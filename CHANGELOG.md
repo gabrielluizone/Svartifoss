@@ -60,11 +60,17 @@ shortcuts.
   action (right stays reserved for the system dismiss gesture).
 - **Long-press the center screen** to open the queue directly; a new
   first-run overlay hints at the available gestures.
-- New **screen theme** options (default/minimal/compact/cinema), a
-  dynamic-vs-static accent toggle, album-art fade transition, album-art
-  style (cover/blur/black-and-white/blur+bw/hidden) with blur radius and dim
-  strength, ambient opacity, rotary dead-zone, and volume/seek overlay
-  timeout — all new settings synced from phone to watch.
+- New **screen theme** options (default/minimal/compact/cinema), album-art
+  fade transition, album-art style (cover/blur/black-and-white/blur+bw/hidden)
+  with blur radius and dim strength, ambient opacity, rotary dead-zone, and
+  volume/seek overlay timeout — all new settings synced from phone to watch.
+- **Configurable title text behavior**: the now-playing title's shrink/wrap/
+  scroll mix is now an explicit, exclusive choice — Automatic (the previous
+  combined behavior), Scroll (marquee), Wrap to two lines, or Shrink to fit.
+- **Independent artist text and progress bar colors**: previously both
+  always followed the same album-derived accent as the icons/mini-buttons.
+  Each can now be set separately to neutral (static theme accent),
+  album-derived (optionally desaturated) or a fixed custom color.
 - Shared `WatchTheme`/chrome (curved clock, curved scroll indicator, loading
   spinner) reused across the queue and new menu screens; the phone
   connection is now kept alive for the duration of any full-screen watch
@@ -80,6 +86,13 @@ shortcuts.
   rows for accent and custom colors, backed by a single source of truth for
   the live accent color ("Lyra" settings/color-picker/player redesign).
 
+### Fresh-install defaults
+
+- New installs now seed the button configs, action list and watch-behavior
+  settings from a bundled default configuration (the same format used by
+  Export/Import Config) instead of a generic auto-detected guess, so the
+  app starts in a known-good, ready-to-use state.
+
 ### Bug fixes
 
 - **Legacy drawer queue could still appear**: the guard only checked for an
@@ -89,6 +102,30 @@ shortcuts.
 - **Watch round-screen clipping in light mode**: the now-playing clock
   circle was cut off at the bezel edge; background drawable and
   button-config vertical spacing corrected.
+- **Queue screen stuttered while scrolling**: each row's rounded-corner clip
+  forced an offscreen `saveLayer` per row on every scroll frame; switched to
+  drawing the rounded background directly. The now-playing equalizer and
+  marquee title animations are also frozen while the list is actively
+  scrolling, and the queue header no longer recomposes on every per-second
+  position tick.
+- **Current track name missing from the Wear OS recents card**: the app's
+  task label wasn't being updated, so the app switcher only ever showed
+  "Svartifoss" instead of the playing track.
+- **Watch-face complication cover flashing back to the placeholder icon**:
+  a complication refresh could land before the phone's album-art asset
+  finished transferring over the Data Layer; the last successfully
+  rendered cover is now cached and reused in that case instead of
+  regressing to the placeholder.
+- **Equalizer icon inconsistent across surfaces**: the static notification/
+  ambient equalizer glyph used different bar geometry than the animated
+  "Up Next" icon and the queue's now-playing indicator; redrawn to match.
+- **Saved button configs silently failing to load in release builds**: the
+  proguard keep rule protecting `PhoneAction`'s reflection-based
+  deserialization constructor still targeted the pre-rename package
+  (`com.matejdro.wearmusiccenter`), so R8 shrinking stripped that
+  constructor from every action class in release builds - any saved
+  button config (including a fresh install's defaults) silently loaded
+  empty. Fixed the rule to the current package.
 
 ## 1.12
 

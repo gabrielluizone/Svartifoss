@@ -46,7 +46,7 @@ the fork.
 
 | | |
 |---|---|
-| **Now-playing screen** | Album art, a circular drag-to-seek progress bar, and an optional rotary-crown seek (turning the crown scrubs the track instead of changing volume). |
+| **Now-playing screen** | Album art, a circular drag-to-seek progress bar, and an optional rotary-crown seek (turning the crown scrubs the track instead of changing volume). Title text behavior is configurable — automatic (shrink, then wrap, then scroll), always scroll, always wrap to two lines, or shrink-to-fit only. |
 | **Configurable input** | Assign any supported action — play/pause, skip, volume, shuffle, repeat (including repeat-one), like/favorite, search, playlist shortcuts, Tasker tasks, opening another app — to physical buttons, screen quadrants (tap zones), or swipe gestures (up/down/left). |
 | **Quick actions panel** | A secondary panel (double-tap to open) with round buttons for shuffle/repeat/like and a shortcut into the queue. |
 | **Queue and play history** | Browse the app's real playback queue when one is exposed, or fall back to a locally tracked play-history list when it isn't (common on apps that don't publish a skippable queue). |
@@ -64,8 +64,10 @@ the fork.
   hidden), with adjustable blur radius, dim strength, and ambient-mode
   opacity.
 - Accent color can follow the current album art or be fixed to a custom
-  color, applied consistently across the now-playing screen, quick panel,
-  and menu.
+  color. The artist text and the progress bar each have their own
+  independent color source (neutral, album, or custom, with an optional
+  desaturate option), on top of the mini-buttons row and quick panel/menu
+  accent.
 - Per-surface layout options for the mini-buttons row and quick panel:
   curve style, background (glass / solid / transparent), and color source.
 
