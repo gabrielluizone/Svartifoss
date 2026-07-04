@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static 3-bar equalizer glyph sized for notification small-icon use (content inside the
+     standard safe padding). Used as the WatchMusicService foreground-notification icon and as the
+     OngoingActivity static/ambient icon; the interactive watch-face indicator shows the animated
+     ic_equalizer_bars_animated instead. Bars are the SAME 3-wide rounded capsules as
+     ic_equalizer_bars.xml / the Compose NowPlayingBars in the queue, at the same x positions, so
+     the static and animated glyphs read as one equalizer across every surface. Heights are frozen
+     to a mid-pose of that animation (bar1 short, bar2 tall, bar3 mid = the animated static
+     scaleY 0.35/0.55/0.45 ordering). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M5.5,12 A1.5,1.5 0 0 1 8.5,12 L8.5,17 A1.5,1.5 0 0 1 5.5,17 Z M10.5,7 A1.5,1.5 0 0 1 13.5,7 L13.5,17 A1.5,1.5 0 0 1 10.5,17 Z M15.5,10 A1.5,1.5 0 0 1 18.5,10 L18.5,17 A1.5,1.5 0 0 1 15.5,17 Z" />
+</vector>
