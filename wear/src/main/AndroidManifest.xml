@@ -91,6 +91,21 @@
             </intent-filter>
         </service>
 
+        <!-- Keeps the complication/Tile fresh independently of WatchMusicService's lifecycle -
+             see the class kdoc. Path must match CommPaths.DATA_MUSIC_STATE. -->
+        <service
+            android:name=".watch.communication.MusicStateListenerService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/Music/State"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
 
         <service android:name="com.matejdro.wearutils.logging.LogTransmitter" />
 
@@ -119,12 +134,47 @@
                 android:resource="@drawable/tile_preview" />
         </service>
 
+        <!-- Watch-face complication: current album cover, tap to open the player -->
+        <!-- Icon: ic_complication_picker is a full-bleed copy of the glyph used ONLY here - both
+             the ic_complication_media inset wrapper and even the raw glyph (built-in Material
+             padding) render tiny in the complications picker. The in-slot fallback image keeps
+             using the inset version (see the service code). -->
+        <service
+            android:name=".watch.complication.AlbumArtComplicationDataSourceService"
+            android:exported="true"
+            android:label="@string/complication_album_art_label"
+            android:icon="@drawable/ic_complication_picker"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+
+            <!-- Image types only, deliberately: whether a face draws a cover attached to a
+                 text-type complication is up to its renderer (most show just the text), so text
+                 slots made the complication look broken. See the service class kdoc. -->
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="SMALL_IMAGE,PHOTO_IMAGE" />
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="1800" />
+        </service>
+
         <activity
             android:name="androidx.wear.activity.ConfirmationActivity"
             android:exported="false" />
 
         <activity
             android:name=".watch.view.queue.QueueActivity"
+            android:exported="false"
+            android:theme="@style/QueueTheme"
+            android:launchMode="singleTop"
+            android:noHistory="true" />
+
+        <!-- Compose actions/custom-list menu (replaces the old bottom drawer). noHistory so it
+             dismisses on screen-off, matching the drawer's close-on-ambient behavior. -->
+        <activity
+            android:name=".watch.view.menu.MenuActivity"
             android:exported="false"
             android:theme="@style/QueueTheme"
             android:launchMode="singleTop"

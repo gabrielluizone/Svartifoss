@@ -13,7 +13,7 @@ apply plugin: 'com.google.protobuf'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace = "com.matejdro.common"
+    namespace = "com.svartifoss.snfell.common"
 
 
     defaultConfig {

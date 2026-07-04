@@ -10,6 +10,7 @@
     <uses-permission android:name="net.dinglisch.android.tasker.PERMISSION_RUN_TASKS" />
     <uses-permission android:name="com.matejdro.wearvibrationcenter.RECEIVE_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk
         tools:overrideLibrary="androidx.wear" />
@@ -21,6 +22,12 @@
 
         <intent>
             <action android:name="android.intent.action.MEDIA_BUTTON" />
+        </intent>
+        <!-- Lets MusicService discover a music app's MediaBrowserService for library search
+             (see MediaBrowserSearch.kt) - the standard declaration used by Android Auto and
+             assistants for the same purpose. -->
+        <intent>
+            <action android:name="android.media.browse.MediaBrowserService" />
         </intent>
     </queries>
 
@@ -85,8 +92,14 @@
             android:name=".view.actionlist.ActionEditorActivity"
             android:theme="@style/AppTheme.Dialog" />
 
+        <activity
+            android:name=".view.settings.PlaylistShortcutsActivity"
+            android:exported="false"
+            android:label="@string/setting_playlist_shortcuts" />
+
+
         <provider
-            android:authorities="com.matejdro.wearmusiccenter.logs"
+            android:authorities="com.svartifoss.snfell.logs"
             android:name="androidx.core.content.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

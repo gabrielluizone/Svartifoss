@@ -32,3 +32,7 @@
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception
+# com.google.android.wearable.* is a system-provided library on watches (declared via
+# <uses-library> in the manifest), so it's absent from the compile classpath - suppress the
+# R8 missing-class error for it.
+-dontwarn com.google.android.wearable.intent.RemoteIntent

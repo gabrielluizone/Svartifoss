@@ -1,26 +1,130 @@
-Music Center for Wear
-================================
+<div align="center">
 
-Application for customizable music control from Android Wear devices with support for additional watch's buttons and digital crown.
+# Svartifoss
+
+Control the music playing on your phone from a Wear OS watch — buttons,
+gestures, digital crown, a quick-actions panel, a Tile, and a watch-face
+complication.
+
+[![Platform](https://img.shields.io/badge/platform-Android%20%7C%20Wear%20OS-3ddc84?logo=android&logoColor=white)](#)
+[![Min SDK](https://img.shields.io/badge/min%20SDK-23%20(phone)%20%2F%2026%20(watch)-informational)](#)
+[![Latest release](https://img.shields.io/github/v/release/gabrielluizone/Svartifoss?label=release)](https://github.com/gabrielluizone/Svartifoss/releases)
+[![Last commit](https://img.shields.io/github/last-commit/gabrielluizone/Svartifoss)](https://github.com/gabrielluizone/Svartifoss/commits)
+[![Repo size](https://img.shields.io/github/repo-size/gabrielluizone/Svartifoss)](#)
+![Visitors](https://komarev.com/ghpvc/?username=gabrielluizone&repo=Svartifoss&label=visitors&color=blue)
+
+</div>
+
+<!--
+Screenshots go here once available, e.g.:
+
+<p align="center">
+  <img src="docs/images/now-playing.png" width="200" alt="Now-playing screen" />
+  <img src="docs/images/quick-panel.png" width="200" alt="Quick actions panel" />
+  <img src="docs/images/menu.png" width="200" alt="Watch menu" />
+  <img src="docs/images/tile.png" width="200" alt="Glanceable Tile" />
+</p>
+-->
+
+Svartifoss reads whatever media session is currently active on the phone
+(any app that exposes one) and mirrors it to the watch: title, artist,
+album art, playback position, queue, and transport controls. It is a
+rename and continuation of [Music Center for Wear](https://github.com/matejdro/WearMusicCenter)
+by matejdro — same lineage, new name, several releases of changes since
+the fork.
+
+## Contents
+
+- [What it can do](#what-it-can-do)
+- [Installing](#installing)
+- [Building](#building)
+- [Credits](#credits)
+
+## What it can do
+
+### On the watch
+
+| | |
+|---|---|
+| **Now-playing screen** | Album art, a circular drag-to-seek progress bar, and an optional rotary-crown seek (turning the crown scrubs the track instead of changing volume). |
+| **Configurable input** | Assign any supported action — play/pause, skip, volume, shuffle, repeat (including repeat-one), like/favorite, search, playlist shortcuts, Tasker tasks, opening another app — to physical buttons, screen quadrants (tap zones), or swipe gestures (up/down/left). |
+| **Quick actions panel** | A secondary panel (double-tap to open) with round buttons for shuffle/repeat/like and a shortcut into the queue. |
+| **Queue and play history** | Browse the app's real playback queue when one is exposed, or fall back to a locally tracked play-history list when it isn't (common on apps that don't publish a skippable queue). |
+| **Full action menu** | A full-screen list for anything not bound to a button or gesture. |
+| **Search** | Trigger a voice or keyboard search against the currently playing app's media library directly from the watch, with a history of past searches you can replay or delete. |
+| **Playlist shortcuts** | Name and save deep links to specific playlists (with an optional "start shuffled" flag), managed from the phone and reachable from the watch as a list or bound straight to a button. |
+| **Glanceable surfaces** | A Tile with track info and transport controls, a second Tile that previews the next queued track, and a watch-face complication showing the current album art / title. |
+
+<p align="center"><em>screenshot placeholder — docs/images/now-playing.png</em></p>
+
+### Look and feel
+
+- Multiple screen themes (default, minimal, compact, cinema) and album-art
+  display styles (full cover, blurred, black-and-white, blurred B&W, or
+  hidden), with adjustable blur radius, dim strength, and ambient-mode
+  opacity.
+- Accent color can follow the current album art or be fixed to a custom
+  color, applied consistently across the now-playing screen, quick panel,
+  and menu.
+- Per-surface layout options for the mini-buttons row and quick panel:
+  curve style, background (glass / solid / transparent), and color source.
+
+<p align="center"><em>screenshot placeholder — docs/images/theme-options.png</em></p>
+
+### On the phone
+
+- Central place to configure every button, gesture, and screen on the
+  watch, plus watch-facing preferences (themes, colors, timeouts, rotary
+  behavior).
+- Custom icon picker and color picker for personalizing actions.
+- Playlist shortcut manager.
+- A short in-app guide covering how to use Svartifoss on the watch.
+
+<p align="center"><em>screenshot placeholder — docs/images/phone-settings.png</em></p>
+
+### Under the hood
+
+- All phone ⟷ watch communication happens over the local Wearable Data
+  Layer connection — no account, server, or internet access is involved.
+- Works with any app that publishes a standard Android media session;
+  extra features like like/shuffle/repeat and search rely on optional
+  media-session extensions some apps expose (availability varies by app).
 
 ## Installing
 
-App is not on the Play Store anymore, due to Google's constant annoying policies and takedowns without a way to get a good explanation.
+The app is not on the Play Store, due to Google's constant annoying
+policies and takedowns without a way to get a good explanation.
 
-You can install the app by manually sideloading the apk from releases to your phone and to your watch. To make watch install easier, you can
+You can install it by manually sideloading the APK from the [releases page](https://github.com/gabrielluizone/Svartifoss/releases)
+to your phone and to your watch. To make the watch install easier, you can
 use [Wear Installer](https://www.xda-developers.com/wear-installer-sideload-wear-os-apps/).
 
 ## Building
 
+Android Studio is convenient but not required — the project builds from
+the command line via the Gradle wrapper.
+
 ### Prerequisites
 
-* [Android Studio 3.0 or newer](https://developer.android.com/studio/index.html)
+- JDK 21
+- Android SDK (either through [Android Studio](https://developer.android.com/studio)
+  or the standalone [command-line tools](https://developer.android.com/studio#command-line-tools-only))
+- `sdk.dir` pointing at that SDK in a `local.properties` file at the repo
+  root (Android Studio creates this automatically on first sync)
 
 ### Build process
 
-#### 1. Pull the repo
-#### 2. Pull the submodules
+1. Pull the repo.
+2. Pull the submodules: `git submodule update --init`
+3. Build from the command line:
 
-Run command `git submodule update --init`
+   ```sh
+   ./gradlew assembleDebug
+   ```
 
-#### 3. Open the project in the Android Studio and wait for its dependencies to resolve
+   or open the project in Android Studio and let it sync.
+
+## Credits
+
+Svartifoss is a fork of [Music Center for Wear](https://github.com/matejdro/WearMusicCenter)
+by matejdro.

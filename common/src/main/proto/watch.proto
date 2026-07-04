@@ -1,8 +1,8 @@
 syntax = "proto2";
 
-package com.matejdro.wearmusiccenter.proto;
+package com.svartifoss.snfell.proto;
 
-option java_package = "com.matejdro.wearmusiccenter.proto";
+option java_package = "com.svartifoss.snfell.proto";
 option java_multiple_files = true;
 option optimize_for = LITE_RUNTIME;
 

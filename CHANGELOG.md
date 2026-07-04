@@ -1,5 +1,95 @@
 # Changelog
 
+## 2.0
+
+The app is renamed **Svartifoss** (formerly Music Center for Wear / Lyra
+Player). Alongside the rebrand, this is the largest feature release since
+the 1.12 Wear OS modernization: a Compose-based watch UI overhaul, several
+new assignable actions, glanceable watch-face/Tile surfaces, and playlist
+shortcuts.
+
+### Rebrand
+
+- App renamed to **Svartifoss**; package IDs renamed
+  `com.matejdro.wearmusiccenter` → `com.svartifoss.snfell` (mobile + wear)
+  and `com.matejdro.common` → `com.svartifoss.snfell.common`.
+- Version bumped to **2.0** (versionCode: mobile 28 → 29, wear 134 → 135).
+- Wear `minSdk` raised 25 → 26 (required by the Tiles APIs used below).
+
+### New actions (assignable to any button/gesture)
+
+- **Play/Pause toggle**, **Stop**, **Restart track**, **Mute toggle** — four
+  new one-tap actions for single-button watches.
+- **Repeat-one** — direct one-tap on/off toggle for track looping, separate
+  from the existing cycling `RepeatAction`.
+- **Search** — opens voice/keyboard input on the watch and resolves the
+  query against the playing app's `MediaBrowserService`; past searches are
+  kept in a **search history** list that can be replayed or deleted from the
+  watch.
+- **Playlist shortcuts** — name + deep-link shortcuts managed on the phone
+  (with an optional shuffle flag), reachable as a watch list or assigned
+  directly to a button/gesture.
+- **Play liked songs** / **Play liked songs, shuffled** — one-tap links into
+  YouTube Music's "Liked Music".
+- Recently-played history is now persisted to disk instead of living only in
+  `MusicService` memory, so it survives service restarts.
+
+### Wear glanceable surfaces
+
+- **Media Tile**: ProtoLayout tile showing track/artist with
+  prev/play-pause/next, tap to open the app.
+- **Queue-preview Tile**: shows the next queued track, tap to skip
+  (optional, toggled from the phone).
+- **Watch-face complication**: current album art / title-artist, tap opens
+  the app; supports short text, long text, small image and photo image
+  complication types.
+- **Rotary-crown seek**: optional setting where turning the crown scrubs the
+  timeline instead of changing volume (debounced before hitting the Data
+  Layer).
+
+### Wear UI overhaul
+
+- Full-screen Compose **menu** (actions menu and phone-pushed custom lists,
+  including in-place delete of search-history entries) replacing the legacy
+  `WearableDrawerLayout` drawer.
+- Configurable **mini-buttons row** (up to 3 slots) and a **quick-actions
+  panel** (3 round buttons + 1 long row), both assignable through the
+  existing button/action pipeline, with per-item styling (curve, glass /
+  solid / transparent background, neutral / album / custom color, offset).
+- **Swipe gestures generalized**: up/down/left can each be assigned any
+  action (right stays reserved for the system dismiss gesture).
+- **Long-press the center screen** to open the queue directly; a new
+  first-run overlay hints at the available gestures.
+- New **screen theme** options (default/minimal/compact/cinema), a
+  dynamic-vs-static accent toggle, album-art fade transition, album-art
+  style (cover/blur/black-and-white/blur+bw/hidden) with blur radius and dim
+  strength, ambient opacity, rotary dead-zone, and volume/seek overlay
+  timeout — all new settings synced from phone to watch.
+- Shared `WatchTheme`/chrome (curved clock, curved scroll indicator, loading
+  spinner) reused across the queue and new menu screens; the phone
+  connection is now kept alive for the duration of any full-screen watch
+  activity (menu, queue) instead of just the main screen.
+- Portuguese (Brazil) localization added for the wear and common modules.
+
+### Mobile UI
+
+- New **Guide** tab with a Wear OS usage walkthrough.
+- New left navigation drawer with app/author info; toolbar title alignment
+  fixed.
+- Built-in icon picker grid for custom action icons; color-swatch preference
+  rows for accent and custom colors, backed by a single source of truth for
+  the live accent color ("Lyra" settings/color-picker/player redesign).
+
+### Bug fixes
+
+- **Legacy drawer queue could still appear**: the guard only checked for an
+  `activeQueueItemId`, which many apps never set on Android 10+, letting the
+  old drawer queue slip through instead of the new `QueueActivity`. Now also
+  blocked by list type (PLAYLIST/HISTORY).
+- **Watch round-screen clipping in light mode**: the now-playing clock
+  circle was cut off at the bezel edge; background drawable and
+  button-config vertical spacing corrected.
+
 ## 1.12
 
 Wear OS modernization initiative — bringing the watch app up to current

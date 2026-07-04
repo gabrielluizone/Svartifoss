@@ -56,7 +56,7 @@ allprojects {
         if (project.plugins.findPlugin("com.android.base") != null && keystoreProperties.exists() && android.signingConfigs.hasProperty(debugConfig)) {
             def props = new Properties()
             props.load(new FileInputStream(keystoreProperties))
-            android.signingConfigs[debugConfig].storeFile = file(props['storeFile'])
+            android.signingConfigs[debugConfig].storeFile = rootProject.file(props['storeFile'])
             android.signingConfigs[debugConfig].storePassword = props['storePassword']
             android.signingConfigs[debugConfig].keyAlias = props['keyAlias']
             android.signingConfigs[debugConfig].keyPassword = props['keyPassword']

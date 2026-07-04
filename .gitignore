@@ -16,6 +16,7 @@ gen/
 
 */build/
 *.apk
+*.keystore
 
 # OS generated files #
 ######################

@@ -7,13 +7,13 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     defaultConfig {
-        applicationId "com.matejdro.wearmusiccenter"
-        namespace = "com.matejdro.wearmusiccenter"
+        applicationId "com.svartifoss.snfell"
+        namespace = "com.svartifoss.snfell"
         minSdkVersion 23
         targetSdkVersion 30
         compileSdk 36
-        versionCode 28
-        versionName "1.13"
+        versionCode 29
+        versionName "2.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
         multiDexEnabled true
@@ -23,6 +23,10 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // Sign with the debug config so local release builds produce an installable APK.
+            // When keystore.properties exists, the root build.gradle afterEvaluate swaps the
+            // debug config's credentials for the real keystore, so this also covers releases.
+            signingConfig signingConfigs.debug
         }
     }
     packagingOptions {
