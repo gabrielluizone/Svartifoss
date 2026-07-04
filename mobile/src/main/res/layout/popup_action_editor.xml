@@ -55,20 +55,18 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        tools:name="com.matejdro.wearmusiccenter.view.actionconfigs.SkipSecondsConfigFragment" />
+        tools:name="com.svartifoss.snfell.view.actionconfigs.SkipSecondsConfigFragment" />
 
     <!-- Swap action button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/swap_button"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/LyraGestureButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
-        android:fontFamily="@font/google_sans"
-        android:text="@string/swap_action"
-        android:textSize="14sp" />
+        android:text="@string/swap_action" />
 
     <!-- Divider -->
     <View
@@ -108,8 +106,11 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans"
             android:text="@android:string/cancel"
+            android:textColor="@color/lyra_text_secondary"
             android:textSize="14sp" />
 
+        <!-- Accent applied at runtime (LyraAccent) - the static color here is just the
+             pre-resolve fallback, matching the gesture picker's OK. -->
         <Button
             android:id="@+id/ok_button"
             style="?attr/buttonBarButtonStyle"
@@ -117,7 +118,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans"
             android:text="@android:string/ok"
-            android:textSize="14sp" />
+            android:textColor="@color/lyra_accent"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

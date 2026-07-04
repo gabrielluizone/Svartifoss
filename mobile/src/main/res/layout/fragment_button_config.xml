@@ -57,7 +57,7 @@
             tools:ignore="ContentDescription"
             tools:src="@drawable/watch_round_background" />
 
-        <com.matejdro.wearmusiccenter.common.view.FourWayTouchLayout
+        <com.svartifoss.snfell.common.view.FourWayTouchLayout
             android:id="@+id/four_way_touch"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -177,6 +177,101 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/caption_physical_buttons" />
+
+        <!-- Section header: Swipe gestures -->
+        <TextView
+            android:id="@+id/swipe_gestures_caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
+            android:text="@string/swipe_gestures"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/watch_button_container" />
+
+        <TextView
+            android:id="@+id/swipe_gestures_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/tap_a_swipe_to_configure"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swipe_gestures_caption" />
+
+        <!-- Swipe gesture tiles (Up/Down/Left), one row of 3 columns - see item_swipe_gesture.xml -->
+        <LinearLayout
+            android:id="@+id/swipe_gesture_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swipe_gestures_hint" />
+
+        <!-- Section header: On-screen buttons -->
+        <TextView
+            android:id="@+id/screen_buttons_caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
+            android:text="@string/screen_buttons"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swipe_gesture_container" />
+
+        <TextView
+            android:id="@+id/screen_buttons_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/tap_a_screen_button_to_configure"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/screen_buttons_caption" />
+
+        <!-- On-screen button slot tiles (1/2/3, left-to-right on the watch), one row of 3
+             columns - reuses item_swipe_gesture.xml since the tiles look identical. -->
+        <LinearLayout
+            android:id="@+id/screen_button_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/screen_buttons_hint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

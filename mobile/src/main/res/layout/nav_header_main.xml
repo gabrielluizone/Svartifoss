@@ -1,89 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:background="@color/lyra_background">
+    android:background="@color/lyra_background"
+    android:fillViewport="true">
 
-    <!-- App Logo / Icon -->
-    <ImageView
-        android:id="@+id/drawer_app_logo"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="32dp"
-        android:src="@mipmap/ic_launcher"
-        android:background="@drawable/mini_album_bg"
-        android:padding="12dp"
-        android:clipToOutline="true"
-        android:layout_gravity="center_horizontal" />
-
-    <!-- App Name -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/app_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/lyra_on_surface"
-        android:fontFamily="@font/google_sans"
-        android:gravity="center_horizontal" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Companion App"
-        android:textSize="12sp"
-        android:textColor="@color/lyra_text_secondary"
-        android:fontFamily="@font/google_sans"
-        android:gravity="center_horizontal" />
+        <ImageView
+            android:id="@+id/drawer_app_logo"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/ic_app_brand"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/app_name" />
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:background="@color/lyra_divider" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/app_name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/lyra_on_surface"
+            android:fontFamily="@font/google_sans"
+            android:gravity="center_horizontal" />
 
-    <!-- About Section Info (in English) -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ABOUT"
-        android:textSize="11sp"
-        android:letterSpacing="0.08"
-        android:textAllCaps="true"
-        android:textColor="@color/lyra_accent"
-        android:fontFamily="@font/google_sans"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/drawer_tagline"
+            android:textSize="12sp"
+            android:textColor="@color/lyra_text_secondary"
+            android:fontFamily="@font/google_sans"
+            android:gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Control and synchronize music between your Android smartphone and Wear OS smartwatch."
-        android:textSize="14sp"
-        android:textColor="@color/lyra_on_surface"
-        android:lineSpacingMultiplier="1.2"
-        android:fontFamily="@font/google_sans" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/lyra_divider" />
 
-    <!-- Spacer to push version info to the bottom -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/drawer_about_heading"
+            android:textSize="11sp"
+            android:letterSpacing="0.08"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:fontFamily="@font/google_sans"
+            android:textStyle="bold" />
 
-    <!-- Version Info -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Version 1.0.0"
-        android:textSize="11sp"
-        android:textColor="@color/lyra_text_secondary"
-        android:fontFamily="@font/google_sans"
-        android:gravity="center_horizontal" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/drawer_about_summary"
+            android:textSize="14sp"
+            android:textColor="@color/lyra_on_surface"
+            android:lineSpacingMultiplier="1.25"
+            android:fontFamily="@font/google_sans" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/drawer_name_heading"
+            android:textSize="11sp"
+            android:letterSpacing="0.08"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:fontFamily="@font/google_sans"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/drawer_name_meaning"
+            android:textSize="13sp"
+            android:textColor="@color/lyra_on_surface"
+            android:lineSpacingMultiplier="1.3"
+            android:fontFamily="@font/google_sans" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/drawer_sync_heading"
+            android:textSize="11sp"
+            android:letterSpacing="0.08"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:fontFamily="@font/google_sans"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/drawer_sync_summary"
+            android:textSize="13sp"
+            android:textColor="@color/lyra_text_secondary"
+            android:lineSpacingMultiplier="1.25"
+            android:fontFamily="@font/google_sans" />
+
+        <TextView
+            android:id="@+id/drawer_version_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="11sp"
+            android:textColor="@color/lyra_text_secondary"
+            android:fontFamily="@font/google_sans"
+            android:gravity="center_horizontal"
+            tools:text="Version 1.13" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Same geometry as pref_item.xml (20dp + 36dp icon frame = 56dp text indent, icon anchored
+     to the title's top line) with a switch widget at the end. -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="56dp"
     android:background="?selectableItemBackground"
-    android:paddingStart="56dp"
+    android:paddingStart="20dp"
     android:paddingEnd="20dp"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@id/switchWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:clickable="false"
+        android:focusable="false" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/pref_text_block"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="36dp"
+        android:layout_toStartOf="@id/switchWidget"
         android:orientation="vertical"
-        android:paddingEnd="16dp">
+        android:paddingEnd="16dp"
+        tools:ignore="RtlSymmetry">
 
         <TextView
             android:id="@android:id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="-3dp"
             android:textSize="15sp"
             android:textColor="?android:attr/textColorPrimary"
             android:fontFamily="@font/google_sans"
@@ -32,19 +48,24 @@
             android:id="@android:id/summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="0dp"
             android:textSize="13sp"
-            android:textColor="@color/lyra_pref_summary"
+            android:textColor="@color/lyra_pref_summary_selector"
             android:fontFamily="@font/google_sans"
             android:maxLines="4" />
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@id/switchWidget"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:clickable="false"
-        android:focusable="false" />
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignTop="@+id/pref_text_block"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="4dp"
+        android:tint="@color/lyra_text_secondary"
+        tools:ignore="ContentDescription,UseAppTint"
+        tools:src="@drawable/ic_palette" />
 
-</LinearLayout>
+</RelativeLayout>

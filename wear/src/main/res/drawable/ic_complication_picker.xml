@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Manifest icon for the complications picker ONLY - never returned as complication data. The
+     3-bar equalizer glyph at a standard Material-ish ~75% fill: the earlier full-bleed cut
+     rendered oversized next to other providers' icons in the picker, and this drawable is also
+     what the ic_complication_media inset wrapper shows inside the watch-face slot, so the fill
+     here directly sets the in-slot fallback size too. Rounded capsule bars, matching the other
+     equalizer icons. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M4,11 A2,2 0 0 1 8,11 L8,19 A2,2 0 0 1 4,19 Z M10,5 A2,2 0 0 1 14,5 L14,19 A2,2 0 0 1 10,19 Z M16,8 A2,2 0 0 1 20,8 L20,19 A2,2 0 0 1 16,19 Z" />
+</vector>

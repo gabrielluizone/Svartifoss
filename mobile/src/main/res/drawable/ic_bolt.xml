@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <!-- Material Symbols glyph; the symbol set uses a 0..-960 Y range, hence the translate. -->
+    <group android:translateY="960">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="m422,-232 l207,-248L469,-480l29,-227 -185,267h139l-30,208ZM320,-80l40,-280L160,-360l360,-520h80l-40,320h240L400,-80h-80Zm151,-390Z" />
+    </group>
+</vector>

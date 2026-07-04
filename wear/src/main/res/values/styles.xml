@@ -10,16 +10,17 @@
         <item name="fontFamily">@font/google_sans</item>
     </style>
 
-    <!-- QueueActivity is a Compose screen: black window background (no gray launch flash), no
-         window animation (the SwipeToDismissBox animates the close itself - a window animation on
-         top of it looked like the screen closing twice), and no system swipe-to-dismiss (Compose
-         handles the swipe, so the system one must not also fire). -->
+    <!-- Theme for the full-screen Compose screens (queue, actions menu). Deliberately OPAQUE:
+         these windows used to be translucent so the swipe-back revealed the live player behind,
+         but that forced the GPU to alpha-blend two full-screen surfaces on every frame and kept
+         MainActivity rendering underneath - the main remaining cause of scroll stutter vs. the
+         stock media app. Opaque means the swipe reveals black and MainActivity fully stops while
+         covered (the activities bind WatchMusicService themselves to keep the phone connection
+         alive). No window animation (the SwipeToDismissBox animates the close itself) and no
+         system swipe-to-dismiss (Compose handles the swipe, so the system one must not also
+         fire). -->
     <style name="QueueTheme" parent="@android:style/Theme.DeviceDefault.NoActionBar">
-        <!-- Translucent so the SwipeToDismissBox reveals the player behind while swiping back (the
-             queue runs in MainActivity's task now); no window animation and no system
-             swipe-to-dismiss, so closing happens exactly once via the Compose swipe. -->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowSwipeToDismiss">false</item>
     </style>

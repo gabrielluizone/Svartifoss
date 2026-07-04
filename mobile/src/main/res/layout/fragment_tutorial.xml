@@ -64,10 +64,15 @@
             layout="@layout/item_tutorial_card"
             android:id="@+id/card_rotary" />
 
-        <!-- Swipe up -->
+        <!-- Swipe gestures (up/down/left/right, all configurable) -->
         <include
             layout="@layout/item_tutorial_card"
             android:id="@+id/card_swipe_up" />
+
+        <!-- YouTube Music shortcuts -->
+        <include
+            layout="@layout/item_tutorial_card"
+            android:id="@+id/card_yt_music" />
 
         <!-- Swipe to exit -->
         <include
@@ -78,6 +83,11 @@
         <include
             layout="@layout/item_tutorial_card"
             android:id="@+id/card_tile" />
+
+        <!-- Watch face complication -->
+        <include
+            layout="@layout/item_tutorial_card"
+            android:id="@+id/card_complication" />
 
         <!-- System media controls -->
         <include

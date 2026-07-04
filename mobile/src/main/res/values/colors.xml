@@ -6,6 +6,12 @@
     <!-- Accent adaptável: mais suave no modo claro, sage no modo escuro (sobrescrito em values-night) -->
     <color name="lyra_accent">#86a69d</color>
     <color name="lyra_accent_highlight">#204A9488</color>
+    <!-- Press/ripple highlight: deliberately NEUTRAL (not accent-derived). The accent is user
+         customizable at runtime, but theme attributes like colorControlHighlight resolve once at
+         inflation - an accent-tinted ripple here permanently kept the DEFAULT sage green on
+         every pressed row/button no matter what accent the user later picked. Gray never
+         clashes. Overridden for dark mode in values-night. -->
+    <color name="lyra_ripple">#1F000000</color>
 
     <!-- Modo claro -->
     <color name="lyra_white">#FFFFFF</color>

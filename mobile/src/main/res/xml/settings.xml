@@ -9,6 +9,7 @@
 
         <ListPreference
             android:key="app_theme"
+            android:icon="@drawable/ic_dark_mode"
             android:title="@string/setting_theme"
             android:defaultValue="system"
             android:entries="@array/theme_entries"
@@ -18,6 +19,7 @@
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:key="dynamic_accent_color"
+            android:icon="@drawable/ic_colors"
             android:defaultValue="false"
             android:title="@string/setting_dynamic_accent_color"
             android:summary="@string/setting_dynamic_accent_color_description"
@@ -31,81 +33,271 @@
             android:dependency="dynamic_accent_color"
             android:layout="@layout/pref_switch_item" />
 
-        <Preference
+        <com.svartifoss.snfell.view.settings.ColorDotPreference
             android:key="custom_accent_color"
+            android:icon="@drawable/ic_palette"
             android:title="@string/setting_custom_accent_color"
             android:summary="@string/setting_custom_accent_color_description"
-            android:layout="@layout/pref_item" />
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
 
     </PreferenceCategory>
 
+    <!-- What the watch's now-playing screen looks like. -->
     <PreferenceCategory
         android:key="cat_music_screen"
-        android:title="@string/category_music_screen"
+        android:title="@string/category_watch_screen"
         android:layout="@layout/pref_category_header">
+
+        <ListPreference
+            android:key="album_art_style"
+            android:icon="@drawable/ic_album"
+            android:defaultValue="cover"
+            android:title="@string/setting_album_art_style"
+            android:summary="@string/setting_album_art_style_description"
+            android:entries="@array/album_art_style_entries"
+            android:entryValues="@array/album_art_style_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="35"
+            android:key="album_art_blur_radius"
+            android:icon="@drawable/ic_paint_roller"
+            android:title="@string/setting_album_art_blur_radius"
+            android:summary="@string/setting_album_art_blur_radius_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="35"
+            android:key="overlay_blur_radius"
+            android:icon="@drawable/ic_paint_roller"
+            android:title="@string/setting_overlay_blur_radius"
+            android:summary="@string/setting_overlay_blur_radius_description"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="dim_album_art"
+            android:icon="@drawable/ic_light_mode"
+            android:title="@string/setting_dim_album_art"
+            android:summary="@string/setting_dim_album_art_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="80"
+            android:key="album_art_dim_strength"
+            android:icon="@drawable/ic_light_mode"
+            android:dependency="dim_album_art"
+            android:title="@string/setting_album_art_dim_strength"
+            android:summary="@string/setting_album_art_dim_strength_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="55"
+            android:key="ambient_album_art_opacity"
+            android:icon="@drawable/ic_dark_mode"
+            android:title="@string/setting_ambient_album_art_opacity"
+            android:summary="@string/setting_ambient_album_art_opacity_description"
+            android:layout="@layout/pref_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="always_show_time"
+            android:icon="@drawable/ic_history"
             android:summaryOff="@string/setting_always_show_time_off_description"
             android:summaryOn="@string/setting_always_show_time_on_description"
             android:title="@string/setting_always_show_time"
             android:layout="@layout/pref_switch_item" />
 
+        <ListPreference
+            android:key="wear_screen_theme"
+            android:icon="@drawable/ic_format_paint"
+            android:defaultValue="default"
+            android:title="@string/setting_wear_screen_theme"
+            android:summary="@string/setting_wear_screen_theme_description"
+            android:entries="@array/wear_screen_theme_entries"
+            android:entryValues="@array/wear_screen_theme_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:key="wear_track_time_mode"
+            android:icon="@drawable/ic_history"
+            android:defaultValue="always"
+            android:title="@string/setting_wear_track_time_mode"
+            android:summary="@string/setting_wear_track_time_mode_description"
+            android:entries="@array/wear_track_time_mode_entries"
+            android:entryValues="@array/wear_track_time_mode_values"
+            android:layout="@layout/pref_item" />
+
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
-            android:key="pause_on_swipe_exit"
-            android:title="@string/setting_pause_on_swipe_exit"
-            android:summary="@string/setting_pause_on_swipe_exit_description"
+            android:defaultValue="true"
+            android:key="wear_dynamic_accent"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_dynamic_accent"
+            android:summary="@string/setting_wear_dynamic_accent_description"
             android:layout="@layout/pref_switch_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
-            android:key="haptic_feedback"
-            android:title="@string/setting_haptic_feedback"
-            android:summary="@string/setting_haptic_feedback_description"
+            android:key="wear_album_art_fade"
+            android:icon="@drawable/ic_autorenew"
+            android:title="@string/setting_wear_album_art_fade"
+            android:summary="@string/setting_wear_album_art_fade_description"
             android:layout="@layout/pref_switch_item" />
 
-        <com.matejdro.wearutils.preferences.compat.NumericEditTextPreference
+    </PreferenceCategory>
+
+    <!-- The configurable mini-button row on the now-playing screen. -->
+    <PreferenceCategory
+        android:key="cat_mini_buttons"
+        android:title="@string/category_mini_buttons"
+        android:layout="@layout/pref_category_header">
+
+        <Preference
+            android:key="screen_buttons_hint"
+            android:icon="@drawable/ic_plus"
+            android:title="@string/setting_screen_buttons_hint"
+            android:summary="@string/setting_screen_buttons_hint_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="42"
+            android:key="screen_buttons_bottom_offset"
+            android:icon="@drawable/ic_arrow_down"
+            android:title="@string/dev_screen_buttons_offset"
+            android:summary="@string/dev_screen_buttons_offset_description"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="flat"
+            android:key="screen_buttons_curve_style"
+            android:icon="@drawable/button_turn_ccw"
+            android:title="@string/setting_screen_buttons_curve"
+            android:summary="%s"
+            android:entries="@array/screen_buttons_curve_entries"
+            android:entryValues="@array/screen_buttons_curve_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="glass"
+            android:key="screen_buttons_bg_style"
+            android:icon="@drawable/ic_format_paint"
+            android:title="@string/setting_screen_buttons_bg"
+            android:summary="%s"
+            android:entries="@array/screen_buttons_bg_entries"
+            android:entryValues="@array/screen_buttons_bg_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="neutral"
+            android:key="screen_buttons_color_mode"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_screen_buttons_color"
+            android:summary="%s"
+            android:entries="@array/screen_buttons_color_entries"
+            android:entryValues="@array/screen_buttons_color_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="screen_buttons_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_screen_buttons_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="screen_buttons_desaturated"
+            android:icon="@drawable/ic_paint_roller"
+            android:title="@string/setting_screen_buttons_desaturated"
+            android:summary="@string/setting_screen_buttons_desaturated_description"
+            android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <!-- Touch, crown and button behavior on the watch. -->
+    <PreferenceCategory
+        android:key="cat_gestures"
+        android:title="@string/category_gestures"
+        android:layout="@layout/pref_category_header">
+
+        <Preference
+            android:key="swipe_gestures_hint"
+            android:icon="@drawable/ic_arrow_up"
+            android:title="@string/setting_swipe_gestures_hint"
+            android:summary="@string/setting_swipe_gestures_hint_description"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_center_long_press_queue"
+            android:icon="@drawable/ic_playlist_play"
+            android:title="@string/setting_wear_center_long_press_queue"
+            android:summary="@string/setting_wear_center_long_press_queue_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="300"
             android:key="rotating_crown_off_period"
+            android:icon="@drawable/button_turn_ccw"
             android:title="@string/setting_rotating_crown_off_period"
             android:summary="@string/setting_rotating_crown_off_period_description"
             android:layout="@layout/pref_item" />
 
-        <com.matejdro.wearutils.preferences.compat.NumericEditTextPreference
-            android:defaultValue="100"
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="40"
             android:key="rotating_crown_sensitivity"
+            android:icon="@drawable/button_turn_cw"
             android:title="@string/setting_rotating_sensitivity"
             android:summary="@string/setting_rotating_sensitivity_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="6"
+            android:key="rotary_deadzone"
+            android:icon="@drawable/button_turn_cw"
+            android:title="@string/setting_rotary_deadzone"
+            android:summary="@string/setting_rotary_deadzone_description"
             android:layout="@layout/pref_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="rotary_seek"
+            android:icon="@drawable/action_forward_10"
             android:title="@string/setting_rotary_seek"
             android:summary="@string/setting_rotary_seek_description"
             android:layout="@layout/pref_switch_item" />
 
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="1000"
+            android:key="volume_overlay_timeout"
+            android:icon="@drawable/action_volume_up"
+            android:title="@string/setting_volume_overlay_timeout"
+            android:summary="@string/setting_volume_overlay_timeout_description"
+            android:layout="@layout/pref_item" />
+
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="disable_ambient_physical_double_click"
+            android:icon="@drawable/ic_watch_off"
             android:title="@string/setting_disable_ambient_physical_double_click"
             android:summary="@string/setting_disable_ambient_physical_double_click_description"
             android:layout="@layout/pref_switch_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
-            android:key="swipe_up_for_queue"
-            android:title="@string/setting_swipe_up_for_queue"
-            android:summary="@string/setting_swipe_up_for_queue_description"
+            android:defaultValue="true"
+            android:key="haptic_feedback"
+            android:icon="@drawable/ic_bolt"
+            android:title="@string/setting_haptic_feedback"
+            android:summary="@string/setting_haptic_feedback_description"
             android:layout="@layout/pref_switch_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="true"
-            android:key="dim_album_art"
-            android:title="@string/setting_dim_album_art"
-            android:summary="@string/setting_dim_album_art_description"
+            android:defaultValue="false"
+            android:key="pause_on_swipe_exit"
+            android:icon="@drawable/ic_music_off"
+            android:title="@string/setting_pause_on_swipe_exit"
+            android:summary="@string/setting_pause_on_swipe_exit_description"
             android:layout="@layout/pref_switch_item" />
 
     </PreferenceCategory>
@@ -118,9 +310,17 @@
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="always_select_center_action"
+            android:icon="@drawable/ic_gamepad"
             android:title="@string/setting_always_select_center_action"
             android:summary="@string/setting_always_select_center_action_description"
             android:layout="@layout/pref_switch_item" />
+
+        <Preference
+            android:key="playlist_shortcuts"
+            android:icon="@drawable/ic_yt_music"
+            android:title="@string/setting_playlist_shortcuts"
+            android:summary="@string/setting_playlist_shortcuts_description"
+            android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 
@@ -132,6 +332,7 @@
         <com.matejdro.wearutils.preferences.compat.AutoSummaryListPreference
             android:defaultValue="false"
             android:key="auto_start_mode"
+            android:icon="@drawable/action_play"
             android:entryValues="@array/auto_start_modes_keys"
             android:entries="@array/auto_start_modes_descriptions"
             android:title="@string/setting_auto_start"
@@ -139,41 +340,45 @@
             app:defaultValue="OFF"
             android:layout="@layout/pref_item" />
 
-        <com.matejdro.wearmusiccenter.view.settings.MusicAppListPreference
+        <com.svartifoss.snfell.view.settings.MusicAppListPreference
             android:key="auto_start_apps_blacklist"
+            android:icon="@drawable/ic_apps"
             android:title="@string/setting_auto_start_apps_blacklist"
             android:summary="@string/setting_auto_start_apps_blacklist_description"
             android:layout="@layout/pref_item" />
 
-        <com.matejdro.wearutils.preferences.compat.NumericEditTextPreference
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="0"
             android:key="close_timeout"
+            android:icon="@drawable/ic_history"
             android:title="@string/setting_close_timeout"
             android:summary="@string/setting_close_timeout_description"
             android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 
+
     <PreferenceCategory
-        android:key="cat_notifications"
-        android:title="@string/category_notifications"
+        android:key="cat_backup"
+        android:title="@string/category_backup"
         android:layout="@layout/pref_category_header">
 
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
-            android:key="enable_notification_popup"
-            android:title="@string/setting_enable_notifications"
-            android:summary="@string/setting_enable_notifications_description"
-            android:layout="@layout/pref_switch_item" />
+        <Preference
+            android:key="exportConfig"
+            android:icon="@drawable/ic_export"
+            android:title="@string/export_config"
+            android:summary="@string/export_config_description"
+            android:layout="@layout/pref_item" />
 
-        <com.matejdro.wearutils.preferences.compat.NumericEditTextPreference
-            android:defaultValue="10"
-            android:key="notification_timeout"
-            android:title="@string/setting_notification_timeout"
-            android:summary="@string/setting_notification_timeout_description"
+        <Preference
+            android:key="importConfig"
+            android:icon="@drawable/ic_import"
+            android:title="@string/import_config"
+            android:summary="@string/import_config_description"
             android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
+
 
     <PreferenceCategory
         android:key="cat_about"
@@ -182,17 +387,20 @@
 
         <Preference
             android:key="version"
+            android:icon="@drawable/ic_app_brand"
             android:title="@string/installed_version"
             android:layout="@layout/pref_item" />
 
         <Preference
             android:key="supportButton"
+            android:icon="@drawable/ic_share"
             android:summary="@string/get_support_description"
             android:title="@string/get_support"
             android:layout="@layout/pref_item" />
 
         <Preference
             android:key="licenses"
+            android:icon="@drawable/ic_open_in_new"
             android:title="@string/licenses"
             android:layout="@layout/pref_item" />
 
@@ -207,7 +415,23 @@
 
         <Preference
             android:key="dev_build_info"
+            android:icon="@drawable/ic_bug_report"
             android:title="@string/dev_build_info"
+            android:layout="@layout/pref_item" />
+
+
+        <Preference
+            android:key="dev_sync_watch"
+            android:icon="@drawable/ic_send_to_mobile"
+            android:title="@string/dev_sync_watch"
+            android:summary="@string/dev_sync_watch_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_copy_debug_info"
+            android:icon="@drawable/ic_share"
+            android:title="@string/dev_copy_debug_info"
+            android:summary="@string/dev_copy_debug_info_description"
             android:layout="@layout/pref_item" />
 
     </PreferenceCategory>

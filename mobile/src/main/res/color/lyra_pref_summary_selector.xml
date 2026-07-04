@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Preference summary text color (pref_item.xml / pref_switch_item.xml). Same fix as
+     lyra_text_primary_selector - the flat color it used to point to had no disabled variant. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/lyra_divider" android:state_enabled="false" />
+    <item android:color="@color/lyra_pref_summary" />
+</selector>

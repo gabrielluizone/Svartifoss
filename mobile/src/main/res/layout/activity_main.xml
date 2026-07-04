@@ -28,7 +28,11 @@
                 app:titleTextColor="@color/lyra_on_surface"
                 app:subtitleTextColor="@color/lyra_text_secondary"
                 app:titleTextAppearance="@style/LyraToolbarTitle"
-                app:titleMargins="0dp" />
+                app:titleMarginStart="0dp"
+                app:titleMarginEnd="0dp"
+                app:titleMarginTop="10dp"
+                app:titleMarginBottom="0dp"
+                app:contentInsetStartWithNavigation="16dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -38,18 +42,21 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <!-- Same margins/size/elevation as fab_play below: the two swap depending on playback
+         state, and any metric difference shows as a visible jump when switching tabs. -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="76dp"
         android:src="@drawable/ic_plus"
         android:visibility="gone"
         app:backgroundTint="@color/lyra_accent"
         app:tint="@color/lyra_white"
-        app:elevation="4dp" />
+        app:elevation="6dp"
+        app:fabSize="normal" />
 
     <!-- Play FAB: shown when nothing is playing -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -229,6 +236,7 @@
             app:menu="@menu/activity_main_drawer"
             app:itemIconTint="@color/bottom_nav_item"
             app:itemTextColor="@color/bottom_nav_item"
+            app:itemRippleColor="@color/lyra_ripple"
             app:itemTextAppearanceActive="@style/LyraBottomNavLabel"
             app:itemTextAppearanceInactive="@style/LyraBottomNavLabel"
             app:labelVisibilityMode="selected"

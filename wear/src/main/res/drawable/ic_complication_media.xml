@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- In-slot fallback image when there's no album art to show. The inset keeps the glyph at the
+     size watch faces expect inside the slot circle (the wrapped drawable itself is full-bleed,
+     designed for the picker - see ic_complication_picker.xml). -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_complication_picker"
+    android:insetLeft="10dp"
+    android:insetTop="12dp"
+    android:insetRight="10dp"
+    android:insetBottom="12dp" />

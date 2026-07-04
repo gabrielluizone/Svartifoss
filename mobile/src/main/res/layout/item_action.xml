@@ -1,35 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:background="?selectableItemBackground"
-              android:clickable="true"
-              tools:ignore="UseCompoundDrawables"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:orientation="horizontal"
+    android:paddingStart="20dp"
     android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:focusable="true">
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp">
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        tools:src="@drawable/action_play"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="fitCenter"
         tools:ignore="ContentDescription"
-        tools:tint="@color/black"
-        android:scaleType="fitXY"/>
+        tools:src="@drawable/action_play"
+        tools:tint="@color/black" />
 
-    <TextView
-        android:id="@android:id/text1"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:textAppearance="?android:attr/textAppearanceListItem"
-        android:textSize="24sp"
-        tools:text="@string/group_playback_controls" />
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
+        <!-- Same negative-margin treatment as pref_item.xml: google_sans carries big font
+             padding, so without it the title/subtitle gap reads far wider than intended. -->
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-3dp"
+            android:fontFamily="@font/google_sans"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="15sp"
+            tools:text="@string/group_playback_controls" />
+
+        <!-- Only visible for entries that open another chooser (opensMoreOptions) -->
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/action_opens_more"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/chevron"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/ic_chevron_right"
+        android:tint="@color/lyra_text_secondary"
+        android:visibility="gone"
+        tools:ignore="ContentDescription,UseAppTint"
+        tools:visibility="visible" />
 
 </LinearLayout>

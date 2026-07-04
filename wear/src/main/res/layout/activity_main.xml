@@ -7,8 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.wear.widget.drawer.WearableDrawerLayout
-        android:id="@+id/drawer_layout"
+    <!-- Wrapper (rather than putting everything straight into the root) so ambient burn-in
+         protection has a single view to jiggle/reset - see onUpdateAmbient in MainActivity.
+         The first-run hints overlay deliberately sits outside it. -->
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:deviceIds="wear">
@@ -38,21 +41,20 @@
                 android:orientation="vertical"
                 app:boxedEdges="all">
 
-                <com.matejdro.wearmusiccenter.watch.view.OutlineTextView
+                <com.svartifoss.snfell.watch.view.OutlineTextView
                     android:id="@+id/text_artist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:maxLength="30"
                     android:maxLines="2"
                     android:textColor="@color/theme_accent"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     tools:text="Artist" />
 
-                <com.matejdro.wearmusiccenter.watch.view.OutlineTextView
+                <com.svartifoss.snfell.watch.view.OutlineTextView
                     android:id="@+id/text_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,7 +68,7 @@
                     android:textStyle="bold"
                     tools:text="Title" />
 
-                <com.matejdro.wearmusiccenter.watch.view.OutlineTextView
+                <com.svartifoss.snfell.watch.view.OutlineTextView
                     android:id="@+id/text_playback_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -83,7 +85,7 @@
 
         </androidx.wear.widget.BoxInsetLayout>
 
-        <com.matejdro.wearmusiccenter.common.view.FourWayTouchLayout
+        <com.svartifoss.snfell.common.view.FourWayTouchLayout
             android:id="@+id/four_way_touch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -142,12 +144,11 @@
 
             <requestFocus />
 
-        </com.matejdro.wearmusiccenter.common.view.FourWayTouchLayout>
+        </com.svartifoss.snfell.common.view.FourWayTouchLayout>
 
         <!-- Tapping the middle of the screen toggles play/pause directly, regardless of how
              the four quadrants are configured - sits above FourWayTouchLayout but is small
-             enough to leave the quadrants reachable everywhere outside its bounds. No visual
-             feedback on purpose (haptic buzz already confirms the tap). -->
+             enough to leave the quadrants reachable everywhere outside its bounds. -->
         <View
             android:id="@+id/center_tap_zone"
             android:layout_width="@dimen/center_tap_zone_size"
@@ -156,6 +157,85 @@
             android:clickable="true"
             android:focusable="true"
             tools:ignore="KeyboardInaccessibleWidget" />
+
+        <!-- Instant "tap registered" pulse for center_tap_zone. The single-tap action itself
+             only fires after the double-tap timeout (~300ms, to disambiguate from a double
+             tap), which used to make play/pause feel dead for that beat - this ring flashes on
+             the initial touch-down instead, before either gesture is decided. Not clickable, so
+             touches pass straight through it. -->
+        <View
+            android:id="@+id/center_tap_pulse"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:alpha="0"
+            android:background="@drawable/center_tap_pulse" />
+
+        <!-- User-configurable mini buttons (see ScreenButtons in common). A *fixed* overlay
+             near the bottom of the screen, deliberately independent of the centered text block
+             so it never shifts with 1- vs 2-line titles (and never pushes the text off-center).
+             Ordered after center_tap_zone so its buttons win touch dispatch over both the
+             center play/pause zone and FourWayTouchLayout, but before the blur/volume/seek
+             overlays so those still cover it. Bottom margin is user-tunable from the phone's
+             developer settings (screen_buttons_bottom_offset); 42dp default clears the bottom
+             quadrant icon and keeps the full 3-button row inside a round screen's circle.
+             Row and unconfigured slots stay gone, so the screen is unchanged until the user
+             assigns something on the phone. -->
+        <LinearLayout
+            android:id="@+id/screen_buttons_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="42dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/screen_button_1"
+                android:layout_width="@dimen/screen_button_width"
+                android:layout_height="@dimen/screen_button_height"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/glass_pill_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="9dp"
+                android:visibility="gone"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/action_open_playlist"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/screen_button_2"
+                android:layout_width="@dimen/screen_button_width"
+                android:layout_height="@dimen/screen_button_height"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/glass_pill_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="9dp"
+                android:visibility="gone"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/action_like"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/screen_button_3"
+                android:layout_width="@dimen/screen_button_width"
+                android:layout_height="@dimen/screen_button_height"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/glass_pill_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="9dp"
+                android:visibility="gone"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/action_shuffle"
+                tools:visibility="visible" />
+
+        </LinearLayout>
 
         <!-- Full-screen acrylic-style blurred album art, shown behind the volume/seek rings so
              everything else on screen reads as hidden while the user is mid-adjustment - no
@@ -184,12 +264,12 @@
             android:background="@color/overlay_dim_color"
             android:visibility="gone" />
 
-        <com.matejdro.wearmusiccenter.watch.view.CircularProgressSeekBar
+        <com.svartifoss.snfell.watch.view.CircularProgressSeekBar
             android:id="@+id/seek_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.matejdro.wearmusiccenter.watch.view.CircularVolumeBar
+        <com.svartifoss.snfell.watch.view.CircularVolumeBar
             android:id="@+id/volume_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -215,7 +295,7 @@
             android:visibility="gone"
             tools:ignore="ContentDescription" />
 
-        <com.matejdro.wearmusiccenter.watch.view.OutlineTextView
+        <com.svartifoss.snfell.watch.view.OutlineTextView
             android:id="@+id/text_volume_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -228,7 +308,7 @@
             tools:text="65%"
             tools:visibility="visible" />
 
-        <com.matejdro.wearmusiccenter.watch.view.OutlineTextView
+        <com.svartifoss.snfell.watch.view.OutlineTextView
             android:id="@+id/text_seek_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -257,7 +337,7 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <com.matejdro.wearmusiccenter.watch.view.OutlineTextView
+            <com.svartifoss.snfell.watch.view.OutlineTextView
                 android:id="@+id/quick_action_panel_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -271,7 +351,7 @@
                 android:textStyle="bold"
                 tools:text="Title" />
 
-            <com.matejdro.wearmusiccenter.watch.view.OutlineTextView
+            <com.svartifoss.snfell.watch.view.OutlineTextView
                 android:id="@+id/quick_action_panel_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -347,6 +427,7 @@
                 android:paddingBottom="11dp">
 
                 <ImageView
+                    android:id="@+id/quick_action_up_next_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="10dp"
@@ -360,6 +441,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/quick_action_up_next_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/google_sans"
@@ -401,25 +483,12 @@
             android:id="@+id/notification_popup"
             layout="@layout/popup_notification" />
 
-        <!-- Black background overrides WearableDrawerView's default (the AppCompat theme's dark
-             gray colorBackground, ~#424242) - that gray was what showed through behind the
-             queue rows, not the rows themselves. -->
-        <com.matejdro.wearmusiccenter.watch.view.NoSwipeCloseDrawerView
-            android:id="@+id/action_drawer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:background="@android:color/black"
-            app:drawerContent="@+id/drawer_content">
+    </FrameLayout>
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@id/drawer_content"
-                android:name="com.matejdro.wearmusiccenter.watch.view.ActionsMenuFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/black" />
-
-        </com.matejdro.wearmusiccenter.watch.view.NoSwipeCloseDrawerView>
-
-    </androidx.wear.widget.drawer.WearableDrawerLayout>
+    <!-- Outside content_frame so the ambient burn-in jiggle never moves it. -->
+    <include
+        android:id="@+id/first_run_hints"
+        layout="@layout/overlay_first_run_hints"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

@@ -1,31 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 20dp padding + 36dp icon frame = text at 56dp, matching pref_category_header's indent.
+     RelativeLayout so the icon can anchor to the *top* of the text block (visually next to the
+     title) instead of floating centered between title and summary, while the block itself
+     stays vertically centered in the row. widget_frame hosts optional per-preference widgets
+     (e.g. the accent color dot - see ColorDotPreference). -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="56dp"
     android:background="?selectableItemBackground"
-    android:paddingStart="56dp"
+    android:paddingStart="20dp"
     android:paddingEnd="20dp"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp"
-    android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
-    <TextView
-        android:id="@android:id/title"
+    <FrameLayout
+        android:id="@android:id/widget_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true" />
+
+    <LinearLayout
+        android:id="@+id/pref_text_block"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="?android:attr/textColorPrimary"
-        android:fontFamily="@font/google_sans" />
+        android:layout_centerVertical="true"
+        android:layout_marginStart="36dp"
+        android:layout_toStartOf="@android:id/widget_frame"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@android:id/summary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="13sp"
-        android:textColor="@color/lyra_pref_summary"
-        android:fontFamily="@font/google_sans"
-        android:maxLines="4" />
+        <TextView
+            android:id="@android:id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-3dp"
+            android:textSize="15sp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:fontFamily="@font/google_sans" />
 
-</LinearLayout>
+        <TextView
+            android:id="@android:id/summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="0dp"
+            android:textSize="13sp"
+            android:textColor="@color/lyra_pref_summary_selector"
+            android:fontFamily="@font/google_sans"
+            android:maxLines="4" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignTop="@+id/pref_text_block"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="4dp"
+        android:tint="@color/lyra_text_secondary"
+        tools:ignore="ContentDescription,UseAppTint"
+        tools:src="@drawable/ic_palette" />
+
+</RelativeLayout>

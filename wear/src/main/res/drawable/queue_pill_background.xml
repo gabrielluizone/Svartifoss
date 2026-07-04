@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Same subtle lifted-dark fill as the Up Next bubble, so inactive queue rows read as gentle
-     pills against the now-black drawer instead of being invisible (pure black on black). Large
-     radius clamps to half the row height for a true cylinder/stadium shape. -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="@color/queue_pill_fill" />
-    <corners android:radius="999dp" />
-</shape>

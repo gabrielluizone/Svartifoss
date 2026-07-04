@@ -11,5 +11,6 @@
     <!-- Sage suave no OLED, sem forçar contraste -->
     <color name="lyra_accent">@color/lyra_sage</color>
     <color name="lyra_accent_highlight">#2087A89F</color>
+    <color name="lyra_ripple">#29FFFFFF</color>
     <color name="watch_background">#202124</color>
 </resources>

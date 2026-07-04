@@ -6,6 +6,12 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="action_icon_size">24dp</dimen>
+    <!-- paddingEnd for icon-bearing gesture buttons: paddingStart (16dp) + iconSize (24dp) +
+         iconPadding (12dp). MaterialButton centers the TEXT inside the area left over after
+         reserving iconSize+iconPadding at the start, so padding the end by exactly that same
+         amount lands the text's center on the button's center - the icon then hangs 12dp to
+         its left. Keep in sync with action_icon_size and LyraGestureButton's iconPadding. -->
+    <dimen name="lyra_icon_button_padding_end">52dp</dimen>
     <dimen name="mini_player_height">80dp</dimen>
     <dimen name="bottom_nav_height">56dp</dimen>
 </resources>

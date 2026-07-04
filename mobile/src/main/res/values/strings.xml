@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Lyra Control</string>
-    <string name="app_name_short">Lyra Control</string>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
 
     <!-- Appearance -->
     <string name="category_appearance">Appearance</string>
@@ -14,8 +14,16 @@
     <string name="dev_mode_unlocked">Developer mode enabled ✦</string>
     <string name="dev_mode_clicks_remaining">%1$d more taps to unlock developer mode</string>
     <string name="dev_build_info">Build info</string>
-    <string name="easter_egg_title">✦ Lyra ✦</string>
-    <string name="easter_egg_message">You found the Lyra constellation.\n\nLyra — the lyre of Orpheus,\ncast into the sky as a reminder\nthat music outlasts everything.\n\n♪ Built with care. ♪</string>
+    <string name="dev_sync_watch">Force sync watch settings</string>
+    <string name="dev_sync_watch_description">Push all current settings to the paired watch immediately</string>
+    <string name="dev_sync_watch_done">Settings synced to watch</string>
+    <string name="dev_copy_debug_info">Copy debug info</string>
+    <string name="dev_copy_debug_info_description">Copy build and device details to the clipboard</string>
+    <string name="dev_copy_debug_info_done">Debug info copied</string>
+    <string name="dev_build_info_dialog_title">Build info</string>
+    <string name="pref_reset_default">Reset to default</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">You found the hidden waterfall.\n\nSvartifoss — black basalt columns\nframing a cascade in Iceland,\na reminder that music flows\nlike water through stone.\n\n♪ Built with care. ♪</string>
     <string name="easter_egg_ok">Close</string>
 
     <string name="nav_tutorial">Guide</string>
@@ -25,8 +33,8 @@
     <string name="nav_settings">Settings</string>
 
     <!-- Guide / tutorial tab -->
-    <string name="tutorial_header">How to use Lyra</string>
-    <string name="tutorial_intro">Lyra turns your watch into a remote for the music playing on your phone. Here\'s everything you can do from your wrist.</string>
+    <string name="tutorial_header">How to use Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss turns your watch into a remote for the music playing on your phone. Here\'s everything you can do from your wrist.</string>
 
     <string name="tutorial_taps_title">Tap the screen zones</string>
     <string name="tutorial_taps_desc">The watch screen is split into four zones — top, bottom, left and right. Tapping a zone runs the action you assigned to it. By default the left zone plays or pauses, the right skips to the next track, and the top and bottom change the volume.</string>
@@ -40,14 +48,19 @@
     <string name="tutorial_rotary_title">Rotating crown</string>
     <string name="tutorial_rotary_desc">Turn the rotating crown or bezel to change the volume. Prefer to scrub through the song instead? Turn on “Seek with rotary crown” in Settings.</string>
 
-    <string name="tutorial_swipe_up_title">Swipe up</string>
-    <string name="tutorial_swipe_up_desc">Swipe up on the now-playing screen to open the actions menu. You can switch this to open the playback queue in Settings.</string>
+    <string name="tutorial_swipe_up_title">Swipe up, down, left &amp; right</string>
+    <string name="tutorial_swipe_up_desc">Swipe up, down or left on the now-playing screen can each be configured to open anything — the actions menu, the playback queue, skip tracks, your playlists, and more. Configure each one in Playing controls / Stopped controls, under \"Swipe gestures\". By default, swiping up opens the actions menu and the others do nothing until you assign them. Swipe right is left alone — that\'s the universal Wear OS gesture to exit the app.</string>
+    <string name="tutorial_yt_music_title">YouTube Music shortcuts</string>
+    <string name="tutorial_yt_music_desc">Assign \"Play liked songs\", \"Play liked songs, shuffled\" or \"My playlists\" to any button, gesture or swipe to jump straight into your music without touching the phone. \"Search history\" remembers your recent searches on the watch — press and hold one to delete it.</string>
 
     <string name="tutorial_exit_title">Swipe to exit</string>
     <string name="tutorial_exit_desc">Swipe from the left edge to leave the player. It can pause playback automatically when you exit — enable it in Settings.</string>
 
     <string name="tutorial_tile_title">Quick-control Tile</string>
-    <string name="tutorial_tile_desc">Swipe the watch face sideways to the Lyra tile for instant play, pause and skip without opening the app.</string>
+    <string name="tutorial_tile_desc">Swipe the watch face sideways to the Svartifoss tile for instant play, pause and skip without opening the app.</string>
+
+    <string name="tutorial_complication_title">Watch face complication</string>
+    <string name="tutorial_complication_desc">Add the Svartifoss album art complication to your watch face to see the current cover at a glance. Tap it to open the player.</string>
 
     <string name="tutorial_system_title">System media controls</string>
     <string name="tutorial_system_desc">The current track also shows up in your watch\'s own media controls and recent apps, so you can control playback from there as well.</string>
@@ -71,29 +84,54 @@
     <string name="action_like">Like</string>
     <string name="action_shuffle">Shuffle</string>
     <string name="action_repeat">Repeat</string>
+    <string name="action_repeat_one">Repeat one</string>
+    <string name="action_search">Search music</string>
     <string name="group_playback_controls">Playback controls</string>
     <string name="pick_action">Pick action</string>
+    <string name="action_opens_more">Multiple options</string>
     <string name="action_volume_up">Increase volume</string>
     <string name="volume_down">Decrease volume</string>
     <string name="group_volume_controls">Volume controls</string>
     <string name="no_watch_detected">No watch detected</string>
-    <string name="connection_instructions">Open Lyra Player on the watch to initiate connection</string>
+    <string name="connection_instructions">Open Svartifoss on the watch to initiate connection</string>
     <string name="playing_controls">Playing controls</string>
     <string name="stopped_controls">Stopped controls</string>
     <string name="actions_menu">Actions menu</string>
     <string name="on_screen_buttons">ON-SCREEN BUTTONS</string>
     <string name="physical_buttons">PHYSICAL BUTTONS</string>
     <string name="tap_a_zone_to_configure">Tap a zone on the watch to assign an action</string>
+
+    <string name="swipe_gestures">SWIPE GESTURES</string>
+    <string name="tap_a_swipe_to_configure">Tap a direction to choose what it opens</string>
+    <string name="swipe_gesture_up">Swipe up</string>
+    <string name="swipe_gesture_down">Swipe down</string>
+    <string name="swipe_gesture_left">Swipe left</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Up</string>
+    <string name="swipe_gesture_label_down">Down</string>
+    <string name="swipe_gesture_label_left">Left</string>
+
+    <string name="screen_buttons">MINI BUTTONS</string>
+    <string name="tap_a_screen_button_to_configure">Up to three visible buttons near the bottom of the watch screen — tap a slot to assign an action</string>
+    <string name="screen_button_1">Mini button 1 (left)</string>
+    <string name="screen_button_2">Mini button 2 (middle)</string>
+    <string name="screen_button_3">Mini button 3 (right)</string>
+    <string name="screen_button_label_1">Button 1</string>
+    <string name="screen_button_label_2">Button 2</string>
+    <string name="screen_button_label_3">Button 3</string>
     <string name="no_action">No action</string>
     <string name="gesture_single_press">Single press</string>
     <string name="gesture_double_press">Double press</string>
     <string name="gesture_long_press">Long press</string>
+    <string name="gesture_swipe_action">Action</string>
     <string name="start_playback">Start playback</string>
     <string name="uninstalled_app">Uninstalled app</string>
 
     <string name="play_app">Play %1$s</string>
     <string name="tasker_task">Tasker Task</string>
     <string name="icon_selection_title">Icon selection</string>
+    <string name="icon_selection_gallery">From gallery</string>
     <string name="icon_selection_no_icon_pack">This feature allows you to pick custom icon for your action from
         installed icon pack.\n\nUnfortunately it appears you do not have any icon packs installed.</string>
     <string name="icon_selection_no_storage_permission">This feature allows you to pick custom icon for your action from
@@ -105,8 +143,25 @@
     <string name="open_playlist_menu">Show current playlist</string>
     <string name="misc_settings">Misc settings</string>
 
+    <string name="category_backup">Backup</string>
+    <string name="export_config">Export configuration</string>
+    <string name="export_config_description">Save your button mappings, action list and watch settings to a file</string>
+    <string name="import_config">Import configuration</string>
+    <string name="import_config_description">Restore button mappings, action list and watch settings from a file</string>
+    <string name="export_config_done">Configuration exported</string>
+    <string name="export_config_failed">Couldn\'t export configuration</string>
+    <string name="import_config_done_title">Import successful</string>
+    <string name="import_config_done_message">Svartifoss needs to restart to apply the imported configuration.</string>
+    <string name="import_config_failed">Couldn\'t import configuration — the file may be invalid or from an incompatible version</string>
+    <string name="action_restart_now">Restart now</string>
+
     <string name="category_about">About</string>
     <string name="category_music_screen">Music screen</string>
+    <string name="category_watch_screen">Watch screen</string>
+    <string name="category_mini_buttons">Mini buttons</string>
+    <string name="category_gestures">Gestures &amp; input</string>
+    <string name="setting_overlay_blur_radius">Overlay blur</string>
+    <string name="setting_overlay_blur_radius_description">Blur strength (px) of the frosted backdrop behind the volume/seek rings and the quick actions panel — independent from the album art background blur</string>
     <string name="category_action_list">Action List</string>
     <string name="category_automation">Automation</string>
     <string name="installed_version">Installed version</string>
@@ -121,14 +176,18 @@
     <string name="tap_to_force_stop">Tap to force stop</string>
     <string name="error_notification_access">No notification access. Check phone.</string>
     <string name="error_notifications">Error notifications</string>
-    <string name="notification_access_notification_title">Lyra Control needs notification access</string>
-    <string name="notification_access_notification_title_description">Tap this notification and check Lyra Control to fix the issue</string>
+    <string name="notification_access_notification_title">Svartifoss needs notification access</string>
+    <string name="notification_access_notification_title_description">Tap this notification and check Svartifoss to fix the issue</string>
     <string name="error_service_not_enabled">Service not enabled</string>
-    <string name="error_service_not_enabled_description">Notification service is not enabled. You must enable it to get this app to work!</string>
+    <string name="error_service_not_enabled_description">Svartifoss needs notification access to detect which app is currently playing music on your phone and control it from your watch. Android only exposes that information to apps with notification access enabled — Svartifoss doesn\'t read the content of your notifications, it only uses this permission to find the active media session.\n\nTap \"Open Settings\" and enable Svartifoss under notification access.</string>
     <string name="action_open_settings">Open Settings</string>
+    <string name="error_watch_app_not_installed">Watch app not installed</string>
+    <string name="error_watch_app_not_installed_description">The Svartifoss watch app isn\'t installed on your paired watch yet. Since this app isn\'t on the Play Store, you\'ll need to sideload it manually — grab the latest APK from the project\'s GitHub releases page.</string>
+    <string name="action_open_github">Open GitHub</string>
+    <string name="github_repo_url" translatable="false">https://github.com/gabrielluizone/Svartifoss</string>
     <string name="required_permission">Required permission</string>
     <string name="setting_pause_on_swipe_exit">Pause playback on swipe exit</string>
-    <string name="setting_pause_on_swipe_exit_description">Automatically pause any playback when exiting Lyra Player on the watch via swipe-left gesture.\n\nExiting via power button is not affected and it will never auto-pause.</string>
+    <string name="setting_pause_on_swipe_exit_description">Automatically pause any playback when exiting Svartifoss on the watch via swipe-left gesture.\n\nExiting via power button is not affected and it will never auto-pause.</string>
     <string name="setting_rotating_crown_off_period">Rotary input screen on delay</string>
     <string name="setting_rotating_crown_off_period_description">Rotating inputs (for example rotating crowns) can be oversensitive on some devices. To prevent accidental volume changes, rotary input will be disabled for <![CDATA[<b>%1$s milliseconds</b>]]> after you turn the screen on.</string>
     <string name="setting_rotary_seek">Seek with rotary crown</string>
@@ -139,14 +198,136 @@
     <string name="setting_disable_ambient_physical_double_click_description">Some watches have buggy buttons where single click of the physical button in ambient mode sometimes gets registered as double click.\n\nIf you experience this, you can enable this option to completely disable double clicks in ambient mode (e.g. clicking twice will just activate single click action). Clicking button twice when watch is active is not affected.</string>
     <string name="setting_haptic_feedback">Haptic feedback</string>
     <string name="setting_haptic_feedback_description">Vibrate the watch when pressing buttons.</string>
-    <string name="setting_auto_start">Open Lyra Player automatically</string>
-    <string name="setting_auto_start_description">Automatically open Lyra Player on the watch when music playback is started on the phone.</string>
+    <string name="setting_auto_start">Open Svartifoss automatically</string>
+    <string name="setting_auto_start_description">Automatically open Svartifoss on the watch when music playback is started on the phone.</string>
     <string name="setting_auto_start_apps_blacklist">Auto-start apps</string>
-    <string name="setting_auto_start_apps_blacklist_description">List of media apps that can auto-start Lyra Player</string>
-    <string name="setting_swipe_up_for_queue">Open queue with swipe up gesture</string>
-    <string name="setting_swipe_up_for_queue_description">When enabled, swiping up will display playback queue instead of actions menu. You can still open actions menu by assigning "Open actions menu" action to any button.</string>
+    <string name="setting_auto_start_apps_blacklist_description">List of media apps that can auto-start Svartifoss</string>
     <string name="setting_dim_album_art">Dim the album art</string>
     <string name="setting_dim_album_art_description">When enabled, displayed album art will be dimmed, allowing for better text visibility.</string>
+    <string name="setting_album_art_style">Album art style</string>
+    <string name="setting_album_art_style_description">Choose how the now-playing background looks on the watch.</string>
+    <string name="setting_album_art_blur_radius">Blur intensity</string>
+    <string name="setting_album_art_blur_radius_description">Strength of the full-screen blur when album art style is set to Blur. Currently <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Dim strength</string>
+    <string name="setting_album_art_dim_strength_description">How strongly the album art is darkened for text readability. Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_ambient_album_art_opacity">Ambient album art opacity</string>
+    <string name="setting_ambient_album_art_opacity_description">How visible the album art remains in ambient mode. Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Volume/seek overlay timeout</string>
+    <string name="setting_volume_overlay_timeout_description">How long volume and seek overlays stay on screen after adjustment. Currently <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Rotary dead zone</string>
+    <string name="setting_rotary_deadzone_description">Minimum crown movement before volume or seek changes apply. Helps prevent accidental adjustments. Currently <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Wear experience</string>
+    <string name="setting_swipe_gestures_hint">Swipe gestures</string>
+    <string name="setting_swipe_gestures_hint_description">Swipe up/down/left on the now-playing screen can each open any action - configure them in Playing controls / Stopped controls, under \"Swipe gestures\". Swipe right stays reserved for exiting the app.</string>
+    <string name="setting_screen_buttons_hint">Mini buttons</string>
+    <string name="setting_screen_buttons_hint_description">Up to three visible buttons near the bottom of the now-playing screen, each with a tap and a long-press action - configure them in Playing controls / Stopped controls, under \"Mini buttons\". Try the \"Open specific playlist\" action to jump straight into a playlist.</string>
+    <string name="dev_screen_buttons_offset">Mini buttons position</string>
+    <string name="dev_screen_buttons_offset_description">Preferred distance in dp between the bottom of the watch screen and the mini buttons (default 42). The row still auto-adjusts away from long titles on its own.</string>
+    <string name="setting_screen_buttons_curve">Mini buttons curve</string>
+    <string name="setting_screen_buttons_bg">Mini buttons background</string>
+    <string name="setting_screen_buttons_color">Mini buttons color</string>
+    <string name="setting_screen_buttons_custom_color">Mini buttons custom color</string>
+    <string name="setting_screen_buttons_custom_color_description">Tap to pick the color used when \"Mini buttons color\" is set to Custom</string>
+    <string name="setting_screen_buttons_desaturated">Desaturated mini buttons</string>
+    <string name="setting_screen_buttons_desaturated_description">Soften the album-based color — only applies when \"Mini buttons color\" is set to Album color</string>
+
+    <string name="quick_panel_row_title">Quick actions panel</string>
+    <string name="quick_panel_config_hint">These are the buttons on the panel opened by double-tapping the center of the watch screen. Tap a row to choose its action (\"None\" hides it); long-press to restore the default.</string>
+    <string name="quick_panel_slot_1">Button 1</string>
+    <string name="quick_panel_slot_2">Button 2</string>
+    <string name="quick_panel_slot_3">Button 3</string>
+    <string name="quick_panel_slot_long">Long button</string>
+    <string name="quick_panel_slot_default">%1$s (default)</string>
+    <string name="quick_panel_slot_hidden">Hidden</string>
+    <string name="quick_panel_default_like">Like</string>
+    <string name="quick_panel_default_shuffle">Shuffle</string>
+    <string name="quick_panel_default_repeat">Repeat</string>
+    <string name="quick_panel_default_up_next">Up Next</string>
+    <string name="setting_wear_center_long_press_queue">Long-press center for queue</string>
+    <string name="setting_wear_center_long_press_queue_description">Long-press the center of the now-playing screen to open the playback queue.</string>
+    <string name="setting_wear_screen_theme">Screen theme</string>
+    <string name="setting_wear_screen_theme_description">Visual style of the now-playing screen on the watch.</string>
+    <string name="setting_wear_dynamic_accent">Dynamic accent on watch</string>
+    <string name="setting_wear_dynamic_accent_description">Adapt the watch accent color (seek ring, artist name) to the current album art.</string>
+    <string name="setting_wear_album_art_fade">Album art fade transition</string>
+    <string name="setting_wear_album_art_fade_description">Smoothly fade album art when the track changes.</string>
+    <string-array name="wear_screen_theme_entries">
+        <item>Default</item>
+        <item>Minimal</item>
+        <item>Compact</item>
+        <item>Cinema</item>
+    </string-array>
+    <string-array name="wear_screen_theme_values">
+        <item>default</item>
+        <item>minimal</item>
+        <item>compact</item>
+        <item>cinema</item>
+    </string-array>
+    <string name="setting_wear_track_time_mode">Track time display</string>
+    <string name="setting_wear_track_time_mode_description">When the track position (e.g. 1:23 / 3:45) is shown on the now-playing screen.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Always</item>
+        <item>Only while playing</item>
+        <item>Only while paused</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+    <string-array name="screen_buttons_curve_entries">
+        <item>Straight row</item>
+        <item>Arc (upright buttons)</item>
+        <item>Soft curve (slight tilt)</item>
+        <item>Curved (full tilt)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_soft</item>
+        <item>curved</item>
+    </string-array>
+
+    <string-array name="screen_buttons_bg_entries">
+        <item>Glass (translucent)</item>
+        <item>Solid</item>
+        <item>Transparent (no background)</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>solid</item>
+        <item>transparent</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Neutral</item>
+        <item>Album color</item>
+        <item>Custom color</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Full cover</item>
+        <item>Blurred background</item>
+        <item>Black &amp; white</item>
+        <item>Blurred black &amp; white</item>
+        <item>Hidden (solid black)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>hidden</item>
+    </string-array>
 
     <string-array name="theme_entries">
         <item>@string/theme_light</item>
@@ -168,14 +349,14 @@
     <string-array name="auto_start_modes_descriptions">
         <item>Disabled</item>
         <item>Show music watchface icon (only for Wear 3.0)</item>
-        <item>Open Lyra Player</item>
+        <item>Open Svartifoss</item>
     </string-array>
 
     <string name="setting_close_timeout">Close timeout</string>
-    <string name="setting_close_timeout_description">Lyra Player will automatically close itself when there is no music playing for <![CDATA[<b>%1$s seconds</b>]]>. Feature is disabled when timeout is set to 0 seconds. Please not that, to save battery, this option may not be too accurate at times and it might delay the closing for up to a minute.</string>
+    <string name="setting_close_timeout_description">Svartifoss will automatically close itself when there is no music playing for <![CDATA[<b>%1$s seconds</b>]]>. Feature is disabled when timeout is set to 0 seconds. Please not that, to save battery, this option may not be too accurate at times and it might delay the closing for up to a minute.</string>
     <string name="category_notifications">Notification popup</string>
     <string name="setting_enable_notifications">Show notification popup</string>
-    <string name="setting_enable_notifications_description">This feature requires another app to manage notifications (Vibration Center for Wear).\n\nWhenever Vibration Center vibrates the watch, Lyra Player will display popup of the notification text, allowing you to glance at notification quickly without leaving Lyra Player.</string>
+    <string name="setting_enable_notifications_description">This feature requires another app to manage notifications (Vibration Center for Wear).\n\nWhenever Vibration Center vibrates the watch, Svartifoss will display popup of the notification text, allowing you to glance at notification quickly without leaving Svartifoss.</string>
     <string name="setting_notification_timeout">Notification popup timeout</string>
     <string name="setting_notification_timeout_description">Notification popup will automatically close itself after <![CDATA[<b>%1$s seconds</b>]]>. Enter 0 to disable auto-close.</string>
     <string name="app_required">App required</string>
@@ -188,6 +369,7 @@
     <string name="please_wait">Please wait</string>
 
     <string name="error_playlist_not_supported">Not supported by this media app</string>
+    <string name="error_search_no_results">No results found</string>
     <string name="seconds_to_skip">Seconds to skip:</string>
     <string name="seconds_to_reverse">Seconds to reverse:</string>
 
@@ -208,7 +390,40 @@
     <string name="color_picker_invalid">Invalid color code</string>
     <string name="color_picker_current">Current: %s</string>
 
+    <string name="drawer_version_format">Version %1$s</string>
+    <string name="drawer_tagline">Companion App for Wear OS</string>
+    <string name="drawer_about_heading">About</string>
+    <string name="drawer_about_summary">Svartifoss lets you control music on your phone from your Wear OS watch — with a fully customizable remote tailored to your device.</string>
+    <string name="drawer_name_heading">The name</string>
+    <string name="drawer_name_meaning">Svartifoss means “Black Falls” in Icelandic — named after the waterfall in Vatnajökull National Park, where dark basalt columns frame a narrow cascade. Like water over stone, music flows through the app.</string>
+    <string name="drawer_sync_heading">Sync</string>
+    <string name="drawer_sync_summary">Watch settings are configured here on the phone and synced automatically to your paired watch.</string>
     <string name="download_album_art">Download cover art</string>
     <string name="album_art_saved">Cover art saved to gallery</string>
     <string name="album_art_save_error">Failed to save cover art</string>
+
+    <string name="action_play_liked_songs">Play liked songs (YT Music)</string>
+    <string name="action_my_playlists">My playlists</string>
+    <string name="action_play_specific_playlist">Open specific playlist</string>
+    <string name="playlist_shortcut_pick_title">Choose a playlist</string>
+    <string name="playlist_shortcut_pick_empty">No playlists saved yet — add one below, then tap it to pick it</string>
+    <string name="playlist_shortcuts_empty">No playlists yet — add them in the phone app settings</string>
+    <string name="setting_playlist_shortcuts">Watch playlists (YT Music)</string>
+    <string name="setting_playlist_shortcuts_description">Manage the playlists shown by the watch\'s My playlists action</string>
+    <string name="playlist_shortcuts_help">Add a name and the playlist share link (music.youtube.com/…). Picking one on the watch starts playing it on the phone. Tip: liked songs already have their own dedicated action.</string>
+    <string name="playlist_shortcuts_add">Add playlist</string>
+    <string name="playlist_shortcuts_edit">Edit playlist</string>
+    <string name="playlist_shortcut_name_hint">Name</string>
+    <string name="playlist_shortcut_link_hint">Playlist link</string>
+    <string name="playlist_shortcut_shuffle">Play shuffled</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_link">Link</string>
+    <string name="playlist_badge_shuffle">Shuffle</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcut_delete">Delete</string>
+    <string name="playlist_shortcuts_none">No playlists added yet</string>
+
+    <string name="action_play_liked_songs_shuffled">Play liked songs, shuffled (YT Music)</string>
+    <string name="action_search_history">Search history</string>
+    <string name="search_history_empty">No recent searches yet</string>
 </resources>

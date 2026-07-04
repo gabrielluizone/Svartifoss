@@ -9,13 +9,15 @@
         <item name="colorSurface">@color/lyra_surface</item>
         <item name="colorOnSurface">@color/lyra_on_surface</item>
         <item name="android:colorBackground">@color/lyra_background</item>
-        <item name="android:textColorPrimary">@color/lyra_on_surface</item>
+        <item name="android:textColorPrimary">@color/lyra_text_primary_selector</item>
         <item name="android:textColorSecondary">@color/lyra_text_secondary</item>
         <!-- Ripple e controles: Sage em vez de roxo -->
         <item name="colorControlNormal">@color/lyra_on_surface</item>
         <item name="colorControlActivated">@color/lyra_accent</item>
-        <item name="colorControlHighlight">@color/lyra_accent_highlight</item>
+        <item name="colorControlHighlight">@color/lyra_ripple</item>
         <item name="colorSwitchThumbNormal">@color/lyra_stone</item>
+        <item name="buttonBarButtonStyle">@style/LyraDialogButton</item>
+        <item name="alertDialogTheme">@style/LyraAlertDialogTheme</item>
         <!-- Status bar adaptável ao modo -->
         <item name="android:statusBarColor">@color/lyra_background</item>
         <item name="android:windowLightStatusBar">@bool/is_light_mode</item>
@@ -43,8 +45,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/google_sans</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical|start</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -63,11 +64,26 @@
         <item name="colorOnSurface">@color/lyra_on_surface</item>
         <item name="android:colorBackground">@color/lyra_surface</item>
         <item name="android:windowBackground">@drawable/dialog_bg_lyra</item>
-        <item name="android:textColorPrimary">@color/lyra_on_surface</item>
+        <item name="android:textColorPrimary">@color/lyra_text_primary_selector</item>
         <item name="android:textColorSecondary">@color/lyra_text_secondary</item>
         <item name="colorControlNormal">@color/lyra_on_surface</item>
         <item name="colorControlActivated">@color/lyra_accent</item>
-        <item name="colorControlHighlight">@color/lyra_accent_highlight</item>
+        <item name="colorControlHighlight">@color/lyra_ripple</item>
+        <item name="buttonBarButtonStyle">@style/LyraDialogButton</item>
+        <item name="alertDialogTheme">@style/LyraAlertDialogTheme</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="fontFamily">@font/google_sans</item>
+    </style>
+
+    <!-- AlertDialog.Builder dialogs (playlist add, permission prompts, ...) don't inflate our
+         popup layouts, so the Lyra look has to come from the dialog theme itself: 12dp window
+         corners and the metric-fixed bar buttons. Colors that must follow the runtime accent
+         are still applied per-dialog after show(). -->
+    <style name="LyraAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_bg_lyra</item>
+        <item name="buttonBarPositiveButtonStyle">@style/LyraDialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/LyraDialogButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/LyraDialogButton</item>
         <item name="android:fontFamily">@font/google_sans</item>
         <item name="fontFamily">@font/google_sans</item>
     </style>
@@ -89,7 +105,14 @@
         <item name="fontFamily">@font/google_sans</item>
     </style>
 
-    <!-- Gesture-picker action button: neutral text, subtle outline, left-aligned with icon -->
+    <!-- Gesture-picker action button: neutral text, subtle outline. Icon+text anchor to the
+         start edge (list-row style) instead of centering: MaterialButton's centered-icon math
+         (iconGravity=textStart + gravity=center) re-derives the icon offset from the text
+         width, so rows with different-length titles started at ragged x positions and the
+         icon could keep a stale offset after a text-only rebind. With start-aligned text the
+         icon is simply pinned at paddingStart, so every row lines up identically.
+         iconTint=@null is load-bearing: the OutlinedButton default is colorPrimary (sage) and
+         would override the manual PorterDuff tints the fragments apply to action icons. -->
     <style name="LyraGestureButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textAllCaps">false</item>
@@ -98,9 +121,29 @@
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0</item>
         <item name="strokeColor">@color/lyra_divider</item>
-        <item name="rippleColor">@color/lyra_accent_highlight</item>
+        <item name="rippleColor">@color/lyra_ripple</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">12dp</item>
+        <item name="iconSize">@dimen/action_icon_size</item>
+        <item name="iconTint">@null</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
+        <!-- Same google_sans metric fix as LyraDialogButton: keeps the label vertically
+             centered in the 52dp row instead of riding ~3dp high. -->
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!-- Dialog bar buttons (OK/Cancel/...): the stock TextButton.Dialog ripple derives from
+         colorPrimary (sage) at inflation time, so it could never follow a runtime accent change -
+         press feedback is theme-neutral instead, like every other pressed surface.
+         includeFontPadding=false: google_sans has wildly asymmetric extreme metrics
+         (winDescent ~1.08em vs winAscent ~1.32em on caps reaching only 0.72em), so the default
+         font-padding line box floats the visible text ~0.2em above the button's center; without
+         it the box is built from real ascent/descent and the text sits centered like the system
+         dialogs'. -->
+    <style name="LyraDialogButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="rippleColor">@color/lyra_ripple</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
 </resources>

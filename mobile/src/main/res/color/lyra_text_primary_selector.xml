@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- android:textColorPrimary override for this app's theme (see styles.xml). The plain color it
+     used to point to had no disabled variant, so a Preference row disabled by a dependency (e.g.
+     a companion switch) never actually looked disabled - title text stayed full-strength. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/lyra_text_secondary" android:state_enabled="false" />
+    <item android:color="@color/lyra_on_surface" />
+</selector>

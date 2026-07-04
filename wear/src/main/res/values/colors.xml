@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Wear-only theme accent, overrides the shared (orange) common.accent for this module -->
+    <!-- Wear-only theme accent, overrides the shared (orange) common.accent for this module.
+         Mirror of WatchTheme.ACCENT_DEFAULT - keep both in sync. -->
     <color name="theme_accent">#87A89F</color>
 
     <color name="music_screen_volume_bar_foreground_color">#87A89F</color>
@@ -12,14 +13,21 @@
          keep white text legible without hiding the blur underneath. -->
     <color name="overlay_dim_color">#4D000000</color>
 
-    <!-- Dark "acrylic" glass surfaces, used by glass_card_background and friends -->
+    <!-- Dark "acrylic" glass surfaces, used by glass_pill_background and friends -->
     <color name="glass_surface_fill">#B3161619</color>
     <color name="glass_surface_border">#33FFFFFF</color>
     <color name="glass_surface_highlight">#14FFFFFF</color>
     <color name="glass_surface_subtitle_text">#B3FFFFFF</color>
     <!-- Opaque (not translucent) lifted dark for queue rows / Up Next bubble, so they read as
-         gentle pills on a pure-black drawer without any see-through gray. -->
+         gentle pills on a pure-black drawer without any see-through gray.
+         Mirror of WatchTheme.SURFACE_DARK - keep both in sync. -->
     <color name="queue_pill_fill">#1E1E20</color>
     <color name="album_art_scrim_top">#00000000</color>
     <color name="album_art_scrim_bottom">#CC000000</color>
+
+    <color name="white">#FFFFFF</color>
+
+    <!-- Wear-only launcher icon background: overrides the shared white from common, so the
+         watch launcher shows a soft gray behind the dark glyph. The phone icon stays white. -->
+    <color name="ic_launcher_background">#DEDEDE</color>
 </resources>

@@ -1,14 +1,12 @@
 <resources>
-    <string name="app_name_short">Lyra Player</string>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
 
     <!-- Quick-control Tile -->
-    <string name="tile_label">Lyra Music</string>
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="complication_album_art_label">Now playing cover</string>
+    <string name="complication_no_music">Nothing playing</string>
     <string name="tile_nothing_playing">Nothing playing</string>
 
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
     <string name="no_phone">No phone connected</string>
     <string name="playback_stopped">Playback Stopped</string>
     <string name="error">ERROR</string>
@@ -17,10 +15,37 @@
     <string name="back_button">Back</string>
     <string name="turn_bezel_cw">Turn bezel CW</string>
     <string name="turn_bezel_ccw">Turn bezel CCW</string>
-    <string name="playback_time_format">%1$s / %2$s</string>
-    <string name="volume_percent_format">%1$d%%</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">Like</string>
     <string name="quick_action_shuffle">Shuffle</string>
     <string name="quick_action_repeat">Repeat</string>
     <string name="quick_action_up_next">Up Next</string>
+    <string name="voice_search_prompt">Search music</string>
+    <string name="queue_empty">No queue available</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">How to use</string>
+    <string name="hint_edges">Edges — tap for the shown actions</string>
+    <string name="hint_center">Center — play/pause\nDouble-tap — quick actions</string>
+    <string name="hint_swipe_up">Swipe up — actions menu</string>
+    <string name="hint_crown">Crown — volume</string>
+    <string name="hint_dismiss">Got it</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Play</string>
+    <string name="action_name_pause">Pause</string>
+    <string name="action_name_skip_prev">Previous track</string>
+    <string name="action_name_skip_next">Next track</string>
+    <string name="action_name_volume_up">Volume up</string>
+    <string name="action_name_volume_down">Volume down</string>
+    <string name="action_name_open_menu">Open menu</string>
+    <string name="action_name_skip_30">Skip 30 seconds</string>
+    <string name="action_name_reverse_30">Rewind 30 seconds</string>
+    <string name="action_name_play_pause">Play/Pause</string>
+    <string name="action_name_stop">Stop</string>
+    <string name="action_name_restart">Restart track</string>
+    <string name="action_name_mute">Mute</string>
+    <string name="action_name_search">Search</string>
 </resources>

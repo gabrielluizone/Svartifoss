@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Fallback tap-feedback color (TriangleRippleDrawable) before a dynamic accent is
+         available - must be fully opaque, since the drawable bakes its own peak alpha into the
+         flash/ring animation and would otherwise double-dim whatever's passed in here. -->
     <color name="music_screen_ripple">#FFFFFFFF</color>
 
     <color name="primary">#87A89F</color>
     <color name="primary_dark">#6B9088</color>
     <color name="accent">#87A89F</color>
+
+    <color name="ic_launcher_background">#FFFFFF</color>
 </resources>

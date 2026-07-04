@@ -2,9 +2,12 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="24.0"
-    android:viewportHeight="24.0">
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M6,6h12v12H6z" />
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <!-- Material Symbols stop (outline); the symbol set uses a 0..-960 Y range, hence the translate. -->
+    <group android:translateY="960">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M320,-640v320,-320Zm-80,400v-480h480v480H240Zm80,-80h320v-320H320v320Z" />
+    </group>
 </vector>
