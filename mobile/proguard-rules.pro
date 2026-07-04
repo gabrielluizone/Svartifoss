@@ -33,7 +33,7 @@
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception
 
--keepclassmembers public class * extends com.matejdro.wearmusiccenter.actions.PhoneAction {
+-keepclassmembers public class * extends com.svartifoss.snfell.actions.PhoneAction {
    public <init>(android.content.Context, android.os.PersistableBundle);
 }
 

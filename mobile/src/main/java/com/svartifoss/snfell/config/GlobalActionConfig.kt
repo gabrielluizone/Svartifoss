@@ -1,12 +1,16 @@
 package com.svartifoss.snfell.config
 
 import android.content.Context
+import android.preference.PreferenceManager
 import androidx.lifecycle.Observer
+import com.svartifoss.snfell.R
 import com.svartifoss.snfell.config.actionlist.ActionList
 import com.svartifoss.snfell.config.actionlist.GlobalActionList
 import com.svartifoss.snfell.config.buttons.ButtonConfig
 import com.svartifoss.snfell.config.buttons.GlobalButtonConfigFactory
 import dagger.Lazy
+import org.json.JSONObject
+import timber.log.Timber
 import java.io.File
 
 class GlobalActionConfig(private val context: Context,
@@ -40,10 +44,32 @@ class GlobalActionConfig(private val context: Context,
         }
     }
 
+    /**
+     * Seeds a fresh install with the bundled [R.raw.default_config] snapshot (the same format
+     * [ConfigBackup] exports/imports) instead of [defaultConfigGenerator]'s auto-detected
+     * defaults - this app is a personal sideload, not a general Play Store release, so "default"
+     * means "my own saved setup" rather than a generic first-run guess.
+     *
+     * Writes straight to the on-disk config files ([ConfigBackup.import]) before [playingConfig] /
+     * [stoppedConfig] / [actionListConfig] are ever lazily created, so - unlike a manual import
+     * from Settings - no app restart is needed: their own `init` blocks load these files the first
+     * time anything calls [getPlayingConfig] / [getStoppedConfig] / [getActionList].
+     */
+    private fun seedBundledDefaultConfig() {
+        try {
+            val json = context.resources.openRawResource(R.raw.default_config).use {
+                JSONObject(it.readBytes().decodeToString())
+            }
+            ConfigBackup.import(context, PreferenceManager.getDefaultSharedPreferences(context), json)
+        } catch (e: Exception) {
+            Timber.e(e, "Failed seeding the bundled default config - falling back to auto-detected defaults")
+            watchInfoProvider.observeForever(defaultConfigCreatorListener)
+        }
+    }
 
     init {
         if (!doesConfigExist()) {
-            watchInfoProvider.observeForever(defaultConfigCreatorListener)
+            seedBundledDefaultConfig()
         }
     }
 
