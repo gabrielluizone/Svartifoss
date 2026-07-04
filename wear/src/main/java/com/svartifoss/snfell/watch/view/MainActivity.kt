@@ -152,6 +152,16 @@ class MainActivity : WearCompanionWatchActivity(),
     private var repeatMode: Int = 0
     private var liked: Boolean = false
 
+    /** Independent color sources for the artist text and the seek bar - each "neutral" (static
+     *  theme accent), "album" (the [currentAccentColor] the icons/buttons already track,
+     *  optionally desaturated) or "custom" (a fixed hex color). See [resolveAccentTint]. */
+    private var artistColorMode = "album"
+    private var artistCustomColor = ""
+    private var artistDesaturated = false
+    private var progressColorMode = "album"
+    private var progressCustomColor = ""
+    private var progressDesaturated = false
+
     /** Synced from the phone (see [MiscPreferences.WEAR_TRACK_TIME_MODE]): "always", "playing",
      *  "paused" or "never". Combined with [isMusicPlaying]/[hasPlaybackPosition] in
      *  [updatePlaybackTimeVisibility] - the single place that decides whether the track time
@@ -550,7 +560,7 @@ class MainActivity : WearCompanionWatchActivity(),
             if ((it.data as MusicState).playing) {
                 // Restores the dynamic (palette-extracted) color after a stopped/error message
                 // may have forced it to plain white below.
-                binding.textArtist.setTextColor(WatchTheme.accentForText(currentAccentColor))
+                binding.textArtist.setTextColor(resolvedArtistTextColor())
                 binding.textArtist.text = it.data?.artist
             } else {
                 setStatusMessageOnArtistLine(getString(R.string.playback_stopped))
@@ -663,20 +673,46 @@ class MainActivity : WearCompanionWatchActivity(),
         }
     }
 
+    /** parseColor throws StringIndexOutOfBounds (not IllegalArgument) on an empty string - and
+     *  empty is every custom-color preference's "not picked yet" default. */
+    private fun parseHexColorOrNull(hex: String): Int? = if (hex.isBlank()) null else try {
+        Color.parseColor(hex)
+    } catch (ignored: Exception) {
+        null
+    }
+
+    /**
+     * Resolves one of the independent artist/progress-bar color sources against the current
+     * album accent: "neutral" always uses the static [defaultSeekBarColor] (ignores the album
+     * entirely, even if dynamic accent is on elsewhere), "album" uses [albumColor] (optionally
+     * desaturated toward gray), "custom" uses the picked hex (falling back to [albumColor] if
+     * unset/invalid).
+     */
+    private fun resolveAccentTint(mode: String, customColor: String, desaturated: Boolean, albumColor: Int): Int {
+        return when (mode) {
+            "album" -> if (desaturated) ColorUtils.blendARGB(albumColor, Color.GRAY, 0.45f) else albumColor
+            "custom" -> parseHexColorOrNull(customColor) ?: albumColor
+            else -> defaultSeekBarColor
+        }
+    }
+
+    private fun resolvedArtistTextColor(): Int =
+            WatchTheme.accentForText(resolveAccentTint(artistColorMode, artistCustomColor, artistDesaturated, currentAccentColor))
+
     private fun applyAccentColor(color: Int) {
         currentAccentColor = color
-        binding.seekBar.progressColor = color
+        binding.seekBar.progressColor = resolveAccentTint(progressColorMode, progressCustomColor, progressDesaturated, color)
         binding.volumeBar.progressColor = color
         binding.fourWayTouch.setTapFeedbackColor(color)
         // Artist name uses the same dark-theme-adapted (lightened) accent as the queue's now-playing row.
-        binding.textArtist.setTextColor(WatchTheme.accentForText(color))
+        binding.textArtist.setTextColor(resolvedArtistTextColor())
 
         if (screenButtonsColorMode == "album") {
             styleScreenButtons()
         }
 
         if (isQuickActionsPanelShowing()) {
-            binding.quickActionPanelArtist.setTextColor(WatchTheme.accentForText(color))
+            binding.quickActionPanelArtist.setTextColor(binding.textArtist.currentTextColor)
             updateQuickActionButtonStates()
         }
     }
@@ -1181,13 +1217,7 @@ class MainActivity : WearCompanionWatchActivity(),
                     accent
                 }
             }
-            // parseColor throws StringIndexOutOfBounds (not IllegalArgument) on an empty
-            // string - and empty is this preference's "not picked yet" default.
-            "custom" -> if (screenButtonsCustomColor.isBlank()) null else try {
-                Color.parseColor(screenButtonsCustomColor)
-            } catch (ignored: Exception) {
-                null
-            }
+            "custom" -> parseHexColorOrNull(screenButtonsCustomColor)
             else -> null
         }
 
@@ -1289,6 +1319,24 @@ class MainActivity : WearCompanionWatchActivity(),
 
         trackTimeMode = Preferences.getString(preferences, MiscPreferences.WEAR_TRACK_TIME_MODE)
         updatePlaybackTimeVisibility()
+
+        val titleTextMode = when (Preferences.getString(preferences, MiscPreferences.WEAR_TITLE_TEXT_MODE)) {
+            "marquee" -> TextSizingMode.MARQUEE
+            "wrap" -> TextSizingMode.WRAP
+            "shrink" -> TextSizingMode.SHRINK
+            else -> TextSizingMode.SMART
+        }
+        binding.textTitle.setSizingMode(titleTextMode)
+
+        artistColorMode = Preferences.getString(preferences, MiscPreferences.WEAR_ARTIST_COLOR_MODE)
+        artistCustomColor = Preferences.getString(preferences, MiscPreferences.WEAR_ARTIST_CUSTOM_COLOR)
+        artistDesaturated = Preferences.getBoolean(preferences, MiscPreferences.WEAR_ARTIST_DESATURATED)
+        progressColorMode = Preferences.getString(preferences, MiscPreferences.WEAR_PROGRESS_COLOR_MODE)
+        progressCustomColor = Preferences.getString(preferences, MiscPreferences.WEAR_PROGRESS_CUSTOM_COLOR)
+        progressDesaturated = Preferences.getBoolean(preferences, MiscPreferences.WEAR_PROGRESS_DESATURATED)
+        // Re-applies with the (possibly unchanged) album color so a mode/custom-color/desaturate
+        // change re-tints the artist text and seek bar immediately, without needing new art.
+        applyAccentColor(currentAccentColor)
 
         applyAlbumArtScrim()
         applyScreenTheme()
@@ -1931,7 +1979,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
         binding.quickActionPanelTitle.text = binding.textTitle.text
         binding.quickActionPanelArtist.text = binding.textArtist.text
-        binding.quickActionPanelArtist.setTextColor(WatchTheme.accentForText(currentAccentColor))
+        binding.quickActionPanelArtist.setTextColor(binding.textArtist.currentTextColor)
         binding.quickActionPanelArtist.visibility =
                 if (binding.quickActionPanelArtist.text.isNullOrEmpty()) View.GONE else View.VISIBLE
 

@@ -9,6 +9,17 @@ import android.util.TypedValue
 import androidx.appcompat.widget.AppCompatTextView
 
 /**
+ * How [OutlineTextView] resolves text that doesn't fit its available width.
+ *
+ * [SMART] is the historical do-everything behavior (shrink, then wrap, then scroll as a last
+ * resort). The other three make that choice explicit/exclusive for users who find the automatic
+ * mix unpredictable: [MARQUEE] always scrolls a single line, [WRAP] always wraps up to the
+ * configured line limit (ellipsizing beyond that), [SHRINK] always shrinks word-safely down to
+ * the floor size (ellipsizing beyond that) - neither of the latter two ever animate.
+ */
+enum class TextSizingMode { SMART, MARQUEE, WRAP, SHRINK }
+
+/**
  * TextView that can be displayed either as a filled text or as an outline.
  */
 class OutlineTextView : AppCompatTextView {
@@ -39,6 +50,7 @@ class OutlineTextView : AppCompatTextView {
     private var smartSizingEnabled = false
     private var smartMaxSizePx = 0f
     private var smartMinSizePx = 0f
+    private var sizingMode = TextSizingMode.SMART
 
     // Captured once, the first time smart sizing runs - the XML-configured cap (e.g. maxLines=2)
     // that wrapping should respect before giving up and switching to a scrolling single line.
@@ -51,15 +63,23 @@ class OutlineTextView : AppCompatTextView {
      * `autoSizeText`, which only optimizes for the text block as a whole and will happily force a
      * line break in the middle of a word once its size floor is hit.
      *
-     * If the text is so long that it still wouldn't fit within the configured `maxLines` even at
-     * [minSizeSp], shrinking further would just make it unpleasantly tiny - instead this falls
-     * back to a single line at [minSizeSp] that scrolls horizontally (marquee) end to end.
+     * [mode] picks which of that shrink/wrap/scroll behavior actually applies - see
+     * [TextSizingMode]. Defaults to [TextSizingMode.SMART] for callers that don't offer a choice.
      */
-    fun enableSmartWordSizing(maxSizeSp: Float, minSizeSp: Float) {
+    fun enableSmartWordSizing(maxSizeSp: Float, minSizeSp: Float, mode: TextSizingMode = TextSizingMode.SMART) {
         smartSizingEnabled = true
         smartMaxSizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxSizeSp, resources.displayMetrics)
         smartMinSizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, minSizeSp, resources.displayMetrics)
         wrapMaxLines = maxLines
+        sizingMode = mode
+        requestSmartResize()
+    }
+
+    /** Changes the sizing mode of an already-configured view (e.g. reacting to a settings
+     *  change) without needing to re-supply the min/max sizes. */
+    fun setSizingMode(mode: TextSizingMode) {
+        if (sizingMode == mode) return
+        sizingMode = mode
         requestSmartResize()
     }
 
@@ -91,6 +111,45 @@ class OutlineTextView : AppCompatTextView {
             return
         }
 
+        when (sizingMode) {
+            TextSizingMode.WRAP -> applyWrapMode()
+            TextSizingMode.MARQUEE -> applyMarqueeMode(words, availableWidth)
+            TextSizingMode.SHRINK -> applyShrinkOrWrapMode(words, availableWidth, fallbackToMarquee = false)
+            TextSizingMode.SMART -> applyShrinkOrWrapMode(words, availableWidth, fallbackToMarquee = true)
+        }
+    }
+
+    /** Fixed size, wraps up to [wrapMaxLines] and ellipsizes beyond that - never shrinks or
+     *  scrolls. This is just the view's plain XML-declared behavior (maxLines + ellipsize), so
+     *  all this does is make sure a previous mode's marquee/shrink state doesn't linger. */
+    private fun applyWrapMode() {
+        disableMarquee()
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, smartMaxSizePx)
+    }
+
+    /** Always a single line at [smartMaxSizePx]; scrolls (marquee) only if that line doesn't fit,
+     *  otherwise sits still - never shrinks or wraps. */
+    private fun applyMarqueeMode(words: List<String>, availableWidth: Float) {
+        val measurePaint = Paint(paint)
+        measurePaint.textSize = smartMaxSizePx
+        val singleLineWidth = measurePaint.measureText(words.joinToString(" "))
+
+        if (singleLineWidth <= availableWidth) {
+            disableMarquee()
+            setTextSize(TypedValue.COMPLEX_UNIT_PX, smartMaxSizePx)
+        } else {
+            enableMarquee(smartMaxSizePx)
+        }
+    }
+
+    /**
+     * Word-safe shrink down to [smartMinSizePx] (see [enableSmartWordSizing]). When
+     * [fallbackToMarquee] is true and the text still doesn't fit [wrapMaxLines] even at the floor
+     * size, falls back to a scrolling single line (this is [TextSizingMode.SMART]'s behavior).
+     * When false, it just stays at the floor size and ellipsizes instead (bounded, non-animating -
+     * [TextSizingMode.SHRINK]'s behavior).
+     */
+    private fun applyShrinkOrWrapMode(words: List<String>, availableWidth: Float, fallbackToMarquee: Boolean) {
         val measurePaint = Paint(paint)
         val stepPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 1f, resources.displayMetrics)
 
@@ -114,7 +173,7 @@ class OutlineTextView : AppCompatTextView {
             sizePx = smartMinSizePx
         }
 
-        if (fits) {
+        if (fits || !fallbackToMarquee) {
             disableMarquee()
             setTextSize(TypedValue.COMPLEX_UNIT_PX, sizePx)
         } else {

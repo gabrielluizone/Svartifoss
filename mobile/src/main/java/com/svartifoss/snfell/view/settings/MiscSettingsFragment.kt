@@ -66,6 +66,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
 
         initAppearanceSection()
         initMusicScreenSection()
+        initWearAccentColorSection()
         initScreenButtonAppearance()
         initAutomationSection()
         initBackupSection()
@@ -312,6 +313,78 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
         val mode = overrideMode ?: findPreference<ListPreference>("screen_buttons_color_mode")?.value
         findPreference<Preference>("screen_buttons_custom_color")?.isEnabled = mode == "custom"
         findPreference<Preference>("screen_buttons_desaturated")?.isEnabled = mode == "album"
+    }
+
+    /** Now-playing artist text and progress bar color prefs: same custom color picker + mode
+     *  dependency wiring as [initScreenButtonAppearance], applied to two independent targets. */
+    private fun initWearAccentColorSection() {
+        initAccentColorTarget(
+                modeKey = "wear_artist_color_mode",
+                customColorKey = "wear_artist_custom_color",
+                desaturatedKey = "wear_artist_desaturated",
+                customColorDescription = R.string.setting_wear_artist_custom_color_description
+        )
+        initAccentColorTarget(
+                modeKey = "wear_progress_color_mode",
+                customColorKey = "wear_progress_custom_color",
+                desaturatedKey = "wear_progress_desaturated",
+                customColorDescription = R.string.setting_wear_progress_custom_color_description
+        )
+    }
+
+    private fun initAccentColorTarget(
+            modeKey: String,
+            customColorKey: String,
+            desaturatedKey: String,
+            customColorDescription: Int
+    ) {
+        val colorPref = findPreference<Preference>(customColorKey)
+        updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
+        colorPref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val prefs = preferenceManager.sharedPreferences
+                    ?: return@OnPreferenceClickListener true
+            showColorPickerDialog(
+                    initialColor = parseHexOrDefault(prefs.getString(customColorKey, null)),
+                    onReset = {
+                        prefs.edit().remove(customColorKey).apply()
+                        updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
+                    },
+                    onApply = { hex ->
+                        prefs.edit().putString(customColorKey, hex).apply()
+                        updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
+                    }
+            )
+            true
+        }
+
+        updateAccentColorTargetDependencies(modeKey, customColorKey, desaturatedKey)
+        findPreference<ListPreference>(modeKey)?.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, newValue ->
+                updateAccentColorTargetDependencies(modeKey, customColorKey, desaturatedKey, newValue as? String)
+                true
+            }
+    }
+
+    private fun updateAccentColorTargetSummary(pref: Preference?, customColorKey: String, descriptionRes: Int) {
+        pref ?: return
+        val saved = preferenceManager.sharedPreferences?.getString(customColorKey, null)
+        pref.summary = if (saved != null) {
+            getString(R.string.color_picker_current, saved)
+        } else {
+            getString(descriptionRes)
+        }
+        (pref as? HexColorDotPreference)?.refreshDot()
+    }
+
+    private fun updateAccentColorTargetDependencies(
+            modeKey: String,
+            customColorKey: String,
+            desaturatedKey: String,
+            overrideMode: String? = null
+    ) {
+        val mode = overrideMode ?: findPreference<ListPreference>(modeKey)?.value
+        findPreference<Preference>(customColorKey)?.isEnabled = mode == "custom"
+        findPreference<Preference>(desaturatedKey)?.isEnabled = mode == "album"
     }
 
     private fun applyTheme(value: String) {

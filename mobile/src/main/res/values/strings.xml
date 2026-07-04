@@ -252,6 +252,44 @@
     <string name="setting_wear_dynamic_accent_description">Adapt the watch accent color (seek ring, artist name) to the current album art.</string>
     <string name="setting_wear_album_art_fade">Album art fade transition</string>
     <string name="setting_wear_album_art_fade_description">Smoothly fade album art when the track changes.</string>
+    <string name="setting_wear_title_text_mode">Title text behavior</string>
+    <string name="setting_wear_title_text_mode_description">How the now-playing title behaves when it doesn\'t fit: Automatic mixes shrinking, wrapping and scrolling; the other options make one behavior exclusive.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automatic (shrink, then wrap, then scroll)</item>
+        <item>Scroll (marquee)</item>
+        <item>Wrap to two lines</item>
+        <item>Shrink to fit</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Artist text color</string>
+    <string name="setting_wear_artist_custom_color">Artist custom color</string>
+    <string name="setting_wear_artist_custom_color_description">Tap to pick the color used when \"Artist text color\" is set to Custom color</string>
+    <string name="setting_wear_artist_desaturated">Desaturated artist color</string>
+    <string name="setting_wear_artist_desaturated_description">Soften the album-based artist text color — only applies when \"Artist text color\" is set to Album color</string>
+
+    <string name="setting_wear_progress_color">Progress bar color</string>
+    <string name="setting_wear_progress_custom_color">Progress bar custom color</string>
+    <string name="setting_wear_progress_custom_color_description">Tap to pick the color used when \"Progress bar color\" is set to Custom color</string>
+    <string name="setting_wear_progress_desaturated">Desaturated progress bar color</string>
+    <string name="setting_wear_progress_desaturated_description">Soften the album-based progress bar color — only applies when \"Progress bar color\" is set to Album color</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Neutral (static theme color)</item>
+        <item>Album color</item>
+        <item>Custom color</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
     <string-array name="wear_screen_theme_entries">
         <item>Default</item>
         <item>Minimal</item>

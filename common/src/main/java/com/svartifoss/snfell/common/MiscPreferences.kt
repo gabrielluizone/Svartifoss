@@ -84,6 +84,42 @@ object MiscPreferences {
     /** Extract accent color from album art on the watch (when off, uses the static theme accent). */
     val WEAR_DYNAMIC_ACCENT: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_dynamic_accent", true)
 
+    /** How the now-playing title text behaves when it doesn't fit its available width: "smart"
+     *  (default - shrinks first, wraps to 2 lines if that helps, and only scrolls as a last
+     *  resort), "marquee" (always a single line at full size, scrolling if it overflows), "wrap"
+     *  (fixed size, wraps up to 2 lines, ellipsizes beyond that - never shrinks or scrolls) or
+     *  "shrink" (word-safe shrink down to a floor size, ellipsizes beyond that - never scrolls). */
+    val WEAR_TITLE_TEXT_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_title_text_mode", "smart")
+
+    /** Where the now-playing artist text color comes from: "neutral" (static theme accent),
+     *  "album" (the watch's dynamic album-art accent, see [WEAR_DYNAMIC_ACCENT]) or "custom"
+     *  ([WEAR_ARTIST_CUSTOM_COLOR]). */
+    val WEAR_ARTIST_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_artist_color_mode", "album")
+
+    /** Hex color (#RRGGBB) used when [WEAR_ARTIST_COLOR_MODE] is "custom". */
+    val WEAR_ARTIST_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_artist_custom_color", "")
+
+    /** Soften the album-derived artist text color (only applies in "album" color mode). */
+    val WEAR_ARTIST_DESATURATED: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_artist_desaturated", false)
+
+    /** Where the now-playing progress bar's accent color comes from: "neutral" (static theme
+     *  accent), "album" (the watch's dynamic album-art accent, see [WEAR_DYNAMIC_ACCENT]) or
+     *  "custom" ([WEAR_PROGRESS_CUSTOM_COLOR]). */
+    val WEAR_PROGRESS_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_progress_color_mode", "album")
+
+    /** Hex color (#RRGGBB) used when [WEAR_PROGRESS_COLOR_MODE] is "custom". */
+    val WEAR_PROGRESS_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_progress_custom_color", "")
+
+    /** Soften the album-derived progress bar color (only applies in "album" color mode). */
+    val WEAR_PROGRESS_DESATURATED: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_progress_desaturated", false)
+
     /** Cross-fade album art when the track changes. */
     val WEAR_ALBUM_ART_FADE: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_album_art_fade", true)
 
@@ -144,6 +180,8 @@ object MiscPreferences {
             WEAR_TRACK_TIME_MODE,
             WEAR_DYNAMIC_ACCENT, WEAR_ALBUM_ART_FADE, WEAR_SCREEN_BUTTONS_OFFSET, WEAR_SCREEN_BUTTONS_CURVE_STYLE,
             WEAR_SCREEN_BUTTONS_BG, WEAR_SCREEN_BUTTONS_COLOR_MODE, WEAR_SCREEN_BUTTONS_CUSTOM_COLOR,
-            WEAR_SCREEN_BUTTONS_DESATURATED, WEAR_OVERLAY_BLUR_RADIUS
+            WEAR_SCREEN_BUTTONS_DESATURATED, WEAR_OVERLAY_BLUR_RADIUS,
+            WEAR_TITLE_TEXT_MODE, WEAR_ARTIST_COLOR_MODE, WEAR_ARTIST_CUSTOM_COLOR, WEAR_ARTIST_DESATURATED,
+            WEAR_PROGRESS_COLOR_MODE, WEAR_PROGRESS_CUSTOM_COLOR, WEAR_PROGRESS_DESATURATED
     )
 }

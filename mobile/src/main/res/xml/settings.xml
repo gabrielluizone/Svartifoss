@@ -145,6 +145,66 @@
             android:summary="@string/setting_wear_album_art_fade_description"
             android:layout="@layout/pref_switch_item" />
 
+        <ListPreference
+            android:defaultValue="smart"
+            android:key="wear_title_text_mode"
+            android:icon="@drawable/ic_format_paint"
+            android:title="@string/setting_wear_title_text_mode"
+            android:summary="%s"
+            android:entries="@array/wear_title_text_mode_entries"
+            android:entryValues="@array/wear_title_text_mode_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="album"
+            android:key="wear_artist_color_mode"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_artist_color"
+            android:summary="%s"
+            android:entries="@array/wear_accent_color_entries"
+            android:entryValues="@array/wear_accent_color_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_artist_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_artist_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_artist_desaturated"
+            android:icon="@drawable/ic_paint_roller"
+            android:title="@string/setting_wear_artist_desaturated"
+            android:summary="@string/setting_wear_artist_desaturated_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <ListPreference
+            android:defaultValue="album"
+            android:key="wear_progress_color_mode"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_progress_color"
+            android:summary="%s"
+            android:entries="@array/wear_accent_color_entries"
+            android:entryValues="@array/wear_accent_color_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_progress_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_progress_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_progress_desaturated"
+            android:icon="@drawable/ic_paint_roller"
+            android:title="@string/setting_wear_progress_desaturated"
+            android:summary="@string/setting_wear_progress_desaturated_description"
+            android:layout="@layout/pref_switch_item" />
+
     </PreferenceCategory>
 
     <!-- The configurable mini-button row on the now-playing screen. -->
