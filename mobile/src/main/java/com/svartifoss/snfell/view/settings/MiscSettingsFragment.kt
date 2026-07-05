@@ -13,6 +13,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -20,6 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -31,15 +33,19 @@ import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.model.AutoStartMode
 import com.svartifoss.snfell.config.ConfigBackup
+import com.svartifoss.snfell.config.WatchInfoProvider
+import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.TitledActivity
 import com.matejdro.wearutils.logging.LogRetrievalTask
 import com.matejdro.wearutils.preferences.compat.PreferenceFragmentCompatEx
 import com.matejdro.wearutils.preferences.definition.Preferences
 import com.matejdro.wearutils.preferencesync.PreferencePusher
+import dagger.android.support.AndroidSupportInjection
 import de.psdev.licensesdialog.LicensesDialog
 import org.json.JSONObject
 import timber.log.Timber
+import javax.inject.Inject
 
 
 class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -51,6 +57,9 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     private var versionClickCount = 0
     private var devModeEnabled = false
 
+    @Inject
+    lateinit var watchInfoProvider: WatchInfoProvider
+
     private val exportConfigLauncher = registerForActivityResult(
             ActivityResultContracts.CreateDocument("application/json")
     ) { uri -> uri?.let { exportConfigTo(it) } }
@@ -58,6 +67,24 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     private val importConfigLauncher = registerForActivityResult(
             ActivityResultContracts.OpenDocument()
     ) { uri -> uri?.let { importConfigFrom(it) } }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidSupportInjection.inject(this)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        watchInfoProvider.observe(viewLifecycleOwner, noWatchBannerObserver)
+    }
+
+    // Every setting on this screen still works and gets saved without a paired watch - it just
+    // won't visibly apply on a watch until one connects. This banner only sets that expectation,
+    // it never disables anything (see the discussion in MainActivity about not gating navigation
+    // on watch presence).
+    private val noWatchBannerObserver = Observer<WatchInfoWithIcons?> { watchInfo ->
+        findPreference<Preference>("no_watch_banner")?.isVisible = watchInfo == null
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings)

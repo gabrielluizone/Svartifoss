@@ -6,6 +6,7 @@ import com.svartifoss.snfell.view.actionlist.ActionListFragment
 import com.svartifoss.snfell.view.buttonconfig.ButtonConfigFragment
 import com.svartifoss.snfell.view.buttonconfig.GesturePickerFragment
 import com.svartifoss.snfell.view.mainactivity.MainActivity
+import com.svartifoss.snfell.view.settings.MiscSettingsFragment
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -35,4 +36,7 @@ abstract class MainActivityFragments {
 
     @ContributesAndroidInjector
     abstract fun contributeGesturePickerFragment(): GesturePickerFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeMiscSettingsFragment(): MiscSettingsFragment
 }

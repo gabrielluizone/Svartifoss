@@ -18,12 +18,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
-import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.databinding.ActivityMainBinding
 import com.svartifoss.snfell.di.InjectableViewModelFactory
 import com.svartifoss.snfell.music.isPlaying
@@ -146,8 +144,6 @@ class MainActivity : WearCompanionPhoneActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-
-        viewmodel.watchInfoProvider.observe(this, watchInfoObserver)
 
         PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener(preferenceChangeListener)
@@ -287,6 +283,16 @@ class MainActivity : WearCompanionPhoneActivity(),
 
         updateCurrentFragment(supportFragmentManager.findFragmentById(R.id.fragment_container))
 
+        // Default landing screen on a fresh launch (no fragment restored by the FragmentManager
+        // yet). Deliberately independent of whether a watch is currently paired/connected -
+        // Playing controls (like Guide, Actions menu and Settings) is fully usable without one;
+        // only its "physical buttons" section needs live watch data, and that section just hides
+        // itself when there isn't any (see ButtonConfigFragment.watchInfoObserver).
+        if (currentFragment == null) {
+            swapFragment(ButtonConfigFragment.newInstance(true))
+            binding.bottomNav.selectedItemId = R.id.playing_controls
+        }
+
         maybeRequestNotificationPermission()
     }
 
@@ -316,10 +322,6 @@ class MainActivity : WearCompanionPhoneActivity(),
         PreferenceManager.getDefaultSharedPreferences(this)
             .unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
         super.onDestroy()
-    }
-
-    private fun setBottomNavVisible(visible: Boolean) {
-        binding.bottomNav.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     private fun setMiniPlayerVisible(visible: Boolean) {
@@ -859,19 +861,6 @@ class MainActivity : WearCompanionPhoneActivity(),
             }
         } catch (e: Exception) {
             android.widget.Toast.makeText(this, R.string.album_art_save_error, android.widget.Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private val watchInfoObserver = Observer<WatchInfoWithIcons?> {
-        if (it != null) {
-            setBottomNavVisible(true)
-            if (currentFragment == null || currentFragment is NoWatchFragment) {
-                swapFragment(ButtonConfigFragment.newInstance(true))
-                binding.bottomNav.selectedItemId = R.id.playing_controls
-            }
-        } else {
-            setBottomNavVisible(false)
-            swapFragment(NoWatchFragment())
         }
     }
 

@@ -2,6 +2,9 @@
     <string name="app_name">Svartifoss</string>
     <string name="app_name_short">Svartifoss</string>
 
+    <string name="setting_no_watch_banner">No watch connected</string>
+    <string name="setting_no_watch_banner_description">These settings sync to your Wear OS watch, so they won\'t visibly apply until one is paired and connected - but everything below is still yours to configure now.</string>
+
     <!-- Appearance -->
     <string name="category_appearance">Appearance</string>
     <string name="setting_theme">Theme</string>

@@ -2,6 +2,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Shown/hidden programmatically (see MiscSettingsFragment.updateNoWatchBannerVisibility)
+         depending on whether a watch is currently paired/connected - everything below still
+         works and stays configurable either way, this is just a heads-up that watch-facing
+         settings won't visibly apply until a watch connects. -->
+    <Preference
+        android:key="no_watch_banner"
+        android:icon="@drawable/ic_watch_off"
+        android:title="@string/setting_no_watch_banner"
+        android:summary="@string/setting_no_watch_banner_description"
+        android:selectable="false"
+        android:visible="false"
+        android:layout="@layout/pref_item" />
+
     <PreferenceCategory
         android:key="cat_appearance"
         android:title="@string/category_appearance"
