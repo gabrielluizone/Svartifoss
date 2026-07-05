@@ -12,7 +12,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 35
         compileSdk 36
-        versionCode 29
+        versionCode 30
         versionName "2.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
