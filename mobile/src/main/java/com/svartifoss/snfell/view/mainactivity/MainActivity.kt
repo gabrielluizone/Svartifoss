@@ -54,6 +54,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
+private const val REQUEST_CODE_POST_NOTIFICATIONS = 1002
 
 class MainActivity : WearCompanionPhoneActivity(),
         TitledActivity, ActivityResultReceiver, HasAndroidInjector {
@@ -279,6 +280,22 @@ class MainActivity : WearCompanionPhoneActivity(),
         }
 
         updateCurrentFragment(supportFragmentManager.findFragmentById(R.id.fragment_container))
+
+        maybeRequestNotificationPermission()
+    }
+
+    /** targetSdk 33+ (Android 13) gates notifications behind POST_NOTIFICATIONS. MusicService posts
+     *  a persistent "control active" notification, so request it once to preserve the pre-33
+     *  behavior of that notification simply showing. If the user denies it, the service still
+     *  runs - only the notification is suppressed, same as a manual denial. */
+    private fun maybeRequestNotificationPermission() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU &&
+                checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_CODE_POST_NOTIFICATIONS
+            )
+        }
     }
 
     override fun onResume() {

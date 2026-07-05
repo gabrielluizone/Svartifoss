@@ -10,7 +10,7 @@ android {
         applicationId "com.svartifoss.snfell"
         namespace = "com.svartifoss.snfell"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 34
         compileSdk 36
         versionCode 29
         versionName "2.0"
@@ -45,9 +45,6 @@ android {
         freeCompilerArgs += "-Xopt-in=kotlin.ExperimentalStdlibApi"
         freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.DelicateCoroutinesApi"
 
-    }
-    lintOptions {
-        disable 'ExpiredTargetSdkVersion'
     }
 }
 

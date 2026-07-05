@@ -10,6 +10,7 @@ import android.os.Build
 import android.preference.PreferenceManager
 import android.provider.Settings
 import android.service.notification.NotificationListenerService
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.NodeClient
@@ -68,7 +69,10 @@ class NotificationService : NotificationListenerService() {
 
         val musicServiceNotifyIntent = Intent(this, MusicService::class.java)
         musicServiceNotifyIntent.action = MusicService.ACTION_NOTIFICATION_SERVICE_ACTIVATED
-        startService(musicServiceNotifyIntent)
+        // MusicService calls startForeground() shortly after being started, and this callback
+        // fires from the system (no foreground UI) - startService() alone can throw
+        // ForegroundServiceStartNotAllowedException in that case on API 31+.
+        ContextCompat.startForegroundService(this, musicServiceNotifyIntent)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !shouldRun()) {
             //Running notification service is not needed for this app to run, it only needs to be enabled.

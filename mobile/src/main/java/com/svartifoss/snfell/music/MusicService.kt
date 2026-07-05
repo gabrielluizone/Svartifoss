@@ -10,6 +10,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ServiceInfo
 import android.database.ContentObserver
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -32,6 +33,7 @@ import android.provider.Settings
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.ServiceCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -193,7 +195,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         @Suppress("DEPRECATION")
         notificationBuilder.priority = Notification.PRIORITY_MIN
 
-        startForeground(NOTIFICATION_ID_PERSISTENT, notificationBuilder.build())
+        // ServiceCompat passes the FGS type on API 29+ (required on API 34+) and is a no-op arg
+        // on older versions, so this stays correct across the minSdk 23.. range.
+        ServiceCompat.startForeground(
+                this,
+                NOTIFICATION_ID_PERSISTENT,
+                notificationBuilder.build(),
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+        )
 
         active = true
         Timber.d("Service started")
@@ -536,8 +545,15 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 .setSmallIcon(R.drawable.ic_notification_brand)
 
 
-        NotificationManagerCompat.from(this).notify(NOTIFICATION_ID_SERVICE_ERROR,
-                notificationBuilder.build())
+        // targetSdk 33+ (Android 13) gates notifications behind POST_NOTIFICATIONS. If the user
+        // denied it (see MainActivity.maybeRequestNotificationPermission), this notification is
+        // simply skipped - the notification-access error is still logged/handled elsewhere, only
+        // this visible nudge is suppressed, same as any other manually-denied notification.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            NotificationManagerCompat.from(this).notify(NOTIFICATION_ID_SERVICE_ERROR,
+                    notificationBuilder.build())
+        }
     }
 
     private fun onWatchSwipeExited() {
