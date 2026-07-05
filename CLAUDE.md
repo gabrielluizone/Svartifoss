@@ -89,9 +89,10 @@ Release signing config is pulled from an optional `keystore.properties` file at 
 
 ## Package naming gotchas
 
-The app was renamed from Music Center for Wear (fork of matejdro/WearMusicCenter): all code now lives under `com.svartifoss.snfell` / `com.svartifoss.snfell.common` (this is also the `applicationId` of both apps). Older docs/commits referencing `com.matejdro.wearmusiccenter` mean the same code.
+The app was renamed from Music Center for Wear (fork of matejdro/WearMusicCenter): all code now lives under `com.svartifoss.snfell` / `com.svartifoss.snfell.common`. Older docs/commits referencing `com.matejdro.wearmusiccenter` mean the same code.
 
-- Despite living in `wear/`, the watch-side code is under the package `com.svartifoss.snfell.watch.*` (not `.wear.*`). All watch-side classes (`PhoneConnection`, `WatchMusicService`, `MainActivity`, etc.) are in subdirectories named `watch/communication/`, `watch/view/`, `watch/model/`, `watch/config/`, `watch/util/`.
+- Despite living in `wear/`, the watch-side code is under the package `com.svartifoss.snfell.watch.*` (not `.wear.*`) - that's the Gradle `namespace`, used for generated R/BuildConfig classes only. All watch-side classes (`PhoneConnection`, `WatchMusicService`, `MainActivity`, etc.) are in subdirectories named `watch/communication/`, `watch/view/`, `watch/model/`, `watch/config/`, `watch/util/`.
+- The Gradle **`applicationId`** (the Play Store package identity) differs between modules: `mobile/` is `com.svartifoss.snfell`, `wear/` is `com.svartifoss.wrfell` - they're published as two separate Play Store listings, which can't share a package name. `MainActivity.openWatchPlayStorePage()` (mobile) hardcodes the wear app's id to open its Play Store listing from the phone; keep that constant in sync with `wear/build.gradle`'s `applicationId` if it ever changes.
 - `mobile/` still contains one deliberately un-renamed package: `com.matejdro.wearvibrationcenter.notificationprovider` — the AIDL/interop contract with the separate Wear Vibration Center app; renaming it would break that integration.
 - The `wearutils/` submodule keeps its own `com.matejdro.wearutils.*` packages.
 

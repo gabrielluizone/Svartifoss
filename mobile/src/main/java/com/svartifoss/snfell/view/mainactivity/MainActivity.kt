@@ -2,6 +2,7 @@ package com.svartifoss.snfell.view.mainactivity
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.media.session.PlaybackState
@@ -46,14 +47,20 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.wearable.intent.RemoteIntent
 import com.matejdro.wearutils.companionnotice.WearCompanionPhoneActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
+import timber.log.Timber
 
 private const val REQUEST_CODE_POST_NOTIFICATIONS = 1002
+
+// Must match wear/build.gradle's applicationId - the watch app is published as its own Play
+// Store listing under a different package than this app.
+private const val WEAR_APPLICATION_ID = "com.svartifoss.wrfell"
 
 class MainActivity : WearCompanionPhoneActivity(),
         TitledActivity, ActivityResultReceiver, HasAndroidInjector {
@@ -1147,9 +1154,22 @@ class MainActivity : WearCompanionPhoneActivity(),
 
     override fun getWatchAppPresenceCapability(): String = CommPaths.WATCH_APP_CAPABILITY
 
-    // Base WearCompanionPhoneActivity implementation (no override needed): offers to open this
-    // app's Play Store listing directly on the watch (mobile and wear share the same
-    // applicationId) when the wear app isn't detected as installed yet.
+    // The base implementation builds this URI from getPackageName(), which assumes the watch app
+    // shares this app's applicationId - true back when both were com.svartifoss.snfell, but the
+    // watch app now has its own Play Store listing under a different id (two listings can't share
+    // a package name). Override with the watch app's actual id instead.
+    override fun openWatchPlayStorePage() {
+        val playStoreIntent = Intent(Intent.ACTION_VIEW).apply {
+            addCategory(Intent.CATEGORY_BROWSABLE)
+            data = Uri.parse("market://details?id=$WEAR_APPLICATION_ID")
+        }
+
+        try {
+            RemoteIntent.startRemoteActivity(this, playStoreIntent, null)
+        } catch (e: Exception) {
+            Timber.e(e, "Activity start crash")
+        }
+    }
 
     @Suppress("UNCHECKED_CAST")
     override fun androidInjector(): AndroidInjector<Any> {

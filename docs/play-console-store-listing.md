@@ -59,10 +59,13 @@ Alternate, if you want to lead with the rebrand instead:
 > • A short in-app guide covering how to use Svartifoss on the watch
 >
 > **Works with your music app**
-> Svartifoss works with any app that publishes a standard Android media
-> session. Extra features like like/shuffle/repeat and search rely on
-> optional media-session extensions some apps expose — availability varies
-> by app.
+> Svartifoss is currently developed and tested primarily against YouTube
+> Music, where every feature — including like, shuffle, repeat, and search —
+> works out of the box. It also works with any other app that publishes a
+> standard Android media session (basic playback mirroring and transport
+> controls), though some extra features may not be available depending on
+> what that app exposes. Broader, deeper compatibility with other streaming
+> apps is planned in future updates.
 >
 > Svartifoss is free and open source (GPLv3) — a continuation of Music
 > Center for Wear by matejdro. Full source code:

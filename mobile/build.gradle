@@ -73,6 +73,10 @@ dependencies {
 
     implementation libs.google.playServices.wearable
     compileOnly libs.google.wearableLibrary
+    // Provides RemoteIntent, used to open the watch app's Play Store listing from the phone
+    // (MainActivity.openWatchPlayStorePage) - same artifact wearutils' WearCompanionPhoneActivity
+    // already uses, but that's an `implementation` dep there so it isn't exposed transitively.
+    implementation libs.google.wearableSupport
 
     implementation libs.kotlin.coroutines
     implementation libs.kotlin.coroutines.playServices
