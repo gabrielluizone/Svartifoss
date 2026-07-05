@@ -10,7 +10,7 @@ android {
         applicationId "com.svartifoss.snfell"
         namespace = "com.svartifoss.snfell"
         minSdkVersion 23
-        targetSdkVersion 34
+        targetSdkVersion 35
         compileSdk 36
         versionCode 29
         versionName "2.0"
