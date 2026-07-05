@@ -664,7 +664,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     private fun sendLogs() {
         LogRetrievalTask(activity,
                 CommPaths.MESSAGE_SEND_LOGS,
-                "apps@matejdro.com",
+                "gabrielluizone@gmail.com",
                 "com.svartifoss.snfell.logs").execute(null as Void?)
     }
 
