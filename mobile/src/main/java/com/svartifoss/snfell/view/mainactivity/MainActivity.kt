@@ -2,7 +2,6 @@ package com.svartifoss.snfell.view.mainactivity
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.media.session.PlaybackState
@@ -1148,25 +1147,9 @@ class MainActivity : WearCompanionPhoneActivity(),
 
     override fun getWatchAppPresenceCapability(): String = CommPaths.WATCH_APP_CAPABILITY
 
-    // Base implementation offers to open this app's Play Store listing on the watch, which
-    // doesn't exist since Svartifoss is sideload-only. Point at the GitHub releases page instead,
-    // opened locally in the phone's own browser (no RemoteIntent needed - we're already on the phone).
-    override fun onWatchAppInstalledResult(watchAppInstalled: Boolean) {
-        if (watchAppInstalled) return
-
-        AlertDialog.Builder(this)
-                .setTitle(R.string.error_watch_app_not_installed)
-                .setMessage(R.string.error_watch_app_not_installed_description)
-                .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(R.string.action_open_github) { _, _ ->
-                    try {
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_repo_url))))
-                    } catch (e: ActivityNotFoundException) {
-                        // No browser available - nothing more we can do here.
-                    }
-                }
-                .show()
-    }
+    // Base WearCompanionPhoneActivity implementation (no override needed): offers to open this
+    // app's Play Store listing directly on the watch (mobile and wear share the same
+    // applicationId) when the wear app isn't detected as installed yet.
 
     @Suppress("UNCHECKED_CAST")
     override fun androidInjector(): AndroidInjector<Any> {
