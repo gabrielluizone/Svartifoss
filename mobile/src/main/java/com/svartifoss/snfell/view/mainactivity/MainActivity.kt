@@ -56,9 +56,10 @@ import timber.log.Timber
 
 private const val REQUEST_CODE_POST_NOTIFICATIONS = 1002
 
-// Must match wear/build.gradle's applicationId - the watch app is published as its own Play
-// Store listing under a different package than this app.
-private const val WEAR_APPLICATION_ID = "com.svartifoss.wrfell"
+// Must match wear/build.gradle's applicationId. The watch app shares this app's package (required
+// by the Wearable Data Layer) and is distributed in the same Play Store listing, so this opens that
+// listing on the watch.
+private const val WEAR_APPLICATION_ID = "com.svartifoss.snfell"
 
 class MainActivity : WearCompanionPhoneActivity(),
         TitledActivity, ActivityResultReceiver, HasAndroidInjector {
@@ -1143,10 +1144,9 @@ class MainActivity : WearCompanionPhoneActivity(),
 
     override fun getWatchAppPresenceCapability(): String = CommPaths.WATCH_APP_CAPABILITY
 
-    // The base implementation builds this URI from getPackageName(), which assumes the watch app
-    // shares this app's applicationId - true back when both were com.svartifoss.snfell, but the
-    // watch app now has its own Play Store listing under a different id (two listings can't share
-    // a package name). Override with the watch app's actual id instead.
+    // The base implementation builds this URI from getPackageName(). The watch app shares this
+    // app's applicationId (required by the Wearable Data Layer), so WEAR_APPLICATION_ID equals the
+    // phone package and this override is explicit rather than strictly necessary.
     override fun openWatchPlayStorePage() {
         val playStoreIntent = Intent(Intent.ACTION_VIEW).apply {
             addCategory(Intent.CATEGORY_BROWSABLE)
