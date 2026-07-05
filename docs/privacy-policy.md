@@ -11,8 +11,8 @@ The short version: **Svartifoss does not have user accounts, does not run its
 own servers, and does not sell or share your data with advertisers.** The
 phone and watch talk to each other directly over your local Bluetooth/Wi-Fi
 connection. The only data that leaves your device goes to Google's Firebase
-service, solely to help us fix crashes — see [Crash reports and basic usage
-analytics](#crash-reports-and-basic-usage-analytics) below.
+service, solely to help us fix crashes — see [Crash reports](#crash-reports)
+below.
 
 ## What the app needs access to, and why
 
@@ -45,7 +45,7 @@ all.
 | Storage (legacy, only on very old Android versions) / Photos | Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option.                                                  |
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
-| Internet                                                     | Used only by the crash-reporting/analytics library described below — the core app features (reading and mirroring music playback) work entirely offline between your two devices.             |
+| Internet                                                     | Used only by the crash-reporting library described below — the core app features (reading and mirroring music playback) work entirely offline between your two devices.             |
 
 ## What's stored locally on your phone
 
@@ -64,7 +64,7 @@ Export Config feature, that file is saved wherever you choose to save it
 (e.g. your own device storage or cloud drive) — that's your copy, under your
 control, and we never see it.
 
-## Crash reports and basic usage analytics
+## Crash reports
 
 Svartifoss uses **Firebase Crashlytics** (a Google service) to receive crash
 reports when the app misbehaves, so we can find and fix bugs. A crash report
@@ -74,15 +74,12 @@ log lines occasionally include the name of the track or app that was playing
 at the time, since that's part of normal app operation, but never your
 personal messages, contacts, or notification content from other apps.
 
-The app also includes **Firebase Analytics**, which may automatically collect
-basic, non-identifying usage signals (like app opens) using Google's default
-SDK behavior. We do not add any custom tracking events ourselves.
-
-Both of these send data to Google's Firebase infrastructure, governed by
-[Google&#39;s Privacy Policy](https://policies.google.com/privacy) and
-[Firebase&#39;s data processing terms](https://firebase.google.com/support/privacy).
+This sends data to Google's Firebase infrastructure, governed by
+[Google's Privacy Policy](https://policies.google.com/privacy) and
+[Firebase's data processing terms](https://firebase.google.com/support/privacy).
 We do not have access to any other data Google collects about your device
-through its own services.
+through its own services. Svartifoss does not include Firebase Analytics or
+any other usage-tracking SDK.
 
 ## What we don't do
 

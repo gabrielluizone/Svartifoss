@@ -103,7 +103,6 @@ google-autoValue-annotations = { module = "com.google.auto.value:auto-value-anno
 google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "google-firebase-bom" }
 google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 google-firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "google-firebase-crashlytics-gradle" }
-google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
 google-wearableSupport = { module = "com.google.android.support:wearable", version.ref = "google-wearableLibrary" }
 google-wearableLibrary = { module = "com.google.android.wearable:wearable", version.ref = "google-wearableLibrary" }

@@ -11,27 +11,30 @@ over time and I can't browse it live from here — treat this as the accurate
 *content* to report, but double-check the precise checkboxes against what
 the form shows you when you fill it in. Google/Firebase also publish their
 own mapping guide ("Data safety section on Google Play and Firebase") that's
-worth a quick look before submitting, since Crashlytics/Analytics are the
-one area here with real third-party data flow.
+worth a quick look before submitting, since Crashlytics is the one area here
+with real third-party data flow.
+
+**Firebase Analytics has been removed** from the app (it was included but
+unused - no custom events were ever logged). The only remaining Firebase
+product is Crashlytics, kept for real crash reporting.
 
 ---
 
 ## Does your app collect or share any of the required user data types?
 
-**Yes** — solely because of Firebase Crashlytics (crash reporting) and
-Firebase Analytics (basic, non-custom usage signals). Everything else the
-app touches (media metadata, button configs, search history, playlist
-shortcuts) stays on-device or goes only to the user's own paired watch over
-the local Wearable Data Layer connection — never to a server you operate.
+**Yes** — solely because of Firebase Crashlytics (crash reporting).
+Everything else the app touches (media metadata, button configs, search
+history, playlist shortcuts) stays on-device or goes only to the user's own
+paired watch over the local Wearable Data Layer connection — never to a
+server you operate.
 
 ## Data types to report
 
 | Category | Type | Collected? | Shared? | Purpose | Notes |
 |---|---|---|---|---|---|
-| App activity | App interactions | Yes | With Google (Firebase Analytics) | Analytics | Automatically collected by the Firebase Analytics SDK; no custom events are logged in the app's own code. |
 | App info and performance | Crash logs | Yes | With Google (Firebase Crashlytics) | Crash/bug reporting | Stack traces + short diagnostic log lines the app already writes while running. These occasionally include the name of the track/app that was playing at crash time. |
 | App info and performance | Diagnostics | Yes | With Google (Firebase Crashlytics) | Crash/bug reporting | Device model, OS version, standard crash-context data. |
-| Device or other IDs | Device or other IDs | Yes | With Google (Firebase) | Analytics, crash correlation | The Firebase installation ID used internally by Crashlytics/Analytics to group events/crashes - not a personal identifier, no account is tied to it. |
+| Device or other IDs | Device or other IDs | Yes | With Google (Firebase Crashlytics) | Crash correlation | The Firebase installation ID used internally by Crashlytics to group crash reports and compute the crash-free-users rate - not a personal identifier, no account is tied to it. |
 
 **Everything else in Play's standard list — Location, Personal info,
 Financial info, Health and fitness, Messages, Photos/videos, Audio files,
@@ -58,17 +61,6 @@ permissions:
 | Question | Answer |
 |---|---|
 | Is all data encrypted in transit? | Yes — the Firebase SDKs use HTTPS. |
-| Do you provide a way for users to request data deletion? | There's no user account in Svartifoss to tie a deletion request to. If Play Console requires an answer here, the honest one is that there's no in-app deletion mechanism, since no personal/account data is collected in the first place — only anonymous crash/analytics telemetry via Firebase's own infrastructure. |
-| Is data collection required or optional? | None of it gates any app feature - the app works identically whether or not Firebase's background telemetry succeeds. |
+| Do you provide a way for users to request data deletion? | There's no user account in Svartifoss to tie a deletion request to. If Play Console requires an answer here, the honest one is that there's no in-app deletion mechanism, since no personal/account data is collected in the first place — only anonymous crash telemetry via Firebase's own infrastructure. |
+| Is data collection required or optional? | It doesn't gate any app feature - the app works identically whether or not Firebase's background telemetry succeeds. |
 | Do you use the data for advertising or sell it? | No. No ads SDK is present, and nothing is sold. |
-
-## Committed vs. actual behavior — one thing to verify yourself
-
-Firebase Analytics is included as a dependency but the app's own code never
-calls `logEvent(...)` — its default automatic collection (session start,
-app open, etc.) is what applies. If you'd rather not report Analytics data
-at all, the cleanest fix is removing the dependency (`libs.google.firebase.analytics`
-in `mobile/build.gradle`) if it isn't actually providing value to you today
-— that would shrink both this form and the privacy policy's "Firebase"
-section. Let me know if you want me to check whether anything relies on it
-before removing it.
