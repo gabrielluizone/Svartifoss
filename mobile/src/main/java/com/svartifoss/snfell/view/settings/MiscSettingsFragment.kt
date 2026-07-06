@@ -41,8 +41,11 @@ import com.matejdro.wearutils.logging.LogRetrievalTask
 import com.matejdro.wearutils.preferences.compat.PreferenceFragmentCompatEx
 import com.matejdro.wearutils.preferences.definition.Preferences
 import com.matejdro.wearutils.preferencesync.PreferencePusher
+import com.google.android.gms.wearable.Wearable
 import dagger.android.support.AndroidSupportInjection
 import de.psdev.licensesdialog.LicensesDialog
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import org.json.JSONObject
 import timber.log.Timber
 import javax.inject.Inject
@@ -513,6 +516,25 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
             } ?: throw java.io.IOException("Could not open input stream")
 
             ConfigBackup.import(requireContext(), preferenceManager.sharedPreferences!!, JSONObject(text))
+        } catch (e: Exception) {
+            Timber.e(e, "Config import failed")
+            Toast.makeText(requireContext(), R.string.import_config_failed, Toast.LENGTH_LONG).show()
+            return
+        }
+
+        // The button/action-list transmitters only push to the watch when their DataItem is
+        // missing (ButtonConfigTransmitter/ActionListTransmitter.resendIfNeeded). After an import
+        // the items still hold the OLD config, so the watch would keep the old buttons until each
+        // config was hand-edited and re-saved. Clear them so the post-restart transmitters re-push
+        // the freshly imported config. Wait for the clear to finish before offering the restart so
+        // it isn't cut short by restartApp()'s process exit; a missing/disconnected watch no-ops.
+        val appContext = requireContext().applicationContext
+        lifecycleScope.launch {
+            try {
+                clearWatchConfigDataItems(appContext)
+            } catch (e: Exception) {
+                Timber.w(e, "Could not clear watch config DataItems after import")
+            }
 
             AlertDialog.Builder(requireContext())
                 .setTitle(R.string.import_config_done_title)
@@ -520,9 +542,19 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
                 .setCancelable(false)
                 .setPositiveButton(R.string.action_restart_now) { _, _ -> restartApp() }
                 .show()
-        } catch (e: Exception) {
-            Timber.e(e, "Config import failed")
-            Toast.makeText(requireContext(), R.string.import_config_failed, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /** Removes the playing/stopped button configs and the action list from the watch so the
+     *  transmitters re-send the imported config on next launch (see [importConfigFrom]). */
+    private suspend fun clearWatchConfigDataItems(context: Context) {
+        val dataClient = Wearable.getDataClient(context)
+        for (path in listOf(
+                CommPaths.DATA_PLAYING_ACTION_CONFIG,
+                CommPaths.DATA_STOPPING_ACTION_CONFIG,
+                CommPaths.DATA_LIST_ITEMS
+        )) {
+            dataClient.deleteDataItems(Uri.parse("wear://*$path")).await()
         }
     }
 

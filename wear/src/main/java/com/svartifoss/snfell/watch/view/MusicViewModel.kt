@@ -317,5 +317,10 @@ class MusicViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         handler.removeCallbacks(positionTickRunnable)
+        // Detach the observeForever hooks these providers hold on PhoneConnection's (@Singleton)
+        // LiveData, otherwise each recreated MusicViewModel leaks its three config providers.
+        playbackConfig.destroy()
+        stoppedConfig.destroy()
+        actionsMenuConfig.destroy()
     }
 }

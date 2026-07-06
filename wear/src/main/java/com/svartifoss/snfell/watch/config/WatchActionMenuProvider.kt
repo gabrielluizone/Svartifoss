@@ -12,7 +12,7 @@ import com.svartifoss.snfell.watch.communication.getIcon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, rawData: LiveData<DataItem>) {
+class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, private val rawData: LiveData<DataItem>) {
     private val dataClient = Wearable.getDataClient(context)
     val config = MutableLiveData<List<ButtonAction>>()
 
@@ -44,5 +44,13 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
 
     init {
         rawData.observeForever(dataObserver)
+    }
+
+    /** Stops observing the phone's action-menu LiveData. The owning ViewModel must call this when
+     *  it is cleared: [rawData] lives in the @Singleton PhoneConnection, so an un-removed
+     *  observeForever would keep this provider (and its decoded icon bitmaps) alive for the whole
+     *  process, one leaked copy per ViewModel recreation. */
+    fun destroy() {
+        rawData.removeObserver(dataObserver)
     }
 }

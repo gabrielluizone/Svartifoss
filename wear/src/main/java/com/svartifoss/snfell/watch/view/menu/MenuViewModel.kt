@@ -25,9 +25,11 @@ class MenuViewModel @Inject constructor(
         private val phoneConnection: PhoneConnection
 ) : ViewModel() {
 
+    private val actionMenuProvider =
+            WatchActionMenuProvider(application, viewModelScope, phoneConnection.rawActionMenuConfig)
+
     /** The configurable actions-menu entries, decoded from the phone's config DataItem. */
-    val actions: LiveData<List<ButtonAction>> =
-            WatchActionMenuProvider(application, viewModelScope, phoneConnection.rawActionMenuConfig).config
+    val actions: LiveData<List<ButtonAction>> = actionMenuProvider.config
 
     /** Latest custom list (playlists, search results, ...) the phone pushed. */
     val customList: LiveData<CustomListWithBitmaps> = phoneConnection.customList
@@ -38,5 +40,11 @@ class MenuViewModel @Inject constructor(
      *  history) - the phone re-pushes the updated list afterwards, updating [customList]. */
     fun deleteCustomListEntry(listId: String, entryId: String) {
         viewModelScope.launch { phoneConnection.deleteCustomListItem(listId, entryId) }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        // Detach the provider's observeForever hook on PhoneConnection's (@Singleton) LiveData.
+        actionMenuProvider.destroy()
     }
 }

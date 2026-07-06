@@ -15,7 +15,7 @@ import com.svartifoss.snfell.proto.WatchActions
 import com.svartifoss.snfell.watch.communication.getIcon
 import kotlinx.coroutines.*
 
-class WatchActionConfigProvider(context: Context, scope: CoroutineScope, rawConfigData: LiveData<DataItem>) {
+class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private val rawConfigData: LiveData<DataItem>) {
     private val dataClient = Wearable.getDataClient(context)
 
     val updateListener = MutableLiveData<WatchActionConfigProvider>()
@@ -79,5 +79,13 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, rawConf
     init {
         rawConfigData.observeForever(rawConfigObserver)
         updateListener.value = this
+    }
+
+    /** Stops observing the phone's config LiveData. The owning ViewModel must call this when it
+     *  is cleared: [rawConfigData] lives in the @Singleton PhoneConnection, so an un-removed
+     *  observeForever would keep this provider (and every decoded icon bitmap in [configMap])
+     *  alive for the whole process, one leaked copy per ViewModel recreation. */
+    fun destroy() {
+        rawConfigData.removeObserver(rawConfigObserver)
     }
 }

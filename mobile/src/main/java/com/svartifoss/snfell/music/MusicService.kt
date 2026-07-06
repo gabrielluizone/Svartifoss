@@ -176,7 +176,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val stopSelfPendingIntent = PendingIntent.getService(this,
                 STOP_SELF_PENDING_INTENT_REQUEST_CODE,
                 stopSelfIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         createNotificationChannel()
         val notificationBuilder = NotificationCompat.Builder(this, KEY_NOTIFICATION_CHANNEL)
@@ -450,9 +450,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
             currentVolume = mediaController.playbackInfo?.currentVolume ?: 0
 
-            val volume = currentVolume.toFloat() / (mediaController.playbackInfo?.maxVolume?.toFloat() ?: 0f)
-
-            musicStateBuilder.volume = volume
+            // Guard the divide-by-zero: a null playbackInfo (or a session reporting maxVolume 0)
+            // otherwise made this NaN, which propagated to the watch's volume bar.
+            val maxVolume = mediaController.playbackInfo?.maxVolume ?: 0
+            musicStateBuilder.volume =
+                    if (maxVolume > 0) currentVolume.toFloat() / maxVolume else 0f
         }
 
 
@@ -518,6 +520,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         val musicState = musicStateBuilder.build()
 
+        // Record the error as the last-transmitted state (buildMusicStateAndTransmit bypasses this
+        // path entirely, so it wouldn't otherwise know an error went out). Without this, if
+        // playback recovers to exactly the pre-error state, that recovered state compares equal to
+        // the stale previousMusicState and gets deduped away - leaving the watch stuck on the error
+        // screen. The error field differs, so comparing against the error state forces a re-send.
+        previousMusicState = musicState
+        previousAlbumArt = null
+
         val putDataRequest = PutDataRequest.create(CommPaths.DATA_MUSIC_STATE)
 
         putDataRequest.data = musicState.toByteArray()
@@ -532,7 +542,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val notificationManagerPendingIntent = PendingIntent.getActivity(this,
                 STOP_SELF_PENDING_INTENT_REQUEST_CODE,
                 notificationManagerIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         createNotificationChannel()
         val notificationBuilder = NotificationCompat.Builder(this, KEY_NOTIFICATION_CHANNEL_ERRORS)
@@ -944,7 +954,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 other.volume != volume ||
                 other.error != error ||
                 other.durationMs != durationMs ||
-                other.seekable != seekable
+                other.seekable != seekable ||
+                // Without these three the watch's quick-actions panel state rings stayed frozen:
+                // a state change that only flipped shuffle/repeat/like looked "equal" here and was
+                // never retransmitted (LikeAction.scheduleStateRefresh hit the same dedupe).
+                other.shuffleEnabled != shuffleEnabled ||
+                other.repeatMode != repeatMode ||
+                other.liked != liked
         ) {
             return false
         }

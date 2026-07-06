@@ -1855,8 +1855,11 @@ class MainActivity : WearCompanionWatchActivity(),
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // Back button is handled through onBackPressedDispatcher
-            return super.onKeyDown(keyCode, event)
+            // Back button is handled through onBackPressedDispatcher. It's super.onKeyUp (not
+            // onKeyDown) that fires onBackPressed for a tracked back event - calling onKeyDown
+            // here instead swallowed the release, so the configured back action, the quick-panel
+            // dismiss and the hints dismiss never ran on watches that deliver BACK as a KeyEvent.
+            return super.onKeyUp(keyCode, event)
         }
 
         if (stemButtonsManager.onKeyUp(keyCode)) {

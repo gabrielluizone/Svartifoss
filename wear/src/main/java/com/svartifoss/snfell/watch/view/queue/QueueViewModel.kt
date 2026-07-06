@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
+import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import com.svartifoss.snfell.watch.theme.WatchTheme
@@ -34,6 +35,17 @@ class QueueViewModel @Inject constructor(
 
     val items = MediatorLiveData<List<QueueItemUi>>().apply {
         addSource(phoneConnection.customList) { list ->
+            // phoneConnection.customList is shared and may still hold an unrelated list (search
+            // results, playlist shortcuts, ...) left over from a previous menu interaction. Only
+            // the live queue and its recently-played fallback belong to this screen; ignore the
+            // rest so the queue doesn't briefly render someone else's list before the real queue
+            // arrives (the loading spinner stays until then).
+            if (list != null &&
+                    list.listId != CustomLists.PLAYLIST &&
+                    list.listId != CustomLists.HISTORY) {
+                return@addSource
+            }
+
             latestList = list
             value = list?.items?.map { item ->
                 QueueItemUi(

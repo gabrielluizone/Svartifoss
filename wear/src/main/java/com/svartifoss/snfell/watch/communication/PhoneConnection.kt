@@ -128,6 +128,9 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         scope?.launchWithErrorHandling(context, musicState) {
             try {
                 dataClient.removeListener(this)
+                // start() registers both listeners; stop() only ever removed the data one, so the
+                // capability listener leaked (and kept firing onCapabilityChanged after close).
+                capabilityClient.removeListener(this)
 
                 val phoneNode = nodeClient.getNearestNodeId()
                 if (phoneNode != null) {
@@ -146,7 +149,11 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
         if (firstNode != null) {
             scope?.launchWithErrorHandling(context, musicState) {
-                messageClient.sendMessage(capabilityInfo.nodes.first().id, CommPaths.MESSAGE_WATCH_OPENED, null).await()
+                // Must target the same nearby node we cached above. nodes.first() is just the
+                // first entry in the set, which - when more than one node is reachable (e.g. a
+                // cloud node alongside the watch) - can be a different, non-nearby node, so the
+                // phone never learned the watch opened and never started transmitting state.
+                messageClient.sendMessage(firstNode.id, CommPaths.MESSAGE_WATCH_OPENED, null).await()
             }
         } else {
             musicState.postValue(Resource.error(context.getString(R.string.no_phone), null))
@@ -374,10 +381,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 DataClient.FILTER_LITERAL)
                 .await()
 
-        val dataItem = dataItems.firstOrNull() ?: return
-
-        targetLiveData.postValue(dataItem.freeze())
-        dataItems.release()
+        // release() must run even when the buffer is empty - the early `?: return` used to leak
+        // the DataItemBuffer whenever no config item was present yet.
+        try {
+            val dataItem = dataItems.firstOrNull() ?: return
+            targetLiveData.postValue(dataItem.freeze())
+        } finally {
+            dataItems.release()
+        }
     }
 
     override fun onInactive() {

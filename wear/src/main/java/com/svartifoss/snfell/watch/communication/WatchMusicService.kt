@@ -141,12 +141,23 @@ class WatchMusicService : LifecycleService() {
 
         // ServiceCompat passes the FGS type on API 29+ (required on API 34+) and is a no-op
         // arg on older versions, so this stays correct across the minSdk 25..34 range.
-        ServiceCompat.startForeground(
-                this,
-                NOTIFICATION_ID_PERSISTENT,
-                notificationBuilder.build(),
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
-        )
+        //
+        // This can run while the app is fully backgrounded (e.g. the combine flow flips to active
+        // because the phone resumed playback while the UI is closed). On API 31+ starting a
+        // foreground service from the background can be refused with
+        // ForegroundServiceStartNotAllowedException (an IllegalStateException) - catch it so a
+        // refusal doesn't crash the service. It stays a plain bound/started service; the
+        // manifest-registered MusicStateListenerService still keeps the Tile/complication fresh.
+        try {
+            ServiceCompat.startForeground(
+                    this,
+                    NOTIFICATION_ID_PERSISTENT,
+                    notificationBuilder.build(),
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+            )
+        } catch (e: IllegalStateException) {
+            Timber.w(e, "Could not promote WatchMusicService to foreground from background")
+        }
     }
 
     private fun removeWearNotification() {

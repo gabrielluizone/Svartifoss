@@ -51,11 +51,11 @@
             android:layout_width="244dp"
             android:layout_height="244dp"
             android:layout_marginTop="40dp"
+            android:src="@drawable/watch_round_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/on_screen_hint"
-            tools:ignore="ContentDescription"
-            tools:src="@drawable/watch_round_background" />
+            tools:ignore="ContentDescription" />
 
         <com.svartifoss.snfell.common.view.FourWayTouchLayout
             android:id="@+id/four_way_touch"
@@ -70,12 +70,12 @@
             android:id="@+id/watch_display_border"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:src="@drawable/watch_round_border"
             app:layout_constraintBottom_toBottomOf="@+id/watch_display_background"
             app:layout_constraintEnd_toEndOf="@+id/watch_display_background"
             app:layout_constraintStart_toStartOf="@+id/watch_display_background"
             app:layout_constraintTop_toTopOf="@+id/watch_display_background"
-            tools:ignore="ContentDescription"
-            tools:src="@drawable/watch_round_border" />
+            tools:ignore="ContentDescription" />
 
         <!-- Top zone icon -->
         <ImageView

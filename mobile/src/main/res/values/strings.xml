@@ -181,9 +181,16 @@
     <string name="error_notifications">Error notifications</string>
     <string name="notification_access_notification_title">Svartifoss needs notification access</string>
     <string name="notification_access_notification_title_description">Tap this notification and check Svartifoss to fix the issue</string>
-    <string name="error_service_not_enabled">Service not enabled</string>
-    <string name="error_service_not_enabled_description">Svartifoss needs notification access to detect which app is currently playing music on your phone and control it from your watch. Android only exposes that information to apps with notification access enabled — Svartifoss doesn\'t read the content of your notifications, it only uses this permission to find the active media session.\n\nTap \"Open Settings\" and enable Svartifoss under notification access.</string>
+    <string name="error_service_not_enabled">Notification access needed</string>
+    <string name="error_service_not_enabled_description">To control music from your watch, Svartifoss needs notification access — that\'s how Android lets it see which app is playing and send it play, pause and skip commands.\n\nSvartifoss never reads the contents of your notifications. It only uses this permission to find the active media session.\n\nTap \"Open Settings\", then turn on Svartifoss under notification access.</string>
     <string name="action_open_settings">Open Settings</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Install Svartifoss on your watch</string>
+    <string name="no_watch_app_description">Svartifoss couldn\'t find its watch app on your paired Wear OS watch. The phone and watch apps work together — without the watch app, controlling playback from your wrist won\'t work.\n\nTap \"Open Play Store\" to open the Play Store on your watch and install Svartifoss there. If you just installed it, give it a minute to finish syncing.</string>
+    <string name="no_watch_app_button">Open Play Store</string>
     <string name="required_permission">Required permission</string>
     <string name="setting_pause_on_swipe_exit">Pause playback on swipe exit</string>
     <string name="setting_pause_on_swipe_exit_description">Automatically pause any playback when exiting Svartifoss on the watch via swipe-left gesture.\n\nExiting via power button is not affected and it will never auto-pause.</string>
