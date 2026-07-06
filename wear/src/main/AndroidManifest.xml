@@ -149,12 +149,13 @@
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
             </intent-filter>
 
-            <!-- Image types only, deliberately: whether a face draws a cover attached to a
-                 text-type complication is up to its renderer (most show just the text), so text
-                 slots made the complication look broken. See the service class kdoc. -->
+            <!-- Round slots get the bare cover (SMALL_IMAGE/PHOTO_IMAGE); wide slots get
+                 LONG_TEXT (cover + title + artist) so the source doesn't render as a lone
+                 circle floating in a wide area. SHORT_TEXT stays deliberately unsupported -
+                 see the service class kdoc. -->
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SMALL_IMAGE,PHOTO_IMAGE" />
+                android:value="SMALL_IMAGE,PHOTO_IMAGE,LONG_TEXT" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="1800" />

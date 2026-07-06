@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cold-start window background: pure black (AMOLED-friendly, matches the app content that
+     replaces it) with the equalizer brand glyph centered, instead of the gray AppCompat
+     default that used to flash before the first frame. The activity layout root is opaque
+     black, so this is only ever visible during launch. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/black" />
+    <item
+        android:width="48dp"
+        android:height="48dp"
+        android:gravity="center"
+        android:drawable="@drawable/ic_equalizer_bars" />
+</layer-list>

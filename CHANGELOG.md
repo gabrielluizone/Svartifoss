@@ -126,6 +126,22 @@ shortcuts.
   constructor from every action class in release builds - any saved
   button config (including a fresh install's defaults) silently loaded
   empty. Fixed the rule to the current package.
+- **Watch UI freezing on track changes (including inside the queue screen)**:
+  several pieces of heavy work ran on the watch's main thread every time the
+  phone pushed new music state - decoding the album-art bitmap (and custom
+  list icons), the watch-face complication re-encoding its cover cache as a
+  max-quality PNG, and the media session re-sending the full cover bitmap
+  across binder on every state update (every volume step and seek included).
+  All bitmap decode/encode now runs on background threads, an unchanged cover
+  is recognized by its Data Layer asset id and skipped outright, and the
+  media-session metadata is only re-sent when something in it changed. A
+  track change also no longer runs the whole UI update pass twice (the
+  state-only put and the follow-up state+cover put delivered the same state
+  to every screen twice).
+- **Progress ring reset animation restored**: the ring once again sweeps
+  back smoothly on a track change instead of snapping to zero - the snap
+  had been introduced on the mistaken theory that the sweep was the
+  perceived lag.
 
 ## 1.12
 

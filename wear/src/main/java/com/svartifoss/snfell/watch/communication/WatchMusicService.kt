@@ -16,6 +16,7 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.ongoing.OngoingActivity
+import androidx.wear.ongoing.Status
 import android.content.ComponentName
 import androidx.wear.tiles.TileService
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
@@ -48,18 +49,38 @@ class WatchMusicService : LifecycleService() {
 
     private lateinit var mediaSession: WatchMediaSession
 
+    private var lastGlanceableFingerprint: String? = null
+
+    private var foregroundActive = false
+    private var lastOngoingTrackText: String? = null
+
     override fun onCreate() {
         super.onCreate()
+        active = true
 
         // Proxy MediaSession so the phone's playback shows up in the system Media Controls app and
         // the Wear OS media surfaces. State is pushed from PhoneConnection; controls forward back.
         // Created before the first notification so createWearNotification() can reference its token.
         mediaSession = WatchMediaSession(this, phoneConnection, lifecycleScope)
         phoneConnection.musicState.observe(this) { resource ->
-            mediaSession.update(resource?.data, phoneConnection.albumArt.value)
-            // Keep the glanceable quick-control Tile in sync with the latest playback state.
-            TileService.getUpdater(this).requestUpdate(MediaTileService::class.java)
-            requestComplicationUpdate()
+            val state = resource?.data
+            mediaSession.update(state, phoneConnection.albumArt.value)
+
+            // Recents/launcher shows the OngoingActivity *status text* under the app name - not
+            // the media session metadata - so it must be re-posted whenever the track changes.
+            refreshOngoingStatus()
+
+            // Keep the glanceable surfaces (Tile, album-art complication) in sync - but only when
+            // a field they actually render changed. The phone transmits state on every volume
+            // step and seek too; update requests are rate-limited by the system, so spamming one
+            // per state change could get the request that carries a new track/cover dropped.
+            val fingerprint =
+                    "${state?.title}|${state?.artist}|${state?.playing}|${resource?.status}"
+            if (fingerprint != lastGlanceableFingerprint) {
+                lastGlanceableFingerprint = fingerprint
+                TileService.getUpdater(this).requestUpdate(MediaTileService::class.java)
+                requestComplicationUpdate()
+            }
         }
         phoneConnection.albumArt.observe(this) { albumArt ->
             mediaSession.update(phoneConnection.musicState.value?.data, albumArt)
@@ -93,7 +114,23 @@ class WatchMusicService : LifecycleService() {
         }
     }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val result = super.onStartCommand(intent, flags, startId)
+
+        // Every ContextCompat.startForegroundService() aimed at this service (IdleMessageListener,
+        // MusicStateListenerService) must be answered with a startForeground() call - even when
+        // the service was already running, and especially when it was running *demoted* (after
+        // removeWearNotification()). Missing it crashes with
+        // "Context.startForegroundService() did not then call Service.startForeground()".
+        // createWearNotification() is idempotent, so re-posting is safe; if the service is
+        // actually idle, the pending timeout still stops it and removes the notification.
+        createWearNotification()
+
+        return result
+    }
+
     override fun onDestroy() {
+        active = false
         if (::mediaSession.isInitialized) {
             mediaSession.release()
         }
@@ -107,6 +144,35 @@ class WatchMusicService : LifecycleService() {
         ).requestUpdateAll()
     }
 
+    /**
+     * The "Title — Artist" line shown in the notification and as the OngoingActivity status
+     * (which is what recents/the launcher render under the app name), or null when there is
+     * no valid track to show.
+     */
+    private fun currentTrackText(): String? {
+        val state = phoneConnection.musicState.value?.data ?: return null
+        if (state.error || state.title.isBlank()) {
+            return null
+        }
+        return if (state.artist.isNotBlank()) {
+            "${state.title} — ${state.artist}"
+        } else {
+            state.title
+        }
+    }
+
+    /**
+     * Re-posts the foreground notification when the displayed track changed. The OngoingActivity
+     * status is baked into the posted notification, so a change requires a re-post; skipping
+     * unchanged text keeps volume/seek state updates from churning the notification.
+     */
+    private fun refreshOngoingStatus() {
+        if (!foregroundActive || currentTrackText() == lastOngoingTrackText) {
+            return
+        }
+        createWearNotification()
+    }
+
     private fun createWearNotification() {
         val openAppIntent = Intent(this, MainActivity::class.java)
 
@@ -115,6 +181,7 @@ class WatchMusicService : LifecycleService() {
                 openAppIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
+        val trackText = currentTrackText()
 
         createNotificationChannel()
         val notificationBuilder = NotificationCompat.Builder(this, KEY_NOTIFICATION_CHANNEL)
@@ -126,18 +193,35 @@ class WatchMusicService : LifecycleService() {
                 // template/surfaces derive their transport controls from the session state.
                 .setStyle(MediaNotificationCompat.MediaStyle().setMediaSession(mediaSession.sessionToken))
 
+        if (trackText != null) {
+            notificationBuilder.setContentText(trackText)
+        }
 
         // The animated icon is what the interactive watch face's ongoing-activity indicator
         // shows (faces that don't animate fall back to the static one, as does ambient) - the
         // same 3-bar equalizer the in-app Up Next button plays.
-        val ongoingActivity = OngoingActivity.Builder(this, NOTIFICATION_ID_PERSISTENT, notificationBuilder)
+        val ongoingActivityBuilder = OngoingActivity.Builder(this, NOTIFICATION_ID_PERSISTENT, notificationBuilder)
                 .setAnimatedIcon(R.drawable.ic_equalizer_bars_animated)
                 .setStaticIcon(R.drawable.ic_notification_bars)
                 .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
                 .setTouchIntent(openAppPendingIntent)
-                .build()
 
-        ongoingActivity.apply(this)
+        // Without an explicit Status the launcher falls back to the notification content text,
+        // which historically was empty here - that's why recents showed no track name. Set the
+        // track as the status so recents always has it (and stays in sync via
+        // refreshOngoingStatus()).
+        if (trackText != null) {
+            ongoingActivityBuilder.setStatus(
+                    Status.Builder()
+                            .addPart("track", Status.TextPart(trackText))
+                            .build()
+            )
+        }
+
+        ongoingActivityBuilder.build().apply(this)
+
+        foregroundActive = true
+        lastOngoingTrackText = trackText
 
         // ServiceCompat passes the FGS type on API 29+ (required on API 34+) and is a no-op
         // arg on older versions, so this stays correct across the minSdk 25..34 range.
@@ -161,6 +245,8 @@ class WatchMusicService : LifecycleService() {
     }
 
     private fun removeWearNotification() {
+        foregroundActive = false
+        lastOngoingTrackText = null
         stopForeground(true)
     }
 
@@ -198,6 +284,16 @@ class WatchMusicService : LifecycleService() {
     class Binder(private val service: WatchMusicService) : android.os.Binder() {
         val uiOpenFlow: Flow<Unit>
             get() = service.uiFlow
+    }
+
+    companion object {
+        /**
+         * Whether an instance is currently running (same-process flag, mirroring the phone-side
+         * MusicService.active) - lets MusicStateListenerService skip redundant foreground starts.
+         */
+        @Volatile
+        var active = false
+            private set
     }
 }
 

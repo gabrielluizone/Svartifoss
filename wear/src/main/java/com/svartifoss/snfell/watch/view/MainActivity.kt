@@ -556,7 +556,13 @@ class MainActivity : WearCompanionWatchActivity(),
         updatePlaybackTimeVisibility()
         syncUpNextEqualizerAnimation()
 
-        if (it.status == Resource.Status.SUCCESS && it.data != null) {
+        // "Idle": connected fine, but there is no track at all (as opposed to a *paused* track,
+        // which keeps the normal title + "Playback Stopped" presentation). Shows the branded
+        // equalizer + hint instead of a bare status line on an empty screen.
+        val idle = it.status == Resource.Status.SUCCESS &&
+                (it.data == null || (it.data?.playing != true && it.data?.title.isNullOrBlank()))
+
+        if (it.status == Resource.Status.SUCCESS && it.data != null && !idle) {
             if ((it.data as MusicState).playing) {
                 // Restores the dynamic (palette-extracted) color after a stopped/error message
                 // may have forced it to plain white below.
@@ -584,12 +590,30 @@ class MainActivity : WearCompanionWatchActivity(),
             }
         } else {
             binding.textArtist.text = ""
-            binding.textTitle.text = getString(R.string.playback_stopped)
+            binding.textTitle.text = ""
             updateRecentsLabel(null)
         }
 
+        setIdleStateVisible(idle)
+
         binding.textArtist.visibility =
                 if (binding.textArtist.text.isEmpty()) View.GONE else View.VISIBLE
+    }
+
+    /**
+     * Shows/hides the idle ("nothing playing") group and runs its equalizer animation only
+     * while it is actually on screen and the display is interactive - ambient stops it (see
+     * ambientCallback), both to respect the low-power mode and because AVDs don't animate
+     * there anyway.
+     */
+    private fun setIdleStateVisible(visible: Boolean) {
+        binding.idleStateGroup.visibility = if (visible) View.VISIBLE else View.GONE
+        val animation = binding.idleStateIcon.drawable as? Animatable ?: return
+        if (visible && !ambientObserver.isAmbient) {
+            if (!animation.isRunning) animation.start()
+        } else {
+            animation.stop()
+        }
     }
 
     /** The app label to fall back to in the recents/app-switcher card when nothing is playing. */
@@ -1436,6 +1460,14 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     private val playbackPositionObserver = Observer<PlaybackPosition?> { position ->
+        // Mid-rotary-scrub the ring shows the pending seek target - don't let the live position
+        // ticker yank it back to the playing position between crown detents. The commit runnable
+        // clears the pending fraction and seekTo() re-anchors the position, so ticks resume from
+        // the scrubbed point right after.
+        if (pendingRotarySeekFraction != null) {
+            return@Observer
+        }
+
         if (position == null || position.durationMs <= 0) {
             binding.seekBar.seekable = false
             hasPlaybackPosition = false
@@ -1687,7 +1719,12 @@ class MainActivity : WearCompanionWatchActivity(),
 
                     viewModel.setContinuousPositionTicking(false)
 
-                    binding.root.background = ColorDrawable(Color.BLACK)
+                    // AVDs don't animate in ambient; also a live equalizer would defeat the
+                    // low-power mode. setIdleStateVisible restarts it on ambient exit.
+                    (binding.idleStateIcon.drawable as? Animatable)?.stop()
+
+                    // The root is already opaque black from the layout (AMOLED + it covers the
+                    // branded splash windowBackground); nothing to override for ambient.
 
                     binding.notificationPopup.backgroundImage.visibility = View.GONE
                     binding.notificationPopup.solidBackground.background = ColorDrawable(Color.BLACK)
@@ -1738,7 +1775,10 @@ class MainActivity : WearCompanionWatchActivity(),
 
                     viewModel.setContinuousPositionTicking(true)
 
-                    binding.root.background = null
+                    // Root deliberately keeps its opaque black layout background (never null -
+                    // that would let the splash windowBackground glyph bleed through wherever
+                    // no album art covers the screen).
+                    setIdleStateVisible(binding.idleStateGroup.visibility == View.VISIBLE)
 
                     binding.notificationPopup.backgroundImage.visibility = View.VISIBLE
                     binding.notificationPopup.solidBackground.background =
@@ -1821,8 +1861,13 @@ class MainActivity : WearCompanionWatchActivity(),
             // Optional: scrub the playback timeline with the crown instead of changing volume.
             if (Preferences.getBoolean(preferences, MiscPreferences.ROTARY_SEEK) &&
                     binding.seekBar.seekable) {
-                val newFraction =
-                        (binding.seekBar.progress + delta * 0.0011f * multipler).coerceIn(0f, 1f)
+                // Accumulate on the pending scrub target, not on seekBar.progress: while music
+                // plays, the position ticker keeps rewriting seekBar.progress with the live
+                // position between detents, so using the bar as the base made each turn snap
+                // back and fight the ticker (the bug only showed during playback - paused had
+                // no ticks). The observer below also holds ticker writes off mid-scrub.
+                val base = pendingRotarySeekFraction ?: binding.seekBar.progress
+                val newFraction = (base + delta * 0.0011f * multipler).coerceIn(0f, 1f)
                 binding.seekBar.progress = newFraction
                 showSeekOverlay(newFraction)
                 scheduleRotarySeekCommit(newFraction)
@@ -2072,7 +2117,19 @@ class MainActivity : WearCompanionWatchActivity(),
         // History (the fallback shown when the playing app exposes no real queue) is backward
         // looking - there's no "next" track to preview in that case.
         val nextTrack = if (data.listId == CustomLists.PLAYLIST) {
-            data.items.firstOrNull()?.listItem?.entryTitle
+            // The queue list is the full queue with activeEntryId marking the current track -
+            // "Up Next" is the entry AFTER it. Taking items.first() showed whatever happened to
+            // sit at the top of the queue (usually the current or even an older track). Without
+            // an active id (some apps never set activeQueueItemId), fall back to the first entry.
+            val items = data.items
+            val activeIndex = data.activeEntryId
+                    ?.let { id -> items.indexOfFirst { item -> item.listItem.entryId == id } }
+                    ?: -1
+            if (activeIndex >= 0) {
+                items.getOrNull(activeIndex + 1)?.listItem?.entryTitle
+            } else {
+                items.firstOrNull()?.listItem?.entryTitle
+            }
         } else {
             null
         }
@@ -2128,8 +2185,11 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     private val rotarySeekCommitRunnable = Runnable {
-        pendingRotarySeekFraction?.let { viewModel.seekTo(it) }
+        // Clear the pending fraction *before* seeking: seekTo() posts the re-anchored position
+        // synchronously, and the observer ignores position updates while a scrub is pending.
+        val fraction = pendingRotarySeekFraction
         pendingRotarySeekFraction = null
+        fraction?.let { viewModel.seekTo(it) }
     }
 
     /**

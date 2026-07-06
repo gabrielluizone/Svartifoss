@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/theme_accent</item>
         <item name="android:fontFamily">@font/google_sans</item>
         <item name="fontFamily">@font/google_sans</item>
+        <!-- Black branded launch frame instead of the gray AppCompat default - pure black is
+             also what AMOLED watches want. See splash_background.xml. -->
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
     <!-- Theme for the full-screen Compose screens (queue, actions menu). Deliberately OPAQUE:

@@ -99,6 +99,10 @@ class CircularProgressSeekBar : View {
     private fun animateProgressTo(target: Float) {
         progressAnimator?.cancel()
 
+        // Every non-trivial change animates - including the backward sweep to zero on a track
+        // change. That sweep once got mistaken for UI lag and replaced with an instant snap,
+        // but the real lag was main-thread bitmap work elsewhere; the animated reset is the
+        // intended look.
         if (kotlin.math.abs(target - displayProgress) < 0.0005f) {
             displayProgress = target
             invalidate()

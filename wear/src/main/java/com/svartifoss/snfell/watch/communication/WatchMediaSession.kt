@@ -82,6 +82,17 @@ class WatchMediaSession(
     val sessionToken: MediaSessionCompat.Token
         get() = session.sessionToken
 
+    // What the session's metadata was last built from. setMetadata ships the full cover bitmap
+    // across binder every call, and update() runs on every state put (volume steps, seeks,
+    // play/pause) - so metadata is only re-set when a field it contains actually changed. The
+    // bitmap is compared by reference: PhoneConnection keeps the posted Bitmap instance stable
+    // while the cover doesn't change.
+    private var metadataSet = false
+    private var lastMetaTitle: String? = null
+    private var lastMetaArtist: String? = null
+    private var lastMetaDurationMs = -1L
+    private var lastMetaAlbumArt: Bitmap? = null
+
     /** Pushes the latest phone state into the session. A null [state] deactivates the session. */
     fun update(state: MusicState?, albumArt: Bitmap?) {
         if (state == null) {
@@ -91,18 +102,28 @@ class WatchMediaSession(
 
         session.isActive = true
 
-        session.setMetadata(
-                MediaMetadataCompat.Builder().apply {
-                    putString(MediaMetadataCompat.METADATA_KEY_TITLE, state.title)
-                    putString(MediaMetadataCompat.METADATA_KEY_ARTIST, state.artist)
-                    if (state.durationMs > 0) {
-                        putLong(MediaMetadataCompat.METADATA_KEY_DURATION, state.durationMs)
-                    }
-                    if (albumArt != null) {
-                        putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, albumArt)
-                    }
-                }.build()
-        )
+        val durationMs = if (state.durationMs > 0) state.durationMs else -1L
+        if (!metadataSet || state.title != lastMetaTitle || state.artist != lastMetaArtist ||
+                durationMs != lastMetaDurationMs || albumArt !== lastMetaAlbumArt) {
+            metadataSet = true
+            lastMetaTitle = state.title
+            lastMetaArtist = state.artist
+            lastMetaDurationMs = durationMs
+            lastMetaAlbumArt = albumArt
+
+            session.setMetadata(
+                    MediaMetadataCompat.Builder().apply {
+                        putString(MediaMetadataCompat.METADATA_KEY_TITLE, state.title)
+                        putString(MediaMetadataCompat.METADATA_KEY_ARTIST, state.artist)
+                        if (durationMs > 0) {
+                            putLong(MediaMetadataCompat.METADATA_KEY_DURATION, durationMs)
+                        }
+                        if (albumArt != null) {
+                            putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, albumArt)
+                        }
+                    }.build()
+            )
+        }
 
         var actions = PlaybackStateCompat.ACTION_PLAY or
                 PlaybackStateCompat.ACTION_PAUSE or

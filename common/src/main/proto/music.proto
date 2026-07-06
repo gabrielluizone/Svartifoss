@@ -21,5 +21,9 @@ message MusicState {
   optional bool shuffleEnabled = 12 [default = false];
   optional int32 repeatMode = 13 [default = 0]; // 0=off, 1=all, 2=one
   optional bool liked = 14 [default = false];
+  // Set on the fast state-only put the phone ships ahead of the album-art put on a track
+  // change: "this state HAS art, it just hasn't crossed Bluetooth yet". The watch keeps the
+  // previous cover instead of blanking; the follow-up put carries the asset and clears this.
+  optional bool albumArtPending = 15 [default = false];
 }
 

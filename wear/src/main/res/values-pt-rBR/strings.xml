@@ -6,6 +6,10 @@
     <string name="complication_no_music">Nada tocando</string>
     <string name="tile_nothing_playing">Nada tocando</string>
 
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Nada tocando</string>
+    <string name="idle_hint">Toque algo no seu celular</string>
+
     <string name="no_phone">Nenhum celular conectado</string>
     <string name="playback_stopped">Reprodução parada</string>
     <string name="error">ERRO</string>

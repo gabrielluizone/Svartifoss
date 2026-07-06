@@ -15,6 +15,8 @@ This is a multi-module Gradle (Groovy DSL) Android project, configured in `setti
 - `common/` — shared code linked into both `mobile` and `wear`: communication path constants (`CommPaths.kt`), action/button-config models, protobuf schemas (`src/main/proto/*.proto` — actions, music, watch, notifications, custom lists), shared views/drawables.
 - `wearutils/` — a **git submodule** (https://github.com/matejdro/WearUtils) with its own `libs.toml`. If this directory is empty, run `git submodule update --init` before building — Android Studio/Gradle sync will fail otherwise.
 
+Root directories that are *not* part of the build: `icons/` (tracked; raw Material Symbols SVG downloads used as source material when adding drawables) and the gitignored local reference folders `retromusic/` and `redesign/`.
+
 ### Phone ⟷ watch communication
 
 All communication goes through the Google Play Services **Wearable Data Layer API** (`MessageClient`/`DataClient`), with paths centralized in `common/.../CommPaths.kt`. Key entry points:
@@ -82,9 +84,17 @@ Unit tests live under `mobile/src/test` and `wear/src/test` (JUnit 4). `wear/bui
 
 There is no instrumented/UI test setup in this repo currently.
 
+To sideload builds onto real devices, `serve_apk.py` (repo root) serves the assembled mobile/wear debug and release APKs over HTTP on the local network (port 8765) — build first, then `python3 serve_apk.py` and download from the phone/watch browser.
+
 ## Signing
 
 Release signing config is pulled from an optional `keystore.properties` file at the repo root (not checked in) — see the `afterEvaluate` block in the root `build.gradle`. Builds without it fall back to the debug signing config.
+
+## Releases & release docs
+
+- `versionCode` lives in `mobile/build.gradle` and `wear/build.gradle`; the two modules are version-coded independently (`versionName` is kept in sync). Play Console permanently burns every uploaded versionCode, including from rejected or never-released builds — bumps sometimes skip ahead (e.g. wear 135 → 140) for exactly this reason, so when bumping, check the Play Console history, not just git.
+- `CHANGELOG.md` (repo root) is the user-facing changelog — update it alongside user-visible changes.
+- Besides the modernization plan, `docs/` holds the Play Console material: store listing texts, Data Safety answers, the notification-access permission declaration, and the privacy policy (`docs/play-console-*.md`, `docs/privacy-policy.md`). Screenshots for the README/store listing go in `docs/images/`.
 
 ## Toolchain
 
@@ -105,4 +115,4 @@ The app was renamed from Music Center for Wear (fork of matejdro/WearMusicCenter
 
 `docs/wear-modernization-plan.md` contains the full phased modernization strategy: Foundation (targetSdk bump — now at 35 — and deprecated API cleanup) → MediaSession mirror (watch-side `MediaSession` that forwards controls to the phone) → Tiles & Complications → in-UI navigation. Consult this doc before making architectural decisions in `wear/`.
 
-**Current state (branch `wear-phase-1-mediasession`):** `WatchMediaSession` is implemented and active, and Phase 3 surfaces exist: a Tile (`watch/tile/MediaTileService.kt`, built with `androidx.wear.protolayout`/`androidx.wear.tiles`) and a complication data source (`watch/complication/AlbumArtComplicationDataSourceService.kt`, `androidx.wear.watchface` complications). Because these run outside the main app UI lifecycle, they fetch music state directly over the Data Layer via `CommPaths` rather than through `PhoneConnection`. Jetpack Compose for Wear OS (`wear.compose.material3`) is enabled in `wear/build.gradle` and used for `QueueActivity`/`QueueScreen` (`watch/view/queue/`) and `MenuActivity`/`MenuScreen` (`watch/view/menu/` — the actions/custom-list menu, which replaced the old `WearableDrawerLayout` bottom drawer; `MenuActivity` is a pure picker that returns the selection for `MainActivity` to execute). Shared Compose chrome (curved clock, scroll indicator, spinner) lives in `watch/view/compose/WatchScreenChrome.kt`; design constants for all three UI stacks live in `watch/theme/WatchTheme.kt`. New watch UI work should prefer Compose; the legacy View-based `MainActivity` (now-playing screen) remains.
+**Current state (branch `wear-phase-1-mediasession`):** `WatchMediaSession` is implemented and active, and Phase 3 surfaces exist: a Tile (`watch/tile/MediaTileService.kt`, built with `androidx.wear.protolayout`/`androidx.wear.tiles`) and a complication data source (`watch/complication/AlbumArtComplicationDataSourceService.kt`, `androidx.wear.watchface` complications). Because these run outside the main app UI lifecycle, they fetch music state directly over the Data Layer via `CommPaths` rather than through `PhoneConnection`; the manifest-registered `MusicStateListenerService` (`watch/communication/`) requests a Tile + complication refresh whenever the phone publishes new music state — `WatchMusicService` does the same while running, but it idle-times out, and without this listener the surfaces froze on stale state. It also revives a dead `WatchMusicService` when the received state says music is playing (the phone only sends `MESSAGE_START_SERVICE` on a playback-*start* edge, so a service that died mid-playback would otherwise stay dead). Jetpack Compose for Wear OS (`wear.compose.material3`) is enabled in `wear/build.gradle` and used for `QueueActivity`/`QueueScreen` (`watch/view/queue/`) and `MenuActivity`/`MenuScreen` (`watch/view/menu/` — the actions/custom-list menu, which replaced the old `WearableDrawerLayout` bottom drawer; `MenuActivity` is a pure picker that returns the selection for `MainActivity` to execute). Shared Compose chrome (curved clock, scroll indicator, spinner) lives in `watch/view/compose/WatchScreenChrome.kt`; design constants for all three UI stacks live in `watch/theme/WatchTheme.kt`. New watch UI work should prefer Compose; the legacy View-based `MainActivity` (now-playing screen) remains.

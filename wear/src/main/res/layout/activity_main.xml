@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contentContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
 
     <!-- Wrapper (rather than putting everything straight into the root) so ambient burn-in
          protection has a single view to jiggle/reset - see onUpdateAmbient in MainActivity.
@@ -28,6 +29,48 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/album_art_scrim" />
+
+        <!-- Idle ("nothing playing") state: animated equalizer glyph + friendly text on pure
+             black, shown by MainActivity instead of the old bare "Playback Stopped" line when
+             there is no track at all. Not clickable - taps fall through to the gesture layers,
+             so stopped-config buttons/gestures still work to start playback. -->
+        <LinearLayout
+            android:id="@+id/idle_state_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/idle_state_icon"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/ic_equalizer_bars_animated"
+                app:tint="@color/theme_accent"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/idle_state_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/idle_nothing_playing"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/idle_state_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/idle_hint"
+                android:textColor="@color/glass_surface_subtitle_text"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <androidx.wear.widget.BoxInsetLayout
             android:layout_width="match_parent"

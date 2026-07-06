@@ -102,6 +102,7 @@ class MusicViewModel @Inject constructor(
             return
         }
 
+        applyOptimisticFeedback(action)
         viewModelScope.launchWithErrorHandling(application, musicState) {
             phoneConnection.executeMenuAction(index)
         }
@@ -126,6 +127,7 @@ class MusicViewModel @Inject constructor(
         }
 
         if (!executeActionOnWatch(action, multiplier)) {
+            applyOptimisticFeedback(action)
             viewModelScope.launchWithErrorHandling(application, musicState) {
                 phoneConnection.executeButtonAction(buttonInfo)
             }
@@ -236,9 +238,54 @@ class MusicViewModel @Inject constructor(
 
     /** Toggles play/pause directly, independent of however the four quadrants are configured. */
     fun togglePlayPause() {
+        latestMusicState?.let { applyOptimisticPlayingState(!it.playing) }
         viewModelScope.launchWithErrorHandling(application, musicState) {
             phoneConnection.togglePlayPause()
         }
+    }
+
+    /**
+     * Immediately reflects a play/pause-type command in the local UI instead of waiting for the
+     * phone to execute it and transmit the resulting state back - that full Bluetooth round trip
+     * plus the player app's own reaction time is what made the button feel laggy. The phone's
+     * real state overwrites this within a moment; if the command didn't take, the UI snaps back.
+     */
+    private fun applyOptimisticFeedback(action: ButtonAction) {
+        when (action.key) {
+            StandardActions.ACTION_PLAY_PAUSE ->
+                latestMusicState?.let { applyOptimisticPlayingState(!it.playing) }
+            StandardActions.ACTION_PLAY -> applyOptimisticPlayingState(true)
+            StandardActions.ACTION_PAUSE, StandardActions.ACTION_STOP ->
+                applyOptimisticPlayingState(false)
+        }
+    }
+
+    private fun applyOptimisticPlayingState(nowPlaying: Boolean) {
+        val state = latestMusicState ?: return
+        if (state.playing == nowPlaying) {
+            return
+        }
+
+        // Re-anchor the position so the progress display neither keeps advancing after an
+        // optimistic pause nor extrapolates from a stale base after an optimistic resume -
+        // same trick seekTo() uses.
+        val elapsedWhilePlaying = if (state.playing) {
+            ((System.currentTimeMillis() - state.positionUpdateTime) * state.playbackSpeed).toLong()
+        } else {
+            0L
+        }
+        val maxPosition = if (state.durationMs > 0) state.durationMs else Long.MAX_VALUE
+        val position = (state.positionMs + elapsedWhilePlaying).coerceIn(0L, maxPosition)
+
+        val optimisticState = state.toBuilder()
+                .setPlaying(nowPlaying)
+                .setPositionMs(position)
+                .setPositionUpdateTime(System.currentTimeMillis())
+                .build()
+
+        // Route through the regular listener so every side effect (config swap, position
+        // ticker, close timeout) behaves exactly as it will when the phone confirms.
+        musicStateListener.onChanged(Resource.success(optimisticState))
     }
 
     /** Triggers like/shuffle/repeat directly from the quick-actions panel, regardless of how

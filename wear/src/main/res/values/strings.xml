@@ -7,6 +7,10 @@
     <string name="complication_no_music">Nothing playing</string>
     <string name="tile_nothing_playing">Nothing playing</string>
 
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Nothing playing</string>
+    <string name="idle_hint">Play something on your phone</string>
+
     <string name="no_phone">No phone connected</string>
     <string name="playback_stopped">Playback Stopped</string>
     <string name="error">ERROR</string>

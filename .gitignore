@@ -40,6 +40,9 @@ mobile/google-services.json
 promp.txt
 centering_check.png
 
+# Personal config-backup export (ConfigBackup.kt output) - not app source
+/svartifoss_config.json
+
 # Design/reference material, not part of the app build
 redesign/
 retromusic/

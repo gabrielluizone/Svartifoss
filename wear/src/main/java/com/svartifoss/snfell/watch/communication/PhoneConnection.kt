@@ -81,6 +81,17 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     @Volatile
     private var phoneNodeId: String? = null
 
+    // Last music state delivered to observers, with albumArtPending cleared for comparison. A
+    // track change arrives as two puts whose states are byte-identical except that flag (state
+    // alone first, state+cover second) - re-delivering the second ran every observer's full
+    // update pass (now-playing UI, media session, notification, recents label) twice per track
+    // change. See deliverMusicState.
+    private var lastDeliveredMusicState: MusicState? = null
+
+    // Data Layer asset id (content-derived) of the currently decoded album art - lets an
+    // unchanged cover riding along on every state put be skipped without decoding it again.
+    private var lastAlbumArtAssetId: String? = null
+
     private var sendingVolume = false
     private var nextVolume = -1f
 
@@ -101,7 +112,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
         scope = CoroutineScope(Job() + Dispatchers.Main)
 
+        // The loading value posted below overwrites whatever observers currently show, so the
+        // seed/next state must always be delivered even if it equals the last delivered one.
+        lastDeliveredMusicState = null
+
         scope?.launchWithErrorHandling(context, musicState) {
+            // Loading goes out first so a "no phone" error posted below is not overwritten by it.
+            musicState.postValue(Resource.loading(null))
+
             val capabilities = capabilityClient.getCapability(
                     CommPaths.PHONE_APP_CAPABILITY,
                     CapabilityClient.FILTER_REACHABLE
@@ -116,7 +134,15 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             loadCurrentActionConfig(CommPaths.DATA_STOPPING_ACTION_CONFIG, rawStoppedConfig)
             loadCurrentActionConfig(CommPaths.DATA_LIST_ITEMS, rawActionMenuConfig)
 
-            musicState.postValue(Resource.loading(null))
+            // Seed music state from the DataItem already in the Data Layer store. The listener
+            // above only fires on *future* changes, and the phone dedups the retransmit it does
+            // on MESSAGE_WATCH_OPENED when nothing changed since its last put - so without this
+            // read the state (and the media session driven by it) could stay empty until the
+            // next actual track/playback change. Only done while the phone is reachable: with no
+            // phone around the stored state is stale and the error above is the truthful UI.
+            if (capabilities.nodes.any { it.isNearby }) {
+                loadCurrentMusicState()
+            }
         }
     }
 
@@ -306,15 +332,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                                 val receivedMusicState = MusicState.parseFrom(dataItem.data)
 
                                 if (receivedMusicState.error) {
+                                    lastDeliveredMusicState = null
                                     musicState.postValue(Resource.error(receivedMusicState.title, null))
                                 } else {
-                                    musicState.postValue(Resource.success(receivedMusicState))
+                                    deliverMusicState(receivedMusicState)
 
                                     sendAck()
 
-                                    val albumArtData = dataItem.assets[CommPaths.ASSET_ALBUM_ART]
-                                            ?.let { asset -> dataClient.getByteArrayAsset(asset) }
-                                    albumArt.postValue(BitmapUtils.deserialize(albumArtData))
+                                    deliverAlbumArt(dataItem, receivedMusicState)
                                 }
                             }
                             CommPaths.DATA_NOTIFICATION -> {
@@ -325,7 +350,9 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
                                 val pictureData = dataItem.assets[CommPaths.ASSET_NOTIFICATION_BACKGROUND]
                                         ?.let { asset -> dataClient.getByteArrayAsset(asset) }
-                                val picture = BitmapUtils.deserialize(pictureData)
+                                val picture = pictureData?.let { bytes ->
+                                    withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
+                                }
 
                                 val mergedNotification = com.svartifoss.snfell.watch.model.Notification(
                                         receivedNotification.title,
@@ -348,7 +375,12 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                                             val pictureData = dataItem.assets[index.toString()]
                                                     ?.let { asset -> dataClient.getByteArrayAsset(asset) }
 
-                                            val picture = BitmapUtils.deserialize(pictureData)
+                                            // Off-main: decoding a screenful of icons on the main
+                                            // dispatcher stalled whatever screen was open when a
+                                            // list arrived.
+                                            val picture = pictureData?.let { bytes ->
+                                                withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
+                                            }
 
                                             CustomListItemWithIcon(
                                                     rawListEntry,
@@ -373,6 +405,88 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
     override fun onCapabilityChanged(capability: CapabilityInfo) {
         onWatchConnectionUpdated(capability)
+    }
+
+    /**
+     * Posts [state] unless it matches the last delivered one modulo the albumArtPending flag -
+     * skipping the second put of the two-put track change (see [lastDeliveredMusicState]).
+     * Must be called without suspending after parsing, so the tracker is updated before the
+     * next queued put's coroutine gets a chance to run.
+     */
+    private fun deliverMusicState(state: MusicState) {
+        val comparable = state.toBuilder().setAlbumArtPending(false).build()
+        if (comparable == lastDeliveredMusicState) {
+            return
+        }
+        lastDeliveredMusicState = comparable
+        musicState.postValue(Resource.success(state))
+    }
+
+    /**
+     * Decodes and posts the album art attached to a music-state DataItem.
+     *
+     * The asset id is content-derived, so the unchanged cover riding along on every state put
+     * (play/pause, volume, seek) is skipped outright - no re-decode, no re-delivery. That also
+     * keeps the posted Bitmap reference-stable, which the identity checks downstream (crossfade
+     * dedupe, palette cache, media-session metadata) rely on. The decode itself runs off the
+     * main thread - it used to stall input and animation frames right as a track changed.
+     */
+    private suspend fun deliverAlbumArt(dataItem: DataItem, state: MusicState) {
+        val asset = dataItem.assets[CommPaths.ASSET_ALBUM_ART]
+
+        if (asset == null) {
+            // The phone ships a track change as two puts: state alone first (fast, flagged
+            // albumArtPending), then state+cover. While the cover is in transit, keep showing
+            // the previous one - the new art crossfades in when it lands, instead of the screen
+            // blanking between the two puts. A state with no asset and no pending flag genuinely
+            // has no art: clear.
+            if (!state.albumArtPending) {
+                lastAlbumArtAssetId = null
+                albumArt.postValue(null)
+            }
+            return
+        }
+
+        if (asset.id == lastAlbumArtAssetId && albumArt.value != null) {
+            return
+        }
+
+        val albumArtData = dataClient.getByteArrayAsset(asset)
+        val receivedAlbumArt = albumArtData?.let { bytes ->
+            withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
+        }
+        if (receivedAlbumArt != null) {
+            lastAlbumArtAssetId = asset.id
+            albumArt.postValue(receivedAlbumArt)
+        } else if (!state.albumArtPending) {
+            // Asset attached but unreadable and nothing newer on the way: clear rather than
+            // keep showing the previous track's cover indefinitely.
+            lastAlbumArtAssetId = null
+            albumArt.postValue(null)
+        }
+    }
+
+    private suspend fun loadCurrentMusicState() {
+        val dataItems = dataClient.getDataItems(
+                Uri.parse("wear://*${CommPaths.DATA_MUSIC_STATE}"),
+                DataClient.FILTER_LITERAL)
+                .await()
+
+        val dataItem = try {
+            dataItems.firstOrNull()?.freeze() ?: return
+        } finally {
+            dataItems.release()
+        }
+
+        val storedState = MusicState.parseFrom(dataItem.data)
+        if (storedState.error) {
+            // A stored error ("nothing playing" etc.) may predate whatever the phone is about to
+            // send in response to MESSAGE_WATCH_OPENED - keep showing loading instead.
+            return
+        }
+
+        deliverMusicState(storedState)
+        deliverAlbumArt(dataItem, storedState)
     }
 
     private suspend fun loadCurrentActionConfig(configPath: String, targetLiveData: MutableLiveData<DataItem>) {

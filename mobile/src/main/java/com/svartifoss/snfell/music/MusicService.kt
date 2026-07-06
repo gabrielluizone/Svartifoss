@@ -72,8 +72,11 @@ import com.matejdro.wearutils.miscutils.BitmapUtils
 import com.matejdro.wearutils.preferences.definition.Preferences
 import com.matejdro.wearvibrationcenter.notificationprovider.ReceivedNotification
 import dagger.android.AndroidInjection
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
 import java.lang.ref.WeakReference
 import java.nio.ByteBuffer
 import java.util.concurrent.TimeUnit
@@ -92,6 +95,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private const val MESSAGE_STOP_SELF = 0
         private val ACK_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(3)
         private const val SEEK_DETECTION_THRESHOLD_MS = 1500L
+        private const val QUEUE_REFRESH_DEBOUNCE_MS = 600L
         private const val MAX_TRACK_HISTORY_SIZE = 20
 
         private const val STOP_SELF_PENDING_INTENT_REQUEST_CODE = 333
@@ -130,11 +134,28 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private lateinit var actionHandlers: Map<Class<*>, ActionHandler<*>>
 
     private var ackTimeoutHandler = AckTimeoutHandler(WeakReference(this))
+    private val queueRefreshHandler = Handler(Looper.getMainLooper())
 
     private var previousMusicState: MusicState? = null
     private var previousAlbumArt: Bitmap? = null
     var currentMediaController: MediaController? = null
     private var startedFromWatch = false
+
+    // Reference-keyed cache of the last art serialized for the watch. State-only changes
+    // (volume, seek, play/pause) reuse the bytes instead of re-encoding the same cover on
+    // every transmit.
+    private var lastSerializedArtSource: Bitmap? = null
+    private var lastSerializedArt: ByteArray? = null
+
+    // Guards against a transmit that suspended for art encoding finishing after a newer
+    // transmit already shipped fresher state - see transmitToWear.
+    private var transmitSequence = 0L
+
+    // Cache of the last album art decoded from a content URI, keyed by the URI string. Apps
+    // that publish art as a URI would otherwise get a fresh Bitmap object on every state
+    // callback, defeating the reference-identity "did the art change" check below.
+    private var lastArtUriString: String? = null
+    private var lastArtUriBitmap: Bitmap? = null
 
     private var lastTrackArtist = ""
     private var lastTrackTitle = ""
@@ -232,6 +253,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         messageClient.removeListener(this)
 
         ackTimeoutHandler.removeCallbacksAndMessages(null)
+        queueRefreshHandler.removeCallbacksAndMessages(null)
         contentResolver.unregisterContentObserver(volumeContentObserver)
 
         active = false
@@ -402,7 +424,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     // Many apps on Android 10+ provide art as a content:// URI instead of a raw
                     // Bitmap to reduce memory pressure. The system notification resolver handles
                     // these automatically; we need an explicit fallback to match.
-                    ?: loadBitmapFromUri(
+                    ?: loadBitmapFromUriCached(
                         meta.getString(MediaMetadata.METADATA_KEY_ALBUM_ART_URI)
                             ?: meta.getString(MediaMetadata.METADATA_KEY_ART_URI)
                             ?: meta.getString(MediaMetadata.METADATA_KEY_DISPLAY_ICON_URI)
@@ -476,30 +498,106 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
 
         Timber.d("TransmittingToWear %s", musicState)
+        val trackChanged = previousMusicState?.title != musicState.title ||
+                previousMusicState?.artist != musicState.artist
         previousMusicState = musicState
         previousAlbumArt = albumArt
         transmitToWear(musicState, albumArt)
+
+        // Keep the watch's queue data (QueueActivity + the quick panel's "Up Next" preview)
+        // in step with playback. It used to be pushed only when explicitly requested, so the
+        // preview kept showing "next" relative to whatever old snapshot it had - often the
+        // previous or even the current track.
+        if (trackChanged) {
+            scheduleQueueRefresh()
+        }
+    }
+
+    /**
+     * Debounced re-push of the playback queue custom list. The delay lets the player app settle
+     * activeQueueItemId after a track change (many update metadata first, queue position a
+     * moment later), and collapses rapid skip-skip-skip into one transmission.
+     */
+    private fun scheduleQueueRefresh() {
+        queueRefreshHandler.removeCallbacksAndMessages(null)
+        queueRefreshHandler.postDelayed({
+            executeAction(OpenPlaylistAction(this))
+        }, QUEUE_REFRESH_DEBOUNCE_MS)
     }
 
     private fun transmitToWear(musicState: MusicState, originalAlbumArt: Bitmap?) {
+        val mySequence = ++transmitSequence
+
         lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+            val stateBytes = musicState.toByteArray()
+
+            val previousArtSource = lastSerializedArtSource
+            val artChanged = when {
+                originalAlbumArt === previousArtSource -> false
+                originalAlbumArt == null || previousArtSource == null -> true
+                // Same pixels behind a new object: players often republish MediaMetadata on
+                // play/pause, handing us a fresh Bitmap for unchanged art. Treating that as
+                // "new art" shipped a state-only put first, which blanked the cover on the
+                // watch for a moment on every pause. Pixel-compare and keep the cached bytes.
+                originalAlbumArt.sameAs(previousArtSource) -> {
+                    lastSerializedArtSource = originalAlbumArt
+                    false
+                }
+                else -> true
+            }
+
+            // The Data Layer only delivers a DataItem to the watch after all attached assets
+            // finished crossing Bluetooth - bundling new art with the state made the new track's
+            // title/artist wait for the cover transfer. When art has to travel, ship the state
+            // alone first (delivered near-instantly) and attach the cover in a second put.
+            if (originalAlbumArt != null && artChanged) {
+                val stateOnlyRequest = PutDataRequest.create(CommPaths.DATA_MUSIC_STATE)
+                // albumArtPending tells the watch "the cover for this state is in transit" so it
+                // keeps the previous cover up (smooth crossfade once the new one lands) instead
+                // of blanking - as opposed to a final state that genuinely has no art.
+                stateOnlyRequest.data = musicState.toBuilder().setAlbumArtPending(true).build().toByteArray()
+                stateOnlyRequest.setUrgent()
+                dataClient.putDataItem(stateOnlyRequest).await()
+            }
+
+            val artBytes = when {
+                originalAlbumArt == null -> null
+                !artChanged -> lastSerializedArt
+                else -> withContext(Dispatchers.Default) {
+                    // Off the main thread (this used to PNG-encode on main for every transmit)
+                    // and as JPEG: album art has no alpha, encodes much faster, and comes out
+                    // several times smaller than PNG - directly cutting the Bluetooth transfer
+                    // that delays the cover on the watch.
+                    var albumArt = originalAlbumArt
+                    val watchInfo = watchInfoProvider.value?.watchInfo
+                    if (watchInfo != null) {
+                        albumArt = BitmapUtils.resizeAndCrop(albumArt,
+                                watchInfo.displayWidth,
+                                watchInfo.displayHeight,
+                                true)
+                    }
+
+                    ByteArrayOutputStream().use { stream ->
+                        albumArt.compress(Bitmap.CompressFormat.JPEG, 85, stream)
+                        stream.toByteArray()
+                    }
+                }.also {
+                    lastSerializedArtSource = originalAlbumArt
+                    lastSerializedArt = it
+                }
+            }
+
+            // While this coroutine was suspended encoding art, a newer state may already have
+            // been transmitted - putting ours now would overwrite fresh state with stale.
+            if (transmitSequence != mySequence) {
+                return@launchWithPlayServicesErrorHandling
+            }
+
             val putDataRequest = PutDataRequest.create(CommPaths.DATA_MUSIC_STATE)
-
-            var albumArt = originalAlbumArt
-            val watchInfo = watchInfoProvider.value?.watchInfo
-            if (watchInfo != null && albumArt != null) {
-                albumArt = BitmapUtils.resizeAndCrop(albumArt,
-                        watchInfo.displayWidth,
-                        watchInfo.displayHeight,
-                        true)
+            if (artBytes != null) {
+                putDataRequest.putAsset(CommPaths.ASSET_ALBUM_ART, Asset.createFromBytes(artBytes))
             }
-
-            if (albumArt != null) {
-                val albumArtAsset = Asset.createFromBytes(BitmapUtils.serialize(albumArt)!!)
-                putDataRequest.putAsset(CommPaths.ASSET_ALBUM_ART, albumArtAsset)
-            }
-
-            putDataRequest.data = musicState.toByteArray()
+            putDataRequest.data = stateBytes
             putDataRequest.setUrgent()
 
             dataClient.putDataItem(putDataRequest).await()
@@ -508,6 +606,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     private fun transmitError(error: String) = lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+        // Invalidate any in-flight transmitToWear still encoding art, so it can't finish after
+        // this and overwrite the error with stale "playing" state.
+        ++transmitSequence
+
         val musicStateBuilder = MusicState.newBuilder()
 
         // Add time to the first message to make sure it gets transmitted even if it is
@@ -580,6 +682,25 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * Loads a [Bitmap] from a local content:// URI. Skips http/https URIs to avoid blocking the
      * main thread on network I/O. Returns null on any error.
      */
+    /**
+     * [loadBitmapFromUri] with a one-entry cache keyed by the URI string. Besides skipping a
+     * redundant decode on every state callback, this keeps the returned Bitmap
+     * *reference-stable* while the URI doesn't change - which is what the identity-based
+     * "did the art change" checks in [buildMusicStateAndTransmit]/[transmitToWear] need.
+     * A fresh decode per call made every state change look like it carried new art.
+     */
+    private fun loadBitmapFromUriCached(uriString: String?): Bitmap? {
+        if (uriString.isNullOrEmpty()) return null
+        if (uriString == lastArtUriString) return lastArtUriBitmap
+
+        val bitmap = loadBitmapFromUri(uriString)
+        // Negative results are cached too - retrying a broken URI on every callback would
+        // just repeat the failed content-resolver round trip.
+        lastArtUriString = uriString
+        lastArtUriBitmap = bitmap
+        return bitmap
+    }
+
     private fun loadBitmapFromUri(uriString: String?): Bitmap? {
         if (uriString.isNullOrEmpty()) return null
         val uri = Uri.parse(uriString)

@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.watch.tile
 
 import android.content.Context
+import android.net.Uri
 import androidx.wear.protolayout.ActionBuilders
 import androidx.wear.protolayout.ColorBuilders.argb
 import androidx.wear.protolayout.DimensionBuilders.dp
@@ -22,6 +23,7 @@ import androidx.wear.protolayout.material.Typography
 import androidx.wear.tiles.RequestBuilders
 import androidx.wear.tiles.TileBuilders
 import androidx.wear.tiles.TileService
+import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.Wearable
 import com.google.common.util.concurrent.ListenableFuture
 import com.svartifoss.snfell.common.CommPaths
@@ -104,10 +106,12 @@ class MediaTileService : TileService() {
 
     private suspend fun readMusicState(): MusicState? {
         return try {
-            val buffer = Wearable.getDataClient(this).dataItems.await()
+            val buffer = Wearable.getDataClient(this).getDataItems(
+                Uri.parse("wear://*${CommPaths.DATA_MUSIC_STATE}"),
+                DataClient.FILTER_LITERAL
+            ).await()
             try {
-                val item = buffer.firstOrNull { it.uri.path == CommPaths.DATA_MUSIC_STATE }
-                item?.let { MusicState.parseFrom(it.data) }
+                buffer.firstOrNull()?.let { MusicState.parseFrom(it.data) }
             } finally {
                 buffer.release()
             }
