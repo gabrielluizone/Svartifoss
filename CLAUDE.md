@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Svartifoss — an Android app that lets a paired Wear OS watch control music playback on the phone (and on the watch itself), with customizable physical buttons / digital crown / gestures. Distributed as a sideloaded APK (not on Play Store).
+Svartifoss — an Android app that lets a paired Wear OS watch control music playback on the phone (and on the watch itself), with customizable physical buttons / digital crown / gestures. Distributed on the Play Store as a single listing spanning both form factors (see "Package naming gotchas" below), plus sideloadable APKs from GitHub releases.
 
 ## Module layout
 
@@ -35,13 +35,14 @@ All communication goes through the Google Play Services **Wearable Data Layer AP
 
 ### Watch input handling
 
-`MainActivity` handles five input categories:
+`MainActivity` handles six input categories:
 
 1. **Screen gestures** — `FourWayTouchLayout` (from `common/`) divides the screen into quadrants; taps in each quadrant are reported as a `ScreenQuadrant` gesture mapped through button config.
 2. **Full-screen swipes** — up/down/left swipes on the now-playing screen are pseudo-buttons (`SwipeGesture` in `common/`, buttonCodes chosen outside the quadrant range) flowing through the same `ButtonInfo`/config pipeline as quadrant taps. Right swipe is deliberately never intercepted — it's the system-wide Wear OS dismiss gesture.
 3. **Physical stem buttons** — `StemButtonsManager` (`wear/.../view/StemButtonsManager.kt`) translates raw `KeyEvent` sequences into single-tap, double-tap, or long-press gestures per configured button. Includes an ambient-mode phantom-click workaround.
 4. **Rotary encoder / digital crown** — handled via `RotaryEncoderHelper` directly in `MainActivity`. On devices with discrete rotary input, crown turns are simulated as button presses (`SpecialButtonCodes.TURN_ROTARY_CW/CCW`) through `StemButtonsManager`, so they're user-configurable like any button. Otherwise, continuous scroll deltas change volume — or scrub the playback timeline instead when the `MiscPreferences.ROTARY_SEEK` preference is on — subject to a configurable deadzone and sensitivity.
 5. **On-screen mini buttons** — up to three *visible* configurable buttons (`ScreenButtons` in `common/`, codes 7–9, tap + long-press) rendered as a fixed overlay near the bottom of the now-playing screen; ordered after `center_tap_zone` in the layout so they win touch dispatch over the center play/pause zone and `FourWayTouchLayout`. Row offset is tunable via `MiscPreferences.WEAR_SCREEN_BUTTONS_OFFSET` (phone developer settings).
+6. **Quick actions panel** — an overlay opened by double-tapping the center of the now-playing screen (rendered in `MainActivity`): three round configurable slots plus a full-width row (`QuickPanelButtons` in `common/`, codes 10–13, continuing the pseudo-button range). Unconfigured slots fall back to classic defaults — Like / Shuffle / Repeat with a live state ring, and an "Up Next" queue-preview row; a `NullAction` assignment hides a slot. The phone writes quick-panel assignments into *both* the playing and stopped configs so the panel behaves the same regardless of playback state.
 
 Resolved actions don't always round-trip to the phone: `MusicViewModel.executeActionOnWatch` intercepts actions that make sense locally (opening the menu/queue, opening search input, volume UI) and only sends the rest to the phone for execution.
 
@@ -54,6 +55,10 @@ The redesigned phone theme is internally named **Lyra** (resource names like `di
 ### Actions system (mobile)
 
 Button presses/gestures map to `PhoneAction` subtypes (`mobile/.../actions/`), each with a corresponding `ActionHandler<T>` implementation (playback, volume, app-launch, Tasker, open menu/playlist, etc.). New actions typically need: an action class, a handler, a binding in `di/ActionHandlersModule.kt`, and an entry in the relevant action list (`RootActionList`, `PlaybackActionList`, `VolumeActionList`).
+
+### Config backup (mobile)
+
+`mobile/.../config/ConfigBackup.kt` exports/imports both button configs, the action list, and the `MiscPreferences.EXPORTABLE` watch-behavior settings as one JSON document (exposed in `MiscSettingsFragment`). The button-config/action-list files are copied as opaque base64 `PersistableBundle` blobs, so the backup format doesn't need updating when configs gain fields — but adding a *new* config file or a preference that should survive reinstall means touching `CONFIG_FILES` or `MiscPreferences.EXPORTABLE`. Personal runtime data (search/track history, playlist shortcuts) is deliberately excluded.
 
 ### Custom lists (watch menu content)
 
@@ -100,4 +105,4 @@ The app was renamed from Music Center for Wear (fork of matejdro/WearMusicCenter
 
 `docs/wear-modernization-plan.md` contains the full phased modernization strategy: Foundation (targetSdk bump — now at 35 — and deprecated API cleanup) → MediaSession mirror (watch-side `MediaSession` that forwards controls to the phone) → Tiles & Complications → in-UI navigation. Consult this doc before making architectural decisions in `wear/`.
 
-**Current state (branch `wear-phase-1-mediasession`):** `WatchMediaSession` is implemented and active, and Phase 3 surfaces exist: Tiles (`watch/tile/MediaTileService.kt`, `QueuePreviewTileService.kt`, built with `androidx.wear.protolayout`/`androidx.wear.tiles`) and a complication data source (`watch/complication/AlbumArtComplicationDataSourceService.kt`, `androidx.wear.watchface` complications). Because these run outside the main app UI lifecycle, they fetch music state directly over the Data Layer via `CommPaths` rather than through `PhoneConnection`. Jetpack Compose for Wear OS (`wear.compose.material3`) is enabled in `wear/build.gradle` and used for `QueueActivity`/`QueueScreen` (`watch/view/queue/`) and `MenuActivity`/`MenuScreen` (`watch/view/menu/` — the actions/custom-list menu, which replaced the old `WearableDrawerLayout` bottom drawer; `MenuActivity` is a pure picker that returns the selection for `MainActivity` to execute). Shared Compose chrome (curved clock, scroll indicator, spinner) lives in `watch/view/compose/WatchScreenChrome.kt`; design constants for all three UI stacks live in `watch/theme/WatchTheme.kt`. New watch UI work should prefer Compose; the legacy View-based `MainActivity` (now-playing screen) remains.
+**Current state (branch `wear-phase-1-mediasession`):** `WatchMediaSession` is implemented and active, and Phase 3 surfaces exist: a Tile (`watch/tile/MediaTileService.kt`, built with `androidx.wear.protolayout`/`androidx.wear.tiles`) and a complication data source (`watch/complication/AlbumArtComplicationDataSourceService.kt`, `androidx.wear.watchface` complications). Because these run outside the main app UI lifecycle, they fetch music state directly over the Data Layer via `CommPaths` rather than through `PhoneConnection`. Jetpack Compose for Wear OS (`wear.compose.material3`) is enabled in `wear/build.gradle` and used for `QueueActivity`/`QueueScreen` (`watch/view/queue/`) and `MenuActivity`/`MenuScreen` (`watch/view/menu/` — the actions/custom-list menu, which replaced the old `WearableDrawerLayout` bottom drawer; `MenuActivity` is a pure picker that returns the selection for `MainActivity` to execute). Shared Compose chrome (curved clock, scroll indicator, spinner) lives in `watch/view/compose/WatchScreenChrome.kt`; design constants for all three UI stacks live in `watch/theme/WatchTheme.kt`. New watch UI work should prefer Compose; the legacy View-based `MainActivity` (now-playing screen) remains.
