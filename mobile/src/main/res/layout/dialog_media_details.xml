@@ -92,7 +92,7 @@
                 android:background="?selectableItemBackgroundBorderless"
                 android:padding="8dp"
                 android:layout_marginStart="8dp"
-                android:tint="@color/lyra_on_surface" />
+                app:tint="@color/lyra_on_surface" />
 
             <!-- Play/Pause — no tint so icon is its natural color -->
             <ImageButton
@@ -111,7 +111,7 @@
                 android:src="@drawable/ic_mini_next"
                 android:background="?selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:tint="@color/lyra_on_surface" />
+                app:tint="@color/lyra_on_surface" />
         </LinearLayout>
 
         <!-- SeekBar -->

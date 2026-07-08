@@ -29,7 +29,8 @@
     <string name="easter_egg_message">You found the hidden waterfall.\n\nSvartifoss — black basalt columns\nframing a cascade in Iceland,\na reminder that music flows\nlike water through stone.\n\n♪ Built with care. ♪</string>
     <string name="easter_egg_ok">Close</string>
 
-    <string name="nav_tutorial">Guide</string>
+    <string name="nav_watch_face">Watch</string>
+    <string name="watch_face_header">Watch face</string>
     <string name="nav_playing">Playing</string>
     <string name="nav_stopped">Stopped</string>
     <string name="nav_actions">Actions</string>
@@ -162,6 +163,12 @@
     <string name="category_music_screen">Music screen</string>
     <string name="category_watch_screen">Watch screen</string>
     <string name="category_mini_buttons">Mini buttons</string>
+    <string name="category_screen_face">Screen face</string>
+    <string name="category_album_background">Album background</string>
+    <string name="category_music_colors">Colors from the music</string>
+    <string name="preview_sample_title">Song title</string>
+    <string name="preview_sample_artist">Artist name</string>
+    <string name="preview_playback_stopped">Playback Stopped</string>
     <string name="category_gestures">Gestures &amp; input</string>
     <string name="setting_overlay_blur_radius">Overlay blur</string>
     <string name="setting_overlay_blur_radius_description">Blur strength (px) of the frosted backdrop behind the volume/seek rings and the quick actions panel — independent from the album art background blur</string>
@@ -252,6 +259,8 @@
     <string name="quick_panel_default_up_next">Up Next</string>
     <string name="setting_wear_center_long_press_queue">Long-press center for queue</string>
     <string name="setting_wear_center_long_press_queue_description">Long-press the center of the now-playing screen to open the playback queue.</string>
+    <string name="setting_wear_screen_face">Screen face</string>
+    <string name="setting_wear_screen_face_description">Overall interface of the now-playing screen on the watch. Classic keeps the edge seek ring and gesture icons; Expressive shows large playback buttons with a wavy progress ring.</string>
     <string name="setting_wear_screen_theme">Screen theme</string>
     <string name="setting_wear_screen_theme_description">Visual style of the now-playing screen on the watch.</string>
     <string name="setting_wear_dynamic_accent">Dynamic accent on watch</string>
@@ -294,6 +303,15 @@
         <item>neutral</item>
         <item>album</item>
         <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
     </string-array>
 
     <string-array name="wear_screen_theme_entries">

@@ -32,6 +32,7 @@ import com.svartifoss.snfell.view.TitledActivity
 import com.svartifoss.snfell.view.actionlist.ActionListFragment
 import com.svartifoss.snfell.view.buttonconfig.ButtonConfigFragment
 import com.svartifoss.snfell.view.settings.MiscSettingsFragment
+import com.svartifoss.snfell.view.watchface.WatchFaceFragment
 import android.graphics.Bitmap
 import android.widget.SeekBar
 import android.widget.ImageButton
@@ -184,9 +185,9 @@ class MainActivity : WearCompanionPhoneActivity(),
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.tutorial -> {
-                    updateActivityTitle(getString(R.string.tutorial_header))
-                    swapFragment(TutorialFragment())
+                R.id.watch_face -> {
+                    updateActivityTitle(getString(R.string.watch_face_header))
+                    swapFragment(WatchFaceFragment())
                 }
                 R.id.playing_controls -> {
                     updateActivityTitle(getString(R.string.playing_controls))
@@ -309,6 +310,24 @@ class MainActivity : WearCompanionPhoneActivity(),
                     REQUEST_CODE_POST_NOTIFICATIONS
             )
         }
+    }
+
+    /** The active phone media session, for fragments that want live now-playing data (the
+     *  Watch tab's preview shows the actual current track/art through this). */
+    fun activeMediaSession(): androidx.lifecycle.LiveData<com.matejdro.wearutils.lifecycle.Resource<MediaController>> =
+            viewmodel.activeMediaSessionProvider
+
+    override fun onCreateOptionsMenu(menu: android.view.Menu): Boolean {
+        menuInflater.inflate(R.menu.toolbar_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
+        if (item.itemId == R.id.menu_help) {
+            startActivity(Intent(this, HelpActivity::class.java))
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {

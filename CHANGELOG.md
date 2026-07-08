@@ -60,6 +60,18 @@ shortcuts.
   action (right stays reserved for the system dismiss gesture).
 - **Long-press the center screen** to open the queue directly; a new
   first-run overlay hints at the available gestures.
+- Selectable **screen face**: besides the classic now-playing layout (edge
+  seek ring + gesture icons), a new **Expressive** face mirroring the
+  Material 3 Expressive system media controls — a soft "cookie" play/pause
+  button (morphs to a circle when paused) wrapped in a progress ring that
+  follows the cookie's scalloped contour (with thumb dot and M3 gaps), large
+  round prev/next buttons in the album accent's tonal container colors, the
+  album art darkened by an accent tint plus a radial black vignette, a curved
+  clock, and a default queue/volume/menu glass trio at the bottom whenever no
+  mini buttons are configured. Picked on the phone (Settings → Screen face);
+  all gestures, buttons, overlays and the quick panel work identically on
+  both faces, and ambient mode always falls back to the burn-in-safe classic
+  look.
 - New **screen theme** options (default/minimal/compact/cinema), album-art
   fade transition, album-art style (cover/blur/black-and-white/blur+bw/hidden)
   with blur radius and dim strength, ambient opacity, rotary dead-zone, and
@@ -79,7 +91,20 @@ shortcuts.
 
 ### Mobile UI
 
-- New **Guide** tab with a Wear OS usage walkthrough.
+- New **Watch** tab (in the slot the Guide briefly occupied): visual
+  customization of the watch's now-playing screen with a **live miniature
+  preview** — face (Classic/Expressive), screen theme, album background
+  (style/blur/dim), colors from the music (dynamic accent, artist/progress
+  color sources), and mini-button appearance/offset, all previewed exactly
+  as they will render on the watch and synced to it on every change. While
+  music plays on the phone, the miniature shows the **actual current track**
+  (album art, title, artist, the accent extracted from that art, and live
+  playback: the progress ring and track time advance in real time, and
+  pausing morphs the preview exactly like the real face); otherwise it falls
+  back to a built-in sample. These settings moved out of
+  the Settings tab, which now keeps behavior-only options.
+- The Wear OS usage **guide** moved from a bottom-nav tab to a help button
+  on the toolbar (opens its own screen).
 - New left navigation drawer with app/author info; toolbar title alignment
   fixed.
 - Built-in icon picker grid for custom action icons; color-swatch preference
@@ -142,6 +167,19 @@ shortcuts.
   back smoothly on a track change instead of snapping to zero - the snap
   had been introduced on the mistaken theory that the sweep was the
   perceived lag.
+- **Settings and button/menu config changed on the phone only reached the
+  watch after interacting with it**: a watch setting (e.g. album-art blur), a
+  button mapping, or the action-menu list edited on the phone would apply on
+  the watch only after tapping the screen or turning the crown. Root cause: the
+  phone pushed those DataItems to the Data Layer *non-urgently*, so the system
+  batched them for power and could delay the sync by minutes - until unrelated
+  urgent traffic (a control message sent by interacting with the watch) flushed
+  the queue. Music state and notifications were already sent urgent; the
+  button-config, action-list and preference pushes now are too, so they sync
+  immediately. Complementing this, a manifest-registered `ConfigListenerService`
+  applies an incoming button/menu-config change to an already-open now-playing
+  screen even when the phone connection had gone idle, so it lands with no
+  interaction needed.
 
 ## 1.12
 

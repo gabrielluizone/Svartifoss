@@ -72,7 +72,11 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
+        <!-- The classic face's centered text block. Hidden as a whole while the expressive
+             face is selected (its children keep being updated regardless - ambient mode and
+             the quick panel read from them for both faces). -->
         <androidx.wear.widget.BoxInsetLayout
+            android:id="@+id/classic_text_block"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/music_screen_text_margin">
@@ -213,6 +217,18 @@
             android:layout_gravity="center"
             android:alpha="0"
             android:background="@drawable/center_tap_pulse" />
+
+        <!-- The expressive now-playing face (see NowPlayingFace.kt). Sits above the gesture
+             layers so its transport buttons win touch dispatch, but below the mini buttons and
+             every overlay (blur, volume/seek, quick panel) so those keep covering the face.
+             Touches on its non-interactive areas fall through to FourWayTouchLayout, keeping
+             quadrant taps and swipe gestures working. GONE unless the "expressive" face is
+             selected on the phone (wear_screen_face); ambient always hides it. -->
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/expressive_face"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
         <!-- User-configurable mini buttons (see ScreenButtons in common). A *fixed* overlay
              near the bottom of the screen, deliberately independent of the centered text block

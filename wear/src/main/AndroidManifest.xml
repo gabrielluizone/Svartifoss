@@ -91,6 +91,27 @@
             </intent-filter>
         </service>
 
+        <!-- Delivers button-config / action-menu edits even while the watch app is idle, so a
+             mapping changed on the phone no longer waits for the user to wake/tap the watch - see
+             the class kdoc. Paths must match CommPaths.DATA_ACTION_CONFIG_PREFIX and
+             DATA_LIST_ITEMS. -->
+        <service
+            android:name=".watch.communication.ConfigListenerService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/Actions"
+                    android:scheme="wear" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/ActionList"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
         <!-- Keeps the complication/Tile fresh independently of WatchMusicService's lifecycle -
              see the class kdoc. Path must match CommPaths.DATA_MUSIC_STATE. -->
         <service

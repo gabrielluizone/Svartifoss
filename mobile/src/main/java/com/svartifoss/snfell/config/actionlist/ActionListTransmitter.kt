@@ -77,6 +77,11 @@ class ActionListTransmitter(actionList: ActionList,
 
         putDataRequest.data = protoBuilder.build().toByteArray()
 
+        // Urgent: otherwise the Data Layer batches this and the action-menu list edited on the
+        // phone reaches the watch only after unrelated urgent traffic flushes the queue. See the
+        // matching note in ButtonConfigTransmitter.
+        putDataRequest.setUrgent()
+
         dataClient.putDataItem(putDataRequest).await()
     }
 }

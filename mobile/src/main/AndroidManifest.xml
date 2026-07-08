@@ -106,6 +106,13 @@
             android:exported="false"
             android:label="@string/setting_playlist_shortcuts" />
 
+        <activity
+            android:name=".view.mainactivity.HelpActivity"
+            android:exported="false"
+            android:label="@string/tutorial_header"
+            android:parentActivityName=".view.mainactivity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
 
         <provider
             android:authorities="com.svartifoss.snfell.logs"

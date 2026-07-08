@@ -288,6 +288,22 @@ class MusicViewModel @Inject constructor(
         musicStateListener.onChanged(Resource.success(optimisticState))
     }
 
+    /** Skips to the next track directly, independent of the quadrant/button config - used by
+     *  the expressive face's transport buttons, over the same Data Layer path
+     *  WatchMediaSession's transport controls use. */
+    fun skipNext() {
+        viewModelScope.launchWithErrorHandling(application, musicState) {
+            phoneConnection.sendSkipNext()
+        }
+    }
+
+    /** Skips to the previous track directly - see [skipNext]. */
+    fun skipPrevious() {
+        viewModelScope.launchWithErrorHandling(application, musicState) {
+            phoneConnection.sendSkipPrevious()
+        }
+    }
+
     /** Triggers like/shuffle/repeat directly from the quick-actions panel, regardless of how
      *  (or whether) the four quadrants are configured. [name] is "like", "shuffle" or "repeat". */
     fun sendQuickAction(name: String) {

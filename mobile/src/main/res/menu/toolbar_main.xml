@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- The usage guide, formerly the "Guide" bottom-nav tab - its slot now hosts the watch
+         face customization screen, so the guide moved up here as a help action. -->
+    <item
+        android:id="@+id/menu_help"
+        android:icon="@drawable/ic_help"
+        android:title="@string/tutorial_header"
+        app:showAsAction="always" />
+
+</menu>

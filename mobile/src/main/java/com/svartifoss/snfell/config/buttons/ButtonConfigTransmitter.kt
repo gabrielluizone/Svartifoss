@@ -84,6 +84,12 @@ class ButtonConfigTransmitter(buttonConfig: ButtonConfig,
 
         putDataRequest.data = protoBuilder.build().toByteArray()
 
+        // Urgent: without it the Data Layer batches this DataItem for power reasons and can delay
+        // the sync by minutes, so a button config edited on the phone appeared on the watch only
+        // after some *other* urgent traffic (a control message from tapping/turning the watch)
+        // flushed the pipe. Music state is already sent urgent; user-edited config must be too.
+        putDataRequest.setUrgent()
+
         dataClient.putDataItem(putDataRequest).await()
     }
 

@@ -73,6 +73,13 @@ object MiscPreferences {
     // face renders an attached cover on a text slot is up to its renderer, and a setting around
     // that just produced "broken-looking" combinations. See AlbumArtComplicationDataSourceService.
 
+    /** Which face renders the now-playing screen: "classic" (the original View layout with the
+     *  bezel seek ring and quadrant hint icons) or "expressive" (a Compose face styled after the
+     *  Material 3 Expressive system media controls, with pill transport buttons and a wavy
+     *  progress ring). The face is the structural layout; [WEAR_SCREEN_THEME] remains a set of
+     *  lighter variations applied on top of the classic face. */
+    val WEAR_SCREEN_FACE: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_screen_face", "classic")
+
     /** Now-playing screen layout: default, minimal, compact, or cinema. */
     val WEAR_SCREEN_THEME: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_screen_theme", "default")
 
@@ -176,7 +183,7 @@ object MiscPreferences {
             AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
             ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_BLUR_RADIUS,
             ALBUM_ART_DIM_STRENGTH, VOLUME_OVERLAY_TIMEOUT, ROTARY_DEADZONE, AMBIENT_ALBUM_ART_OPACITY,
-            WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_THEME,
+            WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_FACE, WEAR_SCREEN_THEME,
             WEAR_TRACK_TIME_MODE,
             WEAR_DYNAMIC_ACCENT, WEAR_ALBUM_ART_FADE, WEAR_SCREEN_BUTTONS_OFFSET, WEAR_SCREEN_BUTTONS_CURVE_STYLE,
             WEAR_SCREEN_BUTTONS_BG, WEAR_SCREEN_BUTTONS_COLOR_MODE, WEAR_SCREEN_BUTTONS_CUSTOM_COLOR,

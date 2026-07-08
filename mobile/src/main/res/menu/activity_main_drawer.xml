@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Formerly the "Guide" tab; the guide now lives behind the toolbar help button
+         (HelpActivity) and this slot hosts the watch face customization screen. -->
     <item
-        android:id="@+id/tutorial"
+        android:id="@+id/watch_face"
         android:icon="@drawable/ic_nav_tutorial"
-        android:title="@string/nav_tutorial" />
+        android:title="@string/nav_watch_face" />
     <item
         android:id="@+id/playing_controls"
         android:icon="@drawable/ic_nav_playing"

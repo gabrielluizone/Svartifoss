@@ -5,8 +5,6 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -14,13 +12,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
@@ -95,9 +90,6 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
         devModeEnabled = preferenceManager.sharedPreferences?.getBoolean(PREF_DEV_MODE, false) == true
 
         initAppearanceSection()
-        initMusicScreenSection()
-        initWearAccentColorSection()
-        initScreenButtonAppearance()
         initAutomationSection()
         initBackupSection()
         initAboutSection()
@@ -107,76 +99,9 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
         super.onDisplayPreferenceDialog(preference)
-        // Preference dialogs (Theme, Album art style, Screen theme, ...) inflate with the
-        // static theme colors; once the dialog is up, re-tint it with the accent currently
-        // on screen.
-        view?.post { tintOpenPreferenceDialog() }
-    }
-
-    private fun tintOpenPreferenceDialog(attempt: Int = 0) {
-        // The dialog fragment show() is an async commit - force it through so the dialog
-        // exists on the very first attempt instead of racing it.
-        if (attempt == 0) {
-            try {
-                parentFragmentManager.executePendingTransactions()
-            } catch (ignored: IllegalStateException) {
-            }
-        }
-
-        // Standard preferences use androidx's tag, PreferenceFragmentCompatEx's custom
-        // dialogs use its own legacy tag - check both.
-        val dialogFragment = (parentFragmentManager.findFragmentByTag(
-                "androidx.preference.PreferenceFragment.DIALOG")
-                ?: parentFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG))
-                as? DialogFragment
-        val dialog = dialogFragment?.dialog as? AlertDialog
-
-        // Even forced, the dialog can lag a frame behind (its window shows after onStart) -
-        // retry over the next frames rather than silently leaving the whole dialog, radio
-        // marks included, in the static theme color.
-        if (dialog == null || !dialog.isShowing) {
-            if (attempt < 20) {
-                view?.postDelayed({ tintOpenPreferenceDialog(attempt + 1) }, 50L)
-            }
-            return
-        }
-
-        // The live activity accent (dynamic album-art color included) - LyraAccent.resolve
-        // reads a persisted snapshot that can lag behind what's actually on screen.
-        val accent = (activity as? com.svartifoss.snfell.view.mainactivity.MainActivity)
-                ?.currentAccentColor()
-                ?: com.svartifoss.snfell.view.LyraAccent.resolve(requireContext())
-        val secondary = androidx.core.content.ContextCompat.getColor(
-                requireContext(), R.color.lyra_text_secondary)
-
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(accent)
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(secondary)
-        dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(secondary)
-
-        // Single/multi-choice rows are CheckedTextViews whose radio/check mark comes tinted
-        // with the static colorControlActivated; re-tint them, including rows (re)bound
-        // later while scrolling.
-        val listView = dialog.listView ?: return
-        val markTint = android.content.res.ColorStateList(
-                arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
-                intArrayOf(accent, secondary)
-        )
-        fun tintRow(row: android.view.View) {
-            val checkedText = row as? android.widget.CheckedTextView ?: return
-            checkedText.checkMarkTintList = markTint
-            // Some AppCompat versions render the radio as a compound drawable instead of the
-            // check mark - tint both so the accent applies regardless.
-            androidx.core.widget.TextViewCompat.setCompoundDrawableTintList(checkedText, markTint)
-        }
-        for (i in 0 until listView.childCount) {
-            tintRow(listView.getChildAt(i))
-        }
-        listView.setOnHierarchyChangeListener(object : ViewGroup.OnHierarchyChangeListener {
-            override fun onChildViewAdded(parent: android.view.View, child: android.view.View) =
-                    tintRow(child)
-
-            override fun onChildViewRemoved(parent: android.view.View, child: android.view.View) = Unit
-        })
+        // Preference dialogs (Theme, ...) inflate with the static theme colors; once the
+        // dialog is up, re-tint it with the accent currently on screen.
+        view?.post { tintOpenLyraPreferenceDialog() }
     }
 
     private fun initAppearanceSection() {
@@ -216,7 +141,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     private fun showAccentColorPicker(pref: Preference?) {
         val prefs = preferenceManager.sharedPreferences ?: return
 
-        showColorPickerDialog(
+        showLyraColorPickerDialog(
                 initialColor = parseHexOrDefault(prefs.getString("custom_accent_color", null)),
                 onReset = {
                     prefs.edit().remove("custom_accent_color").apply()
@@ -233,190 +158,6 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
         )
     }
 
-    private fun parseHexOrDefault(hex: String?): Int = if (hex != null) {
-        try { Color.parseColor(hex) } catch (e: Exception) { 0xFF86A69D.toInt() }
-    } else 0xFF86A69D.toInt()
-
-    /** Shared HSV color picker dialog (accent color, mini buttons color, ...): live preview
-     *  swatch on top, Reset/Cancel/Apply buttons tinted with the runtime accent. */
-    private fun showColorPickerDialog(initialColor: Int, onReset: () -> Unit, onApply: (String) -> Unit) {
-        val ctx = requireContext()
-        val dp = ctx.resources.displayMetrics.density
-
-        // Live preview swatch
-        val previewSwatch = android.view.View(ctx).apply {
-            background = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = dp * 8f
-                setColor(initialColor)
-            }
-            layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, (dp * 44f).toInt()
-            ).also { it.bottomMargin = (dp * 12f).toInt() }
-        }
-
-        val picker = HSVColorPickerView(ctx).apply {
-            setColor(initialColor)
-            layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, (dp * 260f).toInt()
-            )
-        }
-
-        var selectedColor = initialColor
-        picker.onColorChanged = { color ->
-            selectedColor = color
-            (previewSwatch.background as? GradientDrawable)?.setColor(color)
-        }
-
-        val root = LinearLayout(ctx).apply {
-            orientation = LinearLayout.VERTICAL
-            val pad = (dp * 20f).toInt()
-            setPadding(pad, (dp * 12f).toInt(), pad, (dp * 8f).toInt())
-            addView(previewSwatch)
-            addView(picker)
-        }
-
-        val dialog = AlertDialog.Builder(ctx)
-            .setTitle(R.string.color_picker_title)
-            .setView(root)
-            .setNeutralButton(R.string.color_picker_reset) { _, _ -> onReset() }
-            .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(R.string.color_picker_apply) { _, _ ->
-                onApply(String.format("#%06X", 0xFFFFFF and selectedColor))
-            }
-            .show()
-
-        // Same runtime-accent treatment the preference dialogs get in
-        // tintOpenPreferenceDialog - this dialog is built directly, so tint it here.
-        val accent = (activity as? com.svartifoss.snfell.view.mainactivity.MainActivity)
-                ?.currentAccentColor()
-                ?: com.svartifoss.snfell.view.LyraAccent.resolve(ctx)
-        val secondary = androidx.core.content.ContextCompat.getColor(
-                ctx, R.color.lyra_text_secondary)
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(accent)
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(secondary)
-        dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(secondary)
-    }
-
-    /** Mini-button appearance prefs (Wear experience): custom color picker wiring plus
-     *  enabling/disabling the color-mode-dependent rows. */
-    private fun initScreenButtonAppearance() {
-        val colorPref = findPreference<Preference>("screen_buttons_custom_color")
-        updateScreenButtonColorSummary(colorPref)
-        colorPref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val prefs = preferenceManager.sharedPreferences
-                    ?: return@OnPreferenceClickListener true
-            showColorPickerDialog(
-                    initialColor = parseHexOrDefault(prefs.getString("screen_buttons_custom_color", null)),
-                    onReset = {
-                        prefs.edit().remove("screen_buttons_custom_color").apply()
-                        updateScreenButtonColorSummary(colorPref)
-                    },
-                    onApply = { hex ->
-                        prefs.edit().putString("screen_buttons_custom_color", hex).apply()
-                        updateScreenButtonColorSummary(colorPref)
-                    }
-            )
-            true
-        }
-
-        updateScreenButtonColorDependencies()
-        findPreference<ListPreference>("screen_buttons_color_mode")?.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { _, newValue ->
-                updateScreenButtonColorDependencies(newValue as? String)
-                true
-            }
-    }
-
-    private fun updateScreenButtonColorSummary(pref: Preference?) {
-        pref ?: return
-        val saved = preferenceManager.sharedPreferences?.getString("screen_buttons_custom_color", null)
-        pref.summary = if (saved != null) {
-            getString(R.string.color_picker_current, saved)
-        } else {
-            getString(R.string.setting_screen_buttons_custom_color_description)
-        }
-        (pref as? HexColorDotPreference)?.refreshDot()
-    }
-
-    private fun updateScreenButtonColorDependencies(overrideMode: String? = null) {
-        val mode = overrideMode ?: findPreference<ListPreference>("screen_buttons_color_mode")?.value
-        findPreference<Preference>("screen_buttons_custom_color")?.isEnabled = mode == "custom"
-        findPreference<Preference>("screen_buttons_desaturated")?.isEnabled = mode == "album"
-    }
-
-    /** Now-playing artist text and progress bar color prefs: same custom color picker + mode
-     *  dependency wiring as [initScreenButtonAppearance], applied to two independent targets. */
-    private fun initWearAccentColorSection() {
-        initAccentColorTarget(
-                modeKey = "wear_artist_color_mode",
-                customColorKey = "wear_artist_custom_color",
-                desaturatedKey = "wear_artist_desaturated",
-                customColorDescription = R.string.setting_wear_artist_custom_color_description
-        )
-        initAccentColorTarget(
-                modeKey = "wear_progress_color_mode",
-                customColorKey = "wear_progress_custom_color",
-                desaturatedKey = "wear_progress_desaturated",
-                customColorDescription = R.string.setting_wear_progress_custom_color_description
-        )
-    }
-
-    private fun initAccentColorTarget(
-            modeKey: String,
-            customColorKey: String,
-            desaturatedKey: String,
-            customColorDescription: Int
-    ) {
-        val colorPref = findPreference<Preference>(customColorKey)
-        updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
-        colorPref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val prefs = preferenceManager.sharedPreferences
-                    ?: return@OnPreferenceClickListener true
-            showColorPickerDialog(
-                    initialColor = parseHexOrDefault(prefs.getString(customColorKey, null)),
-                    onReset = {
-                        prefs.edit().remove(customColorKey).apply()
-                        updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
-                    },
-                    onApply = { hex ->
-                        prefs.edit().putString(customColorKey, hex).apply()
-                        updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
-                    }
-            )
-            true
-        }
-
-        updateAccentColorTargetDependencies(modeKey, customColorKey, desaturatedKey)
-        findPreference<ListPreference>(modeKey)?.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { _, newValue ->
-                updateAccentColorTargetDependencies(modeKey, customColorKey, desaturatedKey, newValue as? String)
-                true
-            }
-    }
-
-    private fun updateAccentColorTargetSummary(pref: Preference?, customColorKey: String, descriptionRes: Int) {
-        pref ?: return
-        val saved = preferenceManager.sharedPreferences?.getString(customColorKey, null)
-        pref.summary = if (saved != null) {
-            getString(R.string.color_picker_current, saved)
-        } else {
-            getString(descriptionRes)
-        }
-        (pref as? HexColorDotPreference)?.refreshDot()
-    }
-
-    private fun updateAccentColorTargetDependencies(
-            modeKey: String,
-            customColorKey: String,
-            desaturatedKey: String,
-            overrideMode: String? = null
-    ) {
-        val mode = overrideMode ?: findPreference<ListPreference>(modeKey)?.value
-        findPreference<Preference>(customColorKey)?.isEnabled = mode == "custom"
-        findPreference<Preference>(desaturatedKey)?.isEnabled = mode == "album"
-    }
-
     private fun applyTheme(value: String) {
         val mode = when (value) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
@@ -424,24 +165,6 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
             else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         }
         AppCompatDelegate.setDefaultNightMode(mode)
-    }
-
-    private fun initMusicScreenSection() {
-        updateBlurRadiusEnabled()
-
-        findPreference<ListPreference>("album_art_style")?.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { _, newValue ->
-                // The listener fires before the new value persists, so pass it along instead
-                // of re-reading the (still old) preference.
-                updateBlurRadiusEnabled(newValue as? String)
-                true
-            }
-    }
-
-    private fun updateBlurRadiusEnabled(overrideValue: String? = null) {
-        val value = overrideValue ?: findPreference<ListPreference>("album_art_style")?.value
-        val blurStyle = value == "blur" || value == "blur_bw"
-        findPreference<Preference>("album_art_blur_radius")?.isEnabled = blurStyle
     }
 
     private fun initAutomationSection() {
@@ -761,7 +484,12 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
                     requireContext().applicationContext,
                     preferenceManager.sharedPreferences!!,
                     CommPaths.PREFERENCES_PREFIX,
-                    false
+                    // Urgent: the user just toggled this in settings and expects the watch to
+                    // reflect it now. Non-urgent DataItems get batched and could otherwise take
+                    // minutes to sync (until unrelated urgent traffic flushed them) - which is
+                    // exactly why a changed watch setting like the album-art blur appeared to
+                    // apply only after tapping/turning the watch.
+                    true
             )
         }
     }

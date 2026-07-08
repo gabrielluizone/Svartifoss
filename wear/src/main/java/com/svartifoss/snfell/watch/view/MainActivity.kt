@@ -39,6 +39,7 @@ import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -79,6 +80,9 @@ import com.svartifoss.snfell.watch.config.WatchActionConfigProvider
 import com.svartifoss.snfell.watch.model.Notification
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.util.StandardActionTitles
+import com.svartifoss.snfell.watch.view.face.ExpressiveFace
+import com.svartifoss.snfell.watch.view.face.NowPlayingFaceListener
+import com.svartifoss.snfell.watch.view.face.NowPlayingFaceState
 import com.matejdro.wearutils.companionnotice.WearCompanionWatchActivity
 import com.matejdro.wearutils.lifecycle.Resource
 import com.matejdro.wearutils.miscutils.VibratorCompat
@@ -142,6 +146,15 @@ class MainActivity : WearCompanionWatchActivity(),
     private var wearDynamicAccentEnabled = true
     private var albumArtFadeEnabled = true
     private var screenTheme: String = "default"
+
+    /** Selected now-playing face (see [MiscPreferences.WEAR_SCREEN_FACE] and NowPlayingFace.kt):
+     *  "classic" is the original View presentation, "expressive" the Compose face. */
+    private var screenFace: String = "classic"
+
+    /** Single state snapshot driving the Compose face. Kept up to date by the same observers
+     *  that update the classic views, so switching faces is purely a visibility change. */
+    private val faceState = mutableStateOf(NowPlayingFaceState())
+
     private var paletteGeneration = 0
     private var lastPaletteArt: Bitmap? = null
     private var lastKnownDurationMs: Long = 0L
@@ -209,6 +222,65 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val serviceConnection = UiOpenServiceConnection(lifecycle)
 
+    private fun updateFaceState(transform: (NowPlayingFaceState) -> NowPlayingFaceState) {
+        faceState.value = transform(faceState.value)
+    }
+
+    /** Face events route into the exact same pipelines the classic face's inputs use, so both
+     *  faces behave identically (haptics, optimistic state, quick panel, queue long-press). */
+    private val expressiveFaceListener = object : NowPlayingFaceListener {
+        override fun onPlayPauseTap() {
+            buzz()
+            viewModel.togglePlayPause()
+        }
+
+        override fun onCenterDoubleTap() {
+            buzz()
+            if (isQuickActionsPanelShowing()) {
+                hideOverlay()
+            } else {
+                showQuickActionsPanel()
+            }
+        }
+
+        override fun onCenterLongPress() {
+            if (!centerLongPressQueueEnabled) {
+                return
+            }
+            buzz()
+            startActivity(Intent(this@MainActivity, QueueActivity::class.java))
+        }
+
+        override fun onSkipPreviousTap() {
+            buzz()
+            viewModel.skipPrevious()
+        }
+
+        override fun onSkipNextTap() {
+            buzz()
+            viewModel.skipNext()
+        }
+
+        override fun onQueueTap() {
+            buzz()
+            startActivity(Intent(this@MainActivity, QueueActivity::class.java))
+        }
+
+        override fun onVolumeTap() {
+            buzz()
+            showVolumeBar()
+        }
+
+        override fun onOverflowTap() {
+            buzz()
+            startMenu(showCustomList = false)
+        }
+
+        override fun onSeek(fraction: Float) {
+            viewModel.seekTo(fraction)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -234,6 +306,10 @@ class MainActivity : WearCompanionWatchActivity(),
                 binding.screenButton2,
                 binding.screenButton3
         )
+
+        binding.expressiveFace.setContent {
+            ExpressiveFace(state = faceState.value, listener = expressiveFaceListener)
+        }
 
         val centerTapGestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             // Without this, the detector's default onDown() (false) would make onTouchEvent()
@@ -598,6 +674,18 @@ class MainActivity : WearCompanionWatchActivity(),
 
         binding.textArtist.visibility =
                 if (binding.textArtist.text.isEmpty()) View.GONE else View.VISIBLE
+
+        // The classic text views above stay the single source of truth (including the
+        // status-message-in-white override on the artist line) - the face just mirrors them.
+        updateFaceState { face ->
+            face.copy(
+                    title = binding.textTitle.text?.toString().orEmpty(),
+                    artist = binding.textArtist.text?.toString().orEmpty(),
+                    artistColor = binding.textArtist.currentTextColor,
+                    playing = isMusicPlaying,
+                    idle = idle
+            )
+        }
     }
 
     /**
@@ -632,9 +720,11 @@ class MainActivity : WearCompanionWatchActivity(),
         val label = trackTitle?.takeIf { it.isNotBlank() } ?: defaultRecentsLabel
         if (label == currentRecentsLabel) return
         currentRecentsLabel = label
-        val description = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        val description = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityManager.TaskDescription.Builder().setLabel(label).build()
         } else {
+            // TaskDescription.Builder only exists since API 33 - the old >= P guard crashed
+            // Wear OS 3 (API 30) watches with NoClassDefFoundError on every track change.
             @Suppress("DEPRECATION")
             ActivityManager.TaskDescription(label)
         }
@@ -738,6 +828,14 @@ class MainActivity : WearCompanionWatchActivity(),
         if (isQuickActionsPanelShowing()) {
             binding.quickActionPanelArtist.setTextColor(binding.textArtist.currentTextColor)
             updateQuickActionButtonStates()
+        }
+
+        updateFaceState {
+            it.copy(
+                    accentColor = color,
+                    progressColor = binding.seekBar.progressColor,
+                    artistColor = binding.textArtist.currentTextColor
+            )
         }
     }
 
@@ -1082,6 +1180,10 @@ class MainActivity : WearCompanionWatchActivity(),
                 if (screenButtonsConfigured && !ambientObserver.isAmbient) View.VISIBLE else View.GONE
         styleScreenButtons()
         binding.screenButtonsRow.post { repositionScreenButtonsRow() }
+
+        // The expressive face's default queue/volume/overflow trio yields to configured mini
+        // buttons - they occupy the same part of the screen.
+        updateFaceState { it.copy(showDefaultBottomPills = !screenButtonsConfigured) }
     }
 
     /** Smart vertical placement for the mini buttons: the row rests at the user's preferred
@@ -1340,6 +1442,7 @@ class MainActivity : WearCompanionWatchActivity(),
                 preferences, MiscPreferences.WEAR_ALBUM_ART_FADE
         )
         screenTheme = Preferences.getString(preferences, MiscPreferences.WEAR_SCREEN_THEME)
+        screenFace = Preferences.getString(preferences, MiscPreferences.WEAR_SCREEN_FACE)
 
         trackTimeMode = Preferences.getString(preferences, MiscPreferences.WEAR_TRACK_TIME_MODE)
         updatePlaybackTimeVisibility()
@@ -1363,7 +1466,7 @@ class MainActivity : WearCompanionWatchActivity(),
         applyAccentColor(currentAccentColor)
 
         applyAlbumArtScrim()
-        applyScreenTheme()
+        applyScreenFace()
 
         if (!wearDynamicAccentEnabled) {
             updateDynamicAccentFromArt(latestAlbumArt)
@@ -1387,6 +1490,27 @@ class MainActivity : WearCompanionWatchActivity(),
         )
     }
 
+    /**
+     * Applies the selected now-playing face (see NowPlayingFace.kt): "classic" keeps the
+     * original View presentation; "expressive" swaps the central rendering - text block,
+     * bezel seek ring, center tap zone and quadrant hint icons - for the Compose face. The
+     * classic views keep being updated while hidden (ambient mode and the quick panel read
+     * from them), and every input layer stays shared between faces. Ambient always reverts
+     * to the classic presentation - see [ambientCallback].
+     */
+    private fun applyScreenFace() {
+        if (ambientObserver.isAmbient) {
+            return
+        }
+
+        val expressive = screenFace == "expressive"
+        binding.expressiveFace.visibility = if (expressive) View.VISIBLE else View.GONE
+        binding.classicTextBlock.visibility = if (expressive) View.GONE else View.VISIBLE
+        binding.seekBar.visibility = if (expressive) View.GONE else View.VISIBLE
+        binding.centerTapZone.visibility = if (expressive) View.GONE else View.VISIBLE
+        applyScreenTheme()
+    }
+
     private fun applyScreenTheme() {
         if (ambientObserver.isAmbient) {
             return
@@ -1402,6 +1526,19 @@ class MainActivity : WearCompanionWatchActivity(),
             params.width = size
             params.height = size
             icon.layoutParams = params
+        }
+
+        if (screenFace == "expressive") {
+            // The expressive face draws its own transport buttons and curved clock - the
+            // quadrant hint icons and the always-on clock belong to the classic face only.
+            // (Quadrant taps themselves keep working; only their icons are hidden.) The
+            // cinema theme's extra scrim still applies on top of any face.
+            icons.forEach { it.visibility = View.GONE }
+            binding.ambientClock.visibility = View.GONE
+            if (screenTheme == "cinema" && dimAlbumArt) {
+                binding.albumArtScrim.visibility = View.VISIBLE
+            }
+            return
         }
 
         when (screenTheme) {
@@ -1472,12 +1609,22 @@ class MainActivity : WearCompanionWatchActivity(),
             binding.seekBar.seekable = false
             hasPlaybackPosition = false
             updatePlaybackTimeVisibility()
+            updateFaceState { it.copy(seekable = false) }
             return@Observer
         }
 
         lastKnownDurationMs = position.durationMs
         binding.seekBar.seekable = position.seekable
         binding.seekBar.progress = position.positionMs.toFloat() / position.durationMs
+
+        updateFaceState {
+            it.copy(
+                    progress = position.positionMs.toFloat() / position.durationMs,
+                    seekable = position.seekable,
+                    positionMs = position.positionMs,
+                    durationMs = position.durationMs
+            )
+        }
 
         hasPlaybackPosition = true
         updatePlaybackTimeVisibility()
@@ -1503,6 +1650,7 @@ class MainActivity : WearCompanionWatchActivity(),
         }
         binding.textPlaybackTime.visibility =
                 if (hasPlaybackPosition && allowedByMode) View.VISIBLE else View.GONE
+        updateFaceState { it.copy(showTrackTime = hasPlaybackPosition && allowedByMode) }
     }
 
     private fun formatPlaybackTime(timeMs: Long): String {
@@ -1690,6 +1838,12 @@ class MainActivity : WearCompanionWatchActivity(),
                     binding.iconRight.visibility = View.GONE
                     binding.screenButtonsRow.visibility = View.GONE
 
+                    // Ambient always shows the classic presentation regardless of the selected
+                    // face - it is burn-in-audited (outlined text, pixel jiggle) and animation
+                    // free. onExitAmbient re-applies the user's face.
+                    binding.expressiveFace.visibility = View.GONE
+                    binding.classicTextBlock.visibility = View.VISIBLE
+
                     binding.albumArt.alpha = ambientAlbumArtAlpha
                     setAmbientAlbumArtBlur(true)
                     binding.albumArtScrim.visibility = View.GONE
@@ -1813,6 +1967,10 @@ class MainActivity : WearCompanionWatchActivity(),
                     // resetting the wrong view here left it permanently shifted after ambient.
                     binding.contentFrame.translationX = 0f
                     binding.contentFrame.translationY = 0f
+
+                    // Last, so it wins over the classic-view restores above (e.g. the seek ring
+                    // set VISIBLE earlier) when the expressive face is selected.
+                    applyScreenFace()
                 }
 
             }
