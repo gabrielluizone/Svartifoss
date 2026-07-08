@@ -604,7 +604,7 @@ class WatchPreviewView @JvmOverloads constructor(
         // shown when Always-show-time is on (which also hides the top quadrant icon).
         if (screenTheme != "minimal") {
             if (alwaysShowTime) {
-                drawSmallClock(canvas, cx, cy - radius + dp(18f), dp)
+                drawSmallClock(canvas, cx, cy - radius + dp(23f), dp)
             } else {
                 drawIcon(canvas, commonR.drawable.action_volume_up, cx, cy - radius + edge + iconSize / 2f, iconSize, Color.WHITE, iconAlpha)
             }
@@ -612,7 +612,7 @@ class WatchPreviewView @JvmOverloads constructor(
             drawIcon(canvas, commonR.drawable.action_skip_prev, cx - radius + edge + iconSize / 2f, cy, iconSize, Color.WHITE, iconAlpha)
             drawIcon(canvas, commonR.drawable.action_skip_next, cx + radius - edge - iconSize / 2f, cy, iconSize, Color.WHITE, iconAlpha)
         } else if (alwaysShowTime) {
-            drawSmallClock(canvas, cx, cy - radius + dp(18f), dp)
+            drawSmallClock(canvas, cx, cy - radius + dp(23f), dp)
         }
 
         drawClassicTextBlock(canvas, cx, cy, radius * 1.6f, artistColor, dp)
@@ -692,7 +692,7 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun drawSmallClock(canvas: Canvas, x: Float, y: Float, dp: (Float) -> Float) {
         textPaint.typeface = fontRegular
         textPaint.color = 0xC8FFFFFF.toInt()
-        textPaint.textSize = dp(15f)
+        textPaint.textSize = dp(13f)
         // Real wall-clock time, like the watch (which follows the system 12/24h setting and
         // never appends AM/PM). Minute precision is enough - the preview redraws often enough
         // while playing, and a stale minute at rest is harmless.
@@ -816,7 +816,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val onContainer = tonal(accent, 0.16f, 0.25f, 0.60f)
         val artistColor = accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
 
-        drawSmallClock(canvas, cx, cy - radius + dp(20f), dp)
+        drawSmallClock(canvas, cx, cy - radius + dp(24f), dp)
 
         // Title/artist near the top. Overflowing titles always scroll here - the watch's
         // expressive face uses an unconditional marquee, independent of the title text mode.
