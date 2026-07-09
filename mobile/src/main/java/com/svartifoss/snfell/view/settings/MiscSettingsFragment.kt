@@ -52,7 +52,6 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     companion object {
         private const val PREF_DEV_MODE = "developer_mode_enabled"
         private const val DEV_CLICKS_REQUIRED = 7
-        private const val KOFI_URL = "https://ko-fi.com/gabrielsvafoss"
     }
 
     private var versionClickCount = 0
@@ -308,12 +307,6 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     }
 
     private fun initAboutSection() {
-        findPreference<Preference>("donate")!!.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(KOFI_URL)))
-                true
-            }
-
         findPreference<Preference>("supportButton")!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 sendLogs()

@@ -62,6 +62,8 @@ private const val REQUEST_CODE_POST_NOTIFICATIONS = 1002
 // listing on the watch.
 private const val WEAR_APPLICATION_ID = "com.svartifoss.snfell"
 
+private const val BUY_ME_A_COFFEE_URL = "https://buymeacoffee.com/gabrielsvafoss"
+
 class MainActivity : WearCompanionPhoneActivity(),
         TitledActivity, ActivityResultReceiver, HasAndroidInjector {
 
@@ -893,6 +895,10 @@ class MainActivity : WearCompanionPhoneActivity(),
         }
         header.findViewById<TextView>(R.id.drawer_version_text)?.text =
             getString(R.string.drawer_version_format, versionName)
+
+        header.findViewById<View>(R.id.drawer_support_button)?.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BUY_ME_A_COFFEE_URL)))
+        }
     }
 
     private fun swapFragment(newFragment: Fragment) {

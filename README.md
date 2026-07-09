@@ -35,6 +35,7 @@ the fork.
 - [What it can do](#what-it-can-do)
 - [Installing](#installing)
 - [Building](#building)
+- [Support](#support)
 - [Credits](#credits)
 
 ## What it can do
@@ -138,6 +139,13 @@ command line via the Gradle wrapper.
    ```
 
    or open the project in Android Studio and let it sync.
+
+## Support
+
+Svartifoss is free and open source, and stays that way either way — nothing
+in the app is gated behind this. If it's useful to you and you'd like to help
+out, you can do so on [Buy Me a Coffee](https://buymeacoffee.com/gabrielsvafoss)
+or [Ko-fi](https://ko-fi.com/gabrielsvafoss).
 
 ## Credits
 

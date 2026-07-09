@@ -174,8 +174,6 @@
     <string name="category_action_list">Lista de ações</string>
     <string name="category_automation">Automação</string>
     <string name="installed_version">Versão instalada</string>
-    <string name="donate">Apoie o projeto</string>
-    <string name="donate_description">O Svartifoss é gratuito e de código aberto - me pague um café no Ko-fi se ele for útil pra você</string>
     <string name="get_support">Obter suporte</string>
     <string name="get_support_description">Envia os logs do aplicativo para o desenvolvedor, para fins de suporte</string>
     <string name="licenses">Licenças de código aberto</string>
@@ -507,6 +505,9 @@
     <string name="drawer_name_meaning">Svartifoss significa \"Cachoeira Negra\" em islandês — batizada em homenagem à cachoeira no Parque Nacional Vatnajökull, onde colunas de basalto escuro emolduram uma cascata estreita. Como água sobre a pedra, a música flui pelo app.</string>
     <string name="drawer_sync_heading">Sincronização</string>
     <string name="drawer_sync_summary">As configurações do relógio são definidas aqui no celular e sincronizadas automaticamente com o seu relógio pareado.</string>
+    <string name="drawer_support_heading">Apoie o projeto</string>
+    <string name="drawer_support_summary">O Svartifoss é gratuito e de código aberto - me pague um café se ele for útil pra você.</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
     <string name="download_album_art">Baixar capa do álbum</string>
     <string name="album_art_saved">Capa do álbum salva na galeria</string>
     <string name="album_art_save_error">Falha ao salvar a capa do álbum</string>

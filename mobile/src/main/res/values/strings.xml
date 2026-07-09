@@ -175,8 +175,6 @@
     <string name="category_action_list">Action List</string>
     <string name="category_automation">Automation</string>
     <string name="installed_version">Installed version</string>
-    <string name="donate">Support the project</string>
-    <string name="donate_description">Svartifoss is free and open source - buy me a coffee on Ko-fi if it\'s useful to you</string>
     <string name="get_support">Get support</string>
     <string name="get_support_description">Send application logs to the developer for the support</string>
     <string name="licenses">Open source licenses</string>
@@ -508,6 +506,9 @@
     <string name="drawer_name_meaning">Svartifoss means “Black Falls” in Icelandic — named after the waterfall in Vatnajökull National Park, where dark basalt columns frame a narrow cascade. Like water over stone, music flows through the app.</string>
     <string name="drawer_sync_heading">Sync</string>
     <string name="drawer_sync_summary">Watch settings are configured here on the phone and synced automatically to your paired watch.</string>
+    <string name="drawer_support_heading">Support</string>
+    <string name="drawer_support_summary">Svartifoss is free and open source - buy me a coffee if it\'s useful to you.</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
     <string name="download_album_art">Download cover art</string>
     <string name="album_art_saved">Cover art saved to gallery</string>
     <string name="album_art_save_error">Failed to save cover art</string>

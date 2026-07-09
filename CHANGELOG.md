@@ -2,13 +2,35 @@
 
 ## 2.1
 
+### Phone
+
+- **New Watch tab**, in the slot the Guide used to occupy: a dedicated visual
+  customization screen for the watch's now-playing screen, with a **live
+  miniature preview** — face (Classic/Expressive), screen theme, album
+  background (style/blur/dim), colors (dynamic accent, artist/progress color
+  sources), and mini-button appearance/offset — previewed exactly as it will
+  render on the watch and synced there on every change. While music plays on
+  the phone, the miniature mirrors the **actual current track** (real album
+  art, title, artist, the accent extracted from that art, and live playback —
+  the progress ring and track time advance in real time). These appearance
+  settings moved out of Settings, which now keeps only behavior options.
+- **Guide moved to the toolbar**: the usage guide no longer takes up a
+  bottom-nav tab slot — it now opens from a help button in the toolbar,
+  freeing that slot for the new Watch tab above.
+- The app is now fully **navigable without a paired watch**: every screen
+  (Watch, Playing/Stopped controls, Actions, Settings) is reachable even with
+  nothing connected — only the physical-buttons section of the button-config
+  screens needs a live watch, and it already hides itself gracefully when
+  there's no data. A dismissable banner in Settings clarifies that watch
+  settings still save and sync even without a paired watch.
 - **Portuguese (Brazil) translation completed for the phone app.** The watch
   app and shared module were already fully translated; the phone app's ~320
   strings and option lists (themes, screen styles, etc.) are now translated
   too, so the whole app is consistent in pt-BR.
-- **Support the project**: a new entry in Settings → About links to a Ko-fi
-  page, for anyone who wants to help out. The app stays fully free either
-  way — nothing is gated behind it.
+- **Support the project**: a link to [Buy Me a Coffee](https://buymeacoffee.com/gabrielsvafoss)
+  in the app's navigation drawer (swipe in from the left edge), for anyone
+  who wants to help out. The app stays fully free either way — nothing is
+  gated behind it.
 - The **Overlays & queue** style pickers (volume, quick panel, queue screen)
   moved up to right after **Screen face** on the Watch tab, closer to where
   they belong given how much they change the look.
@@ -16,6 +38,38 @@
   immediately when a watch actually is connected.
 - Fixed the Watch tab's live preview briefly showing the default accent
   color before switching to the real album-art color when a track loads.
+
+### Watch
+
+- **New Expressive now-playing face**: alongside the classic layout, a new
+  face mirrors the Material 3 Expressive system media controls — a soft
+  "cookie" play/pause button (morphs to a circle when paused) wrapped in a
+  progress ring that follows its scalloped contour, large round prev/next
+  buttons in the album accent's tonal colors, an accent-tinted/vignetted
+  album backdrop, and a queue/volume/menu glass trio at the bottom whenever
+  no mini buttons are configured. Switch faces from Settings → Screen face;
+  every gesture, button, overlay, and the quick panel behaves identically on
+  both, and ambient mode always falls back to the classic, burn-in-safe look.
+- **Expressive face touch seek**: a new setting picks how touch-seeking works
+  on the Expressive face — drag the **Central ring** around the cookie button
+  (with a live time readout), show the **Edge ring** (the classic bezel seek
+  ring), or **None** (leave seeking to the rotary crown).
+- **13 new overlay & queue styles**: the volume overlay, quick-actions panel,
+  and queue screen each get an independent style picker (Settings →
+  Screen face → Overlays & queue) — Glass, Minimal (AMOLED), Material, Tonal,
+  Neon, Light, Gradient, Mono, Outline, Duotone, High Contrast, Terminal, and
+  Frost.
+- Eliminated watch UI freezes on track change: album-art and custom-list icon
+  decoding, the complication's cover re-encoding, and the media session's
+  cover transfer were all blocking the watch's single main thread on every
+  music-state push — they now run off it, and an unchanged cover is skipped
+  instead of redecoded.
+- Fixed the watch's shuffle/repeat/like state rings getting stuck after a
+  state update was wrongly deduplicated away, fixed a possible crash from a
+  volume divide-by-zero, fixed the back key swallowing the configured
+  back/dismiss action on watches that deliver it as a key event, fixed a
+  config-backup import never actually reaching the watch, and fixed a few
+  memory/listener leaks.
 
 ## 2.0
 

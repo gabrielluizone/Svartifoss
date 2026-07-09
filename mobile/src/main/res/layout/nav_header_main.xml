@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -112,6 +113,38 @@
             android:textColor="@color/lyra_text_secondary"
             android:lineSpacingMultiplier="1.25"
             android:fontFamily="@font/google_sans" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/drawer_support_heading"
+            android:textSize="11sp"
+            android:letterSpacing="0.08"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:fontFamily="@font/google_sans"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/drawer_support_summary"
+            android:textSize="13sp"
+            android:textColor="@color/lyra_text_secondary"
+            android:lineSpacingMultiplier="1.25"
+            android:fontFamily="@font/google_sans" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/drawer_support_button"
+            style="@style/LyraGestureButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/drawer_support_button"
+            app:icon="@drawable/ic_bolt" />
 
         <TextView
             android:id="@+id/drawer_version_text"
