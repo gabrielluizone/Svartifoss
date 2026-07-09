@@ -33,6 +33,7 @@ google-autoValue = "1.10.1" # Do not update that due to minSdk compatibility
 google-firebase-bom = "34.6.0"
 google-firebase-crashlytics-gradle = "3.0.6"
 google-material = "1.13.0"
+google-playBilling = "8.0.0"
 google-playServices-gradle = "4.4.4"
 google-playServices-location = "21.3.0"
 google-playServices-wearable = "19.0.0"
@@ -104,6 +105,7 @@ google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref
 google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 google-firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "google-firebase-crashlytics-gradle" }
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
+google-playBilling = { module = "com.android.billingclient:billing-ktx", version.ref = "google-playBilling" }
 google-wearableSupport = { module = "com.google.android.support:wearable", version.ref = "google-wearableLibrary" }
 google-wearableLibrary = { module = "com.google.android.wearable:wearable", version.ref = "google-wearableLibrary" }
 google-playServices-gradle = { module = "com.google.gms:google-services", version.ref = "google-playServices-gradle" }

@@ -206,6 +206,13 @@ object MiscPreferences {
     val WEAR_QUEUE_STYLE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_queue_style", "glass")
 
+    /** Whether the one-time Premium purchase (see mobile's PurchaseManager) is unlocked - gates the
+     *  premium-only values in [PremiumStyles.PREMIUM_ONLY_STYLE_VALUES]. Written on the phone from the
+     *  Play Billing entitlement, synced to the watch through the normal preference push (see
+     *  PreferencePusher), and re-derived from Play Billing on every app start rather than
+     *  user-editable - deliberately left out of [EXPORTABLE] so backups/restores never fake it. */
+    val PREMIUM_UNLOCKED: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("premium_unlocked", false)
+
     fun isAnyKindOfAutoStartEnabled(preferences: SharedPreferences): Boolean {
         return Preferences.getBoolean(preferences, AUTO_START) || Preferences.getEnum(preferences, AUTO_START_MODE) != AutoStartMode.OFF
     }

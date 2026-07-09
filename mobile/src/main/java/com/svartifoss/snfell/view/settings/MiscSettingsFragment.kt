@@ -24,6 +24,7 @@ import androidx.preference.PreferenceCategory
 import com.svartifoss.snfell.NotificationService
 import android.content.pm.ApplicationInfo
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.billing.PurchaseManager
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.model.AutoStartMode
@@ -58,6 +59,9 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     @Inject
     lateinit var watchInfoProvider: WatchInfoProvider
 
+    @Inject
+    lateinit var purchaseManager: PurchaseManager
+
     private val exportConfigLauncher = registerForActivityResult(
             ActivityResultContracts.CreateDocument("application/json")
     ) { uri -> uri?.let { exportConfigTo(it) } }
@@ -74,6 +78,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         watchInfoProvider.observe(viewLifecycleOwner, noWatchBannerObserver)
+        purchaseManager.isPremium.observe(viewLifecycleOwner) { updatePremiumEntry(it) }
     }
 
     // Every setting on this screen still works and gets saved without a paired watch - it just
@@ -89,12 +94,36 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
 
         devModeEnabled = preferenceManager.sharedPreferences?.getBoolean(PREF_DEV_MODE, false) == true
 
+        initPremiumSection()
         initAppearanceSection()
         initAutomationSection()
         initBackupSection()
         initAboutSection()
         initDevSection()
         updateDevModeVisibility()
+    }
+
+    private fun initPremiumSection() {
+        updatePremiumEntry(purchaseManager.isPremium.value == true)
+        findPreference<Preference>("premium_unlock")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    if (purchaseManager.isPremium.value != true) {
+                        purchaseManager.launchPurchaseFlow(requireActivity())
+                    }
+                    true
+                }
+    }
+
+    private fun updatePremiumEntry(isPremium: Boolean) {
+        val pref = findPreference<Preference>("premium_unlock") ?: return
+        pref.isSelectable = !isPremium
+        if (isPremium) {
+            pref.title = getString(R.string.premium_active_title)
+            pref.summary = getString(R.string.premium_active_description)
+        } else {
+            pref.title = getString(R.string.premium_unlock_title)
+            pref.summary = getString(R.string.premium_unlock_description)
+        }
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {

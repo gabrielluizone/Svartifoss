@@ -2,6 +2,7 @@ package com.svartifoss.snfell.di
 
 import android.app.Application
 import android.content.Context
+import com.svartifoss.snfell.billing.PurchaseManager
 import com.svartifoss.snfell.config.ActionConfig
 import com.svartifoss.snfell.config.DefaultConfigGenerator
 import com.svartifoss.snfell.config.GlobalActionConfig
@@ -22,6 +23,10 @@ class AppModule {
     @Provides
     @Singleton
     fun provideWatchStateProvider(context: Context) = WatchInfoProvider(context)
+
+    @Provides
+    @Singleton
+    fun providePurchaseManager(context: Context) = PurchaseManager(context)
 
     @Provides
     @Singleton

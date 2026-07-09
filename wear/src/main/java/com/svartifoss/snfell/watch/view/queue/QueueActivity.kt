@@ -11,6 +11,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.PremiumStyles
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.matejdro.wearutils.preferences.definition.Preferences
@@ -62,10 +63,11 @@ class QueueActivity : ComponentActivity() {
 
         // Read once on open: the style is a synced phone preference that rarely changes, and this
         // activity is recreated each time the queue opens (noHistory).
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val queueStyle = QueueStyle.fromPref(
-                Preferences.getString(
-                        PreferenceManager.getDefaultSharedPreferences(this),
-                        MiscPreferences.WEAR_QUEUE_STYLE
+                PremiumStyles.sanitize(
+                        Preferences.getString(preferences, MiscPreferences.WEAR_QUEUE_STYLE),
+                        Preferences.getBoolean(preferences, MiscPreferences.PREMIUM_UNLOCKED)
                 )
         )
 
