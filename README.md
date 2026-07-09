@@ -8,6 +8,7 @@
 [![Min SDK](https://img.shields.io/badge/min%20SDK-23%20(phone)%20%2F%2026%20(watch)-informational)](#)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](COPYING)
 [![Latest release](https://img.shields.io/github/v/release/gabrielluizone/Svartifoss?label=release)](https://github.com/gabrielluizone/Svartifoss/releases)
+[![Downloads](https://img.shields.io/github/downloads/gabrielluizone/Svartifoss/total?label=downloads)](https://github.com/gabrielluizone/Svartifoss/releases)
 [![Last commit](https://img.shields.io/github/last-commit/gabrielluizone/Svartifoss)](https://github.com/gabrielluizone/Svartifoss/commits)
 ![Visitors](https://komarev.com/ghpvc/?username=gabrielluizone&repo=Svartifoss&label=visitors&color=blue)
 
