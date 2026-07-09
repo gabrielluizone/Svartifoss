@@ -7,9 +7,9 @@
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20Wear%20OS-3ddc84?logo=android&logoColor=white)](#)
 [![Min SDK](https://img.shields.io/badge/min%20SDK-23%20(phone)%20%2F%2026%20(watch)-informational)](#)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](COPYING)
-[![Latest release](https://img.shields.io/github/v/release/gabrielluizone/Svartifoss?label=release)](https://github.com/gabrielluizone/Svartifoss/releases)
-[![Downloads](https://img.shields.io/github/downloads/gabrielluizone/Svartifoss/latest/total?label=latest%20downloads)](https://github.com/gabrielluizone/Svartifoss/releases/latest)
-[![Last commit](https://img.shields.io/github/last-commit/gabrielluizone/Svartifoss)](https://github.com/gabrielluizone/Svartifoss/commits)
+[![Latest Release](https://img.shields.io/github/v/release/gabrielluizone/Svartifoss?label=Release)](https://github.com/gabrielluizone/Svartifoss/releases)
+[![Downloads](https://img.shields.io/github/downloads/gabrielluizone/Svartifoss/latest/total?label=Downloads)](https://github.com/gabrielluizone/Svartifoss/releases/latest)
+[![Last Commit](https://img.shields.io/github/last-commit/gabrielluizone/Svartifoss)](https://github.com/gabrielluizone/Svartifoss/commits)
 ![Visitors](https://komarev.com/ghpvc/?username=gabrielluizone&repo=Svartifoss&label=visitors&color=blue)
 
 **Control the music playing on your phone from a Wear OS watch** — physical
