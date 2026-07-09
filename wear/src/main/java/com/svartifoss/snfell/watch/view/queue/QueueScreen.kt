@@ -8,6 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,10 +32,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -42,8 +46,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.ColorUtils
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
@@ -78,6 +84,183 @@ private const val QUEUE_LOAD_TIMEOUT_MS = 6000L
 /** The app-wide Google Sans typeface, so the queue matches the rest of the watch UI. */
 private val GoogleSans = GoogleSansFamily
 
+/** User-selectable visual style of the queue (see [MiscPreferences.WEAR_QUEUE_STYLE] on the
+ *  phone). Shares the four-name vocabulary with the volume and quick-panel overlays. */
+enum class QueueStyle {
+    /** Frosted glass pills; the now-playing entry is a light accent pill (original look). */
+    GLASS,
+    /** AMOLED-flat: no pill, a thin accent keyline marks the now-playing row. */
+    MINIMAL,
+    /** Material Design 2: solid dark-grey rounded cards with an accent keyline on now-playing. */
+    MATERIAL,
+    /** Expressive: rounded cards tinted in the album accent, tall and bold. */
+    TONAL,
+    /** Transparent rows with a glowing album-accent outline; now-playing text/border in accent. */
+    NEON,
+    /** Light theme: pale cards with dark text; now-playing is an accent pill. */
+    LIGHT,
+    /** Album-accent vertical gradient cards. */
+    GRADIENT,
+    /** Neutral greyscale, ignoring the album accent. */
+    MONO,
+    /** Thick white cartoon outline, transparent fill. */
+    OUTLINE,
+    /** Two-hue: accent for now-playing, its complementary colour for the rest. */
+    DUOTONE,
+    /** Pure black/white, thick strokes (high contrast). */
+    CONTRAST,
+    /** Sharp-cornered monochrome-green CRT look. */
+    TERMINAL,
+    /** Light translucent frosted panels. */
+    FROST;
+
+    companion object {
+        fun fromPref(value: String?): QueueStyle = when (value) {
+            "minimal" -> MINIMAL
+            "material" -> MATERIAL
+            "tonal" -> TONAL
+            "neon" -> NEON
+            "light" -> LIGHT
+            "gradient" -> GRADIENT
+            "mono" -> MONO
+            "outline" -> OUTLINE
+            "duotone" -> DUOTONE
+            "contrast" -> CONTRAST
+            "terminal" -> TERMINAL
+            "frost" -> FROST
+            else -> GLASS
+        }
+    }
+}
+
+/** Monochrome-green used by the terminal/CRT style. */
+private val TERMINAL_GREEN = Color(0xFF33FF66)
+
+/** Material Design 2 surface grey used for the "material" queue cards. */
+private val MATERIAL_CARD_COLOR = Color(0xFF2A2A2A)
+private val LIGHT_SURFACE = Color(0xFFECECEC)
+private val LIGHT_ON = Color(0xFF111111)
+private val MONO_IDLE = Color(0xFF262626)
+private val MONO_ACTIVE = Color(0xFFE0E0E0)
+
+/** Per-style skin for one queue row. */
+private class QueueRowSkin(
+        val background: Brush,
+        val onColor: Color,
+        val corner: Dp,
+        val verticalPadding: Dp,
+        /** Left accent bar drawn to mark the now-playing row, or null for none. */
+        val keyline: Color?,
+        /** Outline (width, colour) drawn around the row, or null for none. */
+        val border: Pair<Dp, Color>? = null
+)
+
+private fun queueRowSkin(style: QueueStyle, isPlaying: Boolean, accent: Color): QueueRowSkin {
+    val lighten = lightenForBlackText(accent)
+    return when (style) {
+        QueueStyle.GLASS -> QueueRowSkin(
+                background = SolidColor(if (isPlaying) lighten else IDLE_PILL_COLOR),
+                onColor = if (isPlaying) Color.Black else Color.White,
+                corner = 26.dp, verticalPadding = 12.dp, keyline = null
+        )
+        QueueStyle.MINIMAL -> QueueRowSkin(
+                background = SolidColor(Color.Transparent),
+                onColor = if (isPlaying) accent else Color.White,
+                corner = 0.dp, verticalPadding = 10.dp,
+                keyline = if (isPlaying) accent else null
+        )
+        QueueStyle.MATERIAL -> QueueRowSkin(
+                background = SolidColor(MATERIAL_CARD_COLOR),
+                onColor = if (isPlaying) accent else Color.White,
+                corner = 12.dp, verticalPadding = 14.dp,
+                keyline = if (isPlaying) accent else null
+        )
+        QueueStyle.TONAL -> QueueRowSkin(
+                background = SolidColor(if (isPlaying) lighten else tonalColor(accent, 0.22f)),
+                onColor = if (isPlaying) Color.Black else Color.White,
+                corner = 28.dp, verticalPadding = 16.dp, keyline = null
+        )
+        QueueStyle.NEON -> QueueRowSkin(
+                background = SolidColor(Color.Transparent),
+                onColor = if (isPlaying) accent else Color.White,
+                corner = 18.dp, verticalPadding = 12.dp, keyline = null,
+                border = (if (isPlaying) 2.dp else 1.dp) to (if (isPlaying) accent else accent.copy(alpha = 0.5f))
+        )
+        QueueStyle.LIGHT -> QueueRowSkin(
+                background = SolidColor(if (isPlaying) lighten else LIGHT_SURFACE),
+                onColor = if (isPlaying) Color.Black else LIGHT_ON,
+                corner = 20.dp, verticalPadding = 13.dp, keyline = null
+        )
+        QueueStyle.GRADIENT -> QueueRowSkin(
+                background = if (isPlaying) {
+                    Brush.verticalGradient(listOf(lighten, tonalColor(accent, 0.55f)))
+                } else {
+                    Brush.verticalGradient(listOf(tonalColor(accent, 0.26f), tonalColor(accent, 0.13f)))
+                },
+                onColor = if (isPlaying) Color.Black else Color.White,
+                corner = 22.dp, verticalPadding = 14.dp, keyline = null
+        )
+        QueueStyle.MONO -> QueueRowSkin(
+                background = SolidColor(if (isPlaying) MONO_ACTIVE else MONO_IDLE),
+                onColor = if (isPlaying) Color.Black else Color.White,
+                corner = 14.dp, verticalPadding = 13.dp, keyline = null
+        )
+        QueueStyle.OUTLINE -> QueueRowSkin(
+                background = SolidColor(Color.Transparent),
+                onColor = if (isPlaying) accent else Color.White,
+                corner = 16.dp, verticalPadding = 12.dp, keyline = null,
+                border = (if (isPlaying) 3.dp else 2.5.dp) to (if (isPlaying) accent else Color.White)
+        )
+        QueueStyle.DUOTONE -> QueueRowSkin(
+                background = SolidColor(if (isPlaying) lighten else tonalColor(complementary(accent), 0.24f)),
+                onColor = if (isPlaying) Color.Black else Color.White,
+                corner = 22.dp, verticalPadding = 14.dp, keyline = null
+        )
+        QueueStyle.CONTRAST -> QueueRowSkin(
+                background = SolidColor(if (isPlaying) Color.White else Color.Black),
+                onColor = if (isPlaying) Color.Black else Color.White,
+                corner = 8.dp, verticalPadding = 13.dp, keyline = null,
+                border = if (isPlaying) null else 2.dp to Color.White
+        )
+        QueueStyle.TERMINAL -> QueueRowSkin(
+                background = SolidColor(Color.Transparent),
+                onColor = TERMINAL_GREEN,
+                corner = 0.dp, verticalPadding = 11.dp, keyline = null,
+                border = (if (isPlaying) 2.dp else 1.dp) to TERMINAL_GREEN
+        )
+        QueueStyle.FROST -> QueueRowSkin(
+                background = SolidColor(if (isPlaying) accent.copy(alpha = 0.5f) else Color.White.copy(alpha = 0.16f)),
+                onColor = Color.White,
+                corner = 24.dp, verticalPadding = 13.dp, keyline = null
+        )
+    }
+}
+
+/** The album accent's complementary hue (used by the duotone style). */
+private fun complementary(accent: Color): Color {
+    val hsl = FloatArray(3)
+    ColorUtils.colorToHSL(accent.toArgb(), hsl)
+    hsl[0] = (hsl[0] + 180f) % 360f
+    return Color(ColorUtils.HSLToColor(hsl))
+}
+
+/** Row spacing per style - tighter for the flat minimal list, roomier for the bold card styles. */
+private fun queueRowSpacing(style: QueueStyle): Dp = when (style) {
+    QueueStyle.MINIMAL, QueueStyle.TERMINAL -> 2.dp
+    QueueStyle.MATERIAL, QueueStyle.TONAL, QueueStyle.LIGHT, QueueStyle.GRADIENT,
+    QueueStyle.DUOTONE, QueueStyle.FROST -> 8.dp
+    else -> 6.dp
+}
+
+/** A dark, accent-tinted surface for the tonal idle rows - keeps saturation in a readable band. */
+private fun tonalColor(accent: Color, lightness: Float): Color {
+    val hsl = FloatArray(3)
+    ColorUtils.colorToHSL(accent.toArgb(), hsl)
+    hsl[1] = hsl[1].coerceIn(0.25f, 0.60f)
+    hsl[2] = lightness
+    return Color(ColorUtils.HSLToColor(hsl))
+}
+
 /**
  * Playback queue screen. A [ScalingLazyColumn] of glass pills (with a now-playing header on top)
  * where the active entry is highlighted with the full album [accentColor] and a contrast-matched
@@ -93,7 +276,8 @@ fun QueueScreen(
         nowPlayingTitle: String?,
         nowPlayingArtist: String?,
         onItemClick: (entryId: String) -> Unit,
-        onDismiss: () -> Unit
+        onDismiss: () -> Unit,
+        style: QueueStyle = QueueStyle.GLASS
 ) {
     // Guard: SwipeToDismissBox can fire onDismissed more than once in edge cases (e.g. the system
     // windowSwipeToDismiss racing with the Compose gesture). Only forward the first call.
@@ -105,7 +289,7 @@ fun QueueScreen(
         // window is black, so swiping back slides the list away over black - one clean close).
         if (!isBackground) {
             Box(Modifier.fillMaxSize().background(Color.Black)) {
-                QueueList(items, accentColor, nowPlayingTitle, nowPlayingArtist, onItemClick)
+                QueueList(items, accentColor, nowPlayingTitle, nowPlayingArtist, onItemClick, style)
             }
         }
     }
@@ -117,7 +301,8 @@ private fun QueueList(
         accentColor: Color,
         nowPlayingTitle: String?,
         nowPlayingArtist: String?,
-        onItemClick: (String) -> Unit
+        onItemClick: (String) -> Unit,
+        style: QueueStyle
 ) {
     val listState = rememberScalingLazyListState()
 
@@ -146,14 +331,14 @@ private fun QueueList(
                     state = listState,
                     // Extra top padding leaves room for the curved clock at the top bezel.
                     contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 36.dp, bottom = 26.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(queueRowSpacing(style)),
                     // Same fix as MenuScreen: the old overload (no rotary param) is a deprecated
                     // compatibility shim whose legacy touch path is why swipes weren't scrolling.
                     rotaryScrollableBehavior = RotaryScrollableDefaults.behavior(scrollableState = listState)
             ) {
                 item { QueueHeader(nowPlayingTitle, nowPlayingArtist, animate = !isScrolling) }
                 items(items, key = { it.entryId }) { item ->
-                    QueueRow(item, accentColor, onItemClick, animate = !isScrolling)
+                    QueueRow(item, accentColor, onItemClick, animate = !isScrolling, style = style)
                 }
             }
         }
@@ -209,12 +394,13 @@ private fun QueueRow(
         item: QueueItemUi,
         accentColor: Color,
         onItemClick: (String) -> Unit,
-        animate: Boolean
+        animate: Boolean,
+        style: QueueStyle
 ) {
-    // Now-playing text/glyph is always black; the accent is lightened so black always reads,
-    // turning dark albums (e.g. purple) into a dark-theme-friendly pastel of the same hue.
-    val pillColor = if (item.isPlaying) lightenForBlackText(accentColor) else IDLE_PILL_COLOR
-    val onPill = if (item.isPlaying) Color.Black else Color.White
+    // The lightened accent / tonal surfaces keep black or accent text readable regardless of the
+    // album's hue - see queueRowSkin for how each style paints the row.
+    val skin = queueRowSkin(style, item.isPlaying, accentColor)
+    val onRow = skin.onColor
 
     // background(shape) draws an anti-aliased rounded rect directly; the previous
     // clip(RoundedCornerShape) forced an offscreen saveLayer PER ROW on every scroll frame
@@ -222,18 +408,39 @@ private fun QueueRow(
     // of the scroll stutter. The row's content is inside padding and ellipsized, so it never
     // needs the rounded clip - only the tap ripple loses its rounded corners, which is
     // imperceptible next to smooth scrolling.
+    val keyline = skin.keyline
+    val shape = RoundedCornerShape(skin.corner)
+    val border = skin.border
     Row(
             modifier = Modifier
                     .fillMaxWidth()
-                    .background(pillColor, RoundedCornerShape(26.dp))
+                    .background(skin.background, shape)
+                    .then(if (border != null) Modifier.border(border.first, border.second, shape) else Modifier)
                     .clickable { onItemClick(item.entryId) }
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    .then(
+                            if (keyline != null) {
+                                // A short rounded accent bar hugging the left edge marks the
+                                // now-playing row on the flat minimal/material styles (which have
+                                // no coloured pill to signal it).
+                                Modifier.drawBehind {
+                                    drawRoundRect(
+                                            color = keyline,
+                                            topLeft = Offset(0f, size.height * 0.18f),
+                                            size = Size(3.dp.toPx(), size.height * 0.64f),
+                                            cornerRadius = CornerRadius(2.dp.toPx())
+                                    )
+                                }
+                            } else {
+                                Modifier
+                            }
+                    )
+                    .padding(horizontal = 16.dp, vertical = skin.verticalPadding),
             verticalAlignment = Alignment.CenterVertically
     ) {
         Column(Modifier.weight(1f)) {
             Text(
                     text = item.title,
-                    color = onPill,
+                    color = onRow,
                     fontFamily = GoogleSans,
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp,
@@ -251,7 +458,7 @@ private fun QueueRow(
             if (!item.subtitle.isNullOrBlank()) {
                 Text(
                         text = item.subtitle,
-                        color = onPill.copy(alpha = SUBTITLE_ALPHA),
+                        color = onRow.copy(alpha = SUBTITLE_ALPHA),
                         fontFamily = GoogleSans,
                         fontSize = 12.sp,
                         maxLines = 1,
@@ -262,7 +469,7 @@ private fun QueueRow(
 
         if (item.isPlaying) {
             Spacer(Modifier.width(8.dp))
-            NowPlayingBars(color = onPill, animate = animate)
+            NowPlayingBars(color = onRow, animate = animate)
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -60,6 +61,7 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.common.R as commonR
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
@@ -95,6 +97,11 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val screen = maxWidth
+
+        // Non-null while the user is dragging the ring to scrub (central seek mode). Drives both
+        // the ring sweep and the track-time readout so they follow the finger, and is committed to
+        // the phone via listener.onSeek on release.
+        var scrubFraction by remember { mutableStateOf<Float?>(null) }
 
         // --- Background treatment (non-hit-testable, so touches keep falling through). The
         // album art itself is the shared ImageView below this ComposeView; these layers turn
@@ -167,7 +174,14 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     cookieSize = screen * 0.215f,
                     container = centerContainer,
                     content = onContainer,
-                    listener = listener
+                    listener = listener,
+                    scrubFraction = scrubFraction,
+                    onScrub = { scrubFraction = it },
+                    onScrubCommit = {
+                        val committed = scrubFraction
+                        scrubFraction = null
+                        committed?.let(listener::onSeek)
+                    }
             )
             RoundTransportButton(
                     iconRes = commonR.drawable.action_skip_next,
@@ -179,14 +193,19 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
             )
         }
 
-        if (state.showTrackTime) {
+        val scrubbing = scrubFraction != null
+        if (state.showTrackTime || scrubbing) {
+            // While scrubbing, show the position the finger is pointing at (and brighten it) even
+            // if the user normally hides the track time - it's the only readout of where the seek
+            // will land.
+            val shownPositionMs = scrubFraction?.let { (it * state.durationMs).toLong() } ?: state.positionMs
             Text(
                     text = stringResource(
                             R.string.playback_time_format,
-                            formatFaceTime(state.positionMs),
+                            formatFaceTime(shownPositionMs),
                             formatFaceTime(state.durationMs)
                     ),
-                    color = Color.White.copy(alpha = 0.7f),
+                    color = if (scrubbing) Color.White else Color.White.copy(alpha = 0.7f),
                     fontSize = 11.sp,
                     fontFamily = GoogleSansFamily,
                     modifier = Modifier
@@ -249,7 +268,17 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
 
 private fun formatFaceTime(timeMs: Long): String {
     val totalSeconds = timeMs / 1000
-    return String.format("%d:%02d", totalSeconds / 60, totalSeconds % 60)
+    return String.format(java.util.Locale.getDefault(), "%d:%02d", totalSeconds / 60, totalSeconds % 60)
+}
+
+/** Polar angle of [pos] around [center] as a 0f..1f fraction, measured clockwise from 12
+ *  o'clock - the same mapping the classic CircularProgressSeekBar uses, so a given finger
+ *  position seeks to the same spot on either face. */
+private fun ringFractionAt(pos: Offset, center: Offset): Float {
+    val angleFromTop = (Math.toDegrees(
+            atan2((pos.y - center.y).toDouble(), (pos.x - center.x).toDouble())
+    ) + 90.0 + 360.0) % 360.0
+    return (angleFromTop / 360.0).toFloat().coerceIn(0f, 1f)
 }
 
 /** HSL-derived tonal color from the album accent, clamping saturation into a readable band -
@@ -410,8 +439,14 @@ private fun CookiePlayButton(
         cookieSize: Dp,
         container: Color,
         content: Color,
-        listener: NowPlayingFaceListener
+        listener: NowPlayingFaceListener,
+        scrubFraction: Float?,
+        onScrub: (Float) -> Unit,
+        onScrubCommit: () -> Unit
 ) {
+    // Only enable ring scrubbing when the phone allows seeking and the user picked the central
+    // seek mode; otherwise the ring stays display-only and taps still fall through to the cookie.
+    val scrubEnabled = state.seekable && state.centralSeekEnabled
     // Paused flattens both the cookie and the ring's undulation into plain circles.
     val morph by animateFloatAsState(
             targetValue = if (state.playing) 1f else 0f,
@@ -429,13 +464,35 @@ private fun CookiePlayButton(
     var pressed by remember { mutableStateOf(false) }
     val pressScale by animateFloatAsState(if (pressed) 0.9f else 1f, label = "cookiePressScale")
 
-    Box(Modifier.size(boxSize), contentAlignment = Alignment.Center) {
-        // Animated values are read inside the draw lambda, so ring motion only re-draws.
+    val ringDragModifier = if (scrubEnabled) {
+        // Drags on the ring band (the area of this box outside the inner cookie, which owns taps)
+        // scrub. Position → angle → fraction uses the same clockwise-from-12-o'clock mapping as
+        // the classic CircularProgressSeekBar. A tap on the cookie is consumed by its own gesture
+        // detector, so it never reaches this drag detector.
+        Modifier.pointerInput(Unit) {
+            val ringCenter = Offset(size.width / 2f, size.height / 2f)
+            detectDragGestures(
+                    onDragStart = { pos -> onScrub(ringFractionAt(pos, ringCenter)) },
+                    onDrag = { change, _ ->
+                        change.consume()
+                        onScrub(ringFractionAt(change.position, ringCenter))
+                    },
+                    onDragEnd = { onScrubCommit() },
+                    onDragCancel = { onScrubCommit() }
+            )
+        }
+    } else {
+        Modifier
+    }
+
+    Box(Modifier.size(boxSize).then(ringDragModifier), contentAlignment = Alignment.Center) {
+        // Animated values are read inside the draw lambda, so ring motion only re-draws. While the
+        // user is scrubbing, the sweep follows the finger directly instead of the animated value.
         Canvas(Modifier.fillMaxSize()) {
             val stroke = 4.dp.toPx()
             val ringModulation = RING_MODULATION * morph
             val baseRadius = (size.minDimension / 2f - stroke) / (1f + RING_MODULATION)
-            val sweep = progress.value * 360f
+            val sweep = (scrubFraction ?: progress.value) * 360f
 
             // Track: from just past the thumb around to just short of 12 o'clock, leaving the
             // M3-style gaps on both sides of the played portion.
@@ -453,7 +510,8 @@ private fun CookiePlayButton(
             }
             drawCircle(
                     color = Color.White,
-                    radius = 3.5.dp.toPx(),
+                    // Grows while scrubbing so the grabbed thumb reads clearly under the finger.
+                    radius = (if (scrubFraction != null) 5.5.dp else 3.5.dp).toPx(),
                     center = contourPoint(center, baseRadius, ringModulation, sweep)
             )
         }

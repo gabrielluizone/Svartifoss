@@ -314,6 +314,54 @@
         <item>expressive</item>
     </string-array>
 
+    <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
+    <string name="setting_wear_expressive_seek_mode_description">How to scrub the track by touch on the Expressive face. Central ring makes the ring around the play button draggable; Edge ring also shows the Classic bezel ring; None leaves seeking to the rotary crown only.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Central ring</item>
+        <item>Edge ring</item>
+        <item>None</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_overlays_queue">Overlays &amp; queue</string>
+    <string name="setting_wear_volume_style">Volume style</string>
+    <string name="setting_wear_quick_panel_style">Quick panel style</string>
+    <string name="setting_wear_queue_style">Queue style</string>
+    <string-array name="wear_overlay_style_entries">
+        <item>Glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Duotone</item>
+        <item>High Contrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+    </string-array>
+
     <string-array name="wear_screen_theme_entries">
         <item>Default</item>
         <item>Minimal</item>

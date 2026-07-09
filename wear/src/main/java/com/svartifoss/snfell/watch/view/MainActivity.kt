@@ -151,6 +151,11 @@ class MainActivity : WearCompanionWatchActivity(),
      *  "classic" is the original View presentation, "expressive" the Compose face. */
     private var screenFace: String = "classic"
 
+    /** How the expressive face exposes drag-to-seek (see [MiscPreferences.WEAR_EXPRESSIVE_SEEK_MODE]):
+     *  "central" makes the expressive ring draggable, "edge" keeps the classic bezel seek ring
+     *  visible on the expressive face, "none" leaves seeking to the rotary crown. */
+    private var expressiveSeekMode: String = "central"
+
     /** Single state snapshot driving the Compose face. Kept up to date by the same observers
      *  that update the classic views, so switching faces is purely a visibility change. */
     private val faceState = mutableStateOf(NowPlayingFaceState())
@@ -211,6 +216,10 @@ class MainActivity : WearCompanionWatchActivity(),
     private enum class QuickSlotMode { LIKE, SHUFFLE, REPEAT, CUSTOM, HIDDEN }
 
     private val quickSlotModes = arrayOf(QuickSlotMode.LIKE, QuickSlotMode.SHUFFLE, QuickSlotMode.REPEAT)
+    /** Selected quick-actions panel style (see [MiscPreferences.WEAR_QUICK_PANEL_STYLE]):
+     *  "glass"/"minimal"/"material"/"tonal". Themes the round slot buttons and the long row. */
+    private var quickPanelStyle: String = "glass"
+
     private var quickPanelSlots: Array<ButtonAction?> = arrayOfNulls(QuickPanelButtons.ALL_SLOTS.size)
 
     /** The panel's long row (see [QuickPanelButtons.SLOT_LONG]): default Up Next when unset,
@@ -1432,6 +1441,10 @@ class MainActivity : WearCompanionWatchActivity(),
         overlayBlurRadiusPx = Preferences.getInt(preferences, MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS)
                 .coerceIn(5, 120).toFloat()
 
+        binding.volumeBar.barStyle = VolumeStyle.fromPref(
+                Preferences.getString(preferences, MiscPreferences.WEAR_VOLUME_STYLE))
+        quickPanelStyle = Preferences.getString(preferences, MiscPreferences.WEAR_QUICK_PANEL_STYLE)
+
         centerLongPressQueueEnabled = Preferences.getBoolean(
                 preferences, MiscPreferences.WEAR_CENTER_LONG_PRESS_QUEUE
         )
@@ -1443,6 +1456,8 @@ class MainActivity : WearCompanionWatchActivity(),
         )
         screenTheme = Preferences.getString(preferences, MiscPreferences.WEAR_SCREEN_THEME)
         screenFace = Preferences.getString(preferences, MiscPreferences.WEAR_SCREEN_FACE)
+        expressiveSeekMode = Preferences.getString(preferences, MiscPreferences.WEAR_EXPRESSIVE_SEEK_MODE)
+        updateFaceState { it.copy(centralSeekEnabled = expressiveSeekMode == "central") }
 
         trackTimeMode = Preferences.getString(preferences, MiscPreferences.WEAR_TRACK_TIME_MODE)
         updatePlaybackTimeVisibility()
@@ -1506,7 +1521,11 @@ class MainActivity : WearCompanionWatchActivity(),
         val expressive = screenFace == "expressive"
         binding.expressiveFace.visibility = if (expressive) View.VISIBLE else View.GONE
         binding.classicTextBlock.visibility = if (expressive) View.GONE else View.VISIBLE
-        binding.seekBar.visibility = if (expressive) View.GONE else View.VISIBLE
+        // The bezel seek ring belongs to the classic face; on the expressive face it appears only
+        // when the user picks the "edge" seek mode (it draws on top of the ComposeView - see the
+        // z-order in activity_main.xml - so it stays touchable). "central"/"none" hide it.
+        val showEdgeSeekRing = !expressive || expressiveSeekMode == "edge"
+        binding.seekBar.visibility = if (showEdgeSeekRing) View.VISIBLE else View.GONE
         binding.centerTapZone.visibility = if (expressive) View.GONE else View.VISIBLE
         applyScreenTheme()
     }
@@ -1657,7 +1676,7 @@ class MainActivity : WearCompanionWatchActivity(),
         val totalSeconds = timeMs / 1000
         val minutes = totalSeconds / 60
         val seconds = totalSeconds % 60
-        return String.format("%d:%02d", minutes, seconds)
+        return String.format(java.util.Locale.getDefault(), "%d:%02d", minutes, seconds)
     }
 
     private val volumeBarPopupListener = Observer<Unit?> {
@@ -2182,6 +2201,14 @@ class MainActivity : WearCompanionWatchActivity(),
         // All four panel elements are user-configurable slots (see configureQuickPanelButtons);
         // hidden ones collapse and the remaining elements re-center on their own.
         configureQuickPanelButtons()
+        binding.quickActionUpNext.background = quickPanelRowBackground()
+        // The Up Next row is the one panel element with a coloured surface behind its own text, so
+        // its label/subtitle/icon follow the same per-style tint as the round buttons (dark on
+        // light, green on terminal, accent on neon, white otherwise).
+        val upNextTint = quickPanelInactiveTint()
+        binding.quickActionUpNextLabel.setTextColor(upNextTint)
+        binding.quickActionUpNextTrack.setTextColor(ColorUtils.setAlphaComponent(upNextTint, 0xB3))
+        binding.quickActionUpNextIcon.setColorFilter(upNextTint)
 
         binding.quickActionPanelTitle.text = binding.textTitle.text
         binding.quickActionPanelArtist.text = binding.textArtist.text
@@ -2209,6 +2236,108 @@ class MainActivity : WearCompanionWatchActivity(),
         setColor(currentAccentColor)
     }
 
+    /** Material Design 2 surface grey shared by the material quick-panel chrome. */
+    private val materialSurfaceColor = 0xFF2A2A2A.toInt()
+    private val LIGHT_PANEL_SURFACE = 0xFFECECEC.toInt()
+    private val LIGHT_PANEL_ON = 0xFF111111.toInt()
+    private val MONO_PANEL_SURFACE = 0xFF262626.toInt()
+    private val MONO_PANEL_ACTIVE = 0xFFE0E0E0.toInt()
+    private val TERMINAL_GREEN = 0xFF33FF66.toInt()
+
+    /** The album accent's complementary hue (used by the duotone quick-panel style). */
+    private fun complementary(accent: Int): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(accent, hsl)
+        hsl[0] = (hsl[0] + 180f) % 360f
+        return ColorUtils.HSLToColor(hsl)
+    }
+
+    /** A dark, accent-tinted surface for the tonal/gradient quick-panel chrome (saturation clamped
+     *  so the white icons/text keep enough contrast). */
+    private fun tonalSurface(accent: Int, lightness: Float = 0.28f): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(accent, hsl)
+        hsl[1] = hsl[1].coerceIn(0.25f, 0.60f)
+        hsl[2] = lightness
+        return ColorUtils.HSLToColor(hsl)
+    }
+
+    private fun capsule(fill: Int, strokePx: Int = 0, strokeColor: Int = 0, radiusPx: Float = 999f) =
+            GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = radiusPx
+                setColor(fill)
+                if (strokePx > 0) setStroke(strokePx, strokeColor)
+            }
+
+    private fun gradientCapsule(topColor: Int, bottomColor: Int, radiusPx: Float = 999f) =
+            GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(topColor, bottomColor)).apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = radiusPx
+            }
+
+    /** Inactive background of a round quick-panel slot button, per [quickPanelStyle]. The active
+     *  (accent-filled) look stays shared across styles. */
+    private fun inactiveQuickButtonBackground(): android.graphics.drawable.Drawable {
+        val hairline = (1.5f * resources.displayMetrics.density).toInt()
+        return when (quickPanelStyle) {
+            "minimal" -> capsule(Color.TRANSPARENT, hairline, 0x66FFFFFF)
+            "material" -> capsule(materialSurfaceColor)
+            "tonal" -> capsule(tonalSurface(currentAccentColor))
+            "neon" -> capsule(Color.TRANSPARENT, (2f * resources.displayMetrics.density).toInt(), currentAccentColor)
+            "light" -> capsule(LIGHT_PANEL_SURFACE)
+            "gradient" -> gradientCapsule(tonalSurface(currentAccentColor, 0.34f), tonalSurface(currentAccentColor, 0.16f))
+            "mono" -> capsule(MONO_PANEL_SURFACE)
+            "outline" -> capsule(Color.TRANSPARENT, (3f * resources.displayMetrics.density).toInt(), Color.WHITE)
+            "duotone" -> capsule(tonalSurface(complementary(currentAccentColor)))
+            "contrast" -> capsule(Color.BLACK, (2f * resources.displayMetrics.density).toInt(), Color.WHITE)
+            "terminal" -> capsule(Color.TRANSPARENT, hairline, TERMINAL_GREEN, radiusPx = 0f)
+            "frost" -> capsule(0x33FFFFFF)
+            else -> AppCompatResources.getDrawable(this, R.drawable.glass_pill_background)!!
+        }
+    }
+
+    /** Background of the full-width Up Next / long-slot row, per [quickPanelStyle]. */
+    private fun quickPanelRowBackground(): android.graphics.drawable.Drawable {
+        val d = resources.displayMetrics.density
+        val hairline = (1.5f * d).toInt()
+        return when (quickPanelStyle) {
+            "minimal" -> capsule(Color.TRANSPARENT, hairline, 0x66FFFFFF, radiusPx = 24f * d)
+            "material" -> capsule(materialSurfaceColor, radiusPx = 16f * d)
+            "tonal" -> capsule(tonalSurface(currentAccentColor), radiusPx = 28f * d)
+            "neon" -> capsule(Color.TRANSPARENT, (2f * d).toInt(), currentAccentColor, radiusPx = 22f * d)
+            "light" -> capsule(LIGHT_PANEL_SURFACE, radiusPx = 22f * d)
+            "gradient" -> gradientCapsule(tonalSurface(currentAccentColor, 0.34f), tonalSurface(currentAccentColor, 0.16f), radiusPx = 24f * d)
+            "mono" -> capsule(MONO_PANEL_SURFACE, radiusPx = 18f * d)
+            "outline" -> capsule(Color.TRANSPARENT, (3f * d).toInt(), Color.WHITE, radiusPx = 20f * d)
+            "duotone" -> capsule(tonalSurface(complementary(currentAccentColor)), radiusPx = 24f * d)
+            "contrast" -> capsule(Color.BLACK, (2f * d).toInt(), Color.WHITE, radiusPx = 16f * d)
+            "terminal" -> capsule(Color.TRANSPARENT, hairline, TERMINAL_GREEN, radiusPx = 0f)
+            "frost" -> capsule(0x33FFFFFF, radiusPx = 22f * d)
+            else -> AppCompatResources.getDrawable(this, R.drawable.up_next_pill_background)!!
+        }
+    }
+
+    /** Icon/text colour for the inactive quick-panel chrome, per [quickPanelStyle]. */
+    private fun quickPanelInactiveTint(): Int = when (quickPanelStyle) {
+        "light" -> LIGHT_PANEL_ON
+        "neon" -> currentAccentColor
+        "terminal" -> TERMINAL_GREEN
+        else -> Color.WHITE
+    }
+
+    /** Fill colour of an *active* quick-panel button, per [quickPanelStyle]. Most styles use the
+     *  album accent; the monochrome styles keep their own palette so the accent never leaks in. */
+    private fun activeQuickFillColor(): Int = when (quickPanelStyle) {
+        "contrast" -> Color.WHITE
+        "terminal" -> TERMINAL_GREEN
+        "mono" -> MONO_PANEL_ACTIVE
+        else -> currentAccentColor
+    }
+
+    private fun activeQuickButtonBackground(): android.graphics.drawable.Drawable =
+            capsule(activeQuickFillColor(), radiusPx = if (quickPanelStyle == "terminal") 0f else 999f)
+
     /** White icons can disappear against a light album-art accent color, so the icon itself
      *  flips to black/white depending on how light or dark [backgroundColor] is. */
     private fun contrastingIconColor(backgroundColor: Int): Int =
@@ -2216,11 +2345,11 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private fun setQuickActionButtonActive(view: ImageView, active: Boolean) {
         if (active) {
-            view.background = accentCircleDrawable()
-            view.setColorFilter(contrastingIconColor(currentAccentColor))
+            view.background = activeQuickButtonBackground()
+            view.setColorFilter(contrastingIconColor(activeQuickFillColor()))
         } else {
-            view.background = AppCompatResources.getDrawable(this, R.drawable.glass_pill_background)
-            view.clearColorFilter()
+            view.background = inactiveQuickButtonBackground()
+            view.setColorFilter(quickPanelInactiveTint())
         }
     }
 

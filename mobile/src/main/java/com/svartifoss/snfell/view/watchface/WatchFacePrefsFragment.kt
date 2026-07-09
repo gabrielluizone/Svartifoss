@@ -27,6 +27,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.watch_face_settings)
 
+        initExpressiveSeekDependency()
         initBlurRadiusDependency()
         initAccentColorTarget(
                 modeKey = "wear_artist_color_mode",
@@ -75,6 +76,24 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
                     true
             )
         }
+    }
+
+    /** The expressive seek mode only applies to the Expressive face - greyed out on Classic
+     *  (whose edge seek ring is not optional). Mirrors the album-art blur dependency pattern. */
+    private fun initExpressiveSeekDependency() {
+        updateExpressiveSeekEnabled()
+        findPreference<ListPreference>("wear_screen_face")?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, newValue ->
+                    // The listener fires before the new value persists, so pass it along instead
+                    // of re-reading the (still old) preference.
+                    updateExpressiveSeekEnabled(newValue as? String)
+                    true
+                }
+    }
+
+    private fun updateExpressiveSeekEnabled(overrideFace: String? = null) {
+        val face = overrideFace ?: findPreference<ListPreference>("wear_screen_face")?.value
+        findPreference<Preference>("wear_expressive_seek_mode")?.isEnabled = face == "expressive"
     }
 
     private fun initBlurRadiusDependency() {

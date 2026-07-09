@@ -199,8 +199,8 @@ class CircularProgressSeekBar : View {
                 progressAnimator?.cancel()
                 isDragging = true
 
-                // Tells WearableDrawerLayout (which interprets edge swipes/holds as "open the
-                // drawer") to back off for the duration of this gesture - without it, a held
+                // Tells any parent that intercepts edge/bezel touches (e.g. a swipe-to-dismiss
+                // container) to back off for the duration of this gesture - without it, a held
                 // touch near the bezel could get stolen mid-drag, which is what made the ring
                 // appear to freeze and never reach onSeekFinished.
                 parent?.requestDisallowInterceptTouchEvent(true)

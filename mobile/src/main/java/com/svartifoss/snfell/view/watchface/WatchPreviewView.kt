@@ -100,6 +100,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
     // --- Preference snapshot (see refresh()) ---
     private var face = "classic"
+    private var expressiveSeekMode = "central"
     private var screenTheme = "default"
     private var artStyle = "cover"
     private var dimArt = true
@@ -131,6 +132,7 @@ class WatchPreviewView @JvmOverloads constructor(
     /** Re-reads all watched preferences and redraws. Call on any preference change. */
     fun refresh() {
         face = prefs.getString("wear_screen_face", "classic") ?: "classic"
+        expressiveSeekMode = prefs.getString("wear_expressive_seek_mode", "central") ?: "central"
         screenTheme = prefs.getString("wear_screen_theme", "default") ?: "default"
         artStyle = prefs.getString("album_art_style", "cover") ?: "cover"
         dimArt = prefs.getBoolean("dim_album_art", true)
@@ -574,15 +576,14 @@ class WatchPreviewView @JvmOverloads constructor(
         drawable.draw(canvas)
     }
 
-    private fun drawClassic(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float) {
-        // The seek ring uses the raw resolved accent (like the watch's seekBar.progressColor);
-        // only the artist text gets the accentForText lightness lift.
+    /**
+     * Bezel-hugging progress ring - matches CircularProgressSeekBar: a 6dp band whose outer edge
+     * touches the screen edge (inset = strokeWidth/2), track in glass_surface_border with a BUTT
+     * cap and the played arc rounded, both starting at 12 o'clock. Used by the classic face and,
+     * when the expressive face's seek mode is "edge", by the expressive face too.
+     */
+    private fun drawEdgeSeekRing(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float) {
         val progressColor = resolveTint(progressMode, progressCustom, progressDesaturated)
-        val artistColor = accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
-
-        // Bezel-hugging progress ring - matches CircularProgressSeekBar: a 6dp band whose outer
-        // edge touches the screen edge (inset = strokeWidth/2), track in glass_surface_border
-        // with a BUTT cap and the played arc rounded, both starting at 12 o'clock.
         val strokeW = dp(6f)
         val ringInset = strokeW / 2f
         val ringRect = RectF(cx - radius + ringInset, cy - radius + ringInset,
@@ -594,6 +595,14 @@ class WatchPreviewView @JvmOverloads constructor(
         strokePaint.strokeCap = Paint.Cap.ROUND
         strokePaint.color = progressColor
         canvas.drawArc(ringRect, -90f, progressFraction() * 360f, false, strokePaint)
+    }
+
+    private fun drawClassic(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float) {
+        // The seek ring uses the raw resolved accent (like the watch's seekBar.progressColor);
+        // only the artist text gets the accentForText lightness lift.
+        val artistColor = accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
+
+        drawEdgeSeekRing(canvas, cx, cy, radius, dp)
 
         // Quadrant hint icons per screen theme (minimal hides them, compact shrinks, cinema
         // fades). 4dp from the edge, matching music_screen_icon_offset.
@@ -810,6 +819,12 @@ class WatchPreviewView @JvmOverloads constructor(
                 floatArrayOf(0f, 0.55f, 1f), Shader.TileMode.CLAMP)
         canvas.drawCircle(cx, cy, radius, fillPaint)
         fillPaint.shader = null
+
+        // With the "edge" seek mode the classic bezel ring rides on top of the expressive face's
+        // own central ring, so the miniature mirrors what the watch actually shows.
+        if (expressiveSeekMode == "edge") {
+            drawEdgeSeekRing(canvas, cx, cy, radius, dp)
+        }
 
         val sideContainer = tonal(accent, 0.74f, 0.40f, 0.85f)
         val centerContainer = tonal(accent, 0.87f, 0.30f, 0.70f)

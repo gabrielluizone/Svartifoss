@@ -72,6 +72,23 @@ shortcuts.
   all gestures, buttons, overlays and the quick panel work identically on
   both faces, and ambient mode always falls back to the burn-in-safe classic
   look.
+- **Expressive face touch seek**: a new *Expressive seek* setting
+  (Settings → Screen face) chooses how to scrub by touch on the Expressive
+  face — **Central ring** (drag the progress ring around the cookie button,
+  with a live time readout), **Edge ring** (also show the classic bezel seek
+  ring), or **None** (leave seeking to the rotary crown). Previewed in the
+  phone's live miniature.
+- **Selectable overlay & queue styles**: the volume overlay, the quick-actions
+  panel and the queue screen each get their own style picker (Settings →
+  Screen face → Overlays & queue) with thirteen looks — **Glass** (the frosted
+  default), **Minimal (AMOLED)** (pure black, hairline accents), **Material**
+  (solid dark cards, MD2), **Tonal** (album-accent-tinted containers, matching
+  the Expressive face), **Neon** (glowing accent outlines), **Light** (a
+  light-theme with dark text), **Gradient** (album-accent gradient fills),
+  **Mono** (neutral greyscale), **Outline** (thick cartoon outlines),
+  **Duotone** (accent + complementary hue), **High Contrast** (bold black/white
+  for accessibility), **Terminal** (sharp-cornered green CRT), and **Frost**
+  (light translucent panels).
 - New **screen theme** options (default/minimal/compact/cinema), album-art
   fade transition, album-art style (cover/blur/black-and-white/blur+bw/hidden)
   with blur radius and dim strength, ambient opacity, rotary dead-zone, and

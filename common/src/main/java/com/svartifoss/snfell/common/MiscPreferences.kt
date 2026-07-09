@@ -80,6 +80,13 @@ object MiscPreferences {
      *  lighter variations applied on top of the classic face. */
     val WEAR_SCREEN_FACE: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_screen_face", "classic")
 
+    /** How the expressive face exposes drag-to-seek by touch: "central" (the progress ring around
+     *  the cookie play button becomes draggable), "edge" (the classic bezel seek ring is shown on
+     *  the expressive face too) or "none" (display-only; seek only via the rotary crown). Only the
+     *  expressive face is affected — the classic face always uses the edge ring. */
+    val WEAR_EXPRESSIVE_SEEK_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_expressive_seek_mode", "central")
+
     /** Now-playing screen layout: default, minimal, compact, or cinema. */
     val WEAR_SCREEN_THEME: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_screen_theme", "default")
 
@@ -170,6 +177,35 @@ object MiscPreferences {
     val WEAR_OVERLAY_BLUR_RADIUS: PreferenceDefinition<Int> =
             SimplePreferenceDefinition("overlay_blur_radius", 35)
 
+    // --- Selectable visual styles for the overlay surfaces. All share one vocabulary:
+    //   "glass"    - frosted translucent panels over the blur backdrop (the original look).
+    //   "minimal"  - pure-black AMOLED, hairline accent outlines, thin marks, no blur.
+    //   "material" - solid dark-grey Material Design 2 surfaces with rounded corners + a thumb.
+    //   "tonal"    - large rounded containers tinted in the album accent (matches the expressive
+    //                face).
+    //   "neon"     - transparent surfaces with glowing album-accent outlines and accent glyphs.
+    //   "light"    - light surfaces with dark text/icons (a light-theme counterpoint).
+    //   "gradient" - fills painted with an album-accent vertical gradient.
+    //   "mono"     - neutral greyscale, ignoring the album accent entirely.
+    //   "outline"  - thick white cartoon outlines over transparent fills.
+    //   "duotone"  - two-hue: the album accent plus its complementary colour.
+    //   "contrast" - pure black/white, thick strokes (high-contrast/accessibility).
+    //   "terminal" - sharp-cornered monochrome green CRT look, accent forced to green.
+    //   "frost"    - light translucent frosted panels (a light-glass variant).
+    // See each surface's renderer for how it interprets these.
+
+    /** Visual style of the volume overlay (arc on the left edge). */
+    val WEAR_VOLUME_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_volume_style", "glass")
+
+    /** Visual style of the quick-actions panel opened by double-tapping the screen centre. */
+    val WEAR_QUICK_PANEL_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_quick_panel_style", "glass")
+
+    /** Visual style of the playback queue screen. */
+    val WEAR_QUEUE_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_queue_style", "glass")
+
     fun isAnyKindOfAutoStartEnabled(preferences: SharedPreferences): Boolean {
         return Preferences.getBoolean(preferences, AUTO_START) || Preferences.getEnum(preferences, AUTO_START_MODE) != AutoStartMode.OFF
     }
@@ -183,11 +219,12 @@ object MiscPreferences {
             AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
             ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_BLUR_RADIUS,
             ALBUM_ART_DIM_STRENGTH, VOLUME_OVERLAY_TIMEOUT, ROTARY_DEADZONE, AMBIENT_ALBUM_ART_OPACITY,
-            WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_FACE, WEAR_SCREEN_THEME,
+            WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_FACE, WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME,
             WEAR_TRACK_TIME_MODE,
             WEAR_DYNAMIC_ACCENT, WEAR_ALBUM_ART_FADE, WEAR_SCREEN_BUTTONS_OFFSET, WEAR_SCREEN_BUTTONS_CURVE_STYLE,
             WEAR_SCREEN_BUTTONS_BG, WEAR_SCREEN_BUTTONS_COLOR_MODE, WEAR_SCREEN_BUTTONS_CUSTOM_COLOR,
             WEAR_SCREEN_BUTTONS_DESATURATED, WEAR_OVERLAY_BLUR_RADIUS,
+            WEAR_VOLUME_STYLE, WEAR_QUICK_PANEL_STYLE, WEAR_QUEUE_STYLE,
             WEAR_TITLE_TEXT_MODE, WEAR_ARTIST_COLOR_MODE, WEAR_ARTIST_CUSTOM_COLOR, WEAR_ARTIST_DESATURATED,
             WEAR_PROGRESS_COLOR_MODE, WEAR_PROGRESS_CUSTOM_COLOR, WEAR_PROGRESS_DESATURATED
     )

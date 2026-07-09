@@ -2,15 +2,73 @@ package com.svartifoss.snfell.watch.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.RectF
+import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.R
 import kotlin.math.atan2
+import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.sin
+
+/** User-selectable visual style of the volume overlay (see [MiscPreferences.WEAR_VOLUME_STYLE] on
+ *  the phone). All four keep the same left-edge arc geometry - and therefore the same angle-based
+ *  drag - and only differ in how the arc is painted, so touch handling is identical. */
+enum class VolumeStyle {
+    /** Frosted rounded arc over the blur backdrop (original look). */
+    GLASS,
+    /** Thin AMOLED hairline arc, faint track. */
+    MINIMAL,
+    /** Material Design 2: flat-capped grey track + accent fill with a round thumb. */
+    MATERIAL,
+    /** Fat rounded accent capsule with a tonal track. */
+    TONAL,
+    /** Bright accent line with a faint accent track (neon glow). */
+    NEON,
+    /** Light track with an accent fill. */
+    LIGHT,
+    /** Accent vertical-gradient fill. */
+    GRADIENT,
+    /** Neutral greyscale fill, ignoring the album accent. */
+    MONO,
+    /** Bold chunky bar (cartoon outline). */
+    OUTLINE,
+    /** Two-hue: complementary track, accent fill. */
+    DUOTONE,
+    /** Pure white fill on a faint track (high contrast). */
+    CONTRAST,
+    /** Monochrome-green CRT fill. */
+    TERMINAL,
+    /** Brighter frosted track with an accent fill. */
+    FROST;
+
+    companion object {
+        fun fromPref(value: String?): VolumeStyle = when (value) {
+            "minimal" -> MINIMAL
+            "material" -> MATERIAL
+            "tonal" -> TONAL
+            "neon" -> NEON
+            "light" -> LIGHT
+            "gradient" -> GRADIENT
+            "mono" -> MONO
+            "outline" -> OUTLINE
+            "duotone" -> DUOTONE
+            "contrast" -> CONTRAST
+            "terminal" -> TERMINAL
+            "frost" -> FROST
+            else -> GLASS
+        }
+    }
+}
+
+/** Monochrome-green used by the terminal/CRT style. */
+private val TERMINAL_GREEN = 0xFF33FF66.toInt()
 
 /**
  * Volume indicator styled after the stock Wear OS media controls: a vertical arc hugging the
@@ -28,10 +86,28 @@ class CircularVolumeBar : android.view.View {
         private const val ARC_END_DEG = ARC_START_DEG + ARC_SWEEP_DEG
     }
 
-    private val foregroundPaint: Paint = Paint()
-    private val backgroundPaint: Paint
+    // Scratch stroke paint reconfigured per style each draw; and a fill paint for the material thumb.
+    private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     private val circleBounds = RectF()
     private val touchBand = resources.getDimension(R.dimen.seek_bar_touch_band)
+
+    private val baseStroke = resources.getDimension(R.dimen.seek_bar_width)
+    // The bounds inset uses the fattest style's stroke so no style ever clips at the screen edge.
+    private val maxStroke = baseStroke * 1.7f
+    private val glassTrackColor = resources.getColor(R.color.music_screen_volume_bar_background_color, null)
+
+    // The accent (album/theme) color, set via progressColor. Kept in its own field so per-draw
+    // recolouring of the scratch paints never clobbers it.
+    private var accentColorInt = resources.getColor(R.color.music_screen_volume_bar_foreground_color, null)
+
+    var barStyle: VolumeStyle = VolumeStyle.GLASS
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
 
     private var isDragging = false
 
@@ -42,18 +118,6 @@ class CircularVolumeBar : android.view.View {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
-    init {
-        foregroundPaint.style = Paint.Style.STROKE
-        // Matches the seek bar's stroke width for visual consistency between the two rings.
-        foregroundPaint.strokeWidth = resources.getDimension(R.dimen.seek_bar_width)
-        foregroundPaint.strokeCap = Paint.Cap.ROUND
-        foregroundPaint.color = resources.getColor(R.color.music_screen_volume_bar_foreground_color, null)
-        foregroundPaint.isAntiAlias = true
-
-        backgroundPaint = Paint(foregroundPaint)
-        backgroundPaint.color = resources.getColor(R.color.music_screen_volume_bar_background_color, null)
-    }
-
     var volume = 0.5f
         set(value) {
             field = value.coerceIn(0f, 1f)
@@ -62,9 +126,9 @@ class CircularVolumeBar : android.view.View {
 
     /** Tints the filled arc, e.g. with the same color extracted from the current album art. */
     var progressColor: Int
-        get() = foregroundPaint.color
+        get() = accentColorInt
         set(value) {
-            foregroundPaint.color = value
+            accentColorInt = value
             invalidate()
         }
 
@@ -77,8 +141,8 @@ class CircularVolumeBar : android.view.View {
 
         val viewSize = min(measuredWidth, measuredHeight).toFloat()
 
-        val circleStroke = foregroundPaint.strokeWidth / 2
-        val circleSize = viewSize - foregroundPaint.strokeWidth
+        val circleStroke = maxStroke / 2
+        val circleSize = viewSize - maxStroke
 
         val horizontalMargin = measuredWidth - viewSize
         val verticalMargin = measuredHeight - viewSize
@@ -92,12 +156,106 @@ class CircularVolumeBar : android.view.View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        canvas.drawArc(circleBounds, ARC_START_DEG, ARC_SWEEP_DEG, false, backgroundPaint)
+        when (barStyle) {
+            VolumeStyle.GLASS ->
+                drawArc(canvas, baseStroke, Paint.Cap.ROUND, glassTrackColor, accentColorInt)
+            VolumeStyle.MINIMAL ->
+                drawArc(canvas, baseStroke * 0.5f, Paint.Cap.ROUND, 0x22FFFFFF, accentColorInt)
+            VolumeStyle.MATERIAL -> {
+                drawArc(canvas, baseStroke * 1.1f, Paint.Cap.BUTT, 0x33FFFFFF, accentColorInt)
+                drawThumb(canvas, accentColorInt)
+            }
+            VolumeStyle.TONAL ->
+                drawArc(canvas, baseStroke * 1.7f, Paint.Cap.ROUND,
+                        tonal(accentColorInt, 0.22f), tonal(accentColorInt, 0.72f))
+            VolumeStyle.NEON ->
+                drawArc(canvas, baseStroke * 0.8f, Paint.Cap.ROUND,
+                        ColorUtils.setAlphaComponent(accentColorInt, 0x40), accentColorInt)
+            VolumeStyle.LIGHT ->
+                drawArc(canvas, baseStroke, Paint.Cap.ROUND, 0x88CCCCCC.toInt(), accentColorInt)
+            VolumeStyle.GRADIENT ->
+                drawArc(canvas, baseStroke * 1.2f, Paint.Cap.ROUND,
+                        tonal(accentColorInt, 0.18f), 0, fillShader = verticalArcShader())
+            VolumeStyle.MONO ->
+                drawArc(canvas, baseStroke, Paint.Cap.ROUND, 0x33FFFFFF, 0xFFE0E0E0.toInt())
+            VolumeStyle.OUTLINE ->
+                drawArc(canvas, baseStroke * 1.4f, Paint.Cap.BUTT, 0x55FFFFFF, accentColorInt)
+            VolumeStyle.DUOTONE ->
+                drawArc(canvas, baseStroke, Paint.Cap.ROUND, tonal(complementary(accentColorInt), 0.30f), accentColorInt)
+            VolumeStyle.CONTRAST ->
+                drawArc(canvas, baseStroke * 1.3f, Paint.Cap.BUTT, 0x55FFFFFF, 0xFFFFFFFF.toInt())
+            VolumeStyle.TERMINAL ->
+                drawArc(canvas, baseStroke * 0.9f, Paint.Cap.BUTT, ColorUtils.setAlphaComponent(TERMINAL_GREEN, 0x40), TERMINAL_GREEN)
+            VolumeStyle.FROST ->
+                drawArc(canvas, baseStroke, Paint.Cap.ROUND, 0x44FFFFFF, accentColorInt)
+        }
+    }
+
+    /** The album accent's complementary hue (used by the duotone style). */
+    private fun complementary(accent: Int): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(accent, hsl)
+        hsl[0] = (hsl[0] + 180f) % 360f
+        return ColorUtils.HSLToColor(hsl)
+    }
+
+    /** Vertical accent gradient (light at top, dark at bottom) spanning the arc bounds, for the
+     *  gradient style's fill. */
+    private fun verticalArcShader(): Shader = LinearGradient(
+            circleBounds.left, circleBounds.top, circleBounds.left, circleBounds.bottom,
+            tonal(accentColorInt, 0.62f), tonal(accentColorInt, 0.30f), Shader.TileMode.CLAMP
+    )
+
+    /** Draws the track arc plus the volume-filled arc from the bottom end upwards. When
+     *  [fillShader] is set it paints the fill instead of [fillColor]. */
+    private fun drawArc(
+            canvas: Canvas,
+            stroke: Float,
+            cap: Paint.Cap,
+            trackColor: Int,
+            fillColor: Int,
+            fillShader: Shader? = null
+    ) {
+        strokePaint.strokeWidth = stroke
+        strokePaint.strokeCap = cap
+
+        strokePaint.shader = null
+        strokePaint.color = trackColor
+        canvas.drawArc(circleBounds, ARC_START_DEG, ARC_SWEEP_DEG, false, strokePaint)
 
         if (volume > 0.001f) {
-            // Fills from the bottom end of the arc upwards as volume increases.
-            canvas.drawArc(circleBounds, ARC_START_DEG, volume * ARC_SWEEP_DEG, false, foregroundPaint)
+            if (fillShader != null) {
+                strokePaint.shader = fillShader
+            } else {
+                strokePaint.shader = null
+                strokePaint.color = fillColor
+            }
+            canvas.drawArc(circleBounds, ARC_START_DEG, volume * ARC_SWEEP_DEG, false, strokePaint)
+            strokePaint.shader = null
         }
+    }
+
+    /** Material slider-style dot sitting on the arc at the current volume level. */
+    private fun drawThumb(canvas: Canvas, color: Int) {
+        val angleRad = Math.toRadians((ARC_START_DEG + volume * ARC_SWEEP_DEG).toDouble())
+        val radius = circleBounds.width() / 2f
+        fillPaint.color = color
+        canvas.drawCircle(
+                circleBounds.centerX() + radius * cos(angleRad).toFloat(),
+                circleBounds.centerY() + radius * sin(angleRad).toFloat(),
+                baseStroke * 0.95f,
+                fillPaint
+        )
+    }
+
+    /** Album accent mapped to a chosen lightness, saturation kept in a readable band - for the
+     *  tonal style's track (dark) and fill (light). */
+    private fun tonal(accent: Int, lightness: Float): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(accent, hsl)
+        hsl[1] = hsl[1].coerceIn(0.25f, 0.60f)
+        hsl[2] = lightness
+        return ColorUtils.HSLToColor(hsl)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

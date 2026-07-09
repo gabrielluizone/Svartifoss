@@ -9,8 +9,11 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
+import androidx.preference.PreferenceManager
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
+import com.matejdro.wearutils.preferences.definition.Preferences
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -57,6 +60,15 @@ class QueueActivity : ComponentActivity() {
 
         viewModel.requestQueue()
 
+        // Read once on open: the style is a synced phone preference that rarely changes, and this
+        // activity is recreated each time the queue opens (noHistory).
+        val queueStyle = QueueStyle.fromPref(
+                Preferences.getString(
+                        PreferenceManager.getDefaultSharedPreferences(this),
+                        MiscPreferences.WEAR_QUEUE_STYLE
+                )
+        )
+
         setContent {
             // No default value: null means the phone hasn't answered the queue request yet, which
             // QueueScreen renders as a loading spinner instead of a bare black screen.
@@ -73,7 +85,8 @@ class QueueActivity : ComponentActivity() {
                         viewModel.selectItem(entryId)
                         safeFinish()
                     },
-                    onDismiss = { safeFinish() }
+                    onDismiss = { safeFinish() },
+                    style = queueStyle
             )
         }
     }

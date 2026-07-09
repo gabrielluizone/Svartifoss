@@ -32,6 +32,10 @@ data class NowPlayingFaceState(
         /** Playback progress fraction (0f..1f) of [positionMs] / [durationMs]. */
         val progress: Float = 0f,
         val seekable: Boolean = false,
+        /** When true (expressive "central" seek mode) the face's own progress ring is draggable to
+         *  scrub; otherwise the ring is display-only and seeking is left to the host (edge ring or
+         *  rotary crown). */
+        val centralSeekEnabled: Boolean = false,
         val positionMs: Long = 0L,
         val durationMs: Long = 0L,
         /** Whether the "1:23 / 3:45" line should show - already combines the phone-synced

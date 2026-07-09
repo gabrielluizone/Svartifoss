@@ -22,6 +22,16 @@
             android:layout="@layout/pref_item" />
 
         <ListPreference
+            android:key="wear_expressive_seek_mode"
+            android:icon="@drawable/ic_format_paint"
+            android:defaultValue="central"
+            android:title="@string/setting_wear_expressive_seek_mode"
+            android:summary="@string/setting_wear_expressive_seek_mode_description"
+            android:entries="@array/wear_expressive_seek_mode_entries"
+            android:entryValues="@array/wear_expressive_seek_mode_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
             android:key="wear_screen_theme"
             android:icon="@drawable/ic_format_paint"
             android:defaultValue="default"
@@ -257,6 +267,43 @@
             android:title="@string/setting_screen_buttons_desaturated"
             android:summary="@string/setting_screen_buttons_desaturated_description"
             android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_overlays"
+        android:title="@string/category_overlays_queue"
+        android:layout="@layout/pref_category_header">
+
+        <ListPreference
+            android:key="wear_volume_style"
+            android:icon="@drawable/ic_format_paint"
+            android:defaultValue="glass"
+            android:title="@string/setting_wear_volume_style"
+            android:summary="%s"
+            android:entries="@array/wear_overlay_style_entries"
+            android:entryValues="@array/wear_overlay_style_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:key="wear_quick_panel_style"
+            android:icon="@drawable/ic_format_paint"
+            android:defaultValue="glass"
+            android:title="@string/setting_wear_quick_panel_style"
+            android:summary="%s"
+            android:entries="@array/wear_overlay_style_entries"
+            android:entryValues="@array/wear_overlay_style_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:key="wear_queue_style"
+            android:icon="@drawable/ic_format_paint"
+            android:defaultValue="glass"
+            android:title="@string/setting_wear_queue_style"
+            android:summary="%s"
+            android:entries="@array/wear_overlay_style_entries"
+            android:entryValues="@array/wear_overlay_style_values"
+            android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 
