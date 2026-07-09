@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Svartifoss — control your music from your wrist</title>
+<meta name="description" content="Svartifoss is a free, open-source Wear OS app that puts full control of your phone's music on your wrist — physical buttons, gestures, the digital crown, a Tile, and a complication.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Svartifoss — control your music from your wrist">
+<meta property="og:description" content="Free, open-source, sideload-only. Physical buttons, screen gestures, the digital crown, a quick-actions panel, a Tile, and a watch-face complication — all wired to whatever's playing on your phone.">
+<meta property="og:image" content="https://gabrielluizone.github.io/Svartifoss/images/banner.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="images/app-icon-512.png">
+<link rel="apple-touch-icon" href="images/app-icon-512.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --void: #0a0a0a;
+    --shadow: #141414;
+    --carbon: #1e1e1e;
+    --carbon-soft: #232323;
+    --snow: #f0f0f0;
+    --ash: #9a9a9a;
+    --ash-dim: #6f6f6f;
+    --sage: #87a89f;
+    --sage-dark: #6b9088;
+    --sage-glow: rgba(135, 168, 159, 0.18);
+
+    --display: "Big Shoulders", sans-serif;
+    --body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+    --edge: min(6vw, 72px);
+    --col-w: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--void);
+    color: var(--snow);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  a { color: var(--sage); }
+
+  ::selection { background: var(--sage); color: var(--void); }
+
+  :focus-visible {
+    outline: 2px solid var(--sage);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    padding-left: var(--edge);
+    padding-right: var(--edge);
+  }
+
+  /* ---- basalt column motif: thin vertical rules used throughout ---- */
+  .columns-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .columns-bg span {
+    position: absolute;
+    top: -10%;
+    bottom: -10%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, var(--carbon) 15%, var(--carbon) 85%, transparent 100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .columns-bg span { animation: cascade 9s ease-in-out infinite; }
+  }
+  @keyframes cascade {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+
+  .eyebrow .dot { color: var(--sage); }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
+    margin: 0;
+    color: var(--snow);
+  }
+
+  /* ================= NAV ================= */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(10, 10, 10, 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--carbon);
+  }
+  .nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 0.01em;
+    color: var(--snow);
+    text-decoration: none;
+  }
+  .nav-brand img { width: 26px; height: 26px; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a { color: var(--ash); text-decoration: none; }
+  .nav-links a:hover { color: var(--snow); }
+  .nav-links a.cta {
+    color: var(--void);
+    background: var(--sage);
+    padding: 8px 16px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  .nav-links a.cta:hover { background: var(--sage-dark); }
+  @media (max-width: 640px) {
+    .nav-links a:not(.cta) { display: none; }
+  }
+
+  /* ================= HERO ================= */
+  .hero {
+    position: relative;
+    padding: 96px 0 88px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--carbon);
+  }
+  .hero .wrap {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(56px, 8vw, 108px);
+    text-transform: uppercase;
+    margin: 18px 0 22px;
+  }
+  .hero-tagline {
+    font-size: clamp(19px, 2.4vw, 24px);
+    color: var(--snow);
+    font-weight: 500;
+    max-width: 30ch;
+    margin: 0 0 16px;
+  }
+  .hero-sub {
+    color: var(--ash);
+    max-width: 46ch;
+    font-size: 15.5px;
+    margin: 0 0 34px;
+  }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 13px 24px;
+    border-radius: 2px;
+    border: 1px solid var(--sage);
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .btn-primary { background: var(--sage); color: var(--void); }
+  .btn-primary:hover { background: var(--sage-dark); border-color: var(--sage-dark); }
+  .btn-ghost { background: transparent; color: var(--snow); border-color: var(--carbon-soft); }
+  .btn-ghost:hover { border-color: var(--sage); color: var(--sage); }
+
+  .hero-meta {
+    margin-top: 22px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ash-dim);
+  }
+  .hero-meta strong { color: var(--sage); font-weight: 500; }
+
+  .hero-art {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-art .ring {
+    position: absolute;
+    inset: -6%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 40%, var(--sage-glow), transparent 70%);
+  }
+  .hero-art img {
+    position: relative;
+    width: min(92%, 380px);
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
+  }
+
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; text-align: left; }
+    .hero-art { order: -1; margin-bottom: 8px; }
+    .hero-art img { width: min(70%, 300px); margin: 0 auto; }
+    .hero-tagline, .hero-sub { max-width: none; }
+  }
+
+  /* ================= SECTION shell ================= */
+  section { position: relative; padding: 88px 0; border-bottom: 1px solid var(--carbon); }
+  section:last-of-type { border-bottom: none; }
+  .section-head { max-width: 640px; margin-bottom: 52px; }
+  .section-head h2 { font-size: clamp(32px, 4.6vw, 48px); text-transform: uppercase; margin-top: 14px; }
+  .section-head p { color: var(--ash); font-size: 16px; margin-top: 16px; max-width: 56ch; }
+
+  /* ================= SYNC ================= */
+  .sync-pair {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 28px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .sync-frame {
+    border: 1px solid var(--carbon);
+    background: var(--shadow);
+    border-radius: 4px;
+    padding: 14px;
+  }
+  .sync-frame img { border-radius: 2px; }
+  .sync-frame .cap {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ash-dim);
+    text-align: center;
+    margin-top: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .sync-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--sage);
+  }
+  .sync-arrow .line { width: 1px; height: 40px; background: linear-gradient(180deg, var(--carbon), var(--sage)); }
+  .sync-arrow svg { width: 20px; height: 20px; }
+  @media (max-width: 640px) {
+    .sync-pair { grid-template-columns: 1fr; }
+    .sync-arrow { flex-direction: row; }
+    .sync-arrow .line { width: 40px; height: 1px; background: linear-gradient(90deg, var(--carbon), var(--sage)); }
+    .sync-arrow svg { transform: rotate(90deg); }
+  }
+
+  /* ================= FEATURES ================= */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--carbon);
+    border: 1px solid var(--carbon);
+  }
+  .feature {
+    background: var(--void);
+    padding: 32px var(--edge) 32px 28px;
+    position: relative;
+    padding-left: 28px;
+  }
+  .feature::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 32px;
+    bottom: 32px;
+    width: 2px;
+    background: var(--sage);
+    opacity: 0.55;
+  }
+  .feature h3 {
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 17px;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-bottom: 8px;
+  }
+  .feature p { color: var(--ash); font-size: 14.5px; margin: 0; }
+  @media (max-width: 760px) {
+    .feature-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ================= GALLERY (filmstrip) ================= */
+  .filmstrip {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding: 4px var(--edge) 20px;
+    margin: 0 calc(var(--edge) * -1);
+    -ms-overflow-style: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--carbon-soft) transparent;
+  }
+  .filmstrip::-webkit-scrollbar { height: 6px; }
+  .filmstrip::-webkit-scrollbar-thumb { background: var(--carbon-soft); border-radius: 3px; }
+  .film-card {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: 168px;
+    text-align: center;
+  }
+  .film-card .disc {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 35%, #1a1a1a, #0d0d0d 70%);
+    border: 1px solid var(--carbon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .film-card img { width: 100%; height: 100%; object-fit: cover; }
+  .film-card .cap {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--ash);
+  }
+
+  /* ================= THE NAME ================= */
+  .story {
+    text-align: center;
+    padding: 108px 0;
+  }
+  .story-inner {
+    max-width: 620px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .story .eyebrow { justify-content: center; display: flex; gap: 6px; }
+  .story h2 {
+    font-size: clamp(40px, 6vw, 64px);
+    text-transform: uppercase;
+    margin: 16px 0 28px;
+  }
+  .story p {
+    font-size: 18px;
+    color: var(--ash);
+    line-height: 1.75;
+  }
+  .story p strong { color: var(--snow); font-weight: 600; }
+
+  /* ================= INSTALL ================= */
+  .steps {
+    counter-reset: step;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 48px;
+  }
+  .step {
+    border: 1px solid var(--carbon);
+    background: var(--shadow);
+    padding: 26px 24px;
+    border-radius: 4px;
+  }
+  .step .num {
+    counter-increment: step;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 34px;
+    color: var(--sage);
+    line-height: 1;
+  }
+  .step .num::before { content: counter(step, decimal-leading-zero); }
+  .step h3 {
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: none;
+    margin: 14px 0 8px;
+  }
+  .step p { color: var(--ash); font-size: 14px; margin: 0; }
+  @media (max-width: 780px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+
+  .downloads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    border: 1px solid var(--carbon);
+    background: var(--shadow);
+    border-radius: 4px;
+    padding: 26px 28px;
+  }
+  .downloads .dl-group { display: flex; flex-direction: column; gap: 4px; }
+  .downloads .dl-group span { font-family: var(--mono); font-size: 11.5px; color: var(--ash-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+  .downloads .spacer { flex: 1; }
+  .downloads .req { font-size: 12.5px; color: var(--ash-dim); font-family: var(--mono); }
+
+  /* ================= FOOTER ================= */
+  footer { padding: 56px 0 64px; }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--carbon);
+    margin-bottom: 24px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 18px; }
+  .footer-brand img { width: 22px; height: 22px; }
+  .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+  .footer-links a { color: var(--ash); text-decoration: none; font-size: 14px; }
+  .footer-links a:hover { color: var(--sage); }
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ash-dim);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="nav-brand" href="#top">
+      <img src="images/app-icon-512.png" alt="">
+      Svartifoss
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#look">Look &amp; feel</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/gabrielluizone/Svartifoss">GitHub</a>
+      <a class="cta" href="#install">Download</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="columns-bg" aria-hidden="true">
+    <!-- irregular basalt-column spacing -->
+    <span style="left:4%; animation-delay:0s;"></span>
+    <span style="left:11%; animation-delay:1.2s;"></span>
+    <span style="left:17%; animation-delay:.4s;"></span>
+    <span style="left:26%; animation-delay:2s;"></span>
+    <span style="left:33%; animation-delay:.8s;"></span>
+    <span style="left:41%; animation-delay:1.6s;"></span>
+    <span style="left:58%; animation-delay:.6s;"></span>
+    <span style="left:66%; animation-delay:2.2s;"></span>
+    <span style="left:74%; animation-delay:1s;"></span>
+    <span style="left:81%; animation-delay:.2s;"></span>
+    <span style="left:89%; animation-delay:1.8s;"></span>
+    <span style="left:95%; animation-delay:1.4s;"></span>
+  </div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="dot">●</span>&nbsp; Free &amp; open source · sideload-only</div>
+      <h1>Svartifoss</h1>
+      <p class="hero-tagline">Control your music from your wrist.</p>
+      <p class="hero-sub">Svartifoss reads whatever's playing on your phone — any app with a media session — and puts full control on your Wear OS watch: physical buttons, screen gestures, the digital crown, a quick-actions panel, a Tile, and a watch-face complication.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#install">Download Svartifoss</a>
+        <a class="btn btn-ghost" href="https://github.com/gabrielluizone/Svartifoss">View source on GitHub</a>
+      </div>
+      <p class="hero-meta">Latest release: <strong data-version>see GitHub</strong> · GPL-3.0 · no ads, no account</p>
+    </div>
+    <div class="hero-art">
+      <div class="ring" aria-hidden="true"></div>
+      <img src="images/watch-nowplaying.png" alt="Svartifoss now-playing screen on a Wear OS watch">
+    </div>
+  </div>
+</header>
+
+<section id="sync">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>Set it up on your phone.<br>It's on your watch instantly.</h2>
+      <p>Every button, gesture, and screen is yours to assign from the phone app. The watch mirrors it over the local Wearable Data Layer — no cloud, no account, nothing leaves your two devices.</p>
+    </div>
+    <div class="sync-pair">
+      <div class="sync-frame">
+        <img src="images/phone-pick-action.jpg" alt="Picking an action to assign on the phone app">
+        <div class="cap">Assign on the phone</div>
+      </div>
+      <div class="sync-arrow" aria-hidden="true">
+        <div class="line"></div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="line"></div>
+      </div>
+      <div class="sync-frame">
+        <img src="images/watch-minibuttons.png" alt="The assigned action shown as a mini button on the watch">
+        <div class="cap">Live on the watch</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What you get</div>
+      <h2>Every surface, configurable.</h2>
+      <p>Nothing about Svartifoss is fixed. Pick what each input does, how the screen looks, and what shows up when nothing's bound to a button.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <h3>Now-playing screen</h3>
+        <p>Album art, a drag-to-seek ring, and an optional rotary-crown scrub. Choose the classic edge-ring layout or the new Expressive face with Material&nbsp;3 Expressive-styled controls.</p>
+      </div>
+      <div class="feature">
+        <h3>Configurable input</h3>
+        <p>Physical buttons, screen quadrants, swipe gestures, and up to three on-screen mini buttons — assign play/pause, skip, volume, shuffle, repeat, like, search, playlist shortcuts, Tasker tasks, or launching another app.</p>
+      </div>
+      <div class="feature">
+        <h3>Quick-actions panel</h3>
+        <p>Double-tap to open a secondary panel with round buttons for like, shuffle, repeat, and a shortcut straight into the queue.</p>
+      </div>
+      <div class="feature">
+        <h3>Queue &amp; history</h3>
+        <p>Browse the app's real playback queue when it exposes one, or fall back to a locally tracked play-history list when it doesn't.</p>
+      </div>
+      <div class="feature">
+        <h3>Glanceable surfaces</h3>
+        <p>A Tile with track info and transport controls, a queue-preview Tile, and a watch-face complication showing the current album art.</p>
+      </div>
+      <div class="feature">
+        <h3>Search &amp; playlists</h3>
+        <p>Voice or keyboard search against the playing app's library with a replayable history, plus named playlist shortcuts reachable straight from the watch.</p>
+      </div>
+      <div class="feature">
+        <h3>Full action menu</h3>
+        <p>A full-screen list for anything not bound to a button or gesture — nothing is ever more than one extra tap away.</p>
+      </div>
+      <div class="feature">
+        <h3>Works with any player</h3>
+        <p>Anything exposing a standard Android media session works out of the box. Extras like like/shuffle/repeat/search depend on what that app publishes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="look">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Look &amp; feel</div>
+      <h2>Tuned from the phone, previewed live.</h2>
+      <p>Screen themes, album-art styles, accent colors, and per-surface styling for the mini-buttons row, quick panel, and queue — all previewed on a live miniature before you commit.</p>
+    </div>
+    <div class="filmstrip">
+      <div class="film-card"><div class="disc"><img src="images/watch-nowplaying.png" alt="Classic now-playing screen"></div><div class="cap">Now playing</div></div>
+      <div class="film-card"><div class="disc"><img src="images/watch-seekring.png" alt="Edge seek ring with mini buttons"></div><div class="cap">Edge seek ring</div></div>
+      <div class="film-card"><div class="disc"><img src="images/watch-minibuttons.png" alt="Mini buttons row"></div><div class="cap">Mini buttons</div></div>
+      <div class="film-card"><div class="disc"><img src="images/watch-quickpanel.png" alt="Quick actions panel"></div><div class="cap">Quick panel</div></div>
+      <div class="film-card"><div class="disc"><img src="images/watch-queue.png" alt="Queue screen"></div><div class="cap">Queue</div></div>
+      <div class="film-card"><div class="disc"><img src="images/watch-menu.png" alt="Actions menu"></div><div class="cap">Actions menu</div></div>
+      <div class="film-card"><div class="disc"><img src="images/watch-minimal.png" alt="Minimal screen theme"></div><div class="cap">Minimal theme</div></div>
+      <div class="film-card"><div class="disc"><img src="images/watch-seek.png" alt="Rotary crown seek overlay"></div><div class="cap">Crown seek</div></div>
+      <div class="film-card"><div class="disc"><img src="images/watch-volume.png" alt="Volume overlay"></div><div class="cap">Volume overlay</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="name">
+  <div class="columns-bg" aria-hidden="true">
+    <span style="left:15%;"></span>
+    <span style="left:30%;"></span>
+    <span style="left:45%;"></span>
+    <span style="left:60%;"></span>
+    <span style="left:75%;"></span>
+    <span style="left:90%;"></span>
+  </div>
+  <div class="wrap story-inner">
+    <div class="eyebrow">The name</div>
+    <h2>Black Falls</h2>
+    <p><strong>Svartifoss</strong> means "Black Falls" in Icelandic — named after the waterfall in Vatnajökull National Park, where dark basalt columns frame a narrow cascade. Like water over stone, music flows through the app.</p>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Install</div>
+      <h2>Sideload it. Takes a minute.</h2>
+      <p>Svartifoss isn't on the Play Store — install the APKs directly from GitHub Releases onto your phone and watch.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num"></div>
+        <h3>Install on your phone</h3>
+        <p>Download the phone APK below and open it. Android may ask you to allow installs from your browser first.</p>
+      </div>
+      <div class="step">
+        <div class="num"></div>
+        <h3>Install on your watch</h3>
+        <p>Download the watch APK and sideload it to your Wear OS watch — easiest with <a href="https://www.xda-developers.com/wear-installer-sideload-wear-os-apps/">Wear Installer</a>.</p>
+      </div>
+      <div class="step">
+        <div class="num"></div>
+        <h3>Open both apps</h3>
+        <p>They find each other automatically over the Wearable Data Layer — no account, no pairing code, nothing else to configure.</p>
+      </div>
+    </div>
+    <div class="downloads">
+      <div class="dl-group">
+        <span>Phone · Android 6.0+</span>
+        <a class="btn btn-primary" data-dl="mobile" href="https://github.com/gabrielluizone/Svartifoss/releases/latest">Download phone APK</a>
+      </div>
+      <div class="dl-group">
+        <span>Watch · Wear OS (API 26+)</span>
+        <a class="btn btn-ghost" data-dl="wear" href="https://github.com/gabrielluizone/Svartifoss/releases/latest">Download watch APK</a>
+      </div>
+      <div class="spacer"></div>
+      <div class="req">Building from source? See the <a href="https://github.com/gabrielluizone/Svartifoss#building">README</a>.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <a class="footer-brand" href="#top">
+        <img src="images/app-icon-512.png" alt="">
+        Svartifoss
+      </a>
+      <div class="footer-links">
+        <a href="https://github.com/gabrielluizone/Svartifoss">GitHub</a>
+        <a href="https://github.com/gabrielluizone/Svartifoss/releases">Releases</a>
+        <a href="https://buymeacoffee.com/gabrielsvafoss">Buy Me a Coffee</a>
+        <a href="https://ko-fi.com/gabrielsvafoss">Ko-fi</a>
+        <a href="https://github.com/gabrielluizone/Svartifoss/blob/master/COPYING">License</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>com.svartifoss.snfell · GPL-3.0</span>
+      <span>A continuation of <a href="https://github.com/matejdro/WearMusicCenter">Music Center for Wear</a> by matejdro</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(async function () {
+  try {
+    const res = await fetch('https://api.github.com/repos/gabrielluizone/Svartifoss/releases/latest');
+    if (!res.ok) throw new Error('release fetch failed');
+    const data = await res.json();
+    const mobile = data.assets.find(function (a) { return a.name.indexOf('mobile') !== -1; });
+    const wear = data.assets.find(function (a) { return a.name.indexOf('wear') !== -1; });
+    if (mobile) {
+      document.querySelectorAll('[data-dl="mobile"]').forEach(function (el) { el.href = mobile.browser_download_url; });
+    }
+    if (wear) {
+      document.querySelectorAll('[data-dl="wear"]').forEach(function (el) { el.href = wear.browser_download_url; });
+    }
+    if (data.tag_name) {
+      document.querySelectorAll('[data-version]').forEach(function (el) { el.textContent = data.tag_name; });
+    }
+  } catch (e) {
+    /* Static links already point at the releases page — nothing else to do. */
+  }
+})();
+</script>
+
+</body>
+</html>
