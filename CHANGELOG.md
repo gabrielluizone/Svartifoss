@@ -2,6 +2,10 @@
 
 ## 2.1
 
+- **Portuguese (Brazil) translation completed for the phone app.** The watch
+  app and shared module were already fully translated; the phone app's ~320
+  strings and option lists (themes, screen styles, etc.) are now translated
+  too, so the whole app is consistent in pt-BR.
 - **Support the project**: a new entry in Settings → About links to a Ko-fi
   page, for anyone who wants to help out. The app stays fully free either
   way — nothing is gated behind it.
