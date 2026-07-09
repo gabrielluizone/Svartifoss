@@ -6,9 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.svartifoss.snfell.R
-import com.svartifoss.snfell.billing.PurchaseManager
 import com.svartifoss.snfell.common.CommPaths
-import com.svartifoss.snfell.common.PremiumStyles
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.settings.HexColorDotPreference
 import com.svartifoss.snfell.view.settings.parseHexOrDefault
@@ -16,9 +14,6 @@ import com.svartifoss.snfell.view.settings.showLyraColorPickerDialog
 import com.svartifoss.snfell.view.settings.tintOpenLyraPreferenceDialog
 import com.matejdro.wearutils.preferences.compat.PreferenceFragmentCompatEx
 import com.matejdro.wearutils.preferencesync.PreferencePusher
-import dagger.android.support.AndroidSupportInjection
-import androidx.appcompat.app.AlertDialog
-import javax.inject.Inject
 
 /**
  * The preference list half of the "Watch face" tab (see [WatchFaceFragment]): every setting
@@ -28,14 +23,6 @@ import javax.inject.Inject
  */
 class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
         SharedPreferences.OnSharedPreferenceChangeListener {
-
-    @Inject
-    lateinit var purchaseManager: PurchaseManager
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidSupportInjection.inject(this)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.watch_face_settings)
@@ -55,51 +42,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
                 customColorDescription = R.string.setting_wear_progress_custom_color_description
         )
         initScreenButtonAppearance()
-
-        initPremiumStyleGating("wear_volume_style")
-        initPremiumStyleGating("wear_quick_panel_style")
-        initPremiumStyleGating("wear_queue_style")
-        purchaseManager.isPremium.observe(this) { refreshPremiumStyleEntries() }
-    }
-
-    /** Locks the 9 premium-only looks in [key]'s shared style vocabulary (see [PremiumStyles])
-     *  behind the Premium unlock: blocks selecting one and offers the purchase flow instead, and
-     *  marks the locked entries with a lock glyph in the picker dialog. */
-    private fun initPremiumStyleGating(key: String) {
-        val pref = findPreference<ListPreference>(key) ?: return
-        pref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            val value = newValue as? String ?: return@OnPreferenceChangeListener true
-            if (value in PremiumStyles.PREMIUM_ONLY_STYLE_VALUES && purchaseManager.isPremium.value != true) {
-                showPremiumStyleUpsell()
-                false
-            } else {
-                true
-            }
-        }
-    }
-
-    private fun refreshPremiumStyleEntries() {
-        val isPremium = purchaseManager.isPremium.value == true
-        val entries = resources.getStringArray(R.array.wear_overlay_style_entries)
-        val values = resources.getStringArray(R.array.wear_overlay_style_values)
-        val decoratedEntries = entries.mapIndexed { index, entry ->
-            if (!isPremium && values[index] in PremiumStyles.PREMIUM_ONLY_STYLE_VALUES) "$entry 🔒" else entry
-        }.toTypedArray()
-
-        for (key in listOf("wear_volume_style", "wear_quick_panel_style", "wear_queue_style")) {
-            findPreference<ListPreference>(key)?.entries = decoratedEntries
-        }
-    }
-
-    private fun showPremiumStyleUpsell() {
-        AlertDialog.Builder(requireContext())
-                .setTitle(R.string.premium_style_locked_title)
-                .setMessage(R.string.premium_style_locked_message)
-                .setPositiveButton(R.string.premium_unlock_action) { _, _ ->
-                    purchaseManager.launchPurchaseFlow(requireActivity())
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {

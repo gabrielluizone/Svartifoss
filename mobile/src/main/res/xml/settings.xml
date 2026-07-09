@@ -16,22 +16,6 @@
         android:layout="@layout/pref_item" />
 
     <PreferenceCategory
-        android:key="cat_premium"
-        android:title="@string/category_premium"
-        android:layout="@layout/pref_category_header">
-
-        <!-- Title/summary/icon/selectability toggled at runtime by
-             MiscSettingsFragment.updatePremiumEntry() based on PurchaseManager.isPremium. -->
-        <Preference
-            android:key="premium_unlock"
-            android:icon="@drawable/ic_bolt"
-            android:title="@string/premium_unlock_title"
-            android:summary="@string/premium_unlock_description"
-            android:layout="@layout/pref_item" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="cat_appearance"
         android:title="@string/category_appearance"
         android:layout="@layout/pref_category_header">

@@ -5,16 +5,6 @@
     <string name="setting_no_watch_banner">No watch connected</string>
     <string name="setting_no_watch_banner_description">These settings sync to your Wear OS watch, so they won\'t visibly apply until one is paired and connected - but everything below is still yours to configure now.</string>
 
-    <!-- Premium -->
-    <string name="category_premium">Premium</string>
-    <string name="premium_unlock_title">Unlock Premium</string>
-    <string name="premium_unlock_description">Get 9 exclusive watch styles - Tonal, Neon, Gradient, Mono, Outline, Duotone, High Contrast, Terminal, Frost - for the volume overlay, quick panel and queue screen. One-time purchase.</string>
-    <string name="premium_active_title">Premium unlocked ⭐</string>
-    <string name="premium_active_description">Thanks for supporting Svartifoss! All watch styles are unlocked.</string>
-    <string name="premium_style_locked_title">Premium style</string>
-    <string name="premium_style_locked_message">This look is part of Premium - a one-time purchase that unlocks all 9 exclusive watch styles.</string>
-    <string name="premium_unlock_action">Unlock</string>
-
     <!-- Appearance -->
     <string name="category_appearance">Appearance</string>
     <string name="setting_theme">Theme</string>

@@ -57,7 +57,6 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.MiscPreferences
-import com.svartifoss.snfell.common.PremiumStyles
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.QuickPanelButtons
 import com.svartifoss.snfell.common.ScreenButtons
@@ -1442,14 +1441,9 @@ class MainActivity : WearCompanionWatchActivity(),
         overlayBlurRadiusPx = Preferences.getInt(preferences, MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS)
                 .coerceIn(5, 120).toFloat()
 
-        // Defensive: the phone already blocks selecting a premium style without the unlock, but a
-        // watch that never lost a stale value (e.g. after a refund) should still fall back cleanly.
-        val premiumUnlocked = Preferences.getBoolean(preferences, MiscPreferences.PREMIUM_UNLOCKED)
         binding.volumeBar.barStyle = VolumeStyle.fromPref(
-                PremiumStyles.sanitize(
-                        Preferences.getString(preferences, MiscPreferences.WEAR_VOLUME_STYLE), premiumUnlocked))
-        quickPanelStyle = PremiumStyles.sanitize(
-                Preferences.getString(preferences, MiscPreferences.WEAR_QUICK_PANEL_STYLE), premiumUnlocked)
+                Preferences.getString(preferences, MiscPreferences.WEAR_VOLUME_STYLE))
+        quickPanelStyle = Preferences.getString(preferences, MiscPreferences.WEAR_QUICK_PANEL_STYLE)
 
         centerLongPressQueueEnabled = Preferences.getBoolean(
                 preferences, MiscPreferences.WEAR_CENTER_LONG_PRESS_QUEUE
