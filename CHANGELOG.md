@@ -2,6 +2,38 @@
 
 ## 2.1
 
+### Watch
+
+- **New Expressive now-playing face**: alongside the classic layout, a new
+  face mirrors the Material 3 Expressive system media controls — a soft
+  "cookie" play/pause button (morphs to a circle when paused) wrapped in a
+  progress ring that follows its scalloped contour, large round prev/next
+  buttons in the album accent's tonal colors, an accent-tinted/vignetted
+  album backdrop, and a queue/volume/menu glass trio at the bottom whenever
+  no mini buttons are configured. Switch faces from Settings → Screen face;
+  every gesture, button, overlay, and the quick panel behaves identically on
+  both, and ambient mode always falls back to the classic, burn-in-safe look.
+- **Expressive face touch seek**: a new setting picks how touch-seeking works
+  on the Expressive face — drag the **Central ring** around the cookie button
+  (with a live time readout), show the **Edge ring** (the classic bezel seek
+  ring), or **None** (leave seeking to the rotary crown).
+- **13 new overlay & queue styles**: the volume overlay, quick-actions panel,
+  and queue screen each get an independent style picker (Settings →
+  Screen face → Overlays & queue) — Glass, Minimal (AMOLED), Material, Tonal,
+  Neon, Light, Gradient, Mono, Outline, Duotone, High Contrast, Terminal, and
+  Frost.
+- Eliminated watch UI freezes on track change: album-art and custom-list icon
+  decoding, the complication's cover re-encoding, and the media session's
+  cover transfer were all blocking the watch's single main thread on every
+  music-state push — they now run off it, and an unchanged cover is skipped
+  instead of redecoded.
+- Fixed the watch's shuffle/repeat/like state rings getting stuck after a
+  state update was wrongly deduplicated away, fixed a possible crash from a
+  volume divide-by-zero, fixed the back key swallowing the configured
+  back/dismiss action on watches that deliver it as a key event, fixed a
+  config-backup import never actually reaching the watch, and fixed a few
+  memory/listener leaks.
+
 ### Phone
 
 - **New Watch tab**, in the slot the Guide used to occupy: a dedicated visual
@@ -38,38 +70,6 @@
   immediately when a watch actually is connected.
 - Fixed the Watch tab's live preview briefly showing the default accent
   color before switching to the real album-art color when a track loads.
-
-### Watch
-
-- **New Expressive now-playing face**: alongside the classic layout, a new
-  face mirrors the Material 3 Expressive system media controls — a soft
-  "cookie" play/pause button (morphs to a circle when paused) wrapped in a
-  progress ring that follows its scalloped contour, large round prev/next
-  buttons in the album accent's tonal colors, an accent-tinted/vignetted
-  album backdrop, and a queue/volume/menu glass trio at the bottom whenever
-  no mini buttons are configured. Switch faces from Settings → Screen face;
-  every gesture, button, overlay, and the quick panel behaves identically on
-  both, and ambient mode always falls back to the classic, burn-in-safe look.
-- **Expressive face touch seek**: a new setting picks how touch-seeking works
-  on the Expressive face — drag the **Central ring** around the cookie button
-  (with a live time readout), show the **Edge ring** (the classic bezel seek
-  ring), or **None** (leave seeking to the rotary crown).
-- **13 new overlay & queue styles**: the volume overlay, quick-actions panel,
-  and queue screen each get an independent style picker (Settings →
-  Screen face → Overlays & queue) — Glass, Minimal (AMOLED), Material, Tonal,
-  Neon, Light, Gradient, Mono, Outline, Duotone, High Contrast, Terminal, and
-  Frost.
-- Eliminated watch UI freezes on track change: album-art and custom-list icon
-  decoding, the complication's cover re-encoding, and the media session's
-  cover transfer were all blocking the watch's single main thread on every
-  music-state push — they now run off it, and an unchanged cover is skipped
-  instead of redecoded.
-- Fixed the watch's shuffle/repeat/like state rings getting stuck after a
-  state update was wrongly deduplicated away, fixed a possible crash from a
-  volume divide-by-zero, fixed the back key swallowing the configured
-  back/dismiss action on watches that deliver it as a key event, fixed a
-  config-backup import never actually reaching the watch, and fixed a few
-  memory/listener leaks.
 
 ## 2.0
 
@@ -131,35 +131,6 @@ shortcuts.
   action (right stays reserved for the system dismiss gesture).
 - **Long-press the center screen** to open the queue directly; a new
   first-run overlay hints at the available gestures.
-- Selectable **screen face**: besides the classic now-playing layout (edge
-  seek ring + gesture icons), a new **Expressive** face mirroring the
-  Material 3 Expressive system media controls — a soft "cookie" play/pause
-  button (morphs to a circle when paused) wrapped in a progress ring that
-  follows the cookie's scalloped contour (with thumb dot and M3 gaps), large
-  round prev/next buttons in the album accent's tonal container colors, the
-  album art darkened by an accent tint plus a radial black vignette, a curved
-  clock, and a default queue/volume/menu glass trio at the bottom whenever no
-  mini buttons are configured. Picked on the phone (Settings → Screen face);
-  all gestures, buttons, overlays and the quick panel work identically on
-  both faces, and ambient mode always falls back to the burn-in-safe classic
-  look.
-- **Expressive face touch seek**: a new *Expressive seek* setting
-  (Settings → Screen face) chooses how to scrub by touch on the Expressive
-  face — **Central ring** (drag the progress ring around the cookie button,
-  with a live time readout), **Edge ring** (also show the classic bezel seek
-  ring), or **None** (leave seeking to the rotary crown). Previewed in the
-  phone's live miniature.
-- **Selectable overlay & queue styles**: the volume overlay, the quick-actions
-  panel and the queue screen each get their own style picker (Settings →
-  Screen face → Overlays & queue) with thirteen looks — **Glass** (the frosted
-  default), **Minimal (AMOLED)** (pure black, hairline accents), **Material**
-  (solid dark cards, MD2), **Tonal** (album-accent-tinted containers, matching
-  the Expressive face), **Neon** (glowing accent outlines), **Light** (a
-  light-theme with dark text), **Gradient** (album-accent gradient fills),
-  **Mono** (neutral greyscale), **Outline** (thick cartoon outlines),
-  **Duotone** (accent + complementary hue), **High Contrast** (bold black/white
-  for accessibility), **Terminal** (sharp-cornered green CRT), and **Frost**
-  (light translucent panels).
 - New **screen theme** options (default/minimal/compact/cinema), album-art
   fade transition, album-art style (cover/blur/black-and-white/blur+bw/hidden)
   with blur radius and dim strength, ambient opacity, rotary dead-zone, and
@@ -179,20 +150,6 @@ shortcuts.
 
 ### Mobile UI
 
-- New **Watch** tab (in the slot the Guide briefly occupied): visual
-  customization of the watch's now-playing screen with a **live miniature
-  preview** — face (Classic/Expressive), screen theme, album background
-  (style/blur/dim), colors from the music (dynamic accent, artist/progress
-  color sources), and mini-button appearance/offset, all previewed exactly
-  as they will render on the watch and synced to it on every change. While
-  music plays on the phone, the miniature shows the **actual current track**
-  (album art, title, artist, the accent extracted from that art, and live
-  playback: the progress ring and track time advance in real time, and
-  pausing morphs the preview exactly like the real face); otherwise it falls
-  back to a built-in sample. These settings moved out of
-  the Settings tab, which now keeps behavior-only options.
-- The Wear OS usage **guide** moved from a bottom-nav tab to a help button
-  on the toolbar (opens its own screen).
 - New left navigation drawer with app/author info; toolbar title alignment
   fixed.
 - Built-in icon picker grid for custom action icons; color-swatch preference
