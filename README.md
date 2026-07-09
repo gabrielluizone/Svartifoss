@@ -94,10 +94,14 @@ the fork.
 <p align="center">
   <img src="docs/images/phone-playing.jpg" width="215" alt="Playing controls configuration" />
   <img src="docs/images/phone-pick-action.jpg" width="215" alt="Action picker" />
+</p>
+<p align="center"><em>Per-zone / gesture / button config&nbsp;·&nbsp;action picker</em></p>
+
+<p align="center">
   <img src="docs/images/phone-watch-tab.jpg" width="215" alt="Watch tab with live preview" />
   <img src="docs/images/phone-watch-tab-styles.jpg" width="215" alt="Overlays and queue style picker" />
 </p>
-<p align="center"><em>Per-zone / gesture / button config&nbsp;·&nbsp;action picker&nbsp;·&nbsp;Watch tab live preview&nbsp;·&nbsp;overlay &amp; queue styles</em></p>
+<p align="center"><em>Watch tab live preview&nbsp;·&nbsp;overlay &amp; queue styles</em></p>
 
 ### Under the hood
 
