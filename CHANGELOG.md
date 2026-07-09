@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.1
+
+- **Support the project**: a new entry in Settings → About links to a Ko-fi
+  page, for anyone who wants to help out. The app stays fully free either
+  way — nothing is gated behind it.
+- The **Overlays & queue** style pickers (volume, quick panel, queue screen)
+  moved up to right after **Screen face** on the Watch tab, closer to where
+  they belong given how much they change the look.
+- Fixed the "No watch connected" banner in Settings flashing on and back off
+  immediately when a watch actually is connected.
+- Fixed the Watch tab's live preview briefly showing the default accent
+  color before switching to the real album-art color when a track loads.
+
 ## 2.0
 
 The app is renamed **Svartifoss** (formerly Music Center for Wear / Lyra

@@ -175,8 +175,8 @@
     <string name="category_action_list">Action List</string>
     <string name="category_automation">Automation</string>
     <string name="installed_version">Installed version</string>
-    <string name="donate">Donate</string>
-    <string name="donate_description">Buy me a Coke if you really like my app!</string>
+    <string name="donate">Support the project</string>
+    <string name="donate_description">Svartifoss is free and open source - buy me a coffee on Ko-fi if it\'s useful to you</string>
     <string name="get_support">Get support</string>
     <string name="get_support_description">Send application logs to the developer for the support</string>
     <string name="licenses">Open source licenses</string>

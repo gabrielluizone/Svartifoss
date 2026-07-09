@@ -237,6 +237,13 @@
             android:layout="@layout/pref_item" />
 
         <Preference
+            android:key="donate"
+            android:icon="@drawable/ic_bolt"
+            android:title="@string/donate"
+            android:summary="@string/donate_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
             android:key="supportButton"
             android:icon="@drawable/ic_share"
             android:summary="@string/get_support_description"

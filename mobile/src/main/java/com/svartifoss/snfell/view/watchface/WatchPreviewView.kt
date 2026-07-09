@@ -88,7 +88,6 @@ class WatchPreviewView @JvmOverloads constructor(
     private var liveArt: Bitmap? = null
     private var liveArtBlurred: Bitmap? = null
     private var liveAccent: Int? = null
-    private var paletteGeneration = 0
     private var livePlaying: Boolean? = null
     private var livePositionMs: Long = -1
     private var liveDurationMs: Long = -1
@@ -168,7 +167,9 @@ class WatchPreviewView @JvmOverloads constructor(
         if (art !== nowPlayingSource) {
             nowPlayingSource = art
             rebuildLiveArt()
-            extractLiveAccent(art)
+            // Prefer the already center-cropped/small liveArt when the view has been measured;
+            // falls back to the raw art otherwise (e.g. the very first call, before layout).
+            extractLiveAccent(liveArt ?: art)
         }
         invalidate()
     }
@@ -249,29 +250,23 @@ class WatchPreviewView @JvmOverloads constructor(
         return cropped
     }
 
-    /** Same swatch priority the watch uses to pick its dynamic accent from the album art. */
+    /** Same swatch priority the watch uses to pick its dynamic accent from the album art.
+     *  Synchronous rather than [Palette.generate]'s async callback: this preview thumbnail's
+     *  art is already small (see [rebuildLiveArt]'s centerCrop, and Palette's own internal
+     *  downsampling), so the extraction is fast enough not to jank - and doing it inline avoids
+     *  a visible flash of the default/static accent before the real one lands a frame later. */
     private fun extractLiveAccent(art: Bitmap?) {
-        val generation = ++paletteGeneration
-        if (art == null) {
-            liveAccent = null
-            return
-        }
-        Palette.from(art).generate { palette ->
-            if (generation != paletteGeneration) {
-                return@generate
-            }
-            liveAccent = palette?.let { p ->
-                listOf(
-                        p.vibrantSwatch,
-                        p.mutedSwatch,
-                        p.lightVibrantSwatch,
-                        p.darkVibrantSwatch,
-                        p.lightMutedSwatch,
-                        p.darkMutedSwatch,
-                        p.dominantSwatch
-                ).firstNotNullOfOrNull { swatch -> swatch?.rgb }
-            }
-            invalidate()
+        liveAccent = art?.let { bitmap ->
+            val p = Palette.from(bitmap).generate()
+            listOf(
+                    p.vibrantSwatch,
+                    p.mutedSwatch,
+                    p.lightVibrantSwatch,
+                    p.darkVibrantSwatch,
+                    p.lightMutedSwatch,
+                    p.darkMutedSwatch,
+                    p.dominantSwatch
+            ).firstNotNullOfOrNull { swatch -> swatch?.rgb }
         }
     }
 

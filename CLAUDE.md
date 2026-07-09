@@ -97,7 +97,7 @@ Release signing config is pulled from an optional `keystore.properties` file at 
 
 ## Releases & release docs
 
-- `versionCode` lives in `mobile/build.gradle` and `wear/build.gradle`; the two modules are version-coded independently (`versionName` is kept in sync — currently mobile `50` / wear `150`, both `2.0`). The gaps in the sequence (e.g. wear jumping 135 → 140) are historical: Play Console permanently burns every uploaded versionCode, so bumps had to skip ahead during the abandoned Play Store attempt. That's no longer an active constraint now that the app is sideload-only, but keep bumping monotonically.
+- `versionCode` lives in `mobile/build.gradle` and `wear/build.gradle`; the two modules are version-coded independently (`versionName` is kept in sync — currently mobile `51` / wear `151`, both `2.1`). The gaps in the sequence (e.g. wear jumping 135 → 140) are historical: Play Console permanently burns every uploaded versionCode, so bumps had to skip ahead during the abandoned Play Store attempt. That's no longer an active constraint now that the app is sideload-only, but keep bumping monotonically.
 - `CHANGELOG.md` (repo root) is the user-facing changelog — update it alongside user-visible changes.
 - Besides the modernization plan, `docs/` holds **drafted Play Console material retained from the abandoned Play Store attempt** (not current shipping docs): store listing texts, Data Safety answers, the notification-access permission declaration, and the privacy policy (`docs/play-console-*.md`, `docs/privacy-policy.md`). Screenshots for the README go in `docs/images/`.
 

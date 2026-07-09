@@ -39,6 +39,8 @@ import com.matejdro.wearutils.preferencesync.PreferencePusher
 import com.google.android.gms.wearable.Wearable
 import dagger.android.support.AndroidSupportInjection
 import de.psdev.licensesdialog.LicensesDialog
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.json.JSONObject
@@ -50,6 +52,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     companion object {
         private const val PREF_DEV_MODE = "developer_mode_enabled"
         private const val DEV_CLICKS_REQUIRED = 7
+        private const val KOFI_URL = "https://ko-fi.com/gabrielsvafoss"
     }
 
     private var versionClickCount = 0
@@ -76,12 +79,27 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
         watchInfoProvider.observe(viewLifecycleOwner, noWatchBannerObserver)
     }
 
+    private var pendingNoWatchBannerJob: Job? = null
+
     // Every setting on this screen still works and gets saved without a paired watch - it just
     // won't visibly apply on a watch until one connects. This banner only sets that expectation,
     // it never disables anything (see the discussion in MainActivity about not gating navigation
     // on watch presence).
     private val noWatchBannerObserver = Observer<WatchInfoWithIcons?> { watchInfo ->
-        findPreference<Preference>("no_watch_banner")?.isVisible = watchInfo == null
+        pendingNoWatchBannerJob?.cancel()
+        if (watchInfo != null) {
+            findPreference<Preference>("no_watch_banner")?.isVisible = false
+        } else {
+            // WatchInfoProvider's LiveData starts out null and only resolves asynchronously
+            // (it queries the Data Layer on first observe), so a connected watch still causes
+            // one initial null emission - showing the banner immediately made it flash on and
+            // right back off on every visit. Debounce so it only shows if still disconnected
+            // after a beat.
+            pendingNoWatchBannerJob = lifecycleScope.launch {
+                delay(600)
+                findPreference<Preference>("no_watch_banner")?.isVisible = true
+            }
+        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -290,6 +308,12 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     }
 
     private fun initAboutSection() {
+        findPreference<Preference>("donate")!!.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(KOFI_URL)))
+                true
+            }
+
         findPreference<Preference>("supportButton")!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 sendLogs()
