@@ -41,6 +41,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
                 desaturatedKey = "wear_progress_desaturated",
                 customColorDescription = R.string.setting_wear_progress_custom_color_description
         )
+        initAccentColorTarget(
+                modeKey = "wear_aod_color_mode",
+                customColorKey = "wear_aod_custom_color",
+                // No desaturate toggle for the AOD tint - the watch already lifts/clamps its
+                // lightness for legibility on the pure-black ambient background.
+                desaturatedKey = null,
+                customColorDescription = R.string.setting_wear_aod_custom_color_description
+        )
         initScreenButtonAppearance()
     }
 
@@ -118,7 +126,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
     private fun initAccentColorTarget(
             modeKey: String,
             customColorKey: String,
-            desaturatedKey: String,
+            desaturatedKey: String?,
             customColorDescription: Int
     ) {
         val colorPref = findPreference<Preference>(customColorKey)
@@ -162,12 +170,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
     private fun updateAccentColorTargetDependencies(
             modeKey: String,
             customColorKey: String,
-            desaturatedKey: String,
+            desaturatedKey: String?,
             overrideMode: String? = null
     ) {
         val mode = overrideMode ?: findPreference<ListPreference>(modeKey)?.value
         findPreference<Preference>(customColorKey)?.isEnabled = mode == "custom"
-        findPreference<Preference>(desaturatedKey)?.isEnabled = mode == "album"
+        if (desaturatedKey != null) {
+            findPreference<Preference>(desaturatedKey)?.isEnabled = mode == "album"
+        }
     }
 
     /** Mini-button appearance: custom color picker wiring plus the color-mode dependencies. */

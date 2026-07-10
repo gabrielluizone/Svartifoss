@@ -194,8 +194,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Install Svartifoss on your watch</string>
-    <string name="no_watch_app_description">Svartifoss couldn\'t find its watch app on your paired Wear OS watch. The phone and watch apps work together — without the watch app, controlling playback from your wrist won\'t work.\n\nTap \"Open Play Store\" to open the Play Store on your watch and install Svartifoss there. If you just installed it, give it a minute to finish syncing.</string>
-    <string name="no_watch_app_button">Open Play Store</string>
+    <string name="no_watch_app_description">Svartifoss couldn\'t find its watch app on your paired Wear OS watch. The phone and watch apps work together — without the watch app, controlling playback from your wrist won\'t work.\n\nSvartifoss isn\'t on the Play Store — the watch app is sideloaded separately (e.g. with Wear Installer). Tap \"View releases\" to open the GitHub releases page and grab the watch APK. If you just installed it, give it a minute to finish syncing.</string>
+    <string name="no_watch_app_button">View releases</string>
     <string name="required_permission">Required permission</string>
     <string name="setting_pause_on_swipe_exit">Pause playback on swipe exit</string>
     <string name="setting_pause_on_swipe_exit_description">Automatically pause any playback when exiting Svartifoss on the watch via swipe-left gesture.\n\nExiting via power button is not affected and it will never auto-pause.</string>
@@ -324,6 +324,48 @@
         <item>edge</item>
         <item>none</item>
     </string-array>
+
+    <string name="category_wear_aod">Always-on display</string>
+    <string name="setting_wear_aod_style">Always-on style</string>
+    <string name="setting_wear_aod_style_description">How the now-playing screen looks while the watch is in ambient mode. Follow face matches the selected face; Minimal shows only dimmed text on pure black for the longest battery life.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Follow face</item>
+        <item>Classic</item>
+        <item>Expressive (outlined)</item>
+        <item>Minimal (max battery)</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>minimal</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Always-on outline color</string>
+    <string-array name="wear_aod_color_entries">
+        <item>White</item>
+        <item>Album color</item>
+        <item>Custom color</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string name="setting_wear_aod_custom_color">Always-on custom color</string>
+    <string name="setting_wear_aod_custom_color_description">Tap to pick the color used when \"Always-on outline color\" is set to Custom color</string>
+    <string name="setting_wear_aod_intensity">Always-on brightness</string>
+    <string name="setting_wear_aod_intensity_description">How bright the always-on display renders (20–100%%). Lower is dimmer and uses less battery. Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Transport buttons on always-on display</string>
+    <string name="setting_wear_aod_show_transport_description">Show the outlined previous/play/next buttons in ambient mode (Expressive style). They can\'t be tapped while the screen is dimmed, but a tap wakes the watch with the button already under your finger.</string>
+    <string name="setting_wear_aod_show_progress">Progress ring on always-on display</string>
+    <string name="setting_wear_aod_show_progress_description">Show the progress ring around the play button in ambient mode — the position only refreshes about once a minute there</string>
+    <string name="setting_wear_aod_show_pills">Bottom buttons on always-on display</string>
+    <string name="setting_wear_aod_show_pills_description">Show the outlined queue/volume/menu trio in ambient mode (Expressive style, only when no mini buttons are configured)</string>
+    <string name="setting_wear_aod_show_art">Album art on always-on display</string>
+    <string name="setting_wear_aod_show_art_description">Keep the dimmed album art visible in ambient mode. Turning it off shows a pure black background, which saves noticeably more battery on AMOLED screens.</string>
+    <string name="setting_wear_aod_show_clock">Clock on always-on display</string>
+    <string name="setting_wear_aod_show_track_info">Track info on always-on display</string>
+    <string name="setting_wear_aod_show_track_info_description">Show the track title and artist in ambient mode</string>
 
     <string name="category_overlays_queue">Overlays &amp; queue</string>
     <string name="setting_wear_volume_style">Volume style</string>

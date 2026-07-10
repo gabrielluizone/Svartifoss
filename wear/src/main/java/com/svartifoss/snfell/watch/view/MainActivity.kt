@@ -142,6 +142,21 @@ class MainActivity : WearCompanionWatchActivity(),
     private var volumeBarTimeoutMs: Long = 1000L
     private var rotaryDeadzone: Float = 6f
     private var ambientAlbumArtAlpha: Float = 0.55f
+
+    /** Always-on display configuration, all synced from the phone (see MiscPreferences):
+     *  [aodStyle] picks the AOD presentation ("follow" resolves against [screenFace] - see
+     *  [effectiveAodStyle]), the rest toggle individual elements. */
+    private var aodStyle: String = "follow"
+    private var aodShowArt = true
+    private var aodShowClock = true
+    private var aodShowTrackInfo = true
+    private var aodColorMode: String = "white"
+    private var aodCustomColor: String = ""
+    private var aodShowTransport = true
+    private var aodShowProgress = true
+    private var aodShowPills = true
+    private var aodIntensity: Float = 1f
+
     private var centerLongPressQueueEnabled = false
     private var wearDynamicAccentEnabled = true
     private var albumArtFadeEnabled = true
@@ -843,7 +858,10 @@ class MainActivity : WearCompanionWatchActivity(),
             it.copy(
                     accentColor = color,
                     progressColor = binding.seekBar.progressColor,
-                    artistColor = binding.textArtist.currentTextColor
+                    artistColor = binding.textArtist.currentTextColor,
+                    // Track changes can land mid-ambient - keep the AOD's album-mode tint
+                    // following the new art's accent.
+                    ambientTint = resolvedAodTint()
             )
         }
     }
@@ -1422,6 +1440,28 @@ class MainActivity : WearCompanionWatchActivity(),
         ambientAlbumArtAlpha = Preferences.getInt(preferences, MiscPreferences.AMBIENT_ALBUM_ART_OPACITY)
                 .coerceIn(20, 100) / 100f
 
+        aodStyle = Preferences.getString(preferences, MiscPreferences.WEAR_AOD_STYLE)
+        aodShowArt = Preferences.getBoolean(preferences, MiscPreferences.WEAR_AOD_SHOW_ART)
+        aodShowClock = Preferences.getBoolean(preferences, MiscPreferences.WEAR_AOD_SHOW_CLOCK)
+        aodShowTrackInfo = Preferences.getBoolean(preferences, MiscPreferences.WEAR_AOD_SHOW_TRACK_INFO)
+        aodColorMode = Preferences.getString(preferences, MiscPreferences.WEAR_AOD_COLOR_MODE)
+        aodCustomColor = Preferences.getString(preferences, MiscPreferences.WEAR_AOD_CUSTOM_COLOR)
+        aodShowTransport = Preferences.getBoolean(preferences, MiscPreferences.WEAR_AOD_SHOW_TRANSPORT)
+        aodShowProgress = Preferences.getBoolean(preferences, MiscPreferences.WEAR_AOD_SHOW_PROGRESS)
+        aodShowPills = Preferences.getBoolean(preferences, MiscPreferences.WEAR_AOD_SHOW_PILLS)
+        aodIntensity = Preferences.getInt(preferences, MiscPreferences.WEAR_AOD_INTENSITY)
+                .coerceIn(20, 100) / 100f
+        updateFaceState {
+            it.copy(
+                    ambientShowTrackInfo = aodShowTrackInfo,
+                    ambientTint = resolvedAodTint(),
+                    ambientIntensity = aodIntensity,
+                    ambientShowTransport = aodShowTransport,
+                    ambientShowProgress = aodShowProgress,
+                    ambientShowPills = aodShowPills
+            )
+        }
+
         val screenButtonsOffsetPx = (Preferences.getInt(preferences, MiscPreferences.WEAR_SCREEN_BUTTONS_OFFSET)
                 .coerceIn(0, 120) * resources.displayMetrics.density).toInt()
         val rowParams = binding.screenButtonsRow.layoutParams as ViewGroup.MarginLayoutParams
@@ -1490,6 +1530,11 @@ class MainActivity : WearCompanionWatchActivity(),
         if (!ambientObserver.isAmbient) {
             binding.albumArtScrim.visibility = if (dimAlbumArt) View.VISIBLE else View.INVISIBLE
             applyMainAlbumArtDisplay(latestAlbumArt, forceBlur = blurAlbumArtBackground)
+        } else {
+            // A config edit can arrive mid-ambient (ConfigListenerService delivers while idle) -
+            // re-style the already-showing AOD instead of waiting for the next round-trip. Last,
+            // after every field it depends on (aod*, screenFace) has been re-read above.
+            applyAmbientPresentation()
         }
     }
 
@@ -1842,10 +1887,74 @@ class MainActivity : WearCompanionWatchActivity(),
     private fun localUiPrefs(): SharedPreferences =
             getSharedPreferences(PREFS_LOCAL_UI, Context.MODE_PRIVATE)
 
+    /** Resolves [MiscPreferences.WEAR_AOD_STYLE]'s "follow" against the selected face; every
+     *  other value picks its AOD presentation directly. */
+    private fun effectiveAodStyle(): String = when (aodStyle) {
+        "follow" -> if (screenFace == "expressive") "expressive" else "classic"
+        else -> aodStyle
+    }
+
+    /** Resolves [MiscPreferences.WEAR_AOD_COLOR_MODE] into the color the expressive AOD strokes
+     *  its outlines/glyphs with. Album/custom colors get their lightness floored so a dark
+     *  accent doesn't vanish into the pure-black AOD background. */
+    private fun resolvedAodTint(): Int = when (aodColorMode) {
+        "album" -> liftForAodLegibility(currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor)
+        "custom" -> parseHexColorOrNull(aodCustomColor)?.let(::liftForAodLegibility) ?: Color.WHITE
+        else -> Color.WHITE
+    }
+
+    private fun liftForAodLegibility(color: Int): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(color, hsl)
+        hsl[2] = hsl[2].coerceAtLeast(0.60f)
+        return ColorUtils.HSLToColor(hsl)
+    }
+
+    /**
+     * The style- and toggle-dependent part of the always-on display, split out of
+     * [ambientCallback]'s onEnterAmbient so a config edit arriving mid-ambient (via
+     * ConfigListenerService) restyles the already-showing AOD immediately. Every variant stays
+     * burn-in-audited and battery-lean: outlined/dim rendering only, no animations, and
+     * onUpdateAmbient's pixel jiggle moves all of it.
+     *
+     *  - "classic": the original AOD - dimmed blurred art behind the outlined classic text block.
+     *  - "expressive": [ExpressiveFace] with [NowPlayingFaceState.ambient] set - the same layout
+     *    reduced to hairline outlines, so the face no longer snaps to the classic look in AOD.
+     *  - "minimal": pure black with the dimmed text block only - the biggest battery saver.
+     */
+    private fun applyAmbientPresentation() {
+        val style = effectiveAodStyle()
+
+        binding.ambientClock.visibility = if (aodShowClock) View.VISIBLE else View.GONE
+
+        val showArt = aodShowArt && style != "minimal"
+        binding.albumArt.alpha = if (showArt) ambientAlbumArtAlpha else 0f
+        setAmbientAlbumArtBlur(showArt)
+
+        val expressive = style == "expressive"
+        updateFaceState {
+            it.copy(
+                    ambient = true,
+                    ambientShowTrackInfo = aodShowTrackInfo,
+                    ambientTint = resolvedAodTint(),
+                    ambientIntensity = aodIntensity,
+                    ambientShowTransport = aodShowTransport,
+                    ambientShowProgress = aodShowProgress,
+                    ambientShowPills = aodShowPills
+            )
+        }
+        binding.expressiveFace.visibility = if (expressive) View.VISIBLE else View.GONE
+        binding.classicTextBlock.visibility =
+                if (!expressive && aodShowTrackInfo) View.VISIBLE else View.GONE
+        binding.classicTextBlock.alpha = aodIntensity * (if (style == "minimal") 0.6f else 1f)
+
+        binding.textTitle.displayTextOutline = true
+        binding.textPlaybackTime.displayTextOutline = true
+    }
+
     private val ambientCallback = object : AmbientLifecycleObserver.AmbientLifecycleCallback {
                 override fun onEnterAmbient(ambientDetails: AmbientLifecycleObserver.AmbientDetails) {
                     stemButtonsManager.onEnterAmbient()
-                    binding.ambientClock.visibility = View.VISIBLE
 
                     handler.removeMessages(MESSAGE_UPDATE_CLOCK)
                     updateClock()
@@ -1857,14 +1966,8 @@ class MainActivity : WearCompanionWatchActivity(),
                     binding.iconRight.visibility = View.GONE
                     binding.screenButtonsRow.visibility = View.GONE
 
-                    // Ambient always shows the classic presentation regardless of the selected
-                    // face - it is burn-in-audited (outlined text, pixel jiggle) and animation
-                    // free. onExitAmbient re-applies the user's face.
-                    binding.expressiveFace.visibility = View.GONE
-                    binding.classicTextBlock.visibility = View.VISIBLE
+                    applyAmbientPresentation()
 
-                    binding.albumArt.alpha = ambientAlbumArtAlpha
-                    setAmbientAlbumArtBlur(true)
                     binding.albumArtScrim.visibility = View.GONE
                     binding.volumeBar.visibility = View.GONE
                     binding.seekBar.visibility = View.GONE
@@ -1902,10 +2005,6 @@ class MainActivity : WearCompanionWatchActivity(),
                     binding.notificationPopup.backgroundImage.visibility = View.GONE
                     binding.notificationPopup.solidBackground.background = ColorDrawable(Color.BLACK)
 
-                    // Artist stays plain bold (no outline effect) - only the title mimics the
-                    // stock look of an outlined, "etched" headline.
-                    binding.textTitle.displayTextOutline = true
-                    binding.textPlaybackTime.displayTextOutline = true
                 }
 
                 override fun onUpdateAmbient() {
@@ -1920,7 +2019,11 @@ class MainActivity : WearCompanionWatchActivity(),
                 override fun onExitAmbient() {
                     stemButtonsManager.onExitAmbient()
 
+                    updateFaceState { it.copy(ambient = false) }
+                    binding.classicTextBlock.alpha = 1f
+
                     if (Preferences.getBoolean(preferences, MiscPreferences.ALWAYS_SHOW_TIME)) {
+                        binding.ambientClock.visibility = View.VISIBLE
                         handler.sendEmptyMessage(MESSAGE_UPDATE_CLOCK)
                     } else {
                         binding.ambientClock.visibility = View.GONE

@@ -62,6 +62,56 @@ object MiscPreferences {
     /** Album art opacity in ambient mode (20–100%). */
     val AMBIENT_ALBUM_ART_OPACITY: PreferenceDefinition<Int> = SimplePreferenceDefinition("ambient_album_art_opacity", 55)
 
+    // --- Always-on display (ambient mode) ---
+
+    /** How the always-on display renders the now-playing screen: "follow" (match the selected
+     *  [WEAR_SCREEN_FACE] - classic face gets the classic AOD, expressive face gets the outlined
+     *  expressive AOD), "classic", "expressive" or "minimal" (pure black with dimmed text only -
+     *  the biggest battery saver). All variants stay burn-in-audited: outlined/dim rendering,
+     *  no animations, and the shared pixel-jiggle applies to every one of them. */
+    val WEAR_AOD_STYLE: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_aod_style", "follow")
+
+    /** Show the (dimmed) album art on the always-on display. Off = pure black background,
+     *  which is markedly cheaper on AMOLED. [AMBIENT_ALBUM_ART_OPACITY] applies when on;
+     *  the "minimal" [WEAR_AOD_STYLE] never shows art regardless. */
+    val WEAR_AOD_SHOW_ART: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_aod_show_art", true)
+
+    /** Show the clock on the always-on display. */
+    val WEAR_AOD_SHOW_CLOCK: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_aod_show_clock", true)
+
+    /** Show the track title/artist on the always-on display. */
+    val WEAR_AOD_SHOW_TRACK_INFO: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_aod_show_track_info", true)
+
+    /** Where the expressive AOD's outlines and glyphs take their color from: "white" (neutral),
+     *  "album" (the dynamic album accent, lifted for legibility on black - the Wear OS 6
+     *  reference look) or "custom" ([WEAR_AOD_CUSTOM_COLOR]). Text stays white for legibility. */
+    val WEAR_AOD_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_aod_color_mode", "white")
+
+    /** Hex color (#RRGGBB) used when [WEAR_AOD_COLOR_MODE] is "custom". */
+    val WEAR_AOD_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_aod_custom_color", "")
+
+    /** Show the outlined prev / play-pause / next row on the expressive AOD. Off = only text
+     *  and clock, for the leanest always-on screen. */
+    val WEAR_AOD_SHOW_TRANSPORT: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_aod_show_transport", true)
+
+    /** Show the progress ring around the play button on the expressive AOD (position only
+     *  refreshes about once a minute there). */
+    val WEAR_AOD_SHOW_PROGRESS: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_aod_show_progress", true)
+
+    /** Show the outlined bottom pill trio on the expressive AOD (only when no mini buttons are
+     *  configured, mirroring the interactive face). */
+    val WEAR_AOD_SHOW_PILLS: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_aod_show_pills", true)
+
+    /** Overall AOD brightness (20-100%): scales the alpha of the expressive AOD's outlines,
+     *  glyphs and text, and of the classic/minimal AOD text block. Lower = dimmer = cheaper. */
+    val WEAR_AOD_INTENSITY: PreferenceDefinition<Int> = SimplePreferenceDefinition("wear_aod_intensity", 100)
+
     // --- Wear OS experience toggles (configured on phone, synced to watch) ---
 
     /** Long-press the center of the now-playing screen to open the playback queue. */
@@ -219,6 +269,9 @@ object MiscPreferences {
             AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
             ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_BLUR_RADIUS,
             ALBUM_ART_DIM_STRENGTH, VOLUME_OVERLAY_TIMEOUT, ROTARY_DEADZONE, AMBIENT_ALBUM_ART_OPACITY,
+            WEAR_AOD_STYLE, WEAR_AOD_SHOW_ART, WEAR_AOD_SHOW_CLOCK, WEAR_AOD_SHOW_TRACK_INFO,
+            WEAR_AOD_COLOR_MODE, WEAR_AOD_CUSTOM_COLOR, WEAR_AOD_SHOW_TRANSPORT, WEAR_AOD_SHOW_PROGRESS,
+            WEAR_AOD_SHOW_PILLS, WEAR_AOD_INTENSITY,
             WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_FACE, WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME,
             WEAR_TRACK_TIME_MODE,
             WEAR_DYNAMIC_ACCENT, WEAR_ALBUM_ART_FADE, WEAR_SCREEN_BUTTONS_OFFSET, WEAR_SCREEN_BUTTONS_CURVE_STYLE,

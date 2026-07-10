@@ -1,5 +1,42 @@
 # Changelog
 
+## 2.1.1
+
+### Watch
+
+- **Configurable always-on display (AOD)**: a new "Always-on display" section
+  in the phone's Watch face tab controls how ambient mode looks — pick the
+  **style** (Follow face, Classic, Expressive, or Minimal) and toggle the
+  **album art** (off = pure black background, a real battery saver on AMOLED),
+  the **clock**, and the **track title/artist** individually. The existing
+  ambient album-art opacity setting moved into the same section.
+- **Expressive face now has its own AOD**: ambient mode no longer snaps the
+  Expressive face back to the classic look. The new expressive AOD keeps the
+  same layout — title/artist, prev/cookie/next, contour progress ring, and
+  the queue/volume/menu pill trio — but rendered as thin outlines over black
+  (the Wear OS 6 system media controls' AOD look): no fills, no animations,
+  no marquee, burn-in protected by the same pixel jiggle, and deliberately
+  few lit pixels so hours of AOD stay cheap on battery.
+- **AOD outline color, brightness, and per-element toggles**: the outlines
+  can stay white or take the album color (or a custom color — both lifted
+  automatically so dark accents stay readable on black), an AOD brightness
+  setting (20–100%) dims everything for extra battery savings, and the
+  transport buttons, progress ring, and bottom pill trio can each be shown
+  or hidden individually. Because the expressive AOD keeps the exact button
+  positions of the awake face, the tap that wakes the watch lands with your
+  finger already on the button you were aiming at.
+
+### Phone
+
+- Fixed the phone often failing to detect that the watch app was installed,
+  incorrectly showing an "Install Svartifoss on your watch" prompt even when
+  it was already there and working. The check ran on a long-deprecated,
+  blocking Play Services API that frequently never completed on current Play
+  Services builds. Also fixed that prompt's button opening a dead Play Store
+  page on the watch (the app isn't on the Play Store) — it now opens the
+  GitHub releases page instead, matching the equivalent fix already shipped
+  on the watch side.
+
 ## 2.1
 
 ### Watch

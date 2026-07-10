@@ -46,7 +46,6 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.wearable.intent.RemoteIntent
 import com.matejdro.wearutils.companionnotice.WearCompanionPhoneActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -57,12 +56,8 @@ import timber.log.Timber
 
 private const val REQUEST_CODE_POST_NOTIFICATIONS = 1002
 
-// Must match wear/build.gradle's applicationId. The watch app shares this app's package (required
-// by the Wearable Data Layer) and is distributed in the same Play Store listing, so this opens that
-// listing on the watch.
-private const val WEAR_APPLICATION_ID = "com.svartifoss.snfell"
-
 private const val BUY_ME_A_COFFEE_URL = "https://buymeacoffee.com/gabrielsvafoss"
+private const val SVARTIFOSS_RELEASES_URL = "https://github.com/gabrielluizone/Svartifoss/releases"
 
 class MainActivity : WearCompanionPhoneActivity(),
         TitledActivity, ActivityResultReceiver, HasAndroidInjector {
@@ -1169,17 +1164,17 @@ class MainActivity : WearCompanionPhoneActivity(),
 
     override fun getWatchAppPresenceCapability(): String = CommPaths.WATCH_APP_CAPABILITY
 
-    // The base implementation builds this URI from getPackageName(). The watch app shares this
-    // app's applicationId (required by the Wearable Data Layer), so WEAR_APPLICATION_ID equals the
-    // phone package and this override is explicit rather than strictly necessary.
+    // The base implementation remote-opens a market:// URI on the WATCH - a dead end now that
+    // the app isn't on the Play Store (this used to be the "dummy Google Play page" users hit).
+    // There's also no useful action a watch browser could take anyway: installing the watch APK
+    // is a phone-side Wear Installer sideload, not something triggered from a watch web link. So
+    // this opens the GitHub releases page locally on the phone instead, mirroring the fix already
+    // applied to the watch's equivalent "phone app missing" notice (which opens GitHub, not the
+    // Play Store, via PhoneAppNoticeActivity in wearutils).
     override fun openWatchPlayStorePage() {
-        val playStoreIntent = Intent(Intent.ACTION_VIEW).apply {
-            addCategory(Intent.CATEGORY_BROWSABLE)
-            data = Uri.parse("market://details?id=$WEAR_APPLICATION_ID")
-        }
-
+        val releasesIntent = Intent(Intent.ACTION_VIEW, Uri.parse(SVARTIFOSS_RELEASES_URL))
         try {
-            RemoteIntent.startRemoteActivity(this, playStoreIntent, null)
+            startActivity(releasesIntent)
         } catch (e: Exception) {
             Timber.e(e, "Activity start crash")
         }

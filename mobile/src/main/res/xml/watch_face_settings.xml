@@ -73,6 +73,105 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="cat_wf_aod"
+        android:title="@string/category_wear_aod"
+        android:layout="@layout/pref_category_header">
+
+        <ListPreference
+            android:key="wear_aod_style"
+            android:icon="@drawable/ic_dark_mode"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_aod_style"
+            android:summary="@string/setting_wear_aod_style_description"
+            android:entries="@array/wear_aod_style_entries"
+            android:entryValues="@array/wear_aod_style_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:key="wear_aod_color_mode"
+            android:icon="@drawable/ic_colors"
+            android:defaultValue="white"
+            android:title="@string/setting_wear_aod_color"
+            android:summary="%s"
+            android:entries="@array/wear_aod_color_entries"
+            android:entryValues="@array/wear_aod_color_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_aod_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_aod_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_aod_intensity"
+            android:icon="@drawable/ic_light_mode"
+            android:title="@string/setting_wear_aod_intensity"
+            android:summary="@string/setting_wear_aod_intensity_description"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_aod_show_transport"
+            android:icon="@drawable/ic_format_paint"
+            android:title="@string/setting_wear_aod_show_transport"
+            android:summary="@string/setting_wear_aod_show_transport_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_aod_show_progress"
+            android:icon="@drawable/ic_format_paint"
+            android:dependency="wear_aod_show_transport"
+            android:title="@string/setting_wear_aod_show_progress"
+            android:summary="@string/setting_wear_aod_show_progress_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_aod_show_pills"
+            android:icon="@drawable/ic_format_paint"
+            android:title="@string/setting_wear_aod_show_pills"
+            android:summary="@string/setting_wear_aod_show_pills_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_aod_show_art"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_wear_aod_show_art"
+            android:summary="@string/setting_wear_aod_show_art_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="55"
+            android:key="ambient_album_art_opacity"
+            android:icon="@drawable/ic_dark_mode"
+            android:dependency="wear_aod_show_art"
+            android:title="@string/setting_ambient_album_art_opacity"
+            android:summary="@string/setting_ambient_album_art_opacity_description"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_aod_show_clock"
+            android:icon="@drawable/ic_history"
+            android:title="@string/setting_wear_aod_show_clock"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_aod_show_track_info"
+            android:icon="@drawable/ic_format_paint"
+            android:title="@string/setting_wear_aod_show_track_info"
+            android:summary="@string/setting_wear_aod_show_track_info_description"
+            android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="cat_wf_overlays"
         android:title="@string/category_overlays_queue"
         android:layout="@layout/pref_category_header">
@@ -147,14 +246,6 @@
             android:dependency="dim_album_art"
             android:title="@string/setting_album_art_dim_strength"
             android:summary="@string/setting_album_art_dim_strength_description"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
-            android:defaultValue="55"
-            android:key="ambient_album_art_opacity"
-            android:icon="@drawable/ic_dark_mode"
-            android:title="@string/setting_ambient_album_art_opacity"
-            android:summary="@string/setting_ambient_album_art_opacity_description"
             android:layout="@layout/pref_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx

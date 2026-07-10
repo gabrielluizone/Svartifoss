@@ -18,6 +18,8 @@ object WatchTheme {
 
     const val BACKGROUND_BLACK = 0xFF000000.toInt()
 
+    const val COLOR_WHITE = 0xFFFFFFFF.toInt()
+
     /** Lifted near-black for idle pills/cards/buttons on the OLED-black background. */
     const val SURFACE_DARK = 0xFF1E1E20.toInt()
 

@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -92,6 +93,11 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
     if (state.idle) {
         // Nothing to render - the shared idle ("nothing playing") group shows through, and
         // stopped-config gestures on the layers below remain the way to start playback.
+        return
+    }
+
+    if (state.ambient) {
+        ExpressiveAmbientFace(state)
         return
     }
 
@@ -266,6 +272,232 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
     }
 }
 
+/**
+ * The expressive face's always-on-display variant (see MiscPreferences.WEAR_AOD_STYLE): the same
+ * layout skeleton - title/artist up top, prev / cookie / next across the center, the pill trio
+ * at the bottom - but rendered as thin outlines over black instead of tonal fills (the Wear OS 6
+ * system media controls' AOD look), with every animation, marquee and gesture handler gone. Lit
+ * pixels are kept to a minimum on purpose: AOD runs for hours, so fills would both drain AMOLED
+ * battery and risk burn-in. The outline color follows [NowPlayingFaceState.ambientTint] (white,
+ * album accent or custom - text stays white for legibility) and every alpha scales with
+ * [NowPlayingFaceState.ambientIntensity]. The transport row, progress ring and pills are each
+ * individually toggleable. The host hides its straight ambient clock only when the user disables
+ * it - this variant never draws its own.
+ */
+@Composable
+private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
+    val i = state.ambientIntensity.coerceIn(0.2f, 1f)
+    val tint = Color(state.ambientTint)
+    val stroke = tint.copy(alpha = 0.50f * i)
+    val glyph = tint.copy(alpha = 0.75f * i)
+
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val screen = maxWidth
+
+        if (state.ambientShowTrackInfo) {
+            // Slightly lower than the interactive face's 0.13f: the host's straight ambient
+            // clock (not the curved one) sits at the very top in AOD and needs clearance.
+            Column(
+                    modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(top = screen * 0.17f, start = 26.dp, end = 26.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                        text = state.title,
+                        color = Color.White.copy(alpha = 0.85f * i),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = GoogleSansFamily,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                )
+                if (state.artist.isNotEmpty()) {
+                    Text(
+                            text = state.artist,
+                            color = Color.White.copy(alpha = 0.55f * i),
+                            fontSize = 13.sp,
+                            fontFamily = GoogleSansFamily,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+        }
+
+        if (state.ambientShowTransport) {
+            Row(
+                    modifier = Modifier.align(Alignment.Center),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(screen * 0.02f)
+            ) {
+                OutlinedAmbientButton(
+                        iconRes = commonR.drawable.action_skip_prev,
+                        diameter = screen * 0.235f,
+                        stroke = stroke,
+                        glyph = glyph
+                )
+                AmbientCookie(
+                        state = state,
+                        boxSize = screen * 0.34f,
+                        cookieSize = screen * 0.215f,
+                        stroke = stroke,
+                        glyph = glyph
+                )
+                OutlinedAmbientButton(
+                        iconRes = commonR.drawable.action_skip_next,
+                        diameter = screen * 0.235f,
+                        stroke = stroke,
+                        glyph = glyph
+                )
+            }
+        }
+
+        // Same trio, same positions as the interactive face, so a wake-up tap lands on the
+        // button the user was already aiming at - just outlined and inert (ambient touches
+        // wake the watch instead of reaching the app).
+        if (state.showDefaultBottomPills && state.ambientShowPills) {
+            val pillWidth = screen * 0.235f
+            val pillHeight = screen * 0.155f
+            OutlinedAmbientPill(
+                    width = pillWidth,
+                    height = pillHeight,
+                    stroke = stroke,
+                    modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .offset(x = -screen * 0.275f, y = -screen * 0.152f)
+            ) {
+                Icon(
+                        painter = painterResource(R.drawable.ic_queue_music),
+                        contentDescription = null,
+                        tint = glyph,
+                        modifier = Modifier.size(18.dp)
+                )
+            }
+            OutlinedAmbientPill(
+                    width = pillWidth,
+                    height = pillHeight,
+                    stroke = stroke,
+                    modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .offset(y = -screen * 0.032f)
+            ) {
+                Icon(
+                        painter = painterResource(R.drawable.volume_icon_up_outline),
+                        contentDescription = null,
+                        tint = glyph,
+                        modifier = Modifier.size(18.dp)
+                )
+            }
+            OutlinedAmbientPill(
+                    width = pillWidth,
+                    height = pillHeight,
+                    stroke = stroke,
+                    modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .offset(x = screen * 0.275f, y = -screen * 0.152f)
+            ) {
+                OverflowDots(color = glyph)
+            }
+        }
+    }
+}
+
+/** A bottom pill reduced to a hairline rounded outline - no fill, no interaction. */
+@Composable
+private fun OutlinedAmbientPill(
+        width: Dp,
+        height: Dp,
+        stroke: Color,
+        modifier: Modifier = Modifier,
+        content: @Composable () -> Unit
+) {
+    Box(
+            modifier = modifier
+                    .size(width = width, height = height)
+                    .border(1.5.dp, stroke, RoundedCornerShape(50)),
+            contentAlignment = Alignment.Center
+    ) {
+        content()
+    }
+}
+
+/** A transport button reduced to a hairline circle and a dim glyph - no fill, no interaction. */
+@Composable
+private fun OutlinedAmbientButton(iconRes: Int, diameter: Dp, stroke: Color, glyph: Color) {
+    Box(Modifier.size(diameter), contentAlignment = Alignment.Center) {
+        Canvas(Modifier.fillMaxSize()) {
+            drawCircle(
+                    color = stroke,
+                    radius = size.minDimension / 2f - 1.dp.toPx(),
+                    style = Stroke(width = 1.5.dp.toPx())
+            )
+        }
+        Icon(
+                painter = painterResource(iconRes),
+                contentDescription = null,
+                tint = glyph,
+                modifier = Modifier.size(diameter * 0.42f)
+        )
+    }
+}
+
+/** The cookie + contour ring as static outlines: cookie contour stroked (full scallop while
+ *  playing, plain circle while paused - no morph animation), ring frozen at the last known
+ *  progress (position only refreshes about once a minute in ambient, so animating it would
+ *  just be wasted frames). The ring honors [NowPlayingFaceState.ambientShowProgress]. */
+@Composable
+private fun AmbientCookie(
+        state: NowPlayingFaceState,
+        boxSize: Dp,
+        cookieSize: Dp,
+        stroke: Color,
+        glyph: Color
+) {
+    Box(Modifier.size(boxSize), contentAlignment = Alignment.Center) {
+        if (state.ambientShowProgress) {
+            Canvas(Modifier.fillMaxSize()) {
+                val strokePx = 2.dp.toPx()
+                val ringModulation = if (state.playing) RING_MODULATION else 0f
+                val baseRadius = (size.minDimension / 2f - strokePx * 2f) / (1f + RING_MODULATION)
+                val sweep = state.progress.coerceIn(0f, 1f) * 360f
+
+                val trackFrom = sweep + RING_GAP_DEGREES
+                val trackTo = 360f - RING_GAP_DEGREES
+                if (trackTo > trackFrom) {
+                    drawContourStroke(center, baseRadius, ringModulation, trackFrom, trackTo,
+                            stroke.copy(alpha = stroke.alpha * 0.4f), strokePx)
+                }
+                if (sweep > RING_GAP_DEGREES) {
+                    drawContourStroke(center, baseRadius, ringModulation, 0f, sweep - RING_GAP_DEGREES / 2f,
+                            stroke, strokePx)
+                }
+            }
+        }
+
+        Box(Modifier.size(cookieSize), contentAlignment = Alignment.Center) {
+            Canvas(Modifier.fillMaxSize()) {
+                val strokePx = 1.5.dp.toPx()
+                val modulation = if (state.playing) COOKIE_MODULATION else 0f
+                val baseRadius = (size.minDimension / 2f - strokePx) / (1f + COOKIE_MODULATION)
+                val path = contourPath(center, baseRadius, modulation, fromDeg = 0f, toDeg = 360f)
+                path.close()
+                drawPath(path, color = stroke, style = Stroke(width = strokePx))
+            }
+            Icon(
+                    painter = painterResource(
+                            if (state.playing) commonR.drawable.action_pause else commonR.drawable.action_play
+                    ),
+                    contentDescription = null,
+                    tint = glyph,
+                    modifier = Modifier.size(cookieSize * 0.48f)
+            )
+        }
+    }
+}
+
 private fun formatFaceTime(timeMs: Long): String {
     val totalSeconds = timeMs / 1000
     return String.format(java.util.Locale.getDefault(), "%d:%02d", totalSeconds / 60, totalSeconds % 60)
@@ -358,12 +590,12 @@ private fun GlassPill(
 
 /** The reference's "⋮" overflow glyph, drawn directly so no new icon resource is needed. */
 @Composable
-private fun OverflowDots() {
+private fun OverflowDots(color: Color = Color.White) {
     Canvas(Modifier.size(18.dp)) {
         val r = 1.8.dp.toPx()
         val gap = 5.5.dp.toPx()
         for (i in -1..1) {
-            drawCircle(Color.White, radius = r, center = Offset(center.x, center.y + i * gap))
+            drawCircle(color, radius = r, center = Offset(center.x, center.y + i * gap))
         }
     }
 }

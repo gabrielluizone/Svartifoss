@@ -193,8 +193,8 @@
          app-module strings win over the library's, so these replace the outdated, typo'd
          ("Anroid Wear 2") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Instale o Svartifoss no seu relógio</string>
-    <string name="no_watch_app_description">O Svartifoss não encontrou o app do relógio no seu Wear OS pareado. Os apps do celular e do relógio trabalham juntos — sem o app do relógio, controlar a reprodução pelo pulso não vai funcionar.\n\nToque em \"Abrir Play Store\" para abrir a Play Store no seu relógio e instalar o Svartifoss lá. Se você acabou de instalá-lo, dê um minuto para terminar de sincronizar.</string>
-    <string name="no_watch_app_button">Abrir Play Store</string>
+    <string name="no_watch_app_description">O Svartifoss não encontrou o app do relógio no seu Wear OS pareado. Os apps do celular e do relógio trabalham juntos — sem o app do relógio, controlar a reprodução pelo pulso não vai funcionar.\n\nO Svartifoss não está na Play Store — o app do relógio é instalado separadamente (ex.: com o Wear Installer). Toque em \"Ver releases\" para abrir a página de releases no GitHub e baixar o APK do relógio. Se você acabou de instalá-lo, dê um minuto para terminar de sincronizar.</string>
+    <string name="no_watch_app_button">Ver releases</string>
     <string name="required_permission">Permissão necessária</string>
     <string name="setting_pause_on_swipe_exit">Pausar reprodução ao sair com deslize</string>
     <string name="setting_pause_on_swipe_exit_description">Pausa automaticamente qualquer reprodução ao sair do Svartifoss no relógio pelo gesto de deslizar para a esquerda.\n\nSair pelo botão de força não é afetado e nunca pausa automaticamente.</string>
@@ -323,6 +323,37 @@
         <item>edge</item>
         <item>none</item>
     </string-array>
+
+    <string name="category_wear_aod">Tela sempre ativa (AOD)</string>
+    <string name="setting_wear_aod_style">Estilo da tela sempre ativa</string>
+    <string name="setting_wear_aod_style_description">Como a tela de reprodução aparece no modo ambiente. Seguir tema acompanha o tema selecionado; Mínimo mostra apenas texto esmaecido sobre preto puro para a maior economia de bateria.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Seguir tema</item>
+        <item>Clássico</item>
+        <item>Expressivo (contornos)</item>
+        <item>Mínimo (máx. bateria)</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Cor dos contornos na tela sempre ativa</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Branco</item>
+        <item>Cor do álbum</item>
+        <item>Cor personalizada</item>
+    </string-array>
+    <string name="setting_wear_aod_custom_color">Cor personalizada da tela sempre ativa</string>
+    <string name="setting_wear_aod_custom_color_description">Toque para escolher a cor usada quando \"Cor dos contornos na tela sempre ativa\" está em Cor personalizada</string>
+    <string name="setting_wear_aod_intensity">Brilho da tela sempre ativa</string>
+    <string name="setting_wear_aod_intensity_description">Quão brilhante a tela sempre ativa aparece (20–100%%). Menor é mais escuro e gasta menos bateria. Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Botões de reprodução na tela sempre ativa</string>
+    <string name="setting_wear_aod_show_transport_description">Mostra os botões anterior/play/próxima em contorno no modo ambiente (estilo Expressivo). Eles não respondem ao toque com a tela escurecida, mas o toque acorda o relógio já com o botão sob o dedo.</string>
+    <string name="setting_wear_aod_show_progress">Anel de progresso na tela sempre ativa</string>
+    <string name="setting_wear_aod_show_progress_description">Mostra o anel de progresso ao redor do botão play no modo ambiente — a posição só atualiza mais ou menos uma vez por minuto lá</string>
+    <string name="setting_wear_aod_show_pills">Botões inferiores na tela sempre ativa</string>
+    <string name="setting_wear_aod_show_pills_description">Mostra o trio fila/volume/menu em contorno no modo ambiente (estilo Expressivo, apenas quando nenhum mini botão está configurado)</string>
+    <string name="setting_wear_aod_show_art">Capa do álbum na tela sempre ativa</string>
+    <string name="setting_wear_aod_show_art_description">Mantém a capa do álbum esmaecida visível no modo ambiente. Desativar mostra um fundo preto puro, que economiza bem mais bateria em telas AMOLED.</string>
+    <string name="setting_wear_aod_show_clock">Relógio na tela sempre ativa</string>
+    <string name="setting_wear_aod_show_track_info">Informações da faixa na tela sempre ativa</string>
+    <string name="setting_wear_aod_show_track_info_description">Mostra o título e o artista da faixa no modo ambiente</string>
 
     <string name="category_overlays_queue">Overlays e fila</string>
     <string name="setting_wear_volume_style">Estilo do volume</string>
