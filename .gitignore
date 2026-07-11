@@ -46,3 +46,17 @@ centering_check.png
 # Design/reference material, not part of the app build
 redesign/
 retromusic/
+
+# Self-hosted F-Droid repo (see docs/fdroid/) - signing key and config
+# contain secrets and must never be committed. The generated index/cache
+# is also excluded since `fdroid update` regenerates it deterministically.
+# The repo's config.yml.example (created manually, no secrets) IS tracked.
+docs/fdroid/keystore.p12
+docs/fdroid/config.yml
+docs/fdroid/tmp/
+docs/fdroid/.fdroid/
+docs/fdroid/stats/
+!docs/fdroid/repo/*.apk
+
+# Python venv used only to run fdroidserver locally, not part of the app
+.fdroid-venv/
