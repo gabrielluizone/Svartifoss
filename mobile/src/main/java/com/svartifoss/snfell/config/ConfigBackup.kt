@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.util.BundleFileSerialization
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.io.IOException
 
 /**
  * Exports/imports the button configs (playing + stopped), the action list and the
@@ -55,11 +57,26 @@ object ConfigBackup {
     }
 
     /** Writes the config files + preferences to disk. The app must be restarted afterwards for
-     *  the already-loaded in-memory config singletons to pick up the new files. */
+     *  the already-loaded in-memory config singletons to pick up the new files.
+     *
+     *  @throws java.io.IOException when a config blob in the backup can't be decoded on this
+     *  device. Parcel bytes are not stable across Android versions, so a backup written on one
+     *  OS version may be unreadable on another - all blobs are validated *before* anything is
+     *  written, so a failed import never touches the existing on-disk config. */
     fun import(context: Context, preferences: SharedPreferences, json: JSONObject) {
+        val decodedFiles = ArrayList<Pair<String, ByteArray>>()
         for ((jsonKey, fileName) in CONFIG_FILES) {
             if (!json.has(jsonKey)) continue
             val bytes = Base64.decode(json.getString(jsonKey), Base64.NO_WRAP)
+            if (!BundleFileSerialization.isDecodable(bytes)) {
+                throw IOException(
+                        "Backup blob '$jsonKey' is not decodable on this device " +
+                                "(made on an incompatible Android version?)"
+                )
+            }
+            decodedFiles.add(fileName to bytes)
+        }
+        for ((fileName, bytes) in decodedFiles) {
             File(context.filesDir, fileName).writeBytes(bytes)
         }
 

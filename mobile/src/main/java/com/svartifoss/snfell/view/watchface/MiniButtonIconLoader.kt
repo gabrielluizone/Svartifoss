@@ -46,22 +46,30 @@ object MiniButtonIconLoader {
             null
         } ?: return emptyList()
 
-        val numButtons = bundle.getInt(ConfigConstants.NUM_BUTTONS, 0)
         val singleTapActions = HashMap<Int, PersistableBundle>()
         val longPressActions = HashMap<Int, PersistableBundle>()
 
-        for (i in 0 until numButtons) {
-            val info = bundle.getPersistableBundle("${ConfigConstants.BUTTON_INFO}.$i")
-                    ?.let { ButtonInfo(it) } ?: continue
-            if (info.physicalButton || info.buttonCode !in ScreenButtons.ALL_SLOTS) {
-                continue
+        try {
+            // Bundles unparcel lazily (nested ones stay deferred even after readFromFile's own
+            // eager check), so a corrupt config can throw at any get*() here - keep the whole
+            // walk guarded rather than just the file read.
+            val numButtons = bundle.getInt(ConfigConstants.NUM_BUTTONS, 0)
+            for (i in 0 until numButtons) {
+                val info = bundle.getPersistableBundle("${ConfigConstants.BUTTON_INFO}.$i")
+                        ?.let { ButtonInfo(it) } ?: continue
+                if (info.physicalButton || info.buttonCode !in ScreenButtons.ALL_SLOTS) {
+                    continue
+                }
+                val actionBundle = bundle.getPersistableBundle("${ConfigConstants.BUTTON_ACTION}.$i")
+                        ?: continue
+                when (info.gesture) {
+                    GESTURE_SINGLE_TAP -> singleTapActions[info.buttonCode] = actionBundle
+                    GESTURE_LONG_TAP -> longPressActions[info.buttonCode] = actionBundle
+                }
             }
-            val actionBundle = bundle.getPersistableBundle("${ConfigConstants.BUTTON_ACTION}.$i")
-                    ?: continue
-            when (info.gesture) {
-                GESTURE_SINGLE_TAP -> singleTapActions[info.buttonCode] = actionBundle
-                GESTURE_LONG_TAP -> longPressActions[info.buttonCode] = actionBundle
-            }
+        } catch (e: RuntimeException) {
+            Timber.w(e, "Could not parse button config for preview")
+            return emptyList()
         }
 
         val icons = ArrayList<Bitmap>(ScreenButtons.ALL_SLOTS.size)
