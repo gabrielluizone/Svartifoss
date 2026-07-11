@@ -366,19 +366,65 @@
   }
 
   /* ================= GALLERY (filmstrip) ================= */
+  .filmstrip-wrap {
+    position: relative;
+    margin: 0 calc(var(--edge) * -1);
+  }
+  .filmstrip-wrap::before,
+  .filmstrip-wrap::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 20px;
+    width: min(var(--edge), 64px);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .filmstrip-wrap::before { left: 0; background: linear-gradient(90deg, var(--void), transparent); }
+  .filmstrip-wrap::after { right: 0; background: linear-gradient(270deg, var(--void), transparent); }
   .filmstrip {
     display: flex;
     gap: 18px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--edge);
     padding: 4px var(--edge) 20px;
-    margin: 0 calc(var(--edge) * -1);
     -ms-overflow-style: none;
     scrollbar-width: thin;
     scrollbar-color: var(--carbon-soft) transparent;
+    cursor: grab;
+    user-select: none;
+    overflow-anchor: none;
   }
+  .filmstrip.dragging { cursor: grabbing; scroll-snap-type: none; }
   .filmstrip::-webkit-scrollbar { height: 6px; }
   .filmstrip::-webkit-scrollbar-thumb { background: var(--carbon-soft); border-radius: 3px; }
+  .film-nav {
+    position: absolute;
+    top: calc(50% - 10px);
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--carbon-soft);
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(6px);
+    color: var(--snow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  }
+  .film-nav svg.icon { width: 20px; height: 20px; }
+  .film-nav:hover { border-color: var(--sage); color: var(--sage); }
+  .film-nav:disabled { opacity: 0; pointer-events: none; }
+  .film-nav.prev { left: 8px; }
+  .film-nav.next { right: 8px; }
+  @media (max-width: 640px) {
+    .film-nav { display: none; }
+  }
   .film-card {
     flex: 0 0 auto;
     scroll-snap-align: start;
@@ -501,6 +547,8 @@
     <symbol id="i-headphones" viewBox="0 -960 960 960"><path d="M360-120H200q-33 0-56.5-23.5T120-200v-280q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480v280q0 33-23.5 56.5T760-120H600v-320h160v-40q0-117-81.5-198.5T480-760q-117 0-198.5 81.5T200-480v40h160v320Zm-80-240h-80v160h80v-160Zm400 0v160h80v-160h-80Zm-400 0h-80 80Zm400 0h80-80Z"/></symbol>
     <symbol id="i-category" viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/></symbol>
     <symbol id="i-arrow-outward" viewBox="0 -960 960 960"><path d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/></symbol>
+    <symbol id="i-arrow-back" viewBox="0 -960 960 960"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></symbol>
+    <symbol id="i-arrow-forward" viewBox="0 -960 960 960"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></symbol>
   </defs>
 </svg>
 
@@ -642,16 +690,24 @@
       <h2>Tuned from the phone, previewed live.</h2>
       <p>Screen themes, album-art styles, accent colors, and per-surface styling for the mini-buttons row, quick panel, and queue — all previewed on a live miniature before you commit.</p>
     </div>
-    <div class="filmstrip">
-      <div class="film-card"><div class="disc"><img src="images/watch-nowplaying.png" alt="Classic now-playing screen"></div><div class="cap">Now playing</div></div>
-      <div class="film-card"><div class="disc"><img src="images/watch-seekring.png" alt="Edge seek ring with mini buttons"></div><div class="cap">Edge seek ring</div></div>
-      <div class="film-card"><div class="disc"><img src="images/watch-minibuttons.png" alt="Mini buttons row"></div><div class="cap">Mini buttons</div></div>
-      <div class="film-card"><div class="disc"><img src="images/watch-quickpanel.png" alt="Quick actions panel"></div><div class="cap">Quick panel</div></div>
-      <div class="film-card"><div class="disc"><img src="images/watch-queue.png" alt="Queue screen"></div><div class="cap">Queue</div></div>
-      <div class="film-card"><div class="disc"><img src="images/watch-menu.png" alt="Actions menu"></div><div class="cap">Actions menu</div></div>
-      <div class="film-card"><div class="disc"><img src="images/watch-minimal.png" alt="Minimal screen theme"></div><div class="cap">Minimal theme</div></div>
-      <div class="film-card"><div class="disc"><img src="images/watch-seek.png" alt="Rotary crown seek overlay"></div><div class="cap">Crown seek</div></div>
-      <div class="film-card"><div class="disc"><img src="images/watch-volume.png" alt="Volume overlay"></div><div class="cap">Volume overlay</div></div>
+    <div class="filmstrip-wrap">
+      <button type="button" class="film-nav prev" aria-label="Scroll left" data-film-prev>
+        <svg class="icon"><use href="#i-arrow-back"/></svg>
+      </button>
+      <div class="filmstrip" tabindex="0" role="region" aria-label="Watch screen gallery">
+        <div class="film-card"><div class="disc"><img src="images/watch-nowplaying.png" alt="Classic now-playing screen"></div><div class="cap">Now playing</div></div>
+        <div class="film-card"><div class="disc"><img src="images/watch-seekring.png" alt="Edge seek ring with mini buttons"></div><div class="cap">Edge seek ring</div></div>
+        <div class="film-card"><div class="disc"><img src="images/watch-minibuttons.png" alt="Mini buttons row"></div><div class="cap">Mini buttons</div></div>
+        <div class="film-card"><div class="disc"><img src="images/watch-quickpanel.png" alt="Quick actions panel"></div><div class="cap">Quick panel</div></div>
+        <div class="film-card"><div class="disc"><img src="images/watch-queue.png" alt="Queue screen"></div><div class="cap">Queue</div></div>
+        <div class="film-card"><div class="disc"><img src="images/watch-menu.png" alt="Actions menu"></div><div class="cap">Actions menu</div></div>
+        <div class="film-card"><div class="disc"><img src="images/watch-minimal.png" alt="Minimal screen theme"></div><div class="cap">Minimal theme</div></div>
+        <div class="film-card"><div class="disc"><img src="images/watch-seek.png" alt="Rotary crown seek overlay"></div><div class="cap">Crown seek</div></div>
+        <div class="film-card"><div class="disc"><img src="images/watch-volume.png" alt="Volume overlay"></div><div class="cap">Volume overlay</div></div>
+      </div>
+      <button type="button" class="film-nav next" aria-label="Scroll right" data-film-next>
+        <svg class="icon"><use href="#i-arrow-forward"/></svg>
+      </button>
     </div>
   </div>
 </section>
@@ -677,7 +733,7 @@
     <div class="section-head">
       <div class="eyebrow muted">Install</div>
       <h2>Sideload it. Takes a minute.</h2>
-      <p>Svartifoss isn't on the Play Store — install the APKs directly from GitHub Releases onto your phone and watch.</p>
+      <p>Svartifoss isn't on the Play Store — install the APKs directly from GitHub Releases onto your phone and watch. And you only do it by hand once: from 2.2 on, the phone app notifies you about new releases (pre-releases opt-in) and can send the watch its update over Bluetooth — no more cables or Wear Installer.</p>
     </div>
     <div class="steps">
       <div class="step">
@@ -735,6 +791,66 @@
 
 <script>
 (function () {
+  var strip = document.querySelector('.filmstrip');
+  var prevBtn = document.querySelector('[data-film-prev]');
+  var nextBtn = document.querySelector('[data-film-next]');
+  if (strip && prevBtn && nextBtn) {
+    var step = function () {
+      var card = strip.querySelector('.film-card');
+      var gap = parseFloat(getComputedStyle(strip).gap) || 18;
+      return card ? card.offsetWidth * 2 + gap * 2 : 300;
+    };
+
+    var updateNavState = function () {
+      var max = strip.scrollWidth - strip.clientWidth - 1;
+      prevBtn.disabled = strip.scrollLeft <= 0;
+      nextBtn.disabled = strip.scrollLeft >= max;
+    };
+
+    prevBtn.addEventListener('click', function () {
+      strip.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', function () {
+      strip.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+    strip.addEventListener('scroll', updateNavState, { passive: true });
+    window.addEventListener('resize', updateNavState);
+    strip.scrollLeft = 0;
+    updateNavState();
+    window.addEventListener('load', updateNavState);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateNavState);
+
+    // Let vertical mouse-wheel scrolling pan the strip horizontally too.
+    strip.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      e.preventDefault();
+      strip.scrollLeft += e.deltaY;
+    }, { passive: false });
+
+    // Click-and-drag panning for desktop mice (not just touch/trackpad).
+    var isDown = false, startX = 0, startScroll = 0, moved = false;
+    strip.addEventListener('pointerdown', function (e) {
+      isDown = true;
+      moved = false;
+      startX = e.clientX;
+      startScroll = strip.scrollLeft;
+      strip.classList.add('dragging');
+      strip.setPointerCapture(e.pointerId);
+    });
+    strip.addEventListener('pointermove', function (e) {
+      if (!isDown) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 3) moved = true;
+      strip.scrollLeft = startScroll - dx;
+    });
+    var endDrag = function () { isDown = false; strip.classList.remove('dragging'); };
+    strip.addEventListener('pointerup', endDrag);
+    strip.addEventListener('pointerleave', endDrag);
+    strip.addEventListener('pointercancel', endDrag);
+    // Suppress the click-through on an image/link if the pointer actually dragged.
+    strip.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
+  }
+
   function setText(key, value) {
     document.querySelectorAll('[data-stat="' + key + '"]').forEach(function (el) { el.textContent = value; });
   }
