@@ -39,8 +39,9 @@ import kotlinx.coroutines.guava.future
 import kotlinx.coroutines.tasks.await
 
 /**
- * Glanceable quick-control Tile: shows the current track + artist and play/pause, skip prev/next
- * buttons, without opening the app. Tapping the text opens Svartifoss on the watch.
+ * Glanceable quick-control Tile: shows the current track + artist, play/pause and skip prev/next
+ * buttons plus a slimmer -10s/+10s seek row, without opening the app. Tapping the text opens
+ * Svartifoss on the watch.
  *
  * The Tile is a pure proxy like [com.svartifoss.snfell.watch.communication.WatchMediaSession]:
  * it reads the latest music-state [androidx.wear.protolayout] DataItem the phone already publishes,
@@ -88,19 +89,34 @@ class MediaTileService : TileService() {
             .addIdToImageMapping(ICON_NEXT, resourceById(com.svartifoss.snfell.common.R.drawable.action_skip_next))
             .addIdToImageMapping(ICON_PLAY, resourceById(com.svartifoss.snfell.common.R.drawable.action_play))
             .addIdToImageMapping(ICON_PAUSE, resourceById(com.svartifoss.snfell.common.R.drawable.action_pause))
+            .addIdToImageMapping(ICON_SEEK_BACK, resourceById(com.svartifoss.snfell.common.R.drawable.action_replay_10))
+            .addIdToImageMapping(ICON_SEEK_FORWARD, resourceById(com.svartifoss.snfell.common.R.drawable.action_forward_10))
             .build()
     }
 
     private suspend fun dispatchClick(clickedId: String?) {
+        val messageClient = Wearable.getMessageClient(this)
+        val nodeClient = Wearable.getNodeClient(this)
+
+        // -10s/+10s carry a signed delta; the phone resolves it against the session's LIVE
+        // position (this Tile's snapshot can be up to 30s stale).
+        val seekDeltaMs = when (clickedId) {
+            ID_SEEK_BACK -> -SEEK_STEP_MS
+            ID_SEEK_FORWARD -> SEEK_STEP_MS
+            else -> null
+        }
+        if (seekDeltaMs != null) {
+            val payload = java.nio.ByteBuffer.allocate(java.lang.Long.BYTES).putLong(seekDeltaMs).array()
+            messageClient.sendMessageToNearestClient(nodeClient, CommPaths.MESSAGE_SEEK_RELATIVE, payload)
+            return
+        }
+
         val path = when (clickedId) {
             ID_PLAY_PAUSE -> CommPaths.MESSAGE_TOGGLE_PLAY_PAUSE
             ID_SKIP_NEXT -> CommPaths.MESSAGE_SKIP_NEXT
             ID_SKIP_PREV -> CommPaths.MESSAGE_SKIP_PREVIOUS
             else -> return
         }
-
-        val messageClient = Wearable.getMessageClient(this)
-        val nodeClient = Wearable.getNodeClient(this)
         messageClient.sendMessageToNearestClient(nodeClient, path)
     }
 
@@ -190,6 +206,15 @@ class MediaTileService : TileService() {
             .addContent(controlButton(context, ID_SKIP_NEXT, ICON_NEXT, accent = false))
             .build()
 
+        // Second, slimmer row: -10s/+10s relative seek (long-pressing skip can't be used for
+        // scrubbing - the system claims Tile/widget long-presses for its own editor).
+        val seekRow = Row.Builder()
+            .setWidth(wrap())
+            .addContent(smallControlButton(context, ID_SEEK_BACK, ICON_SEEK_BACK))
+            .addContent(Spacer.Builder().setWidth(dp(40f)).build())
+            .addContent(smallControlButton(context, ID_SEEK_FORWARD, ICON_SEEK_FORWARD))
+            .build()
+
         return androidx.wear.protolayout.LayoutElementBuilders.Box.Builder()
             .setWidth(expand())
             .setHeight(expand())
@@ -209,8 +234,10 @@ class MediaTileService : TileService() {
                     .setWidth(expand())
                     .setHorizontalAlignment(HORIZONTAL_ALIGN_CENTER)
                     .addContent(textColumn)
-                    .addContent(Spacer.Builder().setHeight(dp(12f)).build())
+                    .addContent(Spacer.Builder().setHeight(dp(10f)).build())
                     .addContent(controlsRow)
+                    .addContent(Spacer.Builder().setHeight(dp(6f)).build())
+                    .addContent(seekRow)
                     .build()
             )
             .build()
@@ -240,6 +267,20 @@ class MediaTileService : TileService() {
             .build()
     }
 
+    /** The seek row's compact variant - visually secondary to the main transport row. */
+    private fun smallControlButton(context: Context, clickId: String, iconId: String): Button {
+        val clickable = Clickable.Builder()
+            .setId(clickId)
+            .setOnClick(ActionBuilders.LoadAction.Builder().build())
+            .build()
+
+        return Button.Builder(context, clickable)
+            .setIconContent(iconId)
+            .setButtonColors(ButtonColors(WatchTheme.SURFACE_DARK, WatchTheme.TEXT_SECONDARY))
+            .setSize(dp(38f))
+            .build()
+    }
+
     private fun resourceById(resId: Int): ResourceBuilders.ImageResource {
         return ResourceBuilders.ImageResource.Builder()
             .setAndroidResourceByResId(
@@ -251,18 +292,26 @@ class MediaTileService : TileService() {
     }
 
     companion object {
-        private const val RESOURCES_VERSION = "1"
+        // Bump whenever the image-id mappings change, or the renderer keeps its cached set and
+        // new icons never load.
+        private const val RESOURCES_VERSION = "2"
         private const val REFRESH_INTERVAL_MS = 30_000L
 
         private const val ID_OPEN_APP = "open_app"
         private const val ID_PLAY_PAUSE = "tile_play_pause"
         private const val ID_SKIP_NEXT = "tile_skip_next"
         private const val ID_SKIP_PREV = "tile_skip_prev"
+        private const val ID_SEEK_BACK = "tile_seek_back"
+        private const val ID_SEEK_FORWARD = "tile_seek_forward"
+
+        private const val SEEK_STEP_MS = 10_000L
 
         private const val ICON_PREV = "ic_prev"
         private const val ICON_NEXT = "ic_next"
         private const val ICON_PLAY = "ic_play"
         private const val ICON_PAUSE = "ic_pause"
+        private const val ICON_SEEK_BACK = "ic_seek_back"
+        private const val ICON_SEEK_FORWARD = "ic_seek_forward"
 
     }
 }

@@ -256,6 +256,16 @@ object MiscPreferences {
     val WEAR_QUEUE_STYLE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_queue_style", "glass")
 
+    /** Visual style of the edge progress/seek ring: "solid" (default), "dashed", "dots",
+     *  "hairline" or "comet" - see RingStyle on the watch. */
+    val WEAR_PROGRESS_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_progress_style", "solid")
+
+    /** Visual style of the scrub-time readout shown while seeking: "plain" (default), "pill",
+     *  "giant" or "split" (position stacked over total). */
+    val WEAR_SEEK_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_seek_style", "plain")
+
     fun isAnyKindOfAutoStartEnabled(preferences: SharedPreferences): Boolean {
         return Preferences.getBoolean(preferences, AUTO_START) || Preferences.getEnum(preferences, AUTO_START_MODE) != AutoStartMode.OFF
     }
@@ -278,6 +288,7 @@ object MiscPreferences {
             WEAR_SCREEN_BUTTONS_BG, WEAR_SCREEN_BUTTONS_COLOR_MODE, WEAR_SCREEN_BUTTONS_CUSTOM_COLOR,
             WEAR_SCREEN_BUTTONS_DESATURATED, WEAR_OVERLAY_BLUR_RADIUS,
             WEAR_VOLUME_STYLE, WEAR_QUICK_PANEL_STYLE, WEAR_QUEUE_STYLE,
+            WEAR_PROGRESS_STYLE, WEAR_SEEK_STYLE,
             WEAR_TITLE_TEXT_MODE, WEAR_ARTIST_COLOR_MODE, WEAR_ARTIST_CUSTOM_COLOR, WEAR_ARTIST_DESATURATED,
             WEAR_PROGRESS_COLOR_MODE, WEAR_PROGRESS_CUSTOM_COLOR, WEAR_PROGRESS_DESATURATED
     )

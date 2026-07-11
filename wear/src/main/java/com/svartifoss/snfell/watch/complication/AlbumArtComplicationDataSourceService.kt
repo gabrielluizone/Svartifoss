@@ -135,7 +135,7 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
         val hasMusic = state != null && !state.error
         val description = when {
             hasMusic && state!!.title.isNotBlank() && state.artist.isNotBlank() ->
-                "${state.title} — ${state.artist}"
+                "${state.title} • ${state.artist}"
             hasMusic && state!!.title.isNotBlank() -> state.title
             else -> getString(R.string.complication_no_music)
         }

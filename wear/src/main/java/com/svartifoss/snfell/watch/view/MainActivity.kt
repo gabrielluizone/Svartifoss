@@ -13,6 +13,10 @@ import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.RenderEffect
 import android.graphics.Shader
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
@@ -40,6 +44,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -81,6 +86,8 @@ import com.svartifoss.snfell.watch.model.Notification
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.util.StandardActionTitles
 import com.svartifoss.snfell.watch.view.face.ExpressiveFace
+import com.svartifoss.snfell.watch.view.face.PosterFace
+import com.svartifoss.snfell.watch.view.face.VinylFace
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceListener
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceState
 import com.matejdro.wearutils.companionnotice.WearCompanionWatchActivity
@@ -175,6 +182,13 @@ class MainActivity : WearCompanionWatchActivity(),
      *  that update the classic views, so switching faces is purely a visibility change. */
     private val faceState = mutableStateOf(NowPlayingFaceState())
 
+    /** Which Compose face the shared ComposeView renders ("expressive"/"vinyl"/"poster").
+     *  Tracks [screenFace] while interactive and the effective AOD style while ambient. */
+    private val composeFaceKind = mutableStateOf("expressive")
+
+    /** Face keys rendered by the Compose view (everything except the View-based classic). */
+    private val composeFaces = setOf("expressive", "vinyl", "poster")
+
     private var paletteGeneration = 0
     private var lastPaletteArt: Bitmap? = null
     private var lastKnownDurationMs: Long = 0L
@@ -234,6 +248,7 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Selected quick-actions panel style (see [MiscPreferences.WEAR_QUICK_PANEL_STYLE]):
      *  "glass"/"minimal"/"material"/"tonal". Themes the round slot buttons and the long row. */
     private var quickPanelStyle: String = "glass"
+    private var seekOverlayStyle: String = "plain"
 
     private var quickPanelSlots: Array<ButtonAction?> = arrayOfNulls(QuickPanelButtons.ALL_SLOTS.size)
 
@@ -332,7 +347,14 @@ class MainActivity : WearCompanionWatchActivity(),
         )
 
         binding.expressiveFace.setContent {
-            ExpressiveFace(state = faceState.value, listener = expressiveFaceListener)
+            // One ComposeView hosts every Compose face; composeFaceKind picks which one renders
+            // (the interactive screenFace normally, or the AOD style's face while ambient - see
+            // applyScreenFaceNow/applyAmbientPresentation).
+            when (composeFaceKind.value) {
+                "vinyl" -> VinylFace(state = faceState.value, listener = expressiveFaceListener)
+                "poster" -> PosterFace(state = faceState.value, listener = expressiveFaceListener)
+                else -> ExpressiveFace(state = faceState.value, listener = expressiveFaceListener)
+            }
         }
 
         val centerTapGestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
@@ -772,6 +794,9 @@ class MainActivity : WearCompanionWatchActivity(),
         }
         applyBlurredAlbumArt(bitmap)
         updateDynamicAccentFromArt(bitmap)
+        // Faces that draw the art themselves (vinyl disc) read it from the face state -
+        // asImageBitmap wraps the existing bitmap without copying.
+        updateFaceState { it.copy(albumArt = bitmap?.asImageBitmap()) }
     }
 
     private fun updateDynamicAccentFromArt(art: Bitmap?) {
@@ -863,6 +888,11 @@ class MainActivity : WearCompanionWatchActivity(),
                     // following the new art's accent.
                     ambientTint = resolvedAodTint()
             )
+        }
+        if (ambientObserver.isAmbient) {
+            // The classic AOD title carries the same tint (applyAmbientPresentation set it) -
+            // keep it following the new art's accent too.
+            binding.textTitle.setTextColor(resolvedAodTint())
         }
     }
 
@@ -1483,6 +1513,9 @@ class MainActivity : WearCompanionWatchActivity(),
 
         binding.volumeBar.barStyle = VolumeStyle.fromPref(
                 Preferences.getString(preferences, MiscPreferences.WEAR_VOLUME_STYLE))
+        binding.seekBar.ringStyle = RingStyle.fromPref(
+                Preferences.getString(preferences, MiscPreferences.WEAR_PROGRESS_STYLE))
+        seekOverlayStyle = Preferences.getString(preferences, MiscPreferences.WEAR_SEEK_STYLE)
         quickPanelStyle = Preferences.getString(preferences, MiscPreferences.WEAR_QUICK_PANEL_STYLE)
 
         centerLongPressQueueEnabled = Preferences.getBoolean(
@@ -1562,24 +1595,39 @@ class MainActivity : WearCompanionWatchActivity(),
         if (ambientObserver.isAmbient) {
             return
         }
+        applyScreenFaceNow()
+    }
 
-        val expressive = screenFace == "expressive"
-        binding.expressiveFace.visibility = if (expressive) View.VISIBLE else View.GONE
-        binding.classicTextBlock.visibility = if (expressive) View.GONE else View.VISIBLE
+    /** [applyScreenFace] without the ambient guard - onExitAmbient MUST use this variant:
+     *  inside the exit callback [AmbientLifecycleObserver.isAmbient] can still report true,
+     *  which made the guarded call a silent no-op and left ambient-only visibilities (e.g. the
+     *  force-shown edge seek ring) leaking into the interactive screen. */
+    private fun applyScreenFaceNow() {
+        val composeFace = screenFace in composeFaces
+        if (composeFace) {
+            composeFaceKind.value = screenFace
+        }
+        binding.expressiveFace.visibility = if (composeFace) View.VISIBLE else View.GONE
+        binding.classicTextBlock.visibility = if (composeFace) View.GONE else View.VISIBLE
         // The bezel seek ring belongs to the classic face; on the expressive face it appears only
         // when the user picks the "edge" seek mode (it draws on top of the ComposeView - see the
-        // z-order in activity_main.xml - so it stays touchable). "central"/"none" hide it.
-        val showEdgeSeekRing = !expressive || expressiveSeekMode == "edge"
+        // z-order in activity_main.xml - so it stays touchable). "central"/"none" hide it, and
+        // the vinyl/poster faces draw their own progress, so it never shows on them.
+        val showEdgeSeekRing = !composeFace || (screenFace == "expressive" && expressiveSeekMode == "edge")
         binding.seekBar.visibility = if (showEdgeSeekRing) View.VISIBLE else View.GONE
-        binding.centerTapZone.visibility = if (expressive) View.GONE else View.VISIBLE
-        applyScreenTheme()
+        binding.centerTapZone.visibility = if (composeFace) View.GONE else View.VISIBLE
+        applyScreenThemeNow()
     }
 
     private fun applyScreenTheme() {
         if (ambientObserver.isAmbient) {
             return
         }
+        applyScreenThemeNow()
+    }
 
+    /** [applyScreenTheme] without the ambient guard - see [applyScreenFaceNow]. */
+    private fun applyScreenThemeNow() {
         val icons = listOf(binding.iconTop, binding.iconBottom, binding.iconLeft, binding.iconRight)
         val iconSizeDefault = resources.getDimensionPixelSize(R.dimen.music_screen_icon_size)
         val iconSizeCompact = (18 * resources.displayMetrics.density).toInt()
@@ -1592,8 +1640,8 @@ class MainActivity : WearCompanionWatchActivity(),
             icon.layoutParams = params
         }
 
-        if (screenFace == "expressive") {
-            // The expressive face draws its own transport buttons and curved clock - the
+        if (screenFace in composeFaces) {
+            // The Compose faces draw their own transport buttons and curved clock - the
             // quadrant hint icons and the always-on clock belong to the classic face only.
             // (Quadrant taps themselves keep working; only their icons are hidden.) The
             // cinema theme's extra scrim still applies on top of any face.
@@ -1890,7 +1938,9 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Resolves [MiscPreferences.WEAR_AOD_STYLE]'s "follow" against the selected face; every
      *  other value picks its AOD presentation directly. */
     private fun effectiveAodStyle(): String = when (aodStyle) {
-        "follow" -> if (screenFace == "expressive") "expressive" else "classic"
+        // Compose faces (expressive/vinyl/poster) each bring their own AOD variant; the classic
+        // face keeps the classic AOD.
+        "follow" -> if (screenFace in composeFaces) screenFace else "classic"
         else -> aodStyle
     }
 
@@ -1931,7 +1981,10 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.albumArt.alpha = if (showArt) ambientAlbumArtAlpha else 0f
         setAmbientAlbumArtBlur(showArt)
 
-        val expressive = style == "expressive"
+        val composeAod = style in composeFaces
+        if (composeAod) {
+            composeFaceKind.value = style
+        }
         updateFaceState {
             it.copy(
                     ambient = true,
@@ -1943,11 +1996,15 @@ class MainActivity : WearCompanionWatchActivity(),
                     ambientShowPills = aodShowPills
             )
         }
-        binding.expressiveFace.visibility = if (expressive) View.VISIBLE else View.GONE
+        binding.expressiveFace.visibility = if (composeAod) View.VISIBLE else View.GONE
         binding.classicTextBlock.visibility =
-                if (!expressive && aodShowTrackInfo) View.VISIBLE else View.GONE
+                if (!composeAod && aodShowTrackInfo) View.VISIBLE else View.GONE
         binding.classicTextBlock.alpha = aodIntensity * (if (style == "minimal") 0.6f else 1f)
 
+        // The title follows the AOD color mode like the outlines do (resolvedAodTint() is plain
+        // white in the default mode, and album/custom tints arrive lightness-lifted for
+        // legibility on black). onExitAmbient restores the layout's white.
+        binding.textTitle.setTextColor(resolvedAodTint())
         binding.textTitle.displayTextOutline = true
         binding.textPlaybackTime.displayTextOutline = true
     }
@@ -2029,7 +2086,7 @@ class MainActivity : WearCompanionWatchActivity(),
                         binding.ambientClock.visibility = View.GONE
                     }
 
-                    applyScreenTheme()
+                    applyScreenThemeNow()
 
                     binding.screenButtonsRow.visibility =
                             if (screenButtonsConfigured) View.VISIBLE else View.GONE
@@ -2037,7 +2094,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     binding.albumArt.alpha = 1f
                     setAmbientAlbumArtBlur(false)
                     binding.albumArtScrim.visibility = if (dimAlbumArt) View.VISIBLE else View.INVISIBLE
-                    binding.seekBar.visibility = View.VISIBLE
+                    // Seek ring visibility is face-dependent - applyScreenFaceNow() below owns it
+                    // (the old unconditional VISIBLE here leaked the edge ring onto the
+                    // expressive face after every ambient round-trip).
                     binding.seekBar.alpha = 1f
                     binding.volumeBar.visibility = View.GONE
                     binding.volumeBar.alpha = 1f
@@ -2073,6 +2132,7 @@ class MainActivity : WearCompanionWatchActivity(),
                         rotatingInputDisabledUntil = System.currentTimeMillis() + crownDisableTime
                     }
 
+                    binding.textTitle.setTextColor(Color.WHITE)
                     binding.textTitle.displayTextOutline = false
                     binding.textPlaybackTime.displayTextOutline = false
 
@@ -2090,9 +2150,11 @@ class MainActivity : WearCompanionWatchActivity(),
                     binding.contentFrame.translationX = 0f
                     binding.contentFrame.translationY = 0f
 
-                    // Last, so it wins over the classic-view restores above (e.g. the seek ring
-                    // set VISIBLE earlier) when the expressive face is selected.
-                    applyScreenFace()
+                    // Last, so it wins over the classic-view restores above. The unguarded
+                    // variant is essential: isAmbient can still be true inside this callback,
+                    // and the guarded applyScreenFace() silently no-oped - leaving the edge
+                    // seek ring visible on the expressive face after every wake-up.
+                    applyScreenFaceNow()
                 }
 
             }
@@ -2567,11 +2629,57 @@ class MainActivity : WearCompanionWatchActivity(),
 
         binding.textVolumePercent.visibility = View.GONE
         binding.textSeekTime.visibility = View.VISIBLE
-        binding.textSeekTime.text = formatPlaybackTime((fraction * lastKnownDurationMs).toLong())
+        applySeekOverlayStyle(fraction)
 
         // Auto-hide the seek overlay just like the volume overlay does.
         handler.removeMessages(MESSAGE_HIDE_VOLUME)
         handler.sendEmptyMessageDelayed(MESSAGE_HIDE_VOLUME, volumeBarTimeoutMs)
+    }
+
+    /**
+     * Styles the scrub-time readout per [MiscPreferences.WEAR_SEEK_STYLE]: "plain" is the
+     * original bare centered time, "pill" wraps it in the same glass capsule the bottom pills
+     * use, "giant" blows it up for at-a-glance reading mid-drag, and "split" stacks the target
+     * position over the track's total length.
+     */
+    private fun applySeekOverlayStyle(fraction: Float) {
+        val position = formatPlaybackTime((fraction * lastKnownDurationMs).toLong())
+        val text = binding.textSeekTime
+
+        when (seekOverlayStyle) {
+            "pill" -> {
+                text.textSize = 26f
+                text.setBackgroundResource(R.drawable.glass_pill_background)
+                val padH = (18 * resources.displayMetrics.density).toInt()
+                val padV = (8 * resources.displayMetrics.density).toInt()
+                text.setPadding(padH, padV, padH, padV)
+                text.text = position
+            }
+            "giant" -> {
+                text.textSize = 52f
+                text.background = null
+                text.setPadding(0, 0, 0, 0)
+                text.text = position
+            }
+            "split" -> {
+                text.textSize = 30f
+                text.background = null
+                text.setPadding(0, 0, 0, 0)
+                val total = formatPlaybackTime(lastKnownDurationMs)
+                val stacked = SpannableString("$position\n$total")
+                stacked.setSpan(RelativeSizeSpan(0.55f), position.length + 1, stacked.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                stacked.setSpan(ForegroundColorSpan(0xB3FFFFFF.toInt()), position.length + 1,
+                        stacked.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                text.text = stacked
+            }
+            else -> {
+                text.textSize = 30f
+                text.background = null
+                text.setPadding(0, 0, 0, 0)
+                text.text = position
+            }
+        }
     }
 
     private val rotarySeekCommitRunnable = Runnable {

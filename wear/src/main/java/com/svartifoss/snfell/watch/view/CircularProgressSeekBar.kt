@@ -3,9 +3,13 @@ package com.svartifoss.snfell.watch.view
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.DashPathEffect
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
+import android.graphics.SweepGradient
+import androidx.core.graphics.ColorUtils
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -27,6 +31,34 @@ import com.svartifoss.snfell.common.R as commonR
  * carves out exact no-go zones (e.g. the quadrant action icons) that would otherwise overlap
  * with the touch band near the bezel.
  */
+/** Visual style of the edge progress/seek ring, selected on the phone
+ *  ([MiscPreferences.WEAR_PROGRESS_STYLE][com.svartifoss.snfell.common.MiscPreferences.WEAR_PROGRESS_STYLE]).
+ *  New styles are additive cases here plus a branch in [CircularProgressSeekBar.onDraw] -
+ *  touch/seek behavior is shared by all of them. */
+enum class RingStyle {
+    /** Continuous accent arc over a faint track (original look). */
+    SOLID,
+    /** The arc broken into short dashes, like bezel minute marks. */
+    DASHED,
+    /** A trail of round dots. */
+    DOTS,
+    /** Ultra-thin arc, near-invisible track - the discreet option. */
+    HAIRLINE,
+    /** Comet: the played arc fades in from transparent to full accent at the head, with a
+     *  bright head dot. */
+    COMET;
+
+    companion object {
+        fun fromPref(value: String?): RingStyle = when (value) {
+            "dashed" -> DASHED
+            "dots" -> DOTS
+            "hairline" -> HAIRLINE
+            "comet" -> COMET
+            else -> SOLID
+        }
+    }
+}
+
 class CircularProgressSeekBar : View {
     companion object {
         // Slightly longer than MusicViewModel's tick interval so each animation is still
@@ -36,6 +68,10 @@ class CircularProgressSeekBar : View {
 
     private val foregroundPaint: Paint = Paint()
     private val backgroundPaint: Paint
+    private val headDotPaint = Paint().apply {
+        style = Paint.Style.FILL
+        isAntiAlias = true
+    }
     private val circleBounds = RectF()
 
     private var isDragging = false
@@ -80,6 +116,14 @@ class CircularProgressSeekBar : View {
         set(value) {
             foregroundPaint.color = value
             invalidate()
+        }
+
+    var ringStyle: RingStyle = RingStyle.SOLID
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
         }
 
     /**
@@ -144,8 +188,79 @@ class CircularProgressSeekBar : View {
             return
         }
 
-        canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
-        canvas.drawArc(circleBounds, -90f, displayProgress * 360f, false, foregroundPaint)
+        // The scratch paints are recolored/re-effected per draw; stroke geometry (and therefore
+        // onMeasure's bounds and the touch band) stays that of the base solid ring for every
+        // style, so seeking feels identical regardless of the visual.
+        val baseWidth = resources.getDimension(R.dimen.seek_bar_width)
+        foregroundPaint.pathEffect = null
+        backgroundPaint.pathEffect = null
+        foregroundPaint.shader = null
+        foregroundPaint.strokeWidth = baseWidth
+        backgroundPaint.strokeWidth = baseWidth
+        foregroundPaint.strokeCap = Paint.Cap.ROUND
+
+        val sweep = displayProgress * 360f
+        when (ringStyle) {
+            RingStyle.SOLID -> {
+                canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
+                canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
+            }
+            RingStyle.DASHED -> {
+                val dash = DashPathEffect(floatArrayOf(baseWidth * 1.9f, baseWidth * 1.5f), 0f)
+                foregroundPaint.pathEffect = dash
+                backgroundPaint.pathEffect = dash
+                foregroundPaint.strokeCap = Paint.Cap.BUTT
+                canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
+                canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
+            }
+            RingStyle.DOTS -> {
+                // Zero-length "on" intervals with a round cap render as a trail of dots.
+                val dots = DashPathEffect(floatArrayOf(0.01f, baseWidth * 2.6f), 0f)
+                foregroundPaint.pathEffect = dots
+                backgroundPaint.pathEffect = dots
+                backgroundPaint.strokeCap = Paint.Cap.ROUND
+                canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
+                canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
+                backgroundPaint.strokeCap = Paint.Cap.BUTT
+            }
+            RingStyle.HAIRLINE -> {
+                foregroundPaint.strokeWidth = baseWidth * 0.45f
+                backgroundPaint.strokeWidth = baseWidth * 0.3f
+                canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
+                canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
+            }
+            RingStyle.COMET -> {
+                backgroundPaint.strokeWidth = baseWidth * 0.5f
+                canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
+                if (sweep > 1f) {
+                    // Sweep gradient from transparent at 12 o'clock to the full accent at the
+                    // progress head - rotated so position 0 of the shader is the ring start.
+                    val accent = foregroundPaint.color
+                    val shader = SweepGradient(
+                            circleBounds.centerX(), circleBounds.centerY(),
+                            intArrayOf(
+                                    ColorUtils.setAlphaComponent(accent, 0x00),
+                                    ColorUtils.setAlphaComponent(accent, 0xFF)
+                            ),
+                            floatArrayOf(0f, (sweep / 360f).coerceAtMost(1f))
+                    )
+                    val rotate = Matrix()
+                    rotate.setRotate(-90f, circleBounds.centerX(), circleBounds.centerY())
+                    shader.setLocalMatrix(rotate)
+                    foregroundPaint.shader = shader
+                    canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
+                    foregroundPaint.shader = null
+                }
+                // Bright head dot so the current position always reads clearly.
+                val headRad = Math.toRadians((sweep - 90f).toDouble())
+                canvas.drawCircle(
+                        circleBounds.centerX() + circleBounds.width() / 2f * kotlin.math.cos(headRad).toFloat(),
+                        circleBounds.centerY() + circleBounds.height() / 2f * kotlin.math.sin(headRad).toFloat(),
+                        baseWidth * 0.9f,
+                        headDotPaint.apply { color = foregroundPaint.color }
+                )
+            }
+        }
     }
 
     private fun isInsideExcludedView(localX: Float, localY: Float): Boolean {

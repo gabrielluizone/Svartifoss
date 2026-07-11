@@ -1,5 +1,63 @@
 # Changelog
 
+## 2.2.1
+
+### Two new faces (Beta)
+
+- **Vinyl (Beta)**: the album art becomes a slowly spinning record — groove
+  rings, accent label and spindle hole — with the playback progress as an
+  accent arc around the record's rim and glass prev/next buttons beside it.
+  Tap the record to play/pause (it shows a play badge and stops spinning
+  while paused); double-tap and long-press keep their usual quick-panel /
+  queue roles.
+- **Poster (Beta)**: a flat, typography-first look — a deep tonal backdrop
+  derived from the album's accent, big two-line title with the artist in
+  small caps, squared transport buttons and a straight progress bar with the
+  track time under it.
+- Both faces bring their own always-on display variant (thin outlines over
+  black, burn-in safe), honor all the AOD element toggles/colors, show up in
+  the phone's live Watch-face preview, and keep the mini buttons and quick
+  panel exactly where the other faces have them. They're marked Beta:
+  expect small visual adjustments based on feedback.
+
+### New styles
+
+- **Progress ring styles** (classic face / expressive "edge" seek): Solid,
+  Dashed, Dots, Hairline, and Comet — a tail that fades in toward a bright
+  head dot. Seeking works identically on all of them.
+- **Three new volume overlay styles**: Segments (level-meter tick blocks),
+  Aurora (multi-hue gradient) and Ink (wide translucent halo with a solid
+  core).
+- **Seek time styles** for the readout shown while scrubbing: Plain, Glass
+  pill, Giant, or Position / total stacked.
+
+### Fixes
+
+- **Fixed the edge progress ring reappearing on the Expressive face after
+  every always-on-display round trip**, even with the central or hidden
+  seek mode selected: the ambient-exit restore ran while the system still
+  reported ambient mode, so the face-specific cleanup silently no-oped.
+- **The AOD title now follows the always-on display color mode**: with
+  "album accent" (or a custom color) selected, the track title tints along
+  with the outlines on every AOD style — it used to stay white.
+
+### Other
+
+- **The Tile (widget on Wear OS 7) gained a −10s / +10s seek row** under the
+  prev/play/next buttons (thanks to the Pixel Watch 3 feedback!). The jump
+  is resolved against the phone's live playback position, so it stays
+  accurate even when the Tile's snapshot is stale.
+- The persistent "controls active" notification now offers two explicit
+  actions: **Stop** (same as tapping it, ends the controls) and **Force
+  stop** (fully kills the app process and detaches the notification
+  listener until the next reboot or access toggle).
+- The watch's recents/launcher chip and the album-art complication now
+  separate title and artist with "•" instead of "—".
+- Firebase Analytics is back (anonymous usage stats, auto-collected events
+  only) to help development — the app is sideload-only, so this and crash
+  reporting are the only signals of how features are actually used. The
+  README/landing-page privacy notes were updated to match.
+
 ## 2.2
 
 ### Updates without a cable

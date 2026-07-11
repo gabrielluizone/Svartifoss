@@ -182,8 +182,18 @@
             android:defaultValue="glass"
             android:title="@string/setting_wear_volume_style"
             android:summary="%s"
-            android:entries="@array/wear_overlay_style_entries"
-            android:entryValues="@array/wear_overlay_style_values"
+            android:entries="@array/wear_volume_style_entries"
+            android:entryValues="@array/wear_volume_style_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:key="wear_seek_style"
+            android:icon="@drawable/ic_format_paint"
+            android:defaultValue="plain"
+            android:title="@string/setting_wear_seek_style"
+            android:summary="%s"
+            android:entries="@array/wear_seek_style_entries"
+            android:entryValues="@array/wear_seek_style_values"
             android:layout="@layout/pref_item" />
 
         <ListPreference
@@ -303,6 +313,16 @@
             android:title="@string/setting_wear_artist_desaturated"
             android:summary="@string/setting_wear_artist_desaturated_description"
             android:layout="@layout/pref_switch_item" />
+
+        <ListPreference
+            android:defaultValue="solid"
+            android:key="wear_progress_style"
+            android:icon="@drawable/ic_format_paint"
+            android:title="@string/setting_wear_progress_style"
+            android:summary="%s"
+            android:entries="@array/wear_progress_style_entries"
+            android:entryValues="@array/wear_progress_style_values"
+            android:layout="@layout/pref_item" />
 
         <ListPreference
             android:defaultValue="album"

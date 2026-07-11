@@ -20,6 +20,10 @@ interface CommPaths {
         const val MESSAGE_ACK = "/Messages/ACK"
         const val MESSAGE_CHANGE_VOLUME = "/Messages/SetVolume"
         const val MESSAGE_SEEK_TO = "/Messages/SeekTo"
+        // Watch -> phone: seek by a signed delta (ms, as a big-endian long payload) relative to
+        // the session's LIVE position - senders like the Tile only hold a stale snapshot, so
+        // the phone resolves the actual target. Used by the Tile's -10s/+10s buttons.
+        const val MESSAGE_SEEK_RELATIVE = "/Messages/SeekRelative"
         const val MESSAGE_TOGGLE_PLAY_PAUSE = "/Messages/TogglePlayPause"
         const val MESSAGE_SKIP_NEXT = "/Messages/SkipNext"
         const val MESSAGE_SKIP_PREVIOUS = "/Messages/SkipPrevious"

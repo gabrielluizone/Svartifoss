@@ -145,7 +145,7 @@ class WatchMusicService : LifecycleService() {
     }
 
     /**
-     * The "Title — Artist" line shown in the notification and as the OngoingActivity status
+     * The "Title • Artist" line shown in the notification and as the OngoingActivity status
      * (which is what recents/the launcher render under the app name), or null when there is
      * no valid track to show.
      */
@@ -155,7 +155,7 @@ class WatchMusicService : LifecycleService() {
             return null
         }
         return if (state.artist.isNotBlank()) {
-            "${state.title} — ${state.artist}"
+            "${state.title} • ${state.artist}"
         } else {
             state.title
         }

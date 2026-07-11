@@ -2,6 +2,7 @@ package com.svartifoss.snfell.watch.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.DashPathEffect
 import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.RectF
@@ -46,7 +47,13 @@ enum class VolumeStyle {
     /** Monochrome-green CRT fill. */
     TERMINAL,
     /** Brighter frosted track with an accent fill. */
-    FROST;
+    FROST,
+    /** The arc broken into discrete tick blocks, lighting up like a level meter. */
+    SEGMENTS,
+    /** Multi-hue gradient fill drifting around the accent's hue (northern-lights look). */
+    AURORA,
+    /** Wide translucent accent halo with a thin solid core, like a wet ink stroke. */
+    INK;
 
     companion object {
         fun fromPref(value: String?): VolumeStyle = when (value) {
@@ -62,6 +69,9 @@ enum class VolumeStyle {
             "contrast" -> CONTRAST
             "terminal" -> TERMINAL
             "frost" -> FROST
+            "segments" -> SEGMENTS
+            "aurora" -> AURORA
+            "ink" -> INK
             else -> GLASS
         }
     }
@@ -188,7 +198,40 @@ class CircularVolumeBar : android.view.View {
                 drawArc(canvas, baseStroke * 0.9f, Paint.Cap.BUTT, ColorUtils.setAlphaComponent(TERMINAL_GREEN, 0x40), TERMINAL_GREEN)
             VolumeStyle.FROST ->
                 drawArc(canvas, baseStroke, Paint.Cap.ROUND, 0x44FFFFFF, accentColorInt)
+            VolumeStyle.SEGMENTS -> {
+                // Discrete tick blocks lighting up like a level meter.
+                val segments = DashPathEffect(floatArrayOf(baseStroke * 1.3f, baseStroke * 0.9f), 0f)
+                strokePaint.pathEffect = segments
+                drawArc(canvas, baseStroke * 1.5f, Paint.Cap.BUTT,
+                        ColorUtils.setAlphaComponent(accentColorInt, 0x28), accentColorInt)
+                strokePaint.pathEffect = null
+            }
+            VolumeStyle.AURORA ->
+                drawArc(canvas, baseStroke * 1.3f, Paint.Cap.ROUND,
+                        0x22FFFFFF, 0, fillShader = auroraShader())
+            VolumeStyle.INK -> {
+                // Halo pass first (wide, translucent), then the solid core on top.
+                drawArc(canvas, baseStroke * 2.1f, Paint.Cap.ROUND,
+                        0x00000000, ColorUtils.setAlphaComponent(accentColorInt, 0x3A))
+                drawArc(canvas, baseStroke * 0.7f, Paint.Cap.ROUND, 0x22FFFFFF, accentColorInt)
+            }
         }
+    }
+
+    /** Vertical gradient drifting the accent's hue ±40° (the aurora style's fill). */
+    private fun auroraShader(): Shader {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(accentColorInt, hsl)
+        fun hueShift(delta: Float): Int {
+            val shifted = floatArrayOf((hsl[0] + delta + 360f) % 360f,
+                    hsl[1].coerceIn(0.45f, 0.85f), 0.60f)
+            return ColorUtils.HSLToColor(shifted)
+        }
+        return LinearGradient(
+                circleBounds.left, circleBounds.top, circleBounds.left, circleBounds.bottom,
+                intArrayOf(hueShift(40f), hueShift(0f), hueShift(-40f)),
+                floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP
+        )
     }
 
     /** The album accent's complementary hue (used by the duotone style). */

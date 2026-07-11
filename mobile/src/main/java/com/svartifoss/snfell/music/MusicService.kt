@@ -43,6 +43,7 @@ import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.PutDataRequest
 import com.google.android.gms.wearable.Wearable
+import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.ActionHandler
 import com.svartifoss.snfell.actions.OpenPlaylistAction
@@ -101,7 +102,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private const val MAX_TRACK_HISTORY_SIZE = 20
 
         private const val STOP_SELF_PENDING_INTENT_REQUEST_CODE = 333
+        private const val FORCE_STOP_PENDING_INTENT_REQUEST_CODE = 334
         private const val ACTION_STOP_SELF = "STOP_SELF"
+        private const val ACTION_FORCE_STOP = "FORCE_STOP"
         private const val KEY_NOTIFICATION_CHANNEL = "Service_Channel"
         private const val KEY_NOTIFICATION_CHANNEL_ERRORS = "Error notifications"
 
@@ -207,11 +210,25 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 stopSelfIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
+        val forceStopIntent = Intent(this, MusicService::class.java)
+        forceStopIntent.action = ACTION_FORCE_STOP
+        val forceStopPendingIntent = PendingIntent.getService(this,
+                FORCE_STOP_PENDING_INTENT_REQUEST_CODE,
+                forceStopIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
         createNotificationChannel()
         val notificationBuilder = NotificationCompat.Builder(this, KEY_NOTIFICATION_CHANNEL)
                 .setContentTitle(getString(commonR.string.music_control_active))
                 .setContentText(getString(R.string.tap_to_force_stop))
                 .setContentIntent(stopSelfPendingIntent)
+                // Tapping the body keeps today's behavior (stop the service); the two actions
+                // make the choice explicit - "stop" is the same, "force stop" additionally
+                // unbinds the notification listener and kills the process outright.
+                .addAction(R.drawable.ic_nav_stopped,
+                        getString(R.string.notification_action_stop), stopSelfPendingIntent)
+                .addAction(R.drawable.ic_music_off,
+                        getString(R.string.notification_action_force_stop), forceStopPendingIntent)
                 // ic_notification_brand, not ic_app_brand: same logo, but re-padded to the
                 // standard notification-glyph fill - the raw brand asset has so much built-in
                 // padding it rendered visibly smaller than other apps' status icons.
@@ -241,7 +258,21 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val action = intent?.action
 
-        if (action == ACTION_START_FROM_WATCH) {
+        if (action == ACTION_FORCE_STOP) {
+            // "Force stop" from the notification: actually end the whole app, not just this
+            // service. Unbind the notification listener first so the system doesn't restart
+            // the process for it right away (stays unbound until reboot or a listener-access
+            // toggle), then die for real once stopSelf has been processed.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                startService(Intent(this, NotificationService::class.java)
+                        .setAction(NotificationService.ACTION_UNBIND_SERVICE))
+            }
+            stopSelf()
+            Handler(Looper.getMainLooper()).postDelayed({
+                android.os.Process.killProcess(android.os.Process.myPid())
+            }, 300)
+            return Service.START_NOT_STICKY
+        } else if (action == ACTION_START_FROM_WATCH) {
             startedFromWatch = true
         } else if (action == ACTION_STOP_SELF || !startedFromWatch) {
             stopSelf()
@@ -327,6 +358,18 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
     private fun seekTo(positionMs: Long) {
         currentMediaController?.transportControls?.seekTo(positionMs)
+    }
+
+    /** Seeks by [deltaMs] relative to the session's LIVE position. Senders like the Tile only
+     *  hold a snapshot that may be many seconds stale (30s refresh), so the phone - not the
+     *  sender - resolves the actual target position. */
+    private fun seekRelative(deltaMs: Long) {
+        val controller = currentMediaController ?: return
+        val position = controller.playbackState?.position ?: return
+        val duration = controller.metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0L
+        val target = (position + deltaMs).coerceAtLeast(0L)
+                .let { if (duration > 0) it.coerceAtMost(duration) else it }
+        controller.transportControls.seekTo(target)
     }
 
     private var preMuteVolume = 0
@@ -1000,6 +1043,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
             CommPaths.MESSAGE_SEEK_TO -> {
                 seekTo(ByteBuffer.wrap(event.data).long)
+            }
+            CommPaths.MESSAGE_SEEK_RELATIVE -> {
+                seekRelative(ByteBuffer.wrap(event.data).long)
             }
             CommPaths.MESSAGE_TOGGLE_PLAY_PAUSE -> {
                 togglePlayPause()

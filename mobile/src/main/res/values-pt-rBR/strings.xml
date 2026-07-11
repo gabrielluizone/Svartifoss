@@ -180,7 +180,9 @@
     <string name="setting_always_show_time">Sempre mostrar a hora</string>
     <string name="setting_always_show_time_off_description">A hora atual só será exibida no modo ambiente</string>
     <string name="setting_always_show_time_on_description">A hora atual sempre será exibida. O ícone de ação superior não ficará visível (será substituído pelo relógio), mas a ação continuará funcionando normalmente.</string>
-    <string name="tap_to_force_stop">Toque para forçar parada</string>
+    <string name="tap_to_force_stop">Toque para parar o controle</string>
+    <string name="notification_action_stop">Parar</string>
+    <string name="notification_action_force_stop">Forçar parada</string>
     <string name="error_notification_access">Sem acesso a notificações. Verifique o celular.</string>
     <string name="error_notifications">Erro nas notificações</string>
     <string name="notification_access_notification_title">O Svartifoss precisa de acesso a notificações</string>
@@ -257,7 +259,7 @@
     <string name="setting_wear_center_long_press_queue">Toque longo no centro para a fila</string>
     <string name="setting_wear_center_long_press_queue_description">Toque e segure o centro da tela de reprodução para abrir a fila de reprodução.</string>
     <string name="setting_wear_screen_face">Estilo da tela</string>
-    <string name="setting_wear_screen_face_description">Interface geral da tela de reprodução no relógio. O Clássico mantém o anel de busca na borda e os ícones de gesto; o Expressivo mostra botões grandes de reprodução com um anel de progresso ondulado.</string>
+    <string name="setting_wear_screen_face_description">Interface geral da tela de reprodução no relógio. O Clássico mantém o anel de seek na borda e os ícones de gesto; o Expressivo mostra botões grandes com um anel de progresso ondulado. O Vinil (Beta) transforma a capa em um disco girando; o Pôster (Beta) é um visual chapado e tipográfico, com botões quadrados e barra de progresso reta.</string>
     <string name="setting_wear_screen_theme">Tema da tela</string>
     <string name="setting_wear_screen_theme_description">Estilo visual da tela de reprodução no relógio.</string>
     <string name="setting_wear_dynamic_accent">Cor de destaque dinâmica no relógio</string>
@@ -305,10 +307,14 @@
     <string-array name="wear_screen_face_entries">
         <item>Clássico</item>
         <item>Expressivo</item>
+        <item>Vinil (Beta)</item>
+        <item>Pôster (Beta)</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
         <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Busca expressiva</string>
@@ -359,6 +365,70 @@
     <string name="setting_wear_volume_style">Estilo do volume</string>
     <string name="setting_wear_quick_panel_style">Estilo do painel rápido</string>
     <string name="setting_wear_queue_style">Estilo da fila</string>
+    <string name="setting_wear_progress_style">Estilo do anel de progresso</string>
+    <string name="setting_wear_seek_style">Estilo do tempo de seek</string>
+    <string-array name="wear_progress_style_entries">
+        <item>Sólido</item>
+        <item>Tracejado</item>
+        <item>Pontos</item>
+        <item>Fio</item>
+        <item>Cometa</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Simples</item>
+        <item>Pílula de vidro</item>
+        <item>Gigante</item>
+        <item>Posição / total</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>giant</item>
+        <item>split</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Vidro</item>
+        <item>Minimalista (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Claro</item>
+        <item>Gradiente</item>
+        <item>Mono</item>
+        <item>Contorno</item>
+        <item>Duotone</item>
+        <item>Alto contraste</item>
+        <item>Terminal</item>
+        <item>Gelo</item>
+        <item>Segmentos</item>
+        <item>Aurora</item>
+        <item>Tinta</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+    </string-array>
     <string-array name="wear_overlay_style_entries">
         <item>Vidro</item>
         <item>Minimalista (AMOLED)</item>

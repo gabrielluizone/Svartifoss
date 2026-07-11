@@ -11,13 +11,19 @@ import com.svartifoss.snfell.watch.theme.WatchTheme
  * mini buttons, quick actions panel, volume/seek overlays, notification popup and the idle
  * ("nothing playing") state.
  *
- * Two faces exist, selected by [MiscPreferences.WEAR_SCREEN_FACE][com.svartifoss.snfell.common.MiscPreferences.WEAR_SCREEN_FACE]
+ * Four faces exist, selected by [MiscPreferences.WEAR_SCREEN_FACE][com.svartifoss.snfell.common.MiscPreferences.WEAR_SCREEN_FACE]
  * on the phone:
  *  - "classic" - the original View-based presentation (bezel seek ring, quadrant hint icons,
  *    centered text block). It predates this contract and keeps rendering through MainActivity's
  *    views directly; MainActivity *is* its implementation.
  *  - "expressive" - [ExpressiveFace], a Compose face styled after the Material 3 Expressive
  *    system media controls.
+ *  - "vinyl" (Beta) - [VinylFace], the album art as a spinning record with a rim progress arc.
+ *  - "poster" (Beta) - [PosterFace], a flat typography-first look with squared buttons and a
+ *    straight progress bar.
+ * The Compose faces share one ComposeView in the host and keep the expressive face's bottom
+ * geometry (pill trio positions), so the shared mini-buttons row and quick panel fit all of
+ * them; small building blocks they share live in FaceChrome.kt.
  *
  * Ambient (always-on display) rendering is selected separately by
  * [MiscPreferences.WEAR_AOD_STYLE][com.svartifoss.snfell.common.MiscPreferences.WEAR_AOD_STYLE]:
@@ -47,6 +53,10 @@ data class NowPlayingFaceState(
         val showTrackTime: Boolean = false,
         /** Raw album accent (or static theme accent) - the same color the shared UI tracks. */
         val accentColor: Int = WatchTheme.ACCENT_DEFAULT,
+        /** Current album art. The classic/expressive faces render art through the host's shared
+         *  background ImageView instead and ignore this; it exists for faces that draw the art
+         *  as a shape of their own (the vinyl face's disc). Wraps the host bitmap - no copy. */
+        val albumArt: androidx.compose.ui.graphics.ImageBitmap? = null,
         /** Resolved artist text color (already accounts for color mode, desaturation and the
          *  plain-white status-message override - it mirrors the classic artist line exactly). */
         val artistColor: Int = WatchTheme.ACCENT_DEFAULT,
@@ -63,9 +73,10 @@ data class NowPlayingFaceState(
         /** Whether the title/artist lines should show in ambient mode
          *  (MiscPreferences.WEAR_AOD_SHOW_TRACK_INFO). Ignored while [ambient] is false. */
         val ambientShowTrackInfo: Boolean = true,
-        /** Resolved color for the ambient outlines and glyphs (MiscPreferences.WEAR_AOD_COLOR_MODE,
-         *  already lifted for legibility on black by the host) - white, the album accent or a
-         *  custom color. Text stays white regardless. Ignored while [ambient] is false. */
+        /** Resolved color for the ambient outlines, glyphs and the title line
+         *  (MiscPreferences.WEAR_AOD_COLOR_MODE, already lifted for legibility on black by the
+         *  host) - white, the album accent or a custom color. The artist line stays white.
+         *  Ignored while [ambient] is false. */
         val ambientTint: Int = WatchTheme.COLOR_WHITE,
         /** Overall ambient brightness 0.2f..1f (MiscPreferences.WEAR_AOD_INTENSITY) - scales the
          *  alpha of everything the ambient face draws. Ignored while [ambient] is false. */

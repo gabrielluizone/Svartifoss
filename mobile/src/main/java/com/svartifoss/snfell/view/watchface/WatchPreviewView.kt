@@ -7,12 +7,15 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.graphics.DashPathEffect
 import android.graphics.LinearGradient
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RadialGradient
 import android.graphics.RectF
 import android.graphics.Shader
+import android.graphics.SweepGradient
 import android.graphics.Typeface
 import android.os.SystemClock
 import android.text.TextPaint
@@ -111,6 +114,7 @@ class WatchPreviewView @JvmOverloads constructor(
     private var progressMode = "album"
     private var progressCustom = ""
     private var progressDesaturated = false
+    private var progressStyle = "solid"
     private var trackTimeMode = "always"
     private var titleTextMode = "smart"
     private var alwaysShowTime = false
@@ -143,6 +147,7 @@ class WatchPreviewView @JvmOverloads constructor(
         progressMode = prefs.getString("wear_progress_color_mode", "album") ?: "album"
         progressCustom = prefs.getString("wear_progress_custom_color", "") ?: ""
         progressDesaturated = prefs.getBoolean("wear_progress_desaturated", false)
+        progressStyle = prefs.getString("wear_progress_style", "solid") ?: "solid"
         trackTimeMode = prefs.getString("wear_track_time_mode", "always") ?: "always"
         titleTextMode = prefs.getString("wear_title_text_mode", "smart") ?: "smart"
         alwaysShowTime = prefs.getBoolean("always_show_time", false)
@@ -547,10 +552,11 @@ class WatchPreviewView @JvmOverloads constructor(
             fillPaint.shader = null
         }
 
-        if (face == "expressive") {
-            drawExpressive(canvas, cx, cy, radius, ::dp)
-        } else {
-            drawClassic(canvas, cx, cy, radius, ::dp)
+        when (face) {
+            "expressive" -> drawExpressive(canvas, cx, cy, radius, ::dp)
+            "vinyl" -> drawVinyl(canvas, cx, cy, radius, ::dp)
+            "poster" -> drawPoster(canvas, cx, cy, radius, ::dp)
+            else -> drawClassic(canvas, cx, cy, radius, ::dp)
         }
 
         canvas.restore()
@@ -579,17 +585,69 @@ class WatchPreviewView @JvmOverloads constructor(
      */
     private fun drawEdgeSeekRing(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float) {
         val progressColor = resolveTint(progressMode, progressCustom, progressDesaturated)
-        val strokeW = dp(6f)
-        val ringInset = strokeW / 2f
+        val baseStroke = dp(6f)
+        val ringInset = baseStroke / 2f
         val ringRect = RectF(cx - radius + ringInset, cy - radius + ringInset,
                 cx + radius - ringInset, cy + radius - ringInset)
-        strokePaint.strokeWidth = strokeW
-        strokePaint.strokeCap = Paint.Cap.BUTT
+        val sweep = progressFraction() * 360f
+
+        // Mirrors the watch's RingStyle branches (CircularProgressSeekBar.onDraw) at preview
+        // scale - keep the two in sync when adding ring styles.
+        strokePaint.pathEffect = null
+        strokePaint.shader = null
+        var fillWidth = baseStroke
+        var trackWidth = baseStroke
+        var fillCap = Paint.Cap.ROUND
+        var trackCap = Paint.Cap.BUTT
+        when (progressStyle) {
+            "dashed" -> {
+                strokePaint.pathEffect = DashPathEffect(
+                        floatArrayOf(baseStroke * 1.9f, baseStroke * 1.5f), 0f)
+                fillCap = Paint.Cap.BUTT
+            }
+            "dots" -> {
+                strokePaint.pathEffect = DashPathEffect(
+                        floatArrayOf(0.01f, baseStroke * 2.6f), 0f)
+                trackCap = Paint.Cap.ROUND
+            }
+            "hairline" -> {
+                fillWidth = baseStroke * 0.45f
+                trackWidth = baseStroke * 0.3f
+            }
+            "comet" -> {
+                trackWidth = baseStroke * 0.5f
+            }
+        }
+
+        strokePaint.strokeWidth = trackWidth
+        strokePaint.strokeCap = trackCap
         strokePaint.color = 0x33FFFFFF
         canvas.drawArc(ringRect, 0f, 360f, false, strokePaint)
-        strokePaint.strokeCap = Paint.Cap.ROUND
+
+        strokePaint.strokeWidth = fillWidth
+        strokePaint.strokeCap = fillCap
         strokePaint.color = progressColor
-        canvas.drawArc(ringRect, -90f, progressFraction() * 360f, false, strokePaint)
+        if (progressStyle == "comet") {
+            if (sweep > 1f) {
+                val shader = SweepGradient(cx, cy,
+                        intArrayOf(progressColor and 0x00FFFFFF, progressColor),
+                        floatArrayOf(0f, (sweep / 360f).coerceAtMost(1f)))
+                val rotate = Matrix()
+                rotate.setRotate(-90f, cx, cy)
+                shader.setLocalMatrix(rotate)
+                strokePaint.shader = shader
+                canvas.drawArc(ringRect, -90f, sweep, false, strokePaint)
+                strokePaint.shader = null
+            }
+            val headRad = Math.toRadians((sweep - 90f).toDouble())
+            val r = ringRect.width() / 2f
+            fillPaint.color = progressColor
+            canvas.drawCircle(cx + r * cos(headRad).toFloat(),
+                    cy + r * sin(headRad).toFloat(), baseStroke * 0.9f, fillPaint)
+        } else {
+            canvas.drawArc(ringRect, -90f, sweep, false, strokePaint)
+        }
+        strokePaint.pathEffect = null
     }
 
     private fun drawClassic(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float) {
@@ -903,25 +961,239 @@ class WatchPreviewView @JvmOverloads constructor(
         // The watch's expressive face shows its default queue/volume/overflow trio ONLY when
         // no mini buttons are configured; configured mini buttons take over that area instead.
         if (!drawMiniButtons(canvas, cx, cy, radius, dp)) {
-            val pillW = dp(WATCH_DP * 0.235f)
-            val pillH = dp(WATCH_DP * 0.155f)
-            fun glassPill(centerX: Float, centerY: Float, iconRes: Int?) {
-                fillPaint.color = 0x29FFFFFF
-                canvas.drawRoundRect(centerX - pillW / 2f, centerY - pillH / 2f,
-                        centerX + pillW / 2f, centerY + pillH / 2f, pillH, pillH, fillPaint)
-                if (iconRes != null) {
-                    drawIcon(canvas, iconRes, centerX, centerY, dp(13f), Color.WHITE)
-                } else {
-                    fillPaint.color = Color.WHITE
-                    for (i in -1..1) {
-                        canvas.drawCircle(centerX, centerY + i * dp(4.5f), dp(1.4f), fillPaint)
-                    }
+            drawDefaultTrio(canvas, cx, cy, radius, dp, squared = false)
+        }
+    }
+
+    /** The default queue/volume/overflow trio shared by the Compose faces' miniatures - glass
+     *  pills (expressive/vinyl) or squared chips (poster), same positions on every face. */
+    private fun drawDefaultTrio(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float, squared: Boolean) {
+        val pillW = dp(WATCH_DP * 0.235f)
+        val pillH = dp(WATCH_DP * 0.155f)
+        val corner = if (squared) pillH * 0.30f else pillH
+        fun pill(centerX: Float, centerY: Float, iconRes: Int?) {
+            fillPaint.color = if (squared) 0x24FFFFFF else 0x29FFFFFF
+            canvas.drawRoundRect(centerX - pillW / 2f, centerY - pillH / 2f,
+                    centerX + pillW / 2f, centerY + pillH / 2f, corner, corner, fillPaint)
+            if (iconRes != null) {
+                drawIcon(canvas, iconRes, centerX, centerY, dp(13f), Color.WHITE)
+            } else {
+                fillPaint.color = Color.WHITE
+                for (i in -1..1) {
+                    canvas.drawCircle(centerX, centerY + i * dp(4.5f), dp(1.4f), fillPaint)
                 }
             }
-            val sideX = dp(WATCH_DP * 0.275f)
-            glassPill(cx - sideX, cy + radius - dp(WATCH_DP * 0.152f) - pillH / 2f, R.drawable.ic_playlist_play)
-            glassPill(cx, cy + radius - dp(WATCH_DP * 0.032f) - pillH / 2f, commonR.drawable.action_volume_up)
-            glassPill(cx + sideX, cy + radius - dp(WATCH_DP * 0.152f) - pillH / 2f, null)
+        }
+        val sideX = dp(WATCH_DP * 0.275f)
+        pill(cx - sideX, cy + radius - dp(WATCH_DP * 0.152f) - pillH / 2f, R.drawable.ic_playlist_play)
+        pill(cx, cy + radius - dp(WATCH_DP * 0.032f) - pillH / 2f, commonR.drawable.action_volume_up)
+        pill(cx + sideX, cy + radius - dp(WATCH_DP * 0.152f) - pillH / 2f, null)
+    }
+
+    /** Miniature of the wear VinylFace - keep in sync with its geometry (0.46 record, ±0.375
+     *  side buttons, rim arc at 1.22x the record). */
+    private fun drawVinyl(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float) {
+        val accent = albumAccent()
+        val artistColor = accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
+        val progressColor = resolveTint(progressMode, progressCustom, progressDesaturated)
+
+        // The face owns its backdrop: opaque black with a tonal glow behind the record.
+        fillPaint.shader = null
+        fillPaint.color = Color.BLACK
+        canvas.drawCircle(cx, cy, radius, fillPaint)
+        val recordCenterY = cy + radius * 2f * 0.045f
+        fillPaint.shader = RadialGradient(cx, recordCenterY, radius * 0.84f,
+                intArrayOf(ColorUtils.setAlphaComponent(tonal(accent, 0.22f, 0.25f, 0.70f), 140),
+                        Color.TRANSPARENT),
+                floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+        canvas.drawCircle(cx, recordCenterY, radius * 0.84f, fillPaint)
+        fillPaint.shader = null
+
+        drawSmallClock(canvas, cx, cy - radius + dp(24f), dp)
+
+        // Title/artist up top (15sp/12sp on the watch).
+        textPaint.typeface = fontBold
+        textPaint.color = Color.WHITE
+        textPaint.textSize = dp(15f)
+        val title = displayTitle()
+        if (textPaint.measureText(title) <= radius * 1.4f) {
+            canvas.drawText(title, cx, cy - radius + dp(44f), textPaint)
+        } else {
+            drawMarqueeText(canvas, title, cx, cy - radius + dp(44f), radius * 1.4f)
+        }
+        textPaint.typeface = fontRegular
+        textPaint.textSize = dp(11f)
+        if (isPlayingShown()) {
+            textPaint.color = artistColor
+            canvas.drawText(ellipsize(displayArtist(), radius * 1.4f), cx, cy - radius + dp(59f), textPaint)
+        } else {
+            textPaint.color = Color.WHITE
+            canvas.drawText(context.getString(R.string.preview_playback_stopped), cx, cy - radius + dp(59f), textPaint)
+        }
+
+        // Rim progress arc + record.
+        val recordRadius = dp(WATCH_DP * 0.46f) / 2f
+        val rimRadius = recordRadius * 1.22f
+        val rimRect = RectF(cx - rimRadius, recordCenterY - rimRadius, cx + rimRadius, recordCenterY + rimRadius)
+        strokePaint.pathEffect = null
+        strokePaint.shader = null
+        strokePaint.strokeWidth = dp(3f)
+        strokePaint.strokeCap = Paint.Cap.ROUND
+        strokePaint.color = 0x38FFFFFF
+        canvas.drawArc(rimRect, 0f, 360f, false, strokePaint)
+        strokePaint.color = progressColor
+        canvas.drawArc(rimRect, -90f, progressFraction() * 360f, false, strokePaint)
+
+        // Record: art in a circle + vignette + grooves + label + spindle hole.
+        val art = liveArt ?: sampleArt
+        if (art != null) {
+            val artClip = Path().apply { addCircle(cx, recordCenterY, recordRadius, Path.Direction.CW) }
+            canvas.save()
+            canvas.clipPath(artClip)
+            bitmapPaint.colorFilter = null
+            val scale = recordRadius * 2f / minOf(art.width, art.height)
+            canvas.save()
+            canvas.translate(cx - art.width * scale / 2f, recordCenterY - art.height * scale / 2f)
+            canvas.scale(scale, scale)
+            canvas.drawBitmap(art, 0f, 0f, bitmapPaint)
+            canvas.restore()
+            canvas.restore()
+        } else {
+            fillPaint.color = ColorUtils.setAlphaComponent(tonal(accent, 0.55f, 0.25f, 0.70f), 90)
+            canvas.drawCircle(cx, recordCenterY, recordRadius, fillPaint)
+        }
+        fillPaint.shader = RadialGradient(cx, recordCenterY, recordRadius,
+                intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT, Color.argb(140, 0, 0, 0)),
+                floatArrayOf(0f, 0.72f, 1f), Shader.TileMode.CLAMP)
+        canvas.drawCircle(cx, recordCenterY, recordRadius, fillPaint)
+        fillPaint.shader = null
+        strokePaint.strokeWidth = dp(0.8f)
+        strokePaint.color = 0x1AFFFFFF
+        for (i in 0 until 4) {
+            canvas.drawCircle(cx, recordCenterY, recordRadius * (0.52f + 0.115f * i), strokePaint)
+        }
+        fillPaint.color = tonal(accent, 0.55f, 0.25f, 0.70f)
+        canvas.drawCircle(cx, recordCenterY, recordRadius * 0.31f, fillPaint)
+        fillPaint.color = Color.argb(217, 0, 0, 0)
+        canvas.drawCircle(cx, recordCenterY, recordRadius * 0.31f * 0.22f, fillPaint)
+
+        // Paused: scrim + play badge, matching the watch.
+        if (!isPlayingShown()) {
+            fillPaint.color = Color.argb(115, 0, 0, 0)
+            canvas.drawCircle(cx, recordCenterY, recordRadius, fillPaint)
+            drawIcon(canvas, commonR.drawable.action_play, cx, recordCenterY, recordRadius * 0.6f, Color.WHITE)
+        }
+
+        // Side prev/next glass circles.
+        val sideDiameter = dp(WATCH_DP * 0.16f)
+        val sideOffset = dp(WATCH_DP * 0.375f)
+        fillPaint.color = 0x29FFFFFF
+        canvas.drawCircle(cx - sideOffset, recordCenterY, sideDiameter / 2f, fillPaint)
+        canvas.drawCircle(cx + sideOffset, recordCenterY, sideDiameter / 2f, fillPaint)
+        drawIcon(canvas, commonR.drawable.action_skip_prev, cx - sideOffset, recordCenterY, sideDiameter * 0.5f, Color.WHITE)
+        drawIcon(canvas, commonR.drawable.action_skip_next, cx + sideOffset, recordCenterY, sideDiameter * 0.5f, Color.WHITE)
+
+        if (trackTimeVisible()) {
+            textPaint.typeface = fontRegular
+            textPaint.color = 0xB3FFFFFF.toInt()
+            textPaint.textSize = dp(10f)
+            canvas.drawText(timeText(), cx, cy + dp(WATCH_DP * 0.31f), textPaint)
+        }
+
+        if (!drawMiniButtons(canvas, cx, cy, radius, dp)) {
+            drawDefaultTrio(canvas, cx, cy, radius, dp, squared = false)
+        }
+    }
+
+    /** Miniature of the wear PosterFace - flat tonal backdrop, centered editorial type, squared
+     *  transport, straight progress bar. Keep in sync with its geometry. */
+    private fun drawPoster(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float) {
+        val accent = albumAccent()
+        val artistColor = accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
+        val progressColor = resolveTint(progressMode, progressCustom, progressDesaturated)
+
+        // Opaque poster backdrop (the face covers the art on the watch too).
+        fillPaint.shader = LinearGradient(0f, cy - radius, 0f, cy + radius,
+                tonal(accent, 0.13f, 0.20f, 0.55f), tonal(accent, 0.07f, 0.20f, 0.55f),
+                Shader.TileMode.CLAMP)
+        canvas.drawCircle(cx, cy, radius, fillPaint)
+        fillPaint.shader = null
+
+        drawSmallClock(canvas, cx, cy - radius + dp(24f), dp)
+
+        // Big two-line title + uppercase artist (20sp/11sp on the watch).
+        textPaint.typeface = fontBold
+        textPaint.color = Color.WHITE
+        textPaint.textSize = dp(19f)
+        val maxWidth = radius * 1.5f
+        val title = displayTitle()
+        var artistY = cy - radius + dp(52f)
+        if (textPaint.measureText(title) <= maxWidth) {
+            canvas.drawText(title, cx, cy - radius + dp(48f), textPaint)
+        } else {
+            // Simple two-line wrap for the miniature.
+            var breakAt = title.length
+            while (breakAt > 0 && textPaint.measureText(title, 0, breakAt) > maxWidth) breakAt--
+            val lastSpace = title.lastIndexOf(' ', breakAt - 1)
+            if (lastSpace > 0) breakAt = lastSpace
+            canvas.drawText(title.substring(0, breakAt).trim(), cx, cy - radius + dp(44f), textPaint)
+            canvas.drawText(ellipsize(title.substring(breakAt).trim(), maxWidth), cx, cy - radius + dp(64f), textPaint)
+            artistY = cy - radius + dp(70f)
+        }
+        textPaint.typeface = fontRegular
+        textPaint.textSize = dp(9f)
+        if (isPlayingShown()) {
+            textPaint.color = artistColor
+            canvas.drawText(ellipsize(displayArtist().uppercase(), maxWidth), cx, artistY + dp(6f), textPaint)
+        } else {
+            textPaint.color = Color.WHITE
+            canvas.drawText(context.getString(R.string.preview_playback_stopped).uppercase(), cx, artistY + dp(6f), textPaint)
+        }
+
+        // Squared transport row at the center.
+        val small = dp(WATCH_DP * 0.20f)
+        val big = dp(WATCH_DP * 0.26f)
+        val gap = dp(WATCH_DP * 0.035f)
+        val container = tonal(accent, 0.78f, 0.35f, 0.80f)
+        val onContainer = tonal(accent, 0.14f, 0.25f, 0.70f)
+        fun square(centerX: Float, side: Float, color: Int) {
+            val corner = side * 0.28f
+            fillPaint.color = color
+            canvas.drawRoundRect(centerX - side / 2f, cy - side / 2f,
+                    centerX + side / 2f, cy + side / 2f, corner, corner, fillPaint)
+        }
+        val sideOffset = big / 2f + gap + small / 2f
+        square(cx - sideOffset, small, 0x24FFFFFF)
+        square(cx + sideOffset, small, 0x24FFFFFF)
+        square(cx, big, container)
+        drawIcon(canvas, commonR.drawable.action_skip_prev, cx - sideOffset, cy, small * 0.46f, Color.WHITE)
+        drawIcon(canvas, commonR.drawable.action_skip_next, cx + sideOffset, cy, small * 0.46f, Color.WHITE)
+        drawIcon(canvas,
+                if (isPlayingShown()) commonR.drawable.action_pause else commonR.drawable.action_play,
+                cx, cy, big * 0.46f, onContainer)
+
+        // Straight progress bar + time.
+        val barWidth = dp(WATCH_DP * 0.52f)
+        val barHeight = dp(3f)
+        val barY = cy + dp(WATCH_DP * 0.235f)
+        fillPaint.color = 0x40FFFFFF
+        canvas.drawRoundRect(cx - barWidth / 2f, barY - barHeight / 2f,
+                cx + barWidth / 2f, barY + barHeight / 2f, barHeight, barHeight, fillPaint)
+        val fill = barWidth * progressFraction()
+        if (fill > 1f) {
+            fillPaint.color = progressColor
+            canvas.drawRoundRect(cx - barWidth / 2f, barY - barHeight / 2f,
+                    cx - barWidth / 2f + fill, barY + barHeight / 2f, barHeight, barHeight, fillPaint)
+        }
+        if (trackTimeVisible()) {
+            textPaint.typeface = fontRegular
+            textPaint.color = 0xB3FFFFFF.toInt()
+            textPaint.textSize = dp(9f)
+            canvas.drawText(timeText(), cx, barY + dp(12f), textPaint)
+        }
+
+        if (!drawMiniButtons(canvas, cx, cy, radius, dp)) {
+            drawDefaultTrio(canvas, cx, cy, radius, dp, squared = true)
         }
     }
 }

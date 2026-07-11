@@ -181,7 +181,9 @@
     <string name="setting_always_show_time">Always show time</string>
     <string name="setting_always_show_time_off_description">Current time will only be displayed in ambient mode</string>
     <string name="setting_always_show_time_on_description">Current time will always be displayed. Top action icon will not be visible (it will be replaced by clock), but action will still function normally.</string>
-    <string name="tap_to_force_stop">Tap to force stop</string>
+    <string name="tap_to_force_stop">Tap to stop the controls</string>
+    <string name="notification_action_stop">Stop</string>
+    <string name="notification_action_force_stop">Force stop</string>
     <string name="error_notification_access">No notification access. Check phone.</string>
     <string name="error_notifications">Error notifications</string>
     <string name="notification_access_notification_title">Svartifoss needs notification access</string>
@@ -258,7 +260,7 @@
     <string name="setting_wear_center_long_press_queue">Long-press center for queue</string>
     <string name="setting_wear_center_long_press_queue_description">Long-press the center of the now-playing screen to open the playback queue.</string>
     <string name="setting_wear_screen_face">Screen face</string>
-    <string name="setting_wear_screen_face_description">Overall interface of the now-playing screen on the watch. Classic keeps the edge seek ring and gesture icons; Expressive shows large playback buttons with a wavy progress ring.</string>
+    <string name="setting_wear_screen_face_description">Overall interface of the now-playing screen on the watch. Classic keeps the edge seek ring and gesture icons; Expressive shows large playback buttons with a wavy progress ring. Vinyl (Beta) turns the album art into a spinning record; Poster (Beta) is a flat, typography-first look with squared buttons and a straight progress bar.</string>
     <string name="setting_wear_screen_theme">Screen theme</string>
     <string name="setting_wear_screen_theme_description">Visual style of the now-playing screen on the watch.</string>
     <string name="setting_wear_dynamic_accent">Dynamic accent on watch</string>
@@ -306,10 +308,14 @@
     <string-array name="wear_screen_face_entries">
         <item>Classic</item>
         <item>Expressive</item>
+        <item>Vinyl (Beta)</item>
+        <item>Poster (Beta)</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
         <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
@@ -371,6 +377,70 @@
     <string name="setting_wear_volume_style">Volume style</string>
     <string name="setting_wear_quick_panel_style">Quick panel style</string>
     <string name="setting_wear_queue_style">Queue style</string>
+    <string name="setting_wear_progress_style">Progress ring style</string>
+    <string name="setting_wear_seek_style">Seek time style</string>
+    <string-array name="wear_progress_style_entries">
+        <item>Solid</item>
+        <item>Dashed</item>
+        <item>Dots</item>
+        <item>Hairline</item>
+        <item>Comet</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Plain</item>
+        <item>Glass pill</item>
+        <item>Giant</item>
+        <item>Position / total</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>giant</item>
+        <item>split</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Duotone</item>
+        <item>High Contrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Segments</item>
+        <item>Aurora</item>
+        <item>Ink</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+    </string-array>
     <string-array name="wear_overlay_style_entries">
         <item>Glass</item>
         <item>Minimal (AMOLED)</item>

@@ -279,7 +279,8 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
  * system media controls' AOD look), with every animation, marquee and gesture handler gone. Lit
  * pixels are kept to a minimum on purpose: AOD runs for hours, so fills would both drain AMOLED
  * battery and risk burn-in. The outline color follows [NowPlayingFaceState.ambientTint] (white,
- * album accent or custom - text stays white for legibility) and every alpha scales with
+ * album accent or custom); the title takes the same tint (the host pre-lifts its lightness so it
+ * stays legible on black) while the artist line stays white, and every alpha scales with
  * [NowPlayingFaceState.ambientIntensity]. The transport row, progress ring and pills are each
  * individually toggleable. The host hides its straight ambient clock only when the user disables
  * it - this variant never draws its own.
@@ -305,7 +306,10 @@ private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
             ) {
                 Text(
                         text = state.title,
-                        color = Color.White.copy(alpha = 0.85f * i),
+                        // Follows the AOD color mode like the outlines do (tint IS white in the
+                        // default "white" mode, and the host lifts album/custom tints for
+                        // legibility on black).
+                        color = tint.copy(alpha = 0.85f * i),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = GoogleSansFamily,
