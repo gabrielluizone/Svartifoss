@@ -1,0 +1,26 @@
+Categories:
+  - Multimedia
+License: GPL-3.0-or-later
+AuthorName: gabrielluizone
+WebSite: https://gabrielluizone.github.io/Svartifoss/
+SourceCode: https://github.com/gabrielluizone/Svartifoss
+IssueTracker: https://github.com/gabrielluizone/Svartifoss/issues
+Changelog: https://github.com/gabrielluizone/Svartifoss/blob/master/CHANGELOG.md
+
+# This app is distributed as a prebuilt-binary entry in a self-hosted
+# F-Droid repo, not built from source by fdroidserver — it depends on
+# Google Play Services (Wearable Data Layer API) and optionally Firebase,
+# which the official F-Droid repo does not allow.
+AntiFeatures:
+  - NonFreeDep
+  - Tracking
+
+AutoName: Svartifoss
+
+# No Builds: section on purpose — APKs are placed directly into repo/
+# (copied from the mobile-release.apk GitHub release asset) and picked
+# up by `fdroid update`, which reads version/versionCode straight from
+# the APK itself.
+
+CurrentVersion: 2.2.1
+CurrentVersionCode: 54

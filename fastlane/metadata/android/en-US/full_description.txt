@@ -1,0 +1,30 @@
+Svartifoss turns your Wear OS watch into a fully customizable remote for whatever music is playing on your phone.
+
+It mirrors the currently playing track — title, artist, album art, playback position, queue — from any app that exposes a standard Android media session, and lets you control it entirely from your wrist: physical buttons, the digital crown, screen taps, and swipe gestures are all yours to assign.
+
+No account, no app server. Your phone and watch talk to each other directly over the local Wearable Data Layer connection. The internet is touched only by an optional update check (a small anonymous request to the GitHub API, can be switched off in Settings) and by optional Firebase crash reporting / anonymous usage analytics that help development.
+
+On the watch:
+
+* Now-playing screen with album art and a circular drag-to-seek progress bar
+* Assign any action — play/pause, skip, volume, shuffle, repeat, like, search, playlist shortcuts, opening another app — to physical buttons, screen taps, or swipe gestures
+* A quick-actions panel for shuffle/repeat/like plus a shortcut into the queue
+* Browse the real playback queue, or a local play-history fallback when an app doesn't expose one
+* Voice or keyboard search against the currently playing app's library, with a replayable search history
+* Named playlist shortcuts, with an optional "start shuffled" flag
+* A glanceable Tile with transport controls, a second Tile that previews the next queued track, and a watch-face complication showing the current album art
+* Multiple screen themes and album-art display styles, with independently configurable accent colors
+* Optional rotary-crown seek: turn the crown to scrub the timeline instead of changing volume
+
+On the phone:
+
+* One place to configure every button, gesture, and screen on the watch
+* Custom icon and color pickers for personalizing actions
+* Playlist shortcut manager
+* A short in-app guide covering how to use Svartifoss on the watch
+
+Works with your music app: Svartifoss is currently developed and tested primarily against YouTube Music, where every feature — including like, shuffle, repeat, and search — works out of the box. It also works with any other app that publishes a standard Android media session (basic playback mirroring and transport controls), though some extra features may not be available depending on what that app exposes.
+
+Svartifoss is free and open source (GPLv3) — a continuation of Music Center for Wear by matejdro. Full source code: https://github.com/gabrielluizone/Svartifoss
+
+Note: this app depends on Google Play Services (Wearable Data Layer API) for phone-watch communication, and optionally on Firebase for crash reporting and anonymous analytics. It is distributed here as a self-hosted repository rather than through the official F-Droid repo for that reason.
