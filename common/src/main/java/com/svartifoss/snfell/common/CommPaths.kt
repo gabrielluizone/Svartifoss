@@ -41,6 +41,10 @@ interface CommPaths {
 
         const val CHANNEL_LOGS = "/Channel/Logs"
 
+        // Phone -> watch: streams a newer wear APK for on-watch install (self-update without
+        // ADB/Wear Installer). Received by the watch's ApkReceiverService manifest listener.
+        const val CHANNEL_WEAR_APK = "/Channel/WearApk"
+
         const val ASSET_ALBUM_ART = "AlbumArt"
 
         const val DATA_ACTION_CONFIG_PREFIX = "/Actions"

@@ -567,4 +567,35 @@
     <string name="action_play_liked_songs_shuffled">Tocar músicas curtidas, aleatório (YT Music)</string>
     <string name="action_search_history">Histórico de busca</string>
     <string name="search_history_empty">Nenhuma busca recente ainda</string>
+
+    <!-- Updates (verificador de atualizações + instalação no relógio) -->
+    <string name="category_updates">Atualizações</string>
+    <string name="setting_update_check">Avisar sobre novas versões</string>
+    <string name="setting_update_check_description">Verifica novas releases no GitHub cerca de uma vez por dia e mostra uma notificação</string>
+    <string name="setting_update_prereleases">Incluir pre-releases</string>
+    <string name="setting_update_prereleases_description">Avisar também sobre versões beta</string>
+    <string name="setting_update_check_now">Buscar atualização agora</string>
+    <string name="setting_update_check_now_description">Mostra a versão mais recente e permite atualizar o relógio por Bluetooth</string>
+    <string name="update_screen_title">Atualizações</string>
+    <string name="update_notification_channel">Atualizações do app</string>
+    <string name="update_available_title">Svartifoss %1$s disponível</string>
+    <string name="update_installed_phone">Telefone: %1$s</string>
+    <string name="update_installed_versions">Telefone: %1$s \u00b7 Relógio: %2$s</string>
+    <string name="update_watch_version_unknown">desconhecida</string>
+    <string name="update_checking">Buscando atualizações\u2026</string>
+    <string name="update_check_failed">Não foi possível buscar atualizações. Verifique sua conexão e tente de novo.</string>
+    <string name="update_available_line">Nova versão: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(pre-release)</string>
+    <string name="update_up_to_date">Você está na versão mais recente (%1$s)</string>
+    <string name="update_no_wear_asset">Esta release não tem APK do relógio para enviar.</string>
+    <string name="update_watch_hint">\u201cAtualizar relógio\u201d baixa o novo app do relógio e envia por Bluetooth \u2014 você confirma a instalação no próprio relógio, sem cabo nem Wear Installer.</string>
+    <string name="update_downloading">Baixando\u2026 %1$d%%</string>
+    <string name="update_connecting_watch">Conectando ao relógio\u2026</string>
+    <string name="update_transferring">Enviando ao relógio\u2026 %1$d%%</string>
+    <string name="update_confirm_on_watch">Enviado! Uma notificação apareceu no relógio \u2014 toque nela lá para instalar.</string>
+    <string name="update_no_watch">Nenhum relógio conectado.</string>
+    <string name="update_push_failed">Falha ao enviar a atualização para o relógio. Tente de novo.</string>
+    <string name="update_watch_button">Atualizar relógio</string>
+    <string name="update_open_release_button">Abrir página da release</string>
+    <string name="update_watch_behind">Seu relógio ainda está na %1$s \u2014 envie a atualização abaixo.</string>
 </resources>

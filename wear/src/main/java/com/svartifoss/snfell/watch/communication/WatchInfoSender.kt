@@ -10,6 +10,7 @@ import com.google.android.gms.wearable.Asset
 import com.google.android.gms.wearable.PutDataRequest
 import com.google.android.gms.wearable.Wearable
 import com.google.android.wearable.input.WearableInputDevice
+import com.svartifoss.snfell.BuildConfig
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
@@ -33,6 +34,8 @@ class WatchInfoSender(private val context: Context, private val urgent: Boolean)
         builder.displayDensity = context.resources.displayMetrics.density
         builder.displayWidth = displaySize.x
         builder.displayHeight = displaySize.y
+        builder.appVersionCode = BuildConfig.VERSION_CODE
+        builder.appVersionName = BuildConfig.VERSION_NAME
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // Button count includes non-customizable primary button. Subtract one.

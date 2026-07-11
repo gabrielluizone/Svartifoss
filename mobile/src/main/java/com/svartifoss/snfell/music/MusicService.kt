@@ -65,6 +65,7 @@ import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.proto.CustomListItemAction
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.proto.WatchActions
+import com.svartifoss.snfell.update.UpdateChecker
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.matejdro.wearutils.lifecycle.EmptyObserver
 import com.matejdro.wearutils.lifecycle.Resource
@@ -73,6 +74,7 @@ import com.matejdro.wearutils.preferences.definition.Preferences
 import com.matejdro.wearvibrationcenter.notificationprovider.ReceivedNotification
 import dagger.android.AndroidInjection
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -174,6 +176,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         actionHandlers = musicServiceComponentFactory.build(this).getActionHandlers()
 
         recentTrackHistory.addAll(TrackHistoryStorage.load(this))
+
+        // This service starts whenever media plays, making it the app's most reliable
+        // background heartbeat for the sideload update check (throttled to once a day inside).
+        lifecycleScope.launch {
+            UpdateChecker.maybeCheckInBackground(this@MusicService)
+        }
 
         messageClient = Wearable.getMessageClient(applicationContext)
         dataClient = Wearable.getDataClient(applicationContext)

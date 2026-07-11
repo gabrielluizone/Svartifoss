@@ -52,4 +52,10 @@
     <string name="action_name_restart">Restart track</string>
     <string name="action_name_mute">Mute</string>
     <string name="action_name_search">Search</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">App updates</string>
+    <string name="update_install_title">Svartifoss update</string>
+    <string name="update_install_tap">Tap to install the new version</string>
+    <string name="update_install_failed">Install failed. Allow installs from Svartifoss in the watch settings and try again from the phone.</string>
 </resources>

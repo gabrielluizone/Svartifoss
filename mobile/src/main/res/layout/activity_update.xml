@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingTop="24dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="16dp">
+
+    <!-- AppTheme is NoActionBar, so the page carries its own title. -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/google_sans"
+        android:text="@string/update_screen_title"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/text_installed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/google_sans"
+        android:textColor="@color/lyra_text_secondary"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/text_latest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/google_sans"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/text_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/google_sans"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/lyra_text_secondary"
+        android:textSize="13sp" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:max="100"
+        android:visibility="invisible" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_update_watch"
+        style="@style/LyraGestureButton"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/update_watch_button"
+        app:icon="@drawable/ic_send_to_mobile" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_open_release"
+        style="@style/LyraGestureButton"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/update_open_release_button"
+        app:icon="@drawable/ic_open_in_new" />
+
+</LinearLayout>

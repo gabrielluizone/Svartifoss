@@ -91,6 +91,10 @@ the fork.
 - Custom icon picker and color picker for personalizing actions.
 - Playlist shortcut manager.
 - A short in-app guide covering how to use Svartifoss on the watch.
+- **Built-in updates**: a notification when a new release is out (with an
+  optional pre-release channel), and one-tap watch updates — the phone
+  downloads the new watch APK and sends it over Bluetooth, so you confirm
+  the install on the wrist instead of re-running ADB or Wear Installer.
 
 <p align="center">
   <img src="docs/images/phone-playing.jpg" width="150" alt="Playing controls configuration" />
@@ -117,6 +121,11 @@ and takedowns without a way to get a good explanation.
 You can install it by manually sideloading the APK from the [releases page](https://github.com/gabrielluizone/Svartifoss/releases)
 to your phone and to your watch. To make the watch install easier, you can use
 [Wear Installer](https://www.xda-developers.com/wear-installer-sideload-wear-os-apps/).
+
+That manual route is only needed for the **first** install (or when jumping
+from a version older than 2.2): after that, the phone app notifies you about
+new releases and can send the watch update over Bluetooth by itself — see
+Settings → Updates.
 
 ## Building
 

@@ -226,6 +226,36 @@
 
 
     <PreferenceCategory
+        android:key="cat_updates"
+        android:title="@string/category_updates"
+        android:layout="@layout/pref_category_header">
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:key="update_check_enabled"
+            android:icon="@drawable/ic_autorenew"
+            android:defaultValue="true"
+            android:title="@string/setting_update_check"
+            android:summary="@string/setting_update_check_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:key="update_include_prereleases"
+            android:defaultValue="false"
+            android:title="@string/setting_update_prereleases"
+            android:summary="@string/setting_update_prereleases_description"
+            android:dependency="update_check_enabled"
+            android:layout="@layout/pref_switch_item" />
+
+        <Preference
+            android:key="update_check_now"
+            android:icon="@drawable/ic_send_to_mobile"
+            android:title="@string/setting_update_check_now"
+            android:summary="@string/setting_update_check_now_description"
+            android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="cat_about"
         android:title="@string/category_about"
         android:layout="@layout/pref_category_header">

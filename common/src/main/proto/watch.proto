@@ -13,6 +13,10 @@ message WatchInfo {
   required int32 displayWidth = 4;
   required int32 displayHeight = 5;
   optional int64 time = 6;
+  // Watch app version, so the phone's update screen can show whether the watch is outdated.
+  // Absent when the watch runs a build from before these fields existed.
+  optional int32 appVersionCode = 7;
+  optional string appVersionName = 8;
 
   message WatchButton {
     required string label = 1;

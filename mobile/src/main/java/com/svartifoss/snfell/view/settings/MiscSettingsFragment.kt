@@ -28,6 +28,7 @@ import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.model.AutoStartMode
 import com.svartifoss.snfell.config.ConfigBackup
+import com.svartifoss.snfell.update.UpdateActivity
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
@@ -307,6 +308,12 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     }
 
     private fun initAboutSection() {
+        findPreference<Preference>("update_check_now")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(requireContext(), UpdateActivity::class.java))
+                true
+            }
+
         findPreference<Preference>("supportButton")!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 sendLogs()

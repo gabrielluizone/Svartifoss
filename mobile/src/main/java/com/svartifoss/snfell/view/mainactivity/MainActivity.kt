@@ -46,6 +46,9 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.lifecycle.lifecycleScope
+import com.svartifoss.snfell.update.UpdateChecker
+import kotlinx.coroutines.launch
 import com.matejdro.wearutils.companionnotice.WearCompanionPhoneActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -146,6 +149,12 @@ class MainActivity : WearCompanionPhoneActivity(),
 
         PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener(preferenceChangeListener)
+
+        // Covers users who open the app without playing music (MusicService has the same
+        // throttled check for the reverse case).
+        lifecycleScope.launch {
+            UpdateChecker.maybeCheckInBackground(this@MainActivity)
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

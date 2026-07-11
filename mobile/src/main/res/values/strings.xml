@@ -579,4 +579,35 @@
     <string name="action_play_liked_songs_shuffled">Play liked songs, shuffled (YT Music)</string>
     <string name="action_search_history">Search history</string>
     <string name="search_history_empty">No recent searches yet</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Updates</string>
+    <string name="setting_update_check">Notify about new versions</string>
+    <string name="setting_update_check_description">Checks GitHub for new releases about once a day and shows a notification</string>
+    <string name="setting_update_prereleases">Include pre-releases</string>
+    <string name="setting_update_prereleases_description">Also get notified about beta versions</string>
+    <string name="setting_update_check_now">Check for updates now</string>
+    <string name="setting_update_check_now_description">Shows the latest version and lets you update the watch over Bluetooth</string>
+    <string name="update_screen_title">Updates</string>
+    <string name="update_notification_channel">App updates</string>
+    <string name="update_available_title">Svartifoss %1$s is available</string>
+    <string name="update_installed_phone">Phone: %1$s</string>
+    <string name="update_installed_versions">Phone: %1$s \u00b7 Watch: %2$s</string>
+    <string name="update_watch_version_unknown">unknown</string>
+    <string name="update_checking">Checking for updates\u2026</string>
+    <string name="update_check_failed">Could not check for updates. Check your connection and try again.</string>
+    <string name="update_available_line">New version: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(pre-release)</string>
+    <string name="update_up_to_date">You are on the latest version (%1$s)</string>
+    <string name="update_no_wear_asset">This release has no watch APK to send.</string>
+    <string name="update_watch_hint">\u201cUpdate watch\u201d downloads the new watch app and sends it over Bluetooth \u2014 you confirm the install on the watch itself, no cable or Wear Installer needed.</string>
+    <string name="update_downloading">Downloading\u2026 %1$d%%</string>
+    <string name="update_connecting_watch">Connecting to the watch\u2026</string>
+    <string name="update_transferring">Sending to the watch\u2026 %1$d%%</string>
+    <string name="update_confirm_on_watch">Sent! A notification appeared on the watch \u2014 tap it there to install.</string>
+    <string name="update_no_watch">No watch connected.</string>
+    <string name="update_push_failed">Sending the update to the watch failed. Try again.</string>
+    <string name="update_watch_button">Update watch</string>
+    <string name="update_open_release_button">Open release page</string>
+    <string name="update_watch_behind">Your watch is still on %1$s \u2014 send it the update below.</string>
 </resources>

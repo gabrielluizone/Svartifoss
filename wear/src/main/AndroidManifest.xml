@@ -17,6 +17,10 @@
          OngoingActivity, require this permission. Requested once at runtime in MainActivity so
          the notification keeps showing as it did pre-33. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Self-update: the phone streams a newer wear APK over the Data Layer and
+         ApkReceiverService hands it to the system installer (user still confirms on-watch).
+         Requires the "install unknown apps" grant for this app in the watch settings. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".watch.WearMusicCenter"
@@ -127,6 +131,32 @@
             </intent-filter>
         </service>
 
+
+        <!-- Watch self-update: receives the wear APK streamed by the phone (see the phone's
+             WatchApkPusher) and fires the system package installer. Path must match
+             CommPaths.CHANNEL_WEAR_APK. -->
+        <service
+            android:name=".watch.update.ApkReceiverService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.CHANNEL_EVENT" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/Channel/WearApk"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".watch.update.InstallResultReceiver"
+            android:exported="false">
+            <intent-filter>
+                <!-- Fires in the NEW app version right after a successful self-update - the
+                     reliable place to clean the cached APK and dismiss the install notice. -->
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
 
         <service android:name="com.matejdro.wearutils.logging.LogTransmitter" />
 

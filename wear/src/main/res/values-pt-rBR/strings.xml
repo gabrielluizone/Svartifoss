@@ -46,4 +46,10 @@
     <string name="action_name_restart">Reiniciar faixa</string>
     <string name="action_name_mute">Silenciar</string>
     <string name="action_name_search">Buscar</string>
+
+    <!-- Atualização do relógio (APK enviado pelo telefone) -->
+    <string name="update_notification_channel">Atualizações do app</string>
+    <string name="update_install_title">Atualização do Svartifoss</string>
+    <string name="update_install_tap">Toque para instalar a nova versão</string>
+    <string name="update_install_failed">Falha na instalação. Permita instalações do Svartifoss nas configurações do relógio e tente de novo pelo telefone.</string>
 </resources>

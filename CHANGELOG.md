@@ -1,5 +1,44 @@
 # Changelog
 
+## 2.2
+
+### Updates without a cable
+
+- **Update notifications on the phone**: Svartifoss now checks its GitHub
+  releases about once a day (whenever music plays or the app is opened) and
+  posts a notification when a newer version is out. Configurable in Settings
+  under the new **Updates** section, including an opt-in to also be notified
+  about **pre-releases**. No account, no extra permissions — a single small
+  request to the GitHub API.
+- **Update the watch from the phone, over Bluetooth**: the new update screen
+  (tap the notification, or Settings → "Check for updates now") has an
+  **Update watch** button that downloads the new watch APK and streams it
+  straight to the watch — a notification appears on the watch, one tap opens
+  the system install prompt, and that's it. No more ADB or Wear Installer
+  for updates. First time only: allow "install unknown apps" for Svartifoss
+  in the watch settings when prompted. (Requires both apps on 2.2+; this
+  first jump onto 2.2 still needs the old sideload route.)
+- The update screen also shows the installed phone *and* watch versions side
+  by side (the watch now reports its version to the phone).
+
+### Fixes
+
+- **Fixed a crash when opening the Watch tab on recent Android versions**
+  (`BadParcelableException` in the mini-button preview). Saved button configs
+  are raw Android parcels, whose format isn't stable across Android versions
+  — a config seeded or imported from a backup made on a different version
+  could blow up the Watch tab on every open (reported on Android 15). All
+  config reads are now hardened: an unreadable config is quarantined and the
+  app falls back to defaults instead of crashing, config *imports* are
+  validated up front so an incompatible backup is rejected with an error
+  instead of silently planting a broken file, and config writes are atomic
+  so a mid-write kill can no longer corrupt them.
+- **Fixed the watch app closing right after launch (and refusing to open)**
+  on some watches: the startup "is the phone app installed?" check could
+  crash the app when Play Services threw, or silently close it into the
+  install notice on a flaky first lookup. The check no longer takes the app
+  down — only a *confirmed* "phone app missing" answer shows the notice.
+
 ## 2.1.1
 
 ### Watch

@@ -107,6 +107,11 @@
             android:label="@string/setting_playlist_shortcuts" />
 
         <activity
+            android:name=".update.UpdateActivity"
+            android:exported="false"
+            android:label="@string/update_screen_title" />
+
+        <activity
             android:name=".view.mainactivity.HelpActivity"
             android:exported="false"
             android:label="@string/tutorial_header"
