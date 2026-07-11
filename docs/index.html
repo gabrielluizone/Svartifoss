@@ -611,7 +611,7 @@
     <div class="section-head">
       <div class="eyebrow muted">How it works</div>
       <h2>Set it up on your phone.<br>It's on your watch instantly.</h2>
-      <p>Every button, gesture, and screen is yours to assign from the phone app. The watch mirrors it over the local Wearable Data Layer — no cloud, no account, nothing leaves your two devices.</p>
+      <p>Every button, gesture, and screen is yours to assign from the phone app. The watch mirrors it over the local Wearable Data Layer — no cloud, no account. Beyond your two devices, the app only talks to GitHub for the optional update check and to Firebase for crash reports and anonymous usage stats.</p>
     </div>
     <div class="sync-pair">
       <div class="sync-frame">
@@ -758,7 +758,7 @@
         <a class="btn btn-primary" data-dl="mobile" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-send-mobile"/></svg> Download phone APK</a>
       </div>
       <div class="dl-group">
-        <span>Watch · Wear OS (API 26+)</span>
+        <span>Watch · Wear OS 2 or newer (3, 4, 5…)</span>
         <a class="btn btn-ghost" data-dl="wear" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-watch-down"/></svg> Download watch APK</a>
       </div>
       <div class="spacer"></div>
@@ -869,11 +869,13 @@
     .then(function (releases) {
       if (!releases.length) return;
 
+      // Every install is a PAIR of downloads (phone APK + watch APK), so the raw asset total
+      // double-counts people - halve it, rounded down, to report actual installs.
       var totalDownloads = 0;
       releases.forEach(function (rel) {
         (rel.assets || []).forEach(function (a) { totalDownloads += a.download_count || 0; });
       });
-      setText('downloads', formatCount(totalDownloads));
+      setText('downloads', formatCount(Math.floor(totalDownloads / 2)));
 
       var latest = releases[0];
       setText('version', latest.tag_name);

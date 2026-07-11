@@ -108,9 +108,10 @@ the fork.
 ### Under the hood
 
 - All phone ⟷ watch communication happens over the local Wearable Data Layer
-  connection — no account, server, or internet access is involved. The only
-  thing that ever touches the internet is the optional update check (a small
-  anonymous request to the GitHub API, off-switch in Settings).
+  connection — no account or app server is involved. The internet is touched
+  only by the optional update check (a small anonymous request to the GitHub
+  API, off-switch in Settings) and by Firebase crash reporting + anonymous
+  usage analytics that help development.
 - Works with any app that publishes a standard Android media session; extra
   features like like/shuffle/repeat and search rely on optional media-session
   extensions some apps expose (availability varies by app).
