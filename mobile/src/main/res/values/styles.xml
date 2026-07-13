@@ -141,6 +141,26 @@
          font-padding line box floats the visible text ~0.2em above the button's center; without
          it the box is built from real ascent/descent and the text sits centered like the system
          dialogs'. -->
+    <!-- Filled counterpart to LyraGestureButton for a screen's single primary action (e.g. the
+         Updates page's "Update watch"). backgroundTint is set at runtime to the live Lyra accent
+         so it follows a user-picked accent; the label/icon are white. Same google_sans metric fix
+         (includeFontPadding=false) as the other Lyra buttons so the label sits centered. -->
+    <style name="LyraFilledButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">8dp</item>
+        <item name="iconSize">@dimen/action_icon_size</item>
+        <item name="iconTint">@color/white</item>
+        <item name="rippleColor">@color/lyra_ripple</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="elevation">0dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <style name="LyraDialogButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="rippleColor">@color/lyra_ripple</item>
         <item name="android:includeFontPadding">false</item>

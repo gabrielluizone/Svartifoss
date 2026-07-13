@@ -36,6 +36,11 @@
     <color name="lyra_nav_inactive">@color/lyra_pewter</color>
     <color name="lyra_pref_summary">#767676</color>
 
+    <!-- Pending-update badge (toolbar help icon, see MainActivity.refreshHelpIcon). Kept fixed
+         (not accent-derived) so it always reads as a status color regardless of the user's
+         chosen accent - same reasoning as lyra_ripple. -->
+    <color name="lyra_update_badge">#4CAF6B</color>
+
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="watch_background">#DEDEDE</color>

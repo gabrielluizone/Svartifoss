@@ -53,7 +53,9 @@ enum class VolumeStyle {
     /** Multi-hue gradient fill drifting around the accent's hue (northern-lights look). */
     AURORA,
     /** Wide translucent accent halo with a thin solid core, like a wet ink stroke. */
-    INK;
+    INK,
+    /** Recessed dark channel with a slim bright accent core running inside it. */
+    GROOVE;
 
     companion object {
         fun fromPref(value: String?): VolumeStyle = when (value) {
@@ -72,6 +74,7 @@ enum class VolumeStyle {
             "segments" -> SEGMENTS
             "aurora" -> AURORA
             "ink" -> INK
+            "groove" -> GROOVE
             else -> GLASS
         }
     }
@@ -214,6 +217,11 @@ class CircularVolumeBar : android.view.View {
                 drawArc(canvas, baseStroke * 2.1f, Paint.Cap.ROUND,
                         0x00000000, ColorUtils.setAlphaComponent(accentColorInt, 0x3A))
                 drawArc(canvas, baseStroke * 0.7f, Paint.Cap.ROUND, 0x22FFFFFF, accentColorInt)
+            }
+            VolumeStyle.GROOVE -> {
+                // Wide dark channel first (track only), then a slim bright accent core inside it.
+                drawArc(canvas, baseStroke * 1.8f, Paint.Cap.ROUND, 0x55000000, 0)
+                drawArc(canvas, baseStroke * 0.6f, Paint.Cap.ROUND, 0, accentColorInt)
             }
         }
     }

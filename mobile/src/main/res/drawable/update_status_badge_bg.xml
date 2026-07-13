@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circle behind the hero status glyph. Solid white so a runtime accent tint (applied with
+     reduced alpha in UpdateActivity) reads as a soft accent wash regardless of the chosen accent. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/white" />
+</shape>

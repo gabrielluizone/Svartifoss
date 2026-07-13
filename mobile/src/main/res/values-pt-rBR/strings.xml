@@ -366,7 +366,7 @@
     <string name="setting_wear_quick_panel_style">Estilo do painel rápido</string>
     <string name="setting_wear_queue_style">Estilo da fila</string>
     <string name="setting_wear_progress_style">Estilo do anel de progresso</string>
-    <string name="setting_wear_seek_style">Estilo do tempo de seek</string>
+    <string name="setting_wear_seek_style">Estilo do tempo de seek e volume</string>
     <string-array name="wear_progress_style_entries">
         <item>Sólido</item>
         <item>Tracejado</item>
@@ -384,12 +384,14 @@
     <string-array name="wear_seek_style_entries">
         <item>Simples</item>
         <item>Pílula de vidro</item>
+        <item>Pílula expressiva</item>
         <item>Gigante</item>
         <item>Posição / total</item>
     </string-array>
     <string-array name="wear_seek_style_values">
         <item>plain</item>
         <item>pill</item>
+        <item>expressive</item>
         <item>giant</item>
         <item>split</item>
     </string-array>
@@ -410,6 +412,7 @@
         <item>Segmentos</item>
         <item>Aurora</item>
         <item>Tinta</item>
+        <item>Sulco</item>
     </string-array>
     <string-array name="wear_volume_style_values">
         <item>glass</item>
@@ -428,6 +431,7 @@
         <item>segments</item>
         <item>aurora</item>
         <item>ink</item>
+        <item>groove</item>
     </string-array>
     <string-array name="wear_overlay_style_entries">
         <item>Vidro</item>

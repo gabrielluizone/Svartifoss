@@ -328,6 +328,18 @@ class MainActivity : WearCompanionPhoneActivity(),
         return true
     }
 
+    /** Swaps in a badged help icon while a checked release is newer than what's installed - a
+     *  nudge for someone who dismissed or missed the one-shot update notification. Re-evaluated
+     *  every time the menu is invalidated (see onResume), so it picks up both a fresh background
+     *  check and an update just installed via [com.svartifoss.snfell.update.UpdateActivity]. */
+    override fun onPrepareOptionsMenu(menu: android.view.Menu): Boolean {
+        menu.findItem(R.id.menu_help)?.setIcon(
+                if (UpdateChecker.hasPendingUpdate(this)) R.drawable.ic_help_update_badge
+                else R.drawable.ic_help
+        )
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         if (item.itemId == R.id.menu_help) {
             startActivity(Intent(this, HelpActivity::class.java))
@@ -340,6 +352,7 @@ class MainActivity : WearCompanionPhoneActivity(),
         super.onResume()
         showNotificationServiceWarning()
         applyAccentColor(dynamicAccentColor ?: resolveDefaultAccent())
+        invalidateOptionsMenu()
     }
 
     override fun onDestroy() {

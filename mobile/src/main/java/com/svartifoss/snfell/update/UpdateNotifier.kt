@@ -33,13 +33,25 @@ object UpdateNotifier {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification_brand)
                 .setContentTitle(context.getString(R.string.update_available_title, release.tag))
                 .setContentText(release.title)
                 .setContentIntent(contentIntent)
                 .setAutoCancel(true)
-                .build()
+
+        // Expandable "What's new": the release notes under the title, so the notification alone
+        // says what changed instead of just that *something* did.
+        val notes = release.body.takeIf { it.isNotBlank() }
+        if (notes != null) {
+            builder.setStyle(
+                    NotificationCompat.BigTextStyle()
+                            .setBigContentTitle(context.getString(R.string.update_available_title, release.tag))
+                            .bigText(notes)
+            )
+        }
+
+        val notification = builder.build()
 
         notificationManager.notify(NOTIFICATION_ID, notification)
     }

@@ -4,10 +4,14 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.button.MaterialButton
@@ -16,6 +20,7 @@ import com.svartifoss.snfell.BuildConfig
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.proto.WatchInfo
+import com.svartifoss.snfell.util.SimpleMarkdown
 import com.svartifoss.snfell.view.LyraAccent
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
@@ -38,33 +43,67 @@ import java.util.concurrent.TimeUnit
  */
 class UpdateActivity : AppCompatActivity() {
 
-    private lateinit var latestText: TextView
-    private lateinit var installedText: TextView
+    private lateinit var stateHeadline: TextView
+    private lateinit var stateSub: TextView
+    private lateinit var statusIcon: ImageView
+    private lateinit var statusBadge: View
+    private lateinit var phoneVersionText: TextView
+    private lateinit var watchVersionText: TextView
+    private lateinit var whatsNewCard: View
+    private lateinit var releaseNotesText: TextView
     private lateinit var statusText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var openReleaseButton: MaterialButton
     private lateinit var updateWatchButton: MaterialButton
+    private lateinit var updatePhoneButton: MaterialButton
 
     private var latestRelease: UpdateChecker.ReleaseInfo? = null
     private var watchVersion: String? = null
     private var pushing = false
+    private var installing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update)
 
-        latestText = findViewById(R.id.text_latest)
-        installedText = findViewById(R.id.text_installed)
+        stateHeadline = findViewById(R.id.text_state_headline)
+        stateSub = findViewById(R.id.text_state_sub)
+        statusIcon = findViewById(R.id.status_icon)
+        statusBadge = findViewById(R.id.status_badge)
+        phoneVersionText = findViewById(R.id.text_phone_version)
+        watchVersionText = findViewById(R.id.text_watch_version)
+        whatsNewCard = findViewById(R.id.card_whats_new)
+        releaseNotesText = findViewById(R.id.text_release_notes)
         statusText = findViewById(R.id.text_status)
         progressBar = findViewById(R.id.progress)
         openReleaseButton = findViewById(R.id.button_open_release)
         updateWatchButton = findViewById(R.id.button_update_watch)
+        updatePhoneButton = findViewById(R.id.button_update_phone)
 
         val accent = LyraAccent.resolve(this)
-        for (button in listOf(openReleaseButton, updateWatchButton)) {
-            button.setTextColor(accent)
-            button.iconTint = ColorStateList.valueOf(accent)
-        }
+
+        // Hero badge: a soft wash of the (runtime) accent behind an accent-tinted glyph.
+        statusBadge.backgroundTintList =
+                ColorStateList.valueOf((accent and 0x00FFFFFF) or (0x24 shl 24))
+        statusIcon.imageTintList = ColorStateList.valueOf(accent)
+
+        // "Open release page" is the tertiary action - outlined, accent-tinted content.
+        openReleaseButton.setTextColor(accent)
+        openReleaseButton.iconTint = ColorStateList.valueOf(accent)
+
+        // The two "Update ..." buttons are primary actions - filled with the accent, grey when
+        // disabled (shared state list so a runtime accent applies to both).
+        val disabledFill = ContextCompat.getColor(this, R.color.lyra_divider)
+        val filledTint = ColorStateList(
+                arrayOf(
+                        intArrayOf(android.R.attr.state_enabled),
+                        intArrayOf(-android.R.attr.state_enabled)
+                ),
+                intArrayOf(accent, disabledFill)
+        )
+        updateWatchButton.backgroundTintList = filledTint
+        updatePhoneButton.backgroundTintList = filledTint
+
         progressBar.progressTintList = ColorStateList.valueOf(accent)
         progressBar.indeterminateTintList = ColorStateList.valueOf(accent)
 
@@ -77,8 +116,10 @@ class UpdateActivity : AppCompatActivity() {
             }
         }
         updateWatchButton.setOnClickListener { pushToWatch() }
+        updatePhoneButton.setOnClickListener { installPhone() }
 
-        installedText.text = getString(R.string.update_installed_phone, BuildConfig.VERSION_NAME)
+        phoneVersionText.text = BuildConfig.VERSION_NAME
+        watchVersionText.text = getString(R.string.update_watch_version_unknown)
         loadWatchVersion()
         loadLatestRelease()
     }
@@ -102,17 +143,14 @@ class UpdateActivity : AppCompatActivity() {
                 null
             }
 
-            installedText.text = getString(
-                    R.string.update_installed_versions,
-                    BuildConfig.VERSION_NAME,
+            watchVersionText.text =
                     watchVersion ?: getString(R.string.update_watch_version_unknown)
-            )
             refreshButtons()
         }
     }
 
     private fun loadLatestRelease() {
-        latestText.text = getString(R.string.update_checking)
+        showState(R.drawable.ic_autorenew, getString(R.string.update_state_checking), null)
         progressBar.visibility = View.VISIBLE
         progressBar.isIndeterminate = true
         refreshButtons()
@@ -131,32 +169,120 @@ class UpdateActivity : AppCompatActivity() {
 
             progressBar.visibility = View.INVISIBLE
             if (release == null) {
-                latestText.text = getString(R.string.update_check_failed)
+                showState(
+                        R.drawable.ic_autorenew,
+                        getString(R.string.update_state_failed),
+                        getString(R.string.update_state_failed_sub)
+                )
                 return@launch
             }
 
             latestRelease = release
+            showReleaseNotes(release)
 
             if (UpdateChecker.isNewerThanInstalled(release.tag)) {
-                latestText.text = getString(
-                        R.string.update_available_line,
-                        release.title,
-                        release.tag
-                ) + if (release.isPrerelease) " " + getString(R.string.update_prerelease_marker) else ""
-                statusText.text = if (release.wearApkUrl == null) {
-                    getString(R.string.update_no_wear_asset)
-                } else {
-                    getString(R.string.update_watch_hint)
+                UpdateChecker.rememberKnownRelease(this@UpdateActivity, release.tag)
+                var sub = getString(R.string.update_state_available_sub, release.title, release.tag)
+                if (release.isPrerelease) {
+                    sub += " " + getString(R.string.update_prerelease_marker)
                 }
+                showState(R.drawable.ic_download, getString(R.string.update_state_available), sub)
+                setStatus(
+                        if (release.wearApkUrl == null) getString(R.string.update_no_wear_asset)
+                        else getString(R.string.update_watch_hint)
+                )
             } else {
-                latestText.text = getString(R.string.update_up_to_date, release.tag)
-                statusText.text = if (watchNeedsUpdate(release)) {
-                    getString(R.string.update_watch_behind, watchVersion)
-                } else {
-                    ""
-                }
+                showState(
+                        R.drawable.ic_check_circle,
+                        getString(R.string.update_state_current),
+                        getString(R.string.update_state_current_sub, release.tag)
+                )
+                setStatus(
+                        if (watchNeedsUpdate(release)) getString(R.string.update_watch_behind, watchVersion)
+                        else null
+                )
             }
             refreshButtons()
+        }
+    }
+
+    private fun showState(@DrawableRes iconRes: Int, headline: String, sub: String?) {
+        statusIcon.setImageResource(iconRes)
+        stateHeadline.text = headline
+        if (sub.isNullOrEmpty()) {
+            stateSub.visibility = View.GONE
+        } else {
+            stateSub.text = sub
+            stateSub.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showReleaseNotes(release: UpdateChecker.ReleaseInfo) {
+        if (release.body.isBlank()) {
+            whatsNewCard.visibility = View.GONE
+        } else {
+            releaseNotesText.movementMethod = LinkMovementMethod.getInstance()
+            releaseNotesText.text = SimpleMarkdown.render(release.body, releaseNotesText.currentTextColor)
+            whatsNewCard.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setStatus(text: CharSequence?) {
+        if (text.isNullOrEmpty()) {
+            statusText.text = ""
+            statusText.visibility = View.GONE
+        } else {
+            statusText.text = text
+            statusText.visibility = View.VISIBLE
+        }
+    }
+
+    /** The phone can self-update when the release is newer than the installed build and ships a
+     *  phone APK asset to download. */
+    private fun phoneNeedsUpdate(release: UpdateChecker.ReleaseInfo): Boolean =
+            release.mobileApkUrl != null && UpdateChecker.isNewerThanInstalled(release.tag)
+
+    private fun installPhone() {
+        val release = latestRelease ?: return
+        if (installing || pushing) {
+            return
+        }
+        installing = true
+        refreshButtons()
+        progressBar.visibility = View.VISIBLE
+        progressBar.isIndeterminate = true
+
+        lifecycleScope.launch {
+            try {
+                PhoneApkInstaller(applicationContext).installLatest(release) { progress ->
+                    runOnUiThread { showPhoneProgress(progress) }
+                }
+            } catch (e: Exception) {
+                Timber.w(e, "Phone update failed")
+                setStatus(getString(R.string.update_phone_failed))
+            } finally {
+                installing = false
+                progressBar.visibility = View.INVISIBLE
+                refreshButtons()
+            }
+        }
+    }
+
+    private fun showPhoneProgress(progress: PhoneApkInstaller.Progress) {
+        when (progress) {
+            is PhoneApkInstaller.Progress.Downloading -> {
+                progressBar.isIndeterminate = false
+                progressBar.progress = progress.percent
+                setStatus(getString(R.string.update_downloading, progress.percent))
+            }
+            PhoneApkInstaller.Progress.Installing -> {
+                progressBar.isIndeterminate = true
+                setStatus(getString(R.string.update_installing))
+            }
+            PhoneApkInstaller.Progress.NeedsPermission -> {
+                progressBar.visibility = View.INVISIBLE
+                setStatus(getString(R.string.update_install_permission_needed))
+            }
         }
     }
 
@@ -179,7 +305,7 @@ class UpdateActivity : AppCompatActivity() {
 
     private fun pushToWatch() {
         val release = latestRelease ?: return
-        if (pushing) {
+        if (pushing || installing) {
             return
         }
         pushing = true
@@ -195,14 +321,14 @@ class UpdateActivity : AppCompatActivity() {
                     }
                 }
             } catch (e: WatchApkPusher.NoWatchException) {
-                statusText.text = getString(R.string.update_no_watch)
+                setStatus(getString(R.string.update_no_watch))
                 progressBar.visibility = View.INVISIBLE
             } catch (e: TimeoutCancellationException) {
-                statusText.text = getString(R.string.update_push_failed)
+                setStatus(getString(R.string.update_push_failed))
                 progressBar.visibility = View.INVISIBLE
             } catch (e: Exception) {
                 Timber.w(e, "Watch update push failed")
-                statusText.text = getString(R.string.update_push_failed)
+                setStatus(getString(R.string.update_push_failed))
                 progressBar.visibility = View.INVISIBLE
             } finally {
                 pushing = false
@@ -216,27 +342,33 @@ class UpdateActivity : AppCompatActivity() {
             is WatchApkPusher.Progress.Downloading -> {
                 progressBar.isIndeterminate = false
                 progressBar.progress = progress.percent
-                statusText.text = getString(R.string.update_downloading, progress.percent)
+                setStatus(getString(R.string.update_downloading, progress.percent))
             }
             is WatchApkPusher.Progress.Connecting -> {
                 progressBar.isIndeterminate = true
-                statusText.text = getString(R.string.update_connecting_watch)
+                setStatus(getString(R.string.update_connecting_watch))
             }
             is WatchApkPusher.Progress.Transferring -> {
                 progressBar.isIndeterminate = false
                 progressBar.progress = progress.percent
-                statusText.text = getString(R.string.update_transferring, progress.percent)
+                setStatus(getString(R.string.update_transferring, progress.percent))
             }
             is WatchApkPusher.Progress.AwaitingWatchConfirmation -> {
                 progressBar.visibility = View.INVISIBLE
-                statusText.text = getString(R.string.update_confirm_on_watch)
+                setStatus(getString(R.string.update_confirm_on_watch))
             }
         }
     }
 
     private fun refreshButtons() {
-        openReleaseButton.isEnabled = !pushing && latestRelease != null
-        updateWatchButton.isEnabled = !pushing &&
+        val busy = pushing || installing
+        openReleaseButton.isEnabled = !busy && latestRelease != null
+
+        val phoneUpdatable = latestRelease?.let { phoneNeedsUpdate(it) } == true
+        updatePhoneButton.visibility = if (phoneUpdatable) View.VISIBLE else View.GONE
+        updatePhoneButton.isEnabled = !busy && phoneUpdatable
+
+        updateWatchButton.isEnabled = !busy &&
                 latestRelease?.let { watchNeedsUpdate(it) } == true
     }
 }

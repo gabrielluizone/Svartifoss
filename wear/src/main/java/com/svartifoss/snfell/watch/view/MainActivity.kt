@@ -34,6 +34,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.view.ViewConfiguration
 import android.view.animation.DecelerateInterpolator
 import android.app.ActivityManager
@@ -2613,10 +2614,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
         binding.textSeekTime.visibility = View.GONE
         binding.textVolumePercent.visibility = View.VISIBLE
-        binding.textVolumePercent.text = getString(
-                R.string.volume_percent_format,
-                (binding.volumeBar.volume * 100).roundToInt()
-        )
+        applyVolumeOverlayStyle()
         binding.volumeIconTop.visibility = View.VISIBLE
         binding.volumeIconBottom.visibility = View.VISIBLE
 
@@ -2638,49 +2636,95 @@ class MainActivity : WearCompanionWatchActivity(),
 
     /**
      * Styles the scrub-time readout per [MiscPreferences.WEAR_SEEK_STYLE]: "plain" is the
-     * original bare centered time, "pill" wraps it in the same glass capsule the bottom pills
-     * use, "giant" blows it up for at-a-glance reading mid-drag, and "split" stacks the target
-     * position over the track's total length.
+     * original bare centered time, "pill"/"expressive" wrap it in a capsule (see
+     * [applyPillReadoutStyle]), "giant" blows it up for at-a-glance reading mid-drag, and "split"
+     * stacks the target position over the track's total length (seek-only - there's no
+     * equivalent second line for a plain volume percentage).
      */
     private fun applySeekOverlayStyle(fraction: Float) {
         val position = formatPlaybackTime((fraction * lastKnownDurationMs).toLong())
         val text = binding.textSeekTime
 
-        when (seekOverlayStyle) {
+        if (seekOverlayStyle == "split") {
+            text.textSize = 30f
+            text.background = null
+            text.setPadding(0, 0, 0, 0)
+            val total = formatPlaybackTime(lastKnownDurationMs)
+            val stacked = SpannableString("$position\n$total")
+            stacked.setSpan(RelativeSizeSpan(0.55f), position.length + 1, stacked.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            stacked.setSpan(ForegroundColorSpan(0xB3FFFFFF.toInt()), position.length + 1,
+                    stacked.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.text = stacked
+            return
+        }
+
+        applyPillReadoutStyle(text, seekOverlayStyle, position)
+    }
+
+    /** Same [MiscPreferences.WEAR_SEEK_STYLE] options, applied to the volume-percentage readout
+     *  (there's no "split" equivalent for a single percentage, so it falls back to plain). */
+    private fun applyVolumeOverlayStyle() {
+        val percentText = getString(
+                R.string.volume_percent_format,
+                (binding.volumeBar.volume * 100).roundToInt()
+        )
+        applyPillReadoutStyle(binding.textVolumePercent, seekOverlayStyle, percentText)
+    }
+
+    /**
+     * Shared "plain" / "pill" (glass capsule) / "giant" / "expressive" (colorful Material
+     * Expressive-style tonal pill) rendering for a centered overlay readout - used by both the
+     * seek-time and volume-percentage text views so they always share one visual language.
+     *
+     * "expressive" mirrors the system media player's tonal-pair look: a light, saturated tint of
+     * the album accent as the pill fill with a dark tone of the *same* hue as the text - rather
+     * than white-on-dark-glass, so the accent color itself reads as the decoration.
+     */
+    private fun applyPillReadoutStyle(text: TextView, style: String, content: String) {
+        when (style) {
             "pill" -> {
                 text.textSize = 26f
+                text.setTextColor(Color.WHITE)
                 text.setBackgroundResource(R.drawable.glass_pill_background)
                 val padH = (18 * resources.displayMetrics.density).toInt()
                 val padV = (8 * resources.displayMetrics.density).toInt()
                 text.setPadding(padH, padV, padH, padV)
-                text.text = position
+                text.text = content
+            }
+            "expressive" -> {
+                text.textSize = 26f
+                text.setTextColor(expressivePillTextColor())
+                text.background = capsule(expressivePillFillColor())
+                val padH = (20 * resources.displayMetrics.density).toInt()
+                val padV = (8 * resources.displayMetrics.density).toInt()
+                text.setPadding(padH, padV, padH, padV)
+                text.text = content
             }
             "giant" -> {
                 text.textSize = 52f
+                text.setTextColor(Color.WHITE)
                 text.background = null
                 text.setPadding(0, 0, 0, 0)
-                text.text = position
-            }
-            "split" -> {
-                text.textSize = 30f
-                text.background = null
-                text.setPadding(0, 0, 0, 0)
-                val total = formatPlaybackTime(lastKnownDurationMs)
-                val stacked = SpannableString("$position\n$total")
-                stacked.setSpan(RelativeSizeSpan(0.55f), position.length + 1, stacked.length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                stacked.setSpan(ForegroundColorSpan(0xB3FFFFFF.toInt()), position.length + 1,
-                        stacked.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                text.text = stacked
+                text.text = content
             }
             else -> {
                 text.textSize = 30f
+                text.setTextColor(Color.WHITE)
                 text.background = null
                 text.setPadding(0, 0, 0, 0)
-                text.text = position
+                text.text = content
             }
         }
     }
+
+    /** Light, saturated tint of the album accent - the "expressive" pill style's fill. Lightness
+     *  is high enough that dark text stays legible regardless of the accent's own hue. */
+    private fun expressivePillFillColor(): Int = tonalSurface(currentAccentColor, lightness = 0.82f)
+
+    /** Dark tone of the *same* hue as the album accent - the "expressive" pill style's text
+     *  color, so the pairing reads as one accent color rather than a generic light/dark pair. */
+    private fun expressivePillTextColor(): Int = tonalSurface(currentAccentColor, lightness = 0.22f)
 
     private val rotarySeekCommitRunnable = Runnable {
         // Clear the pending fraction *before* seeking: seekTo() posts the re-anchored position

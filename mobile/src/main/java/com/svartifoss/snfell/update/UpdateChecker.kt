@@ -39,8 +39,11 @@ object UpdateChecker {
             val htmlUrl: String,
             val isPrerelease: Boolean,
             val mobileApkUrl: String?,
+            val mobileApkSize: Long,
             val wearApkUrl: String?,
-            val wearApkSize: Long
+            val wearApkSize: Long,
+            /** The release description (GitHub Markdown), shown as the "What's new" notes. */
+            val body: String
     )
 
     /**
@@ -74,6 +77,7 @@ object UpdateChecker {
 
     private fun parseRelease(release: JSONObject): ReleaseInfo {
         var mobileApkUrl: String? = null
+        var mobileApkSize = 0L
         var wearApkUrl: String? = null
         var wearApkSize = 0L
 
@@ -81,7 +85,10 @@ object UpdateChecker {
         for (i in 0 until assets.length()) {
             val asset = assets.getJSONObject(i)
             when (asset.optString("name")) {
-                ASSET_NAME_MOBILE -> mobileApkUrl = asset.optString("browser_download_url")
+                ASSET_NAME_MOBILE -> {
+                    mobileApkUrl = asset.optString("browser_download_url")
+                    mobileApkSize = asset.optLong("size")
+                }
                 ASSET_NAME_WEAR -> {
                     wearApkUrl = asset.optString("browser_download_url")
                     wearApkSize = asset.optLong("size")
@@ -96,8 +103,10 @@ object UpdateChecker {
                 htmlUrl = release.getString("html_url"),
                 isPrerelease = release.optBoolean("prerelease"),
                 mobileApkUrl = mobileApkUrl,
+                mobileApkSize = mobileApkSize,
                 wearApkUrl = wearApkUrl,
-                wearApkSize = wearApkSize
+                wearApkSize = wearApkSize,
+                body = release.optString("body").trim()
         )
     }
 
@@ -161,11 +170,37 @@ object UpdateChecker {
         if (!isNewerThanInstalled(release.tag)) {
             return
         }
-        if (preferences.getString(PREF_LAST_NOTIFIED_TAG, null) == release.tag) {
+        val alreadyNotified = preferences.getString(PREF_LAST_NOTIFIED_TAG, null) == release.tag
+        rememberKnownRelease(appContext, release.tag)
+        if (alreadyNotified) {
             return
         }
 
         UpdateNotifier.notifyUpdateAvailable(appContext, release)
-        preferences.edit().putString(PREF_LAST_NOTIFIED_TAG, release.tag).apply()
+    }
+
+    /**
+     * Records that [tag] is the newest release the user has seen - either via the background
+     * check above, or [UpdateActivity]'s manual "check now" (which never posts a notification but
+     * should still count as "seen" and back [hasPendingUpdate]). Reusing the "notified" pref for
+     * both means a manual check that already surfaced a release also suppresses a redundant
+     * notification for that same tag later.
+     */
+    fun rememberKnownRelease(context: Context, tag: String) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit().putString(PREF_LAST_NOTIFIED_TAG, tag).apply()
+    }
+
+    /**
+     * Whether the newest release we know about is newer than what's installed now - a free,
+     * no-network read of the cached result of the last check (background or manual), for surfaces
+     * (the toolbar help-icon badge) that want to flag a pending update the user may have dismissed
+     * or missed. Naturally clears itself once the phone is actually updated, since the remembered
+     * tag stops being newer than the (now bumped) installed version.
+     */
+    fun hasPendingUpdate(context: Context): Boolean {
+        val tag = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(PREF_LAST_NOTIFIED_TAG, null) ?: return false
+        return isNewerThanInstalled(tag)
     }
 }

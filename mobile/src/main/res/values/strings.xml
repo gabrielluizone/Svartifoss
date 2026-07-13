@@ -378,7 +378,7 @@
     <string name="setting_wear_quick_panel_style">Quick panel style</string>
     <string name="setting_wear_queue_style">Queue style</string>
     <string name="setting_wear_progress_style">Progress ring style</string>
-    <string name="setting_wear_seek_style">Seek time style</string>
+    <string name="setting_wear_seek_style">Seek &amp; volume readout style</string>
     <string-array name="wear_progress_style_entries">
         <item>Solid</item>
         <item>Dashed</item>
@@ -396,12 +396,14 @@
     <string-array name="wear_seek_style_entries">
         <item>Plain</item>
         <item>Glass pill</item>
+        <item>Expressive pill</item>
         <item>Giant</item>
         <item>Position / total</item>
     </string-array>
     <string-array name="wear_seek_style_values">
         <item>plain</item>
         <item>pill</item>
+        <item>expressive</item>
         <item>giant</item>
         <item>split</item>
     </string-array>
@@ -422,6 +424,7 @@
         <item>Segments</item>
         <item>Aurora</item>
         <item>Ink</item>
+        <item>Groove</item>
     </string-array>
     <string-array name="wear_volume_style_values">
         <item>glass</item>
@@ -440,6 +443,7 @@
         <item>segments</item>
         <item>aurora</item>
         <item>ink</item>
+        <item>groove</item>
     </string-array>
     <string-array name="wear_overlay_style_entries">
         <item>Glass</item>
@@ -680,4 +684,22 @@
     <string name="update_watch_button">Update watch</string>
     <string name="update_open_release_button">Open release page</string>
     <string name="update_watch_behind">Your watch is still on %1$s \u2014 send it the update below.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Keep the phone and watch apps in sync</string>
+    <string name="update_state_checking">Checking for updates\u2026</string>
+    <string name="update_state_current">You\u2019re up to date</string>
+    <string name="update_state_current_sub">Running the latest release, %1$s</string>
+    <string name="update_state_available">Update available</string>
+    <string name="update_state_available_sub">%1$s \u00b7 %2$s</string>
+    <string name="update_state_failed">Couldn\u2019t check for updates</string>
+    <string name="update_state_failed_sub">Check your connection and try again</string>
+    <string name="update_device_phone">Phone</string>
+    <string name="update_device_watch">Watch</string>
+    <string name="update_versions_header">Installed</string>
+    <string name="update_whats_new">What\u2019s new</string>
+    <string name="update_phone_button">Update phone</string>
+    <string name="update_installing">Opening the installer\u2026</string>
+    <string name="update_install_permission_needed">Allow installing apps from Svartifoss, then tap Update phone again.</string>
+    <string name="update_phone_failed">Downloading the phone update failed. Try again.</string>
 </resources>

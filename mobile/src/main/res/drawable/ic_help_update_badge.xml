@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ic_help with a small solid dot over its top-right corner, shown on the toolbar help icon
+     when a checked release is newer than the installed version (see
+     MainActivity.refreshHelpIcon / UpdateChecker.hasPendingUpdate) - a way to notice a pending
+     update without having dismissed/missed the one-shot notification. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_help" />
+    <item
+        android:width="9dp"
+        android:height="9dp"
+        android:gravity="top|end"
+        android:top="1dp"
+        android:end="1dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/lyra_update_badge" />
+        </shape>
+    </item>
+</layer-list>
