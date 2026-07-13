@@ -17,12 +17,7 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.ongoing.OngoingActivity
 import androidx.wear.ongoing.Status
-import android.content.ComponentName
-import androidx.wear.tiles.TileService
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.svartifoss.snfell.R
-import com.svartifoss.snfell.watch.complication.AlbumArtComplicationDataSourceService
-import com.svartifoss.snfell.watch.tile.MediaTileService
 import com.svartifoss.snfell.watch.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -78,13 +73,12 @@ class WatchMusicService : LifecycleService() {
                     "${state?.title}|${state?.artist}|${state?.playing}|${resource?.status}"
             if (fingerprint != lastGlanceableFingerprint) {
                 lastGlanceableFingerprint = fingerprint
-                TileService.getUpdater(this).requestUpdate(MediaTileService::class.java)
-                requestComplicationUpdate()
+                GlanceableSurfaces.requestUpdate(this)
             }
         }
         phoneConnection.albumArt.observe(this) { albumArt ->
             mediaSession.update(phoneConnection.musicState.value?.data, albumArt)
-            requestComplicationUpdate()
+            GlanceableSurfaces.requestComplicationUpdate(this)
         }
 
         createWearNotification()
@@ -135,13 +129,6 @@ class WatchMusicService : LifecycleService() {
             mediaSession.release()
         }
         super.onDestroy()
-    }
-
-    private fun requestComplicationUpdate() {
-        ComplicationDataSourceUpdateRequester.create(
-            this,
-            ComponentName(this, AlbumArtComplicationDataSourceService::class.java)
-        ).requestUpdateAll()
     }
 
     /**

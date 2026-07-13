@@ -8,7 +8,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -70,9 +69,11 @@ private const val SUBTITLE_ALPHA = 0.65f
  * Full-screen actions/custom-list menu, replacing the old WearableDrawerLayout drawer. A pure
  * picker: rows only report clicks upward, they don't execute anything themselves.
  *
- * [alwaysPickCenter] mirrors the ALWAYS_SELECT_CENTER_ACTION preference: rows stop being
- * individually tappable and any tap confirms the centered row instead ([onCenterConfirm]).
- * [onCenterItemChanged] keeps the host activity's stem-button confirm target up to date.
+ * [alwaysPickCenter] mirrors the ALWAYS_SELECT_CENTER_ACTION preference: instead of a tap on a
+ * row selecting that row, every row's tap confirms whatever row is currently centered
+ * ([onCenterConfirm]). This is done by swapping each row's onClick - NOT by laying a full-screen
+ * clickable over the list, which would swallow finger drags and leave only the rotary crown able
+ * to scroll. [onCenterItemChanged] keeps the host activity's stem-button confirm target up to date.
  */
 @Composable
 fun MenuScreen(
@@ -118,8 +119,8 @@ fun MenuScreen(
                         itemsIndexed(content.items) { index, action ->
                             ActionRow(
                                     action = action,
-                                    clickable = !alwaysPickCenter,
-                                    onClick = { onActionClick(index) }
+                                    onClick = if (alwaysPickCenter) onCenterConfirm
+                                              else { { onActionClick(index) } }
                             )
                         }
                     }
@@ -145,10 +146,8 @@ fun MenuScreen(
                                         } else {
                                             null
                                         },
-                                        clickable = !alwaysPickCenter,
-                                        onClick = {
-                                            onEntryClick(content.list.listId, item.listItem.entryId)
-                                        },
+                                        onClick = if (alwaysPickCenter) onCenterConfirm
+                                                  else { { onEntryClick(content.list.listId, item.listItem.entryId) } },
                                         onLongClick = if (deletable) {
                                             { onEntryLongClick(content.list.listId, item.listItem.entryId) }
                                         } else {
@@ -165,32 +164,19 @@ fun MenuScreen(
                 val clockVisible by remember { derivedStateOf { listState.centerItemIndex == 0 } }
                 CurvedClock(visible = clockVisible)
                 CurvedScrollIndicator(listState)
-
-                // "Always select center" mode: one big invisible tap target confirming whatever
-                // row is centered, matching the old drawer's RecyclerClickDetector behavior.
-                if (alwaysPickCenter && content != null) {
-                    Box(
-                            Modifier
-                                    .fillMaxSize()
-                                    .clickable(
-                                            interactionSource = remember { MutableInteractionSource() },
-                                            indication = null
-                                    ) { onCenterConfirm() }
-                    )
-                }
             }
         }
     }
 }
 
 @Composable
-private fun ActionRow(action: ButtonAction, clickable: Boolean, onClick: () -> Unit) {
+private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
     Row(
             modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(26.dp))
                     .background(PILL_COLOR)
-                    .clickable(enabled = clickable, onClick = onClick)
+                    .clickable(onClick = onClick)
                     .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
     ) {
@@ -222,7 +208,6 @@ private fun ActionRow(action: ButtonAction, clickable: Boolean, onClick: () -> U
 private fun CustomEntryRow(
         title: String,
         subtitle: String?,
-        clickable: Boolean,
         onClick: () -> Unit,
         onLongClick: (() -> Unit)? = null
 ) {
@@ -232,7 +217,6 @@ private fun CustomEntryRow(
                     .clip(RoundedCornerShape(26.dp))
                     .background(PILL_COLOR)
                     .combinedClickable(
-                            enabled = clickable,
                             onClick = onClick,
                             onLongClick = onLongClick
                     )

@@ -1,17 +1,12 @@
 package com.svartifoss.snfell.watch.communication
 
-import android.content.ComponentName
 import android.content.Intent
 import androidx.core.content.ContextCompat
-import androidx.wear.tiles.TileService
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.google.android.gms.wearable.DataEvent
 import com.google.android.gms.wearable.DataEventBuffer
 import com.google.android.gms.wearable.WearableListenerService
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.proto.MusicState
-import com.svartifoss.snfell.watch.complication.AlbumArtComplicationDataSourceService
-import com.svartifoss.snfell.watch.tile.MediaTileService
 import timber.log.Timber
 
 /**
@@ -48,12 +43,7 @@ class MusicStateListenerService : WearableListenerService() {
                     }
                 }
 
-        ComplicationDataSourceUpdateRequester.create(
-                this,
-                ComponentName(this, AlbumArtComplicationDataSourceService::class.java)
-        ).requestUpdateAll()
-
-        TileService.getUpdater(this).requestUpdate(MediaTileService::class.java)
+        GlanceableSurfaces.requestUpdate(this)
 
         if (latestState?.playing == true && !latestState.error && !WatchMusicService.active) {
             // Same contract as IdleMessageListener: the service promotes itself to foreground, so
