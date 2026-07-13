@@ -1,5 +1,60 @@
 # Changelog
 
+## 2.2.2
+
+### Updates
+
+- **Update the phone from inside the app**: when a new release is out, the
+  Updates screen now has an "Update phone" button that downloads the phone APK
+  and opens the installer — no more hunting for the file in the browser. (Needs
+  the one-time "install unknown apps" permission, same as installing any
+  sideloaded app.)
+- **Redesigned Updates screen**: a status band tells you at a glance whether
+  you're up to date, the phone and watch versions sit on their own card, and
+  the release notes ("What's new") show right there — now rendered as
+  formatted text instead of raw Markdown, with tighter spacing and icons that
+  actually line up with their labels.
+- **Release notes in the update notification**: the "new version available"
+  notification now expands to show what changed, not just the version number.
+- **"Check for updates now" moved to the top of Settings** (its own category,
+  above everything else) instead of being buried near the bottom.
+- **Pending-update badge on the help icon**: a small dot appears on the
+  toolbar's help (?) button whenever a checked release is newer than what's
+  installed, so a dismissed or missed update notification isn't the only way
+  to notice one is waiting.
+
+### Watch appearance
+
+- **New "Expressive pill" seek & volume style**: a colorful tonal pill in the
+  album accent color with dark text on top (the system media player's
+  tonal-pair look), instead of white text on dark glass. Applies to both the
+  scrub-time readout while seeking and the volume-percentage readout while
+  adjusting volume — that setting now styles both together.
+- **New "Groove" volume style**: a recessed dark channel with a slim bright
+  accent core, joining the existing volume-overlay styles.
+
+### Fixes
+
+- **Watch crash on Wear OS 5**: the watch app could crash on Wear OS 5 (e.g.
+  Xiaomi Watch 2) while refreshing the media Tile / complication — the tiles
+  library reads a system setting the platform now blocks for apps targeting
+  API 35. These refreshes are best-effort again and can no longer bring the
+  app down.
+- **Finger scrolling in the watch menu with "Always select center action" on**:
+  the menu could only be scrolled with the rotary crown, not by dragging,
+  because that mode covered the list with an invisible tap target. Tapping now
+  confirms the centered row without blocking scroll, so finger and crown both
+  work.
+- **Config backups restore across Android versions**: exported config/backup
+  files are stored in a version-independent format and rebuilt on the importing
+  device, so a backup made on one Android version restores correctly on
+  another (the old format could fail to decode across OS versions). Existing
+  backups still import.
+- **Less crash-report noise**: expected, already-handled situations — a config
+  snapshot that can't be decoded on a given Android version and falls back to
+  defaults, routine coroutine cancellation, "phone not currently connected" —
+  no longer get logged as crashes.
+
 ## 2.2.1
 
 ### Two new faces (Beta)
