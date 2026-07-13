@@ -62,7 +62,9 @@ class GlobalActionConfig(private val context: Context,
             }
             ConfigBackup.import(context, PreferenceManager.getDefaultSharedPreferences(context), json)
         } catch (e: Exception) {
-            Timber.e(e, "Failed seeding the bundled default config - falling back to auto-detected defaults")
+            // Expected on devices whose Android version can't decode the bundled parcel snapshot -
+            // the fallback below fully handles it, so log at WARN (no Crashlytics issue) not ERROR.
+            Timber.w(e, "Failed seeding the bundled default config - falling back to auto-detected defaults")
             watchInfoProvider.observeForever(defaultConfigCreatorListener)
         }
     }

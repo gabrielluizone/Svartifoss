@@ -9,6 +9,15 @@ import timber.log.Timber
 class CrashlyticsExceptionWearHandler : ExceptionWearHandler {
     override fun handleException(throwable: Throwable, map: DataMap) {
         Timber.d("HandleException %s", throwable)
+
+        // The watch forwards its uncaught exceptions here wrapped in a WatchException, so we match
+        // on the message text. Routine coroutine cancellation and "phone not currently connected"
+        // Data Layer failures are expected background noise, not faults - drop them.
+        val message = throwable.message.orEmpty()
+        if (message.contains("CancellationException") || message.contains("TARGET_NODE_NOT_CONNECTED")) {
+            return
+        }
+
         FirebaseCrashlytics.getInstance().setCustomKey("wear_exception", true)
         FirebaseCrashlytics.getInstance().setCustomKey("board", map.getString("board")!!)
         FirebaseCrashlytics.getInstance()
