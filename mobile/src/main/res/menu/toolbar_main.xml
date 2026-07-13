@@ -2,6 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Shown/hidden at runtime (see MainActivity.onPrepareOptionsMenu) whenever a checked
+         release is newer than what's installed - a nudge for someone who dismissed or missed the
+         one-shot update notification. Tapping it opens the Updates screen directly. -->
+    <item
+        android:id="@+id/menu_update_available"
+        android:icon="@drawable/ic_update_available"
+        android:title="@string/update_available_action"
+        android:visible="false"
+        app:showAsAction="always" />
+
     <!-- The usage guide, formerly the "Guide" bottom-nav tab - its slot now hosts the watch
          face customization screen, so the guide moved up here as a help action. -->
     <item

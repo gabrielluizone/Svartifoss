@@ -33,25 +33,16 @@ object UpdateNotifier {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        // Kept deliberately plain - the release body is raw Markdown, and rendering it here would
+        // mean re-implementing SimpleMarkdown's spans for a notification's tiny expanded text.
+        // The full formatted "What's new" already lives one tap away, in UpdateActivity.
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification_brand)
                 .setContentTitle(context.getString(R.string.update_available_title, release.tag))
-                .setContentText(release.title)
+                .setContentText(context.getString(R.string.update_notification_text))
                 .setContentIntent(contentIntent)
                 .setAutoCancel(true)
-
-        // Expandable "What's new": the release notes under the title, so the notification alone
-        // says what changed instead of just that *something* did.
-        val notes = release.body.takeIf { it.isNotBlank() }
-        if (notes != null) {
-            builder.setStyle(
-                    NotificationCompat.BigTextStyle()
-                            .setBigContentTitle(context.getString(R.string.update_available_title, release.tag))
-                            .bigText(notes)
-            )
-        }
-
-        val notification = builder.build()
+                .build()
 
         notificationManager.notify(NOTIFICATION_ID, notification)
     }

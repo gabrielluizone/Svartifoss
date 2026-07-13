@@ -653,6 +653,8 @@
     <string name="update_screen_title">Atualizações</string>
     <string name="update_notification_channel">Atualizações do app</string>
     <string name="update_available_title">Svartifoss %1$s disponível</string>
+    <string name="update_notification_text">Toque para atualizar</string>
+    <string name="update_available_action">Atualização disponível</string>
     <string name="update_installed_phone">Telefone: %1$s</string>
     <string name="update_installed_versions">Telefone: %1$s \u00b7 Relógio: %2$s</string>
     <string name="update_watch_version_unknown">desconhecida</string>

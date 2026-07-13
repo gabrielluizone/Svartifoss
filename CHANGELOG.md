@@ -14,14 +14,12 @@
   the release notes ("What's new") show right there — now rendered as
   formatted text instead of raw Markdown, with tighter spacing and icons that
   actually line up with their labels.
-- **Release notes in the update notification**: the "new version available"
-  notification now expands to show what changed, not just the version number.
 - **"Check for updates now" moved to the top of Settings** (its own category,
   above everything else) instead of being buried near the bottom.
-- **Pending-update badge on the help icon**: a small dot appears on the
-  toolbar's help (?) button whenever a checked release is newer than what's
-  installed, so a dismissed or missed update notification isn't the only way
-  to notice one is waiting.
+- **Update-available icon next to Help**: a green icon appears in the toolbar
+  whenever a checked release is newer than what's installed, and opens the
+  Updates screen when tapped — so a dismissed or missed update notification
+  isn't the only way to notice one is waiting.
 
 ### Watch appearance
 
@@ -35,6 +33,13 @@
 
 ### Fixes
 
+- **"Update phone" failing to install ("problem parsing the package")**: the
+  downloaded APK could come back truncated (a known Android networking bug
+  with the redirect GitHub release-asset links go through), which was then
+  silently handed to the installer instead of being caught. The download is
+  now verified against the expected size before installing, and a bad
+  download is deleted and reported so the button can be retried instead of
+  failing confusingly.
 - **Watch crash on Wear OS 5**: the watch app could crash on Wear OS 5 (e.g.
   Xiaomi Watch 2) while refreshing the media Tile / complication — the tiles
   library reads a system setting the platform now blocks for apps targeting
