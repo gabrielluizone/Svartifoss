@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.music
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
 import androidx.preference.PreferenceManager
@@ -108,9 +109,36 @@ object PlaylistShortcutStorage {
                             .build()
             )
         } else {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val openMode = prefs.getString(StreamingShortcutLinks.OPEN_MODE_KEY, null)
+                    ?: if (prefs.getBoolean(
+                                    StreamingShortcutLinks.PREFER_INSTALLED_APP_KEY,
+                                    true)) {
+                        StreamingShortcutLinks.OPEN_MODE_APP
+                    } else {
+                        StreamingShortcutLinks.OPEN_MODE_DEFAULT
+                    }
+
             shortcuts.map { shortcut ->
+                val service = StreamingShortcutLinks.detect(shortcut.link)
+                val targetPackage = service.packageName?.takeIf { packageName ->
+                    openMode == StreamingShortcutLinks.OPEN_MODE_APP && isPackageInstalled(context, packageName)
+                }
+
+                val primaryLink = if (targetPackage != null) {
+                    StreamingShortcutLinks.forInstalledApp(shortcut.link)
+                } else {
+                    StreamingShortcutLinks.forBrowser(shortcut.link)
+                }
+
+                val entryId = if (targetPackage != null) {
+                    "$targetPackage|$primaryLink"
+                } else {
+                    primaryLink
+                }
+
                 CustomList.ListEntry.newBuilder()
-                        .setEntryId(shortcut.link)
+                        .setEntryId(entryId)
                         .setEntryTitle(shortcut.name)
                         .setEntrySubtitle(describe(context, shortcut))
                         .build()
@@ -122,6 +150,13 @@ object PlaylistShortcutStorage {
                 .setListId(CustomLists.PLAYLIST_SHORTCUTS)
                 .setListTimestamp(timestamp)
                 .build()
+    }
+
+    private fun isPackageInstalled(context: Context, packageName: String): Boolean = try {
+        context.packageManager.getPackageInfo(packageName, 0)
+        true
+    } catch (_: PackageManager.NameNotFoundException) {
+        false
     }
 
     fun createDataRequest(

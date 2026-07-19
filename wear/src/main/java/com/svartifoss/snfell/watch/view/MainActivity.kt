@@ -704,6 +704,8 @@ class MainActivity : WearCompanionWatchActivity(),
 
         maybeRequestNotificationPermission()
 
+        stemButtonsManager = StemButtonsManager(WatchInfoSender.getAvailableButtonsOnWatch(this), stemButtonListener, lifecycleScope)
+
         viewModel.albumArt.observe(this, albumArtObserver)
         viewModel.currentButtonConfig.observe(this, buttonConfigObserver)
         // Preference delivery must remain active while the activity is in ambient/paused state.
@@ -726,9 +728,6 @@ class MainActivity : WearCompanionWatchActivity(),
             quickPanelExtraActions = actions.orEmpty()
             if (isQuickActionsPanelShowing()) renderQuickPanelExtraActions()
         }
-
-
-        stemButtonsManager = StemButtonsManager(WatchInfoSender.getAvailableButtonsOnWatch(this), stemButtonListener, lifecycleScope)
 
         onBackPressedDispatcher.addCallback(this, backButtonOverrideCallback)
         // Registered after backButtonOverrideCallback so it takes priority while enabled - the
@@ -3339,7 +3338,13 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Opens a streaming shortcut through the Wear OS phone bridge. Launching ACTION_VIEW from
      * the phone-side playback service is blocked by modern Android background-start rules. */
     private fun openUriOnPhone(rawUri: String) {
-        val uri = runCatching { Uri.parse(rawUri.trim()) }.getOrNull() ?: return
+        val parts = rawUri.split('|', limit = 2)
+        val (targetPackage, uriString) = if (parts.size == 2) {
+            parts[0] to parts[1]
+        } else {
+            null to rawUri
+        }
+        val uri = runCatching { Uri.parse(uriString.trim()) }.getOrNull() ?: return
         val scheme = uri.scheme?.lowercase(Locale.US).orEmpty()
         if (scheme.isBlank() || scheme in setOf("content", "data", "file", "intent", "javascript")) {
             Timber.e("Refusing unsafe streaming shortcut URI scheme: %s", scheme)
@@ -3351,6 +3356,9 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         val phoneIntent = Intent(Intent.ACTION_VIEW, uri).addCategory(Intent.CATEGORY_BROWSABLE)
+        if (!targetPackage.isNullOrBlank()) {
+            phoneIntent.setPackage(targetPackage)
+        }
         val remoteActivityHelper = RemoteActivityHelper(
                 this,
                 ContextCompat.getMainExecutor(this)
