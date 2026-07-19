@@ -6,6 +6,13 @@ These changes are still in development and are not part of a published release.
 
 ### Phone experience
 
+- **Watch settings apply without a wake-up gesture**: phone-to-watch preference
+  synchronization now belongs to the application process instead of whichever
+  Settings screen happens to be open. Edits are coalesced, sent urgently and
+  ordered so an older snapshot cannot overwrite a newer one; identical refreshes,
+  removed values and string-set settings are also delivered reliably. The watch
+  keeps observing changes while paused or in AOD, so the active layout is
+  re-rendered without waiting for a tap or crown interaction.
 - **Create and save your own watch themes**: the existing designs are now
   available as base layouts for reusable custom profiles. Pick Classic,
   Expressive, Poster, Studio, Material or another available layout, give the
@@ -51,12 +58,15 @@ These changes are still in development and are not part of a published release.
   the single BETA badge replaces the duplicated title suffix, all decorative
   marks follow the live accent, and filled actions choose black or white content
   automatically for contrast. Add shortcut and Paste link now share the same
-  filled pill geometry.
+  filled pill geometry; pick mode uses the shorter “Choose shortcut” title and
+  Paste link now has a neutral grey treatment instead of the old green accent.
 - **Streaming content inside Actions**: saved tracks, albums, mixes and
   playlists can now be assigned directly to the watch Actions menu and Quick
-  Actions, alongside apps and normal commands. The Watch → Panels page also
-  includes a live shortcut count and a direct link to the existing editor so
-  this feature is easier to discover without creating a duplicate library.
+  Actions, alongside apps and normal commands. Pick Action now shows the
+  installed destination music app's full-colour icon for each saved shortcut,
+  with the generic playlist glyph only as a fallback. The Watch → Panels page
+  also includes a live shortcut count and a direct link to the existing editor
+  so this feature is easier to discover without creating a duplicate library.
 - **Faster Streaming shortcuts on the watch**: shortcuts now use their own
   persistent Wear data cache, independent from queue and search responses. The
   watch renders the screen immediately from local data instead of waiting for a
@@ -71,6 +81,8 @@ These changes are still in development and are not part of a published release.
 - **Modernized navigation icons**: Watch and Controls now use dedicated watch
   vibration and gamepad icons, and Buy Me a Coffee uses the supplied coffee
   artwork instead of the generic lightning bolt.
+- **Cleaner icon picker**: the unrelated Haibane Renmei artwork is no longer
+  offered as a configurable action icon.
 
 ### Watch experience
 
@@ -132,8 +144,11 @@ These changes are still in development and are not part of a published release.
   stable-height media pills widened to the Up Next row, and correct centering
   when an app exposes fewer than three actions. Metadata now follows the same
   top keyline as Expressive/Material and the three primary pills sit closer to
-  the screen center. A back swipe or a tap outside an action dismisses only the
-  panel instead of closing the app.
+  the screen center. Its indicator now lives in a viewport overlay, so the full
+  track stays attached to the circular bezel while the thumb follows the list;
+  touch and crown motion use the same scale, alpha and easing response as the
+  queue. A back swipe or a tap outside an action dismisses only the panel instead
+  of closing the app.
 - **Reliable Quick Actions icons**: full-colour launcher icons are preserved,
   monochrome vectors receive the correct surface tint, and transparent or
   corrupt media-app artwork falls back to a visible semantic glyph.
@@ -142,7 +157,9 @@ These changes are still in development and are not part of a published release.
   Outline stroke is now a thin keyline instead of a heavy border.
 - **Queue styles restored per theme**: the queue resolves its style from the
   active built-in layout or custom-theme snapshot, so changing Queue style no
-  longer appears to stop working after artwork thumbnails are added.
+  longer appears to stop working after artwork thumbnails are added. Cover
+  thumbnails now follow each style's geometry as well, from circular Glass/Tonal
+  artwork through rounded Material cards to square Terminal artwork.
 - **Cleaner empty playback state**: “Nothing playing” and its phone hint use
   tighter margins without extra font padding on the small Wear screen.
 

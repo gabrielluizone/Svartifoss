@@ -609,6 +609,16 @@
 
         </com.svartifoss.snfell.watch.view.CircularQuickActionsScrollView>
 
+        <!-- Kept outside the ScrollView so the full track is physically fixed to the round
+             viewport, exactly like the Canvas layered over QueueScreen's ScalingLazyColumn. -->
+        <com.svartifoss.snfell.watch.view.QuickActionsScrollIndicatorView
+            android:id="@+id/quick_actions_scroll_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"
+            android:importantForAccessibility="no" />
+
         </androidx.wear.widget.SwipeDismissFrameLayout>
 
         <ProgressBar

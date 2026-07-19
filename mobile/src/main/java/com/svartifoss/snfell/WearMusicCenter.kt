@@ -21,6 +21,8 @@ class WearMusicCenter : Application(), HasAndroidInjector {
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
+    private lateinit var watchPreferenceSync: WatchPreferenceSyncCoordinator
+
     override fun onCreate() {
         DaggerAppComponent.builder()
                 .application(this)
@@ -46,6 +48,10 @@ class WearMusicCenter : Application(), HasAndroidInjector {
         Timber.plant(fileLogger)
 
         applyThemeFromPreferences()
+
+        // Application lifetime, rather than a Settings Fragment lifecycle, owns phone -> watch
+        // preference delivery. This also performs one startup repair sync for a stale watch.
+        watchPreferenceSync = WatchPreferenceSyncCoordinator(this).also { it.start() }
     }
 
     private fun applyThemeFromPreferences() {

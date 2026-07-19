@@ -18,7 +18,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,18 +25,15 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.matejdro.wearutils.preferencesync.PreferencePusher
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.AppearanceContext
-import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.ThemeAppearance
-import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.watchface.WatchPreviewView
 
 /** Full-screen catalog for built-in presets and phone-local user themes. Tapping a row is an
- * explicit apply action; the repository performs the one atomic preference materialization and
- * this activity performs exactly one Wear push afterwards. */
+ * explicit apply action; the repository performs one atomic preference materialization and the
+ * application-level sync coordinator delivers it independently of this Activity's lifecycle. */
 class WatchThemesActivity : AppCompatActivity() {
 
     private lateinit var repository: WatchThemeRepository
@@ -149,18 +145,6 @@ class WatchThemesActivity : AppCompatActivity() {
                 getString(R.string.watch_theme_apply_success, name))
         Toast.makeText(
                 this, getString(R.string.watch_theme_apply_success, name), Toast.LENGTH_SHORT).show()
-        pushPreferencesOnce()
-    }
-
-    private fun pushPreferencesOnce() {
-        val appContext = applicationContext
-        lifecycleScope.launchWithPlayServicesErrorHandling(appContext) {
-            PreferencePusher.pushPreferences(
-                    appContext,
-                    defaultPrefs,
-                    CommPaths.PREFERENCES_PREFIX,
-                    true)
-        }
     }
 
     private fun showCreateDialog() {
@@ -285,7 +269,6 @@ class WatchThemesActivity : AppCompatActivity() {
         Toast.makeText(this, R.string.watch_theme_deleted, Toast.LENGTH_SHORT).show()
         if (active) {
             setResult(RESULT_OK)
-            pushPreferencesOnce()
         }
     }
 

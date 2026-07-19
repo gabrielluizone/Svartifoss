@@ -2,7 +2,6 @@ package com.svartifoss.snfell.view.buttonconfig
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.VectorDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -134,7 +133,7 @@ class ActionPickerActivity : AppCompatActivity() {
             val action = viewModel.displayedActions.value?.get(position) ?: return
 
             val icon = customIconStorage[action]
-            if (icon is VectorDrawable) {
+            if (action.iconTintable) {
                 val iconColor = ContextCompat.getColor(this@ActionPickerActivity, R.color.lyra_on_surface)
                 holder.iconView.setColorFilter(iconColor)
             } else {

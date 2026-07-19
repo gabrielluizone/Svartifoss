@@ -6,18 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.matejdro.wearutils.preferencesync.PreferencePusher
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.R
-import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.databinding.FragmentSettingsHomeBinding
-import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.TitledActivity
 import com.svartifoss.snfell.view.mainactivity.MainActivity
 
@@ -43,14 +39,11 @@ class SettingsHomeFragment : Fragment() {
     private var pageChangeCallback: ViewPager2.OnPageChangeCallback? = null
 
     private val preferenceChangeListener =
-        SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             if (key == MiscPreferences.WEAR_QUICK_PANEL_SOURCE.key) {
                 context?.applicationContext?.let { appContext ->
                     NotificationService.updateQuickActionsBinding(appContext)
                 }
-            }
-            if (key != "app_theme" && key != MiscPreferences.CRASH_REPORTING_ENABLED.key) {
-                pushPreferencesToWatch(sharedPreferences)
             }
         }
 
@@ -115,18 +108,6 @@ class SettingsHomeFragment : Fragment() {
         PreferenceManager.getDefaultSharedPreferences(requireContext())
             .unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
         super.onStop()
-    }
-
-    private fun pushPreferencesToWatch(sharedPreferences: SharedPreferences) {
-        val appContext = requireContext().applicationContext
-        lifecycleScope.launchWithPlayServicesErrorHandling(appContext) {
-            PreferencePusher.pushPreferences(
-                appContext,
-                sharedPreferences,
-                CommPaths.PREFERENCES_PREFIX,
-                true
-            )
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

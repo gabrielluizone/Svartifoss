@@ -817,7 +817,7 @@
     <string name="action_play_specific_playlist">Abrir atalho de streaming</string>
     <string name="action_choose_or_add_streaming_shortcut">Escolher ou adicionar atalho de streaming</string>
     <string name="action_show_streaming_library">Mostrar todos os atalhos salvos</string>
-    <string name="playlist_shortcut_pick_title">Escolha um atalho de streaming</string>
+    <string name="playlist_shortcut_pick_title">Escolher atalho</string>
     <string name="playlist_shortcut_pick_empty">Nenhum atalho de streaming salvo — adicione um abaixo e toque nele para escolher</string>
     <string name="playlist_shortcuts_empty">Nenhum atalho de streaming — adicione-os nas configurações do app no celular</string>
     <string name="setting_playlist_shortcuts">Atalhos de streaming</string>

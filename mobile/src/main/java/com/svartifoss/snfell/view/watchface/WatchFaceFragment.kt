@@ -27,18 +27,15 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.NotificationService
-import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.databinding.FragmentWatchFaceBinding
 import com.svartifoss.snfell.config.buttons.GlobalButtonConfig
 import com.svartifoss.snfell.music.isPlaying
-import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.TitledActivity
 import com.svartifoss.snfell.view.mainactivity.MainActivity
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.view.watchface.theme.WatchThemesActivity
-import com.matejdro.wearutils.preferencesync.PreferencePusher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -123,8 +120,9 @@ private val WATCH_APPEARANCE_PREF_KEYS = setOf(
  * "Watch" tab (the slot the Guide used to occupy - the guide now opens from the toolbar's
  * help button): visual customization of the watch's now-playing screen. A live miniature
  * ([WatchPreviewView]) is docked on top and re-renders on every preference change, while the
- * settings themselves live in the nested [WatchFacePrefsFragment] below it. This host coalesces
- * committed changes before pushing them to the watch, so the real screen follows the preview.
+ * settings themselves live in the nested [WatchFacePrefsFragment] below it. The application-level
+ * preference sync coordinator pushes committed changes, so delivery survives this Fragment's
+ * lifecycle while the real screen follows the preview.
  *
  * When music is playing on the phone, the miniature shows the *actual* current track - album
  * art, title and artist from the active media session (the same one the mini player uses),
@@ -167,16 +165,7 @@ class WatchFaceFragment : Fragment() {
         if (result.resultCode == Activity.RESULT_OK && _binding != null) {
             updateThemeCard()
             preview?.refresh()
-            // The manager may finish immediately after creating/customizing. Its lifecycle-bound
-            // push can then be cancelled, so the resumed host performs the definitive sync.
-            pushPreferencesToWatch()
         }
-    }
-    private val preferencePushHandler = Handler(Looper.getMainLooper())
-    private var preferencePushPending = false
-    private val preferencePush = Runnable {
-        preferencePushPending = false
-        pushPreferencesToWatch()
     }
 
     private val pageCallback = object : ViewPager2.OnPageChangeCallback() {
@@ -226,25 +215,6 @@ class WatchFaceFragment : Fragment() {
             } else {
                 preview?.refresh(baseKey)
             }
-            // A dialog may write several related values in one interaction. Coalesce them so the
-            // local preview stays immediate without starting concurrent full preference pushes.
-            preferencePushHandler.removeCallbacks(preferencePush)
-            preferencePushPending = true
-            preferencePushHandler.postDelayed(preferencePush, 300L)
-        }
-    }
-
-    private fun pushPreferencesToWatch() {
-        val context = context?.applicationContext ?: return
-        // Keep the final onStop flush alive while this Fragment's view is being torn down.
-        val scope = activity?.lifecycleScope ?: return
-        scope.launchWithPlayServicesErrorHandling(context) {
-            PreferencePusher.pushPreferences(
-                context,
-                PreferenceManager.getDefaultSharedPreferences(context),
-                CommPaths.PREFERENCES_PREFIX,
-                true
-            )
         }
     }
 
@@ -543,11 +513,6 @@ class WatchFaceFragment : Fragment() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
         themeRepository.captureActive(prefs)
         prefs.unregisterOnSharedPreferenceChangeListener(prefListener)
-        preferencePushHandler.removeCallbacks(preferencePush)
-        if (preferencePushPending) {
-            preferencePushPending = false
-            pushPreferencesToWatch()
-        }
         unregisterMediaCallback()
         tickHandler.removeCallbacks(playbackTick)
         super.onStop()
@@ -555,8 +520,6 @@ class WatchFaceFragment : Fragment() {
 
     override fun onDestroyView() {
         tickHandler.removeCallbacks(playbackTick)
-        preferencePushHandler.removeCallbacks(preferencePush)
-        preferencePushPending = false
         binding.root.removeOnLayoutChangeListener(previewLayoutListener)
         binding.watchPreviewPanel.setOnTouchListener(null)
         binding.watchPager.unregisterOnPageChangeCallback(pageCallback)

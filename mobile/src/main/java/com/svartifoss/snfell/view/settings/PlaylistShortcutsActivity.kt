@@ -147,8 +147,18 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         findViewById<View>(R.id.button_back).setOnClickListener { finish() }
         findViewById<MaterialButton>(R.id.button_paste).apply {
             setOnClickListener { pasteShortcutFromClipboard() }
-            setTextColor(accent)
-            iconTint = ColorStateList.valueOf(accent)
+            backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                            this@PlaylistShortcutsActivity,
+                            R.color.lyra_divider
+                    )
+            )
+            val neutralForeground = ContextCompat.getColor(
+                    this@PlaylistShortcutsActivity,
+                    R.color.lyra_on_surface
+            )
+            setTextColor(neutralForeground)
+            iconTint = ColorStateList.valueOf(neutralForeground)
         }
         findViewById<MaterialButton>(R.id.button_add).apply {
             setOnClickListener { showShortcutDialog() }

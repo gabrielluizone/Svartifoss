@@ -102,8 +102,7 @@ object BuiltInIconPicker {
             R.drawable.ic_update_available,
             R.drawable.ic_watch,
             R.drawable.ic_watch_off,
-            R.drawable.ic_playlist_play,
-            R.drawable.ic_haibane_renmei
+            R.drawable.ic_playlist_play
     )
 
     fun show(

@@ -1108,7 +1108,7 @@
     <string name="action_play_specific_playlist">Open streaming shortcut</string>
     <string name="action_choose_or_add_streaming_shortcut">Choose or add a streaming shortcut</string>
     <string name="action_show_streaming_library">Show all saved shortcuts</string>
-    <string name="playlist_shortcut_pick_title">Choose a streaming shortcut</string>
+    <string name="playlist_shortcut_pick_title">Choose shortcut</string>
     <string name="playlist_shortcut_pick_empty">No streaming shortcuts saved yet — add one below, then tap it to pick it</string>
     <string name="playlist_shortcuts_empty">No streaming shortcuts yet — add them in the phone app settings</string>
     <string name="setting_playlist_shortcuts">Streaming shortcuts</string>

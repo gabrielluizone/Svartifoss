@@ -1,10 +1,14 @@
 package com.svartifoss.snfell.actions
 
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.music.MusicService
+import com.svartifoss.snfell.music.StreamingShortcutLinks
 import javax.inject.Inject
 
 /**
@@ -45,11 +49,59 @@ class PlayPlaylistShortcutAction : SelectableAction {
 
     override fun retrieveTitle(): String = playlistName
 
+    /**
+     * A saved shortcut represents a concrete destination, so its icon should identify that
+     * destination in Pick action (and on the watch after it is assigned), rather than making
+     * every playlist/track look like the same generic playlist command.
+     *
+     * Supported services use their installed launcher icon. For a custom scheme/provider, use
+     * Android's default handler when one exists. The monochrome playlist glyph remains the safe
+     * fallback for an app that is not installed or a link without a default handler.
+     */
+    private val destinationAppIcon: Drawable? by lazy {
+        val service = StreamingShortcutLinks.detect(link)
+        val knownPackage = service.packageName
+        if (knownPackage != null) {
+            applicationIcon(knownPackage)
+        } else {
+            resolveCustomLinkHandlerIcon()
+        }
+    }
+
+    override val defaultIconTintable: Boolean
+        get() = destinationAppIcon == null
+
     override val defaultIcon: Drawable
-        get() = AppCompatResources.getDrawable(context, com.svartifoss.snfell.common.R.drawable.action_open_playlist)!!
+        get() = destinationAppIcon ?: AppCompatResources.getDrawable(
+                context,
+                com.svartifoss.snfell.common.R.drawable.action_open_playlist
+        )!!
 
     override val remoteUri: String
         get() = link
+
+    private fun applicationIcon(packageName: String): Drawable? = try {
+        context.packageManager.getApplicationIcon(packageName)
+    } catch (_: PackageManager.NameNotFoundException) {
+        null
+    } catch (_: SecurityException) {
+        null
+    }
+
+    private fun resolveCustomLinkHandlerIcon(): Drawable? {
+        val canonicalLink = StreamingShortcutLinks.canonicalize(link)
+        if (!StreamingShortcutLinks.isSafeLink(canonicalLink)) return null
+
+        val resolvedPackage = try {
+            context.packageManager.resolveActivity(
+                    Intent(Intent.ACTION_VIEW, Uri.parse(canonicalLink)),
+                    PackageManager.MATCH_DEFAULT_ONLY
+            )?.activityInfo?.packageName
+        } catch (_: RuntimeException) {
+            null
+        }
+        return resolvedPackage?.let(::applicationIcon)
+    }
 
     override fun isEqualToAction(other: PhoneAction): Boolean {
         other as PlayPlaylistShortcutAction

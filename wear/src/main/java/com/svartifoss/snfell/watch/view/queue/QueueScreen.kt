@@ -287,6 +287,31 @@ private fun queueRowSpacing(style: QueueStyle): Dp = when (style) {
     else -> 6.dp
 }
 
+/**
+ * Corner treatment for the 30dp cover inside a queue row.
+ *
+ * The artwork is deliberately shaped independently from the row: copying a 28dp pill radius to
+ * a 30dp image would clamp almost every style to the same circle again. These values preserve the
+ * visual family of each row while leaving genuinely pill-like styles (Glass/Tonal) circular and
+ * square styles (Material/Terminal/Contrast) visibly squarer.
+ */
+internal fun queueArtworkCorner(style: QueueStyle): Dp = when (style) {
+    QueueStyle.GLASS -> 15.dp
+    QueueStyle.MINIMAL -> 2.dp
+    QueueStyle.MATERIAL -> 6.dp
+    QueueStyle.TONAL -> 15.dp
+    QueueStyle.NEON -> 9.dp
+    QueueStyle.LIGHT -> 10.dp
+    QueueStyle.GRADIENT -> 11.dp
+    QueueStyle.MONO -> 7.dp
+    QueueStyle.OUTLINE -> 8.dp
+    QueueStyle.DUOTONE -> 11.dp
+    QueueStyle.CONTRAST -> 4.dp
+    QueueStyle.TERMINAL -> 0.dp
+    QueueStyle.PRISM -> 8.dp
+    QueueStyle.FROST -> 12.dp
+}
+
 /** A dark, accent-tinted surface for the tonal idle rows - keeps saturation in a readable band. */
 private fun tonalColor(accent: Color, lightness: Float): Color {
     val hsl = FloatArray(3)
@@ -503,6 +528,7 @@ private fun QueueRow(
     ) {
         item.artwork?.let { bitmap ->
             val image = remember(bitmap) { bitmap.asImageBitmap() }
+            val artworkCorner = queueArtworkCorner(style)
             Image(
                     bitmap = image,
                     contentDescription = null,
@@ -511,7 +537,13 @@ private fun QueueRow(
                             // The row owns its height; artwork fits inside the existing text
                             // keyline instead of expanding every pill that has a cover.
                             .size(30.dp)
-                            .clip(RoundedCornerShape(50))
+                            .then(
+                                    if (artworkCorner > 0.dp) {
+                                        Modifier.clip(RoundedCornerShape(artworkCorner))
+                                    } else {
+                                        Modifier
+                                    }
+                            )
             )
             Spacer(Modifier.width(10.dp))
         }

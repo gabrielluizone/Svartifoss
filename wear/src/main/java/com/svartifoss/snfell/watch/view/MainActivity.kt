@@ -706,7 +706,11 @@ class MainActivity : WearCompanionWatchActivity(),
 
         viewModel.albumArt.observe(this, albumArtObserver)
         viewModel.currentButtonConfig.observe(this, buttonConfigObserver)
-        viewModel.preferences.observe(this, preferencesChangeObserver)
+        // Preference delivery must remain active while the activity is in ambient/paused state.
+        // A lifecycle-bound observer can be suspended there, making an already-received phone
+        // edit appear only after the next touch wakes the activity back to STARTED. The observer
+        // is explicitly removed in onDestroy, so it cannot retain a dead Activity.
+        viewModel.preferences.observeForever(preferencesChangeObserver)
         viewModel.volume.observe(this, phoneVolumeListener)
         viewModel.popupVolumeBar.observe(this, volumeBarPopupListener)
         viewModel.openActionsMenu.observe(this, openActionsMenuListener)
@@ -850,6 +854,7 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     override fun onDestroy() {
+        viewModel.preferences.removeObserver(preferencesChangeObserver)
         super.onDestroy()
 
         viewModel.musicState.removeObserver(musicStateObserver)
@@ -3790,7 +3795,7 @@ class MainActivity : WearCompanionWatchActivity(),
                     RotaryEncoderHelper.isFromRotaryEncoder(ev)) {
                 val delta = -RotaryEncoderHelper.getRotaryAxisValue(ev) *
                         RotaryEncoderHelper.getScaledScrollFactor(this)
-                binding.quickActionsPanel.smoothScrollBy(0, delta.roundToInt())
+                binding.quickActionsPanel.smoothScrollByRotary(delta.roundToInt())
                 return true
             }
             return false
