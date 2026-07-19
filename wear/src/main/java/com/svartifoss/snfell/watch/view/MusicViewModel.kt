@@ -105,6 +105,9 @@ class MusicViewModel @Inject constructor(
 
         action.remoteUri?.takeIf(String::isNotBlank)?.let {
             openUriOnPhone.value = it
+            viewModelScope.launchWithErrorHandling(application, musicState) {
+                phoneConnection.executeMenuAction(index)
+            }
             return
         }
 
@@ -133,6 +136,9 @@ class MusicViewModel @Inject constructor(
 
         if (listId == CustomLists.PLAYLIST_SHORTCUTS) {
             openUriOnPhone.value = itemId
+            viewModelScope.launchWithErrorHandling(application, musicState) {
+                phoneConnection.executeCustomMenuAction(listId, itemId)
+            }
             return
         }
 
@@ -146,6 +152,9 @@ class MusicViewModel @Inject constructor(
 
         action.remoteUri?.takeIf(String::isNotBlank)?.let {
             openUriOnPhone.value = it
+            viewModelScope.launchWithErrorHandling(application, musicState) {
+                phoneConnection.executeButtonAction(buttonInfo)
+            }
             return true
         }
 

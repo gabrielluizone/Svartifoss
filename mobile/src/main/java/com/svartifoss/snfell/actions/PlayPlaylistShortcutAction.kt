@@ -78,7 +78,41 @@ class PlayPlaylistShortcutAction : SelectableAction {
         )!!
 
     override val remoteUri: String
-        get() = link
+        get() {
+            val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
+            val openMode = prefs.getString(StreamingShortcutLinks.OPEN_MODE_KEY, null)
+                    ?: if (prefs.getBoolean(
+                                    StreamingShortcutLinks.PREFER_INSTALLED_APP_KEY,
+                                    true)) {
+                        StreamingShortcutLinks.OPEN_MODE_APP
+                    } else {
+                        StreamingShortcutLinks.OPEN_MODE_DEFAULT
+                    }
+
+            val service = StreamingShortcutLinks.detect(link)
+            val targetPackage = service.packageName?.takeIf { packageName ->
+                openMode == StreamingShortcutLinks.OPEN_MODE_APP && isPackageInstalled(packageName)
+            }
+
+            val primaryLink = if (targetPackage != null) {
+                StreamingShortcutLinks.forInstalledApp(link)
+            } else {
+                StreamingShortcutLinks.forBrowser(link)
+            }
+
+            return if (targetPackage != null) {
+                "$targetPackage|$primaryLink"
+            } else {
+                primaryLink
+            }
+        }
+
+    private fun isPackageInstalled(packageName: String): Boolean = try {
+        context.packageManager.getPackageInfo(packageName, 0)
+        true
+    } catch (_: PackageManager.NameNotFoundException) {
+        false
+    }
 
     private fun applicationIcon(packageName: String): Drawable? = try {
         context.packageManager.getApplicationIcon(packageName)
