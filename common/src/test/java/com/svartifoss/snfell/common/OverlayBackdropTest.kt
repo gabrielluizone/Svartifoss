@@ -32,6 +32,12 @@ class OverlayBackdropTest {
                 OverlayBackdropResolver.resolve("follow", "prism"))
         assertEquals(OverlayBackdrop.SOLID_ALBUM,
                 OverlayBackdropResolver.resolve("follow", "tonal"))
+        assertEquals(OverlayBackdrop.GLASS,
+                OverlayBackdropResolver.resolve("follow", "glass_white"))
+        assertEquals(OverlayBackdrop.GLASS,
+                OverlayBackdropResolver.resolve("follow", "glass_tonal"))
+        assertEquals(OverlayBackdrop.GLASS,
+                OverlayBackdropResolver.resolve("follow", "outline_glass_white"))
     }
 
     @Test

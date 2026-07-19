@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.actions.StandardActions
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
@@ -84,6 +85,7 @@ class MusicViewModel @Inject constructor(
     val openActionsMenu = SingleLiveEvent<Unit>()
     val openPlaybackQueueScreen = SingleLiveEvent<Unit>()
     val openStreamingShortcutsMenu = SingleLiveEvent<Unit>()
+    val openUriOnPhone = SingleLiveEvent<String>()
     val openVoiceSearch = SingleLiveEvent<Unit>()
     val closeApp = SingleLiveEvent<Unit>()
 
@@ -100,6 +102,11 @@ class MusicViewModel @Inject constructor(
         val action = actionsMenuConfig.config.value?.get(index) ?: return
 
         closeActionsMenu.postValue(Unit)
+
+        action.remoteUri?.takeIf(String::isNotBlank)?.let {
+            openUriOnPhone.value = it
+            return
+        }
 
         if (action.key == StandardActions.ACTION_OPEN_STREAMING_SHORTCUTS) {
             // Render the dedicated DataItem cache immediately. The phone command only refreshes
@@ -124,6 +131,11 @@ class MusicViewModel @Inject constructor(
     fun executeItemFromCustomMenu(listId: String, itemId: String) {
         closeActionsMenu.postValue(Unit)
 
+        if (listId == CustomLists.PLAYLIST_SHORTCUTS) {
+            openUriOnPhone.value = itemId
+            return
+        }
+
         viewModelScope.launchWithErrorHandling(application, musicState) {
             phoneConnection.executeCustomMenuAction(listId, itemId)
         }
@@ -131,6 +143,11 @@ class MusicViewModel @Inject constructor(
 
     fun executeAction(buttonInfo: ButtonInfo): Boolean {
         val action = currentButtonConfig.value?.getAction(buttonInfo) ?: return false
+
+        action.remoteUri?.takeIf(String::isNotBlank)?.let {
+            openUriOnPhone.value = it
+            return true
+        }
 
         if (action.key == StandardActions.ACTION_OPEN_STREAMING_SHORTCUTS) {
             openStreamingShortcutsMenu.call()

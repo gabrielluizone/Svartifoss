@@ -67,7 +67,8 @@
                 android:id="@+id/idle_state_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
+                android:includeFontPadding="false"
                 android:text="@string/idle_nothing_playing"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -77,7 +78,8 @@
                 android:id="@+id/idle_state_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="0dp"
+                android:includeFontPadding="false"
                 android:text="@string/idle_hint"
                 android:textColor="@color/glass_surface_subtitle_text"
                 android:textSize="12sp" />
@@ -445,7 +447,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:clipChildren="false"
-                android:paddingTop="18dp"
+                android:paddingTop="32dp"
                 android:paddingBottom="30dp">
 
             <com.svartifoss.snfell.watch.view.OutlineTextView
@@ -540,8 +542,8 @@
 
                 <ImageView
                     android:id="@+id/quick_action_up_next_artwork"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/artwork_round_mask"
                     android:clipToOutline="true"

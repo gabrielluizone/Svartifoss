@@ -50,7 +50,10 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
                 ButtonAction(it.value.actionKey,
                         icon,
                         it.value.actionTitle,
-                        iconTintable)
+                        iconTintable,
+                        it.value.remoteUri.takeIf { _ ->
+                            it.value.hasRemoteUri() && it.value.remoteUri.isNotBlank()
+                        })
             }.toList()
 
             config.postValue(actions)

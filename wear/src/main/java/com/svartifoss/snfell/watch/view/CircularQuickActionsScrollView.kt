@@ -197,14 +197,13 @@ class CircularQuickActionsScrollView @JvmOverloads constructor(
         val side = minOf(width, height).toFloat() - strokeInset * 2f
         indicatorBounds.set(
                 (width - side) / 2f,
-                scrollY + (height - side) / 2f,
+                (height - side) / 2f,
                 (width + side) / 2f,
-                scrollY + (height + side) / 2f
+                (height + side) / 2f
         )
 
-        // ScrollView draws descendants in content coordinates. Including scrollY above anchors
-        // the complete arc to the physical bezel while only its thumb travels along the track,
-        // exactly like QueueScreen's overlay indicator.
+        // dispatchDraw is already in viewport coordinates. Adding scrollY here made the complete
+        // track travel with the content; keep the track fixed and move only the thumb fraction.
 
         trackPaint.alpha = (0.12f * alpha * 255f).toInt()
         canvas.drawArc(indicatorBounds, -ARC_SPAN / 2f, ARC_SPAN, false, trackPaint)

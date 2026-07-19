@@ -23,6 +23,7 @@ import android.graphics.drawable.Animatable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.TransitionDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -52,6 +53,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
@@ -64,6 +66,7 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import androidx.wear.ambient.AmbientLifecycleObserver
 import androidx.wear.input.RemoteInputIntentHelper
+import androidx.wear.remote.interactions.RemoteActivityHelper
 import androidx.wear.widget.SwipeDismissFrameLayout
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesRepairableException
@@ -135,25 +138,26 @@ import com.matejdro.wearutils.miscutils.VibratorCompat
 import com.matejdro.wearutils.preferences.definition.Preferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.ref.WeakReference
+import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
-/** Mini buttons belong to the active transport state, not merely to a configured action map.
- * A paused track is intentionally inactive here: it is distinct from idle metadata, but neither
- * state should leave playback-only shortcuts floating over the player. */
-internal fun hasActiveMiniButtons(configured: Boolean, playing: Boolean): Boolean =
-        configured && playing
+/** Mini buttons belong to a loaded track, whether that track is playing or paused. The idle flag
+ * distinguishes a real paused session from the completely empty "nothing playing" screen. */
+internal fun hasActiveMiniButtons(configured: Boolean, idle: Boolean): Boolean =
+        configured && !idle
 
 internal fun shouldShowMiniButtons(
         configured: Boolean,
-        playing: Boolean,
+        idle: Boolean,
         ambient: Boolean,
         overlayActive: Boolean
-): Boolean = hasActiveMiniButtons(configured, playing) && !ambient && !overlayActive
+): Boolean = hasActiveMiniButtons(configured, idle) && !ambient && !overlayActive
 
 @AndroidEntryPoint
 class MainActivity : WearCompanionWatchActivity(),
@@ -708,6 +712,7 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.openActionsMenu.observe(this, openActionsMenuListener)
         viewModel.openPlaybackQueueScreen.observe(this, openPlaybackQueueScreenListener)
         viewModel.openStreamingShortcutsMenu.observe(this, openStreamingShortcutsMenuListener)
+        viewModel.openUriOnPhone.observe(this, openUriOnPhoneListener)
         viewModel.openVoiceSearch.observe(this, openVoiceSearchListener)
         viewModel.closeApp.observe(this, closeAppListener)
         viewModel.notification.observe(this, notificationObserver)
@@ -2278,25 +2283,25 @@ class MainActivity : WearCompanionWatchActivity(),
         syncScreenButtonsVisibility()
     }
 
-    /** Central visibility contract for every playback/AOD/overlay transition. Configured stopped
-     * actions remain available to the rest of the input system, but the visual mini row exists only
-     * while playback is actively running. [forceInteractive] is used while leaving ambient because
+    /** Central visibility contract for every playback/AOD/overlay transition. Paused-track actions
+     * stay visible, while the truly empty idle screen remains uncluttered. [forceInteractive] is
+     * used while leaving ambient because
      * AmbientLifecycleObserver may still report ambient from inside its exit callback. */
     private fun syncScreenButtonsVisibility(forceInteractive: Boolean = false) {
-        val active = hasActiveMiniButtons(screenButtonsConfigured, isMusicPlaying)
+        val active = hasActiveMiniButtons(screenButtonsConfigured, faceState.value.idle)
         val visible = if (forceInteractive) {
             active && !overlayActive
         } else {
             shouldShowMiniButtons(
                     configured = screenButtonsConfigured,
-                    playing = isMusicPlaying,
+                    idle = faceState.value.idle,
                     ambient = ambientObserver.isAmbient,
                     overlayActive = overlayActive)
         }
         binding.screenButtonsRow.visibility = if (visible) View.VISIBLE else View.GONE
 
-        // Curated/Expressive faces should reserve their lower chrome only for a row that can
-        // actually appear. Paused/idle playback restores their default lower composition.
+        // Curated/Expressive faces reserve their lower chrome only for a row that can actually
+        // appear. Only the empty idle state restores their default lower composition.
         updateFaceState { state ->
             state.copy(
                     showDefaultBottomPills = !active,
@@ -3322,6 +3327,38 @@ class MainActivity : WearCompanionWatchActivity(),
         )
     }
 
+    private val openUriOnPhoneListener = Observer<String?> { rawUri ->
+        rawUri?.let(::openUriOnPhone)
+    }
+
+    /** Opens a streaming shortcut through the Wear OS phone bridge. Launching ACTION_VIEW from
+     * the phone-side playback service is blocked by modern Android background-start rules. */
+    private fun openUriOnPhone(rawUri: String) {
+        val uri = runCatching { Uri.parse(rawUri.trim()) }.getOrNull() ?: return
+        val scheme = uri.scheme?.lowercase(Locale.US).orEmpty()
+        if (scheme.isBlank() || scheme in setOf("content", "data", "file", "intent", "javascript")) {
+            Timber.e("Refusing unsafe streaming shortcut URI scheme: %s", scheme)
+            return
+        }
+        if ((scheme == "http" || scheme == "https") && uri.host.isNullOrBlank()) {
+            Timber.e("Refusing malformed streaming shortcut web URI")
+            return
+        }
+
+        val phoneIntent = Intent(Intent.ACTION_VIEW, uri).addCategory(Intent.CATEGORY_BROWSABLE)
+        val remoteActivityHelper = RemoteActivityHelper(
+                this,
+                ContextCompat.getMainExecutor(this)
+        )
+        lifecycleScope.launch {
+            runCatching {
+                remoteActivityHelper.startRemoteActivity(phoneIntent).await()
+            }.onFailure { error ->
+                Timber.e(error, "Could not request streaming shortcut on paired phone")
+            }
+        }
+    }
+
     private val closeAppListener = Observer<Unit?> {
         finish()
     }
@@ -4210,6 +4247,14 @@ class MainActivity : WearCompanionWatchActivity(),
         // physical viewport edge. Its curved indicator can now hug the same bezel as QueueScreen.
         val sideInset = (8f * density).roundToInt()
         panelRoot.setPadding(sideInset, panelRoot.paddingTop, sideInset, panelRoot.paddingBottom)
+        val viewportHeight = panelRoot.height.takeIf { it > 0 }
+                ?: resources.displayMetrics.heightPixels
+        panel.setPadding(
+                panel.paddingLeft,
+                (viewportHeight * .17f).roundToInt(),
+                panel.paddingRight,
+                panel.paddingBottom
+        )
 
         // Layout variants may reorder information, but they no longer shrink its touch targets or
         // hide metadata. The compact variant's tiny bubbles were the core legibility regression.
@@ -4317,8 +4362,12 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Inactive background of a round quick-panel slot button, per [quickPanelStyle]. The active
      *  (accent-filled) look stays shared across styles. */
     private fun inactiveQuickButtonBackground(): android.graphics.drawable.Drawable {
-        val hairline = (1.5f * resources.displayMetrics.density).toInt()
+        val d = resources.displayMetrics.density
+        val hairline = (1.25f * d).roundToInt().coerceAtLeast(1)
         return when (quickPanelStyle) {
+            "glass_white" -> capsule(0xB3FFFFFF.toInt())
+            "glass_tonal" -> capsule(ColorUtils.setAlphaComponent(
+                    expressiveSurface(resolvedQuickPanelAccent()), 0xB3))
             "minimal" -> capsule(Color.TRANSPARENT, hairline, 0x66FFFFFF)
             "material" -> capsule(materialSurfaceColor)
             "tonal" -> capsule(expressiveSurface(resolvedQuickPanelAccent()))
@@ -4326,7 +4375,8 @@ class MainActivity : WearCompanionWatchActivity(),
             "light" -> capsule(LIGHT_PANEL_SURFACE)
             "gradient" -> gradientCapsule(tonalSurface(resolvedQuickPanelAccent(), 0.34f), tonalSurface(resolvedQuickPanelSecondaryAccent(), 0.16f))
             "mono" -> capsule(MONO_PANEL_SURFACE)
-            "outline" -> capsule(Color.TRANSPARENT, (3f * resources.displayMetrics.density).toInt(), Color.WHITE)
+            "outline" -> capsule(Color.TRANSPARENT, hairline, Color.WHITE)
+            "outline_glass_white" -> capsule(0x80FFFFFF.toInt(), hairline, Color.WHITE)
             "prism" -> prismCapsule()
             "duotone" -> capsule(tonalSurface(resolvedQuickPanelSecondaryAccent()))
             "contrast" -> capsule(Color.BLACK, (2f * resources.displayMetrics.density).toInt(), Color.WHITE)
@@ -4339,8 +4389,12 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Background of the full-width Up Next / long-slot row, per [quickPanelStyle]. */
     private fun quickPanelRowBackground(): android.graphics.drawable.Drawable {
         val d = resources.displayMetrics.density
-        val hairline = (1.5f * d).toInt()
+        val hairline = (1.25f * d).roundToInt().coerceAtLeast(1)
         return when (quickPanelStyle) {
+            "glass_white" -> capsule(0xB3FFFFFF.toInt(), radiusPx = 28f * d)
+            "glass_tonal" -> capsule(
+                    ColorUtils.setAlphaComponent(expressiveSurface(resolvedQuickPanelAccent()), 0xB3),
+                    radiusPx = 28f * d)
             "minimal" -> capsule(Color.TRANSPARENT, hairline, 0x66FFFFFF, radiusPx = 24f * d)
             "material" -> capsule(materialSurfaceColor, radiusPx = 16f * d)
             "tonal" -> capsule(expressiveSurface(resolvedQuickPanelAccent()), radiusPx = 28f * d)
@@ -4348,7 +4402,9 @@ class MainActivity : WearCompanionWatchActivity(),
             "light" -> capsule(LIGHT_PANEL_SURFACE, radiusPx = 22f * d)
             "gradient" -> gradientCapsule(tonalSurface(resolvedQuickPanelAccent(), 0.34f), tonalSurface(resolvedQuickPanelSecondaryAccent(), 0.16f), radiusPx = 24f * d)
             "mono" -> capsule(MONO_PANEL_SURFACE, radiusPx = 18f * d)
-            "outline" -> capsule(Color.TRANSPARENT, (3f * d).toInt(), Color.WHITE, radiusPx = 20f * d)
+            "outline" -> capsule(Color.TRANSPARENT, hairline, Color.WHITE, radiusPx = 20f * d)
+            "outline_glass_white" -> capsule(
+                    0x80FFFFFF.toInt(), hairline, Color.WHITE, radiusPx = 20f * d)
             "duotone" -> capsule(tonalSurface(resolvedQuickPanelSecondaryAccent()), radiusPx = 24f * d)
             "contrast" -> capsule(Color.BLACK, (2f * d).toInt(), Color.WHITE, radiusPx = 16f * d)
             "prism" -> prismCapsule(radiusPx = 24f * d)
@@ -4379,12 +4435,13 @@ class MainActivity : WearCompanionWatchActivity(),
 
     /** Icon/text colour for the inactive quick-panel chrome, per [quickPanelStyle]. */
     private fun quickPanelInactiveTint(): Int = when (quickPanelStyle) {
-        "light" -> LIGHT_PANEL_ON
+        "light", "glass_white", "outline_glass_white" -> LIGHT_PANEL_ON
         "neon" -> resolvedQuickPanelAccent()
         "terminal" -> TERMINAL_GREEN
         // The tonal chrome now uses the Expressive face's light container, so its glyphs must be
         // dark to stay legible (matching the face's dark-on-light transport icons).
-        "tonal" -> contrastingIconColor(expressiveSurface(resolvedQuickPanelAccent()))
+        "tonal", "glass_tonal" -> contrastingIconColor(
+                expressiveSurface(resolvedQuickPanelAccent()))
         else -> Color.WHITE
     }
 
@@ -4625,8 +4682,7 @@ class MainActivity : WearCompanionWatchActivity(),
         updateFaceState { state ->
             state.copy(
                     upNextTitle = nextTrack.orEmpty(),
-                    upNextArtist = nextEntry?.entrySubtitle?.takeIf(String::isNotBlank).orEmpty(),
-                    upNextArtwork = nextItem?.icon?.asImageBitmap()
+                    upNextArtist = nextEntry?.entrySubtitle?.takeIf(String::isNotBlank).orEmpty()
             )
         }
 

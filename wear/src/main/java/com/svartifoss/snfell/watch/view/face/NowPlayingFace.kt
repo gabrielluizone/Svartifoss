@@ -135,8 +135,6 @@ data class NowPlayingFaceState(
          *  metadata. */
         val upNextTitle: String = "",
         val upNextArtist: String = "",
-        /** Optional cover for [upNextTitle]. Queue publishers are not required to expose one. */
-        val upNextArtwork: androidx.compose.ui.graphics.ImageBitmap? = null,
         /** Resolved progress accent (already accounts for the progress color mode). */
         val progressColor: Int = WatchTheme.ACCENT_DEFAULT,
         /** Raw universal progress-ring style (solid/dashed/dots/hairline/comet). Interactive

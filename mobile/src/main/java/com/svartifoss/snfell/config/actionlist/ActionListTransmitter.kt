@@ -8,6 +8,7 @@ import com.google.android.gms.wearable.Wearable
 import com.google.auto.factory.AutoFactory
 import com.google.auto.factory.Provided
 import com.svartifoss.snfell.actions.PhoneAction
+import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.actions.StandardIcons
 import com.svartifoss.snfell.config.CustomIconStorage
@@ -35,14 +36,18 @@ class ActionListTransmitter(actionList: ActionList,
         GlobalScope.launchWithPlayServicesErrorHandling(context) {
             val dataOnWatch = dataClient.getDataItems(Uri.parse("wear://*${CommPaths.DATA_LIST_ITEMS}")).await()
 
-            val missingTintMetadata = dataOnWatch.any { item ->
+            val missingMetadata = dataOnWatch.any { item ->
                 try {
-                    WatchList.parseFrom(item.data).actionsList.any { !it.hasIconTintable() }
+                    WatchList.parseFrom(item.data).actionsList.any { action ->
+                        !action.hasIconTintable() ||
+                                (action.actionKey == PlayPlaylistShortcutAction::class.java.canonicalName &&
+                                        !action.hasRemoteUri())
+                    }
                 } catch (_: Exception) {
                     true
                 }
             }
-            if (!dataOnWatch.any() || missingTintMetadata) {
+            if (!dataOnWatch.any() || missingMetadata) {
                 sendConfigToWatch(actionList.actions)
             }
 
@@ -63,6 +68,7 @@ class ActionListTransmitter(actionList: ActionList,
             actionProto.actionTitle = action.title
             actionProto.actionKey = action.javaClass.canonicalName
             actionProto.iconTintable = action.iconTintable
+            action.remoteUri?.takeIf(String::isNotBlank)?.let { actionProto.remoteUri = it }
             protoBuilder.addActions(actionProto.build())
 
             if (action.customIconUri == null &&

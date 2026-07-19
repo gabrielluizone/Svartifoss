@@ -21,6 +21,9 @@ message WatchActions {
     // True for monochrome template glyphs that should follow the destination surface tint;
     // false for app artwork / gallery images whose original colours must be preserved.
     optional bool iconTintable = 6;
+    // URI that must be opened on the paired phone through Wear RemoteIntent. Keeping this in the
+    // action payload avoids Android's background-activity launch restriction on phone services.
+    optional string remoteUri = 7;
   }
 }
 
@@ -32,5 +35,6 @@ message WatchList {
     optional string actionKey = 2;
     // Explicitly distinguishes monochrome templates from full-colour launcher/gallery artwork.
     optional bool iconTintable = 3;
+    optional string remoteUri = 4;
   }
 }

@@ -69,19 +69,19 @@ class PlayerConfigurationTest {
     }
 
     @Test
-    fun miniButtonsOnlyAppearDuringActiveInteractivePlayback() {
-        assertTrue(hasActiveMiniButtons(configured = true, playing = true))
-        assertFalse(hasActiveMiniButtons(configured = true, playing = false))
-        assertFalse(hasActiveMiniButtons(configured = false, playing = true))
+    fun miniButtonsAppearForPlayingOrPausedTracksButNotIdle() {
+        assertTrue(hasActiveMiniButtons(configured = true, idle = false))
+        assertFalse(hasActiveMiniButtons(configured = true, idle = true))
+        assertFalse(hasActiveMiniButtons(configured = false, idle = false))
 
         assertTrue(shouldShowMiniButtons(
-                configured = true, playing = true, ambient = false, overlayActive = false))
+                configured = true, idle = false, ambient = false, overlayActive = false))
         assertFalse(shouldShowMiniButtons(
-                configured = true, playing = false, ambient = false, overlayActive = false))
+                configured = true, idle = true, ambient = false, overlayActive = false))
         assertFalse(shouldShowMiniButtons(
-                configured = true, playing = true, ambient = true, overlayActive = false))
+                configured = true, idle = false, ambient = true, overlayActive = false))
         assertFalse(shouldShowMiniButtons(
-                configured = true, playing = true, ambient = false, overlayActive = true))
+                configured = true, idle = false, ambient = false, overlayActive = true))
     }
 
     @Test

@@ -48,6 +48,9 @@ class PlayPlaylistShortcutAction : SelectableAction {
     override val defaultIcon: Drawable
         get() = AppCompatResources.getDrawable(context, com.svartifoss.snfell.common.R.drawable.action_open_playlist)!!
 
+    override val remoteUri: String
+        get() = link
+
     override fun isEqualToAction(other: PhoneAction): Boolean {
         other as PlayPlaylistShortcutAction
         return super.isEqualToAction(other) &&

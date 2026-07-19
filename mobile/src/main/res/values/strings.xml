@@ -787,6 +787,45 @@
         <item>frost</item>
     </string-array>
 
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Glass</item>
+        <item>Glass White</item>
+        <item>Glass Tonal</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Outline Glass White</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>High Contrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+    </string-array>
+
     <string-array name="wear_screen_theme_entries">
         <item>@string/wear_screen_theme_default</item>
         <item>@string/wear_screen_theme_minimal</item>

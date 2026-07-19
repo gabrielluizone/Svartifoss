@@ -2916,7 +2916,6 @@ class WatchPreviewView @JvmOverloads constructor(
         drawConfiguredOverlayBackdrop(
                 canvas, geometry, quickPanelStyle,
                 accent, quickPanelSecondaryAccent(), quickPanelTertiaryAccent())
-        drawSmallClock(canvas, geometry.cx, geometry.bounds.top + dp(20f), dp)
         val metadataColor = when (quickPanelStyle) {
             "light" -> 0xFF111111.toInt()
             "terminal" -> TERMINAL_GREEN
@@ -2937,11 +2936,13 @@ class WatchPreviewView @JvmOverloads constructor(
         val titleY = when (quickPanelLayout) {
             "actions_first" -> geometry.cy + dp(5f)
             "compact" -> geometry.cy - dp(55f)
-            else -> if (renderArtist) geometry.cy - dp(68f) else geometry.cy - dp(54f)
+            // Matches the awake Expressive/Material metadata keyline instead of crowding the
+            // upper bezel. Baseline sits around 24% of the common 192dp viewport.
+            else -> if (renderArtist) geometry.cy - dp(49f) else geometry.cy - dp(40f)
         }
         val artistY = when (quickPanelLayout) {
             "actions_first" -> geometry.cy + dp(22f)
-            else -> if (showTrackTitle) geometry.cy - dp(47f) else geometry.cy - dp(54f)
+            else -> if (showTrackTitle) geometry.cy - dp(31f) else geometry.cy - dp(40f)
         }
 
         textPaint.style = Paint.Style.FILL
@@ -2974,7 +2975,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val gap = dp(6f)
         val centerY = when (quickPanelLayout) {
             "actions_first" -> geometry.cy - dp(46f)
-            else -> geometry.cy - dp(13f) + controlsShift
+            else -> geometry.cy + dp(12f) + controlsShift
         }
         val defaultIcons = intArrayOf(
                 commonR.drawable.action_like,
@@ -3032,7 +3033,7 @@ class WatchPreviewView @JvmOverloads constructor(
             val rowY = when (quickPanelLayout) {
                 "actions_first" -> geometry.cy + dp(52f)
                 "compact" -> geometry.cy + dp(39f)
-                else -> geometry.cy + dp(43f) + controlsShift
+                else -> geometry.cy + dp(70f) + controlsShift
             }
             val rowRect = RectF(
                     geometry.cx - rowWidth / 2f,
@@ -3085,7 +3086,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val corner = if (row) when (style) {
             "material", "contrast" -> 16f
             "mono" -> 18f
-            "outline" -> 20f
+            "outline", "outline_glass_white" -> 20f
             "neon", "light", "frost" -> 22f
             "minimal", "gradient", "duotone", "prism" -> 24f
             "terminal" -> 0f
@@ -3119,10 +3120,21 @@ class WatchPreviewView @JvmOverloads constructor(
         }
 
         return when (style) {
+            "glass_white" -> PreviewSkin(
+                    fill = 0xB3FFFFFF.toInt(), onColor = LIGHT_ON, cornerDp = corner)
+            "glass_tonal" -> {
+                val fill = ColorUtils.setAlphaComponent(
+                        tonal(accent, .74f, .40f, .92f), 0xB3)
+                PreviewSkin(fill = fill, onColor = contrastingColor(
+                        tonal(accent, .74f, .40f, .92f)), cornerDp = corner)
+            }
             "minimal" -> PreviewSkin(cornerDp = corner,
                     strokeColor = 0x66FFFFFF, strokeDp = 1.5f)
             "material" -> PreviewSkin(fill = MATERIAL_SURFACE, cornerDp = corner)
-            "tonal" -> PreviewSkin(fill = tonal(accent, 0.28f, 0.25f, 0.60f), cornerDp = corner)
+            "tonal" -> {
+                val fill = tonal(accent, .74f, .40f, .92f)
+                PreviewSkin(fill = fill, onColor = contrastingColor(fill), cornerDp = corner)
+            }
             "neon" -> PreviewSkin(onColor = accent, cornerDp = corner,
                     strokeColor = accent, strokeDp = 2f)
             "light" -> PreviewSkin(fill = LIGHT_SURFACE, onColor = LIGHT_ON, cornerDp = corner)
@@ -3131,7 +3143,10 @@ class WatchPreviewView @JvmOverloads constructor(
                     gradientBottom = tonal(secondary, 0.16f, 0.25f, 0.60f))
             "mono" -> PreviewSkin(fill = MONO_SURFACE, cornerDp = corner)
             "outline" -> PreviewSkin(cornerDp = corner,
-                    strokeColor = Color.WHITE, strokeDp = 3f)
+                    strokeColor = Color.WHITE, strokeDp = 1.25f)
+            "outline_glass_white" -> PreviewSkin(
+                    fill = 0x80FFFFFF.toInt(), onColor = LIGHT_ON, cornerDp = corner,
+                    strokeColor = Color.WHITE, strokeDp = 1.25f)
             "duotone" -> PreviewSkin(
                     fill = tonal(secondary, 0.24f, 0.25f, 0.60f),
                     cornerDp = corner)

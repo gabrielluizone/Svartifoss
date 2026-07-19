@@ -140,7 +140,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_paste"
-            style="@style/LyraGestureButton"
+            style="@style/LyraFilledButton"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginStart="5dp"

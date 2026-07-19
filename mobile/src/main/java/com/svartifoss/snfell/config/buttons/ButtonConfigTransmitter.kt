@@ -9,6 +9,7 @@ import com.google.android.gms.wearable.Wearable
 import com.google.auto.factory.AutoFactory
 import com.google.auto.factory.Provided
 import com.svartifoss.snfell.actions.PhoneAction
+import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.actions.StandardIcons
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
@@ -37,7 +38,17 @@ class ButtonConfigTransmitter(buttonConfig: ButtonConfig,
         GlobalScope.launchWithPlayServicesErrorHandling(context) {
             val dataOnWatch = dataClient.getDataItems(Uri.parse("wear://*$endpointPath")).await()
 
-            if (!dataOnWatch.any()) {
+            val missingRemoteUri = dataOnWatch.any { item ->
+                try {
+                    WatchActions.parseFrom(item.data).actionsList.any { action ->
+                        action.actionKey == PlayPlaylistShortcutAction::class.java.canonicalName &&
+                                !action.hasRemoteUri()
+                    }
+                } catch (_: Exception) {
+                    true
+                }
+            }
+            if (!dataOnWatch.any() || missingRemoteUri) {
                 sendConfigToWatch(buttonConfig.getAllActions())
             }
 
@@ -59,6 +70,7 @@ class ButtonConfigTransmitter(buttonConfig: ButtonConfig,
             buttonInfoProto.actionKey = actionKey
             buttonInfoProto.actionTitle = action.title
             buttonInfoProto.iconTintable = action.iconTintable
+            action.remoteUri?.takeIf(String::isNotBlank)?.let { buttonInfoProto.remoteUri = it }
             protoBuilder.addActions(buttonInfoProto.build())
 
             if (buttonInfo.physicalButton) {

@@ -621,6 +621,26 @@
         <item>Gelo</item>
     </string-array>
 
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Vidro</item>
+        <item>Vidro branco</item>
+        <item>Vidro tonal</item>
+        <item>Minimalista (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Claro</item>
+        <item>Gradiente</item>
+        <item>Mono</item>
+        <item>Contorno</item>
+        <item>Contorno de vidro branco</item>
+        <item>Duotone</item>
+        <item>Prisma</item>
+        <item>Alto contraste</item>
+        <item>Terminal</item>
+        <item>Gelo</item>
+    </string-array>
+
     <string name="setting_wear_track_time_mode">Exibição do tempo da faixa</string>
     <string name="setting_wear_track_time_mode_description">Quando a posição da faixa (ex: 1:23 / 3:45) é exibida na tela de reprodução.</string>
     <string-array name="wear_track_time_mode_entries">

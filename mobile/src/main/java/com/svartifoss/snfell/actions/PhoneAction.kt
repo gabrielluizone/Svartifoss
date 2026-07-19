@@ -49,6 +49,11 @@ abstract class PhoneAction : Bundlable {
     open val defaultIconTintable: Boolean
         get() = true
 
+    /** Optional URI that the watch should open directly on the paired phone. This bypasses
+     * Android's background-Activity restriction that applies to MusicService. */
+    open val remoteUri: String?
+        get() = null
+
     val iconTintable: Boolean
         get() = customIconUri?.let {
             it.scheme == ContentResolver.SCHEME_ANDROID_RESOURCE

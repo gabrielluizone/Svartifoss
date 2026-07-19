@@ -99,6 +99,7 @@ dependencies {
     implementation libs.androidx.wear
     implementation libs.androidx.wear.input
     implementation libs.androidx.wear.ongoing
+    implementation libs.androidx.wear.remote.interactions
     implementation libs.androidx.media
 
     // Wear OS Tiles + ProtoLayout — glanceable quick-control surface (MediaTileService).

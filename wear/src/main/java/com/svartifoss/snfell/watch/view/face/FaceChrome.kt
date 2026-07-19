@@ -2,7 +2,6 @@ package com.svartifoss.snfell.watch.view.face
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
@@ -33,7 +32,6 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -450,26 +448,14 @@ internal fun AmbientUpNextPill(
                     .padding(horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically
     ) {
-        if (state.upNextArtwork != null) {
-            Image(
-                    bitmap = state.upNextArtwork,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                            // Fixed square artwork never participates in the row's measurement,
-                            // so a cover cannot make the ambient pill taller or appear stretched.
-                            .size(30.dp)
-                            .clip(RoundedCornerShape(7.dp))
-                            .graphicsLayer(alpha = .78f * alpha)
-            )
-        } else {
-            Icon(
-                    painter = painterResource(R.drawable.ic_queue_music),
-                    contentDescription = null,
-                    tint = tint.copy(alpha = .68f * alpha),
-                    modifier = Modifier.size(24.dp)
-            )
-        }
+        // AOD deliberately never publishes or paints album bitmaps: the monochrome queue glyph
+        // keeps emitted pixels and GPU work low while the two text lines still identify the track.
+        Icon(
+                painter = painterResource(R.drawable.ic_queue_music),
+                contentDescription = null,
+                tint = tint.copy(alpha = .68f * alpha),
+                modifier = Modifier.size(24.dp)
+        )
         Column(Modifier.padding(start = 10.dp).weight(1f)) {
             Text(
                     text = label,

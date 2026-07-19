@@ -84,7 +84,11 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private
                 } else {
                     null
                 }
-                newConfigMap.put(buttonInfo, ButtonAction(key, icon, title, iconTintable))
+                val remoteUri = action.remoteUri.takeIf { action.hasRemoteUri() && it.isNotBlank() }
+                newConfigMap.put(
+                        buttonInfo,
+                        ButtonAction(key, icon, title, iconTintable, remoteUri)
+                )
             }
 
             configMap = newConfigMap

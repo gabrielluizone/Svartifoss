@@ -508,7 +508,9 @@ private fun QueueRow(
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                            .size(38.dp)
+                            // The row owns its height; artwork fits inside the existing text
+                            // keyline instead of expanding every pill that has a cover.
+                            .size(30.dp)
                             .clip(RoundedCornerShape(50))
             )
             Spacer(Modifier.width(10.dp))

@@ -313,8 +313,8 @@
             android:defaultValue="glass"
             android:title="@string/setting_wear_quick_panel_style"
             android:summary="%s"
-            android:entries="@array/wear_overlay_style_entries"
-            android:entryValues="@array/wear_overlay_style_values"
+            android:entries="@array/wear_quick_panel_style_entries"
+            android:entryValues="@array/wear_quick_panel_style_values"
             android:layout="@layout/pref_item" />
 
         <ListPreference

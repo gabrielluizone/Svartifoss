@@ -50,7 +50,8 @@ These changes are still in development and are not part of a published release.
   playlists, albums, artists, shows, episodes or mixes. Text spacing was refined,
   the single BETA badge replaces the duplicated title suffix, all decorative
   marks follow the live accent, and filled actions choose black or white content
-  automatically for contrast.
+  automatically for contrast. Add shortcut and Paste link now share the same
+  filled pill geometry.
 - **Streaming content inside Actions**: saved tracks, albums, mixes and
   playlists can now be assigned directly to the watch Actions menu and Quick
   Actions, alongside apps and normal commands. The Watch → Panels page also
@@ -64,6 +65,9 @@ These changes are still in development and are not part of a published release.
   app's MediaSession commands and then fall back to a correctly typed deep link.
   Spotify web links are converted to matching track, playlist, album, artist,
   show or episode app URIs instead of being treated as one generic playlist.
+  Watch taps now carry the saved URI with the configured action and use the
+  AndroidX Wear remote-activity bridge to open it on the paired phone, avoiding
+  modern Android background-launch restrictions.
 - **Modernized navigation icons**: Watch and Controls now use dedicated watch
   vibration and gamepad icons, and Buy Me a Coffee uses the supplied coffee
   artwork instead of the generic lightning bolt.
@@ -77,9 +81,9 @@ These changes are still in development and are not part of a published release.
 - **Wide, compact Up Next on the always-on display**: Expressive and Material
   AOD layouts use 88% of the available width while clamping the row to 44–52 dp,
   and the row now sits higher in the usable lower band without touching the
-  center transport controls. It can
-  show the next track's artwork, title and artist and remains intentionally
-  non-interactive while ambient.
+  center transport controls. It shows a low-emission monochrome queue glyph,
+  title and artist, deliberately omits album artwork to save energy, and remains
+  intentionally non-interactive while ambient.
 - **Up Next no longer depends on opening Quick Actions**: queue data is
   loaded from the local Wear cache at startup, then refreshed and retained when
   playback or the current track changes. The AOD is populated without first
@@ -93,9 +97,10 @@ These changes are still in development and are not part of a published release.
   total time whenever Track time is enabled, using the same transport-relative
   placement and mini-button clearance as Expressive; the phone preview mirrors
   that placement.
-- **Artwork in Up Next and queue**: the quick-actions preview, ambient Up Next
-  pill and playback queue show a compact cover thumbnail whenever the media app
-  supplies one, while preserving the text-only layout when artwork is missing.
+- **Artwork in interactive Up Next and queue**: Quick Actions and the playback
+  queue show a compact cover whenever the media app supplies one, while keeping
+  a text-only fallback. Covers are constrained to 30 dp inside the established
+  row height so they can no longer stretch or distort their pills.
 - **Expressive side buttons follow your Controls**: the previous/next buttons
   on the Expressive layout now run whatever you assigned to the left/right
   screen quadrants (and show that action's icon), falling back to
@@ -125,11 +130,21 @@ These changes are still in development and are not part of a published release.
 - **Quick Actions behaves like the queue**: the panel uses the same round-screen
   row scaling and fixed curved bezel indicator, tighter app/playlist spacing,
   stable-height media pills widened to the Up Next row, and correct centering
-  when an app exposes fewer than three actions. A back swipe or a tap outside
-  an action dismisses only the panel instead of closing the app.
+  when an app exposes fewer than three actions. Metadata now follows the same
+  top keyline as Expressive/Material and the three primary pills sit closer to
+  the screen center. A back swipe or a tap outside an action dismisses only the
+  panel instead of closing the app.
 - **Reliable Quick Actions icons**: full-colour launcher icons are preserved,
   monochrome vectors receive the correct surface tint, and transparent or
   corrupt media-app artwork falls back to a visible semantic glyph.
+- **Quick panel style expansion**: Glass White, Glass Tonal and Outline Glass
+  White join the panel picker with matching watch/phone previews. The original
+  Outline stroke is now a thin keyline instead of a heavy border.
+- **Queue styles restored per theme**: the queue resolves its style from the
+  active built-in layout or custom-theme snapshot, so changing Queue style no
+  longer appears to stop working after artwork thumbnails are added.
+- **Cleaner empty playback state**: “Nothing playing” and its phone hint use
+  tighter margins without extra font padding on the small Wear screen.
 
 - **Clearer navigation and grouping**: the separate playing and stopped setup
   screens now live together under Controls, with swipeable "Music playing" and
@@ -176,7 +191,9 @@ These changes are still in development and are not part of a published release.
 - **Mini buttons no longer break layouts**: Compose players place shortcuts in
   a compact lower-bezel row, remove conflicting lower chrome and make only the
   small collision-specific adjustments needed by Halo/Aurora. Neutral buttons
-  inherit a layout-aware surface instead of one generic glass pill.
+  inherit a layout-aware surface instead of one generic glass pill. Buttons
+  configured for the paused state remain visible for a loaded paused track and
+  disappear only on the truly empty playback screen or in AOD/overlays.
 - **Simplified control styles**: the picker now exposes the four reliable
   choices — Balanced, Minimal, Compact and High contrast — and migrates legacy
   values safely. Player icon visibility remains configurable on Classic, Poster
