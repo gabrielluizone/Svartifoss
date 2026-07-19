@@ -1,8 +1,11 @@
 package com.svartifoss.snfell.view.watchface
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.content.res.ColorStateList
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.media.session.PlaybackState
@@ -16,6 +19,7 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import androidx.lifecycle.lifecycleScope
@@ -25,12 +29,15 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.databinding.FragmentWatchFaceBinding
 import com.svartifoss.snfell.config.buttons.GlobalButtonConfig
 import com.svartifoss.snfell.music.isPlaying
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.TitledActivity
 import com.svartifoss.snfell.view.mainactivity.MainActivity
+import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
+import com.svartifoss.snfell.view.watchface.theme.WatchThemesActivity
 import com.matejdro.wearutils.preferencesync.PreferencePusher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -47,6 +54,10 @@ private const val PLAYBACK_TICK_INTERVAL_MS = 500L
  *  not pull a contextual AOD/panel preview back to the player or trigger a full watch push. */
 private val WATCH_APPEARANCE_PREF_KEYS = setOf(
     "wear_screen_face",
+    "wear_active_custom_theme_id",
+    "wear_custom_theme_schema",
+    "wear_custom_theme_complete",
+    "wear_custom_theme_revision",
     "wear_show_track_title",
     "wear_show_track_artist",
     "wear_classic_icons_visible",
@@ -148,6 +159,19 @@ class WatchFaceFragment : Fragment() {
     private var selectedPreviewPreference: String? = null
     private var miniButtonsLoadJob: Job? = null
     private var tabMediator: TabLayoutMediator? = null
+    private val themeRepository by lazy(LazyThreadSafetyMode.NONE) {
+        WatchThemeRepository(requireContext())
+    }
+    private val themeManagerLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK && _binding != null) {
+            updateThemeCard()
+            preview?.refresh()
+            // The manager may finish immediately after creating/customizing. Its lifecycle-bound
+            // push can then be cancelled, so the resumed host performs the definitive sync.
+            pushPreferencesToWatch()
+        }
+    }
     private val preferencePushHandler = Handler(Looper.getMainLooper())
     private var preferencePushPending = false
     private val preferencePush = Runnable {
@@ -195,7 +219,13 @@ class WatchFaceFragment : Fragment() {
             }
             // Switching the face changes every scoped value at once - refresh the whole preview so
             // it re-reads the new face's configuration, not just the one key that changed.
-            if (baseKey == "wear_screen_face") preview?.refresh() else preview?.refresh(baseKey)
+            if (baseKey == "wear_screen_face" || baseKey.startsWith("wear_custom_theme_") ||
+                    baseKey == "wear_active_custom_theme_id") {
+                preview?.refresh()
+                updateThemeCard()
+            } else {
+                preview?.refresh(baseKey)
+            }
             // A dialog may write several related values in one interaction. Coalesce them so the
             // local preview stays immediate without starting concurrent full preference pushes.
             preferencePushHandler.removeCallbacks(preferencePush)
@@ -275,6 +305,14 @@ class WatchFaceFragment : Fragment() {
         binding.root.addOnLayoutChangeListener(previewLayoutListener)
         bindPreviewSwipe()
         tintTabs()
+        binding.watchThemeCard.setOnClickListener {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+            // Persist any edits made in the shared Watch editor before the manager reads its
+            // phone-local library. Only the resulting Apply action is synchronized to Wear.
+            themeRepository.captureActive(prefs)
+            themeManagerLauncher.launch(Intent(requireContext(), WatchThemesActivity::class.java))
+        }
+        updateThemeCard()
 
         (activity as? MainActivity)?.activeMediaSession()?.observe(viewLifecycleOwner) { resource ->
             bindMediaController(resource?.data)
@@ -312,6 +350,36 @@ class WatchFaceFragment : Fragment() {
     private fun tintTabs() {
         val activity = activity as? MainActivity ?: return
         activity.applyAccentToView(binding.watchTabs)
+        val accent = activity.currentAccentTextColor()
+        binding.watchThemeIcon.imageTintList = ColorStateList.valueOf(accent)
+        binding.watchThemeCard.strokeWidth = 0
+    }
+
+    /** The compact identity row makes it explicit whether the six editors below currently mutate
+     * a built-in layout or an isolated saved theme. */
+    private fun updateThemeCard() {
+        if (_binding == null || !isAdded) return
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val appearance = ThemeAppearance.resolve(prefs)
+        val faceName = WatchThemeRepository.displayNameForFace(requireContext(), appearance.baseFace)
+        val profile = themeRepository.activeProfile(prefs)
+        binding.watchThemeName.text = when (appearance) {
+            is com.svartifoss.snfell.common.AppearanceContext.Custom ->
+                profile?.name ?: getString(R.string.watch_theme_unknown_name)
+            is com.svartifoss.snfell.common.AppearanceContext.BuiltIn -> faceName
+        }
+        binding.watchThemeSummary.text = if (appearance is com.svartifoss.snfell.common.AppearanceContext.Custom) {
+            getString(R.string.watch_theme_custom_subtitle, faceName)
+        } else {
+            getString(R.string.watch_theme_builtin_subtitle, faceName)
+        }
+        binding.watchThemeCard.contentDescription = buildString {
+            append(binding.watchThemeName.text)
+            append(". ")
+            append(binding.watchThemeSummary.text)
+            append(". ")
+            append(getString(R.string.watch_theme_manage))
+        }
     }
 
     /** The preview deliberately stays fixed while the preference pages move, so it is outside
@@ -465,13 +533,16 @@ class WatchFaceFragment : Fragment() {
         // observer merely returns to STARTED, so explicitly resume its callbacks here.
         registerMediaCallback()
         preview?.refresh()
+        updateThemeCard()
+        tintTabs()
         loadMiniButtons()
         restartPlaybackTicker()
     }
 
     override fun onStop() {
-        PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .unregisterOnSharedPreferenceChangeListener(prefListener)
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        themeRepository.captureActive(prefs)
+        prefs.unregisterOnSharedPreferenceChangeListener(prefListener)
         preferencePushHandler.removeCallbacks(preferencePush)
         if (preferencePushPending) {
             preferencePushPending = false

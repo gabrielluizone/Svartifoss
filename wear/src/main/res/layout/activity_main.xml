@@ -28,6 +28,13 @@
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />
 
+        <!-- Native background-treatment layer for the View-based Classic layout. Compose faces
+             draw the same treatment inside their own canvas and keep this View hidden. -->
+        <View
+            android:id="@+id/player_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <View
             android:id="@+id/album_art_scrim"
             android:layout_width="match_parent"
@@ -410,9 +417,8 @@
 
         <!-- Quick-actions panel: like/shuffle/repeat + a shortcut into the queue, opened by
              double-tapping center_tap_zone (single tap there still toggles play/pause). Sits on
-             top of the same blur/dim overlay used by the volume and seek previews. Flat side
-             margins (not BoxInsetLayout - that clips to an inner square and cut the buttons off
-             instead of just keeping them clear of the bezel). -->
+             top of the same blur/dim overlay used by the volume and seek previews. Content uses
+             safe side padding while the scroll host reaches the bezel for its curved indicator. -->
         <androidx.wear.widget.SwipeDismissFrameLayout
             android:id="@+id/quick_actions_dismiss_frame"
             android:layout_width="match_parent"
@@ -423,12 +429,13 @@
             android:id="@+id/quick_actions_panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:clipChildren="false"
             android:clipToPadding="false"
             android:fadeScrollbars="false"
             android:fillViewport="false"
             android:overScrollMode="never"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:scrollbars="none">
 
             <LinearLayout
@@ -437,6 +444,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
+                android:clipChildren="false"
                 android:paddingTop="18dp"
                 android:paddingBottom="30dp">
 
@@ -518,7 +526,7 @@
                 android:id="@+id/quick_action_up_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/up_next_pill_background"
                 android:clickable="true"
                 android:focusable="true"

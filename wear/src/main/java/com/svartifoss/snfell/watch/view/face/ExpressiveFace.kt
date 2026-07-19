@@ -63,7 +63,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.PaletteTransforms
-import com.svartifoss.snfell.common.PlayerShadingStyle
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
@@ -130,32 +129,9 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
         // the phone via listener.onSeek on release.
         var scrubFraction by remember { mutableStateOf<Float?>(null) }
 
-        // --- Background treatment (non-hit-testable, so touches keep falling through). The
-        // album art itself is the shared ImageView below this ComposeView; these layers turn
-        // it into the reference's dark accent-tinted monochrome with black bezel edges. Fixed
-        // regardless of the visual style theme, which only changes the transport icons below.
-        val authoredShade = if (
-            state.backdropShadingStyle == PlayerShadingStyle.FOLLOW && state.backdropDimEnabled
-        ) {
-            (state.backdropDimStrength / .8f).coerceIn(0f, 1.25f)
-        } else {
-            0f
-        }
-        if (authoredShade > 0f) {
-            val tint = Color(tonal(surfaceAccent, lightness = 0.30f, minSat = 0.30f, maxSat = 0.90f))
-            Canvas(Modifier.fillMaxSize()) {
-                drawRect(color = tint.copy(alpha = (0.45f * authoredShade).coerceAtMost(1f)))
-                drawRect(color = Color.Black.copy(alpha = (0.30f * authoredShade).coerceAtMost(1f)))
-                drawRect(
-                        brush = Brush.radialGradient(
-                                0.0f to Color.Transparent,
-                                0.55f to Color.Transparent,
-                                1.0f to Color.Black.copy(
-                                        alpha = (0.88f * authoredShade).coerceAtMost(1f))
-                        )
-                    )
-            }
-        }
+        // The visual treatment is independent from this layout: Material/Poster/Aurora and every
+        // other background can be combined with Expressive's control geometry.
+        PlayerBackgroundTreatment(state)
         PlayerShadingOverlay(state)
 
         FaceClock(visible = state.showClock)
@@ -281,18 +257,10 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
             // if the user normally hides the track time - it's the only readout of where the seek
             // will land.
             val shownPositionMs = scrubFraction?.let { (it * state.durationMs).toLong() } ?: state.positionMs
-            val desiredOffset = ringBottom + 14.dp
-            // The default bottom trio is gone (mini buttons own that row now), so always leave
-            // clearance for the mini-button row's position, whether or not any are configured.
-            val miniRowClearance = screen * state.miniButtonsTopFraction.coerceIn(.20f, .95f) -
-                    screen * .50f - 10.dp
-            // Floor at the ring's bottom edge PLUS clearance for the text's own half-height (the
-            // offset positions the text's center). When the mini-button row settles high,
-            // miniRowClearance shrinks or goes negative and, unclamped, would yank the track time
-            // up onto the ring; flooring at exactly ringBottom still left the 11sp text's top edge
-            // touching the ring, so the floor keeps a real visual gap. If the squeeze is genuinely
-            // impossible, crowding toward the mini buttons beats ever covering the play button.
-            val timeOffset = minOf(desiredOffset, miniRowClearance).coerceAtLeast(ringBottom + 10.dp)
+            // The default bottom trio is gone (mini buttons own that row now), so leave clearance
+            // for the real row position. Material consumes the same metric for exact parity.
+            val timeOffset = centeredTransportTrackTimeOffset(
+                    screen, state.miniButtonsTopFraction)
             Text(
                     text = stringResource(
                             R.string.playback_time_format,
@@ -416,8 +384,9 @@ private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
                     intensity = i,
                     modifier = Modifier
                             .align(Alignment.BottomCenter)
-                            // Below the center cookie's bounding box, with a small bezel inset.
-                            .padding(bottom = screen * .03f)
+                            // Raised into the usable round-screen band while remaining below the
+                            // center cookie. Width and height deliberately stay unchanged.
+                            .padding(bottom = screen * .06f)
             )
         }
 

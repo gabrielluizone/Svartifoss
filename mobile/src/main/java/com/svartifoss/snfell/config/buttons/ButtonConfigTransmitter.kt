@@ -1,7 +1,6 @@
 package com.svartifoss.snfell.config.buttons
 
 import android.content.Context
-import android.content.ContentResolver
 import android.media.AudioManager
 import android.net.Uri
 import com.google.android.gms.wearable.Asset
@@ -59,12 +58,7 @@ class ButtonConfigTransmitter(buttonConfig: ButtonConfig,
             val actionKey = action.javaClass.canonicalName ?: action.javaClass.name
             buttonInfoProto.actionKey = actionKey
             buttonInfoProto.actionTitle = action.title
-            // Shared vectors and built-ins selected from the picker are monochrome templates.
-            // Gallery/app artwork must retain its original colours on the watch.
-            buttonInfoProto.iconTintable = when (val customUri = action.customIconUri) {
-                null -> StandardIcons.hasIcon(actionKey)
-                else -> customUri.scheme == ContentResolver.SCHEME_ANDROID_RESOURCE
-            }
+            buttonInfoProto.iconTintable = action.iconTintable
             protoBuilder.addActions(buttonInfoProto.build())
 
             if (buttonInfo.physicalButton) {

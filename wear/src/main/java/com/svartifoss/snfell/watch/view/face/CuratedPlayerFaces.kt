@@ -79,7 +79,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.PaletteTransforms
-import com.svartifoss.snfell.common.PlayerShadingStyle
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
@@ -157,16 +156,12 @@ private fun CuratedPlayerFace(
             { animatedProgress.value.coerceIn(0f, 1f) }
         }
 
-        CuratedBackdrop(layout, palette, state)
-        // Poster owns a full-bleed cover inside its composition, so its shading must be inserted
-        // there after the cover. Every other face can share this background-level placement.
-        if (layout != CuratedLayout.POSTER) {
-            PlayerShadingOverlay(state)
-        }
+        PlayerBackgroundTreatment(state)
+        PlayerShadingOverlay(state)
 
         when (layout) {
             CuratedLayout.VINYL -> VinylComposition(state, listener, palette, progress, screen)
-            CuratedLayout.POSTER -> PosterComposition(state, listener, palette, progress, screen)
+            CuratedLayout.POSTER -> PosterComposition(state, listener, progress, screen)
             CuratedLayout.STUDIO -> StudioComposition(state, listener, palette, progress, screen)
             CuratedLayout.HALO -> HaloComposition(state, listener, palette, progress, screen)
             CuratedLayout.AURORA -> AuroraComposition(state, listener, palette, progress, screen)
@@ -215,145 +210,6 @@ private data class CuratedPalette(
 
 private fun tunedFaceColor(color: Int, lightness: Float, saturation: Float): Int =
         PaletteTransforms.tunedFaceColor(color, lightness, saturation)
-
-/**
- * Scales a face's baked scrim alpha by the user's dim preference. The shipped defaults (dim on,
- * strength 80%) resolve to exactly 1f, so every curated face keeps its original look until the
- * user actually moves the slider; dim off resolves to the lightest treatment that still keeps
- * each face's text legible over bright art.
- */
-internal fun curatedDimFactor(dimEnabled: Boolean, dimStrength: Float): Float =
-        if (dimEnabled) (dimStrength.coerceIn(0f, 1f) / .8f).coerceAtMost(1.25f) else 0f
-
-@Composable
-private fun CuratedBackdrop(layout: CuratedLayout, p: CuratedPalette, state: NowPlayingFaceState) {
-    // Explicit styles replace, rather than stack on top of, each face's baked black scrims.
-    // Decorative album-colour glows remain part of the face identity.
-    val dim = if (state.backdropShadingStyle == PlayerShadingStyle.FOLLOW) {
-        curatedDimFactor(state.backdropDimEnabled, state.backdropDimStrength)
-    } else {
-        0f
-    }
-    fun scrim(base: Float): Float = (base * dim).coerceIn(0f, 1f)
-    Canvas(Modifier.fillMaxSize()) {
-        when (layout) {
-            // Eclipse's identity is a true-black AMOLED canvas - it deliberately ignores dim.
-            CuratedLayout.ECLIPSE -> drawRect(Color.Black)
-            CuratedLayout.MATERIAL -> {
-                drawRect(Color.Black)
-                // The host supplies a raw or softened album surface according to the active color
-                // options. Preserve that saturation (including true neutrals) while lifting the
-                // backdrop out of the near-black range where blue and green covers disappeared.
-                val tint = Color(PaletteTransforms.tonalSurface(
-                        state.materialSurfaceColor,
-                        lightness = if (state.materialSurfaceSoftened) 0.36f else 0.26f,
-                        minSat = if (state.materialSurfaceSoftened) 0.0f else 0.30f,
-                        maxSat = 0.80f
-                ))
-                drawCircle(
-                        brush = Brush.radialGradient(
-                                0.0f to tint.copy(alpha = 0.72f),
-                                0.50f to tint.copy(alpha = 0.38f),
-                                0.80f to tint.copy(alpha = 0.12f),
-                                1.0f to Color.Transparent
-                        ),
-                        radius = size.minDimension * 0.85f,
-                        center = center
-                )
-            }
-            CuratedLayout.VINYL -> {
-                drawRect(Color.Black.copy(alpha = scrim(.68f)))
-                drawCircle(
-                        brush = Brush.radialGradient(
-                                0f to p.primary.copy(alpha = .32f),
-                                .55f to p.deep.copy(alpha = .20f),
-                                1f to Color.Transparent
-                        ),
-                        radius = size.minDimension * .69f,
-                        center = Offset(size.width * .64f, size.height * .38f)
-                )
-            }
-            CuratedLayout.POSTER -> drawRect(Color.Black.copy(alpha = scrim(.24f)))
-            CuratedLayout.STUDIO -> {
-                drawRect(Color.Black.copy(alpha = scrim(.48f)))
-                drawRect(brush = Brush.linearGradient(
-                        listOf(p.primary.copy(alpha = .44f), p.secondary.copy(alpha = .15f), Color.Transparent),
-                        start = Offset(size.width, 0f), end = Offset(0f, size.height)))
-            }
-            CuratedLayout.HALO -> {
-                drawRect(Color.Black.copy(alpha = scrim(.68f)))
-                drawCircle(brush = Brush.radialGradient(
-                        0f to p.primary.copy(alpha = .50f),
-                        .48f to p.secondary.copy(alpha = .18f),
-                        1f to Color.Transparent), radius = size.minDimension * .62f)
-            }
-            CuratedLayout.AURORA -> {
-                // Aurora's canvas is black by identity, but the dim preference now lets the
-                // host's album art glow through instead of being unconditionally painted over.
-                drawRect(Color.Black.copy(alpha = scrim(1f)))
-                drawCircle(
-                        brush = Brush.radialGradient(
-                                0f to p.primary.copy(alpha = .48f),
-                                .42f to p.deep.copy(alpha = .30f),
-                                1f to Color.Transparent
-                        ),
-                        radius = size.minDimension * .78f,
-                        center = Offset(size.width * .18f, size.height * .14f)
-                )
-                drawCircle(
-                        brush = Brush.radialGradient(
-                                0f to p.secondary.copy(alpha = .38f),
-                                .48f to p.tertiary.copy(alpha = .18f),
-                                1f to Color.Transparent
-                        ),
-                        radius = size.minDimension * .72f,
-                        center = Offset(size.width * .88f, size.height * .72f)
-                )
-                val ribbons = listOf(
-                        Triple(.30f, .52f, p.primary),
-                        Triple(.43f, .63f, p.secondary),
-                        Triple(.56f, .72f, p.tertiary)
-                )
-                ribbons.forEachIndexed { index, (startY, endY, color) ->
-                    val ribbon = Path().apply {
-                        moveTo(-size.width * .14f, size.height * startY)
-                        cubicTo(
-                                size.width * .18f,
-                                size.height * (startY - .24f + index * .025f),
-                                size.width * .58f,
-                                size.height * (endY + .18f - index * .02f),
-                                size.width * 1.14f,
-                                size.height * endY
-                        )
-                    }
-                    drawPath(
-                            ribbon,
-                            brush = Brush.linearGradient(listOf(color, p.primary, p.secondary)),
-                            style = Stroke(
-                                    size.minDimension * (.085f - index * .012f),
-                                    cap = StrokeCap.Round
-                            ),
-                            alpha = .32f - index * .045f
-                    )
-                }
-                drawRect(brush = Brush.verticalGradient(
-                        0f to Color.Black.copy(alpha = .06f),
-                        .62f to Color.Transparent,
-                        1f to Color.Black.copy(alpha = .78f)
-                ))
-            }
-            CuratedLayout.SPECTRUM -> {
-                drawRect(Color.Black.copy(alpha = scrim(.58f)))
-                drawRect(brush = Brush.verticalGradient(
-                        listOf(
-                                p.surface.copy(alpha = scrim(.78f)),
-                                p.deep.copy(alpha = scrim(.90f)),
-                                Color.Black.copy(alpha = scrim(.88f))
-                        )))
-            }
-        }
-    }
-}
 
 @Composable
 private fun BoxScope.VinylComposition(
@@ -421,7 +277,7 @@ private fun BoxScope.VinylComposition(
 
 @Composable
 private fun BoxScope.PosterComposition(
-        state: NowPlayingFaceState, listener: NowPlayingFaceListener, p: CuratedPalette,
+        state: NowPlayingFaceState, listener: NowPlayingFaceListener,
         progress: () -> Float, screen: Dp
 ) {
     InteractiveFocus(
@@ -431,30 +287,6 @@ private fun BoxScope.PosterComposition(
             modifier = Modifier.fillMaxSize(),
             animateHero = false
     ) {
-        AlbumArtwork(state, RoundedCornerShape(0.dp), p)
-        if (state.backdropShadingStyle == PlayerShadingStyle.FOLLOW) {
-            val authored = curatedDimFactor(state.backdropDimEnabled, state.backdropDimStrength)
-            Canvas(Modifier.fillMaxSize()) {
-                drawRect(p.primary.copy(alpha = .12f * authored))
-                drawRect(
-                        brush = Brush.verticalGradient(
-                                0f to Color.Black.copy(alpha = .48f * authored),
-                                .36f to Color.Black.copy(alpha = .06f * authored),
-                                .68f to Color.Black.copy(alpha = .25f * authored),
-                                1f to Color.Black.copy(alpha = (.94f * authored).coerceAtMost(1f))
-                        )
-                )
-                drawRect(
-                        brush = Brush.horizontalGradient(
-                                listOf(
-                                        Color.Black.copy(alpha = .36f * authored),
-                                        Color.Transparent,
-                                        Color.Black.copy(alpha = .36f * authored))
-                        )
-                )
-            }
-        }
-        PlayerShadingOverlay(state)
         if (state.showTitle || state.showArtist) PosterMetadata(state, screen)
     }
     val posterProgressShown = state.showDefaultBottomPills && state.showInternalProgress
@@ -1237,10 +1069,9 @@ private fun InteractiveFocus(
     }
 }
 
-/** Renders the cover honoring MiscPreferences.ALBUM_ART_STYLE (mirrors what the classic host
- *  ImageView already applies to itself - see MainActivity.applyMainAlbumArtDisplay). "hidden"
- *  falls back to the same palette gradient already used before any art has arrived; "bw" and
- *  "blur"/"blur_bw" desaturate and/or blur the cover in place. */
+/** Renders a composition-owned mini cover using the resolved flags from PlayerBackgroundStyle.
+ * Hidden/Eclipse fall back to the palette gradient; monochrome and blurred treatments mirror the
+ * shared host artwork pipeline. */
 @Composable
 private fun AlbumArtwork(state: NowPlayingFaceState, shape: Shape, p: CuratedPalette) {
     Box(Modifier.fillMaxSize().clip(shape), contentAlignment = Alignment.Center) {
@@ -1258,8 +1089,7 @@ private fun AlbumArtwork(state: NowPlayingFaceState, shape: Shape, p: CuratedPal
             Modifier
         }
         // Same crossfade the classic host ImageView applies (fadeToAlbumArt): track changes on
-        // faces that draw the cover themselves used to swap instantly, making WEAR_ALBUM_ART_FADE
-        // appear broken on Poster in particular.
+        // faces that draw a mini cover themselves used to swap instantly.
         Crossfade(
                 targetState = state.albumArt.takeUnless { state.albumArtHidden },
                 animationSpec = tween(if (state.albumArtFade) 300 else 0),
@@ -1499,8 +1329,9 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
                     intensity = intensity,
                     modifier = Modifier
                             .align(Alignment.BottomCenter)
-                            // Keeps the compact row fully below Material's center progress disc.
-                            .padding(bottom = screen * .03f)
+                            // Raised into the usable round-screen band while remaining below
+                            // Material's center progress disc. Its size stays unchanged.
+                            .padding(bottom = screen * .06f)
             )
         }
     }
@@ -1644,6 +1475,26 @@ private fun BoxScope.MaterialComposition(
                 iconAlpha = state.screenTheme.tokens.iconAlpha,
                 iconScale = state.screenTheme.tokens.iconScale,
                 onClick = listener::onSkipNextTap
+        )
+    }
+
+    if (state.showTrackTime) {
+        Text(
+                text = stringResource(
+                        R.string.playback_time_format,
+                        formatFaceClockTime(state.positionMs),
+                        formatFaceClockTime(state.durationMs)
+                ),
+                color = Color.White.copy(alpha = .70f),
+                fontSize = 11.sp,
+                fontFamily = GoogleSansFamily,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                modifier = Modifier
+                        .align(Alignment.Center)
+                        .offset(y = centeredTransportTrackTimeOffset(
+                                screen, state.miniButtonsTopFraction))
+                        .width(screen * .68f)
         )
     }
 }

@@ -50,8 +50,13 @@ class AodPresentationTest {
         assertEquals(
                 AodArtworkSpec(visible = true, blurred = true, monochrome = true),
                 resolveAodArtwork(true, "classic", AodArtTreatment.FOLLOW, "blur_bw"))
+        assertEquals(
+                AodArtworkSpec(visible = true, blurred = true),
+                resolveAodArtwork(true, "classic", AodArtTreatment.FOLLOW, "expressive"))
         assertFalse(resolveAodArtwork(
                 true, "classic", AodArtTreatment.FOLLOW, "hidden").visible)
+        assertFalse(resolveAodArtwork(
+                true, "classic", AodArtTreatment.FOLLOW, "eclipse").visible)
     }
 
     @Test

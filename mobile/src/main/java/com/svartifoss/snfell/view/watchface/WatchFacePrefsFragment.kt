@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.watchface
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.preference.EditTextPreference
@@ -11,8 +12,12 @@ import androidx.preference.TwoStatePreference
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import com.svartifoss.snfell.view.settings.FaceScopedPreferenceDataStore
 import com.svartifoss.snfell.view.settings.HexColorDotPreference
+import com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity
 import com.svartifoss.snfell.view.settings.parseHexOrDefault
 import com.svartifoss.snfell.view.settings.showLyraColorPickerDialog
 import com.svartifoss.snfell.view.settings.tintOpenLyraPreferenceDialog
@@ -50,7 +55,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      *  developer switch changes, even if this fragment remained alive beside Settings. */
     private val faceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         when (key) {
-            MiscPreferences.WEAR_SCREEN_FACE.key -> {
+            MiscPreferences.WEAR_SCREEN_FACE.key,
+            MiscPreferences.WEAR_ACTIVE_CUSTOM_THEME_ID.key,
+            MiscPreferences.WEAR_CUSTOM_THEME_SCHEMA.key,
+            MiscPreferences.WEAR_CUSTOM_THEME_COMPLETE.key -> {
                 migrateLegacyColorSettings()
                 rebindScopedValues()
                 refreshColorTargetSummaries()
@@ -123,6 +131,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     (activity as? com.svartifoss.snfell.view.mainactivity.MainActivity)?.openControls()
                     true
                 }
+        initStreamingShortcutsGuide()
         applySectionVisibility()
         wirePreviewInteractions()
     }
@@ -209,6 +218,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         rebindScopedValues()
         refreshColorTargetSummaries()
         refreshConditionalPreferences()
+        refreshStreamingShortcutsGuide()
     }
 
     override fun onPause() {
@@ -262,7 +272,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
     private fun applyArchivedOptionFilters() {
         val showArchived = rawPrefs.getBoolean("dev_show_archived", false)
-        val face = rawPrefs.getString(MiscPreferences.WEAR_SCREEN_FACE.key, "classic") ?: "classic"
+        val face = ThemeAppearance.resolve(rawPrefs).baseFace
         if (!showArchived && readStringPreference(MiscPreferences.WEAR_FONT.key, "google_sans") ==
                 "typewriter") {
             // A hidden current value would make the row claim another font while the watch kept
@@ -365,6 +375,35 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private fun readStringPreference(key: String, defaultValue: String): String =
             store.getString(key, defaultValue) ?: defaultValue
 
+    /**
+     * Streaming shortcuts are especially useful beside Quick Actions, so Panels exposes a
+     * discoverability link to the existing editor. The editor remains the single source of truth;
+     * this preference does not create a second copy of the shortcut library.
+     */
+    private fun initStreamingShortcutsGuide() {
+        findPreference<Preference>("watch_streaming_shortcuts")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    startActivity(Intent(requireContext(), PlaylistShortcutsActivity::class.java))
+                    true
+                }
+        refreshStreamingShortcutsGuide()
+    }
+
+    private fun refreshStreamingShortcutsGuide() {
+        if (!isAdded || preferenceScreen == null) return
+        val count = PlaylistShortcutStorage.load(requireContext()).size
+        findPreference<Preference>("watch_streaming_shortcuts")?.summary =
+                if (count == 0) {
+                    getString(R.string.watch_streaming_shortcuts_empty)
+                } else {
+                    resources.getQuantityString(
+                            R.plurals.watch_streaming_shortcuts_summary,
+                            count,
+                            count
+                    )
+                }
+    }
+
     /** The numeric preference stores strings to match wearutils; reject malformed/out-of-range
      *  input here so every persisted opacity is a valid percentage before it reaches the watch. */
     private fun initMiniButtonOpacityValidation() {
@@ -460,7 +499,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             overrideAodStyle: String? = null
     ) {
         updatePlayerCapabilityVisibility(overrideFace = overrideFace)
-        updateBackgroundCapabilityVisibility(overrideFace)
+        updateBackgroundCapabilityVisibility()
         updateAodDetailVisibility(
                 overrideFace = overrideFace,
                 overrideStyle = overrideAodStyle
@@ -491,25 +530,19 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         findPreference<Preference>("wear_progress_style")?.isVisible = edgeVisible
     }
 
-    private fun updateBackgroundCapabilityVisibility(overrideFace: String? = null) {
-        val face = overrideFace ?: readStringPreference("wear_screen_face", "classic")
-        // Eclipse never renders album art at all (a fixed black backdrop), so a background style
-        // has nothing to affect there. Every other face - including Poster, whose curated
-        // composition now honors this preference - supports it.
-        val stylable = face != "eclipse"
-        findPreference<Preference>("album_art_style")?.isVisible = stylable
-        updateBlurRadiusEnabled(backgroundSupported = stylable)
+    private fun updateBackgroundCapabilityVisibility() {
+        // Background and layout are independent now, including Eclipse: selecting Poster,
+        // Material or Expressive here must work without replacing the structural renderer.
+        findPreference<Preference>("album_art_style")?.isVisible = true
+        updateBlurRadiusEnabled()
 
-        // Every artwork-backed face consumes the same explicit shading vocabulary. Eclipse stays
-        // excluded because its identity is an already-opaque true-black canvas.
-        val dimSupported = face != "eclipse"
         listOf(
                 "dim_album_art",
                 "wear_player_shading_style",
                 "wear_player_shading_intensity",
                 "wear_album_art_fade"
         )
-                .forEach { key -> findPreference<Preference>(key)?.isVisible = dimSupported }
+                .forEach { key -> findPreference<Preference>(key)?.isVisible = true }
     }
 
     /** The three detailed AOD controls are rendered only by the visual (Compose) AOD faces. */
@@ -547,15 +580,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 }
     }
 
-    private fun updateBlurRadiusEnabled(
-            overrideValue: String? = null,
-            backgroundSupported: Boolean? = null
-    ) {
+    private fun updateBlurRadiusEnabled(overrideValue: String? = null) {
         val value = overrideValue ?: readStringPreference("album_art_style", "cover")
-        val blurStyle = value == "blur" || value == "blur_bw"
-        val face = readStringPreference("wear_screen_face", "classic")
-        val supported = backgroundSupported ?: (face != "eclipse")
-        findPreference<Preference>("album_art_blur_radius")?.isVisible = supported && blurStyle
+        val blurStyle = PlayerBackgroundStyle.fromPreference(value).usesBlurRadius
+        findPreference<Preference>("album_art_blur_radius")?.isVisible = blurStyle
     }
 
     /** Custom color picker wiring plus enabling/disabling the color-mode-dependent rows for one
@@ -573,7 +601,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             showLyraColorPickerDialog(
                     initialColor = parseHexOrDefault(store.getString(customColorKey, null)),
                     onReset = {
-                        store.putString(customColorKey, null)
+                        // Persist the empty definition value instead of removing the scoped key.
+                        // Preference sync does not transmit removals, so deletion would leave the
+                        // watch rendering its previous custom color indefinitely.
+                        store.putString(customColorKey, "")
                         updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
                     },
                     onApply = { hex ->
@@ -598,7 +629,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
     private fun updateAccentColorTargetSummary(pref: Preference?, customColorKey: String, descriptionRes: Int) {
         pref ?: return
-        val saved = store.getString(customColorKey, null)
+        val saved = store.getString(customColorKey, null)?.takeUnless { it.isBlank() }
         pref.summary = if (saved != null) {
             getString(R.string.color_picker_current, saved)
         } else {
@@ -629,8 +660,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * artist and progress choices into one global policy. New installations simply inherit the
      * global treatment through the "follow" default. */
     private fun migrateLegacyColorSettings() {
-        val face = rawPrefs.getString(MiscPreferences.WEAR_SCREEN_FACE.key, "classic") ?: "classic"
-        val scopedTreatment = FaceScopedPreferences.scopedKey("wear_color_treatment", face)
+        val context = ThemeAppearance.resolve(rawPrefs)
+        val scope = FaceScopedPreferences.scopeFor(context)
+        val scopedTreatment = FaceScopedPreferences.scopedKey("wear_color_treatment", scope)
         if (!rawPrefs.contains(scopedTreatment) && !rawPrefs.contains("wear_color_treatment")) {
             store.putString(
                     "wear_color_treatment",
@@ -638,7 +670,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         }
 
         fun migrateTarget(modeKey: String, legacyDesaturatedKey: String) {
-            val storedKey = FaceScopedPreferences.scopedKey(modeKey, face)
+            val storedKey = FaceScopedPreferences.scopedKey(modeKey, scope)
             val rawMode = when {
                 rawPrefs.contains(storedKey) -> rawPrefs.getString(storedKey, null)
                 rawPrefs.contains(modeKey) -> rawPrefs.getString(modeKey, null)
@@ -668,7 +700,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             showLyraColorPickerDialog(
                     initialColor = parseHexOrDefault(store.getString("wear_normal_color", null)),
                     onReset = {
-                        store.putString("wear_normal_color", null)
+                        // Keep an explicit reset value so the Wear receiver overwrites, rather
+                        // than retains, a previously synchronized custom color.
+                        store.putString("wear_normal_color", "")
                         updateAccentColorTargetSummary(
                                 colorPref, "wear_normal_color",
                                 R.string.setting_wear_normal_color_description)

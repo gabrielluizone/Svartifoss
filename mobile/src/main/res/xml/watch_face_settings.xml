@@ -337,6 +337,13 @@
             android:entryValues="@array/wear_quick_panel_source_values"
             android:layout="@layout/pref_item" />
 
+        <Preference
+            android:key="watch_streaming_shortcuts"
+            android:icon="@drawable/ic_playlist_add"
+            android:title="@string/setting_playlist_shortcuts"
+            android:summary="@string/watch_streaming_shortcuts_empty"
+            android:layout="@layout/pref_item" />
+
         <ListPreference
             android:key="wear_queue_style"
             android:icon="@drawable/ic_playlist_play"

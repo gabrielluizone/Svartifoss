@@ -416,7 +416,10 @@ object MediaNotificationActions {
         val top = (ICON_SIZE_PX - height) / 2
         drawable.setBounds(left, top, left + width, top + height)
         drawable.draw(canvas)
-        val normalized = normalizeTemplateBitmap(bitmap)
+        // A few apps publish an action drawable that resolves to a fully transparent vector in
+        // another package's theme. Do not serialize that as a "valid" PNG: an absent image lets
+        // the watch use the semantic fallback glyph instead of showing an empty pill.
+        val normalized = normalizeTemplateBitmap(bitmap) ?: return null
         ByteArrayOutputStream().use { output ->
             normalized.compress(Bitmap.CompressFormat.PNG, 100, output)
             output.toByteArray()
@@ -428,7 +431,7 @@ object MediaNotificationActions {
     /** Crops transparent/intrinsic padding and places the visible glyph on a common optical
      * canvas. Players ship wildly different vector viewBoxes: without this pass Spotify looked
      * tiny, while YouTube Music's asymmetric padding pushed glyphs off-centre. */
-    private fun normalizeTemplateBitmap(source: Bitmap): Bitmap {
+    private fun normalizeTemplateBitmap(source: Bitmap): Bitmap? {
         var left = source.width
         var top = source.height
         var right = -1
@@ -443,7 +446,7 @@ object MediaNotificationActions {
                 }
             }
         }
-        if (right < left || bottom < top) return source
+        if (right < left || bottom < top) return null
 
         val visibleWidth = right - left + 1
         val visibleHeight = bottom - top + 1

@@ -35,7 +35,14 @@ class ActionListTransmitter(actionList: ActionList,
         GlobalScope.launchWithPlayServicesErrorHandling(context) {
             val dataOnWatch = dataClient.getDataItems(Uri.parse("wear://*${CommPaths.DATA_LIST_ITEMS}")).await()
 
-            if (!dataOnWatch.any()) {
+            val missingTintMetadata = dataOnWatch.any { item ->
+                try {
+                    WatchList.parseFrom(item.data).actionsList.any { !it.hasIconTintable() }
+                } catch (_: Exception) {
+                    true
+                }
+            }
+            if (!dataOnWatch.any() || missingTintMetadata) {
                 sendConfigToWatch(actionList.actions)
             }
 
@@ -55,6 +62,7 @@ class ActionListTransmitter(actionList: ActionList,
             val actionProto = WatchList.WatchListAction.newBuilder()
             actionProto.actionTitle = action.title
             actionProto.actionKey = action.javaClass.canonicalName
+            actionProto.iconTintable = action.iconTintable
             protoBuilder.addActions(actionProto.build())
 
             if (action.customIconUri == null &&

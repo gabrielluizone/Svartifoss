@@ -129,6 +129,7 @@
     <string name="action_repeat_one">Repetir uma</string>
     <string name="action_search">Buscar música</string>
     <string name="group_playback_controls">Controles de reprodução</string>
+    <string name="group_streaming_shortcuts">Faixas, álbuns e playlists</string>
     <string name="pick_action">Escolher ação</string>
     <string name="action_opens_more">Múltiplas opções</string>
     <string name="action_volume_up">Aumentar volume</string>
@@ -139,7 +140,7 @@
     <string name="playing_controls">Controles com música tocando</string>
     <string name="stopped_controls">Controles sem reprodução</string>
     <string name="actions_menu">Menu de ações</string>
-    <string name="actions_intro">Configure as duas áreas de ações disponíveis no relógio. O painel rápido é compacto; o menu abaixo comporta uma lista ordenada maior.</string>
+    <string name="actions_intro">Configure as duas áreas de ações do relógio com controles de reprodução, apps ou faixas, álbuns e playlists salvos. O painel rápido é compacto; o menu abaixo comporta uma lista ordenada maior.</string>
     <string name="actions_quick_panel_section">Painel rápido</string>
     <string name="actions_watch_menu_section">Menu no relógio</string>
     <plurals name="actions_list_summary">
@@ -278,7 +279,7 @@
     <string name="setting_album_art_style">Estilo da capa do álbum</string>
     <string name="setting_album_art_style_description">Escolha a aparência do fundo da tela de reprodução no relógio.</string>
     <string name="setting_album_art_blur_radius">Intensidade do desfoque</string>
-    <string name="setting_album_art_blur_radius_description">Força do desfoque em tela cheia quando o estilo da capa do álbum está definido como Desfocado. Atualmente <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_blur_radius_description">Força do desfoque em tela cheia sempre que o fundo selecionado usar desfoque. Atualmente <![CDATA[<b>%1$s px</b>]]>.</string>
     <string name="setting_album_art_dim_strength">Intensidade do escurecimento</string>
     <string name="setting_album_art_dim_strength_description">O quanto a capa do álbum é escurecida para facilitar a leitura do texto. Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
     <string name="setting_player_shading_style">Estilo do sombreamento</string>
@@ -332,8 +333,8 @@
     <string name="quick_panel_default_up_next">A seguir</string>
     <string name="setting_wear_center_long_press_queue">Toque longo no centro para a fila</string>
     <string name="setting_wear_center_long_press_queue_description">Toque e segure o centro da tela de reprodução para abrir a fila de reprodução.</string>
-    <string name="setting_wear_screen_face">Tema do player</string>
-    <string name="setting_wear_screen_face_description">Escolha o tema visual do player. Cada tema usa as cores da música e mantém os atalhos disponíveis pelos mini botões e gestos.</string>
+    <string name="setting_wear_screen_face">Layout-base</string>
+    <string name="setting_wear_screen_face_description">Escolha a estrutura usada por este tema. Temas salvos podem combinar esse layout com fonte, cores, blur, sombreamento, AOD e painéis próprios.</string>
     <string name="setting_wear_show_track_title">Exibir nome da música</string>
     <string name="setting_wear_show_track_title_description">Mostra o título da música atual no player</string>
     <string name="setting_wear_show_track_artist">Exibir nome do artista</string>
@@ -494,7 +495,7 @@
         <item>Desfoque suave</item>
         <item>Capa nítida</item>
         <item>Desfoque monocromático</item>
-        <item>Seguir fundo do player</item>
+        <item>Seguir tratamento da capa do player</item>
     </string-array>
     <string name="setting_wear_aod_show_clock">Relógio na tela sempre ativa</string>
     <string name="setting_wear_aod_show_clock_description">Exibir o relógio quando o relógio estiver no modo ambiente</string>
@@ -686,7 +687,7 @@
     </string-array>
 
     <string-array name="screen_buttons_bg_entries">
-        <item>Seguir layout</item>
+        <item>Padrão do fundo</item>
         <item>Vidro (uniforme)</item>
         <item>Vidro (claro)</item>
         <item>Álbum Translúcido</item>
@@ -713,6 +714,15 @@
         <item>Fundo desfocado</item>
         <item>Preto e branco</item>
         <item>Preto e branco desfocado</item>
+        <item>Desfoque Expressive</item>
+        <item>Gradiente tonal Material</item>
+        <item>Capa Poster</item>
+        <item>Gradiente Studio</item>
+        <item>Brilho radial Vinyl</item>
+        <item>Brilho Halo</item>
+        <item>Faixas Aurora</item>
+        <item>Gradiente Spectrum</item>
+        <item>Preto AMOLED Eclipse</item>
         <item>Escondida (preto sólido)</item>
     </string-array>
 
@@ -785,11 +795,18 @@
     <string name="action_play_liked_songs">Tocar músicas curtidas (YT Music)</string>
     <string name="action_my_playlists">Atalhos de streaming</string>
     <string name="action_play_specific_playlist">Abrir atalho de streaming</string>
+    <string name="action_choose_or_add_streaming_shortcut">Escolher ou adicionar atalho de streaming</string>
+    <string name="action_show_streaming_library">Mostrar todos os atalhos salvos</string>
     <string name="playlist_shortcut_pick_title">Escolha um atalho de streaming</string>
     <string name="playlist_shortcut_pick_empty">Nenhum atalho de streaming salvo — adicione um abaixo e toque nele para escolher</string>
     <string name="playlist_shortcuts_empty">Nenhum atalho de streaming — adicione-os nas configurações do app no celular</string>
     <string name="setting_playlist_shortcuts">Atalhos de streaming</string>
     <string name="setting_playlist_shortcuts_description">Abra pelo relógio links do YouTube Music, Spotify e outros apps de streaming</string>
+    <string name="watch_streaming_shortcuts_empty">Adicione faixas, álbuns ou playlists para usar nas Ações rápidas e no menu do relógio</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d atalho salvo · Disponível nas Ações rápidas e no menu do relógio</item>
+        <item quantity="other">%1$d atalhos salvos · Disponíveis nas Ações rápidas e no menu do relógio</item>
+    </plurals>
     <string name="category_music_apps">Apps e serviços de música</string>
     <string name="setting_apps_integrations">Serviços de música compatíveis</string>
     <string name="setting_apps_integrations_description">Os links funcionam com YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music e SoundCloud. Nenhum acesso à conta é necessário.</string>

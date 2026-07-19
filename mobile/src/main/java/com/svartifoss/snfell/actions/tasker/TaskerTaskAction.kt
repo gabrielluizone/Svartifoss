@@ -33,6 +33,8 @@ class TaskerTaskAction : SelectableAction {
     }
 
     override fun retrieveTitle(): String = taskName
+    override val defaultIconTintable: Boolean
+        get() = false
     override val defaultIcon: Drawable
         get() = try {
             context.packageManager.getApplicationIcon(TaskerIntent.getInstalledTaskerPackage(context))

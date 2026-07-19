@@ -31,14 +31,13 @@ class RootActionList : PhoneAction {
         actions.addAll(listOf(PlaybackActionList(context),
                 VolumeActionList(context),
                 AppPlayPickerAction(context),
-                PlaylistShortcutPickerAction(context),
+                StreamingShortcutActionList(context),
                 OpenMenuAction(context),
                 OpenPlaylistAction(context),
                 SearchAction(context),
                 OpenSearchHistoryAction(context),
                 PlayLikedSongsAction(context),
-                PlayLikedSongsShuffledAction(context),
-                OpenPlaylistShortcutsAction(context)
+                PlayLikedSongsShuffledAction(context)
         ))
 
         if (isTaskerInstalled()) {

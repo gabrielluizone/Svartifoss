@@ -72,11 +72,13 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.AodArtTreatment
+import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.OverlayBackdropResolver
 import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingIntensity
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.common.ScreenQuadrant
@@ -84,6 +86,7 @@ import com.svartifoss.snfell.common.QuickPanelButtons
 import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.SurfaceColorTreatment
 import com.svartifoss.snfell.common.SwipeGesture
+import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.resolveAodArtwork
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_DOUBLE_TAP
@@ -192,6 +195,7 @@ class MainActivity : WearCompanionWatchActivity(),
     private var firstRunHintsPending = false
     private var dimAlbumArt: Boolean = false
     private var albumArtStyle: String = "cover"
+    private var playerBackgroundStyle: PlayerBackgroundStyle = PlayerBackgroundStyle.COVER
     private var blurAlbumArtBackground: Boolean = false
     private var albumArtGrayscale: Boolean = false
     private var albumArtHidden: Boolean = false
@@ -232,6 +236,10 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Selected now-playing face (see [MiscPreferences.WEAR_SCREEN_FACE] and NowPlayingFace.kt):
      *  "classic" is the original View presentation, "expressive" the Compose face. */
     private var screenFace: String = "classic"
+    /** Separates the structural renderer ([screenFace]) from the appearance namespace. Built-in
+     * themes keep their historical `key@face` scope; a saved custom theme renders its validated
+     * [AppearanceContext.baseFace] while reading the isolated active-theme snapshot. */
+    private var appearanceContext: AppearanceContext = AppearanceContext.BuiltIn("classic")
     private var showTrackTitle = true
     private var showTrackArtist = true
     private var playerControlsVisible = true
@@ -593,6 +601,9 @@ class MainActivity : WearCompanionWatchActivity(),
 
         // Consume the standard rightward Wear gesture inside Quick Actions and dismiss only the
         // overlay. Without a swipe host the gesture escaped the ScrollView and closed MainActivity.
+        // Enable it explicitly: the widget otherwise inherits the Activity/window navigation
+        // policy, which varies between Wear versions and left some devices dismissing the app.
+        binding.quickActionsDismissFrame.isSwipeable = true
         binding.quickActionsDismissFrame.addCallback(
                 object : SwipeDismissFrameLayout.Callback() {
                     override fun onDismissed(layout: SwipeDismissFrameLayout) {
@@ -606,6 +617,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     }
                 }
         )
+        binding.quickActionsPanel.setOnDismissRequestListener {
+            if (isQuickActionsPanelShowing()) hideOverlay()
+        }
 
         binding.quickActionLike.setOnTouchListener(quickActionPressFeedback)
         binding.quickActionShuffle.setOnTouchListener(quickActionPressFeedback)
@@ -678,6 +692,8 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.notificationPopup.clickableFrame.setOnClickListener { onNotificationTapped() }
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        appearanceContext = ThemeAppearance.resolve(preferences)
+        screenFace = appearanceContext.baseFace
         ambientObserver = AmbientLifecycleObserver(this, ambientCallback)
         lifecycle.addObserver(ambientObserver)
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -1013,6 +1029,9 @@ class MainActivity : WearCompanionWatchActivity(),
      */
     private fun setIdleStateVisible(visible: Boolean) {
         binding.idleStateGroup.visibility = if (visible) View.VISIBLE else View.GONE
+        binding.playerBackground.visibility = if (
+            visible || ambientObserver.isAmbient || screenFace in composeFaces
+        ) View.GONE else View.VISIBLE
         val animation = binding.idleStateIcon.drawable as? Animatable ?: return
         if (visible && !ambientObserver.isAmbient) {
             if (!animation.isRunning) animation.start()
@@ -1311,6 +1330,7 @@ class MainActivity : WearCompanionWatchActivity(),
         }
         // Album-based and duotone shading must follow the same palette update as the controls.
         applyAlbumArtScrim()
+        applyPlayerBackground()
         if (ambientObserver.isAmbient) {
             // Keep all host-rendered AOD metadata (including the clock) following a newly
             // extracted album tint, rather than updating only the title line.
@@ -1837,7 +1857,15 @@ class MainActivity : WearCompanionWatchActivity(),
                 ?: resources.displayMetrics.widthPixels) - (16 * density).toInt()
         var margin = (8 * density).toInt()
         var width = defaultW
-        if (count * width + margin * (count - 1) > available) {
+        if (count == 3) {
+            // Match the measured width occupied by Up Next on every display size. Only the
+            // horizontal dimension grows; height stays the fixed 52dp touch target below.
+            if (count * width + margin * (count - 1) > available) {
+                margin = (4 * density).toInt()
+            }
+            width = ((available - margin * (count - 1)) / count)
+                    .coerceAtLeast((40 * density).toInt())
+        } else if (count * width + margin * (count - 1) > available) {
             margin = (4 * density).toInt()
             width = (available - margin * (count - 1)) / count
             if (width < minimumTarget && available >= count * minimumTarget) {
@@ -1850,7 +1878,10 @@ class MainActivity : WearCompanionWatchActivity(),
             }
             width = width.coerceIn((40 * density).toInt(), defaultW)
         }
-        val height = maxOf(minimumTarget, defaultH * width / defaultW)
+        // Width adapts to the round viewport, but height is a deliberate, stable touch target.
+        // Scaling both axes made the top pills look shorter/smaller than Up Next on narrow
+        // watches even though the user only asked for horizontal fitting.
+        val height = maxOf(minimumTarget, defaultH)
         return Triple(width, height, margin)
     }
 
@@ -1912,12 +1943,16 @@ class MainActivity : WearCompanionWatchActivity(),
         val bitmap = if (action.hasIconPng() && !action.iconPng.isEmpty) {
             val bytes = action.iconPng.toByteArray()
             val cached = sessionQuickIconBitmaps[action.id]
-            if (cached != null && cached.png.contentEquals(bytes)) {
+            if (cached != null && cached.png.contentEquals(bytes) &&
+                    hasVisiblePixels(cached.bitmap)) {
                 cached.bitmap
             } else {
-                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.also { decoded ->
+                val decoded = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                if (decoded != null && hasVisiblePixels(decoded)) {
                     sessionQuickIconBitmaps[action.id] = CachedSessionQuickIcon(bytes, decoded)
-                } ?: run {
+                    decoded
+                } else {
+                    decoded?.recycle()
                     sessionQuickIconBitmaps.remove(action.id)
                     null
                 }
@@ -1936,6 +1971,17 @@ class MainActivity : WearCompanionWatchActivity(),
             setQuickActionIconPadding(view, remoteTemplate = false)
             false
         }
+    }
+
+    /** Defensive counterpart of the phone-side raster check for cached payloads produced by an
+     * older app version. Transparent PNG bytes are valid data but not a visible action icon. */
+    private fun hasVisiblePixels(bitmap: Bitmap): Boolean {
+        for (y in 0 until bitmap.height) {
+            for (x in 0 until bitmap.width) {
+                if (Color.alpha(bitmap.getPixel(x, y)) > 12) return true
+            }
+        }
+        return false
     }
 
     private fun setQuickActionIconPadding(view: ImageView, remoteTemplate: Boolean) {
@@ -2735,20 +2781,20 @@ class MainActivity : WearCompanionWatchActivity(),
         }
     }
 
-    // --- Face-scoped appearance reads. The selected face is read first (global), then every
-    // appearance preference resolves against it so each now-playing face keeps its own look.
+    // --- Appearance-scoped reads. The active context deliberately separates the structural face
+    // from the storage namespace: presets keep `key@face`, while a custom theme uses its isolated
+    // active snapshot without modifying (or inheriting mutable values from) the base preset.
     private fun faceString(def: com.matejdro.wearutils.preferences.definition.PreferenceDefinition<String>): String =
-            FaceScopedPreferences.getString(preferences, def, screenFace)
+            FaceScopedPreferences.getString(preferences, def, appearanceContext)
 
     private fun faceBool(def: com.matejdro.wearutils.preferences.definition.PreferenceDefinition<Boolean>): Boolean =
-            FaceScopedPreferences.getBoolean(preferences, def, screenFace)
+            FaceScopedPreferences.getBoolean(preferences, def, appearanceContext)
 
     private fun faceInt(def: com.matejdro.wearutils.preferences.definition.PreferenceDefinition<Int>): Int =
-            FaceScopedPreferences.getInt(preferences, def, screenFace)
+            FaceScopedPreferences.getInt(preferences, def, appearanceContext)
 
     private fun hasFacePreference(baseKey: String): Boolean =
-            preferences.contains(FaceScopedPreferences.scopedKey(baseKey, screenFace)) ||
-                    preferences.contains(baseKey)
+            FaceScopedPreferences.containsExplicitValue(preferences, baseKey, appearanceContext)
 
     /** Runtime migration for a watch paired to an older phone or a config restored before the
      * rewritten Colors page has been opened. */
@@ -2766,29 +2812,6 @@ class MainActivity : WearCompanionWatchActivity(),
             return faceString(MiscPreferences.WEAR_NORMAL_COLOR)
         }
         return ""
-    }
-
-    /** Reads a face-scoped integer whose common definition may not exist on older paired-phone
-     *  builds yet. Synced integer preferences are normally strings, but tolerate raw ints from
-     *  developer tools/legacy builds just like FaceScopedPreferences.getInt does. */
-    private fun faceInt(baseKey: String, defaultValue: Int): Int {
-        val scopedKey = FaceScopedPreferences.scopedKey(baseKey, screenFace)
-
-        fun read(key: String): Int? = try {
-            preferences.getString(key, null)?.toIntOrNull()
-        } catch (_: ClassCastException) {
-            try {
-                preferences.getInt(key, defaultValue)
-            } catch (_: ClassCastException) {
-                null
-            }
-        }
-
-        return when {
-            preferences.contains(scopedKey) -> read(scopedKey) ?: defaultValue
-            preferences.contains(baseKey) -> read(baseKey) ?: defaultValue
-            else -> defaultValue
-        }
     }
 
     /** Rasterizes a configured action's icon (BitmapDrawable or vector) to an ImageBitmap so a
@@ -2810,8 +2833,10 @@ class MainActivity : WearCompanionWatchActivity(),
 
         preferences = it
 
-        // Resolve the active face up front - every scoped appearance read below depends on it.
-        screenFace = Preferences.getString(preferences, MiscPreferences.WEAR_SCREEN_FACE)
+        // Resolve the active theme up front. screenFace remains the validated structural renderer
+        // used by Compose dispatch and AOD follow; appearanceContext owns all scoped reads.
+        appearanceContext = ThemeAppearance.resolve(preferences)
+        screenFace = appearanceContext.baseFace
 
         stemButtonsManager.enableDoublePressInAmbient = !Preferences.getBoolean(
                 preferences,
@@ -2833,15 +2858,17 @@ class MainActivity : WearCompanionWatchActivity(),
 
         dimAlbumArt = faceBool(MiscPreferences.DIM_ALBUM_ART)
         albumArtStyle = faceString(MiscPreferences.ALBUM_ART_STYLE)
-        blurAlbumArtBackground = albumArtStyle == "blur" || albumArtStyle == "blur_bw"
-        albumArtGrayscale = albumArtStyle == "bw" || albumArtStyle == "blur_bw"
-        albumArtHidden = albumArtStyle == "hidden"
+        playerBackgroundStyle = PlayerBackgroundStyle.fromPreference(albumArtStyle)
+        blurAlbumArtBackground = playerBackgroundStyle.blurredArtwork
+        albumArtGrayscale = playerBackgroundStyle.grayscaleArtwork
+        albumArtHidden = playerBackgroundStyle.hidesArtwork
         blurRadiusPx = faceInt(MiscPreferences.ALBUM_ART_BLUR_RADIUS)
                 .coerceIn(5, 120).toFloat()
         // The classic host ImageView applies these itself (applyMainAlbumArtDisplay); the Compose
         // faces read the same choice through the shared state instead of ignoring it.
         updateFaceState {
             it.copy(
+                    backgroundStyle = playerBackgroundStyle,
                     albumArtHidden = albumArtHidden,
                     albumArtGrayscale = albumArtGrayscale,
                     albumArtBlurred = blurAlbumArtBackground,
@@ -2851,9 +2878,8 @@ class MainActivity : WearCompanionWatchActivity(),
         playerShadingStyle = PlayerShadingStyle.fromPreference(
                 faceString(MiscPreferences.WEAR_PLAYER_SHADING_STYLE))
         val namedIntensityKey = MiscPreferences.WEAR_PLAYER_SHADING_INTENSITY.key
-        val hasNamedIntensity = preferences.contains(
-                FaceScopedPreferences.scopedKey(namedIntensityKey, screenFace)) ||
-                preferences.contains(namedIntensityKey)
+        val hasNamedIntensity = FaceScopedPreferences.containsExplicitValue(
+                preferences, namedIntensityKey, appearanceContext)
         playerShadingIntensity = if (hasNamedIntensity) {
             PlayerShadingIntensity.fromPreference(
                     faceString(MiscPreferences.WEAR_PLAYER_SHADING_INTENSITY)).multiplier
@@ -2902,7 +2928,7 @@ class MainActivity : WearCompanionWatchActivity(),
         screenButtonsCurveStyle = faceString(MiscPreferences.WEAR_SCREEN_BUTTONS_CURVE_STYLE)
         screenButtonsBgStyle = faceString(MiscPreferences.WEAR_SCREEN_BUTTONS_BG)
         screenButtonsShape = faceString(MiscPreferences.WEAR_SCREEN_BUTTONS_SHAPE)
-        screenButtonsOpacity = faceInt("screen_buttons_opacity", 100)
+        screenButtonsOpacity = faceInt(MiscPreferences.WEAR_SCREEN_BUTTONS_OPACITY)
                 .coerceIn(0, 100) / 100f
         // The shape also drives per-button WIDTH/HEIGHT (circle -> square box, wide pills -> wider
         // boxes - see configureScreenButtonsGeometry). Restyling without re-running the geometry
@@ -2928,7 +2954,10 @@ class MainActivity : WearCompanionWatchActivity(),
         seekPanelLayout = faceString(MiscPreferences.WEAR_SEEK_LAYOUT)
         quickPanelStyle = faceString(MiscPreferences.WEAR_QUICK_PANEL_STYLE)
         quickPanelLayout = faceString(MiscPreferences.WEAR_QUICK_PANEL_LAYOUT)
-        quickPanelSource = faceString(MiscPreferences.WEAR_QUICK_PANEL_SOURCE)
+        // Source controls a phone-side MediaSession binding and is intentionally global; it is
+        // not part of a saved appearance snapshot (see FaceScopedPreferences.SCOPED_KEYS).
+        quickPanelSource = Preferences.getString(
+                preferences, MiscPreferences.WEAR_QUICK_PANEL_SOURCE)
         if (isQuickActionsPanelShowing()) {
             configureQuickPanelButtons()
             renderQuickPanelExtraActions()
@@ -3036,6 +3065,7 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         applyAlbumArtScrim()
+        applyPlayerBackground()
         applyScreenFace()
 
         updateDynamicAccentFromArt(latestAlbumArt)
@@ -3054,16 +3084,41 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     private fun applyAlbumArtScrim() {
+        val usesSharedLayer = playerShadingStyle != PlayerShadingStyle.FOLLOW ||
+                playerBackgroundStyle.isPlainArtworkTreatment
         binding.albumArtScrim.background = PlayerShadingDrawable(
                 style = playerShadingStyle,
-                intensity = if (dimAlbumArt) playerShadingIntensity else 0f,
+                intensity = if (dimAlbumArt && usesSharedLayer) playerShadingIntensity else 0f,
                 primary = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
                 secondary = resolvedSecondaryAccent()
         )
     }
 
+    /** Native background renderer used only by Classic; Compose faces draw the same treatment
+     * inside their own canvas so layout and background remain independently selectable. */
+    private fun applyPlayerBackground() {
+        val authoredStrength = if (
+            dimAlbumArt && playerShadingStyle == PlayerShadingStyle.FOLLOW
+        ) {
+            (playerShadingIntensity / .8f).coerceIn(0f, 1.25f)
+        } else {
+            0f
+        }
+        binding.playerBackground.background = PlayerBackgroundDrawable(
+                style = playerBackgroundStyle,
+                authoredStrength = authoredStrength,
+                primary = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
+                secondary = resolvedSecondaryAccent(),
+                tertiary = resolvedTertiaryAccent(),
+                materialSurface = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
+                materialSurfaceSoftened = colorTreatment == "desaturated")
+    }
+
     /** Compose faces own the same layer inside their composition; the host View is Classic-only. */
-    private fun shouldShowInteractiveScrim(): Boolean = dimAlbumArt && screenFace == "classic"
+    private fun shouldShowInteractiveScrim(): Boolean =
+            dimAlbumArt && screenFace == "classic" &&
+                    (playerShadingStyle != PlayerShadingStyle.FOLLOW ||
+                            playerBackgroundStyle.isPlainArtworkTreatment)
 
     /** Keep the bezel scrubber inert whenever another full-screen surface owns input. Merely
      * fading the ring to alpha=0 is insufficient because an invisible View remains hit-testable. */
@@ -3097,6 +3152,9 @@ class MainActivity : WearCompanionWatchActivity(),
             composeFaceKind.value = screenFace
         }
         binding.expressiveFace.visibility = if (composeFace) View.VISIBLE else View.GONE
+        binding.playerBackground.visibility = if (
+            composeFace || binding.idleStateGroup.visibility == View.VISIBLE
+        ) View.GONE else View.VISIBLE
         binding.classicTextBlock.visibility = if (composeFace) View.GONE else View.VISIBLE
         // Keep the bezel View/hit target present when only the arc is hidden. onTouchEvent passes
         // non-bezel touches through, so this does not steal the layouts' central controls.
@@ -3481,6 +3539,9 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.ambientClock.visibility = if (aodShowClock) View.VISIBLE else View.GONE
 
         applyAmbientAlbumArt()
+        // Ambient has its own artwork contract and Compose treatment; never leak the interactive
+        // Classic background layer into AOD.
+        binding.playerBackground.visibility = View.GONE
 
         val composeAod = style in composeFaces
         if (composeAod) {
@@ -4142,10 +4203,13 @@ class MainActivity : WearCompanionWatchActivity(),
         panel.addView(extras)
 
         val panelParams = panelRoot.layoutParams as FrameLayout.LayoutParams
-        val sideMargin = 8f * density
-        panelParams.marginStart = sideMargin.roundToInt()
-        panelParams.marginEnd = sideMargin.roundToInt()
+        panelParams.marginStart = 0
+        panelParams.marginEnd = 0
         panelRoot.layoutParams = panelParams
+        // Keep the cards at the original safe inset while letting the ScrollView itself reach the
+        // physical viewport edge. Its curved indicator can now hug the same bezel as QueueScreen.
+        val sideInset = (8f * density).roundToInt()
+        panelRoot.setPadding(sideInset, panelRoot.paddingTop, sideInset, panelRoot.paddingBottom)
 
         // Layout variants may reorder information, but they no longer shrink its touch targets or
         // hide metadata. The compact variant's tiny bubbles were the core legibility regression.
@@ -4168,7 +4232,7 @@ class MainActivity : WearCompanionWatchActivity(),
         }
         actions.layoutParams = actionParams
         val upNextParams = upNext.layoutParams as LinearLayout.LayoutParams
-        upNextParams.topMargin = (10f * density).roundToInt()
+        upNextParams.topMargin = (6f * density).roundToInt()
         upNextParams.width = ViewGroup.LayoutParams.MATCH_PARENT
         upNextParams.gravity = Gravity.CENTER_HORIZONTAL
         upNext.layoutParams = upNextParams

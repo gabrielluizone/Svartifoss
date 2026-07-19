@@ -48,12 +48,11 @@ fun resolveAodArtwork(
         AodArtTreatment.CLEAR -> AodArtworkSpec(visible = true)
         AodArtTreatment.MONOCHROME_BLUR ->
             AodArtworkSpec(visible = true, blurred = true, monochrome = true)
-        AodArtTreatment.FOLLOW -> when (playerArtworkStyle) {
-            "hidden" -> AodArtworkSpec(visible = false)
-            "blur" -> AodArtworkSpec(visible = true, blurred = true)
-            "bw" -> AodArtworkSpec(visible = true, monochrome = true)
-            "blur_bw" -> AodArtworkSpec(visible = true, blurred = true, monochrome = true)
-            else -> AodArtworkSpec(visible = true)
+        AodArtTreatment.FOLLOW -> PlayerBackgroundStyle.fromPreference(playerArtworkStyle).let {
+            AodArtworkSpec(
+                    visible = !it.hidesArtwork,
+                    blurred = it.blurredArtwork,
+                    monochrome = it.grayscaleArtwork)
         }
     }
 }

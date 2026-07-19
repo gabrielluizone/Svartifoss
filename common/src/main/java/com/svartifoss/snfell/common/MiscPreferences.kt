@@ -153,6 +153,28 @@ object MiscPreferences {
      *  the universal button treatment layered over that structure without changing its input map. */
     val WEAR_SCREEN_FACE: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_screen_face", "classic")
 
+    /** ID of the user-created theme currently materialized in the fixed
+     *  [ThemeAppearance.CUSTOM_SCOPE] preference scope. An empty value keeps the selected
+     *  built-in face active. The profile library itself remains phone-local; only this active
+     *  snapshot metadata and the scoped appearance values are synchronized to the watch. */
+    val WEAR_ACTIVE_CUSTOM_THEME_ID: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_active_custom_theme_id", "")
+
+    /** Schema of the materialized custom-theme snapshot. Stored as a string, like every other
+     *  wearutils integer preference. A custom snapshot is accepted only when it exactly matches
+     *  [ThemeAppearance.CURRENT_SCHEMA]. */
+    val WEAR_CUSTOM_THEME_SCHEMA: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_custom_theme_schema", 0)
+
+    /** Commit marker written only after every `key@custom_active` value has been materialized. */
+    val WEAR_CUSTOM_THEME_COMPLETE: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_custom_theme_complete", false)
+
+    /** Monotonic revision of the materialized snapshot, used by the mobile/Wear integration to
+     *  identify a newly applied version without synchronizing the complete profile library. */
+    val WEAR_CUSTOM_THEME_REVISION: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_custom_theme_revision", 0)
+
     /** Show the current song title on the interactive player. Status/error messages are kept
      *  visible even when this is off so disabling metadata never hides important feedback. */
     val WEAR_SHOW_TRACK_TITLE: PreferenceDefinition<Boolean> =
@@ -420,7 +442,10 @@ object MiscPreferences {
             WEAR_AOD_SHOW_CLOCK, WEAR_AOD_SHOW_TRACK_INFO,
             WEAR_AOD_COLOR_MODE, WEAR_AOD_CUSTOM_COLOR, WEAR_AOD_SHOW_TRANSPORT, WEAR_AOD_SHOW_PROGRESS,
             WEAR_AOD_SHOW_PILLS, WEAR_AOD_INTENSITY,
-            WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_FACE, WEAR_SHOW_TRACK_TITLE, WEAR_SHOW_TRACK_ARTIST,
+            WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_FACE,
+            WEAR_ACTIVE_CUSTOM_THEME_ID, WEAR_CUSTOM_THEME_SCHEMA,
+            WEAR_CUSTOM_THEME_COMPLETE, WEAR_CUSTOM_THEME_REVISION,
+            WEAR_SHOW_TRACK_TITLE, WEAR_SHOW_TRACK_ARTIST,
             WEAR_PLAYER_CONTROLS_VISIBLE, WEAR_INTERNAL_PROGRESS_VISIBLE,
             WEAR_EDGE_PROGRESS_VISIBLE, WEAR_EDGE_SEEK_ENABLED,
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_FONT,

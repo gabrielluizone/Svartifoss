@@ -1,6 +1,5 @@
 package com.svartifoss.snfell.view.watchface
 
-import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -13,7 +12,6 @@ import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.QuickPanelButtons
-import com.svartifoss.snfell.common.actions.StandardIcons
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_LONG_TAP
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_SINGLE_TAP
@@ -97,11 +95,7 @@ object MiniButtonIconLoader {
         fun decode(actionBundle: PersistableBundle): PreviewActionIcon? {
             return try {
                 val action = PhoneAction.deserialize<PhoneAction>(context, actionBundle) ?: return null
-                val iconTintable = when (val customUri = action.customIconUri) {
-                    null -> StandardIcons.hasIcon(
-                            action.javaClass.canonicalName ?: action.javaClass.name)
-                    else -> customUri.scheme == ContentResolver.SCHEME_ANDROID_RESOURCE
-                }
+                val iconTintable = action.iconTintable
                 PreviewActionIcon(
                         bitmap = renderIcon(loadActionIcon(context, action), iconTintable),
                         tintable = iconTintable,

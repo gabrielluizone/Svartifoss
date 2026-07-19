@@ -13,11 +13,14 @@ import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
  * writes scoped keys through a `PreferenceDataStore`; the flat SharedPreferences sync
  * (`PreferencePusher`) then carries every `"<baseKey>@<face>"` entry to the watch unchanged.
  *
- * Resolution order for a scoped read (see [getString]/[getBoolean]/[getInt]):
+ * Resolution order for a built-in scoped string read (see [getString]):
  *  1. `"<baseKey>@<face>"` if explicitly set — the user customised this face.
- *  2. `"<baseKey>"` legacy global value — installs from before per-face existed keep their look.
- *  3. [perFaceDefault] — drives the album-accent surface consistency on album faces.
- *  4. the definition's own default value.
+ *  2. A non-default legacy global album-art style — preserves pre-preset artwork choices.
+ *  3. [perFaceDefault] where one exists — drives consistent backgrounds/surfaces per layout.
+ *  4. `"<baseKey>"` legacy global value — old installs keep their look for every other key.
+ *  5. the definition's own default value.
+ * Boolean/integer keys have no per-face override and keep scoped → legacy → definition order.
+ * Custom themes are stricter: they read only the fixed custom snapshot, then face/default values.
  */
 object FaceScopedPreferences {
 
@@ -89,9 +92,38 @@ object FaceScopedPreferences {
             "wear_volume_custom_color"
     )
 
+    /** Typed definitions that form one complete materialized appearance snapshot. Derived from
+     *  the same export registry used by backup so a new scoped preference cannot silently be
+     *  omitted by profile creation/import code. */
+    val SCOPED_DEFINITIONS: List<PreferenceDefinition<*>> by lazy {
+        MiscPreferences.EXPORTABLE.filter { it.key in SCOPED_KEYS }
+    }
+
+    val SCOPED_DEFINITIONS_BY_KEY: Map<String, PreferenceDefinition<*>> by lazy {
+        SCOPED_DEFINITIONS.associateBy { it.key }
+    }
+
     fun isScoped(baseKey: String): Boolean = baseKey in SCOPED_KEYS
 
     fun scopedKey(baseKey: String, face: String): String = baseKey + SCOPE_SEPARATOR + face
+
+    fun scopeFor(context: AppearanceContext): String = when (context) {
+        is AppearanceContext.BuiltIn -> context.baseFace
+        is AppearanceContext.Custom -> ThemeAppearance.CUSTOM_SCOPE
+    }
+
+    /** Whether the active context contains an explicit value for this appearance key. Custom
+     *  contexts deliberately never consult a global or base-face value. */
+    fun containsExplicitValue(
+            prefs: SharedPreferences,
+            baseKey: String,
+            context: AppearanceContext
+    ): Boolean = when (context) {
+        is AppearanceContext.BuiltIn ->
+            prefs.contains(scopedKey(baseKey, context.baseFace)) || prefs.contains(baseKey)
+        is AppearanceContext.Custom ->
+            prefs.contains(scopedKey(baseKey, ThemeAppearance.CUSTOM_SCOPE))
+    }
 
     /** Faces whose now-playing look is built from the album-art accent. Their overlay/panel
      *  surfaces default to the matching album-accent styles so the quick panel / volume / seek /
@@ -110,8 +142,26 @@ object FaceScopedPreferences {
             // to SOLID_ALBUM (see OverlayBackdropResolver), so the blur backdrop follows the album.
     )
 
-    fun perFaceDefault(face: String, baseKey: String): String? =
-            if (face in ALBUM_ACCENT_FACES) ALBUM_ACCENT_SURFACE_DEFAULTS[baseKey] else null
+    fun perFaceDefault(face: String, baseKey: String): String? = when {
+        baseKey == MiscPreferences.ALBUM_ART_STYLE.key ->
+            PlayerBackgroundStyle.defaultForFace(face).preferenceValue
+        face in ALBUM_ACCENT_FACES -> ALBUM_ACCENT_SURFACE_DEFAULTS[baseKey]
+        else -> null
+    }
+
+    /** `default_config.json` seeds the old global key with `cover` on every install, so key
+     * presence alone cannot distinguish a user choice. Only a non-default legacy value is a real
+     * override worth preserving ahead of the new per-layout background defaults. */
+    fun hasLegacyAlbumArtOverride(prefs: SharedPreferences): Boolean {
+        val key = MiscPreferences.ALBUM_ART_STYLE.key
+        if (!prefs.contains(key)) return false
+        val value = try {
+            prefs.getString(key, MiscPreferences.ALBUM_ART_STYLE.defaultValue)
+        } catch (_: ClassCastException) {
+            null
+        }
+        return PlayerBackgroundStyle.isLegacyOverrideValue(value)
+    }
 
     fun getString(prefs: SharedPreferences, def: PreferenceDefinition<String>, face: String): String {
         val scoped = scopedKey(def.key, face)
@@ -124,11 +174,33 @@ object FaceScopedPreferences {
         // unaffected and still falls back to the legacy value, preserving existing installs' look.
         return when {
             prefs.contains(scoped) -> prefs.getString(scoped, def.defaultValue) ?: def.defaultValue
+            // Album-art style existed before backgrounds became per-layout presets. Preserve a
+            // non-default legacy choice until the user saves a value for this face; `cover` is
+            // seeded for every install and therefore cannot be treated as explicit intent.
+            def.key == MiscPreferences.ALBUM_ART_STYLE.key && hasLegacyAlbumArtOverride(prefs) ->
+                prefs.getString(def.key, def.defaultValue) ?: def.defaultValue
             else -> perFaceDefault(face, def.key) ?: if (prefs.contains(def.key)) {
                 prefs.getString(def.key, def.defaultValue) ?: def.defaultValue
             } else {
                 def.defaultValue
             }
+        }
+    }
+
+    /** Resolves a string against a validated appearance context. The built-in branch delegates to
+     *  the historical implementation unchanged. A custom snapshot is isolated from both legacy
+     *  globals and `key@baseFace`, falling back only to the base preset default and definition. */
+    fun getString(
+            prefs: SharedPreferences,
+            def: PreferenceDefinition<String>,
+            context: AppearanceContext
+    ): String = when (context) {
+        is AppearanceContext.BuiltIn -> getString(prefs, def, context.baseFace)
+        is AppearanceContext.Custom -> {
+            val scoped = scopedKey(def.key, ThemeAppearance.CUSTOM_SCOPE)
+            prefs.getStrictStringSafe(scoped)
+                    ?: perFaceDefault(context.baseFace, def.key)
+                    ?: def.defaultValue
         }
     }
 
@@ -138,6 +210,20 @@ object FaceScopedPreferences {
             prefs.contains(scoped) -> prefs.getBoolean(scoped, def.defaultValue)
             prefs.contains(def.key) -> prefs.getBoolean(def.key, def.defaultValue)
             else -> def.defaultValue
+        }
+    }
+
+    fun getBoolean(
+            prefs: SharedPreferences,
+            def: PreferenceDefinition<Boolean>,
+            context: AppearanceContext
+    ): Boolean = when (context) {
+        is AppearanceContext.BuiltIn -> getBoolean(prefs, def, context.baseFace)
+        is AppearanceContext.Custom -> {
+            val scoped = scopedKey(def.key, ThemeAppearance.CUSTOM_SCOPE)
+            prefs.getBooleanSafe(scoped)
+                    ?: perFaceDefault(context.baseFace, def.key)?.toBooleanStrictOrNull()
+                    ?: def.defaultValue
         }
     }
 
@@ -152,10 +238,72 @@ object FaceScopedPreferences {
         return raw?.toIntOrNull() ?: def.defaultValue
     }
 
+    fun getInt(
+            prefs: SharedPreferences,
+            def: PreferenceDefinition<Int>,
+            context: AppearanceContext
+    ): Int = when (context) {
+        is AppearanceContext.BuiltIn -> getInt(prefs, def, context.baseFace)
+        is AppearanceContext.Custom -> {
+            val scoped = scopedKey(def.key, ThemeAppearance.CUSTOM_SCOPE)
+            prefs.getStringIntSafe(scoped)
+                    ?: perFaceDefault(context.baseFace, def.key)?.toIntOrNull()
+                    ?: def.defaultValue
+        }
+    }
+
+    /** Generic bridge for code materializing a snapshot from [SCOPED_DEFINITIONS]. */
+    fun resolveValue(
+            prefs: SharedPreferences,
+            definition: PreferenceDefinition<*>,
+            context: AppearanceContext
+    ): Any = when (definition.defaultValue) {
+        is String -> {
+            @Suppress("UNCHECKED_CAST")
+            getString(prefs, definition as PreferenceDefinition<String>, context)
+        }
+        is Boolean -> {
+            @Suppress("UNCHECKED_CAST")
+            getBoolean(prefs, definition as PreferenceDefinition<Boolean>, context)
+        }
+        is Int -> {
+            @Suppress("UNCHECKED_CAST")
+            getInt(prefs, definition as PreferenceDefinition<Int>, context)
+        }
+        else -> error("Unsupported scoped preference type for ${definition.key}")
+    }
+
     private fun SharedPreferences.getStringSafe(key: String): String? = try {
         getString(key, null)
     } catch (_: ClassCastException) {
         // Tolerate a value stored as a raw int by some older path.
         try { getInt(key, 0).toString() } catch (_: ClassCastException) { null }
+    }
+
+    private fun SharedPreferences.getStrictStringSafe(key: String): String? = try {
+        getString(key, null)
+    } catch (_: ClassCastException) {
+        null
+    }
+
+    private fun SharedPreferences.getBooleanSafe(key: String): Boolean? = try {
+        if (contains(key)) getBoolean(key, false) else null
+    } catch (_: ClassCastException) {
+        null
+    }
+
+    private fun SharedPreferences.getStringIntSafe(key: String): Int? {
+        val rawString = try {
+            getString(key, null)
+        } catch (_: ClassCastException) {
+            null
+        }
+        if (rawString != null) return rawString.toIntOrNull()
+
+        return try {
+            if (contains(key)) getInt(key, 0) else null
+        } catch (_: ClassCastException) {
+            null
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.watch.view.face
 
 import androidx.compose.ui.text.font.FontFamily
+import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
@@ -181,31 +182,30 @@ data class NowPlayingFaceState(
          *  read by every face's title/artist text through AdaptiveTitleText - previously only the
          *  classic face's OutlineTextView consulted this. */
         val titleTextMode: String = "smart",
-        /** Mirrors MiscPreferences.ALBUM_ART_STYLE == "hidden". Curated faces that draw the cover
-         *  themselves fall back to their palette gradient instead - the same fallback already
-         *  used before any art has arrived. Classic keeps its own, separate handling on the host
-         *  ImageView; this only reaches the Compose faces. */
+        /** Background/artwork treatment selected independently from this face's structural
+         * layout. This lets, for example, Material controls use the Expressive blur or Poster
+         * artwork treatment without swapping the controls themselves. */
+        val backgroundStyle: PlayerBackgroundStyle = PlayerBackgroundStyle.COVER,
+        /** Whether the selected [backgroundStyle] suppresses artwork (Hidden/Eclipse). Curated
+         *  layouts with their own small cover shape fall back to the palette gradient. */
         val albumArtHidden: Boolean = false,
-        /** Mirrors ALBUM_ART_STYLE == "bw"/"blur_bw": desaturate the cover the curated faces
-         *  draw. */
+        /** Whether [backgroundStyle] requests monochrome artwork. */
         val albumArtGrayscale: Boolean = false,
-        /** Mirrors ALBUM_ART_STYLE == "blur"/"blur_bw". */
+        /** Whether [backgroundStyle] requests blurred artwork. */
         val albumArtBlurred: Boolean = false,
         /** Raw blur radius in pixels (MiscPreferences.ALBUM_ART_BLUR_RADIUS) - only meaningful
          *  together with [albumArtBlurred]. Kept in px, matching the host's own RenderEffect
          *  radius, rather than pre-converted to Dp so every consumer applies the same density
          *  conversion the platform blur itself expects. */
         val albumArtBlurRadiusPx: Float = 35f,
-        /** Mirrors MiscPreferences.WEAR_ALBUM_ART_FADE. The classic/expressive backgrounds get
-         *  their crossfade from the host ImageView (fadeToAlbumArt); faces that draw the cover
-         *  themselves (Poster full-bleed, Vinyl's label, Halo's disc) honor it through
-         *  AlbumArtwork's own crossfade instead of swapping instantly. */
+        /** Mirrors MiscPreferences.WEAR_ALBUM_ART_FADE. Shared full-screen artwork crossfades in
+         *  the host; Vinyl/Halo's composition-owned mini covers use AlbumArtwork's crossfade. */
         val albumArtFade: Boolean = true,
         /** Master switch for the user-selected layer between artwork and player chrome. */
         val backdropDimEnabled: Boolean = true,
         /** Named soft/balanced/strong level resolved to a shared 0f..1f multiplier. */
         val backdropDimStrength: Float = .8f,
-        /** Explicit treatment, or FOLLOW to keep the selected face's authored treatment. */
+        /** Explicit treatment, or FOLLOW to keep the selected background's authored treatment. */
         val backdropShadingStyle: PlayerShadingStyle = PlayerShadingStyle.FOLLOW,
         /** Icons of the actions configured on the LEFT / RIGHT screen quadrants (single tap). The
          *  faces with side action buttons render these instead of fixed skip glyphs when set, so

@@ -4,9 +4,13 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Rect
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewConfiguration
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import com.svartifoss.snfell.R
@@ -32,12 +36,78 @@ class CircularQuickActionsScrollView @JvmOverloads constructor(
         strokeCap = Paint.Cap.ROUND
     }
     private val indicatorBounds = RectF()
+    private val hitRect = Rect()
     private var indicatorVisibleUntilMs = 0L
+    private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
+    private var gestureStartX = 0f
+    private var gestureStartY = 0f
+    private var gestureMoved = false
+    private var dismissRequestListener: (() -> Unit)? = null
 
     init {
         isVerticalScrollBarEnabled = false
         isHorizontalScrollBarEnabled = false
         setWillNotDraw(false)
+    }
+
+    /**
+     * The panel fills the screen, so its backdrop can never receive a tap through this
+     * ScrollView. Report taps that do not land on an actual action, plus a rightward fallback
+     * gesture for devices whose parent SwipeDismissFrameLayout loses the gesture to scrolling.
+     */
+    fun setOnDismissRequestListener(listener: (() -> Unit)?) {
+        dismissRequestListener = listener
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                gestureStartX = event.rawX
+                gestureStartY = event.rawY
+                gestureMoved = false
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (abs(event.rawX - gestureStartX) > touchSlop ||
+                        abs(event.rawY - gestureStartY) > touchSlop) {
+                    gestureMoved = true
+                }
+            }
+            MotionEvent.ACTION_UP -> {
+                val deltaX = event.rawX - gestureStartX
+                val deltaY = event.rawY - gestureStartY
+                val rightwardDismiss = deltaX >= maxOf(width * 0.22f, 44f * density) &&
+                        deltaX > abs(deltaY) * 1.25f
+                val blankTap = !gestureMoved &&
+                        !hasClickableDescendantAt(this, event.rawX.toInt(), event.rawY.toInt())
+                if (rightwardDismiss || blankTap) {
+                    // Let the pressed child clear its state before the overlay disappears.
+                    val handled = super.dispatchTouchEvent(event)
+                    post { dismissRequestListener?.invoke() }
+                    return handled || dismissRequestListener != null
+                }
+            }
+            MotionEvent.ACTION_CANCEL -> gestureMoved = false
+        }
+        return super.dispatchTouchEvent(event)
+    }
+
+    private fun hasClickableDescendantAt(
+            parent: ViewGroup,
+            screenX: Int,
+            screenY: Int
+    ): Boolean {
+        for (index in parent.childCount - 1 downTo 0) {
+            val child = parent.getChildAt(index)
+            if (child.visibility != View.VISIBLE || child.alpha <= 0f) continue
+            if (child is ViewGroup && hasClickableDescendantAt(child, screenX, screenY)) {
+                return true
+            }
+            if (child.isClickable && child.isEnabled &&
+                    child.getGlobalVisibleRect(hitRect) && hitRect.contains(screenX, screenY)) {
+                return true
+            }
+        }
+        return false
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -127,10 +197,14 @@ class CircularQuickActionsScrollView @JvmOverloads constructor(
         val side = minOf(width, height).toFloat() - strokeInset * 2f
         indicatorBounds.set(
                 (width - side) / 2f,
-                (height - side) / 2f,
+                scrollY + (height - side) / 2f,
                 (width + side) / 2f,
-                (height + side) / 2f
+                scrollY + (height + side) / 2f
         )
+
+        // ScrollView draws descendants in content coordinates. Including scrollY above anchors
+        // the complete arc to the physical bezel while only its thumb travels along the track,
+        // exactly like QueueScreen's overlay indicator.
 
         trackPaint.alpha = (0.12f * alpha * 255f).toInt()
         canvas.drawArc(indicatorBounds, -ARC_SPAN / 2f, ARC_SPAN, false, trackPaint)

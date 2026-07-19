@@ -57,6 +57,8 @@ class AppPlayAction : SelectableAction {
     }
 
     override fun retrieveTitle(): String = lazyName
+    override val defaultIconTintable: Boolean
+        get() = false
     override val defaultIcon: Drawable
         get() = try {
             context.packageManager.getApplicationIcon(receiverComponent.packageName)

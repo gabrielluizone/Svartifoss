@@ -30,5 +30,7 @@ message WatchList {
   message WatchListAction {
     required string actionTitle = 1;
     optional string actionKey = 2;
+    // Explicitly distinguishes monochrome templates from full-colour launcher/gallery artwork.
+    optional bool iconTintable = 3;
   }
 }

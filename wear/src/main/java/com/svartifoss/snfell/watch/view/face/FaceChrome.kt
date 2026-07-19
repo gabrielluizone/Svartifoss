@@ -28,7 +28,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -48,6 +51,8 @@ import androidx.core.graphics.ColorUtils
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 
@@ -67,20 +72,201 @@ internal fun faceTonal(accent: Int, lightness: Float, minSat: Float = 0.25f, max
 }
 
 /**
- * Shared explicit player-shading layer for every Compose face. FOLLOW is intentionally handled
- * by the face itself so its authored identity remains available; every other value is drawn with
- * identical stops and strength semantics to Classic and the phone preview.
+ * Draws the selected background treatment without making any decision about control geometry.
+ * It is shared by Expressive and every curated layout, which is the key distinction between a
+ * layout (where controls live) and a background (how artwork/album colour fills the screen).
+ */
+@Composable
+internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
+    val style = state.backgroundStyle
+    // Decorative colour remains part of the selected background. Its authored black scrim is the
+    // FOLLOW shading treatment: it scales with the shared dim strength and is replaced (not
+    // stacked) when the user selects an explicit shading style.
+    val authoredStrength = if (
+        state.backdropDimEnabled && state.backdropShadingStyle == PlayerShadingStyle.FOLLOW
+    ) {
+        (state.backdropDimStrength / .8f).coerceIn(0f, 1.25f)
+    } else {
+        0f
+    }
+    fun opacity(base: Float): Float = base.coerceIn(0f, 1f)
+    fun authoredOpacity(base: Float): Float =
+            (base * authoredStrength).coerceIn(0f, 1f)
+
+    val primary = Color(PaletteTransforms.tunedFaceColor(state.accentColor, .62f, .74f))
+    val secondary = Color(PaletteTransforms.tunedFaceColor(
+            state.secondaryAccentColor, .58f, .70f))
+    val tertiary = Color(PaletteTransforms.tunedFaceColor(
+            state.tertiaryAccentColor, .62f, .72f))
+    val deep = Color(PaletteTransforms.tunedFaceColor(state.accentColor, .075f, .48f))
+    val surface = Color(PaletteTransforms.tunedFaceColor(
+            state.secondaryAccentColor, .16f, .42f))
+
+    Canvas(Modifier.fillMaxSize()) {
+        when (style) {
+            PlayerBackgroundStyle.COVER,
+            PlayerBackgroundStyle.BLUR,
+            PlayerBackgroundStyle.BLACK_AND_WHITE,
+            PlayerBackgroundStyle.BLURRED_BLACK_AND_WHITE -> Unit
+
+            PlayerBackgroundStyle.EXPRESSIVE -> {
+                val tint = Color(PaletteTransforms.tonalSurface(
+                        state.accentColor, .30f, .30f, .90f))
+                drawRect(tint.copy(alpha = opacity(.45f)))
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.30f)))
+                drawRect(brush = Brush.radialGradient(
+                        0f to Color.Transparent,
+                        .55f to Color.Transparent,
+                        1f to Color.Black.copy(alpha = authoredOpacity(.88f)),
+                        center = center,
+                        radius = size.maxDimension * .68f))
+            }
+
+            PlayerBackgroundStyle.MATERIAL -> {
+                drawRect(Color.Black)
+                val tint = Color(PaletteTransforms.tonalSurface(
+                        state.materialSurfaceColor,
+                        lightness = if (state.materialSurfaceSoftened) .36f else .26f,
+                        minSat = if (state.materialSurfaceSoftened) 0f else .30f,
+                        maxSat = .80f))
+                drawCircle(
+                        brush = Brush.radialGradient(
+                                0f to tint.copy(alpha = .72f),
+                                .50f to tint.copy(alpha = .38f),
+                                .80f to tint.copy(alpha = .12f),
+                                1f to Color.Transparent),
+                        radius = size.minDimension * .85f,
+                        center = center)
+            }
+
+            PlayerBackgroundStyle.POSTER -> {
+                drawRect(primary.copy(alpha = opacity(.12f)))
+                drawRect(brush = Brush.verticalGradient(
+                        0f to Color.Black.copy(alpha = authoredOpacity(.48f)),
+                        .36f to Color.Black.copy(alpha = authoredOpacity(.06f)),
+                        .68f to Color.Black.copy(alpha = authoredOpacity(.25f)),
+                        1f to Color.Black.copy(alpha = authoredOpacity(.94f))))
+                drawRect(brush = Brush.horizontalGradient(
+                        0f to Color.Black.copy(alpha = authoredOpacity(.36f)),
+                        .50f to Color.Transparent,
+                        1f to Color.Black.copy(alpha = authoredOpacity(.36f))))
+            }
+
+            PlayerBackgroundStyle.STUDIO -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.48f)))
+                drawRect(brush = Brush.linearGradient(
+                        colors = listOf(
+                                primary.copy(alpha = .44f),
+                                secondary.copy(alpha = .15f),
+                                Color.Transparent),
+                        start = Offset(size.width, 0f),
+                        end = Offset(0f, size.height)))
+            }
+
+            PlayerBackgroundStyle.VINYL -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.68f)))
+                drawCircle(
+                        brush = Brush.radialGradient(
+                                0f to primary.copy(alpha = .32f),
+                                .55f to deep.copy(alpha = .20f),
+                                1f to Color.Transparent),
+                        radius = size.minDimension * .69f,
+                        center = Offset(size.width * .64f, size.height * .38f))
+            }
+
+            PlayerBackgroundStyle.HALO -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.68f)))
+                drawCircle(
+                        brush = Brush.radialGradient(
+                                0f to primary.copy(alpha = .50f),
+                                .48f to secondary.copy(alpha = .18f),
+                                1f to Color.Transparent),
+                        radius = size.minDimension * .62f,
+                        center = center)
+            }
+
+            PlayerBackgroundStyle.AURORA -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(1f)))
+                drawCircle(
+                        brush = Brush.radialGradient(
+                                0f to primary.copy(alpha = .48f),
+                                .42f to deep.copy(alpha = .30f),
+                                1f to Color.Transparent),
+                        radius = size.minDimension * .78f,
+                        center = Offset(size.width * .18f, size.height * .14f))
+                drawCircle(
+                        brush = Brush.radialGradient(
+                                0f to secondary.copy(alpha = .38f),
+                                .48f to tertiary.copy(alpha = .18f),
+                                1f to Color.Transparent),
+                        radius = size.minDimension * .72f,
+                        center = Offset(size.width * .88f, size.height * .72f))
+                listOf(
+                        Triple(.30f, .52f, primary),
+                        Triple(.43f, .63f, secondary),
+                        Triple(.56f, .72f, tertiary)
+                ).forEachIndexed { index, (startY, endY, color) ->
+                    val ribbon = Path().apply {
+                        moveTo(-size.width * .14f, size.height * startY)
+                        cubicTo(
+                                size.width * .18f,
+                                size.height * (startY - .24f + index * .025f),
+                                size.width * .58f,
+                                size.height * (endY + .18f - index * .02f),
+                                size.width * 1.14f,
+                                size.height * endY)
+                    }
+                    drawPath(
+                            ribbon,
+                            brush = Brush.linearGradient(
+                                    colors = listOf(color, primary, secondary),
+                                    start = Offset(0f, size.height * .50f),
+                                    end = Offset(size.width, size.height * .50f)),
+                            style = Stroke(
+                                    size.minDimension * (.085f - index * .012f),
+                                    cap = StrokeCap.Round),
+                            alpha = .32f - index * .045f)
+                }
+                drawRect(brush = Brush.verticalGradient(
+                        0f to Color.Black.copy(alpha = authoredOpacity(.06f)),
+                        .62f to Color.Transparent,
+                        1f to Color.Black.copy(alpha = authoredOpacity(.78f))))
+            }
+
+            PlayerBackgroundStyle.SPECTRUM -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.58f)))
+                drawRect(brush = Brush.verticalGradient(
+                        colors = listOf(
+                                surface.copy(alpha = opacity(.78f)),
+                                deep.copy(alpha = opacity(.90f)),
+                                Color.Black.copy(alpha = authoredOpacity(.88f)))))
+            }
+
+            PlayerBackgroundStyle.ECLIPSE,
+            PlayerBackgroundStyle.HIDDEN -> drawRect(Color.Black)
+        }
+    }
+}
+
+/**
+ * Shared player-shading layer for every Compose face. FOLLOW lets a named background use its
+ * authored scrim, while plain artwork gets the neutral bottom fade; explicit values replace it.
  */
 @Composable
 internal fun PlayerShadingOverlay(state: NowPlayingFaceState) {
-    if (!state.backdropDimEnabled || state.backdropShadingStyle == PlayerShadingStyle.FOLLOW) return
+    if (!state.backdropDimEnabled) return
+    val style = when {
+        state.backdropShadingStyle != PlayerShadingStyle.FOLLOW -> state.backdropShadingStyle
+        state.backgroundStyle.isPlainArtworkTreatment -> PlayerShadingStyle.BOTTOM_FADE
+        else -> return // Named backgrounds already rendered their scaled authored scrim above.
+    }
     val strength = state.backdropDimStrength.coerceIn(0f, 1f)
     fun black(maxAlpha: Float) = Color.Black.copy(alpha = maxAlpha * strength)
     val primary = Color(faceTonal(state.accentColor, .13f, .25f, .78f))
     val secondary = Color(faceTonal(state.secondaryAccentColor, .13f, .25f, .78f))
 
     Canvas(Modifier.fillMaxSize()) {
-        when (state.backdropShadingStyle) {
+        when (style) {
             PlayerShadingStyle.EDGE_VIGNETTE -> drawRect(
                     brush = Brush.radialGradient(
                             0f to Color.Transparent,
@@ -127,7 +313,7 @@ internal fun PlayerShadingOverlay(state: NowPlayingFaceState) {
                             .66f to Color.Transparent,
                             1f to black(.72f)))
 
-            PlayerShadingStyle.FOLLOW -> Unit
+            PlayerShadingStyle.FOLLOW -> Unit // Resolved to BOTTOM_FADE above.
         }
     }
 }
@@ -135,6 +321,22 @@ internal fun PlayerShadingOverlay(state: NowPlayingFaceState) {
 internal fun formatFaceClockTime(timeMs: Long): String {
     val totalSeconds = timeMs / 1000
     return String.format(java.util.Locale.getDefault(), "%d:%02d", totalSeconds / 60, totalSeconds % 60)
+}
+
+/**
+ * Vertical offset shared by Expressive and Material for their interactive track-time readout.
+ * Both faces keep their transport focus centered, so using one metric prevents the Material
+ * layout from drifting when mini buttons need extra clearance near the lower bezel.
+ */
+internal fun centeredTransportTrackTimeOffset(
+        screen: Dp,
+        miniButtonsTopFraction: Float
+): Dp {
+    val ringBottom = if (screen >= 225.dp) 39.dp else 31.dp
+    val desiredOffset = ringBottom + 14.dp
+    val miniRowClearance = screen * miniButtonsTopFraction.coerceIn(.20f, .95f) -
+            screen * .50f - 10.dp
+    return minOf(desiredOffset, miniRowClearance).coerceAtLeast(ringBottom + 10.dp)
 }
 
 /** A press-scaling tap target of any [shape] - the shared skeleton for the Beta faces' buttons,

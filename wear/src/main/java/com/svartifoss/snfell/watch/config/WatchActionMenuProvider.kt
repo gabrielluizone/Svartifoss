@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.watch.config
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -33,9 +34,23 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
                         it.value.actionKey
                 )
 
+                // getIcon() always falls back to a local monochrome vector when an asset is
+                // absent or cannot be decoded. Classify the drawable we actually received, not
+                // merely the DataItem key: a corrupt full-colour asset must not leave that local
+                // fallback untinted and invisible on the panel surface.
+                val usesLocalTemplate = icon !is BitmapDrawable
+                val iconTintable = when {
+                    usesLocalTemplate -> true
+                    it.value.hasIconTintable() -> it.value.iconTintable
+                    // Legacy payloads had no metadata. Their transferred assets were most often
+                    // launcher/gallery artwork, so preserving color remains the safest fallback.
+                    else -> false
+                }
+
                 ButtonAction(it.value.actionKey,
                         icon,
-                        it.value.actionTitle)
+                        it.value.actionTitle,
+                        iconTintable)
             }.toList()
 
             config.postValue(actions)

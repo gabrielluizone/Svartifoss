@@ -5,8 +5,10 @@ import android.content.SharedPreferences
 import android.util.Base64
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.util.BundleFileSerialization
 import com.svartifoss.snfell.util.BundleJson
+import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -27,7 +29,8 @@ import java.io.IOException
  * (with a decodability check) so old backups keep working, but new exports never produce them.
  */
 object ConfigBackup {
-    private const val SCHEMA_VERSION = 2
+    private const val SCHEMA_VERSION = 3
+    private const val WATCH_THEMES_KEY = "watchThemes"
 
     private val CONFIG_FILES = mapOf(
             "buttonConfigPlaying" to "action_config_playing",
@@ -72,6 +75,10 @@ object ConfigBackup {
             }
         }
         json.put("preferences", prefsJson)
+        // The full theme library intentionally lives outside default SharedPreferences so it is
+        // never mirrored wholesale to Wear. Export it explicitly; the repository first captures
+        // any edits made to the active custom snapshot in the shared Watch editor.
+        json.put(WATCH_THEMES_KEY, WatchThemeRepository(context).exportToJson(preferences))
 
         return json
     }
@@ -88,6 +95,16 @@ object ConfigBackup {
      *  @throws java.io.IOException when a legacy config blob in the backup can't be decoded on this
      *  device (parcel bytes aren't stable across Android versions). */
     fun import(context: Context, preferences: SharedPreferences, json: JSONObject) {
+        // Validate the phone-only theme catalog before the first config/preference write. This
+        // preserves the all-or-nothing guarantee for malformed or future-schema backups.
+        val themeRepository = WatchThemeRepository(context)
+        val themesJson = when {
+            !json.has(WATCH_THEMES_KEY) -> null
+            json.optJSONObject(WATCH_THEMES_KEY) != null -> json.optJSONObject(WATCH_THEMES_KEY)
+            else -> throw IOException("Invalid watch theme library")
+        }
+        themesJson?.let(themeRepository::validateImport)
+
         val pendingWrites = ArrayList<() -> Unit>()
         for ((jsonKey, fileName) in CONFIG_FILES) {
             if (!json.has(jsonKey)) continue
@@ -141,7 +158,29 @@ object ConfigBackup {
                         key, (0 until value.length()).map { value.getString(it) }.toSet())
             }
         }
+        if (themesJson == null) {
+            // A schema-1/2 backup cannot describe the custom profile that may currently be
+            // active. Deactivate that projection in the same preference transaction; otherwise
+            // an imported wear_screen_face would silently rewrite the saved profile's base layout
+            // the next time the Watch editor captures it.
+            editor.putString(MiscPreferences.WEAR_ACTIVE_CUSTOM_THEME_ID.key, "")
+            editor.putString(MiscPreferences.WEAR_CUSTOM_THEME_SCHEMA.key, "0")
+            editor.putString(MiscPreferences.WEAR_CUSTOM_THEME_REVISION.key, "0")
+            editor.putBoolean(MiscPreferences.WEAR_CUSTOM_THEME_COMPLETE.key, false)
+        }
         editor.apply()
+
+        // Schema 1/2 backups have no theme library and retain whatever is already on the phone.
+        // Schema 3 replaces the library as one validated unit and re-materializes its active
+        // profile into custom_active, or safely returns to the imported built-in face.
+        if (themesJson != null) {
+            themeRepository.replaceFromJson(themesJson, preferences)
+        } else {
+            // Keep the phone-only catalog, but clear its stale active marker to match the imported
+            // legacy preference state. Saved themes remain available for later use.
+            themeRepository.applyBuiltIn(
+                    preferences, ThemeAppearance.resolve(preferences).baseFace)
+        }
     }
 
     /** True for a "<baseKey>@<face>" key whose base is a face-scoped exportable preference. */

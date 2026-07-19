@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.watch.config
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.view.KeyEvent
 import androidx.collection.SimpleArrayMap
 import androidx.lifecycle.LiveData
@@ -9,7 +10,6 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.wearable.DataItem
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.common.CommPaths
-import com.svartifoss.snfell.common.actions.StandardIcons
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_LONG_TAP
 import com.svartifoss.snfell.proto.WatchActions
@@ -71,14 +71,13 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private
 
                 // Payloads written before iconTintable existed can still be classified reliably:
                 // locally-resolved standard vectors have no asset; transferred bitmaps do.
-                val usesGenericFallback = !dataItem.assets.containsKey(iconKey) &&
-                        !StandardIcons.hasIcon(key)
-                val iconTintable = if (usesGenericFallback) {
+                val usesLocalTemplate = icon !is BitmapDrawable
+                val iconTintable = if (usesLocalTemplate) {
                     true
                 } else if (action.hasIconTintable()) {
                     action.iconTintable
                 } else {
-                    !dataItem.assets.containsKey(iconKey)
+                    false
                 }
                 val title = if (action.hasActionTitle()) {
                     action.actionTitle.takeIf { it.isNotBlank() }

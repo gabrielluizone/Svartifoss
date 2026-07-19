@@ -4,36 +4,48 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceDataStore
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.ThemeAppearance
 
 /**
  * Backs the Watch-tab preference screens so each now-playing face keeps its own appearance config.
- * Appearance keys (see [FaceScopedPreferences.SCOPED_KEYS]) read/write `"<key>@<face>"`, where
- * `<face>` is the current global `wear_screen_face`; every other key (the face selector, dev
- * toggles, ...) passes straight through unscoped.
+ * Appearance keys (see [FaceScopedPreferences.SCOPED_KEYS]) read/write the active appearance
+ * namespace. Built-ins retain `"<key>@<face>"`; a saved theme uses the isolated
+ * `"<key>@custom_active"` snapshot while `wear_screen_face` continues to select its renderer.
+ * Every non-appearance key passes straight through unscoped.
  *
- * Reads use the shared resolution (scoped -> legacy global -> per-face default -> supplied
- * default) so the UI shows exactly the value the watch will apply. Every write still lands in the
- * same [SharedPreferences] (just under the scoped key), so the existing `PreferencePusher` sync
- * carries them to the watch unchanged.
+ * Reads mirror the shared built-in/custom fallback rules so the UI shows exactly the value the
+ * watch will apply. Every write still lands in the same [SharedPreferences] (just under the
+ * resolved scope), so the existing `PreferencePusher` sync carries it to the watch unchanged.
  */
 class FaceScopedPreferenceDataStore(
         private val prefs: SharedPreferences
 ) : PreferenceDataStore() {
 
-    private val face: String
-        get() = prefs.getString(MiscPreferences.WEAR_SCREEN_FACE.key, "classic") ?: "classic"
+    private val context
+        get() = ThemeAppearance.resolve(prefs)
 
     private fun effectiveWriteKey(key: String): String =
-            if (FaceScopedPreferences.isScoped(key)) FaceScopedPreferences.scopedKey(key, face) else key
+            if (FaceScopedPreferences.isScoped(key)) {
+                FaceScopedPreferences.scopedKey(key, FaceScopedPreferences.scopeFor(context))
+            } else {
+                key
+            }
 
     override fun getString(key: String, defValue: String?): String? {
         if (!FaceScopedPreferences.isScoped(key)) return prefs.getString(key, defValue)
-        val currentFace = face
-        val scoped = FaceScopedPreferences.scopedKey(key, currentFace)
-        // See FaceScopedPreferences.getString: the per-face default wins over a pre-existing
-        // *global* legacy value, so the UI shows the same resolved value the watch will apply.
+        val current = context
+        val currentFace = current.baseFace
+        val scope = FaceScopedPreferences.scopeFor(current)
+        val scoped = FaceScopedPreferences.scopedKey(key, scope)
+        // See FaceScopedPreferences.getString: surface defaults normally win over legacy globals;
+        // album-art style alone preserves a non-default pre-preset choice until this face is saved.
         return when {
             prefs.contains(scoped) -> prefs.getString(scoped, defValue)
+            scope == ThemeAppearance.CUSTOM_SCOPE ->
+                FaceScopedPreferences.perFaceDefault(currentFace, key) ?: defValue
+            key == MiscPreferences.ALBUM_ART_STYLE.key &&
+                    FaceScopedPreferences.hasLegacyAlbumArtOverride(prefs) ->
+                prefs.getString(key, defValue)
             else -> FaceScopedPreferences.perFaceDefault(currentFace, key)
                     ?: if (prefs.contains(key)) prefs.getString(key, defValue) else defValue
         }
@@ -48,10 +60,12 @@ class FaceScopedPreferenceDataStore(
 
     override fun getBoolean(key: String, defValue: Boolean): Boolean {
         if (!FaceScopedPreferences.isScoped(key)) return prefs.getBoolean(key, defValue)
-        val currentFace = face
-        val scoped = FaceScopedPreferences.scopedKey(key, currentFace)
+        val current = context
+        val scope = FaceScopedPreferences.scopeFor(current)
+        val scoped = FaceScopedPreferences.scopedKey(key, scope)
         return when {
             prefs.contains(scoped) -> prefs.getBoolean(scoped, defValue)
+            scope == ThemeAppearance.CUSTOM_SCOPE -> defValue
             prefs.contains(key) -> prefs.getBoolean(key, defValue)
             else -> defValue
         }

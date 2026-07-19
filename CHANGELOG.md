@@ -6,6 +6,27 @@ These changes are still in development and are not part of a published release.
 
 ### Phone experience
 
+- **Create and save your own watch themes**: the existing designs are now
+  available as base layouts for reusable custom profiles. Pick Classic,
+  Expressive, Poster, Studio, Material or another available layout, give the
+  theme a name, then combine its typography, colors, artwork blur, dim and
+  shading, AOD, progress, panels and mini-button appearance in the same live
+  six-section editor. The new theme manager can apply, customize, duplicate,
+  rename and delete profiles, clearly identifies the active theme and returns
+  a newly created profile directly to its editor.
+- **Layouts and backgrounds are independent**: every player layout can now use
+  the artwork treatment originally authored for Classic, Expressive, Material,
+  Poster, Studio, Vinyl, Halo, Aurora, Spectrum or Eclipse. Choosing a
+  background no longer swaps the clock, metadata or control geometry, and each
+  built-in/custom theme remembers its own selection and blur strength.
+- **Independent, portable theme profiles**: editing a saved theme no longer
+  changes the appearance stored for its base layout. The complete profile
+  library stays on the phone while only one validated, atomic active snapshot
+  is synchronized to Wear, keeping the payload bounded. Profiles, names and
+  active selection are included in schema-3 configuration backups; legacy
+  backups safely return to a built-in layout without corrupting an existing
+  profile. Color resets are materialized explicitly so stale values cannot
+  remain on a disconnected/reconnected watch.
 - **Per-layout appearance**: every setting on the Watch tab (colors, overlays,
   always-on, panels, mini buttons) is now remembered *per layout*. Configure a
   layout the way you want, switch to another, and each keeps its own look; the
@@ -30,6 +51,11 @@ These changes are still in development and are not part of a published release.
   the single BETA badge replaces the duplicated title suffix, all decorative
   marks follow the live accent, and filled actions choose black or white content
   automatically for contrast.
+- **Streaming content inside Actions**: saved tracks, albums, mixes and
+  playlists can now be assigned directly to the watch Actions menu and Quick
+  Actions, alongside apps and normal commands. The Watch → Panels page also
+  includes a live shortcut count and a direct link to the existing editor so
+  this feature is easier to discover without creating a duplicate library.
 - **Faster Streaming shortcuts on the watch**: shortcuts now use their own
   persistent Wear data cache, independent from queue and search responses. The
   watch renders the screen immediately from local data instead of waiting for a
@@ -50,7 +76,8 @@ These changes are still in development and are not part of a published release.
   grey — still overridable per layout.
 - **Wide, compact Up Next on the always-on display**: Expressive and Material
   AOD layouts use 88% of the available width while clamping the row to 44–52 dp,
-  keeping it readable without touching the center transport controls. It can
+  and the row now sits higher in the usable lower band without touching the
+  center transport controls. It can
   show the next track's artwork, title and artist and remains intentionally
   non-interactive while ambient.
 - **Up Next no longer depends on opening Quick Actions**: queue data is
@@ -62,6 +89,10 @@ These changes are still in development and are not part of a published release.
   and Material players sit comfortably between the clock and playback controls.
   Poster and Studio AOD remove the central play/pause circle and center the song
   title with the artist immediately below it.
+- **Material track time restored**: the Material player now shows elapsed and
+  total time whenever Track time is enabled, using the same transport-relative
+  placement and mini-button clearance as Expressive; the phone preview mirrors
+  that placement.
 - **Artwork in Up Next and queue**: the quick-actions preview, ambient Up Next
   pill and playback queue show a compact cover thumbnail whenever the media app
   supplies one, while preserving the text-only layout when artwork is missing.
@@ -91,6 +122,14 @@ These changes are still in development and are not part of a published release.
   layout now flashes the same expanding ring the Classic layout shows.
 - **Instant seek/volume backdrop blur**: the blurred overlay backdrop is
   applied immediately when the overlay opens instead of fading in.
+- **Quick Actions behaves like the queue**: the panel uses the same round-screen
+  row scaling and fixed curved bezel indicator, tighter app/playlist spacing,
+  stable-height media pills widened to the Up Next row, and correct centering
+  when an app exposes fewer than three actions. A back swipe or a tap outside
+  an action dismisses only the panel instead of closing the app.
+- **Reliable Quick Actions icons**: full-colour launcher icons are preserved,
+  monochrome vectors receive the correct surface tint, and transparent or
+  corrupt media-app artwork falls back to a visible semantic glyph.
 
 - **Clearer navigation and grouping**: the separate playing and stopped setup
   screens now live together under Controls, with swipeable "Music playing" and
@@ -109,7 +148,8 @@ These changes are still in development and are not part of a published release.
 - **Improved Actions editor**: the quick-actions panel and watch menu are
   clearly separated, the screen shows the configured action count and an empty
   state, and menu actions can be reordered by drag, keyboard or accessibility
-  actions.
+  actions. Those configured rows now continue below Up Next as scrollable Quick
+  Actions, including apps and saved streaming content.
 
 - **Expressive seek setting**: the Expressive layout's touch-seek option (central
   ring, edge ring, or off) is now adjustable from the Watch tab instead of being

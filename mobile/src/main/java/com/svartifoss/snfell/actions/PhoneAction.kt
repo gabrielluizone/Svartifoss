@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.actions
 
 import android.content.Context
+import android.content.ContentResolver
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.PersistableBundle
@@ -40,6 +41,18 @@ abstract class PhoneAction : Bundlable {
     abstract fun onActionPicked(actionPicker: ActionPickerViewModel)
     protected abstract fun retrieveTitle(): String
     abstract val defaultIcon: Drawable
+
+    /** Whether the action icon is a monochrome template that should follow its destination tint.
+     * Built-in vectors default to true; actions backed by launcher artwork override
+     * [defaultIconTintable]. User-picked gallery images remain full color, while packaged vector
+     * resources remain tintable. */
+    open val defaultIconTintable: Boolean
+        get() = true
+
+    val iconTintable: Boolean
+        get() = customIconUri?.let {
+            it.scheme == ContentResolver.SCHEME_ANDROID_RESOURCE
+        } ?: defaultIconTintable
 
     val title: String
         get() = customTitle ?: retrieveTitle()

@@ -7,7 +7,7 @@ package com.svartifoss.snfell.common
  * Classic face and every Compose face decode the same enum, then use their native drawing API.
  */
 enum class PlayerShadingStyle(val preferenceValue: String) {
-    /** Preserve the face's authored treatment (Classic uses its historical bottom fade). */
+    /** Use the background's authored scrim; plain artwork resolves to the neutral bottom fade. */
     FOLLOW("follow"),
     /** Darken only the circular bezel while leaving the centre comparatively open. */
     EDGE_VIGNETTE("edge_vignette"),

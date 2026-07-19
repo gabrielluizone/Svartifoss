@@ -121,6 +121,12 @@
             android:theme="@style/AppTheme.Dialog" />
 
         <activity
+            android:name=".view.watchface.theme.WatchThemesActivity"
+            android:exported="false"
+            android:label="@string/watch_themes_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".view.settings.PlaylistShortcutsActivity"
             android:exported="true"
             android:launchMode="singleTop"

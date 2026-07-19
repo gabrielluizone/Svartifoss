@@ -128,6 +128,7 @@
     <string name="action_repeat_one">Repeat one</string>
     <string name="action_search">Search music</string>
     <string name="group_playback_controls">Playback controls</string>
+    <string name="group_streaming_shortcuts">Tracks, albums &amp; playlists</string>
     <string name="pick_action">Pick action</string>
     <string name="action_opens_more">Multiple options</string>
     <string name="action_volume_up">Increase volume</string>
@@ -138,7 +139,7 @@
     <string name="playing_controls">Controls while playing</string>
     <string name="stopped_controls">Controls with no playback</string>
     <string name="actions_menu">Actions menu</string>
-    <string name="actions_intro">Configure the two action surfaces available on your watch. The quick panel stays compact; the menu below can hold a longer ordered list.</string>
+    <string name="actions_intro">Configure both action surfaces on your watch with playback controls, apps, or saved tracks, albums and playlists. The quick panel stays compact; the menu below can hold a longer ordered list.</string>
     <string name="actions_quick_panel_section">Quick panel</string>
     <string name="actions_watch_menu_section">Menu on watch</string>
     <plurals name="actions_list_summary">
@@ -279,7 +280,7 @@
     <string name="setting_album_art_style">Album art style</string>
     <string name="setting_album_art_style_description">Choose how the now-playing background looks on the watch.</string>
     <string name="setting_album_art_blur_radius">Blur intensity</string>
-    <string name="setting_album_art_blur_radius_description">Strength of the full-screen blur when album art style is set to Blur. Currently <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_blur_radius_description">Strength of the full-screen blur whenever the selected background uses blur. Currently <![CDATA[<b>%1$s px</b>]]>.</string>
     <string name="setting_album_art_dim_strength">Dim strength</string>
     <string name="setting_album_art_dim_strength_description">How strongly the album art is darkened for text readability. Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
     <string name="setting_player_shading_style">Shading style</string>
@@ -349,8 +350,8 @@
     <string name="quick_panel_default_up_next">Up Next</string>
     <string name="setting_wear_center_long_press_queue">Long-press center for queue</string>
     <string name="setting_wear_center_long_press_queue_description">Long-press the center of the now-playing screen to open the playback queue.</string>
-    <string name="setting_wear_screen_face">Player theme</string>
-    <string name="setting_wear_screen_face_description">Choose the player’s visual theme. Each theme uses the current music colors and keeps shortcuts available through your mini buttons and gestures.</string>
+    <string name="setting_wear_screen_face">Base layout</string>
+    <string name="setting_wear_screen_face_description">Choose the structure used by this theme. Saved themes can combine this layout with their own font, colors, blur, shading, AOD and panels.</string>
     <string name="setting_wear_show_track_title">Show song title</string>
     <string name="setting_wear_show_track_title_description">Display the current song name on the player</string>
     <string name="setting_wear_show_track_artist">Show artist name</string>
@@ -553,7 +554,7 @@
         <item>Soft blur</item>
         <item>Clear cover</item>
         <item>Monochrome blur</item>
-        <item>Follow player background</item>
+        <item>Follow player artwork treatment</item>
     </string-array>
     <string-array name="wear_aod_art_treatment_values">
         <item>blur</item>
@@ -911,7 +912,7 @@
         <item>curved_extreme</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
-        <item>Follow layout</item>
+        <item>Background default</item>
         <item>Glass (uniform)</item>
         <item>Glass (light)</item>
         <item>Translucent Album</item>
@@ -959,6 +960,15 @@
         <item>Blurred background</item>
         <item>Black &amp; white</item>
         <item>Blurred black &amp; white</item>
+        <item>Expressive blur</item>
+        <item>Material tonal gradient</item>
+        <item>Poster cover</item>
+        <item>Studio gradient</item>
+        <item>Vinyl radial glow</item>
+        <item>Halo glow</item>
+        <item>Aurora ribbons</item>
+        <item>Spectrum gradient</item>
+        <item>Eclipse AMOLED black</item>
         <item>Hidden (solid black)</item>
     </string-array>
     <string-array name="album_art_style_values">
@@ -966,6 +976,15 @@
         <item>blur</item>
         <item>bw</item>
         <item>blur_bw</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>eclipse</item>
         <item>hidden</item>
     </string-array>
 
@@ -1048,11 +1067,18 @@
     <string name="action_play_liked_songs">Play liked songs (YT Music)</string>
     <string name="action_my_playlists">Streaming shortcuts</string>
     <string name="action_play_specific_playlist">Open streaming shortcut</string>
+    <string name="action_choose_or_add_streaming_shortcut">Choose or add a streaming shortcut</string>
+    <string name="action_show_streaming_library">Show all saved shortcuts</string>
     <string name="playlist_shortcut_pick_title">Choose a streaming shortcut</string>
     <string name="playlist_shortcut_pick_empty">No streaming shortcuts saved yet — add one below, then tap it to pick it</string>
     <string name="playlist_shortcuts_empty">No streaming shortcuts yet — add them in the phone app settings</string>
     <string name="setting_playlist_shortcuts">Streaming shortcuts</string>
     <string name="setting_playlist_shortcuts_description">Open share links from the watch in YouTube Music, Spotify and other streaming apps</string>
+    <string name="watch_streaming_shortcuts_empty">Add tracks, albums or playlists for Quick Actions and the watch menu</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d saved shortcut · Available in Quick Actions and the watch menu</item>
+        <item quantity="other">%1$d saved shortcuts · Available in Quick Actions and the watch menu</item>
+    </plurals>
     <string name="category_music_apps">Music apps &amp; services</string>
     <string name="setting_apps_integrations">Supported music services</string>
     <string name="setting_apps_integrations_description">Links work with YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music and SoundCloud. No account access is required.</string>
