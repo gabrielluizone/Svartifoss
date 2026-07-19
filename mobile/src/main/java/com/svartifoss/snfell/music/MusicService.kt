@@ -1118,7 +1118,17 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             StreamingShortcutLinks.forInstalledApp(link)
         } else browserLink
 
-        if (startStreamingLink(primaryLink, targetPackage)) return
+        if (startStreamingLink(primaryLink, targetPackage)) {
+            if (targetPackage != null) {
+                lifecycleScope.launch {
+                    for (i in 0..15) {
+                        kotlinx.coroutines.delay(200)
+                        if (requestStreamingPlayback(link, service, targetPackage)) return@launch
+                    }
+                }
+            }
+            return
+        }
         if (targetPackage != null && startStreamingLink(browserLink, null)) return
 
         Timber.e("No app handles %s streaming link", service.name)
