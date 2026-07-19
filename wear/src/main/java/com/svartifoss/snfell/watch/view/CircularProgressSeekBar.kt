@@ -16,9 +16,11 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import com.svartifoss.snfell.R
 import kotlin.math.atan2
+import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.sin
 import com.svartifoss.snfell.common.R as commonR
 
 /**
@@ -46,7 +48,13 @@ enum class RingStyle {
     HAIRLINE,
     /** Comet: the played arc fades in from transparent to full accent at the head, with a
      *  bright head dot. */
-    COMET;
+    COMET,
+    /** Sixty round watch marks, with a larger marker every five positions. */
+    WATCH_DOTS_60,
+    /** Sixty radial minute/second ticks, with a longer marker every five positions. */
+    WATCH_TICKS_60,
+    /** Twelve bold rounded marks inspired by the hour indices of an analogue dial. */
+    HOUR_SEGMENTS_12;
 
     companion object {
         fun fromPref(value: String?): RingStyle = when (value) {
@@ -54,10 +62,19 @@ enum class RingStyle {
             "dots" -> DOTS
             "hairline" -> HAIRLINE
             "comet" -> COMET
+            "watch_dots_60" -> WATCH_DOTS_60
+            "watch_ticks_60" -> WATCH_TICKS_60
+            "hour_segments_12" -> HOUR_SEGMENTS_12
             else -> SOLID
         }
     }
 }
+
+internal fun shouldDrawEdgeProgress(
+        seekable: Boolean,
+        visualEnabled: Boolean,
+        dragging: Boolean
+): Boolean = dragging || (seekable && visualEnabled)
 
 class CircularProgressSeekBar : View {
     companion object {
@@ -83,6 +100,20 @@ class CircularProgressSeekBar : View {
     private val excludedViewRect = Rect()
 
     var seekable: Boolean = false
+
+    /** Whether the progress track/arc is painted. The View deliberately stays present when false
+     *  so [touchSeekingEnabled] can expose an invisible bezel scrub target. */
+    var drawProgress: Boolean = true
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
+
+    /** Whether the bezel target accepts touch input. Kept independent from [drawProgress] so the
+     *  user can choose either an invisible scrubber or a visible display-only ring. */
+    var touchSeekingEnabled: Boolean = true
 
     /** Views (e.g. the quadrant action icons) that should always win over this ring on overlap. */
     var excludedTouchViews: List<View> = emptyList()
@@ -181,10 +212,76 @@ class CircularProgressSeekBar : View {
         circleBounds.bottom = circleBounds.top + circleSize
     }
 
+    private fun markIsPlayed(index: Int, count: Int): Boolean =
+            displayProgress > 0f && index.toFloat() / count < displayProgress
+
+    private fun drawWatchDots(canvas: Canvas, baseWidth: Float) {
+        val cx = circleBounds.centerX()
+        val cy = circleBounds.centerY()
+        val orbit = circleBounds.width() / 2f
+        headDotPaint.style = Paint.Style.FILL
+
+        repeat(60) { index ->
+            val angle = Math.toRadians((index * 6f - 90f).toDouble())
+            val major = index % 5 == 0
+            headDotPaint.color = if (markIsPlayed(index, 60)) {
+                foregroundPaint.color
+            } else {
+                backgroundPaint.color
+            }
+            canvas.drawCircle(
+                    cx + orbit * cos(angle).toFloat(),
+                    cy + orbit * sin(angle).toFloat(),
+                    baseWidth * if (major) 0.36f else 0.22f,
+                    headDotPaint)
+        }
+    }
+
+    private fun drawWatchTicks(
+            canvas: Canvas,
+            baseWidth: Float,
+            count: Int,
+            emphasizeEvery: Int,
+            normalLength: Float,
+            emphasizedLength: Float,
+            normalWidth: Float,
+            emphasizedWidth: Float
+    ) {
+        val cx = circleBounds.centerX()
+        val cy = circleBounds.centerY()
+        // The ordinary stroke is centred baseWidth/2 inside the screen. These explicit marks are
+        // slightly inset so their rounded caps never get clipped by the physical display edge.
+        val outerRadius = circleBounds.width() / 2f + baseWidth * 0.25f
+        headDotPaint.style = Paint.Style.STROKE
+        headDotPaint.strokeCap = Paint.Cap.ROUND
+
+        repeat(count) { index ->
+            val angle = Math.toRadians((index * 360f / count - 90f).toDouble())
+            val emphasized = emphasizeEvery > 0 && index % emphasizeEvery == 0
+            val length = if (emphasized) emphasizedLength else normalLength
+            headDotPaint.strokeWidth = if (emphasized) emphasizedWidth else normalWidth
+            headDotPaint.color = if (markIsPlayed(index, count)) {
+                foregroundPaint.color
+            } else {
+                backgroundPaint.color
+            }
+            val cosAngle = cos(angle).toFloat()
+            val sinAngle = sin(angle).toFloat()
+            canvas.drawLine(
+                    cx + (outerRadius - length) * cosAngle,
+                    cy + (outerRadius - length) * sinAngle,
+                    cx + outerRadius * cosAngle,
+                    cy + outerRadius * sinAngle,
+                    headDotPaint)
+        }
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        if (!seekable) {
+        // A visually hidden ring remains a usable bezel target. Reveal it only for the lifetime of
+        // an active drag, giving position feedback without changing the user's resting appearance.
+        if (!shouldDrawEdgeProgress(seekable, drawProgress, isDragging)) {
             return
         }
 
@@ -210,7 +307,7 @@ class CircularProgressSeekBar : View {
                 foregroundPaint.pathEffect = dash
                 backgroundPaint.pathEffect = dash
                 foregroundPaint.strokeCap = Paint.Cap.BUTT
-                canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
+                canvas.drawArc(circleBounds, -90f, 360f, false, backgroundPaint)
                 canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
             }
             RingStyle.DOTS -> {
@@ -219,7 +316,7 @@ class CircularProgressSeekBar : View {
                 foregroundPaint.pathEffect = dots
                 backgroundPaint.pathEffect = dots
                 backgroundPaint.strokeCap = Paint.Cap.ROUND
-                canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
+                canvas.drawArc(circleBounds, -90f, 360f, false, backgroundPaint)
                 canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
                 backgroundPaint.strokeCap = Paint.Cap.BUTT
             }
@@ -256,10 +353,32 @@ class CircularProgressSeekBar : View {
                 canvas.drawCircle(
                         circleBounds.centerX() + circleBounds.width() / 2f * kotlin.math.cos(headRad).toFloat(),
                         circleBounds.centerY() + circleBounds.height() / 2f * kotlin.math.sin(headRad).toFloat(),
-                        baseWidth * 0.9f,
-                        headDotPaint.apply { color = foregroundPaint.color }
+                        baseWidth * 0.5f,
+                        headDotPaint.apply {
+                            style = Paint.Style.FILL
+                            color = foregroundPaint.color
+                        }
                 )
             }
+            RingStyle.WATCH_DOTS_60 -> drawWatchDots(canvas, baseWidth)
+            RingStyle.WATCH_TICKS_60 -> drawWatchTicks(
+                    canvas = canvas,
+                    baseWidth = baseWidth,
+                    count = 60,
+                    emphasizeEvery = 5,
+                    normalLength = baseWidth * 0.58f,
+                    emphasizedLength = baseWidth * 0.95f,
+                    normalWidth = baseWidth * 0.17f,
+                    emphasizedWidth = baseWidth * 0.29f)
+            RingStyle.HOUR_SEGMENTS_12 -> drawWatchTicks(
+                    canvas = canvas,
+                    baseWidth = baseWidth,
+                    count = 12,
+                    emphasizeEvery = 1,
+                    normalLength = baseWidth,
+                    emphasizedLength = baseWidth,
+                    normalWidth = baseWidth * 0.4f,
+                    emphasizedWidth = baseWidth * 0.4f)
         }
     }
 
@@ -289,7 +408,7 @@ class CircularProgressSeekBar : View {
         // Once a drag is already in progress, see it through even if seekable flips off for a
         // moment (e.g. a stale tick from the phone) - bailing out mid-gesture is what caused the
         // ring to freeze with no way to finish choosing a position.
-        if (!seekable && !isDragging) {
+        if ((!seekable || !touchSeekingEnabled) && !isDragging) {
             return false
         }
 
@@ -322,6 +441,7 @@ class CircularProgressSeekBar : View {
 
                 displayProgress = angleToProgress(dx, dy)
                 invalidate()
+                onSeekPreview?.invoke(displayProgress)
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
@@ -345,9 +465,10 @@ class CircularProgressSeekBar : View {
                     return false
                 }
                 isDragging = false
+                invalidate()
                 parent?.requestDisallowInterceptTouchEvent(false)
-                // A quick tap (no ACTION_MOVE in between) still jumps straight to that position -
-                // it just never showed the seek-time overlay, since there was nothing to preview.
+                // A quick tap (no ACTION_MOVE in between) still jumps straight to that position;
+                // ACTION_DOWN already emitted its preview so tap and drag share the same feedback.
                 onSeekFinished?.invoke(displayProgress)
                 return true
             }

@@ -146,6 +146,7 @@ fun MenuScreen(
                                         } else {
                                             null
                                         },
+                                        icon = item.icon,
                                         onClick = if (alwaysPickCenter) onCenterConfirm
                                                   else { { onEntryClick(content.list.listId, item.listItem.entryId) } },
                                         onLongClick = if (deletable) {
@@ -208,10 +209,11 @@ private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
 private fun CustomEntryRow(
         title: String,
         subtitle: String?,
+        icon: Bitmap?,
         onClick: () -> Unit,
         onLongClick: (() -> Unit)? = null
 ) {
-    Column(
+    Row(
             modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(26.dp))
@@ -220,26 +222,39 @@ private fun CustomEntryRow(
                             onClick = onClick,
                             onLongClick = onLongClick
                     )
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-                text = title,
-                color = Color.White,
-                fontFamily = GoogleSansFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 15.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-        )
-        if (!subtitle.isNullOrBlank()) {
+        if (icon != null) {
+            Image(
+                    bitmap = icon.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier
+                            .size(30.dp)
+                            .clip(RoundedCornerShape(8.dp))
+            )
+            Spacer(Modifier.width(10.dp))
+        }
+        Column(Modifier.weight(1f)) {
             Text(
-                    text = subtitle,
-                    color = Color.White.copy(alpha = SUBTITLE_ALPHA),
+                    text = title,
+                    color = Color.White,
                     fontFamily = GoogleSansFamily,
-                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
             )
+            if (!subtitle.isNullOrBlank()) {
+                Text(
+                        text = subtitle,
+                        color = Color.White.copy(alpha = SUBTITLE_ALPHA),
+                        fontFamily = GoogleSansFamily,
+                        fontSize = 12.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }

@@ -5,19 +5,15 @@
          (HelpActivity) and this slot hosts the watch face customization screen. -->
     <item
         android:id="@+id/watch_face"
-        android:icon="@drawable/ic_nav_tutorial"
+        android:icon="@drawable/ic_watch_vibration"
         android:title="@string/nav_watch_face" />
     <item
-        android:id="@+id/playing_controls"
-        android:icon="@drawable/ic_nav_playing"
-        android:title="@string/nav_playing" />
-    <item
-        android:id="@+id/stopped_controls"
-        android:icon="@drawable/ic_nav_stopped"
-        android:title="@string/nav_stopped" />
+        android:id="@+id/controls"
+        android:icon="@drawable/ic_gamepad_circle_down"
+        android:title="@string/nav_controls" />
     <item
         android:id="@+id/actions_menu"
-        android:icon="@drawable/ic_nav_actions"
+        android:icon="@drawable/ic_actions_menu"
         android:title="@string/nav_actions" />
     <item
         android:id="@+id/settings"

@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 05-07-2026**
+**Last updated: 14-07-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -10,23 +10,27 @@ your device.
 The short version: **Svartifoss does not have user accounts, does not run its
 own servers, and does not sell or share your data with advertisers.** The
 phone and watch talk to each other directly over your local Bluetooth/Wi-Fi
-connection. The only data that leaves your device goes to Google's Firebase
-service, solely to help us fix crashes — see [Crash reports](#crash-reports)
-below.
+connection. Optional update checks contact GitHub, and the phone app includes
+Google Firebase Crashlytics and Analytics for diagnostics. Crash reporting is
+enabled by default and can be disabled at any time — see
+[Crash reports](#crash-reports) below.
 
 ## What the app needs access to, and why
 
 ### Notification access / media session (Android's "Notification access" permission)
 
 Svartifoss requests **notification access** so it can read which app is
-currently playing music and its metadata (track title, artist, album art,
-playback position, shuffle/repeat state). This is the only reason the
-permission is requested — it is **not** used to read the content of your
-messages, emails, or any other app's notifications. The app can technically
-see notification data because that's how Android exposes the "what's playing"
-information from other music apps, but Svartifoss only acts on media-session
-data and does not store, transmit, or log the content of unrelated
-notifications.
+currently playing music and its media-session metadata (track title, artist,
+album art, playback position, shuffle/repeat state). If you select **From
+current media app** for the quick-actions panel, it also reads up to four
+action labels, icons and local button intents from that app's active media
+notification. The labels/icons are mirrored only to your paired watch; the
+button intents stay on the phone and are invoked only when you tap the matching
+watch button.
+
+This permission is **not** used to read the content of your messages, emails,
+or unrelated notifications. Svartifoss does not store, transmit to a server or
+log such content.
 
 ### Phone ⟷ watch communication
 
@@ -45,7 +49,7 @@ all.
 | Storage (legacy, only on very old Android versions) / Photos | Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option.                                                  |
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
-| Internet                                                     | Used only by the crash-reporting library described below — the core app features (reading and mirroring music playback) work entirely offline between your two devices.             |
+| Internet                                                     | Used for optional update checks and the Firebase diagnostics described below. Core playback mirroring and control work locally between your two devices.                         |
 
 ## What's stored locally on your phone
 
@@ -74,12 +78,32 @@ log lines occasionally include the name of the track or app that was playing
 at the time, since that's part of normal app operation, but never your
 personal messages, contacts, or notification content from other apps.
 
+Crash reporting is **enabled by default**. You can disable it under
+**Settings → Data & support → Privacy → Send crash reports**. Disabling the
+setting stops Svartifoss from adding custom Crashlytics logs or non-fatal
+reports and deletes reports still queued on the device without sending them.
+Automatic Crashlytics upload remains disabled at all times; when this setting
+is enabled, Svartifoss explicitly sends finalized reports only after reading
+your choice at startup. It cannot recall a report that had already been
+uploaded before you opted out.
+
 This sends data to Google's Firebase infrastructure, governed by
 [Google's Privacy Policy](https://policies.google.com/privacy) and
 [Firebase's data processing terms](https://firebase.google.com/support/privacy).
-We do not have access to any other data Google collects about your device
-through its own services. Svartifoss does not include Firebase Analytics or
-any other usage-tracking SDK.
+We do not have access to unrelated data Google may hold through its other
+services.
+
+## Usage diagnostics
+
+The phone app also includes **Google Analytics for Firebase**. It collects
+Firebase's standard automatic app/session events and technical context such as
+app version, device/OS class and an installation-scoped identifier. Svartifoss
+does not attach an account, name, email, media metadata or message content to
+these events and does not log custom Analytics events. This service is governed
+by [Google's Privacy Policy](https://policies.google.com/privacy) and
+[Firebase's privacy information](https://firebase.google.com/support/privacy).
+The crash-reporting switch described above controls Crashlytics reports; it
+does not control these separate automatic Analytics events.
 
 ## What we don't do
 
@@ -87,8 +111,9 @@ any other usage-tracking SDK.
 - We don't run our own backend server that your data passes through.
 - We don't sell, rent, or share your data with advertisers or data brokers.
 - We don't show ads.
-- We don't read the content of notifications from apps other than the
-  currently-playing media app's playback metadata.
+- We don't read the content of unrelated notifications. For the current media
+  app, only playback metadata and — when explicitly selected — its media action
+  labels/icons are used.
 
 ## Children's privacy
 

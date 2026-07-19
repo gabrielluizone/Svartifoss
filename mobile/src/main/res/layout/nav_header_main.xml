@@ -52,28 +52,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/drawer_about_heading"
-            android:textSize="11sp"
-            android:letterSpacing="0.08"
-            android:textAllCaps="true"
-            android:textColor="@color/lyra_accent"
-            android:fontFamily="@font/google_sans"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/drawer_about_summary"
-            android:textSize="14sp"
-            android:textColor="@color/lyra_on_surface"
-            android:lineSpacingMultiplier="1.25"
-            android:fontFamily="@font/google_sans" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:text="@string/drawer_name_heading"
             android:textSize="11sp"
             android:letterSpacing="0.08"
@@ -144,7 +123,7 @@
             android:layout_marginTop="12dp"
             android:gravity="center"
             android:text="@string/drawer_support_button"
-            app:icon="@drawable/ic_bolt" />
+            app:icon="@drawable/ic_buy_me_a_coffee" />
 
         <TextView
             android:id="@+id/drawer_version_text"

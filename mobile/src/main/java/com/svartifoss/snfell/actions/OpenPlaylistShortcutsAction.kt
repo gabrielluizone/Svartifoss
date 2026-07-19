@@ -4,14 +4,10 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
-import com.google.android.gms.wearable.PutDataRequest
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
-import com.svartifoss.snfell.common.CommPaths
-import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
-import com.svartifoss.snfell.proto.CustomList
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -33,36 +29,9 @@ class OpenPlaylistShortcutsAction : SelectableAction {
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<OpenPlaylistShortcutsAction> {
         override suspend fun handleAction(action: OpenPlaylistShortcutsAction) {
             val shortcuts = PlaylistShortcutStorage.load(service)
-
-            val entries = if (shortcuts.isEmpty()) {
-                listOf(
-                        CustomList.ListEntry.newBuilder()
-                                .setEntryId(CustomLists.SPECIAL_ITEM_ERROR)
-                                .setEntryTitle(service.getString(R.string.playlist_shortcuts_empty))
-                                .build()
-                )
-            } else {
-                shortcuts.map { shortcut ->
-                    CustomList.ListEntry.newBuilder()
-                            .setEntryId(shortcut.link)
-                            .setEntryTitle(shortcut.name)
-                            // Extra context under the name on the watch (source + shuffle),
-                            // since the raw link would be meaningless there.
-                            .setEntrySubtitle(PlaylistShortcutStorage.describe(service, shortcut))
-                            .build()
-                }
-            }
-
-            val protoData = CustomList.newBuilder()
-                    .addAllActions(entries)
-                    .setListId(CustomLists.PLAYLIST_SHORTCUTS)
-                    .setListTimestamp(System.currentTimeMillis())
-                    .build()
-
-            val putDataRequest = PutDataRequest.create(CommPaths.DATA_CUSTOM_LIST)
-            putDataRequest.data = protoData.toByteArray()
-
-            Wearable.getDataClient(service).putDataItem(putDataRequest).await()
+            Wearable.getDataClient(service)
+                    .putDataItem(PlaylistShortcutStorage.createDataRequest(service, shortcuts))
+                    .await()
         }
     }
 }

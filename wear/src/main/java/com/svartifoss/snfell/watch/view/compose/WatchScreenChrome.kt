@@ -7,8 +7,10 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +20,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import android.text.format.DateFormat
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
@@ -35,6 +38,7 @@ import androidx.wear.compose.foundation.CurvedLayout
 import androidx.wear.compose.foundation.CurvedTextStyle
 import androidx.wear.compose.foundation.basicCurvedText
 import androidx.wear.compose.foundation.lazy.ScalingLazyListState
+import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
@@ -73,12 +77,13 @@ private fun currentTime(pattern: String): String =
  *
  * The fade alpha is applied in a graphicsLayer block (draw phase) rather than read during
  * composition, so the 200ms fade that fires exactly when a scroll starts doesn't recompose
- * anything mid-scroll.
+ * anything mid-scroll. [contentAlpha] lets an interactive player theme quiet the clock without
+ * changing visibility or affecting list screens, whose default remains fully opaque.
  */
 @Composable
-internal fun CurvedClock(visible: Boolean) {
+internal fun CurvedClock(visible: Boolean, contentAlpha: Float = 1f) {
     val clockAlpha = animateFloatAsState(
-            targetValue = if (visible) 1f else 0f,
+            targetValue = if (visible) contentAlpha.coerceIn(0f, 1f) else 0f,
             animationSpec = tween(durationMillis = 200),
             label = "clockAlpha"
     )
@@ -99,6 +104,32 @@ internal fun CurvedClock(visible: Boolean) {
                         fontFamily = GoogleSansFamily,
                         fontWeight = FontWeight.Normal
                 )
+        )
+    }
+}
+
+/**
+ * Straight top-center clock matching the Classic face's interactive clock exactly (the
+ * `ambient_clock` TextView: 15sp Google Sans at #99FFFFFF, 5dp below the top edge). The player
+ * faces use this instead of [CurvedClock] so switching faces never moves or re-styles the clock;
+ * the curved variant stays for the list screens (queue, menu), where hugging the bezel is the
+ * point.
+ */
+@Composable
+internal fun FaceClock(visible: Boolean) {
+    val clockAlpha = animateFloatAsState(
+            targetValue = if (visible) 1f else 0f,
+            animationSpec = tween(durationMillis = 200),
+            label = "faceClockAlpha"
+    )
+    val time = rememberWallClockTime()
+    Box(Modifier.fillMaxSize().graphicsLayer { alpha = clockAlpha.value }) {
+        Text(
+                text = time,
+                color = Color(0x99FFFFFF),
+                fontSize = 15.sp,
+                fontFamily = GoogleSansFamily,
+                modifier = Modifier.align(Alignment.TopCenter).padding(top = 5.dp)
         )
     }
 }

@@ -1,8 +1,11 @@
 package com.svartifoss.snfell.watch.theme
 
+import android.content.Context
+import android.graphics.Typeface
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.R
 
@@ -66,3 +69,108 @@ val GoogleSansFamily = FontFamily(
         Font(R.font.google_sans_regular, FontWeight.Normal),
         Font(R.font.google_sans_bold, FontWeight.Bold)
 )
+
+/** Mom's Typewriter — a retro typewriter-style font, available for curated face text. */
+val MomsTypewriterFamily = FontFamily(
+        Font(R.font.moms_typewriter, FontWeight.Normal),
+        Font(R.font.moms_typewriter, FontWeight.Bold),
+        Font(R.font.moms_typewriter, FontWeight.Medium),
+        Font(R.font.moms_typewriter, FontWeight.Light)
+)
+
+/** Love Letter Typewriter — a retro typewriter-style font, used for Lain-themed tracks. */
+val LoveLetterTypewriterFamily = FontFamily(
+        Font(R.font.love_letter_typewriter, FontWeight.Normal),
+        Font(R.font.love_letter_typewriter, FontWeight.Bold),
+        Font(R.font.love_letter_typewriter, FontWeight.Medium),
+        Font(R.font.love_letter_typewriter, FontWeight.Light)
+)
+
+/**
+ * Keywords that trigger the [LoveLetterTypewriterFamily] override on title/artist text.
+ * The match is case-insensitive and only requires the keyword to be a substring
+ * (e.g. "wiredlau" → true for "wired").
+ */
+private val LAIN_KEYWORDS = setOf("iwakura", "lain", "wired", "breakcore", "serial experiments")
+
+/** Returns [LoveLetterTypewriterFamily] if [text] contains any [LAIN_KEYWORDS], null otherwise. */
+fun lainFont(text: String): FontFamily? {
+    val lower = text.lowercase()
+    return if (LAIN_KEYWORDS.any { lower.contains(it) }) LoveLetterTypewriterFamily else null
+}
+
+/** System condensed sans — present on every device, so it costs no bundled asset. `by lazy`
+ *  defers the platform Typeface.create call until first use (not this file's class-init), so
+ *  JVM unit tests that never select "condensed" are unaffected by the unmocked Android call. */
+val CondensedFamily: FontFamily by lazy {
+    FontFamily(android.graphics.Typeface.create("sans-serif-condensed", android.graphics.Typeface.NORMAL))
+}
+
+/** Extra faces come from Android's own system font catalog, so they add no APK weight and stay
+ * legally redistributable. Typeface.create gracefully falls back on older watches that do not
+ * ship one of the optional aliases. The lazy map also keeps stable FontFamily instances across
+ * Compose recompositions and avoids touching android.graphics.Typeface in host JVM tests unless
+ * one of these choices is explicitly exercised. */
+private val ModernSystemFamilies: Map<String, FontFamily> by lazy {
+    mapOf(
+            "rounded" to "sans-serif-rounded",
+            "sans_light" to "sans-serif-light",
+            "sans_thin" to "sans-serif-thin",
+            "sans_medium" to "sans-serif-medium",
+            "sans_black" to "sans-serif-black",
+            "small_caps" to "sans-serif-smallcaps",
+            "casual" to "casual",
+            "serif_monospace" to "serif-monospace",
+            "condensed_light" to "sans-serif-condensed-light",
+            "condensed_medium" to "sans-serif-condensed-medium"
+    ).mapValues { (_, familyName) ->
+        FontFamily(android.graphics.Typeface.create(familyName, android.graphics.Typeface.NORMAL))
+    }
+}
+
+private val modernSystemTypefaceNames = mapOf(
+        "rounded" to "sans-serif-rounded",
+        "sans_light" to "sans-serif-light",
+        "sans_thin" to "sans-serif-thin",
+        "sans_medium" to "sans-serif-medium",
+        "sans_black" to "sans-serif-black",
+        "small_caps" to "sans-serif-smallcaps",
+        "casual" to "casual",
+        "serif_monospace" to "serif-monospace",
+        "condensed_light" to "sans-serif-condensed-light",
+        "condensed_medium" to "sans-serif-condensed-medium"
+)
+
+/**
+ * Maps the user's MiscPreferences.WEAR_FONT choice to a Compose [FontFamily]. The bundled
+ * typewriter fonts and the always-available system families make up the catalog; unknown or
+ * missing values fall back to Google Sans so old configs keep rendering unchanged. Keep the keys
+ * in sync with the phone's `wear_font_values` array and `WatchPreviewView`'s typeface mapping.
+ */
+fun watchFontFamily(key: String?): FontFamily = when (key) {
+    "roboto" -> FontFamily.Default
+    "typewriter" -> MomsTypewriterFamily
+    "love_letter" -> LoveLetterTypewriterFamily
+    "serif" -> FontFamily.Serif
+    "monospace" -> FontFamily.Monospace
+    "cursive" -> FontFamily.Cursive
+    "condensed" -> CondensedFamily
+    else -> key
+            ?.takeIf(modernSystemTypefaceNames::containsKey)
+            ?.let { ModernSystemFamilies.getValue(it) }
+            ?: GoogleSansFamily
+}
+
+/** [watchFontFamily]'s [Typeface] counterpart for the View-based classic face - keep the key set
+ *  and fallback identical to it so classic and Compose faces render the exact same choice. */
+fun watchFontTypeface(context: Context, key: String?): Typeface = when (key) {
+    "roboto" -> Typeface.DEFAULT
+    "typewriter" -> ResourcesCompat.getFont(context, R.font.moms_typewriter)
+    "love_letter" -> ResourcesCompat.getFont(context, R.font.love_letter_typewriter)
+    "serif" -> Typeface.SERIF
+    "monospace" -> Typeface.MONOSPACE
+    "cursive" -> Typeface.create("cursive", Typeface.NORMAL)
+    "condensed" -> Typeface.create("sans-serif-condensed", Typeface.NORMAL)
+    else -> key?.let(modernSystemTypefaceNames::get)?.let { Typeface.create(it, Typeface.NORMAL) }
+            ?: ResourcesCompat.getFont(context, R.font.google_sans_regular)
+} ?: Typeface.DEFAULT

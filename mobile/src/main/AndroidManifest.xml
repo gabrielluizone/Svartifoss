@@ -25,6 +25,16 @@
         <package android:name="net.dinglisch.android.taskerm"/>
         <package android:name="com.matejdro.wearvibrationcenter"/>
 
+        <!-- Package visibility for Streaming shortcuts (Beta): used only to decide whether an
+             ACTION_VIEW link can be targeted and to show the installed app's own icon. -->
+        <package android:name="com.google.android.apps.youtube.music" />
+        <package android:name="com.spotify.music" />
+        <package android:name="deezer.android.app" />
+        <package android:name="com.aspiro.tidal" />
+        <package android:name="com.apple.android.music" />
+        <package android:name="com.amazon.mp3" />
+        <package android:name="com.soundcloud.android" />
+
         <intent>
             <action android:name="android.intent.action.MEDIA_BUTTON" />
         </intent>
@@ -45,6 +55,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <!-- Firebase's provider starts before Application.onCreate. Automatic Crashlytics upload
+             therefore stays off permanently; CrashReporting sends or deletes queued reports only
+             after reading the local privacy preference (which defaults to enabled). -->
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
         <activity
             android:name=".view.mainactivity.MainActivity"
             android:exported="true"
@@ -106,8 +122,15 @@
 
         <activity
             android:name=".view.settings.PlaylistShortcutsActivity"
-            android:exported="false"
-            android:label="@string/setting_playlist_shortcuts" />
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:label="@string/setting_playlist_shortcuts">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".update.UpdateActivity"

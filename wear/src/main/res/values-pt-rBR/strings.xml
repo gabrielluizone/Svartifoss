@@ -2,9 +2,13 @@
     <!-- "Svartifoss" (app_name_short, tile_label) is a proper name and stays untranslated;
          playback_time_format / volume_percent_format are locale-neutral. Both fall back to the
          default values/strings.xml. -->
+    <string name="tile_description">Faixa atual e controles de mídia</string>
     <string name="complication_album_art_label">Capa da música atual</string>
     <string name="complication_no_music">Nada tocando</string>
     <string name="tile_nothing_playing">Nada tocando</string>
+    <string name="tile_open_app">Abrir o Svartifoss</string>
+    <string name="tile_rewind_10">Voltar 10 segundos</string>
+    <string name="tile_forward_10">Avançar 10 segundos</string>
 
     <!-- Idle (nothing-playing) state on the now-playing screen -->
     <string name="idle_nothing_playing">Nada tocando</string>
@@ -21,9 +25,13 @@
     <string name="quick_action_like">Curtir</string>
     <string name="quick_action_shuffle">Aleatório</string>
     <string name="quick_action_repeat">Repetir</string>
+    <string name="quick_action_repeat_all">Repetir tudo</string>
+    <string name="quick_action_repeat_one">Repetir uma</string>
     <string name="quick_action_up_next">A seguir</string>
+    <string name="quick_actions_unavailable">O app atual não oferece ações rápidas</string>
     <string name="voice_search_prompt">Buscar música</string>
     <string name="queue_empty">Sem fila disponível</string>
+    <string name="queue_now_playing">Tocando agora</string>
 
     <string name="hint_title">Como usar</string>
     <string name="hint_edges">Bordas — toque para as ações dos ícones</string>
@@ -44,8 +52,12 @@
     <string name="action_name_play_pause">Reproduzir/Pausar</string>
     <string name="action_name_stop">Parar</string>
     <string name="action_name_restart">Reiniciar faixa</string>
+    <string name="action_name_seek">Buscar na faixa</string>
     <string name="action_name_mute">Silenciar</string>
     <string name="action_name_search">Buscar</string>
+    <string name="action_name_custom">Ação personalizada</string>
+    <string name="state_on">Ativado</string>
+    <string name="state_off">Desativado</string>
 
     <!-- Atualização do relógio (APK enviado pelo telefone) -->
     <string name="update_notification_channel">Atualizações do app</string>

@@ -22,6 +22,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -61,11 +62,17 @@ import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.di.GlobalConfig
 import com.svartifoss.snfell.di.MusicServiceSubComponent
+import com.svartifoss.snfell.notifications.MediaNotificationActions
 import com.svartifoss.snfell.notifications.NotificationProvider
+import com.svartifoss.snfell.notifications.customActionSnapshotId
+import com.svartifoss.snfell.notifications.inferMediaActionSemantic
+import com.svartifoss.snfell.notifications.isCustomActionSnapshotId
 import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.proto.CustomListItemAction
+import com.svartifoss.snfell.proto.MediaAction
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.proto.WatchActions
+import com.google.protobuf.ByteString
 import com.svartifoss.snfell.update.UpdateChecker
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.matejdro.wearutils.lifecycle.EmptyObserver
@@ -88,8 +95,6 @@ import com.svartifoss.snfell.common.R as commonR
 
 data class TrackHistoryEntry(val artist: String, val title: String)
 
-private const val YOUTUBE_MUSIC_PACKAGE = "com.google.android.apps.youtube.music"
-
 class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener {
     companion object {
         const val ACTION_START_FROM_WATCH = "START_FROM_WATCH"
@@ -100,6 +105,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private const val SEEK_DETECTION_THRESHOLD_MS = 1500L
         private const val QUEUE_REFRESH_DEBOUNCE_MS = 600L
         private const val MAX_TRACK_HISTORY_SIZE = 20
+        private const val SESSION_ACTION_PREFIX = "session:"
+        private const val MAX_SESSION_QUICK_ACTIONS = 3
 
         private const val STOP_SELF_PENDING_INTENT_REQUEST_CODE = 333
         private const val FORCE_STOP_PENDING_INTENT_REQUEST_CODE = 334
@@ -140,6 +147,36 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
     private var ackTimeoutHandler = AckTimeoutHandler(WeakReference(this))
     private val queueRefreshHandler = Handler(Looper.getMainLooper())
+    private val notificationActionsChanged: () -> Unit = {
+        queueRefreshHandler.post {
+            if (usesSessionQuickActions()) {
+                currentMediaController?.let(::buildMusicStateAndTransmit)
+            }
+        }
+    }
+    private val quickActionsPreferenceChanged =
+            SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == MiscPreferences.WEAR_QUICK_PANEL_SOURCE.key) {
+            queueRefreshHandler.post {
+                // The notification listener is also used by auto-start, so this central helper
+                // decides whether changing either consumer should bind or unbind it.
+                NotificationService.updateQuickActionsBinding(this)
+                buildMusicStateAndTransmit(currentMediaController)
+            }
+        } else if (key == MiscPreferences.ENABLE_NOTIFICATION_POPUP.key) {
+            // Apply the toggle live instead of only on the next service start. observe/
+            // removeObserver must run on the main thread, and queueRefreshHandler is main-looper.
+            queueRefreshHandler.post { applyNotificationPopupObserver() }
+        }
+    }
+
+    /** Binds or unbinds the notification popup source to match the current preference. */
+    private fun applyNotificationPopupObserver() {
+        notificationProvider.removeObserver(notificationCallback)
+        if (Preferences.getBoolean(preferences, MiscPreferences.ENABLE_NOTIFICATION_POPUP)) {
+            notificationProvider.observe(this, notificationCallback)
+        }
+    }
 
     private var previousMusicState: MusicState? = null
     private var previousAlbumArt: Bitmap? = null
@@ -188,19 +225,26 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         messageClient = Wearable.getMessageClient(applicationContext)
         dataClient = Wearable.getDataClient(applicationContext)
+        PlaylistShortcutStorage.syncToWatch(this)
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        preferences.registerOnSharedPreferenceChangeListener(quickActionsPreferenceChanged)
 
-        messageClient.addListener(this, Uri.parse(CommPaths.MESSAGES_PREFIX), MessageClient.FILTER_PREFIX)
+        MediaNotificationActions.addListener(notificationActionsChanged)
+        NotificationService.updateQuickActionsBinding(this)
+
+        try {
+            messageClient.addListener(this, Uri.parse(CommPaths.MESSAGES_PREFIX), MessageClient.FILTER_PREFIX)
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to register Wearable message client listener")
+        }
 
         mediaSessionProvider = ActiveMediaSessionProvider(this)
         mediaSessionProvider.observe(this, mediaCallback)
 
         watchInfoProvider.observe(this, EmptyObserver<WatchInfoWithIcons>())
 
-        if (Preferences.getBoolean(preferences, MiscPreferences.ENABLE_NOTIFICATION_POPUP)) {
-            notificationProvider.observe(this, notificationCallback)
-        }
+        applyNotificationPopupObserver()
 
         val stopSelfIntent = Intent(this, MusicService::class.java)
         stopSelfIntent.action = ACTION_STOP_SELF
@@ -289,10 +333,16 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     override fun onDestroy() {
         Timber.d("Service stopped")
 
-        messageClient.removeListener(this)
+        try {
+            messageClient.removeListener(this)
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to remove Wearable message client listener")
+        }
 
         ackTimeoutHandler.removeCallbacksAndMessages(null)
         queueRefreshHandler.removeCallbacksAndMessages(null)
+        MediaNotificationActions.removeListener(notificationActionsChanged)
+        preferences.unregisterOnSharedPreferenceChangeListener(quickActionsPreferenceChanged)
         contentResolver.unregisterContentObserver(volumeContentObserver)
 
         active = false
@@ -303,6 +353,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private val mediaCallback = Observer<Resource<MediaController>?> {
         when {
             it == null -> {
+                currentMediaController = null
                 buildMusicStateAndTransmit(null)
             }
             it.status == Resource.Status.ERROR -> {
@@ -396,8 +447,54 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
-    /** Drives the watch's quick-actions panel - these always work, regardless of button config. */
+    private fun usesSessionQuickActions(): Boolean =
+            Preferences.getString(preferences, MiscPreferences.WEAR_QUICK_PANEL_SOURCE) == "session"
+
+    private fun customActionSemantic(action: PlaybackState.CustomAction): String =
+            inferMediaActionSemantic(action.action, action.name?.toString())
+
+    private fun customActionCommandId(action: PlaybackState.CustomAction): String =
+            customActionSnapshotId(
+                    sourceId = action.action,
+                    label = action.name?.toString().orEmpty(),
+                    semantic = customActionSemantic(action),
+                    iconResourceId = action.icon
+            )
+
+    /** Drives the watch's quick-actions panel. Notification actions resolve to the original
+     * phone-side PendingIntent; MediaSession custom actions are looked up again because a player
+     * can replace them between the watch receiving the panel and the user tapping it. */
     private fun executeQuickAction(name: String) {
+        if (name.startsWith(SESSION_ACTION_PREFIX)) {
+            if (!usesSessionQuickActions()) return
+            val id = name.removePrefix(SESSION_ACTION_PREFIX)
+            if (MediaNotificationActions.isNotificationAction(id)) {
+                val controller = currentMediaController ?: return
+                if (MediaNotificationActions.execute(
+                                actionId = id,
+                                packageName = controller.packageName,
+                                sessionToken = controller.sessionToken
+                        )) {
+                    scheduleStateRefresh()
+                }
+                return
+            }
+            val customActions = currentMediaController?.playbackState?.customActions.orEmpty()
+            val action = if (isCustomActionSnapshotId(id)) {
+                // Snapshot ids include the source id, label, semantic meaning and icon resource.
+                // If an app repurposes an id before this tap arrives, it deliberately will not
+                // match and no unrelated function is executed under the old icon.
+                customActions.firstOrNull { customActionCommandId(it) == id }
+            } else {
+                // Compatibility with a watch that cached a state from an older phone build.
+                customActions.firstOrNull { it.action == id }
+            }
+                    ?: return
+            currentMediaController?.transportControls?.sendCustomAction(action.action, action.extras)
+            scheduleStateRefresh()
+            return
+        }
+
         val action: PhoneAction = when (name) {
             "like" -> LikeAction(this)
             "shuffle" -> ShuffleAction(this)
@@ -501,6 +598,52 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 musicStateBuilder.playbackSpeed = playbackState.playbackSpeed
                 musicStateBuilder.seekable = (playbackState.actions and PlaybackState.ACTION_SEEK_TO) != 0L
                 musicStateBuilder.liked = LikeAction.isCurrentlyLiked(playbackState)
+                if (usesSessionQuickActions()) {
+                    val notificationActions = MediaNotificationActions.actionsForSession(
+                            packageName = mediaController.packageName,
+                            sessionToken = mediaController.sessionToken
+                    )
+                    if (notificationActions.isNotEmpty()) {
+                        notificationActions.take(MAX_SESSION_QUICK_ACTIONS).forEach { action ->
+                            val builder = MediaAction.newBuilder()
+                                    .setId(action.id)
+                                    .setLabel(action.label)
+                                    .setSemantic(action.semantic)
+                            action.iconPng?.takeIf { it.isNotEmpty() }?.let {
+                                builder.iconPng = ByteString.copyFrom(it)
+                            }
+                            musicStateBuilder.addMediaActions(builder.build())
+                        }
+                    } else {
+                        // MediaSession custom actions are the fallback for apps whose media
+                        // notification does not expose buttons (or while listener access
+                        // reconnects). If neither source supplies anything, the watch presents
+                        // an explicit unavailable state instead of silently using manual slots.
+                        playbackState.customActions.orEmpty()
+                                .asSequence()
+                                .filter { it.action.isNotBlank() }
+                                .filter { customActionSemantic(it) != "dislike" }
+                                .distinctBy { it.action }
+                                .take(MAX_SESSION_QUICK_ACTIONS)
+                                .forEach { customAction ->
+                                    val label = customAction.name?.toString().orEmpty()
+                                    val semantic = customActionSemantic(customAction)
+                                    val iconPng = MediaNotificationActions.loadRemoteActionIcon(
+                                            context = this,
+                                            packageName = mediaController.packageName,
+                                            resourceId = customAction.icon
+                                    )
+                                    val builder = MediaAction.newBuilder()
+                                            .setId(customActionCommandId(customAction))
+                                            .setLabel(label)
+                                            .setSemantic(semantic)
+                                    iconPng?.takeIf { it.isNotEmpty() }?.let {
+                                        builder.iconPng = ByteString.copyFrom(it)
+                                    }
+                                    musicStateBuilder.addMediaActions(builder.build())
+                                }
+                    }
+                }
             }
 
             // Shuffle/repeat only exist on the AndroidX media-compat layer, not the framework
@@ -941,52 +1084,120 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
-    /**
-     * Opens a music deep link (e.g. a music.youtube.com playlist) on the phone. YouTube links
-     * are targeted straight at the YouTube Music app when it's installed, so they start playing
-     * there instead of opening a browser/chooser.
-     */
+    /** Opens a user-configured streaming link on the phone. This intentionally remains a link
+     * hand-off rather than pretending to be an account/API integration. When requested, a known
+    * installed streaming app is targeted; every targeted launch has an ACTION_VIEW fallback. */
     fun playDeepLink(link: String) {
-        val uri = normalizeYoutubeMusicLink(Uri.parse(link))
-        val targetPackage = if (uri.host?.contains("youtube") == true &&
-                isPackageInstalled(YOUTUBE_MUSIC_PACKAGE)) {
-            YOUTUBE_MUSIC_PACKAGE
-        } else {
-            null
+        if (!StreamingShortcutLinks.isSafeLink(link)) {
+            Timber.e("Refusing unsafe or invalid streaming link")
+            return
         }
-
-        val viewIntent = Intent(Intent.ACTION_VIEW, uri).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            setPackage(targetPackage)
+        val service = StreamingShortcutLinks.detect(link)
+        val openMode = preferences.getString(StreamingShortcutLinks.OPEN_MODE_KEY, null)
+                ?: if (preferences.getBoolean(
+                                StreamingShortcutLinks.PREFER_INSTALLED_APP_KEY,
+                                true)) {
+                    StreamingShortcutLinks.OPEN_MODE_APP
+                } else {
+                    StreamingShortcutLinks.OPEN_MODE_DEFAULT
+                }
+        val targetPackage = service.packageName?.takeIf { packageName ->
+            openMode == StreamingShortcutLinks.OPEN_MODE_APP && isPackageInstalled(packageName)
         }
+        val browserLink = StreamingShortcutLinks.forBrowser(link)
+        if (openMode == StreamingShortcutLinks.OPEN_MODE_CHOOSER &&
+                startStreamingLinkChooser(browserLink)) return
 
-        try {
-            startActivity(viewIntent)
-        } catch (e: ActivityNotFoundException) {
-            if (targetPackage == null) {
-                Timber.e("No app handles music link %s", link)
-                return
+        // ACTION_VIEW only navigates to Spotify content; it does not promise playback. If that
+        // app is already the active MediaSession and explicitly advertises playFromUri, use the
+        // Android media contract first so tracks, albums and playlists actually start. Services
+        // that do not implement it continue through the normal deep-link fallback below.
+        if (targetPackage != null && requestStreamingPlayback(link, service, targetPackage)) return
+
+        val primaryLink = if (targetPackage != null) {
+            StreamingShortcutLinks.forInstalledApp(link)
+        } else browserLink
+
+        if (startStreamingLink(primaryLink, targetPackage)) return
+        if (targetPackage != null && startStreamingLink(browserLink, null)) return
+
+        Timber.e("No app handles %s streaming link", service.name)
+    }
+
+    private fun requestStreamingPlayback(
+            link: String,
+            service: StreamingService,
+            targetPackage: String
+    ): Boolean {
+        val info = StreamingShortcutLinks.inspect(link)
+        if (info.service != service || !info.contentType.isPlayable) return false
+        val controller = currentMediaController ?: return false
+        if (controller.packageName != targetPackage) return false
+        val actions = controller.playbackState?.actions ?: 0L
+        val advertisesPlayFromUri = actions and PlaybackState.ACTION_PLAY_FROM_URI != 0L
+        val advertisesPlayFromMediaId =
+                actions and PlaybackState.ACTION_PLAY_FROM_MEDIA_ID != 0L
+        val playbackLink = StreamingShortcutLinks.forPlayback(link)
+
+        return try {
+            when {
+                advertisesPlayFromUri -> controller.transportControls.playFromUri(
+                        Uri.parse(playbackLink),
+                        Bundle.EMPTY
+                )
+                advertisesPlayFromMediaId -> controller.transportControls.playFromMediaId(
+                        playbackLink,
+                        Bundle.EMPTY
+                )
+                // Some player sessions accept URI playback but fail to publish the capability.
+                // Try it, then still execute the visible deep-link fallback below.
+                else -> controller.transportControls.playFromUri(
+                        Uri.parse(playbackLink),
+                        Bundle.EMPTY
+                )
             }
-            viewIntent.setPackage(null)
-            try {
-                startActivity(viewIntent)
-            } catch (e2: ActivityNotFoundException) {
-                Timber.e("No app handles music link %s", link)
-            }
+            scheduleStateRefresh()
+            // Only playFromUri has an unambiguous contract for this input. Media-id and
+            // unadvertised fallbacks are best effort, so still foreground the same deep link:
+            // there is no acknowledgement channel and app-defined media ids may use another form.
+            advertisesPlayFromUri
+        } catch (error: RuntimeException) {
+            Timber.w(error, "Player rejected %s playFromUri", service.name)
+            false
         }
     }
 
-    /**
-     * A YT Music playlist share link is `.../playlist?list=PLxxx` - that path only opens the
-     * playlist's page, it does not start playback. `.../watch?list=PLxxx` is the endpoint that
-     * actually starts playing the playlist immediately (the same one "Liked Music" already used).
-     * Any other link (a plain video/watch link, a non-YouTube link, ...) passes through untouched.
-     */
-    private fun normalizeYoutubeMusicLink(uri: Uri): Uri {
-        if (uri.host?.contains("youtube") != true || uri.path != "/playlist") {
-            return uri
+    private fun startStreamingLinkChooser(link: String): Boolean {
+        if (link.isBlank()) return false
+        val viewIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        val chooser = Intent.createChooser(
+                viewIntent,
+                getString(R.string.streaming_shortcut_choose_app)
+        ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        return try {
+            startActivity(chooser)
+            true
+        } catch (_: ActivityNotFoundException) {
+            false
+        } catch (_: SecurityException) {
+            false
         }
-        return uri.buildUpon().path("/watch").build()
+    }
+
+    private fun startStreamingLink(link: String, targetPackage: String?): Boolean {
+        if (link.isBlank()) return false
+        val viewIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link)).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            setPackage(targetPackage)
+        }
+        return try {
+            startActivity(viewIntent)
+            true
+        } catch (_: ActivityNotFoundException) {
+            false
+        } catch (_: SecurityException) {
+            false
+        }
     }
 
     private fun isPackageInstalled(packageName: String): Boolean = try {
@@ -1136,6 +1347,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 other.shuffleEnabled != shuffleEnabled ||
                 other.repeatMode != repeatMode ||
                 other.liked != liked
+                || other.mediaActionsList != mediaActionsList
         ) {
             return false
         }

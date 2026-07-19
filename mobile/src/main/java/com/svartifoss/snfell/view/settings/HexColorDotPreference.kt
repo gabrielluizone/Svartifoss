@@ -24,8 +24,10 @@ class HexColorDotPreference @JvmOverloads constructor(
 
         val dot = holder.findViewById(R.id.color_dot) as? ImageView
         // parseColor throws StringIndexOutOfBounds (not IllegalArgument) on an empty string,
-        // so guard blank input separately and catch broadly.
-        val hex = sharedPreferences?.getString(key, null)
+        // so guard blank input separately and catch broadly. Reads through the PreferenceDataStore
+        // when one is installed (the Watch tab scopes custom colors per face); sharedPreferences
+        // is null in that case.
+        val hex = preferenceDataStore?.getString(key, null) ?: sharedPreferences?.getString(key, null)
         val color = if (hex.isNullOrBlank()) {
             0x40808080
         } else {

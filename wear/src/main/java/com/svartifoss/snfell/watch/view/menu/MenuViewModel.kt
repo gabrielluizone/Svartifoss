@@ -3,8 +3,10 @@ package com.svartifoss.snfell.watch.view.menu
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import com.svartifoss.snfell.watch.config.ButtonAction
@@ -33,6 +35,17 @@ class MenuViewModel @Inject constructor(
 
     /** Latest custom list (playlists, search results, ...) the phone pushed. */
     val customList: LiveData<CustomListWithBitmaps> = phoneConnection.customList
+
+    /** Dedicated, persistent cache. The generic-list source is a compatibility fallback for a
+     * phone build that still responds on the old transient path. */
+    val streamingShortcuts = MediatorLiveData<CustomListWithBitmaps>().apply {
+        addSource(phoneConnection.streamingShortcuts) { list ->
+            if (list?.listId == CustomLists.PLAYLIST_SHORTCUTS) value = list
+        }
+        addSource(phoneConnection.customList) { list ->
+            if (list?.listId == CustomLists.PLAYLIST_SHORTCUTS) value = list
+        }
+    }
 
     val preferences: LiveData<SharedPreferences> = PreferencesBus
 

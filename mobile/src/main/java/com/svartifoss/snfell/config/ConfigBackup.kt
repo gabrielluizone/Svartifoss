@@ -3,6 +3,7 @@ package com.svartifoss.snfell.config
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
+import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.util.BundleFileSerialization
 import com.svartifoss.snfell.util.BundleJson
@@ -52,11 +53,22 @@ object ConfigBackup {
 
         val prefsJson = JSONObject()
         val allPrefs = preferences.all
+        val exportableKeys = MiscPreferences.EXPORTABLE.map { it.key }.toSet()
         for (definition in MiscPreferences.EXPORTABLE) {
             when (val value = allPrefs[definition.key]) {
                 is Boolean -> prefsJson.put(definition.key, value)
                 is String -> prefsJson.put(definition.key, value)
                 is Set<*> -> prefsJson.put(definition.key, JSONArray(value.toList()))
+            }
+        }
+        // Also export the per-face variants ("<baseKey>@<face>") of every scoped exportable key so
+        // each face's appearance survives a reinstall, not just the global fallback.
+        for ((key, value) in allPrefs) {
+            if (!isExportableScopedKey(key, exportableKeys)) continue
+            when (value) {
+                is Boolean -> prefsJson.put(key, value)
+                is String -> prefsJson.put(key, value)
+                is Set<*> -> prefsJson.put(key, JSONArray(value.toList()))
             }
         }
         json.put("preferences", prefsJson)
@@ -116,6 +128,27 @@ object ConfigBackup {
                 )
             }
         }
+        // Restore the per-face variants ("<baseKey>@<face>") of scoped exportable keys.
+        val exportableKeys = MiscPreferences.EXPORTABLE.map { it.key }.toSet()
+        val prefKeys = prefsJson.keys()
+        while (prefKeys.hasNext()) {
+            val key = prefKeys.next()
+            if (!isExportableScopedKey(key, exportableKeys)) continue
+            when (val value = prefsJson.get(key)) {
+                is Boolean -> editor.putBoolean(key, value)
+                is String -> editor.putString(key, value)
+                is JSONArray -> editor.putStringSet(
+                        key, (0 until value.length()).map { value.getString(it) }.toSet())
+            }
+        }
         editor.apply()
+    }
+
+    /** True for a "<baseKey>@<face>" key whose base is a face-scoped exportable preference. */
+    private fun isExportableScopedKey(key: String, exportableKeys: Set<String>): Boolean {
+        val separator = key.indexOf(FaceScopedPreferences.SCOPE_SEPARATOR)
+        if (separator <= 0) return false
+        val base = key.substring(0, separator)
+        return base in exportableKeys && FaceScopedPreferences.isScoped(base)
     }
 }

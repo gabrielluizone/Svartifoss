@@ -15,6 +15,7 @@ import com.google.android.gms.wearable.DataItem
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.proto.CustomList
@@ -60,6 +61,8 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     val musicState = ListenableLiveData<Resource<MusicState>>()
     val albumArt = ListenableLiveData<Bitmap?>()
     val customList = ListenableLiveData<CustomListWithBitmaps>()
+    /** Persistent cache used only by Streaming shortcuts. Queue/search data cannot overwrite it. */
+    val streamingShortcuts = ListenableLiveData<CustomListWithBitmaps>()
 
     val notification = SingleLiveEvent<com.svartifoss.snfell.watch.model.Notification>()
 
@@ -103,6 +106,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     init {
         lifecycleObserver.addLiveData(musicState)
         lifecycleObserver.addLiveData(albumArt)
+        lifecycleObserver.addLiveData(streamingShortcuts)
     }
 
     private fun start() {
@@ -119,6 +123,15 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         scope?.launchWithErrorHandling(context, musicState) {
             // Loading goes out first so a "no phone" error posted below is not overwritten by it.
             musicState.postValue(Resource.loading(null))
+
+            // This is a local Data Layer read, deliberately before capability discovery. Opening
+            // Streaming shortcuts must never wait for a Bluetooth/phone round trip just to draw
+            // rows the watch already cached.
+            loadCurrentStreamingShortcuts()
+            // Up Next uses the transient custom-list path. Seed a persisted queue before the
+            // phone lookup as well; otherwise a process restart left AOD empty until opening
+            // Quick Actions happened to request a fresh queue.
+            loadCurrentPlaybackQueue()
 
             val capabilities = capabilityClient.getCapability(
                     CommPaths.PHONE_APP_CAPABILITY,
@@ -366,38 +379,10 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                             CommPaths.DATA_PLAYING_ACTION_CONFIG -> rawPlaybackConfig.postValue(it.freeze())
                             CommPaths.DATA_STOPPING_ACTION_CONFIG -> rawStoppedConfig.postValue(it.freeze())
                             CommPaths.DATA_LIST_ITEMS -> rawActionMenuConfig.postValue(it.freeze())
-                            CommPaths.DATA_CUSTOM_LIST -> {
-                                val dataItem = it.freeze()
-                                val receivedCustomList = CustomList.parseFrom(dataItem.data)
-
-                                val listItems = receivedCustomList.actionsList
-                                        .mapIndexed { index, rawListEntry ->
-                                            val pictureData = dataItem.assets[index.toString()]
-                                                    ?.let { asset -> dataClient.getByteArrayAsset(asset) }
-
-                                            // Off-main: decoding a screenful of icons on the main
-                                            // dispatcher stalled whatever screen was open when a
-                                            // list arrived.
-                                            val picture = pictureData?.let { bytes ->
-                                                withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
-                                            }
-
-                                            CustomListItemWithIcon(
-                                                    rawListEntry,
-                                                    picture
-                                            )
-                                        }
-
-
-                                customList.postValue(
-                                        CustomListWithBitmaps(
-                                                receivedCustomList.listTimestamp,
-                                                receivedCustomList.listId,
-                                                listItems,
-                                                receivedCustomList.activeEntryId.takeIf { it.isNotEmpty() }
-                                        )
-                                )
-                            }
+                            CommPaths.DATA_CUSTOM_LIST ->
+                                customList.postValue(decodeCustomList(it.freeze()))
+                            CommPaths.DATA_STREAMING_SHORTCUTS ->
+                                streamingShortcuts.postValue(decodeCustomList(it.freeze()))
                         }
                     }
         }
@@ -503,6 +488,56 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         } finally {
             dataItems.release()
         }
+    }
+
+    private suspend fun loadCurrentStreamingShortcuts() {
+        val dataItems = dataClient.getDataItems(
+                Uri.parse("wear://*${CommPaths.DATA_STREAMING_SHORTCUTS}"),
+                DataClient.FILTER_LITERAL
+        ).await()
+        val dataItem = try {
+            dataItems.firstOrNull()?.freeze() ?: return
+        } finally {
+            dataItems.release()
+        }
+        streamingShortcuts.postValue(decodeCustomList(dataItem))
+    }
+
+    private suspend fun loadCurrentPlaybackQueue() {
+        val dataItems = dataClient.getDataItems(
+                Uri.parse("wear://*${CommPaths.DATA_CUSTOM_LIST}"),
+                DataClient.FILTER_LITERAL
+        ).await()
+        val dataItem = try {
+            dataItems.firstOrNull()?.freeze() ?: return
+        } finally {
+            dataItems.release()
+        }
+        val decoded = decodeCustomList(dataItem)
+        // Search results share DATA_CUSTOM_LIST but are not a playback queue and must never be
+        // presented as Up Next after a restart.
+        if (decoded.listId == CustomLists.PLAYLIST || decoded.listId == CustomLists.HISTORY) {
+            customList.postValue(decoded)
+        }
+    }
+
+    private suspend fun decodeCustomList(dataItem: DataItem): CustomListWithBitmaps {
+        val received = CustomList.parseFrom(dataItem.data)
+        val listItems = received.actionsList.mapIndexed { index, rawEntry ->
+            val pictureData = dataItem.assets[index.toString()]
+                    ?.let { asset -> dataClient.getByteArrayAsset(asset) }
+            // Album thumbnails, when present, are decoded away from the main dispatcher.
+            val picture = pictureData?.let { bytes ->
+                withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
+            }
+            CustomListItemWithIcon(rawEntry, picture)
+        }
+        return CustomListWithBitmaps(
+                received.listTimestamp,
+                received.listId,
+                listItems,
+                received.activeEntryId.takeIf { it.isNotEmpty() }
+        )
     }
 
     override fun onInactive() {

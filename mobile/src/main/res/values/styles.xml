@@ -105,6 +105,20 @@
         <item name="fontFamily">@font/google_sans</item>
     </style>
 
+    <!-- Selected and unselected tabs deliberately share every font metric. Material 1.13 can
+         apply a second TextAppearance during selection; if its line box differs even slightly,
+         the label visibly jumps before settling in the center. Only the ColorStateList changes. -->
+    <style name="LyraTabText" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="fontFamily">@font/google_sans</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="lineHeight">18sp</item>
+    </style>
+
     <!-- Gesture-picker action button: neutral text, subtle outline. Icon+text anchor to the
          start edge (list-row style) instead of centering: MaterialButton's centered-icon math
          (iconGravity=textStart + gravity=center) re-derives the icon offset from the text

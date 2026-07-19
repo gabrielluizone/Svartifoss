@@ -25,7 +25,12 @@ object StandardActionTitles {
             StandardActions.ACTION_STOP to R.string.action_name_stop,
             StandardActions.ACTION_RESTART to R.string.action_name_restart,
             StandardActions.ACTION_MUTE to R.string.action_name_mute,
-            StandardActions.ACTION_SEARCH to R.string.action_name_search
+            StandardActions.ACTION_SEARCH to R.string.action_name_search,
+            StandardActions.ACTION_LIKE to R.string.quick_action_like,
+            StandardActions.ACTION_SHUFFLE to R.string.quick_action_shuffle,
+            StandardActions.ACTION_REPEAT to R.string.quick_action_repeat,
+            StandardActions.ACTION_REPEAT_ONE to R.string.quick_action_repeat_one,
+            StandardActions.ACTION_OPEN_PLAYLIST_MENU to R.string.quick_action_up_next
     )
 
     /**

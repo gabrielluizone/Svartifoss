@@ -25,5 +25,17 @@ message MusicState {
   // change: "this state HAS art, it just hasn't crossed Bluetooth yet". The watch keeps the
   // previous cover instead of blanking; the follow-up put carries the asset and clears this.
   optional bool albumArtPending = 15 [default = false];
+  // Actions supplied by the active media notification (preferred) or MediaSession fallback.
+  // Notification icons are rasterized on the phone because remote-app resource ids cannot be
+  // resolved on the watch.
+  repeated MediaAction mediaActions = 16;
 }
 
+message MediaAction {
+  required string id = 1;
+  optional string label = 2;
+  optional bytes iconPng = 3;
+  // Stable, locale-independent meaning used only for state/fallback presentation. The opaque id
+  // remains the sole execution token, so a semantic guess can never redirect a button.
+  optional string semantic = 4 [default = "unknown"];
+}

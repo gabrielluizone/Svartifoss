@@ -52,6 +52,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="76dp"
         android:src="@drawable/ic_plus"
+        android:contentDescription="@string/actions_add"
         android:visibility="gone"
         app:backgroundTint="@color/lyra_accent"
         app:tint="@color/lyra_white"
@@ -67,6 +68,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="76dp"
         android:src="@drawable/ic_nav_playing"
+        android:contentDescription="@string/action_play"
         android:visibility="gone"
         app:backgroundTint="@color/lyra_accent"
         app:tint="@color/lyra_white"
@@ -239,7 +241,7 @@
             app:itemRippleColor="@color/lyra_ripple"
             app:itemTextAppearanceActive="@style/LyraBottomNavLabel"
             app:itemTextAppearanceInactive="@style/LyraBottomNavLabel"
-            app:labelVisibilityMode="selected"
+            app:labelVisibilityMode="labeled"
             app:elevation="0dp" />
 
     </LinearLayout>

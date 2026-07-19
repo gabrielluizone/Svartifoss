@@ -32,11 +32,13 @@ import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.MainActivity
 import com.matejdro.wearutils.messages.sendMessageToNearestClient
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.guava.future
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 
 /**
  * Glanceable quick-control Tile: shows the current track + artist, play/pause and skip prev/next
@@ -62,14 +64,22 @@ class MediaTileService : TileService() {
     ): ListenableFuture<TileBuilders.Tile> = scope.future {
         // Dispatch any pending click first, then render the freshest state we can read.
         val clickedId = requestParams.currentState.lastClickableId
-        dispatchClick(clickedId)
+        val clickWasSent = try {
+            dispatchClick(clickedId)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            // A disconnected phone must not make the renderer discard the whole Tile response.
+            Timber.w(e, "Could not dispatch media Tile action")
+            false
+        }
         val state = readMusicState()
 
         // A play/pause toggle was only just sent to the phone, which won't have published the
         // resulting state back yet - the DataItem read above still holds the pre-click state.
         // Render the icon optimistically flipped instead of showing the stale one until the
         // next refresh, which would make the button feel like it did nothing.
-        val flipPlaying = clickedId == ID_PLAY_PAUSE
+        val flipPlaying = clickWasSent && clickedId == ID_PLAY_PAUSE
 
         val layout = buildLayout(this@MediaTileService, state, flipPlaying)
 
@@ -87,19 +97,24 @@ class MediaTileService : TileService() {
             .setVersion(RESOURCES_VERSION)
             .addIdToImageMapping(ICON_PREV, resourceById(com.svartifoss.snfell.common.R.drawable.action_skip_prev))
             .addIdToImageMapping(ICON_NEXT, resourceById(com.svartifoss.snfell.common.R.drawable.action_skip_next))
-            .addIdToImageMapping(ICON_PLAY, resourceById(com.svartifoss.snfell.common.R.drawable.action_play))
-            .addIdToImageMapping(ICON_PAUSE, resourceById(com.svartifoss.snfell.common.R.drawable.action_pause))
+            .addIdToImageMapping(ICON_PLAY, resourceById(com.svartifoss.snfell.common.R.drawable.action_play_filled))
+            .addIdToImageMapping(ICON_PAUSE, resourceById(com.svartifoss.snfell.common.R.drawable.action_pause_filled))
             .addIdToImageMapping(ICON_SEEK_BACK, resourceById(com.svartifoss.snfell.common.R.drawable.action_replay_10))
             .addIdToImageMapping(ICON_SEEK_FORWARD, resourceById(com.svartifoss.snfell.common.R.drawable.action_forward_10))
+            .addIdToImageMapping(
+                ICON_OPEN_APP,
+                resourceById(com.svartifoss.snfell.R.drawable.ic_complication_picker)
+            )
             .build()
     }
 
-    private suspend fun dispatchClick(clickedId: String?) {
+    /** Returns true only when the command was accepted by the phone connection. */
+    private suspend fun dispatchClick(clickedId: String?): Boolean {
         val messageClient = Wearable.getMessageClient(this)
         val nodeClient = Wearable.getNodeClient(this)
 
         // -10s/+10s carry a signed delta; the phone resolves it against the session's LIVE
-        // position (this Tile's snapshot can be up to 30s stale).
+        // position (this Tile's snapshot can be up to one minute stale).
         val seekDeltaMs = when (clickedId) {
             ID_SEEK_BACK -> -SEEK_STEP_MS
             ID_SEEK_FORWARD -> SEEK_STEP_MS
@@ -107,17 +122,20 @@ class MediaTileService : TileService() {
         }
         if (seekDeltaMs != null) {
             val payload = java.nio.ByteBuffer.allocate(java.lang.Long.BYTES).putLong(seekDeltaMs).array()
-            messageClient.sendMessageToNearestClient(nodeClient, CommPaths.MESSAGE_SEEK_RELATIVE, payload)
-            return
+            return messageClient.sendMessageToNearestClient(
+                nodeClient,
+                CommPaths.MESSAGE_SEEK_RELATIVE,
+                payload
+            ) != null
         }
 
         val path = when (clickedId) {
             ID_PLAY_PAUSE -> CommPaths.MESSAGE_TOGGLE_PLAY_PAUSE
             ID_SKIP_NEXT -> CommPaths.MESSAGE_SKIP_NEXT
             ID_SKIP_PREV -> CommPaths.MESSAGE_SKIP_PREVIOUS
-            else -> return
+            else -> return false
         }
-        messageClient.sendMessageToNearestClient(nodeClient, path)
+        return messageClient.sendMessageToNearestClient(nodeClient, path) != null
     }
 
     private suspend fun readMusicState(): MusicState? {
@@ -131,6 +149,8 @@ class MediaTileService : TileService() {
             } finally {
                 buffer.release()
             }
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             null
         }
@@ -141,11 +161,23 @@ class MediaTileService : TileService() {
         state: MusicState?,
         flipPlaying: Boolean
     ): LayoutElementBuilders.LayoutElement {
-        val hasMusic = state != null && !state.error
+        // A controller-less state is still published as a valid proto with all media fields
+        // empty. Treating every non-error proto as an active session left a row of dead controls
+        // below "Nothing playing" after playback ended.
+        val hasMusic = state != null && !state.error && (
+            state.title.isNotBlank() ||
+                state.artist.isNotBlank() ||
+                state.playing ||
+                state.durationMs > 0L
+            )
         val title = if (hasMusic && state!!.title.isNotBlank()) state.title else context.getString(
             com.svartifoss.snfell.R.string.tile_nothing_playing
         )
-        val artist = if (hasMusic) state!!.artist else ""
+        val artist = if (hasMusic) {
+            state!!.artist
+        } else {
+            context.getString(com.svartifoss.snfell.R.string.tile_open_app)
+        }
         val playing = hasMusic && (state!!.playing xor flipPlaying)
 
         val openAppClickable = Clickable.Builder()
@@ -215,6 +247,31 @@ class MediaTileService : TileService() {
             .addContent(smallControlButton(context, ID_SEEK_FORWARD, ICON_SEEK_FORWARD))
             .build()
 
+        val openAppButton = Button.Builder(context, openAppClickable)
+            .setIconContent(ICON_OPEN_APP)
+            .setContentDescription(context.getString(com.svartifoss.snfell.R.string.tile_open_app))
+            .setButtonColors(ButtonColors(WatchTheme.ACCENT_DEFAULT, WatchTheme.BACKGROUND_BLACK))
+            .setSize(ButtonDefaults.LARGE_SIZE)
+            .build()
+
+        val contentColumn = Column.Builder()
+            .setWidth(expand())
+            .setHorizontalAlignment(HORIZONTAL_ALIGN_CENTER)
+            .addContent(textColumn)
+            .addContent(Spacer.Builder().setHeight(dp(10f)).build())
+            .apply {
+                if (hasMusic) {
+                    addContent(controlsRow)
+                    if (state!!.seekable && state.durationMs > 0L) {
+                        addContent(Spacer.Builder().setHeight(dp(6f)).build())
+                        addContent(seekRow)
+                    }
+                } else {
+                    addContent(openAppButton)
+                }
+            }
+            .build()
+
         return androidx.wear.protolayout.LayoutElementBuilders.Box.Builder()
             .setWidth(expand())
             .setHeight(expand())
@@ -230,15 +287,7 @@ class MediaTileService : TileService() {
                     .build()
             )
             .addContent(
-                Column.Builder()
-                    .setWidth(expand())
-                    .setHorizontalAlignment(HORIZONTAL_ALIGN_CENTER)
-                    .addContent(textColumn)
-                    .addContent(Spacer.Builder().setHeight(dp(10f)).build())
-                    .addContent(controlsRow)
-                    .addContent(Spacer.Builder().setHeight(dp(6f)).build())
-                    .addContent(seekRow)
-                    .build()
+                contentColumn
             )
             .build()
     }
@@ -262,6 +311,20 @@ class MediaTileService : TileService() {
 
         return Button.Builder(context, clickable)
             .setIconContent(iconId)
+            .setContentDescription(
+                context.getString(
+                    when (clickId) {
+                        ID_SKIP_PREV -> com.svartifoss.snfell.R.string.action_name_skip_prev
+                        ID_SKIP_NEXT -> com.svartifoss.snfell.R.string.action_name_skip_next
+                        ID_PLAY_PAUSE -> if (iconId == ICON_PAUSE) {
+                            com.svartifoss.snfell.R.string.action_name_pause
+                        } else {
+                            com.svartifoss.snfell.R.string.action_name_play
+                        }
+                        else -> com.svartifoss.snfell.R.string.action_name_play_pause
+                    }
+                )
+            )
             .setButtonColors(colors)
             .setSize(if (accent) ButtonDefaults.LARGE_SIZE else ButtonDefaults.DEFAULT_SIZE)
             .build()
@@ -276,8 +339,18 @@ class MediaTileService : TileService() {
 
         return Button.Builder(context, clickable)
             .setIconContent(iconId)
+            .setContentDescription(
+                context.getString(
+                    if (clickId == ID_SEEK_BACK) {
+                        com.svartifoss.snfell.R.string.tile_rewind_10
+                    } else {
+                        com.svartifoss.snfell.R.string.tile_forward_10
+                    }
+                )
+            )
             .setButtonColors(ButtonColors(WatchTheme.SURFACE_DARK, WatchTheme.TEXT_SECONDARY))
-            .setSize(dp(38f))
+            // Keep the secondary visual weight, but retain the platform's 48dp touch minimum.
+            .setSize(dp(48f))
             .build()
     }
 
@@ -294,8 +367,10 @@ class MediaTileService : TileService() {
     companion object {
         // Bump whenever the image-id mappings change, or the renderer keeps its cached set and
         // new icons never load.
-        private const val RESOURCES_VERSION = "2"
-        private const val REFRESH_INTERVAL_MS = 30_000L
+        private const val RESOURCES_VERSION = "4"
+        // Android may throttle Tile requests made more often than once a minute. State changes
+        // still request an immediate refresh through MusicStateListenerService.
+        private const val REFRESH_INTERVAL_MS = 60_000L
 
         private const val ID_OPEN_APP = "open_app"
         private const val ID_PLAY_PAUSE = "tile_play_pause"
@@ -312,6 +387,7 @@ class MediaTileService : TileService() {
         private const val ICON_PAUSE = "ic_pause"
         private const val ICON_SEEK_BACK = "ic_seek_back"
         private const val ICON_SEEK_FORWARD = "ic_seek_forward"
+        private const val ICON_OPEN_APP = "ic_open_app"
 
     }
 }

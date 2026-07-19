@@ -47,6 +47,7 @@ class FourWayTouchLayout : FrameLayout,
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
             tapPulse.release()
+            listener?.onTouchUp()
         }
 
         return gestureDetector.onTouchEvent(event)
@@ -55,6 +56,7 @@ class FourWayTouchLayout : FrameLayout,
 
     override fun onDown(e: MotionEvent): Boolean {
         tapPulse.press(e.x, e.y)
+        listener?.onTouchDown(e.x, e.y)
         return true
     }
 
@@ -190,6 +192,16 @@ class FourWayTouchLayout : FrameLayout,
         fun onSingleTap(quadrant: Int)
         fun onDoubleTap(quadrant: Int)
         fun onLongTap(quadrant: Int)
+
+        /** Raw touch-down position, fired alongside this layout's own [tapPulse] (which always
+         *  draws at this layout's own z-order). A host that layers other opaque content above
+         *  this layout - e.g. a full-screen Compose face - can use this to mirror the same
+         *  feedback at a higher z-order where it will actually be visible. Default no-op so
+         *  existing listeners (e.g. the phone's touch-zone picker) don't need to implement it. */
+        fun onTouchDown(x: Float, y: Float) {}
+
+        /** Matches a prior [onTouchDown] - fired on ACTION_UP/ACTION_CANCEL. */
+        fun onTouchUp() {}
     }
 
     companion object {

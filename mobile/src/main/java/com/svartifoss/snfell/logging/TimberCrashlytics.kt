@@ -14,7 +14,7 @@ import java.util.concurrent.CancellationException
  */
 class TimberCrashlytics : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String?, t: Throwable?) {
-        if (t != null) {
+        if (t != null && CrashReporting.enabled) {
             val crashlytics = FirebaseCrashlytics.getInstance()
             message?.let { crashlytics.log(it) }
             if (priority >= Log.ERROR && t !is CancellationException) {

@@ -8,6 +8,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="6dp"
+        android:fontFamily="@font/google_sans"
+        android:text="@string/actions_intro"
+        android:textColor="@color/lyra_pref_summary"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="56dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="4dp"
+        android:fontFamily="@font/google_sans"
+        android:letterSpacing="0.1"
+        android:text="@string/actions_quick_panel_section"
+        android:textAllCaps="true"
+        android:textColor="@color/lyra_accent"
+        android:textSize="11sp" />
+
     <LinearLayout
         android:id="@+id/quick_panel_row"
         android:layout_width="match_parent"
@@ -73,10 +99,56 @@
         android:layout_height="1dp"
         android:background="@color/lyra_divider" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="56dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:fontFamily="@font/google_sans"
+        android:letterSpacing="0.1"
+        android:text="@string/actions_watch_menu_section"
+        android:textAllCaps="true"
+        android:textColor="@color/lyra_accent"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/action_list_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="56dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="6dp"
+        android:fontFamily="@font/google_sans"
+        android:textColor="@color/lyra_pref_summary"
+        android:textSize="12sp"
+        tools:text="8 actions · Tap to edit · Hold and drag to reorder" />
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/actions_reorder_description" />
+
+        <TextView
+            android:id="@+id/action_list_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="32dp"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/actions_empty"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
 </LinearLayout>

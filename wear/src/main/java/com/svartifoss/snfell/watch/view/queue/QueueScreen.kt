@@ -1,11 +1,13 @@
 package com.svartifoss.snfell.watch.view.queue
 
+import android.graphics.Bitmap
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
@@ -33,15 +35,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -71,7 +79,9 @@ data class QueueItemUi(
         val entryId: String,
         val title: String,
         val subtitle: String?,
-        val isPlaying: Boolean
+        val isPlaying: Boolean,
+        /** Cover published by the media app for this queue item. Null keeps the row text-only. */
+        val artwork: Bitmap? = null
 )
 
 // Idle rows are near-black for an OLED-dark look; the now-playing row uses the full album accent.
@@ -99,18 +109,20 @@ enum class QueueStyle {
     NEON,
     /** Light theme: pale cards with dark text; now-playing is an accent pill. */
     LIGHT,
-    /** Album-accent vertical gradient cards. */
+    /** Vertical-gradient cards made from two album-art swatches. */
     GRADIENT,
     /** Neutral greyscale, ignoring the album accent. */
     MONO,
     /** Thick white cartoon outline, transparent fill. */
     OUTLINE,
-    /** Two-hue: accent for now-playing, its complementary colour for the rest. */
+    /** Two-hue: primary album swatch for now-playing, secondary swatch for the rest. */
     DUOTONE,
     /** Pure black/white, thick strokes (high contrast). */
     CONTRAST,
     /** Sharp-cornered monochrome-green CRT look. */
     TERMINAL,
+    /** Three real album swatches with a diagonal glass keyline. */
+    PRISM,
     /** Light translucent frosted panels. */
     FROST;
 
@@ -128,6 +140,7 @@ enum class QueueStyle {
             "contrast" -> CONTRAST
             "terminal" -> TERMINAL
             "frost" -> FROST
+            "prism" -> PRISM
             else -> GLASS
         }
     }
@@ -155,7 +168,13 @@ private class QueueRowSkin(
         val border: Pair<Dp, Color>? = null
 )
 
-private fun queueRowSkin(style: QueueStyle, isPlaying: Boolean, accent: Color): QueueRowSkin {
+private fun queueRowSkin(
+        style: QueueStyle,
+        isPlaying: Boolean,
+        accent: Color,
+        secondaryAccent: Color,
+        tertiaryAccent: Color
+): QueueRowSkin {
     val lighten = lightenForBlackText(accent)
     return when (style) {
         QueueStyle.GLASS -> QueueRowSkin(
@@ -193,9 +212,12 @@ private fun queueRowSkin(style: QueueStyle, isPlaying: Boolean, accent: Color): 
         )
         QueueStyle.GRADIENT -> QueueRowSkin(
                 background = if (isPlaying) {
-                    Brush.verticalGradient(listOf(lighten, tonalColor(accent, 0.55f)))
+                    Brush.verticalGradient(listOf(lighten, tonalColor(secondaryAccent, 0.55f)))
                 } else {
-                    Brush.verticalGradient(listOf(tonalColor(accent, 0.26f), tonalColor(accent, 0.13f)))
+                    Brush.verticalGradient(listOf(
+                            tonalColor(accent, 0.26f),
+                            tonalColor(secondaryAccent, 0.13f)
+                    ))
                 },
                 onColor = if (isPlaying) Color.Black else Color.White,
                 corner = 22.dp, verticalPadding = 14.dp, keyline = null
@@ -212,9 +234,30 @@ private fun queueRowSkin(style: QueueStyle, isPlaying: Boolean, accent: Color): 
                 border = (if (isPlaying) 3.dp else 2.5.dp) to (if (isPlaying) accent else Color.White)
         )
         QueueStyle.DUOTONE -> QueueRowSkin(
-                background = SolidColor(if (isPlaying) lighten else tonalColor(complementary(accent), 0.24f)),
+                background = SolidColor(
+                        if (isPlaying) lighten else tonalColor(secondaryAccent, 0.24f)),
                 onColor = if (isPlaying) Color.Black else Color.White,
                 corner = 22.dp, verticalPadding = 14.dp, keyline = null
+        )
+        QueueStyle.PRISM -> QueueRowSkin(
+                background = Brush.linearGradient(
+                        if (isPlaying) {
+                            listOf(
+                                    tonalColor(tertiaryAccent, .52f),
+                                    lighten,
+                                    tonalColor(secondaryAccent, .46f))
+                        } else {
+                            listOf(
+                                    tonalColor(tertiaryAccent, .18f),
+                                    tonalColor(accent, .28f),
+                                    tonalColor(secondaryAccent, .14f))
+                        }
+                ),
+                onColor = if (isPlaying) Color.Black else Color.White,
+                corner = 22.dp,
+                verticalPadding = 14.dp,
+                keyline = null,
+                border = 1.dp to Color.White.copy(alpha = .38f)
         )
         QueueStyle.CONTRAST -> QueueRowSkin(
                 background = SolidColor(if (isPlaying) Color.White else Color.Black),
@@ -236,19 +279,11 @@ private fun queueRowSkin(style: QueueStyle, isPlaying: Boolean, accent: Color): 
     }
 }
 
-/** The album accent's complementary hue (used by the duotone style). */
-private fun complementary(accent: Color): Color {
-    val hsl = FloatArray(3)
-    ColorUtils.colorToHSL(accent.toArgb(), hsl)
-    hsl[0] = (hsl[0] + 180f) % 360f
-    return Color(ColorUtils.HSLToColor(hsl))
-}
-
 /** Row spacing per style - tighter for the flat minimal list, roomier for the bold card styles. */
 private fun queueRowSpacing(style: QueueStyle): Dp = when (style) {
     QueueStyle.MINIMAL, QueueStyle.TERMINAL -> 2.dp
     QueueStyle.MATERIAL, QueueStyle.TONAL, QueueStyle.LIGHT, QueueStyle.GRADIENT,
-    QueueStyle.DUOTONE, QueueStyle.FROST -> 8.dp
+    QueueStyle.DUOTONE, QueueStyle.PRISM, QueueStyle.FROST -> 8.dp
     else -> 6.dp
 }
 
@@ -273,6 +308,8 @@ private fun tonalColor(accent: Color, lightness: Float): Color {
 fun QueueScreen(
         items: List<QueueItemUi>?,
         accentColor: Color,
+        secondaryAccentColor: Color,
+        tertiaryAccentColor: Color,
         nowPlayingTitle: String?,
         nowPlayingArtist: String?,
         onItemClick: (entryId: String) -> Unit,
@@ -289,7 +326,16 @@ fun QueueScreen(
         // window is black, so swiping back slides the list away over black - one clean close).
         if (!isBackground) {
             Box(Modifier.fillMaxSize().background(Color.Black)) {
-                QueueList(items, accentColor, nowPlayingTitle, nowPlayingArtist, onItemClick, style)
+                QueueList(
+                        items,
+                        accentColor,
+                        secondaryAccentColor,
+                        tertiaryAccentColor,
+                        nowPlayingTitle,
+                        nowPlayingArtist,
+                        onItemClick,
+                        style
+                )
             }
         }
     }
@@ -299,6 +345,8 @@ fun QueueScreen(
 private fun QueueList(
         items: List<QueueItemUi>?,
         accentColor: Color,
+        secondaryAccentColor: Color,
+        tertiaryAccentColor: Color,
         nowPlayingTitle: String?,
         nowPlayingArtist: String?,
         onItemClick: (String) -> Unit,
@@ -338,7 +386,15 @@ private fun QueueList(
             ) {
                 item { QueueHeader(nowPlayingTitle, nowPlayingArtist, animate = !isScrolling) }
                 items(items, key = { it.entryId }) { item ->
-                    QueueRow(item, accentColor, onItemClick, animate = !isScrolling, style = style)
+                    QueueRow(
+                            item,
+                            accentColor,
+                            secondaryAccentColor,
+                            tertiaryAccentColor,
+                            onItemClick,
+                            animate = !isScrolling,
+                            style = style
+                    )
                 }
             }
         }
@@ -393,13 +449,16 @@ private fun QueueHeader(title: String?, artist: String?, animate: Boolean) {
 private fun QueueRow(
         item: QueueItemUi,
         accentColor: Color,
+        secondaryAccentColor: Color,
+        tertiaryAccentColor: Color,
         onItemClick: (String) -> Unit,
         animate: Boolean,
         style: QueueStyle
 ) {
     // The lightened accent / tonal surfaces keep black or accent text readable regardless of the
     // album's hue - see queueRowSkin for how each style paints the row.
-    val skin = queueRowSkin(style, item.isPlaying, accentColor)
+    val skin = queueRowSkin(
+            style, item.isPlaying, accentColor, secondaryAccentColor, tertiaryAccentColor)
     val onRow = skin.onColor
 
     // background(shape) draws an anti-aliased rounded rect directly; the previous
@@ -411,12 +470,17 @@ private fun QueueRow(
     val keyline = skin.keyline
     val shape = RoundedCornerShape(skin.corner)
     val border = skin.border
+    val nowPlayingDescription = stringResource(R.string.queue_now_playing)
     Row(
             modifier = Modifier
                     .fillMaxWidth()
                     .background(skin.background, shape)
                     .then(if (border != null) Modifier.border(border.first, border.second, shape) else Modifier)
                     .clickable { onItemClick(item.entryId) }
+                    .semantics {
+                        selected = item.isPlaying
+                        if (item.isPlaying) stateDescription = nowPlayingDescription
+                    }
                     .then(
                             if (keyline != null) {
                                 // A short rounded accent bar hugging the left edge marks the
@@ -437,6 +501,18 @@ private fun QueueRow(
                     .padding(horizontal = 16.dp, vertical = skin.verticalPadding),
             verticalAlignment = Alignment.CenterVertically
     ) {
+        item.artwork?.let { bitmap ->
+            val image = remember(bitmap) { bitmap.asImageBitmap() }
+            Image(
+                    bitmap = image,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                            .size(38.dp)
+                            .clip(RoundedCornerShape(50))
+            )
+            Spacer(Modifier.width(10.dp))
+        }
         Column(Modifier.weight(1f)) {
             Text(
                     text = item.title,
@@ -572,6 +648,8 @@ private fun QueueScreenEmptyPreview() {
         QueueScreen(
                 items = emptyList(),
                 accentColor = Color(0xFF9C5BD0),
+                secondaryAccentColor = Color(0xFF3F739C),
+                tertiaryAccentColor = Color(0xFF8C4F7E),
                 nowPlayingTitle = null,
                 nowPlayingArtist = null,
                 onItemClick = {},
@@ -591,6 +669,8 @@ private fun QueueScreenPreview() {
                         QueueItemUi("3", "Otpusti", "hxvvxn & damnenby", false)
                 ),
                 accentColor = Color(0xFF9C5BD0),
+                secondaryAccentColor = Color(0xFF3F739C),
+                tertiaryAccentColor = Color(0xFF8C4F7E),
                 nowPlayingTitle = "WINGS",
                 nowPlayingArtist = "Lieless, PRATEIN & Pimpie",
                 onItemClick = {},

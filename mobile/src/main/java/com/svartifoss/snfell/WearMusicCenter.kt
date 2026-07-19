@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.di.DaggerAppComponent
 import com.svartifoss.snfell.logging.CrashlyticsExceptionWearHandler
+import com.svartifoss.snfell.logging.CrashReporting
 import com.svartifoss.snfell.logging.TimberCrashlytics
 import com.matejdro.wearutils.logging.FileLogger
 import dagger.android.AndroidInjector
@@ -27,6 +28,8 @@ class WearMusicCenter : Application(), HasAndroidInjector {
                 .inject(this)
 
         super.onCreate()
+
+        CrashReporting.initialize(this)
 
         Timber.setAppTag("WearMusicCenter")
 

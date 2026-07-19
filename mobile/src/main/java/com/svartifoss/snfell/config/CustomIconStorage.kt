@@ -19,21 +19,51 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.regex.Pattern
+import java.security.MessageDigest
 import javax.inject.Inject
 
 @Reusable
 class CustomIconStorage @Inject constructor(private val context: Context,
                                             @GlobalConfig private val configLazy: Lazy<ActionConfig>) {
     companion object {
-        private val UNSAFE_CHARACTERS_PATTERN = Pattern.compile("[^\\w.\\-_]")
-
         private const val PREF_NAME = "custom_icon_storage"
         private const val PREF_KEY_NUM_SAVES = "num_saves"
 
         private const val GC_SAVES_THRESHOLD = 10
 
         private const val MAX_MEMORY_LRU_STORE_SIZE_BYTES = 5_000_000
+
+        /** Stable, bounded and collision-resistant filename for a complete URI. The old mapping
+         * deleted punctuation, so different URIs such as `a:b` and `ab` silently shared a PNG. */
+        private fun hashedFileName(uri: Uri): String {
+            val digest = MessageDigest.getInstance("SHA-256")
+                    .digest(uri.toString().toByteArray(Charsets.UTF_8))
+            return digest.joinToString(separator = "") { byte ->
+                (byte.toInt() and 0xff).toString(16).padStart(2, '0')
+            } + ".png"
+        }
+
+        private fun legacyFileName(uri: Uri): String =
+                uri.toString().replace(Regex("[^\\w.\\-_]"), "") + ".png"
+
+        /** Shared with the Watch preview loader so both consumers resolve the exact same file.
+         * Existing installs are migrated lazily without deleting the legacy copy immediately;
+         * the normal garbage collector removes it only after every referenced URI was resolved. */
+        internal fun resolveStoredIconFile(filesDir: File, uri: Uri): File {
+            val folder = File(filesDir, "icon_store").apply { mkdirs() }
+            val target = File(folder, hashedFileName(uri))
+            if (!target.exists()) {
+                val legacy = File(folder, legacyFileName(uri))
+                if (legacy.exists()) {
+                    try {
+                        legacy.copyTo(target, overwrite = false)
+                    } catch (e: IOException) {
+                        Timber.w(e, "Could not migrate custom icon filename")
+                    }
+                }
+            }
+            return target
+        }
     }
 
     private val storageFolder = File(context.filesDir, "icon_store")
@@ -157,11 +187,7 @@ class CustomIconStorage @Inject constructor(private val context: Context,
 
 
     private fun getFileForUri(uri: Uri): File {
-        var fileName = uri.toString()
-        fileName = UNSAFE_CHARACTERS_PATTERN.matcher(fileName).replaceAll("")
-        fileName += ".png"
-
-        return File(storageFolder, fileName)
+        return resolveStoredIconFile(context.filesDir, uri)
     }
 
     private fun calculateInSampleSize(
@@ -197,4 +223,3 @@ class CustomIconStorage @Inject constructor(private val context: Context,
         return BitmapFactory.decodeFile(file.absolutePath, options)
     }
 }
-

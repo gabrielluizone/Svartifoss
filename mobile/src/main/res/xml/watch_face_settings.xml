@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><!--suppress AndroidElementNotAllowed -->
-<!-- The watch face customization screen ("Watch face" tab): everything that changes how the
-     watch's now-playing screen LOOKS, previewed live by the WatchPreviewView docked above this
-     list. Behavior settings (gestures, crown, automation, ...) stay in the Settings tab. All
-     keys here were moved from settings.xml - they are the same MiscPreferences the watch
-     already syncs and the config backup already exports. -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- The watch appearance screen: everything that changes how the watch UI looks. WatchPreviewView
+     follows the active section and focused preference across the player, AOD and secondary
+     surfaces. Behavior settings stay in Settings. All keys here were moved from settings.xml;
+     they are the same MiscPreferences the watch already syncs and the config backup exports. -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="cat_wf_face"
@@ -13,7 +13,7 @@
 
         <ListPreference
             android:key="wear_screen_face"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/ic_player_theme"
             android:defaultValue="classic"
             android:title="@string/setting_wear_screen_face"
             android:summary="@string/setting_wear_screen_face_description"
@@ -21,30 +21,89 @@
             android:entryValues="@array/wear_screen_face_values"
             android:layout="@layout/pref_item" />
 
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_show_track_title"
+            android:icon="@drawable/ic_music_note"
+            android:title="@string/setting_wear_show_track_title"
+            android:summary="@string/setting_wear_show_track_title_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_show_track_artist"
+            android:icon="@drawable/ic_person"
+            android:title="@string/setting_wear_show_track_artist"
+            android:summary="@string/setting_wear_show_track_artist_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.DescribedListPreference
+            android:key="wear_screen_theme"
+            android:icon="@drawable/ic_palette"
+            android:defaultValue="default"
+            android:title="@string/setting_wear_screen_theme"
+            android:entries="@array/wear_screen_theme_entries"
+            android:entryValues="@array/wear_screen_theme_values"
+            app:descriptions="@array/wear_screen_theme_descriptions"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.DescribedListPreference
+            android:key="wear_font"
+            android:icon="@drawable/ic_text_fields"
+            android:defaultValue="google_sans"
+            android:title="@string/setting_wear_font"
+            android:entries="@array/wear_font_entries"
+            android:entryValues="@array/wear_font_values"
+            app:descriptions="@array/wear_font_descriptions"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_classic_icons_visible"
+            android:icon="@drawable/ic_transport_controls"
+            android:title="@string/setting_wear_player_controls_visible"
+            android:summary="@string/setting_wear_player_controls_visible_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_internal_progress_visible"
+            android:icon="@drawable/ic_progress_ring"
+            android:title="@string/setting_wear_internal_progress_visible"
+            android:summary="@string/setting_wear_internal_progress_visible_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_edge_progress_visible"
+            android:icon="@drawable/ic_progress_ring"
+            android:title="@string/setting_wear_edge_progress_visible"
+            android:summary="@string/setting_wear_edge_progress_visible_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_edge_seek_enabled"
+            android:icon="@drawable/ic_progress_style"
+            android:title="@string/setting_wear_edge_seek_enabled"
+            android:summary="@string/setting_wear_edge_seek_enabled_description"
+            android:layout="@layout/pref_switch_item" />
+
         <ListPreference
-            android:key="wear_expressive_seek_mode"
-            android:icon="@drawable/ic_format_paint"
             android:defaultValue="central"
+            android:key="wear_expressive_seek_mode"
+            android:icon="@drawable/ic_progress_style"
             android:title="@string/setting_wear_expressive_seek_mode"
-            android:summary="@string/setting_wear_expressive_seek_mode_description"
+            android:summary="%s"
             android:entries="@array/wear_expressive_seek_mode_entries"
             android:entryValues="@array/wear_expressive_seek_mode_values"
             android:layout="@layout/pref_item" />
 
         <ListPreference
-            android:key="wear_screen_theme"
-            android:icon="@drawable/ic_format_paint"
-            android:defaultValue="default"
-            android:title="@string/setting_wear_screen_theme"
-            android:summary="@string/setting_wear_screen_theme_description"
-            android:entries="@array/wear_screen_theme_entries"
-            android:entryValues="@array/wear_screen_theme_values"
-            android:layout="@layout/pref_item" />
-
-        <ListPreference
             android:defaultValue="smart"
             android:key="wear_title_text_mode"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/ic_text_fields"
+            android:dependency="wear_show_track_title"
             android:title="@string/setting_wear_title_text_mode"
             android:summary="%s"
             android:entries="@array/wear_title_text_mode_entries"
@@ -79,7 +138,7 @@
 
         <ListPreference
             android:key="wear_aod_style"
-            android:icon="@drawable/ic_dark_mode"
+            android:icon="@drawable/ic_always_on"
             android:defaultValue="follow"
             android:title="@string/setting_wear_aod_style"
             android:summary="@string/setting_wear_aod_style_description"
@@ -107,7 +166,7 @@
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="100"
             android:key="wear_aod_intensity"
-            android:icon="@drawable/ic_light_mode"
+            android:icon="@drawable/ic_brightness_medium"
             android:title="@string/setting_wear_aod_intensity"
             android:summary="@string/setting_wear_aod_intensity_description"
             android:layout="@layout/pref_item" />
@@ -115,7 +174,7 @@
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
             android:key="wear_aod_show_transport"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/ic_transport_controls"
             android:title="@string/setting_wear_aod_show_transport"
             android:summary="@string/setting_wear_aod_show_transport_description"
             android:layout="@layout/pref_switch_item" />
@@ -123,7 +182,7 @@
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
             android:key="wear_aod_show_progress"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/ic_progress_ring"
             android:dependency="wear_aod_show_transport"
             android:title="@string/setting_wear_aod_show_progress"
             android:summary="@string/setting_wear_aod_show_progress_description"
@@ -132,7 +191,7 @@
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
             android:key="wear_aod_show_pills"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/ic_mini_buttons"
             android:title="@string/setting_wear_aod_show_pills"
             android:summary="@string/setting_wear_aod_show_pills_description"
             android:layout="@layout/pref_switch_item" />
@@ -145,10 +204,21 @@
             android:summary="@string/setting_wear_aod_show_art_description"
             android:layout="@layout/pref_switch_item" />
 
+        <ListPreference
+            android:key="wear_aod_art_treatment"
+            android:icon="@drawable/ic_album"
+            android:defaultValue="blur"
+            android:dependency="wear_aod_show_art"
+            android:title="@string/setting_wear_aod_art_treatment"
+            android:summary="%s"
+            android:entries="@array/wear_aod_art_treatment_entries"
+            android:entryValues="@array/wear_aod_art_treatment_values"
+            android:layout="@layout/pref_item" />
+
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="55"
             android:key="ambient_album_art_opacity"
-            android:icon="@drawable/ic_dark_mode"
+            android:icon="@drawable/ic_opacity"
             android:dependency="wear_aod_show_art"
             android:title="@string/setting_ambient_album_art_opacity"
             android:summary="@string/setting_ambient_album_art_opacity_description"
@@ -159,12 +229,13 @@
             android:key="wear_aod_show_clock"
             android:icon="@drawable/ic_history"
             android:title="@string/setting_wear_aod_show_clock"
+            android:summary="@string/setting_wear_aod_show_clock_description"
             android:layout="@layout/pref_switch_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
             android:key="wear_aod_show_track_info"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/ic_text_fields"
             android:title="@string/setting_wear_aod_show_track_info"
             android:summary="@string/setting_wear_aod_show_track_info_description"
             android:layout="@layout/pref_switch_item" />
@@ -177,8 +248,18 @@
         android:layout="@layout/pref_category_header">
 
         <ListPreference
+            android:key="wear_overlay_backdrop_style"
+            android:icon="@drawable/ic_backdrop_style"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_overlay_backdrop_style"
+            android:summary="%s"
+            android:entries="@array/wear_overlay_backdrop_entries"
+            android:entryValues="@array/wear_overlay_backdrop_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
             android:key="wear_volume_style"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/action_volume_up"
             android:defaultValue="glass"
             android:title="@string/setting_wear_volume_style"
             android:summary="%s"
@@ -187,8 +268,28 @@
             android:layout="@layout/pref_item" />
 
         <ListPreference
+            android:key="wear_volume_layout"
+            android:icon="@drawable/action_volume_up"
+            android:defaultValue="edge"
+            android:title="@string/setting_wear_volume_layout"
+            android:summary="%s"
+            android:entries="@array/wear_volume_layout_entries"
+            android:entryValues="@array/wear_volume_layout_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="solid"
+            android:key="wear_progress_style"
+            android:icon="@drawable/ic_progress_style"
+            android:title="@string/setting_wear_progress_style"
+            android:summary="%s"
+            android:entries="@array/wear_progress_style_entries"
+            android:entryValues="@array/wear_progress_style_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
             android:key="wear_seek_style"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/ic_progress_style"
             android:defaultValue="plain"
             android:title="@string/setting_wear_seek_style"
             android:summary="%s"
@@ -197,8 +298,18 @@
             android:layout="@layout/pref_item" />
 
         <ListPreference
+            android:key="wear_seek_layout"
+            android:icon="@drawable/ic_progress_style"
+            android:defaultValue="edge"
+            android:title="@string/setting_wear_seek_layout"
+            android:summary="%s"
+            android:entries="@array/wear_seek_layout_entries"
+            android:entryValues="@array/wear_seek_layout_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
             android:key="wear_quick_panel_style"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/ic_quick_actions"
             android:defaultValue="glass"
             android:title="@string/setting_wear_quick_panel_style"
             android:summary="%s"
@@ -207,8 +318,28 @@
             android:layout="@layout/pref_item" />
 
         <ListPreference
+            android:key="wear_quick_panel_layout"
+            android:icon="@drawable/ic_quick_actions"
+            android:defaultValue="stacked"
+            android:title="@string/setting_wear_quick_panel_layout"
+            android:summary="%s"
+            android:entries="@array/wear_quick_panel_layout_entries"
+            android:entryValues="@array/wear_quick_panel_layout_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:key="wear_quick_panel_source"
+            android:icon="@drawable/ic_joystick"
+            android:defaultValue="manual"
+            android:title="@string/setting_wear_quick_panel_source"
+            android:summary="@string/setting_wear_quick_panel_source_description"
+            android:entries="@array/wear_quick_panel_source_entries"
+            android:entryValues="@array/wear_quick_panel_source_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
             android:key="wear_queue_style"
-            android:icon="@drawable/ic_format_paint"
+            android:icon="@drawable/ic_playlist_play"
             android:defaultValue="glass"
             android:title="@string/setting_wear_queue_style"
             android:summary="%s"
@@ -236,7 +367,7 @@
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="35"
             android:key="album_art_blur_radius"
-            android:icon="@drawable/ic_paint_roller"
+            android:icon="@drawable/ic_blur"
             android:title="@string/setting_album_art_blur_radius"
             android:summary="@string/setting_album_art_blur_radius_description"
             android:layout="@layout/pref_item" />
@@ -244,18 +375,31 @@
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
             android:key="dim_album_art"
-            android:icon="@drawable/ic_light_mode"
+            android:icon="@drawable/ic_brightness_medium"
             android:title="@string/setting_dim_album_art"
             android:summary="@string/setting_dim_album_art_description"
             android:layout="@layout/pref_switch_item" />
 
-        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
-            android:defaultValue="80"
-            android:key="album_art_dim_strength"
-            android:icon="@drawable/ic_light_mode"
+        <ListPreference
+            android:defaultValue="follow"
+            android:key="wear_player_shading_style"
+            android:icon="@drawable/ic_dim_style"
             android:dependency="dim_album_art"
-            android:title="@string/setting_album_art_dim_strength"
-            android:summary="@string/setting_album_art_dim_strength_description"
+            android:title="@string/setting_player_shading_style"
+            android:summary="%s"
+            android:entries="@array/player_shading_style_entries"
+            android:entryValues="@array/player_shading_style_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="balanced"
+            android:key="wear_player_shading_intensity"
+            android:icon="@drawable/ic_brightness_medium"
+            android:dependency="dim_album_art"
+            android:title="@string/setting_player_shading_intensity"
+            android:summary="%s"
+            android:entries="@array/player_shading_intensity_entries"
+            android:entryValues="@array/player_shading_intensity_values"
             android:layout="@layout/pref_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
@@ -269,7 +413,7 @@
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="35"
             android:key="overlay_blur_radius"
-            android:icon="@drawable/ic_paint_roller"
+            android:icon="@drawable/ic_blur"
             android:title="@string/setting_overlay_blur_radius"
             android:summary="@string/setting_overlay_blur_radius_description"
             android:layout="@layout/pref_item" />
@@ -281,22 +425,31 @@
         android:title="@string/category_music_colors"
         android:layout="@layout/pref_category_header">
 
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="true"
-            android:key="wear_dynamic_accent"
+        <ListPreference
+            android:defaultValue="expressive"
+            android:key="wear_color_treatment"
             android:icon="@drawable/ic_colors"
-            android:title="@string/setting_wear_dynamic_accent"
-            android:summary="@string/setting_wear_dynamic_accent_description"
-            android:layout="@layout/pref_switch_item" />
+            android:title="@string/setting_wear_color_treatment"
+            android:summary="%s"
+            android:entries="@array/wear_color_treatment_entries"
+            android:entryValues="@array/wear_color_treatment_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_normal_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_normal_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
 
         <ListPreference
-            android:defaultValue="album"
+            android:defaultValue="follow"
             android:key="wear_artist_color_mode"
-            android:icon="@drawable/ic_colors"
+            android:icon="@drawable/ic_person"
             android:title="@string/setting_wear_artist_color"
             android:summary="%s"
-            android:entries="@array/wear_accent_color_entries"
-            android:entryValues="@array/wear_accent_color_values"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
             android:layout="@layout/pref_item" />
 
         <com.svartifoss.snfell.view.settings.HexColorDotPreference
@@ -306,32 +459,14 @@
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
 
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
-            android:key="wear_artist_desaturated"
-            android:icon="@drawable/ic_paint_roller"
-            android:title="@string/setting_wear_artist_desaturated"
-            android:summary="@string/setting_wear_artist_desaturated_description"
-            android:layout="@layout/pref_switch_item" />
-
         <ListPreference
-            android:defaultValue="solid"
-            android:key="wear_progress_style"
-            android:icon="@drawable/ic_format_paint"
-            android:title="@string/setting_wear_progress_style"
-            android:summary="%s"
-            android:entries="@array/wear_progress_style_entries"
-            android:entryValues="@array/wear_progress_style_values"
-            android:layout="@layout/pref_item" />
-
-        <ListPreference
-            android:defaultValue="album"
+            android:defaultValue="follow"
             android:key="wear_progress_color_mode"
-            android:icon="@drawable/ic_colors"
+            android:icon="@drawable/ic_progress_ring"
             android:title="@string/setting_wear_progress_color"
             android:summary="%s"
-            android:entries="@array/wear_accent_color_entries"
-            android:entryValues="@array/wear_accent_color_values"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
             android:layout="@layout/pref_item" />
 
         <com.svartifoss.snfell.view.settings.HexColorDotPreference
@@ -341,13 +476,39 @@
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
 
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
-            android:key="wear_progress_desaturated"
-            android:icon="@drawable/ic_paint_roller"
-            android:title="@string/setting_wear_progress_desaturated"
-            android:summary="@string/setting_wear_progress_desaturated_description"
-            android:layout="@layout/pref_switch_item" />
+        <ListPreference
+            android:defaultValue="follow"
+            android:key="wear_volume_color_mode"
+            android:icon="@drawable/action_volume_up"
+            android:title="@string/setting_wear_volume_color"
+            android:summary="%s"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_volume_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_volume_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <ListPreference
+            android:defaultValue="follow"
+            android:key="wear_quick_panel_color_mode"
+            android:icon="@drawable/ic_quick_actions"
+            android:title="@string/setting_wear_quick_panel_color"
+            android:summary="%s"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_quick_panel_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_quick_panel_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
 
     </PreferenceCategory>
 
@@ -358,23 +519,15 @@
 
         <Preference
             android:key="screen_buttons_hint"
-            android:icon="@drawable/ic_plus"
+            android:icon="@drawable/ic_mini_buttons"
             android:title="@string/setting_screen_buttons_hint"
             android:summary="@string/setting_screen_buttons_hint_description"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
-            android:defaultValue="42"
-            android:key="screen_buttons_bottom_offset"
-            android:icon="@drawable/ic_arrow_down"
-            android:title="@string/dev_screen_buttons_offset"
-            android:summary="@string/dev_screen_buttons_offset_description"
             android:layout="@layout/pref_item" />
 
         <ListPreference
             android:defaultValue="flat"
             android:key="screen_buttons_curve_style"
-            android:icon="@drawable/button_turn_ccw"
+            android:icon="@drawable/ic_rounded_corner"
             android:title="@string/setting_screen_buttons_curve"
             android:summary="%s"
             android:entries="@array/screen_buttons_curve_entries"
@@ -391,30 +544,23 @@
             android:entryValues="@array/screen_buttons_bg_values"
             android:layout="@layout/pref_item" />
 
-        <ListPreference
-            android:defaultValue="neutral"
-            android:key="screen_buttons_color_mode"
-            android:icon="@drawable/ic_colors"
-            android:title="@string/setting_screen_buttons_color"
-            android:summary="%s"
-            android:entries="@array/screen_buttons_color_entries"
-            android:entryValues="@array/screen_buttons_color_values"
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="screen_buttons_opacity"
+            android:icon="@drawable/ic_opacity"
+            android:title="@string/setting_screen_buttons_opacity"
+            android:summary="@string/setting_screen_buttons_opacity_description"
             android:layout="@layout/pref_item" />
 
-        <com.svartifoss.snfell.view.settings.HexColorDotPreference
-            android:key="screen_buttons_custom_color"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_screen_buttons_custom_color"
-            android:layout="@layout/pref_item"
-            android:widgetLayout="@layout/pref_widget_color_dot" />
-
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
-            android:key="screen_buttons_desaturated"
-            android:icon="@drawable/ic_paint_roller"
-            android:title="@string/setting_screen_buttons_desaturated"
-            android:summary="@string/setting_screen_buttons_desaturated_description"
-            android:layout="@layout/pref_switch_item" />
+        <ListPreference
+            android:defaultValue="pill"
+            android:key="screen_buttons_shape"
+            android:icon="@drawable/ic_category"
+            android:title="@string/setting_screen_buttons_shape"
+            android:summary="%s"
+            android:entries="@array/screen_buttons_shape_entries"
+            android:entryValues="@array/screen_buttons_shape_values"
+            android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 

@@ -3,9 +3,13 @@
 
     <!-- Quick-control Tile -->
     <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Now playing and media controls</string>
     <string name="complication_album_art_label">Now playing cover</string>
     <string name="complication_no_music">Nothing playing</string>
     <string name="tile_nothing_playing">Nothing playing</string>
+    <string name="tile_open_app">Open Svartifoss</string>
+    <string name="tile_rewind_10">Rewind 10 seconds</string>
+    <string name="tile_forward_10">Skip 10 seconds</string>
 
     <!-- Idle (nothing-playing) state on the now-playing screen -->
     <string name="idle_nothing_playing">Nothing playing</string>
@@ -24,9 +28,13 @@
     <string name="quick_action_like">Like</string>
     <string name="quick_action_shuffle">Shuffle</string>
     <string name="quick_action_repeat">Repeat</string>
+    <string name="quick_action_repeat_all">Repeat all</string>
+    <string name="quick_action_repeat_one">Repeat one</string>
     <string name="quick_action_up_next">Up Next</string>
+    <string name="quick_actions_unavailable">Current app has no quick actions</string>
     <string name="voice_search_prompt">Search music</string>
     <string name="queue_empty">No queue available</string>
+    <string name="queue_now_playing">Now playing</string>
 
     <!-- One-time gesture hints overlay shown on first launch -->
     <string name="hint_title">How to use</string>
@@ -50,8 +58,12 @@
     <string name="action_name_play_pause">Play/Pause</string>
     <string name="action_name_stop">Stop</string>
     <string name="action_name_restart">Restart track</string>
+    <string name="action_name_seek">Seek through track</string>
     <string name="action_name_mute">Mute</string>
     <string name="action_name_search">Search</string>
+    <string name="action_name_custom">Custom action</string>
+    <string name="state_on">On</string>
+    <string name="state_off">Off</string>
 
     <!-- Watch self-update (APK pushed from the phone) -->
     <string name="update_notification_channel">App updates</string>

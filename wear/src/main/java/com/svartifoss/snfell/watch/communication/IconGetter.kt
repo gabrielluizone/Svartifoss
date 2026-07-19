@@ -17,15 +17,17 @@ suspend fun DataClient.getIcon(dataItem: DataItem, iconKey: String, actionKey: S
         val iconAsset = dataItem.assets[iconKey]
         val iconBitmap = BitmapUtils.deserialize(iconAsset?.let { this.getByteArrayAsset(it) })
 
-        return BitmapDrawable(resources, iconBitmap)
+        // A malformed/truncated Data Layer asset used to produce a BitmapDrawable containing a
+        // null bitmap. That prevented every fallback and left an empty pill on screen.
+        if (iconBitmap != null) {
+            return BitmapDrawable(resources, iconBitmap)
+        }
     }
 
     // We did not receive icon via bluetooth. Check if it is one of the standard icons
     // that we have pre-stored on the watch
     val iconRes = StandardIcons.getIcon(actionKey)
-    if (iconRes == 0) {
-        return null
-    }
-
-    return ResourcesCompat.getDrawable(resources, iconRes, null)
+    val resolvedRes = if (iconRes != 0) iconRes else
+        com.svartifoss.snfell.common.R.drawable.action_custom
+    return ResourcesCompat.getDrawable(resources, resolvedRes, null)
 }

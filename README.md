@@ -45,14 +45,14 @@ the fork.
 
 | | |
 |---|---|
-| **Now-playing screen** | Album art, a circular drag-to-seek progress bar, and an optional rotary-crown seek (turning the crown scrubs the track instead of changing volume). Title text behavior is configurable — automatic (shrink, then wrap, then scroll), always scroll, always wrap to two lines, or shrink-to-fit only. |
+| **Now-playing screen** | Album art, an optional edge progress ring that can be made draggable on every layout, and optional rotary-crown seek. Song title and artist can each be hidden independently; when the title is shown, its sizing behavior is configurable. |
 | **Configurable input** | Assign any supported action — play/pause, skip, volume, shuffle, repeat (including repeat-one), like/favorite, search, playlist shortcuts, Tasker tasks, opening another app — to physical buttons, screen quadrants (tap zones), or swipe gestures (up/down/left). |
-| **Quick actions panel** | A secondary panel (double-tap to open) with round buttons for like/shuffle/repeat and a shortcut into the queue. |
+| **Quick actions panel** | A secondary panel (double-tap to open) that can use four manually configured shortcuts or mirror the current media notification's real actions and icons. |
 | **Queue and play history** | Browse the app's real playback queue when one is exposed, or fall back to a locally tracked play-history list when it isn't (common on apps that don't publish a skippable queue). |
 | **Full action menu** | A full-screen list for anything not bound to a button or gesture. |
 | **Search** | Trigger a voice or keyboard search against the currently playing app's media library directly from the watch, with a history of past searches you can replay or delete. |
 | **Playlist shortcuts** | Name and save deep links to specific playlists (with an optional "start shuffled" flag), managed from the phone and reachable from the watch as a list or bound straight to a button. |
-| **Glanceable surfaces** | A Tile with track info and transport controls, a second Tile that previews the next queued track, and a watch-face complication showing the current album art / title. |
+| **Glanceable surfaces** | A Tile with track info, previous/play-pause/next and ±10-second seek controls, plus a watch-face complication showing the current album art / title. |
 
 <p align="center">
   <img src="docs/images/watch-quickpanel.png" width="215" alt="Quick actions panel" />
@@ -71,8 +71,8 @@ the fork.
   color. The artist text and the progress bar each have their own independent
   color source (neutral, album, or custom, with an optional desaturate
   option), on top of the mini-buttons row and quick panel/menu accent.
-- Per-surface layout options for the mini-buttons row and quick panel: curve
-  style, background (glass / solid / transparent), and color source.
+- Per-surface layout options for the mini-buttons row and quick panel: multiple curve styles (flat up to extreme curvature), custom shapes (pill, wide, square, rounded rect, squircle, leaf, drop, and circle), background styles (glass, glass white, translucent album, solid, transparent), and color source.
+- Customizable seek and volume readout overlay styles: glass pill, glass white, expressive, material, white, giant, split (position/total), translucent album, glow, outline, and solid.
 
 <p align="center">
   <img src="docs/images/watch-minimal.png" width="215" alt="Minimal screen theme" />
@@ -89,7 +89,8 @@ the fork.
   now-playing screen will look — mirroring the track currently playing on the
   phone — as you tweak the appearance.
 - Custom icon picker and color picker for personalizing actions.
-- Playlist shortcut manager.
+- An **Apps** settings section for service-specific integrations, starting with
+  YouTube Music playlist shortcuts and ready for more streaming services.
 - A short in-app guide covering how to use Svartifoss on the watch.
 - **Built-in updates**: a notification when a new release is out (with an
   optional pre-release channel), and one-tap watch updates — the phone
@@ -110,8 +111,9 @@ the fork.
 - All phone ⟷ watch communication happens over the local Wearable Data Layer
   connection — no account or app server is involved. The internet is touched
   only by the optional update check (a small anonymous request to the GitHub
-  API, off-switch in Settings) and by Firebase crash reporting + anonymous
-  usage analytics that help development.
+  API, off-switch in Settings) and by Firebase diagnostics that help
+  development. Crash reporting is enabled by default and can be disabled at
+  any time under Settings → Data & support → Privacy.
 - Works with any app that publishes a standard Android media session; extra
   features like like/shuffle/repeat and search rely on optional media-session
   extensions some apps expose (availability varies by app).

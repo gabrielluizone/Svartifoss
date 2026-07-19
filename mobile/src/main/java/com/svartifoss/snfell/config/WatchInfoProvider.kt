@@ -17,19 +17,33 @@ import javax.inject.Inject
 
 @Reusable
 class WatchInfoProvider @Inject constructor(private val context: Context) :
-        LiveData<WatchInfoWithIcons?>(null), DataClient.OnDataChangedListener {
+        // Do not publish a synthetic initial null. A connected watch's cached DataItem arrives
+        // moments later; emitting null first made Settings briefly claim no watch was connected.
+        LiveData<WatchInfoWithIcons?>(), DataClient.OnDataChangedListener {
 
     private val dataClient = Wearable.getDataClient(context)
+
+    /** False while the Data Layer's first snapshot is still being queried. Consumers must not
+     * treat [value] == null as a disconnected watch until this becomes true. */
+    @Volatile
+    var hasResolvedInitialValue: Boolean = false
+        private set
 
     private var coroutineScope = CoroutineScope(Job())
 
     private fun parseDataItem(dataItem: DataItem?) {
+        hasResolvedInitialValue = true
         if (dataItem == null) {
             this.postValue(null)
             return
         }
 
         val watchInfo = WatchInfo.parseFrom(dataItem.data)
+
+        // Presence is already known from the DataItem; icon assets are optional decoration and
+        // can take noticeably longer to download. Publish the watch immediately (reusing any
+        // cached icons) so Settings never interprets "icons still loading" as "disconnected".
+        postValue(WatchInfoWithIcons(watchInfo, value?.icons ?: emptyMap()))
 
         val frozenDataItem = dataItem.freeze()
         coroutineScope.launchWithPlayServicesErrorHandling(context) {
@@ -68,11 +82,15 @@ class WatchInfoProvider @Inject constructor(private val context: Context) :
     }
 
     private fun registerListener() {
-        dataClient.addListener(
-                this,
-                Uri.parse("wear://*" + CommPaths.DATA_WATCH_INFO),
-                DataClient.FILTER_LITERAL
-        )
+        try {
+            dataClient.addListener(
+                    this,
+                    Uri.parse("wear://*" + CommPaths.DATA_WATCH_INFO),
+                    DataClient.FILTER_LITERAL
+            )
+        } catch (e: Exception) {
+            timber.log.Timber.w(e, "Failed to register Wearable data client listener")
+        }
     }
 
     override fun onDataChanged(dataBuffer: DataEventBuffer) {
@@ -86,7 +104,11 @@ class WatchInfoProvider @Inject constructor(private val context: Context) :
 
     override fun onInactive() {
         coroutineScope.cancel()
-        dataClient.removeListener(this)
+        try {
+            dataClient.removeListener(this)
+        } catch (e: Exception) {
+            timber.log.Timber.w(e, "Failed to remove Wearable data client listener")
+        }
     }
 
     override fun onActive() {

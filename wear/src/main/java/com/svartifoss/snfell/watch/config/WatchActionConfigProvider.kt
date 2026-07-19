@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.wearable.DataItem
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.actions.StandardIcons
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_LONG_TAP
 import com.svartifoss.snfell.proto.WatchActions
@@ -68,7 +69,23 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private
                         key
                 )
 
-                newConfigMap.put(buttonInfo, ButtonAction(key, icon))
+                // Payloads written before iconTintable existed can still be classified reliably:
+                // locally-resolved standard vectors have no asset; transferred bitmaps do.
+                val usesGenericFallback = !dataItem.assets.containsKey(iconKey) &&
+                        !StandardIcons.hasIcon(key)
+                val iconTintable = if (usesGenericFallback) {
+                    true
+                } else if (action.hasIconTintable()) {
+                    action.iconTintable
+                } else {
+                    !dataItem.assets.containsKey(iconKey)
+                }
+                val title = if (action.hasActionTitle()) {
+                    action.actionTitle.takeIf { it.isNotBlank() }
+                } else {
+                    null
+                }
+                newConfigMap.put(buttonInfo, ButtonAction(key, icon, title, iconTintable))
             }
 
             configMap = newConfigMap

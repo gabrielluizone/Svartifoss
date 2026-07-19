@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Preference values are protocol identifiers shared with the watch. Keep them outside
+         localized resources so translations cannot accidentally change the synced payload. -->
+    <string-array name="wear_screen_theme_values" translatable="false">
+        <item>default</item>
+        <item>minimal</item>
+        <item>compact</item>
+        <item>contrast</item>
+    </string-array>
+    <string-array name="wear_font_values" translatable="false">
+        <item>google_sans</item>
+        <item>roboto</item>
+        <item>rounded</item>
+        <item>sans_light</item>
+        <item>sans_thin</item>
+        <item>sans_medium</item>
+        <item>sans_black</item>
+        <item>small_caps</item>
+        <item>casual</item>
+        <item>love_letter</item>
+        <item>serif</item>
+        <item>serif_monospace</item>
+        <item>monospace</item>
+        <item>condensed</item>
+        <item>condensed_light</item>
+        <item>condensed_medium</item>
+        <item>cursive</item>
+        <item>typewriter</item>
+    </string-array>
+    <string-array name="streaming_open_mode_values" translatable="false">
+        <item>app</item>
+        <item>default</item>
+        <item>chooser</item>
+    </string-array>
+</resources>

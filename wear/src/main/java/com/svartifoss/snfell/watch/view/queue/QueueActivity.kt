@@ -74,11 +74,15 @@ class QueueActivity : ComponentActivity() {
             // QueueScreen renders as a loading spinner instead of a bare black screen.
             val items by viewModel.items.observeAsState()
             val accent by viewModel.accentColor.observeAsState(DEFAULT_QUEUE_ACCENT)
+            val secondaryAccent by viewModel.secondaryAccentColor.observeAsState(DEFAULT_QUEUE_ACCENT)
+            val tertiaryAccent by viewModel.tertiaryAccentColor.observeAsState(DEFAULT_QUEUE_ACCENT)
             val nowPlaying by viewModel.nowPlaying.observeAsState()
 
             QueueScreen(
                     items = items,
                     accentColor = Color(accent),
+                    secondaryAccentColor = Color(secondaryAccent),
+                    tertiaryAccentColor = Color(tertiaryAccent),
                     nowPlayingTitle = nowPlaying?.title,
                     nowPlayingArtist = nowPlaying?.artist,
                     onItemClick = { entryId ->

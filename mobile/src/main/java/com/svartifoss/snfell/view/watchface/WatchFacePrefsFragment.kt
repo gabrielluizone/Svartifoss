@@ -2,44 +2,113 @@ package com.svartifoss.snfell.view.watchface
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
+import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.PreferenceGroup
+import androidx.preference.PreferenceManager
+import androidx.preference.TwoStatePreference
 import com.svartifoss.snfell.R
-import com.svartifoss.snfell.common.CommPaths
-import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
+import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.view.settings.FaceScopedPreferenceDataStore
 import com.svartifoss.snfell.view.settings.HexColorDotPreference
 import com.svartifoss.snfell.view.settings.parseHexOrDefault
 import com.svartifoss.snfell.view.settings.showLyraColorPickerDialog
 import com.svartifoss.snfell.view.settings.tintOpenLyraPreferenceDialog
 import com.matejdro.wearutils.preferences.compat.PreferenceFragmentCompatEx
-import com.matejdro.wearutils.preferencesync.PreferencePusher
 
 /**
- * The preference list half of the "Watch face" tab (see [WatchFaceFragment]): every setting
- * that changes how the watch's now-playing screen looks, all previewed live by the
- * [WatchPreviewView] docked above. The keys here were moved out of MiscSettingsFragment's
- * settings.xml - behavior settings (gestures, crown, automation, ...) stayed there.
+ * The preference-list half of the Watch tab (see [WatchFaceFragment]), filtered into focused
+ * appearance sections. [WatchPreviewView] follows the focused row, switching between the player,
+ * ambient screen, overlays, queue and mini-button examples. Behavior settings (gestures, crown,
+ * automation, ...) stay in Settings.
  */
-class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
-        SharedPreferences.OnSharedPreferenceChangeListener {
+class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
+
+    companion object {
+        const val SECTION_STYLE = "style"
+        const val SECTION_BACKGROUND = "background"
+        const val SECTION_COLORS = "colors"
+        const val SECTION_AOD = "aod"
+        const val SECTION_PANELS = "panels"
+        const val SECTION_MINI_BUTTONS = "miniButtons"
+        private const val ARG_SECTION = "watchAppearanceSection"
+
+        fun newInstance(section: String) = WatchFacePrefsFragment().apply {
+            arguments = Bundle().apply { putString(ARG_SECTION, section) }
+        }
+    }
+
+    private var section = SECTION_STYLE
+
+    /** The real backing store; appearance keys are scoped per face through [store]. */
+    private lateinit var rawPrefs: SharedPreferences
+    private lateinit var store: FaceScopedPreferenceDataStore
+
+    /** Re-reads scoped values after a face change and refreshes archived lists when their
+     *  developer switch changes, even if this fragment remained alive beside Settings. */
+    private val faceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        when (key) {
+            MiscPreferences.WEAR_SCREEN_FACE.key -> {
+                migrateLegacyColorSettings()
+                rebindScopedValues()
+                refreshColorTargetSummaries()
+                refreshConditionalPreferences()
+            }
+            "dev_show_archived" -> applyArchivedOptionFilters()
+        }
+    }
+
+    /** Values hidden from their normal pickers because they are archived. They come back when the
+     *  developer-mode "Show archived options" switch is on. A value currently selected always
+     *  stays listed so an existing configuration can be understood and changed without migration. */
+    private val archivedFaces = setOf("vinyl", "halo", "aurora", "eclipse", "spectrum")
+    private val archivedFonts = setOf("typewriter")
+    private val archivedMiniButtonBackgrounds = setOf("solid_theme")
+    private val archivedMiniButtonShapes = setOf(
+            "pill_wide_large", "pill_wide_xlarge", "rounded_rect_medium", "rounded_rect_large")
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        section = arguments?.getString(ARG_SECTION) ?: SECTION_STYLE
+        // Scope every appearance preference to the selected face BEFORE inflating, so each control
+        // reads/writes "<key>@<face>". Must be set before addPreferencesFromResource.
+        rawPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        store = FaceScopedPreferenceDataStore(rawPrefs)
+        migrateLegacyColorSettings()
+        preferenceManager.preferenceDataStore = store
         addPreferencesFromResource(R.xml.watch_face_settings)
 
-        initExpressiveSeekDependency()
+        applyArchivedOptionFilters()
+        initListSummaries()
+        initFaceDependencies()
         initBlurRadiusDependency()
+        initMiniButtonOpacityValidation()
+        initAodPercentageValidation()
+        initUnifiedColorTreatment()
         initAccentColorTarget(
                 modeKey = "wear_artist_color_mode",
                 customColorKey = "wear_artist_custom_color",
-                desaturatedKey = "wear_artist_desaturated",
+                desaturatedKey = null,
                 customColorDescription = R.string.setting_wear_artist_custom_color_description
         )
         initAccentColorTarget(
                 modeKey = "wear_progress_color_mode",
                 customColorKey = "wear_progress_custom_color",
-                desaturatedKey = "wear_progress_desaturated",
+                desaturatedKey = null,
                 customColorDescription = R.string.setting_wear_progress_custom_color_description
+        )
+        initAccentColorTarget(
+                modeKey = "wear_volume_color_mode",
+                customColorKey = "wear_volume_custom_color",
+                desaturatedKey = null,
+                customColorDescription = R.string.setting_wear_volume_custom_color_description
+        )
+        initAccentColorTarget(
+                modeKey = "wear_quick_panel_color_mode",
+                customColorKey = "wear_quick_panel_custom_color",
+                desaturatedKey = null,
+                customColorDescription = R.string.setting_wear_quick_panel_custom_color_description
         )
         initAccentColorTarget(
                 modeKey = "wear_aod_color_mode",
@@ -49,7 +118,78 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
                 desaturatedKey = null,
                 customColorDescription = R.string.setting_wear_aod_custom_color_description
         )
-        initScreenButtonAppearance()
+        findPreference<Preference>("screen_buttons_hint")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    (activity as? com.svartifoss.snfell.view.mainactivity.MainActivity)?.openControls()
+                    true
+                }
+        applySectionVisibility()
+        wirePreviewInteractions()
+    }
+
+    private fun initListSummaries() {
+        listOf(
+            "wear_screen_face",
+            "wear_expressive_seek_mode",
+            "wear_title_text_mode",
+            "wear_track_time_mode",
+            "wear_aod_style",
+            "wear_aod_art_treatment",
+            "wear_aod_color_mode",
+            "wear_overlay_backdrop_style",
+            "wear_volume_style",
+            "wear_volume_layout",
+            "wear_seek_style",
+            "wear_seek_layout",
+            "wear_quick_panel_style",
+            "wear_quick_panel_layout",
+            "wear_quick_panel_source",
+            "wear_queue_style",
+            "album_art_style",
+            "wear_player_shading_style",
+            "wear_player_shading_intensity",
+            "wear_color_treatment",
+            "wear_artist_color_mode",
+            "wear_progress_color_mode",
+            "wear_volume_color_mode",
+            "wear_quick_panel_color_mode",
+            "wear_progress_style",
+            "screen_buttons_bg_style",
+            "screen_buttons_shape"
+        ).forEach { key ->
+            findPreference<ListPreference>(key)?.summaryProvider =
+                ListPreference.SimpleSummaryProvider.getInstance()
+        }
+    }
+
+    fun showSection(newSection: String) {
+        section = newSection
+        applySectionVisibility()
+        listView?.scrollToPosition(0)
+    }
+
+    private fun applySectionVisibility() {
+        if (preferenceScreen == null) return
+
+        val visibleCategories = when (section) {
+            SECTION_BACKGROUND -> setOf("cat_wf_background")
+            SECTION_COLORS -> setOf("cat_wf_colors")
+            SECTION_AOD -> setOf("cat_wf_aod")
+            SECTION_PANELS -> setOf("cat_wf_overlays")
+            SECTION_MINI_BUTTONS -> setOf("cat_wf_mini_buttons")
+            else -> setOf("cat_wf_face")
+        }
+
+        listOf(
+            "cat_wf_face",
+            "cat_wf_aod",
+            "cat_wf_overlays",
+            "cat_wf_background",
+            "cat_wf_colors",
+            "cat_wf_mini_buttons"
+        ).forEach { key ->
+            findPreference<Preference>(key)?.isVisible = key in visibleCategories
+        }
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -59,49 +199,341 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
         view?.post { tintOpenLyraPreferenceDialog() }
     }
 
-    override fun onStart() {
-        super.onStart()
-        preferenceManager.sharedPreferences!!.registerOnSharedPreferenceChangeListener(this)
+    override fun onResume() {
+        super.onResume()
+        rawPrefs.registerOnSharedPreferenceChangeListener(faceChangeListener)
+        // ViewPager2 keeps neighbouring pages alive in STARTED state. When this page becomes
+        // current, re-read every scoped value for the currently selected face (a face swap or an
+        // edit made on another page while this one stayed alive would otherwise leave stale
+        // in-memory values here) and refresh dependent rows and summaries.
+        rebindScopedValues()
+        refreshColorTargetSummaries()
+        refreshConditionalPreferences()
     }
 
-    override fun onStop() {
-        super.onStop()
-        preferenceManager.sharedPreferences!!.unregisterOnSharedPreferenceChangeListener(this)
+    override fun onPause() {
+        super.onPause()
+        rawPrefs.unregisterOnSharedPreferenceChangeListener(faceChangeListener)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        pushPreferencesToWatch()
-    }
-
-    private fun pushPreferencesToWatch() {
-        lifecycleScope.launchWithPlayServicesErrorHandling(requireContext().applicationContext) {
-            PreferencePusher.pushPreferences(
-                    requireContext().applicationContext,
-                    preferenceManager.sharedPreferences!!,
-                    CommPaths.PREFERENCES_PREFIX,
-                    // Urgent, same as MiscSettingsFragment: the user is watching the live
-                    // preview and expects the watch to match it right away.
-                    true
-            )
+    /** Re-reads every scoped preference from [store] for the current face and pushes the value
+     *  into its control, so switching the face shows that face's own configuration. */
+    private fun rebindScopedValues(group: PreferenceGroup? = preferenceScreen) {
+        group ?: return
+        for (index in 0 until group.preferenceCount) {
+            val pref = group.getPreference(index)
+            if (pref is PreferenceGroup) {
+                rebindScopedValues(pref)
+                continue
+            }
+            val key = pref.key?.takeIf { it.isNotBlank() } ?: continue
+            if (!FaceScopedPreferences.isScoped(key)) continue
+            when (pref) {
+                is ListPreference -> store.getString(key, pref.value)?.let {
+                    if (it != pref.value) pref.value = it
+                }
+                is TwoStatePreference -> {
+                    val value = store.getBoolean(key, pref.isChecked)
+                    if (value != pref.isChecked) pref.isChecked = value
+                }
+                is EditTextPreference -> {
+                    val value = store.getString(key, pref.text)
+                    if (value != pref.text) pref.text = value
+                }
+                is HexColorDotPreference -> pref.refreshDot()
+            }
         }
     }
 
-    /** The expressive seek mode only applies to the Expressive face - greyed out on Classic
-     *  (whose edge seek ring is not optional). Mirrors the album-art blur dependency pattern. */
-    private fun initExpressiveSeekDependency() {
-        updateExpressiveSeekEnabled()
+    private fun refreshColorTargetSummaries() {
+        updateAccentColorTargetSummary(findPreference("wear_normal_color"),
+                "wear_normal_color", R.string.setting_wear_normal_color_description)
+        updateAccentColorTargetSummary(findPreference("wear_aod_custom_color"),
+                "wear_aod_custom_color", R.string.setting_wear_aod_custom_color_description)
+        updateAccentColorTargetSummary(findPreference("wear_artist_custom_color"),
+                "wear_artist_custom_color", R.string.setting_wear_artist_custom_color_description)
+        updateAccentColorTargetSummary(findPreference("wear_progress_custom_color"),
+                "wear_progress_custom_color", R.string.setting_wear_progress_custom_color_description)
+        updateAccentColorTargetSummary(findPreference("wear_volume_custom_color"),
+                "wear_volume_custom_color", R.string.setting_wear_volume_custom_color_description)
+        updateAccentColorTargetSummary(findPreference("wear_quick_panel_custom_color"),
+                "wear_quick_panel_custom_color", R.string.setting_wear_quick_panel_custom_color_description)
+    }
+
+    private fun applyArchivedOptionFilters() {
+        val showArchived = rawPrefs.getBoolean("dev_show_archived", false)
+        val face = rawPrefs.getString(MiscPreferences.WEAR_SCREEN_FACE.key, "classic") ?: "classic"
+        if (!showArchived && readStringPreference(MiscPreferences.WEAR_FONT.key, "google_sans") ==
+                "typewriter") {
+            // A hidden current value would make the row claim another font while the watch kept
+            // rendering Typewriter. Normalize it; enabling archived options makes it selectable
+            // again without keeping a secret, mismatched active state.
+            store.putString(MiscPreferences.WEAR_FONT.key, "google_sans")
+        }
+        if (readStringPreference(MiscPreferences.WEAR_SCREEN_THEME.key, "default") == "hidden") {
+            // "Hidden" duplicated the dedicated Show player controls switch and was the most
+            // common source of apparently broken styles. Migrate it losslessly: retain the clean
+            // control-free look on configurable faces, while essential-control faces normalize
+            // to Balanced (their transport cannot be hidden).
+            store.putString(MiscPreferences.WEAR_SCREEN_THEME.key, "default")
+            if (face !in setOf("material", "expressive")) {
+                store.putBoolean(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key, false)
+            }
+        }
+        filterArchivedListPreference(
+                key = "wear_screen_face",
+                entriesRes = R.array.wear_screen_face_entries,
+                valuesRes = R.array.wear_screen_face_values,
+                archived = archivedFaces,
+                defaultValue = "classic",
+                showArchived = showArchived)
+        // Typewriter is intentionally absent from the normal catalog and is only offered when
+        // archived options are on.
+        filterArchivedListPreference(
+                key = "wear_font",
+                entriesRes = R.array.wear_font_entries,
+                valuesRes = R.array.wear_font_values,
+                archived = archivedFonts,
+                defaultValue = "google_sans",
+                showArchived = showArchived,
+                keepCurrentArchived = false)
+        filterArchivedListPreference(
+                key = "screen_buttons_bg_style",
+                entriesRes = R.array.screen_buttons_bg_entries,
+                valuesRes = R.array.screen_buttons_bg_values,
+                archived = archivedMiniButtonBackgrounds,
+                defaultValue = "glass",
+                showArchived = showArchived)
+        filterArchivedListPreference(
+                key = "screen_buttons_shape",
+                entriesRes = R.array.screen_buttons_shape_entries,
+                valuesRes = R.array.screen_buttons_shape_values,
+                archived = archivedMiniButtonShapes,
+                defaultValue = "pill",
+                showArchived = showArchived)
+    }
+
+    private fun filterArchivedListPreference(
+            key: String,
+            entriesRes: Int,
+            valuesRes: Int,
+            archived: Set<String>,
+            defaultValue: String,
+            showArchived: Boolean,
+            keepCurrentArchived: Boolean = true
+    ) {
+        val pref = findPreference<ListPreference>(key) ?: return
+        val entries = resources.getStringArray(entriesRes)
+        val values = resources.getStringArray(valuesRes)
+        val current = pref.value ?: readStringPreference(key, defaultValue)
+        val keep = values.indices.filter { index ->
+            index < entries.size &&
+                    (showArchived || values[index] !in archived ||
+                            (keepCurrentArchived && values[index] == current))
+        }
+        pref.entries = keep.map { entries[it] }.toTypedArray()
+        pref.entryValues = keep.map { values[it] }.toTypedArray()
+    }
+
+    private fun refreshConditionalPreferences() {
+        applyArchivedOptionFilters()
+        val face = readStringPreference("wear_screen_face", "classic")
+        val aodStyle = readStringPreference("wear_aod_style", "follow")
+        updateFaceDependencies(face, aodStyle)
+        updateBlurRadiusEnabled(readStringPreference("album_art_style", "cover"))
+        updateUnifiedColorTreatmentVisibility(
+                readStringPreference("wear_color_treatment", "expressive"))
+        updateAccentColorTargetDependencies(
+            "wear_aod_color_mode",
+            "wear_aod_custom_color",
+            null,
+            readStringPreference("wear_aod_color_mode", "white")
+        )
+        listOf(
+                "wear_artist_color_mode" to "wear_artist_custom_color",
+                "wear_progress_color_mode" to "wear_progress_custom_color",
+                "wear_volume_color_mode" to "wear_volume_custom_color",
+                "wear_quick_panel_color_mode" to "wear_quick_panel_custom_color"
+        ).forEach { (modeKey, colorKey) ->
+            updateAccentColorTargetDependencies(
+                    modeKey, colorKey, null, readStringPreference(modeKey, "follow"))
+        }
+    }
+
+    /** Reads through [store] so dependency/visibility logic sees the same face-scoped value the
+     *  control shows and the watch applies. */
+    private fun readStringPreference(key: String, defaultValue: String): String =
+            store.getString(key, defaultValue) ?: defaultValue
+
+    /** The numeric preference stores strings to match wearutils; reject malformed/out-of-range
+     *  input here so every persisted opacity is a valid percentage before it reaches the watch. */
+    private fun initMiniButtonOpacityValidation() {
+        findPreference<EditTextPreference>("screen_buttons_opacity")?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, candidate ->
+                    candidate.toString().toIntOrNull()?.let { it in 0..100 } == true
+                }
+    }
+
+    /** Reject invalid percentages before runtime clamps could disagree with the shown value. */
+    private fun initAodPercentageValidation() {
+        validateNumericPercentage("wear_aod_intensity", 20..100)
+        validateNumericPercentage("ambient_album_art_opacity", 20..100)
+    }
+
+    private fun validateNumericPercentage(key: String, range: IntRange) {
+        findPreference<EditTextPreference>(key)?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, candidate ->
+                    candidate.toString().toIntOrNull() in range
+                }
+    }
+
+    /**
+     * Keeps the host preview in the same visual context as the row the user is manipulating.
+     * Existing listeners own validation and dependency changes, so they always run exactly once;
+     * a candidate is reported only after they accept it. The committed value is still observed by
+     * the host's single SharedPreferences listener.
+     */
+    private fun wirePreviewInteractions() {
+        val root = preferenceScreen ?: return
+        wirePreviewInteractions(root)
+    }
+
+    private fun wirePreviewInteractions(group: PreferenceGroup) {
+        for (index in 0 until group.preferenceCount) {
+            val preference = group.getPreference(index)
+            if (preference is PreferenceGroup) {
+                wirePreviewInteractions(preference)
+            } else {
+                wrapPreviewInteraction(preference)
+            }
+        }
+    }
+
+    private fun wrapPreviewInteraction(preference: Preference) {
+        val key = preference.key?.takeIf { it.isNotBlank() } ?: return
+
+        val existingClickListener = preference.onPreferenceClickListener
+        preference.onPreferenceClickListener = Preference.OnPreferenceClickListener { clicked ->
+            notifyPreviewInteraction(key, null)
+            existingClickListener?.onPreferenceClick(clicked) ?: false
+        }
+
+        val existingChangeListener = preference.onPreferenceChangeListener
+        preference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { changed, candidate ->
+            val accepted = existingChangeListener?.onPreferenceChange(changed, candidate) ?: true
+            if (accepted) {
+                notifyPreviewInteraction(key, candidate)
+            }
+            accepted
+        }
+    }
+
+    private fun notifyPreviewInteraction(key: String, candidateValue: Any?) {
+        (parentFragment as? WatchFaceFragment)
+                ?.onWatchPreferenceInteraction(section, key, candidateValue)
+    }
+
+    /** Keeps face-specific settings aligned with the renderer selected in the preview. */
+    private fun initFaceDependencies() {
+        updateFaceDependencies()
         findPreference<ListPreference>("wear_screen_face")?.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _, newValue ->
                     // The listener fires before the new value persists, so pass it along instead
                     // of re-reading the (still old) preference.
-                    updateExpressiveSeekEnabled(newValue as? String)
+                    updateFaceDependencies(newValue as? String)
+                    true
+                }
+        findPreference<ListPreference>("wear_aod_style")?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, newValue ->
+                    updateAodDetailVisibility(overrideStyle = newValue as? String)
+                    true
+                }
+        findPreference<Preference>("wear_edge_progress_visible")?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, newValue ->
+                    updatePlayerCapabilityVisibility(overrideEdgeVisible = newValue as? Boolean)
                     true
                 }
     }
 
-    private fun updateExpressiveSeekEnabled(overrideFace: String? = null) {
-        val face = overrideFace ?: findPreference<ListPreference>("wear_screen_face")?.value
-        findPreference<Preference>("wear_expressive_seek_mode")?.isEnabled = face == "expressive"
+    private fun updateFaceDependencies(
+            overrideFace: String? = null,
+            overrideAodStyle: String? = null
+    ) {
+        updatePlayerCapabilityVisibility(overrideFace = overrideFace)
+        updateBackgroundCapabilityVisibility(overrideFace)
+        updateAodDetailVisibility(
+                overrideFace = overrideFace,
+                overrideStyle = overrideAodStyle
+        )
+    }
+
+    /** Do not offer controls that the selected renderer cannot consume. This keeps switching
+     * layouts from leaving apparently broken rows behind while preserving the saved value for
+     * when the user returns to a compatible face. */
+    private fun updatePlayerCapabilityVisibility(
+            overrideFace: String? = null,
+            overrideEdgeVisible: Boolean? = null
+    ) {
+        val face = overrideFace ?: readStringPreference("wear_screen_face", "classic")
+        val edgeVisible = overrideEdgeVisible ?: store.getBoolean("wear_edge_progress_visible", true)
+        // Every layout now reads this through AdaptiveTitleText, not just Classic's own
+        // OutlineTextView - it always applies.
+        findPreference<Preference>("wear_title_text_mode")?.isVisible = true
+        // Only the Expressive face reads this; every other face ignores the value entirely.
+        findPreference<Preference>("wear_expressive_seek_mode")?.isVisible = face == "expressive"
+        // Expressive and Material must keep their central transport visible. Other faces,
+        // including Poster and Studio, can still be reduced to a clean metadata/artwork layout.
+        findPreference<Preference>(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key)?.isVisible =
+                face !in setOf("expressive", "material")
+        findPreference<Preference>("wear_internal_progress_visible")?.isVisible = face in setOf(
+                "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum"
+        )
+        findPreference<Preference>("wear_progress_style")?.isVisible = edgeVisible
+    }
+
+    private fun updateBackgroundCapabilityVisibility(overrideFace: String? = null) {
+        val face = overrideFace ?: readStringPreference("wear_screen_face", "classic")
+        // Eclipse never renders album art at all (a fixed black backdrop), so a background style
+        // has nothing to affect there. Every other face - including Poster, whose curated
+        // composition now honors this preference - supports it.
+        val stylable = face != "eclipse"
+        findPreference<Preference>("album_art_style")?.isVisible = stylable
+        updateBlurRadiusEnabled(backgroundSupported = stylable)
+
+        // Every artwork-backed face consumes the same explicit shading vocabulary. Eclipse stays
+        // excluded because its identity is an already-opaque true-black canvas.
+        val dimSupported = face != "eclipse"
+        listOf(
+                "dim_album_art",
+                "wear_player_shading_style",
+                "wear_player_shading_intensity",
+                "wear_album_art_fade"
+        )
+                .forEach { key -> findPreference<Preference>(key)?.isVisible = dimSupported }
+    }
+
+    /** The three detailed AOD controls are rendered only by the visual (Compose) AOD faces. */
+    private fun updateAodDetailVisibility(
+            overrideFace: String? = null,
+            overrideStyle: String? = null
+    ) {
+        val face = overrideFace ?: readStringPreference("wear_screen_face", "classic")
+        val selectedStyle = overrideStyle ?: readStringPreference("wear_aod_style", "follow")
+        val effectiveStyle = if (selectedStyle == "follow") face else selectedStyle
+        val visualStyle = effectiveStyle in setOf(
+            "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
+            "spectrum", "material"
+        )
+        findPreference<Preference>("wear_aod_show_transport")?.isVisible = visualStyle
+        findPreference<Preference>("wear_aod_show_progress")?.isVisible = visualStyle
+        // Only Expressive owns a fixed bottom pill trio. Curated layouts deliberately leave
+        // this strip to the user's mini buttons, so exposing this toggle there would do nothing.
+        findPreference<Preference>("wear_aod_show_pills")?.isVisible =
+                effectiveStyle == "expressive" || effectiveStyle == "material"
+        val artworkSupported = effectiveStyle !in setOf("minimal", "eclipse")
+        findPreference<Preference>("wear_aod_show_art")?.isVisible = artworkSupported
+        findPreference<Preference>("wear_aod_art_treatment")?.isVisible = artworkSupported
+        findPreference<Preference>("ambient_album_art_opacity")?.isVisible = artworkSupported
     }
 
     private fun initBlurRadiusDependency() {
@@ -115,14 +547,19 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
                 }
     }
 
-    private fun updateBlurRadiusEnabled(overrideValue: String? = null) {
-        val value = overrideValue ?: findPreference<ListPreference>("album_art_style")?.value
+    private fun updateBlurRadiusEnabled(
+            overrideValue: String? = null,
+            backgroundSupported: Boolean? = null
+    ) {
+        val value = overrideValue ?: readStringPreference("album_art_style", "cover")
         val blurStyle = value == "blur" || value == "blur_bw"
-        findPreference<Preference>("album_art_blur_radius")?.isEnabled = blurStyle
+        val face = readStringPreference("wear_screen_face", "classic")
+        val supported = backgroundSupported ?: (face != "eclipse")
+        findPreference<Preference>("album_art_blur_radius")?.isVisible = supported && blurStyle
     }
 
-    /** Custom color picker wiring plus enabling/disabling the color-mode-dependent rows, for
-     *  one artist/progress color target. */
+    /** Custom color picker wiring plus enabling/disabling the color-mode-dependent rows for one
+     *  artist, progress or AOD color target. */
     private fun initAccentColorTarget(
             modeKey: String,
             customColorKey: String,
@@ -132,17 +569,20 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
         val colorPref = findPreference<Preference>(customColorKey)
         updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
         colorPref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val prefs = preferenceManager.sharedPreferences
-                    ?: return@OnPreferenceClickListener true
+            // Read/write through the face-scoped store so each face keeps its own custom color.
             showLyraColorPickerDialog(
-                    initialColor = parseHexOrDefault(prefs.getString(customColorKey, null)),
+                    initialColor = parseHexOrDefault(store.getString(customColorKey, null)),
                     onReset = {
-                        prefs.edit().remove(customColorKey).apply()
+                        store.putString(customColorKey, null)
                         updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
                     },
                     onApply = { hex ->
-                        prefs.edit().putString(customColorKey, hex).apply()
+                        store.putString(customColorKey, hex)
                         updateAccentColorTargetSummary(colorPref, customColorKey, customColorDescription)
+                    },
+                    onPreviewColor = { hex -> notifyPreviewInteraction(customColorKey, hex) },
+                    onPreviewCancelled = {
+                        notifyPreviewInteraction(customColorKey, store.getString(customColorKey, null))
                     }
             )
             true
@@ -158,7 +598,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
 
     private fun updateAccentColorTargetSummary(pref: Preference?, customColorKey: String, descriptionRes: Int) {
         pref ?: return
-        val saved = preferenceManager.sharedPreferences?.getString(customColorKey, null)
+        val saved = store.getString(customColorKey, null)
         pref.summary = if (saved != null) {
             getString(R.string.color_picker_current, saved)
         } else {
@@ -173,56 +613,92 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx(),
             desaturatedKey: String?,
             overrideMode: String? = null
     ) {
-        val mode = overrideMode ?: findPreference<ListPreference>(modeKey)?.value
-        findPreference<Preference>(customColorKey)?.isEnabled = mode == "custom"
+        val defaultMode = if (modeKey == "wear_aod_color_mode") "white" else "follow"
+        val mode = overrideMode ?: readStringPreference(modeKey, defaultMode)
+        findPreference<Preference>(customColorKey)?.isVisible = if (modeKey == "wear_aod_color_mode") {
+            mode == "custom"
+        } else {
+            mode == "normal" || mode == "custom"
+        }
         if (desaturatedKey != null) {
-            findPreference<Preference>(desaturatedKey)?.isEnabled = mode == "album"
+            findPreference<Preference>(desaturatedKey)?.isVisible = mode == "album"
         }
     }
 
-    /** Mini-button appearance: custom color picker wiring plus the color-mode dependencies. */
-    private fun initScreenButtonAppearance() {
-        val colorPref = findPreference<Preference>("screen_buttons_custom_color")
-        updateScreenButtonColorSummary(colorPref)
+    /** Migrates the old neutral/album/custom + soften matrix without collapsing the user's
+     * artist and progress choices into one global policy. New installations simply inherit the
+     * global treatment through the "follow" default. */
+    private fun migrateLegacyColorSettings() {
+        val face = rawPrefs.getString(MiscPreferences.WEAR_SCREEN_FACE.key, "classic") ?: "classic"
+        val scopedTreatment = FaceScopedPreferences.scopedKey("wear_color_treatment", face)
+        if (!rawPrefs.contains(scopedTreatment) && !rawPrefs.contains("wear_color_treatment")) {
+            store.putString(
+                    "wear_color_treatment",
+                    if (store.getBoolean("wear_dynamic_accent", true)) "expressive" else "normal")
+        }
+
+        fun migrateTarget(modeKey: String, legacyDesaturatedKey: String) {
+            val storedKey = FaceScopedPreferences.scopedKey(modeKey, face)
+            val rawMode = when {
+                rawPrefs.contains(storedKey) -> rawPrefs.getString(storedKey, null)
+                rawPrefs.contains(modeKey) -> rawPrefs.getString(modeKey, null)
+                else -> null
+            } ?: return
+            val migrated = when (rawMode) {
+                "neutral", "custom" -> "normal"
+                "album" -> if (store.getBoolean(legacyDesaturatedKey, false)) {
+                    "desaturated"
+                } else {
+                    "expressive"
+                }
+                else -> rawMode
+            }
+            if (migrated != rawMode) store.putString(modeKey, migrated)
+        }
+
+        migrateTarget("wear_artist_color_mode", "wear_artist_desaturated")
+        migrateTarget("wear_progress_color_mode", "wear_progress_desaturated")
+    }
+
+    private fun initUnifiedColorTreatment() {
+        val colorPref = findPreference<Preference>("wear_normal_color")
+        updateAccentColorTargetSummary(
+                colorPref, "wear_normal_color", R.string.setting_wear_normal_color_description)
         colorPref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val prefs = preferenceManager.sharedPreferences
-                    ?: return@OnPreferenceClickListener true
             showLyraColorPickerDialog(
-                    initialColor = parseHexOrDefault(prefs.getString("screen_buttons_custom_color", null)),
+                    initialColor = parseHexOrDefault(store.getString("wear_normal_color", null)),
                     onReset = {
-                        prefs.edit().remove("screen_buttons_custom_color").apply()
-                        updateScreenButtonColorSummary(colorPref)
+                        store.putString("wear_normal_color", null)
+                        updateAccentColorTargetSummary(
+                                colorPref, "wear_normal_color",
+                                R.string.setting_wear_normal_color_description)
                     },
                     onApply = { hex ->
-                        prefs.edit().putString("screen_buttons_custom_color", hex).apply()
-                        updateScreenButtonColorSummary(colorPref)
+                        store.putString("wear_normal_color", hex)
+                        updateAccentColorTargetSummary(
+                                colorPref, "wear_normal_color",
+                                R.string.setting_wear_normal_color_description)
+                    },
+                    onPreviewColor = { hex -> notifyPreviewInteraction("wear_normal_color", hex) },
+                    onPreviewCancelled = {
+                        notifyPreviewInteraction(
+                                "wear_normal_color", store.getString("wear_normal_color", null))
                     }
             )
             true
         }
-
-        updateScreenButtonColorDependencies()
-        findPreference<ListPreference>("screen_buttons_color_mode")?.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { _, newValue ->
-                    updateScreenButtonColorDependencies(newValue as? String)
+        updateUnifiedColorTreatmentVisibility(
+                readStringPreference("wear_color_treatment", "expressive"))
+        findPreference<ListPreference>("wear_color_treatment")?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, candidate ->
+                    updateUnifiedColorTreatmentVisibility(candidate as? String)
                     true
                 }
     }
 
-    private fun updateScreenButtonColorSummary(pref: Preference?) {
-        pref ?: return
-        val saved = preferenceManager.sharedPreferences?.getString("screen_buttons_custom_color", null)
-        pref.summary = if (saved != null) {
-            getString(R.string.color_picker_current, saved)
-        } else {
-            getString(R.string.setting_screen_buttons_custom_color_description)
-        }
-        (pref as? HexColorDotPreference)?.refreshDot()
+    private fun updateUnifiedColorTreatmentVisibility(override: String? = null) {
+        val treatment = override ?: readStringPreference("wear_color_treatment", "expressive")
+        findPreference<Preference>("wear_normal_color")?.isVisible = treatment == "normal"
     }
 
-    private fun updateScreenButtonColorDependencies(overrideMode: String? = null) {
-        val mode = overrideMode ?: findPreference<ListPreference>("screen_buttons_color_mode")?.value
-        findPreference<Preference>("screen_buttons_custom_color")?.isEnabled = mode == "custom"
-        findPreference<Preference>("screen_buttons_desaturated")?.isEnabled = mode == "album"
-    }
 }

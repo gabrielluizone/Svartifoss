@@ -60,7 +60,7 @@
         android:layout_alignTop="@+id/pref_text_block"
         android:layout_alignParentStart="true"
         android:layout_marginTop="4dp"
-        android:tint="@color/lyra_text_secondary"
+        android:tint="@color/lyra_pref_icon_selector"
         tools:ignore="ContentDescription,UseAppTint"
         tools:src="@drawable/ic_palette" />
 

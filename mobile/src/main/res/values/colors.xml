@@ -3,8 +3,9 @@
     <!-- Lyra design system — paleta base (luz e sombra compartilhadas) -->
     <color name="lyra_sage">#87A89F</color>
     <color name="lyra_sage_dark">#6B9088</color>
-    <!-- Accent adaptável: mais suave no modo claro, sage no modo escuro (sobrescrito em values-night) -->
-    <color name="lyra_accent">#86a69d</color>
+    <!-- Dark enough for small category labels and navigation text on white; dark mode overrides
+         this with the lighter sage below, where the background is near-black. -->
+    <color name="lyra_accent">#55776F</color>
     <color name="lyra_accent_highlight">#204A9488</color>
     <!-- Press/ripple highlight: deliberately NEUTRAL (not accent-derived). The accent is user
          customizable at runtime, but theme attributes like colorControlHighlight resolve once at
@@ -17,14 +18,16 @@
     <color name="lyra_white">#FFFFFF</color>
     <color name="lyra_mist">#F2F2F2</color>
     <color name="lyra_stone">#E2E2E2</color>
-    <color name="lyra_pewter">#888888</color>
+    <!-- 5.33:1 on white and 4.76:1 on the light surface (#F2F2F2). -->
+    <color name="lyra_pewter">#6B6B6B</color>
     <color name="lyra_ink">#1A1A1A</color>
 
     <!-- Modo escuro (OLED) -->
     <color name="lyra_void">#0A0A0A</color>
     <color name="lyra_shadow">#141414</color>
     <color name="lyra_carbon">#1E1E1E</color>
-    <color name="lyra_ash">#606060</color>
+    <!-- 5.01:1 on OLED black and 4.66:1 on the dark surface (#141414). -->
+    <color name="lyra_ash">#808080</color>
     <color name="lyra_snow">#F0F0F0</color>
 
     <!-- Cores adaptáveis — sobrescritas em values-night -->

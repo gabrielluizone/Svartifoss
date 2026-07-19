@@ -59,6 +59,9 @@ interface CommPaths {
         const val ASSET_BUTTON_ICON_PREFIX = "/Button_Icon_"
 
         const val DATA_CUSTOM_LIST = "/CustomList/List"
+        // Persistent, independently cached streaming-shortcut list. It must not share
+        // DATA_CUSTOM_LIST: queue/search pushes frequently replace that transient DataItem.
+        const val DATA_STREAMING_SHORTCUTS = "/CustomList/StreamingShortcuts"
 
         const val PREFERENCES_PREFIX = "/Settings"
     }

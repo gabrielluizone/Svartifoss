@@ -1,6 +1,8 @@
 package com.svartifoss.snfell.config.buttons
 
 import android.util.ArrayMap
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.auto.factory.AutoFactory
 import com.google.auto.factory.Provided
 import com.svartifoss.snfell.actions.PhoneAction
@@ -10,12 +12,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 @AutoFactory
 class GlobalButtonConfig
-constructor(playbackConfig: Boolean,
+constructor(private val playbackConfig: Boolean,
             @Provided diskButtonConfigStorageFactory: DiskButtonConfigStorageFactory,
             @Provided buttonConfigTransmitterFactory: ButtonConfigTransmitterFactory) : ButtonConfig {
+    companion object {
+        private val mutablePlayingConfigSaved = MutableLiveData<Unit>()
+        private val mutableStoppedConfigSaved = MutableLiveData<Unit>()
+
+        /** Emitted only after the playing config is safely available to disk-based previews. */
+        val playingConfigSaved: LiveData<Unit> = mutablePlayingConfigSaved
+        /** Emitted after the stopped/paused action config reaches disk-based previews. */
+        val stoppedConfigSaved: LiveData<Unit> = mutableStoppedConfigSaved
+    }
+
     private val configMap = ArrayMap<ButtonInfo, PhoneAction>()
     private var commiting: Boolean = false
     private var commitAgain: Boolean = false
@@ -67,14 +80,27 @@ constructor(playbackConfig: Boolean,
         commiting = true
 
         GlobalScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.Default) worker@ {
-                diskButtonStorage.saveButtons(configMap.entries)
-                buttonTransmitter.sendConfigToWatch(configMap.entries)
-            }
-
-            commiting = false
-            if (commitAgain) {
-                commit()
+            try {
+                withContext(Dispatchers.Default) worker@ {
+                    val saved = diskButtonStorage.saveButtons(configMap.entries)
+                    if (saved) {
+                        if (playbackConfig) {
+                            mutablePlayingConfigSaved.postValue(Unit)
+                        } else {
+                            mutableStoppedConfigSaved.postValue(Unit)
+                        }
+                    }
+                    buttonTransmitter.sendConfigToWatch(configMap.entries)
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Could not commit button configuration")
+            } finally {
+                commiting = false
+                val runQueuedCommit = commitAgain
+                commitAgain = false
+                if (runQueuedCommit) {
+                    commit()
+                }
             }
         }
     }

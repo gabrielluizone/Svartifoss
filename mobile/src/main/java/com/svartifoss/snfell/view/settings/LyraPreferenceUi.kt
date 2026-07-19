@@ -37,7 +37,9 @@ internal fun parseHexOrDefault(hex: String?): Int = if (hex != null) {
 internal fun Fragment.showLyraColorPickerDialog(
         initialColor: Int,
         onReset: () -> Unit,
-        onApply: (String) -> Unit
+        onApply: (String) -> Unit,
+        onPreviewColor: ((String) -> Unit)? = null,
+        onPreviewCancelled: (() -> Unit)? = null
 ) {
     val ctx = requireContext()
     val dp = ctx.resources.displayMetrics.density
@@ -64,6 +66,7 @@ internal fun Fragment.showLyraColorPickerDialog(
     picker.onColorChanged = { color ->
         selectedColor = color
         (previewSwatch.background as? GradientDrawable)?.setColor(color)
+        onPreviewColor?.invoke(String.format("#%06X", 0xFFFFFF and color))
     }
 
     val root = LinearLayout(ctx).apply {
@@ -78,11 +81,14 @@ internal fun Fragment.showLyraColorPickerDialog(
             .setTitle(R.string.color_picker_title)
             .setView(root)
             .setNeutralButton(R.string.color_picker_reset) { _, _ -> onReset() }
-            .setNegativeButton(android.R.string.cancel, null)
+            .setNegativeButton(android.R.string.cancel) { _, _ -> onPreviewCancelled?.invoke() }
             .setPositiveButton(R.string.color_picker_apply) { _, _ ->
                 onApply(String.format("#%06X", 0xFFFFFF and selectedColor))
             }
             .show()
+
+    // Back/outside cancellation does not invoke the negative button listener.
+    dialog.setOnCancelListener { onPreviewCancelled?.invoke() }
 
     // Same runtime-accent treatment the preference dialogs get in
     // tintOpenLyraPreferenceDialog - this dialog is built directly, so tint it here.

@@ -6,6 +6,8 @@
     android:id="@+id/contentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:background="@android:color/black">
 
     <!-- Wrapper (rather than putting everything straight into the root) so ambient burn-in
@@ -15,6 +17,8 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         tools:deviceIds="wear">
 
         <ImageView
@@ -230,6 +234,19 @@
             android:layout_height="match_parent"
             android:visibility="gone" />
 
+        <!-- Mirrors FourWayTouchLayout's own tap-feedback pulse at a higher z-order: that
+             layout's ripple is a child of itself, so it is drawn UNDER expressive_face and every
+             curated face's opaque backdrop and is invisible whenever one of them is showing.
+             MainActivity.onTouchDown/onTouchUp (FourWayTouchLayout.UserActionListener) drives
+             this drawable in lockstep, but only while a Compose face is active - Classic already
+             has a visible ripple and does not need a second one drawn on top. Not clickable, so
+             touches pass straight through it, same as center_tap_pulse. -->
+        <ImageView
+            android:id="@+id/compose_tap_pulse"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription" />
+
         <!-- User-configurable mini buttons (see ScreenButtons in common). A *fixed* overlay
              near the bottom of the screen, deliberately independent of the centered text block
              so it never shifts with 1- vs 2-line titles (and never pushes the text off-center).
@@ -296,32 +313,37 @@
 
         </LinearLayout>
 
-        <!-- Full-screen acrylic-style blurred album art, shown behind the volume/seek rings so
-             everything else on screen reads as hidden while the user is mid-adjustment - no
-             color filter on the image itself, just a heavily blurred copy of the current album
-             art (falls back to plain black via the background when there's no art to blur).
-             Drawn (and so must stay ordered in this file) *before* seek_bar/volume_bar so those
-             rings remain visible on top of it instead of being covered. Absorbs stray touches so
-             they don't fall through to center_tap_zone/icons underneath. -->
-        <ImageView
-            android:id="@+id/overlay_blur_image"
+        <!-- One full-screen compositing group for blur + gradient/dim. It stays before the panel
+             content so rings and actions draw on top, and absorbs stray touches outside them.
+             Animating this parent (rather than both children) prevents a visible two-stage blur. -->
+        <FrameLayout
+            android:id="@+id/overlay_backdrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/black"
             android:clickable="true"
             android:focusable="true"
-            android:scaleType="centerCrop"
             android:visibility="gone"
-            tools:ignore="ContentDescription,KeyboardInaccessibleWidget" />
+            tools:ignore="KeyboardInaccessibleWidget">
 
-        <!-- Faint extra darkening on top of the blur, just enough to keep the white text legible
-             without looking like a flat color filter. -->
-        <View
-            android:id="@+id/overlay_dim"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/overlay_dim_color"
-            android:visibility="gone" />
+            <ImageView
+                android:id="@+id/overlay_blur_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/black"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
+            <!-- This gradient/dim layer and the blur are children of one alpha-composited group.
+                 They must enter and leave together: separate sibling animations visibly applied
+                 the gradient a frame after the blur during volume and bezel seeking. -->
+            <View
+                android:id="@+id/overlay_dim"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/overlay_dim_color" />
+
+        </FrameLayout>
 
         <com.svartifoss.snfell.watch.view.CircularProgressSeekBar
             android:id="@+id/seek_bar"
@@ -380,21 +402,43 @@
             tools:text="1:45"
             tools:visibility="visible" />
 
+        <com.svartifoss.snfell.watch.view.OverlayProgressMeter
+            android:id="@+id/seek_overlay_meter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
         <!-- Quick-actions panel: like/shuffle/repeat + a shortcut into the queue, opened by
              double-tapping center_tap_zone (single tap there still toggles play/pause). Sits on
              top of the same blur/dim overlay used by the volume and seek previews. Flat side
              margins (not BoxInsetLayout - that clips to an inner square and cut the buttons off
              instead of just keeping them clear of the bezel). -->
-        <LinearLayout
+        <androidx.wear.widget.SwipeDismissFrameLayout
+            android:id="@+id/quick_actions_dismiss_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        <com.svartifoss.snfell.watch.view.CircularQuickActionsScrollView
             android:id="@+id/quick_actions_panel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:clipToPadding="false"
+            android:fadeScrollbars="false"
+            android:fillViewport="false"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/quick_actions_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="18dp"
+                android:paddingBottom="30dp">
 
             <com.svartifoss.snfell.watch.view.OutlineTextView
                 android:id="@+id/quick_action_panel_title"
@@ -425,6 +469,7 @@
                 tools:text="Artist" />
 
             <LinearLayout
+                android:id="@+id/quick_action_round_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -440,7 +485,7 @@
                     android:contentDescription="@string/quick_action_like"
                     android:focusable="true"
                     android:padding="13dp"
-                    android:src="@drawable/action_like_outline" />
+                    android:src="@drawable/action_like" />
 
                 <ImageView
                     android:id="@+id/quick_action_shuffle"
@@ -486,6 +531,18 @@
                 android:paddingBottom="11dp">
 
                 <ImageView
+                    android:id="@+id/quick_action_up_next_artwork"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/artwork_round_mask"
+                    android:clipToOutline="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    tools:ignore="ContentDescription"
+                    tools:src="@drawable/ic_queue_music" />
+
+                <ImageView
                     android:id="@+id/quick_action_up_next_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
@@ -528,7 +585,21 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+            <!-- User-configured action-menu entries are mirrored here as full-width rows. The
+                 container makes the panel genuinely scrollable and lets playlists/search/other
+                 useful actions be reached without shrinking the three primary media buttons. -->
+            <LinearLayout
+                android:id="@+id/quick_action_extra_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" />
+
+            </LinearLayout>
+
+        </com.svartifoss.snfell.watch.view.CircularQuickActionsScrollView>
+
+        </androidx.wear.widget.SwipeDismissFrameLayout>
 
         <ProgressBar
             android:id="@+id/loading_indicator"
@@ -543,6 +614,14 @@
             layout="@layout/popup_notification" />
 
     </FrameLayout>
+
+    <!-- Optional diagnostics controlled from phone developer settings. Kept outside content_frame
+         so it observes the final, post-jiggle geometry without participating in layout itself. -->
+    <com.svartifoss.snfell.watch.view.DeveloperOverlayView
+        android:id="@+id/developer_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <!-- Outside content_frame so the ambient burn-in jiggle never moves it. -->
     <include

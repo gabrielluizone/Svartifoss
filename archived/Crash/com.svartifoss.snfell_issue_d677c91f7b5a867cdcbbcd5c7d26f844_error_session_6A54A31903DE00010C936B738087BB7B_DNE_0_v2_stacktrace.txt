@@ -1,0 +1,9 @@
+# Crashlytics -
+# Application: com.svartifoss.snfell
+# Platform: android
+# Version: 2.2.1 (54)
+# Issue: d677c91f7b5a867cdcbbcd5c7d26f844
+# Session: 6A54A31903DE00010C936B738087BB7B_DNE_0_v2
+# Date: Mon Jul 13 2026 05:34:35 GMT-0300 (Brasilia Standard Time)
+
+Non-fatal Exception: kotlinx.coroutines.JobCancellationException: Job was cancelled

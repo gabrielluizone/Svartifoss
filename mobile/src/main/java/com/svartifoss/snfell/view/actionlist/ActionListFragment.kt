@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.os.Vibrator
 import android.provider.Settings
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +18,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange
@@ -63,6 +68,7 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
 
     private val viewModel: ActionListViewModel by viewModels { viewModelFactory }
     private lateinit var binding: FragmentActionListBinding
+    private lateinit var listItemAdapter: ListItemAdapter
     private lateinit var adapter: RecyclerView.Adapter<ListItemHolder>
     private lateinit var dragDropManager: RecyclerViewDragDropManager
     private lateinit var vibrator: Vibrator
@@ -128,8 +134,9 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
                 R.drawable.material_shadow_z3,
                 null) as NinePatchDrawable)
 
+        listItemAdapter = ListItemAdapter()
         @Suppress("UNCHECKED_CAST")
-        adapter = dragDropManager.createWrappedAdapter(ListItemAdapter()) as RecyclerView.Adapter<ListItemHolder>
+        adapter = dragDropManager.createWrappedAdapter(listItemAdapter) as RecyclerView.Adapter<ListItemHolder>
         recycler.adapter = adapter
         recycler.itemAnimator = DraggableItemAnimator()
         recycler.layoutManager =
@@ -322,12 +329,24 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
         startActivityForResult(intent, REQUEST_CODE_EDIT_WINDOW)
     }
 
+    override fun prepareFab(fab: FloatingActionButton) {
+        fab.contentDescription = getString(R.string.actions_add)
+    }
+
     private val actionListListener = Observer<List<IdentifiedItem<PhoneAction>>?> {
         if (it == null) {
             return@Observer
         }
 
         this.actions = it
+
+        binding.actionListEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+        binding.recycler.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
+        binding.actionListSummary.text = resources.getQuantityString(
+                R.plurals.actions_list_summary,
+                it.size,
+                it.size
+        )
 
         if (!ignoreNextUpdate) {
             adapter.notifyDataSetChanged()
@@ -372,6 +391,34 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
     }
 
     override fun onItemDragMoveDistanceUpdated(offsetX: Int, offsetY: Int) = Unit
+
+    /** Moves an action without requiring a drag gesture. TalkBack exposes this through the
+     *  custom "Move up/down" actions below; hardware keyboards use Ctrl+Up/Down. */
+    private fun moveItemAccessibly(holder: ListItemHolder, offset: Int): Boolean {
+        val fromPosition = holder.bindingAdapterPosition
+        val toPosition = fromPosition + offset
+        if (fromPosition == RecyclerView.NO_POSITION || toPosition !in actions.indices) {
+            return false
+        }
+
+        val actionTitle = actions[fromPosition].item.title
+        ignoreNextUpdate = true
+        viewModel.moveItem(fromPosition, toPosition)
+        listItemAdapter.notifyItemMoved(fromPosition, toPosition)
+
+        holder.itemView.post {
+            holder.itemView.requestFocus()
+            holder.itemView.announceForAccessibility(
+                    getString(
+                            R.string.actions_moved_to_position,
+                            actionTitle,
+                            toPosition + 1,
+                            actions.size
+                    )
+            )
+        }
+        return true
+    }
 
 
     private inner class ListItemAdapter : RecyclerView.Adapter<ListItemHolder>(),
@@ -445,6 +492,60 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
         init {
             itemView.setOnClickListener {
                 viewModel.editAction(adapterPosition)
+            }
+
+            ViewCompat.setAccessibilityDelegate(itemView, object : AccessibilityDelegateCompat() {
+                override fun onInitializeAccessibilityNodeInfo(
+                    host: View,
+                    info: AccessibilityNodeInfoCompat
+                ) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+                    val position = bindingAdapterPosition
+                    if (position == RecyclerView.NO_POSITION) return
+
+                    if (position > 0) {
+                        info.addAction(
+                                AccessibilityNodeInfoCompat.AccessibilityActionCompat(
+                                        R.id.accessibility_action_move_up,
+                                        getString(R.string.actions_move_up)
+                                )
+                        )
+                    }
+                    if (position < actions.lastIndex) {
+                        info.addAction(
+                                AccessibilityNodeInfoCompat.AccessibilityActionCompat(
+                                        R.id.accessibility_action_move_down,
+                                        getString(R.string.actions_move_down)
+                                )
+                        )
+                    }
+                }
+
+                override fun performAccessibilityAction(
+                    host: View,
+                    action: Int,
+                    args: Bundle?
+                ): Boolean = when (action) {
+                    R.id.accessibility_action_move_up -> moveItemAccessibly(this@ListItemHolder, -1)
+                    R.id.accessibility_action_move_down -> moveItemAccessibly(this@ListItemHolder, 1)
+                    else -> super.performAccessibilityAction(host, action, args)
+                }
+            })
+
+            itemView.setOnKeyListener { _, keyCode, event ->
+                val reorderKey = keyCode == KeyEvent.KEYCODE_DPAD_UP ||
+                        keyCode == KeyEvent.KEYCODE_DPAD_DOWN
+                if (!event.isCtrlPressed || !reorderKey) {
+                    false
+                } else {
+                    if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+                        moveItemAccessibly(
+                                this@ListItemHolder,
+                                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) -1 else 1
+                        )
+                    }
+                    true
+                }
             }
         }
     }

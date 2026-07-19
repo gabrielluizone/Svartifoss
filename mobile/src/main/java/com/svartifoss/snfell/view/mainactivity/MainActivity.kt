@@ -30,8 +30,8 @@ import com.svartifoss.snfell.view.FabFragment
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.TitledActivity
 import com.svartifoss.snfell.view.actionlist.ActionListFragment
-import com.svartifoss.snfell.view.buttonconfig.ButtonConfigFragment
-import com.svartifoss.snfell.view.settings.MiscSettingsFragment
+import com.svartifoss.snfell.view.buttonconfig.ControlsFragment
+import com.svartifoss.snfell.view.settings.SettingsHomeFragment
 import com.svartifoss.snfell.view.watchface.WatchFaceFragment
 import android.graphics.Bitmap
 import android.widget.SeekBar
@@ -46,6 +46,7 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.tabs.TabLayout
 import androidx.lifecycle.lifecycleScope
 import com.svartifoss.snfell.update.UpdateChecker
 import kotlinx.coroutines.launch
@@ -178,7 +179,7 @@ class MainActivity : WearCompanionPhoneActivity(),
                     })
                 }
             }
-        }, false)
+        }, true)
 
         val toggle = ActionBarDrawerToggle(
             this, binding.drawerLayout, binding.toolbar,
@@ -195,13 +196,9 @@ class MainActivity : WearCompanionPhoneActivity(),
                     updateActivityTitle(getString(R.string.watch_face_header))
                     swapFragment(WatchFaceFragment())
                 }
-                R.id.playing_controls -> {
-                    updateActivityTitle(getString(R.string.playing_controls))
-                    swapFragment(ButtonConfigFragment.newInstance(true))
-                }
-                R.id.stopped_controls -> {
-                    updateActivityTitle(getString(R.string.stopped_controls))
-                    swapFragment(ButtonConfigFragment.newInstance(false))
+                R.id.controls -> {
+                    updateActivityTitle(getString(R.string.controls_header))
+                    swapFragment(ControlsFragment())
                 }
                 R.id.actions_menu -> {
                     updateActivityTitle(getString(R.string.actions_menu))
@@ -209,7 +206,7 @@ class MainActivity : WearCompanionPhoneActivity(),
                 }
                 R.id.settings -> {
                     updateActivityTitle(getString(R.string.action_settings))
-                    swapFragment(MiscSettingsFragment())
+                    swapFragment(SettingsHomeFragment())
                 }
             }
             true
@@ -293,12 +290,16 @@ class MainActivity : WearCompanionPhoneActivity(),
 
         // Default landing screen on a fresh launch (no fragment restored by the FragmentManager
         // yet). Deliberately independent of whether a watch is currently paired/connected -
-        // Playing controls (like Guide, Actions menu and Settings) is fully usable without one;
-        // only its "physical buttons" section needs live watch data, and that section just hides
-        // itself when there isn't any (see ButtonConfigFragment.watchInfoObserver).
+        // Controls (like Watch, Actions and Settings) is fully usable without one;
+        // only its "physical buttons" section needs live watch data, and that section explains
+        // the disconnected state while the other inputs remain editable.
         if (currentFragment == null) {
-            swapFragment(ButtonConfigFragment.newInstance(true))
-            binding.bottomNav.selectedItemId = R.id.playing_controls
+            binding.bottomNav.selectedItemId = R.id.controls
+            // selectedItemId normally invokes the listener above. Keep a defensive fallback for
+            // restored view state where Controls was already marked selected before attachment.
+            if (currentFragment == null) {
+                swapFragment(ControlsFragment())
+            }
         }
 
         maybeRequestNotificationPermission()
@@ -322,6 +323,18 @@ class MainActivity : WearCompanionPhoneActivity(),
      *  Watch tab's preview shows the actual current track/art through this). */
     fun activeMediaSession(): androidx.lifecycle.LiveData<com.matejdro.wearutils.lifecycle.Resource<MediaController>> =
             viewmodel.activeMediaSessionProvider
+
+    /** The exact display profile reported by the connected watch. The Watch preview uses it to
+     *  reproduce round/square geometry and the real dp canvas instead of assuming every device
+     *  is a 192dp circle. */
+    fun connectedWatchInfo(): androidx.lifecycle.LiveData<com.svartifoss.snfell.config.WatchInfoWithIcons?> =
+            viewmodel.watchInfoProvider
+
+    /** Used by contextual links such as "Swipe gestures" and "Mini buttons" so explanatory
+     *  settings rows lead directly to the place where those controls are assigned. */
+    fun openControls() {
+        binding.bottomNav.selectedItemId = R.id.controls
+    }
 
     override fun onCreateOptionsMenu(menu: android.view.Menu): Boolean {
         menuInflater.inflate(R.menu.toolbar_main, menu)
@@ -501,7 +514,7 @@ class MainActivity : WearCompanionPhoneActivity(),
             intArrayOf()
         )
         val colors = intArrayOf(
-            color,
+            accentTextColor(color),
             ContextCompat.getColor(this, R.color.lyra_nav_inactive)
         )
         val colorStateList = android.content.res.ColorStateList(states, colors)
@@ -982,10 +995,67 @@ class MainActivity : WearCompanionPhoneActivity(),
      *  persisted value, so in-activity UI (settings dialogs, the accent dot) should prefer it. */
     fun currentAccentColor(): Int = dynamicAccentColor ?: resolveDefaultAccent()
 
+    /**
+     * Accent adapted for small labels drawn directly on the app background. Album artwork can
+     * yield almost any color; using it unmodified for selected tab/navigation text made some
+     * combinations unreadable even though the decorative indicator itself still looked fine.
+     */
+    fun currentAccentTextColor(): Int = accentTextColor(currentAccentColor())
+
+    private fun accentTextColor(accent: Int): Int {
+        val background = ContextCompat.getColor(this, R.color.lyra_background)
+        val opaqueAccent = ColorUtils.setAlphaComponent(accent, 255)
+        if (ColorUtils.calculateContrast(opaqueAccent, background) >= 4.5) {
+            return opaqueAccent
+        }
+
+        val target = if (ColorUtils.calculateLuminance(background) > 0.5) {
+            android.graphics.Color.BLACK
+        } else {
+            android.graphics.Color.WHITE
+        }
+        var low = 0f
+        var high = 1f
+        repeat(12) {
+            val amount = (low + high) / 2f
+            val candidate = ColorUtils.blendARGB(opaqueAccent, target, amount)
+            if (ColorUtils.calculateContrast(candidate, background) >= 4.5) {
+                high = amount
+            } else {
+                low = amount
+            }
+        }
+        return ColorUtils.blendARGB(opaqueAccent, target, high)
+    }
+
     private fun applyAccentColorToViewTree(view: View, color: Int) {
+        if (view is TabLayout) {
+            view.setSelectedTabIndicatorColor(color)
+            val inactive = ContextCompat.getColor(this, R.color.lyra_text_secondary)
+            val selected = accentTextColor(color)
+            val currentColors = view.tabTextColors
+            val currentSelected = currentColors?.getColorForState(
+                intArrayOf(android.R.attr.state_selected),
+                currentColors.defaultColor
+            )
+
+            // Material rebuilds/re-measures every tab label whenever setTabTextColors is called,
+            // even when both colors are unchanged. Avoiding that redundant update removes the
+            // brief vertical jump that used to happen as a page became selected.
+            if (currentColors?.defaultColor != inactive || currentSelected != selected) {
+                view.setTabTextColors(inactive, selected)
+            }
+            // TabLayout owns internal TextViews whose implementation is not part of its public
+            // contract. Tint the component once and do not recolor those children with the raw
+            // album accent below.
+            return
+        }
+
         val staticAccent = ContextCompat.getColor(this, R.color.lyra_accent)
         val previousAccent = lastAppliedAccentColor
         val csl = android.content.res.ColorStateList.valueOf(color)
+        val readableAccent = accentTextColor(color)
+        val readableCsl = android.content.res.ColorStateList.valueOf(readableAccent)
         // Disabled state must come first: ColorStateList picks the first array entry whose
         // state spec matches, and a disabled-but-checked switch matches both "disabled" and
         // "checked" specs - it needs to hit the disabled (grayed out) one, not the checked
@@ -1041,12 +1111,14 @@ class MainActivity : WearCompanionPhoneActivity(),
             // action icon on the gesture buttons. Ripple is deliberately untouched: press
             // highlights are theme-neutral now (see colorControlHighlight in styles.xml), and
             // the old unconditional opaque-accent ripple was part of the mismatched-color mess.
-            if (usesAccentTint(view.iconTint?.defaultColor, staticAccent, previousAccent)) {
-                view.iconTint = csl
+            if (view.getTag(R.id.tag_uses_accent_icon) == true ||
+                usesAccentTint(view.iconTint?.defaultColor, staticAccent, previousAccent)) {
+                view.iconTint = readableCsl
+                view.setTag(R.id.tag_uses_accent_icon, true)
             }
             if (view.getTag(R.id.tag_uses_accent) == true ||
                 usesAccentTint(view.currentTextColor, staticAccent, previousAccent)) {
-                view.setTextColor(color)
+                view.setTextColor(readableAccent)
                 view.setTag(R.id.tag_uses_accent, true)
             }
             // Uses its own tag, never the text-color one above: those used to share a single
@@ -1069,13 +1141,13 @@ class MainActivity : WearCompanionPhoneActivity(),
         } else if (view is android.widget.Button) {
             if (view.getTag(R.id.tag_uses_accent) == true ||
                 usesAccentTint(view.currentTextColor, staticAccent, previousAccent)) {
-                view.setTextColor(color)
+                view.setTextColor(readableAccent)
                 view.setTag(R.id.tag_uses_accent, true)
             }
         } else if (view is ImageView) {
             if (view.getTag(R.id.tag_uses_accent) == true ||
                 usesAccentTint(view.imageTintList?.defaultColor, staticAccent, previousAccent)) {
-                view.imageTintList = csl
+                view.imageTintList = readableCsl
                 view.setTag(R.id.tag_uses_accent, true)
             }
         } else if (view is android.widget.EditText) {
@@ -1099,7 +1171,7 @@ class MainActivity : WearCompanionPhoneActivity(),
         } else if (view is android.widget.TextView) {
             if (view.getTag(R.id.tag_uses_accent) == true ||
                 usesAccentTint(view.currentTextColor, staticAccent, previousAccent)) {
-                view.setTextColor(color)
+                view.setTextColor(readableAccent)
                 view.setTag(R.id.tag_uses_accent, true)
             }
         }

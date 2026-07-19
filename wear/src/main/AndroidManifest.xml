@@ -174,7 +174,8 @@
             android:name=".watch.tile.MediaTileService"
             android:exported="true"
             android:label="@string/tile_label"
-            android:icon="@drawable/ic_queue_music"
+            android:description="@string/tile_description"
+            android:icon="@drawable/ic_complication_picker"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
             <intent-filter>
                 <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />

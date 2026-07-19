@@ -18,33 +18,37 @@ that's what a human reviewer actually reads.
 > currently playing on the phone to a paired watch, and lets the watch
 > send back transport controls (play/pause, skip, volume, seek).
 >
-> Android only exposes "what's currently playing on this phone" through
+> Android exposes "what's currently playing on this phone" through
 > `MediaSessionManager.getActiveSessions()`, and that API requires the
-> caller to hold notification-listener access as a prerequisite — this is
-> the sole reason the permission is requested.
+> caller to hold notification-listener access. When the user selects
+> "From current media app" for the quick-actions panel, Svartifoss also
+> mirrors up to four buttons from the active media notification so that the
+> watch uses the same actions and icons as the phone player.
 >
-> The app's `NotificationListenerService` implementation
-> (`NotificationService.kt`) does **not** override `onNotificationPosted`
-> or `onNotificationRemoved`, and never calls `getActiveNotifications()`.
-> It does not read, store, or transmit the content of any notification
-> from any app. The only thing read is standard media-session metadata
-> (track title, artist, album art, playback position/state, shuffle/repeat
-> state) exposed by whichever app is currently playing music — the same
-> information already shown on the phone's lock screen and in the system
-> media player.
+> The app's `NotificationListenerService` implementation filters posted
+> notifications to media playback notifications only. From the current
+> media notification it reads only action labels, action icons and their
+> local `PendingIntent`s. It keeps those intents in process memory, sends
+> only the labels/icons to the paired watch, and invokes an intent when the
+> user taps the corresponding watch button. It does not inspect or retain
+> message bodies, emails or unrelated notification content.
 >
-> This metadata is sent only to the user's own paired Wear OS watch, over
+> the local Wearable Data Layer connection (Bluetooth/Wi-Fi Direct between
+> the user's own two devices). It is never sent to any server we operate,
+> and no notification content of any kind leaves the device.
+> Playback metadata and media-action labels/icons are sent only to the
+> user's own paired Wear OS watch over the Wearable Data Layer connection.
+> They are never sent to any server we operate.
 > the local Wearable Data Layer connection (Bluetooth/Wi-Fi Direct between
 > the user's own two devices). It is never sent to any server we operate,
 > and no notification content of any kind leaves the device.
 
 ## If asked "does your app read notification content?"
 
-> No. The app reads media-session playback metadata via
-> `MediaSessionManager`, not notification content via
-> `NotificationListenerService.getActiveNotifications()` or
-> `onNotificationPosted()`. Neither of the latter two APIs is used
-> anywhere in the codebase.
+> Svartifoss does not read message, email or unrelated notification content.
+> It reads media-session playback metadata and, only for the active media
+> notification, the action labels/icons needed to reproduce its controls on
+> the paired watch.
 
 ## If asked for a demo video / test instructions
 
@@ -61,3 +65,6 @@ paired Wear OS watch to fully demonstrate. Suggested steps to include:
 4. Optionally, press a transport control on the watch and show playback
    change on the phone, to demonstrate the two-way (not just read-only)
    nature of the feature.
+5. Select Watch → Panels → Quick actions source → From current media app,
+   open the watch quick-actions panel, and show that its four controls match
+   the current media notification.

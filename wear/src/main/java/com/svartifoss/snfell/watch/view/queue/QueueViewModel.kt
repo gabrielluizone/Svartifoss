@@ -1,7 +1,9 @@
 package com.svartifoss.snfell.watch.view.queue
 
 import android.graphics.Bitmap
+import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
@@ -9,6 +11,7 @@ import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import com.svartifoss.snfell.watch.theme.WatchTheme
+import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,7 +59,8 @@ class QueueViewModel @Inject constructor(
                         } else {
                             null
                         },
-                        isPlaying = item.listItem.entryId == list.activeEntryId
+                        isPlaying = item.listItem.entryId == list.activeEntryId,
+                        artwork = item.icon
                 )
             } ?: emptyList()
         }
@@ -73,11 +77,18 @@ class QueueViewModel @Inject constructor(
         }
     }
 
+    /** A second real quantized cover swatch for Gradient/Duotone queue rows. */
+    val secondaryAccentColor = MutableLiveData(DEFAULT_QUEUE_ACCENT)
+    /** Third real quantized cover swatch used only by the Prisma queue style. */
+    val tertiaryAccentColor = MutableLiveData(DEFAULT_QUEUE_ACCENT)
+
     val accentColor = MediatorLiveData<Int>().apply {
         value = DEFAULT_QUEUE_ACCENT
         addSource(phoneConnection.albumArt) { bitmap ->
             if (bitmap == null) {
                 value = DEFAULT_QUEUE_ACCENT
+                secondaryAccentColor.value = DEFAULT_QUEUE_ACCENT
+                tertiaryAccentColor.value = DEFAULT_QUEUE_ACCENT
             } else {
                 deriveAccent(bitmap)
             }
@@ -87,10 +98,34 @@ class QueueViewModel @Inject constructor(
     private fun deriveAccent(bitmap: Bitmap) {
         viewModelScope.launch(Dispatchers.Default) {
             val palette = Palette.from(bitmap).generate()
-            accentColor.postValue(
-                    palette.getVibrantColor(palette.getLightMutedColor(DEFAULT_QUEUE_ACCENT))
-            )
+            val primary = listOfNotNull(
+                    palette.vibrantSwatch,
+                    palette.mutedSwatch,
+                    palette.lightVibrantSwatch,
+                    palette.darkVibrantSwatch,
+                    palette.lightMutedSwatch,
+                    palette.darkMutedSwatch,
+                    palette.dominantSwatch
+            ).firstOrNull()?.rgb ?: DEFAULT_QUEUE_ACCENT
+            val rankedAlbumColors = palette.swatches
+                    .sortedByDescending { it.population }
+                    .map { it.rgb }
+            val companions = selectAlbumCompanionColors(primary, rankedAlbumColors)
+            val secondary = companions.secondary ?: sameHueTone(primary, .42f)
+            val tertiary = companions.tertiary ?: sameHueTone(primary, .68f)
+            accentColor.postValue(primary)
+            secondaryAccentColor.postValue(secondary)
+            tertiaryAccentColor.postValue(tertiary)
         }
+    }
+
+    /** Monochromatic covers still get two readable tones without fabricating another hue. */
+    private fun sameHueTone(color: Int, lightness: Float): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(color, hsl)
+        hsl[1] = hsl[1].coerceIn(.25f, .82f)
+        hsl[2] = lightness
+        return ColorUtils.HSLToColor(hsl)
     }
 
     /** Asks the phone to send the current playback queue. */

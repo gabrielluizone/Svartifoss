@@ -1,71 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
-
-    <ImageView
-        android:id="@+id/source_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/circle_icon_bg"
-        android:padding="9dp"
-        android:src="@drawable/ic_yt_music"
-        android:tint="@color/lyra_on_surface"
-        tools:ignore="ContentDescription,UseAppTint" />
+    android:foreground="?selectableItemBackground"
+    app:cardBackgroundColor="@color/lyra_surface"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/lyra_divider"
+    app:strokeWidth="1dp">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:minHeight="76dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="8dp">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/google_sans"
-            android:maxLines="1"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:text="Daily mix" />
+        <ImageView
+            android:id="@+id/source_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/circle_icon_bg"
+            android:padding="10dp"
+            android:src="@drawable/ic_yt_music"
+            android:tint="@color/lyra_on_surface"
+            tools:ignore="ContentDescription,UseAppTint" />
 
-        <!-- Derived description (source app + shuffle badge), never the raw link. -->
-        <TextView
-            android:id="@+id/subtitle"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/google_sans"
-            android:maxLines="1"
-            android:textColor="@color/lyra_text_secondary"
-            android:textSize="12sp"
-            tools:text="YouTube Music • Shuffle" />
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/google_sans"
+                android:includeFontPadding="false"
+                android:lineHeight="21sp"
+                android:maxLines="1"
+                android:textColor="@color/lyra_on_surface"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Discover Weekly" />
+
+            <!-- Service, automatically detected entity type and optional shuffle state. -->
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/google_sans"
+                android:includeFontPadding="false"
+                android:lineHeight="18sp"
+                android:maxLines="1"
+                android:textColor="@color/lyra_text_secondary"
+                android:textSize="12sp"
+                tools:text="Spotify • Playlist" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/more_options"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_more_vert"
+            android:tint="@color/lyra_text_secondary"
+            tools:ignore="UseAppTint,ContentDescription" />
+
+        <ImageView
+            android:id="@+id/drag_handle"
+            android:layout_width="36dp"
+            android:layout_height="40dp"
+            android:contentDescription="@null"
+            android:padding="8dp"
+            android:src="@drawable/ic_drag_handle"
+            android:tint="@color/lyra_text_secondary"
+            tools:ignore="UseAppTint" />
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/delete"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:contentDescription="@string/playlist_shortcut_delete"
-        android:padding="8dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_delete"
-        android:tint="@color/lyra_text_secondary"
-        tools:ignore="UseAppTint" />
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

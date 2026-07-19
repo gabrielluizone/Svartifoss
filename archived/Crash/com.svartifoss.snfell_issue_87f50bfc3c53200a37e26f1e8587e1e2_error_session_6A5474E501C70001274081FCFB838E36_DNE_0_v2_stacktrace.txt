@@ -1,0 +1,40 @@
+# Crashlytics -
+# Application: com.svartifoss.snfell
+# Platform: android
+# Version: 2.2.1 (54)
+# Issue: 87f50bfc3c53200a37e26f1e8587e1e2
+# Session: 6A5474E501C70001274081FCFB838E36_DNE_0_v2
+# Date: Mon Jul 13 2026 02:18:00 GMT-0300 (Brasilia Standard Time)
+
+Non-fatal Exception: pl.tajchert.exceptionwear.WatchException: java.lang.SecurityException: Settings key: <clockwork_sysui_package> is only readable to apps with targetSdkVersion lower than or equal to: 34
+       at android.os.Parcel.createExceptionOrNull(Parcel.java:3205)
+       at android.os.Parcel.createException(Parcel.java:3189)
+       at android.os.Parcel.readException(Parcel.java:3172)
+       at android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:202)
+       at android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:154)
+       at android.content.ContentProviderProxy.call(ContentProviderNative.java:764)
+       at android.provider.Settings$NameValueCache.getStringForUser(Settings.java:3562)
+       at android.provider.Settings$Global.getStringForUser(Settings.java:17858)
+       at android.provider.Settings$Global.getString(Settings.java:17841)
+       at androidx.wear.tiles.SysUiTileUpdateRequester.getSysUiPackageName(SysUiTileUpdateRequester.java:94)
+       at androidx.wear.tiles.SysUiTileUpdateRequester.buildUpdateBindIntent(SysUiTileUpdateRequester.java:107)
+       at androidx.wear.tiles.SysUiTileUpdateRequester.requestUpdate(SysUiTileUpdateRequester.java:79)
+       at androidx.wear.tiles.CompositeTileUpdateRequester.requestUpdate(CompositeTileUpdateRequester.java:39)
+       at com.svartifoss.snfell.watch.communication.WatchMusicService.onCreate$lambda$0(WatchMusicService.kt:81)
+       at com.svartifoss.snfell.watch.communication.WatchMusicService.$r8$lambda$zs1HHICYHr2GYpg2iaFc4IifKRI(WatchMusicService.kt)
+       at com.svartifoss.snfell.watch.communication.WatchMusicService$$ExternalSyntheticLambda0.invoke(R8$$SyntheticClass)
+       at com.svartifoss.snfell.watch.communication.WatchMusicServiceKt$sam$androidx_lifecycle_Observer$0.onChanged(WatchMusicService.kt)
+       at androidx.lifecycle.LiveData.considerNotify(LiveData.java:134)
+       at androidx.lifecycle.LiveData.dispatchingValue(LiveData.java:152)
+       at androidx.lifecycle.LiveData.setValue(LiveData.java:310)
+       at androidx.lifecycle.MutableLiveData.setValue(MutableLiveData.java:50)
+       at com.matejdro.wearutils.lifecycle.ListenableLiveData.setValue(ListenableLiveData.java:20)
+       at androidx.lifecycle.LiveData$1.run(LiveData.java:94)
+       at android.os.Handler.handleCallback(Handler.java:959)
+       at android.os.Handler.dispatchMessage(Handler.java:100)
+       at android.os.Looper.loopOnce(Looper.java:232)
+       at android.os.Looper.loop(Looper.java:317)
+       at android.app.ActivityThread.main(ActivityThread.java:8592)
+       at java.lang.reflect.Method.invoke(Method.java)
+       at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+       at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:889)

@@ -1,9 +1,8 @@
 package com.svartifoss.snfell.view.settings
 
 import android.Manifest
-import android.content.ComponentName
+import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -11,6 +10,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,6 +31,9 @@ import com.svartifoss.snfell.config.ConfigBackup
 import com.svartifoss.snfell.update.UpdateActivity
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
+import com.svartifoss.snfell.music.PlaylistShortcutStorage
+import com.svartifoss.snfell.music.StreamingService
+import com.svartifoss.snfell.music.StreamingShortcutLinks
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.TitledActivity
 import com.matejdro.wearutils.logging.LogRetrievalTask
@@ -49,14 +52,26 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnSharedPreferenceChangeListener {
+class MiscSettingsFragment : PreferenceFragmentCompatEx() {
     companion object {
         private const val PREF_DEV_MODE = "developer_mode_enabled"
         private const val DEV_CLICKS_REQUIRED = 7
+
+        const val SECTION_GENERAL = "general"
+        const val SECTION_WATCH = "watch"
+        const val SECTION_AUTOMATION = "automation"
+        const val SECTION_APPS = "apps"
+        const val SECTION_DATA = "data"
+        private const val ARG_SECTION = "settingsSection"
+
+        fun newInstance(section: String) = MiscSettingsFragment().apply {
+            arguments = Bundle().apply { putString(ARG_SECTION, section) }
+        }
     }
 
     private var versionClickCount = 0
     private var devModeEnabled = false
+    private var section = SECTION_GENERAL
 
     @Inject
     lateinit var watchInfoProvider: WatchInfoProvider
@@ -70,6 +85,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     ) { uri -> uri?.let { importConfigFrom(it) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        section = arguments?.getString(ARG_SECTION) ?: SECTION_GENERAL
         AndroidSupportInjection.inject(this)
         super.onCreate(savedInstanceState)
     }
@@ -86,20 +102,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     // it never disables anything (see the discussion in MainActivity about not gating navigation
     // on watch presence).
     private val noWatchBannerObserver = Observer<WatchInfoWithIcons?> { watchInfo ->
-        pendingNoWatchBannerJob?.cancel()
-        if (watchInfo != null) {
-            findPreference<Preference>("no_watch_banner")?.isVisible = false
-        } else {
-            // WatchInfoProvider's LiveData starts out null and only resolves asynchronously
-            // (it queries the Data Layer on first observe), so a connected watch still causes
-            // one initial null emission - showing the banner immediately made it flash on and
-            // right back off on every visit. Debounce so it only shows if still disconnected
-            // after a beat.
-            pendingNoWatchBannerJob = lifecycleScope.launch {
-                delay(600)
-                findPreference<Preference>("no_watch_banner")?.isVisible = true
-            }
-        }
+        updateNoWatchBanner(watchInfo)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -108,11 +111,73 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
         devModeEnabled = preferenceManager.sharedPreferences?.getBoolean(PREF_DEV_MODE, false) == true
 
         initAppearanceSection()
+        initNavigationLinks()
+        initAppsSection()
         initAutomationSection()
         initBackupSection()
         initAboutSection()
         initDevSection()
+        applySectionVisibility()
+    }
+
+    private fun initNavigationLinks() {
+        findPreference<Preference>("swipe_gestures_hint")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                (activity as? com.svartifoss.snfell.view.mainactivity.MainActivity)?.openControls()
+                true
+            }
+    }
+
+    fun showSection(newSection: String) {
+        section = newSection
+        applySectionVisibility()
+        updateNoWatchBanner(watchInfoProvider.value)
+        listView?.scrollToPosition(0)
+    }
+
+    private fun applySectionVisibility() {
+        if (preferenceScreen == null) return
+
+        val visibleCategories = when (section) {
+            SECTION_WATCH -> setOf("cat_gestures", "cat_action_list", "cat_notifications")
+            SECTION_AUTOMATION -> setOf("cat_automation")
+            SECTION_APPS -> setOf("cat_apps")
+            SECTION_DATA -> setOf("cat_backup", "cat_privacy", "cat_about")
+            else -> setOf("cat_updates", "cat_appearance")
+        }
+
+        listOf(
+            "cat_updates",
+            "cat_appearance",
+            "cat_gestures",
+            "cat_action_list",
+            "cat_notifications",
+            "cat_automation",
+            "cat_apps",
+            "cat_backup",
+            "cat_privacy",
+            "cat_about"
+        ).forEach { key ->
+            findPreference<PreferenceCategory>(key)?.isVisible = key in visibleCategories
+        }
         updateDevModeVisibility()
+    }
+
+    private fun updateNoWatchBanner(watchInfo: WatchInfoWithIcons?) {
+        pendingNoWatchBannerJob?.cancel()
+        val banner = findPreference<Preference>("no_watch_banner") ?: return
+        val relevantSection = section == SECTION_WATCH || section == SECTION_AUTOMATION
+        banner.isVisible = false
+        if (watchInfo == null && relevantSection && watchInfoProvider.hasResolvedInitialValue) {
+            // WatchInfoProvider emits an initial null while querying the Data Layer. A short
+            // debounce avoids flashing the disconnected notice for connected watches.
+            pendingNoWatchBannerJob = lifecycleScope.launch {
+                delay(600)
+                banner.isVisible = watchInfoProvider.value == null &&
+                        watchInfoProvider.hasResolvedInitialValue &&
+                        (section == SECTION_WATCH || section == SECTION_AUTOMATION)
+            }
+        }
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -136,13 +201,6 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
             true
         }
 
-        findPreference<Preference>("playlist_shortcuts")?.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener {
-                startActivity(
-                    android.content.Intent(requireContext(), PlaylistShortcutsActivity::class.java)
-                )
-                true
-            }
     }
 
     private fun updateAccentColorSummary(pref: Preference?) {
@@ -185,6 +243,119 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
         AppCompatDelegate.setDefaultNightMode(mode)
     }
 
+    /** Phone-side app capabilities live together here: streaming link routing, shortcut import,
+     * notification-listener access and the per-music-app automatic-launch filter. */
+    private fun initAppsSection() {
+        migrateStreamingOpenMode()
+
+        findPreference<Preference>("playlist_shortcuts")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(requireContext(), PlaylistShortcutsActivity::class.java))
+                true
+            }
+
+        findPreference<Preference>("notification_access")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                try {
+                    startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                } catch (_: ActivityNotFoundException) {
+                    Toast.makeText(
+                            requireContext(),
+                            R.string.setting_notification_access_unavailable,
+                            Toast.LENGTH_LONG
+                    ).show()
+                } catch (_: SecurityException) {
+                    Toast.makeText(
+                            requireContext(),
+                            R.string.setting_notification_access_unavailable,
+                            Toast.LENGTH_LONG
+                    ).show()
+                }
+                true
+            }
+
+        refreshAppsSection()
+    }
+
+    /** Converts the former boolean into the richer three-way routing preference once. */
+    private fun migrateStreamingOpenMode() {
+        val sharedPreferences = preferenceManager.sharedPreferences ?: return
+        if (sharedPreferences.contains(StreamingShortcutLinks.OPEN_MODE_KEY)) return
+
+        val mode = if (sharedPreferences.getBoolean(
+                        StreamingShortcutLinks.PREFER_INSTALLED_APP_KEY,
+                        true
+                )) {
+            StreamingShortcutLinks.OPEN_MODE_APP
+        } else {
+            StreamingShortcutLinks.OPEN_MODE_DEFAULT
+        }
+        findPreference<ListPreference>(StreamingShortcutLinks.OPEN_MODE_KEY)?.value = mode
+        sharedPreferences.edit()
+                .remove(StreamingShortcutLinks.PREFER_INSTALLED_APP_KEY)
+                .apply()
+    }
+
+    /** Summaries are live because the user may install an app or grant notification access while
+     * this fragment is in the background. Package visibility is covered by manifest queries for
+     * every service listed in [StreamingService]. */
+    private fun refreshAppsSection() {
+        if (preferenceScreen == null || !isAdded) return
+
+        val supportedServices = StreamingService.values().filter { it.packageName != null }
+        val installedServices = supportedServices.filter { service ->
+            val packageName = service.packageName ?: return@filter false
+            try {
+                requireContext().packageManager.getPackageInfo(packageName, 0)
+                true
+            } catch (_: PackageManager.NameNotFoundException) {
+                false
+            } catch (_: SecurityException) {
+                false
+            }
+        }
+        findPreference<Preference>("apps_integrations_info")?.summary =
+                if (installedServices.isEmpty()) {
+                    getString(R.string.setting_apps_integrations_none)
+                } else {
+                    getString(
+                            R.string.setting_apps_integrations_installed,
+                            installedServices.size,
+                            supportedServices.size,
+                            installedServices.joinToString(", ") { streamingServiceName(it) }
+                    )
+                }
+
+        val shortcutCount = PlaylistShortcutStorage.load(requireContext()).size
+        findPreference<Preference>("playlist_shortcuts")?.summary =
+                resources.getQuantityString(
+                        R.plurals.setting_playlist_shortcuts_count,
+                        shortcutCount,
+                        shortcutCount
+                )
+
+        findPreference<Preference>("notification_access")?.setSummary(
+                if (NotificationService.isEnabled(requireContext())) {
+                    R.string.setting_notification_access_enabled
+                } else {
+                    R.string.setting_notification_access_disabled
+                }
+        )
+    }
+
+    private fun streamingServiceName(service: StreamingService): String = getString(
+            when (service) {
+                StreamingService.YOUTUBE_MUSIC -> R.string.playlist_source_yt_music
+                StreamingService.SPOTIFY -> R.string.playlist_source_spotify
+                StreamingService.DEEZER -> R.string.playlist_source_deezer
+                StreamingService.TIDAL -> R.string.playlist_source_tidal
+                StreamingService.APPLE_MUSIC -> R.string.playlist_source_apple_music
+                StreamingService.AMAZON_MUSIC -> R.string.playlist_source_amazon_music
+                StreamingService.SOUNDCLOUD -> R.string.playlist_source_soundcloud
+                StreamingService.GENERIC -> R.string.playlist_source_link
+            }
+    )
+
     private fun initAutomationSection() {
         migrateOldAutoStartSetting()
 
@@ -197,17 +368,10 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
                     val mode = enumValueOf<AutoStartMode>(newValue)
                     findPreference<Preference>("auto_start_apps_blacklist")?.isEnabled = mode != AutoStartMode.OFF
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        if (newValue != AutoStartMode.OFF) {
-                            android.service.notification.NotificationListenerService.requestRebind(
-                                    ComponentName(requireContext(), NotificationService::class.java)
-                            )
-                        } else {
-                            val serviceStopIntent = Intent(requireContext(), NotificationService::class.java)
-                            serviceStopIntent.action = NotificationService.ACTION_UNBIND_SERVICE
-                            requireContext().startService(serviceStopIntent)
-                        }
-                    }
+                    NotificationService.updateQuickActionsBinding(
+                            requireContext().applicationContext,
+                            autoStartEnabledOverride = mode != AutoStartMode.OFF
+                    )
                     true
                 }
     }
@@ -456,7 +620,8 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
     }
 
     private fun updateDevModeVisibility() {
-        findPreference<PreferenceCategory>("cat_developer")?.isVisible = devModeEnabled
+        findPreference<PreferenceCategory>("cat_developer")?.isVisible =
+            devModeEnabled && section == SECTION_DATA
     }
 
     private fun showEasterEgg() {
@@ -486,35 +651,18 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx(), SharedPreferences.OnS
 
     override fun onStart() {
         super.onStart()
-        if (parentFragmentManager.findFragmentById(R.id.fragment_container) !== this) return
+        if (parentFragmentManager.findFragmentById(R.id.fragment_container) === this) {
+            (activity as? TitledActivity)?.updateActivityTitle(getString(R.string.action_settings))
+        }
+    }
 
-        (activity as? TitledActivity)?.updateActivityTitle(getString(R.string.action_settings))
-        preferenceManager.sharedPreferences!!.registerOnSharedPreferenceChangeListener(this)
+    override fun onResume() {
+        super.onResume()
+        refreshAppsSection()
     }
 
     override fun onStop() {
+        pendingNoWatchBannerJob?.cancel()
         super.onStop()
-        preferenceManager.sharedPreferences!!.unregisterOnSharedPreferenceChangeListener(this)
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == "app_theme") return
-        pushPreferencesToWatch()
-    }
-
-    private fun pushPreferencesToWatch() {
-        lifecycleScope.launchWithPlayServicesErrorHandling(requireContext().applicationContext) {
-            PreferencePusher.pushPreferences(
-                    requireContext().applicationContext,
-                    preferenceManager.sharedPreferences!!,
-                    CommPaths.PREFERENCES_PREFIX,
-                    // Urgent: the user just toggled this in settings and expects the watch to
-                    // reflect it now. Non-urgent DataItems get batched and could otherwise take
-                    // minutes to sync (until unrelated urgent traffic flushed them) - which is
-                    // exactly why a changed watch setting like the album-art blur appeared to
-                    // apply only after tapping/turning the watch.
-                    true
-            )
-        }
     }
 }

@@ -40,6 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MenuActivity : ComponentActivity() {
     companion object {
         const val EXTRA_SHOW_CUSTOM_LIST = "ShowCustomList"
+        const val EXTRA_CUSTOM_LIST_ID = "CustomListId"
 
         const val RESULT_EXTRA_ACTION_INDEX = "ActionIndex"
         const val RESULT_EXTRA_LIST_ID = "ListId"
@@ -49,6 +50,7 @@ class MenuActivity : ComponentActivity() {
     private val viewModel: MenuViewModel by viewModels()
 
     private var showCustomList by mutableStateOf(false)
+    private var requestedCustomListId by mutableStateOf<String?>(null)
     private var centerItemIndex = 0
     private var closeKeycode = -1
     @Volatile private var finishCalled = false
@@ -71,15 +73,22 @@ class MenuActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         showCustomList = intent.getBooleanExtra(EXTRA_SHOW_CUSTOM_LIST, false)
+        requestedCustomListId = intent.getStringExtra(EXTRA_CUSTOM_LIST_ID)
         findCloseButton()
 
         setContent {
             val actions by viewModel.actions.observeAsState()
             val customList by viewModel.customList.observeAsState()
+            val streamingShortcuts by viewModel.streamingShortcuts.observeAsState()
             val preferences by viewModel.preferences.observeAsState()
 
             val content = if (showCustomList) {
-                customList?.let { MenuContent.Custom(it) }
+                val requestedList = if (requestedCustomListId == CustomLists.PLAYLIST_SHORTCUTS) {
+                    streamingShortcuts
+                } else {
+                    customList
+                }
+                requestedList?.let { MenuContent.Custom(it) }
             } else {
                 actions?.let { MenuContent.Actions(it) }
             }
@@ -106,6 +115,7 @@ class MenuActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         showCustomList = intent.getBooleanExtra(EXTRA_SHOW_CUSTOM_LIST, false)
+        requestedCustomListId = intent.getStringExtra(EXTRA_CUSTOM_LIST_ID)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -125,7 +135,11 @@ class MenuActivity : ComponentActivity() {
 
     private fun confirmCenterItem() {
         if (showCustomList) {
-            val list = viewModel.customList.value ?: return
+            val list = if (requestedCustomListId == CustomLists.PLAYLIST_SHORTCUTS) {
+                viewModel.streamingShortcuts.value
+            } else {
+                viewModel.customList.value
+            } ?: return
             val entry = list.items.getOrNull(centerItemIndex)?.listItem ?: return
             returnCustomEntry(list.listId, entry.entryId)
         } else {

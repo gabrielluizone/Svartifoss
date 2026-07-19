@@ -1,9 +1,13 @@
 package com.svartifoss.snfell.actions
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
+import com.google.android.gms.wearable.Asset
 import com.google.android.gms.wearable.PutDataRequest
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
@@ -11,7 +15,10 @@ import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.proto.CustomList
+import com.matejdro.wearutils.miscutils.BitmapUtils
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class OpenPlaylistAction : SelectableAction {
@@ -27,12 +34,21 @@ class OpenPlaylistAction : SelectableAction {
             val playlist = service.currentMediaController?.queue?.take(20)
             val putDataRequest = PutDataRequest.create(CommPaths.DATA_CUSTOM_LIST)
 
-            // No per-entry album art thumbnails - the watch UI shows a plain text list (title +
-            // artist), matching the stock Wear OS queue look instead of our old icon-row style.
             val listId: String
             val protoList = if (playlist != null && playlist.isNotEmpty()) {
                 listId = CustomLists.PLAYLIST
-                playlist.map { queueItem ->
+                playlist.mapIndexed { index, queueItem ->
+                    // MediaDescription may carry the cover either as a ready Bitmap or as a local
+                    // content URI. Attach only artwork the player actually publishes; the watch
+                    // deliberately collapses the thumbnail slot when this is null.
+                    val artwork = queueItem.description.iconBitmap
+                            ?: loadLocalArtwork(queueItem.description.iconUri)
+                    artwork?.let { bitmap ->
+                        val thumbnail = BitmapUtils.shrinkPreservingRatio(bitmap, 96, 96, true)
+                        BitmapUtils.serialize(thumbnail)?.let { bytes ->
+                            putDataRequest.putAsset(index.toString(), Asset.createFromBytes(bytes))
+                        }
+                    }
                     CustomList.ListEntry.newBuilder()
                             .setEntryId(queueItem.queueId.toString())
                             .setEntryTitle(queueItem.description.title?.toString() ?: "")
@@ -76,8 +92,28 @@ class OpenPlaylistAction : SelectableAction {
             val protoData = protoDataBuilder.build()
 
             putDataRequest.data = protoData.toByteArray()
+            // This response feeds both the visible queue and AOD's Up Next row. Letting the Data
+            // Layer batch it made an earlier request appear to complete only when Quick Actions
+            // sent more traffic later.
+            putDataRequest.setUrgent()
 
             Wearable.getDataClient(service).putDataItem(putDataRequest).await()
+        }
+
+        /** Remote http(s) covers are intentionally skipped: opening the queue must never wait on
+         * network I/O. content/file URIs already granted to the media controller are cheap and
+         * safe to decode on the IO dispatcher. */
+        private suspend fun loadLocalArtwork(uri: Uri?): Bitmap? {
+            if (uri == null || uri.scheme in setOf("http", "https")) return null
+            return withContext(Dispatchers.IO) {
+                try {
+                    service.contentResolver.openInputStream(uri)?.use { stream ->
+                        BitmapFactory.decodeStream(stream)
+                    }
+                } catch (_: Exception) {
+                    null
+                }
+            }
         }
     }
 }

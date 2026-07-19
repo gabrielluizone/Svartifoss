@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One swipe-direction/mini-button tile: icon + a small caption underneath, no card/background
-     behind either (per explicit feedback - the earlier pill background read as an unwanted
-     "balloon"). Before an action is assigned, the icon is a plain directional arrow (up/down/
-     left) or a "+"; once assigned, ButtonConfigFragment swaps it for the configured action's own
-     icon - at which point the caption (set once in code, never swapped) is the only thing left
-     telling the three tiles apart. -->
+<!-- One swipe-direction/mini-button tile. The caption stays intentionally short (Up, Down,
+     Left or Button 1/2/3): it preserves spatial orientation after an action icon replaces the
+     directional placeholder, without reintroducing explanatory paragraphs in Controls. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="0dp"
@@ -31,9 +28,12 @@
         android:layout_marginTop="2dp"
         android:fontFamily="@font/google_sans"
         android:gravity="center"
+        android:ellipsize="end"
+        android:importantForAccessibility="no"
         android:maxLines="2"
         android:textColor="@color/lyra_pref_summary"
-        android:textSize="10sp"
+        android:textSize="11sp"
+        android:visibility="visible"
         tools:text="Up" />
 
 </LinearLayout>

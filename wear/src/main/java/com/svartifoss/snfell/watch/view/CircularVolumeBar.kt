@@ -2,12 +2,14 @@ package com.svartifoss.snfell.watch.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Shader
 import android.util.AttributeSet
+import android.graphics.SweepGradient
 import android.view.MotionEvent
 import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.R
@@ -18,9 +20,8 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sin
 
-/** User-selectable visual style of the volume overlay (see [MiscPreferences.WEAR_VOLUME_STYLE] on
- *  the phone). All four keep the same left-edge arc geometry - and therefore the same angle-based
- *  drag - and only differ in how the arc is painted, so touch handling is identical. */
+/** User-selectable paint style of the volume overlay. Geometry is selected independently through
+ * [VolumeLayout], so a theme is no longer just another colour on the same left-edge arc. */
 enum class VolumeStyle {
     /** Frosted rounded arc over the blur backdrop (original look). */
     GLASS,
@@ -34,13 +35,15 @@ enum class VolumeStyle {
     NEON,
     /** Light track with an accent fill. */
     LIGHT,
-    /** Accent vertical-gradient fill. */
+    /** Two real album swatches blended through a vertical-gradient fill. */
     GRADIENT,
     /** Neutral greyscale fill, ignoring the album accent. */
     MONO,
+    /** Rich three-swatch album spectrum with a slim glass highlight. */
+    PRISM,
     /** Bold chunky bar (cartoon outline). */
     OUTLINE,
-    /** Two-hue: complementary track, accent fill. */
+    /** Two-hue: secondary album swatch track, primary album swatch fill. */
     DUOTONE,
     /** Pure white fill on a faint track (high contrast). */
     CONTRAST,
@@ -50,7 +53,7 @@ enum class VolumeStyle {
     FROST,
     /** The arc broken into discrete tick blocks, lighting up like a level meter. */
     SEGMENTS,
-    /** Multi-hue gradient fill drifting around the accent's hue (northern-lights look). */
+    /** Multi-hue gradient fill made from three album swatches (northern-lights look). */
     AURORA,
     /** Wide translucent accent halo with a thin solid core, like a wet ink stroke. */
     INK,
@@ -63,6 +66,7 @@ enum class VolumeStyle {
             "material" -> MATERIAL
             "tonal" -> TONAL
             "neon" -> NEON
+            "prism" -> PRISM
             "light" -> LIGHT
             "gradient" -> GRADIENT
             "mono" -> MONO
@@ -76,6 +80,20 @@ enum class VolumeStyle {
             "ink" -> INK
             "groove" -> GROOVE
             else -> GLASS
+        }
+    }
+}
+
+enum class VolumeLayout {
+    EDGE,
+    HALO,
+    METER;
+
+    companion object {
+        fun fromPref(value: String?): VolumeLayout = when (value) {
+            "halo" -> HALO
+            "meter" -> METER
+            else -> EDGE
         }
     }
 }
@@ -96,13 +114,16 @@ class CircularVolumeBar : android.view.View {
         // o'clock (true left) - centering the arc there puts it on the left edge of the screen.
         private const val ARC_START_DEG = 130f
         private const val ARC_SWEEP_DEG = 100f
-        private const val ARC_END_DEG = ARC_START_DEG + ARC_SWEEP_DEG
+        private const val HALO_START_DEG = 135f
+        private const val HALO_SWEEP_DEG = 270f
     }
 
     // Scratch stroke paint reconfigured per style each draw; and a fill paint for the material thumb.
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
     private val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     private val circleBounds = RectF()
+    private val haloBounds = RectF()
+    private val meterBounds = RectF()
     private val touchBand = resources.getDimension(R.dimen.seek_bar_touch_band)
 
     private val baseStroke = resources.getDimension(R.dimen.seek_bar_width)
@@ -113,8 +134,18 @@ class CircularVolumeBar : android.view.View {
     // The accent (album/theme) color, set via progressColor. Kept in its own field so per-draw
     // recolouring of the scratch paints never clobbers it.
     private var accentColorInt = resources.getColor(R.color.music_screen_volume_bar_foreground_color, null)
+    private var secondaryColorInt = accentColorInt
+    private var tertiaryColorInt = accentColorInt
 
     var barStyle: VolumeStyle = VolumeStyle.GLASS
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
+
+    var barLayout: VolumeLayout = VolumeLayout.EDGE
         set(value) {
             if (field != value) {
                 field = value
@@ -145,6 +176,21 @@ class CircularVolumeBar : android.view.View {
             invalidate()
         }
 
+    /** Additional album-palette swatches for styles that intentionally use more than one hue. */
+    var secondaryColor: Int
+        get() = secondaryColorInt
+        set(value) {
+            secondaryColorInt = value
+            invalidate()
+        }
+
+    var tertiaryColor: Int
+        get() = tertiaryColorInt
+        set(value) {
+            tertiaryColorInt = value
+            invalidate()
+        }
+
     fun incrementVolume(change: Float) {
         volume = min(1f, max(0f, volume + change))
     }
@@ -164,10 +210,32 @@ class CircularVolumeBar : android.view.View {
         circleBounds.top = circleStroke + verticalMargin / 2
         circleBounds.right = circleBounds.left + circleSize
         circleBounds.bottom = circleBounds.top + circleSize
+
+        val density = resources.displayMetrics.density
+        val haloSize = min(viewSize - 52f * density, 138f * density)
+                .coerceAtLeast(80f * density)
+        haloBounds.set(
+                measuredWidth / 2f - haloSize / 2f,
+                measuredHeight / 2f - haloSize / 2f,
+                measuredWidth / 2f + haloSize / 2f,
+                measuredHeight / 2f + haloSize / 2f)
+        val meterWidth = min(measuredWidth * .68f, 132f * density)
+        val meterHeight = 11f * density
+        val meterY = measuredHeight / 2f + 29f * density
+        meterBounds.set(
+                measuredWidth / 2f - meterWidth / 2f,
+                meterY - meterHeight / 2f,
+                measuredWidth / 2f + meterWidth / 2f,
+                meterY + meterHeight / 2f)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+
+        if (barLayout == VolumeLayout.METER) {
+            drawMeter(canvas)
+            return
+        }
 
         when (barStyle) {
             VolumeStyle.GLASS ->
@@ -194,7 +262,13 @@ class CircularVolumeBar : android.view.View {
             VolumeStyle.OUTLINE ->
                 drawArc(canvas, baseStroke * 1.4f, Paint.Cap.BUTT, 0x55FFFFFF, accentColorInt)
             VolumeStyle.DUOTONE ->
-                drawArc(canvas, baseStroke, Paint.Cap.ROUND, tonal(complementary(accentColorInt), 0.30f), accentColorInt)
+                drawArc(canvas, baseStroke, Paint.Cap.ROUND,
+                        tonal(secondaryColorInt, 0.30f), accentColorInt)
+            VolumeStyle.PRISM -> {
+                drawArc(canvas, baseStroke * 1.7f, Paint.Cap.ROUND,
+                        0x22FFFFFF, 0, fillShader = prismShader())
+                drawArc(canvas, baseStroke * 0.35f, Paint.Cap.ROUND, 0, 0xA6FFFFFF.toInt())
+            }
             VolumeStyle.CONTRAST ->
                 drawArc(canvas, baseStroke * 1.3f, Paint.Cap.BUTT, 0x55FFFFFF, 0xFFFFFFFF.toInt())
             VolumeStyle.TERMINAL ->
@@ -226,36 +300,46 @@ class CircularVolumeBar : android.view.View {
         }
     }
 
-    /** Vertical gradient drifting the accent's hue ±40° (the aurora style's fill). */
+    /** Vertical gradient through real tertiary/primary/secondary album-art swatches. */
     private fun auroraShader(): Shader {
-        val hsl = FloatArray(3)
-        ColorUtils.colorToHSL(accentColorInt, hsl)
-        fun hueShift(delta: Float): Int {
-            val shifted = floatArrayOf((hsl[0] + delta + 360f) % 360f,
-                    hsl[1].coerceIn(0.45f, 0.85f), 0.60f)
-            return ColorUtils.HSLToColor(shifted)
-        }
+        val bounds = activeArcBounds()
         return LinearGradient(
-                circleBounds.left, circleBounds.top, circleBounds.left, circleBounds.bottom,
-                intArrayOf(hueShift(40f), hueShift(0f), hueShift(-40f)),
+                bounds.left, bounds.top, bounds.left, bounds.bottom,
+                intArrayOf(
+                        tonal(tertiaryColorInt, 0.60f),
+                        tonal(accentColorInt, 0.60f),
+                        tonal(secondaryColorInt, 0.60f)
+                ),
                 floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP
         )
     }
 
-    /** The album accent's complementary hue (used by the duotone style). */
-    private fun complementary(accent: Int): Int {
-        val hsl = FloatArray(3)
-        ColorUtils.colorToHSL(accent, hsl)
-        hsl[0] = (hsl[0] + 180f) % 360f
-        return ColorUtils.HSLToColor(hsl)
-    }
-
     /** Vertical accent gradient (light at top, dark at bottom) spanning the arc bounds, for the
      *  gradient style's fill. */
-    private fun verticalArcShader(): Shader = LinearGradient(
-            circleBounds.left, circleBounds.top, circleBounds.left, circleBounds.bottom,
-            tonal(accentColorInt, 0.62f), tonal(accentColorInt, 0.30f), Shader.TileMode.CLAMP
-    )
+    private fun verticalArcShader(): Shader {
+        val bounds = activeArcBounds()
+        return LinearGradient(
+                bounds.left, bounds.top, bounds.left, bounds.bottom,
+                tonal(accentColorInt, 0.62f), tonal(secondaryColorInt, 0.30f),
+                Shader.TileMode.CLAMP)
+    }
+
+    /** Repeats the three real cover swatches around the circle so this left-edge arc receives
+     *  all three hues, unlike a two-stop vertical gradient that only exposes its middle. */
+    private fun prismShader(): Shader {
+        val bounds = activeArcBounds()
+        return SweepGradient(
+                bounds.centerX(),
+                bounds.centerY(),
+                intArrayOf(
+                        tonal(tertiaryColorInt, .38f),
+                        tonal(accentColorInt, .62f),
+                        tonal(secondaryColorInt, .48f),
+                        tonal(tertiaryColorInt, .38f),
+                        tonal(accentColorInt, .62f)
+                ),
+                floatArrayOf(0f, .36f, .50f, .64f, 1f))
+    }
 
     /** Draws the track arc plus the volume-filled arc from the bottom end upwards. When
      *  [fillShader] is set it paints the fill instead of [fillColor]. */
@@ -272,7 +356,10 @@ class CircularVolumeBar : android.view.View {
 
         strokePaint.shader = null
         strokePaint.color = trackColor
-        canvas.drawArc(circleBounds, ARC_START_DEG, ARC_SWEEP_DEG, false, strokePaint)
+        val bounds = activeArcBounds()
+        val start = activeArcStart()
+        val sweep = activeArcSweep()
+        canvas.drawArc(bounds, start, sweep, false, strokePaint)
 
         if (volume > 0.001f) {
             if (fillShader != null) {
@@ -281,19 +368,20 @@ class CircularVolumeBar : android.view.View {
                 strokePaint.shader = null
                 strokePaint.color = fillColor
             }
-            canvas.drawArc(circleBounds, ARC_START_DEG, volume * ARC_SWEEP_DEG, false, strokePaint)
+            canvas.drawArc(bounds, start, volume * sweep, false, strokePaint)
             strokePaint.shader = null
         }
     }
 
     /** Material slider-style dot sitting on the arc at the current volume level. */
     private fun drawThumb(canvas: Canvas, color: Int) {
-        val angleRad = Math.toRadians((ARC_START_DEG + volume * ARC_SWEEP_DEG).toDouble())
-        val radius = circleBounds.width() / 2f
+        val bounds = activeArcBounds()
+        val angleRad = Math.toRadians((activeArcStart() + volume * activeArcSweep()).toDouble())
+        val radius = bounds.width() / 2f
         fillPaint.color = color
         canvas.drawCircle(
-                circleBounds.centerX() + radius * cos(angleRad).toFloat(),
-                circleBounds.centerY() + radius * sin(angleRad).toFloat(),
+                bounds.centerX() + radius * cos(angleRad).toFloat(),
+                bounds.centerY() + radius * sin(angleRad).toFloat(),
                 baseStroke * 0.95f,
                 fillPaint
         )
@@ -309,10 +397,86 @@ class CircularVolumeBar : android.view.View {
         return ColorUtils.HSLToColor(hsl)
     }
 
+    private fun activeArcBounds(): RectF =
+            if (barLayout == VolumeLayout.HALO) haloBounds else circleBounds
+
+    private fun activeArcStart(): Float =
+            if (barLayout == VolumeLayout.HALO) HALO_START_DEG else ARC_START_DEG
+
+    private fun activeArcSweep(): Float =
+            if (barLayout == VolumeLayout.HALO) HALO_SWEEP_DEG else ARC_SWEEP_DEG
+
+    /** Horizontal level composition. The selected paint style still controls its material, but
+     * this geometry is intentionally unrelated to the bezel arc. */
+    private fun drawMeter(canvas: Canvas) {
+        val radius = meterBounds.height() / 2f
+        val trackColor = when (barStyle) {
+            VolumeStyle.LIGHT -> 0x88CCCCCC.toInt()
+            VolumeStyle.TERMINAL -> ColorUtils.setAlphaComponent(TERMINAL_GREEN, 0x40)
+            VolumeStyle.DUOTONE -> tonal(secondaryColorInt, .30f)
+            VolumeStyle.TONAL -> tonal(accentColorInt, .22f)
+            else -> 0x35FFFFFF
+        }
+        val fillColor = when (barStyle) {
+            VolumeStyle.MONO -> 0xFFE0E0E0.toInt()
+            VolumeStyle.CONTRAST -> 0xFFFFFFFF.toInt()
+            VolumeStyle.TERMINAL -> TERMINAL_GREEN
+            VolumeStyle.TONAL -> tonal(accentColorInt, .72f)
+            else -> accentColorInt
+        }
+        fillPaint.shader = null
+        fillPaint.color = trackColor
+        canvas.drawRoundRect(meterBounds, radius, radius, fillPaint)
+
+        if (barStyle == VolumeStyle.SEGMENTS) {
+            val count = 10
+            val gap = resources.displayMetrics.density * 3f
+            val segmentWidth = (meterBounds.width() - gap * (count - 1)) / count
+            repeat(count) { index ->
+                val left = meterBounds.left + index * (segmentWidth + gap)
+                fillPaint.color = if ((index + 1f) / count <= volume + .001f) {
+                    fillColor
+                } else {
+                    ColorUtils.setAlphaComponent(fillColor, 0x28)
+                }
+                canvas.drawRoundRect(
+                        left, meterBounds.top, left + segmentWidth, meterBounds.bottom,
+                        segmentWidth / 2f, segmentWidth / 2f, fillPaint)
+            }
+            return
+        }
+
+        if (volume > .001f) {
+            val fill = RectF(
+                    meterBounds.left, meterBounds.top,
+                    meterBounds.left + meterBounds.width() * volume, meterBounds.bottom)
+            fillPaint.shader = when (barStyle) {
+                VolumeStyle.GRADIENT, VolumeStyle.AURORA, VolumeStyle.PRISM -> LinearGradient(
+                        meterBounds.left, meterBounds.centerY(), meterBounds.right,
+                        meterBounds.centerY(), tertiaryColorInt, secondaryColorInt,
+                        Shader.TileMode.CLAMP)
+                else -> null
+            }
+            fillPaint.color = fillColor
+            canvas.drawRoundRect(fill, radius, radius, fillPaint)
+            fillPaint.shader = null
+        }
+        if (barStyle in setOf(VolumeStyle.MATERIAL, VolumeStyle.GLASS, VolumeStyle.TONAL)) {
+            fillPaint.color = Color.WHITE
+            canvas.drawCircle(
+                    meterBounds.left + meterBounds.width() * volume,
+                    meterBounds.centerY(), radius * .72f, fillPaint)
+        }
+    }
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val centerX = circleBounds.centerX()
-        val centerY = circleBounds.centerY()
-        val radius = circleBounds.width() / 2
+        if (barLayout == VolumeLayout.METER) {
+            return handleMeterTouch(event)
+        }
+        val bounds = activeArcBounds()
+        val centerX = bounds.centerX()
+        val centerY = bounds.centerY()
+        val radius = bounds.width() / 2
         val dx = event.x - centerX
         val dy = event.y - centerY
         val distanceFromCenter = hypot(dx, dy)
@@ -320,7 +484,8 @@ class CircularVolumeBar : android.view.View {
         // Same convention as Canvas.drawArc: 0deg = East, increasing clockwise (screen Y is
         // already "down", so atan2(dy, dx) lines up with it directly, no extra offset needed).
         val angleDeg = (Math.toDegrees(atan2(dy, dx).toDouble()) + 360.0) % 360.0
-        val withinArc = angleDeg in ARC_START_DEG.toDouble()..ARC_END_DEG.toDouble()
+        val delta = ((angleDeg - activeArcStart()) + 360.0) % 360.0
+        val withinArc = delta <= activeArcSweep().toDouble()
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -348,10 +513,33 @@ class CircularVolumeBar : android.view.View {
             else -> return false
         }
 
-        val fraction = ((angleDeg - ARC_START_DEG) / ARC_SWEEP_DEG).toFloat().coerceIn(0f, 1f)
+        val fraction = (delta / activeArcSweep()).toFloat().coerceIn(0f, 1f)
         volume = fraction
         onVolumeChanged?.invoke(fraction)
 
+        return true
+    }
+
+    private fun handleMeterTouch(event: MotionEvent): Boolean {
+        val expanded = RectF(meterBounds).apply { inset(-touchBand, -touchBand) }
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                if (!expanded.contains(event.x, event.y)) return false
+                isDragging = true
+                parent?.requestDisallowInterceptTouchEvent(true)
+            }
+            MotionEvent.ACTION_MOVE -> if (!isDragging) return false
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                if (!isDragging) return false
+                isDragging = false
+                parent?.requestDisallowInterceptTouchEvent(false)
+                return true
+            }
+            else -> return false
+        }
+        val fraction = ((event.x - meterBounds.left) / meterBounds.width()).coerceIn(0f, 1f)
+        volume = fraction
+        onVolumeChanged?.invoke(fraction)
         return true
     }
 }

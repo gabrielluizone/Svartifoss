@@ -1,0 +1,20 @@
+# Crashlytics -
+# Application: com.svartifoss.snfell
+# Platform: android
+# Version: 2.2.1 (54)
+# Issue: 957850a8e545258ea2cc34d7a96c2797
+# Session: 6A53BFD1011900011BBE515355AE3EBD_DNE_2_v2
+# Date: Sun Jul 12 2026 19:19:11 GMT-0300 (Brasilia Standard Time)
+
+Non-fatal Exception: pl.tajchert.exceptionwear.WatchException: com.google.android.gms.common.api.ApiException: 4000: TARGET_NODE_NOT_CONNECTED
+       at com.google.android.gms.common.internal.ApiExceptionUtil.fromStatus(com.google.android.gms:play-services-base@@18.4.0:3)
+       at com.google.android.gms.common.internal.zap.onComplete(com.google.android.gms:play-services-base@@18.4.0:4)
+       at com.google.android.gms.common.api.internal.BasePendingResult.zab(com.google.android.gms:play-services-base@@18.4.0:7)
+       at com.google.android.gms.common.api.internal.BasePendingResult.setResult(com.google.android.gms:play-services-base@@18.4.0:6)
+       at com.google.android.gms.wearable.internal.zzt.setResult(com.google.android.gms:play-services-wearable@@19.0.0:1)
+       at com.google.android.gms.wearable.internal.zzig.zzQ(com.google.android.gms:play-services-wearable@@19.0.0:1)
+       at com.google.android.gms.wearable.internal.zziz.zzM(com.google.android.gms:play-services-wearable@@19.0.0:1)
+       at com.google.android.gms.wearable.internal.zzfo.zza(com.google.android.gms:play-services-wearable@@19.0.0:108)
+       at com.google.android.gms.internal.wearable.zzb.onTransact(com.google.android.gms:play-services-wearable@@19.0.0:3)
+       at android.os.Binder.execTransactInternal(Binder.java:1364)
+       at android.os.Binder.execTransact(Binder.java:1323)

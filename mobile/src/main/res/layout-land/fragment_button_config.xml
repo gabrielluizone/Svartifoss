@@ -25,9 +25,29 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
             android:text="@string/on_screen_buttons"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/on_screen_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/google_sans"
+            android:maxLines="2"
+            android:text="@string/tap_a_zone_to_configure"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/watch_display_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/on_screen_buttons_caption" />
 
         <ImageView
             android:id="@+id/watch_display_background"
@@ -83,7 +103,7 @@
             android:padding="10dp"
             android:src="@drawable/action_volume_up"
             app:layout_constraintStart_toStartOf="@+id/space4"
-            app:layout_constraintTop_toBottomOf="@+id/on_screen_buttons_caption"
+            app:layout_constraintTop_toBottomOf="@+id/on_screen_hint"
             app:layout_constraintVertical_chainStyle="packed"
             tools:ignore="ContentDescription" />
 
@@ -121,9 +141,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
             android:text="@string/physical_buttons"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="11sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/physical_buttons_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/physical_buttons_disconnected"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/watch_display_border"
+            app:layout_constraintTop_toBottomOf="@+id/caption_physical_buttons" />
 
         <LinearLayout
             android:id="@+id/watch_button_container"
@@ -135,7 +174,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/watch_display_border"
-            app:layout_constraintTop_toBottomOf="@+id/caption_physical_buttons" />
+            app:layout_constraintTop_toBottomOf="@+id/physical_buttons_hint" />
 
         <TextView
             android:id="@+id/swipe_gestures_caption"
@@ -144,7 +183,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
             android:text="@string/swipe_gestures"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/watch_button_container" />
 
@@ -154,7 +198,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/google_sans"
             android:text="@string/tap_a_swipe_to_configure"
+            android:textColor="@color/lyra_pref_summary"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +226,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
             android:text="@string/screen_buttons"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/swipe_gesture_container" />
 
@@ -190,7 +241,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/google_sans"
             android:text="@string/tap_a_screen_button_to_configure"
+            android:textColor="@color/lyra_pref_summary"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

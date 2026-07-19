@@ -100,7 +100,7 @@
 
         <Preference
             android:key="swipe_gestures_hint"
-            android:icon="@drawable/ic_arrow_up"
+            android:icon="@drawable/ic_swipe_directions"
             android:title="@string/setting_swipe_gestures_hint"
             android:summary="@string/setting_swipe_gestures_hint_description"
             android:layout="@layout/pref_item" />
@@ -124,7 +124,7 @@
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="40"
             android:key="rotating_crown_sensitivity"
-            android:icon="@drawable/button_turn_cw"
+            android:icon="@drawable/ic_tune"
             android:title="@string/setting_rotating_sensitivity"
             android:summary="@string/setting_rotating_sensitivity_description"
             android:layout="@layout/pref_item" />
@@ -132,7 +132,7 @@
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="6"
             android:key="rotary_deadzone"
-            android:icon="@drawable/button_turn_cw"
+            android:icon="@drawable/ic_tune"
             android:title="@string/setting_rotary_deadzone"
             android:summary="@string/setting_rotary_deadzone_description"
             android:layout="@layout/pref_item" />
@@ -140,7 +140,7 @@
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="rotary_seek"
-            android:icon="@drawable/action_forward_10"
+            android:icon="@drawable/ic_progress_style"
             android:title="@string/setting_rotary_seek"
             android:summary="@string/setting_rotary_seek_description"
             android:layout="@layout/pref_switch_item" />
@@ -164,7 +164,7 @@
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
             android:key="haptic_feedback"
-            android:icon="@drawable/ic_bolt"
+            android:icon="@drawable/ic_watch_vibration"
             android:title="@string/setting_haptic_feedback"
             android:summary="@string/setting_haptic_feedback_description"
             android:layout="@layout/pref_switch_item" />
@@ -172,7 +172,7 @@
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="pause_on_swipe_exit"
-            android:icon="@drawable/ic_music_off"
+            android:icon="@drawable/ic_pause"
             android:title="@string/setting_pause_on_swipe_exit"
             android:summary="@string/setting_pause_on_swipe_exit_description"
             android:layout="@layout/pref_switch_item" />
@@ -187,16 +187,79 @@
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="always_select_center_action"
-            android:icon="@drawable/ic_gamepad"
+            android:icon="@drawable/ic_joystick"
             android:title="@string/setting_always_select_center_action"
             android:summary="@string/setting_always_select_center_action_description"
             android:layout="@layout/pref_switch_item" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_notifications"
+        android:title="@string/category_notifications"
+        android:layout="@layout/pref_category_header">
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="enable_notification_popup"
+            android:icon="@drawable/ic_bell"
+            android:title="@string/setting_enable_notifications"
+            android:summary="@string/setting_enable_notifications_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="10"
+            android:key="notification_timeout"
+            android:icon="@drawable/ic_history"
+            android:dependency="enable_notification_popup"
+            android:title="@string/setting_notification_timeout"
+            android:summary="@string/setting_notification_timeout_description"
+            android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_apps"
+        android:title="@string/category_music_apps"
+        android:layout="@layout/pref_category_header">
+
+        <Preference
+            android:key="apps_integrations_info"
+            android:icon="@drawable/ic_apps"
+            android:title="@string/setting_apps_integrations"
+            android:summary="@string/setting_apps_integrations_description"
+            android:selectable="false"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.AutoSummaryListPreference
+            android:key="streaming_open_mode"
+            android:icon="@drawable/ic_apps"
+            android:title="@string/setting_streaming_open_mode"
+            android:entries="@array/streaming_open_mode_entries"
+            android:entryValues="@array/streaming_open_mode_values"
+            app:summary="%1$s"
+            app:defaultValue="app"
+            android:layout="@layout/pref_item" />
+
         <Preference
             android:key="playlist_shortcuts"
-            android:icon="@drawable/ic_yt_music"
+            android:icon="@drawable/ic_playlist_add"
             android:title="@string/setting_playlist_shortcuts"
             android:summary="@string/setting_playlist_shortcuts_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="notification_access"
+            android:icon="@drawable/ic_bell"
+            android:title="@string/setting_notification_access"
+            android:summary="@string/setting_notification_access_disabled"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.MusicAppListPreference
+            android:key="auto_start_apps_blacklist"
+            android:icon="@drawable/ic_apps"
+            android:title="@string/setting_auto_start_apps_blacklist"
+            android:summary="@string/setting_auto_start_apps_blacklist_description"
             android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
@@ -207,7 +270,6 @@
         android:layout="@layout/pref_category_header">
 
         <com.matejdro.wearutils.preferences.compat.AutoSummaryListPreference
-            android:defaultValue="false"
             android:key="auto_start_mode"
             android:icon="@drawable/action_play"
             android:entryValues="@array/auto_start_modes_keys"
@@ -215,13 +277,6 @@
             android:title="@string/setting_auto_start"
             app:summary="%1$s"
             app:defaultValue="OFF"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.MusicAppListPreference
-            android:key="auto_start_apps_blacklist"
-            android:icon="@drawable/ic_apps"
-            android:title="@string/setting_auto_start_apps_blacklist"
-            android:summary="@string/setting_auto_start_apps_blacklist_description"
             android:layout="@layout/pref_item" />
 
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
@@ -257,6 +312,21 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="cat_privacy"
+        android:title="@string/category_privacy"
+        android:layout="@layout/pref_category_header">
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="crash_reporting_enabled"
+            android:icon="@drawable/ic_bug_report"
+            android:title="@string/setting_crash_reporting"
+            android:summary="@string/setting_crash_reporting_description"
+            android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="cat_about"
         android:title="@string/category_about"
         android:layout="@layout/pref_category_header">
@@ -269,7 +339,7 @@
 
         <Preference
             android:key="supportButton"
-            android:icon="@drawable/ic_share"
+            android:icon="@drawable/ic_help"
             android:summary="@string/get_support_description"
             android:title="@string/get_support"
             android:layout="@layout/pref_item" />
@@ -298,7 +368,7 @@
 
         <Preference
             android:key="dev_sync_watch"
-            android:icon="@drawable/ic_send_to_mobile"
+            android:icon="@drawable/ic_sync_to_watch"
             android:title="@string/dev_sync_watch"
             android:summary="@string/dev_sync_watch_description"
             android:layout="@layout/pref_item" />
@@ -308,6 +378,30 @@
             android:icon="@drawable/ic_share"
             android:title="@string/dev_copy_debug_info"
             android:summary="@string/dev_copy_debug_info_description"
+            android:layout="@layout/pref_item" />
+
+        <SwitchPreferenceCompat
+            android:key="dev_show_archived"
+            android:defaultValue="false"
+            android:icon="@drawable/ic_archived_options"
+            android:title="@string/dev_show_archived"
+            android:summary="@string/dev_show_archived_description"
+            android:layout="@layout/pref_item" />
+
+        <SwitchPreferenceCompat
+            android:key="wear_dev_show_layout_bounds"
+            android:defaultValue="false"
+            android:icon="@drawable/ic_rounded_corner"
+            android:title="@string/dev_watch_layout_bounds"
+            android:summary="@string/dev_watch_layout_bounds_description"
+            android:layout="@layout/pref_item" />
+
+        <SwitchPreferenceCompat
+            android:key="wear_dev_show_player_info"
+            android:defaultValue="false"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/dev_watch_player_info"
+            android:summary="@string/dev_watch_player_info_description"
             android:layout="@layout/pref_item" />
 
     </PreferenceCategory>

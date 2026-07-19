@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Preference icons fade with their dependent row instead of staying visually actionable. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/lyra_divider" android:state_enabled="false" />
+    <item android:color="@color/lyra_text_secondary" />
+</selector>

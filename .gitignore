@@ -39,6 +39,8 @@ mobile/google-services.json
 .playwright-mcp/
 promp.txt
 centering_check.png
+/run.md
+/look-*.png
 
 # Personal config-backup export (ConfigBackup.kt output) - not app source
 /svartifoss_config.json

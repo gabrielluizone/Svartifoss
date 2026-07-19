@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- A single-choice ListPreference whose modal dialog shows a per-option description under
+         each name, instead of hiding the descriptions the way a stock ListPreference does. -->
+    <declare-styleable name="DescribedListPreference">
+        <!-- String-array of per-entry descriptions, parallel to android:entries/entryValues. -->
+        <attr name="descriptions" format="reference" />
+    </declare-styleable>
+</resources>

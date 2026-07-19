@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One row of the DescribedListPreference dialog: just the option name, like a stock
+     ListPreference's radio list. The full description lives in the row's own summary on the
+     settings screen instead - keeping the dialog itself short and scannable. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:minHeight="52dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+
+    <TextView
+        android:id="@+id/choice_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:fontFamily="@font/google_sans"
+        android:textColor="@color/lyra_on_surface" />
+
+    <ImageView
+        android:id="@+id/choice_check"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_check_circle"
+        android:importantForAccessibility="no" />
+
+</LinearLayout>

@@ -13,13 +13,10 @@ import timber.log.Timber
  * [AlbumArtComplicationDataSourceService] album-art complication - swallowing any failure so a
  * library-side error can never crash the caller.
  *
- * On Wear OS 5, `androidx.wear.tiles`' `SysUiTileUpdateRequester` reads the `Settings.Global`
- * `clockwork_sysui_package` key, which the platform now restricts to apps targeting API <= 34;
- * with our `targetSdk 35` that read throws [SecurityException]. Both callers request the update
- * synchronously on the main thread (from a `LiveData` observer in [WatchMusicService] and from
- * [MusicStateListenerService.onDataChanged]), so an unguarded throw took the whole watch app down.
- * These updates are best-effort hints anyway - dropping one just leaves a surface briefly stale
- * until the next state change.
+ * Both callers request the update synchronously on the main thread (from a `LiveData` observer in
+ * [WatchMusicService] and from [MusicStateListenerService.onDataChanged]). The runtime guard stays
+ * in place because these are best-effort hints: a vendor renderer failure must never crash the
+ * player, and the Tile still has a one-minute freshness fallback.
  */
 object GlanceableSurfaces {
     fun requestUpdate(context: Context) {
@@ -30,6 +27,8 @@ object GlanceableSurfaces {
     fun requestTileUpdate(context: Context) {
         try {
             TileService.getUpdater(context).requestUpdate(MediaTileService::class.java)
+        } catch (e: SecurityException) {
+            Timber.w("Could not request media Tile update due to API 35+ settings restrictions: %s", e.message)
         } catch (e: RuntimeException) {
             Timber.w(e, "Could not request media Tile update")
         }
@@ -41,6 +40,8 @@ object GlanceableSurfaces {
                     context,
                     ComponentName(context, AlbumArtComplicationDataSourceService::class.java)
             ).requestUpdateAll()
+        } catch (e: SecurityException) {
+            Timber.w("Could not request complication update: %s", e.message)
         } catch (e: RuntimeException) {
             Timber.w(e, "Could not request complication update")
         }

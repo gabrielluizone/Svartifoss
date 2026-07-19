@@ -18,11 +18,12 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +31,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
@@ -45,7 +49,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -55,12 +62,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.ColorUtils
+import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.PlayerShadingStyle
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
-import com.svartifoss.snfell.watch.view.compose.CurvedClock
+import com.svartifoss.snfell.watch.view.compose.FaceClock
 import com.svartifoss.snfell.common.R as commonR
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -73,9 +81,9 @@ import kotlin.math.tanh
  * controls: a soft 12-lobe "cookie" play/pause button (morphs to a plain circle while paused)
  * wrapped in a progress ring that follows the cookie's scalloped contour, flanked by large
  * round prev/next buttons in the album accent's light container tone, over the album art
- * darkened by an accent tint and a radial black vignette. When the user has no mini buttons
- * configured, the reference's bottom trio (queue / volume / overflow) shows as translucent
- * glass pills.
+ * darkened by an accent tint and a radial black vignette. Queue/volume/menu access is left
+ * entirely to the user's configured mini buttons (see [NowPlayingFaceState.miniButtonsTopFraction])
+ * rather than a fixed default trio, so there is never a second, conflicting set of shortcuts.
  *
  * Only the buttons are hit-testable; touches everywhere else fall straight through this
  * composable to the shared input layers underneath (quadrant taps, swipe gestures), so the
@@ -103,6 +111,19 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val screen = maxWidth
+        val metrics = expressiveMetrics(screen)
+        // The ring's bottom edge below screen center - the transport row is centered and the ring
+        // fills the cookie box, so half the box height. Layout clamps (title height, track-time
+        // offset) hang off this instead of a magic fraction, so they track the real button size.
+        val ringBottom = metrics.cookieBox / 2
+        val theme = state.screenTheme
+        val themeTokens = theme.tokens
+        // Every other control-style theme only fades or scales these icons; only Hidden zeroes
+        // them out. Expressive's cookie/transport row is its one visual focus (there is no
+        // quadrant/gesture fallback the way Classic and the curated faces have), so this face
+        // always shows its icons at full opacity - Hidden becomes a no-op here.
+        val expressiveIconAlpha = themeTokens.iconAlpha.takeIf { it > 0f } ?: 1f
+        val surfaceAccent = state.accentColor
 
         // Non-null while the user is dragging the ring to scrub (central seek mode). Drives both
         // the ring sweep and the track-time readout so they follow the finger, and is committed to
@@ -111,75 +132,122 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
 
         // --- Background treatment (non-hit-testable, so touches keep falling through). The
         // album art itself is the shared ImageView below this ComposeView; these layers turn
-        // it into the reference's dark accent-tinted monochrome with black bezel edges.
-        val tint = Color(tonal(state.accentColor, lightness = 0.30f, minSat = 0.30f, maxSat = 0.80f))
-        Canvas(Modifier.fillMaxSize()) {
-            drawRect(color = tint.copy(alpha = 0.45f))
-            drawRect(color = Color.Black.copy(alpha = 0.30f))
-            drawRect(
-                    brush = Brush.radialGradient(
-                            0.0f to Color.Transparent,
-                            0.55f to Color.Transparent,
-                            1.0f to Color.Black.copy(alpha = 0.88f)
-                    )
-            )
-        }
-
-        CurvedClock(visible = true)
-
-        val sideContainer = Color(tonal(state.accentColor, lightness = 0.74f, minSat = 0.40f, maxSat = 0.85f))
-        val centerContainer = Color(tonal(state.accentColor, lightness = 0.87f, minSat = 0.30f, maxSat = 0.70f))
-        val onContainer = Color(tonal(state.accentColor, lightness = 0.16f, minSat = 0.25f, maxSat = 0.60f))
-
-        // Title/artist near the top, like the reference (the transport row owns the center).
-        Column(
-                modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .padding(top = screen * 0.13f, start = 26.dp, end = 26.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+        // it into the reference's dark accent-tinted monochrome with black bezel edges. Fixed
+        // regardless of the visual style theme, which only changes the transport icons below.
+        val authoredShade = if (
+            state.backdropShadingStyle == PlayerShadingStyle.FOLLOW && state.backdropDimEnabled
         ) {
-            Text(
-                    text = state.title,
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = GoogleSansFamily,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    modifier = Modifier.basicMarquee()
-            )
-            if (state.artist.isNotEmpty()) {
-                Text(
-                        text = state.artist,
-                        color = Color(state.artistColor),
-                        fontSize = 13.sp,
-                        fontFamily = GoogleSansFamily,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                )
+            (state.backdropDimStrength / .8f).coerceIn(0f, 1.25f)
+        } else {
+            0f
+        }
+        if (authoredShade > 0f) {
+            val tint = Color(tonal(surfaceAccent, lightness = 0.30f, minSat = 0.30f, maxSat = 0.90f))
+            Canvas(Modifier.fillMaxSize()) {
+                drawRect(color = tint.copy(alpha = (0.45f * authoredShade).coerceAtMost(1f)))
+                drawRect(color = Color.Black.copy(alpha = (0.30f * authoredShade).coerceAtMost(1f)))
+                drawRect(
+                        brush = Brush.radialGradient(
+                                0.0f to Color.Transparent,
+                                0.55f to Color.Transparent,
+                                1.0f to Color.Black.copy(
+                                        alpha = (0.88f * authoredShade).coerceAtMost(1f))
+                        )
+                    )
+            }
+        }
+        PlayerShadingOverlay(state)
+
+        FaceClock(visible = state.showClock)
+
+        val sideContainer = Color(tonal(surfaceAccent, 0.74f, 0.40f, 0.92f))
+        val centerContainer = Color(tonal(surfaceAccent, 0.87f, 0.30f, 0.90f))
+        val onOpaque = Color(tonal(surfaceAccent, 0.16f, 0.25f, 0.70f))
+        val sideContent = onOpaque
+        val centerContent = onOpaque
+        val sideStroke = Color.Transparent
+        val centerStroke = Color.Transparent
+
+        // Keep metadata in the same band as the ambient composition: visually centered between
+        // the clock and the transport row instead of crowding the clock at the bezel.
+        // On a round screen the visible width near the top is much narrower than the square
+        // bounds, so a flat 16dp inset let long titles spill past the left/right edges. Inset
+        // horizontally by a fraction of the diameter there so the text stays inside the circle.
+        val isRound = LocalConfiguration.current.isScreenRound
+        val titleHorizontalPadding = if (isRound) screen * 0.16f else 16.dp
+        if (state.showTitle || state.showArtist) {
+            Column(
+                    modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(top = screen * 0.17f,
+                                    start = titleHorizontalPadding, end = titleHorizontalPadding)
+                            // Bound the title block to the top section (17% top margin down to the
+                            // ring top) and clip. Without this, a two-line "wrap" title plus artist
+                            // spills past the ring top and paints over the transport row; clipping a
+                            // rare overflowing second line is far better than overlapping the
+                            // controls. Ring top from screen top = center (0.5) minus half the ring.
+                            .heightIn(max = (screen * 0.33f - ringBottom).coerceAtLeast(screen * 0.14f))
+                            .clipToBounds(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (state.showTitle) {
+                    AdaptiveTitleText(
+                            text = state.title,
+                            mode = state.titleTextMode,
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = state.titleFont,
+                            textAlign = TextAlign.Center,
+                            minFontSize = 12.sp
+                    )
+                }
+                if (state.showArtist && state.artist.isNotEmpty()) {
+                    Text(
+                            text = state.artist,
+                            color = Color(state.artistColor),
+                            fontSize = 11.sp,
+                            fontFamily = state.artistFont,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(top = if (state.showTitle) 2.dp else 0.dp)
+                    )
+                }
             }
         }
 
         Row(
                 modifier = Modifier.align(Alignment.Center),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(screen * 0.02f)
+                horizontalArrangement = Arrangement.spacedBy(metrics.spacing)
         ) {
             RoundTransportButton(
                     iconRes = commonR.drawable.action_skip_prev,
-                    contentDescription = stringResource(R.string.action_name_skip_prev),
-                    diameter = screen * 0.235f,
+                    contentDescription = state.leftActionDescription
+                            ?: stringResource(R.string.action_name_skip_prev),
+                    width = metrics.side,
+                    height = metrics.sideHeight,
                     container = sideContainer,
-                    content = onContainer,
+                    content = sideContent,
+                    borderColor = sideStroke,
+                    visible = state.showControls,
+                    iconAlpha = expressiveIconAlpha,
+                    iconScale = themeTokens.iconScale,
+                    iconOverride = state.leftActionIcon,
+                    iconOverrideTintable = state.leftActionIconTintable,
                     onClick = listener::onSkipPreviousTap
             )
             CookiePlayButton(
                     state = state,
-                    boxSize = screen * 0.34f,
-                    cookieSize = screen * 0.215f,
+                    boxSize = metrics.cookieBox,
+                    cookieSize = metrics.cookie,
+                    ringStroke = metrics.ringStroke,
                     container = centerContainer,
-                    content = onContainer,
+                    content = centerContent,
+                    borderColor = centerStroke,
+                    iconAlpha = expressiveIconAlpha,
+                    iconScale = themeTokens.iconScale,
                     listener = listener,
                     scrubFraction = scrubFraction,
                     onScrub = { scrubFraction = it },
@@ -191,10 +259,18 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
             )
             RoundTransportButton(
                     iconRes = commonR.drawable.action_skip_next,
-                    contentDescription = stringResource(R.string.action_name_skip_next),
-                    diameter = screen * 0.235f,
+                    contentDescription = state.rightActionDescription
+                            ?: stringResource(R.string.action_name_skip_next),
+                    width = metrics.side,
+                    height = metrics.sideHeight,
                     container = sideContainer,
-                    content = onContainer,
+                    content = sideContent,
+                    borderColor = sideStroke,
+                    visible = state.showControls,
+                    iconAlpha = expressiveIconAlpha,
+                    iconScale = themeTokens.iconScale,
+                    iconOverride = state.rightActionIcon,
+                    iconOverrideTintable = state.rightActionIconTintable,
                     onClick = listener::onSkipNextTap
             )
         }
@@ -205,6 +281,18 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
             // if the user normally hides the track time - it's the only readout of where the seek
             // will land.
             val shownPositionMs = scrubFraction?.let { (it * state.durationMs).toLong() } ?: state.positionMs
+            val desiredOffset = ringBottom + 14.dp
+            // The default bottom trio is gone (mini buttons own that row now), so always leave
+            // clearance for the mini-button row's position, whether or not any are configured.
+            val miniRowClearance = screen * state.miniButtonsTopFraction.coerceIn(.20f, .95f) -
+                    screen * .50f - 10.dp
+            // Floor at the ring's bottom edge PLUS clearance for the text's own half-height (the
+            // offset positions the text's center). When the mini-button row settles high,
+            // miniRowClearance shrinks or goes negative and, unclamped, would yank the track time
+            // up onto the ring; flooring at exactly ringBottom still left the 11sp text's top edge
+            // touching the ring, so the floor keeps a real visual gap. If the squeeze is genuinely
+            // impossible, crowding toward the mini buttons beats ever covering the play button.
+            val timeOffset = minOf(desiredOffset, miniRowClearance).coerceAtLeast(ringBottom + 10.dp)
             Text(
                     text = stringResource(
                             R.string.playback_time_format,
@@ -216,71 +304,22 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     fontFamily = GoogleSansFamily,
                     modifier = Modifier
                             .align(Alignment.Center)
-                            .offset(y = screen * 0.17f + 12.dp)
+                            .offset(y = timeOffset)
             )
         }
 
-        // The reference's bottom trio, shown only while the user has no mini buttons
-        // configured - configured mini buttons take over this part of the screen.
-        if (state.showDefaultBottomPills) {
-            val pillWidth = screen * 0.235f
-            val pillHeight = screen * 0.155f
-            GlassPill(
-                    width = pillWidth,
-                    height = pillHeight,
-                    label = stringResource(R.string.quick_action_up_next),
-                    onClick = listener::onQueueTap,
-                    modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .offset(x = -screen * 0.275f, y = -screen * 0.152f)
-            ) {
-                Icon(
-                        painter = painterResource(R.drawable.ic_queue_music),
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(18.dp)
-                )
-            }
-            GlassPill(
-                    width = pillWidth,
-                    height = pillHeight,
-                    label = stringResource(R.string.action_name_volume_up),
-                    onClick = listener::onVolumeTap,
-                    modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .offset(y = -screen * 0.032f)
-            ) {
-                Icon(
-                        painter = painterResource(R.drawable.volume_icon_up_outline),
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(18.dp)
-                )
-            }
-            GlassPill(
-                    width = pillWidth,
-                    height = pillHeight,
-                    label = stringResource(R.string.action_name_open_menu),
-                    onClick = listener::onOverflowTap,
-                    modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .offset(x = screen * 0.275f, y = -screen * 0.152f)
-            ) {
-                OverflowDots()
-            }
-        }
     }
 }
 
 /**
  * The expressive face's always-on-display variant (see MiscPreferences.WEAR_AOD_STYLE): the same
- * layout skeleton - title/artist up top, prev / cookie / next across the center, the pill trio
- * at the bottom - but rendered as thin outlines over black instead of tonal fills (the Wear OS 6
+ * layout skeleton - title/artist up top, prev / cookie / next across the center - but rendered
+ * as thin outlines over black instead of tonal fills (the Wear OS 6
  * system media controls' AOD look), with every animation, marquee and gesture handler gone. Lit
  * pixels are kept to a minimum on purpose: AOD runs for hours, so fills would both drain AMOLED
  * battery and risk burn-in. The outline color follows [NowPlayingFaceState.ambientTint] (white,
  * album accent or custom); the title takes the same tint (the host pre-lifts its lightness so it
- * stays legible on black) while the artist line stays white, and every alpha scales with
+ * stays legible on black), and every alpha scales with
  * [NowPlayingFaceState.ambientIntensity]. The transport row, progress ring and pills are each
  * individually toggleable. The host hides its straight ambient clock only when the user disables
  * it - this variant never draws its own.
@@ -294,35 +333,35 @@ private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val screen = maxWidth
+        val metrics = expressiveMetrics(screen)
 
-        if (state.ambientShowTrackInfo) {
-            // Slightly lower than the interactive face's 0.13f: the host's straight ambient
-            // clock (not the curved one) sits at the very top in AOD and needs clearance.
+        if (state.ambientShowTrackInfo && (state.showTitle || state.showArtist)) {
+            // Matches the interactive metadata band: both sit between the top clock and the
+            // center transport row, so switching into AOD does not make the text jump.
             Column(
                     modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = screen * 0.17f, start = 26.dp, end = 26.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                        text = state.title,
-                        // Follows the AOD color mode like the outlines do (tint IS white in the
-                        // default "white" mode, and the host lifts album/custom tints for
-                        // legibility on black).
-                        color = tint.copy(alpha = 0.85f * i),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = GoogleSansFamily,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                )
-                if (state.artist.isNotEmpty()) {
+                if (state.showTitle) {
+                    Text(
+                            text = state.title,
+                            color = tint.copy(alpha = 0.85f * i),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = state.titleFont,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                    )
+                }
+                if (state.showArtist && state.artist.isNotEmpty()) {
                     Text(
                             text = state.artist,
-                            color = Color.White.copy(alpha = 0.55f * i),
+                            color = tint.copy(alpha = 0.55f * i),
                             fontSize = 13.sp,
-                            fontFamily = GoogleSansFamily,
+                            fontFamily = state.artistFont,
                             textAlign = TextAlign.Center,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
@@ -335,116 +374,98 @@ private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
             Row(
                     modifier = Modifier.align(Alignment.Center),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(screen * 0.02f)
+                    horizontalArrangement = Arrangement.spacedBy(metrics.spacing)
             ) {
                 OutlinedAmbientButton(
                         iconRes = commonR.drawable.action_skip_prev,
-                        diameter = screen * 0.235f,
+                        width = metrics.side,
+                        height = metrics.sideHeight,
                         stroke = stroke,
-                        glyph = glyph
+                        glyph = glyph,
+                        iconOverride = state.leftActionIcon,
+                        // AOD intentionally flattens artwork to the low-emission ambient tint.
+                        iconOverrideTintable = true
                 )
                 AmbientCookie(
                         state = state,
-                        boxSize = screen * 0.34f,
-                        cookieSize = screen * 0.215f,
+                        boxSize = metrics.cookieBox,
+                        cookieSize = metrics.cookie,
                         stroke = stroke,
                         glyph = glyph
                 )
                 OutlinedAmbientButton(
                         iconRes = commonR.drawable.action_skip_next,
-                        diameter = screen * 0.235f,
+                        width = metrics.side,
+                        height = metrics.sideHeight,
                         stroke = stroke,
-                        glyph = glyph
+                        glyph = glyph,
+                        iconOverride = state.rightActionIcon,
+                        iconOverrideTintable = true
                 )
             }
         }
 
-        // Same trio, same positions as the interactive face, so a wake-up tap lands on the
-        // button the user was already aiming at - just outlined and inert (ambient touches
-        // wake the watch instead of reaching the app).
-        if (state.showDefaultBottomPills && state.ambientShowPills) {
-            val pillWidth = screen * 0.235f
-            val pillHeight = screen * 0.155f
-            OutlinedAmbientPill(
-                    width = pillWidth,
-                    height = pillHeight,
-                    stroke = stroke,
+        // One useful, glanceable row fills the lower AOD band without pretending to be
+        // interactive. It is independent of configured mini buttons because those are hidden in
+        // ambient mode anyway.
+        if (state.ambientShowPills) {
+            AmbientUpNextPill(
+                    state = state,
+                    screen = screen,
+                    tint = tint,
+                    intensity = i,
                     modifier = Modifier
                             .align(Alignment.BottomCenter)
-                            .offset(x = -screen * 0.275f, y = -screen * 0.152f)
-            ) {
-                Icon(
-                        painter = painterResource(R.drawable.ic_queue_music),
-                        contentDescription = null,
-                        tint = glyph,
-                        modifier = Modifier.size(18.dp)
-                )
-            }
-            OutlinedAmbientPill(
-                    width = pillWidth,
-                    height = pillHeight,
-                    stroke = stroke,
-                    modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .offset(y = -screen * 0.032f)
-            ) {
-                Icon(
-                        painter = painterResource(R.drawable.volume_icon_up_outline),
-                        contentDescription = null,
-                        tint = glyph,
-                        modifier = Modifier.size(18.dp)
-                )
-            }
-            OutlinedAmbientPill(
-                    width = pillWidth,
-                    height = pillHeight,
-                    stroke = stroke,
-                    modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .offset(x = screen * 0.275f, y = -screen * 0.152f)
-            ) {
-                OverflowDots(color = glyph)
-            }
+                            // Below the center cookie's bounding box, with a small bezel inset.
+                            .padding(bottom = screen * .03f)
+            )
         }
+
     }
 }
 
-/** A bottom pill reduced to a hairline rounded outline - no fill, no interaction. */
+/** A transport button reduced to a hairline capsule outline and a dim glyph - no fill, no
+ *  interaction. Same flattened geometry as the awake [RoundTransportButton] so a wake-up tap
+ *  lands on the button the AOD showed. */
 @Composable
-private fun OutlinedAmbientPill(
+private fun OutlinedAmbientButton(
+        iconRes: Int,
         width: Dp,
         height: Dp,
         stroke: Color,
-        modifier: Modifier = Modifier,
-        content: @Composable () -> Unit
+        glyph: Color,
+        iconOverride: androidx.compose.ui.graphics.ImageBitmap? = null,
+        iconOverrideTintable: Boolean = true
 ) {
-    Box(
-            modifier = modifier
-                    .size(width = width, height = height)
-                    .border(1.5.dp, stroke, RoundedCornerShape(50)),
-            contentAlignment = Alignment.Center
-    ) {
-        content()
-    }
-}
-
-/** A transport button reduced to a hairline circle and a dim glyph - no fill, no interaction. */
-@Composable
-private fun OutlinedAmbientButton(iconRes: Int, diameter: Dp, stroke: Color, glyph: Color) {
-    Box(Modifier.size(diameter), contentAlignment = Alignment.Center) {
+    Box(Modifier.size(width, height), contentAlignment = Alignment.Center) {
         Canvas(Modifier.fillMaxSize()) {
-            drawCircle(
+            val inset = 1.dp.toPx()
+            // Corner radius = half the SMALLER dimension, so the capsule fully rounds along its
+            // short axis whichever way the button is oriented (here: rounded top and bottom).
+            val radius = (minOf(size.width, size.height) - 2 * inset) / 2f
+            drawRoundRect(
                     color = stroke,
-                    radius = size.minDimension / 2f - 1.dp.toPx(),
+                    topLeft = Offset(inset, inset),
+                    size = Size(size.width - 2 * inset, size.height - 2 * inset),
+                    cornerRadius = CornerRadius(radius),
                     style = Stroke(width = 1.5.dp.toPx())
             )
         }
-        Icon(
-                painter = painterResource(iconRes),
-                contentDescription = null,
-                tint = glyph,
-                modifier = Modifier.size(diameter * 0.42f)
-        )
+        if (iconOverride != null) {
+            Icon(
+                    bitmap = iconOverride,
+                    contentDescription = null,
+                    tint = if (iconOverrideTintable) glyph else Color.Unspecified,
+                    modifier = Modifier.size(height * 0.5f)
+            )
+        } else {
+            Icon(
+                    painter = painterResource(iconRes),
+                    contentDescription = null,
+                    tint = glyph,
+                    modifier = Modifier.size(height * 0.5f)
+            )
+        }
     }
 }
 
@@ -464,19 +485,29 @@ private fun AmbientCookie(
         if (state.ambientShowProgress) {
             Canvas(Modifier.fillMaxSize()) {
                 val strokePx = 2.dp.toPx()
+                val ringStrokes = ambientRingStrokes(state.progressRingStyle, strokePx)
                 val ringModulation = if (state.playing) RING_MODULATION else 0f
                 val baseRadius = (size.minDimension / 2f - strokePx * 2f) / (1f + RING_MODULATION)
                 val sweep = state.progress.coerceIn(0f, 1f) * 360f
+                val halfGap = RING_GAP_DEGREES / 2f
 
-                val trackFrom = sweep + RING_GAP_DEGREES
-                val trackTo = 360f - RING_GAP_DEGREES
-                if (trackTo > trackFrom) {
-                    drawContourStroke(center, baseRadius, ringModulation, trackFrom, trackTo,
-                            stroke.copy(alpha = stroke.alpha * 0.4f), strokePx)
+                // Same single-gap-at-the-playhead geometry as the awake ring (no gap at the start).
+                val trackFrom = sweep + halfGap
+                if (trackFrom < 360f) {
+                    drawContourStroke(center, baseRadius, ringModulation, trackFrom, 360f,
+                            stroke.copy(alpha = stroke.alpha * 0.4f), strokePx,
+                            ringStrokes.track)
                 }
-                if (sweep > RING_GAP_DEGREES) {
-                    drawContourStroke(center, baseRadius, ringModulation, 0f, sweep - RING_GAP_DEGREES / 2f,
-                            stroke, strokePx)
+                if (sweep > halfGap) {
+                    drawContourStroke(center, baseRadius, ringModulation, 0f, sweep - halfGap,
+                            stroke, strokePx, ringStrokes.played)
+                }
+                if (ringStrokes.cometHead && sweep > 0f) {
+                    drawCircle(
+                            color = stroke,
+                            radius = strokePx * 0.9f,
+                            center = contourPoint(center, baseRadius, ringModulation, sweep)
+                    )
                 }
             }
         }
@@ -492,7 +523,8 @@ private fun AmbientCookie(
             }
             Icon(
                     painter = painterResource(
-                            if (state.playing) commonR.drawable.action_pause else commonR.drawable.action_play
+                            if (state.playing) commonR.drawable.action_pause_expressive
+                            else commonR.drawable.action_play
                     ),
                     contentDescription = null,
                     tint = glyph,
@@ -519,112 +551,141 @@ private fun ringFractionAt(pos: Offset, center: Offset): Float {
 
 /** HSL-derived tonal color from the album accent, clamping saturation into a readable band -
  *  the same idea as WatchTheme.accentForSurface, parameterized for the M3-style container /
- *  on-container pairs this face needs. */
-private fun tonal(accent: Int, lightness: Float, minSat: Float, maxSat: Float): Int {
-    val hsl = FloatArray(3)
-    ColorUtils.colorToHSL(accent, hsl)
-    hsl[1] = hsl[1].coerceIn(minSat, maxSat)
-    hsl[2] = lightness
-    return ColorUtils.HSLToColor(hsl)
-}
+ *  on-container pairs this face needs. Shared with the overlay chrome and the phone preview via
+ *  [PaletteTransforms] so the face and the overlays that open over it never disagree on tint. */
+private fun tonal(accent: Int, lightness: Float, minSat: Float, maxSat: Float): Int =
+        PaletteTransforms.tonalSurface(accent, lightness, minSat, maxSat)
 
 @Composable
 private fun RoundTransportButton(
         iconRes: Int,
         contentDescription: String,
-        diameter: Dp,
+        width: Dp,
+        height: Dp,
         container: Color,
         content: Color,
-        onClick: () -> Unit
+        borderColor: Color,
+        visible: Boolean,
+        onClick: () -> Unit,
+        iconAlpha: Float = 1f,
+        iconScale: Float = 1f,
+        /** When set, drawn instead of [iconRes] - the configured quadrant action's icon, so the
+         *  side buttons mirror the user's Controls config. */
+        iconOverride: androidx.compose.ui.graphics.ImageBitmap? = null,
+        iconOverrideTintable: Boolean = true
 ) {
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val scale by animateFloatAsState(if (pressed) 0.9f else 1f, label = "transportPressScale")
 
+    // CircleShape on the non-square box renders as a gently flattened capsule (see
+    // ExpressiveMetrics.sideHeight), not a full circle.
     Box(
             modifier = Modifier
-                    .size(diameter)
+                    .size(width, height)
                     .graphicsLayer {
                         scaleX = scale
                         scaleY = scale
                     }
                     .clip(CircleShape)
-                    .background(container)
                     .clickable(interactionSource = interaction, indication = null, onClick = onClick),
             contentAlignment = Alignment.Center
     ) {
-        Icon(
-                painter = painterResource(iconRes),
-                contentDescription = contentDescription,
-                tint = content,
-                modifier = Modifier.size(diameter * 0.42f)
-        )
-    }
-}
-
-@Composable
-private fun GlassPill(
-        width: Dp,
-        height: Dp,
-        label: String,
-        onClick: () -> Unit,
-        modifier: Modifier = Modifier,
-        content: @Composable () -> Unit
-) {
-    val interaction = remember { MutableInteractionSource() }
-    val pressed by interaction.collectIsPressedAsState()
-    val scale by animateFloatAsState(if (pressed) 0.9f else 1f, label = "pillPressScale")
-
-    Box(
-            modifier = modifier
-                    .size(width = width, height = height)
-                    .graphicsLayer {
-                        scaleX = scale
-                        scaleY = scale
-                    }
-                    .clip(RoundedCornerShape(50))
-                    .background(Color.White.copy(alpha = 0.16f))
-                    .clickable(interactionSource = interaction, indication = null, onClick = onClick)
-                    .semantics { contentDescription = label },
-            contentAlignment = Alignment.Center
-    ) {
-        content()
-    }
-}
-
-/** The reference's "⋮" overflow glyph, drawn directly so no new icon resource is needed. */
-@Composable
-private fun OverflowDots(color: Color = Color.White) {
-    Canvas(Modifier.size(18.dp)) {
-        val r = 1.8.dp.toPx()
-        val gap = 5.5.dp.toPx()
-        for (i in -1..1) {
-            drawCircle(color, radius = r, center = Offset(center.x, center.y + i * gap))
+        Box(
+                modifier = Modifier
+                        .size(width, height)
+                        .alpha(if (visible) 1f else 0f)
+                        .clip(CircleShape)
+                        .background(container)
+                        .then(
+                                if (borderColor.alpha > 0f) {
+                                    Modifier.border(1.5.dp, borderColor, CircleShape)
+                                } else {
+                                    Modifier
+                                }
+                        ),
+                contentAlignment = Alignment.Center
+        ) {
+            if (iconOverride != null) {
+                Icon(
+                        bitmap = iconOverride,
+                        contentDescription = contentDescription,
+                        tint = if (iconOverrideTintable) {
+                            content.copy(alpha = iconAlpha)
+                        } else {
+                            Color.Unspecified
+                        },
+                        modifier = Modifier
+                                .size(height * 0.5f * iconScale)
+                                .then(
+                                        if (iconOverrideTintable) Modifier
+                                        else Modifier.alpha(iconAlpha)
+                                )
+                )
+            } else {
+                Icon(
+                        painter = painterResource(iconRes),
+                        contentDescription = contentDescription,
+                        tint = content.copy(alpha = iconAlpha),
+                        modifier = Modifier.size(height * 0.5f * iconScale)
+                )
+            }
         }
     }
 }
 
+// --- Transport-row sizing ----------------------------------------------------------------
+
+/** Compact transport-row sizes in dp, with a 225dp breakpoint for larger watches. The visual
+ *  controls are deliberately smaller than the Wear OS media spec so they leave more breathing room
+ *  around the artwork. [cookieBox] remains larger than the cookie itself, so the progress ring
+ *  keeps a visible ~3dp air gap from the cookie's scalloped crest instead of hugging it
+ *  ([RING_MODULATION]/[COOKIE_MODULATION] crests eat most of a naive box-minus-cookie margin).
+ *  The awake and ambient faces read the same metrics so a wake-up tap lands on the same button it
+ *  would while awake. */
+private data class ExpressiveMetrics(
+        val side: Dp, val sideHeight: Dp, val cookieBox: Dp, val cookie: Dp, val spacing: Dp,
+        val ringStroke: Dp)
+
+private fun expressiveMetrics(screen: Dp): ExpressiveMetrics {
+    val large = screen >= 225.dp
+    return ExpressiveMetrics(
+            side = if (large) 48.dp else 42.dp,
+            // TALLER than wide: the sides read as vertically-oriented capsules (CircleShape on a
+            // non-square box rounds the top and bottom into semicircles), hugging the round bezel
+            // like the Wear OS media reference's prev/next buttons - not full circles, and squeezed
+            // top-to-bottom rather than side-to-side.
+            sideHeight = if (large) 58.dp else 50.dp,
+            cookieBox = if (large) 78.dp else 62.dp,
+            cookie = if (large) 62.dp else 48.dp,
+            spacing = 4.dp,
+            ringStroke = if (large) 4.dp else 3.dp
+    )
+}
+
 // --- Cookie geometry ---------------------------------------------------------------------
 
-private const val COOKIE_LOBES = 12
+private const val COOKIE_LOBES = 10
 
 /** tanh() gently flattens the cosine's crests and valleys, turning a pointy star into the
- *  reference's soft scallops. */
-private const val COOKIE_SOFTNESS = 1.5f
+ *  reference's soft scallops. Lower = closer to a pure sinusoid (rounder, softer lobes). */
+private const val COOKIE_SOFTNESS = 0.55f
 
 /** Cookie lobe amplitude as a fraction of its base radius. */
-private const val COOKIE_MODULATION = 0.08f
+private const val COOKIE_MODULATION = 0.05f
 
 /** The ring undulates noticeably less than the cookie it wraps, as in the reference. */
-private const val RING_MODULATION = 0.045f
+private const val RING_MODULATION = 0.03f
 
 /** Gap (degrees) the ring leaves around the progress thumb and the 12 o'clock start. */
 private const val RING_GAP_DEGREES = 7f
 
-/** Radius multiplier for the given polar [angleRad]: 1f ± [modulation], lobe crests at the
- *  cardinal points (12 divides the 90° offsets used below evenly). */
+/** Radius multiplier for the given polar [angleRad]: 1f ± [modulation]. The phase term anchors a
+ *  lobe crest at 12 o'clock for any lobe count ([angleRad] is measured from 3 o'clock, so the
+ *  +π/2 shift re-references the cosine to the top of the dial). */
 private fun cookieProfile(angleRad: Float, modulation: Float): Float {
-    val wave = tanh(COOKIE_SOFTNESS * cos(COOKIE_LOBES * angleRad)) / tanh(COOKIE_SOFTNESS)
+    val angleFromTop = angleRad + (Math.PI / 2.0).toFloat()
+    val wave = tanh(COOKIE_SOFTNESS * cos(COOKIE_LOBES * angleFromTop)) / tanh(COOKIE_SOFTNESS)
     return 1f + modulation * wave
 }
 
@@ -673,15 +734,19 @@ private fun CookiePlayButton(
         state: NowPlayingFaceState,
         boxSize: Dp,
         cookieSize: Dp,
+        ringStroke: Dp,
         container: Color,
         content: Color,
+        borderColor: Color,
         listener: NowPlayingFaceListener,
         scrubFraction: Float?,
         onScrub: (Float) -> Unit,
-        onScrubCommit: () -> Unit
+        onScrubCommit: () -> Unit,
+        iconAlpha: Float = 1f,
+        iconScale: Float = 1f
 ) {
-    // Only enable ring scrubbing when the phone allows seeking and the user picked the central
-    // seek mode; otherwise the ring stays display-only and taps still fall through to the cookie.
+    // The Expressive ring is structural: the curated-layout progress preference neither hides it
+    // nor disables its scrub target.
     val scrubEnabled = state.seekable && state.centralSeekEnabled
     // Paused flattens both the cookie and the ring's undulation into plain circles.
     val morph by animateFloatAsState(
@@ -699,6 +764,7 @@ private fun CookiePlayButton(
 
     var pressed by remember { mutableStateOf(false) }
     val pressScale by animateFloatAsState(if (pressed) 0.9f else 1f, label = "cookiePressScale")
+    val actionDescription = stringResource(R.string.action_name_play_pause)
 
     val ringDragModifier = if (scrubEnabled) {
         // Drags on the ring band (the area of this box outside the inner cookie, which owns taps)
@@ -724,33 +790,31 @@ private fun CookiePlayButton(
     Box(Modifier.size(boxSize).then(ringDragModifier), contentAlignment = Alignment.Center) {
         // Animated values are read inside the draw lambda, so ring motion only re-draws. While the
         // user is scrubbing, the sweep follows the finger directly instead of the animated value.
-        Canvas(Modifier.fillMaxSize()) {
-            val stroke = 4.dp.toPx()
-            val ringModulation = RING_MODULATION * morph
-            val baseRadius = (size.minDimension / 2f - stroke) / (1f + RING_MODULATION)
-            val sweep = (scrubFraction ?: progress.value) * 360f
+            Canvas(Modifier.fillMaxSize()) {
+                val stroke = ringStroke.toPx()
+                val ringModulation = RING_MODULATION * morph
+                val baseRadius = (size.minDimension / 2f - stroke) / (1f + RING_MODULATION)
+                val sweep = (scrubFraction ?: progress.value) * 360f
+                val halfGap = RING_GAP_DEGREES / 2f
 
-            // Track: from just past the thumb around to just short of 12 o'clock, leaving the
-            // M3-style gaps on both sides of the played portion.
-            val trackFrom = sweep + RING_GAP_DEGREES
-            val trackTo = 360f - RING_GAP_DEGREES
-            if (trackTo > trackFrom) {
-                drawContourStroke(center, baseRadius, ringModulation, trackFrom, trackTo,
-                        Color.White.copy(alpha = 0.30f), stroke)
-            }
+                // Track (unplayed): from just past the playhead all the way back to 12 o'clock
+                // (360°), so it meets the played bar at the start with NO gap there. The only break
+                // in the ring is the single M3-style gap straddling the playhead - the start of the
+                // ring is the played bar itself, not empty space.
+                val trackFrom = sweep + halfGap
+                if (trackFrom < 360f) {
+                    drawContourStroke(center, baseRadius, ringModulation, trackFrom, 360f,
+                            Color.White.copy(alpha = 0.30f), stroke)
+                }
 
-            // Played portion + thumb dot at its end.
-            if (sweep > RING_GAP_DEGREES) {
-                drawContourStroke(center, baseRadius, ringModulation, 0f, sweep - RING_GAP_DEGREES / 2f,
-                        Color.White, stroke)
+                // Played portion: 12 o'clock to just before the playhead, in the progress colour.
+                // No thumb dot (removed by user request - the playhead gap marks the position, and
+                // scrub still works via the sweep + time readout).
+                if (sweep > halfGap) {
+                    drawContourStroke(center, baseRadius, ringModulation, 0f, sweep - halfGap,
+                            Color(state.progressColor), stroke)
+                }
             }
-            drawCircle(
-                    color = Color.White,
-                    // Grows while scrubbing so the grabbed thumb reads clearly under the finger.
-                    radius = (if (scrubFraction != null) 5.5.dp else 3.5.dp).toPx(),
-                    center = contourPoint(center, baseRadius, ringModulation, sweep)
-            )
-        }
 
         Box(
                 modifier = Modifier
@@ -760,7 +824,6 @@ private fun CookiePlayButton(
                             scaleY = pressScale
                         }
                         .clip(CookieShape(morph))
-                        .background(container)
                         .pointerInput(Unit) {
                             detectTapGestures(
                                     onPress = {
@@ -772,17 +835,42 @@ private fun CookiePlayButton(
                                     onDoubleTap = { listener.onCenterDoubleTap() },
                                     onLongPress = { listener.onCenterLongPress() }
                             )
+                        }
+                        .semantics(mergeDescendants = true) {
+                            contentDescription = actionDescription
+                            role = Role.Button
+                            onClick(actionDescription) {
+                                listener.onPlayPauseTap()
+                                true
+                            }
                         },
                 contentAlignment = Alignment.Center
         ) {
-            Icon(
-                    painter = painterResource(
-                            if (state.playing) commonR.drawable.action_pause else commonR.drawable.action_play
-                    ),
-                    contentDescription = stringResource(R.string.action_name_play_pause),
-                    tint = content,
-                    modifier = Modifier.size(cookieSize * 0.48f)
-            )
+            Box(
+                    modifier = Modifier
+                            .size(cookieSize)
+                            .alpha(if (state.showControls) 1f else 0f)
+                            .clip(CookieShape(morph))
+                            .background(container)
+                            .then(
+                                    if (borderColor.alpha > 0f) {
+                                        Modifier.border(1.5.dp, borderColor, CookieShape(morph))
+                                    } else {
+                                        Modifier
+                                    }
+                            ),
+                    contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                        painter = painterResource(
+                                if (state.playing) commonR.drawable.action_pause_expressive
+                                else commonR.drawable.action_play_filled
+                        ),
+                        contentDescription = null,
+                        tint = content.copy(alpha = iconAlpha),
+                        modifier = Modifier.size(cookieSize * 0.48f * iconScale)
+                )
+            }
         }
     }
 }
@@ -794,11 +882,12 @@ private fun DrawScope.drawContourStroke(
         fromDeg: Float,
         toDeg: Float,
         color: Color,
-        strokeWidth: Float
+        strokeWidth: Float,
+        strokeStyle: Stroke? = null
 ) {
     drawPath(
             path = contourPath(center, radius, modulation, fromDeg, toDeg),
             color = color,
-            style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
+            style = strokeStyle ?: Stroke(width = strokeWidth, cap = StrokeCap.Round)
     )
 }

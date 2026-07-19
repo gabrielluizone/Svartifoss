@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="60dp"
     android:background="@drawable/action_list_item_background"
     android:clickable="true"
     android:focusable="true"
-    android:paddingStart="12dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="8dp"
     android:orientation="horizontal">
 
     <ImageView
@@ -24,13 +26,24 @@
 
     <TextView
         android:id="@+id/text"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:textAppearance="?android:attr/textAppearanceListItem"
-        android:textSize="24sp"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="12dp"
+        android:fontFamily="@font/google_sans"
+        android:textColor="@color/lyra_on_surface"
+        android:textSize="16sp"
         tools:text="@string/action_play" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:padding="8dp"
+        android:src="@drawable/ic_drag_handle"
+        android:tint="@color/lyra_text_secondary"
+        tools:ignore="ContentDescription,UseAppTint" />
 
 </LinearLayout>

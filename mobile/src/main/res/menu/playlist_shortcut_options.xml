@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/shortcut_edit"
+        android:title="@string/playlist_shortcut_menu_edit" />
+    <item
+        android:id="@+id/shortcut_open"
+        android:title="@string/playlist_shortcut_menu_open" />
+    <item
+        android:id="@+id/shortcut_copy"
+        android:title="@string/playlist_shortcut_menu_copy" />
+    <item
+        android:id="@+id/shortcut_duplicate"
+        android:title="@string/playlist_shortcut_menu_duplicate" />
+    <item
+        android:id="@+id/shortcut_share"
+        android:title="@string/playlist_shortcut_menu_share" />
+    <item
+        android:id="@+id/shortcut_delete"
+        android:title="@string/playlist_shortcut_menu_delete" />
+
+</menu>

@@ -28,6 +28,8 @@ import com.matejdro.wearutils.lifecycle.Resource
 import com.matejdro.wearutils.lifecycle.SingleLiveEvent
 import com.matejdro.wearutils.preferences.definition.Preferences
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.max
@@ -81,6 +83,7 @@ class MusicViewModel @Inject constructor(
     val closeActionsMenu = SingleLiveEvent<Unit>()
     val openActionsMenu = SingleLiveEvent<Unit>()
     val openPlaybackQueueScreen = SingleLiveEvent<Unit>()
+    val openStreamingShortcutsMenu = SingleLiveEvent<Unit>()
     val openVoiceSearch = SingleLiveEvent<Unit>()
     val closeApp = SingleLiveEvent<Unit>()
 
@@ -97,6 +100,16 @@ class MusicViewModel @Inject constructor(
         val action = actionsMenuConfig.config.value?.get(index) ?: return
 
         closeActionsMenu.postValue(Unit)
+
+        if (action.key == StandardActions.ACTION_OPEN_STREAMING_SHORTCUTS) {
+            // Render the dedicated DataItem cache immediately. The phone command only refreshes
+            // its contents; it is no longer on the critical path to opening the screen.
+            openStreamingShortcutsMenu.call()
+            viewModelScope.launchWithErrorHandling(application, musicState) {
+                phoneConnection.executeMenuAction(index)
+            }
+            return
+        }
 
         if (executeActionOnWatch(action, 1f)) {
             return
@@ -118,6 +131,14 @@ class MusicViewModel @Inject constructor(
 
     fun executeAction(buttonInfo: ButtonInfo): Boolean {
         val action = currentButtonConfig.value?.getAction(buttonInfo) ?: return false
+
+        if (action.key == StandardActions.ACTION_OPEN_STREAMING_SHORTCUTS) {
+            openStreamingShortcutsMenu.call()
+            viewModelScope.launchWithErrorHandling(application, musicState) {
+                phoneConnection.executeButtonAction(buttonInfo)
+            }
+            return true
+        }
 
         val multiplier = if (buttonInfo.buttonCode == SpecialButtonCodes.TURN_ROTARY_CW ||
                 buttonInfo.buttonCode == SpecialButtonCodes.TURN_ROTARY_CCW) {
@@ -233,6 +254,20 @@ class MusicViewModel @Inject constructor(
     fun openPlaybackQueue() {
         viewModelScope.launchWithErrorHandling(application, musicState) {
             phoneConnection.openPlaybackQueue()
+        }
+    }
+
+    /** Ambient Up Next is optional decoration. A disconnected phone must not replace otherwise
+     * valid playback metadata with an error merely because this background refresh failed. */
+    fun refreshPlaybackQueueSilently() {
+        viewModelScope.launch {
+            try {
+                phoneConnection.openPlaybackQueue()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w(e, "Could not refresh ambient Up Next preview")
+            }
         }
     }
 

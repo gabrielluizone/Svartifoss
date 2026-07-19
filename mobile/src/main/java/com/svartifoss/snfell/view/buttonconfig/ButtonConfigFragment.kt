@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.view.buttonconfig
 
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.VectorDrawable
@@ -53,6 +54,11 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
     private var setsPlaybackActions: Boolean = false
     private var watchInfo: WatchInfoWithIcons? = null
 
+    /** Lets the Controls pager route its legacy save notification to the owning page only. */
+    internal fun configuresPlaybackActions(): Boolean =
+        arguments?.getBoolean(ARGUMENT_SETS_PLAYBACK_ACTIONS, setsPlaybackActions)
+            ?: setsPlaybackActions
+
     private lateinit var binding: FragmentButtonConfigBinding
     private val viewModel: ButtonConfigViewModel by viewModels { viewModelFactory }
 
@@ -95,8 +101,23 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.fourWayTouch.listener = this
+        setupTouchZone(binding.iconTop, ScreenQuadrant.TOP, R.string.touch_zone_top)
+        setupTouchZone(binding.iconBottom, ScreenQuadrant.BOTTOM, R.string.touch_zone_bottom)
+        setupTouchZone(binding.iconLeft, ScreenQuadrant.LEFT, R.string.touch_zone_left)
+        setupTouchZone(binding.iconRight, ScreenQuadrant.RIGHT, R.string.touch_zone_right)
         setupSwipeGestureRows()
         setupScreenButtonRows()
+    }
+
+    private fun setupTouchZone(imageView: ImageView, quadrant: Int, label: Int) {
+        imageView.isClickable = true
+        imageView.isFocusable = true
+        imageView.setOnClickListener { onSingleTap(quadrant) }
+        imageView.contentDescription = getString(
+            R.string.touch_zone_action,
+            getString(label),
+            getString(R.string.no_action)
+        )
     }
 
     // Populated once in setupSwipeGestureRows / setupScreenButtonRows, then refreshed
@@ -110,9 +131,9 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
      *  physical-buttons list, not driven by any live watch-info data), one per configurable
      *  [SwipeGesture] direction, each opening the same gesture picker a quadrant tap does - just
      *  in single-action mode, since a swipe has no double/long-press equivalent. Each tile is
-     *  just an icon (no background/label - see item_swipe_gesture.xml); a directional arrow
-     *  stands in for the direction until an action is assigned, so the three stay
-     *  distinguishable without needing a text label. */
+     *  just an icon plus a concise direction caption (see item_swipe_gesture.xml). The caption
+     *  remains after a user action replaces the arrow, preserving orientation without verbose
+     *  helper text. */
     private fun setupSwipeGestureRows() {
         val container = binding.swipeGestureContainer ?: return
         val directions = listOf(
@@ -128,12 +149,11 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         for ((info, shortLabel) in directions) {
             val (code, label, defaultIconRes) = info
             val tileBinding = ItemSwipeGestureBinding.inflate(inflater, container, true)
-            tileBinding.icon.contentDescription = label
             tileBinding.label.text = shortLabel
             tileBinding.icon.setOnClickListener {
                 configureButton(false, code, label, supportsLongPress = false, singleActionOnly = true)
             }
-            swipeGestureRows[code] = IconTile(tileBinding, defaultIconRes)
+            swipeGestureRows[code] = IconTile(tileBinding, defaultIconRes, shortLabel, label)
         }
     }
 
@@ -154,18 +174,22 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         for ((codeAndLabel, shortLabel) in slots) {
             val (code, label) = codeAndLabel
             val tileBinding = ItemSwipeGestureBinding.inflate(inflater, container, true)
-            tileBinding.icon.contentDescription = label
             tileBinding.label.text = shortLabel
             tileBinding.icon.setOnClickListener {
                 configureButton(false, code, label, supportsLongPress = true, singleActionOnly = true)
             }
-            screenButtonRows[code] = IconTile(tileBinding, R.drawable.ic_plus)
+            screenButtonRows[code] = IconTile(tileBinding, R.drawable.ic_plus, shortLabel, label)
         }
     }
 
     /** [defaultIconRes] is the placeholder shown until an action is assigned - a directional
      *  arrow for swipe tiles (each direction needs its own) or a "+" for mini-button slots. */
-    private class IconTile(val binding: ItemSwipeGestureBinding, val defaultIconRes: Int)
+    private class IconTile(
+        val binding: ItemSwipeGestureBinding,
+        val defaultIconRes: Int,
+        val defaultLabel: String,
+        val accessibilityLabel: String
+    )
 
     private val watchInfoObserver = Observer<WatchInfoWithIcons?> {
         this.watchInfo = it
@@ -176,7 +200,12 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
 
         val buttonsCount = it?.watchInfo?.buttonsCount ?: 0
 
-        binding.captionPhysicalButtons.visibility = if (buttonsCount > 0) View.VISIBLE else View.GONE
+        binding.captionPhysicalButtons.visibility = View.VISIBLE
+        binding.physicalButtonsHint.visibility = if (buttonsCount > 0) View.GONE else View.VISIBLE
+        binding.physicalButtonsHint.setText(
+            if (it == null) R.string.physical_buttons_disconnected
+            else R.string.physical_buttons_unavailable
+        )
 
         if (it == null) {
             return@Observer
@@ -225,16 +254,16 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         }
 
         val topAction = it.getScreenAction(ButtonInfo(false, ScreenQuadrant.TOP, GESTURE_SINGLE_TAP))
-        setIcon(binding.iconTop, topAction)
+        setTouchZoneIcon(binding.iconTop, R.string.touch_zone_top, topAction)
 
         val bottomAction = it.getScreenAction(ButtonInfo(false, ScreenQuadrant.BOTTOM, GESTURE_SINGLE_TAP))
-        setIcon(binding.iconBottom, bottomAction)
+        setTouchZoneIcon(binding.iconBottom, R.string.touch_zone_bottom, bottomAction)
 
         val rightAction = it.getScreenAction(ButtonInfo(false, ScreenQuadrant.RIGHT, GESTURE_SINGLE_TAP))
-        setIcon(binding.iconRight, rightAction)
+        setTouchZoneIcon(binding.iconRight, R.string.touch_zone_right, rightAction)
 
         val leftAction = it.getScreenAction(ButtonInfo(false, ScreenQuadrant.LEFT, GESTURE_SINGLE_TAP))
-        setIcon(binding.iconLeft, leftAction)
+        setTouchZoneIcon(binding.iconLeft, R.string.touch_zone_left, leftAction)
 
         for ((code, tile) in swipeGestureRows) {
             val action = it.getScreenAction(ButtonInfo(false, code, GESTURE_SINGLE_TAP))
@@ -252,7 +281,9 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
 
     private fun setIcon(imageView: ImageView, phoneAction: PhoneAction?) {
         if (phoneAction == null) {
-            imageView.setImageDrawable(null)
+            imageView.setImageResource(R.drawable.ic_plus)
+            imageView.setColorFilter(Color.WHITE)
+            imageView.alpha = 0.55f
             return
         }
 
@@ -262,7 +293,18 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         if (icon is VectorDrawable) {
             icon.mutate().setTint(Color.WHITE)
         }
+        imageView.clearColorFilter()
         imageView.setImageDrawable(icon)
+        imageView.alpha = 1f
+    }
+
+    private fun setTouchZoneIcon(imageView: ImageView, label: Int, phoneAction: PhoneAction?) {
+        setIcon(imageView, phoneAction)
+        imageView.contentDescription = getString(
+            R.string.touch_zone_action,
+            getString(label),
+            phoneAction?.title ?: getString(R.string.no_action)
+        )
     }
 
     /** Unlike the watch-face preview icons, a swipe/mini-button tile sits on the app's own
@@ -279,11 +321,22 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         } else {
             customIconStorage[phoneAction]
         }
-        if (icon is VectorDrawable) {
-            icon.mutate().setColorFilter(if (isNotSet) mutedColor else primaryColor, android.graphics.PorterDuff.Mode.SRC_ATOP)
-        }
-
         tile.binding.icon.setImageDrawable(icon)
+        tile.binding.icon.clearColorFilter()
+        val isTemplate = isNotSet || icon is VectorDrawable ||
+                phoneAction?.customIconUri?.scheme == ContentResolver.SCHEME_ANDROID_RESOURCE
+        if (isTemplate) {
+            tile.binding.icon.setColorFilter(if (isNotSet) mutedColor else primaryColor)
+        }
+        // The caption identifies the physical position, not the currently assigned action.
+        // Icons and the accessibility description already communicate the action; repeating a
+        // title such as "Play liked songs" turns a compact control grid into noisy prose.
+        tile.binding.label.text = tile.defaultLabel
+        tile.binding.icon.contentDescription = getString(
+                R.string.touch_zone_action,
+                tile.accessibilityLabel,
+                phoneAction?.title ?: getString(R.string.no_action)
+        )
     }
 
     override fun onSingleTap(quadrant: Int) {

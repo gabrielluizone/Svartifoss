@@ -10,6 +10,7 @@ import android.os.Build
 import android.preference.PreferenceManager
 import android.provider.Settings
 import android.service.notification.NotificationListenerService
+import android.service.notification.StatusBarNotification
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.android.gms.wearable.MessageClient
@@ -21,6 +22,7 @@ import com.svartifoss.snfell.common.model.AutoStartMode
 import com.svartifoss.snfell.music.ActiveMediaSessionProvider
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.isPlaying
+import com.svartifoss.snfell.notifications.MediaNotificationActions
 import com.matejdro.wearutils.lifecycle.Resource
 import com.matejdro.wearutils.messages.sendMessageToNearestClient
 import com.matejdro.wearutils.preferences.definition.Preferences
@@ -33,8 +35,18 @@ import timber.log.Timber
 class NotificationService : NotificationListenerService() {
     private lateinit var preferences: SharedPreferences
     private var bound = false
+    private var mediaObserverRegistered = false
 
     private var activeMediaProvider: ActiveMediaSessionProvider? = null
+
+    private val consumerPreferenceListener =
+            SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == MiscPreferences.AUTO_START.key ||
+                key == MiscPreferences.AUTO_START_MODE.key ||
+                key == MiscPreferences.WEAR_QUICK_PANEL_SOURCE.key) {
+            updateConnectedConsumers()
+        }
+    }
 
     private val coroutineScope = CoroutineScope(Job())
     private lateinit var messageClient: MessageClient
@@ -44,6 +56,7 @@ class NotificationService : NotificationListenerService() {
         super.onCreate()
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        preferences.registerOnSharedPreferenceChangeListener(consumerPreferenceListener)
 
         nodeClient = Wearable.getNodeClient(applicationContext)
         messageClient = Wearable.getMessageClient(applicationContext)
@@ -86,16 +99,26 @@ class NotificationService : NotificationListenerService() {
 
         activeMediaProvider = ActiveMediaSessionProvider(this)
 
-        if (MiscPreferences.isAnyKindOfAutoStartEnabled(preferences)) {
-            activeMediaProvider!!.observeForever(mediaObserver)
+        // Seed the registry immediately; waiting for the next onNotificationPosted callback left
+        // an already-playing app's quick actions empty until its notification happened to update.
+        try {
+            activeNotifications.orEmpty().forEach { MediaNotificationActions.update(this, it) }
+        } catch (e: SecurityException) {
+            // A few OEMs briefly revoke access while reconnecting the listener. The next posted
+            // media notification will populate the registry, so this must not kill the service.
+            Timber.w(e, "Unable to seed media notification actions")
         }
 
         bound = true
+        updateConnectedConsumers()
     }
 
     override fun onListenerDisconnected() {
         Timber.d("Listener disconnected")
-        activeMediaProvider?.removeObserver(mediaObserver)
+        stopObservingMedia()
+        activeMediaProvider = null
+        bound = false
+        MediaNotificationActions.clear()
 
         super.onListenerDisconnected()
     }
@@ -103,14 +126,50 @@ class NotificationService : NotificationListenerService() {
     override fun onDestroy() {
         Timber.d("Service destroyed")
 
-        activeMediaProvider?.removeObserver(mediaObserver)
+        preferences.unregisterOnSharedPreferenceChangeListener(consumerPreferenceListener)
+        stopObservingMedia()
+        activeMediaProvider = null
+        bound = false
+        MediaNotificationActions.clear()
         coroutineScope.cancel()
 
         super.onDestroy()
     }
 
     private fun shouldRun(): Boolean {
-        return MiscPreferences.isAnyKindOfAutoStartEnabled(preferences)
+        return MiscPreferences.isAnyKindOfAutoStartEnabled(preferences) ||
+                Preferences.getString(preferences, MiscPreferences.WEAR_QUICK_PANEL_SOURCE) == "session"
+    }
+
+    /** Keeps auto-start observation independent from the quick-actions reason for binding. */
+    private fun updateConnectedConsumers() {
+        val provider = activeMediaProvider
+        val needsAutoStart = MiscPreferences.isAnyKindOfAutoStartEnabled(preferences)
+        if (provider != null && needsAutoStart && !mediaObserverRegistered) {
+            provider.observeForever(mediaObserver)
+            mediaObserverRegistered = true
+        } else if (!needsAutoStart) {
+            stopObservingMedia()
+        }
+
+        if (bound && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !shouldRun()) {
+            requestUnbindSafe()
+        }
+    }
+
+    private fun stopObservingMedia() {
+        if (mediaObserverRegistered) {
+            activeMediaProvider?.removeObserver(mediaObserver)
+            mediaObserverRegistered = false
+        }
+    }
+
+    override fun onNotificationPosted(sbn: StatusBarNotification?) {
+        sbn?.let { MediaNotificationActions.update(this, it) }
+    }
+
+    override fun onNotificationRemoved(sbn: StatusBarNotification?) {
+        sbn?.key?.let(MediaNotificationActions::remove)
     }
 
     private fun startAppOnWatch() {
@@ -159,6 +218,38 @@ class NotificationService : NotificationListenerService() {
         }
 
         const val ACTION_UNBIND_SERVICE = "UNBIND"
+
+        /**
+         * Re-evaluates the notification listener whenever either of its consumers changes.
+         * [autoStartEnabledOverride] is used by the ListPreference callback, which runs just
+         * before the new value is persisted; all other callers should leave it null.
+         */
+        fun updateQuickActionsBinding(
+                context: Context,
+                autoStartEnabledOverride: Boolean? = null
+        ) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !isEnabled(context)) return
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val shouldBind = (autoStartEnabledOverride
+                    ?: MiscPreferences.isAnyKindOfAutoStartEnabled(prefs)) ||
+                    Preferences.getString(prefs, MiscPreferences.WEAR_QUICK_PANEL_SOURCE) == "session"
+            val component = ComponentName(context, NotificationService::class.java)
+            if (shouldBind) {
+                requestRebind(component)
+            } else {
+                try {
+                    context.startService(
+                            Intent(context, NotificationService::class.java)
+                                    .setAction(ACTION_UNBIND_SERVICE)
+                    )
+                } catch (e: RuntimeException) {
+                    // A background-start restriction can race a settings/import lifecycle.
+                    // The persisted values are still authoritative and onListenerConnected()
+                    // will unbind immediately the next time the system connects the listener.
+                    Timber.w(e, "Unable to request notification-listener unbind")
+                }
+            }
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.N)

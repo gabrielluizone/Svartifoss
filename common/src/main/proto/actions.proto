@@ -15,6 +15,12 @@ message WatchActions {
     required int32 buttonIndex = 2;
     required int32 gesture = 3;
     optional string actionKey = 4;
+    // Human-facing title resolved on the phone, including a user supplied custom title.
+    // Older watches safely fall back to actionKey; older phone payloads simply omit it.
+    optional string actionTitle = 5;
+    // True for monochrome template glyphs that should follow the destination surface tint;
+    // false for app artwork / gallery images whose original colours must be preserved.
+    optional bool iconTintable = 6;
   }
 }
 
@@ -26,4 +32,3 @@ message WatchList {
     optional string actionKey = 2;
   }
 }
-

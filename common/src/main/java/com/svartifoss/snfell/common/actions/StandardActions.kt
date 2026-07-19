@@ -15,10 +15,17 @@ object StandardActions {
     const val ACTION_RESTART = "com.svartifoss.snfell.actions.playback.RestartTrackAction"
     const val ACTION_MUTE = "com.svartifoss.snfell.actions.volume.MuteToggleAction"
     const val ACTION_SEARCH = "com.svartifoss.snfell.actions.SearchAction"
+    const val ACTION_LIKE = "com.svartifoss.snfell.actions.playback.LikeAction"
+    const val ACTION_SHUFFLE = "com.svartifoss.snfell.actions.playback.ShuffleAction"
+    const val ACTION_REPEAT = "com.svartifoss.snfell.actions.playback.RepeatAction"
+    const val ACTION_REPEAT_ONE = "com.svartifoss.snfell.actions.playback.RepeatOneAction"
 
     /** Not watch-local like the others above in the sense of never reaching the phone - it still
      *  requests a fresh queue from the phone - but the watch intercepts it to launch its own
      *  QueueActivity screen directly instead of running OpenPlaylistAction's normal round trip
      *  (which would instead push a plain custom-list popup). */
     const val ACTION_OPEN_PLAYLIST_MENU = "com.svartifoss.snfell.actions.OpenPlaylistAction"
+    /** Opens the persistent Streaming shortcuts cache locally, then refreshes it from the phone. */
+    const val ACTION_OPEN_STREAMING_SHORTCUTS =
+            "com.svartifoss.snfell.actions.OpenPlaylistShortcutsAction"
 }

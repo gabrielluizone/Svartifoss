@@ -20,6 +20,12 @@ object StandardIcons {
             StandardActions.ACTION_RESTART to com.svartifoss.snfell.common.R.drawable.action_restart,
             StandardActions.ACTION_MUTE to com.svartifoss.snfell.common.R.drawable.action_volume_off,
             StandardActions.ACTION_SEARCH to com.svartifoss.snfell.common.R.drawable.action_search,
+            StandardActions.ACTION_LIKE to com.svartifoss.snfell.common.R.drawable.action_like,
+            StandardActions.ACTION_SHUFFLE to com.svartifoss.snfell.common.R.drawable.action_shuffle,
+            StandardActions.ACTION_REPEAT to com.svartifoss.snfell.common.R.drawable.action_repeat,
+            StandardActions.ACTION_REPEAT_ONE to com.svartifoss.snfell.common.R.drawable.action_repeat_one,
+            StandardActions.ACTION_OPEN_PLAYLIST_MENU to
+                    com.svartifoss.snfell.common.R.drawable.action_open_playlist,
 
             getButtonKey(KeyEvent.KEYCODE_BACK) to R.drawable.button_back,
             getButtonKey(SpecialButtonCodes.TURN_ROTARY_CW) to R.drawable.button_turn_cw,

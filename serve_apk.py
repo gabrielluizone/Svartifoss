@@ -7,7 +7,7 @@ import socket
 import socketserver
 from pathlib import Path
 
-PORT = 8765
+PORT = 8760
 ROOT = Path(__file__).resolve().parent
 CHUNK_SIZE = 64 * 1024
 

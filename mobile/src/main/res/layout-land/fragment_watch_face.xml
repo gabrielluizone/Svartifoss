@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Width is resized together with the preview at runtime, keeping the watch large while the
+         preferences retain the rest of the landscape width. -->
+    <FrameLayout
+        android:id="@+id/watch_preview_panel"
+        android:layout_width="176dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.svartifoss.snfell.view.watchface.WatchPreviewView
+            android:id="@+id/watch_preview"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/watch_preview_description"
+            android:importantForAccessibility="yes" />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/watch_preview_divider"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/lyra_divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/watch_preview_panel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/watch_preview_divider"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/watch_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/lyra_background"
+            app:tabGravity="start"
+            app:tabIndicatorColor="@color/lyra_accent"
+            app:tabIndicatorFullWidth="false"
+            app:tabMode="scrollable"
+            app:tabRippleColor="@color/lyra_ripple"
+            app:tabSelectedTextColor="@color/lyra_accent"
+            app:tabSelectedTextAppearance="@style/LyraTabText"
+            app:tabTextAppearance="@style/LyraTabText"
+            app:tabTextColor="@color/lyra_text_secondary" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lyra_divider" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/watch_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
