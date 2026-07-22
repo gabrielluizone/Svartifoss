@@ -602,10 +602,6 @@
           "t": "s",
           "v": "com.spotify.mediasession.mediasession.receiver.MediaButtonReceiver"
         },
-        "CUSTOM_ICON_URI": {
-          "t": "s",
-          "v": "content://website.leifs.delta.fileProvider/cache_files/Spotify%20Alt%201.png"
-        },
         "PACKAGE_NAME": {
           "t": "s",
           "v": "com.spotify.music"
@@ -622,10 +618,6 @@
         "COMPONENT_NAME": {
           "t": "s",
           "v": "androidx.media.session.MediaButtonReceiver"
-        },
-        "CUSTOM_ICON_URI": {
-          "t": "s",
-          "v": "content://website.leifs.delta.fileProvider/cache_files/Youtube%20Music%20Vanced.png"
         },
         "PACKAGE_NAME": {
           "t": "s",
@@ -646,77 +638,9 @@
   "actionList": {
     "ActionCount": {
       "t": "i",
-      "v": 14
+      "v": 7
     },
     "0": {
-      "t": "p",
-      "v": {
-        "Bundlable.ClassName": {
-          "t": "s",
-          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
-        },
-        "PLAYLIST_LINK": {
-          "t": "s",
-          "v": "https://music.youtube.com/playlist?list=OLAK5uy_lGIq-5a77uvJTHLkGdr-tKyMe44PNcE6U&shuffle=true"
-        },
-        "PLAYLIST_NAME": {
-          "t": "s",
-          "v": "Give Up the Ghost"
-        }
-      }
-    },
-    "1": {
-      "t": "p",
-      "v": {
-        "Bundlable.ClassName": {
-          "t": "s",
-          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
-        },
-        "PLAYLIST_LINK": {
-          "t": "s",
-          "v": "https://music.youtube.com/watch?v=QX52_M4mbDY"
-        },
-        "PLAYLIST_NAME": {
-          "t": "s",
-          "v": "Invencible"
-        }
-      }
-    },
-    "2": {
-      "t": "p",
-      "v": {
-        "Bundlable.ClassName": {
-          "t": "s",
-          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
-        },
-        "PLAYLIST_LINK": {
-          "t": "s",
-          "v": "https://music.youtube.com/watch?v=feBUX2LV4DI"
-        },
-        "PLAYLIST_NAME": {
-          "t": "s",
-          "v": "Dirt"
-        }
-      }
-    },
-    "3": {
-      "t": "p",
-      "v": {
-        "Bundlable.ClassName": {
-          "t": "s",
-          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
-        },
-        "PLAYLIST_LINK": {
-          "t": "s",
-          "v": "https://open.spotify.com/playlist/3hi7onPSwlyMzSdVGjTMJY?pi=8MD_NNkKSz6SD"
-        },
-        "PLAYLIST_NAME": {
-          "t": "s",
-          "v": "The Cranberries: Best Of The Best"
-        }
-      }
-    },
-    "4": {
       "t": "p",
       "v": {
         "Bundlable.ClassName": {
@@ -733,58 +657,7 @@
         }
       }
     },
-    "5": {
-      "t": "p",
-      "v": {
-        "Bundlable.ClassName": {
-          "t": "s",
-          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
-        },
-        "PLAYLIST_LINK": {
-          "t": "s",
-          "v": "https://open.spotify.com/track/4PGeXRCNgHAAsvx6NWKcqE"
-        },
-        "PLAYLIST_NAME": {
-          "t": "s",
-          "v": "Just My Imagination"
-        }
-      }
-    },
-    "6": {
-      "t": "p",
-      "v": {
-        "Bundlable.ClassName": {
-          "t": "s",
-          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
-        },
-        "PLAYLIST_LINK": {
-          "t": "s",
-          "v": "https://music.youtube.com/playlist?list=OLAK5uy_lCKktqeRh7ZtFd-T6L-yNhZAyg7ykQLdk&shuffle=true"
-        },
-        "PLAYLIST_NAME": {
-          "t": "s",
-          "v": "This Is Acting"
-        }
-      }
-    },
-    "7": {
-      "t": "p",
-      "v": {
-        "Bundlable.ClassName": {
-          "t": "s",
-          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
-        },
-        "PLAYLIST_LINK": {
-          "t": "s",
-          "v": "https://open.spotify.com/artist/53A0W3U0s8diEn9RhXQhVz"
-        },
-        "PLAYLIST_NAME": {
-          "t": "s",
-          "v": "Keane"
-        }
-      }
-    },
-    "8": {
+    "1": {
       "t": "p",
       "v": {
         "Bundlable.ClassName": {
@@ -805,7 +678,7 @@
         }
       }
     },
-    "9": {
+    "2": {
       "t": "p",
       "v": {
         "Bundlable.ClassName": {
@@ -822,7 +695,7 @@
         }
       }
     },
-    "10": {
+    "3": {
       "t": "p",
       "v": {
         "Bundlable.ClassName": {
@@ -839,7 +712,7 @@
         }
       }
     },
-    "11": {
+    "4": {
       "t": "p",
       "v": {
         "Bundlable.ClassName": {
@@ -852,7 +725,7 @@
         }
       }
     },
-    "12": {
+    "5": {
       "t": "p",
       "v": {
         "Bundlable.ClassName": {
@@ -869,7 +742,7 @@
         }
       }
     },
-    "13": {
+    "6": {
       "t": "p",
       "v": {
         "Bundlable.ClassName": {
@@ -939,7 +812,7 @@
     "wear_color_treatment@immersive": "expressive",
     "wear_progress_color_mode@immersive": "follow",
     "wear_clock_color_mode@expressive": "dynamic",
-    "wear_color_treatment@studio": "normal",
+    "wear_color_treatment@studio": "expressive",
     "wear_aod_show_clock@studio": true,
     "wear_internal_progress_visible@expressive": true,
     "wear_aod_show_transport@material": true,

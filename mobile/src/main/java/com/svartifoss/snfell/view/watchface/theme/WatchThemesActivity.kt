@@ -320,6 +320,8 @@ class WatchThemesActivity : AppCompatActivity() {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(accentColor)
             nameLayout.boxStrokeColor = accentColor
             nameLayout.defaultHintTextColor = ColorStateList.valueOf(accentColor)
+            // The character counter ("12/48") otherwise stays Material's default sage green too.
+            nameLayout.setCounterTextColor(ColorStateList.valueOf(accentColor))
 
             fun validate(): Boolean {
                 val candidate = nameInput.text?.toString()?.trim().orEmpty()

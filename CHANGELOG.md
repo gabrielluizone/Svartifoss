@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- **Fixed a watch state replay bug.** While the watch was disconnected or asleep, Google Play Services could queue up several updates to the same now-playing state (e.g. skipping tracks repeatedly on the phone) and deliver all of them at once on reconnect; the watch applied every queued update in sequence instead of jumping straight to the latest, visible as playback rapidly "catching up" through each intermediate track once the watch was touched. Only the newest update per data type is now applied.
+- **Studio theme's default color treatment is now Expressive**, matching the other album-accent faces, instead of Normal.
+- **The character counter in "Create a new theme"/"Rename theme" now follows the accent color** instead of staying Material's default green.
+
 ## 3.0
 
 A major update: streaming shortcuts that actually start playback (including in the background), the new minimalist Immersive layout, free bundled fonts, optional online shortcut artwork and the playing-app icon, a redesigned numeric/colored shading system, and many watch-app quality-of-life fixes.
