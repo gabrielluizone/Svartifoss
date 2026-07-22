@@ -1,0 +1,1083 @@
+<resources>
+    <string name="setting_no_wearable_api_banner">Wear OS não é suportado neste dispositivo</string>
+    <string name="setting_no_wearable_api_banner_description">Este dispositivo não fornece o componente Wear OS dos Serviços Google Play, de que o Svartifoss precisa para comunicar com um relógio. Emparelhar não ajuda — a aplicação do telemóvel não consegue alcançar um relógio aqui. Tudo abaixo continua a ser guardado e será aplicado se instalares o Svartifoss num dispositivo compatível.</string>
+    <string name="setting_no_watch_banner">Nenhum relógio ligado</string>
+    <string name="setting_no_watch_banner_description">Estas definições sincronizam com o teu relógio Wear OS, por isso só se aplicam visivelmente quando houver um emparelhado e ligado — mas podes configurar tudo abaixo desde já.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Aparência</string>
+    <string name="setting_theme">Tema</string>
+    <string name="theme_light">Branco Nítido</string>
+    <string name="theme_dark">Preto Total</string>
+    <string name="theme_system">Seguir o sistema</string>
+    <string name="setting_language">Idioma</string>
+    <string name="language_system">Seguir o sistema</string>
+    <string name="language_change_watch_notice">O relógio passa a seguir este idioma assim que sincronizar.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Programador</string>
+    <string name="dev_mode_unlocked">Modo de programador ativado ✦</string>
+    <string name="dev_mode_clicks_remaining">Mais %1$d toques para desbloquear o modo de programador</string>
+    <string name="dev_disable_mode">Desativar modo de programador</string>
+    <string name="dev_disable_mode_description">Ocultar esta secção de novo — toca sete vezes em \"Versão instalada\" para a trazer de volta</string>
+    <string name="dev_mode_disabled">Modo de programador desativado</string>
+    <string name="dev_build_info">Informações da compilação</string>
+    <string name="dev_sync_watch">Forçar sincronização das definições do relógio</string>
+    <string name="dev_sync_watch_description">Enviar imediatamente todas as definições atuais para o relógio emparelhado</string>
+    <string name="dev_sync_watch_done">Definições sincronizadas com o relógio</string>
+    <string name="dev_copy_debug_info">Copiar informações de depuração</string>
+    <string name="dev_copy_debug_info_description">Copiar detalhes da compilação e do dispositivo para a área de transferência</string>
+    <string name="dev_show_archived">Mostrar opções arquivadas</string>
+    <string name="dev_show_archived_description">Revelar esquemas e definições do relógio arquivados devido a problemas conhecidos</string>
+    <string name="dev_copy_debug_info_done">Informações de depuração copiadas</string>
+    <string name="dev_open_update_screen">Abrir ecrã de atualizações</string>
+    <string name="dev_open_update_screen_description">Pré-visualizar o ecrã de Atualizações (banner de capa, esquema das notas de versão) sem esperar por uma versão real</string>
+    <string name="dev_watch_layout_bounds">Mostrar limites do esquema do relógio</string>
+    <string name="dev_watch_layout_bounds_description">Contornar os elementos visíveis do leitor e as zonas de toque no relógio. Apenas sobreposição de diagnóstico.</string>
+    <string name="dev_watch_player_info">Mostrar informações do leitor no relógio</string>
+    <string name="dev_watch_player_info_description">Sobrepor no relógio o face ativo, o estado de reprodução, o progresso e informações de renderização.</string>
+    <string name="pref_reset_default">Repor predefinições</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Encontraste a cascata escondida.\n\nSvartifoss — colunas de basalto negro\nque emolduram uma queda de água na Islândia,\num lembrete de que a música flui\ncomo a água pela pedra.\n\n♪ Feito com cuidado. ♪</string>
+    <string name="easter_egg_ok">Fechar</string>
+
+    <string name="nav_watch_face">Relógio</string>
+    <string name="watch_face_header">Aparência do relógio</string>
+    <string name="nav_controls">Controlos</string>
+    <string name="nav_actions">Ações</string>
+    <string name="nav_settings">Definições</string>
+
+    <string name="controls_header">Controlos</string>
+    <string name="controls_state_playing">Música a tocar</string>
+    <string name="controls_state_stopped">Sem reprodução</string>
+    <string name="controls_playing_description">Escolhe o que cada entrada faz enquanto a música está a tocar. Esta configuração é independente do estado sem reprodução.</string>
+    <string name="controls_stopped_description">Escolhe o que cada entrada faz antes de a reprodução começar ou depois de parar. Esta configuração é independente do estado de reprodução.</string>
+
+    <string name="watch_live_preview">Pré-visualização em direto do relógio</string>
+    <string name="watch_preview_description">Pré-visualização em direto da superfície do relógio selecionada. As alterações aparecem aqui antes de as experimentares no relógio.</string>
+    <string name="watch_section_style">Leitor</string>
+    <string name="watch_section_style_description">Escolhe o esquema do leitor e como se comportam o título, o tempo e o progresso.</string>
+    <string name="watch_section_background">Fundo</string>
+    <string name="watch_section_background_description">Controla a capa do álbum, o desfoque, o esbatimento e a legibilidade por trás do leitor.</string>
+    <string name="watch_section_colors">Cores</string>
+    <string name="watch_section_colors_description">Afina as cores do artista, do anel de progresso e do acento baseado no álbum.</string>
+    <string name="watch_section_aod">Sempre visível</string>
+    <string name="watch_section_aod_description">Configura o ecrã de baixo consumo e vê o seu aspeto ambiente na pré-visualização.</string>
+    <string name="watch_section_panels">Painéis</string>
+    <string name="watch_section_panels_description">Estiliza o volume, a busca, o painel rápido e a fila; focar uma linha abre essa superfície na pré-visualização.</string>
+    <string name="watch_section_mini_buttons">Mini botões</string>
+    <string name="watch_section_mini_buttons_description">Estiliza a linha opcional de atalhos. Toca em “Mini botões” abaixo para atribuir as suas ações em Controlos.</string>
+
+    <string name="settings_section_general">Geral</string>
+    <string name="settings_section_general_description">Tema da aplicação, cor de acento e preferências de atualização.</string>
+    <string name="settings_section_watch">Comportamento</string>
+    <string name="settings_section_watch_description">Coroa, toque, vibração e comportamento do menu de ações no teu relógio.</string>
+    <string name="settings_section_automation">Automatização</string>
+    <string name="settings_section_automation_description">Escolhe quando o Svartifoss abre e fecha automaticamente.</string>
+    <string name="settings_section_apps">Aplicações</string>
+    <string name="settings_section_apps_description">Configura serviços de música e integrações específicas de aplicações num só lugar.</string>
+    <string name="settings_section_data">Dados e suporte</string>
+    <string name="settings_section_data_description">Faz cópia de segurança da tua configuração, verifica a versão, diagnósticos ou obtém ajuda.</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Como usar o Svartifoss</string>
+    <string name="tutorial_intro">O Svartifoss transforma o teu relógio num comando para a música a tocar no telemóvel. Aqui está tudo o que podes fazer a partir do pulso.</string>
+
+    <string name="tutorial_taps_title">Tocar nas zonas do ecrã</string>
+    <string name="tutorial_taps_desc">O ecrã do relógio está dividido em quatro zonas — superior, inferior, esquerda e direita. Tocar numa zona executa a ação que lhe atribuíste. Por predefinição, a zona esquerda reproduz ou pausa, a direita passa à faixa seguinte, e a superior e inferior mudam o volume.</string>
+
+    <string name="tutorial_gestures_title">Toque simples, duplo e longo</string>
+    <string name="tutorial_gestures_desc">Cada zona tem três ações distintas: uma para um toque simples, uma para um toque duplo e uma para um toque longo. Por exemplo, um toque simples no centro pode pausar a música, enquanto um toque duplo abre o menu de ações — só verás isto se o configurares, por isso personaliza a teu gosto.</string>
+
+    <string name="tutorial_buttons_title">Botões físicos</string>
+    <string name="tutorial_buttons_desc">Se o teu relógio tiver botões laterais, também lhes podes atribuir ações de toque simples, duplo e longo. Continuam a funcionar mesmo com o ecrã desligado.</string>
+
+    <string name="tutorial_rotary_title">Coroa rotativa</string>
+    <string name="tutorial_rotary_desc">Roda a coroa ou o aro rotativo para mudar o volume. Preferes percorrer a música? Ativa “Buscar com a coroa rotativa” nas Definições.</string>
+
+    <string name="tutorial_swipe_up_title">Deslizar para cima, baixo, esquerda e direita</string>
+    <string name="tutorial_swipe_up_desc">Deslizar para cima, para baixo ou para a esquerda no ecrã de reprodução pode ser configurado para abrir qualquer coisa — o menu de ações, a fila de reprodução, saltar faixas, as tuas playlists e mais. Configura cada um em Controlos, escolhendo Música a tocar ou Sem reprodução. Por predefinição, deslizar para cima abre o menu de ações e os outros não fazem nada até os atribuíres. Deslizar para a direita fica intocado — é o gesto universal do Wear OS para sair da aplicação.</string>
+    <string name="tutorial_yt_music_title">Atalhos do YouTube Music</string>
+    <string name="tutorial_yt_music_desc">Atribui \"Reproduzir músicas gostadas\", \"Reproduzir músicas gostadas, aleatório\" ou \"As minhas playlists\" a qualquer botão, gesto ou deslize para saltar diretamente para a tua música sem tocar no telemóvel. O \"Histórico de pesquisas\" recorda as tuas pesquisas recentes no relógio — mantém premida uma para a eliminar.</string>
+
+    <string name="tutorial_exit_title">Deslizar para sair</string>
+    <string name="tutorial_exit_desc">Desliza a partir da margem esquerda para sair do leitor. Pode pausar a reprodução automaticamente ao saíres — ativa nas Definições.</string>
+
+    <string name="tutorial_tile_title">Mosaico de controlo rápido</string>
+    <string name="tutorial_tile_desc">Desliza o mostrador do relógio para o lado até ao mosaico do Svartifoss para reproduzir, pausar e saltar instantaneamente sem abrir a aplicação.</string>
+
+    <string name="tutorial_complication_title">Complicação do mostrador</string>
+    <string name="tutorial_complication_desc">Adiciona a complicação de capa do álbum do Svartifoss ao teu mostrador para veres a capa atual num relance. Toca-lhe para abrir o leitor.</string>
+
+    <string name="tutorial_system_title">Controlos de multimédia do sistema</string>
+    <string name="tutorial_system_desc">A faixa atual também aparece nos controlos de multimédia do próprio relógio e nas aplicações recentes, para poderes controlar a reprodução também a partir daí.</string>
+
+    <string name="tutorial_tip">Dica: configura ambos os estados em Controlos e depois organiza o menu em Ações.</string>
+
+    <string name="navigation_drawer_open">Abrir gaveta de navegação</string>
+    <string name="navigation_drawer_close">Fechar gaveta de navegação</string>
+
+    <string name="action_settings">Definições</string>
+    <string name="action_pause">Pausar</string>
+    <string name="action_play">Reproduzir</string>
+    <string name="action_skip_prev">Anterior</string>
+    <string name="action_skip_next">Seguinte</string>
+    <string name="action_play_pause">Reproduzir / Pausar</string>
+    <string name="action_stop">Parar</string>
+    <string name="action_restart">Reiniciar faixa</string>
+    <string name="action_mute">Silenciar / Ativar som</string>
+    <string name="action_skip_seconds">Avançar %1$d segundos</string>
+    <string name="action_reverse_seconds">Recuar %1$d segundos</string>
+    <string name="action_like">Gosto</string>
+    <string name="action_shuffle">Aleatório</string>
+    <string name="action_repeat">Repetir</string>
+    <string name="action_repeat_one">Repetir uma</string>
+    <string name="action_search">Procurar música</string>
+    <string name="group_playback_controls">Controlos de reprodução</string>
+    <string name="group_streaming_shortcuts">Faixas, álbuns e playlists</string>
+    <string name="pick_action">Escolher ação</string>
+    <string name="action_opens_more">Várias opções</string>
+    <string name="action_volume_up">Aumentar volume</string>
+    <string name="volume_down">Diminuir volume</string>
+    <string name="group_volume_controls">Controlos de volume</string>
+    <string name="no_watch_detected">Nenhum relógio detetado</string>
+    <string name="connection_instructions">Abre o Svartifoss no relógio para iniciar a ligação</string>
+    <string name="playing_controls">Controlos durante a reprodução</string>
+    <string name="stopped_controls">Controlos sem reprodução</string>
+    <string name="actions_menu">Menu de ações</string>
+    <string name="actions_intro">Configura ambas as superfícies de ações do teu relógio com controlos de reprodução, aplicações ou faixas, álbuns e playlists guardados. O painel rápido mantém-se compacto; o menu abaixo pode conter uma lista ordenada mais longa.</string>
+    <string name="actions_quick_panel_section">Painel rápido</string>
+    <string name="actions_watch_menu_section">Menu no relógio</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d ação · Toca para editar · Mantém premido e arrasta para reordenar</item>
+        <item quantity="other">%1$d ações · Toca para editar · Mantém premido e arrasta para reordenar</item>
+    </plurals>
+    <string name="actions_reorder_description">Menu de ações ordenado. Toca e mantém premido para arrastar, usa as ações de acessibilidade Mover para cima ou Mover para baixo, ou prime Ctrl+Cima/Baixo num teclado.</string>
+    <string name="actions_move_up">Mover para cima</string>
+    <string name="actions_move_down">Mover para baixo</string>
+    <string name="actions_moved_to_position">%1$s movido para a posição %2$d de %3$d.</string>
+    <string name="actions_empty">Ainda sem ações. Usa o botão de adicionar para criar a primeira.</string>
+    <string name="actions_add">Adicionar ação</string>
+    <string name="on_screen_buttons">ZONAS DE TOQUE</string>
+    <string name="physical_buttons">BOTÕES FÍSICOS</string>
+    <string name="physical_buttons_disconnected">Liga-te e abre o Svartifoss no teu relógio para configurar os seus botões físicos. Zonas de toque, deslizes e mini botões já estão disponíveis.</string>
+    <string name="physical_buttons_unavailable">Este relógio não reportou botões físicos configuráveis.</string>
+    <string name="tap_a_zone_to_configure">Toca numa zona do relógio para atribuir uma ação</string>
+    <string name="touch_zone_top">Zona superior</string>
+    <string name="touch_zone_bottom">Zona inferior</string>
+    <string name="touch_zone_left">Zona esquerda</string>
+    <string name="touch_zone_right">Zona direita</string>
+    <string name="touch_zone_center">Toque central</string>
+    <string name="touch_zone_action">%1$s: %2$s. Toca para configurar.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">GESTOS DE DESLIZE</string>
+    <string name="tap_a_swipe_to_configure">Toca numa direção para escolher o que abre</string>
+    <string name="swipe_gesture_up">Deslizar para cima</string>
+    <string name="swipe_gesture_down">Deslizar para baixo</string>
+    <string name="swipe_gesture_left">Deslizar para a esquerda</string>
+    <!-- Short captions shown under each tile's icon -->
+    <string name="swipe_gesture_label_up">Cima</string>
+    <string name="swipe_gesture_label_down">Baixo</string>
+    <string name="swipe_gesture_label_left">Esquerda</string>
+
+    <string name="screen_buttons">MINI BOTÕES</string>
+    <string name="tap_a_screen_button_to_configure">Até três botões visíveis perto da parte de baixo do ecrã do relógio — toca num espaço para atribuir uma ação</string>
+    <string name="screen_button_1">Mini botão 1 (esquerda)</string>
+    <string name="screen_button_2">Mini botão 2 (meio)</string>
+    <string name="screen_button_3">Mini botão 3 (direita)</string>
+    <string name="screen_button_label_1">Botão 1</string>
+    <string name="screen_button_label_2">Botão 2</string>
+    <string name="screen_button_label_3">Botão 3</string>
+    <string name="no_action">Sem ação</string>
+    <string name="gesture_single_press">Pressão simples</string>
+    <string name="gesture_double_press">Pressão dupla</string>
+    <string name="gesture_long_press">Pressão longa</string>
+    <string name="gesture_swipe_action">Ação</string>
+    <string name="center_button_quick_panel_note">Tocar duas vezes no centro do ecrã de reprodução abre sempre o painel de ações rápidas, independentemente do que atribuíres aqui.</string>
+    <string name="start_playback">Iniciar reprodução</string>
+    <string name="uninstalled_app">Aplicação desinstalada</string>
+
+    <string name="play_app">Reproduzir %1$s</string>
+    <string name="tasker_task">Tarefa do Tasker</string>
+    <string name="icon_selection_title">Seleção de ícone</string>
+    <string name="icon_selection_gallery">Da galeria</string>
+    <string name="icon_selection_no_icon_pack">Esta funcionalidade permite escolher um ícone personalizado para a tua ação a partir de um
+        pacote de ícones instalado.\n\nInfelizmente, parece que não tens pacotes de ícones instalados.</string>
+    <string name="icon_selection_no_storage_permission">Esta funcionalidade permite escolher um ícone personalizado para a tua ação a partir de um
+        pacote de ícones instalado.\n\nAlguns pacotes de ícones exigem que as aplicações tenham permissão de armazenamento. Terás de a permitir para usar esta funcionalidade.</string>
+    <string name="delete">Eliminar</string>
+    <string name="action_text">Texto da ação</string>
+    <string name="swap_action">Trocar ação</string>
+    <string name="open_actions_menu">Abrir menu de ações</string>
+    <string name="open_playlist_menu">Mostrar playlist atual</string>
+    <string name="misc_settings">Definições diversas</string>
+
+    <string name="category_backup">Cópia de segurança</string>
+    <string name="export_config">Exportar configuração</string>
+    <string name="export_config_description">Guarda as tuas atribuições de botões, lista de ações e definições do relógio num ficheiro</string>
+    <string name="import_config">Importar configuração</string>
+    <string name="import_config_description">Restaura as atribuições de botões, a lista de ações e as definições do relógio a partir de um ficheiro</string>
+    <string name="export_config_done">Configuração exportada</string>
+    <string name="export_config_failed">Não foi possível exportar a configuração</string>
+    <string name="import_config_done_title">Importação bem-sucedida</string>
+    <string name="import_config_done_message">O Svartifoss precisa de reiniciar para aplicar a configuração importada.</string>
+    <string name="import_config_failed">Não foi possível importar a configuração — o ficheiro pode ser inválido ou de uma versão incompatível</string>
+    <string name="action_restart_now">Reiniciar agora</string>
+
+    <string name="category_about">Sobre</string>
+    <string name="category_music_screen">Ecrã de música</string>
+    <string name="category_watch_screen">Ecrã do relógio</string>
+    <string name="category_mini_buttons">Mini botões</string>
+    <string name="category_screen_face">Aparência do leitor</string>
+    <string name="category_album_background">Fundo do álbum</string>
+    <string name="category_music_colors">Cores da música</string>
+    <string name="preview_sample_title">Título da música</string>
+    <string name="preview_sample_artist">Nome do artista</string>
+    <string name="preview_sample_next_title">Próxima música</string>
+    <string name="preview_playback_stopped">Reprodução parada</string>
+    <string name="category_gestures">Gestos e entrada</string>
+    <string name="setting_overlay_blur_radius">Desfoque da sobreposição</string>
+    <string name="setting_overlay_blur_radius_description">Intensidade do desfoque (px) do fundo fosco por trás dos anéis de volume/busca e do painel de ações rápidas — independente do desfoque do fundo da capa do álbum</string>
+    <string name="category_action_list">Lista de ações</string>
+    <string name="category_automation">Automatização</string>
+    <string name="installed_version">Versão instalada</string>
+    <string name="get_support">Obter suporte</string>
+    <string name="get_support_description">Envia os registos da aplicação ao programador para suporte</string>
+    <string name="contact_developer">Contactar o programador</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — contacto</string>
+    <string name="contact_developer_chooser">Enviar email</string>
+    <string name="contact_developer_no_client">Nenhuma aplicação de email instalada. Endereço copiado para a área de transferência.</string>
+    <string name="about_developer_title">Sobre o programador</string>
+    <string name="about_developer_dialog_message">O Svartifoss começou como um projeto pessoal — queria pôr o Music Center for Wear a par do que é possível hoje, só para o poder usar eu próprio todos os dias. Correu suficientemente bem para decidir partilhá-lo com todos. Esta é a minha primeira aplicação, e não há nada como ver algo que construíste revelar-se útil também para outras pessoas.</string>
+    <string name="licenses">Licenças de código aberto</string>
+    <string name="setting_always_show_time">Mostrar sempre a hora</string>
+    <string name="setting_always_show_time_off_description">A hora atual só será mostrada no modo ambiente</string>
+    <string name="setting_always_show_time_on_description">A hora atual será sempre mostrada. O ícone da ação superior não ficará visível (será substituído pelo relógio), mas a ação continua a funcionar normalmente.</string>
+    <string name="tap_to_force_stop">Toca para parar os controlos</string>
+    <string name="notification_action_stop">Parar</string>
+    <string name="notification_action_force_stop">Forçar paragem</string>
+    <string name="error_notification_access">Sem acesso a notificações. Verifica o telemóvel.</string>
+    <string name="error_notifications">Notificações de erro</string>
+    <string name="notification_access_notification_title">O Svartifoss precisa de acesso às notificações</string>
+    <string name="notification_access_notification_title_description">Toca nesta notificação e verifica o Svartifoss para resolver o problema</string>
+    <string name="error_service_not_enabled">É necessário acesso às notificações</string>
+    <string name="error_service_not_enabled_description">Para controlar a música a partir do relógio, o Svartifoss precisa de acesso às notificações — é assim que o Android lhe permite ver que aplicação está a tocar e enviar-lhe comandos de reproduzir, pausar e saltar.\n\nO Svartifoss nunca lê o conteúdo das tuas notificações. Só usa esta permissão para encontrar a sessão de multimédia ativa.\n\nToca em \"Abrir Definições\" e depois ativa o Svartifoss no acesso às notificações.</string>
+    <string name="action_open_settings">Abrir Definições</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog -->
+    <string name="no_watch_app_title">Instalar o Svartifoss no teu relógio</string>
+    <string name="no_watch_app_description">O Svartifoss não conseguiu encontrar a sua aplicação de relógio no teu relógio Wear OS emparelhado. As aplicações do telemóvel e do relógio funcionam em conjunto — sem a aplicação do relógio, controlar a reprodução a partir do pulso não funciona.\n\nO Svartifoss não está na Play Store — a aplicação do relógio é instalada à parte por sideload (por exemplo, com o Wear Installer). Toca em \"Ver versões\" para abrir a página de versões do GitHub e obter o APK do relógio. Se acabaste de o instalar, dá-lhe um minuto para terminar a sincronização.</string>
+    <string name="no_watch_app_button">Ver versões</string>
+    <string name="required_permission">Permissão necessária</string>
+    <string name="setting_pause_on_swipe_exit">Pausar reprodução ao sair por deslize</string>
+    <string name="setting_pause_on_swipe_exit_description">Pausa automaticamente qualquer reprodução ao saíres do Svartifoss no relógio com o gesto de deslizar para a esquerda.\n\nSair pelo botão de energia não é afetado e nunca pausa automaticamente.</string>
+    <string name="setting_rotating_crown_off_period">Atraso da entrada rotativa após ligar o ecrã</string>
+    <string name="setting_rotating_crown_off_period_description">As entradas rotativas (por exemplo, coroas rotativas) podem ser demasiado sensíveis nalguns dispositivos. Para evitar mudanças de volume acidentais, a entrada rotativa será desativada durante <![CDATA[<b>%1$s milissegundos</b>]]> depois de ligares o ecrã.</string>
+    <string name="setting_rotary_seek">Buscar com a coroa rotativa</string>
+    <string name="setting_rotary_seek_description">Quando ativado, rodar a coroa percorre a faixa atual em vez de mudar o volume. O volume pode continuar a ser alterado com botões no ecrã ou físicos.</string>
+    <string name="setting_rotating_sensitivity">Sensibilidade da entrada rotativa</string>
+    <string name="setting_rotating_sensitivity_description">Sensibilidade da entrada rotativa. Um número maior significa que mover a coroa da mesma forma aumenta mais o volume. Atualmente definido para <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Desativar duplo clique dos botões físicos no ambiente</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Alguns relógios têm botões problemáticos em que um único clique do botão físico no modo ambiente é por vezes registado como duplo clique.\n\nSe tiveres este problema, podes ativar esta opção para desativar completamente os duplos cliques no modo ambiente (por exemplo, clicar duas vezes só ativará a ação de clique simples). Clicar duas vezes com o relógio ativo não é afetado.</string>
+    <string name="setting_haptic_feedback">Retorno tátil</string>
+    <string name="setting_haptic_feedback_description">Vibrar o relógio ao premir botões.</string>
+    <string name="setting_auto_start">Abrir o Svartifoss automaticamente</string>
+    <string name="setting_auto_start_description">Abrir automaticamente o Svartifoss no relógio quando a reprodução de música começa no telemóvel.</string>
+    <string name="setting_auto_start_apps_blacklist">Aplicações de arranque automático</string>
+    <string name="setting_auto_start_apps_blacklist_description">Lista de aplicações de multimédia que podem iniciar o Svartifoss automaticamente</string>
+    <string name="setting_dim_album_art">Sombreamento do leitor</string>
+    <string name="setting_dim_album_art_description">Adiciona um tratamento de sombra à tua escolha entre a arte e os controlos do leitor.</string>
+    <string name="setting_album_art_style">Estilo da capa do álbum</string>
+    <string name="setting_album_art_style_description">Escolhe o aspeto do fundo de reprodução no relógio.</string>
+    <string name="setting_album_art_blur_radius">Intensidade do desfoque</string>
+    <string name="setting_album_art_blur_radius_description">Intensidade do desfoque de ecrã inteiro sempre que o fundo selecionado usa desfoque. Atualmente <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Intensidade do escurecimento</string>
+    <string name="setting_album_art_dim_strength_description">Quão fortemente a capa do álbum é escurecida para a legibilidade do texto. Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Estilo de sombreamento</string>
+    <string name="setting_player_shading_intensity">Intensidade do sombreamento</string>
+    <string name="setting_player_shading_intensity_description">Quão fortemente o sombreamento escurece o fundo. 100%% é força total; sobe mais para contraste extra (até 150%%). Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Aplicar este aspeto a todos os faces</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Copiar as definições de aparência deste face para todos os outros faces</string>
+    <string name="apply_appearance_confirm_title">Aplicar a todos os faces?</string>
+    <string name="apply_appearance_confirm_message">Isto substitui as definições de aparência de todos os outros faces pelas atuais. Não altera as tuas definições de comportamento.</string>
+    <string name="apply_appearance_confirm_button">Aplicar</string>
+    <string name="apply_appearance_done">Aplicado a todos os faces</string>
+    <string name="category_wf_layout_actions">Esquema</string>
+    <string name="setting_reset_appearance">Repor este esquema</string>
+    <string name="setting_reset_appearance_description">Restaurar a aparência deste face às predefinições originais</string>
+    <string name="reset_appearance_confirm_title">Repor este esquema?</string>
+    <string name="reset_appearance_confirm_message">As definições de aparência deste face voltam às predefinições. As tuas definições de comportamento e outros faces não são afetados.</string>
+    <string name="reset_appearance_confirm_button">Repor</string>
+    <string name="reset_appearance_done">Esquema reposto para as predefinições</string>
+    <string name="setting_reset_all_faces">Repor todos os faces para a predefinição</string>
+    <string name="setting_reset_all_faces_description">Restaurar a aparência de cada face incorporado às predefinições originais</string>
+    <string name="reset_all_faces_confirm_title">Repor todos os faces?</string>
+    <string name="reset_all_faces_confirm_message">A aparência de cada face incorporado volta às predefinições originais, e qualquer tema personalizado ativo é desligado. Os teus temas personalizados guardados, definições de comportamento e face escolhido são mantidos.</string>
+    <string name="reset_all_faces_confirm_button">Repor tudo</string>
+    <string name="reset_all_faces_done">Todos os faces repostos para as predefinições</string>
+    <string name="setting_player_shading_color">Cor do sombreamento</string>
+    <string name="setting_wear_shading_custom_color">Cor de sombreamento personalizada</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Preto</item>
+        <item>Acento do álbum</item>
+        <item>Álbum dessaturado</item>
+        <item>Cor personalizada</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Seguir tema do leitor</item>
+        <item>Vinheta de bordo</item>
+        <item>Vinheta de bordo (Forte)</item>
+        <item>Vinheta de bordo (Intensa)</item>
+        <item>Canto inferior</item>
+        <item>Esbatimento inferior</item>
+        <item>Chão e teto</item>
+        <item>Filtro de ecrã inteiro</item>
+        <item>Banho de cor do álbum</item>
+        <item>Gradiente de duas cores do álbum</item>
+        <item>Cortinas laterais</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Opacidade da capa no ambiente</string>
+    <string name="setting_ambient_album_art_opacity_description">Quão visível a capa do álbum permanece no modo ambiente. Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Tempo limite da sobreposição de volume/busca</string>
+    <string name="setting_volume_overlay_timeout_description">Quanto tempo as sobreposições de volume e busca permanecem no ecrã após o ajuste. Atualmente <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Zona morta da coroa</string>
+    <string name="setting_rotary_deadzone_description">Movimento mínimo da coroa antes de aplicar mudanças de volume ou busca. Ajuda a evitar ajustes acidentais. Atualmente <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Experiência Wear</string>
+    <string name="setting_swipe_gestures_hint">Gestos de deslize</string>
+    <string name="setting_swipe_gestures_hint_description">Deslizar para cima/baixo/esquerda pode abrir qualquer ação. Toca aqui para os configurar para Música a tocar ou Sem reprodução. Deslizar para a direita continua reservado para sair da aplicação.</string>
+    <string name="setting_screen_buttons_hint">Mini botões</string>
+    <string name="setting_screen_buttons_hint_description">Até três botões visíveis, cada um com ações de toque e toque longo. Toca aqui para os configurar para Música a tocar ou Sem reprodução.</string>
+    <string name="dev_screen_buttons_offset">Posição dos mini botões</string>
+    <string name="dev_screen_buttons_offset_description">Distância preferida em dp entre a parte de baixo do ecrã do relógio e os mini botões (predefinição 42). A linha continua a ajustar-se sozinha para se afastar de títulos longos.</string>
+    <string name="setting_screen_buttons_tilt">Inclinação dos botões</string>
+    <string name="setting_screen_buttons_tilt_description">Quanto os botões laterais seguem a curva do ecrã. 0 = linha reta; 100 = arco completo com ícones inclinados.</string>
+    <string name="setting_screen_buttons_bg">Fundo dos mini botões</string>
+    <string name="setting_screen_buttons_opacity">Opacidade dos mini botões</string>
+    <string name="setting_screen_buttons_opacity_description">Opacidade de todo o grupo de mini botões (0–100%%). Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Painel de ações rápidas</string>
+    <string name="quick_panel_config_hint">Estes são os botões do painel aberto ao tocar duas vezes no centro do ecrã do relógio. Toca numa linha para escolher a sua ação (\"Nenhuma\" oculta-a); mantém premido para restaurar a predefinição.</string>
+    <string name="quick_panel_slot_1">Botão 1</string>
+    <string name="quick_panel_slot_2">Botão 2</string>
+    <string name="quick_panel_slot_3">Botão 3</string>
+    <string name="quick_panel_slot_long">Botão longo</string>
+    <string name="quick_panel_slot_default">%1$s (predefinição)</string>
+    <string name="quick_panel_slot_hidden">Oculto</string>
+    <string name="quick_panel_default_like">Gosto</string>
+    <string name="quick_panel_default_shuffle">Aleatório</string>
+    <string name="quick_panel_default_repeat">Repetir</string>
+    <string name="quick_panel_default_up_next">A seguir</string>
+    <string name="setting_wear_center_long_press_queue">Pressão longa no centro para a fila</string>
+    <string name="setting_wear_center_long_press_queue_description">Mantém premido o centro do ecrã de reprodução para abrir a fila de reprodução.</string>
+    <string name="setting_wear_screen_face">Esquema base</string>
+    <string name="setting_wear_screen_face_description">Escolhe a estrutura usada por este tema. Os temas guardados podem combinar este esquema com a sua própria fonte, cores, desfoque, sombreamento, AOD e painéis.</string>
+    <string name="setting_wear_show_track_title">Mostrar título da música</string>
+    <string name="setting_wear_show_track_title_description">Mostra o nome da música atual no leitor</string>
+    <string name="setting_wear_show_track_artist">Mostrar nome do artista</string>
+    <string name="setting_wear_show_track_artist_description">Mostra o artista atual no leitor</string>
+    <string name="setting_wear_show_source_icon">Mostrar ícone da app a tocar</string>
+    <string name="setting_wear_show_source_icon_description">Mostra o ícone da aplicação a tocar ao lado do artista. Usa o ícone da sua notificação de multimédia. Quando desligado, o ícone nunca é enviado para o relógio.</string>
+    <string name="setting_wear_player_controls_visible">Mostrar controlos do leitor</string>
+    <string name="setting_wear_player_controls_visible_description">Mostra ou oculta botões incorporados nos esquemas Classic, Poster, Studio e outros configuráveis sem desativar as suas zonas de toque</string>
+    <string name="setting_wear_quadrant_tap_flash">Piscar ícone ao tocar</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Quando a ação de uma zona de canto dispara, faz o seu ícone piscar brevemente com brilho total — especialmente útil no estilo de controlo Oculto, onde o ícone é de outro modo invisível e não dá confirmação de que ação acabou de correr.</string>
+    <string name="setting_wear_internal_progress_visible">Indicador de progresso do esquema</string>
+    <string name="setting_wear_internal_progress_visible_description">Mostra o indicador de progresso extra desenhado neste esquema. Os anéis do botão de reprodução Expressive e Material fazem parte dos seus controlos e continuam disponíveis.</string>
+    <string name="setting_wear_edge_progress_visible">Mostrar arco de progresso na margem</string>
+    <string name="setting_wear_edge_progress_visible_description">Oculta apenas o arco visual à volta do ecrã. A busca pela margem continua a ser uma opção independente.</string>
+    <string name="setting_wear_edge_seek_enabled">Buscar a partir da margem do ecrã</string>
+    <string name="setting_wear_edge_seek_enabled_description">Toca ou arrasta ao longo da margem do ecrã para saltar para um ponto exato, mesmo quando o seu arco está oculto</string>
+    <string name="setting_wear_screen_theme">Estilo de controlo</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Equilibrado</string>
+    <string name="wear_screen_theme_default_description">Hierarquia e tamanhos de controlo padrão.</string>
+    <string name="wear_screen_theme_minimal">Minimalista</string>
+    <string name="wear_screen_theme_minimal_description">Usa controlos mais pequenos e discretos mantendo cada ação visível e utilizável.</string>
+    <string name="wear_screen_theme_compact">Compacto</string>
+    <string name="wear_screen_theme_compact_description">Usa um tratamento de controlo mais apertado sem alterar as tuas ações.</string>
+    <string name="wear_screen_theme_cinema">Cinema</string>
+    <string name="wear_screen_theme_cinema_description">Suaviza os controlos sem alterar a arte.</string>
+    <string name="wear_screen_theme_vivid">Vívido</string>
+    <string name="wear_screen_theme_vivid_description">Usa controlos maiores e mais destacados.</string>
+    <string name="wear_screen_theme_contrast">Alto contraste</string>
+    <string name="wear_screen_theme_contrast_description">Usa controlos maiores para leitura mais fácil.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Usa controlos compactos e ligeiramente esbatidos. Não escurece o fundo em si — usa as definições de fundo para isso.</string>
+    <string name="wear_screen_theme_hidden">Oculto</string>
+    <string name="wear_screen_theme_hidden_description">Oculta completamente todos os ícones de controlo. As zonas de toque permanecem ativas e totalmente funcionais.</string>
+    <string name="setting_wear_font">Tipo de letra</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">O tipo de letra predefinido da aplicação.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">O tipo de letra clássico do sistema Android.</string>
+    <string name="wear_font_rounded">Arredondado</string>
+    <string name="wear_font_rounded_description">Formas de letra modernas e amigáveis com terminais suavemente arredondados.</string>
+    <string name="wear_font_sans_light">Moderno Fino</string>
+    <string name="wear_font_sans_light_description">Uma sans-serif limpa e arejada com um peso visual mais leve.</string>
+    <string name="wear_font_sans_thin">Ultrafino</string>
+    <string name="wear_font_sans_thin_description">Um estilo de exibição extraleve para um leitor minimalista.</string>
+    <string name="wear_font_sans_medium">Moderno Médio</string>
+    <string name="wear_font_sans_medium_description">Uma sans-serif nítida com traços mais fortes e compactos.</string>
+    <string name="wear_font_sans_black">Pesado</string>
+    <string name="wear_font_sans_black_description">Uma família de exibição negrito com impacto visual máximo.</string>
+    <string name="wear_font_small_caps">Versaletes</string>
+    <string name="wear_font_small_caps_description">Formas compactas em maiúsculas com um toque editorial.</string>
+    <string name="wear_font_casual">Casual</string>
+    <string name="wear_font_casual_description">Uma família de sistema manuscrita e divertida.</string>
+    <string name="wear_font_typewriter">Máquina de escrever (Arquivado)</string>
+    <string name="wear_font_typewriter_description">Um visual retro de máquina de escrever (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Uma sans geométrica arredondada, uma alternativa livre (OFL) no espírito da Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Uma sans geométrica limpa, uma alternativa livre (OFL) no espírito da Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Uma romana humanista elegante, uma alternativa livre (OFL) no espírito da Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Um estilo de máquina de escrever mais suave (Love Letter Typewriter) — normalmente reservado para faixas com tema \"Lain\".</string>
+    <string name="wear_font_serif">Serifada</string>
+    <string name="wear_font_serif_description">Um tipo de letra serifado clássico.</string>
+    <string name="wear_font_serif_monospace">Serifada Mono</string>
+    <string name="wear_font_serif_monospace_description">Letras serifadas de largura fixa com um visual editorial/terminal distinto.</string>
+    <string name="wear_font_monospace">Monoespaçada</string>
+    <string name="wear_font_monospace_description">Largura fixa, visual técnico.</string>
+    <string name="wear_font_condensed">Condensada</string>
+    <string name="wear_font_condensed_description">Formas de letra mais estreitas que cabem mais texto.</string>
+    <string name="wear_font_condensed_light">Condensada Fina</string>
+    <string name="wear_font_condensed_light_description">Uma família estreita e mais leve para títulos longos.</string>
+    <string name="wear_font_condensed_medium">Condensada Média</string>
+    <string name="wear_font_condensed_medium_description">Uma família estreita com traços mais fortes e excelente legibilidade.</string>
+    <string name="wear_font_cursive">Cursiva</string>
+    <string name="wear_font_cursive_description">Um tipo de letra manuscrito decorativo.</string>
+    <string name="setting_wear_dynamic_accent">Acento dinâmico no relógio</string>
+    <string name="setting_wear_dynamic_accent_description">Adapta as cores do relógio baseadas no álbum à capa atual. Quando desligado, as escolhas de cor do Álbum usam o acento estático do tema.</string>
+    <string name="setting_wear_album_art_fade">Transição de esbatimento da capa</string>
+    <string name="setting_wear_album_art_fade_description">Esbate suavemente a capa do álbum quando a faixa muda.</string>
+    <string name="setting_wear_title_text_mode">Comportamento do texto do título</string>
+    <string name="setting_wear_title_text_mode_description">Como se comporta o título de reprodução quando não cabe: Automático combina encolher, quebrar e deslocar; as outras opções tornam um comportamento exclusivo.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automático (encolher, depois quebrar, depois deslocar)</item>
+        <item>Deslocar (marquee)</item>
+        <item>Quebrar em duas linhas</item>
+        <item>Quebrar em três linhas</item>
+        <item>Quebrar em cinco linhas</item>
+        <item>Estático (uma linha, sem deslocar ou encolher)</item>
+        <item>Encolher para caber</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Cor do texto do artista</string>
+    <string name="setting_wear_artist_custom_color">Cor personalizada do artista</string>
+    <string name="setting_wear_artist_custom_color_description">Escolhe a cor do artista usada com o tratamento Normal</string>
+    <string name="setting_wear_artist_desaturated">Cor dessaturada do artista</string>
+    <string name="setting_wear_artist_desaturated_description">Suaviza a cor do texto do artista baseada no álbum — só se aplica quando \"Cor do texto do artista\" está definida como Cor do álbum</string>
+
+    <string name="setting_wear_progress_color">Cor da barra de progresso</string>
+    <string name="setting_wear_progress_custom_color">Cor personalizada da barra de progresso</string>
+    <string name="setting_wear_progress_custom_color_description">Escolhe a cor de progresso e busca usada com o tratamento Normal</string>
+    <string name="setting_wear_progress_desaturated">Cor dessaturada da barra de progresso</string>
+    <string name="setting_wear_progress_desaturated_description">Suaviza a cor da barra de progresso baseada no álbum — só se aplica quando \"Cor da barra de progresso\" está definida como Cor do álbum</string>
+
+    <string name="setting_wear_volume_color">Cor da barra de volume</string>
+    <string name="setting_wear_volume_custom_color">Cor personalizada do volume</string>
+    <string name="setting_wear_volume_custom_color_description">Escolhe a cor do volume usada com o tratamento Normal</string>
+    <string name="setting_wear_quick_panel_color">Cor das Ações Rápidas</string>
+    <string name="setting_wear_quick_panel_custom_color">Cor personalizada das Ações Rápidas</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Escolhe a cor das Ações Rápidas usada com o tratamento Normal</string>
+    <string name="setting_wear_shading_custom_color_description">Escolhe a cor que tinge o gradiente de sombreamento</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Neutro (cor estática do tema)</item>
+        <item>Cor do álbum</item>
+        <item>Cor personalizada</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Busca Expressive</string>
+    <string name="setting_wear_expressive_seek_mode_description">Como percorrer a faixa por toque no face Expressive. Anel central torna arrastável o anel à volta do botão de reprodução; Anel de bordo mostra também o anel de aro Classic; Nenhum deixa a busca apenas para a coroa rotativa.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Anel central</item>
+        <item>Anel de bordo</item>
+        <item>Nenhum</item>
+    </string-array>
+
+    <string name="category_wear_aod">Ecrã sempre visível</string>
+    <string name="setting_wear_aod_style">Estilo sempre visível</string>
+    <string name="setting_wear_aod_style_description">Como fica o ecrã de reprodução enquanto o relógio está no modo ambiente. Seguir face corresponde ao face selecionado; Minimalista mostra apenas texto esbatido em preto puro para a maior autonomia.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Seguir face</item>
+        <item>Classic</item>
+        <item>Expressive (contornado)</item>
+        <item>Material (contornado)</item>
+        <item>Controlos AMOLED</item>
+        <item>Chrono (relógio grande)</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Cor sempre visível</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Branco</item>
+        <item>Cor do álbum</item>
+        <item>Cor personalizada</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Branco</item>
+        <item>Dinâmico (pela área sob o relógio)</item>
+        <item>Cor do álbum</item>
+        <item>Cor personalizada</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Seguir estilo do painel</item>
+        <item>Transparente (sem fundo)</item>
+        <item>Acento do álbum</item>
+        <item>Translúcido</item>
+        <item>Branco</item>
+        <item>Branco fosco</item>
+        <item>Preto</item>
+        <item>Dinâmico (tom do álbum)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Fundo da cápsula A seguir</string>
+    <string name="setting_wear_show_up_next_pill">Cápsula A seguir no leitor</string>
+    <string name="setting_wear_show_up_next_pill_description">Mostra uma cápsula A seguir na parte de baixo do ecrã de reprodução. Ocupa o espaço da linha de mini botões, por isso só aparece enquanto essa linha não estiver visível.</string>
+    <string name="category_wf_clock">Relógio</string>
+    <string name="setting_wear_clock_color">Cor do relógio</string>
+    <string name="setting_wear_clock_custom_color">Cor personalizada do relógio</string>
+    <string name="setting_wear_clock_custom_color_description">Toca para escolher a cor do relógio usada quando Cor do relógio está definida como Cor personalizada</string>
+    <string name="setting_wear_clock_opacity">Opacidade do relógio</string>
+    <string name="setting_wear_clock_opacity_description">Quão opaco é o relógio sempre visível (10–100%%). Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Cor personalizada sempre visível</string>
+    <string name="setting_wear_aod_custom_color_description">Toca para escolher a cor usada no texto, controlos e relógio sempre visíveis quando \"Cor sempre visível\" está definida como Cor personalizada</string>
+    <string name="setting_wear_aod_intensity">Brilho sempre visível</string>
+    <string name="setting_wear_aod_intensity_description">Quão brilhante o ecrã sempre visível é renderizado (20–100%%). Mais baixo é mais esbatido e usa menos bateria. Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Botões de transporte no ecrã sempre visível</string>
+    <string name="setting_wear_aod_show_transport_description">Mostra os botões contornados anterior/reproduzir/seguinte nos estilos sempre visíveis suportados. Não podem ser tocados enquanto o ecrã está esbatido, mas um toque acorda o relógio com o botão já debaixo do teu dedo.</string>
+    <string name="setting_wear_aod_show_progress">Anel de progresso no ecrã sempre visível</string>
+    <string name="setting_wear_aod_show_progress_description">Mostra o anel de progresso à volta do botão de reprodução no modo ambiente — a posição só se atualiza cerca de uma vez por minuto aí</string>
+    <string name="setting_wear_aod_show_pills">A seguir no ecrã sempre visível</string>
+    <string name="setting_wear_aod_show_pills_description">Mostra uma cápsula A seguir estática e contornada na parte de baixo dos estilos sempre visíveis</string>
+    <string name="category_wf_gestures">Gestos do ecrã</string>
+    <string name="setting_wear_mini_buttons_mode">Mostrar mini botões</string>
+    <string name="setting_wear_gestures_mode">Gestos do ecrã</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Sempre</item>
+        <item>Só durante a reprodução</item>
+        <item>Só em pausa</item>
+        <item>Nunca</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Capa do álbum no ecrã sempre visível</string>
+    <string name="setting_wear_aod_show_art_description">Mantém a capa do álbum esbatida visível no modo ambiente. Desligá-la mostra um fundo preto puro, que poupa bastante mais bateria em ecrãs AMOLED.</string>
+    <string name="setting_wear_aod_art_treatment">Estilo da capa sempre visível</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Desfoque suave</item>
+        <item>Capa nítida</item>
+        <item>Desfoque monocromático</item>
+        <item>Seguir tratamento da arte do leitor</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Relógio no ecrã sempre visível</string>
+    <string name="setting_wear_aod_show_clock_description">Mostra o relógio quando o relógio está no modo ambiente</string>
+    <string name="setting_wear_aod_show_track_info">Info da faixa no ecrã sempre visível</string>
+    <string name="setting_wear_aod_show_track_info_description">Mostra o título e o artista da faixa no modo ambiente</string>
+
+    <string name="category_overlays_queue">Sobreposições e fila</string>
+    <string name="setting_wear_overlay_backdrop_style">Fundo do painel</string>
+    <string name="setting_wear_volume_style">Estilo do volume</string>
+    <string name="setting_wear_volume_layout">Esquema do volume</string>
+    <string name="setting_wear_quick_panel_style">Estilo do painel rápido</string>
+    <string name="setting_wear_quick_panel_layout">Esquema do painel rápido</string>
+    <string name="setting_wear_quick_panel_source">Ações rápidas</string>
+    <string name="setting_wear_quick_panel_source_description">Escolhe os teus botões configurados ou ações fornecidas pela aplicação a tocar atualmente.</string>
+    <string name="quick_panel_open_note_title">Abrir o painel</string>
+    <string name="quick_panel_open_note_description">Toca duas vezes no centro do ecrã de reprodução para abrir o painel de ações rápidas no relógio.</string>
+    <string name="preview_current_app_action">Ação da app atual</string>
+    <string name="preview_notification_controls">Ícone da notificação de multimédia</string>
+    <string name="setting_wear_queue_style">Estilo da fila</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Usar capas de atalho como fundo</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando o Estilo da fila acima é uma variante Capa, uma linha de ação do painel rápido com uma capa de atalho obtida (faixa, playlist, artista…) também preenche a sua cápsula com essa arte, como faz o A seguir. Atalhos sem capa obtida (apenas um ícone de aplicação) não são afetados.</string>
+    <string name="setting_wear_list_row_size">Tamanho da cápsula da lista</string>
+    <string name="setting_wear_list_row_size_description">Altura das linhas de largura total na fila, menus e painel rápido.</string>
+    <string name="setting_wear_progress_style">Estilo do anel de progresso</string>
+    <string name="setting_wear_seek_style">Estilo da leitura de busca e volume</string>
+    <string name="setting_wear_seek_layout">Esquema do painel de busca</string>
+    <string name="setting_wear_color_treatment">Tratamento de cor do relógio</string>
+    <string name="setting_wear_normal_color">Cor normal</string>
+    <string name="setting_wear_normal_color_description">Escolhe a cor única usada pelos acentos do título, progresso, volume, painéis e cromado dos mini botões no modo Normal</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normal (cor escolhida)</item>
+        <item>Dessaturado (cor suave do álbum)</item>
+        <item>Expressive (paleta completa do álbum)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Seguir tratamento do relógio</item>
+        <item>Normal (cor escolhida)</item>
+        <item>Dessaturado (cor suave do álbum)</item>
+        <item>Expressive (paleta completa do álbum)</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Arco de bordo (esquerda)</item>
+        <item>Arco de bordo (alto)</item>
+        <item>Arco de bordo (direita)</item>
+        <item>Arco de bordo (topo)</item>
+        <item>Arco de bordo (fundo)</item>
+        <item>Anel completo</item>
+        <item>Halo central</item>
+        <item>Medidor horizontal</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Anel de bordo</item>
+        <item>Anel de bordo (fino)</item>
+        <item>Anel de bordo (grosso)</item>
+        <item>Linha temporal</item>
+        <item>Linha temporal segmentada</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metadados primeiro</item>
+        <item>Arco</item>
+        <item>Hero</item>
+        <item>Grelha</item>
+        <item>Linhas com etiqueta</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Sólido</item>
+        <item>Tracejado</item>
+        <item>Pontos</item>
+        <item>Fio de cabelo</item>
+        <item>Cometa</item>
+        <item>60 pontos de relógio</item>
+        <item>60 marcas de relógio</item>
+        <item>Segmentos de 12 horas</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Simples</item>
+        <item>Cápsula de vidro</item>
+        <item>Cápsula Expressive</item>
+        <item>Cápsula Material</item>
+        <item>Cápsula branca</item>
+        <item>Gigante</item>
+        <item>Posição / total</item>
+        <item>Vidro branco</item>
+        <item>Álbum translúcido</item>
+        <item>Brilho do álbum</item>
+        <item>Contorno</item>
+        <item>Tema sólido</item>
+        <item>Álbum sólido</item>
+        <item>Micro</item>
+        <item>Sombra (sem cromado)</item>
+        <item>Sublinhado</item>
+        <item>Contorno fino</item>
+        <item>Cor do álbum gigante</item>
+        <item>Mono</item>
+        <item>Tonal escuro</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Botões configurados</item>
+        <item>Da app de multimédia atual</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Seguir estilo do painel</item>
+        <item>Desfoque do álbum (acrílico)</item>
+        <item>Preto sólido</item>
+        <item>Cor do álbum sólida</item>
+        <item>Vidro</item>
+        <item>Gradiente do álbum</item>
+        <item>Duotom do álbum</item>
+        <item>Prisma</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Vidro</item>
+        <item>Minimalista (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Néon</item>
+        <item>Claro</item>
+        <item>Gradiente</item>
+        <item>Mono</item>
+        <item>Contorno</item>
+        <item>Duotom</item>
+        <item>Prisma</item>
+        <item>Alto contraste</item>
+        <item>Terminal</item>
+        <item>Gelo</item>
+        <item>Segmentos</item>
+        <item>Aurora</item>
+        <item>Tinta</item>
+        <item>Ranhura</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Compacto</item>
+        <item>Normal</item>
+        <item>Alto</item>
+        <item>Extra alto</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Vidro</item>
+        <item>Minimalista (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Néon</item>
+        <item>Claro</item>
+        <item>Gradiente</item>
+        <item>Mono</item>
+        <item>Contorno</item>
+        <item>Duotom</item>
+        <item>Prisma</item>
+        <item>Alto contraste</item>
+        <item>Terminal</item>
+        <item>Gelo</item>
+        <item>Capa</item>
+        <item>Capa desfocada</item>
+        <item>Capa Tonal</item>
+        <item>Capa quadrada</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Vidro</item>
+        <item>Vidro branco</item>
+        <item>Vidro Tonal</item>
+        <item>Minimalista (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Néon</item>
+        <item>Claro</item>
+        <item>Gradiente</item>
+        <item>Mono</item>
+        <item>Contorno</item>
+        <item>Contorno Vidro Branco</item>
+        <item>Duotom</item>
+        <item>Prisma</item>
+        <item>Alto contraste</item>
+        <item>Terminal</item>
+        <item>Gelo</item>
+        <item>Ghost (sem cromado)</item>
+        <item>Névoa</item>
+        <item>Tinta</item>
+        <item>Ponto</item>
+        <item>Laje</item>
+    </string-array>
+
+    <string name="setting_wear_track_time_mode">Apresentação do tempo da faixa</string>
+    <string name="setting_wear_track_time_mode_description">Quando a posição da faixa (por exemplo, 1:23 / 3:45) é mostrada no ecrã de reprodução.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Sempre</item>
+        <item>Só durante a reprodução</item>
+        <item>Só em pausa</item>
+        <item>Nunca</item>
+    </string-array>
+
+    <string name="setting_screen_buttons_curve">Curvatura dos mini botões</string>
+    <string name="setting_screen_buttons_curve_description">Seleciona o estilo de curvatura dos mini botões: plano, arco, suave, curvo.</string>
+    <string name="setting_screen_buttons_shape">Forma dos mini botões</string>
+    <string name="setting_screen_buttons_shape_description">Seleciona a forma e o formato de esquema dos mini botões.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Cápsula (Predefinição)</item>
+        <item>Círculo</item>
+        <item>Quadrado</item>
+        <item>Quadrado arredondado (Suave)</item>
+        <item>Quadrado arredondado (Médio)</item>
+        <item>Squircle</item>
+        <item>Folha</item>
+        <item>Gota</item>
+        <item>Cápsula (Larga Pequena)</item>
+        <item>Cápsula (Larga Média)</item>
+        <item>Cápsula (Larga Grande)</item>
+        <item>Cápsula (Larga Extragrande)</item>
+        <item>Retângulo arredondado (Pequeno)</item>
+        <item>Retângulo arredondado (Médio)</item>
+        <item>Retângulo arredondado (Grande)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Plano</item>
+        <item>Arco</item>
+        <item>Curva ligeira</item>
+        <item>Curva suave</item>
+        <item>Curva média</item>
+        <item>Curvo</item>
+        <item>Curva extrema</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Fundo predefinido</item>
+        <item>Vidro (uniforme)</item>
+        <item>Vidro (claro)</item>
+        <item>Álbum translúcido</item>
+        <item>Álbum translúcido Exp</item>
+        <item>Brilho do álbum</item>
+        <item>Brilho Exp</item>
+        <item>Tema sólido</item>
+        <item>Álbum sólido</item>
+        <item>Álbum Exp sólido</item>
+        <item>Contorno</item>
+        <item>Contorno Álbum Exp</item>
+        <item>Só ícone (transparente)</item>
+        <item>Ícone Exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Neutro</item>
+        <item>Cor do álbum</item>
+        <item>Cor personalizada</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Capa completa</item>
+        <item>Fundo desfocado</item>
+        <item>Quadrado (cantos vivos)</item>
+        <item>Quadrado (cantos suaves)</item>
+        <item>Quadrado (cantos arredondados)</item>
+        <item>Preto e branco</item>
+        <item>Preto e branco desfocado</item>
+        <item>Desfoque Expressive</item>
+        <item>Expressive</item>
+        <item>Gradiente tonal Material</item>
+        <item>Capa Poster</item>
+        <item>Gradiente Studio</item>
+        <item>Brilho radial Vinyl</item>
+        <item>Brilho Halo</item>
+        <item>Fitas Aurora</item>
+        <item>Gradiente Spectrum</item>
+        <item>Varrimento Corona</item>
+        <item>Esbatimento crepúsculo</item>
+        <item>Bloom</item>
+        <item>Esbatimento horizonte</item>
+        <item>Brilho brasa</item>
+        <item>Eclipse AMOLED preto</item>
+        <item>Oculto (preto sólido)</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Tempo limite de fecho</string>
+    <string name="setting_close_timeout_description">O Svartifoss fecha-se automaticamente quando não há música a tocar durante <![CDATA[<b>%1$s segundos</b>]]>. A funcionalidade fica desativada quando o tempo limite é definido como 0 segundos. Nota que, para poupar bateria, esta opção pode ser por vezes pouco precisa e pode atrasar o fecho até um minuto.</string>
+    <string name="setting_wear_close_on_idle">Fechar em \"Nada em reprodução\"</string>
+    <string name="setting_wear_close_on_idle_description">Fecha automaticamente a aplicação do relógio cerca de um minuto depois de chegar ao ecrã inativo \"Nada em reprodução\", para nunca ficar ali parada. Independente do tempo limite de fecho acima, que cobre uma faixa em pausa.</string>
+    <string name="category_notifications">Balão de notificação</string>
+    <string name="setting_enable_notifications">Mostrar balão de notificação</string>
+    <string name="setting_enable_notifications_description">Esta funcionalidade requer outra aplicação para gerir as notificações (Vibration Center for Wear).\n\nSempre que o Vibration Center faz o relógio vibrar, o Svartifoss mostra um balão com o texto da notificação, permitindo-te espreitá-la rapidamente sem sair do Svartifoss.</string>
+    <string name="setting_notification_timeout">Tempo limite do balão de notificação</string>
+    <string name="setting_notification_timeout_description">O balão de notificação fecha-se automaticamente após <![CDATA[<b>%1$s segundos</b>]]>. Introduz 0 para desativar o fecho automático.</string>
+    <string name="app_required">Aplicação necessária</string>
+    <string name="vibration_center_required_description">Para usar esta funcionalidade, terás de instalar outra aplicação (gratuita): Vibration Center for Wear.</string>
+    <string name="open_play_store">Abrir a Play Store</string>
+    <string name="error_no_notification_service_support">Lamentamos, o teu dispositivo não parece suportar serviços de notificação</string>
+    <string name="setting_always_select_center_action">Selecionar sempre a ação central</string>
+    <string name="setting_always_select_center_action_description">Quando ativado, tocar na lista de ações seleciona sempre a opção central (destacada), independentemente da opção em que tocaste.</string>
+    <string name="change_icon">Mudar ícone</string>
+    <string name="please_wait">Aguarda</string>
+
+    <string name="error_playlist_not_supported">Não suportado por esta aplicação de multimédia</string>
+    <string name="error_search_no_results">Nenhum resultado encontrado</string>
+    <string name="seconds_to_skip">Segundos a avançar:</string>
+    <string name="seconds_to_reverse">Segundos a recuar:</string>
+
+    <string name="setting_dynamic_accent_color">Cor de acento dinâmica</string>
+    <string name="setting_dynamic_accent_color_description">Quando ativado, a cor de acento (SeekBar, item ativo da fila) adapta-se automaticamente à cor dominante da capa do álbum atual.</string>
+    <string name="setting_desaturated_color">Cor dessaturada</string>
+    <string name="setting_desaturated_color_description">Ajusta a saturação e o brilho da cor extraída para garantir alta legibilidade e contraste consoante o tema ativo.</string>
+
+    <string name="queue_header">Fila de reprodução</string>
+    <string name="queue_unavailable">Fila indisponível</string>
+
+    <string name="setting_custom_accent_color">Cor de acento</string>
+    <string name="setting_custom_accent_color_description">Escolhe uma cor de acento personalizada para a interface da aplicação</string>
+    <string name="setting_mini_player">Mini leitor</string>
+    <string name="setting_mini_player_description">Mostra uma barra de reprodução persistente acima da navegação inferior sempre que houver multimédia ativa. Ativado por predefinição; desliga-o para recuperar esse espaço.</string>
+    <string name="color_picker_title">Escolher cor de acento</string>
+    <string name="color_picker_reset">Repor</string>
+    <string name="color_picker_apply">Aplicar</string>
+    <string name="color_picker_default">Predefinição</string>
+    <string name="color_picker_invalid">Código de cor inválido</string>
+    <string name="color_picker_current">Atual: %s</string>
+
+    <string name="drawer_version_format">Versão %1$s</string>
+    <string name="drawer_tagline">Aplicação complementar para Wear OS</string>
+    <string name="drawer_about_heading">Sobre</string>
+    <string name="drawer_about_summary">O Svartifoss permite-te controlar a música no telemóvel a partir do teu relógio Wear OS — com um comando totalmente personalizável adaptado ao teu dispositivo.</string>
+    <string name="drawer_name_heading">O nome</string>
+    <string name="drawer_name_meaning">Svartifoss significa “Cascata Negra” em islandês — batizado com o nome da cascata no Parque Nacional de Vatnajökull, onde colunas de basalto escuro emolduram uma queda estreita. Como a água sobre a pedra, a música flui pela aplicação.</string>
+    <string name="drawer_sync_heading">Sincronização</string>
+    <string name="drawer_sync_summary">As definições do relógio são configuradas aqui no telemóvel e sincronizadas automaticamente com o teu relógio emparelhado.</string>
+    <string name="drawer_support_heading">Apoio</string>
+    <string name="drawer_support_summary">O Svartifoss é gratuito e de código aberto — paga-me um café se te for útil :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Transferir capa</string>
+    <string name="album_art_saved">Capa guardada na galeria</string>
+    <string name="album_art_save_error">Falha ao guardar a capa</string>
+
+    <string name="action_play_liked_songs">Reproduzir músicas gostadas (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Reproduzir músicas gostadas (Spotify)</string>
+    <string name="action_my_playlists">Atalhos de streaming</string>
+    <string name="action_play_specific_playlist">Abrir atalho de streaming</string>
+    <string name="action_choose_or_add_streaming_shortcut">Escolher ou adicionar um atalho de streaming</string>
+    <string name="action_show_streaming_library">Mostrar todos os atalhos guardados</string>
+    <string name="playlist_shortcut_pick_title">Escolher atalho</string>
+    <string name="playlist_shortcut_pick_empty">Ainda não há atalhos de streaming guardados — adiciona um abaixo e depois toca para o escolher</string>
+    <string name="playlist_shortcuts_empty">Ainda sem atalhos de streaming — adiciona-os nas definições da aplicação do telemóvel</string>
+    <string name="setting_playlist_shortcuts">Atalhos de streaming</string>
+    <string name="setting_playlist_shortcuts_description">Abre links de partilha do relógio no YouTube Music, Spotify e outras aplicações de streaming</string>
+    <string name="setting_shortcut_artwork">Obter arte dos atalhos online</string>
+    <string name="setting_shortcut_artwork_description">Transfere uma miniatura de cada atalho guardado a partir do serviço, mostrada na lista do telemóvel, no menu do relógio e nos botões atribuídos. Cada miniatura é obtida uma vez. Este é o único acesso online além da verificação de atualizações; só o link de partilha público é enviado. Desligado por predefinição.</string>
+    <string name="watch_streaming_shortcuts_empty">Adiciona faixas, álbuns ou playlists para as Ações Rápidas e o menu do relógio</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d atalho guardado · Disponível nas Ações Rápidas e no menu do relógio</item>
+        <item quantity="other">%1$d atalhos guardados · Disponíveis nas Ações Rápidas e no menu do relógio</item>
+    </plurals>
+    <string name="category_music_apps">Aplicações e serviços de música</string>
+    <string name="setting_apps_integrations">Serviços de música suportados</string>
+    <string name="setting_apps_integrations_description">Os links funcionam com YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music e SoundCloud. Não é necessário acesso à conta.</string>
+    <string name="setting_apps_integrations_none">Nenhuma aplicação suportada detetada. Os atalhos podem mesmo assim abrir num navegador ou noutra aplicação compatível.</string>
+    <string name="setting_apps_integrations_installed">%1$d de %2$d detetadas: %3$s</string>
+    <string name="setting_streaming_open_mode">Abrir links de streaming com</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Aplicação de streaming detetada</item>
+        <item>Predefinição do Android</item>
+        <item>Perguntar sempre</item>
+    </string-array>
+    <string name="setting_notification_access">Acesso a notificações de multimédia</string>
+    <string name="setting_notification_access_enabled">Permitido · Toca para rever as definições do Android</string>
+    <string name="setting_notification_access_disabled">Não permitido · Necessário para ações de multimédia das notificações e filtros de arranque automático</string>
+    <string name="setting_notification_access_unavailable">As definições de acesso a notificações estão indisponíveis neste dispositivo</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d atalho guardado · Toca para gerir ou importar links</item>
+        <item quantity="other">%1$d atalhos guardados · Toca para gerir ou importar links</item>
+    </plurals>
+    <string name="category_privacy">Privacidade</string>
+    <string name="setting_crash_reporting">Enviar relatórios de falhas</string>
+    <string name="setting_crash_reporting_description">Envia diagnósticos do Firebase Crashlytics para ajudar a corrigir falhas. Ativado por predefinição; desliga a qualquer momento.</string>
+    <string name="setting_announcements">Notificações de anúncios</string>
+    <string name="setting_announcements_description">Notificações ocasionais do programador — novas versões, avisos importantes. Enviadas via Firebase Cloud Messaging; não há conta nem lista de utilizadores envolvida. Ativado por predefinição; desliga a qualquer momento.</string>
+    <string name="announcement_notification_channel">Anúncios</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Partilha uma playlist, álbum ou faixa diretamente para o Svartifoss, cola um link copiado ou adiciona um manualmente. O relógio pede ao telemóvel para o abrir; não é necessário início de sessão no serviço.</string>
+    <string name="back">Voltar</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">A tua música, a um toque</string>
+    <string name="playlist_shortcuts_yours">Os teus atalhos</string>
+    <string name="playlist_shortcuts_empty_hint">Adiciona um link partilhado de faixa, álbum ou playlist para o tornar disponível no teu relógio.</string>
+    <string name="playlist_shortcuts_add">Adicionar atalho</string>
+    <string name="playlist_shortcuts_paste">Colar link</string>
+    <string name="playlist_shortcuts_reload_covers">Recarregar capas</string>
+    <string name="playlist_shortcuts_reloading_covers">A recarregar capas…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Capas recarregadas</string>
+    <string name="playlist_shortcuts_edit">Editar atalho</string>
+    <string name="playlist_shortcut_save">Guardar atalho</string>
+    <string name="playlist_shortcut_editor_hint">Cola um link. O Svartifoss identifica automaticamente a sua aplicação e o tipo de conteúdo.</string>
+    <string name="playlist_shortcut_detection_waiting">À espera de um link de streaming</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer e mais são suportados.</string>
+    <string name="playlist_shortcut_detected_format">Detetado: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Nome</string>
+    <string name="playlist_shortcut_link_hint">Link de partilha ou URI da aplicação</string>
+    <string name="playlist_shortcut_shuffle">Reproduzir aleatório (só YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Link</string>
+    <string name="playlist_type_track">Faixa</string>
+    <string name="playlist_type_playlist">Playlist</string>
+    <string name="playlist_type_album">Álbum</string>
+    <string name="playlist_type_artist">Artista</string>
+    <string name="playlist_type_show">Programa</string>
+    <string name="playlist_type_episode">Episódio</string>
+    <string name="playlist_type_mix">Mistura</string>
+    <string name="playlist_badge_shuffle">Aleatório</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Ainda não foram adicionados atalhos de streaming</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d guardado</item>
+        <item quantity="other">%1$d guardados</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Atalhos de streaming ordenados. Toca e mantém premido para arrastar, usa as ações de acessibilidade Mover para cima ou Mover para baixo, ou prime Ctrl+Cima/Baixo num teclado.</string>
+    <string name="playlist_shortcut_more_options">Mais opções para %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Editar</string>
+    <string name="playlist_shortcut_menu_open">Abrir agora</string>
+    <string name="playlist_shortcut_menu_copy">Copiar link</string>
+    <string name="playlist_shortcut_menu_duplicate">Duplicar</string>
+    <string name="playlist_shortcut_menu_share">Partilhar</string>
+    <string name="playlist_shortcut_menu_delete">Eliminar</string>
+    <string name="playlist_shortcut_open_failed">Nenhuma aplicação consegue abrir este link</string>
+    <string name="streaming_shortcut_choose_app">Abrir link de streaming com</string>
+    <string name="playlist_shortcut_link_copied">Link copiado</string>
+    <string name="playlist_shortcut_import_invalid">O texto partilhado não contém um link de streaming válido</string>
+    <string name="playlist_shortcut_clipboard_invalid">A área de transferência não contém um link de streaming válido</string>
+    <string name="playlist_shortcut_name_required">Introduz um nome para o atalho</string>
+    <string name="playlist_shortcut_link_invalid">Introduz um link web ou URI de aplicação válido</string>
+    <string name="playlist_shortcut_service_invalid">Cola um link válido para detetar o seu serviço</string>
+    <string name="playlist_shortcut_service_generic">Link compatível · O Android escolherá uma aplicação</string>
+    <string name="playlist_shortcut_service_installed">%1$s instalada · Pronta para abrir na sua aplicação</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s não instalada · Pode ser usado um navegador ou aplicação compatível</string>
+    <string name="playlist_shortcut_copy_name">%1$s cópia</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s cópia %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s criado</string>
+    <string name="playlist_shortcut_share_title">Partilhar atalho de streaming</string>
+    <string name="playlist_shortcut_share_failed">Nenhuma aplicação disponível para partilhar este atalho</string>
+    <string name="playlist_shortcut_deleted">%1$s eliminado</string>
+    <string name="playlist_shortcut_undo">Anular</string>
+
+    <string name="action_play_liked_songs_shuffled">Reproduzir músicas gostadas, aleatório (YT Music)</string>
+    <string name="action_search_history">Histórico de pesquisas</string>
+    <string name="search_history_empty">Ainda sem pesquisas recentes</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Atualizações</string>
+    <string name="setting_update_check">Notificar sobre novas versões</string>
+    <string name="setting_update_check_description">Verifica o GitHub em busca de novas versões cerca de uma vez por dia e mostra uma notificação</string>
+    <string name="setting_update_prereleases">Incluir versões preliminares</string>
+    <string name="setting_update_prereleases_description">Ser também notificado sobre versões beta</string>
+    <string name="setting_update_check_now">Verificar atualizações agora</string>
+    <string name="setting_update_check_now_description">Mostra a versão mais recente e permite atualizar o relógio por Bluetooth</string>
+    <string name="update_screen_title">Atualizações</string>
+    <string name="update_cover_content_description">Svartifoss, a cascata que dá nome à aplicação</string>
+    <string name="update_notification_channel">Atualizações da aplicação</string>
+    <string name="update_available_title">O Svartifoss %1$s está disponível</string>
+    <string name="update_notification_text">Toca para atualizar</string>
+    <string name="update_available_action">Atualização disponível</string>
+    <string name="update_installed_phone">Telemóvel: %1$s</string>
+    <string name="update_installed_versions">Telemóvel: %1$s · Relógio: %2$s</string>
+    <string name="update_watch_version_unknown">desconhecida</string>
+    <string name="update_checking">A procurar atualizações…</string>
+    <string name="update_check_failed">Não foi possível procurar atualizações. Verifica a tua ligação e tenta novamente.</string>
+    <string name="update_available_line">Nova versão: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(versão preliminar)</string>
+    <string name="update_up_to_date">Estás na versão mais recente (%1$s)</string>
+    <string name="update_no_wear_asset">Esta versão não tem um APK de relógio para enviar.</string>
+    <string name="update_watch_hint">“Atualizar relógio” transfere a nova aplicação do relógio e envia-a por Bluetooth — confirmas a instalação no próprio relógio, sem cabo ou Wear Installer.</string>
+    <string name="update_downloading">A transferir… %1$d%%</string>
+    <string name="update_connecting_watch">A ligar ao relógio…</string>
+    <string name="update_transferring">A enviar para o relógio… %1$d%%</string>
+    <string name="update_confirm_on_watch">Enviado! Apareceu uma notificação no relógio — toca-lhe aí para instalar.</string>
+    <string name="update_no_watch">Nenhum relógio ligado.</string>
+    <string name="update_push_failed">Falha ao enviar a atualização para o relógio. Tenta novamente.</string>
+    <string name="update_watch_button">Atualizar relógio</string>
+    <string name="update_open_release_button">Abrir página da versão</string>
+    <string name="update_watch_behind">O teu relógio ainda está na %1$s — envia-lhe a atualização abaixo.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Mantém as aplicações do telemóvel e do relógio sincronizadas</string>
+    <string name="update_state_checking">A procurar atualizações…</string>
+    <string name="update_state_current">Estás atualizado</string>
+    <string name="update_state_current_sub">A usar a versão mais recente, %1$s</string>
+    <string name="update_state_available">Atualização disponível</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Não foi possível procurar atualizações</string>
+    <string name="update_state_failed_sub">Verifica a tua ligação e tenta novamente</string>
+    <string name="update_device_phone">Telemóvel</string>
+    <string name="update_device_watch">Relógio</string>
+    <string name="update_versions_header">Instalado</string>
+    <string name="update_whats_new">Novidades</string>
+    <string name="update_phone_button">Atualizar telemóvel</string>
+    <string name="update_installing">A abrir o instalador…</string>
+    <string name="update_install_permission_needed">Permite instalar aplicações a partir do Svartifoss e depois toca novamente em Atualizar telemóvel.</string>
+    <string name="update_phone_failed">Falha ao transferir a atualização do telemóvel. Tenta novamente.</string>
+</resources>

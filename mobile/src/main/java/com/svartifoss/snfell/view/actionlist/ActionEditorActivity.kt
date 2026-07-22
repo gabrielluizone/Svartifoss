@@ -77,11 +77,16 @@ class ActionEditorActivity : AppCompatActivity() {
     /** This is a standalone activity, so it can't ride MainActivity's runtime accent walker -
      *  the accent-colored labels resolve the currently displayed accent (dynamic album-art,
      *  custom, or default) themselves. OK gets it too: without an explicit color it fell back
-     *  to the theme's static colorPrimary green, clashing with the resolved accent on Delete. */
+     *  to the theme's static colorPrimary green, clashing with the resolved accent on Delete.
+     *  The name box's cursor/selection handles and box outline are the same static theme green
+     *  otherwise - LyraAccent.applyToEditText plus boxStrokeColor is the same pairing already
+     *  used by the shortcut editor and theme name box. */
     private fun applyCustomAccent() {
         val color = LyraAccent.resolve(this)
         binding.deleteButton.setTextColor(color)
         binding.okButton.setTextColor(color)
+        LyraAccent.applyToEditText(binding.nameBox, color)
+        binding.nameBoxLayout.boxStrokeColor = color
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -1,6 +1,8 @@
 package com.svartifoss.snfell.update
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.BuildConfig
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +27,7 @@ object UpdateChecker {
     const val PREF_INCLUDE_PRERELEASES = "update_include_prereleases"
     private const val PREF_LAST_CHECK_MS = "update_last_check_ms"
     private const val PREF_LAST_NOTIFIED_TAG = "update_last_notified_tag"
+    private const val PREF_LAST_SEEN_VERSION_CODE = "update_last_seen_version_code"
 
     private const val RELEASES_URL =
             "https://api.github.com/repos/gabrielluizone/Svartifoss/releases?per_page=15"
@@ -202,5 +205,40 @@ object UpdateChecker {
         val tag = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(PREF_LAST_NOTIFIED_TAG, null) ?: return false
         return isNewerThanInstalled(tag)
+    }
+
+    /**
+     * True exactly once per version bump: when the installed versionCode is higher than the one
+     * recorded on the *previous* call. Also records the current versionCode as a side effect, so
+     * a second call on the same build (another Activity recreation, a later session) returns
+     * false. A fresh install has no prior recording - [PREF_LAST_SEEN_VERSION_CODE] defaults to
+     * -1, which is never less than a real versionCode's floor of 1 in the ">= 0" check below -
+     * that first call still records the baseline, it just never returns true for it, so a new
+     * user never gets a welcome screen with nothing to compare against.
+     */
+    fun consumePostUpdateWelcome(context: Context): Boolean {
+        val appContext = context.applicationContext
+        val preferences = PreferenceManager.getDefaultSharedPreferences(appContext)
+        if (!preferences.getBoolean(PREF_CHECK_ENABLED, true)) {
+            return false
+        }
+
+        val currentVersionCode = try {
+            val info = appContext.packageManager.getPackageInfo(appContext.packageName, 0)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                info.longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                info.versionCode.toLong()
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            return false
+        }
+
+        val lastSeenVersionCode = preferences.getLong(PREF_LAST_SEEN_VERSION_CODE, -1L)
+        if (lastSeenVersionCode != currentVersionCode) {
+            preferences.edit().putLong(PREF_LAST_SEEN_VERSION_CODE, currentVersionCode).apply()
+        }
+        return lastSeenVersionCode in 0 until currentVersionCode
     }
 }

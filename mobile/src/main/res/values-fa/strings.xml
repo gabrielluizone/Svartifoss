@@ -1,0 +1,1083 @@
+<resources>
+    <string name="setting_no_wearable_api_banner">Wear OS در این دستگاه پشتیبانی نمی‌شود</string>
+    <string name="setting_no_wearable_api_banner_description">این دستگاه فاقد مؤلفه Wear OS خدمات گوگل پلی است که Svartifoss برای ارتباط با ساعت به آن نیاز دارد. جفت‌سازی کمکی نمی‌کند — برنامه گوشی در اینجا نمی‌تواند به ساعتی دسترسی پیدا کند. همه موارد زیر همچنان ذخیره می‌شوند و در صورت نصب Svartifoss روی دستگاهی که از آن پشتیبانی می‌کند، اعمال خواهند شد.</string>
+    <string name="setting_no_watch_banner">هیچ ساعتی متصل نیست</string>
+    <string name="setting_no_watch_banner_description">این تنظیمات با ساعت Wear OS شما همگام‌سازی می‌شوند، بنابراین تا زمانی که ساعتی جفت و متصل نشود به‌صورت مشهود اعمال نخواهند شد — اما همه موارد زیر همین حالا برای پیکربندی در اختیار شماست.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">ظاهر</string>
+    <string name="setting_theme">پوسته</string>
+    <string name="theme_light">سفید کاملاً روشن</string>
+    <string name="theme_dark">سیاه کامل</string>
+    <string name="theme_system">پیروی از سیستم</string>
+    <string name="setting_language">زبان</string>
+    <string name="language_system">پیروی از سیستم</string>
+    <string name="language_change_watch_notice">ساعت نیز پس از همگام‌سازی از این زبان پیروی می‌کند.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">توسعه‌دهنده</string>
+    <string name="dev_mode_unlocked">حالت توسعه‌دهنده فعال شد ✦</string>
+    <string name="dev_mode_clicks_remaining">%1$d ضربه دیگر برای باز کردن حالت توسعه‌دهنده</string>
+    <string name="dev_disable_mode">غیرفعال کردن حالت توسعه‌دهنده</string>
+    <string name="dev_disable_mode_description">این بخش را دوباره پنهان کنید — برای بازگرداندن آن هفت بار روی «نسخه نصب‌شده» ضربه بزنید</string>
+    <string name="dev_mode_disabled">حالت توسعه‌دهنده غیرفعال شد</string>
+    <string name="dev_build_info">اطلاعات ساخت</string>
+    <string name="dev_sync_watch">همگام‌سازی اجباری تنظیمات ساعت</string>
+    <string name="dev_sync_watch_description">همه تنظیمات فعلی را بلافاصله به ساعت جفت‌شده ارسال کنید</string>
+    <string name="dev_sync_watch_done">تنظیمات با ساعت همگام‌سازی شد</string>
+    <string name="dev_copy_debug_info">کپی اطلاعات اشکال‌زدایی</string>
+    <string name="dev_copy_debug_info_description">جزئیات ساخت و دستگاه را در کلیپ‌بورد کپی کنید</string>
+    <string name="dev_show_archived">نمایش گزینه‌های بایگانی‌شده</string>
+    <string name="dev_show_archived_description">نمایش چیدمان‌ها و تنظیمات ساعتی که به دلیل مشکلات شناخته‌شده بایگانی شده‌اند</string>
+    <string name="dev_copy_debug_info_done">اطلاعات اشکال‌زدایی کپی شد</string>
+    <string name="dev_open_update_screen">باز کردن صفحه به‌روزرسانی</string>
+    <string name="dev_open_update_screen_description">پیش‌نمایش صفحه به‌روزرسانی‌ها (بنر جلد، چیدمان یادداشت‌های انتشار) بدون انتظار برای انتشار واقعی</string>
+    <string name="dev_watch_layout_bounds">نمایش مرزهای چیدمان ساعت</string>
+    <string name="dev_watch_layout_bounds_description">دور عناصر قابل‌مشاهده پخش‌کننده و نواحی لمسی روی ساعت را مشخص کنید. فقط پوشش تشخیصی.</string>
+    <string name="dev_watch_player_info">نمایش اطلاعات پخش‌کننده ساعت</string>
+    <string name="dev_watch_player_info_description">نمایش رویه فعال، وضعیت پخش، پیشرفت و اطلاعات رندر روی ساعت.</string>
+    <string name="pref_reset_default">بازنشانی به پیش‌فرض</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">شما آبشار پنهان را پیدا کردید.\n\nSvartifoss — ستون‌های بازالت سیاه\nآبشاری در ایسلند را قاب می‌گیرند،\nیادآوری اینکه موسیقی جاری می‌شود\nمانند آب در میان سنگ.\n\n♪ با دقت ساخته شده. ♪</string>
+    <string name="easter_egg_ok">بستن</string>
+
+    <string name="nav_watch_face">ساعت</string>
+    <string name="watch_face_header">ظاهر ساعت</string>
+    <string name="nav_controls">کنترل‌ها</string>
+    <string name="nav_actions">اقدامات</string>
+    <string name="nav_settings">تنظیمات</string>
+
+    <string name="controls_header">کنترل‌ها</string>
+    <string name="controls_state_playing">موسیقی در حال پخش</string>
+    <string name="controls_state_stopped">بدون پخش</string>
+    <string name="controls_playing_description">انتخاب کنید هر ورودی هنگام پخش موسیقی چه کاری انجام دهد. این تنظیم مستقل از حالت بدون پخش است.</string>
+    <string name="controls_stopped_description">انتخاب کنید هر ورودی قبل از شروع پخش یا پس از توقف آن چه کاری انجام دهد. این تنظیم مستقل از حالت پخش است.</string>
+
+    <string name="watch_live_preview">پیش‌نمایش زنده ساعت</string>
+    <string name="watch_preview_description">پیش‌نمایش زنده رویه انتخاب‌شده ساعت. تغییرات پیش از امتحان روی ساعت اینجا نمایش داده می‌شوند.</string>
+    <string name="watch_section_style">پخش‌کننده</string>
+    <string name="watch_section_style_description">چیدمان پخش‌کننده و نحوه رفتار عنوان، زمان و پیشرفت را انتخاب کنید.</string>
+    <string name="watch_section_background">پس‌زمینه</string>
+    <string name="watch_section_background_description">جلد آلبوم، تاری، محو شدن و خوانایی پشت پخش‌کننده را کنترل کنید.</string>
+    <string name="watch_section_colors">رنگ‌ها</string>
+    <string name="watch_section_colors_description">رنگ‌های خواننده، حلقه پیشرفت و تأکید مبتنی بر آلبوم را تنظیم کنید.</string>
+    <string name="watch_section_aod">همیشه روشن</string>
+    <string name="watch_section_aod_description">صفحه کم‌مصرف را پیکربندی کنید و ظاهر محیطی آن را در پیش‌نمایش ببینید.</string>
+    <string name="watch_section_panels">پنل‌ها</string>
+    <string name="watch_section_panels_description">صدا، جست‌وجو، پنل سریع و صف را استایل‌دهی کنید؛ تمرکز روی یک ردیف آن رویه را در پیش‌نمایش باز می‌کند.</string>
+    <string name="watch_section_mini_buttons">دکمه‌های کوچک</string>
+    <string name="watch_section_mini_buttons_description">ردیف اختیاری میان‌برها را استایل‌دهی کنید. برای انتساب اقدامات آن در بخش کنترل‌ها، روی «دکمه‌های کوچک» در پایین ضربه بزنید.</string>
+
+    <string name="settings_section_general">عمومی</string>
+    <string name="settings_section_general_description">پوسته برنامه، رنگ تأکید و تنظیمات به‌روزرسانی.</string>
+    <string name="settings_section_watch">رفتار</string>
+    <string name="settings_section_watch_description">تاج، لمس، لرزش و رفتار منوی اقدامات روی ساعت شما.</string>
+    <string name="settings_section_automation">خودکارسازی</string>
+    <string name="settings_section_automation_description">انتخاب کنید Svartifoss چه زمانی به‌طور خودکار باز و بسته شود.</string>
+    <string name="settings_section_apps">برنامه‌ها</string>
+    <string name="settings_section_apps_description">خدمات موسیقی و یکپارچه‌سازی‌های خاص برنامه را در یک مکان پیکربندی کنید.</string>
+    <string name="settings_section_data">داده و پشتیبانی</string>
+    <string name="settings_section_data_description">از تنظیمات خود پشتیبان بگیرید، نسخه، عیب‌یابی را بررسی کنید یا کمک بگیرید.</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">نحوه استفاده از Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss ساعت شما را به یک ریموت برای موسیقی در حال پخش روی گوشی تبدیل می‌کند. در اینجا همه کارهایی که می‌توانید از مچ دست خود انجام دهید آمده است.</string>
+
+    <string name="tutorial_taps_title">روی نواحی صفحه ضربه بزنید</string>
+    <string name="tutorial_taps_desc">صفحه ساعت به چهار ناحیه تقسیم می‌شود — بالا، پایین، چپ و راست. ضربه زدن روی یک ناحیه اقدامی را که به آن اختصاص داده‌اید اجرا می‌کند. به‌طور پیش‌فرض، ناحیه چپ پخش یا مکث می‌کند، ناحیه راست به آهنگ بعدی می‌پرد و بالا و پایین صدا را تغییر می‌دهند.</string>
+
+    <string name="tutorial_gestures_title">فشار تک، دوتایی و طولانی</string>
+    <string name="tutorial_gestures_desc">هر ناحیه سه اقدام جداگانه دارد: یکی برای ضربه تک، یکی برای ضربه دوتایی و یکی برای فشار طولانی. برای مثال، یک ضربه تک در مرکز می‌تواند موسیقی را مکث کند، در حالی که ضربه دوتایی منوی اقدامات را باز می‌کند — این را نمی‌بینید مگر آن را تنظیم کنید، پس آن را طبق سلیقه خود شخصی‌سازی کنید.</string>
+
+    <string name="tutorial_buttons_title">دکمه‌های فیزیکی</string>
+    <string name="tutorial_buttons_desc">اگر ساعت شما دکمه‌های کناری دارد، می‌توانید به آن‌ها هم اقدامات فشار تک، دوتایی و طولانی اختصاص دهید. حتی هنگام خاموش بودن صفحه هم کار می‌کنند.</string>
+
+    <string name="tutorial_rotary_title">تاج چرخشی</string>
+    <string name="tutorial_rotary_desc">برای تغییر صدا، تاج چرخشی یا لبه را بچرخانید. ترجیح می‌دهید در آهنگ پیمایش کنید؟ «جست‌وجو با تاج چرخشی» را در تنظیمات فعال کنید.</string>
+
+    <string name="tutorial_swipe_up_title">کشیدن به بالا، پایین، چپ و راست</string>
+    <string name="tutorial_swipe_up_desc">کشیدن به بالا، پایین یا چپ روی صفحه در حال پخش را می‌توان طوری تنظیم کرد که هر چیزی را باز کند — منوی اقدامات، صف پخش، رد کردن آهنگ‌ها، لیست‌های پخش شما و موارد دیگر. هر کدام را در بخش کنترل‌ها، با انتخاب موسیقی در حال پخش یا بدون پخش، پیکربندی کنید. به‌طور پیش‌فرض، کشیدن به بالا منوی اقدامات را باز می‌کند و بقیه تا زمانی که اختصاص ندهید کاری انجام نمی‌دهند. کشیدن به راست دست‌نخورده باقی می‌ماند — این حرکت جهانی Wear OS برای خروج از برنامه است.</string>
+    <string name="tutorial_yt_music_title">میان‌برهای YouTube Music</string>
+    <string name="tutorial_yt_music_desc">«پخش آهنگ‌های پسندیده‌شده»، «پخش آهنگ‌های پسندیده‌شده، تصادفی» یا «لیست‌های پخش من» را به هر دکمه، حرکت یا کشیدنی اختصاص دهید تا بدون لمس گوشی مستقیماً به موسیقی خود بپرید. «تاریخچه جست‌وجو» جست‌وجوهای اخیر شما را روی ساعت به خاطر می‌سپارد — برای حذف یکی، آن را نگه دارید.</string>
+
+    <string name="tutorial_exit_title">کشیدن برای خروج</string>
+    <string name="tutorial_exit_desc">برای ترک پخش‌کننده از لبه چپ بکشید. می‌تواند هنگام خروج شما پخش را به‌طور خودکار متوقف کند — این را در تنظیمات فعال کنید.</string>
+
+    <string name="tutorial_tile_title">کاشی کنترل سریع</string>
+    <string name="tutorial_tile_desc">صفحه ساعت را به‌طور جانبی به کاشی Svartifoss بکشید تا بدون باز کردن برنامه، بلافاصله پخش، مکث و رد کنید.</string>
+
+    <string name="tutorial_complication_title">پیچیدگی صفحه ساعت</string>
+    <string name="tutorial_complication_desc">پیچیدگی جلد آلبوم Svartifoss را به صفحه ساعت خود اضافه کنید تا جلد فعلی را در یک نگاه ببینید. برای باز کردن پخش‌کننده روی آن ضربه بزنید.</string>
+
+    <string name="tutorial_system_title">کنترل‌های رسانه سیستم</string>
+    <string name="tutorial_system_desc">آهنگ فعلی همچنین در کنترل‌های رسانه خود ساعت و برنامه‌های اخیر ظاهر می‌شود، بنابراین می‌توانید پخش را از آنجا نیز کنترل کنید.</string>
+
+    <string name="tutorial_tip">نکته: هر دو حالت را در بخش کنترل‌ها پیکربندی کنید، سپس منو را در بخش اقدامات سازماندهی کنید.</string>
+
+    <string name="navigation_drawer_open">باز کردن کشوی ناوبری</string>
+    <string name="navigation_drawer_close">بستن کشوی ناوبری</string>
+
+    <string name="action_settings">تنظیمات</string>
+    <string name="action_pause">مکث</string>
+    <string name="action_play">پخش</string>
+    <string name="action_skip_prev">قبلی</string>
+    <string name="action_skip_next">بعدی</string>
+    <string name="action_play_pause">پخش / مکث</string>
+    <string name="action_stop">توقف</string>
+    <string name="action_restart">شروع دوباره آهنگ</string>
+    <string name="action_mute">بی‌صدا / باصدا</string>
+    <string name="action_skip_seconds">%1$d ثانیه جلو</string>
+    <string name="action_reverse_seconds">%1$d ثانیه عقب</string>
+    <string name="action_like">پسندیدن</string>
+    <string name="action_shuffle">پخش تصادفی</string>
+    <string name="action_repeat">تکرار</string>
+    <string name="action_repeat_one">تکرار یکی</string>
+    <string name="action_search">جست‌وجوی موسیقی</string>
+    <string name="group_playback_controls">کنترل‌های پخش</string>
+    <string name="group_streaming_shortcuts">آهنگ‌ها، آلبوم‌ها و لیست‌های پخش</string>
+    <string name="pick_action">انتخاب اقدام</string>
+    <string name="action_opens_more">چند گزینه</string>
+    <string name="action_volume_up">افزایش صدا</string>
+    <string name="volume_down">کاهش صدا</string>
+    <string name="group_volume_controls">کنترل‌های صدا</string>
+    <string name="no_watch_detected">هیچ ساعتی شناسایی نشد</string>
+    <string name="connection_instructions">برای شروع اتصال، Svartifoss را روی ساعت باز کنید</string>
+    <string name="playing_controls">کنترل‌ها هنگام پخش</string>
+    <string name="stopped_controls">کنترل‌ها بدون پخش</string>
+    <string name="actions_menu">منوی اقدامات</string>
+    <string name="actions_intro">هر دو رویه اقدامات ساعت خود را با کنترل‌های پخش، برنامه‌ها یا آهنگ‌ها، آلبوم‌ها و لیست‌های پخش ذخیره‌شده پیکربندی کنید. پنل سریع فشرده باقی می‌ماند؛ منوی زیر می‌تواند فهرست مرتب‌شده طولانی‌تری داشته باشد.</string>
+    <string name="actions_quick_panel_section">پنل سریع</string>
+    <string name="actions_watch_menu_section">منو روی ساعت</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d اقدام · برای ویرایش ضربه بزنید · برای مرتب‌سازی مجدد نگه دارید و بکشید</item>
+        <item quantity="other">%1$d اقدام · برای ویرایش ضربه بزنید · برای مرتب‌سازی مجدد نگه دارید و بکشید</item>
+    </plurals>
+    <string name="actions_reorder_description">منوی اقدامات مرتب‌شده. برای کشیدن لمس کنید و نگه دارید، از اقدامات دسترسی‌پذیری انتقال به بالا یا انتقال به پایین استفاده کنید، یا Ctrl+بالا/پایین را روی صفحه‌کلید فشار دهید.</string>
+    <string name="actions_move_up">انتقال به بالا</string>
+    <string name="actions_move_down">انتقال به پایین</string>
+    <string name="actions_moved_to_position">%1$s به موقعیت %2$d از %3$d منتقل شد.</string>
+    <string name="actions_empty">هنوز هیچ اقدامی وجود ندارد. برای ایجاد اولین مورد از دکمه افزودن استفاده کنید.</string>
+    <string name="actions_add">افزودن اقدام</string>
+    <string name="on_screen_buttons">نواحی لمسی</string>
+    <string name="physical_buttons">دکمه‌های فیزیکی</string>
+    <string name="physical_buttons_disconnected">برای پیکربندی دکمه‌های فیزیکی، وصل شوید و Svartifoss را روی ساعت خود باز کنید. نواحی لمسی، کشیدن‌ها و دکمه‌های کوچک اکنون در دسترس هستند.</string>
+    <string name="physical_buttons_unavailable">این ساعت هیچ دکمه فیزیکی قابل‌پیکربندی گزارش نکرد.</string>
+    <string name="tap_a_zone_to_configure">برای اختصاص یک اقدام، روی ناحیه‌ای در ساعت ضربه بزنید</string>
+    <string name="touch_zone_top">ناحیه بالا</string>
+    <string name="touch_zone_bottom">ناحیه پایین</string>
+    <string name="touch_zone_left">ناحیه چپ</string>
+    <string name="touch_zone_right">ناحیه راست</string>
+    <string name="touch_zone_center">ضربه مرکزی</string>
+    <string name="touch_zone_action">%1$s: %2$s. برای پیکربندی ضربه بزنید.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">حرکات کشیدن</string>
+    <string name="tap_a_swipe_to_configure">برای انتخاب اینکه چه چیزی باز شود، روی یک جهت ضربه بزنید</string>
+    <string name="swipe_gesture_up">کشیدن به بالا</string>
+    <string name="swipe_gesture_down">کشیدن به پایین</string>
+    <string name="swipe_gesture_left">کشیدن به چپ</string>
+    <!-- Short captions shown under each tile's icon -->
+    <string name="swipe_gesture_label_up">بالا</string>
+    <string name="swipe_gesture_label_down">پایین</string>
+    <string name="swipe_gesture_label_left">چپ</string>
+
+    <string name="screen_buttons">دکمه‌های کوچک</string>
+    <string name="tap_a_screen_button_to_configure">حداکثر سه دکمه قابل‌مشاهده نزدیک پایین صفحه ساعت — برای اختصاص یک اقدام، روی یک جایگاه ضربه بزنید</string>
+    <string name="screen_button_1">دکمه کوچک ۱ (چپ)</string>
+    <string name="screen_button_2">دکمه کوچک ۲ (وسط)</string>
+    <string name="screen_button_3">دکمه کوچک ۳ (راست)</string>
+    <string name="screen_button_label_1">دکمه ۱</string>
+    <string name="screen_button_label_2">دکمه ۲</string>
+    <string name="screen_button_label_3">دکمه ۳</string>
+    <string name="no_action">بدون اقدام</string>
+    <string name="gesture_single_press">فشار تک</string>
+    <string name="gesture_double_press">فشار دوتایی</string>
+    <string name="gesture_long_press">فشار طولانی</string>
+    <string name="gesture_swipe_action">اقدام</string>
+    <string name="center_button_quick_panel_note">دو بار ضربه زدن به مرکز صفحه در حال پخش همیشه پنل اقدامات سریع را باز می‌کند، صرف‌نظر از اینکه اینجا چه چیزی اختصاص دهید.</string>
+    <string name="start_playback">شروع پخش</string>
+    <string name="uninstalled_app">برنامه حذف‌شده</string>
+
+    <string name="play_app">پخش %1$s</string>
+    <string name="tasker_task">وظیفه Tasker</string>
+    <string name="icon_selection_title">انتخاب نماد</string>
+    <string name="icon_selection_gallery">از گالری</string>
+    <string name="icon_selection_no_icon_pack">این ویژگی به شما امکان می‌دهد نماد سفارشی برای اقدام خود را از یک
+        بسته نماد نصب‌شده انتخاب کنید.\n\nمتأسفانه به نظر می‌رسد هیچ بسته نمادی نصب نکرده‌اید.</string>
+    <string name="icon_selection_no_storage_permission">این ویژگی به شما امکان می‌دهد نماد سفارشی برای اقدام خود را از یک
+        بسته نماد نصب‌شده انتخاب کنید.\n\nبرخی بسته‌های نماد نیاز دارند برنامه‌ها مجوز حافظه داشته باشند. برای استفاده از این ویژگی باید آن را مجاز کنید.</string>
+    <string name="delete">حذف</string>
+    <string name="action_text">متن اقدام</string>
+    <string name="swap_action">جابه‌جایی اقدام</string>
+    <string name="open_actions_menu">باز کردن منوی اقدامات</string>
+    <string name="open_playlist_menu">نمایش لیست پخش فعلی</string>
+    <string name="misc_settings">تنظیمات متفرقه</string>
+
+    <string name="category_backup">پشتیبان‌گیری</string>
+    <string name="export_config">برون‌بری پیکربندی</string>
+    <string name="export_config_description">نگاشت دکمه‌ها، فهرست اقدامات و تنظیمات ساعت خود را در یک فایل ذخیره کنید</string>
+    <string name="import_config">درون‌ریزی پیکربندی</string>
+    <string name="import_config_description">نگاشت دکمه‌ها، فهرست اقدامات و تنظیمات ساعت را از یک فایل بازیابی کنید</string>
+    <string name="export_config_done">پیکربندی برون‌بری شد</string>
+    <string name="export_config_failed">برون‌بری پیکربندی ممکن نشد</string>
+    <string name="import_config_done_title">درون‌ریزی موفق</string>
+    <string name="import_config_done_message">Svartifoss باید برای اعمال پیکربندی درون‌ریزی‌شده مجدداً راه‌اندازی شود.</string>
+    <string name="import_config_failed">درون‌ریزی پیکربندی ممکن نشد — ممکن است فایل نامعتبر یا از نسخه‌ای ناسازگار باشد</string>
+    <string name="action_restart_now">اکنون راه‌اندازی مجدد کنید</string>
+
+    <string name="category_about">درباره</string>
+    <string name="category_music_screen">صفحه موسیقی</string>
+    <string name="category_watch_screen">صفحه ساعت</string>
+    <string name="category_mini_buttons">دکمه‌های کوچک</string>
+    <string name="category_screen_face">ظاهر پخش‌کننده</string>
+    <string name="category_album_background">پس‌زمینه آلبوم</string>
+    <string name="category_music_colors">رنگ‌ها از موسیقی</string>
+    <string name="preview_sample_title">عنوان آهنگ</string>
+    <string name="preview_sample_artist">نام خواننده</string>
+    <string name="preview_sample_next_title">آهنگ بعدی</string>
+    <string name="preview_playback_stopped">پخش متوقف شد</string>
+    <string name="category_gestures">حرکات و ورودی</string>
+    <string name="setting_overlay_blur_radius">تاری پوشش</string>
+    <string name="setting_overlay_blur_radius_description">شدت تاری (پیکسل) پس‌زمینه مات پشت حلقه‌های صدا/جست‌وجو و پنل اقدامات سریع — مستقل از تاری پس‌زمینه جلد آلبوم</string>
+    <string name="category_action_list">فهرست اقدامات</string>
+    <string name="category_automation">خودکارسازی</string>
+    <string name="installed_version">نسخه نصب‌شده</string>
+    <string name="get_support">دریافت پشتیبانی</string>
+    <string name="get_support_description">ارسال گزارش‌های برنامه به توسعه‌دهنده برای پشتیبانی</string>
+    <string name="contact_developer">تماس با توسعه‌دهنده</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — تماس</string>
+    <string name="contact_developer_chooser">ارسال ایمیل</string>
+    <string name="contact_developer_no_client">هیچ برنامه ایمیلی نصب نشده است. آدرس در کلیپ‌بورد کپی شد.</string>
+    <string name="about_developer_title">درباره توسعه‌دهنده</string>
+    <string name="about_developer_dialog_message">Svartifoss به‌عنوان یک پروژه شخصی شروع شد — می‌خواستم Music Center for Wear را با امکانات امروزی به‌روز کنم، فقط برای اینکه بتوانم خودم هر روز از آن استفاده کنم. نتیجه به اندازه کافی خوب شد که تصمیم گرفتم آن را با همه به اشتراک بگذارم. این اولین برنامه من است و هیچ چیز شبیه دیدن چیزی که ساخته‌اید نیست که برای دیگران هم مفید باشد.</string>
+    <string name="licenses">مجوزهای متن‌باز</string>
+    <string name="setting_always_show_time">همیشه زمان را نمایش بده</string>
+    <string name="setting_always_show_time_off_description">زمان فعلی فقط در حالت محیطی نمایش داده می‌شود</string>
+    <string name="setting_always_show_time_on_description">زمان فعلی همیشه نمایش داده می‌شود. نماد اقدام بالا قابل‌مشاهده نخواهد بود (با ساعت جایگزین می‌شود)، اما اقدام همچنان به‌طور عادی کار می‌کند.</string>
+    <string name="tap_to_force_stop">برای توقف کنترل‌ها ضربه بزنید</string>
+    <string name="notification_action_stop">توقف</string>
+    <string name="notification_action_force_stop">توقف اجباری</string>
+    <string name="error_notification_access">دسترسی به اعلان‌ها وجود ندارد. گوشی را بررسی کنید.</string>
+    <string name="error_notifications">اعلان‌های خطا</string>
+    <string name="notification_access_notification_title">Svartifoss به دسترسی اعلان‌ها نیاز دارد</string>
+    <string name="notification_access_notification_title_description">برای رفع مشکل، روی این اعلان ضربه بزنید و Svartifoss را بررسی کنید</string>
+    <string name="error_service_not_enabled">دسترسی به اعلان‌ها لازم است</string>
+    <string name="error_service_not_enabled_description">برای کنترل موسیقی از ساعت خود، Svartifoss به دسترسی اعلان‌ها نیاز دارد — این‌گونه است که اندروید به آن اجازه می‌دهد ببیند کدام برنامه در حال پخش است و به آن دستورات پخش، مکث و رد کردن ارسال کند.\n\nSvartifoss هرگز محتوای اعلان‌های شما را نمی‌خواند. این فقط از این مجوز برای یافتن نشست رسانه فعال استفاده می‌کند.\n\nروی «باز کردن تنظیمات» ضربه بزنید، سپس Svartifoss را در بخش دسترسی اعلان‌ها فعال کنید.</string>
+    <string name="action_open_settings">باز کردن تنظیمات</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog -->
+    <string name="no_watch_app_title">Svartifoss را روی ساعت خود نصب کنید</string>
+    <string name="no_watch_app_description">Svartifoss نتوانست برنامه ساعت خود را روی ساعت Wear OS جفت‌شده شما پیدا کند. برنامه‌های گوشی و ساعت با هم کار می‌کنند — بدون برنامه ساعت، کنترل پخش از مچ دست شما کار نخواهد کرد.\n\nSvartifoss در فروشگاه Play نیست — برنامه ساعت جداگانه از طریق sideload (مثلاً با Wear Installer) نصب می‌شود. برای باز کردن صفحه انتشارات گیت‌هاب و دریافت فایل APK ساعت، روی «مشاهده انتشارات» ضربه بزنید. اگر همین حالا آن را نصب کرده‌اید، یک دقیقه فرصت دهید تا همگام‌سازی کامل شود.</string>
+    <string name="no_watch_app_button">مشاهده انتشارات</string>
+    <string name="required_permission">مجوز مورد نیاز</string>
+    <string name="setting_pause_on_swipe_exit">مکث پخش هنگام خروج با کشیدن</string>
+    <string name="setting_pause_on_swipe_exit_description">هنگام خروج از Svartifoss روی ساعت با حرکت کشیدن به چپ، هر پخشی را به‌طور خودکار متوقف می‌کند.\n\nخروج از طریق دکمه روشن/خاموش تحت‌تأثیر قرار نمی‌گیرد و هرگز به‌طور خودکار مکث نمی‌کند.</string>
+    <string name="setting_rotating_crown_off_period">تأخیر ورودی چرخشی پس از روشن شدن صفحه</string>
+    <string name="setting_rotating_crown_off_period_description">ورودی‌های چرخشی (مانند تاج‌های چرخشی) ممکن است در برخی دستگاه‌ها بیش از حد حساس باشند. برای جلوگیری از تغییرات ناخواسته صدا، ورودی چرخشی پس از روشن کردن صفحه به مدت <![CDATA[<b>%1$s میلی‌ثانیه</b>]]> غیرفعال می‌شود.</string>
+    <string name="setting_rotary_seek">جست‌وجو با تاج چرخشی</string>
+    <string name="setting_rotary_seek_description">در صورت فعال بودن، چرخاندن تاج به‌جای تغییر صدا، آهنگ فعلی را پیمایش می‌کند. صدا همچنان با دکمه‌های صفحه یا فیزیکی قابل‌تغییر است.</string>
+    <string name="setting_rotating_sensitivity">حساسیت ورودی چرخشی</string>
+    <string name="setting_rotating_sensitivity_description">حساسیت ورودی چرخشی. عدد بالاتر یعنی حرکت تاج چرخشی به همان شکل، صدا را بیشتر افزایش می‌دهد. اکنون روی <![CDATA[<b>%1$s٪</b>]]> تنظیم شده است.</string>
+    <string name="setting_disable_ambient_physical_double_click">غیرفعال کردن دوبار کلیک دکمه فیزیکی در حالت محیطی</string>
+    <string name="setting_disable_ambient_physical_double_click_description">برخی ساعت‌ها دکمه‌های معیوبی دارند که در آن‌ها یک کلیک تک دکمه فیزیکی در حالت محیطی گاهی به‌عنوان دوبار کلیک ثبت می‌شود.\n\nاگر این را تجربه می‌کنید، می‌توانید این گزینه را فعال کنید تا دوبار کلیک در حالت محیطی به‌طور کامل غیرفعال شود (مثلاً کلیک دو بار فقط اقدام کلیک تک را فعال می‌کند). کلیک دو بار روی دکمه هنگام فعال بودن ساعت تحت‌تأثیر قرار نمی‌گیرد.</string>
+    <string name="setting_haptic_feedback">بازخورد لمسی</string>
+    <string name="setting_haptic_feedback_description">هنگام فشردن دکمه‌ها، ساعت را لرزش دهید.</string>
+    <string name="setting_auto_start">باز کردن خودکار Svartifoss</string>
+    <string name="setting_auto_start_description">هنگام شروع پخش موسیقی روی گوشی، Svartifoss را روی ساعت به‌طور خودکار باز کنید.</string>
+    <string name="setting_auto_start_apps_blacklist">برنامه‌های شروع خودکار</string>
+    <string name="setting_auto_start_apps_blacklist_description">فهرست برنامه‌های رسانه‌ای که می‌توانند Svartifoss را به‌طور خودکار راه‌اندازی کنند</string>
+    <string name="setting_dim_album_art">سایه‌زنی پخش‌کننده</string>
+    <string name="setting_dim_album_art_description">یک پردازش سایه انتخابی کاربر بین جلد و کنترل‌های پخش‌کننده اضافه کنید.</string>
+    <string name="setting_album_art_style">سبک جلد آلبوم</string>
+    <string name="setting_album_art_style_description">انتخاب کنید پس‌زمینه در حال پخش روی ساعت چگونه به نظر برسد.</string>
+    <string name="setting_album_art_blur_radius">شدت تاری</string>
+    <string name="setting_album_art_blur_radius_description">شدت تاری تمام‌صفحه هر زمان که پس‌زمینه انتخاب‌شده از تاری استفاده کند. اکنون <![CDATA[<b>%1$s پیکسل</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">شدت تیرگی</string>
+    <string name="setting_album_art_dim_strength_description">جلد آلبوم چقدر برای خوانایی متن تیره می‌شود. اکنون <![CDATA[<b>%1$s٪</b>]]>.</string>
+    <string name="setting_player_shading_style">سبک سایه‌زنی</string>
+    <string name="setting_player_shading_intensity">شدت سایه‌زنی</string>
+    <string name="setting_player_shading_intensity_description">سایه‌زنی چقدر پس‌زمینه را تیره می‌کند. ۱۰۰٪ شدت کامل است؛ برای کنتراست بیشتر (تا ۱۵۰٪) بالاتر بروید. اکنون <![CDATA[<b>%1$s٪</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">این ظاهر را به همه رویه‌ها اعمال کن</string>
+    <string name="setting_apply_appearance_to_all_faces_description">تنظیمات ظاهری این رویه را در همه رویه‌های دیگر کپی کنید</string>
+    <string name="apply_appearance_confirm_title">به همه رویه‌ها اعمال شود؟</string>
+    <string name="apply_appearance_confirm_message">این کار تنظیمات ظاهری همه رویه‌های دیگر را با تنظیمات فعلی جایگزین می‌کند. تنظیمات رفتاری شما تغییر نخواهد کرد.</string>
+    <string name="apply_appearance_confirm_button">اعمال</string>
+    <string name="apply_appearance_done">به همه رویه‌ها اعمال شد</string>
+    <string name="category_wf_layout_actions">چیدمان</string>
+    <string name="setting_reset_appearance">بازنشانی این چیدمان</string>
+    <string name="setting_reset_appearance_description">ظاهر این رویه را به پیش‌فرض‌های اصلی بازگردانید</string>
+    <string name="reset_appearance_confirm_title">این چیدمان بازنشانی شود؟</string>
+    <string name="reset_appearance_confirm_message">تنظیمات ظاهری این رویه به پیش‌فرض‌های خود بازمی‌گردد. تنظیمات رفتاری شما و رویه‌های دیگر تحت‌تأثیر قرار نمی‌گیرند.</string>
+    <string name="reset_appearance_confirm_button">بازنشانی</string>
+    <string name="reset_appearance_done">چیدمان به پیش‌فرض‌ها بازنشانی شد</string>
+    <string name="setting_reset_all_faces">بازنشانی همه رویه‌ها به پیش‌فرض</string>
+    <string name="setting_reset_all_faces_description">ظاهر هر رویه داخلی را به پیش‌فرض‌های اصلی بازگردانید</string>
+    <string name="reset_all_faces_confirm_title">همه رویه‌ها بازنشانی شوند؟</string>
+    <string name="reset_all_faces_confirm_message">ظاهر هر رویه داخلی به پیش‌فرض‌های اصلی خود بازمی‌گردد و هر پوسته سفارشی فعال خاموش می‌شود. پوسته‌های سفارشی ذخیره‌شده، تنظیمات رفتاری و رویه انتخاب‌شده شما حفظ می‌شوند.</string>
+    <string name="reset_all_faces_confirm_button">بازنشانی همه</string>
+    <string name="reset_all_faces_done">همه رویه‌ها به پیش‌فرض‌ها بازنشانی شدند</string>
+    <string name="setting_player_shading_color">رنگ سایه‌زنی</string>
+    <string name="setting_wear_shading_custom_color">رنگ سایه‌زنی سفارشی</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>سیاه</item>
+        <item>تأکید آلبوم</item>
+        <item>آلبوم کم‌رنگ‌شده</item>
+        <item>رنگ سفارشی</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>پیروی از پوسته پخش‌کننده</item>
+        <item>وینیت لبه</item>
+        <item>وینیت لبه (قوی)</item>
+        <item>وینیت لبه (سنگین)</item>
+        <item>گوشه پایین</item>
+        <item>محو شدن پایین</item>
+        <item>کف و سقف</item>
+        <item>فیلتر تمام‌صفحه</item>
+        <item>شست‌وشوی رنگ آلبوم</item>
+        <item>گرادیان دورنگ آلبوم</item>
+        <item>پرده‌های کناری</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">شفافیت جلد آلبوم در حالت محیطی</string>
+    <string name="setting_ambient_album_art_opacity_description">جلد آلبوم در حالت محیطی چقدر قابل‌مشاهده باقی می‌ماند. اکنون <![CDATA[<b>%1$s٪</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">زمان انقضای پوشش صدا/جست‌وجو</string>
+    <string name="setting_volume_overlay_timeout_description">پس از تنظیم، پوشش‌های صدا و جست‌وجو چه مدت روی صفحه باقی می‌مانند. اکنون <![CDATA[<b>%1$s میلی‌ثانیه</b>]]>.</string>
+    <string name="setting_rotary_deadzone">ناحیه مرده چرخشی</string>
+    <string name="setting_rotary_deadzone_description">حداقل حرکت تاج قبل از اعمال تغییرات صدا یا جست‌وجو. کمک می‌کند از تنظیمات ناخواسته جلوگیری شود. اکنون <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">تجربه Wear</string>
+    <string name="setting_swipe_gestures_hint">حرکات کشیدن</string>
+    <string name="setting_swipe_gestures_hint_description">کشیدن به بالا/پایین/چپ می‌تواند هر کدام هر اقدامی را باز کند. برای پیکربندی آن‌ها برای موسیقی در حال پخش یا بدون پخش، اینجا ضربه بزنید. کشیدن به راست برای خروج از برنامه رزرو باقی می‌ماند.</string>
+    <string name="setting_screen_buttons_hint">دکمه‌های کوچک</string>
+    <string name="setting_screen_buttons_hint_description">حداکثر سه دکمه قابل‌مشاهده، هر کدام با اقدامات ضربه و فشار طولانی. برای پیکربندی آن‌ها برای موسیقی در حال پخش یا بدون پخش، اینجا ضربه بزنید.</string>
+    <string name="dev_screen_buttons_offset">موقعیت دکمه‌های کوچک</string>
+    <string name="dev_screen_buttons_offset_description">فاصله ترجیحی به dp بین پایین صفحه ساعت و دکمه‌های کوچک (پیش‌فرض ۴۲). ردیف همچنان خودش برای دوری از عنوان‌های طولانی تنظیم می‌شود.</string>
+    <string name="setting_screen_buttons_tilt">شیب دکمه‌ها</string>
+    <string name="setting_screen_buttons_tilt_description">دکمه‌های کناری چقدر از انحنای صفحه پیروی می‌کنند. ۰ = ردیف صاف؛ ۱۰۰ = قوس کامل با نمادهای مایل.</string>
+    <string name="setting_screen_buttons_bg">پس‌زمینه دکمه‌های کوچک</string>
+    <string name="setting_screen_buttons_opacity">شفافیت دکمه‌های کوچک</string>
+    <string name="setting_screen_buttons_opacity_description">شفافیت کل گروه دکمه‌های کوچک (۰ تا ۱۰۰٪). اکنون <![CDATA[<b>%1$s٪</b>]]>.</string>
+    <string name="quick_panel_row_title">پنل اقدامات سریع</string>
+    <string name="quick_panel_config_hint">این‌ها دکمه‌های پنلی هستند که با دو بار ضربه زدن به مرکز صفحه ساعت باز می‌شود. برای انتخاب اقدام هر ردیف روی آن ضربه بزنید («هیچ‌کدام» آن را پنهان می‌کند)؛ برای بازگرداندن پیش‌فرض نگه دارید.</string>
+    <string name="quick_panel_slot_1">دکمه ۱</string>
+    <string name="quick_panel_slot_2">دکمه ۲</string>
+    <string name="quick_panel_slot_3">دکمه ۳</string>
+    <string name="quick_panel_slot_long">دکمه بلند</string>
+    <string name="quick_panel_slot_default">%1$s (پیش‌فرض)</string>
+    <string name="quick_panel_slot_hidden">پنهان</string>
+    <string name="quick_panel_default_like">پسندیدن</string>
+    <string name="quick_panel_default_shuffle">پخش تصادفی</string>
+    <string name="quick_panel_default_repeat">تکرار</string>
+    <string name="quick_panel_default_up_next">بعدی</string>
+    <string name="setting_wear_center_long_press_queue">فشار طولانی در مرکز برای صف</string>
+    <string name="setting_wear_center_long_press_queue_description">مرکز صفحه در حال پخش را نگه دارید تا صف پخش باز شود.</string>
+    <string name="setting_wear_screen_face">چیدمان پایه</string>
+    <string name="setting_wear_screen_face_description">ساختاری که این پوسته استفاده می‌کند را انتخاب کنید. پوسته‌های ذخیره‌شده می‌توانند این چیدمان را با فونت، رنگ‌ها، تاری، سایه‌زنی، AOD و پنل‌های خود ترکیب کنند.</string>
+    <string name="setting_wear_show_track_title">نمایش عنوان آهنگ</string>
+    <string name="setting_wear_show_track_title_description">نام آهنگ فعلی را روی پخش‌کننده نمایش بده</string>
+    <string name="setting_wear_show_track_artist">نمایش نام خواننده</string>
+    <string name="setting_wear_show_track_artist_description">خواننده فعلی را روی پخش‌کننده نمایش بده</string>
+    <string name="setting_wear_show_source_icon">نمایش نماد برنامه در حال پخش</string>
+    <string name="setting_wear_show_source_icon_description">نماد برنامه در حال پخش را کنار خواننده نمایش بده. از نماد اعلان رسانه آن استفاده می‌کند. در صورت خاموش بودن، نماد هرگز به ساعت ارسال نمی‌شود.</string>
+    <string name="setting_wear_player_controls_visible">نمایش کنترل‌های پخش‌کننده</string>
+    <string name="setting_wear_player_controls_visible_description">دکمه‌های داخلی در چیدمان‌های Classic، Poster، Studio و سایر چیدمان‌های قابل‌پیکربندی را بدون غیرفعال کردن نواحی لمسی آن‌ها نشان یا پنهان کن</string>
+    <string name="setting_wear_quadrant_tap_flash">چشمک زدن نماد هنگام ضربه</string>
+    <string name="setting_wear_quadrant_tap_flash_description">هنگام فعال شدن اقدام یک ناحیه گوشه، نماد آن را به‌طور کوتاه با روشنایی کامل چشمک بزن — به‌ویژه در سبک صفحه پنهان مفید است، جایی که نماد در غیر این صورت نامرئی است و هیچ تأییدی از اینکه کدام اقدام تازه اجرا شده نمی‌دهد.</string>
+    <string name="setting_wear_internal_progress_visible">نشانگر پیشرفت چیدمان</string>
+    <string name="setting_wear_internal_progress_visible_description">نشانگر پیشرفت اضافی طراحی‌شده در این چیدمان را نمایش بده. حلقه‌های دکمه پخش Expressive و Material بخشی از کنترل‌های آن‌ها هستند و همچنان در دسترس‌اند.</string>
+    <string name="setting_wear_edge_progress_visible">نمایش قوس پیشرفت لبه</string>
+    <string name="setting_wear_edge_progress_visible_description">فقط قوس بصری اطراف صفحه را پنهان کن. جست‌وجوی لبه یک گزینه مستقل باقی می‌ماند.</string>
+    <string name="setting_wear_edge_seek_enabled">جست‌وجو از لبه صفحه</string>
+    <string name="setting_wear_edge_seek_enabled_description">حتی وقتی قوس آن پنهان است، برای پریدن به نقطه دقیق، روی لبه صفحه ضربه بزنید یا بکشید</string>
+    <string name="setting_wear_screen_theme">سبک کنترل</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">متعادل</string>
+    <string name="wear_screen_theme_default_description">سلسله‌مراتب و اندازه‌های کنترل استاندارد.</string>
+    <string name="wear_screen_theme_minimal">مینیمال</string>
+    <string name="wear_screen_theme_minimal_description">از کنترل‌های کوچک‌تر و ساکت‌تر استفاده می‌کند در حالی که هر اقدام قابل‌مشاهده و قابل‌استفاده باقی می‌ماند.</string>
+    <string name="wear_screen_theme_compact">فشرده</string>
+    <string name="wear_screen_theme_compact_description">بدون تغییر اقدامات شما، از پردازش کنترل فشرده‌تری استفاده می‌کند.</string>
+    <string name="wear_screen_theme_cinema">سینما</string>
+    <string name="wear_screen_theme_cinema_description">بدون تغییر جلد، کنترل‌ها را نرم می‌کند.</string>
+    <string name="wear_screen_theme_vivid">زنده</string>
+    <string name="wear_screen_theme_vivid_description">از کنترل‌های بزرگ‌تر و برجسته‌تر استفاده می‌کند.</string>
+    <string name="wear_screen_theme_contrast">کنتراست بالا</string>
+    <string name="wear_screen_theme_contrast_description">برای خواندن آسان‌تر، از کنترل‌های بزرگ‌تر استفاده می‌کند.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">از کنترل‌های فشرده و کمی تیره‌شده استفاده می‌کند. این خودِ پس‌زمینه را تیره نمی‌کند — برای آن از تنظیمات پس‌زمینه استفاده کنید.</string>
+    <string name="wear_screen_theme_hidden">پنهان</string>
+    <string name="wear_screen_theme_hidden_description">همه نمادهای کنترل را کاملاً پنهان می‌کند. نواحی لمسی فعال و کاملاً کاربردی باقی می‌مانند.</string>
+    <string name="setting_wear_font">قلم</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">قلم پیش‌فرض برنامه.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">قلم سیستم کلاسیک اندروید.</string>
+    <string name="wear_font_rounded">گرد</string>
+    <string name="wear_font_rounded_description">شکل‌های حروف مدرن و دوستانه با پایانه‌های گرد نرم.</string>
+    <string name="wear_font_sans_light">مدرن نازک</string>
+    <string name="wear_font_sans_light_description">یک بدون‌سریف تمیز و سبک با وزن بصری سبک‌تر.</string>
+    <string name="wear_font_sans_thin">فوق نازک</string>
+    <string name="wear_font_sans_thin_description">یک سبک نمایشی فوق‌سبک برای پخش‌کننده مینیمال.</string>
+    <string name="wear_font_sans_medium">مدرن متوسط</string>
+    <string name="wear_font_sans_medium_description">یک بدون‌سریف واضح با ضربه‌های قوی‌تر و فشرده‌تر.</string>
+    <string name="wear_font_sans_black">ضخیم</string>
+    <string name="wear_font_sans_black_description">یک خانواده نمایشی جسورانه با حداکثر تأثیر بصری.</string>
+    <string name="wear_font_small_caps">حروف بزرگ کوچک</string>
+    <string name="wear_font_small_caps_description">شکل‌های فشرده با فرم حروف بزرگ با حس تحریریه.</string>
+    <string name="wear_font_casual">غیررسمی</string>
+    <string name="wear_font_casual_description">یک خانواده سیستمی دست‌نویس و بازیگوش.</string>
+    <string name="wear_font_typewriter">ماشین تحریر (بایگانی‌شده)</string>
+    <string name="wear_font_typewriter_description">یک نمای ماشین تحریر قدیمی (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">یک هندسی گرد بدون‌سریف، جایگزینی رایگان (OFL) در روح Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">یک هندسی تمیز بدون‌سریف، جایگزینی رایگان (OFL) در روح Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">یک رومی انسان‌گرای شیک، جایگزینی رایگان (OFL) در روح Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">یک سبک ماشین تحریر نرم‌تر (Love Letter Typewriter) — معمولاً برای آهنگ‌های با موضوع «Lain» رزرو شده است.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">یک قلم سریف کلاسیک.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">حروف سریف با عرض ثابت با ظاهر متمایز تحریریه/ترمینال.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">عرض ثابت، نمای فنی.</string>
+    <string name="wear_font_condensed">فشرده</string>
+    <string name="wear_font_condensed_description">شکل‌های حروف باریک‌تر که متن بیشتری جا می‌دهد.</string>
+    <string name="wear_font_condensed_light">فشرده نازک</string>
+    <string name="wear_font_condensed_light_description">یک خانواده باریک و سبک‌تر برای عنوان‌های طولانی.</string>
+    <string name="wear_font_condensed_medium">فشرده متوسط</string>
+    <string name="wear_font_condensed_medium_description">یک خانواده باریک با ضربه‌های قوی‌تر و خوانایی عالی.</string>
+    <string name="wear_font_cursive">شکسته</string>
+    <string name="wear_font_cursive_description">یک قلم دست‌نویس تزئینی.</string>
+    <string name="setting_wear_dynamic_accent">تأکید پویا روی ساعت</string>
+    <string name="setting_wear_dynamic_accent_description">رنگ‌های ساعت مبتنی بر آلبوم را با جلد فعلی تطبیق دهید. در صورت خاموش بودن، انتخاب‌های رنگ آلبوم از تأکید ثابت پوسته استفاده می‌کنند.</string>
+    <string name="setting_wear_album_art_fade">انتقال محو شدن جلد آلبوم</string>
+    <string name="setting_wear_album_art_fade_description">هنگام تغییر آهنگ، جلد آلبوم را به‌آرامی محو کن.</string>
+    <string name="setting_wear_title_text_mode">رفتار متن عنوان</string>
+    <string name="setting_wear_title_text_mode_description">وقتی عنوان در حال پخش جا نمی‌شود چگونه رفتار می‌کند: خودکار ترکیبی از کوچک شدن، سطربندی و پیمایش است؛ گزینه‌های دیگر یک رفتار را انحصاری می‌کنند.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>خودکار (کوچک شدن، سپس سطربندی، سپس پیمایش)</item>
+        <item>پیمایش (نوار متحرک)</item>
+        <item>سطربندی به دو خط</item>
+        <item>سطربندی به سه خط</item>
+        <item>سطربندی به پنج خط</item>
+        <item>ثابت (یک خط، بدون پیمایش یا کوچک شدن)</item>
+        <item>کوچک شدن برای جا شدن</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">رنگ متن خواننده</string>
+    <string name="setting_wear_artist_custom_color">رنگ سفارشی خواننده</string>
+    <string name="setting_wear_artist_custom_color_description">رنگ خواننده استفاده‌شده با پردازش عادی را انتخاب کنید</string>
+    <string name="setting_wear_artist_desaturated">رنگ کم‌رنگ‌شده خواننده</string>
+    <string name="setting_wear_artist_desaturated_description">رنگ متن خواننده مبتنی بر آلبوم را نرم کن — فقط زمانی اعمال می‌شود که «رنگ متن خواننده» روی رنگ آلبوم تنظیم شده باشد</string>
+
+    <string name="setting_wear_progress_color">رنگ نوار پیشرفت</string>
+    <string name="setting_wear_progress_custom_color">رنگ سفارشی نوار پیشرفت</string>
+    <string name="setting_wear_progress_custom_color_description">رنگ پیشرفت و جست‌وجو استفاده‌شده با پردازش عادی را انتخاب کنید</string>
+    <string name="setting_wear_progress_desaturated">رنگ کم‌رنگ‌شده نوار پیشرفت</string>
+    <string name="setting_wear_progress_desaturated_description">رنگ نوار پیشرفت مبتنی بر آلبوم را نرم کن — فقط زمانی اعمال می‌شود که «رنگ نوار پیشرفت» روی رنگ آلبوم تنظیم شده باشد</string>
+
+    <string name="setting_wear_volume_color">رنگ نوار صدا</string>
+    <string name="setting_wear_volume_custom_color">رنگ سفارشی صدا</string>
+    <string name="setting_wear_volume_custom_color_description">رنگ صدا استفاده‌شده با پردازش عادی را انتخاب کنید</string>
+    <string name="setting_wear_quick_panel_color">رنگ اقدامات سریع</string>
+    <string name="setting_wear_quick_panel_custom_color">رنگ سفارشی اقدامات سریع</string>
+    <string name="setting_wear_quick_panel_custom_color_description">رنگ اقدامات سریع استفاده‌شده با پردازش عادی را انتخاب کنید</string>
+    <string name="setting_wear_shading_custom_color_description">رنگی که گرادیان سایه‌زنی را رنگ می‌کند انتخاب کنید</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>خنثی (رنگ ثابت پوسته)</item>
+        <item>رنگ آلبوم</item>
+        <item>رنگ سفارشی</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">جست‌وجوی Expressive</string>
+    <string name="setting_wear_expressive_seek_mode_description">نحوه پیمایش آهنگ با لمس در رویه Expressive. حلقه مرکزی حلقه اطراف دکمه پخش را قابل‌کشیدن می‌کند؛ حلقه لبه همچنین حلقه لبه Classic را نشان می‌دهد؛ هیچ‌کدام جست‌وجو را فقط برای تاج چرخشی باقی می‌گذارد.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>حلقه مرکزی</item>
+        <item>حلقه لبه</item>
+        <item>هیچ‌کدام</item>
+    </string-array>
+
+    <string name="category_wear_aod">صفحه همیشه روشن</string>
+    <string name="setting_wear_aod_style">سبک همیشه روشن</string>
+    <string name="setting_wear_aod_style_description">صفحه در حال پخش وقتی ساعت در حالت محیطی است چگونه به نظر می‌رسد. پیروی از رویه با رویه انتخاب‌شده مطابقت دارد؛ مینیمال فقط متن تیره روی سیاه کامل را برای طولانی‌ترین عمر باتری نشان می‌دهد.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>پیروی از رویه</item>
+        <item>Classic</item>
+        <item>Expressive (خط‌دار)</item>
+        <item>Material (خط‌دار)</item>
+        <item>کنترل‌های AMOLED</item>
+        <item>Chrono (ساعت بزرگ)</item>
+    </string-array>
+    <string name="setting_wear_aod_color">رنگ همیشه روشن</string>
+    <string-array name="wear_aod_color_entries">
+        <item>سفید</item>
+        <item>رنگ آلبوم</item>
+        <item>رنگ سفارشی</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>سفید</item>
+        <item>پویا (بر اساس ناحیه زیر ساعت)</item>
+        <item>رنگ آلبوم</item>
+        <item>رنگ سفارشی</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>پیروی از سبک پنل</item>
+        <item>شفاف (بدون پس‌زمینه)</item>
+        <item>تأکید آلبوم</item>
+        <item>نیمه‌شفاف</item>
+        <item>سفید</item>
+        <item>سفید مات</item>
+        <item>سیاه</item>
+        <item>پویا (رنگ آلبوم)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">پس‌زمینه قرص بعدی</string>
+    <string name="setting_wear_show_up_next_pill">قرص بعدی روی پخش‌کننده</string>
+    <string name="setting_wear_show_up_next_pill_description">قرص بعدی را در پایین صفحه در حال پخش نمایش بده. فضایی را که ردیف دکمه‌های کوچک می‌گیرد پر می‌کند، بنابراین فقط وقتی آن ردیف نمایش داده نمی‌شود ظاهر می‌شود.</string>
+    <string name="category_wf_clock">ساعت</string>
+    <string name="setting_wear_clock_color">رنگ ساعت</string>
+    <string name="setting_wear_clock_custom_color">رنگ سفارشی ساعت</string>
+    <string name="setting_wear_clock_custom_color_description">برای انتخاب رنگ ساعت استفاده‌شده وقتی رنگ ساعت روی رنگ سفارشی تنظیم شده، ضربه بزنید</string>
+    <string name="setting_wear_clock_opacity">شفافیت ساعت</string>
+    <string name="setting_wear_clock_opacity_description">ساعت همیشه نمایش‌داده‌شده چقدر مات است (۱۰ تا ۱۰۰٪). اکنون <![CDATA[<b>%1$s٪</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">رنگ سفارشی همیشه روشن</string>
+    <string name="setting_wear_aod_custom_color_description">برای انتخاب رنگ استفاده‌شده برای متن، کنترل‌ها و ساعت همیشه‌فعال وقتی «رنگ همیشه روشن» روی رنگ سفارشی تنظیم شده، ضربه بزنید</string>
+    <string name="setting_wear_aod_intensity">روشنایی همیشه روشن</string>
+    <string name="setting_wear_aod_intensity_description">صفحه همیشه روشن چقدر روشن رندر می‌شود (۲۰ تا ۱۰۰٪). پایین‌تر تیره‌تر است و باتری کمتری مصرف می‌کند. اکنون <![CDATA[<b>%1$s٪</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">دکمه‌های انتقال روی صفحه همیشه روشن</string>
+    <string name="setting_wear_aod_show_transport_description">دکمه‌های خط‌دار قبلی/پخش/بعدی را در سبک‌های بصری همیشه روشن پشتیبانی‌شده نشان بده. وقتی صفحه تیره است قابل‌ضربه نیستند، اما یک ضربه ساعت را با دکمه از قبل زیر انگشت شما بیدار می‌کند.</string>
+    <string name="setting_wear_aod_show_progress">حلقه پیشرفت روی صفحه همیشه روشن</string>
+    <string name="setting_wear_aod_show_progress_description">حلقه پیشرفت اطراف دکمه پخش را در حالت محیطی نشان بده — موقعیت آنجا فقط تقریباً هر یک دقیقه به‌روزرسانی می‌شود</string>
+    <string name="setting_wear_aod_show_pills">بعدی روی صفحه همیشه روشن</string>
+    <string name="setting_wear_aod_show_pills_description">یک قرص بعدی ثابت و خط‌دار در پایین سبک‌های بصری همیشه روشن نشان بده</string>
+    <string name="category_wf_gestures">حرکات صفحه</string>
+    <string name="setting_wear_mini_buttons_mode">نمایش دکمه‌های کوچک</string>
+    <string name="setting_wear_gestures_mode">حرکات صفحه</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>همیشه</item>
+        <item>فقط هنگام پخش</item>
+        <item>فقط هنگام مکث</item>
+        <item>هرگز</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">جلد آلبوم روی صفحه همیشه روشن</string>
+    <string name="setting_wear_aod_show_art_description">جلد آلبوم تیره‌شده را در حالت محیطی قابل‌مشاهده نگه دار. خاموش کردن آن پس‌زمینه‌ای کاملاً سیاه نشان می‌دهد که باتری قابل‌توجهی بیشتر روی صفحه‌های AMOLED صرفه‌جویی می‌کند.</string>
+    <string name="setting_wear_aod_art_treatment">سبک جلد آلبوم همیشه روشن</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>تاری نرم</item>
+        <item>جلد شفاف</item>
+        <item>تاری تک‌رنگ</item>
+        <item>پیروی از پردازش جلد پخش‌کننده</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">ساعت روی صفحه همیشه روشن</string>
+    <string name="setting_wear_aod_show_clock_description">وقتی ساعت در حالت محیطی است، ساعت را نمایش بده</string>
+    <string name="setting_wear_aod_show_track_info">اطلاعات آهنگ روی صفحه همیشه روشن</string>
+    <string name="setting_wear_aod_show_track_info_description">عنوان آهنگ و خواننده را در حالت محیطی نشان بده</string>
+
+    <string name="category_overlays_queue">پوشش‌ها و صف</string>
+    <string name="setting_wear_overlay_backdrop_style">پس‌زمینه پنل</string>
+    <string name="setting_wear_volume_style">سبک صدا</string>
+    <string name="setting_wear_volume_layout">چیدمان صدا</string>
+    <string name="setting_wear_quick_panel_style">سبک پنل سریع</string>
+    <string name="setting_wear_quick_panel_layout">چیدمان پنل سریع</string>
+    <string name="setting_wear_quick_panel_source">اقدامات سریع</string>
+    <string name="setting_wear_quick_panel_source_description">دکمه‌های پیکربندی‌شده خود، یا اقدامات ارائه‌شده توسط برنامه در حال پخش فعلی را انتخاب کنید.</string>
+    <string name="quick_panel_open_note_title">باز کردن پنل</string>
+    <string name="quick_panel_open_note_description">برای باز کردن پنل اقدامات سریع روی ساعت، مرکز صفحه در حال پخش را دو بار ضربه بزنید.</string>
+    <string name="preview_current_app_action">اقدام برنامه فعلی</string>
+    <string name="preview_notification_controls">نماد از اعلان رسانه</string>
+    <string name="setting_wear_queue_style">سبک صف</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">استفاده از جلد میان‌برها به‌عنوان پس‌زمینه</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">وقتی سبک صف بالا یک نوع جلد باشد، یک ردیف اقدام پنل سریع با جلد میان‌بر بازیابی‌شده (آهنگ، لیست پخش، خواننده…) قرص خود را نیز با آن تصویر پر می‌کند، همان‌طور که بعدی این کار را انجام می‌دهد. میان‌برهای بدون جلد بازیابی‌شده (فقط نماد برنامه) تحت‌تأثیر قرار نمی‌گیرند.</string>
+    <string name="setting_wear_list_row_size">اندازه قرص فهرست</string>
+    <string name="setting_wear_list_row_size_description">ارتفاع ردیف‌های تمام‌عرض در صف، منوها و پنل سریع.</string>
+    <string name="setting_wear_progress_style">سبک حلقه پیشرفت</string>
+    <string name="setting_wear_seek_style">سبک نمایش جست‌وجو و صدا</string>
+    <string name="setting_wear_seek_layout">چیدمان پنل جست‌وجو</string>
+    <string name="setting_wear_color_treatment">پردازش رنگ ساعت</string>
+    <string name="setting_wear_normal_color">رنگ عادی</string>
+    <string name="setting_wear_normal_color_description">رنگ واحد استفاده‌شده توسط تأکیدهای عنوان، پیشرفت، صدا، پنل‌ها و ظاهر دکمه‌های کوچک در حالت عادی را انتخاب کنید</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>عادی (رنگ انتخاب‌شده)</item>
+        <item>کم‌رنگ‌شده (رنگ نرم آلبوم)</item>
+        <item>Expressive (پالت کامل آلبوم)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>پیروی از پردازش ساعت</item>
+        <item>عادی (رنگ انتخاب‌شده)</item>
+        <item>کم‌رنگ‌شده (رنگ نرم آلبوم)</item>
+        <item>Expressive (پالت کامل آلبوم)</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>قوس لبه (چپ)</item>
+        <item>قوس لبه (بلند)</item>
+        <item>قوس لبه (راست)</item>
+        <item>قوس لبه (بالا)</item>
+        <item>قوس لبه (پایین)</item>
+        <item>حلقه کامل</item>
+        <item>هاله مرکزی</item>
+        <item>متر افقی</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>حلقه لبه</item>
+        <item>حلقه لبه (نازک)</item>
+        <item>حلقه لبه (ضخیم)</item>
+        <item>خط زمانی</item>
+        <item>خط زمانی تقسیم‌شده</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>ابتدا فراداده</item>
+        <item>قوس</item>
+        <item>Hero</item>
+        <item>شبکه</item>
+        <item>ردیف‌های برچسب‌دار</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>یکپارچه</item>
+        <item>خط‌چین</item>
+        <item>نقطه‌چین</item>
+        <item>خط مویی</item>
+        <item>دنباله‌دار</item>
+        <item>۶۰ نقطه ساعت</item>
+        <item>۶۰ علامت ساعت</item>
+        <item>بخش‌های ۱۲ ساعته</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>ساده</item>
+        <item>قرص شیشه‌ای</item>
+        <item>قرص Expressive</item>
+        <item>قرص Material</item>
+        <item>قرص سفید</item>
+        <item>غول‌پیکر</item>
+        <item>موقعیت / کل</item>
+        <item>شیشه سفید</item>
+        <item>آلبوم نیمه‌شفاف</item>
+        <item>درخشش آلبوم</item>
+        <item>خط‌دار</item>
+        <item>پوسته یکپارچه</item>
+        <item>آلبوم یکپارچه</item>
+        <item>میکرو</item>
+        <item>سایه (بدون ظاهر)</item>
+        <item>زیرخط</item>
+        <item>خط‌دار مویی</item>
+        <item>رنگ آلبوم غول‌پیکر</item>
+        <item>تک‌رنگ</item>
+        <item>تونال تیره</item>
+        <item>ترمینال</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>دکمه‌های پیکربندی‌شده</item>
+        <item>از برنامه رسانه فعلی</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>پیروی از سبک پنل</item>
+        <item>تاری آلبوم (اکریلیک)</item>
+        <item>سیاه یکپارچه</item>
+        <item>رنگ آلبوم یکپارچه</item>
+        <item>شیشه‌ای</item>
+        <item>گرادیان آلبوم</item>
+        <item>دورنگ آلبوم</item>
+        <item>منشور</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>شیشه‌ای</item>
+        <item>مینیمال (AMOLED)</item>
+        <item>Material</item>
+        <item>تونال</item>
+        <item>نئون</item>
+        <item>روشن</item>
+        <item>گرادیان</item>
+        <item>تک‌رنگ</item>
+        <item>خط‌دار</item>
+        <item>دورنگ</item>
+        <item>منشور</item>
+        <item>کنتراست بالا</item>
+        <item>ترمینال</item>
+        <item>یخ‌زده</item>
+        <item>بخش‌بندی‌شده</item>
+        <item>Aurora</item>
+        <item>جوهر</item>
+        <item>شیار</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>فشرده</item>
+        <item>عادی</item>
+        <item>بلند</item>
+        <item>خیلی بلند</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>شیشه‌ای</item>
+        <item>مینیمال (AMOLED)</item>
+        <item>Material</item>
+        <item>تونال</item>
+        <item>نئون</item>
+        <item>روشن</item>
+        <item>گرادیان</item>
+        <item>تک‌رنگ</item>
+        <item>خط‌دار</item>
+        <item>دورنگ</item>
+        <item>منشور</item>
+        <item>کنتراست بالا</item>
+        <item>ترمینال</item>
+        <item>یخ‌زده</item>
+        <item>جلد</item>
+        <item>جلد تار</item>
+        <item>جلد تونال</item>
+        <item>جلد مربعی</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>شیشه‌ای</item>
+        <item>شیشه سفید</item>
+        <item>شیشه تونال</item>
+        <item>مینیمال (AMOLED)</item>
+        <item>Material</item>
+        <item>تونال</item>
+        <item>نئون</item>
+        <item>روشن</item>
+        <item>گرادیان</item>
+        <item>تک‌رنگ</item>
+        <item>خط‌دار</item>
+        <item>خط‌دار شیشه سفید</item>
+        <item>دورنگ</item>
+        <item>منشور</item>
+        <item>کنتراست بالا</item>
+        <item>ترمینال</item>
+        <item>یخ‌زده</item>
+        <item>Ghost (بدون ظاهر)</item>
+        <item>مه</item>
+        <item>جوهر</item>
+        <item>نقطه</item>
+        <item>لوح</item>
+    </string-array>
+
+    <string name="setting_wear_track_time_mode">نمایش زمان آهنگ</string>
+    <string name="setting_wear_track_time_mode_description">چه زمانی موقعیت آهنگ (مثلاً ۱:۲۳ / ۳:۴۵) در صفحه در حال پخش نمایش داده می‌شود.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>همیشه</item>
+        <item>فقط هنگام پخش</item>
+        <item>فقط هنگام مکث</item>
+        <item>هرگز</item>
+    </string-array>
+
+    <string name="setting_screen_buttons_curve">انحنای دکمه‌های کوچک</string>
+    <string name="setting_screen_buttons_curve_description">سبک انحنا برای دکمه‌های کوچک را انتخاب کنید: صاف، قوس، نرم، منحنی.</string>
+    <string name="setting_screen_buttons_shape">شکل دکمه‌های کوچک</string>
+    <string name="setting_screen_buttons_shape_description">شکل و قالب چیدمان دکمه‌های کوچک را انتخاب کنید.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>قرص (پیش‌فرض)</item>
+        <item>دایره</item>
+        <item>مربع</item>
+        <item>مربع گرد (نرم)</item>
+        <item>مربع گرد (متوسط)</item>
+        <item>Squircle</item>
+        <item>برگ</item>
+        <item>قطره</item>
+        <item>قرص (عریض کوچک)</item>
+        <item>قرص (عریض متوسط)</item>
+        <item>قرص (عریض بزرگ)</item>
+        <item>قرص (عریض خیلی بزرگ)</item>
+        <item>مستطیل گرد (کوچک)</item>
+        <item>مستطیل گرد (متوسط)</item>
+        <item>مستطیل گرد (بزرگ)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>صاف</item>
+        <item>قوس</item>
+        <item>انحنای ملایم</item>
+        <item>انحنای نرم</item>
+        <item>انحنای متوسط</item>
+        <item>منحنی</item>
+        <item>انحنای شدید</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>پس‌زمینه پیش‌فرض</item>
+        <item>شیشه‌ای (یکنواخت)</item>
+        <item>شیشه‌ای (روشن)</item>
+        <item>آلبوم نیمه‌شفاف</item>
+        <item>آلبوم نیمه‌شفاف Exp</item>
+        <item>درخشش آلبوم</item>
+        <item>درخشش Exp</item>
+        <item>پوسته یکپارچه</item>
+        <item>آلبوم یکپارچه</item>
+        <item>آلبوم Exp یکپارچه</item>
+        <item>خط‌دار</item>
+        <item>خط‌دار آلبوم Exp</item>
+        <item>فقط نماد (شفاف)</item>
+        <item>نماد Exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>خنثی</item>
+        <item>رنگ آلبوم</item>
+        <item>رنگ سفارشی</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>جلد کامل</item>
+        <item>پس‌زمینه تار</item>
+        <item>مربع (گوشه‌های تیز)</item>
+        <item>مربع (گوشه‌های نرم)</item>
+        <item>مربع (گوشه‌های گرد)</item>
+        <item>سیاه و سفید</item>
+        <item>سیاه و سفید تار</item>
+        <item>تاری Expressive</item>
+        <item>Expressive</item>
+        <item>گرادیان تونال Material</item>
+        <item>جلد Poster</item>
+        <item>گرادیان Studio</item>
+        <item>درخشش شعاعی Vinyl</item>
+        <item>درخشش Halo</item>
+        <item>روبان‌های Aurora</item>
+        <item>گرادیان Spectrum</item>
+        <item>پوشش Corona</item>
+        <item>محو شدن غروب</item>
+        <item>Bloom</item>
+        <item>محو شدن افق</item>
+        <item>درخشش اخگر</item>
+        <item>Eclipse AMOLED سیاه</item>
+        <item>پنهان (سیاه یکپارچه)</item>
+    </string-array>
+
+    <string name="setting_close_timeout">زمان انقضای بستن</string>
+    <string name="setting_close_timeout_description">Svartifoss هنگامی که به مدت <![CDATA[<b>%1$s ثانیه</b>]]> موسیقی‌ای در حال پخش نباشد، به‌طور خودکار بسته می‌شود. این ویژگی وقتی زمان انقضا روی ۰ ثانیه تنظیم شود غیرفعال است. لطفاً توجه داشته باشید که برای صرفه‌جویی در باتری، این گزینه ممکن است گاهی چندان دقیق نباشد و بستن را تا یک دقیقه به تأخیر بیندازد.</string>
+    <string name="setting_wear_close_on_idle">بستن در «چیزی پخش نمی‌شود»</string>
+    <string name="setting_wear_close_on_idle_description">حدود یک دقیقه پس از رسیدن به صفحه بی‌کار «چیزی پخش نمی‌شود»، برنامه ساعت را به‌طور خودکار می‌بندد، تا هرگز آنجا نماند. مستقل از زمان انقضای بستن بالا که آهنگ مکث‌شده را پوشش می‌دهد.</string>
+    <string name="category_notifications">پاپ‌آپ اعلان</string>
+    <string name="setting_enable_notifications">نمایش پاپ‌آپ اعلان</string>
+    <string name="setting_enable_notifications_description">این ویژگی به یک برنامه دیگر برای مدیریت اعلان‌ها نیاز دارد (Vibration Center for Wear).\n\nهر زمان Vibration Center ساعت را لرزش دهد، Svartifoss پاپ‌آپی از متن اعلان نمایش می‌دهد و به شما امکان می‌دهد بدون ترک Svartifoss نگاهی سریع به اعلان بیندازید.</string>
+    <string name="setting_notification_timeout">زمان انقضای پاپ‌آپ اعلان</string>
+    <string name="setting_notification_timeout_description">پاپ‌آپ اعلان پس از <![CDATA[<b>%1$s ثانیه</b>]]> به‌طور خودکار بسته می‌شود. برای غیرفعال کردن بستن خودکار، ۰ وارد کنید.</string>
+    <string name="app_required">برنامه لازم است</string>
+    <string name="vibration_center_required_description">برای استفاده از این ویژگی، باید یک برنامه دیگر (رایگان) نصب کنید: Vibration Center for Wear.</string>
+    <string name="open_play_store">باز کردن فروشگاه Play</string>
+    <string name="error_no_notification_service_support">متأسفانه، به نظر می‌رسد دستگاه شما از خدمات اعلان پشتیبانی نمی‌کند</string>
+    <string name="setting_always_select_center_action">همیشه اقدام مرکزی را انتخاب کن</string>
+    <string name="setting_always_select_center_action_description">در صورت فعال بودن، ضربه زدن روی فهرست اقدامات همیشه گزینه مرکزی (برجسته‌شده) را انتخاب می‌کند، صرف‌نظر از اینکه روی کدام گزینه ضربه زده‌اید.</string>
+    <string name="change_icon">تغییر نماد</string>
+    <string name="please_wait">لطفاً صبر کنید</string>
+
+    <string name="error_playlist_not_supported">توسط این برنامه رسانه پشتیبانی نمی‌شود</string>
+    <string name="error_search_no_results">هیچ نتیجه‌ای یافت نشد</string>
+    <string name="seconds_to_skip">ثانیه برای جلو رفتن:</string>
+    <string name="seconds_to_reverse">ثانیه برای عقب رفتن:</string>
+
+    <string name="setting_dynamic_accent_color">رنگ تأکید پویا</string>
+    <string name="setting_dynamic_accent_color_description">در صورت فعال بودن، رنگ تأکید (نوار جست‌وجو، مورد فعال صف) به‌طور خودکار با رنگ غالب جلد آلبوم فعلی تطبیق می‌یابد.</string>
+    <string name="setting_desaturated_color">رنگ کم‌رنگ‌شده</string>
+    <string name="setting_desaturated_color_description">اشباع و روشنایی رنگ استخراج‌شده را تنظیم می‌کند تا خوانایی و کنتراست بالا بسته به پوسته فعال تضمین شود.</string>
+
+    <string name="queue_header">صف پخش</string>
+    <string name="queue_unavailable">صف در دسترس نیست</string>
+
+    <string name="setting_custom_accent_color">رنگ تأکید</string>
+    <string name="setting_custom_accent_color_description">یک رنگ تأکید سفارشی برای رابط برنامه انتخاب کنید</string>
+    <string name="setting_mini_player">پخش‌کننده کوچک</string>
+    <string name="setting_mini_player_description">هر زمان رسانه‌ای فعال باشد، یک نوار در حال پخش دائمی بالای ناوبری پایین نمایش می‌دهد. به‌طور پیش‌فرض فعال است؛ برای بازپس‌گیری آن فضا آن را خاموش کنید.</string>
+    <string name="color_picker_title">انتخاب رنگ تأکید</string>
+    <string name="color_picker_reset">بازنشانی</string>
+    <string name="color_picker_apply">اعمال</string>
+    <string name="color_picker_default">پیش‌فرض</string>
+    <string name="color_picker_invalid">کد رنگ نامعتبر</string>
+    <string name="color_picker_current">فعلی: %s</string>
+
+    <string name="drawer_version_format">نسخه %1$s</string>
+    <string name="drawer_tagline">برنامه همراه برای Wear OS</string>
+    <string name="drawer_about_heading">درباره</string>
+    <string name="drawer_about_summary">Svartifoss به شما امکان می‌دهد موسیقی روی گوشی خود را از ساعت Wear OS خود کنترل کنید — با یک ریموت کاملاً قابل‌شخصی‌سازی متناسب با دستگاه شما.</string>
+    <string name="drawer_name_heading">نام</string>
+    <string name="drawer_name_meaning">Svartifoss در ایسلندی به معنای «آبشار سیاه» است — نام‌گذاری‌شده به افتخار آبشاری در پارک ملی واتنایوکول، جایی که ستون‌های بازالت تیره یک آبشار باریک را قاب می‌گیرند. مانند آب روی سنگ، موسیقی از میان برنامه جاری می‌شود.</string>
+    <string name="drawer_sync_heading">همگام‌سازی</string>
+    <string name="drawer_sync_summary">تنظیمات ساعت اینجا روی گوشی پیکربندی شده و به‌طور خودکار با ساعت جفت‌شده شما همگام می‌شود.</string>
+    <string name="drawer_support_heading">پشتیبانی</string>
+    <string name="drawer_support_summary">Svartifoss رایگان و متن‌باز است — اگر برایتان مفید بود، یک قهوه برایم بخرید :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">دانلود جلد</string>
+    <string name="album_art_saved">جلد در گالری ذخیره شد</string>
+    <string name="album_art_save_error">ذخیره جلد ناموفق بود</string>
+
+    <string name="action_play_liked_songs">پخش آهنگ‌های پسندیده‌شده (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">پخش آهنگ‌های پسندیده‌شده (Spotify)</string>
+    <string name="action_my_playlists">میان‌برهای پخش</string>
+    <string name="action_play_specific_playlist">باز کردن میان‌بر پخش</string>
+    <string name="action_choose_or_add_streaming_shortcut">انتخاب یا افزودن یک میان‌بر پخش</string>
+    <string name="action_show_streaming_library">نمایش همه میان‌برهای ذخیره‌شده</string>
+    <string name="playlist_shortcut_pick_title">انتخاب میان‌بر</string>
+    <string name="playlist_shortcut_pick_empty">هنوز هیچ میان‌بر پخشی ذخیره نشده — یکی در زیر اضافه کنید، سپس برای انتخاب آن روی آن ضربه بزنید</string>
+    <string name="playlist_shortcuts_empty">هنوز هیچ میان‌بر پخشی نیست — آن‌ها را در تنظیمات برنامه گوشی اضافه کنید</string>
+    <string name="setting_playlist_shortcuts">میان‌برهای پخش</string>
+    <string name="setting_playlist_shortcuts_description">پیوندهای اشتراک‌گذاری‌شده از ساعت را در YouTube Music، Spotify و سایر برنامه‌های پخش باز کنید</string>
+    <string name="setting_shortcut_artwork">دریافت جلد میان‌برها به‌صورت آنلاین</string>
+    <string name="setting_shortcut_artwork_description">یک بندانگشتی برای هر میان‌بر ذخیره‌شده از سرویس دانلود می‌کند که در فهرست گوشی، منوی ساعت و دکمه‌های تخصیص‌داده‌شده نمایش داده می‌شود. هر بندانگشتی یک بار دریافت می‌شود. این تنها دسترسی آنلاین به‌جز بررسی به‌روزرسانی است؛ فقط پیوند عمومی اشتراک‌گذاری ارسال می‌شود. به‌طور پیش‌فرض خاموش است.</string>
+    <string name="watch_streaming_shortcuts_empty">آهنگ‌ها، آلبوم‌ها یا لیست‌های پخش را برای اقدامات سریع و منوی ساعت اضافه کنید</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d میان‌بر ذخیره‌شده · در اقدامات سریع و منوی ساعت در دسترس است</item>
+        <item quantity="other">%1$d میان‌بر ذخیره‌شده · در اقدامات سریع و منوی ساعت در دسترس‌اند</item>
+    </plurals>
+    <string name="category_music_apps">برنامه‌ها و خدمات موسیقی</string>
+    <string name="setting_apps_integrations">خدمات موسیقی پشتیبانی‌شده</string>
+    <string name="setting_apps_integrations_description">پیوندها با YouTube Music، Spotify، Deezer، TIDAL، Apple Music، Amazon Music و SoundCloud کار می‌کنند. نیازی به دسترسی به حساب نیست.</string>
+    <string name="setting_apps_integrations_none">هیچ برنامه پشتیبانی‌شده‌ای شناسایی نشد. میان‌برها همچنان می‌توانند در مرورگر یا برنامه سازگار دیگری باز شوند.</string>
+    <string name="setting_apps_integrations_installed">%1$d از %2$d شناسایی شد: %3$s</string>
+    <string name="setting_streaming_open_mode">باز کردن پیوندهای پخش با</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>برنامه پخش شناسایی‌شده</item>
+        <item>پیش‌فرض اندروید</item>
+        <item>هر بار بپرس</item>
+    </string-array>
+    <string name="setting_notification_access">دسترسی اعلان رسانه</string>
+    <string name="setting_notification_access_enabled">مجاز · برای بررسی تنظیمات اندروید ضربه بزنید</string>
+    <string name="setting_notification_access_disabled">مجاز نیست · برای اقدامات رسانه اعلان‌ها و فیلترهای راه‌اندازی خودکار لازم است</string>
+    <string name="setting_notification_access_unavailable">تنظیمات دسترسی اعلان‌ها در این دستگاه در دسترس نیست</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d میان‌بر ذخیره‌شده · برای مدیریت یا درون‌ریزی پیوندها ضربه بزنید</item>
+        <item quantity="other">%1$d میان‌بر ذخیره‌شده · برای مدیریت یا درون‌ریزی پیوندها ضربه بزنید</item>
+    </plurals>
+    <string name="category_privacy">حریم خصوصی</string>
+    <string name="setting_crash_reporting">ارسال گزارش‌های خرابی</string>
+    <string name="setting_crash_reporting_description">برای کمک به رفع خرابی‌ها، اطلاعات تشخیصی Firebase Crashlytics را ارسال کن. به‌طور پیش‌فرض فعال است؛ هر زمان خواستید آن را خاموش کنید.</string>
+    <string name="setting_announcements">اعلان‌های اطلاعیه</string>
+    <string name="setting_announcements_description">اعلان‌های گاه‌به‌گاه از توسعه‌دهنده — انتشارات جدید، اطلاعیه‌های مهم. از طریق Firebase Cloud Messaging ارسال می‌شود؛ هیچ حساب یا فهرست کاربری در آن دخیل نیست. به‌طور پیش‌فرض فعال است؛ هر زمان خواستید آن را خاموش کنید.</string>
+    <string name="announcement_notification_channel">اطلاعیه‌ها</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">یک لیست پخش، آلبوم یا آهنگ را مستقیماً با Svartifoss به اشتراک بگذارید، یک پیوند کپی‌شده را جای‌گذاری کنید، یا یکی را به‌صورت دستی اضافه کنید. ساعت از گوشی می‌خواهد آن را باز کند؛ نیازی به ورود به سرویس نیست.</string>
+    <string name="back">بازگشت</string>
+    <string name="playlist_shortcuts_beta_badge">بتا</string>
+    <string name="playlist_shortcuts_intro_title">موسیقی شما، یک ضربه دورتر</string>
+    <string name="playlist_shortcuts_yours">میان‌برهای شما</string>
+    <string name="playlist_shortcuts_empty_hint">یک پیوند اشتراک‌گذاری‌شده آهنگ، آلبوم یا لیست پخش اضافه کنید تا روی ساعت شما در دسترس باشد.</string>
+    <string name="playlist_shortcuts_add">افزودن میان‌بر</string>
+    <string name="playlist_shortcuts_paste">جای‌گذاری پیوند</string>
+    <string name="playlist_shortcuts_reload_covers">بارگذاری مجدد جلدها</string>
+    <string name="playlist_shortcuts_reloading_covers">در حال بارگذاری مجدد جلدها…</string>
+    <string name="playlist_shortcuts_covers_reloaded">جلدها بارگذاری مجدد شدند</string>
+    <string name="playlist_shortcuts_edit">ویرایش میان‌بر</string>
+    <string name="playlist_shortcut_save">ذخیره میان‌بر</string>
+    <string name="playlist_shortcut_editor_hint">یک پیوند جای‌گذاری کنید. Svartifoss برنامه و نوع محتوای آن را به‌طور خودکار شناسایی می‌کند.</string>
+    <string name="playlist_shortcut_detection_waiting">در انتظار یک پیوند پخش</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify، YouTube Music، Apple Music، TIDAL، Deezer و موارد دیگر پشتیبانی می‌شوند.</string>
+    <string name="playlist_shortcut_detected_format">شناسایی شد: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">نام</string>
+    <string name="playlist_shortcut_link_hint">پیوند اشتراک‌گذاری یا URI برنامه</string>
+    <string name="playlist_shortcut_shuffle">پخش تصادفی (فقط YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">پیوند</string>
+    <string name="playlist_type_track">آهنگ</string>
+    <string name="playlist_type_playlist">لیست پخش</string>
+    <string name="playlist_type_album">آلبوم</string>
+    <string name="playlist_type_artist">خواننده</string>
+    <string name="playlist_type_show">برنامه</string>
+    <string name="playlist_type_episode">قسمت</string>
+    <string name="playlist_type_mix">میکس</string>
+    <string name="playlist_badge_shuffle">پخش تصادفی</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">هنوز هیچ میان‌بر پخشی اضافه نشده است</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d ذخیره شد</item>
+        <item quantity="other">%1$d ذخیره شد</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">میان‌برهای پخش مرتب‌شده. برای کشیدن لمس کنید و نگه دارید، از اقدامات دسترسی‌پذیری انتقال به بالا یا انتقال به پایین استفاده کنید، یا Ctrl+بالا/پایین را روی صفحه‌کلید فشار دهید.</string>
+    <string name="playlist_shortcut_more_options">گزینه‌های بیشتر برای %1$s</string>
+    <string name="playlist_shortcut_menu_edit">ویرایش</string>
+    <string name="playlist_shortcut_menu_open">اکنون باز کن</string>
+    <string name="playlist_shortcut_menu_copy">کپی پیوند</string>
+    <string name="playlist_shortcut_menu_duplicate">تکثیر</string>
+    <string name="playlist_shortcut_menu_share">اشتراک‌گذاری</string>
+    <string name="playlist_shortcut_menu_delete">حذف</string>
+    <string name="playlist_shortcut_open_failed">هیچ برنامه‌ای نمی‌تواند این پیوند را باز کند</string>
+    <string name="streaming_shortcut_choose_app">باز کردن پیوند پخش با</string>
+    <string name="playlist_shortcut_link_copied">پیوند کپی شد</string>
+    <string name="playlist_shortcut_import_invalid">متن به‌اشتراک‌گذاشته‌شده حاوی یک پیوند پخش معتبر نیست</string>
+    <string name="playlist_shortcut_clipboard_invalid">کلیپ‌بورد حاوی یک پیوند پخش معتبر نیست</string>
+    <string name="playlist_shortcut_name_required">یک نام میان‌بر وارد کنید</string>
+    <string name="playlist_shortcut_link_invalid">یک پیوند وب یا URI برنامه معتبر وارد کنید</string>
+    <string name="playlist_shortcut_service_invalid">یک پیوند معتبر جای‌گذاری کنید تا سرویس آن شناسایی شود</string>
+    <string name="playlist_shortcut_service_generic">پیوند سازگار · اندروید یک برنامه انتخاب خواهد کرد</string>
+    <string name="playlist_shortcut_service_installed">%1$s نصب شده · آماده باز شدن در برنامه خودش</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s نصب نشده · می‌توان از مرورگر یا برنامه سازگاری استفاده کرد</string>
+    <string name="playlist_shortcut_copy_name">کپی %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">کپی %1$s %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s ایجاد شد</string>
+    <string name="playlist_shortcut_share_title">اشتراک‌گذاری میان‌بر پخش</string>
+    <string name="playlist_shortcut_share_failed">هیچ برنامه‌ای برای اشتراک‌گذاری این میان‌بر در دسترس نیست</string>
+    <string name="playlist_shortcut_deleted">%1$s حذف شد</string>
+    <string name="playlist_shortcut_undo">لغو</string>
+
+    <string name="action_play_liked_songs_shuffled">پخش آهنگ‌های پسندیده‌شده، تصادفی (YT Music)</string>
+    <string name="action_search_history">تاریخچه جست‌وجو</string>
+    <string name="search_history_empty">هنوز هیچ جست‌وجوی اخیری وجود ندارد</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">به‌روزرسانی‌ها</string>
+    <string name="setting_update_check">اطلاع از نسخه‌های جدید</string>
+    <string name="setting_update_check_description">تقریباً یک بار در روز گیت‌هاب را برای انتشارات جدید بررسی می‌کند و اعلانی نشان می‌دهد</string>
+    <string name="setting_update_prereleases">شامل پیش‌انتشارها</string>
+    <string name="setting_update_prereleases_description">درباره نسخه‌های بتا نیز مطلع شوید</string>
+    <string name="setting_update_check_now">اکنون بررسی به‌روزرسانی‌ها</string>
+    <string name="setting_update_check_now_description">آخرین نسخه را نشان می‌دهد و به شما امکان می‌دهد ساعت را از طریق بلوتوث به‌روزرسانی کنید</string>
+    <string name="update_screen_title">به‌روزرسانی‌ها</string>
+    <string name="update_cover_content_description">Svartifoss، آبشاری که برنامه به نام آن نامیده شده است</string>
+    <string name="update_notification_channel">به‌روزرسانی‌های برنامه</string>
+    <string name="update_available_title">Svartifoss %1$s در دسترس است</string>
+    <string name="update_notification_text">برای به‌روزرسانی ضربه بزنید</string>
+    <string name="update_available_action">به‌روزرسانی در دسترس است</string>
+    <string name="update_installed_phone">گوشی: %1$s</string>
+    <string name="update_installed_versions">گوشی: %1$s · ساعت: %2$s</string>
+    <string name="update_watch_version_unknown">نامشخص</string>
+    <string name="update_checking">در حال بررسی به‌روزرسانی‌ها…</string>
+    <string name="update_check_failed">بررسی به‌روزرسانی‌ها ممکن نشد. اتصال خود را بررسی کنید و دوباره امتحان کنید.</string>
+    <string name="update_available_line">نسخه جدید: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(پیش‌انتشار)</string>
+    <string name="update_up_to_date">شما در جدیدترین نسخه هستید (%1$s)</string>
+    <string name="update_no_wear_asset">این انتشار هیچ فایل APK ساعتی برای ارسال ندارد.</string>
+    <string name="update_watch_hint">«به‌روزرسانی ساعت» برنامه جدید ساعت را دانلود کرده و از طریق بلوتوث ارسال می‌کند — شما نصب را روی خود ساعت تأیید می‌کنید، بدون نیاز به کابل یا Wear Installer.</string>
+    <string name="update_downloading">در حال دانلود… %1$d٪</string>
+    <string name="update_connecting_watch">در حال اتصال به ساعت…</string>
+    <string name="update_transferring">در حال ارسال به ساعت… %1$d٪</string>
+    <string name="update_confirm_on_watch">ارسال شد! اعلانی روی ساعت ظاهر شد — برای نصب، آن را آنجا ضربه بزنید.</string>
+    <string name="update_no_watch">هیچ ساعتی متصل نیست.</string>
+    <string name="update_push_failed">ارسال به‌روزرسانی به ساعت ناموفق بود. دوباره امتحان کنید.</string>
+    <string name="update_watch_button">به‌روزرسانی ساعت</string>
+    <string name="update_open_release_button">باز کردن صفحه انتشار</string>
+    <string name="update_watch_behind">ساعت شما هنوز روی %1$s است — به‌روزرسانی زیر را برایش ارسال کنید.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">برنامه‌های گوشی و ساعت را همگام نگه دارید</string>
+    <string name="update_state_checking">در حال بررسی به‌روزرسانی‌ها…</string>
+    <string name="update_state_current">شما به‌روز هستید</string>
+    <string name="update_state_current_sub">در حال اجرای آخرین انتشار، %1$s</string>
+    <string name="update_state_available">به‌روزرسانی در دسترس است</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">بررسی به‌روزرسانی‌ها ممکن نشد</string>
+    <string name="update_state_failed_sub">اتصال خود را بررسی کنید و دوباره امتحان کنید</string>
+    <string name="update_device_phone">گوشی</string>
+    <string name="update_device_watch">ساعت</string>
+    <string name="update_versions_header">نصب‌شده</string>
+    <string name="update_whats_new">تازه‌ها</string>
+    <string name="update_phone_button">به‌روزرسانی گوشی</string>
+    <string name="update_installing">در حال باز کردن نصب‌کننده…</string>
+    <string name="update_install_permission_needed">اجازه نصب برنامه‌ها از Svartifoss را بدهید، سپس دوباره روی به‌روزرسانی گوشی ضربه بزنید.</string>
+    <string name="update_phone_failed">دانلود به‌روزرسانی گوشی ناموفق بود. دوباره امتحان کنید.</string>
+</resources>

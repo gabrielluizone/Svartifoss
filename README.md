@@ -111,9 +111,12 @@ the fork.
 - All phone ⟷ watch communication happens over the local Wearable Data Layer
   connection — no account or app server is involved. The internet is touched
   only by the optional update check (a small anonymous request to the GitHub
-  API, off-switch in Settings) and by Firebase diagnostics that help
-  development. Crash reporting is enabled by default and can be disabled at
-  any time under Settings → Data & support → Privacy.
+  API, off-switch in Settings), by Firebase diagnostics that help development,
+  and by occasional developer announcement notifications sent via Firebase
+  Cloud Messaging (topic-based, no account or server of ours). Crash
+  reporting and announcement notifications are both enabled by default and
+  can each be disabled at any time under Settings → Data & support →
+  Privacy.
 - Works with any app that publishes a standard Android media session; extra
   features like like/shuffle/repeat and search rely on optional media-session
   extensions some apps expose (availability varies by app).

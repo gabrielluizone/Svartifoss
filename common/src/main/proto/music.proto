@@ -29,6 +29,10 @@ message MusicState {
   // Notification icons are rasterized on the phone because remote-app resource ids cannot be
   // resolved on the watch.
   repeated MediaAction mediaActions = 16;
+  // True when the source icon asset is the media notification's small icon - a monochrome
+  // template glyph the watch tints to match its artist line. False means the phone fell back to
+  // the app's full-colour launcher icon, which must be drawn untinted.
+  optional bool sourceIconTemplate = 17 [default = false];
 }
 
 message MediaAction {

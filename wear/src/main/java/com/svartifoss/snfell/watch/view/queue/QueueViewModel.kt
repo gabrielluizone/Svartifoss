@@ -98,7 +98,7 @@ class QueueViewModel @Inject constructor(
     private fun deriveAccent(bitmap: Bitmap) {
         viewModelScope.launch(Dispatchers.Default) {
             val palette = Palette.from(bitmap).generate()
-            val primary = listOfNotNull(
+            val preferredColors = listOfNotNull(
                     palette.vibrantSwatch,
                     palette.mutedSwatch,
                     palette.lightVibrantSwatch,
@@ -106,11 +106,14 @@ class QueueViewModel @Inject constructor(
                     palette.lightMutedSwatch,
                     palette.darkMutedSwatch,
                     palette.dominantSwatch
-            ).firstOrNull()?.rgb ?: DEFAULT_QUEUE_ACCENT
+            ).map { it.rgb }.distinct()
+            val primary = preferredColors.firstOrNull() ?: DEFAULT_QUEUE_ACCENT
             val rankedAlbumColors = palette.swatches
                     .sortedByDescending { it.population }
                     .map { it.rgb }
-            val companions = selectAlbumCompanionColors(primary, rankedAlbumColors)
+            // Named tonal swatches first, population-ranked raw swatches only as a fallback - see
+            // MainActivity.kt's palette extraction for why.
+            val companions = selectAlbumCompanionColors(primary, preferredColors + rankedAlbumColors)
             val secondary = companions.secondary ?: sameHueTone(primary, .42f)
             val tertiary = companions.tertiary ?: sameHueTone(primary, .68f)
             accentColor.postValue(primary)

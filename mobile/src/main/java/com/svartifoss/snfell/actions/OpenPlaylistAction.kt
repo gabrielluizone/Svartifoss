@@ -11,6 +11,10 @@ import com.google.android.gms.wearable.Asset
 import com.google.android.gms.wearable.PutDataRequest
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
+import androidx.preference.PreferenceManager
+import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.music.MusicService
@@ -34,6 +38,12 @@ class OpenPlaylistAction : SelectableAction {
             val playlist = service.currentMediaController?.queue?.take(20)
             val putDataRequest = PutDataRequest.create(CommPaths.DATA_CUSTOM_LIST)
 
+            // 96px suits the 30dp circular thumbnail every other queue style draws, but the Cover
+            // style stretches the same art across the whole pill, where it looked visibly soft.
+            // Sent larger only for that style so the other styles keep the smaller payload - a
+            // queue is up to 20 entries and each one crosses Bluetooth.
+            val thumbnailSize = if (coverQueueStyleActive()) 320 else 96
+
             val listId: String
             val protoList = if (playlist != null && playlist.isNotEmpty()) {
                 listId = CustomLists.PLAYLIST
@@ -44,7 +54,8 @@ class OpenPlaylistAction : SelectableAction {
                     val artwork = queueItem.description.iconBitmap
                             ?: loadLocalArtwork(queueItem.description.iconUri)
                     artwork?.let { bitmap ->
-                        val thumbnail = BitmapUtils.shrinkPreservingRatio(bitmap, 96, 96, true)
+                        val thumbnail = BitmapUtils.shrinkPreservingRatio(
+                                bitmap, thumbnailSize, thumbnailSize, true)
                         BitmapUtils.serialize(thumbnail)?.let { bytes ->
                             putDataRequest.putAsset(index.toString(), Asset.createFromBytes(bytes))
                         }
@@ -98,6 +109,17 @@ class OpenPlaylistAction : SelectableAction {
             putDataRequest.setUrgent()
 
             Wearable.getDataClient(service).putDataItem(putDataRequest).await()
+        }
+
+        /** Whether the watch's queue is set to the cover-filled pill style, which needs the
+         *  larger artwork. Read from the phone's own copy of the synced preference. */
+        private fun coverQueueStyleActive(): Boolean {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(service)
+            return FaceScopedPreferences.getString(
+                    prefs,
+                    MiscPreferences.WEAR_QUEUE_STYLE,
+                    ThemeAppearance.resolve(prefs)
+            ) in MiscPreferences.COVER_LIST_STYLES
         }
 
         /** Remote http(s) covers are intentionally skipped: opening the queue must never wait on

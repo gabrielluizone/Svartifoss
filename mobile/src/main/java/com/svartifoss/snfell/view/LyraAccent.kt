@@ -1,7 +1,10 @@
 package com.svartifoss.snfell.view
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.preference.PreferenceManager
@@ -35,6 +38,31 @@ object LyraAccent {
         }
 
         return ContextCompat.getColor(context, R.color.lyra_accent)
+    }
+
+    /**
+     * Tints an [EditText]'s selection UI - text-cursor, teardrop handles, selection highlight and
+     * the focused underline - to [color], defaulting to the current runtime accent.
+     *
+     * These all come from the theme's `colorControlActivated`, which is the static Lyra sage green
+     * resolved once at inflation and can never follow a runtime accent - so an EditText that
+     * MainActivity's own accent traversal doesn't reach (standalone dialog activities, the theme
+     * name box, etc.) keeps showing sage-green handles under any custom accent. Call this for those.
+     */
+    fun applyToEditText(editText: EditText, color: Int = resolve(editText.context)) {
+        editText.highlightColor = ColorUtils.setAlphaComponent(color, 0x55)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            editText.textCursorDrawable = editText.textCursorDrawable?.mutate()?.apply { setTint(color) }
+            editText.textSelectHandle?.mutate()?.apply { setTint(color) }
+                    ?.let { editText.setTextSelectHandle(it) }
+            editText.textSelectHandleLeft?.mutate()?.apply { setTint(color) }
+                    ?.let { editText.setTextSelectHandleLeft(it) }
+            editText.textSelectHandleRight?.mutate()?.apply { setTint(color) }
+                    ?.let { editText.setTextSelectHandleRight(it) }
+        }
+        editText.backgroundTintList = ColorStateList(
+                arrayOf(intArrayOf(android.R.attr.state_focused), intArrayOf()),
+                intArrayOf(color, ContextCompat.getColor(editText.context, R.color.lyra_divider)))
     }
 
     /** Keeps an album-derived accent legible as text/marks on the Lyra surface: if the raw accent

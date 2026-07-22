@@ -43,6 +43,11 @@ interface CommPaths {
         // path filter matches it even when the watch UI is not running.
         const val MESSAGE_OPEN_VOICE_SEARCH = "/IdleMessages/OpenVoiceSearch"
 
+        /** Immediate MessageClient delivery of a preference snapshot (see WatchPreferenceMessage),
+         *  complementing the durable /Settings DataItem. Own prefix so a dedicated manifest
+         *  listener wakes the watch for it without entangling the idle-message handler. */
+        const val MESSAGE_APPLY_PREFERENCES = "/PreferencesSync/Apply"
+
         const val CHANNEL_LOGS = "/Channel/Logs"
 
         // Phone -> watch: streams a newer wear APK for on-watch install (self-update without
@@ -50,6 +55,11 @@ interface CommPaths {
         const val CHANNEL_WEAR_APK = "/Channel/WearApk"
 
         const val ASSET_ALBUM_ART = "AlbumArt"
+
+        /** Icon of the app currently playing, rasterized on the phone and attached to the music
+         *  state so faces can show it next to the artist (the Data Layer dedupes it while the
+         *  source app is unchanged). */
+        const val ASSET_SOURCE_ICON = "SourceAppIcon"
 
         const val DATA_ACTION_CONFIG_PREFIX = "/Actions"
         const val DATA_LIST_ITEMS = "/ActionList"

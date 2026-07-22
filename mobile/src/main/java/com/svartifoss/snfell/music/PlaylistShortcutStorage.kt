@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
 import androidx.preference.PreferenceManager
+import com.google.android.gms.wearable.Asset
 import com.google.android.gms.wearable.PutDataRequest
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
@@ -164,6 +165,14 @@ object PlaylistShortcutStorage {
             shortcuts: List<PlaylistShortcut> = load(context)
     ): PutDataRequest = PutDataRequest.create(CommPaths.DATA_STREAMING_SHORTCUTS).apply {
         data = buildCustomList(context, shortcuts).toByteArray()
+        // Attach any cached online thumbnail as a per-index asset - the watch menu reads
+        // dataItem.assets[index] for the entry icon (same path as the queue's album art). The
+        // entry index in buildCustomList matches the shortcut index when the list is non-empty.
+        shortcuts.forEachIndexed { index, shortcut ->
+            ShortcutArtworkStore.get(context, shortcut.link)?.let { png ->
+                putAsset(index.toString(), Asset.createFromBytes(png))
+            }
+        }
         setUrgent()
     }
 

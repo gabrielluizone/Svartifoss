@@ -11,6 +11,13 @@
     <string name="tile_rewind_10">Rewind 10 seconds</string>
     <string name="tile_forward_10">Skip 10 seconds</string>
 
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Your streaming shortcuts, one tap away</string>
+    <string name="shortcuts_tile_title">Shortcuts</string>
+    <string name="shortcuts_tile_empty">No shortcuts yet</string>
+    <string name="shortcuts_tile_more">More in app</string>
+
     <!-- Idle (nothing-playing) state on the now-playing screen -->
     <string name="idle_nothing_playing">Nothing playing</string>
     <string name="idle_hint">Play something on your phone</string>

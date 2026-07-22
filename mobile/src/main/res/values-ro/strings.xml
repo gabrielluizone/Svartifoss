@@ -1,0 +1,1087 @@
+<resources>
+    <string name="setting_no_wearable_api_banner">Wear OS nu este acceptat pe acest dispozitiv</string>
+    <string name="setting_no_wearable_api_banner_description">Acest dispozitiv nu oferă componenta Wear OS din Google Play Services, de care Svartifoss are nevoie pentru a comunica cu un ceas. Împerecherea nu va ajuta — aplicația de pe telefon nu poate ajunge la un ceas aici. Tot ce urmează mai jos se salvează oricum și se va aplica dacă instalați Svartifoss pe un dispozitiv compatibil.</string>
+    <string name="setting_no_watch_banner">Niciun ceas conectat</string>
+    <string name="setting_no_watch_banner_description">Aceste setări se sincronizează cu ceasul dvs. Wear OS, deci nu se vor aplica vizibil până nu este împerecheat și conectat unul — dar puteți configura totul de mai jos chiar acum.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Aspect</string>
+    <string name="setting_theme">Temă</string>
+    <string name="theme_light">Alb pur</string>
+    <string name="theme_dark">Negru pur</string>
+    <string name="theme_system">Urmează sistemul</string>
+    <string name="setting_language">Limbă</string>
+    <string name="language_system">Urmează sistemul</string>
+    <string name="language_change_watch_notice">Ceasul va urma și el această limbă, odată ce se sincronizează.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Dezvoltator</string>
+    <string name="dev_mode_unlocked">Modul dezvoltator activat ✦</string>
+    <string name="dev_mode_clicks_remaining">Încă %1$d atingeri pentru a debloca modul dezvoltator</string>
+    <string name="dev_disable_mode">Dezactivează modul dezvoltator</string>
+    <string name="dev_disable_mode_description">Ascunde din nou această secțiune — atingeți de șapte ori „Versiune instalată” pentru a o aduce înapoi</string>
+    <string name="dev_mode_disabled">Modul dezvoltator dezactivat</string>
+    <string name="dev_build_info">Informații despre build</string>
+    <string name="dev_sync_watch">Forțează sincronizarea setărilor ceasului</string>
+    <string name="dev_sync_watch_description">Trimite imediat toate setările curente către ceasul împerecheat</string>
+    <string name="dev_sync_watch_done">Setări sincronizate cu ceasul</string>
+    <string name="dev_copy_debug_info">Copiază informațiile de depanare</string>
+    <string name="dev_copy_debug_info_description">Copiază detaliile build-ului și ale dispozitivului în clipboard</string>
+    <string name="dev_show_archived">Afișează opțiunile arhivate</string>
+    <string name="dev_show_archived_description">Dezvăluie aspectele și setările ceasului arhivate din cauza unor probleme cunoscute</string>
+    <string name="dev_copy_debug_info_done">Informațiile de depanare au fost copiate</string>
+    <string name="dev_open_update_screen">Deschide ecranul de actualizări</string>
+    <string name="dev_open_update_screen_description">Previzualizează ecranul Actualizări (banner de copertă, aspectul notelor de lansare) fără a aștepta o lansare reală</string>
+    <string name="dev_watch_layout_bounds">Afișează limitele aspectului ceasului</string>
+    <string name="dev_watch_layout_bounds_description">Conturează elementele vizibile ale playerului și zonele de atingere pe ceas. Doar suprapunere de diagnosticare.</string>
+    <string name="dev_watch_player_info">Afișează informațiile playerului ceasului</string>
+    <string name="dev_watch_player_info_description">Suprapune fața activă, starea redării, progresul și informațiile de randare pe ceas.</string>
+    <string name="pref_reset_default">Resetează la valorile implicite</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Ați găsit cascada ascunsă.\n\nSvartifoss — coloane de bazalt negru\nîncadrează o cascadă în Islanda,\nun memento că muzica curge\nca apa prin piatră.\n\n♪ Construit cu grijă. ♪</string>
+    <string name="easter_egg_ok">Închide</string>
+
+    <string name="nav_watch_face">Ceas</string>
+    <string name="watch_face_header">Aspect ceas</string>
+    <string name="nav_controls">Comenzi</string>
+    <string name="nav_actions">Acțiuni</string>
+    <string name="nav_settings">Setări</string>
+
+    <string name="controls_header">Comenzi</string>
+    <string name="controls_state_playing">Muzică în redare</string>
+    <string name="controls_state_stopped">Fără redare</string>
+    <string name="controls_playing_description">Alegeți ce face fiecare intrare în timp ce muzica este redată. Această configurare este independentă de starea fără redare.</string>
+    <string name="controls_stopped_description">Alegeți ce face fiecare intrare înainte de începerea redării sau după oprirea acesteia. Această configurare este independentă de starea de redare.</string>
+
+    <string name="watch_live_preview">Previzualizare live ceas</string>
+    <string name="watch_preview_description">Previzualizare live a suprafeței ceasului selectate. Modificările apar aici înainte de a le încerca pe ceas.</string>
+    <string name="watch_section_style">Player</string>
+    <string name="watch_section_style_description">Alegeți aspectul playerului și modul în care se comportă titlul, timpul și progresul.</string>
+    <string name="watch_section_background">Fundal</string>
+    <string name="watch_section_background_description">Controlați coperta albumului, neclaritatea, estomparea și lizibilitatea din spatele playerului.</string>
+    <string name="watch_section_colors">Culori</string>
+    <string name="watch_section_colors_description">Reglați culorile artistului, inelului de progres și accentului bazat pe album.</string>
+    <string name="watch_section_aod">Mereu activ</string>
+    <string name="watch_section_aod_description">Configurați ecranul cu consum redus și vedeți aspectul său ambiental în previzualizare.</string>
+    <string name="watch_section_panels">Panouri</string>
+    <string name="watch_section_panels_description">Stilizați volumul, căutarea, panoul rapid și coada; focalizarea unui rând deschide acea suprafață în previzualizare.</string>
+    <string name="watch_section_mini_buttons">Mini butoane</string>
+    <string name="watch_section_mini_buttons_description">Stilizați rândul opțional de scurtături. Atingeți „Mini butoane” mai jos pentru a le asigna acțiunile în Comenzi.</string>
+
+    <string name="settings_section_general">General</string>
+    <string name="settings_section_general_description">Tema aplicației, culoarea de accent și preferințele de actualizare.</string>
+    <string name="settings_section_watch">Comportament</string>
+    <string name="settings_section_watch_description">Coroană, atingere, vibrații și comportamentul meniului de acțiuni pe ceasul dvs.</string>
+    <string name="settings_section_automation">Automatizare</string>
+    <string name="settings_section_automation_description">Alegeți când Svartifoss se deschide și se închide automat.</string>
+    <string name="settings_section_apps">Aplicații</string>
+    <string name="settings_section_apps_description">Configurați serviciile de muzică și integrările specifice aplicațiilor într-un singur loc.</string>
+    <string name="settings_section_data">Date și asistență</string>
+    <string name="settings_section_data_description">Faceți backup configurației, verificați versiunea, diagnosticarea sau obțineți ajutor.</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Cum să folosiți Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss transformă ceasul dvs. într-o telecomandă pentru muzica redată pe telefon. Iată tot ce puteți face de la încheietură.</string>
+
+    <string name="tutorial_taps_title">Atingeți zonele ecranului</string>
+    <string name="tutorial_taps_desc">Ecranul ceasului este împărțit în patru zone — sus, jos, stânga și dreapta. Atingerea unei zone execută acțiunea pe care i-ați asignat-o. Implicit, zona din stânga redă sau pune pauză, cea din dreapta sare la piesa următoare, iar sus și jos modifică volumul.</string>
+
+    <string name="tutorial_gestures_title">Apăsare simplă, dublă și lungă</string>
+    <string name="tutorial_gestures_desc">Fiecare zonă conține trei acțiuni separate: una pentru o atingere simplă, una pentru o atingere dublă și una pentru o apăsare lungă. De exemplu, o atingere simplă în centru poate pune muzica pe pauză, în timp ce o atingere dublă deschide meniul de acțiuni — nu veți vedea acest lucru decât dacă îl configurați, așa că personalizați-l după gust.</string>
+
+    <string name="tutorial_buttons_title">Butoane fizice</string>
+    <string name="tutorial_buttons_desc">Dacă ceasul dvs. are butoane laterale, le puteți asigna și acestora acțiuni de apăsare simplă, dublă și lungă. Continuă să funcționeze chiar și cu ecranul stins.</string>
+
+    <string name="tutorial_rotary_title">Coroană rotativă</string>
+    <string name="tutorial_rotary_desc">Rotiți coroana sau lunetă pentru a schimba volumul. Preferați să derulați prin melodie? Activați „Căutare cu coroana rotativă” din Setări.</string>
+
+    <string name="tutorial_swipe_up_title">Glisați sus, jos, stânga și dreapta</string>
+    <string name="tutorial_swipe_up_desc">Glisarea în sus, în jos sau la stânga pe ecranul de redare poate fi configurată să deschidă orice — meniul de acțiuni, coada de redare, sărirea peste piese, listele dvs. de redare și multe altele. Configurați fiecare în Comenzi, alegând Muzică în redare sau Fără redare. Implicit, glisarea în sus deschide meniul de acțiuni, iar celelalte nu fac nimic până nu le asignați. Glisarea la dreapta este lăsată neatinsă — este gestul universal Wear OS pentru a ieși din aplicație.</string>
+    <string name="tutorial_yt_music_title">Scurtături YouTube Music</string>
+    <string name="tutorial_yt_music_desc">Asignați „Redă melodiile apreciate”, „Redă melodiile apreciate, aleatoriu” sau „Listele mele” oricărui buton, gest sau glisare pentru a sări direct la muzica dvs. fără a atinge telefonul. „Istoricul căutărilor” reține căutările recente pe ceas — apăsați și mențineți una pentru a o șterge.</string>
+
+    <string name="tutorial_exit_title">Glisați pentru a ieși</string>
+    <string name="tutorial_exit_desc">Glisați de la marginea stângă pentru a părăsi playerul. Poate pune automat redarea pe pauză când ieșiți — activați acest lucru din Setări.</string>
+
+    <string name="tutorial_tile_title">Tile de control rapid</string>
+    <string name="tutorial_tile_desc">Glisați cadranul ceasului lateral până la tile-ul Svartifoss pentru redare, pauză și săritură instantanee fără a deschide aplicația.</string>
+
+    <string name="tutorial_complication_title">Complicație pe cadranul ceasului</string>
+    <string name="tutorial_complication_desc">Adăugați complicația cu coperta albumului Svartifoss pe cadranul ceasului pentru a vedea coperta curentă dintr-o privire. Atingeți-o pentru a deschide playerul.</string>
+
+    <string name="tutorial_system_title">Comenzi media de sistem</string>
+    <string name="tutorial_system_desc">Piesa curentă apare și în comenzile media proprii ale ceasului și în aplicațiile recente, astfel încât puteți controla redarea și de acolo.</string>
+
+    <string name="tutorial_tip">Sfat: configurați ambele stări în Comenzi, apoi organizați meniul în Acțiuni.</string>
+
+    <string name="navigation_drawer_open">Deschide sertarul de navigare</string>
+    <string name="navigation_drawer_close">Închide sertarul de navigare</string>
+
+    <string name="action_settings">Setări</string>
+    <string name="action_pause">Pauză</string>
+    <string name="action_play">Redă</string>
+    <string name="action_skip_prev">Anterior</string>
+    <string name="action_skip_next">Următor</string>
+    <string name="action_play_pause">Redare / Pauză</string>
+    <string name="action_stop">Oprește</string>
+    <string name="action_restart">Repornește piesa</string>
+    <string name="action_mute">Fără sunet / Cu sunet</string>
+    <string name="action_skip_seconds">Înainte %1$d secunde</string>
+    <string name="action_reverse_seconds">Înapoi %1$d secunde</string>
+    <string name="action_like">Îmi place</string>
+    <string name="action_shuffle">Redare aleatorie</string>
+    <string name="action_repeat">Repetă</string>
+    <string name="action_repeat_one">Repetă una</string>
+    <string name="action_search">Caută muzică</string>
+    <string name="group_playback_controls">Comenzi de redare</string>
+    <string name="group_streaming_shortcuts">Piese, albume și liste de redare</string>
+    <string name="pick_action">Alege acțiunea</string>
+    <string name="action_opens_more">Mai multe opțiuni</string>
+    <string name="action_volume_up">Mărește volumul</string>
+    <string name="volume_down">Micșorează volumul</string>
+    <string name="group_volume_controls">Comenzi de volum</string>
+    <string name="no_watch_detected">Niciun ceas detectat</string>
+    <string name="connection_instructions">Deschideți Svartifoss pe ceas pentru a iniția conectarea</string>
+    <string name="playing_controls">Comenzi în timpul redării</string>
+    <string name="stopped_controls">Comenzi fără redare</string>
+    <string name="actions_menu">Meniu de acțiuni</string>
+    <string name="actions_intro">Configurați ambele suprafețe de acțiuni ale ceasului dvs. cu comenzi de redare, aplicații sau piese, albume și liste de redare salvate. Panoul rapid rămâne compact; meniul de mai jos poate conține o listă ordonată mai lungă.</string>
+    <string name="actions_quick_panel_section">Panou rapid</string>
+    <string name="actions_watch_menu_section">Meniu pe ceas</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d acțiune · Atingeți pentru a edita · Țineți apăsat și trageți pentru a reordona</item>
+        <item quantity="few">%1$d acțiuni · Atingeți pentru a edita · Țineți apăsat și trageți pentru a reordona</item>
+        <item quantity="other">%1$d de acțiuni · Atingeți pentru a edita · Țineți apăsat și trageți pentru a reordona</item>
+    </plurals>
+    <string name="actions_reorder_description">Meniu de acțiuni ordonat. Atingeți și țineți apăsat pentru a trage, folosiți acțiunile de accesibilitate Mutare sus sau Mutare jos, sau apăsați Ctrl+Sus/Jos pe tastatură.</string>
+    <string name="actions_move_up">Mutare sus</string>
+    <string name="actions_move_down">Mutare jos</string>
+    <string name="actions_moved_to_position">%1$s a fost mutat pe poziția %2$d din %3$d.</string>
+    <string name="actions_empty">Nicio acțiune încă. Folosiți butonul de adăugare pentru a crea prima.</string>
+    <string name="actions_add">Adaugă acțiune</string>
+    <string name="on_screen_buttons">ZONE TACTILE</string>
+    <string name="physical_buttons">BUTOANE FIZICE</string>
+    <string name="physical_buttons_disconnected">Conectați-vă și deschideți Svartifoss pe ceas pentru a configura butoanele sale fizice. Zonele tactile, glisările și mini butoanele sunt deja disponibile.</string>
+    <string name="physical_buttons_unavailable">Acest ceas nu a raportat butoane fizice configurabile.</string>
+    <string name="tap_a_zone_to_configure">Atingeți o zonă pe ceas pentru a asigna o acțiune</string>
+    <string name="touch_zone_top">Zona superioară</string>
+    <string name="touch_zone_bottom">Zona inferioară</string>
+    <string name="touch_zone_left">Zona din stânga</string>
+    <string name="touch_zone_right">Zona din dreapta</string>
+    <string name="touch_zone_center">Atingere centrală</string>
+    <string name="touch_zone_action">%1$s: %2$s. Atingeți pentru a configura.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">GESTURI DE GLISARE</string>
+    <string name="tap_a_swipe_to_configure">Atingeți o direcție pentru a alege ce deschide</string>
+    <string name="swipe_gesture_up">Glisați sus</string>
+    <string name="swipe_gesture_down">Glisați jos</string>
+    <string name="swipe_gesture_left">Glisați stânga</string>
+    <!-- Short captions shown under each tile's icon -->
+    <string name="swipe_gesture_label_up">Sus</string>
+    <string name="swipe_gesture_label_down">Jos</string>
+    <string name="swipe_gesture_label_left">Stânga</string>
+
+    <string name="screen_buttons">MINI BUTOANE</string>
+    <string name="tap_a_screen_button_to_configure">Până la trei butoane vizibile aproape de partea de jos a ecranului ceasului — atingeți un slot pentru a asigna o acțiune</string>
+    <string name="screen_button_1">Mini buton 1 (stânga)</string>
+    <string name="screen_button_2">Mini buton 2 (mijloc)</string>
+    <string name="screen_button_3">Mini buton 3 (dreapta)</string>
+    <string name="screen_button_label_1">Buton 1</string>
+    <string name="screen_button_label_2">Buton 2</string>
+    <string name="screen_button_label_3">Buton 3</string>
+    <string name="no_action">Nicio acțiune</string>
+    <string name="gesture_single_press">Apăsare simplă</string>
+    <string name="gesture_double_press">Apăsare dublă</string>
+    <string name="gesture_long_press">Apăsare lungă</string>
+    <string name="gesture_swipe_action">Acțiune</string>
+    <string name="center_button_quick_panel_note">Atingerea dublă a centrului ecranului de redare deschide întotdeauna panoul de acțiuni rapide, indiferent de ce asignați aici.</string>
+    <string name="start_playback">Începe redarea</string>
+    <string name="uninstalled_app">Aplicație dezinstalată</string>
+
+    <string name="play_app">Redă %1$s</string>
+    <string name="tasker_task">Sarcină Tasker</string>
+    <string name="icon_selection_title">Selectare pictogramă</string>
+    <string name="icon_selection_gallery">Din galerie</string>
+    <string name="icon_selection_no_icon_pack">Această funcție vă permite să alegeți o pictogramă personalizată pentru acțiunea dvs. dintr-un
+        pachet de pictograme instalat.\n\nDin păcate, se pare că nu aveți niciun pachet de pictograme instalat.</string>
+    <string name="icon_selection_no_storage_permission">Această funcție vă permite să alegeți o pictogramă personalizată pentru acțiunea dvs. dintr-un
+        pachet de pictograme instalat.\n\nUnele pachete de pictograme necesită ca aplicațiile să aibă permisiune de stocare. Va trebui să o permiteți pentru a folosi această funcție.</string>
+    <string name="delete">Șterge</string>
+    <string name="action_text">Text acțiune</string>
+    <string name="swap_action">Schimbă acțiunea</string>
+    <string name="open_actions_menu">Deschide meniul de acțiuni</string>
+    <string name="open_playlist_menu">Afișează lista curentă de redare</string>
+    <string name="misc_settings">Setări diverse</string>
+
+    <string name="category_backup">Backup</string>
+    <string name="export_config">Exportă configurația</string>
+    <string name="export_config_description">Salvați asignările butoanelor, lista de acțiuni și setările ceasului într-un fișier</string>
+    <string name="import_config">Importă configurația</string>
+    <string name="import_config_description">Restaurați asignările butoanelor, lista de acțiuni și setările ceasului dintr-un fișier</string>
+    <string name="export_config_done">Configurația a fost exportată</string>
+    <string name="export_config_failed">Nu s-a putut exporta configurația</string>
+    <string name="import_config_done_title">Import reușit</string>
+    <string name="import_config_done_message">Svartifoss trebuie să repornească pentru a aplica configurația importată.</string>
+    <string name="import_config_failed">Nu s-a putut importa configurația — fișierul poate fi nevalid sau dintr-o versiune incompatibilă</string>
+    <string name="action_restart_now">Repornește acum</string>
+
+    <string name="category_about">Despre</string>
+    <string name="category_music_screen">Ecran muzică</string>
+    <string name="category_watch_screen">Ecran ceas</string>
+    <string name="category_mini_buttons">Mini butoane</string>
+    <string name="category_screen_face">Aspect player</string>
+    <string name="category_album_background">Fundal album</string>
+    <string name="category_music_colors">Culori din muzică</string>
+    <string name="preview_sample_title">Titlul piesei</string>
+    <string name="preview_sample_artist">Numele artistului</string>
+    <string name="preview_sample_next_title">Piesa următoare</string>
+    <string name="preview_playback_stopped">Redare oprită</string>
+    <string name="category_gestures">Gesturi și intrare</string>
+    <string name="setting_overlay_blur_radius">Neclaritate suprapunere</string>
+    <string name="setting_overlay_blur_radius_description">Intensitatea neclarității (px) a fundalului mat din spatele inelelor de volum/căutare și al panoului de acțiuni rapide — independentă de neclaritatea fundalului cu coperta albumului</string>
+    <string name="category_action_list">Listă de acțiuni</string>
+    <string name="category_automation">Automatizare</string>
+    <string name="installed_version">Versiune instalată</string>
+    <string name="get_support">Obține asistență</string>
+    <string name="get_support_description">Trimite jurnalele aplicației către dezvoltator pentru asistență</string>
+    <string name="contact_developer">Contactează dezvoltatorul</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — contact</string>
+    <string name="contact_developer_chooser">Trimite email</string>
+    <string name="contact_developer_no_client">Nicio aplicație de email instalată. Adresa a fost copiată în clipboard.</string>
+    <string name="about_developer_title">Despre dezvoltator</string>
+    <string name="about_developer_dialog_message">Svartifoss a început ca un proiect personal — am vrut să aduc Music Center for Wear la nivelul posibilităților de astăzi, doar pentru a-l putea folosi eu însumi zilnic. A ieșit suficient de bine încât am decis să-l împărtășesc cu toată lumea. Aceasta este prima mea aplicație, și nu există nimic asemănător cu a vedea ceva ce ai construit dovedindu-se util și pentru alți oameni.</string>
+    <string name="licenses">Licențe open source</string>
+    <string name="setting_always_show_time">Afișează întotdeauna ora</string>
+    <string name="setting_always_show_time_off_description">Ora curentă va fi afișată doar în modul ambiental</string>
+    <string name="setting_always_show_time_on_description">Ora curentă va fi afișată întotdeauna. Pictograma de acțiune de sus nu va fi vizibilă (va fi înlocuită de ceas), dar acțiunea va continua să funcționeze normal.</string>
+    <string name="tap_to_force_stop">Atingeți pentru a opri comenzile</string>
+    <string name="notification_action_stop">Oprește</string>
+    <string name="notification_action_force_stop">Oprire forțată</string>
+    <string name="error_notification_access">Fără acces la notificări. Verificați telefonul.</string>
+    <string name="error_notifications">Notificări de eroare</string>
+    <string name="notification_access_notification_title">Svartifoss are nevoie de acces la notificări</string>
+    <string name="notification_access_notification_title_description">Atingeți această notificare și verificați Svartifoss pentru a rezolva problema</string>
+    <string name="error_service_not_enabled">Este necesar acces la notificări</string>
+    <string name="error_service_not_enabled_description">Pentru a controla muzica de pe ceas, Svartifoss are nevoie de acces la notificări — așa îi permite Android să vadă ce aplicație redă și să-i trimită comenzi de redare, pauză și săritură.\n\nSvartifoss nu citește niciodată conținutul notificărilor dvs. Folosește această permisiune doar pentru a găsi sesiunea media activă.\n\nAtingeți „Deschide Setările”, apoi activați Svartifoss la accesul la notificări.</string>
+    <string name="action_open_settings">Deschide Setările</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog -->
+    <string name="no_watch_app_title">Instalați Svartifoss pe ceas</string>
+    <string name="no_watch_app_description">Svartifoss nu a putut găsi aplicația sa pentru ceas pe ceasul Wear OS împerecheat. Aplicațiile pentru telefon și ceas lucrează împreună — fără aplicația pentru ceas, controlul redării de la încheietură nu va funcționa.\n\nSvartifoss nu se află în Play Store — aplicația pentru ceas este instalată separat prin sideload (de exemplu cu Wear Installer). Atingeți „Vezi versiunile” pentru a deschide pagina de versiuni GitHub și a obține APK-ul pentru ceas. Dacă tocmai l-ați instalat, oferiți-i un minut pentru a termina sincronizarea.</string>
+    <string name="no_watch_app_button">Vezi versiunile</string>
+    <string name="required_permission">Permisiune necesară</string>
+    <string name="setting_pause_on_swipe_exit">Pune redarea pe pauză la ieșirea prin glisare</string>
+    <string name="setting_pause_on_swipe_exit_description">Pune automat pauză oricărei redări la ieșirea din Svartifoss pe ceas prin gestul de glisare la stânga.\n\nIeșirea prin butonul de pornire nu este afectată și nu va pune niciodată pauză automat.</string>
+    <string name="setting_rotating_crown_off_period">Întârziere intrare rotativă după pornirea ecranului</string>
+    <string name="setting_rotating_crown_off_period_description">Intrările rotative (de exemplu, coroanele rotative) pot fi prea sensibile pe unele dispozitive. Pentru a preveni schimbări accidentale de volum, intrarea rotativă va fi dezactivată timp de <![CDATA[<b>%1$s milisecunde</b>]]> după ce porniți ecranul.</string>
+    <string name="setting_rotary_seek">Căutare cu coroana rotativă</string>
+    <string name="setting_rotary_seek_description">Când este activat, rotirea coroanei derulează prin piesa curentă în loc să schimbe volumul. Volumul poate fi în continuare modificat cu butoanele de pe ecran sau fizice.</string>
+    <string name="setting_rotating_sensitivity">Sensibilitatea intrării rotative</string>
+    <string name="setting_rotating_sensitivity_description">Sensibilitatea intrării rotative. Un număr mai mare înseamnă că mișcarea coroanei rotative în același mod va crește volumul mai mult. Setat momentan la <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Dezactivează dublul clic al butonului fizic în modul ambiental</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Unele ceasuri au butoane defecte în care un singur clic pe butonul fizic în modul ambiental este uneori înregistrat ca dublu clic.\n\nDacă întâmpinați acest lucru, puteți activa această opțiune pentru a dezactiva complet dublurile clicuri în modul ambiental (de exemplu, apăsarea de două ori va activa doar acțiunea de clic simplu). Apăsarea de două ori atunci când ceasul este activ nu este afectată.</string>
+    <string name="setting_haptic_feedback">Feedback haptic</string>
+    <string name="setting_haptic_feedback_description">Vibrează ceasul la apăsarea butoanelor.</string>
+    <string name="setting_auto_start">Deschide Svartifoss automat</string>
+    <string name="setting_auto_start_description">Deschide automat Svartifoss pe ceas când începe redarea muzicii pe telefon.</string>
+    <string name="setting_auto_start_apps_blacklist">Aplicații de pornire automată</string>
+    <string name="setting_auto_start_apps_blacklist_description">Lista aplicațiilor media care pot porni automat Svartifoss</string>
+    <string name="setting_dim_album_art">Umbrire player</string>
+    <string name="setting_dim_album_art_description">Adăugați un tratament de umbră ales de dvs. între coperta și comenzile playerului.</string>
+    <string name="setting_album_art_style">Stil copertă album</string>
+    <string name="setting_album_art_style_description">Alegeți cum arată fundalul de redare pe ceas.</string>
+    <string name="setting_album_art_blur_radius">Intensitatea neclarității</string>
+    <string name="setting_album_art_blur_radius_description">Intensitatea neclarității pe tot ecranul oricând fundalul selectat folosește neclaritate. Setat momentan la <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Intensitatea întunecării</string>
+    <string name="setting_album_art_dim_strength_description">Cât de puternic este întunecată coperta albumului pentru lizibilitatea textului. Setat momentan la <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Stil de umbrire</string>
+    <string name="setting_player_shading_intensity">Intensitate umbrire</string>
+    <string name="setting_player_shading_intensity_description">Cât de puternic întunecă umbrirea fundalul. 100%% este intensitatea maximă; creșteți pentru contrast suplimentar (până la 150%%). Setat momentan la <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Aplică acest aspect tuturor fețelor</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Copiază setările de aspect ale acestei fețe pe fiecare altă față</string>
+    <string name="apply_appearance_confirm_title">Aplicați la toate fețele?</string>
+    <string name="apply_appearance_confirm_message">Aceasta suprascrie setările de aspect ale fiecărei alte fețe cu cea curentă. Nu vă va schimba setările de comportament.</string>
+    <string name="apply_appearance_confirm_button">Aplică</string>
+    <string name="apply_appearance_done">Aplicat la toate fețele</string>
+    <string name="category_wf_layout_actions">Aspect</string>
+    <string name="setting_reset_appearance">Resetează acest aspect</string>
+    <string name="setting_reset_appearance_description">Restaurează aspectul acestei fețe la valorile implicite originale</string>
+    <string name="reset_appearance_confirm_title">Resetați acest aspect?</string>
+    <string name="reset_appearance_confirm_message">Setările de aspect ale acestei fețe revin la valorile implicite. Setările dvs. de comportament și alte fețe nu sunt afectate.</string>
+    <string name="reset_appearance_confirm_button">Resetează</string>
+    <string name="reset_appearance_done">Aspect resetat la valorile implicite</string>
+    <string name="setting_reset_all_faces">Resetează toate fețele la valorile implicite</string>
+    <string name="setting_reset_all_faces_description">Restaurează aspectul fiecărei fețe integrate la valorile implicite originale</string>
+    <string name="reset_all_faces_confirm_title">Resetați toate fețele?</string>
+    <string name="reset_all_faces_confirm_message">Aspectul fiecărei fețe integrate revine la valorile implicite originale, iar orice temă personalizată activă este dezactivată. Temele personalizate salvate, setările de comportament și fața aleasă sunt păstrate.</string>
+    <string name="reset_all_faces_confirm_button">Resetează tot</string>
+    <string name="reset_all_faces_done">Toate fețele resetate la valorile implicite</string>
+    <string name="setting_player_shading_color">Culoare umbrire</string>
+    <string name="setting_wear_shading_custom_color">Culoare de umbrire personalizată</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Negru</item>
+        <item>Accent album</item>
+        <item>Album desaturat</item>
+        <item>Culoare personalizată</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Urmează tema playerului</item>
+        <item>Vinietă la margine</item>
+        <item>Vinietă la margine (Puternică)</item>
+        <item>Vinietă la margine (Grea)</item>
+        <item>Colț inferior</item>
+        <item>Estompare inferioară</item>
+        <item>Podea și tavan</item>
+        <item>Filtru pe tot ecranul</item>
+        <item>Spălare de culoare album</item>
+        <item>Gradient bicolor album</item>
+        <item>Perdele laterale</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Opacitatea copertei în modul ambiental</string>
+    <string name="setting_ambient_album_art_opacity_description">Cât de vizibilă rămâne coperta albumului în modul ambiental. Setat momentan la <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Timp de expirare suprapunere volum/căutare</string>
+    <string name="setting_volume_overlay_timeout_description">Cât timp rămân pe ecran suprapunerile de volum și căutare după ajustare. Setat momentan la <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Zonă moartă rotativă</string>
+    <string name="setting_rotary_deadzone_description">Mișcarea minimă a coroanei înainte ca schimbările de volum sau căutare să se aplice. Ajută la prevenirea ajustărilor accidentale. Setat momentan la <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Experiență Wear</string>
+    <string name="setting_swipe_gestures_hint">Gesturi de glisare</string>
+    <string name="setting_swipe_gestures_hint_description">Glisarea sus/jos/stânga poate deschide fiecare orice acțiune. Atingeți aici pentru a le configura pentru Muzică în redare sau Fără redare. Glisarea la dreapta rămâne rezervată pentru ieșirea din aplicație.</string>
+    <string name="setting_screen_buttons_hint">Mini butoane</string>
+    <string name="setting_screen_buttons_hint_description">Până la trei butoane vizibile, fiecare cu acțiuni de atingere și apăsare lungă. Atingeți aici pentru a le configura pentru Muzică în redare sau Fără redare.</string>
+    <string name="dev_screen_buttons_offset">Poziția mini butoanelor</string>
+    <string name="dev_screen_buttons_offset_description">Distanța preferată în dp între partea de jos a ecranului ceasului și mini butoane (implicit 42). Rândul continuă să se ajusteze automat pentru a se îndepărta de titlurile lungi.</string>
+    <string name="setting_screen_buttons_tilt">Înclinarea butoanelor</string>
+    <string name="setting_screen_buttons_tilt_description">Cât urmăresc butoanele laterale curbura ecranului. 0 = rând drept; 100 = arc complet cu pictograme înclinate.</string>
+    <string name="setting_screen_buttons_bg">Fundal mini butoane</string>
+    <string name="setting_screen_buttons_opacity">Opacitate mini butoane</string>
+    <string name="setting_screen_buttons_opacity_description">Opacitatea întregului grup de mini butoane (0–100%%). Setat momentan la <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Panou de acțiuni rapide</string>
+    <string name="quick_panel_config_hint">Acestea sunt butoanele panoului deschis prin atingerea dublă a centrului ecranului ceasului. Atingeți un rând pentru a alege acțiunea sa („Niciuna” îl ascunde); țineți apăsat pentru a restaura valoarea implicită.</string>
+    <string name="quick_panel_slot_1">Buton 1</string>
+    <string name="quick_panel_slot_2">Buton 2</string>
+    <string name="quick_panel_slot_3">Buton 3</string>
+    <string name="quick_panel_slot_long">Buton lung</string>
+    <string name="quick_panel_slot_default">%1$s (implicit)</string>
+    <string name="quick_panel_slot_hidden">Ascuns</string>
+    <string name="quick_panel_default_like">Îmi place</string>
+    <string name="quick_panel_default_shuffle">Redare aleatorie</string>
+    <string name="quick_panel_default_repeat">Repetă</string>
+    <string name="quick_panel_default_up_next">Urmează</string>
+    <string name="setting_wear_center_long_press_queue">Apăsare lungă în centru pentru coadă</string>
+    <string name="setting_wear_center_long_press_queue_description">Țineți apăsat centrul ecranului de redare pentru a deschide coada de redare.</string>
+    <string name="setting_wear_screen_face">Aspect de bază</string>
+    <string name="setting_wear_screen_face_description">Alegeți structura folosită de această temă. Temele salvate pot combina acest aspect cu propriul font, culori, neclaritate, umbrire, AOD și panouri.</string>
+    <string name="setting_wear_show_track_title">Afișează titlul piesei</string>
+    <string name="setting_wear_show_track_title_description">Afișează numele piesei curente pe player</string>
+    <string name="setting_wear_show_track_artist">Afișează numele artistului</string>
+    <string name="setting_wear_show_track_artist_description">Afișează artistul curent pe player</string>
+    <string name="setting_wear_show_source_icon">Afișează pictograma aplicației în redare</string>
+    <string name="setting_wear_show_source_icon_description">Afișează pictograma aplicației care redă în prezent lângă artist. Folosește pictograma din notificarea media a acesteia. Când este dezactivată, pictograma nu este niciodată trimisă către ceas.</string>
+    <string name="setting_wear_player_controls_visible">Afișează comenzile playerului</string>
+    <string name="setting_wear_player_controls_visible_description">Afișează sau ascunde butoanele integrate în aspectele Classic, Poster, Studio și alte aspecte configurabile fără a dezactiva zonele lor de atingere</string>
+    <string name="setting_wear_quadrant_tap_flash">Sclipire pictogramă la atingere</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Când se declanșează acțiunea unei zone de colț, sclipiți scurt pictograma sa la luminozitate maximă — deosebit de util în stilul de ecran Ascuns, unde pictograma este altfel invizibilă și nu oferă nicio confirmare a ce acțiune tocmai a rulat.</string>
+    <string name="setting_wear_internal_progress_visible">Indicator de progres al aspectului</string>
+    <string name="setting_wear_internal_progress_visible_description">Afișează indicatorul de progres suplimentar proiectat în acest aspect. Inelele butonului de redare Expressive și Material fac parte din comenzile lor și rămân disponibile.</string>
+    <string name="setting_wear_edge_progress_visible">Afișează arcul de progres la margine</string>
+    <string name="setting_wear_edge_progress_visible_description">Ascunde doar arcul vizual din jurul ecranului. Căutarea la margine rămâne o opțiune independentă.</string>
+    <string name="setting_wear_edge_seek_enabled">Căutare de la marginea ecranului</string>
+    <string name="setting_wear_edge_seek_enabled_description">Atingeți sau glisați de-a lungul marginii ecranului pentru a sări la un punct exact, chiar și atunci când arcul său este ascuns</string>
+    <string name="setting_wear_screen_theme">Stil de control</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Echilibrat</string>
+    <string name="wear_screen_theme_default_description">Ierarhie și dimensiuni de control standard.</string>
+    <string name="wear_screen_theme_minimal">Minimal</string>
+    <string name="wear_screen_theme_minimal_description">Folosește comenzi mai mici, mai discrete, păstrând fiecare acțiune vizibilă și utilizabilă.</string>
+    <string name="wear_screen_theme_compact">Compact</string>
+    <string name="wear_screen_theme_compact_description">Folosește un tratament de control mai strâns fără a vă schimba acțiunile.</string>
+    <string name="wear_screen_theme_cinema">Cinema</string>
+    <string name="wear_screen_theme_cinema_description">Înmoaie comenzile fără a schimba coperta.</string>
+    <string name="wear_screen_theme_vivid">Vivid</string>
+    <string name="wear_screen_theme_vivid_description">Folosește comenzi mai mari, mai proeminente.</string>
+    <string name="wear_screen_theme_contrast">Contrast ridicat</string>
+    <string name="wear_screen_theme_contrast_description">Folosește comenzi mai mari pentru o citire mai ușoară.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Folosește comenzi compacte, ușor estompate. Nu întunecă fundalul în sine — folosiți setările de fundal pentru asta.</string>
+    <string name="wear_screen_theme_hidden">Ascuns</string>
+    <string name="wear_screen_theme_hidden_description">Ascunde complet toate pictogramele de control. Zonele de atingere rămân active și complet funcționale.</string>
+    <string name="setting_wear_font">Font</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Fontul implicit al aplicației.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Fontul clasic de sistem al Android.</string>
+    <string name="wear_font_rounded">Rotunjit</string>
+    <string name="wear_font_rounded_description">Forme de litere prietenoase și moderne cu terminații ușor rotunjite.</string>
+    <string name="wear_font_sans_light">Modern Ușor</string>
+    <string name="wear_font_sans_light_description">Un sans-serif curat, aerisit, cu o greutate vizuală mai ușoară.</string>
+    <string name="wear_font_sans_thin">Ultra Subțire</string>
+    <string name="wear_font_sans_thin_description">Un stil de afișare extra-ușor pentru un player minimalist.</string>
+    <string name="wear_font_sans_medium">Modern Mediu</string>
+    <string name="wear_font_sans_medium_description">Un sans-serif clar, cu trăsături mai puternice, compacte.</string>
+    <string name="wear_font_sans_black">Îngroșat</string>
+    <string name="wear_font_sans_black_description">O familie de afișare îndrăzneață, cu impact vizual maxim.</string>
+    <string name="wear_font_small_caps">Capitale mici</string>
+    <string name="wear_font_small_caps_description">Forme compacte în formă de majusculă, cu un aer editorial.</string>
+    <string name="wear_font_casual">Casual</string>
+    <string name="wear_font_casual_description">O familie de sistem manuscrisă și jucăușă.</string>
+    <string name="wear_font_typewriter">Mașină de scris (Arhivat)</string>
+    <string name="wear_font_typewriter_description">Un aspect retro de mașină de scris (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Un sans geometric rotunjit, o alternativă gratuită (OFL) în spiritul Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Un sans geometric curat, o alternativă gratuită (OFL) în spiritul Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">O romană umanistă elegantă, o alternativă gratuită (OFL) în spiritul Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Un stil de mașină de scris mai blând (Love Letter Typewriter) — rezervat de obicei pieselor cu tematică „Lain”.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Un font serif clasic.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">Litere serif cu lățime fixă, cu un aspect editorial/terminal distinctiv.</string>
+    <string name="wear_font_monospace">Monospațiat</string>
+    <string name="wear_font_monospace_description">Lățime fixă, aspect tehnic.</string>
+    <string name="wear_font_condensed">Condensat</string>
+    <string name="wear_font_condensed_description">Forme de litere mai înguste care încap mai mult text.</string>
+    <string name="wear_font_condensed_light">Condensat Ușor</string>
+    <string name="wear_font_condensed_light_description">O familie îngustă, mai ușoară pentru titluri lungi.</string>
+    <string name="wear_font_condensed_medium">Condensat Mediu</string>
+    <string name="wear_font_condensed_medium_description">O familie îngustă cu trăsături mai puternice și lizibilitate excelentă.</string>
+    <string name="wear_font_cursive">Cursiv</string>
+    <string name="wear_font_cursive_description">Un font manuscris decorativ.</string>
+    <string name="setting_wear_dynamic_accent">Accent dinamic pe ceas</string>
+    <string name="setting_wear_dynamic_accent_description">Adaptează culorile ceasului bazate pe album la coperta curentă. Când este dezactivat, alegerile de culoare Album folosesc accentul static al temei.</string>
+    <string name="setting_wear_album_art_fade">Tranziție de estompare a copertei</string>
+    <string name="setting_wear_album_art_fade_description">Estompează lin coperta albumului când se schimbă piesa.</string>
+    <string name="setting_wear_title_text_mode">Comportamentul textului titlului</string>
+    <string name="setting_wear_title_text_mode_description">Cum se comportă titlul de redare când nu încape: Automat combină micșorarea, încadrarea și derularea; celelalte opțiuni fac exclusiv un singur comportament.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automat (micșorare, apoi încadrare, apoi derulare)</item>
+        <item>Derulare (marquee)</item>
+        <item>Încadrare pe două linii</item>
+        <item>Încadrare pe trei linii</item>
+        <item>Încadrare pe cinci linii</item>
+        <item>Static (o linie, fără derulare sau micșorare)</item>
+        <item>Micșorare pentru a se încadra</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Culoare text artist</string>
+    <string name="setting_wear_artist_custom_color">Culoare artist personalizată</string>
+    <string name="setting_wear_artist_custom_color_description">Alegeți culoarea artistului folosită cu tratamentul Normal</string>
+    <string name="setting_wear_artist_desaturated">Culoare artist desaturată</string>
+    <string name="setting_wear_artist_desaturated_description">Înmoaie culoarea textului artistului bazată pe album — se aplică doar când „Culoare text artist” este setat la Culoare album</string>
+
+    <string name="setting_wear_progress_color">Culoare bară de progres</string>
+    <string name="setting_wear_progress_custom_color">Culoare personalizată bară de progres</string>
+    <string name="setting_wear_progress_custom_color_description">Alegeți culoarea de progres și căutare folosită cu tratamentul Normal</string>
+    <string name="setting_wear_progress_desaturated">Culoare desaturată bară de progres</string>
+    <string name="setting_wear_progress_desaturated_description">Înmoaie culoarea barei de progres bazată pe album — se aplică doar când „Culoare bară de progres” este setat la Culoare album</string>
+
+    <string name="setting_wear_volume_color">Culoare bară de volum</string>
+    <string name="setting_wear_volume_custom_color">Culoare de volum personalizată</string>
+    <string name="setting_wear_volume_custom_color_description">Alegeți culoarea de volum folosită cu tratamentul Normal</string>
+    <string name="setting_wear_quick_panel_color">Culoare Acțiuni Rapide</string>
+    <string name="setting_wear_quick_panel_custom_color">Culoare personalizată Acțiuni Rapide</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Alegeți culoarea Acțiunilor Rapide folosită cu tratamentul Normal</string>
+    <string name="setting_wear_shading_custom_color_description">Alegeți culoarea care colorează gradientul de umbrire</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Neutru (culoare statică a temei)</item>
+        <item>Culoare album</item>
+        <item>Culoare personalizată</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Căutare Expressive</string>
+    <string name="setting_wear_expressive_seek_mode_description">Cum să derulați prin piesă prin atingere pe fața Expressive. Inelul central face inelul din jurul butonului de redare tras; Inelul de margine afișează și inelul de lunetă Classic; Niciunul lasă căutarea doar coroanei rotative.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Inel central</item>
+        <item>Inel de margine</item>
+        <item>Niciunul</item>
+    </string-array>
+
+    <string name="category_wear_aod">Ecran mereu activ</string>
+    <string name="setting_wear_aod_style">Stil mereu activ</string>
+    <string name="setting_wear_aod_style_description">Cum arată ecranul de redare cât timp ceasul este în modul ambiental. Urmează fața se potrivește cu fața selectată; Minimal afișează doar text estompat pe negru pur pentru cea mai lungă durată de baterie.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Urmează fața</item>
+        <item>Classic</item>
+        <item>Expressive (conturat)</item>
+        <item>Material (conturat)</item>
+        <item>Comenzi AMOLED</item>
+        <item>Chrono (ceas mare)</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Culoare mereu activ</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Alb</item>
+        <item>Culoare album</item>
+        <item>Culoare personalizată</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Alb</item>
+        <item>Dinamic (după zona de sub ceas)</item>
+        <item>Culoare album</item>
+        <item>Culoare personalizată</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Urmează stilul panoului</item>
+        <item>Transparent (fără fundal)</item>
+        <item>Accent album</item>
+        <item>Translucid</item>
+        <item>Alb</item>
+        <item>Alb mat</item>
+        <item>Negru</item>
+        <item>Dinamic (ton album)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Fundal pastilă Urmează</string>
+    <string name="setting_wear_show_up_next_pill">Pastilă Urmează pe player</string>
+    <string name="setting_wear_show_up_next_pill_description">Afișează o pastilă Urmează în partea de jos a ecranului de redare. Umple spațiul pe care l-ar ocupa rândul de mini butoane, deci apare doar când acel rând nu este afișat.</string>
+    <string name="category_wf_clock">Ceas</string>
+    <string name="setting_wear_clock_color">Culoare ceas</string>
+    <string name="setting_wear_clock_custom_color">Culoare ceas personalizată</string>
+    <string name="setting_wear_clock_custom_color_description">Atingeți pentru a alege culoarea ceasului folosită când Culoare ceas este setat la Culoare personalizată</string>
+    <string name="setting_wear_clock_opacity">Opacitate ceas</string>
+    <string name="setting_wear_clock_opacity_description">Cât de opac este ceasul mereu afișat (10–100%%). Setat momentan la <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Culoare mereu activ personalizată</string>
+    <string name="setting_wear_aod_custom_color_description">Atingeți pentru a alege culoarea folosită pentru text, comenzi și ceas mereu active când „Culoare mereu activ” este setat la Culoare personalizată</string>
+    <string name="setting_wear_aod_intensity">Luminozitate mereu activ</string>
+    <string name="setting_wear_aod_intensity_description">Cât de luminos redă ecranul mereu activ (20–100%%). Mai jos este mai estompat și folosește mai puțină baterie. Setat momentan la <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Butoane de transport pe ecranul mereu activ</string>
+    <string name="setting_wear_aod_show_transport_description">Afișează butoanele conturate anterior/redare/următor în stilurile vizuale mereu active acceptate. Nu pot fi atinse cât timp ecranul este estompat, dar o atingere trezește ceasul cu butonul deja sub deget.</string>
+    <string name="setting_wear_aod_show_progress">Inel de progres pe ecranul mereu activ</string>
+    <string name="setting_wear_aod_show_progress_description">Afișează inelul de progres din jurul butonului de redare în modul ambiental — poziția se actualizează acolo doar cam o dată pe minut</string>
+    <string name="setting_wear_aod_show_pills">Urmează pe ecranul mereu activ</string>
+    <string name="setting_wear_aod_show_pills_description">Afișează o pastilă Urmează statică, conturată în partea de jos a stilurilor vizuale mereu active</string>
+    <string name="category_wf_gestures">Gesturi ecran</string>
+    <string name="setting_wear_mini_buttons_mode">Afișează mini butoane</string>
+    <string name="setting_wear_gestures_mode">Gesturi ecran</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Întotdeauna</item>
+        <item>Doar în timpul redării</item>
+        <item>Doar în pauză</item>
+        <item>Niciodată</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Coperta albumului pe ecranul mereu activ</string>
+    <string name="setting_wear_aod_show_art_description">Păstrează coperta albumului estompată vizibilă în modul ambiental. Dezactivarea afișează un fundal complet negru, care economisește semnificativ mai multă baterie pe ecranele AMOLED.</string>
+    <string name="setting_wear_aod_art_treatment">Stil copertă mereu activ</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Neclaritate ușoară</item>
+        <item>Copertă clară</item>
+        <item>Neclaritate monocromă</item>
+        <item>Urmează tratamentul copertei playerului</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Ceas pe ecranul mereu activ</string>
+    <string name="setting_wear_aod_show_clock_description">Afișează ceasul când ceasul este în modul ambiental</string>
+    <string name="setting_wear_aod_show_track_info">Info piesă pe ecranul mereu activ</string>
+    <string name="setting_wear_aod_show_track_info_description">Afișează titlul și artistul piesei în modul ambiental</string>
+
+    <string name="category_overlays_queue">Suprapuneri și coadă</string>
+    <string name="setting_wear_overlay_backdrop_style">Fundal panou</string>
+    <string name="setting_wear_volume_style">Stil volum</string>
+    <string name="setting_wear_volume_layout">Aspect volum</string>
+    <string name="setting_wear_quick_panel_style">Stil panou rapid</string>
+    <string name="setting_wear_quick_panel_layout">Aspect panou rapid</string>
+    <string name="setting_wear_quick_panel_source">Acțiuni rapide</string>
+    <string name="setting_wear_quick_panel_source_description">Alegeți butoanele configurate sau acțiunile oferite de aplicația care redă în prezent.</string>
+    <string name="quick_panel_open_note_title">Deschiderea panoului</string>
+    <string name="quick_panel_open_note_description">Atingeți de două ori centrul ecranului de redare pentru a deschide panoul de acțiuni rapide pe ceas.</string>
+    <string name="preview_current_app_action">Acțiune aplicație curentă</string>
+    <string name="preview_notification_controls">Pictogramă din notificarea media</string>
+    <string name="setting_wear_queue_style">Stil coadă</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Folosește copertele scurtăturilor ca fundal</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Când Stilul cozii de mai sus este o variantă Copertă, un rând de acțiune al panoului rapid cu o copertă de scurtătură preluată (piesă, listă de redare, artist…) umple și el pastila sa cu acea imagine, așa cum face Urmează. Scurtăturile fără copertă preluată (doar o pictogramă de aplicație) nu sunt afectate.</string>
+    <string name="setting_wear_list_row_size">Dimensiune pastilă listă</string>
+    <string name="setting_wear_list_row_size_description">Înălțimea rândurilor pe toată lățimea în coadă, meniuri și panoul rapid.</string>
+    <string name="setting_wear_progress_style">Stil inel de progres</string>
+    <string name="setting_wear_seek_style">Stil afișare căutare și volum</string>
+    <string name="setting_wear_seek_layout">Aspect panou de căutare</string>
+    <string name="setting_wear_color_treatment">Tratament culoare ceas</string>
+    <string name="setting_wear_normal_color">Culoare normală</string>
+    <string name="setting_wear_normal_color_description">Alegeți culoarea unică folosită de accentele titlului, progres, volum, panouri și cromul mini butoanelor în modul Normal</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normal (culoare aleasă)</item>
+        <item>Desaturat (culoare album blândă)</item>
+        <item>Expressive (paletă completă a albumului)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Urmează tratamentul ceasului</item>
+        <item>Normal (culoare aleasă)</item>
+        <item>Desaturat (culoare album blândă)</item>
+        <item>Expressive (paletă completă a albumului)</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Arc de margine (stânga)</item>
+        <item>Arc de margine (înalt)</item>
+        <item>Arc de margine (dreapta)</item>
+        <item>Arc de margine (sus)</item>
+        <item>Arc de margine (jos)</item>
+        <item>Inel complet</item>
+        <item>Halou central</item>
+        <item>Metru orizontal</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Inel de margine</item>
+        <item>Inel de margine (subțire)</item>
+        <item>Inel de margine (gros)</item>
+        <item>Cronologie</item>
+        <item>Cronologie segmentată</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metadate mai întâi</item>
+        <item>Arc</item>
+        <item>Hero</item>
+        <item>Grilă</item>
+        <item>Rânduri etichetate</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Solid</item>
+        <item>Punctat</item>
+        <item>Puncte</item>
+        <item>Linie fină</item>
+        <item>Cometă</item>
+        <item>60 de puncte de ceas</item>
+        <item>60 de repere de ceas</item>
+        <item>Segmente de 12 ore</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Simplu</item>
+        <item>Pastilă sticlă</item>
+        <item>Pastilă Expressive</item>
+        <item>Pastilă Material</item>
+        <item>Pastilă albă</item>
+        <item>Gigant</item>
+        <item>Poziție / total</item>
+        <item>Sticlă albă</item>
+        <item>Album translucid</item>
+        <item>Strălucire album</item>
+        <item>Contur</item>
+        <item>Temă solidă</item>
+        <item>Album solid</item>
+        <item>Micro</item>
+        <item>Umbră (fără crom)</item>
+        <item>Subliniere</item>
+        <item>Contur fin</item>
+        <item>Culoare album gigant</item>
+        <item>Mono</item>
+        <item>Tonal întunecat</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Butoane configurate</item>
+        <item>Din aplicația media curentă</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Urmează stilul panoului</item>
+        <item>Neclaritate album (acril)</item>
+        <item>Negru solid</item>
+        <item>Culoare album solidă</item>
+        <item>Sticlă</item>
+        <item>Gradient album</item>
+        <item>Bicolor album</item>
+        <item>Prismă</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Sticlă</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Deschis</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Contur</item>
+        <item>Bicolor</item>
+        <item>Prismă</item>
+        <item>Contrast ridicat</item>
+        <item>Terminal</item>
+        <item>Chiciură</item>
+        <item>Segmente</item>
+        <item>Aurora</item>
+        <item>Cerneală</item>
+        <item>Canelură</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Compact</item>
+        <item>Normal</item>
+        <item>Înalt</item>
+        <item>Foarte înalt</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Sticlă</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Deschis</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Contur</item>
+        <item>Bicolor</item>
+        <item>Prismă</item>
+        <item>Contrast ridicat</item>
+        <item>Terminal</item>
+        <item>Chiciură</item>
+        <item>Copertă</item>
+        <item>Copertă neclară</item>
+        <item>Copertă Tonală</item>
+        <item>Copertă pătrată</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Sticlă</item>
+        <item>Sticlă albă</item>
+        <item>Sticlă Tonală</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Deschis</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Contur</item>
+        <item>Contur Sticlă Albă</item>
+        <item>Bicolor</item>
+        <item>Prismă</item>
+        <item>Contrast ridicat</item>
+        <item>Terminal</item>
+        <item>Chiciură</item>
+        <item>Ghost (fără crom)</item>
+        <item>Ceață</item>
+        <item>Cerneală</item>
+        <item>Punct</item>
+        <item>Placă</item>
+    </string-array>
+
+    <string name="setting_wear_track_time_mode">Afișare timp piesă</string>
+    <string name="setting_wear_track_time_mode_description">Când este afișată poziția piesei (de exemplu 1:23 / 3:45) pe ecranul de redare.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Întotdeauna</item>
+        <item>Doar în timpul redării</item>
+        <item>Doar în pauză</item>
+        <item>Niciodată</item>
+    </string-array>
+
+    <string name="setting_screen_buttons_curve">Curbura mini butoanelor</string>
+    <string name="setting_screen_buttons_curve_description">Selectați stilul de curbură pentru mini butoane: plat, arc, moale, curbat.</string>
+    <string name="setting_screen_buttons_shape">Forma mini butoanelor</string>
+    <string name="setting_screen_buttons_shape_description">Selectați forma și formatul de aspect al mini butoanelor.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pastilă (Implicit)</item>
+        <item>Cerc</item>
+        <item>Pătrat</item>
+        <item>Pătrat rotunjit (Moale)</item>
+        <item>Pătrat rotunjit (Mediu)</item>
+        <item>Squircle</item>
+        <item>Frunză</item>
+        <item>Picătură</item>
+        <item>Pastilă (Lată Mică)</item>
+        <item>Pastilă (Lată Medie)</item>
+        <item>Pastilă (Lată Mare)</item>
+        <item>Pastilă (Lată Foarte Mare)</item>
+        <item>Dreptunghi rotunjit (Mic)</item>
+        <item>Dreptunghi rotunjit (Mediu)</item>
+        <item>Dreptunghi rotunjit (Mare)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Plat</item>
+        <item>Arc</item>
+        <item>Curbură ușoară</item>
+        <item>Curbură moale</item>
+        <item>Curbură medie</item>
+        <item>Curbat</item>
+        <item>Curbură extremă</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Fundal implicit</item>
+        <item>Sticlă (uniform)</item>
+        <item>Sticlă (deschisă)</item>
+        <item>Album translucid</item>
+        <item>Album translucid Exp</item>
+        <item>Strălucire album</item>
+        <item>Strălucire Exp</item>
+        <item>Temă solidă</item>
+        <item>Album solid</item>
+        <item>Album solid Exp</item>
+        <item>Contur</item>
+        <item>Contur album Exp</item>
+        <item>Doar pictogramă (transparent)</item>
+        <item>Pictogramă Exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Neutru</item>
+        <item>Culoare album</item>
+        <item>Culoare personalizată</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Copertă completă</item>
+        <item>Fundal neclar</item>
+        <item>Pătrat (colțuri ascuțite)</item>
+        <item>Pătrat (colțuri moi)</item>
+        <item>Pătrat (colțuri rotunjite)</item>
+        <item>Alb-negru</item>
+        <item>Alb-negru neclar</item>
+        <item>Neclaritate Expressive</item>
+        <item>Expressive</item>
+        <item>Gradient tonal Material</item>
+        <item>Copertă Poster</item>
+        <item>Gradient Studio</item>
+        <item>Strălucire radială Vinyl</item>
+        <item>Strălucire Halo</item>
+        <item>Panglici Aurora</item>
+        <item>Gradient Spectrum</item>
+        <item>Baleiaj Corona</item>
+        <item>Estompare amurg</item>
+        <item>Bloom</item>
+        <item>Estompare orizont</item>
+        <item>Strălucire jar</item>
+        <item>Eclipse AMOLED negru</item>
+        <item>Ascuns (negru solid)</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Timp de expirare la închidere</string>
+    <string name="setting_close_timeout_description">Svartifoss se va închide automat când nu se redă muzică timp de <![CDATA[<b>%1$s secunde</b>]]>. Funcția este dezactivată când timpul de expirare este setat la 0 secunde. Rețineți că, pentru a economisi bateria, această opțiune poate să nu fie foarte precisă uneori și poate întârzia închiderea până la un minut.</string>
+    <string name="setting_wear_close_on_idle">Închide la „Nimic în redare”</string>
+    <string name="setting_wear_close_on_idle_description">Închide automat aplicația ceasului la aproximativ un minut după ce ajunge la ecranul inactiv „Nimic în redare”, astfel încât să nu rămână niciodată acolo. Independent de timpul de expirare la închidere de mai sus, care acoperă o piesă în pauză.</string>
+    <string name="category_notifications">Fereastră de notificare</string>
+    <string name="setting_enable_notifications">Afișează fereastra de notificare</string>
+    <string name="setting_enable_notifications_description">Această funcție necesită o altă aplicație pentru a gestiona notificările (Vibration Center for Wear).\n\nOri de câte ori Vibration Center face ceasul să vibreze, Svartifoss va afișa o fereastră cu textul notificării, permițându-vă să aruncați o privire rapidă fără a părăsi Svartifoss.</string>
+    <string name="setting_notification_timeout">Timp de expirare fereastră de notificare</string>
+    <string name="setting_notification_timeout_description">Fereastra de notificare se va închide automat după <![CDATA[<b>%1$s secunde</b>]]>. Introduceți 0 pentru a dezactiva închiderea automată.</string>
+    <string name="app_required">Aplicație necesară</string>
+    <string name="vibration_center_required_description">Pentru a folosi această funcție, va trebui să instalați o altă aplicație (gratuită): Vibration Center for Wear.</string>
+    <string name="open_play_store">Deschide Play Store</string>
+    <string name="error_no_notification_service_support">Ne pare rău, dispozitivul dvs. nu pare să accepte serviciile de notificare</string>
+    <string name="setting_always_select_center_action">Selectează întotdeauna acțiunea centrală</string>
+    <string name="setting_always_select_center_action_description">Când este activat, atingerea listei de acțiuni va selecta întotdeauna opțiunea centrală (evidențiată), indiferent de opțiunea pe care ați atins-o.</string>
+    <string name="change_icon">Schimbă pictograma</string>
+    <string name="please_wait">Vă rugăm așteptați</string>
+
+    <string name="error_playlist_not_supported">Neacceptat de această aplicație media</string>
+    <string name="error_search_no_results">Niciun rezultat găsit</string>
+    <string name="seconds_to_skip">Secunde de derulat înainte:</string>
+    <string name="seconds_to_reverse">Secunde de derulat înapoi:</string>
+
+    <string name="setting_dynamic_accent_color">Culoare de accent dinamică</string>
+    <string name="setting_dynamic_accent_color_description">Când este activată, culoarea de accent (bara de căutare, elementul activ al cozii) se adaptează automat la culoarea dominantă a copertei albumului curent.</string>
+    <string name="setting_desaturated_color">Culoare desaturată</string>
+    <string name="setting_desaturated_color_description">Ajustează saturația și luminozitatea culorii extrase pentru a garanta lizibilitate și contrast ridicat în funcție de tema activă.</string>
+
+    <string name="queue_header">Coada de redare</string>
+    <string name="queue_unavailable">Coadă indisponibilă</string>
+
+    <string name="setting_custom_accent_color">Culoare de accent</string>
+    <string name="setting_custom_accent_color_description">Alegeți o culoare de accent personalizată pentru interfața aplicației</string>
+    <string name="setting_mini_player">Mini player</string>
+    <string name="setting_mini_player_description">Afișează o bară de redare persistentă deasupra navigării de jos ori de câte ori media este activă. Activat implicit; dezactivați pentru a recupera acel spațiu.</string>
+    <string name="color_picker_title">Alege culoarea de accent</string>
+    <string name="color_picker_reset">Resetează</string>
+    <string name="color_picker_apply">Aplică</string>
+    <string name="color_picker_default">Implicit</string>
+    <string name="color_picker_invalid">Cod de culoare nevalid</string>
+    <string name="color_picker_current">Curent: %s</string>
+
+    <string name="drawer_version_format">Versiunea %1$s</string>
+    <string name="drawer_tagline">Aplicație însoțitoare pentru Wear OS</string>
+    <string name="drawer_about_heading">Despre</string>
+    <string name="drawer_about_summary">Svartifoss vă permite să controlați muzica de pe telefon de la ceasul Wear OS — cu o telecomandă complet personalizabilă, adaptată dispozitivului dvs.</string>
+    <string name="drawer_name_heading">Numele</string>
+    <string name="drawer_name_meaning">Svartifoss înseamnă „Cascada Neagră” în islandeză — numit după cascada din Parcul Național Vatnajökull, unde coloane de bazalt întunecat încadrează o cascadă îngustă. Ca apa peste piatră, muzica curge prin aplicație.</string>
+    <string name="drawer_sync_heading">Sincronizare</string>
+    <string name="drawer_sync_summary">Setările ceasului sunt configurate aici pe telefon și sincronizate automat cu ceasul dvs. împerecheat.</string>
+    <string name="drawer_support_heading">Susținere</string>
+    <string name="drawer_support_summary">Svartifoss este gratuit și cu sursă deschisă — cumpărați-mi o cafea dacă vă este util :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Descarcă coperta</string>
+    <string name="album_art_saved">Coperta a fost salvată în galerie</string>
+    <string name="album_art_save_error">Nu s-a putut salva coperta</string>
+
+    <string name="action_play_liked_songs">Redă melodiile apreciate (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Redă melodiile apreciate (Spotify)</string>
+    <string name="action_my_playlists">Scurtături de streaming</string>
+    <string name="action_play_specific_playlist">Deschide scurtătura de streaming</string>
+    <string name="action_choose_or_add_streaming_shortcut">Alegeți sau adăugați o scurtătură de streaming</string>
+    <string name="action_show_streaming_library">Afișează toate scurtăturile salvate</string>
+    <string name="playlist_shortcut_pick_title">Alegeți scurtătura</string>
+    <string name="playlist_shortcut_pick_empty">Nicio scurtătură de streaming salvată încă — adăugați una mai jos, apoi atingeți-o pentru a o alege</string>
+    <string name="playlist_shortcuts_empty">Nicio scurtătură de streaming încă — adăugați-le în setările aplicației de pe telefon</string>
+    <string name="setting_playlist_shortcuts">Scurtături de streaming</string>
+    <string name="setting_playlist_shortcuts_description">Deschideți linkuri partajate de pe ceas în YouTube Music, Spotify și alte aplicații de streaming</string>
+    <string name="setting_shortcut_artwork">Preia coperte de scurtături online</string>
+    <string name="setting_shortcut_artwork_description">Descarcă o miniatură pentru fiecare scurtătură salvată de la serviciu, afișată în lista de pe telefon, meniul ceasului și butoanele asignate. Fiecare miniatură este preluată o singură dată. Acesta este singurul acces online în afară de verificarea actualizărilor; se trimite doar linkul public de partajare. Dezactivat implicit.</string>
+    <string name="watch_streaming_shortcuts_empty">Adăugați piese, albume sau liste de redare pentru Acțiuni Rapide și meniul ceasului</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d scurtătură salvată · Disponibilă în Acțiuni Rapide și meniul ceasului</item>
+        <item quantity="few">%1$d scurtături salvate · Disponibile în Acțiuni Rapide și meniul ceasului</item>
+        <item quantity="other">%1$d de scurtături salvate · Disponibile în Acțiuni Rapide și meniul ceasului</item>
+    </plurals>
+    <string name="category_music_apps">Aplicații și servicii de muzică</string>
+    <string name="setting_apps_integrations">Servicii de muzică acceptate</string>
+    <string name="setting_apps_integrations_description">Linkurile funcționează cu YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music și SoundCloud. Nu este necesar acces la cont.</string>
+    <string name="setting_apps_integrations_none">Nicio aplicație acceptată detectată. Scurtăturile pot fi deschise în continuare într-un browser sau altă aplicație compatibilă.</string>
+    <string name="setting_apps_integrations_installed">%1$d din %2$d detectate: %3$s</string>
+    <string name="setting_streaming_open_mode">Deschide linkurile de streaming cu</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Aplicație de streaming detectată</item>
+        <item>Implicit Android</item>
+        <item>Întreabă de fiecare dată</item>
+    </string-array>
+    <string name="setting_notification_access">Acces la notificări media</string>
+    <string name="setting_notification_access_enabled">Permis · Atingeți pentru a revizui setările Android</string>
+    <string name="setting_notification_access_disabled">Nepermis · Necesar pentru acțiunile media ale notificărilor și filtrele de pornire automată</string>
+    <string name="setting_notification_access_unavailable">Setările de acces la notificări nu sunt disponibile pe acest dispozitiv</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d scurtătură salvată · Atingeți pentru a gestiona sau importa linkuri</item>
+        <item quantity="few">%1$d scurtături salvate · Atingeți pentru a gestiona sau importa linkuri</item>
+        <item quantity="other">%1$d de scurtături salvate · Atingeți pentru a gestiona sau importa linkuri</item>
+    </plurals>
+    <string name="category_privacy">Confidențialitate</string>
+    <string name="setting_crash_reporting">Trimite rapoarte de blocare</string>
+    <string name="setting_crash_reporting_description">Trimite diagnostice Firebase Crashlytics pentru a ajuta la remedierea erorilor. Activat implicit; dezactivați oricând.</string>
+    <string name="setting_announcements">Notificări de anunțuri</string>
+    <string name="setting_announcements_description">Notificări ocazionale de la dezvoltator — lansări noi, anunțuri importante. Trimise prin Firebase Cloud Messaging; nu este implicat niciun cont sau listă de utilizatori. Activat implicit; dezactivați oricând.</string>
+    <string name="announcement_notification_channel">Anunțuri</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Partajați o listă de redare, un album sau o piesă direct către Svartifoss, lipiți un link copiat sau adăugați unul manual. Ceasul cere telefonului să-l deschidă; nu este necesară nicio autentificare la serviciu.</string>
+    <string name="back">Înapoi</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Muzica dvs., la o atingere distanță</string>
+    <string name="playlist_shortcuts_yours">Scurtăturile dvs.</string>
+    <string name="playlist_shortcuts_empty_hint">Adăugați un link partajat de piesă, album sau listă de redare pentru a-l face disponibil pe ceasul dvs.</string>
+    <string name="playlist_shortcuts_add">Adaugă scurtătură</string>
+    <string name="playlist_shortcuts_paste">Lipește linkul</string>
+    <string name="playlist_shortcuts_reload_covers">Reîncarcă copertele</string>
+    <string name="playlist_shortcuts_reloading_covers">Se reîncarcă copertele…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Copertele au fost reîncărcate</string>
+    <string name="playlist_shortcuts_edit">Editează scurtătura</string>
+    <string name="playlist_shortcut_save">Salvează scurtătura</string>
+    <string name="playlist_shortcut_editor_hint">Lipiți un link. Svartifoss identifică automat aplicația și tipul de conținut.</string>
+    <string name="playlist_shortcut_detection_waiting">Se așteaptă un link de streaming</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Sunt acceptate Spotify, YouTube Music, Apple Music, TIDAL, Deezer și altele.</string>
+    <string name="playlist_shortcut_detected_format">Detectat: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Nume</string>
+    <string name="playlist_shortcut_link_hint">Link de partajare sau URI de aplicație</string>
+    <string name="playlist_shortcut_shuffle">Redă aleatoriu (doar YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Link</string>
+    <string name="playlist_type_track">Piesă</string>
+    <string name="playlist_type_playlist">Listă de redare</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">Artist</string>
+    <string name="playlist_type_show">Emisiune</string>
+    <string name="playlist_type_episode">Episod</string>
+    <string name="playlist_type_mix">Mix</string>
+    <string name="playlist_badge_shuffle">Redare aleatorie</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Nicio scurtătură de streaming adăugată încă</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d salvată</item>
+        <item quantity="few">%1$d salvate</item>
+        <item quantity="other">%1$d de salvate</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Scurtături de streaming ordonate. Atingeți și țineți apăsat pentru a trage, folosiți acțiunile de accesibilitate Mutare sus sau Mutare jos, sau apăsați Ctrl+Sus/Jos pe tastatură.</string>
+    <string name="playlist_shortcut_more_options">Mai multe opțiuni pentru %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Editează</string>
+    <string name="playlist_shortcut_menu_open">Deschide acum</string>
+    <string name="playlist_shortcut_menu_copy">Copiază linkul</string>
+    <string name="playlist_shortcut_menu_duplicate">Duplică</string>
+    <string name="playlist_shortcut_menu_share">Partajează</string>
+    <string name="playlist_shortcut_menu_delete">Șterge</string>
+    <string name="playlist_shortcut_open_failed">Nicio aplicație nu poate deschide acest link</string>
+    <string name="streaming_shortcut_choose_app">Deschide linkul de streaming cu</string>
+    <string name="playlist_shortcut_link_copied">Linkul a fost copiat</string>
+    <string name="playlist_shortcut_import_invalid">Textul partajat nu conține un link de streaming valid</string>
+    <string name="playlist_shortcut_clipboard_invalid">Clipboardul nu conține un link de streaming valid</string>
+    <string name="playlist_shortcut_name_required">Introduceți un nume pentru scurtătură</string>
+    <string name="playlist_shortcut_link_invalid">Introduceți un link web sau un URI de aplicație valid</string>
+    <string name="playlist_shortcut_service_invalid">Lipiți un link valid pentru a detecta serviciul acestuia</string>
+    <string name="playlist_shortcut_service_generic">Link compatibil · Android va alege o aplicație</string>
+    <string name="playlist_shortcut_service_installed">%1$s instalat · Gata pentru a deschide în aplicația proprie</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s neinstalat · Poate fi folosit un browser sau o aplicație compatibilă</string>
+    <string name="playlist_shortcut_copy_name">Copie %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">Copie %1$s %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s creat</string>
+    <string name="playlist_shortcut_share_title">Partajează scurtătura de streaming</string>
+    <string name="playlist_shortcut_share_failed">Nicio aplicație disponibilă pentru a partaja această scurtătură</string>
+    <string name="playlist_shortcut_deleted">%1$s șters</string>
+    <string name="playlist_shortcut_undo">Anulează</string>
+
+    <string name="action_play_liked_songs_shuffled">Redă melodiile apreciate, aleatoriu (YT Music)</string>
+    <string name="action_search_history">Istoric căutări</string>
+    <string name="search_history_empty">Nicio căutare recentă încă</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Actualizări</string>
+    <string name="setting_update_check">Notifică despre versiuni noi</string>
+    <string name="setting_update_check_description">Verifică GitHub aproximativ o dată pe zi pentru lansări noi și afișează o notificare</string>
+    <string name="setting_update_prereleases">Include pre-lansări</string>
+    <string name="setting_update_prereleases_description">Fiți notificat și despre versiunile beta</string>
+    <string name="setting_update_check_now">Verifică acum actualizările</string>
+    <string name="setting_update_check_now_description">Afișează cea mai recentă versiune și vă permite să actualizați ceasul prin Bluetooth</string>
+    <string name="update_screen_title">Actualizări</string>
+    <string name="update_cover_content_description">Svartifoss, cascada care dă numele aplicației</string>
+    <string name="update_notification_channel">Actualizări aplicație</string>
+    <string name="update_available_title">Svartifoss %1$s este disponibil</string>
+    <string name="update_notification_text">Atingeți pentru a actualiza</string>
+    <string name="update_available_action">Actualizare disponibilă</string>
+    <string name="update_installed_phone">Telefon: %1$s</string>
+    <string name="update_installed_versions">Telefon: %1$s · Ceas: %2$s</string>
+    <string name="update_watch_version_unknown">necunoscută</string>
+    <string name="update_checking">Se verifică actualizările…</string>
+    <string name="update_check_failed">Nu s-au putut verifica actualizările. Verificați conexiunea și încercați din nou.</string>
+    <string name="update_available_line">Versiune nouă: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(pre-lansare)</string>
+    <string name="update_up_to_date">Aveți cea mai recentă versiune (%1$s)</string>
+    <string name="update_no_wear_asset">Această lansare nu are un APK de ceas de trimis.</string>
+    <string name="update_watch_hint">„Actualizează ceasul” descarcă noua aplicație pentru ceas și o trimite prin Bluetooth — confirmați instalarea pe ceas însuși, fără cablu sau Wear Installer.</string>
+    <string name="update_downloading">Se descarcă… %1$d%%</string>
+    <string name="update_connecting_watch">Se conectează la ceas…</string>
+    <string name="update_transferring">Se trimite la ceas… %1$d%%</string>
+    <string name="update_confirm_on_watch">Trimis! A apărut o notificare pe ceas — atingeți-o acolo pentru a instala.</string>
+    <string name="update_no_watch">Niciun ceas conectat.</string>
+    <string name="update_push_failed">Trimiterea actualizării către ceas a eșuat. Încercați din nou.</string>
+    <string name="update_watch_button">Actualizează ceasul</string>
+    <string name="update_open_release_button">Deschide pagina de lansare</string>
+    <string name="update_watch_behind">Ceasul dvs. este încă la versiunea %1$s — trimiteți-i actualizarea de mai jos.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Mențineți aplicațiile de pe telefon și ceas sincronizate</string>
+    <string name="update_state_checking">Se verifică actualizările…</string>
+    <string name="update_state_current">Sunteți la zi</string>
+    <string name="update_state_current_sub">Rulați cea mai recentă lansare, %1$s</string>
+    <string name="update_state_available">Actualizare disponibilă</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Nu s-au putut verifica actualizările</string>
+    <string name="update_state_failed_sub">Verificați conexiunea și încercați din nou</string>
+    <string name="update_device_phone">Telefon</string>
+    <string name="update_device_watch">Ceas</string>
+    <string name="update_versions_header">Instalat</string>
+    <string name="update_whats_new">Ce este nou</string>
+    <string name="update_phone_button">Actualizează telefonul</string>
+    <string name="update_installing">Se deschide programul de instalare…</string>
+    <string name="update_install_permission_needed">Permiteți instalarea aplicațiilor de la Svartifoss, apoi atingeți din nou Actualizează telefonul.</string>
+    <string name="update_phone_failed">Descărcarea actualizării telefonului a eșuat. Încercați din nou.</string>
+</resources>

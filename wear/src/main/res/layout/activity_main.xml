@@ -28,6 +28,22 @@
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />
 
+        <!-- The Square album art style's sharp inset: album_art behind it stays blurred (the
+             same RenderEffect/legacy-blur path the Blur style uses) and this shows the unblurred
+             source, uncropped (contain-fit, not centerCrop - see applySquareInsetMatrix) and
+             clipped to a centered rounded square by MainActivity - see squareInsetOutlineProvider.
+             scaleType is "matrix" because the fit has to be computed against that smaller square,
+             not this view's own match_parent bounds, or the platform's own centerCrop/fitCenter
+             math would scale against the wrong (much larger) target. Hidden for every other
+             style, and in ambient. -->
+        <ImageView
+            android:id="@+id/album_art_square_inset"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="matrix"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
         <!-- Native background-treatment layer for the View-based Classic layout. Compose faces
              draw the same treatment inside their own canvas and keep this View hidden. -->
         <View
@@ -101,18 +117,37 @@
                 android:orientation="vertical"
                 app:boxedEdges="all">
 
-                <com.svartifoss.snfell.watch.view.OutlineTextView
-                    android:id="@+id/text_artist"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
                     android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="2"
-                    android:textColor="@color/theme_accent"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    tools:text="Artist" />
+                    android:orientation="horizontal">
+
+                    <!-- Real sibling view, not a compound drawable: a start-compound drawable on
+                         a match_parent centred TextView anchors to the view's own edge, not next
+                         to the (shorter, centred) text - which is what put it far from the artist
+                         name. A separate view in a centered row sits where it visually belongs. -->
+                    <ImageView
+                        android:id="@+id/source_icon_classic"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:importantForAccessibility="no"
+                        android:visibility="gone"
+                        tools:ignore="ContentDescription" />
+
+                    <com.svartifoss.snfell.watch.view.OutlineTextView
+                        android:id="@+id/text_artist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="2"
+                        android:textColor="@color/theme_accent"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:text="Artist" />
+                </LinearLayout>
 
                 <com.svartifoss.snfell.watch.view.OutlineTextView
                     android:id="@+id/text_title"
@@ -197,7 +232,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|top"
                 android:fontFamily="@font/google_sans"
-                android:paddingTop="5sp"
+                android:paddingTop="5dp"
                 android:textColor="@color/ambient_clock_color"
                 android:textSize="15sp"
                 android:visibility="gone" />
@@ -447,8 +482,8 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:clipChildren="false"
-                android:paddingTop="32dp"
-                android:paddingBottom="30dp">
+                android:paddingTop="40dp"
+                android:paddingBottom="48dp">
 
             <com.svartifoss.snfell.watch.view.OutlineTextView
                 android:id="@+id/quick_action_panel_title"
@@ -478,11 +513,14 @@
                 android:textStyle="bold"
                 tools:text="Artist" />
 
-            <LinearLayout
+            <!-- Straight row, arc or grid, per MiscPreferences.WEAR_QUICK_PANEL_LAYOUT. Subclasses
+                 LinearLayout so the slot sizing keeps assigning LinearLayout.LayoutParams. -->
+            <com.svartifoss.snfell.watch.view.QuickActionsRowLayout
                 android:id="@+id/quick_action_round_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:clipChildren="false"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -522,23 +560,30 @@
                     android:padding="13dp"
                     android:src="@drawable/action_repeat" />
 
-            </LinearLayout>
+            </com.svartifoss.snfell.watch.view.QuickActionsRowLayout>
+
+            <!-- Used only by the "rows" layout: the same slots as the round row above, rebuilt as
+                 labelled full-width rows. Mirrors the round row rather than replacing it, so slot
+                 resolution stays in one place. -->
+            <LinearLayout
+                android:id="@+id/quick_action_primary_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/quick_action_up_next"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/quick_action_row_height"
                 android:layout_marginTop="6dp"
                 android:background="@drawable/up_next_pill_background"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:minHeight="@dimen/quick_action_button_height"
                 android:orientation="horizontal"
                 android:paddingStart="18dp"
-                android:paddingTop="11dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="11dp">
+                android:paddingEnd="20dp">
 
                 <ImageView
                     android:id="@+id/quick_action_up_next_artwork"
@@ -632,6 +677,17 @@
         <include
             android:id="@+id/notification_popup"
             layout="@layout/popup_notification" />
+
+        <!-- Topmost in content_frame so the same single drawable instance renders identically
+             above Classic's views and every Compose face's opaque backdrop alike - no per-face
+             branching needed, unlike compose_tap_pulse above. MainActivity's onTouchMove/swipe
+             callbacks/onTouchUp (FourWayTouchLayout.UserActionListener) drive it. Not clickable,
+             so touches pass straight through it, same as compose_tap_pulse. -->
+        <ImageView
+            android:id="@+id/swipe_trail_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription" />
 
     </FrameLayout>
 

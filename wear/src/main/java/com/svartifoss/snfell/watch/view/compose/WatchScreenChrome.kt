@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.inset
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -109,14 +110,22 @@ internal fun CurvedClock(visible: Boolean, contentAlpha: Float = 1f) {
 }
 
 /**
- * Straight top-center clock matching the Classic face's interactive clock exactly (the
- * `ambient_clock` TextView: 15sp Google Sans at #99FFFFFF, 5dp below the top edge). The player
- * faces use this instead of [CurvedClock] so switching faces never moves or re-styles the clock;
- * the curved variant stays for the list screens (queue, menu), where hugging the bezel is the
- * point.
+ * Straight top-center clock matching the Classic face's interactive clock (the `ambient_clock`
+ * TextView, 5dp below the top edge). The player faces use this instead of [CurvedClock] so
+ * switching faces never moves or re-styles the clock; the curved variant stays for the list
+ * screens (queue, menu), where hugging the bezel is the point.
+ *
+ * [color] and [fontFamily] are fully resolved by the host (opacity baked into [color], the
+ * dynamic/album/custom colour mode already applied), so this is purely presentational - the
+ * identical values drive the Classic View clock. Default arguments keep the historical
+ * 15sp Google Sans at #99FFFFFF look for any caller that hasn't wired the prefs through yet.
  */
 @Composable
-internal fun FaceClock(visible: Boolean) {
+internal fun FaceClock(
+        visible: Boolean,
+        color: Color = Color(0x99FFFFFF),
+        fontFamily: FontFamily = GoogleSansFamily
+) {
     val clockAlpha = animateFloatAsState(
             targetValue = if (visible) 1f else 0f,
             animationSpec = tween(durationMillis = 200),
@@ -126,9 +135,9 @@ internal fun FaceClock(visible: Boolean) {
     Box(Modifier.fillMaxSize().graphicsLayer { alpha = clockAlpha.value }) {
         Text(
                 text = time,
-                color = Color(0x99FFFFFF),
+                color = color,
                 fontSize = 15.sp,
-                fontFamily = GoogleSansFamily,
+                fontFamily = fontFamily,
                 modifier = Modifier.align(Alignment.TopCenter).padding(top = 5.dp)
         )
     }

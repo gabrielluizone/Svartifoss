@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 14-07-2026**
+**Last updated: 21-07-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -11,9 +11,11 @@ The short version: **Svartifoss does not have user accounts, does not run its
 own servers, and does not sell or share your data with advertisers.** The
 phone and watch talk to each other directly over your local Bluetooth/Wi-Fi
 connection. Optional update checks contact GitHub, and the phone app includes
-Google Firebase Crashlytics and Analytics for diagnostics. Crash reporting is
-enabled by default and can be disabled at any time — see
-[Crash reports](#crash-reports) below.
+Google Firebase Crashlytics and Analytics for diagnostics, plus Firebase
+Cloud Messaging for occasional developer announcements. Crash reporting and
+announcement notifications are both enabled by default and can each be
+disabled at any time — see [Crash reports](#crash-reports) and
+[Announcement notifications](#announcement-notifications) below.
 
 ## What the app needs access to, and why
 
@@ -45,7 +47,7 @@ all.
 
 | Permission                                                   | What it's for                                                                                                                                                                                  |
 | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Foreground service / "Post notifications"                    | Keeps the phone↔watch connection alive while music plays, shown as a persistent notification (required by Android for background media apps).                                                 |
+| Foreground service / "Post notifications"                    | Keeps the phone↔watch connection alive while music plays, shown as a persistent notification (required by Android for background media apps). Also required to show the optional developer announcement notifications described below.                                                 |
 | Storage (legacy, only on very old Android versions) / Photos | Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option.                                                  |
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
@@ -92,6 +94,33 @@ This sends data to Google's Firebase infrastructure, governed by
 [Firebase's data processing terms](https://firebase.google.com/support/privacy).
 We do not have access to unrelated data Google may hold through its other
 services.
+
+## Announcement notifications
+
+Svartifoss uses **Firebase Cloud Messaging** (a Google service) to let the
+developer send occasional push notifications — for example, about a new
+release or an important notice. There is no Svartifoss account and no server
+of ours involved: every installation subscribes to a single shared FCM topic,
+and a notification sent to that topic reaches every subscribed device. We do
+not receive or hold a list of users, devices, or install identifiers through
+this feature — Google's Firebase infrastructure routes the message to
+subscribed devices without exposing that list to us.
+
+A notification may include a title, a short message, and an optional link
+that opens when you tap it (for example, to a release page). Svartifoss does
+not use this channel for advertising, and does not send anything through it
+based on your listening activity, location, or any other on-device data —
+whatever gets sent is written by the developer at the time it's sent.
+
+Announcement notifications are **enabled by default**. You can disable them
+under **Settings → Data & support → Privacy → Announcement notifications**.
+Disabling unsubscribes this installation from the topic; a message sent while
+you're unsubscribed will not reach this device. Android's own notification
+permission still applies on top of this setting.
+
+This uses Google's Firebase infrastructure, governed by
+[Google's Privacy Policy](https://policies.google.com/privacy) and
+[Firebase's data processing terms](https://firebase.google.com/support/privacy).
 
 ## Usage diagnostics
 

@@ -7,11 +7,17 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.graphics.Matrix
+import android.graphics.RectF
 import android.graphics.RenderEffect
 import android.graphics.Shader
 import android.graphics.Typeface
@@ -20,8 +26,13 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.graphics.drawable.Animatable
+import com.svartifoss.snfell.watch.view.queue.QueueRowSize
+import com.svartifoss.snfell.watch.view.queue.QueueStyle
+import com.svartifoss.snfell.watch.view.queue.blurredCover
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
 import android.os.Build
@@ -57,6 +68,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
+import androidx.core.view.doOnLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.coroutineScope
@@ -72,11 +84,14 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.wearable.input.RotaryEncoderHelper
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.CenterButton
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.BitmapBlur
+import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.OverlayBackdropResolver
@@ -84,6 +99,8 @@ import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingIntensity
 import com.svartifoss.snfell.common.PlayerShadingStyle
+import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
+import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.QuickPanelButtons
 import com.svartifoss.snfell.common.ScreenButtons
@@ -97,6 +114,7 @@ import com.svartifoss.snfell.common.buttonconfig.GESTURE_LONG_TAP
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_SINGLE_TAP
 import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
 import com.svartifoss.snfell.common.view.FourWayTouchLayout
+import com.svartifoss.snfell.common.view.SwipeTrailDrawable
 import com.svartifoss.snfell.common.view.TapPulseDrawable
 import com.svartifoss.snfell.databinding.ActivityMainBinding
 import com.svartifoss.snfell.proto.MediaAction
@@ -116,7 +134,9 @@ import com.svartifoss.snfell.watch.theme.lainFont
 import com.svartifoss.snfell.watch.theme.watchFontTypeface
 import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
 import com.svartifoss.snfell.watch.theme.selectPrimaryAccent
+import com.svartifoss.snfell.common.AppLocales
 import com.svartifoss.snfell.watch.util.StandardActionTitles
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.svartifoss.snfell.watch.view.face.AuroraFace
 import com.svartifoss.snfell.watch.view.face.EclipseFace
 import com.svartifoss.snfell.watch.view.face.ExpressiveFace
@@ -126,6 +146,8 @@ import com.svartifoss.snfell.watch.view.face.SpectrumFace
 import com.svartifoss.snfell.watch.view.face.StudioFace
 import com.svartifoss.snfell.watch.view.face.VinylFace
 import com.svartifoss.snfell.watch.view.face.MaterialFace
+import com.svartifoss.snfell.watch.view.face.ChronoAmbientFace
+import com.svartifoss.snfell.watch.view.face.ImmersiveFace
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceListener
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceState
 import com.svartifoss.snfell.watch.view.face.ScreenTheme
@@ -145,19 +167,24 @@ import java.lang.ref.WeakReference
 import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 import kotlin.random.Random
 
 /** Mini buttons belong to a loaded track, whether that track is playing or paused. The idle flag
- * distinguishes a real paused session from the completely empty "nothing playing" screen. */
-internal fun hasActiveMiniButtons(configured: Boolean, idle: Boolean): Boolean =
-        configured && !idle
+ * distinguishes a real paused session from the completely empty "nothing playing" screen.
+ * [enabledForFace] is [MiscPreferences.WEAR_MINI_BUTTONS_MODE] resolved for the active face and
+ * playback state -
+ * independent from [configured], which reflects the (global) slot assignments. */
+internal fun hasActiveMiniButtons(configured: Boolean, idle: Boolean, enabledForFace: Boolean): Boolean =
+        configured && !idle && enabledForFace
 
 internal fun shouldShowMiniButtons(
         configured: Boolean,
         idle: Boolean,
         ambient: Boolean,
-        overlayActive: Boolean
-): Boolean = hasActiveMiniButtons(configured, idle) && !ambient && !overlayActive
+        overlayActive: Boolean,
+        enabledForFace: Boolean
+): Boolean = hasActiveMiniButtons(configured, idle, enabledForFace) && !ambient && !overlayActive
 
 @AndroidEntryPoint
 class MainActivity : WearCompanionWatchActivity(),
@@ -178,11 +205,15 @@ class MainActivity : WearCompanionWatchActivity(),
         private const val PREFS_LOCAL_UI = "local_ui_state"
         private const val KEY_GESTURE_HINTS_SHOWN = "gesture_hints_shown"
 
+        /** Top edge of the awake Up Next pill as a fraction of screen height: it sits at
+         *  BottomCenter with ~.07 bottom padding and ~.25 height, so its top is ~1 - .07 - .25.
+         *  Fed to the faces as miniButtonsTopFraction so the track time clears it. */
+        private const val AWAKE_PILL_TOP_FRACTION = 0.66f
+
         private const val ROTARY_SEEK_COMMIT_DELAY_MS = 400L
         private const val OVERLAY_FADE_OUT_MS = 150L
         private const val OVERLAY_FADE_IN_MS = 90L
         private const val ALBUM_ART_CROSSFADE_MS = 300
-        private const val MIN_LEGACY_BLUR_SAMPLE_PX = 96
         /** Consistent readable ink for every light pill surface. */
         private const val PILL_ON_LIGHT = 0xFF202124.toInt()
     }
@@ -190,6 +221,11 @@ class MainActivity : WearCompanionWatchActivity(),
     private lateinit var binding: ActivityMainBinding
     private lateinit var vibrator: Vibrator
     private lateinit var ambientObserver: AmbientLifecycleObserver
+
+    /** Our own ambient flag, flipped at the very start of onEnter/onExitAmbient. More reliable than
+     *  [AmbientLifecycleObserver.isAmbient], which is not guaranteed set yet inside the enter
+     *  callback on every watch - see the source-icon-in-AOD note there. */
+    private var inAmbient = false
     private lateinit var stemButtonsManager: StemButtonsManager
     private val handler = TimeoutsHandler(WeakReference(this))
 
@@ -213,6 +249,8 @@ class MainActivity : WearCompanionWatchActivity(),
     private var overlayBackdropStyle: String = "follow"
     private var playerShadingStyle: PlayerShadingStyle = PlayerShadingStyle.FOLLOW
     private var playerShadingIntensity: Float = PlayerShadingIntensity.BALANCED.multiplier
+    private var shadingColorMode: String = "black"
+    private var shadingCustomColor: String = ""
     private var volumeBarTimeoutMs: Long = 1000L
     private var rotaryDeadzone: Float = 6f
     private var ambientAlbumArtAlpha: Float = 0.55f
@@ -232,10 +270,39 @@ class MainActivity : WearCompanionWatchActivity(),
     private var aodShowPills = true
     private var aodIntensity: Float = 1f
 
+    /** Awake-clock appearance (MiscPreferences.WEAR_CLOCK_*). Resolved into a single ARGB colour
+     *  by [resolveClockColor]; the "dynamic" mode also samples [latestAlbumArt]. */
+    private var clockColorMode: String = "white"
+    private var clockCustomColor: String = ""
+    private var clockOpacity: Int = 60
+
+    /** When the mini-buttons row / screen gestures apply on the active face, as an
+     *  [ActivityVisibility] value (MiscPreferences.WEAR_MINI_BUTTONS_MODE / WEAR_GESTURES_MODE).
+     *  Independent from the configured slots/assignments; resolved for the current playback state
+     *  by [miniButtonsEnabledNow] / [gesturesEnabledNow]. */
+    private var miniButtonsMode: String = ActivityVisibility.ALWAYS
+    private var gesturesMode: String = ActivityVisibility.ALWAYS
+
+    /** MiscPreferences.WEAR_SHOW_UP_NEXT_PILL for the active face. The pill only actually draws
+     *  while the mini-buttons row is not (resolved in syncScreenButtonsVisibility). */
+    private var showUpNextPillPref = false
+
+    /** The modes resolved against actual playback right now. "playing" is true only during real
+     *  playback; a paused session and true idle both count as not-playing (matching the button
+     *  configs' split). */
+    private fun miniButtonsEnabledNow(): Boolean =
+            ActivityVisibility.isActive(miniButtonsMode, isMusicPlaying)
+
+    private fun gesturesEnabledNow(): Boolean =
+            ActivityVisibility.isActive(gesturesMode, isMusicPlaying)
+
     private var centerLongPressQueueEnabled = false
     private var wearDynamicAccentEnabled = true
     private var albumArtFadeEnabled = true
     private var screenTheme: ScreenTheme = ScreenTheme.DEFAULT
+    /** Classic-only: whether a quadrant's icon flashes to full opacity and back on its own tap -
+     *  see [pulseQuadrantIcon]. */
+    private var quadrantTapFlashEnabled: Boolean = false
 
     /** Selected now-playing face (see [MiscPreferences.WEAR_SCREEN_FACE] and NowPlayingFace.kt):
      *  "classic" is the original View presentation, "expressive" the Compose face. */
@@ -275,7 +342,8 @@ class MainActivity : WearCompanionWatchActivity(),
 
     /** Face keys rendered by the Compose view (everything except the View-based classic). */
     private val composeFaces = setOf(
-            "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material"
+            "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum",
+            "material", "immersive"
     )
 
     /** Mirrors [FourWayTouchLayout]'s own tap-feedback pulse at a higher z-order, drawn into
@@ -288,12 +356,36 @@ class MainActivity : WearCompanionWatchActivity(),
         TapPulseDrawable(ResourcesCompat.getColor(resources, com.svartifoss.snfell.common.R.color.music_screen_ripple, null))
     }
 
+    /** Drawn into R.id.swipe_trail_overlay, the topmost view in content_frame - so unlike
+     *  [composeTapPulse] it doesn't need a face-conditional, the same instance renders above
+     *  Classic and every Compose face alike. Fed live points via [onTouchMove] while a touch is
+     *  unclassified, revealed only once a swipe actually fires (see [onUpwardsSwipe] and
+     *  siblings), gated by [swipeTrailEnabled]. */
+    private val swipeTrail by lazy {
+        SwipeTrailDrawable(ResourcesCompat.getColor(resources, com.svartifoss.snfell.common.R.color.music_screen_ripple, null))
+    }
+
+    /** Whether the *currently active* config (playing or stopped, whichever is live) has at
+     *  least one swipe gesture assigned - recomputed by [buttonConfigObserver] on every config
+     *  swap, exactly the condition the user asked for: a screen with nothing assigned to swipes
+     *  never shows the trail, one with at least one assignment always does, regardless of which
+     *  direction was actually performed. */
+    private var swipeTrailEnabled = false
+
+    /** Set once a swipe is actually recognized during the current touch sequence, so
+     *  [onTouchUp] knows whether to [SwipeTrailDrawable.discard] the just-recorded path (a tap,
+     *  long-press, or quadrant gesture shouldn't leave a stray trail) or leave the just-revealed
+     *  fade alone. */
+    private var swipeTrailRevealedThisTouch = false
+
     private var paletteGeneration = 0
     private var lastPaletteArt: Bitmap? = null
     private var lastKnownDurationMs: Long = 0L
     private var lastKnownPositionMs: Long = 0L
     private var pendingRotarySeekFraction: Float? = null
     private var latestAlbumArt: Bitmap? = null
+    private var latestSourceIcon: Bitmap? = null
+    private var latestSourceIconTemplate = false
     private var rawAccentColor: Int = 0
     private var rawSecondaryAccentColor: Int = 0
     private var rawTertiaryAccentColor: Int = 0
@@ -344,6 +436,15 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private lateinit var preferences: SharedPreferences
 
+    /** Language this instance's Resources were built with; a sync that changes it forces a
+     *  recreate. Captured in [attachBaseContext], which runs before anything else. */
+    private var createdLanguageTag: String = AppLocales.SYSTEM
+
+    override fun attachBaseContext(newBase: Context) {
+        createdLanguageTag = WatchLanguage.storedTag(newBase)
+        super.attachBaseContext(WatchLanguage.attach(newBase))
+    }
+
     private val viewModel: MusicViewModel by viewModels()
 
     private var rotatingInputDisabledUntil = 0L
@@ -382,6 +483,19 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Selected quick-actions panel style (see [MiscPreferences.WEAR_QUICK_PANEL_STYLE]):
      *  "glass"/"minimal"/"material"/"tonal". Themes the round slot buttons and the long row. */
     private var quickPanelStyle: String = "glass"
+    /** Dedicated Up Next pill background style (MiscPreferences.WEAR_UP_NEXT_PILL_STYLE); "follow"
+     *  defers to [quickPanelStyle]. See [upNextPillBackground]. */
+    private var upNextPillStyle: String = "follow"
+    /** Whether pills that have their own cover art should be filled with it (see
+     *  QueueStyle.COVER). Driven by the queue style, which acts as the shared list-style choice. */
+    private var coverPillsActive = false
+    /** Which cover variation is active, so the View-side pills match the queue's rows. */
+    private var coverPillStyle: QueueStyle = QueueStyle.COVER
+    /** Whether an eligible quick-panel action row (genuine fetched cover art, not just any
+     *  non-tintable icon) is also allowed to fill its pill with it - opt-in, on top of
+     *  [coverPillsActive], since not every user wants shortcut rows turned into cover art. */
+    private var quickPanelShortcutCoverEnabled = false
+    private var listRowSize: QueueRowSize = QueueRowSize.NORMAL
     private var quickPanelLayout: String = "stacked"
     /** "manual" uses assigned slots; "session" mirrors actions exposed by the active player. */
     private var quickPanelSource: String = "manual"
@@ -417,7 +531,11 @@ class MainActivity : WearCompanionWatchActivity(),
     private val expressiveFaceListener = object : NowPlayingFaceListener {
         override fun onPlayPauseTap() {
             buzz()
-            viewModel.togglePlayPause()
+            // Follow the user's Controls config for the center tap if one is set, otherwise fall
+            // back to the default play/pause toggle (same idiom as onSkipPreviousTap/onSkipNextTap).
+            if (!viewModel.executeAction(ButtonInfo(false, CenterButton.TAP, GESTURE_SINGLE_TAP))) {
+                viewModel.togglePlayPause()
+            }
         }
 
         override fun onCenterDoubleTap() {
@@ -487,6 +605,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
         binding.fourWayTouch.listener = this
         binding.composeTapPulse.setImageDrawable(composeTapPulse)
+        binding.swipeTrailOverlay.setImageDrawable(swipeTrail)
         binding.seekBar.onSeekPreview = { fraction -> showSeekOverlay(fraction) }
         binding.seekBar.onSeekFinished = { fraction ->
             viewModel.seekTo(fraction)
@@ -519,6 +638,10 @@ class MainActivity : WearCompanionWatchActivity(),
                 "eclipse" -> EclipseFace(state = faceState.value, listener = expressiveFaceListener)
                 "spectrum" -> SpectrumFace(state = faceState.value, listener = expressiveFaceListener)
                 "material" -> MaterialFace(state = faceState.value, listener = expressiveFaceListener)
+                "immersive" -> ImmersiveFace(state = faceState.value, listener = expressiveFaceListener)
+                // Chrono is an AOD-only face (the awake screen never selects it), rendered in the
+                // same ComposeView while ambient - see applyAmbientPresentation.
+                "chrono" -> ChronoAmbientFace(state = faceState.value)
                 else -> ExpressiveFace(state = faceState.value, listener = expressiveFaceListener)
             }
         }
@@ -534,7 +657,9 @@ class MainActivity : WearCompanionWatchActivity(),
 
             override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
                 buzz()
-                viewModel.togglePlayPause()
+                if (!viewModel.executeAction(ButtonInfo(false, CenterButton.TAP, GESTURE_SINGLE_TAP))) {
+                    viewModel.togglePlayPause()
+                }
                 return true
             }
 
@@ -707,6 +832,7 @@ class MainActivity : WearCompanionWatchActivity(),
         stemButtonsManager = StemButtonsManager(WatchInfoSender.getAvailableButtonsOnWatch(this), stemButtonListener, lifecycleScope)
 
         viewModel.albumArt.observe(this, albumArtObserver)
+        viewModel.sourceIcon.observe(this, sourceIconObserver)
         viewModel.currentButtonConfig.observe(this, buttonConfigObserver)
         // Preference delivery must remain active while the activity is in ambient/paused state.
         // A lifecycle-bound observer can be suspended there, making an already-received phone
@@ -866,6 +992,10 @@ class MainActivity : WearCompanionWatchActivity(),
         val time = java.text.SimpleDateFormat(pattern, java.util.Locale.getDefault())
                 .format(java.util.Date())
         binding.ambientClock.text = time
+        // Keep the Chrono ambient face's large Compose clock in sync with the per-minute update.
+        if (faceState.value.clockText != time) {
+            updateFaceState { it.copy(clockText = time) }
+        }
     }
 
     private fun updateDeveloperOverlay() {
@@ -930,6 +1060,15 @@ class MainActivity : WearCompanionWatchActivity(),
         val idle = it.status == Resource.Status.SUCCESS &&
                 (it.data == null || (it.data?.playing != true && it.data?.title.isNullOrBlank()))
 
+        // Whether the phone's source icon is a tintable monochrome template (notification small
+        // icon) or full-colour launcher artwork. Drives the glyph's tint on every face.
+        (it.data as? MusicState)?.let { state ->
+            if (state.sourceIconTemplate != latestSourceIconTemplate) {
+                latestSourceIconTemplate = state.sourceIconTemplate
+                updateFaceState { face -> face.copy(sourceIconTemplate = state.sourceIconTemplate) }
+            }
+        }
+
         if (it.status == Resource.Status.SUCCESS && it.data != null && !idle) {
             titleLineIsStatus = false
             if ((it.data as MusicState).playing) {
@@ -940,6 +1079,11 @@ class MainActivity : WearCompanionWatchActivity(),
             } else {
                 setStatusMessageOnArtistLine(getString(R.string.playback_stopped))
             }
+            // After the artist colour is set: a template source icon is tinted to whatever colour
+            // the artist line now shows, so it follows the per-track palette instead of a stale
+            // colour. (It used to be applied only on the source-icon-template *flag* change, which
+            // ran before this and left the glyph the wrong colour.)
+            applyClassicSourceIcon()
 
             binding.textTitle.text = it.data?.title
             updateRecentsLabel((it.data as MusicState).title)
@@ -1076,6 +1220,51 @@ class MainActivity : WearCompanionWatchActivity(),
         setTaskDescription(description)
     }
 
+    private val sourceIconObserver = Observer<Bitmap?> { bitmap ->
+        latestSourceIcon = bitmap
+        updateFaceState { it.copy(sourceIcon = bitmap?.asImageBitmap()) }
+        applyClassicSourceIcon()
+    }
+
+    /** Draws the source icon inline with the Classic face's artist line. A real sibling
+     *  [ImageView] in the centred row (see activity_main.xml), not a compound drawable on the
+     *  TextView - a start-compound drawable on a match_parent centred TextView anchors to the
+     *  view's own edge rather than next to the (shorter, centred) text, which is what put it far
+     *  from the artist name. Cleared in ambient for the same reason the Compose glyph
+     *  ([SourceIconGlyph]) is skipped there: the AOD contract is outline-only, with no filled
+     *  artwork - [inAmbient] is the reliable signal for that. */
+    private fun applyClassicSourceIcon() {
+        val iconView = binding.sourceIconClassic
+        val icon = latestSourceIcon.takeUnless { inAmbient }
+        if (icon == null) {
+            iconView.visibility = View.GONE
+            iconView.setImageDrawable(null)
+            return
+        }
+
+        // A square box sized off the artist line's own text size, with FIT_CENTER below keeping
+        // the icon's own aspect ratio inside it - forcing non-square source art into a square
+        // stretched it, which made the glyph look skewed next to the artist name.
+        val box = (binding.textArtist.textSize * 1.1f).toInt().coerceAtLeast(1)
+        val params = iconView.layoutParams as LinearLayout.LayoutParams
+        params.width = box
+        params.height = box
+        params.marginEnd = (binding.textArtist.textSize * .28f).toInt()
+        iconView.layoutParams = params
+
+        iconView.scaleType = ImageView.ScaleType.FIT_CENTER
+        iconView.setImageBitmap(icon)
+        // A notification small icon is a flat white template, so it has to be tinted to the
+        // artist line's own colour or it reads as a foreign white blob next to accent-coloured
+        // text. Launcher artwork is full-colour and must stay untinted.
+        iconView.imageTintList = if (latestSourceIconTemplate) {
+            ColorStateList.valueOf(binding.textArtist.currentTextColor)
+        } else {
+            null
+        }
+        iconView.visibility = View.VISIBLE
+    }
+
     private val albumArtObserver = Observer<Bitmap?> { bitmap ->
         val previous = latestAlbumArt
         latestAlbumArt = bitmap
@@ -1098,6 +1287,10 @@ class MainActivity : WearCompanionWatchActivity(),
         // published together with its resolved accent inside updateDynamicAccentFromArt so the two
         // land atomically - see A4 in the blur/color coherence work.
         updateDynamicAccentFromArt(bitmap)
+        // The dynamic clock colour is derived from the region under the clock, so a new cover can
+        // flip it; album mode also follows the accent, refreshed just above. Cheap enough to run
+        // unconditionally rather than branch on the mode.
+        applyClockAppearance()
     }
 
     private fun updateDynamicAccentFromArt(art: Bitmap?) {
@@ -1158,7 +1351,12 @@ class MainActivity : WearCompanionWatchActivity(),
             val realAlbumColors = swatchInfos
                     .sortedByDescending { it.population }
                     .map { it.rgb }
-            val companions = selectAlbumCompanionColors(primary, realAlbumColors)
+            // Named tonal swatches first (they're chosen by Palette specifically to be distinct
+            // from each other), population-ranked raw swatches only as a fallback - two of the
+            // most-populous swatches are often near-duplicate shades of the same dominant hue,
+            // which used to make Expressive collapse into Original's single-hue look far more
+            // often than a genuinely monochromatic cover would justify.
+            val companions = selectAlbumCompanionColors(primary, preferredColors + realAlbumColors)
             val secondary = companions.secondary ?: albumToneFallback(primary, .42f)
             val tertiary = companions.tertiary ?: albumToneFallback(primary, .68f)
 
@@ -1298,6 +1496,7 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.volumeBar.tertiaryColor = volumeTertiaryAccentColor
         binding.fourWayTouch.setTapFeedbackColor(currentAccentColor)
         composeTapPulse.accentColor = currentAccentColor
+        swipeTrail.accentColor = currentAccentColor
         // Artist name uses the same dark-theme-adapted (lightened) accent as the queue's now-playing row.
         binding.textArtist.setTextColor(resolvedArtistTextColor())
 
@@ -1310,7 +1509,7 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         if (isQuickActionsPanelShowing()) {
-            binding.quickActionUpNext.background = quickPanelRowBackground()
+            binding.quickActionUpNext.background = upNextPillBackground()
             renderQuickPanelExtraActions()
             updateQuickActionButtonStates()
         }
@@ -1327,8 +1526,13 @@ class MainActivity : WearCompanionWatchActivity(),
                     materialSurfaceSoftened = materialSurfaceSoftened,
                     secondaryAccentColor = resolvedSecondaryAccent(),
                     tertiaryAccentColor = resolvedTertiaryAccent(),
+                    // Album/desaturated/custom shading tones follow the current accent.
+                    backdropShadingColor = resolvedShadingColor(),
                     progressColor = binding.seekBar.progressColor,
                     artistColor = binding.textArtist.currentTextColor,
+                    // The awake Up Next pill's colours follow the accent, so refresh them here too.
+                    upNextPillFill = upNextPillFillColor(),
+                    upNextPillTextColor = awakeUpNextPillTint(),
                     // Track changes can land mid-ambient - keep the AOD's album-mode tint
                     // following the new art's accent.
                     ambientTint = resolvedAodTint()
@@ -1425,26 +1629,31 @@ class MainActivity : WearCompanionWatchActivity(),
     private val grayscaleFilter = ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
 
     /** Renders the main background album art — sharp cover, full-screen blur, black & white
-     *  variants, or hidden entirely, per user setting. */
+     *  variants, Square (an uncropped inset over a blurred backdrop), or hidden entirely, per
+     *  user setting. */
     private fun applyMainAlbumArtDisplay(source: Bitmap?, forceBlur: Boolean) {
         applyAlbumArtDisplay(
                 source = source,
                 blurred = forceBlur,
                 grayscale = albumArtGrayscale,
-                hidden = albumArtHidden
+                hidden = albumArtHidden,
+                square = playerBackgroundStyle.squareCornerRadiusFraction != null
         )
     }
 
     /** Low-level artwork renderer shared by interactive and ambient modes. Ambient treatment is
-     * independent from the interactive artwork style, so blur/monochrome/visibility must be
-     * supplied explicitly instead of mutating the interactive preference fields. */
+     * independent from the interactive artwork style, so blur/monochrome/visibility - and
+     * [square], which only the interactive caller ever passes true - must be supplied explicitly
+     * instead of reading the interactive preference fields directly. */
     private fun applyAlbumArtDisplay(
             source: Bitmap?,
             blurred: Boolean,
             grayscale: Boolean,
-            hidden: Boolean
+            hidden: Boolean,
+            square: Boolean = false
     ) {
         binding.albumArt.colorFilter = if (grayscale) grayscaleFilter else null
+        updateSquareInset(if (square && !hidden) source else null)
 
         if (source == null || hidden) {
             binding.albumArt.setImageBitmap(null)
@@ -1539,26 +1748,167 @@ class MainActivity : WearCompanionWatchActivity(),
      * than collapsing the cover to 8–16 pixels and, because the result is cached when art or
      * preferences change, no bitmap work occurs during a seek/volume gesture.
      */
-    private fun createBlurredBitmapLegacy(source: Bitmap, radiusPx: Float): Bitmap {
-        // Shared with the phone preview so a given radius blurs the same in both; scale shrinks
-        // from ~58% of the source at the minimum radius down to ~18% at the maximum.
-        val scale = PaletteTransforms.legacyBlurScale(radiusPx)
-        val targetWidth = (source.width * scale).roundToInt()
-                .coerceAtLeast(MIN_LEGACY_BLUR_SAMPLE_PX)
-                .coerceAtMost(source.width)
-        val targetHeight = (source.height * scale).roundToInt()
-                .coerceAtLeast(MIN_LEGACY_BLUR_SAMPLE_PX)
-                .coerceAtMost(source.height)
-        val passes = (2 + radiusPx.roundToInt() / 18).coerceIn(2, 8)
-        var current = source
-        repeat(passes) {
-            val down = Bitmap.createScaledBitmap(current, targetWidth, targetHeight, true)
-            val up = Bitmap.createScaledBitmap(down, source.width, source.height, true)
-            if (current !== source) current.recycle()
-            if (down !== up) down.recycle()
-            current = up
+    /** Delegates to the shared implementation so the watch, the cover pills and the phone
+     *  preview all blur identically for a given radius. */
+    private fun createBlurredBitmapLegacy(source: Bitmap, radiusPx: Float): Bitmap =
+            BitmapBlur.blur(source, radiusPx)
+
+    /** Pending "settle back to a plain matrix-scaled bitmap" callback from the last
+     *  [updateSquareInset] cross-fade, so a rapid follow-up call (quick track skips) cancels it
+     *  instead of letting it overwrite a newer bitmap with a stale one. */
+    private var squareInsetSettleRunnable: Runnable? = null
+
+    /** Shows/hides and fills the Square style's sharp inset (`album_art_square_inset` in
+     *  activity_main.xml) - null hides it. The blurred backdrop stays entirely on
+     *  `binding.albumArt`, handled by the ordinary blurred/plain paths in [applyAlbumArtDisplay]
+     *  and already cross-fades there (see [fadeToAlbumArt]); this only ever swapped its own
+     *  Bitmap outright, so the sharp inset popped instantly on every track change while the
+     *  backdrop behind it eased in - this cross-fades the inset too, to match.
+     *
+     *  Reworked from a straight setImageBitmap: the view's `scaleType="matrix"` means a single
+     *  [applySquareInsetMatrix] only ever positions *one* bitmap at a time, so a
+     *  [TransitionDrawable] of the raw old/new bitmaps can't be used directly (both would be
+     *  forced through whichever bitmap's matrix is current). Instead each frame is pre-composed
+     *  into a view-sized [Bitmap] with its own contain-fit already baked in via
+     *  [composeSquareInsetFrame], so the two frames the TransitionDrawable cross-fades between
+     *  are already positioned identically regardless of the two source bitmaps' own dimensions -
+     *  the outgoing frame is a live snapshot ([snapshotView]) of whatever was on screen, so it's
+     *  correct even if that was mid cross-fade itself. Settles back to a plain matrix-scaled
+     *  bitmap once the transition finishes, ready for the next call. */
+    private fun updateSquareInset(source: Bitmap?) {
+        val insetView = binding.albumArtSquareInset
+        squareInsetSettleRunnable?.let { insetView.removeCallbacks(it) }
+        squareInsetSettleRunnable = null
+
+        if (source == null) {
+            insetView.visibility = View.GONE
+            insetView.setImageBitmap(null)
+            return
         }
-        return current
+
+        insetView.clipToOutline = true
+        insetView.outlineProvider = squareInsetOutlineProvider
+
+        val previousFrame = if (insetView.visibility == View.VISIBLE &&
+                insetView.width > 0 && insetView.height > 0) {
+            snapshotView(insetView)
+        } else {
+            null
+        }
+        insetView.visibility = View.VISIBLE
+
+        fun settle() {
+            insetView.scaleType = ImageView.ScaleType.MATRIX
+            insetView.setImageBitmap(source)
+            applySquareInsetMatrix(insetView, source)
+            insetView.invalidateOutline()
+        }
+
+        val newFrame = previousFrame?.let { composeSquareInsetFrame(insetView, source) }
+        if (previousFrame == null || newFrame == null) {
+            // First appearance, not laid out yet, or the style just switched on - nothing sane
+            // to cross-fade from.
+            settle()
+            return
+        }
+
+        val transition = TransitionDrawable(
+                arrayOf(BitmapDrawable(resources, previousFrame), BitmapDrawable(resources, newFrame)))
+        insetView.scaleType = ImageView.ScaleType.FIT_XY
+        insetView.setImageDrawable(transition)
+        insetView.invalidateOutline()
+        transition.startTransition(ALBUM_ART_CROSSFADE_MS)
+
+        val runnable = Runnable {
+            settle()
+            squareInsetSettleRunnable = null
+        }
+        squareInsetSettleRunnable = runnable
+        insetView.postDelayed(runnable, ALBUM_ART_CROSSFADE_MS.toLong())
+    }
+
+    /** Renders [view]'s current on-screen content (post-clip, post-transform) into a same-sized
+     *  [Bitmap] - used to grab a stable "outgoing frame" for [updateSquareInset]'s cross-fade
+     *  that's correct even mid-transition, since it captures whatever is actually drawn rather
+     *  than assuming a single static bitmap is showing. */
+    private fun snapshotView(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        view.draw(Canvas(bitmap))
+        return bitmap
+    }
+
+    /** Composes [source] into a [view]-sized frame with the same contain-fit
+     *  [squareInsetFitMatrix] gives [applySquareInsetMatrix], so it can stand in as one half of a
+     *  [TransitionDrawable] cross-fade without the shared `imageMatrix` a plain Bitmap would need
+     *  (and which only ever fits one source bitmap's own dimensions at a time). Null when the
+     *  view isn't laid out yet. */
+    private fun composeSquareInsetFrame(view: ImageView, source: Bitmap): Bitmap? {
+        val bounds = squareInsetBounds(view) ?: return null
+        val frame = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        Canvas(frame).drawBitmap(source, squareInsetFitMatrix(bounds, source), null)
+        return frame
+    }
+
+    /** The largest square that fits inside the round bezel without a corner being cut off (side
+     *  = min(width, height) / sqrt(2)) - the target region for the Square style's sharp inset,
+     *  shared by [squareInsetOutlineProvider] (which clips the view to it) and
+     *  [applySquareInsetMatrix] (which fits the bitmap into it), so the two can never drift
+     *  apart into a clip region and a scale that disagree. */
+    private fun squareInsetBounds(view: View): RectF? {
+        val side = minOf(view.width, view.height) / sqrt(2f)
+        if (side <= 0f) return null
+        val left = (view.width - side) / 2f
+        val top = (view.height - side) / 2f
+        return RectF(left, top, left + side, top + side)
+    }
+
+    /** Fits the *entire* bitmap into [squareInsetBounds] with contain scaling - the smaller of
+     *  the two axis scales, never the larger - so a source that isn't exactly square is
+     *  letterboxed inside the inset square rather than cropped; the blurred backdrop underneath
+     *  shows through any letterbox gap. The view stays `match_parent` and `scaleType="matrix"`
+     *  (see activity_main.xml), so without this the platform's own centerCrop math would scale
+     *  against the full screen instead of the much smaller inset, zooming into the art's center
+     *  well past what the outline clip below reveals - that was the original bug. Deferred to the
+     *  next layout pass if the view hasn't been measured yet (only possible on the very first
+     *  call, before content_frame's first layout). */
+    private fun applySquareInsetMatrix(view: ImageView, source: Bitmap) {
+        if (view.width == 0 || view.height == 0) {
+            view.doOnLayout { applySquareInsetMatrix(view, source) }
+            return
+        }
+        val bounds = squareInsetBounds(view) ?: return
+        view.imageMatrix = squareInsetFitMatrix(bounds, source)
+    }
+
+    /** The contain-fit transform shared by [applySquareInsetMatrix] (applied live as an
+     *  ImageView's `imageMatrix`) and [composeSquareInsetFrame] (baked into an offscreen
+     *  Bitmap) - kept as one function so the two can never drift into disagreeing about where
+     *  the art sits. */
+    private fun squareInsetFitMatrix(bounds: RectF, source: Bitmap): Matrix {
+        val scale = minOf(bounds.width() / source.width, bounds.height() / source.height)
+        return Matrix().apply {
+            setScale(scale, scale)
+            postTranslate(
+                    bounds.centerX() - source.width * scale / 2f,
+                    bounds.centerY() - source.height * scale / 2f
+            )
+        }
+    }
+
+    /** Clips the sharp inset to [squareInsetBounds], rounded per the active Square variant's
+     *  [PlayerBackgroundStyle.squareCornerRadiusFraction]. Reads [playerBackgroundStyle] fresh on
+     *  every call, so switching between Square variants just needs [updateSquareInset] to
+     *  invalidate the outline, not a new provider instance. */
+    private val squareInsetOutlineProvider = object : android.view.ViewOutlineProvider() {
+        override fun getOutline(view: View, outline: android.graphics.Outline) {
+            val bounds = squareInsetBounds(view) ?: return
+            val radiusFraction = playerBackgroundStyle.squareCornerRadiusFraction ?: 0.10f
+            outline.setRoundRect(
+                    bounds.left.roundToInt(), bounds.top.roundToInt(),
+                    bounds.right.roundToInt(), bounds.bottom.roundToInt(),
+                    bounds.width() * radiusFraction
+            )
+        }
     }
 
     private val buttonConfigObserver = Observer<WatchActionConfigProvider?> { config ->
@@ -1623,6 +1973,13 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         backButtonOverrideCallback.isEnabled = config.isActionActive(ButtonInfo(true, KeyEvent.KEYCODE_BACK, GESTURE_SINGLE_TAP))
+
+        // Gates the swipe comet trail (see swipeTrail/onTouchMove/onUpwardsSwipe and siblings):
+        // only shown when this specific screen's config - playing or stopped, whichever is
+        // currently active - has at least one swipe direction actually assigned.
+        swipeTrailEnabled = config.isActionActive(ButtonInfo(false, SwipeGesture.UP, GESTURE_SINGLE_TAP)) ||
+                config.isActionActive(ButtonInfo(false, SwipeGesture.DOWN, GESTURE_SINGLE_TAP)) ||
+                config.isActionActive(ButtonInfo(false, SwipeGesture.LEFT, GESTURE_SINGLE_TAP))
 
         updateScreenButtons(config)
 
@@ -2292,7 +2649,9 @@ class MainActivity : WearCompanionWatchActivity(),
      * used while leaving ambient because
      * AmbientLifecycleObserver may still report ambient from inside its exit callback. */
     private fun syncScreenButtonsVisibility(forceInteractive: Boolean = false) {
-        val active = hasActiveMiniButtons(screenButtonsConfigured, faceState.value.idle)
+        val miniButtonsEnabled = miniButtonsEnabledNow()
+        val active = hasActiveMiniButtons(
+                screenButtonsConfigured, faceState.value.idle, miniButtonsEnabled)
         val visible = if (forceInteractive) {
             active && !overlayActive
         } else {
@@ -2300,16 +2659,37 @@ class MainActivity : WearCompanionWatchActivity(),
                     configured = screenButtonsConfigured,
                     idle = faceState.value.idle,
                     ambient = ambientObserver.isAmbient,
-                    overlayActive = overlayActive)
+                    overlayActive = overlayActive,
+                    enabledForFace = miniButtonsEnabled)
+        }
+        val wasVisible = binding.screenButtonsRow.visibility == View.VISIBLE
+        // Newly shown: keep it transparent until repositionScreenButtonsRow has placed it. The row
+        // is laid out at its default XML position first and only nudged into place in a later post,
+        // so drawing it in between flashed the outer icons clipped by the round bezel. Alpha 0 lets
+        // it measure without being seen; the reposition sets alpha back to 1.
+        if (visible && !wasVisible) {
+            binding.screenButtonsRow.alpha = 0f
         }
         binding.screenButtonsRow.visibility = if (visible) View.VISIBLE else View.GONE
 
         // Curated/Expressive faces reserve their lower chrome only for a row that can actually
         // appear. Only the empty idle state restores their default lower composition.
+        // The awake Up Next pill fills that same bottom band, so it shows only when the row does
+        // not (and never on the empty idle screen).
+        val pillVisible = showUpNextPillPref && !active && !faceState.value.idle
         updateFaceState { state ->
             state.copy(
                     showDefaultBottomPills = !active,
-                    miniButtonsTopFraction = if (active) state.miniButtonsTopFraction else 1f)
+                    // The faces read miniButtonsTopFraction to keep the track time / lower content
+                    // clear of whatever occupies the bottom band. The pill takes the same band the
+                    // mini-button row would (BottomCenter, padding .07, height ~.25 of the screen),
+                    // so reserve its top edge (~.66) - otherwise the track time drew behind it.
+                    miniButtonsTopFraction = when {
+                        active -> state.miniButtonsTopFraction
+                        pillVisible -> AWAKE_PILL_TOP_FRACTION
+                        else -> 1f
+                    },
+                    showUpNextPill = pillVisible)
         }
         if (visible) {
             binding.screenButtonsRow.post { repositionScreenButtonsRow() }
@@ -2418,6 +2798,11 @@ class MainActivity : WearCompanionWatchActivity(),
         row.pivotY = row.height.toFloat()
         row.scaleX = scale
         row.scaleY = scale
+        // Now placed: reveal it (syncScreenButtonsVisibility hid it at alpha 0 to avoid a flash of
+        // the un-positioned row). Restore the user's configured opacity, not a hardcoded 1.
+        if (row.alpha != screenButtonsOpacity) {
+            row.alpha = screenButtonsOpacity
+        }
 
         val effectiveTop = bottom - (buttonHeight + maxRise) * scale
         val topFraction = (effectiveTop / content.height).coerceIn(.20f, .95f)
@@ -2842,6 +3227,15 @@ class MainActivity : WearCompanionWatchActivity(),
 
         preferences = it
 
+        // A language change cannot be applied in place: every already-inflated string, and the
+        // Resources the activity was created against, are bound to the old locale. Recreating is
+        // the only way, and it must happen before any of the appearance work below - that work
+        // would just be redone by the new instance.
+        if (WatchLanguage.tagFrom(it) != createdLanguageTag) {
+            recreate()
+            return@Observer
+        }
+
         // Resolve the active theme up front. screenFace remains the validated structural renderer
         // used by Compose dispatch and AOD follow; appearanceContext owns all scoped reads.
         appearanceContext = ThemeAppearance.resolve(preferences)
@@ -2854,8 +3248,13 @@ class MainActivity : WearCompanionWatchActivity(),
 
         val alwaysDisplayClock = faceBool(MiscPreferences.ALWAYS_SHOW_TIME)
         if (!ambientObserver.isAmbient) {
-
-            if (alwaysDisplayClock) {
+            if (screenFace in composeFaces) {
+                // Compose faces render their own FaceClock. Keep the classic View clock (and the
+                // top quadrant icon) hidden so the two clocks never stack - they use slightly
+                // different top offsets and briefly read as a doubled clock otherwise.
+                binding.ambientClock.visibility = View.GONE
+                binding.iconTop.visibility = View.GONE
+            } else if (alwaysDisplayClock) {
                 binding.ambientClock.visibility = View.VISIBLE
                 binding.iconTop.visibility = View.GONE
                 handler.sendEmptyMessage(MESSAGE_UPDATE_CLOCK)
@@ -2886,21 +3285,16 @@ class MainActivity : WearCompanionWatchActivity(),
         }
         playerShadingStyle = PlayerShadingStyle.fromPreference(
                 faceString(MiscPreferences.WEAR_PLAYER_SHADING_STYLE))
-        val namedIntensityKey = MiscPreferences.WEAR_PLAYER_SHADING_INTENSITY.key
-        val hasNamedIntensity = FaceScopedPreferences.containsExplicitValue(
-                preferences, namedIntensityKey, appearanceContext)
-        playerShadingIntensity = if (hasNamedIntensity) {
-            PlayerShadingIntensity.fromPreference(
-                    faceString(MiscPreferences.WEAR_PLAYER_SHADING_INTENSITY)).multiplier
-        } else {
-            PlayerShadingIntensity.fromLegacyPercent(
-                    faceInt(MiscPreferences.ALBUM_ART_DIM_STRENGTH)).multiplier
-        }
+        playerShadingIntensity = resolveShadingMultiplier()
+        shadingColorMode = faceString(MiscPreferences.WEAR_SHADING_COLOR_MODE)
+                ?: MiscPreferences.WEAR_SHADING_COLOR_MODE.defaultValue
+        shadingCustomColor = faceString(MiscPreferences.WEAR_SHADING_CUSTOM_COLOR).orEmpty()
         updateFaceState {
             it.copy(
                     backdropDimEnabled = dimAlbumArt,
                     backdropDimStrength = playerShadingIntensity,
-                    backdropShadingStyle = playerShadingStyle
+                    backdropShadingStyle = playerShadingStyle,
+                    backdropShadingColor = resolvedShadingColor()
             )
         }
         volumeBarTimeoutMs = Preferences.getInt(preferences, MiscPreferences.VOLUME_OVERLAY_TIMEOUT)
@@ -2934,17 +3328,30 @@ class MainActivity : WearCompanionWatchActivity(),
             )
         }
 
+        clockColorMode = faceString(MiscPreferences.WEAR_CLOCK_COLOR_MODE)
+        clockCustomColor = faceString(MiscPreferences.WEAR_CLOCK_CUSTOM_COLOR).orEmpty()
+        clockOpacity = faceInt(MiscPreferences.WEAR_CLOCK_OPACITY)
+        // applyClockAppearance() is deferred until after wearFontKey and the face state's fontKey
+        // are refreshed below, so the View clock's typeface uses the just-read font on this pass.
+
         screenButtonsCurveStyle = faceString(MiscPreferences.WEAR_SCREEN_BUTTONS_CURVE_STYLE)
         screenButtonsBgStyle = faceString(MiscPreferences.WEAR_SCREEN_BUTTONS_BG)
         screenButtonsShape = faceString(MiscPreferences.WEAR_SCREEN_BUTTONS_SHAPE)
         screenButtonsOpacity = faceInt(MiscPreferences.WEAR_SCREEN_BUTTONS_OPACITY)
                 .coerceIn(0, 100) / 100f
+        miniButtonsMode = faceString(MiscPreferences.WEAR_MINI_BUTTONS_MODE)
+        gesturesMode = faceString(MiscPreferences.WEAR_GESTURES_MODE)
+        showUpNextPillPref = faceBool(MiscPreferences.WEAR_SHOW_UP_NEXT_PILL)
         // The shape also drives per-button WIDTH/HEIGHT (circle -> square box, wide pills -> wider
         // boxes - see configureScreenButtonsGeometry). Restyling without re-running the geometry
         // left a shape change applying only its corner radius until the next full config sync,
         // which is why shape switches looked half-applied on the watch.
         configureScreenButtonsGeometry()
         styleScreenButtons()
+        // The enabled flag doesn't change screenButtonsConfigured itself, so it needs its own
+        // visibility pass - configureScreenButtonsGeometry/styleScreenButtons only restyle a row
+        // that's already showing, they don't decide whether it should be.
+        syncScreenButtonsVisibility()
         binding.screenButtonsRow.post { repositionScreenButtonsRow() }
 
         overlayBlurRadiusPx = faceInt(MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS)
@@ -2962,7 +3369,23 @@ class MainActivity : WearCompanionWatchActivity(),
         seekOverlayStyle = faceString(MiscPreferences.WEAR_SEEK_STYLE)
         seekPanelLayout = faceString(MiscPreferences.WEAR_SEEK_LAYOUT)
         quickPanelStyle = faceString(MiscPreferences.WEAR_QUICK_PANEL_STYLE)
+        upNextPillStyle = faceString(MiscPreferences.WEAR_UP_NEXT_PILL_STYLE)
+        // The awake player pill shares the quick-panel Up Next style; refresh its resolved colours
+        // so a style change updates the player pill too, not only the quick panel.
+        updateFaceState {
+            it.copy(upNextPillFill = upNextPillFillColor(), upNextPillTextColor = awakeUpNextPillTint())
+        }
         quickPanelLayout = faceString(MiscPreferences.WEAR_QUICK_PANEL_LAYOUT)
+        // One switch drives every cover-capable pill (queue, menu, quick panel) rather than a
+        // separate picker per surface, so "use the cover" is a single choice for the user.
+        coverPillStyle = QueueStyle.fromPref(faceString(MiscPreferences.WEAR_QUEUE_STYLE))
+        coverPillsActive = coverPillStyle.isCover
+        quickPanelShortcutCoverEnabled = faceBool(MiscPreferences.WEAR_QUICK_PANEL_SHORTCUT_COVER)
+        // Legacy cover_compact / cover_tall still name their own size; otherwise the standalone
+        // preference owns it, so the quick panel's pills match the queue's rows.
+        listRowSize = coverPillStyle.legacyRowSize
+                ?: QueueRowSize.fromPref(faceString(MiscPreferences.WEAR_LIST_ROW_SIZE))
+        applyListRowHeight()
         // Source controls a phone-side MediaSession binding and is intentionally global; it is
         // not part of a saved appearance snapshot (see FaceScopedPreferences.SCOPED_KEYS).
         quickPanelSource = Preferences.getString(
@@ -3006,6 +3429,7 @@ class MainActivity : WearCompanionWatchActivity(),
         screenTheme = ScreenTheme.fromPreference(
                 faceString(MiscPreferences.WEAR_SCREEN_THEME)
         )
+        quadrantTapFlashEnabled = faceBool(MiscPreferences.WEAR_QUADRANT_TAP_FLASH)
         showTrackTitle = faceBool(MiscPreferences.WEAR_SHOW_TRACK_TITLE)
         showTrackArtist = faceBool(MiscPreferences.WEAR_SHOW_TRACK_ARTIST)
         playerControlsVisible = faceBool(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE)
@@ -3036,6 +3460,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     fontKey = wearFontKey
             )
         }
+        // Now that wearFontKey and the state's fontKey are current, resolve the awake clock colour
+        // + typeface (see the deferred note where the clock prefs are read above).
+        applyClockAppearance()
         applyMetadataVisibility()
 
         trackTimeMode = faceString(MiscPreferences.WEAR_TRACK_TIME_MODE)
@@ -3092,6 +3519,37 @@ class MainActivity : WearCompanionWatchActivity(),
         updateDeveloperOverlay()
     }
 
+    /** Shading strength as a 0..[SHADING_MAX_MULTIPLIER] multiplier from the numeric percentage
+     *  preference. A user who set a legacy named level but never touched the numeric slider keeps
+     *  that level's equivalent percentage until they do, so the migration is loss-free. */
+    private fun resolveShadingMultiplier(): Float {
+        val hasNumeric = FaceScopedPreferences.containsExplicitValue(
+                preferences, MiscPreferences.ALBUM_ART_DIM_STRENGTH.key, appearanceContext)
+        val hasNamed = FaceScopedPreferences.containsExplicitValue(
+                preferences, MiscPreferences.WEAR_PLAYER_SHADING_INTENSITY.key, appearanceContext)
+        val percent = if (!hasNumeric && hasNamed) {
+            PlayerShadingIntensity.percentFor(
+                    faceString(MiscPreferences.WEAR_PLAYER_SHADING_INTENSITY))
+        } else {
+            faceInt(MiscPreferences.ALBUM_ART_DIM_STRENGTH)
+        }
+        return percent.coerceIn(0, SHADING_MAX_PERCENT) / 100f
+    }
+
+    /** Colour that tints the shading gradient. Black by default; album/desaturated/custom resolve
+     *  to a dark, still-chromatic tone so the overlay keeps darkening while carrying the hue. */
+    private fun resolvedShadingColor(): Int {
+        val accent = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
+        return when (shadingColorMode) {
+            "album" -> PaletteTransforms.shadingTone(accent)
+            "desaturated" ->
+                PaletteTransforms.shadingTone(PaletteTransforms.softenedAlbumAccent(accent))
+            "custom" -> parseHexColorOrNull(shadingCustomColor)
+                    ?.let { PaletteTransforms.shadingTone(it) } ?: Color.BLACK
+            else -> Color.BLACK
+        }
+    }
+
     private fun applyAlbumArtScrim() {
         val usesSharedLayer = playerShadingStyle != PlayerShadingStyle.FOLLOW ||
                 playerBackgroundStyle.isPlainArtworkTreatment
@@ -3099,17 +3557,23 @@ class MainActivity : WearCompanionWatchActivity(),
                 style = playerShadingStyle,
                 intensity = if (dimAlbumArt && usesSharedLayer) playerShadingIntensity else 0f,
                 primary = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
-                secondary = resolvedSecondaryAccent()
+                secondary = resolvedSecondaryAccent(),
+                shadingColor = resolvedShadingColor()
         )
     }
 
     /** Native background renderer used only by Classic; Compose faces draw the same treatment
      * inside their own canvas so layout and background remain independently selectable. */
     private fun applyPlayerBackground() {
+        // Authored background styles (Expressive, Poster, ...) own their designed look and must
+        // render it regardless of the "Dim album art" toggle - that toggle governs the separate
+        // legibility scrim over plain artwork, not a background style's identity. The intensity
+        // slider still modulates their depth. Plain treatments have no authored overlay.
         val authoredStrength = if (
-            dimAlbumArt && playerShadingStyle == PlayerShadingStyle.FOLLOW
+            playerShadingStyle == PlayerShadingStyle.FOLLOW &&
+            !playerBackgroundStyle.isPlainArtworkTreatment
         ) {
-            (playerShadingIntensity / .8f).coerceIn(0f, 1.25f)
+            (playerShadingIntensity / .8f).coerceIn(0f, SHADING_MAX_MULTIPLIER / .8f)
         } else {
             0f
         }
@@ -3529,6 +3993,9 @@ class MainActivity : WearCompanionWatchActivity(),
     private fun effectiveAodStyle(): String = when (aodStyle) {
         // Compose faces each bring their own AOD variant; the classic face keeps classic AOD.
         "follow" -> if (screenFace in composeFaces) screenFace else "classic"
+        // "minimal" was removed (it read almost identically to classic); a stored value falls back
+        // to classic so existing installs keep a working AOD.
+        "minimal" -> "classic"
         else -> aodStyle
     }
 
@@ -3553,6 +4020,75 @@ class MainActivity : WearCompanionWatchActivity(),
             (255f * multiplier.coerceIn(0f, 1f)).roundToInt()
     )
 
+    /**
+     * The single ARGB colour (opacity baked in) for the awake clock, resolved from the
+     * WEAR_CLOCK_* prefs. Consumed by the Classic View clock and, via the face state, by the
+     * Compose [FaceClock] - so both always agree.
+     *
+     * "dynamic" samples only the small artwork region *under* the clock (top-centre), never the
+     * whole cover, and picks white on a dark region or black on a light one. It is a best-effort
+     * proxy: it reads the raw album bitmap, not the on-screen (blurred/shaded) background, so a
+     * heavily dimmed light cover can still read as "light". The fixed colour modes are there for
+     * anyone who wants a guaranteed result.
+     */
+    private fun resolveClockColor(): Int {
+        val base = when (clockColorMode) {
+            "album" -> currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
+            "custom" -> parseHexColorOrNull(clockCustomColor) ?: Color.WHITE
+            "dynamic" -> if (clockAreaIsLight()) Color.BLACK else Color.WHITE
+            else -> Color.WHITE
+        }
+        val alpha = (clockOpacity.coerceIn(10, 100) / 100f * 255f).roundToInt()
+        return ColorUtils.setAlphaComponent(base, alpha)
+    }
+
+    /**
+     * Whether the artwork region directly under the top-centre clock is light enough that black
+     * text would read better than white. Samples a small horizontal strip near the top of
+     * [latestAlbumArt] (roughly where the clock sits on a round screen) and thresholds its average
+     * luminance. Falls back to "dark" (→ white clock) when there is no artwork.
+     */
+    private fun clockAreaIsLight(): Boolean {
+        val art = latestAlbumArt ?: return false
+        val w = art.width
+        val h = art.height
+        if (w <= 0 || h <= 0) return false
+        // Strip: horizontal centre 35%-65%, vertical top 2%-15% - the band the clock occupies.
+        val left = (w * 0.35f).toInt().coerceIn(0, w - 1)
+        val right = (w * 0.65f).toInt().coerceIn(left + 1, w)
+        val top = (h * 0.02f).toInt().coerceIn(0, h - 1)
+        val bottom = (h * 0.15f).toInt().coerceIn(top + 1, h)
+        // Sample a small grid rather than every pixel - 5x3 is plenty for an average and keeps
+        // this cheap enough to run on every art change.
+        var luminanceSum = 0.0
+        var samples = 0
+        val cols = 5
+        val rows = 3
+        for (cx in 0 until cols) {
+            for (cy in 0 until rows) {
+                val x = left + (right - left) * cx / (cols - 1).coerceAtLeast(1)
+                val y = top + (bottom - top) * cy / (rows - 1).coerceAtLeast(1)
+                luminanceSum += ColorUtils.calculateLuminance(
+                        art.getPixel(x.coerceIn(0, w - 1), y.coerceIn(0, h - 1)))
+                samples++
+            }
+        }
+        val avg = if (samples > 0) luminanceSum / samples else 0.0
+        return avg > 0.55
+    }
+
+    /** Applies the resolved awake-clock colour + font to the Classic View clock and pushes the
+     *  colour into the face state for the Compose clock. Called on preference and artwork changes. */
+    private fun applyClockAppearance() {
+        val color = resolveClockColor()
+        binding.ambientClock.setTextColor(color)
+        binding.ambientClock.typeface = Typeface.create(
+                watchFontTypeface(this, wearFontKey), Typeface.NORMAL)
+        if (faceState.value.clockColor != color) {
+            updateFaceState { it.copy(clockColor = color) }
+        }
+    }
+
     /** Classic uses Android Views while every other face paints AOD in Compose. Keep the View
      * metadata on the same tint/intensity contract: the parent block supplies global intensity,
      * while secondary metadata retains a quieter relative alpha. The clock sits outside that
@@ -3573,7 +4109,8 @@ class MainActivity : WearCompanionWatchActivity(),
      *  - "classic": the original AOD - dimmed blurred art behind the outlined classic text block.
      *  - "expressive": [ExpressiveFace] with [NowPlayingFaceState.ambient] set - the same layout
      *    reduced to hairline outlines, so the face no longer snaps to the classic look in AOD.
-     *  - "minimal": pure black with the dimmed text block only - the biggest battery saver.
+     *  - "chrono": a large centred clock on pure black with just the track title beneath - the
+     *    clock-forward AOD that replaced the near-classic "minimal" style.
      */
     private fun applyAmbientPresentation() {
         val style = effectiveAodStyle()
@@ -3586,16 +4123,20 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.textArtist.alpha = 1f
         binding.textPlaybackTime.alpha = 1f
         binding.ambientClock.alpha = aodIntensity
-        binding.ambientClock.visibility = if (aodShowClock) View.VISIBLE else View.GONE
+        // Chrono draws its own large clock in Compose, so the small View clock is hidden for it.
+        binding.ambientClock.visibility =
+                if (aodShowClock && style != "chrono") View.VISIBLE else View.GONE
 
         applyAmbientAlbumArt()
         // Ambient has its own artwork contract and Compose treatment; never leak the interactive
         // Classic background layer into AOD.
         binding.playerBackground.visibility = View.GONE
 
-        val composeAod = style in composeFaces
+        // Chrono is Compose-rendered like the face AODs, just not one of the interactive faces.
+        val composeAod = style in composeFaces || style == "chrono"
         if (composeAod) {
             composeFaceKind.value = style
+            updateFaceState { it.copy(clockText = binding.ambientClock.text.toString()) }
         }
         updateFaceState {
             it.copy(
@@ -3608,10 +4149,16 @@ class MainActivity : WearCompanionWatchActivity(),
                     ambientShowPills = aodShowPills
             )
         }
+        // Drops the filled source-icon glyph from the Classic artist line for ambient.
+        applyClassicSourceIcon()
         binding.expressiveFace.visibility = if (composeAod) View.VISIBLE else View.GONE
         binding.classicTextBlock.visibility =
                 if (!composeAod && aodShowTrackInfo) View.VISIBLE else View.GONE
-        binding.classicTextBlock.alpha = aodIntensity * (if (style == "minimal") 0.6f else 1f)
+        binding.classicTextBlock.alpha = aodIntensity
+        if (!composeAod) {
+            binding.textArtist.visibility =
+                    if (aodShowTrackInfo && showTrackArtist) View.VISIBLE else View.GONE
+        }
 
         // The title follows the AOD color mode like the outlines do (resolvedAodTint() is plain
         // white in the default mode, and album/custom tints arrive lightness-lifted for
@@ -3623,6 +4170,12 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val ambientCallback = object : AmbientLifecycleObserver.AmbientLifecycleCallback {
                 override fun onEnterAmbient(ambientDetails: AmbientLifecycleObserver.AmbientDetails) {
+                    // Own ambient flag, set before anything else runs. AmbientLifecycleObserver's
+                    // isAmbient is not reliably true yet inside this callback on every watch, which
+                    // let the Classic source icon survive into AOD (accent-tinted, far from the
+                    // centred artist because it rides as a start compound drawable on a
+                    // match_parent view) - applyClassicSourceIcon now reads this instead.
+                    inAmbient = true
                     stemButtonsManager.onEnterAmbient()
                     overlayActive = false
                     activeOverlayKind = null
@@ -3700,12 +4253,17 @@ class MainActivity : WearCompanionWatchActivity(),
                 }
 
                 override fun onExitAmbient() {
+                    inAmbient = false
                     stemButtonsManager.onExitAmbient()
 
                     updateFaceState { it.copy(ambient = false) }
+                    // Restores the source-icon glyph the ambient pass cleared.
+                    applyClassicSourceIcon()
                     binding.classicTextBlock.alpha = 1f
                     binding.ambientClock.alpha = 1f
-                    binding.ambientClock.setTextColor(getColor(R.color.ambient_clock_color))
+                    // Restore the user's awake-clock colour/font, not the raw layout default -
+                    // the ambient pass overwrote the colour with the AOD tint.
+                    applyClockAppearance()
 
                     if (faceBool(MiscPreferences.ALWAYS_SHOW_TIME)) {
                         binding.ambientClock.visibility = View.VISIBLE
@@ -4026,14 +4584,6 @@ class MainActivity : WearCompanionWatchActivity(),
         activeOverlayKind = kind
         updateDeveloperOverlay()
         updateEdgeSeekTouchState()
-        // The now-playing face sits behind these overlays in the layout, but a Compose face
-        // (ComposeView) can draw over its later sibling Views, so its clock/title/controls bled
-        // through the seek/volume/quick-panel backdrop (the blur then only looked like it covered
-        // part of the screen). Hide it outright while an overlay owns the screen; hideOverlay
-        // brings it back.
-        if (screenFace in composeFaces) {
-            binding.expressiveFace.visibility = View.GONE
-        }
         // Persistent chrome that otherwise shows through a translucent backdrop near the edges:
         // the always-on clock (top) and the mini-button row (bottom). Hidden for the overlay's
         // duration so the backdrop reads as a full-screen surface; hideOverlay restores them.
@@ -4061,6 +4611,24 @@ class MainActivity : WearCompanionWatchActivity(),
                     .alpha(1f)
                     .setDuration(OVERLAY_FADE_IN_MS)
                     .start()
+
+            // A Compose face (ComposeView) can draw over its later sibling Views, so once an
+            // overlay owns the screen the face must end hidden or its clock/controls paint over
+            // the backdrop. It used to be hidden with an instant GONE, which uncovered the sharp
+            // classic album art beneath it for the backdrop's fade-in - read as the cover
+            // flashing before the blur appeared. Crossfade it out over the same duration instead:
+            // the opaque face keeps occluding the album art until the backdrop has faded fully in.
+            if (screenFace in composeFaces) {
+                binding.expressiveFace.animate().cancel()
+                binding.expressiveFace.animate()
+                        .alpha(0f)
+                        .setDuration(OVERLAY_FADE_IN_MS)
+                        .withEndAction {
+                            if (overlayActive) binding.expressiveFace.visibility = View.GONE
+                            binding.expressiveFace.alpha = 1f
+                        }
+                        .start()
+            }
         }
     }
 
@@ -4072,10 +4640,18 @@ class MainActivity : WearCompanionWatchActivity(),
         // handles its own visibility, so only restore when interactive.
         if (!ambientObserver.isAmbient) {
             if (screenFace in composeFaces) {
+                // Cancel a still-running show crossfade so its end action can't hide the face
+                // again after we bring it back, and reset the alpha it was mid-fading.
+                binding.expressiveFace.animate().cancel()
+                binding.expressiveFace.alpha = 1f
                 binding.expressiveFace.visibility = View.VISIBLE
+                // The Compose face owns its own clock; restoring the classic View clock here would
+                // stack a second clock on top of it once the overlay finishes closing.
+                binding.ambientClock.visibility = View.GONE
+            } else {
+                binding.ambientClock.visibility =
+                        if (faceBool(MiscPreferences.ALWAYS_SHOW_TIME)) View.VISIBLE else View.GONE
             }
-            binding.ambientClock.visibility =
-                    if (faceBool(MiscPreferences.ALWAYS_SHOW_TIME)) View.VISIBLE else View.GONE
             syncScreenButtonsVisibility()
         }
         binding.overlayBackdrop.animate().cancel()
@@ -4136,11 +4712,11 @@ class MainActivity : WearCompanionWatchActivity(),
         // Manual mode uses the configured slots; session mode mirrors controls supplied by the
         // media app itself. Hidden elements collapse and the rest re-center on their own.
         configureQuickPanelButtons()
-        binding.quickActionUpNext.background = quickPanelRowBackground()
+        binding.quickActionUpNext.background = upNextPillBackground()
         // The Up Next row is the one panel element with a coloured surface behind its own text, so
-        // its label/subtitle/icon follow the same per-style tint as the round buttons (dark on
-        // light, green on terminal, accent on neon, white otherwise).
-        val upNextTint = quickPanelInactiveTint()
+        // its label/subtitle/icon follow its pill tint (dark on light, white on black/accent, or
+        // the quick-panel tint when the pill style is "follow").
+        val upNextTint = upNextPillTint()
         binding.quickActionUpNextLabel.setTextColor(upNextTint)
         binding.quickActionUpNextTrack.setTextColor(ColorUtils.setAlphaComponent(upNextTint, 0xB3))
         // A real notification/custom icon must keep its own colours - see setQuickActionButtonActive.
@@ -4204,6 +4780,7 @@ class MainActivity : WearCompanionWatchActivity(),
                     container,
                     false
             )
+            row.layoutParams = row.layoutParams?.apply { height = listRowHeightPx() }
             val icon = row.findViewById<ImageView>(R.id.quick_extra_icon)
             val title = row.findViewById<TextView>(R.id.quick_extra_title)
             if (action.icon != null) {
@@ -4211,12 +4788,42 @@ class MainActivity : WearCompanionWatchActivity(),
             } else {
                 icon.setImageResource(com.svartifoss.snfell.common.R.drawable.action_custom)
             }
-            if (action.iconTintable) icon.setColorFilter(tint) else icon.clearColorFilter()
+            // Full-colour cover art (e.g. an online shortcut thumbnail) fills a circle and crops
+            // rectangles; monochrome template glyphs stay centered and follow the panel tint.
+            val isArtwork = action.icon != null && !action.iconTintable
+            // Cover style + the opt-in shortcut-cover toggle: only a row backed by genuine cover
+            // art (action.isCoverArt - never a plain app-launcher icon) fills the whole pill with
+            // it, the same treatment the Up Next row gets for the actual track artwork.
+            val coverBitmap = if (action.isCoverArt && coverPillsActive && quickPanelShortcutCoverEnabled) {
+                (action.icon as? BitmapDrawable)?.bitmap
+            } else {
+                null
+            }
+            if (coverBitmap != null) {
+                icon.visibility = View.GONE
+            } else if (isArtwork) {
+                icon.visibility = View.VISIBLE
+                icon.clearColorFilter()
+                icon.scaleType = ImageView.ScaleType.CENTER_CROP
+                icon.outlineProvider = circularOutlineProvider
+                icon.clipToOutline = true
+            } else {
+                icon.visibility = View.VISIBLE
+                if (action.iconTintable) icon.setColorFilter(tint) else icon.clearColorFilter()
+                icon.scaleType = ImageView.ScaleType.FIT_CENTER
+                icon.clipToOutline = false
+            }
             title.text = action.title
                     ?: StandardActionTitles.get(this, action.key)
                     ?: getString(R.string.action_name_custom)
-            title.setTextColor(tint)
-            row.background = quickPanelRowBackground()
+            // White over the scrim rather than the panel tint, which is picked to read against
+            // the flat pill and can vanish against artwork.
+            title.setTextColor(if (coverBitmap != null) Color.WHITE else tint)
+            if (coverBitmap != null) {
+                applyCoverPill(row, coverBitmap)
+            } else {
+                row.background = quickPanelRowBackground()
+            }
             row.contentDescription = title.text
             row.setOnClickListener {
                 buzz()
@@ -4241,11 +4848,35 @@ class MainActivity : WearCompanionWatchActivity(),
         val extras = binding.quickActionExtraList
         val density = resources.displayMetrics.density
 
-        val desiredOrder = when (quickPanelLayout) {
-            "actions_first" -> listOf(actions, title, artist, upNext)
-            "compact" -> listOf(title, actions, upNext, artist)
-            else -> listOf(title, artist, actions, upNext)
+        val primaryList = binding.quickActionPrimaryList
+
+        // "rows" is the only layout that does not use the round slots at all: it mirrors them as
+        // labelled full-width rows instead. Everything else keeps the round row and varies its
+        // arrangement.
+        val asRows = quickPanelLayout == "rows"
+        actions.visibility = if (asRows) View.GONE else View.VISIBLE
+        primaryList.visibility = if (asRows) View.VISIBLE else View.GONE
+        if (asRows) renderQuickPanelPrimaryRows() else primaryList.removeAllViews()
+
+        actions.arrangement = when (quickPanelLayout) {
+            "arc" -> QuickActionsRowLayout.Arrangement.ARC
+            "grid" -> QuickActionsRowLayout.Arrangement.GRID
+            else -> QuickActionsRowLayout.Arrangement.ROW
         }
+
+        // The grid stands on its own as a dense launcher, so metadata would only cost it the room
+        // it needs; every other layout keeps both lines.
+        val metadataVisible = quickPanelLayout != "grid"
+        title.visibility = if (metadataVisible && title.text.isNotBlank()) View.VISIBLE else View.GONE
+        // Hero deliberately drops to a single metadata line - its point is one dominant action.
+        artist.visibility = if (metadataVisible && quickPanelLayout != "hero" &&
+                artist.text.isNotBlank()) View.VISIBLE else View.GONE
+
+        // Every layout now keeps the natural reading order and expresses itself through the
+        // arrangement of the slots instead. The old "actions first" / "compact deck" options were
+        // only reorderings of this same stack, which is why they never looked meaningfully
+        // different from it.
+        val desiredOrder = listOf(title, artist, actions, primaryList, upNext)
         val params = desiredOrder.associateWith { it.layoutParams }
         desiredOrder.forEach(panel::removeView)
         panel.removeView(extras)
@@ -4269,21 +4900,22 @@ class MainActivity : WearCompanionWatchActivity(),
                 panel.paddingBottom
         )
 
-        // Layout variants may reorder information, but they no longer shrink its touch targets or
-        // hide metadata. The compact variant's tiny bubbles were the core legibility regression.
-        title.textSize = 18f
+        // No layout shrinks text or hides metadata to make room any more - the old compact
+        // variant's tiny bubbles were the core legibility regression. Hero is the one exception,
+        // and it drops a whole line rather than shrinking one.
+        title.textSize = if (quickPanelLayout == "hero") 16f else 18f
         artist.textSize = 13f
 
         val titleParams = title.layoutParams as LinearLayout.LayoutParams
-        titleParams.bottomMargin = (if (quickPanelLayout == "actions_first") 1f else 5f)
-                .times(density).roundToInt()
+        titleParams.bottomMargin = (5f * density).roundToInt()
         title.layoutParams = titleParams
         val artistParams = artist.layoutParams as LinearLayout.LayoutParams
-        artistParams.bottomMargin = (if (quickPanelLayout == "actions_first") 8f else 14f)
-                .times(density).roundToInt()
+        artistParams.bottomMargin = (14f * density).roundToInt()
         artist.layoutParams = artistParams
         val actionParams = actions.layoutParams as LinearLayout.LayoutParams
-        actionParams.bottomMargin = if (quickPanelLayout == "actions_first") {
+        // The arc's dipped centre slot already reserves its depth inside the row's measured
+        // height, so only the grid needs to be held off the Up Next row below it.
+        actionParams.bottomMargin = if (quickPanelLayout == "grid") {
             (10f * density).roundToInt()
         } else {
             0
@@ -4301,10 +4933,78 @@ class MainActivity : WearCompanionWatchActivity(),
 
         val visible = quickPanelViews().filter { it.visibility == View.VISIBLE }
         if (visible.isNotEmpty()) {
-            val (width, height, gap) = fittedRoundQuickSizes(visible.size)
+            // The grid puts at most two slots on a line, so they are fitted for two rather than for
+            // the whole row - which is what lets them come out noticeably larger than in a row.
+            val fitCount = if (quickPanelLayout == "grid") {
+                minOf(visible.size, 2)
+            } else {
+                visible.size
+            }
+            val (width, height, gap) = fittedRoundQuickSizes(fitCount)
             visible.forEachIndexed { index, button ->
                 sizeRoundQuickButton(button, width, height, gap, first = index == 0)
             }
+            if (quickPanelLayout == "hero") applyHeroSlotEmphasis(visible, height)
+        }
+    }
+
+    /**
+     * Hero layout: the first visible slot becomes the panel's single focus and the rest step back.
+     * Sizes are derived from the fitted row height so the emphasised slot still fits the viewport
+     * on small watches, and every slot stays at or above the 48dp Wear OS touch target.
+     */
+    private fun applyHeroSlotEmphasis(visible: List<ImageView>, fittedHeight: Int) {
+        val density = resources.displayMetrics.density
+        val minimumTarget = (48 * density).roundToInt()
+        val available = (binding.contentFrame.width.takeIf { it > 0 }
+                ?: resources.displayMetrics.widthPixels) - (16 * density).toInt()
+        val gap = (8 * density).roundToInt()
+
+        val heroSize = (fittedHeight * 1.5f).roundToInt()
+        val secondaryCount = visible.size - 1
+        // Whatever the hero does not take is shared by the remaining slots.
+        val secondaryWidth = if (secondaryCount > 0) {
+            ((available - heroSize - gap * secondaryCount) / secondaryCount)
+                    .coerceIn(minimumTarget, fittedHeight)
+        } else {
+            fittedHeight
+        }
+
+        visible.forEachIndexed { index, button ->
+            if (index == 0) {
+                sizeRoundQuickButton(button, heroSize, heroSize, gap, first = true)
+            } else {
+                sizeRoundQuickButton(button, secondaryWidth, secondaryWidth, gap, first = false)
+            }
+        }
+    }
+
+    /**
+     * Rebuilds the round slots as labelled full-width rows for the "rows" layout.
+     *
+     * It reads the already-resolved round buttons rather than re-deriving the slot config: their
+     * drawable is the icon the user configured and their content description is the label already
+     * computed for accessibility, and the click is forwarded to the button itself. So slot
+     * semantics (defaults, NullAction hiding, session mode) stay defined in exactly one place.
+     */
+    private fun renderQuickPanelPrimaryRows() {
+        val container = binding.quickActionPrimaryList
+        container.removeAllViews()
+        val tint = quickPanelInactiveTint()
+
+        quickPanelViews().filter { it.visibility == View.VISIBLE }.forEach { button ->
+            val row = layoutInflater.inflate(R.layout.item_quick_action_row, container, false)
+            row.layoutParams = row.layoutParams?.apply { height = listRowHeightPx() }
+            val icon = row.findViewById<ImageView>(R.id.quick_extra_icon)
+            val title = row.findViewById<TextView>(R.id.quick_extra_title)
+
+            icon.setImageDrawable(button.drawable)
+            icon.setColorFilter(tint)
+            title.text = button.contentDescription ?: getString(R.string.action_name_custom)
+            title.setTextColor(tint)
+            row.background = quickPanelRowBackground()
+            row.setOnClickListener { button.performClick() }
+            container.addView(row)
         }
     }
 
@@ -4324,6 +5024,15 @@ class MainActivity : WearCompanionWatchActivity(),
     private val MONO_PANEL_SURFACE = 0xFF262626.toInt()
     private val MONO_PANEL_ACTIVE = 0xFFE0E0E0.toInt()
     private val TERMINAL_GREEN = 0xFF33FF66.toInt()
+    /** Soft rounded-rectangle corner shared by the quick-panel rows, matching the Menu screen. */
+    private val QUICK_PANEL_ROW_CORNER_DP = 26f
+
+    /** Circular clip for a full-colour thumbnail shown in a quick-panel row. */
+    private val circularOutlineProvider = object : android.view.ViewOutlineProvider() {
+        override fun getOutline(view: View, outline: android.graphics.Outline) {
+            outline.setOval(0, 0, view.width, view.height)
+        }
+    }
 
     /** A dark, accent-tinted surface for the tonal/gradient quick-panel chrome (saturation clamped
      *  so the white icons/text keep enough contrast). Delegates to the shared transform so the
@@ -4395,37 +5104,180 @@ class MainActivity : WearCompanionWatchActivity(),
             "contrast" -> capsule(Color.BLACK, (2f * resources.displayMetrics.density).toInt(), Color.WHITE)
             "terminal" -> capsule(Color.TRANSPARENT, hairline, TERMINAL_GREEN, radiusPx = 0f)
             "frost" -> capsule(0x33FFFFFF)
+            // --- Reduced styles. These drop the container rather than restyling it, so the icon
+            // itself becomes the control; the touch target is unchanged in every case.
+            "ghost" -> capsule(Color.TRANSPARENT)
+            "mist" -> capsule(0x14FFFFFF)
+            "slab" -> capsule(SLAB_SURFACE, radiusPx = SLAB_CORNER_DP * d)
+            "ink" -> underlineDrawable(
+                    liftedAccent(resolvedQuickPanelAccent()), (2f * d).roundToInt())
+            "dot" -> markerDrawable(
+                    liftedAccent(resolvedQuickPanelAccent()), (5f * d).roundToInt())
             else -> AppCompatResources.getDrawable(this, R.drawable.glass_pill_background)!!
         }
     }
 
-    /** Background of the full-width Up Next / long-slot row, per [quickPanelStyle]. */
+    /** Neutral flat surface for the "slab" style - a single tone, no stroke, no gradient. */
+    private val SLAB_SURFACE = 0xFF1E1E20.toInt()
+    private val SLAB_CORNER_DP = 10f
+
+    /**
+     * A small centred dot along the bottom edge, used by the "dot" quick-panel style: the slot has
+     * no container at all, and this marks it as a control instead. Same [LayerDrawable] technique
+     * as [underlineDrawable] - a fixed-size, bottom-gravity layer, since the view height is not
+     * known when the background is assigned.
+     */
+    private fun markerDrawable(color: Int, sizePx: Int): LayerDrawable =
+            LayerDrawable(arrayOf<android.graphics.drawable.Drawable>(
+                    ColorDrawable(Color.TRANSPARENT),
+                    GradientDrawable().apply {
+                        shape = GradientDrawable.OVAL
+                        setColor(color)
+                    }
+            )).apply {
+                setLayerGravity(1, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
+                setLayerWidth(1, sizePx)
+                setLayerHeight(1, sizePx)
+            }
+
+    /** Background of the full-width Up Next / long-slot / action rows, per [quickPanelStyle].
+     *
+     *  Rows use the Menu screen's soft 26dp rounded-rectangle corners (not a full stadium) so the
+     *  quick panel's scrollable list reads as the same interface as the rest of the app. Styles
+     *  differ in *surface*, not shape. "terminal" stays square: sharp corners are its identity. */
+    /** Height of a full-width quick-panel pill, in px: the user's chosen content height plus the
+     *  panel's own 12dp padding rhythm, matching QueueRow's arithmetic on the queue screen. */
+    private fun listRowHeightPx(): Int {
+        val d = resources.displayMetrics.density
+        return ((listRowSize.contentHeight.value + 24f) * d).roundToInt()
+    }
+
+    /** Re-applies the pill height to the Up Next row. The inflated extra rows pick it up as they
+     *  are created in [renderQuickPanelExtraActions]. */
+    private fun applyListRowHeight() {
+        binding.quickActionUpNext.layoutParams =
+                binding.quickActionUpNext.layoutParams?.apply { height = listRowHeightPx() }
+    }
+
+    /** Fills [view] with [artwork] under the cover scrim, honouring the active cover variation
+     *  (blur/tonal/square). Keeps the quick panel's pills identical to the queue's rows, which
+     *  render the same variations through QueueScreen. */
+    private fun applyCoverPill(view: View, artwork: Bitmap) {
+        val style = coverPillStyle
+        val bitmap = if (style == QueueStyle.COVER_BLUR) blurredCover(artwork) else artwork
+        val corner = if (style == QueueStyle.COVER_SQUARE) {
+            10f * resources.displayMetrics.density
+        } else {
+            quickPanelRowCornerPx()
+        }
+        val scrimTint = if (style == QueueStyle.COVER_TONAL) {
+            resolvedQuickPanelAccent()
+        } else {
+            Color.BLACK
+        }
+        view.background = CoverPillDrawable(
+                bitmap,
+                corner,
+                scrimTint = scrimTint,
+                softScrim = style == QueueStyle.COVER_BLUR
+        )
+    }
+
+    /** Corner radius the quick-panel pills are drawn with, in px - shared by the flat backgrounds
+     *  and the cover-filled ones so both round identically. */
+    private fun quickPanelRowCornerPx(): Float = when (quickPanelStyle) {
+        "terminal" -> 0f
+        // Slab's identity is a tight, flat rectangle rather than the soft list-item corner.
+        "slab" -> SLAB_CORNER_DP * resources.displayMetrics.density
+        else -> QUICK_PANEL_ROW_CORNER_DP * resources.displayMetrics.density
+    }
+
     private fun quickPanelRowBackground(): android.graphics.drawable.Drawable {
         val d = resources.displayMetrics.density
         val hairline = (1.25f * d).roundToInt().coerceAtLeast(1)
+        val r = if (quickPanelStyle == "terminal") 0f else QUICK_PANEL_ROW_CORNER_DP * d
         return when (quickPanelStyle) {
-            "glass_white" -> capsule(0xB3FFFFFF.toInt(), radiusPx = 28f * d)
+            "glass_white" -> capsule(0xB3FFFFFF.toInt(), radiusPx = r)
             "glass_tonal" -> capsule(
                     ColorUtils.setAlphaComponent(expressiveSurface(resolvedQuickPanelAccent()), 0xB3),
-                    radiusPx = 28f * d)
-            "minimal" -> capsule(Color.TRANSPARENT, hairline, 0x66FFFFFF, radiusPx = 24f * d)
-            "material" -> capsule(materialSurfaceColor, radiusPx = 16f * d)
-            "tonal" -> capsule(expressiveSurface(resolvedQuickPanelAccent()), radiusPx = 28f * d)
-            "neon" -> capsule(Color.TRANSPARENT, (2f * d).toInt(), resolvedQuickPanelAccent(), radiusPx = 22f * d)
-            "light" -> capsule(LIGHT_PANEL_SURFACE, radiusPx = 22f * d)
-            "gradient" -> gradientCapsule(tonalSurface(resolvedQuickPanelAccent(), 0.34f), tonalSurface(resolvedQuickPanelSecondaryAccent(), 0.16f), radiusPx = 24f * d)
-            "mono" -> capsule(MONO_PANEL_SURFACE, radiusPx = 18f * d)
-            "outline" -> capsule(Color.TRANSPARENT, hairline, Color.WHITE, radiusPx = 20f * d)
-            "outline_glass_white" -> capsule(
-                    0x80FFFFFF.toInt(), hairline, Color.WHITE, radiusPx = 20f * d)
-            "duotone" -> capsule(tonalSurface(resolvedQuickPanelSecondaryAccent()), radiusPx = 24f * d)
-            "contrast" -> capsule(Color.BLACK, (2f * d).toInt(), Color.WHITE, radiusPx = 16f * d)
-            "prism" -> prismCapsule(radiusPx = 24f * d)
+                    radiusPx = r)
+            "minimal" -> capsule(Color.TRANSPARENT, hairline, 0x66FFFFFF, radiusPx = r)
+            "material" -> capsule(materialSurfaceColor, radiusPx = r)
+            "tonal" -> capsule(expressiveSurface(resolvedQuickPanelAccent()), radiusPx = r)
+            "neon" -> capsule(Color.TRANSPARENT, (2f * d).toInt(), resolvedQuickPanelAccent(), radiusPx = r)
+            "light" -> capsule(LIGHT_PANEL_SURFACE, radiusPx = r)
+            "gradient" -> gradientCapsule(tonalSurface(resolvedQuickPanelAccent(), 0.34f), tonalSurface(resolvedQuickPanelSecondaryAccent(), 0.16f), radiusPx = r)
+            "mono" -> capsule(MONO_PANEL_SURFACE, radiusPx = r)
+            "outline" -> capsule(Color.TRANSPARENT, hairline, Color.WHITE, radiusPx = r)
+            "outline_glass_white" -> capsule(0x80FFFFFF.toInt(), hairline, Color.WHITE, radiusPx = r)
+            "duotone" -> capsule(tonalSurface(resolvedQuickPanelSecondaryAccent()), radiusPx = r)
+            "contrast" -> capsule(Color.BLACK, (2f * d).toInt(), Color.WHITE, radiusPx = r)
+            "prism" -> prismCapsule(radiusPx = r)
             "terminal" -> capsule(Color.TRANSPARENT, hairline, TERMINAL_GREEN, radiusPx = 0f)
-            "frost" -> capsule(0x33FFFFFF, radiusPx = 22f * d)
-            else -> AppCompatResources.getDrawable(this, R.drawable.up_next_pill_background)!!
+            "frost" -> capsule(0x33FFFFFF, radiusPx = r)
+            // The reduced styles keep a faint surface on the full-width rows even where the round
+            // slots have none: a row is a list item, and with zero chrome its tap area would be
+            // completely invisible against the backdrop.
+            "ghost" -> capsule(0x0DFFFFFF, radiusPx = r)
+            "mist" -> capsule(0x14FFFFFF, radiusPx = r)
+            "slab" -> capsule(SLAB_SURFACE, radiusPx = r)
+            "ink" -> capsule(0x0DFFFFFF, hairline,
+                    ColorUtils.setAlphaComponent(liftedAccent(resolvedQuickPanelAccent()), 0xB3),
+                    radiusPx = r)
+            "dot" -> capsule(0x0DFFFFFF, radiusPx = r)
+            else -> capsule(ContextCompat.getColor(this, R.color.glass_surface_fill), radiusPx = r)
         }
     }
+
+    /**
+     * Background for the awake Up Next pill, honouring its own [upNextPillStyle] independent of the
+     * quick-panel style. "follow" keeps the historical behaviour (the pill follows the panel), so
+     * existing installs are unchanged. Paired with [upNextPillTint] for legible text/icon colour.
+     *
+     * "white_blur" is a *frosted* white rather than a real per-pill GPU blur: the panel already
+     * sits over its own (optionally blurred) overlay backdrop, so a translucent white capsule on
+     * top reads as frosted glass without the cost of blurring a bitmap for this one row.
+     */
+    private fun upNextPillBackground(): android.graphics.drawable.Drawable {
+        if (upNextPillStyle == "follow") return quickPanelRowBackground()
+        val r = quickPanelRowCornerPx()
+        return capsule(upNextPillFillColor(), radiusPx = r)
+    }
+
+    /** The Up Next pill's fill colour for a colour-based style (everything except "follow", which
+     *  uses the quick-panel row background). Shared by the quick-panel pill and the awake player
+     *  pill so both look identical for a given style. */
+    private fun upNextPillFillColor(): Int {
+        val accent = resolvedQuickPanelAccent()
+        return when (upNextPillStyle) {
+            "accent" -> accent
+            "translucent" -> 0x40FFFFFF
+            "white" -> 0xF2FFFFFF.toInt()
+            "white_blur" -> 0x73FFFFFF
+            "black" -> 0xCC000000.toInt()
+            "dynamic" -> tonalSurface(accent, lightness = 0.24f)
+            "transparent" -> Color.TRANSPARENT
+            // "follow": the awake pill has no quick-panel context, so it uses the tonal accent.
+            else -> ColorUtils.setAlphaComponent(accent, 0x38)
+        }
+    }
+
+    /** Text/icon colour for the Up Next pill, contrasting with [upNextPillBackground]. Delegates to
+     *  the quick-panel tint in "follow" mode. */
+    private fun upNextPillTint(): Int = when (upNextPillStyle) {
+        "follow" -> quickPanelInactiveTint()
+        "white", "white_blur" -> LIGHT_PANEL_ON
+        "translucent", "transparent" -> Color.WHITE
+        "accent" -> contrastingIconColor(resolvedQuickPanelAccent())
+        "black" -> Color.WHITE
+        "dynamic" -> contrastingIconColor(tonalSurface(resolvedQuickPanelAccent(), lightness = 0.24f))
+        else -> quickPanelInactiveTint()
+    }
+
+    /** The awake player pill's text colour, resolved from the same style as the quick-panel pill.
+     *  "follow" uses white here (the pill sits over the player art, not the panel backdrop). */
+    private fun awakeUpNextPillTint(): Int =
+            if (upNextPillStyle == "follow") Color.WHITE else upNextPillTint()
 
     /** Representative colour of the surface the quick panel's free-floating title/artist text sits
      *  on - the full-screen overlay backdrop, NOT the button capsules. Mirrors the drawables built
@@ -4471,7 +5323,13 @@ class MainActivity : WearCompanionWatchActivity(),
             if (quickPanelStyle == "prism") {
                 prismCapsule(active = true)
             } else {
-                capsule(activeQuickFillColor(), radiusPx = if (quickPanelStyle == "terminal") 0f else 999f)
+                // The reduced styles are chromeless only while inactive - an active slot always
+                // gets a real accent fill, which is what makes the state readable at a glance.
+                capsule(activeQuickFillColor(), radiusPx = when (quickPanelStyle) {
+                    "terminal" -> 0f
+                    "slab" -> SLAB_CORNER_DP * resources.displayMetrics.density
+                    else -> 999f
+                })
             }
 
     /** White icons can disappear against a light album-art accent color, so the icon itself
@@ -4704,12 +5562,32 @@ class MainActivity : WearCompanionWatchActivity(),
         if (quickPanelLongMode != QuickLongMode.UP_NEXT) return
 
         val artwork = nextItem?.icon
-        if (artwork != null) {
-            binding.quickActionUpNextArtwork.setImageBitmap(artwork)
-            binding.quickActionUpNextArtwork.visibility = View.VISIBLE
+        if (artwork != null && coverPillsActive) {
+            // Cover style: the art fills the whole pill instead of sitting in the 30dp slot, and
+            // the label goes white because the panel tint is chosen against the flat pill and can
+            // disappear over artwork.
+            applyCoverPill(binding.quickActionUpNext, artwork)
+            binding.quickActionUpNextLabel.setTextColor(Color.WHITE)
+            binding.quickActionUpNextTrack.setTextColor(
+                    ColorUtils.setAlphaComponent(Color.WHITE, 0xB3))
+            binding.quickActionUpNextArtwork.visibility = View.GONE
             binding.quickActionUpNextIcon.visibility = View.GONE
         } else {
-            clearQuickUpNextArtwork()
+            // No cover to show (this entry has none, or the style is off): stay on the themed
+            // pill and its own tint. Forcing the static glass drawable here made a light
+            // quick-panel style render dark-on-dark, since the tint is picked for the theme.
+            binding.quickActionUpNext.background = upNextPillBackground()
+            val upNextTint = upNextPillTint()
+            binding.quickActionUpNextLabel.setTextColor(upNextTint)
+            binding.quickActionUpNextTrack.setTextColor(
+                    ColorUtils.setAlphaComponent(upNextTint, 0xB3))
+            if (artwork != null) {
+                binding.quickActionUpNextArtwork.setImageBitmap(artwork)
+                binding.quickActionUpNextArtwork.visibility = View.VISIBLE
+                binding.quickActionUpNextIcon.visibility = View.GONE
+            } else {
+                clearQuickUpNextArtwork()
+            }
         }
 
         binding.quickActionUpNextTrack.apply {
@@ -4814,8 +5692,13 @@ class MainActivity : WearCompanionWatchActivity(),
         )
         applyPillReadoutStyle(
                 binding.textVolumePercent, seekOverlayStyle, percentText, resolvedVolumeAccent())
+        // Chromeless readouts draw white numerals straight onto the backdrop, which the LIGHT arc
+        // style makes pale; they get flipped to dark text. Styles carrying their own filled
+        // container already guarantee their own contrast and are left alone.
         if (binding.volumeBar.barStyle == VolumeStyle.LIGHT &&
-                seekOverlayStyle !in setOf("pill", "expressive", "material", "white", "glass_white", "translucent_album", "glow_album", "outline", "solid_theme", "solid_album")) {
+                seekOverlayStyle !in setOf("pill", "expressive", "material", "white", "glass_white",
+                        "translucent_album", "glow_album", "outline", "solid_theme", "solid_album",
+                        "mono", "tonal_dark", "terminal")) {
             binding.textVolumePercent.setTextColor(LIGHT_PANEL_ON)
         }
     }
@@ -4837,13 +5720,29 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.textVolumePercent.translationY = 0f
 
         when (binding.volumeBar.barLayout) {
-            VolumeLayout.EDGE -> {
-                top.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-                bottom.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-            }
+            // Every arc that fills bottom-to-top keeps the louder/quieter glyphs on the vertical
+            // axis, matching the direction the fill actually travels.
+            VolumeLayout.EDGE,
+            VolumeLayout.EDGE_TALL,
+            VolumeLayout.EDGE_RIGHT,
+            VolumeLayout.RING,
             VolumeLayout.HALO -> {
                 top.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
                 bottom.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+            }
+            // The top/bottom arcs fill left-to-right, so the glyphs move onto the horizontal axis.
+            // They sit at mid-height (as in METER) rather than beside the arc's ends: near the top
+            // or bottom of a round screen there is no width left to place them without clipping.
+            VolumeLayout.EDGE_TOP,
+            VolumeLayout.EDGE_BOTTOM -> {
+                val side = (8f * density).roundToInt()
+                top.gravity = Gravity.END or Gravity.CENTER_VERTICAL
+                top.marginEnd = side
+                top.topMargin = 0
+                bottom.gravity = Gravity.START or Gravity.CENTER_VERTICAL
+                bottom.marginStart = side
+                bottom.bottomMargin = 0
+                bottom.topMargin = 0
             }
             VolumeLayout.METER -> {
                 val side = (8f * density).roundToInt()
@@ -4866,7 +5765,16 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private fun applySeekPanelLayout(fraction: Float) {
         val density = resources.displayMetrics.density
-        val customMeter = seekPanelLayout != "edge"
+        // The edge family keeps the bezel ring and only varies its weight; everything else swaps
+        // the ring out for the meter. Thickness is orthogonal to WEAR_PROGRESS_STYLE, so each
+        // variant works with all eight ring appearances.
+        val edgeStrokeScale = when (seekPanelLayout) {
+            "edge_thin" -> 0.5f
+            "edge_thick" -> 1.8f
+            else -> 1f
+        }
+        val customMeter = seekPanelLayout !in setOf("edge", "edge_thin", "edge_thick")
+        binding.seekBar.edgeStrokeScale = edgeStrokeScale
         binding.seekBar.animate().cancel()
         binding.seekBar.alpha = if (customMeter) 0f else 1f
         binding.textSeekTime.translationY = if (customMeter) -18f * density else 0f
@@ -4897,6 +5805,12 @@ class MainActivity : WearCompanionWatchActivity(),
             content: String,
             accentColor: Int
     ) {
+        // One TextView is restyled in place every time the style changes, so any property only some
+        // branches set has to be cleared here or it leaks into the next style. Background, colour,
+        // size and padding are set by every branch; these two are not.
+        text.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT)
+        text.letterSpacing = 0f
+
         when (style) {
             "pill" -> {
                 text.textSize = 26f
@@ -4939,14 +5853,7 @@ class MainActivity : WearCompanionWatchActivity(),
                 } else {
                     accent
                 }
-                val hsl = FloatArray(3)
-                ColorUtils.colorToHSL(tintColor, hsl)
-                val glowColor = if (hsl[2] < 0.4f) {
-                    hsl[2] = 0.45f
-                    ColorUtils.HSLToColor(hsl)
-                } else {
-                    tintColor
-                }
+                val glowColor = liftedAccent(tintColor)
                 text.setTextColor(glowColor)
                 text.background = capsule(
                         Color.TRANSPARENT,
@@ -5036,6 +5943,98 @@ class MainActivity : WearCompanionWatchActivity(),
                 text.setPadding(0, 0, 0, 0)
                 text.text = content
             }
+            // --- Minimal readouts: no filled container, the numerals themselves carry the style.
+            "micro" -> {
+                // Deliberately the smallest readout offered: on a scrub the ring already shows the
+                // position, so the numerals only need to confirm it, not announce it.
+                text.textSize = 15f
+                text.setTextColor(ColorUtils.setAlphaComponent(Color.WHITE, 0xB3))
+                text.letterSpacing = 0.08f
+                text.background = null
+                text.setPadding(0, 0, 0, 0)
+                text.text = content
+            }
+            "shadow" -> {
+                // Chromeless but readable over bright artwork: the drop shadow does the work a
+                // capsule would, without covering the art.
+                text.textSize = 30f
+                text.setTextColor(Color.WHITE)
+                text.setShadowLayer(
+                        6f * resources.displayMetrics.density, 0f,
+                        1.5f * resources.displayMetrics.density,
+                        ColorUtils.setAlphaComponent(Color.BLACK, 0xCC))
+                text.background = null
+                text.setPadding(0, 0, 0, 0)
+                text.text = content
+            }
+            "underline" -> {
+                val accent = liftedAccent(accentColor)
+                text.textSize = 28f
+                text.setTextColor(Color.WHITE)
+                text.background = underlineDrawable(
+                        accent, (2f * resources.displayMetrics.density).roundToInt())
+                val padH = (4 * resources.displayMetrics.density).toInt()
+                val padV = (6 * resources.displayMetrics.density).toInt()
+                text.setPadding(padH, padV, padH, padV)
+                text.text = content
+            }
+            "hairline" -> {
+                text.textSize = 22f
+                text.setTextColor(Color.WHITE)
+                text.background = capsule(
+                        Color.TRANSPARENT,
+                        (1f * resources.displayMetrics.density).roundToInt(),
+                        ColorUtils.setAlphaComponent(Color.WHITE, 0x66))
+                val padH = (20 * resources.displayMetrics.density).toInt()
+                val padV = (7 * resources.displayMetrics.density).toInt()
+                text.setPadding(padH, padV, padH, padV)
+                text.text = content
+            }
+            "giant_album" -> {
+                text.textSize = 52f
+                text.setTextColor(liftedAccent(accentColor))
+                text.background = null
+                text.setPadding(0, 0, 0, 0)
+                text.text = content
+            }
+            // --- Filled counterparts that stay off the album accent entirely, or invert it.
+            "mono" -> {
+                text.textSize = 26f
+                text.setTextColor(Color.WHITE)
+                text.background = capsule(MONO_PANEL_SURFACE)
+                val padH = (20 * resources.displayMetrics.density).toInt()
+                val padV = (8 * resources.displayMetrics.density).toInt()
+                text.setPadding(padH, padV, padH, padV)
+                text.text = content
+            }
+            "tonal_dark" -> {
+                // The inverse of "material": a dark tonal container with light accent numerals,
+                // for users who find the light pill too bright at night.
+                val container = tonalSurface(accentColor, lightness = 0.22f)
+                text.textSize = 26f
+                text.setTextColor(liftedAccent(accentColor))
+                text.background = capsule(container)
+                val padH = (20 * resources.displayMetrics.density).toInt()
+                val padV = (8 * resources.displayMetrics.density).toInt()
+                text.setPadding(padH, padV, padH, padV)
+                text.text = content
+            }
+            "terminal" -> {
+                // Sharp corners and forced green, matching the "terminal" vocabulary the arc and
+                // quick panel already speak - the album accent is ignored on purpose.
+                text.textSize = 24f
+                text.setTextColor(TERMINAL_GREEN)
+                text.letterSpacing = 0.12f
+                text.background = capsule(
+                        ColorUtils.setAlphaComponent(Color.BLACK, 0xCC),
+                        (1f * resources.displayMetrics.density).roundToInt(),
+                        ColorUtils.setAlphaComponent(TERMINAL_GREEN, 0x99),
+                        radiusPx = 0f)
+                val padH = (16 * resources.displayMetrics.density).toInt()
+                val padV = (7 * resources.displayMetrics.density).toInt()
+                text.setPadding(padH, padV, padH, padV)
+                text.text = content
+            }
             else -> {
                 text.textSize = 30f
                 text.setTextColor(Color.WHITE)
@@ -5050,6 +6049,34 @@ class MainActivity : WearCompanionWatchActivity(),
      *  is high enough that dark text stays legible regardless of the accent's own hue. */
     private fun expressivePillFillColor(accentColor: Int): Int =
             tonalSurface(accentColor, lightness = 0.82f)
+
+    /**
+     * The album accent raised to a lightness that stays readable when it is used as *text* or a
+     * hairline rather than as a fill. Dark album art routinely yields an accent near-black, which
+     * is invisible on the overlay backdrop; anything already light is passed through untouched.
+     */
+    private fun liftedAccent(color: Int): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(color, hsl)
+        if (hsl[2] >= 0.4f) return color
+        hsl[2] = 0.45f
+        return ColorUtils.HSLToColor(hsl)
+    }
+
+    /**
+     * A rule drawn along the bottom edge of whatever it backs, used by the "underline" readout.
+     * A [LayerDrawable] with a bottom-gravity fixed-height layer rather than an inset drawable,
+     * because the inset would have to be computed from a view height that isn't known when the
+     * background is assigned.
+     */
+    private fun underlineDrawable(color: Int, thicknessPx: Int): LayerDrawable =
+            LayerDrawable(arrayOf<android.graphics.drawable.Drawable>(
+                    ColorDrawable(Color.TRANSPARENT),
+                    GradientDrawable().apply { setColor(color); cornerRadius = thicknessPx / 2f }
+            )).apply {
+                setLayerGravity(1, Gravity.BOTTOM)
+                setLayerHeight(1, thicknessPx)
+            }
 
     private val rotarySeekCommitRunnable = Runnable {
         // Clear the pending fraction *before* seeking: seekTo() posts the re-anchored position
@@ -5100,24 +6127,40 @@ class MainActivity : WearCompanionWatchActivity(),
     // long-standing unconditional behavior; the other two simply do nothing until assigned.
     // Swipe-right has no case here at all - see SwipeGesture's kdoc for why.
     override fun onUpwardsSwipe() {
+        if (!gesturesEnabledNow()) return
         Timber.d("UpwardsSwipe")
         buzz()
+        revealSwipeTrailIfEnabled()
         if (!viewModel.executeAction(ButtonInfo(false, SwipeGesture.UP, GESTURE_SINGLE_TAP))) {
             startMenu(showCustomList = false)
         }
     }
 
     override fun onDownwardsSwipe() {
+        if (!gesturesEnabledNow()) return
         buzz()
+        revealSwipeTrailIfEnabled()
         viewModel.executeAction(ButtonInfo(false, SwipeGesture.DOWN, GESTURE_SINGLE_TAP))
     }
 
     override fun onSwipeLeft() {
+        if (!gesturesEnabledNow()) return
         buzz()
+        revealSwipeTrailIfEnabled()
         viewModel.executeAction(ButtonInfo(false, SwipeGesture.LEFT, GESTURE_SINGLE_TAP))
     }
 
+    /** Freezes and fades the path recorded by [onTouchMove] since the finger went down - see
+     *  [swipeTrailEnabled]'s doc for the gating rule. Marks the touch sequence so [onTouchUp]
+     *  doesn't also [SwipeTrailDrawable.discard] what was just revealed. */
+    private fun revealSwipeTrailIfEnabled() {
+        if (!swipeTrailEnabled) return
+        swipeTrail.reveal()
+        swipeTrailRevealedThisTouch = true
+    }
+
     override fun onSingleTap(quadrant: Int) {
+        if (!gesturesEnabledNow()) return
         buzz()
         pulseQuadrantIcon(quadrant)
 
@@ -5125,6 +6168,7 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     override fun onDoubleTap(quadrant: Int) {
+        if (!gesturesEnabledNow()) return
         // Single tap vibration has delay, because it needs to wait to see if user presses
         // for the second time.
         // Introduce similar delay to double tap vibration to make it more apparent to the user
@@ -5135,26 +6179,48 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     override fun onLongTap(quadrant: Int) {
+        if (!gesturesEnabledNow()) return
         buzz()
         pulseQuadrantIcon(quadrant)
         viewModel.executeAction(ButtonInfo(false, quadrant, GESTURE_LONG_TAP))
     }
 
     /** Only Compose faces need the higher-z-order mirror pulse - Classic's own ripple (drawn by
-     *  [binding.fourWayTouch] itself) is already visible since nothing opaque sits above it. */
+     *  [binding.fourWayTouch] itself) is already visible since nothing opaque sits above it.
+     *  Boosted when "Flash icon on tap" is on - these faces have no persistent quadrant icon to
+     *  flash (see [pulseQuadrantIcon]), so the ripple itself has to carry that confirmation.
+     *  Also starts recording this touch sequence's path for the swipe trail (see
+     *  [swipeTrailEnabled]) - captured here rather than only from [onTouchMove] so the trail
+     *  doesn't miss the actual finger-down origin. */
     override fun onTouchDown(x: Float, y: Float) {
+        swipeTrailRevealedThisTouch = false
+        if (swipeTrailEnabled) {
+            swipeTrail.record(x, y)
+        }
         if (screenFace in composeFaces) {
-            composeTapPulse.press(x, y)
+            composeTapPulse.press(x, y, boosted = quadrantTapFlashEnabled)
+        }
+    }
+
+    override fun onTouchMove(x: Float, y: Float) {
+        if (swipeTrailEnabled) {
+            swipeTrail.record(x, y)
         }
     }
 
     override fun onTouchUp() {
         composeTapPulse.release()
+        // A tap, long-press, or quadrant gesture never reveals the trail - drop what was
+        // recorded so it doesn't leave a stray mark for a touch that wasn't a swipe.
+        if (!swipeTrailRevealedThisTouch) {
+            swipeTrail.discard()
+        }
     }
 
     /** Briefly scales the tapped quadrant's icon up and back, visually tying "I tapped here"
      *  to "that action ran" - the quadrant ripple alone doesn't point at the icon. */
     private fun pulseQuadrantIcon(quadrant: Int) {
+        if (screenFace in composeFaces) return // no persistent icon here - see composeTapPulse.
         val icon = when (quadrant) {
             ScreenQuadrant.TOP -> binding.iconTop
             ScreenQuadrant.BOTTOM -> binding.iconBottom
@@ -5162,8 +6228,20 @@ class MainActivity : WearCompanionWatchActivity(),
             ScreenQuadrant.RIGHT -> binding.iconRight
             else -> return
         }
-        if (icon.visibility != View.VISIBLE) {
-            return
+
+        // Persistently View.GONE (not just alpha 0) whenever "Show player controls" is off, or
+        // for the always-shown-time top icon - the same condition applyScreenThemeNow() uses.
+        // Resolved from the *setting*, not the icon's current (possibly already forced-visible)
+        // visibility, so a rapid re-tap mid-flash still lands on the same answer both times. The
+        // flash toggle overrides this just long enough to confirm which action fired, then hides
+        // the icon again.
+        val alwaysShowTime = faceBool(MiscPreferences.ALWAYS_SHOW_TIME)
+        val persistentlyHidden = !playerControlsVisible || (icon === binding.iconTop && alwaysShowTime)
+        if (persistentlyHidden && !quadrantTapFlashEnabled) return
+
+        if (persistentlyHidden) {
+            icon.visibility = View.VISIBLE
+            icon.alpha = 0f
         }
 
         // Timed to the quadrant ring pulse (~350ms total, decelerating) so ring + icon read as
@@ -5183,6 +6261,53 @@ class MainActivity : WearCompanionWatchActivity(),
                             .start()
                 }
                 .start()
+
+        if (quadrantTapFlashEnabled) {
+            // A normally-hidden icon flashes down to fully invisible again (then is re-hidden via
+            // View.GONE once the fade completes), not the Screen Theme's resting alpha - that
+            // only applies to an icon that's actually meant to stay on screen.
+            val restingAlpha = if (persistentlyHidden) 0f else screenTheme.tokens.iconAlpha
+            flashQuadrantIconAlpha(icon, restingAlpha) {
+                if (persistentlyHidden) icon.visibility = View.GONE
+            }
+        }
+    }
+
+    private var quadrantFlashAnimator: AnimatorSet? = null
+
+    /** Flashes [icon] to full opacity, holds briefly, then fades back down to [restingAlpha] -
+     *  a separate property from [pulseQuadrantIcon]'s scale bounce above, so the two don't fight
+     *  over the same ViewPropertyAnimator. Makes the tap register visibly even when the icon is
+     *  normally invisible (Hidden theme, or forced temporarily visible while otherwise GONE),
+     *  where there would otherwise be no confirmation at all of which action fired. [onNaturalEnd]
+     *  only fires when this flash runs to completion undisturbed - a rapid re-tap cancels it to
+     *  start a fresh one instead, and must not also fire the superseded flash's end action (which
+     *  could hide the icon while the new flash is still using it). */
+    private fun flashQuadrantIconAlpha(
+            icon: ImageView, restingAlpha: Float, onNaturalEnd: (() -> Unit)? = null
+    ) {
+        quadrantFlashAnimator?.cancel()
+        val flashIn = ObjectAnimator.ofFloat(icon, View.ALPHA, 1f).apply {
+            duration = 100
+        }
+        val flashOut = ObjectAnimator.ofFloat(icon, View.ALPHA, restingAlpha).apply {
+            duration = 250
+            startDelay = 240
+        }
+        val set = AnimatorSet().apply { playTogether(flashIn, flashOut) }
+        if (onNaturalEnd != null) {
+            set.addListener(object : android.animation.AnimatorListenerAdapter() {
+                private var wasCancelled = false
+                override fun onAnimationCancel(animation: android.animation.Animator) {
+                    wasCancelled = true
+                }
+                override fun onAnimationEnd(animation: android.animation.Animator) {
+                    if (!wasCancelled) onNaturalEnd()
+                }
+            })
+        }
+        quadrantFlashAnimator = set
+        set.start()
     }
 
     private class TimeoutsHandler(val activity: WeakReference<MainActivity>) :

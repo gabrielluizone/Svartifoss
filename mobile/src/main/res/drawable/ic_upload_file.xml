@@ -1,0 +1,15 @@
+<!-- Material Symbols "upload_file" (fonts.google.com/icons). Auto-converted from SVG;
+     viewBox 0 -960 960 960 shifted into Android's coordinate space via the group translate.
+     Tinted at usage. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960"
+    android:tint="?attr/colorControlNormal">
+    <group android:translateY="960">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
+    </group>
+</vector>

@@ -30,7 +30,7 @@ data class AodArtworkSpec(
 
 /**
  * Resolves the independent AOD artwork controls against the effective ambient presentation.
- * Minimal and Eclipse are guaranteed art-free here, rather than rendering/blur-processing an
+ * Chrono and Eclipse are guaranteed art-free here, rather than rendering/blur-processing an
  * image that their black canvases immediately cover.
  */
 fun resolveAodArtwork(
@@ -39,7 +39,7 @@ fun resolveAodArtwork(
         treatment: AodArtTreatment,
         playerArtworkStyle: String
 ): AodArtworkSpec {
-    if (!showArtwork || effectiveAodStyle == "minimal" || effectiveAodStyle == "eclipse") {
+    if (!showArtwork || effectiveAodStyle == "chrono" || effectiveAodStyle == "eclipse") {
         return AodArtworkSpec(visible = false)
     }
 

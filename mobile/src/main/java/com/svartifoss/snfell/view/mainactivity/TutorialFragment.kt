@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.mainactivity
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.TitledActivity
 import com.svartifoss.snfell.common.R as commonR
 
@@ -64,7 +66,12 @@ class TutorialFragment : Fragment() {
         @StringRes description: Int
     ) {
         val card = root.findViewById<View>(cardId)
-        card.findViewById<ImageView>(R.id.tutorial_card_icon).setImageResource(icon)
+        val iconView = card.findViewById<ImageView>(R.id.tutorial_card_icon)
+        iconView.setImageResource(icon)
+        // The layout's own android:tint is the static Lyra default (always green/sage) - this is
+        // a standalone Activity outside MainActivity's live accent traversal, so it needs its own
+        // one-shot resolve, same as LyraAccent's other standalone-dialog callers.
+        iconView.imageTintList = ColorStateList.valueOf(LyraAccent.resolve(requireContext()))
         card.findViewById<TextView>(R.id.tutorial_card_title).setText(title)
         card.findViewById<TextView>(R.id.tutorial_card_desc).setText(description)
     }

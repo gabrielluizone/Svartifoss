@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One row of the ColorTreatmentPreference dialog: the option name plus three small swatches
+     (primary/secondary/tertiary) showing what that option's colors actually resolve to, so the
+     difference between e.g. Original and Expressive is visible without leaving the dialog. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:minHeight="52dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+
+    <TextView
+        android:id="@+id/choice_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:includeFontPadding="false"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:fontFamily="@font/google_sans"
+        android:textColor="@color/lyra_on_surface" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="14dp"
+        android:importantForAccessibility="no">
+
+        <ImageView
+            android:id="@+id/swatch_primary"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/color_dot_circle" />
+
+        <ImageView
+            android:id="@+id/swatch_secondary"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/color_dot_circle" />
+
+        <ImageView
+            android:id="@+id/swatch_tertiary"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/color_dot_circle" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/choice_check"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@drawable/ic_check_circle"
+        android:importantForAccessibility="no" />
+
+</LinearLayout>

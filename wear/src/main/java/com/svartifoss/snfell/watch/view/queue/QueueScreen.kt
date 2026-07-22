@@ -36,10 +36,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
+import kotlin.math.roundToInt
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.asImageBitmap
@@ -67,6 +74,7 @@ import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.SwipeToDismissBox
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.BitmapBlur
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
@@ -124,7 +132,21 @@ enum class QueueStyle {
     /** Three real album swatches with a diagonal glass keyline. */
     PRISM,
     /** Light translucent frosted panels. */
-    FROST;
+    FROST,
+    /** The entry's own cover art fills the whole pill, with the title over a legibility scrim -
+     *  the Wear OS media-template "browse" look. Rows with no artwork of their own fall back to
+     *  [GLASS], since per-item art depends on the player and shortcut thumbnails are opt-in. */
+    COVER,
+    /** Cover, blurred: the art is a soft backdrop and the sharp thumbnail returns to its slot. */
+    COVER_BLUR,
+    /** Cover washed in the album accent instead of a neutral black scrim. */
+    COVER_TONAL,
+    /** Cover on tight rows - more entries visible per screen. */
+    COVER_COMPACT,
+    /** Cover on tall poster rows, closest to the Wear OS browse mock-ups. */
+    COVER_TALL,
+    /** Cover with squared-off corners rather than a stadium pill. */
+    COVER_SQUARE;
 
     companion object {
         fun fromPref(value: String?): QueueStyle = when (value) {
@@ -141,8 +163,34 @@ enum class QueueStyle {
             "terminal" -> TERMINAL
             "frost" -> FROST
             "prism" -> PRISM
+            "cover" -> COVER
+            "cover_blur" -> COVER_BLUR
+            "cover_tonal" -> COVER_TONAL
+            "cover_compact" -> COVER_COMPACT
+            "cover_tall" -> COVER_TALL
+            "cover_square" -> COVER_SQUARE
             else -> GLASS
         }
+
+        /** Every variation that fills the pill with the entry's artwork. */
+        val COVER_FAMILY = setOf(
+                COVER, COVER_BLUR, COVER_TONAL, COVER_COMPACT, COVER_TALL, COVER_SQUARE)
+    }
+
+    /** True for any cover variation; the shared switch the surfaces branch on. */
+    val isCover: Boolean get() = this in COVER_FAMILY
+
+    /** Cover variations keep the sharp thumbnail only when the backdrop is blurred - otherwise
+     *  the same image would appear twice. */
+    val coverKeepsThumbnail: Boolean get() = this == COVER_BLUR
+
+    /** Legacy size presets: these two values predate [QueueRowSize] and are kept only so an
+     *  already-synced preference still renders at the size it named. New selections express size
+     *  through the separate row-size preference, which works with every style. */
+    val legacyRowSize: QueueRowSize? get() = when (this) {
+        COVER_COMPACT -> QueueRowSize.COMPACT
+        COVER_TALL -> QueueRowSize.TALL
+        else -> null
     }
 }
 
@@ -276,8 +324,134 @@ private fun queueRowSkin(
                 onColor = Color.White,
                 corner = 24.dp, verticalPadding = 13.dp, keyline = null
         )
+        // The cover itself is drawn by the row (a Brush cannot carry a bitmap); this is the
+        // fill that shows through where there is no artwork, matching GLASS so an art-less row
+        // is indistinguishable from the plain style. Text stays white over the scrim, and the
+        // now-playing row is marked with an accent keyline rather than a light pill, which would
+        // fight the artwork underneath it.
+        QueueStyle.COVER, QueueStyle.COVER_BLUR, QueueStyle.COVER_TONAL,
+        QueueStyle.COVER_COMPACT, QueueStyle.COVER_TALL, QueueStyle.COVER_SQUARE -> QueueRowSkin(
+                background = SolidColor(IDLE_PILL_COLOR),
+                onColor = Color.White,
+                corner = if (style == QueueStyle.COVER_SQUARE) 10.dp else 26.dp,
+                verticalPadding = when (style) {
+                    QueueStyle.COVER_COMPACT -> 8.dp
+                    QueueStyle.COVER_TALL -> 14.dp
+                    else -> 12.dp
+                },
+                keyline = if (isPlaying) accent else null
+        )
     }
 }
+
+/** The artwork keyline every queue row is built around; row height is this plus the style's
+ *  vertical padding, so one-line and two-line entries come out the same height. */
+private val QUEUE_ROW_CONTENT_HEIGHT = 30.dp
+
+/**
+ * User-chosen list pill height (MiscPreferences.WEAR_LIST_ROW_SIZE). Independent of the style so
+ * any look can be made roomier or tighter; the style still supplies its own padding rhythm on top
+ * of this content height.
+ */
+enum class QueueRowSize(val contentHeight: Dp) {
+    COMPACT(22.dp),
+    NORMAL(QUEUE_ROW_CONTENT_HEIGHT),
+    TALL(52.dp),
+    XTALL(78.dp);
+
+    companion object {
+        fun fromPref(value: String?): QueueRowSize = when (value) {
+            "compact" -> COMPACT
+            "tall" -> TALL
+            "xtall" -> XTALL
+            else -> NORMAL
+        }
+    }
+}
+
+/**
+ * Legibility scrim laid over a cover-filled pill. Album art is arbitrary - it can be white,
+ * busy, or the same hue as the text - so the title needs a guaranteed floor of contrast. The
+ * gradient is horizontal and heaviest on the left, where the (left-aligned) title sits, letting
+ * the right side of the artwork stay visible the way the Wear OS media template does.
+ */
+internal fun coverScrim(tint: Color = Color.Black): Brush = Brush.horizontalGradient(
+        0f to tint.copy(alpha = .74f),
+        .55f to tint.copy(alpha = .46f),
+        1f to tint.copy(alpha = .22f)
+)
+
+/**
+ * Scrim for one cover variation. Tonal washes the row in a darkened album accent instead of
+ * neutral black; Blur already softens the art underneath, so it needs far less darkening to stay
+ * legible and keeps more of the colour visible.
+ */
+internal fun coverScrimFor(style: QueueStyle, accent: Color): Brush = when (style) {
+    QueueStyle.COVER_TONAL -> coverScrim(darkenForScrim(accent))
+    QueueStyle.COVER_BLUR -> Brush.horizontalGradient(
+            0f to Color.Black.copy(alpha = .50f),
+            1f to Color.Black.copy(alpha = .28f)
+    )
+    else -> coverScrim()
+}
+
+/** Pulls an accent down to a dark, low-saturation tone usable as a scrim - a bright accent at
+ *  70% alpha would tint the artwork without actually darkening it. */
+private fun darkenForScrim(accent: Color): Color {
+    val hsl = FloatArray(3)
+    ColorUtils.colorToHSL(accent.toArgb(), hsl)
+    hsl[1] = (hsl[1] * .8f).coerceIn(0f, .65f)
+    hsl[2] = .16f
+    return Color(ColorUtils.HSLToColor(hsl))
+}
+
+/**
+ * Fills the node with [image], center-cropped and clipped to [shape], then lays [scrim] over it.
+ *
+ * Deliberately a draw-only modifier. The obvious `Modifier.paint` route participates in
+ * *measurement*: it sizes the node to the painter's intrinsic size unless told otherwise, so rows
+ * inherited the artwork's pixel dimensions and every entry came out a different height - small
+ * covers looked right, large ones ballooned into squares. Drawing behind the content cannot affect
+ * layout at all, which is the property this needs.
+ */
+internal fun Modifier.coverFill(image: ImageBitmap, shape: Shape, scrim: Brush): Modifier =
+        clip(shape).drawBehind {
+            // Center-crop by choosing the source rect that matches the destination's aspect
+            // ratio, rather than by scaling the image past the node and relying on the clip.
+            val dstAspect = if (size.height > 0f) size.width / size.height else 1f
+            val srcAspect = if (image.height > 0) {
+                image.width.toFloat() / image.height.toFloat()
+            } else {
+                1f
+            }
+            val srcWidth: Int
+            val srcHeight: Int
+            if (srcAspect > dstAspect) {
+                srcHeight = image.height
+                srcWidth = (image.height * dstAspect).roundToInt().coerceIn(1, image.width)
+            } else {
+                srcWidth = image.width
+                srcHeight = (image.width / dstAspect).roundToInt().coerceIn(1, image.height)
+            }
+            drawImage(
+                    image = image,
+                    srcOffset = IntOffset((image.width - srcWidth) / 2, (image.height - srcHeight) / 2),
+                    srcSize = IntSize(srcWidth, srcHeight),
+                    dstSize = IntSize(size.width.roundToInt(), size.height.roundToInt())
+            )
+            drawRect(scrim)
+        }
+
+/**
+ * Backdrop blur for [QueueStyle.COVER_BLUR], using the same multi-pass blur as the player
+ * background so the two read as the same effect. A single hard downscale (what this used to do)
+ * left visible pixel blocks rather than a blur.
+ */
+internal fun blurredCover(source: Bitmap): Bitmap =
+        BitmapBlur.blur(source, COVER_BLUR_RADIUS_PX)
+
+/** Tuned for a pill-sized backdrop: enough to abstract the artwork without erasing its shapes. */
+private const val COVER_BLUR_RADIUS_PX = 28f
 
 /** Row spacing per style - tighter for the flat minimal list, roomier for the bold card styles. */
 private fun queueRowSpacing(style: QueueStyle): Dp = when (style) {
@@ -310,6 +484,11 @@ internal fun queueArtworkCorner(style: QueueStyle): Dp = when (style) {
     QueueStyle.TERMINAL -> 0.dp
     QueueStyle.PRISM -> 8.dp
     QueueStyle.FROST -> 12.dp
+    // Reached by a cover-style row with no artwork (falls back to the Glass look), and by the
+    // blur variation, which keeps its sharp thumbnail over the softened backdrop.
+    QueueStyle.COVER_SQUARE -> 6.dp
+    QueueStyle.COVER, QueueStyle.COVER_BLUR, QueueStyle.COVER_TONAL,
+    QueueStyle.COVER_COMPACT, QueueStyle.COVER_TALL -> 15.dp
 }
 
 /** A dark, accent-tinted surface for the tonal idle rows - keeps saturation in a readable band. */
@@ -339,8 +518,12 @@ fun QueueScreen(
         nowPlayingArtist: String?,
         onItemClick: (entryId: String) -> Unit,
         onDismiss: () -> Unit,
-        style: QueueStyle = QueueStyle.GLASS
+        style: QueueStyle = QueueStyle.GLASS,
+        rowSize: QueueRowSize = QueueRowSize.NORMAL
 ) {
+    // A legacy cover_compact / cover_tall selection still names its own size; the standalone
+    // preference owns it for every other value.
+    val effectiveRowSize = style.legacyRowSize ?: rowSize
     // Guard: SwipeToDismissBox can fire onDismissed more than once in edge cases (e.g. the system
     // windowSwipeToDismiss racing with the Compose gesture). Only forward the first call.
     var dismissed by remember { mutableStateOf(false) }
@@ -359,7 +542,8 @@ fun QueueScreen(
                         nowPlayingTitle,
                         nowPlayingArtist,
                         onItemClick,
-                        style
+                        style,
+                        effectiveRowSize
                 )
             }
         }
@@ -375,7 +559,8 @@ private fun QueueList(
         nowPlayingTitle: String?,
         nowPlayingArtist: String?,
         onItemClick: (String) -> Unit,
-        style: QueueStyle
+        style: QueueStyle,
+        rowSize: QueueRowSize
 ) {
     val listState = rememberScalingLazyListState()
 
@@ -418,7 +603,8 @@ private fun QueueList(
                             tertiaryAccentColor,
                             onItemClick,
                             animate = !isScrolling,
-                            style = style
+                            style = style,
+                            rowSize = rowSize
                     )
                 }
             }
@@ -478,7 +664,8 @@ private fun QueueRow(
         tertiaryAccentColor: Color,
         onItemClick: (String) -> Unit,
         animate: Boolean,
-        style: QueueStyle
+        style: QueueStyle,
+        rowSize: QueueRowSize
 ) {
     // The lightened accent / tonal surfaces keep black or accent text readable regardless of the
     // album's hue - see queueRowSkin for how each style paints the row.
@@ -496,10 +683,28 @@ private fun QueueRow(
     val shape = RoundedCornerShape(skin.corner)
     val border = skin.border
     val nowPlayingDescription = stringResource(R.string.queue_now_playing)
+    // Cover style: the entry's own art fills the pill. Null for every other style, and for a
+    // cover-style row whose entry has no artwork - which then renders as a plain Glass pill.
+    val coverArt = if (style.isCover) item.artwork else null
+    val coverImage = remember(coverArt, style) {
+        coverArt?.let { if (style == QueueStyle.COVER_BLUR) blurredCover(it) else it }
+                ?.asImageBitmap()
+    }
     Row(
             modifier = Modifier
                     .fillMaxWidth()
                     .background(skin.background, shape)
+                    .then(
+                            if (coverImage != null) {
+                                // Only this style pays for the rounded clip (and its per-row
+                                // saveLayer, see the note above) - it is the one treatment that
+                                // genuinely needs the artwork clipped to the pill.
+                                Modifier.coverFill(
+                                        coverImage, shape, coverScrimFor(style, accentColor))
+                            } else {
+                                Modifier
+                            }
+                    )
                     .then(if (border != null) Modifier.border(border.first, border.second, shape) else Modifier)
                     .clickable { onItemClick(item.entryId) }
                     .semantics {
@@ -523,10 +728,17 @@ private fun QueueRow(
                                 Modifier
                             }
                     )
-                    .padding(horizontal = 16.dp, vertical = skin.verticalPadding),
+                    // Height is derived from the style's padding around the 30dp artwork keyline
+                    // rather than left to the content. A row whose track has no artist collapses
+                    // to one line, so content-driven heights made the list ragged next to the
+                    // quick panel's pills; each style still keeps its own rhythm via its padding.
+                    .height(rowSize.contentHeight + skin.verticalPadding * 2)
+                    .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
     ) {
-        item.artwork?.let { bitmap ->
+        // The cover style already shows the art full-bleed behind the text; a second thumbnail
+        // of the same image would just crowd the row.
+        item.artwork?.takeIf { coverImage == null || style.coverKeepsThumbnail }?.let { bitmap ->
             val image = remember(bitmap) { bitmap.asImageBitmap() }
             val artworkCorner = queueArtworkCorner(style)
             Image(

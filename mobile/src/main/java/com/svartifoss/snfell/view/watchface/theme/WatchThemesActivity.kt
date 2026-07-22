@@ -283,6 +283,8 @@ class WatchThemesActivity : AppCompatActivity() {
         val content = layoutInflater.inflate(R.layout.dialog_watch_theme, null)
         val nameLayout = content.findViewById<TextInputLayout>(R.id.theme_name_layout)
         val nameInput = content.findViewById<TextInputEditText>(R.id.theme_name_input)
+        // Cursor/handles/highlight otherwise stay the theme's default sage green, not the accent.
+        LyraAccent.applyToEditText(nameInput, accentColor)
         val baseContainer = content.findViewById<LinearLayout>(R.id.base_face_container)
         val spinner = content.findViewById<androidx.appcompat.widget.AppCompatSpinner>(
                 R.id.base_face_spinner)
@@ -294,8 +296,12 @@ class WatchThemesActivity : AppCompatActivity() {
             showArchived || face !in ARCHIVED_FACES || face == initialBaseFace
         }
         val labels = faces.map { WatchThemeRepository.displayNameForFace(this, it) }
-        spinner.adapter = ArrayAdapter(
-                this, android.R.layout.simple_spinner_dropdown_item, labels)
+        spinner.adapter = ArrayAdapter(this, R.layout.item_spinner_lyra, labels).apply {
+            // The closed control uses the vertically-centered Lyra item; the expanded list keeps
+            // the platform dropdown row (checkmark + row height). Passing the dropdown item as the
+            // closed view is what left the selected label misaligned against the control.
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
         spinner.setSelection(faces.indexOf(initialBaseFace).coerceAtLeast(0))
         baseContainer.visibility = if (showBaseFace) View.VISIBLE else View.GONE
         nameInput.setText(initialName)
@@ -308,6 +314,13 @@ class WatchThemesActivity : AppCompatActivity() {
                 .setPositiveButton(android.R.string.ok, null)
                 .create()
         dialog.setOnShowListener {
+            // Buttons and the name field's box/label otherwise stay the theme's default sage
+            // green like the EditText cursor did before LyraAccent.applyToEditText above.
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(accentColor)
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(accentColor)
+            nameLayout.boxStrokeColor = accentColor
+            nameLayout.defaultHintTextColor = ColorStateList.valueOf(accentColor)
+
             fun validate(): Boolean {
                 val candidate = nameInput.text?.toString()?.trim().orEmpty()
                 val error = when {

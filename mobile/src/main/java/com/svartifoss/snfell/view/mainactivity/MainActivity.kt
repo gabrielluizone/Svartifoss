@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.databinding.ActivityMainBinding
 import com.svartifoss.snfell.di.InjectableViewModelFactory
 import com.svartifoss.snfell.music.isPlaying
@@ -51,6 +52,7 @@ import androidx.lifecycle.lifecycleScope
 import com.svartifoss.snfell.update.UpdateChecker
 import kotlinx.coroutines.launch
 import com.matejdro.wearutils.companionnotice.WearCompanionPhoneActivity
+import com.matejdro.wearutils.preferences.definition.Preferences
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -114,7 +116,14 @@ class MainActivity : WearCompanionPhoneActivity(),
         if (key == "dynamic_accent_color" || key == "desaturated_color" || key == "custom_accent_color") {
             updateMiniPlayerMetadata(miniPlayerController?.metadata)
         }
+        if (key == MiscPreferences.MINI_PLAYER_ENABLED.key) {
+            setMiniPlayerVisible(miniPlayerController != null && miniPlayerPreferenceEnabled())
+        }
     }
+
+    private fun miniPlayerPreferenceEnabled(): Boolean = Preferences.getBoolean(
+            PreferenceManager.getDefaultSharedPreferences(this), MiscPreferences.MINI_PLAYER_ENABLED
+    )
 
     fun onCustomAccentColorChanged(hex: String?) {
         val color = if (hex != null) {
@@ -139,9 +148,13 @@ class MainActivity : WearCompanionPhoneActivity(),
     }
 
     private val playFabRunnable = Runnable {
-        val isMiniPlayerVisible = binding.miniPlayer.visibility == View.VISIBLE
+        // Whether something is actually playing, not the mini player's own visibility - those
+        // used to be the same thing, but the mini player can now also be hidden by user
+        // preference while a session is still active, and the Play FAB (which means "tap to
+        // resume") must not appear in that case.
         val isFabFragment = currentFragment is FabFragment
-        binding.fabPlay.visibility = if (!isMiniPlayerVisible && !isFabFragment) View.VISIBLE else View.GONE
+        binding.fabPlay.visibility =
+                if (miniPlayerController == null && !isFabFragment) View.VISIBLE else View.GONE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,8 +170,21 @@ class MainActivity : WearCompanionPhoneActivity(),
             UpdateChecker.maybeCheckInBackground(this@MainActivity)
         }
 
+        // First launch after an install that bumped the versionCode: show the same Updates
+        // screen used everywhere else, now reporting "you're current" plus its release notes,
+        // instead of leaving the update a silent, undiscoverable fact.
+        if (UpdateChecker.consumePostUpdateWelcome(this)) {
+            startActivity(Intent(this, com.svartifoss.snfell.update.UpdateActivity::class.java))
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // DrawerLayout paints its own status-bar scrim in the top inset region, defaulting to the
+        // theme's colorPrimaryDark (lyra_sage_dark, green). Opaque status bars used to hide it, but
+        // targetSdk 35 forces edge-to-edge on Android 15 (statusBarColor is ignored), exposing the
+        // green scrim. Match it to the app background so the status-bar area reads as one surface.
+        binding.drawerLayout.setStatusBarBackground(R.color.lyra_background)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
@@ -268,7 +294,7 @@ class MainActivity : WearCompanionPhoneActivity(),
             if (controller != null) {
                 updateMiniPlayerMetadata(controller.metadata)
                 updateMiniPlayerPlayState(controller.playbackState)
-                setMiniPlayerVisible(true)
+                setMiniPlayerVisible(miniPlayerPreferenceEnabled())
             } else {
                 setMiniPlayerVisible(false)
             }
@@ -478,7 +504,7 @@ class MainActivity : WearCompanionPhoneActivity(),
         // just under the 0.35 threshold below (saturated blues/reds), picking a WHITE icon on a
         // light pill. Skip the heuristic and always use the dark icon in that combination.
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        if (isDarkThemeActive() && prefs.getBoolean("desaturated_color", false)) {
+        if (isDarkThemeActive() && prefs.getBoolean("desaturated_color", true)) {
             return android.content.res.ColorStateList.valueOf(android.graphics.Color.BLACK)
         }
 
@@ -570,7 +596,7 @@ class MainActivity : WearCompanionPhoneActivity(),
         // Some media apps publish metadata in two steps (text, then artwork moments later) without
         // firing another onMetadataChanged — poll while playing so the accent tracks new art.
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        if (prefs.getBoolean("dynamic_accent_color", false)) {
+        if (prefs.getBoolean("dynamic_accent_color", true)) {
             val metadata = controller.metadata
             val art = metadata?.getBitmap(MediaMetadata.METADATA_KEY_ART)
                 ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
@@ -588,7 +614,7 @@ class MainActivity : WearCompanionPhoneActivity(),
 
     private fun updateDynamicAccentFromArt(art: Bitmap?, description: String?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        if (!prefs.getBoolean("dynamic_accent_color", false)) {
+        if (!prefs.getBoolean("dynamic_accent_color", true)) {
             if (dynamicAccentColor != null) {
                 dynamicAccentColor = null
                 lastPaletteArt = null
@@ -617,7 +643,7 @@ class MainActivity : WearCompanionPhoneActivity(),
             }
 
             var extracted = extractAccentFromPalette(palette)
-            if (prefs.getBoolean("desaturated_color", false)) {
+            if (prefs.getBoolean("desaturated_color", true)) {
                 extracted = adjustColorForContrast(extracted, isDarkThemeActive())
             }
 
@@ -927,8 +953,9 @@ class MainActivity : WearCompanionPhoneActivity(),
         } catch (_: Exception) {
             "?"
         }
-        header.findViewById<TextView>(R.id.drawer_version_text)?.text =
-            getString(R.string.drawer_version_format, versionName)
+        header.findViewById<TextView>(R.id.drawer_version_text)?.let { versionText ->
+            versionText.text = getString(R.string.drawer_version_format, versionName)
+        }
 
         header.findViewById<View>(R.id.drawer_support_button)?.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BUY_ME_A_COFFEE_URL)))
@@ -1151,23 +1178,12 @@ class MainActivity : WearCompanionPhoneActivity(),
                 view.setTag(R.id.tag_uses_accent, true)
             }
         } else if (view is android.widget.EditText) {
-            // Selection UI (highlight, cursor, teardrop handles) and the focused underline all
-            // come from the theme's colorControlActivated, resolved once at inflation - they can
-            // never follow a runtime accent and stayed default-sage under any custom accent.
-            // Must be handled before the TextView branch below (EditText is a TextView).
-            view.highlightColor = ColorUtils.setAlphaComponent(color, 0x55)
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                view.textCursorDrawable = view.textCursorDrawable?.mutate()?.apply { setTint(color) }
-                // Explicit setter calls: the handle getters are @Nullable but the setters are
-                // @NonNull, so Kotlin exposes these as read-only properties, not vars.
-                view.textSelectHandle?.mutate()?.apply { setTint(color) }?.let { view.setTextSelectHandle(it) }
-                view.textSelectHandleLeft?.mutate()?.apply { setTint(color) }?.let { view.setTextSelectHandleLeft(it) }
-                view.textSelectHandleRight?.mutate()?.apply { setTint(color) }?.let { view.setTextSelectHandleRight(it) }
-            }
-            view.backgroundTintList = android.content.res.ColorStateList(
-                arrayOf(intArrayOf(android.R.attr.state_focused), intArrayOf()),
-                intArrayOf(color, ContextCompat.getColor(this, R.color.lyra_divider))
-            )
+            // Selection UI (highlight, cursor, teardrop handles) and the focused underline all come
+            // from the theme's colorControlActivated (static sage), resolved once at inflation, and
+            // can never follow a runtime accent - so tint them explicitly. Shared with the
+            // standalone dialog activities via LyraAccent. Handled before the TextView branch below
+            // (EditText is a TextView).
+            LyraAccent.applyToEditText(view, color)
         } else if (view is android.widget.TextView) {
             if (view.getTag(R.id.tag_uses_accent) == true ||
                 usesAccentTint(view.currentTextColor, staticAccent, previousAccent)) {

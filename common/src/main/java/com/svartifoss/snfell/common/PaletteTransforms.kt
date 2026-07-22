@@ -40,6 +40,17 @@ object PaletteTransforms {
         return ColorUtils.HSLToColor(hsl)
     }
 
+    /** Dark, still-chromatic tone used to tint the player shading overlay with an album/custom
+     *  color instead of plain black. Shared by the watch renderer and the phone preview so a
+     *  tinted shading looks identical in both. */
+    fun shadingTone(color: Int): Int = tonalSurface(color, lightness = .13f, minSat = .25f, maxSat = .78f)
+
+    /** Same-hue fallback for a monochromatic cover/static accent: varies only lightness, never
+     *  inventing a second hue that wasn't in the source. Named spelling of a pattern already
+     *  duplicated privately as sameHueTone/albumToneFallback in the wear renderer, the phone
+     *  preview and the queue view model - new callers should use this instead of a fourth copy. */
+    fun sameHueTone(color: Int, lightness: Float): Int = tonalSurface(color, lightness, .25f, .82f)
+
     /**
      * Softens an album accent for readable text and progress chrome on a dark watch face.
      *

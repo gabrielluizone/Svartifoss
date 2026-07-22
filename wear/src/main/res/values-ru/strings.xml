@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">Воспроизведение и управление медиа</string>
+    <string name="complication_album_art_label">Обложка текущего трека</string>
+    <string name="complication_no_music">Ничего не воспроизводится</string>
+    <string name="tile_nothing_playing">Ничего не воспроизводится</string>
+    <string name="tile_open_app">Открыть Svartifoss</string>
+    <string name="tile_rewind_10">Назад на 10 секунд</string>
+    <string name="tile_forward_10">Вперёд на 10 секунд</string>
+
+    <string name="shortcuts_tile_description">Ваши ярлыки стриминга в одно касание</string>
+    <string name="shortcuts_tile_title">Ярлыки</string>
+    <string name="shortcuts_tile_empty">Пока нет ярлыков</string>
+    <string name="shortcuts_tile_more">Больше в приложении</string>
+
+    <string name="idle_nothing_playing">Ничего не воспроизводится</string>
+    <string name="idle_hint">Включите что-нибудь на телефоне</string>
+
+    <string name="no_phone">Телефон не подключён</string>
+    <string name="playback_stopped">Воспроизведение остановлено</string>
+    <string name="error">ОШИБКА</string>
+    <string name="error_play_services">Ошибка Play Services</string>
+    <string name="button">Кнопка</string>
+    <string name="back_button">Назад</string>
+    <string name="turn_bezel_cw">Поверните безель по часовой стрелке</string>
+    <string name="turn_bezel_ccw">Поверните безель против часовой стрелки</string>
+    <string name="quick_action_like">Нравится</string>
+    <string name="quick_action_shuffle">Перемешать</string>
+    <string name="quick_action_repeat">Повтор</string>
+    <string name="quick_action_repeat_all">Повтор всех</string>
+    <string name="quick_action_repeat_one">Повтор одного</string>
+    <string name="quick_action_up_next">Далее</string>
+    <string name="quick_actions_unavailable">У текущего приложения нет быстрых действий</string>
+    <string name="voice_search_prompt">Поиск музыки</string>
+    <string name="queue_empty">Очередь недоступна</string>
+    <string name="queue_now_playing">Сейчас играет</string>
+
+    <string name="hint_title">Как пользоваться</string>
+    <string name="hint_edges">Края — нажмите для показанных действий</string>
+    <string name="hint_center">Центр — воспроизведение/пауза\nДвойное нажатие — быстрые действия</string>
+    <string name="hint_swipe_up">Смахните вверх — меню действий</string>
+    <string name="hint_crown">Колёсико — громкость</string>
+    <string name="hint_dismiss">Понятно</string>
+
+    <string name="action_name_play">Воспроизвести</string>
+    <string name="action_name_pause">Пауза</string>
+    <string name="action_name_skip_prev">Предыдущий трек</string>
+    <string name="action_name_skip_next">Следующий трек</string>
+    <string name="action_name_volume_up">Громче</string>
+    <string name="action_name_volume_down">Тише</string>
+    <string name="action_name_open_menu">Открыть меню</string>
+    <string name="action_name_skip_30">Вперёд на 30 секунд</string>
+    <string name="action_name_reverse_30">Назад на 30 секунд</string>
+    <string name="action_name_play_pause">Воспроизведение/Пауза</string>
+    <string name="action_name_stop">Стоп</string>
+    <string name="action_name_restart">Начать трек заново</string>
+    <string name="action_name_seek">Перемотка по треку</string>
+    <string name="action_name_mute">Без звука</string>
+    <string name="action_name_search">Поиск</string>
+    <string name="action_name_custom">Своё действие</string>
+    <string name="state_on">Вкл.</string>
+    <string name="state_off">Выкл.</string>
+
+    <string name="update_notification_channel">Обновления приложения</string>
+    <string name="update_install_title">Обновление Svartifoss</string>
+    <string name="update_install_tap">Нажмите, чтобы установить новую версию</string>
+    <string name="update_install_failed">Не удалось установить. Разрешите установку из Svartifoss в настройках часов и повторите попытку с телефона.</string>
+</resources>

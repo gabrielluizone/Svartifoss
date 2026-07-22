@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">Reproducción y controles multimedia</string>
+    <string name="complication_album_art_label">Carátula en reproducción</string>
+    <string name="complication_no_music">No se reproduce nada</string>
+    <string name="tile_nothing_playing">No se reproduce nada</string>
+    <string name="tile_open_app">Abrir Svartifoss</string>
+    <string name="tile_rewind_10">Retroceder 10 segundos</string>
+    <string name="tile_forward_10">Avanzar 10 segundos</string>
+
+    <string name="shortcuts_tile_description">Tus accesos directos de streaming, a un toque</string>
+    <string name="shortcuts_tile_title">Accesos directos</string>
+    <string name="shortcuts_tile_empty">Aún no hay accesos directos</string>
+    <string name="shortcuts_tile_more">Más en la app</string>
+
+    <string name="idle_nothing_playing">No se reproduce nada</string>
+    <string name="idle_hint">Reproduce algo en tu teléfono</string>
+
+    <string name="no_phone">No hay teléfono conectado</string>
+    <string name="playback_stopped">Reproducción detenida</string>
+    <string name="error">ERROR</string>
+    <string name="error_play_services">Error de Play Services</string>
+    <string name="button">Botón</string>
+    <string name="back_button">Atrás</string>
+    <string name="turn_bezel_cw">Gira el bisel en sentido horario</string>
+    <string name="turn_bezel_ccw">Gira el bisel en sentido antihorario</string>
+    <string name="quick_action_like">Me gusta</string>
+    <string name="quick_action_shuffle">Aleatorio</string>
+    <string name="quick_action_repeat">Repetir</string>
+    <string name="quick_action_repeat_all">Repetir todo</string>
+    <string name="quick_action_repeat_one">Repetir una</string>
+    <string name="quick_action_up_next">A continuación</string>
+    <string name="quick_actions_unavailable">La app actual no tiene acciones rápidas</string>
+    <string name="voice_search_prompt">Buscar música</string>
+    <string name="queue_empty">No hay cola disponible</string>
+    <string name="queue_now_playing">En reproducción</string>
+
+    <string name="hint_title">Cómo se usa</string>
+    <string name="hint_edges">Bordes — toca para las acciones mostradas</string>
+    <string name="hint_center">Centro — reproducir/pausar\nToca dos veces — acciones rápidas</string>
+    <string name="hint_swipe_up">Desliza hacia arriba — menú de acciones</string>
+    <string name="hint_crown">Corona — volumen</string>
+    <string name="hint_dismiss">Entendido</string>
+
+    <string name="action_name_play">Reproducir</string>
+    <string name="action_name_pause">Pausar</string>
+    <string name="action_name_skip_prev">Pista anterior</string>
+    <string name="action_name_skip_next">Pista siguiente</string>
+    <string name="action_name_volume_up">Subir volumen</string>
+    <string name="action_name_volume_down">Bajar volumen</string>
+    <string name="action_name_open_menu">Abrir menú</string>
+    <string name="action_name_skip_30">Avanzar 30 segundos</string>
+    <string name="action_name_reverse_30">Retroceder 30 segundos</string>
+    <string name="action_name_play_pause">Reproducir/Pausar</string>
+    <string name="action_name_stop">Detener</string>
+    <string name="action_name_restart">Reiniciar pista</string>
+    <string name="action_name_seek">Desplazarse por la pista</string>
+    <string name="action_name_mute">Silenciar</string>
+    <string name="action_name_search">Buscar</string>
+    <string name="action_name_custom">Acción personalizada</string>
+    <string name="state_on">Activado</string>
+    <string name="state_off">Desactivado</string>
+
+    <string name="update_notification_channel">Actualizaciones de la app</string>
+    <string name="update_install_title">Actualización de Svartifoss</string>
+    <string name="update_install_tap">Toca para instalar la nueva versión</string>
+    <string name="update_install_failed">Error de instalación. Permite instalaciones desde Svartifoss en los ajustes del reloj e inténtalo de nuevo desde el teléfono.</string>
+</resources>

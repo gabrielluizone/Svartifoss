@@ -61,6 +61,15 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         }
     }
 
+    /**
+     * Any currently-active MediaController for [packageName], even when it is not the tracked
+     * "current" session. Lets a streaming shortcut reach an app (e.g. Spotify) that has a live
+     * session while a different app is the foreground one, instead of only ever driving
+     * [currentController].
+     */
+    fun controllerForPackage(packageName: String): MediaController? =
+            getActiveSessions().firstOrNull { it.packageName == packageName }
+
     fun activate() {
         try {
             mediaSessionManager.addOnActiveSessionsChangedListener(this, notificationListenerComponent)

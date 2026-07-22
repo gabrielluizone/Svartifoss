@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">Wiedergabe und Mediensteuerung</string>
+    <string name="complication_album_art_label">Cover der Wiedergabe</string>
+    <string name="complication_no_music">Nichts wird abgespielt</string>
+    <string name="tile_nothing_playing">Nichts wird abgespielt</string>
+    <string name="tile_open_app">Svartifoss öffnen</string>
+    <string name="tile_rewind_10">10 Sekunden zurück</string>
+    <string name="tile_forward_10">10 Sekunden vor</string>
+
+    <string name="shortcuts_tile_description">Deine Streaming-Verknüpfungen, nur einen Tipp entfernt</string>
+    <string name="shortcuts_tile_title">Verknüpfungen</string>
+    <string name="shortcuts_tile_empty">Noch keine Verknüpfungen</string>
+    <string name="shortcuts_tile_more">Mehr in der App</string>
+
+    <string name="idle_nothing_playing">Nichts wird abgespielt</string>
+    <string name="idle_hint">Spiele etwas auf deinem Telefon ab</string>
+
+    <string name="no_phone">Kein Telefon verbunden</string>
+    <string name="playback_stopped">Wiedergabe gestoppt</string>
+    <string name="error">FEHLER</string>
+    <string name="error_play_services">Play-Services-Fehler</string>
+    <string name="button">Taste</string>
+    <string name="back_button">Zurück</string>
+    <string name="turn_bezel_cw">Lünette im Uhrzeigersinn drehen</string>
+    <string name="turn_bezel_ccw">Lünette gegen den Uhrzeigersinn drehen</string>
+    <string name="quick_action_like">Mag ich</string>
+    <string name="quick_action_shuffle">Zufallswiedergabe</string>
+    <string name="quick_action_repeat">Wiederholen</string>
+    <string name="quick_action_repeat_all">Alle wiederholen</string>
+    <string name="quick_action_repeat_one">Titel wiederholen</string>
+    <string name="quick_action_up_next">Als Nächstes</string>
+    <string name="quick_actions_unavailable">Aktuelle App hat keine Schnellaktionen</string>
+    <string name="voice_search_prompt">Musik suchen</string>
+    <string name="queue_empty">Keine Warteschlange verfügbar</string>
+    <string name="queue_now_playing">Wird abgespielt</string>
+
+    <string name="hint_title">Bedienung</string>
+    <string name="hint_edges">Ränder — tippen für die angezeigten Aktionen</string>
+    <string name="hint_center">Mitte — Wiedergabe/Pause\nDoppeltippen — Schnellaktionen</string>
+    <string name="hint_swipe_up">Nach oben wischen — Aktionsmenü</string>
+    <string name="hint_crown">Krone — Lautstärke</string>
+    <string name="hint_dismiss">Verstanden</string>
+
+    <string name="action_name_play">Wiedergabe</string>
+    <string name="action_name_pause">Pause</string>
+    <string name="action_name_skip_prev">Vorheriger Titel</string>
+    <string name="action_name_skip_next">Nächster Titel</string>
+    <string name="action_name_volume_up">Lauter</string>
+    <string name="action_name_volume_down">Leiser</string>
+    <string name="action_name_open_menu">Menü öffnen</string>
+    <string name="action_name_skip_30">30 Sekunden vor</string>
+    <string name="action_name_reverse_30">30 Sekunden zurück</string>
+    <string name="action_name_play_pause">Wiedergabe/Pause</string>
+    <string name="action_name_stop">Stopp</string>
+    <string name="action_name_restart">Titel neu starten</string>
+    <string name="action_name_seek">Im Titel spulen</string>
+    <string name="action_name_mute">Stumm</string>
+    <string name="action_name_search">Suchen</string>
+    <string name="action_name_custom">Benutzerdefinierte Aktion</string>
+    <string name="state_on">An</string>
+    <string name="state_off">Aus</string>
+
+    <string name="update_notification_channel">App-Updates</string>
+    <string name="update_install_title">Svartifoss-Update</string>
+    <string name="update_install_tap">Tippen, um die neue Version zu installieren</string>
+    <string name="update_install_failed">Installation fehlgeschlagen. Erlaube Installationen von Svartifoss in den Uhreneinstellungen und versuche es erneut vom Telefon aus.</string>
+</resources>

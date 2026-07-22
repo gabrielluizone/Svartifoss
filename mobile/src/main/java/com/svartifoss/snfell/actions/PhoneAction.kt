@@ -49,6 +49,13 @@ abstract class PhoneAction : Bundlable {
     open val defaultIconTintable: Boolean
         get() = true
 
+    /** Whether [defaultIcon] is genuine cover/artwork content (e.g. a streaming shortcut's fetched
+     * thumbnail) suitable for filling a whole quick-panel pill's background, as opposed to a
+     * generic app-launcher icon or glyph. Mirrors [defaultIconTintable]: only consulted while the
+     * default icon is showing - see [isCoverArt]. */
+    open val defaultIsCoverArt: Boolean
+        get() = false
+
     /** Optional URI that the watch should open directly on the paired phone. This bypasses
      * Android's background-Activity restriction that applies to MusicService. */
     open val remoteUri: String?
@@ -58,6 +65,11 @@ abstract class PhoneAction : Bundlable {
         get() = customIconUri?.let {
             it.scheme == ContentResolver.SCHEME_ANDROID_RESOURCE
         } ?: defaultIconTintable
+
+    /** A user-picked custom icon is never treated as cover art - it replaced the action's own
+     * artwork, so it is no longer "the shortcut's cover". */
+    val isCoverArt: Boolean
+        get() = customIconUri == null && defaultIsCoverArt
 
     val title: String
         get() = customTitle ?: retrieveTitle()

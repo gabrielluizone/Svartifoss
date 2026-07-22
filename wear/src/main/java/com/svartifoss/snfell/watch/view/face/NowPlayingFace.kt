@@ -126,6 +126,12 @@ data class NowPlayingFaceState(
          *  background ImageView instead and ignore this; it exists for faces that draw the art
          *  as a shape of their own (the vinyl face's disc). Wraps the host bitmap - no copy. */
         val albumArt: androidx.compose.ui.graphics.ImageBitmap? = null,
+        /** Icon of the app currently playing, shown next to the artist on faces that support it
+         *  (Immersive). Null when unavailable or the user turned the element off. */
+        val sourceIcon: androidx.compose.ui.graphics.ImageBitmap? = null,
+        /** True when [sourceIcon] is the notification's monochrome template glyph, which faces
+         *  tint to their own artist colour; false for full-colour launcher artwork. */
+        val sourceIconTemplate: Boolean = false,
         /** Resolved artist text color (already accounts for color mode, desaturation and the
          *  plain-white status-message override - it mirrors the classic artist line exactly). */
         val artistColor: Int = WatchTheme.ACCENT_DEFAULT,
@@ -151,6 +157,24 @@ data class NowPlayingFaceState(
         /** Whether the interactive curved clock is visible. This is the Compose equivalent of
          *  the Classic face's ALWAYS_SHOW_TIME clock and is independent from the AOD clock. */
         val showClock: Boolean = false,
+        /** Whether to show the awake Up Next pill at the bottom of the player - the same pill the
+         *  AOD shows, brought to the main screen (MiscPreferences.WEAR_SHOW_UP_NEXT_PILL). The host
+         *  only sets this true while the mini-buttons row is not occupying that space, so the two
+         *  never fight for the bottom band. */
+        val showUpNextPill: Boolean = false,
+        /** Resolved ARGB background/text colours for the awake Up Next pill, from the shared
+         *  WEAR_UP_NEXT_PILL_STYLE (a transparent fill is a valid choice). */
+        val upNextPillFill: Int = 0x38FFFFFF,
+        val upNextPillTextColor: Int = WatchTheme.COLOR_WHITE,
+        /** Fully-resolved ARGB colour (opacity already baked in) for the awake clock, so both the
+         *  Compose [FaceClock] and the Classic View clock consume the identical value. The host
+         *  resolves it from the clock colour-mode/opacity prefs, sampling the artwork region under
+         *  the clock for the "dynamic" mode - see MainActivity.resolveClockColor. */
+        val clockColor: Int = WatchTheme.COLOR_WHITE_60,
+        /** Current wall-clock time text (e.g. "7:21"), kept fresh by the host's updateClock(). Used
+         *  by the Chrono ambient face, which renders its own large clock in Compose; other faces
+         *  keep using the host's jiggled ambient-clock View. */
+        val clockText: String = "",
         /** True while the watch is in ambient (always-on display) mode. Faces must render an
          *  outlined, animation-free, mostly-black variant: no fills, no marquee, no track time
          *  and no touch affordances (input is dead in ambient anyway). The optional static
@@ -205,6 +229,9 @@ data class NowPlayingFaceState(
         val backdropDimStrength: Float = .8f,
         /** Explicit treatment, or FOLLOW to keep the selected background's authored treatment. */
         val backdropShadingStyle: PlayerShadingStyle = PlayerShadingStyle.FOLLOW,
+        /** Colour of the shading gradient (black by default; album/desaturated/custom resolved to
+         *  a dark tone by the host). */
+        val backdropShadingColor: Int = android.graphics.Color.BLACK,
         /** Icons of the actions configured on the LEFT / RIGHT screen quadrants (single tap). The
          *  faces with side action buttons render these instead of fixed skip glyphs when set, so
          *  the buttons follow the user's Controls config; null keeps the default previous/next
@@ -231,6 +258,14 @@ data class NowPlayingFaceState(
      */
     val artistFont: FontFamily
         get() = titleFont
+
+    /**
+     * The [FontFamily] for the awake clock. Follows the user's [fontKey] choice like the track
+     * text does, but deliberately ignores the Lain easter egg: the clock is chrome, not track
+     * text, so it should not flip typeface based on what is playing.
+     */
+    val clockFont: FontFamily
+        get() = watchFontFamily(fontKey)
 }
 
 /** Events a face raises back to the host. Implemented by MainActivity, which routes them into

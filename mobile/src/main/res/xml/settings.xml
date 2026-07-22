@@ -62,17 +62,29 @@
             android:summary="%s"
             android:layout="@layout/pref_item" />
 
+        <!-- Synced to the watch (it is in MiscPreferences.EXPORTABLE), so both apps follow one
+             choice instead of each following its own device locale. -->
+        <ListPreference
+            android:key="app_language"
+            android:icon="@drawable/ic_language"
+            android:title="@string/setting_language"
+            android:defaultValue="system"
+            android:entries="@array/app_language_entries"
+            android:entryValues="@array/app_language_values"
+            android:summary="%s"
+            android:layout="@layout/pref_item" />
+
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:key="dynamic_accent_color"
             android:icon="@drawable/ic_colors"
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:title="@string/setting_dynamic_accent_color"
             android:summary="@string/setting_dynamic_accent_color_description"
             android:layout="@layout/pref_switch_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:key="desaturated_color"
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:title="@string/setting_desaturated_color"
             android:summary="@string/setting_desaturated_color_description"
             android:dependency="dynamic_accent_color"
@@ -85,6 +97,14 @@
             android:summary="@string/setting_custom_accent_color_description"
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:key="mini_player_enabled"
+            android:icon="@drawable/ic_player_theme"
+            android:defaultValue="true"
+            android:title="@string/setting_mini_player"
+            android:summary="@string/setting_mini_player_description"
+            android:layout="@layout/pref_switch_item" />
 
     </PreferenceCategory>
 
@@ -248,11 +268,26 @@
             android:summary="@string/setting_playlist_shortcuts_description"
             android:layout="@layout/pref_item" />
 
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="streaming_shortcut_artwork"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_shortcut_artwork"
+            android:summary="@string/setting_shortcut_artwork_description"
+            android:layout="@layout/pref_switch_item" />
+
         <Preference
             android:key="notification_access"
             android:icon="@drawable/ic_bell"
             android:title="@string/setting_notification_access"
             android:summary="@string/setting_notification_access_disabled"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="persistent_notification_settings"
+            android:icon="@drawable/ic_tune"
+            android:title="@string/setting_persistent_notification"
+            android:summary="@string/setting_persistent_notification_description"
             android:layout="@layout/pref_item" />
 
         <com.svartifoss.snfell.view.settings.MusicAppListPreference
@@ -286,6 +321,14 @@
             android:title="@string/setting_close_timeout"
             android:summary="@string/setting_close_timeout_description"
             android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_close_on_idle"
+            android:icon="@drawable/ic_history"
+            android:title="@string/setting_wear_close_on_idle"
+            android:summary="@string/setting_wear_close_on_idle_description"
+            android:layout="@layout/pref_switch_item" />
 
     </PreferenceCategory>
 
@@ -324,6 +367,14 @@
             android:summary="@string/setting_crash_reporting_description"
             android:layout="@layout/pref_switch_item" />
 
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="announcements_enabled"
+            android:icon="@drawable/ic_notification_brand"
+            android:title="@string/setting_announcements"
+            android:summary="@string/setting_announcements_description"
+            android:layout="@layout/pref_switch_item" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -342,6 +393,29 @@
             android:icon="@drawable/ic_help"
             android:summary="@string/get_support_description"
             android:title="@string/get_support"
+            android:layout="@layout/pref_item" />
+
+        <!-- Summary is the literal address so it is readable (and long-press copyable) without
+             needing an email client installed. -->
+        <Preference
+            android:key="contactDeveloper"
+            android:icon="@drawable/ic_email"
+            android:title="@string/contact_developer"
+            android:summary="@string/contact_developer_email"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="aboutDeveloper"
+            android:icon="@drawable/ic_person"
+            android:title="@string/about_developer_title"
+            android:summary="@string/about_developer_summary"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="developerGithub"
+            android:icon="@drawable/ic_link"
+            android:title="@string/about_developer_github"
+            android:summary="@string/about_developer_handle"
             android:layout="@layout/pref_item" />
 
         <Preference
@@ -380,6 +454,13 @@
             android:summary="@string/dev_copy_debug_info_description"
             android:layout="@layout/pref_item" />
 
+        <Preference
+            android:key="dev_open_update_screen"
+            android:icon="@drawable/ic_autorenew"
+            android:title="@string/dev_open_update_screen"
+            android:summary="@string/dev_open_update_screen_description"
+            android:layout="@layout/pref_item" />
+
         <SwitchPreferenceCompat
             android:key="dev_show_archived"
             android:defaultValue="false"
@@ -402,6 +483,13 @@
             android:icon="@drawable/ic_text_fields"
             android:title="@string/dev_watch_player_info"
             android:summary="@string/dev_watch_player_info_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_disable_mode"
+            android:icon="@drawable/ic_toggle_off"
+            android:title="@string/dev_disable_mode"
+            android:summary="@string/dev_disable_mode_description"
             android:layout="@layout/pref_item" />
 
     </PreferenceCategory>

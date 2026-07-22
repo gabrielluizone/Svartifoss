@@ -134,6 +134,22 @@
             tools:src="@drawable/action_skip_next"
             tools:tint="#FFFFFF" />
 
+        <!-- Center zone icon: the watch's hidden center-tap gesture, made visible/configurable
+             (single tap only - double tap/long press stay the fixed quick-panel/queue behavior) -->
+        <ImageView
+            android:id="@+id/icon_center"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/center_button_bg"
+            android:padding="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/watch_display_background"
+            app:layout_constraintEnd_toEndOf="@+id/watch_display_background"
+            app:layout_constraintStart_toStartOf="@+id/watch_display_background"
+            app:layout_constraintTop_toTopOf="@+id/watch_display_background"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/action_play_pause"
+            tools:tint="#FFFFFF" />
+
         <!-- Divider. Margem superior aumentada para dar mais chão -->
         <View
             android:id="@+id/divider"

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Closed-state view for a Lyra spinner. Fills the control height and centers the text
+     vertically so the selected label sits aligned with the control instead of hugging the top,
+     which the default simple_spinner_dropdown_item (a CheckedTextView) did. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:ellipsize="end"
+    android:fontFamily="@font/google_sans"
+    android:gravity="center_vertical|start"
+    android:maxLines="1"
+    android:paddingStart="4dp"
+    android:paddingEnd="8dp"
+    android:textColor="@color/lyra_on_surface"
+    android:textSize="16sp" />

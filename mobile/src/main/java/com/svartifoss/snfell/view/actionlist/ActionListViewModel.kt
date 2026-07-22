@@ -54,6 +54,17 @@ class ActionListViewModel @Inject constructor(@param:LocalActivityConfig val act
         saveActions()
     }
 
+    /**
+     * Rebuilds the list from the shared config so external edits are picked up - e.g. renaming or
+     * repointing a saved streaming shortcut updates its assigned copies (see
+     * PlaylistShortcutActionSync). The snapshot taken in [init] would otherwise stay stale, and a
+     * later reorder/edit here would even write it back, undoing the propagation.
+     */
+    fun refreshFromConfig() {
+        actionStore = ArrayList(actionListConfig.actions.map(this::itemFromPhoneAction))
+        actions.value = actionStore
+    }
+
     private fun itemFromPhoneAction(action: PhoneAction): IdentifiedItem<PhoneAction>
             = IdentifiedItem(lastId++, action)
 

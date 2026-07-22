@@ -1,0 +1,1091 @@
+<resources>
+    <string name="setting_no_wearable_api_banner">Wear OS не поддерживается на этом устройстве</string>
+    <string name="setting_no_wearable_api_banner_description">На этом устройстве нет компонента Wear OS от Google Play Services, необходимого Svartifoss для связи с часами. Сопряжение не поможет — приложение на телефоне не сможет достучаться до часов здесь. Всё ниже всё равно сохранится и применится, если вы установите Svartifoss на поддерживаемое устройство.</string>
+    <string name="setting_no_watch_banner">Часы не подключены</string>
+    <string name="setting_no_watch_banner_description">Эти настройки синхронизируются с вашими часами Wear OS, поэтому видимо применятся только после сопряжения и подключения — но всё ниже можно настроить уже сейчас.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Внешний вид</string>
+    <string name="setting_theme">Тема</string>
+    <string name="theme_light">Белоснежная</string>
+    <string name="theme_dark">Чёрная</string>
+    <string name="theme_system">Как в системе</string>
+    <string name="setting_language">Язык</string>
+    <string name="language_system">Как в системе</string>
+    <string name="language_change_watch_notice">Часы также перейдут на этот язык после синхронизации.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Разработчик</string>
+    <string name="dev_mode_unlocked">Режим разработчика включён ✦</string>
+    <string name="dev_mode_clicks_remaining">Ещё %1$d нажатий до разблокировки режима разработчика</string>
+    <string name="dev_disable_mode">Отключить режим разработчика</string>
+    <string name="dev_disable_mode_description">Снова скрыть этот раздел — нажмите семь раз на «Установленная версия», чтобы вернуть его</string>
+    <string name="dev_mode_disabled">Режим разработчика отключён</string>
+    <string name="dev_build_info">Информация о сборке</string>
+    <string name="dev_sync_watch">Принудительно синхронизировать настройки часов</string>
+    <string name="dev_sync_watch_description">Немедленно отправить все текущие настройки на сопряжённые часы</string>
+    <string name="dev_sync_watch_done">Настройки синхронизированы с часами</string>
+    <string name="dev_copy_debug_info">Скопировать отладочную информацию</string>
+    <string name="dev_copy_debug_info_description">Скопировать сведения о сборке и устройстве в буфер обмена</string>
+    <string name="dev_show_archived">Показать архивные параметры</string>
+    <string name="dev_show_archived_description">Показать раскладки и настройки часов, заархивированные из-за известных проблем</string>
+    <string name="dev_copy_debug_info_done">Отладочная информация скопирована</string>
+    <string name="dev_open_update_screen">Открыть экран обновлений</string>
+    <string name="dev_open_update_screen_description">Предпросмотр экрана Обновления (баннер обложки, макет заметок о выпуске) без ожидания настоящего релиза</string>
+    <string name="dev_watch_layout_bounds">Показать границы макета часов</string>
+    <string name="dev_watch_layout_bounds_description">Обвести видимые элементы плеера и зоны касания на часах. Только диагностический оверлей.</string>
+    <string name="dev_watch_player_info">Показать информацию о плеере часов</string>
+    <string name="dev_watch_player_info_description">Наложить на часах активный циферблат, состояние воспроизведения, прогресс и информацию о рендеринге.</string>
+    <string name="pref_reset_default">Сбросить по умолчанию</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Вы нашли скрытый водопад.\n\nSvartifoss — чёрные базальтовые колонны\nобрамляют каскад в Исландии,\nнапоминание, что музыка течёт,\nкак вода сквозь камень.\n\n♪ Сделано с заботой. ♪</string>
+    <string name="easter_egg_ok">Закрыть</string>
+
+    <string name="nav_watch_face">Часы</string>
+    <string name="watch_face_header">Внешний вид часов</string>
+    <string name="nav_controls">Управление</string>
+    <string name="nav_actions">Действия</string>
+    <string name="nav_settings">Настройки</string>
+
+    <string name="controls_header">Управление</string>
+    <string name="controls_state_playing">Музыка играет</string>
+    <string name="controls_state_stopped">Нет воспроизведения</string>
+    <string name="controls_playing_description">Выберите, что делает каждый ввод во время воспроизведения музыки. Эта настройка не зависит от состояния без воспроизведения.</string>
+    <string name="controls_stopped_description">Выберите, что делает каждый ввод до начала воспроизведения или после его остановки. Эта настройка не зависит от состояния воспроизведения.</string>
+
+    <string name="watch_live_preview">Живой предпросмотр часов</string>
+    <string name="watch_preview_description">Живой предпросмотр выбранной поверхности часов. Изменения появляются здесь до того, как вы попробуете их на часах.</string>
+    <string name="watch_section_style">Плеер</string>
+    <string name="watch_section_style_description">Выберите макет плеера и поведение заголовка, времени и прогресса.</string>
+    <string name="watch_section_background">Фон</string>
+    <string name="watch_section_background_description">Управляйте обложкой альбома, размытием, затуханием и читаемостью за плеером.</string>
+    <string name="watch_section_colors">Цвета</string>
+    <string name="watch_section_colors_description">Настройте цвета исполнителя, кольца прогресса и акцента на основе альбома.</string>
+    <string name="watch_section_aod">Всегда включён</string>
+    <string name="watch_section_aod_description">Настройте энергосберегающий экран и посмотрите его вид в спящем режиме в предпросмотре.</string>
+    <string name="watch_section_panels">Панели</string>
+    <string name="watch_section_panels_description">Оформите громкость, перемотку, быструю панель и очередь; фокус на строке открывает эту поверхность в предпросмотре.</string>
+    <string name="watch_section_mini_buttons">Мини-кнопки</string>
+    <string name="watch_section_mini_buttons_description">Оформите необязательный ряд ярлыков. Нажмите «Мини-кнопки» ниже, чтобы назначить их действия в разделе Управление.</string>
+
+    <string name="settings_section_general">Общие</string>
+    <string name="settings_section_general_description">Тема приложения, акцентный цвет и настройки обновлений.</string>
+    <string name="settings_section_watch">Поведение</string>
+    <string name="settings_section_watch_description">Заводная головка, касание, вибрация и поведение меню действий на ваших часах.</string>
+    <string name="settings_section_automation">Автоматизация</string>
+    <string name="settings_section_automation_description">Выберите, когда Svartifoss открывается и закрывается автоматически.</string>
+    <string name="settings_section_apps">Приложения</string>
+    <string name="settings_section_apps_description">Настройте музыкальные сервисы и интеграции приложений в одном месте.</string>
+    <string name="settings_section_data">Данные и поддержка</string>
+    <string name="settings_section_data_description">Резервное копирование настроек, проверка версии, диагностика или получение помощи.</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Как использовать Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss превращает ваши часы в пульт для музыки, играющей на телефоне. Вот всё, что можно сделать с запястья.</string>
+
+    <string name="tutorial_taps_title">Касание зон экрана</string>
+    <string name="tutorial_taps_desc">Экран часов разделён на четыре зоны — верх, низ, слева и справа. Касание зоны запускает назначенное ей действие. По умолчанию левая зона воспроизводит или ставит на паузу, правая переключает на следующий трек, а верх и низ меняют громкость.</string>
+
+    <string name="tutorial_gestures_title">Одиночное, двойное и долгое нажатие</string>
+    <string name="tutorial_gestures_desc">У каждой зоны три отдельных действия: для одиночного касания, для двойного касания и для долгого нажатия. Например, одиночное касание в центре может ставить музыку на паузу, а двойное касание — открывать меню действий. Вы не увидите этого, пока не настроите, так что настраивайте по своему вкусу.</string>
+
+    <string name="tutorial_buttons_title">Физические кнопки</string>
+    <string name="tutorial_buttons_desc">Если на ваших часах есть боковые кнопки, им тоже можно назначить действия для одиночного, двойного и долгого нажатия. Они продолжают работать даже при выключенном экране.</string>
+
+    <string name="tutorial_rotary_title">Вращающаяся заводная головка</string>
+    <string name="tutorial_rotary_desc">Вращайте заводную головку или безель, чтобы изменить громкость. Предпочитаете перематывать песню? Включите «Перемотка заводной головкой» в Настройках.</string>
+
+    <string name="tutorial_swipe_up_title">Свайп вверх, вниз, влево и вправо</string>
+    <string name="tutorial_swipe_up_desc">Свайп вверх, вниз или влево на экране воспроизведения можно настроить на открытие чего угодно — меню действий, очереди воспроизведения, пропуск треков, ваши плейлисты и многое другое. Настройте каждый в разделе Управление, выбрав «Музыка играет» или «Нет воспроизведения». По умолчанию свайп вверх открывает меню действий, остальные ничего не делают, пока вы их не назначите. Свайп вправо не тронут — это универсальный жест Wear OS для выхода из приложения.</string>
+    <string name="tutorial_yt_music_title">Ярлыки YouTube Music</string>
+    <string name="tutorial_yt_music_desc">Назначьте «Воспроизвести понравившиеся песни», «Воспроизвести понравившиеся песни вперемешку» или «Мои плейлисты» на любую кнопку, жест или свайп, чтобы сразу перейти к музыке, не касаясь телефона. «История поиска» запоминает недавние поисковые запросы на часах — удерживайте один, чтобы удалить его.</string>
+
+    <string name="tutorial_exit_title">Свайп для выхода</string>
+    <string name="tutorial_exit_desc">Проведите от левого края, чтобы выйти из плеера. Это может автоматически ставить воспроизведение на паузу при выходе — включите это в Настройках.</string>
+
+    <string name="tutorial_tile_title">Плитка быстрого управления</string>
+    <string name="tutorial_tile_desc">Проведите по циферблату в сторону до плитки Svartifoss для мгновенного воспроизведения, паузы и пропуска без открытия приложения.</string>
+
+    <string name="tutorial_complication_title">Осложнение циферблата</string>
+    <string name="tutorial_complication_desc">Добавьте осложнение обложки альбома Svartifoss на циферблат, чтобы видеть текущую обложку одним взглядом. Коснитесь его, чтобы открыть плеер.</string>
+
+    <string name="tutorial_system_title">Системное управление медиа</string>
+    <string name="tutorial_system_desc">Текущий трек также отображается в собственном управлении медиа часов и недавних приложениях, так что оттуда тоже можно управлять воспроизведением.</string>
+
+    <string name="tutorial_tip">Совет: настройте оба состояния в разделе Управление, затем упорядочьте меню в разделе Действия.</string>
+
+    <string name="navigation_drawer_open">Открыть меню навигации</string>
+    <string name="navigation_drawer_close">Закрыть меню навигации</string>
+
+    <string name="action_settings">Настройки</string>
+    <string name="action_pause">Пауза</string>
+    <string name="action_play">Воспроизвести</string>
+    <string name="action_skip_prev">Предыдущий</string>
+    <string name="action_skip_next">Следующий</string>
+    <string name="action_play_pause">Воспроизведение / Пауза</string>
+    <string name="action_stop">Стоп</string>
+    <string name="action_restart">Начать трек заново</string>
+    <string name="action_mute">Выключить / Включить звук</string>
+    <string name="action_skip_seconds">Вперёд на %1$d секунд</string>
+    <string name="action_reverse_seconds">Назад на %1$d секунд</string>
+    <string name="action_like">Нравится</string>
+    <string name="action_shuffle">Перемешать</string>
+    <string name="action_repeat">Повтор</string>
+    <string name="action_repeat_one">Повтор одного</string>
+    <string name="action_search">Поиск музыки</string>
+    <string name="group_playback_controls">Управление воспроизведением</string>
+    <string name="group_streaming_shortcuts">Треки, альбомы и плейлисты</string>
+    <string name="pick_action">Выбрать действие</string>
+    <string name="action_opens_more">Несколько вариантов</string>
+    <string name="action_volume_up">Увеличить громкость</string>
+    <string name="volume_down">Уменьшить громкость</string>
+    <string name="group_volume_controls">Управление громкостью</string>
+    <string name="no_watch_detected">Часы не обнаружены</string>
+    <string name="connection_instructions">Откройте Svartifoss на часах, чтобы начать подключение</string>
+    <string name="playing_controls">Управление во время воспроизведения</string>
+    <string name="stopped_controls">Управление без воспроизведения</string>
+    <string name="actions_menu">Меню действий</string>
+    <string name="actions_intro">Настройте обе поверхности действий часов с помощью управления воспроизведением, приложений или сохранённых треков, альбомов и плейлистов. Быстрая панель остаётся компактной; меню ниже может содержать более длинный упорядоченный список.</string>
+    <string name="actions_quick_panel_section">Быстрая панель</string>
+    <string name="actions_watch_menu_section">Меню на часах</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d действие · Нажмите для редактирования · Удерживайте и перетаскивайте для изменения порядка</item>
+        <item quantity="few">%1$d действия · Нажмите для редактирования · Удерживайте и перетаскивайте для изменения порядка</item>
+        <item quantity="many">%1$d действий · Нажмите для редактирования · Удерживайте и перетаскивайте для изменения порядка</item>
+        <item quantity="other">%1$d действия · Нажмите для редактирования · Удерживайте и перетаскивайте для изменения порядка</item>
+    </plurals>
+    <string name="actions_reorder_description">Упорядоченное меню действий. Коснитесь и удерживайте для перетаскивания, используйте специальные возможности «Переместить вверх» или «Переместить вниз», либо нажмите Ctrl+Вверх/Вниз на клавиатуре.</string>
+    <string name="actions_move_up">Переместить вверх</string>
+    <string name="actions_move_down">Переместить вниз</string>
+    <string name="actions_moved_to_position">%1$s перемещено на позицию %2$d из %3$d.</string>
+    <string name="actions_empty">Действий пока нет. Используйте кнопку добавления, чтобы создать первое.</string>
+    <string name="actions_add">Добавить действие</string>
+    <string name="on_screen_buttons">СЕНСОРНЫЕ ЗОНЫ</string>
+    <string name="physical_buttons">ФИЗИЧЕСКИЕ КНОПКИ</string>
+    <string name="physical_buttons_disconnected">Подключитесь и откройте Svartifoss на часах, чтобы настроить их физические кнопки. Сенсорные зоны, свайпы и мини-кнопки уже доступны.</string>
+    <string name="physical_buttons_unavailable">Эти часы не сообщили о настраиваемых физических кнопках.</string>
+    <string name="tap_a_zone_to_configure">Коснитесь зоны на часах, чтобы назначить действие</string>
+    <string name="touch_zone_top">Верхняя зона</string>
+    <string name="touch_zone_bottom">Нижняя зона</string>
+    <string name="touch_zone_left">Левая зона</string>
+    <string name="touch_zone_right">Правая зона</string>
+    <string name="touch_zone_center">Касание в центре</string>
+    <string name="touch_zone_action">%1$s: %2$s. Нажмите для настройки.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">ЖЕСТЫ СВАЙПОВ</string>
+    <string name="tap_a_swipe_to_configure">Коснитесь направления, чтобы выбрать, что оно открывает</string>
+    <string name="swipe_gesture_up">Свайп вверх</string>
+    <string name="swipe_gesture_down">Свайп вниз</string>
+    <string name="swipe_gesture_left">Свайп влево</string>
+    <!-- Short captions shown under each tile's icon -->
+    <string name="swipe_gesture_label_up">Вверх</string>
+    <string name="swipe_gesture_label_down">Вниз</string>
+    <string name="swipe_gesture_label_left">Влево</string>
+
+    <string name="screen_buttons">МИНИ-КНОПКИ</string>
+    <string name="tap_a_screen_button_to_configure">До трёх видимых кнопок внизу экрана часов — коснитесь слота, чтобы назначить действие</string>
+    <string name="screen_button_1">Мини-кнопка 1 (слева)</string>
+    <string name="screen_button_2">Мини-кнопка 2 (по центру)</string>
+    <string name="screen_button_3">Мини-кнопка 3 (справа)</string>
+    <string name="screen_button_label_1">Кнопка 1</string>
+    <string name="screen_button_label_2">Кнопка 2</string>
+    <string name="screen_button_label_3">Кнопка 3</string>
+    <string name="no_action">Нет действия</string>
+    <string name="gesture_single_press">Одиночное нажатие</string>
+    <string name="gesture_double_press">Двойное нажатие</string>
+    <string name="gesture_long_press">Долгое нажатие</string>
+    <string name="gesture_swipe_action">Действие</string>
+    <string name="center_button_quick_panel_note">Двойное касание центра экрана воспроизведения всегда открывает панель быстрых действий, независимо от того, что вы назначите здесь.</string>
+    <string name="start_playback">Начать воспроизведение</string>
+    <string name="uninstalled_app">Удалённое приложение</string>
+
+    <string name="play_app">Воспроизвести %1$s</string>
+    <string name="tasker_task">Задача Tasker</string>
+    <string name="icon_selection_title">Выбор значка</string>
+    <string name="icon_selection_gallery">Из галереи</string>
+    <string name="icon_selection_no_icon_pack">Эта функция позволяет выбрать пользовательский значок для вашего действия из
+        установленного набора значков.\n\nК сожалению, похоже, у вас не установлены наборы значков.</string>
+    <string name="icon_selection_no_storage_permission">Эта функция позволяет выбрать пользовательский значок для вашего действия из
+        установленного набора значков.\n\nНекоторым наборам значков требуется разрешение на хранение для приложений. Вам нужно будет предоставить его, чтобы использовать эту функцию.</string>
+    <string name="delete">Удалить</string>
+    <string name="action_text">Текст действия</string>
+    <string name="swap_action">Поменять действие</string>
+    <string name="open_actions_menu">Открыть меню действий</string>
+    <string name="open_playlist_menu">Показать текущий плейлист</string>
+    <string name="misc_settings">Прочие настройки</string>
+
+    <string name="category_backup">Резервное копирование</string>
+    <string name="export_config">Экспортировать конфигурацию</string>
+    <string name="export_config_description">Сохранить назначения кнопок, список действий и настройки часов в файл</string>
+    <string name="import_config">Импортировать конфигурацию</string>
+    <string name="import_config_description">Восстановить назначения кнопок, список действий и настройки часов из файла</string>
+    <string name="export_config_done">Конфигурация экспортирована</string>
+    <string name="export_config_failed">Не удалось экспортировать конфигурацию</string>
+    <string name="import_config_done_title">Импорт выполнен успешно</string>
+    <string name="import_config_done_message">Svartifoss нужно перезапустить, чтобы применить импортированную конфигурацию.</string>
+    <string name="import_config_failed">Не удалось импортировать конфигурацию — файл может быть недействительным или из несовместимой версии</string>
+    <string name="action_restart_now">Перезапустить сейчас</string>
+
+    <string name="category_about">О приложении</string>
+    <string name="category_music_screen">Экран музыки</string>
+    <string name="category_watch_screen">Экран часов</string>
+    <string name="category_mini_buttons">Мини-кнопки</string>
+    <string name="category_screen_face">Внешний вид плеера</string>
+    <string name="category_album_background">Фон альбома</string>
+    <string name="category_music_colors">Цвета из музыки</string>
+    <string name="preview_sample_title">Название песни</string>
+    <string name="preview_sample_artist">Имя исполнителя</string>
+    <string name="preview_sample_next_title">Следующая песня</string>
+    <string name="preview_playback_stopped">Воспроизведение остановлено</string>
+    <string name="category_gestures">Жесты и ввод</string>
+    <string name="setting_overlay_blur_radius">Размытие оверлея</string>
+    <string name="setting_overlay_blur_radius_description">Сила размытия (px) матового фона за кольцами громкости/перемотки и панелью быстрых действий — не зависит от размытия фона обложки альбома</string>
+    <string name="category_action_list">Список действий</string>
+    <string name="category_automation">Автоматизация</string>
+    <string name="installed_version">Установленная версия</string>
+    <string name="get_support">Получить поддержку</string>
+    <string name="get_support_description">Отправить журналы приложения разработчику для поддержки</string>
+    <string name="contact_developer">Связаться с разработчиком</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — обращение</string>
+    <string name="contact_developer_chooser">Отправить письмо</string>
+    <string name="contact_developer_no_client">Почтовое приложение не установлено. Адрес скопирован в буфер обмена.</string>
+    <string name="about_developer_title">О разработчике</string>
+    <string name="about_developer_dialog_message">Svartifoss начинался как личный проект — я хотел обновить Music Center for Wear до возможностей сегодняшнего дня, просто чтобы пользоваться им самому каждый день. Получилось достаточно хорошо, чтобы решить поделиться им со всеми. Это моё первое приложение, и нет ничего лучше, чем увидеть, что созданное тобой оказалось полезным и для других людей.</string>
+    <string name="licenses">Лицензии открытого исходного кода</string>
+    <string name="setting_always_show_time">Всегда показывать время</string>
+    <string name="setting_always_show_time_off_description">Текущее время будет отображаться только в спящем режиме</string>
+    <string name="setting_always_show_time_on_description">Текущее время будет отображаться всегда. Верхний значок действия не будет виден (его заменят часы), но действие продолжит работать как обычно.</string>
+    <string name="tap_to_force_stop">Нажмите, чтобы остановить управление</string>
+    <string name="notification_action_stop">Стоп</string>
+    <string name="notification_action_force_stop">Принудительная остановка</string>
+    <string name="error_notification_access">Нет доступа к уведомлениям. Проверьте телефон.</string>
+    <string name="error_notifications">Уведомления об ошибках</string>
+    <string name="notification_access_notification_title">Svartifoss требуется доступ к уведомлениям</string>
+    <string name="notification_access_notification_title_description">Нажмите на это уведомление и проверьте Svartifoss, чтобы решить проблему</string>
+    <string name="error_service_not_enabled">Требуется доступ к уведомлениям</string>
+    <string name="error_service_not_enabled_description">Чтобы управлять музыкой с часов, Svartifoss нужен доступ к уведомлениям — так Android позволяет ему видеть, какое приложение играет, и отправлять ему команды воспроизведения, паузы и пропуска.\n\nSvartifoss никогда не читает содержимое ваших уведомлений. Оно использует это разрешение только для поиска активной медиасессии.\n\nНажмите «Открыть настройки», затем включите Svartifoss в разделе доступа к уведомлениям.</string>
+    <string name="action_open_settings">Открыть настройки</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog -->
+    <string name="no_watch_app_title">Установите Svartifoss на часы</string>
+    <string name="no_watch_app_description">Svartifoss не удалось найти своё приложение для часов на сопряжённых часах Wear OS. Приложения для телефона и часов работают вместе — без приложения для часов управление воспроизведением с запястья работать не будет.\n\nSvartifoss нет в Play Store — приложение для часов устанавливается отдельно способом sideload (например, с помощью Wear Installer). Нажмите «Смотреть версии», чтобы открыть страницу релизов GitHub и скачать APK для часов. Если вы только что установили его, дайте минуту на завершение синхронизации.</string>
+    <string name="no_watch_app_button">Смотреть версии</string>
+    <string name="required_permission">Требуемое разрешение</string>
+    <string name="setting_pause_on_swipe_exit">Ставить на паузу при выходе свайпом</string>
+    <string name="setting_pause_on_swipe_exit_description">Автоматически ставит любое воспроизведение на паузу при выходе из Svartifoss на часах жестом свайпа влево.\n\nВыход кнопкой питания на это не влияет и никогда не ставит на паузу автоматически.</string>
+    <string name="setting_rotating_crown_off_period">Задержка вращающегося ввода после включения экрана</string>
+    <string name="setting_rotating_crown_off_period_description">Вращающийся ввод (например, заводные головки) может быть слишком чувствительным на некоторых устройствах. Чтобы предотвратить случайное изменение громкости, вращающийся ввод будет отключён на <![CDATA[<b>%1$s миллисекунд</b>]]> после включения экрана.</string>
+    <string name="setting_rotary_seek">Перемотка заводной головкой</string>
+    <string name="setting_rotary_seek_description">При включении вращение заводной головки перематывает текущий трек вместо изменения громкости. Громкость по-прежнему можно менять экранными или физическими кнопками.</string>
+    <string name="setting_rotating_sensitivity">Чувствительность вращающегося ввода</string>
+    <string name="setting_rotating_sensitivity_description">Чувствительность вращающегося ввода. Чем больше число, тем сильнее увеличивается громкость при том же движении заводной головки. Сейчас установлено <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Отключить двойной клик физической кнопки в спящем режиме</string>
+    <string name="setting_disable_ambient_physical_double_click_description">У некоторых часов есть проблема с кнопками, когда одиночный клик физической кнопки в спящем режиме иногда регистрируется как двойной клик.\n\nЕсли вы столкнулись с этим, можете включить эту опцию, чтобы полностью отключить двойные клики в спящем режиме (например, клик дважды просто активирует действие одиночного клика). На двойной клик при активных часах это не влияет.</string>
+    <string name="setting_haptic_feedback">Тактильная отдача</string>
+    <string name="setting_haptic_feedback_description">Вибрация часов при нажатии кнопок.</string>
+    <string name="setting_auto_start">Открывать Svartifoss автоматически</string>
+    <string name="setting_auto_start_description">Автоматически открывать Svartifoss на часах, когда на телефоне начинается воспроизведение музыки.</string>
+    <string name="setting_auto_start_apps_blacklist">Приложения автозапуска</string>
+    <string name="setting_auto_start_apps_blacklist_description">Список медиаприложений, которые могут автоматически запускать Svartifoss</string>
+    <string name="setting_dim_album_art">Затенение плеера</string>
+    <string name="setting_dim_album_art_description">Добавьте выбранную вами обработку тенью между обложкой и элементами управления плеера.</string>
+    <string name="setting_album_art_style">Стиль обложки альбома</string>
+    <string name="setting_album_art_style_description">Выберите, как выглядит фон воспроизведения на часах.</string>
+    <string name="setting_album_art_blur_radius">Интенсивность размытия</string>
+    <string name="setting_album_art_blur_radius_description">Сила размытия во весь экран, когда выбранный фон использует размытие. Сейчас <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Интенсивность затемнения</string>
+    <string name="setting_album_art_dim_strength_description">Насколько сильно затемняется обложка альбома для читаемости текста. Сейчас <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Стиль затенения</string>
+    <string name="setting_player_shading_intensity">Интенсивность затенения</string>
+    <string name="setting_player_shading_intensity_description">Насколько сильно затенение затемняет фон. 100%% — полная сила; поднимите выше для дополнительного контраста (до 150%%). Сейчас <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Применить этот вид ко всем циферблатам</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Скопировать настройки внешнего вида этого циферблата на все остальные циферблаты</string>
+    <string name="apply_appearance_confirm_title">Применить ко всем циферблатам?</string>
+    <string name="apply_appearance_confirm_message">Это заменит настройки внешнего вида всех остальных циферблатов текущими. Настройки поведения не изменятся.</string>
+    <string name="apply_appearance_confirm_button">Применить</string>
+    <string name="apply_appearance_done">Применено ко всем циферблатам</string>
+    <string name="category_wf_layout_actions">Раскладка</string>
+    <string name="setting_reset_appearance">Сбросить эту раскладку</string>
+    <string name="setting_reset_appearance_description">Восстановить внешний вид этого циферблата к исходным значениям по умолчанию</string>
+    <string name="reset_appearance_confirm_title">Сбросить эту раскладку?</string>
+    <string name="reset_appearance_confirm_message">Настройки внешнего вида этого циферблата вернутся к значениям по умолчанию. Настройки поведения и другие циферблаты не затрагиваются.</string>
+    <string name="reset_appearance_confirm_button">Сбросить</string>
+    <string name="reset_appearance_done">Раскладка сброшена по умолчанию</string>
+    <string name="setting_reset_all_faces">Сбросить все циферблаты по умолчанию</string>
+    <string name="setting_reset_all_faces_description">Восстановить внешний вид каждого встроенного циферблата к исходным значениям по умолчанию</string>
+    <string name="reset_all_faces_confirm_title">Сбросить все циферблаты?</string>
+    <string name="reset_all_faces_confirm_message">Внешний вид каждого встроенного циферблата вернётся к исходным значениям по умолчанию, а любая активная пользовательская тема будет отключена. Ваши сохранённые пользовательские темы, настройки поведения и выбранный циферблат сохранятся.</string>
+    <string name="reset_all_faces_confirm_button">Сбросить всё</string>
+    <string name="reset_all_faces_done">Все циферблаты сброшены по умолчанию</string>
+    <string name="setting_player_shading_color">Цвет затенения</string>
+    <string name="setting_wear_shading_custom_color">Свой цвет затенения</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Чёрный</item>
+        <item>Акцент альбома</item>
+        <item>Приглушённый альбом</item>
+        <item>Свой цвет</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Как в теме плеера</item>
+        <item>Виньетка по краям</item>
+        <item>Виньетка по краям (сильная)</item>
+        <item>Виньетка по краям (мощная)</item>
+        <item>Нижний угол</item>
+        <item>Затухание снизу</item>
+        <item>Пол и потолок</item>
+        <item>Фильтр во весь экран</item>
+        <item>Заливка цветом альбома</item>
+        <item>Двухцветный градиент альбома</item>
+        <item>Боковые шторки</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Прозрачность обложки в спящем режиме</string>
+    <string name="setting_ambient_album_art_opacity_description">Насколько видна обложка альбома в спящем режиме. Сейчас <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Тайм-аут оверлея громкости/перемотки</string>
+    <string name="setting_volume_overlay_timeout_description">Как долго оверлеи громкости и перемотки остаются на экране после изменения. Сейчас <![CDATA[<b>%1$s мс</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Мёртвая зона вращения</string>
+    <string name="setting_rotary_deadzone_description">Минимальное движение заводной головки перед применением изменений громкости или перемотки. Помогает предотвратить случайные изменения. Сейчас <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Опыт Wear</string>
+    <string name="setting_swipe_gestures_hint">Жесты свайпов</string>
+    <string name="setting_swipe_gestures_hint_description">Свайп вверх/вниз/влево может открывать любое действие. Нажмите здесь, чтобы настроить их для «Музыка играет» или «Нет воспроизведения». Свайп вправо остаётся зарезервированным для выхода из приложения.</string>
+    <string name="setting_screen_buttons_hint">Мини-кнопки</string>
+    <string name="setting_screen_buttons_hint_description">До трёх видимых кнопок, каждая с действиями касания и долгого нажатия. Нажмите здесь, чтобы настроить их для «Музыка играет» или «Нет воспроизведения».</string>
+    <string name="dev_screen_buttons_offset">Положение мини-кнопок</string>
+    <string name="dev_screen_buttons_offset_description">Предпочтительное расстояние в dp между нижним краем экрана часов и мини-кнопками (по умолчанию 42). Ряд по-прежнему автоматически подстраивается, отдаляясь от длинных заголовков.</string>
+    <string name="setting_screen_buttons_tilt">Наклон кнопок</string>
+    <string name="setting_screen_buttons_tilt_description">Насколько боковые кнопки следуют изгибу экрана. 0 = прямой ряд; 100 = полная дуга с наклонёнными значками.</string>
+    <string name="setting_screen_buttons_bg">Фон мини-кнопок</string>
+    <string name="setting_screen_buttons_opacity">Прозрачность мини-кнопок</string>
+    <string name="setting_screen_buttons_opacity_description">Непрозрачность всей группы мини-кнопок (0–100%%). Сейчас <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Панель быстрых действий</string>
+    <string name="quick_panel_config_hint">Это кнопки панели, открываемой двойным касанием центра экрана часов. Нажмите на строку, чтобы выбрать её действие («Нет» скрывает её); удерживайте, чтобы восстановить значение по умолчанию.</string>
+    <string name="quick_panel_slot_1">Кнопка 1</string>
+    <string name="quick_panel_slot_2">Кнопка 2</string>
+    <string name="quick_panel_slot_3">Кнопка 3</string>
+    <string name="quick_panel_slot_long">Длинная кнопка</string>
+    <string name="quick_panel_slot_default">%1$s (по умолчанию)</string>
+    <string name="quick_panel_slot_hidden">Скрыто</string>
+    <string name="quick_panel_default_like">Нравится</string>
+    <string name="quick_panel_default_shuffle">Перемешать</string>
+    <string name="quick_panel_default_repeat">Повтор</string>
+    <string name="quick_panel_default_up_next">Далее</string>
+    <string name="setting_wear_center_long_press_queue">Долгое нажатие в центре для очереди</string>
+    <string name="setting_wear_center_long_press_queue_description">Удерживайте центр экрана воспроизведения, чтобы открыть очередь воспроизведения.</string>
+    <string name="setting_wear_screen_face">Базовая раскладка</string>
+    <string name="setting_wear_screen_face_description">Выберите структуру, используемую этой темой. Сохранённые темы могут сочетать эту раскладку со своим шрифтом, цветами, размытием, затенением, экраном всегда-включён и панелями.</string>
+    <string name="setting_wear_show_track_title">Показывать название песни</string>
+    <string name="setting_wear_show_track_title_description">Отображать название текущей песни на плеере</string>
+    <string name="setting_wear_show_track_artist">Показывать имя исполнителя</string>
+    <string name="setting_wear_show_track_artist_description">Отображать текущего исполнителя на плеере</string>
+    <string name="setting_wear_show_source_icon">Показывать значок играющего приложения</string>
+    <string name="setting_wear_show_source_icon_description">Показывать значок приложения, которое сейчас играет, рядом с исполнителем. Использует значок из его медиауведомления. При выключении значок никогда не отправляется на часы.</string>
+    <string name="setting_wear_player_controls_visible">Показывать элементы управления плеера</string>
+    <string name="setting_wear_player_controls_visible_description">Показывать или скрывать встроенные кнопки в раскладках Classic, Poster, Studio и других настраиваемых раскладках без отключения их зон касания</string>
+    <string name="setting_wear_quadrant_tap_flash">Мигать значком при касании</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Когда срабатывает действие угловой зоны, кратко мигнуть её значком на полной яркости — особенно полезно в стиле экрана «Скрытый», где значок иначе невидим и не даёт подтверждения, какое действие только что выполнилось.</string>
+    <string name="setting_wear_internal_progress_visible">Индикатор прогресса раскладки</string>
+    <string name="setting_wear_internal_progress_visible_description">Показывать дополнительный индикатор прогресса, встроенный в эту раскладку. Кольца кнопки воспроизведения Expressive и Material являются частью их элементов управления и остаются доступными.</string>
+    <string name="setting_wear_edge_progress_visible">Показывать дугу прогресса по краю</string>
+    <string name="setting_wear_edge_progress_visible_description">Скрыть только визуальную дугу вокруг экрана. Перемотка по краю остаётся независимой опцией.</string>
+    <string name="setting_wear_edge_seek_enabled">Перемотка от края экрана</string>
+    <string name="setting_wear_edge_seek_enabled_description">Коснитесь или проведите по краю экрана, чтобы перейти к точной точке, даже когда её дуга скрыта</string>
+    <string name="setting_wear_screen_theme">Стиль управления</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Сбалансированный</string>
+    <string name="wear_screen_theme_default_description">Стандартная иерархия и размеры элементов управления.</string>
+    <string name="wear_screen_theme_minimal">Минимальный</string>
+    <string name="wear_screen_theme_minimal_description">Использует меньшие, более сдержанные элементы управления, сохраняя каждое действие видимым и используемым.</string>
+    <string name="wear_screen_theme_compact">Компактный</string>
+    <string name="wear_screen_theme_compact_description">Использует более сжатую обработку элементов управления без изменения ваших действий.</string>
+    <string name="wear_screen_theme_cinema">Кино</string>
+    <string name="wear_screen_theme_cinema_description">Смягчает элементы управления, не изменяя обложку.</string>
+    <string name="wear_screen_theme_vivid">Яркий</string>
+    <string name="wear_screen_theme_vivid_description">Использует более крупные, заметные элементы управления.</string>
+    <string name="wear_screen_theme_contrast">Высокий контраст</string>
+    <string name="wear_screen_theme_contrast_description">Использует более крупные элементы управления для лёгкого чтения.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Использует компактные, слегка приглушённые элементы управления. Сам фон не затемняет — используйте настройки фона для этого.</string>
+    <string name="wear_screen_theme_hidden">Скрытый</string>
+    <string name="wear_screen_theme_hidden_description">Полностью скрывает все значки управления. Зоны касания остаются активными и полностью функциональными.</string>
+    <string name="setting_wear_font">Шрифт</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Шрифт приложения по умолчанию.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Классический системный шрифт Android.</string>
+    <string name="wear_font_rounded">Скруглённый</string>
+    <string name="wear_font_rounded_description">Дружелюбные современные формы букв с мягко скруглёнными окончаниями.</string>
+    <string name="wear_font_sans_light">Современный Лёгкий</string>
+    <string name="wear_font_sans_light_description">Чистый, воздушный рубленый шрифт с более лёгким визуальным весом.</string>
+    <string name="wear_font_sans_thin">Ультратонкий</string>
+    <string name="wear_font_sans_thin_description">Сверхлёгкий дисплейный стиль для минималистичного плеера.</string>
+    <string name="wear_font_sans_medium">Современный Средний</string>
+    <string name="wear_font_sans_medium_description">Чёткий рубленый шрифт с более сильными, компактными штрихами.</string>
+    <string name="wear_font_sans_black">Жирный</string>
+    <string name="wear_font_sans_black_description">Смелое дисплейное семейство с максимальным визуальным воздействием.</string>
+    <string name="wear_font_small_caps">Капитель</string>
+    <string name="wear_font_small_caps_description">Компактные формы в виде заглавных букв с редакционным настроением.</string>
+    <string name="wear_font_casual">Непринуждённый</string>
+    <string name="wear_font_casual_description">Игривое рукописное системное семейство.</string>
+    <string name="wear_font_typewriter">Печатная машинка (Архив)</string>
+    <string name="wear_font_typewriter_description">Ретро-вид печатной машинки (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Скруглённый геометрический рубленый шрифт, свободная (OFL) альтернатива в духе Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Чистый геометрический рубленый шрифт, свободная (OFL) альтернатива в духе Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Элегантный гуманистический антиквенный шрифт, свободная (OFL) альтернатива в духе Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Более мягкий стиль печатной машинки (Love Letter Typewriter) — обычно зарезервирован для треков в стиле «Lain».</string>
+    <string name="wear_font_serif">С засечками</string>
+    <string name="wear_font_serif_description">Классический шрифт с засечками.</string>
+    <string name="wear_font_serif_monospace">С засечками Моно</string>
+    <string name="wear_font_serif_monospace_description">Буквы с засечками фиксированной ширины с характерным редакционно-терминальным видом.</string>
+    <string name="wear_font_monospace">Моноширинный</string>
+    <string name="wear_font_monospace_description">Фиксированная ширина, технический вид.</string>
+    <string name="wear_font_condensed">Узкий</string>
+    <string name="wear_font_condensed_description">Более узкие формы букв, вмещающие больше текста.</string>
+    <string name="wear_font_condensed_light">Узкий Лёгкий</string>
+    <string name="wear_font_condensed_light_description">Узкое, более лёгкое семейство для длинных заголовков.</string>
+    <string name="wear_font_condensed_medium">Узкий Средний</string>
+    <string name="wear_font_condensed_medium_description">Узкое семейство с более сильными штрихами и отличной читаемостью.</string>
+    <string name="wear_font_cursive">Курсив</string>
+    <string name="wear_font_cursive_description">Декоративный рукописный шрифт.</string>
+    <string name="setting_wear_dynamic_accent">Динамический акцент на часах</string>
+    <string name="setting_wear_dynamic_accent_description">Адаптировать цвета часов на основе альбома к текущей обложке. При выключении варианты цвета «Альбом» используют статический акцент темы.</string>
+    <string name="setting_wear_album_art_fade">Переход затухания обложки альбома</string>
+    <string name="setting_wear_album_art_fade_description">Плавно затухать обложку альбома при смене трека.</string>
+    <string name="setting_wear_title_text_mode">Поведение текста заголовка</string>
+    <string name="setting_wear_title_text_mode_description">Как ведёт себя заголовок воспроизведения, когда не помещается: Автоматический сочетает уменьшение, перенос и прокрутку; остальные варианты делают одно поведение исключительным.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Автоматический (уменьшение, затем перенос, затем прокрутка)</item>
+        <item>Прокрутка (бегущая строка)</item>
+        <item>Перенос на две строки</item>
+        <item>Перенос на три строки</item>
+        <item>Перенос на пять строк</item>
+        <item>Статичный (одна строка, без прокрутки или уменьшения)</item>
+        <item>Уменьшить до размера</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Цвет текста исполнителя</string>
+    <string name="setting_wear_artist_custom_color">Свой цвет исполнителя</string>
+    <string name="setting_wear_artist_custom_color_description">Выберите цвет исполнителя для обработки Обычный</string>
+    <string name="setting_wear_artist_desaturated">Приглушённый цвет исполнителя</string>
+    <string name="setting_wear_artist_desaturated_description">Смягчить цвет текста исполнителя на основе альбома — применяется только когда «Цвет текста исполнителя» установлен на Цвет альбома</string>
+
+    <string name="setting_wear_progress_color">Цвет полосы прогресса</string>
+    <string name="setting_wear_progress_custom_color">Свой цвет полосы прогресса</string>
+    <string name="setting_wear_progress_custom_color_description">Выберите цвет прогресса и перемотки для обработки Обычный</string>
+    <string name="setting_wear_progress_desaturated">Приглушённый цвет полосы прогресса</string>
+    <string name="setting_wear_progress_desaturated_description">Смягчить цвет полосы прогресса на основе альбома — применяется только когда «Цвет полосы прогресса» установлен на Цвет альбома</string>
+
+    <string name="setting_wear_volume_color">Цвет полосы громкости</string>
+    <string name="setting_wear_volume_custom_color">Свой цвет громкости</string>
+    <string name="setting_wear_volume_custom_color_description">Выберите цвет громкости для обработки Обычный</string>
+    <string name="setting_wear_quick_panel_color">Цвет Быстрых действий</string>
+    <string name="setting_wear_quick_panel_custom_color">Свой цвет Быстрых действий</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Выберите цвет Быстрых действий для обработки Обычный</string>
+    <string name="setting_wear_shading_custom_color_description">Выберите цвет, окрашивающий градиент затенения</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Нейтральный (статический цвет темы)</item>
+        <item>Цвет альбома</item>
+        <item>Свой цвет</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Перемотка Expressive</string>
+    <string name="setting_wear_expressive_seek_mode_description">Как перематывать трек касанием на циферблате Expressive. Центральное кольцо делает кольцо вокруг кнопки воспроизведения перетаскиваемым; Краевое кольцо также показывает кольцо безеля Classic; Нет оставляет перемотку только заводной головке.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Центральное кольцо</item>
+        <item>Краевое кольцо</item>
+        <item>Нет</item>
+    </string-array>
+
+    <string name="category_wear_aod">Экран всегда-включён</string>
+    <string name="setting_wear_aod_style">Стиль всегда-включён</string>
+    <string name="setting_wear_aod_style_description">Как выглядит экран воспроизведения, пока часы в спящем режиме. «Как в циферблате» соответствует выбранному циферблату; «Минимальный» показывает только приглушённый текст на чистом чёрном для максимальной автономности.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Как в циферблате</item>
+        <item>Classic</item>
+        <item>Expressive (контурный)</item>
+        <item>Material (контурный)</item>
+        <item>Управление AMOLED</item>
+        <item>Chrono (большие часы)</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Цвет всегда-включён</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Белый</item>
+        <item>Цвет альбома</item>
+        <item>Свой цвет</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Белый</item>
+        <item>Динамический (по области под часами)</item>
+        <item>Цвет альбома</item>
+        <item>Свой цвет</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Как в стиле панели</item>
+        <item>Прозрачный (без фона)</item>
+        <item>Акцент альбома</item>
+        <item>Полупрозрачный</item>
+        <item>Белый</item>
+        <item>Матовый белый</item>
+        <item>Чёрный</item>
+        <item>Динамический (тон альбома)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Фон плашки «Далее»</string>
+    <string name="setting_wear_show_up_next_pill">Плашка «Далее» на плеере</string>
+    <string name="setting_wear_show_up_next_pill_description">Показывать плашку «Далее» внизу экрана воспроизведения. Она занимает место ряда мини-кнопок, поэтому появляется только когда этот ряд не отображается.</string>
+    <string name="category_wf_clock">Часы</string>
+    <string name="setting_wear_clock_color">Цвет часов</string>
+    <string name="setting_wear_clock_custom_color">Свой цвет часов</string>
+    <string name="setting_wear_clock_custom_color_description">Нажмите, чтобы выбрать цвет часов, используемый когда Цвет часов установлен на Свой цвет</string>
+    <string name="setting_wear_clock_opacity">Непрозрачность часов</string>
+    <string name="setting_wear_clock_opacity_description">Насколько непрозрачны постоянно отображаемые часы (10–100%%). Сейчас <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Свой цвет всегда-включён</string>
+    <string name="setting_wear_aod_custom_color_description">Нажмите, чтобы выбрать цвет для текста, элементов управления и часов в режиме всегда-включён, когда «Цвет всегда-включён» установлен на Свой цвет</string>
+    <string name="setting_wear_aod_intensity">Яркость всегда-включён</string>
+    <string name="setting_wear_aod_intensity_description">Насколько ярко отображается экран всегда-включён (20–100%%). Ниже — тусклее и меньше расход батареи. Сейчас <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Кнопки управления на экране всегда-включён</string>
+    <string name="setting_wear_aod_show_transport_description">Показывать контурные кнопки предыдущий/воспроизведение/следующий в поддерживаемых визуальных стилях всегда-включён. Их нельзя нажать, пока экран приглушён, но касание разбудит часы с кнопкой уже под вашим пальцем.</string>
+    <string name="setting_wear_aod_show_progress">Кольцо прогресса на экране всегда-включён</string>
+    <string name="setting_wear_aod_show_progress_description">Показывать кольцо прогресса вокруг кнопки воспроизведения в спящем режиме — там позиция обновляется примерно раз в минуту</string>
+    <string name="setting_wear_aod_show_pills">«Далее» на экране всегда-включён</string>
+    <string name="setting_wear_aod_show_pills_description">Показывать статичную контурную плашку «Далее» внизу визуальных стилей всегда-включён</string>
+    <string name="category_wf_gestures">Жесты экрана</string>
+    <string name="setting_wear_mini_buttons_mode">Показывать мини-кнопки</string>
+    <string name="setting_wear_gestures_mode">Жесты экрана</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Всегда</item>
+        <item>Только во время воспроизведения</item>
+        <item>Только на паузе</item>
+        <item>Никогда</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Обложка альбома на экране всегда-включён</string>
+    <string name="setting_wear_aod_show_art_description">Оставлять приглушённую обложку альбома видимой в спящем режиме. Отключение показывает чисто чёрный фон, что заметно экономит батарею на AMOLED-экранах.</string>
+    <string name="setting_wear_aod_art_treatment">Стиль обложки альбома всегда-включён</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Мягкое размытие</item>
+        <item>Чёткая обложка</item>
+        <item>Монохромное размытие</item>
+        <item>Как в обработке обложки плеера</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Часы на экране всегда-включён</string>
+    <string name="setting_wear_aod_show_clock_description">Отображать часы, когда часы в спящем режиме</string>
+    <string name="setting_wear_aod_show_track_info">Информация о треке на экране всегда-включён</string>
+    <string name="setting_wear_aod_show_track_info_description">Показывать название трека и исполнителя в спящем режиме</string>
+
+    <string name="category_overlays_queue">Оверлеи и очередь</string>
+    <string name="setting_wear_overlay_backdrop_style">Фон панели</string>
+    <string name="setting_wear_volume_style">Стиль громкости</string>
+    <string name="setting_wear_volume_layout">Раскладка громкости</string>
+    <string name="setting_wear_quick_panel_style">Стиль быстрой панели</string>
+    <string name="setting_wear_quick_panel_layout">Раскладка быстрой панели</string>
+    <string name="setting_wear_quick_panel_source">Быстрые действия</string>
+    <string name="setting_wear_quick_panel_source_description">Выберите настроенные кнопки или действия, предоставляемые текущим играющим приложением.</string>
+    <string name="quick_panel_open_note_title">Открытие панели</string>
+    <string name="quick_panel_open_note_description">Дважды коснитесь центра экрана воспроизведения, чтобы открыть панель быстрых действий на часах.</string>
+    <string name="preview_current_app_action">Действие текущего приложения</string>
+    <string name="preview_notification_controls">Значок из медиауведомления</string>
+    <string name="setting_wear_queue_style">Стиль очереди</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Использовать обложки ярлыков как фон</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Когда стиль очереди выше — вариант с обложкой, строка действия быстрой панели с полученной обложкой ярлыка (трек, плейлист, исполнитель…) также заполняет свою плашку этим изображением, как это делает «Далее». Ярлыки без полученной обложки (только значок приложения) не затрагиваются.</string>
+    <string name="setting_wear_list_row_size">Размер плашки списка</string>
+    <string name="setting_wear_list_row_size_description">Высота строк на всю ширину в очереди, меню и быстрой панели.</string>
+    <string name="setting_wear_progress_style">Стиль кольца прогресса</string>
+    <string name="setting_wear_seek_style">Стиль отображения перемотки и громкости</string>
+    <string name="setting_wear_seek_layout">Раскладка панели перемотки</string>
+    <string name="setting_wear_color_treatment">Цветовая обработка часов</string>
+    <string name="setting_wear_normal_color">Обычный цвет</string>
+    <string name="setting_wear_normal_color_description">Выберите единый цвет, используемый акцентами заголовка, прогрессом, громкостью, панелями и хромом мини-кнопок в режиме Обычный</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Обычный (выбранный цвет)</item>
+        <item>Приглушённый (мягкий цвет альбома)</item>
+        <item>Expressive (полная палитра альбома)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Как в обработке часов</item>
+        <item>Обычный (выбранный цвет)</item>
+        <item>Приглушённый (мягкий цвет альбома)</item>
+        <item>Expressive (полная палитра альбома)</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Дуга по краю (слева)</item>
+        <item>Дуга по краю (высокая)</item>
+        <item>Дуга по краю (справа)</item>
+        <item>Дуга по краю (сверху)</item>
+        <item>Дуга по краю (снизу)</item>
+        <item>Полное кольцо</item>
+        <item>Центральный ореол</item>
+        <item>Горизонтальный измеритель</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Краевое кольцо</item>
+        <item>Краевое кольцо (тонкое)</item>
+        <item>Краевое кольцо (толстое)</item>
+        <item>Временная шкала</item>
+        <item>Сегментированная временная шкала</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Сначала метаданные</item>
+        <item>Дуга</item>
+        <item>Hero</item>
+        <item>Сетка</item>
+        <item>Строки с подписями</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Сплошной</item>
+        <item>Пунктирный</item>
+        <item>Точки</item>
+        <item>Тонкая линия</item>
+        <item>Комета</item>
+        <item>60 точек часов</item>
+        <item>60 засечек часов</item>
+        <item>12-часовые сегменты</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Простой</item>
+        <item>Стеклянная плашка</item>
+        <item>Плашка Expressive</item>
+        <item>Плашка Material</item>
+        <item>Белая плашка</item>
+        <item>Гигантский</item>
+        <item>Позиция / всего</item>
+        <item>Белое стекло</item>
+        <item>Полупрозрачный альбом</item>
+        <item>Свечение альбома</item>
+        <item>Контур</item>
+        <item>Сплошная тема</item>
+        <item>Сплошной альбом</item>
+        <item>Микро</item>
+        <item>Тень (без хрома)</item>
+        <item>Подчёркивание</item>
+        <item>Тонкий контур</item>
+        <item>Гигантский цвет альбома</item>
+        <item>Моно</item>
+        <item>Тональный тёмный</item>
+        <item>Терминал</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Настроенные кнопки</item>
+        <item>Из текущего медиаприложения</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Как в стиле панели</item>
+        <item>Размытие альбома (акрил)</item>
+        <item>Сплошной чёрный</item>
+        <item>Сплошной цвет альбома</item>
+        <item>Стекло</item>
+        <item>Градиент альбома</item>
+        <item>Двухцветный альбом</item>
+        <item>Призма</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Стекло</item>
+        <item>Минимальный (AMOLED)</item>
+        <item>Material</item>
+        <item>Тональный</item>
+        <item>Неон</item>
+        <item>Светлый</item>
+        <item>Градиент</item>
+        <item>Моно</item>
+        <item>Контур</item>
+        <item>Двухцветный</item>
+        <item>Призма</item>
+        <item>Высокий контраст</item>
+        <item>Терминал</item>
+        <item>Изморозь</item>
+        <item>Сегменты</item>
+        <item>Aurora</item>
+        <item>Чернила</item>
+        <item>Канавка</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Компактный</item>
+        <item>Обычный</item>
+        <item>Высокий</item>
+        <item>Очень высокий</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Стекло</item>
+        <item>Минимальный (AMOLED)</item>
+        <item>Material</item>
+        <item>Тональный</item>
+        <item>Неон</item>
+        <item>Светлый</item>
+        <item>Градиент</item>
+        <item>Моно</item>
+        <item>Контур</item>
+        <item>Двухцветный</item>
+        <item>Призма</item>
+        <item>Высокий контраст</item>
+        <item>Терминал</item>
+        <item>Изморозь</item>
+        <item>Обложка</item>
+        <item>Размытая обложка</item>
+        <item>Обложка Тональная</item>
+        <item>Квадратная обложка</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Стекло</item>
+        <item>Белое стекло</item>
+        <item>Тональное стекло</item>
+        <item>Минимальный (AMOLED)</item>
+        <item>Material</item>
+        <item>Тональный</item>
+        <item>Неон</item>
+        <item>Светлый</item>
+        <item>Градиент</item>
+        <item>Моно</item>
+        <item>Контур</item>
+        <item>Контур Белое Стекло</item>
+        <item>Двухцветный</item>
+        <item>Призма</item>
+        <item>Высокий контраст</item>
+        <item>Терминал</item>
+        <item>Изморозь</item>
+        <item>Ghost (без хрома)</item>
+        <item>Дымка</item>
+        <item>Чернила</item>
+        <item>Точка</item>
+        <item>Плита</item>
+    </string-array>
+
+    <string name="setting_wear_track_time_mode">Отображение времени трека</string>
+    <string name="setting_wear_track_time_mode_description">Когда позиция трека (например, 1:23 / 3:45) отображается на экране воспроизведения.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Всегда</item>
+        <item>Только во время воспроизведения</item>
+        <item>Только на паузе</item>
+        <item>Никогда</item>
+    </string-array>
+
+    <string name="setting_screen_buttons_curve">Изгиб мини-кнопок</string>
+    <string name="setting_screen_buttons_curve_description">Выберите стиль изгиба мини-кнопок: плоский, дуга, мягкий, изогнутый.</string>
+    <string name="setting_screen_buttons_shape">Форма мини-кнопок</string>
+    <string name="setting_screen_buttons_shape_description">Выберите форму и формат раскладки мини-кнопок.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Плашка (по умолчанию)</item>
+        <item>Круг</item>
+        <item>Квадрат</item>
+        <item>Скруглённый квадрат (мягкий)</item>
+        <item>Скруглённый квадрат (средний)</item>
+        <item>Сквиркл</item>
+        <item>Лист</item>
+        <item>Капля</item>
+        <item>Плашка (широкая маленькая)</item>
+        <item>Плашка (широкая средняя)</item>
+        <item>Плашка (широкая большая)</item>
+        <item>Плашка (широкая очень большая)</item>
+        <item>Скруглённый прямоугольник (малый)</item>
+        <item>Скруглённый прямоугольник (средний)</item>
+        <item>Скруглённый прямоугольник (большой)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Плоский</item>
+        <item>Дуга</item>
+        <item>Лёгкий изгиб</item>
+        <item>Мягкий изгиб</item>
+        <item>Средний изгиб</item>
+        <item>Изогнутый</item>
+        <item>Экстремальный изгиб</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Фон по умолчанию</item>
+        <item>Стекло (однородное)</item>
+        <item>Стекло (светлое)</item>
+        <item>Полупрозрачный альбом</item>
+        <item>Полупрозрачный альбом Exp</item>
+        <item>Свечение альбома</item>
+        <item>Свечение Exp</item>
+        <item>Сплошная тема</item>
+        <item>Сплошной альбом</item>
+        <item>Сплошной Exp альбом</item>
+        <item>Контур</item>
+        <item>Контур Exp альбом</item>
+        <item>Только значок (прозрачный)</item>
+        <item>Значок Exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Нейтральный</item>
+        <item>Цвет альбома</item>
+        <item>Свой цвет</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Полная обложка</item>
+        <item>Размытый фон</item>
+        <item>Квадрат (острые углы)</item>
+        <item>Квадрат (мягкие углы)</item>
+        <item>Квадрат (скруглённые углы)</item>
+        <item>Чёрно-белый</item>
+        <item>Размытый чёрно-белый</item>
+        <item>Размытие Expressive</item>
+        <item>Expressive</item>
+        <item>Тональный градиент Material</item>
+        <item>Обложка Poster</item>
+        <item>Градиент Studio</item>
+        <item>Радиальное свечение Vinyl</item>
+        <item>Свечение Halo</item>
+        <item>Ленты Aurora</item>
+        <item>Градиент Spectrum</item>
+        <item>Разворот Corona</item>
+        <item>Затухание сумерек</item>
+        <item>Bloom</item>
+        <item>Затухание горизонта</item>
+        <item>Свечение углей</item>
+        <item>Eclipse AMOLED чёрный</item>
+        <item>Скрытый (сплошной чёрный)</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Тайм-аут закрытия</string>
+    <string name="setting_close_timeout_description">Svartifoss автоматически закроется, когда музыка не играет <![CDATA[<b>%1$s секунд</b>]]>. Функция отключена, если тайм-аут установлен на 0 секунд. Обратите внимание, что для экономии батареи эта опция иногда может быть неточной и может задержать закрытие до минуты.</string>
+    <string name="setting_wear_close_on_idle">Закрывать при «Ничего не играет»</string>
+    <string name="setting_wear_close_on_idle_description">Автоматически закрывает приложение на часах примерно через минуту после достижения бездействующего экрана «Ничего не играет», чтобы оно никогда там не задерживалось. Не зависит от тайм-аута закрытия выше, который относится к паузе трека.</string>
+    <string name="category_notifications">Всплывающее уведомление</string>
+    <string name="setting_enable_notifications">Показывать всплывающее уведомление</string>
+    <string name="setting_enable_notifications_description">Эта функция требует другого приложения для управления уведомлениями (Vibration Center for Wear).\n\nКаждый раз, когда Vibration Center вибрирует часами, Svartifoss покажет всплывающее окно с текстом уведомления, позволяя быстро взглянуть на него, не покидая Svartifoss.</string>
+    <string name="setting_notification_timeout">Тайм-аут всплывающего уведомления</string>
+    <string name="setting_notification_timeout_description">Всплывающее уведомление автоматически закроется через <![CDATA[<b>%1$s секунд</b>]]>. Введите 0, чтобы отключить автозакрытие.</string>
+    <string name="app_required">Требуется приложение</string>
+    <string name="vibration_center_required_description">Чтобы использовать эту функцию, вам нужно установить другое (бесплатное) приложение: Vibration Center for Wear.</string>
+    <string name="open_play_store">Открыть Play Store</string>
+    <string name="error_no_notification_service_support">Извините, ваше устройство, похоже, не поддерживает службы уведомлений</string>
+    <string name="setting_always_select_center_action">Всегда выбирать центральное действие</string>
+    <string name="setting_always_select_center_action_description">При включении касание списка действий всегда выбирает центральный (выделенный) вариант, независимо от того, на какой вариант вы нажали.</string>
+    <string name="change_icon">Сменить значок</string>
+    <string name="please_wait">Подождите</string>
+
+    <string name="error_playlist_not_supported">Не поддерживается этим медиаприложением</string>
+    <string name="error_search_no_results">Результатов не найдено</string>
+    <string name="seconds_to_skip">Секунд для перемотки вперёд:</string>
+    <string name="seconds_to_reverse">Секунд для перемотки назад:</string>
+
+    <string name="setting_dynamic_accent_color">Динамический акцентный цвет</string>
+    <string name="setting_dynamic_accent_color_description">При включении акцентный цвет (полоса перемотки, активный элемент очереди) автоматически подстраивается под доминирующий цвет текущей обложки альбома.</string>
+    <string name="setting_desaturated_color">Приглушённый цвет</string>
+    <string name="setting_desaturated_color_description">Регулирует насыщенность и яркость извлечённого цвета для обеспечения высокой читаемости и контраста в зависимости от активной темы.</string>
+
+    <string name="queue_header">Очередь воспроизведения</string>
+    <string name="queue_unavailable">Очередь недоступна</string>
+
+    <string name="setting_custom_accent_color">Акцентный цвет</string>
+    <string name="setting_custom_accent_color_description">Выберите свой акцентный цвет для интерфейса приложения</string>
+    <string name="setting_mini_player">Мини-плеер</string>
+    <string name="setting_mini_player_description">Показывает постоянную панель воспроизведения над нижней навигацией, когда активны медиа. Включено по умолчанию; отключите, чтобы вернуть это место.</string>
+    <string name="color_picker_title">Выбрать акцентный цвет</string>
+    <string name="color_picker_reset">Сбросить</string>
+    <string name="color_picker_apply">Применить</string>
+    <string name="color_picker_default">По умолчанию</string>
+    <string name="color_picker_invalid">Неверный код цвета</string>
+    <string name="color_picker_current">Текущий: %s</string>
+
+    <string name="drawer_version_format">Версия %1$s</string>
+    <string name="drawer_tagline">Приложение-компаньон для Wear OS</string>
+    <string name="drawer_about_heading">О приложении</string>
+    <string name="drawer_about_summary">Svartifoss позволяет управлять музыкой на телефоне с ваших часов Wear OS — с полностью настраиваемым пультом, адаптированным под ваше устройство.</string>
+    <string name="drawer_name_heading">Название</string>
+    <string name="drawer_name_meaning">Svartifoss означает «Чёрный водопад» на исландском языке — назван в честь водопада в национальном парке Ватнайёкюдль, где тёмные базальтовые колонны обрамляют узкий каскад. Как вода по камню, музыка течёт через приложение.</string>
+    <string name="drawer_sync_heading">Синхронизация</string>
+    <string name="drawer_sync_summary">Настройки часов настраиваются здесь на телефоне и автоматически синхронизируются с сопряжёнными часами.</string>
+    <string name="drawer_support_heading">Поддержка</string>
+    <string name="drawer_support_summary">Svartifoss бесплатное и с открытым исходным кодом — угостите меня кофе, если оно вам полезно :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Скачать обложку</string>
+    <string name="album_art_saved">Обложка сохранена в галерею</string>
+    <string name="album_art_save_error">Не удалось сохранить обложку</string>
+
+    <string name="action_play_liked_songs">Воспроизвести понравившиеся песни (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Воспроизвести понравившиеся песни (Spotify)</string>
+    <string name="action_my_playlists">Ярлыки стриминга</string>
+    <string name="action_play_specific_playlist">Открыть ярлык стриминга</string>
+    <string name="action_choose_or_add_streaming_shortcut">Выбрать или добавить ярлык стриминга</string>
+    <string name="action_show_streaming_library">Показать все сохранённые ярлыки</string>
+    <string name="playlist_shortcut_pick_title">Выбрать ярлык</string>
+    <string name="playlist_shortcut_pick_empty">Пока нет сохранённых ярлыков стриминга — добавьте один ниже, затем нажмите на него, чтобы выбрать</string>
+    <string name="playlist_shortcuts_empty">Пока нет ярлыков стриминга — добавьте их в настройках приложения на телефоне</string>
+    <string name="setting_playlist_shortcuts">Ярлыки стриминга</string>
+    <string name="setting_playlist_shortcuts_description">Открывать ссылки, отправленные с часов, в YouTube Music, Spotify и других стриминговых приложениях</string>
+    <string name="setting_shortcut_artwork">Получать обложки ярлыков онлайн</string>
+    <string name="setting_shortcut_artwork_description">Скачивает миниатюру для каждого сохранённого ярлыка из сервиса, отображаемую в списке на телефоне, меню часов и назначенных кнопках. Каждая миниатюра получается один раз. Это единственный онлайн-доступ, кроме проверки обновлений; отправляется только публичная ссылка. Отключено по умолчанию.</string>
+    <string name="watch_streaming_shortcuts_empty">Добавьте треки, альбомы или плейлисты для Быстрых действий и меню часов</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d сохранённый ярлык · Доступен в Быстрых действиях и меню часов</item>
+        <item quantity="few">%1$d сохранённых ярлыка · Доступны в Быстрых действиях и меню часов</item>
+        <item quantity="many">%1$d сохранённых ярлыков · Доступны в Быстрых действиях и меню часов</item>
+        <item quantity="other">%1$d сохранённых ярлыка · Доступны в Быстрых действиях и меню часов</item>
+    </plurals>
+    <string name="category_music_apps">Музыкальные приложения и сервисы</string>
+    <string name="setting_apps_integrations">Поддерживаемые музыкальные сервисы</string>
+    <string name="setting_apps_integrations_description">Ссылки работают с YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music и SoundCloud. Доступ к аккаунту не требуется.</string>
+    <string name="setting_apps_integrations_none">Поддерживаемое приложение не обнаружено. Ярлыки всё равно могут открываться в браузере или другом совместимом приложении.</string>
+    <string name="setting_apps_integrations_installed">Обнаружено %1$d из %2$d: %3$s</string>
+    <string name="setting_streaming_open_mode">Открывать ссылки стриминга с помощью</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Обнаруженное стриминговое приложение</item>
+        <item>По умолчанию в Android</item>
+        <item>Спрашивать каждый раз</item>
+    </string-array>
+    <string name="setting_notification_access">Доступ к медиауведомлениям</string>
+    <string name="setting_notification_access_enabled">Разрешено · Нажмите, чтобы проверить настройки Android</string>
+    <string name="setting_notification_access_disabled">Не разрешено · Требуется для медиадействий уведомлений и фильтров автозапуска</string>
+    <string name="setting_notification_access_unavailable">Настройки доступа к уведомлениям недоступны на этом устройстве</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d сохранённый ярлык · Нажмите для управления или импорта ссылок</item>
+        <item quantity="few">%1$d сохранённых ярлыка · Нажмите для управления или импорта ссылок</item>
+        <item quantity="many">%1$d сохранённых ярлыков · Нажмите для управления или импорта ссылок</item>
+        <item quantity="other">%1$d сохранённых ярлыка · Нажмите для управления или импорта ссылок</item>
+    </plurals>
+    <string name="category_privacy">Конфиденциальность</string>
+    <string name="setting_crash_reporting">Отправлять отчёты о сбоях</string>
+    <string name="setting_crash_reporting_description">Отправлять диагностику Firebase Crashlytics, чтобы помочь исправить сбои. Включено по умолчанию; отключите в любое время.</string>
+    <string name="setting_announcements">Уведомления об анонсах</string>
+    <string name="setting_announcements_description">Периодические уведомления от разработчика — новые релизы, важные объявления. Отправляются через Firebase Cloud Messaging; аккаунт или список пользователей не используются. Включено по умолчанию; отключите в любое время.</string>
+    <string name="announcement_notification_channel">Анонсы</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Поделитесь плейлистом, альбомом или треком напрямую в Svartifoss, вставьте скопированную ссылку или добавьте её вручную. Часы просят телефон открыть её; вход в сервис не требуется.</string>
+    <string name="back">Назад</string>
+    <string name="playlist_shortcuts_beta_badge">БЕТА</string>
+    <string name="playlist_shortcuts_intro_title">Ваша музыка в одно касание</string>
+    <string name="playlist_shortcuts_yours">Ваши ярлыки</string>
+    <string name="playlist_shortcuts_empty_hint">Добавьте ссылку на общий трек, альбом или плейлист, чтобы сделать её доступной на ваших часах.</string>
+    <string name="playlist_shortcuts_add">Добавить ярлык</string>
+    <string name="playlist_shortcuts_paste">Вставить ссылку</string>
+    <string name="playlist_shortcuts_reload_covers">Обновить обложки</string>
+    <string name="playlist_shortcuts_reloading_covers">Обновление обложек…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Обложки обновлены</string>
+    <string name="playlist_shortcuts_edit">Изменить ярлык</string>
+    <string name="playlist_shortcut_save">Сохранить ярлык</string>
+    <string name="playlist_shortcut_editor_hint">Вставьте ссылку. Svartifoss автоматически определяет приложение и тип контента.</string>
+    <string name="playlist_shortcut_detection_waiting">Ожидание ссылки стриминга</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Поддерживаются Spotify, YouTube Music, Apple Music, TIDAL, Deezer и другие.</string>
+    <string name="playlist_shortcut_detected_format">Обнаружено: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Название</string>
+    <string name="playlist_shortcut_link_hint">Ссылка или URI приложения</string>
+    <string name="playlist_shortcut_shuffle">Воспроизвести вперемешку (только YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Ссылка</string>
+    <string name="playlist_type_track">Трек</string>
+    <string name="playlist_type_playlist">Плейлист</string>
+    <string name="playlist_type_album">Альбом</string>
+    <string name="playlist_type_artist">Исполнитель</string>
+    <string name="playlist_type_show">Шоу</string>
+    <string name="playlist_type_episode">Эпизод</string>
+    <string name="playlist_type_mix">Микс</string>
+    <string name="playlist_badge_shuffle">Перемешать</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Ярлыки стриминга ещё не добавлены</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d сохранён</item>
+        <item quantity="few">%1$d сохранены</item>
+        <item quantity="many">%1$d сохранено</item>
+        <item quantity="other">%1$d сохранено</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Упорядоченные ярлыки стриминга. Коснитесь и удерживайте для перетаскивания, используйте специальные возможности «Переместить вверх» или «Переместить вниз», либо нажмите Ctrl+Вверх/Вниз на клавиатуре.</string>
+    <string name="playlist_shortcut_more_options">Дополнительные параметры для %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Изменить</string>
+    <string name="playlist_shortcut_menu_open">Открыть сейчас</string>
+    <string name="playlist_shortcut_menu_copy">Копировать ссылку</string>
+    <string name="playlist_shortcut_menu_duplicate">Дублировать</string>
+    <string name="playlist_shortcut_menu_share">Поделиться</string>
+    <string name="playlist_shortcut_menu_delete">Удалить</string>
+    <string name="playlist_shortcut_open_failed">Ни одно приложение не может открыть эту ссылку</string>
+    <string name="streaming_shortcut_choose_app">Открыть ссылку стриминга с помощью</string>
+    <string name="playlist_shortcut_link_copied">Ссылка скопирована</string>
+    <string name="playlist_shortcut_import_invalid">Отправленный текст не содержит действительную ссылку стриминга</string>
+    <string name="playlist_shortcut_clipboard_invalid">Буфер обмена не содержит действительную ссылку стриминга</string>
+    <string name="playlist_shortcut_name_required">Введите название ярлыка</string>
+    <string name="playlist_shortcut_link_invalid">Введите действительную веб-ссылку или URI приложения</string>
+    <string name="playlist_shortcut_service_invalid">Вставьте действительную ссылку, чтобы определить её сервис</string>
+    <string name="playlist_shortcut_service_generic">Совместимая ссылка · Android выберет приложение</string>
+    <string name="playlist_shortcut_service_installed">%1$s установлено · Готово к открытию в своём приложении</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s не установлено · Можно использовать браузер или совместимое приложение</string>
+    <string name="playlist_shortcut_copy_name">%1$s копия</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s копия %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s создан</string>
+    <string name="playlist_shortcut_share_title">Поделиться ярлыком стриминга</string>
+    <string name="playlist_shortcut_share_failed">Нет приложения для отправки этого ярлыка</string>
+    <string name="playlist_shortcut_deleted">%1$s удалён</string>
+    <string name="playlist_shortcut_undo">Отменить</string>
+
+    <string name="action_play_liked_songs_shuffled">Воспроизвести понравившиеся песни вперемешку (YT Music)</string>
+    <string name="action_search_history">История поиска</string>
+    <string name="search_history_empty">Пока нет недавних поисков</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Обновления</string>
+    <string name="setting_update_check">Уведомлять о новых версиях</string>
+    <string name="setting_update_check_description">Проверяет GitHub примерно раз в день на новые релизы и показывает уведомление</string>
+    <string name="setting_update_prereleases">Включая предварительные версии</string>
+    <string name="setting_update_prereleases_description">Также получать уведомления о бета-версиях</string>
+    <string name="setting_update_check_now">Проверить обновления сейчас</string>
+    <string name="setting_update_check_now_description">Показывает последнюю версию и позволяет обновить часы по Bluetooth</string>
+    <string name="update_screen_title">Обновления</string>
+    <string name="update_cover_content_description">Svartifoss, водопад, в честь которого названо приложение</string>
+    <string name="update_notification_channel">Обновления приложения</string>
+    <string name="update_available_title">Доступна версия Svartifoss %1$s</string>
+    <string name="update_notification_text">Нажмите для обновления</string>
+    <string name="update_available_action">Доступно обновление</string>
+    <string name="update_installed_phone">Телефон: %1$s</string>
+    <string name="update_installed_versions">Телефон: %1$s · Часы: %2$s</string>
+    <string name="update_watch_version_unknown">неизвестно</string>
+    <string name="update_checking">Проверка обновлений…</string>
+    <string name="update_check_failed">Не удалось проверить обновления. Проверьте соединение и попробуйте снова.</string>
+    <string name="update_available_line">Новая версия: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(предварительная версия)</string>
+    <string name="update_up_to_date">У вас последняя версия (%1$s)</string>
+    <string name="update_no_wear_asset">В этом релизе нет APK для часов для отправки.</string>
+    <string name="update_watch_hint">«Обновить часы» скачивает новое приложение для часов и отправляет его по Bluetooth — вы подтверждаете установку на самих часах, без кабеля или Wear Installer.</string>
+    <string name="update_downloading">Скачивание… %1$d%%</string>
+    <string name="update_connecting_watch">Подключение к часам…</string>
+    <string name="update_transferring">Отправка на часы… %1$d%%</string>
+    <string name="update_confirm_on_watch">Отправлено! На часах появилось уведомление — нажмите на него там, чтобы установить.</string>
+    <string name="update_no_watch">Часы не подключены.</string>
+    <string name="update_push_failed">Не удалось отправить обновление на часы. Попробуйте снова.</string>
+    <string name="update_watch_button">Обновить часы</string>
+    <string name="update_open_release_button">Открыть страницу релиза</string>
+    <string name="update_watch_behind">Ваши часы всё ещё на %1$s — отправьте им обновление ниже.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Синхронизируйте приложения на телефоне и часах</string>
+    <string name="update_state_checking">Проверка обновлений…</string>
+    <string name="update_state_current">У вас последняя версия</string>
+    <string name="update_state_current_sub">Используется последний релиз, %1$s</string>
+    <string name="update_state_available">Доступно обновление</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Не удалось проверить обновления</string>
+    <string name="update_state_failed_sub">Проверьте соединение и попробуйте снова</string>
+    <string name="update_device_phone">Телефон</string>
+    <string name="update_device_watch">Часы</string>
+    <string name="update_versions_header">Установлено</string>
+    <string name="update_whats_new">Что нового</string>
+    <string name="update_phone_button">Обновить телефон</string>
+    <string name="update_installing">Открытие установщика…</string>
+    <string name="update_install_permission_needed">Разрешите установку приложений от Svartifoss, затем снова нажмите «Обновить телефон».</string>
+    <string name="update_phone_failed">Не удалось скачать обновление для телефона. Попробуйте снова.</string>
+</resources>

@@ -1,7 +1,10 @@
 package com.svartifoss.snfell.watch.tile
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
+import androidx.palette.graphics.Palette
 import androidx.wear.protolayout.ActionBuilders
 import androidx.wear.protolayout.ColorBuilders.argb
 import androidx.wear.protolayout.DimensionBuilders.dp
@@ -28,9 +31,13 @@ import com.google.android.gms.wearable.Wearable
 import com.google.common.util.concurrent.ListenableFuture
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.proto.MusicState
+import com.svartifoss.snfell.watch.theme.SwatchInfo
 import com.svartifoss.snfell.watch.theme.WatchTheme
+import com.svartifoss.snfell.watch.theme.selectPrimaryAccent
 import com.svartifoss.snfell.watch.view.MainActivity
+import com.matejdro.wearutils.messages.getByteArrayAsset
 import com.matejdro.wearutils.messages.sendMessageToNearestClient
+import com.matejdro.wearutils.miscutils.BitmapUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +57,10 @@ import timber.log.Timber
  * and forwards transport controls back to the phone over the Data Layer. Button taps use a
  * [ActionBuilders.LoadAction] so the framework re-requests the Tile; we read the clicked id from
  * [RequestBuilders.TileRequest.getCurrentState] and dispatch the matching control before rebuilding.
+ *
+ * The accent used for the play/pause and open-app buttons is extracted from the current cover
+ * (same Palette primary the now-playing faces pick) so the Tile tracks the album instead of a fixed
+ * green; it falls back to [WatchTheme.ACCENT_DEFAULT] when no cover is available.
  */
 class MediaTileService : TileService() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -73,7 +84,8 @@ class MediaTileService : TileService() {
             Timber.w(e, "Could not dispatch media Tile action")
             false
         }
-        val state = readMusicState()
+        val snapshot = readSnapshot()
+        val state = snapshot.state
 
         // A play/pause toggle was only just sent to the phone, which won't have published the
         // resulting state back yet - the DataItem read above still holds the pre-click state.
@@ -81,7 +93,7 @@ class MediaTileService : TileService() {
         // next refresh, which would make the button feel like it did nothing.
         val flipPlaying = clickWasSent && clickedId == ID_PLAY_PAUSE
 
-        val layout = buildLayout(this@MediaTileService, state, flipPlaying)
+        val layout = buildLayout(this@MediaTileService, state, flipPlaying, snapshot.accent)
 
         TileBuilders.Tile.Builder()
             .setResourcesVersion(RESOURCES_VERSION)
@@ -138,19 +150,59 @@ class MediaTileService : TileService() {
         return messageClient.sendMessageToNearestClient(nodeClient, path) != null
     }
 
-    private suspend fun readMusicState(): MusicState? {
-        return try {
-            val buffer = Wearable.getDataClient(this).getDataItems(
+    /** The current track's state plus the accent extracted from its cover, read in one pass. */
+    private class TileSnapshot(val state: MusicState?, val accent: Int?)
+
+    private suspend fun readSnapshot(): TileSnapshot {
+        val dataClient = Wearable.getDataClient(this)
+        val item = try {
+            val buffer = dataClient.getDataItems(
                 Uri.parse("wear://*${CommPaths.DATA_MUSIC_STATE}"),
                 DataClient.FILTER_LITERAL
             ).await()
             try {
-                buffer.firstOrNull()?.let { MusicState.parseFrom(it.data) }
+                buffer.firstOrNull()?.freeze()
             } finally {
                 buffer.release()
             }
         } catch (e: CancellationException) {
             throw e
+        } catch (e: Exception) {
+            return TileSnapshot(null, null)
+        }
+        if (item == null) return TileSnapshot(null, null)
+
+        val state = try {
+            MusicState.parseFrom(item.data)
+        } catch (e: Exception) {
+            return TileSnapshot(null, null)
+        }
+
+        // The cover rides the same DataItem as an asset (as the complication reads it). Extracting
+        // the accent here lets the Tile tint its transport controls with the album colour instead
+        // of a fixed green; a missing/unreadable cover falls back to the default accent downstream.
+        val accent = try {
+            val asset = item.assets[CommPaths.ASSET_ALBUM_ART]
+            val bytes = asset?.let { dataClient.getByteArrayAsset(it) }
+            extractAccent(BitmapUtils.deserialize(bytes))
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            null
+        }
+        return TileSnapshot(state, accent)
+    }
+
+    /** Runs Palette on the cover and picks the same primary accent the now-playing faces use. */
+    private fun extractAccent(bitmap: Bitmap?): Int? {
+        if (bitmap == null) return null
+        return try {
+            val palette = Palette.from(bitmap).generate()
+            val swatchInfos = palette.swatches.map { SwatchInfo(it.rgb, it.population) }
+            selectPrimaryAccent(
+                palette.getVibrantSwatch()?.let { SwatchInfo(it.rgb, it.population) },
+                swatchInfos
+            )
         } catch (e: Exception) {
             null
         }
@@ -159,8 +211,11 @@ class MediaTileService : TileService() {
     private fun buildLayout(
         context: Context,
         state: MusicState?,
-        flipPlaying: Boolean
+        flipPlaying: Boolean,
+        albumAccent: Int?
     ): LayoutElementBuilders.LayoutElement {
+        val accent = resolveTileAccent(albumAccent)
+        val onAccent = onAccentColor(accent)
         // A controller-less state is still published as a valid proto with all media fields
         // empty. Treating every non-error proto as an active session left a row of dead controls
         // below "Nothing playing" after playback ended.
@@ -224,18 +279,20 @@ class MediaTileService : TileService() {
 
         val controlsRow = Row.Builder()
             .setWidth(wrap())
-            .addContent(controlButton(context, ID_SKIP_PREV, ICON_PREV, accent = false))
+            .addContent(controlButton(context, ID_SKIP_PREV, ICON_PREV, accent = false, accentColor = accent, onAccentColor = onAccent))
             .addContent(Spacer.Builder().setWidth(dp(8f)).build())
             .addContent(
                 controlButton(
                     context,
                     ID_PLAY_PAUSE,
                     if (playing) ICON_PAUSE else ICON_PLAY,
-                    accent = true
+                    accent = true,
+                    accentColor = accent,
+                    onAccentColor = onAccent
                 )
             )
             .addContent(Spacer.Builder().setWidth(dp(8f)).build())
-            .addContent(controlButton(context, ID_SKIP_NEXT, ICON_NEXT, accent = false))
+            .addContent(controlButton(context, ID_SKIP_NEXT, ICON_NEXT, accent = false, accentColor = accent, onAccentColor = onAccent))
             .build()
 
         // Second, slimmer row: -10s/+10s relative seek (long-pressing skip can't be used for
@@ -250,7 +307,7 @@ class MediaTileService : TileService() {
         val openAppButton = Button.Builder(context, openAppClickable)
             .setIconContent(ICON_OPEN_APP)
             .setContentDescription(context.getString(com.svartifoss.snfell.R.string.tile_open_app))
-            .setButtonColors(ButtonColors(WatchTheme.ACCENT_DEFAULT, WatchTheme.BACKGROUND_BLACK))
+            .setButtonColors(ButtonColors(accent, onAccent))
             .setSize(ButtonDefaults.LARGE_SIZE)
             .build()
 
@@ -296,7 +353,9 @@ class MediaTileService : TileService() {
         context: Context,
         clickId: String,
         iconId: String,
-        accent: Boolean
+        accent: Boolean,
+        accentColor: Int,
+        onAccentColor: Int
     ): Button {
         val clickable = Clickable.Builder()
             .setId(clickId)
@@ -304,7 +363,7 @@ class MediaTileService : TileService() {
             .build()
 
         val colors = if (accent) {
-            ButtonColors(WatchTheme.ACCENT_DEFAULT, WatchTheme.BACKGROUND_BLACK)
+            ButtonColors(accentColor, onAccentColor)
         } else {
             ButtonColors(WatchTheme.SURFACE_DARK, WatchTheme.ON_SURFACE)
         }
@@ -352,6 +411,27 @@ class MediaTileService : TileService() {
             // Keep the secondary visual weight, but retain the platform's 48dp touch minimum.
             .setSize(dp(48f))
             .build()
+    }
+
+    /**
+     * Resolves the fill for the accent controls: the album accent when available, else the default
+     * green. Very dark or washed-out album colours are lifted so the filled button never sinks into
+     * the black Tile background.
+     */
+    private fun resolveTileAccent(raw: Int?): Int {
+        val base = raw ?: return WatchTheme.ACCENT_DEFAULT
+        val hsv = FloatArray(3)
+        Color.colorToHSV(base, hsv)
+        if (hsv[2] < 0.55f) hsv[2] = 0.55f
+        if (hsv[1] > 0.9f) hsv[1] = 0.9f
+        return Color.HSVToColor(hsv)
+    }
+
+    /** Picks the icon/label tint (black or white) that reads best on [accent]. */
+    private fun onAccentColor(accent: Int): Int {
+        val luminance =
+            (0.299 * Color.red(accent) + 0.587 * Color.green(accent) + 0.114 * Color.blue(accent)) / 255.0
+        return if (luminance > 0.6) WatchTheme.BACKGROUND_BLACK else WatchTheme.COLOR_WHITE
     }
 
     private fun resourceById(resId: Int): ResourceBuilders.ImageResource {

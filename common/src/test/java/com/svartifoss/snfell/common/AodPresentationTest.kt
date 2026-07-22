@@ -60,10 +60,10 @@ class AodPresentationTest {
     }
 
     @Test
-    fun minimalEclipseAndDisabledArtNeverRequestArtworkWork() {
+    fun chronoEclipseAndDisabledArtNeverRequestArtworkWork() {
         assertEquals(
                 AodArtworkSpec(visible = false),
-                resolveAodArtwork(true, "minimal", AodArtTreatment.BLUR, "cover"))
+                resolveAodArtwork(true, "chrono", AodArtTreatment.BLUR, "cover"))
         assertEquals(
                 AodArtworkSpec(visible = false),
                 resolveAodArtwork(true, "eclipse", AodArtTreatment.BLUR, "cover"))

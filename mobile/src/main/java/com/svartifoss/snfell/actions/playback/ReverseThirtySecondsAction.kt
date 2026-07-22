@@ -26,7 +26,15 @@ class ReverseThirtySecondsAction : SelectableAction {
 
     override fun retrieveTitle(): String = context.getString(R.string.action_reverse_seconds, secondsToReverse)
     override val defaultIcon: Drawable
-        get() = AppCompatResources.getDrawable(context, com.svartifoss.snfell.common.R.drawable.action_reverse_30_seconds)!!
+        get() = AppCompatResources.getDrawable(context, iconResForSeconds(secondsToReverse))!!
+
+    /** Dedicated 5s/10s glyphs when the amount matches exactly; the generic reverse glyph
+     *  otherwise. A "5" icon on a 15s rewind would misread, so only exact matches swap. */
+    private fun iconResForSeconds(seconds: Int): Int = when (seconds) {
+        5 -> com.svartifoss.snfell.common.R.drawable.action_replay_5
+        10 -> com.svartifoss.snfell.common.R.drawable.action_replay_10
+        else -> com.svartifoss.snfell.common.R.drawable.action_reverse_30_seconds
+    }
     override val configFragment: Class<out ActionConfigFragment<out PhoneAction>>
         get() = ReverseSecondsConfigFragment::class.java
 

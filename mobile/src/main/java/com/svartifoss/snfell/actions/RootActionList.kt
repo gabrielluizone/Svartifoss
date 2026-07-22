@@ -37,7 +37,8 @@ class RootActionList : PhoneAction {
                 SearchAction(context),
                 OpenSearchHistoryAction(context),
                 PlayLikedSongsAction(context),
-                PlayLikedSongsShuffledAction(context)
+                PlayLikedSongsShuffledAction(context),
+                PlaySpotifyLikedSongsAction(context)
         ))
 
         if (isTaskerInstalled()) {

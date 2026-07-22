@@ -2,6 +2,8 @@
     <string name="app_name">Svartifoss</string>
     <string name="app_name_short">Svartifoss</string>
 
+    <string name="setting_no_wearable_api_banner">Wear OS not supported on this device</string>
+    <string name="setting_no_wearable_api_banner_description">This device doesn\'t provide the Google Play Services Wear OS component, which Svartifoss needs to talk to a watch. Pairing won\'t help — the phone app can\'t reach a watch here. Everything below still saves, and will apply if you install Svartifoss on a device that does support it.</string>
     <string name="setting_no_watch_banner">No watch connected</string>
     <string name="setting_no_watch_banner_description">These settings sync to your Wear OS watch, so they won\'t visibly apply until one is paired and connected - but everything below is still yours to configure now.</string>
 
@@ -11,11 +13,17 @@
     <string name="theme_light">Clearly White</string>
     <string name="theme_dark">Just Black</string>
     <string name="theme_system">Follow System</string>
+    <string name="setting_language">Language</string>
+    <string name="language_system">Follow System</string>
+    <string name="language_change_watch_notice">The watch follows this language too, once it syncs.</string>
 
     <!-- Developer mode -->
     <string name="category_developer">Developer</string>
     <string name="dev_mode_unlocked">Developer mode enabled ✦</string>
     <string name="dev_mode_clicks_remaining">%1$d more taps to unlock developer mode</string>
+    <string name="dev_disable_mode">Disable developer mode</string>
+    <string name="dev_disable_mode_description">Hide this section again - tap "Installed version" seven times to bring it back</string>
+    <string name="dev_mode_disabled">Developer mode disabled</string>
     <string name="dev_build_info">Build info</string>
     <string name="dev_sync_watch">Force sync watch settings</string>
     <string name="dev_sync_watch_description">Push all current settings to the paired watch immediately</string>
@@ -25,11 +33,12 @@
     <string name="dev_show_archived">Show archived options</string>
     <string name="dev_show_archived_description">Reveal watch layouts and settings archived because of known issues</string>
     <string name="dev_copy_debug_info_done">Debug info copied</string>
+    <string name="dev_open_update_screen">Open update screen</string>
+    <string name="dev_open_update_screen_description">Preview the Updates screen (cover banner, release notes layout) without waiting for a real release</string>
     <string name="dev_watch_layout_bounds">Show watch layout bounds</string>
     <string name="dev_watch_layout_bounds_description">Outline visible player elements and touch regions on the watch. Diagnostic overlay only.</string>
     <string name="dev_watch_player_info">Show watch player info</string>
     <string name="dev_watch_player_info_description">Overlay the active face, playback state, progress and render information on the watch.</string>
-    <string name="dev_build_info_dialog_title">Build info</string>
     <string name="pref_reset_default">Reset to default</string>
     <string name="easter_egg_title">✦ Svartifoss ✦</string>
     <string name="easter_egg_message">You found the hidden waterfall.\n\nSvartifoss — black basalt columns\nframing a cascade in Iceland,\na reminder that music flows\nlike water through stone.\n\n♪ Built with care. ♪</string>
@@ -161,6 +170,7 @@
     <string name="touch_zone_bottom">Bottom zone</string>
     <string name="touch_zone_left">Left zone</string>
     <string name="touch_zone_right">Right zone</string>
+    <string name="touch_zone_center">Center tap</string>
     <string name="touch_zone_action">%1$s: %2$s. Tap to configure.</string>
     <string name="control_assignment_label">%1$s\n%2$s</string>
 
@@ -188,6 +198,7 @@
     <string name="gesture_double_press">Double press</string>
     <string name="gesture_long_press">Long press</string>
     <string name="gesture_swipe_action">Action</string>
+    <string name="center_button_quick_panel_note">Double-tapping the center of the now-playing screen always opens the quick actions panel, no matter what you assign here.</string>
     <string name="start_playback">Start playback</string>
     <string name="uninstalled_app">Uninstalled app</string>
 
@@ -237,6 +248,17 @@
     <string name="installed_version">Installed version</string>
     <string name="get_support">Get support</string>
     <string name="get_support_description">Send application logs to the developer for the support</string>
+    <string name="contact_developer">Contact the developer</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — contact</string>
+    <string name="contact_developer_chooser">Send email</string>
+    <string name="contact_developer_no_client">No email app installed. Address copied to the clipboard.</string>
+    <string name="about_developer_title">About the developer</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss started as a personal project — I wanted to bring Music Center for Wear up to date with what\'s possible today, just so I could use it myself every day. It turned out well enough that I decided to share it with everyone. This is my first app, and there\'s nothing quite like seeing something you built turn out to be useful to other people too.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">Open source licenses</string>
     <string name="setting_always_show_time">Always show time</string>
     <string name="setting_always_show_time_off_description">Current time will only be displayed in ambient mode</string>
@@ -285,9 +307,45 @@
     <string name="setting_album_art_dim_strength_description">How strongly the album art is darkened for text readability. Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
     <string name="setting_player_shading_style">Shading style</string>
     <string name="setting_player_shading_intensity">Shading intensity</string>
+    <string name="setting_player_shading_intensity_description">How strongly the shading darkens the background. 100%% is full strength; go higher for extra contrast (up to 150%%). Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Apply this look to all faces</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Copy this face\'s appearance settings to every other face</string>
+    <string name="apply_appearance_confirm_title">Apply to all faces?</string>
+    <string name="apply_appearance_confirm_message">This overwrites the appearance settings of every other face with the current one. It won\'t change your behavior settings.</string>
+    <string name="apply_appearance_confirm_button">Apply</string>
+    <string name="apply_appearance_done">Applied to all faces</string>
+    <string name="category_wf_layout_actions">Layout</string>
+    <string name="setting_reset_appearance">Reset this layout</string>
+    <string name="setting_reset_appearance_description">Restore this face\'s appearance to its original defaults</string>
+    <string name="reset_appearance_confirm_title">Reset this layout?</string>
+    <string name="reset_appearance_confirm_message">This face\'s appearance settings go back to their defaults. Your behavior settings and other faces are not affected.</string>
+    <string name="reset_appearance_confirm_button">Reset</string>
+    <string name="reset_appearance_done">Layout reset to defaults</string>
+    <string name="setting_reset_all_faces">Reset all faces to default</string>
+    <string name="setting_reset_all_faces_description">Restore every built-in face\'s appearance to its original defaults</string>
+    <string name="reset_all_faces_confirm_title">Reset all faces?</string>
+    <string name="reset_all_faces_confirm_message">Every built-in face\'s appearance goes back to its original defaults, and any active custom theme is switched off. Your saved custom themes, behavior settings and chosen face are kept.</string>
+    <string name="reset_all_faces_confirm_button">Reset all</string>
+    <string name="reset_all_faces_done">All faces reset to defaults</string>
+    <string name="setting_player_shading_color">Shading color</string>
+    <string name="setting_wear_shading_custom_color">Custom shading color</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Black</item>
+        <item>Album accent</item>
+        <item>Desaturated album</item>
+        <item>Custom color</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="player_shading_style_entries">
         <item>Follow player theme</item>
         <item>Edge vignette</item>
+        <item>Edge vignette (Strong)</item>
+        <item>Edge vignette (Heavy)</item>
         <item>Bottom corner</item>
         <item>Bottom fade</item>
         <item>Floor and ceiling</item>
@@ -299,6 +357,8 @@
     <string-array name="player_shading_style_values" translatable="false">
         <item>follow</item>
         <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
         <item>bottom_corner</item>
         <item>bottom_fade</item>
         <item>floor_ceiling</item>
@@ -306,16 +366,6 @@
         <item>album_tint</item>
         <item>duotone</item>
         <item>side_curtains</item>
-    </string-array>
-    <string-array name="player_shading_intensity_entries">
-        <item>Soft</item>
-        <item>Balanced</item>
-        <item>Strong</item>
-    </string-array>
-    <string-array name="player_shading_intensity_values" translatable="false">
-        <item>soft</item>
-        <item>balanced</item>
-        <item>strong</item>
     </string-array>
     <string name="setting_ambient_album_art_opacity">Ambient album art opacity</string>
     <string name="setting_ambient_album_art_opacity_description">How visible the album art remains in ambient mode. Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
@@ -356,8 +406,12 @@
     <string name="setting_wear_show_track_title_description">Display the current song name on the player</string>
     <string name="setting_wear_show_track_artist">Show artist name</string>
     <string name="setting_wear_show_track_artist_description">Display the current artist on the player</string>
+    <string name="setting_wear_show_source_icon">Show playing app icon</string>
+    <string name="setting_wear_show_source_icon_description">Show the icon of the app currently playing next to the artist. Uses the icon from its media notification. When off, the icon is never sent to the watch.</string>
     <string name="setting_wear_player_controls_visible">Show player controls</string>
     <string name="setting_wear_player_controls_visible_description">Show or hide built-in buttons in Classic, Poster, Studio and other configurable layouts without disabling their touch targets</string>
+    <string name="setting_wear_quadrant_tap_flash">Flash icon on tap</string>
+    <string name="setting_wear_quadrant_tap_flash_description">When a corner zone\'s action fires, briefly flash its icon to full brightness - especially useful on the Hidden screen theme, where the icon is otherwise invisible and gives no confirmation of which action just ran.</string>
     <string name="setting_wear_internal_progress_visible">Layout progress indicator</string>
     <string name="setting_wear_internal_progress_visible_description">Show the extra progress indicator designed into this layout. The Expressive and Material play-button rings are part of their controls and stay available.</string>
     <string name="setting_wear_edge_progress_visible">Show edge progress arc</string>
@@ -404,6 +458,12 @@
     <string name="wear_font_casual_description">A playful handwritten system family.</string>
     <string name="wear_font_typewriter">Typewriter (Archived)</string>
     <string name="wear_font_typewriter_description">A retro typewriter look (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">A rounded geometric sans, a free (OFL) alternative in the spirit of Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">A clean geometric sans, a free (OFL) alternative in the spirit of Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">An elegant humanist roman, a free (OFL) alternative in the spirit of Optima.</string>
     <string name="wear_font_love_letter">Wired</string>
     <string name="wear_font_love_letter_description">A softer typewriter style (Love Letter Typewriter) — normally reserved for \"Lain\"-themed tracks.</string>
     <string name="wear_font_serif">Serif</string>
@@ -430,12 +490,18 @@
         <item>Automatic (shrink, then wrap, then scroll)</item>
         <item>Scroll (marquee)</item>
         <item>Wrap to two lines</item>
+        <item>Wrap to three lines</item>
+        <item>Wrap to five lines</item>
+        <item>Static (one line, no scroll or shrink)</item>
         <item>Shrink to fit</item>
     </string-array>
     <string-array name="wear_title_text_mode_values">
         <item>smart</item>
         <item>marquee</item>
         <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
         <item>shrink</item>
     </string-array>
 
@@ -457,6 +523,7 @@
     <string name="setting_wear_quick_panel_color">Quick Actions color</string>
     <string name="setting_wear_quick_panel_custom_color">Quick Actions custom color</string>
     <string name="setting_wear_quick_panel_custom_color_description">Choose the Quick Actions color used with Normal treatment</string>
+    <string name="setting_wear_shading_custom_color_description">Choose the color that tints the shading gradient</string>
 
     <string-array name="wear_accent_color_entries">
         <item>Neutral (static theme color)</item>
@@ -480,6 +547,7 @@
         <item>Eclipse AMOLED</item>
         <item>Spectrum</item>
         <item>Material</item>
+        <item>Immersive</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -492,6 +560,7 @@
         <item>eclipse</item>
         <item>spectrum</item>
         <item>material</item>
+        <item>immersive</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
@@ -516,7 +585,7 @@
         <item>Expressive (outlined)</item>
         <item>Material (outlined)</item>
         <item>AMOLED controls</item>
-        <item>Minimal (max battery)</item>
+        <item>Chrono (big clock)</item>
     </string-array>
     <string-array name="wear_aod_style_values">
         <item>follow</item>
@@ -524,7 +593,7 @@
         <item>expressive</item>
         <item>material</item>
         <item>eclipse</item>
-        <item>minimal</item>
+        <item>chrono</item>
     </string-array>
     <string name="setting_wear_aod_color">Always-on color</string>
     <string-array name="wear_aod_color_entries">
@@ -537,6 +606,47 @@
         <item>album</item>
         <item>custom</item>
     </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>White</item>
+        <item>Dynamic (by area under clock)</item>
+        <item>Album color</item>
+        <item>Custom color</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Follow panel style</item>
+        <item>Transparent (no background)</item>
+        <item>Album accent</item>
+        <item>Translucent</item>
+        <item>White</item>
+        <item>Frosted white</item>
+        <item>Black</item>
+        <item>Dynamic (album tone)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Up Next pill background</string>
+    <string name="setting_wear_show_up_next_pill">Up Next pill on player</string>
+    <string name="setting_wear_show_up_next_pill_description">Show an Up Next pill at the bottom of the now-playing screen. It fills the space the mini-buttons row would take, so it only appears while that row isn\'t showing.</string>
+    <string name="category_wf_clock">Clock</string>
+    <string name="setting_wear_clock_color">Clock color</string>
+    <string name="setting_wear_clock_custom_color">Clock custom color</string>
+    <string name="setting_wear_clock_custom_color_description">Tap to pick the clock color used when Clock color is set to Custom color</string>
+    <string name="setting_wear_clock_opacity">Clock opacity</string>
+    <string name="setting_wear_clock_opacity_description">How opaque the always-shown clock is (10–100%%). Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
     <string name="setting_wear_aod_custom_color">Always-on custom color</string>
     <string name="setting_wear_aod_custom_color_description">Tap to pick the color used for always-on text, controls and clock when \"Always-on color\" is set to Custom color</string>
     <string name="setting_wear_aod_intensity">Always-on brightness</string>
@@ -546,7 +656,22 @@
     <string name="setting_wear_aod_show_progress">Progress ring on always-on display</string>
     <string name="setting_wear_aod_show_progress_description">Show the progress ring around the play button in ambient mode — the position only refreshes about once a minute there</string>
     <string name="setting_wear_aod_show_pills">Up Next on always-on display</string>
-    <string name="setting_wear_aod_show_pills_description">Show a static outlined Up Next pill at the bottom of the Expressive and Material always-on styles</string>
+    <string name="setting_wear_aod_show_pills_description">Show a static outlined Up Next pill at the bottom of the visual always-on styles</string>
+    <string name="category_wf_gestures">Screen gestures</string>
+    <string name="setting_wear_mini_buttons_mode">Show mini buttons</string>
+    <string name="setting_wear_gestures_mode">Screen gestures</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Always</item>
+        <item>Only while playing</item>
+        <item>Only while paused</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
     <string name="setting_wear_aod_show_art">Album art on always-on display</string>
     <string name="setting_wear_aod_show_art_description">Keep the dimmed album art visible in ambient mode. Turning it off shows a pure black background, which saves noticeably more battery on AMOLED screens.</string>
     <string name="setting_wear_aod_art_treatment">Always-on album art style</string>
@@ -575,9 +700,15 @@
     <string name="setting_wear_quick_panel_layout">Quick panel layout</string>
     <string name="setting_wear_quick_panel_source">Quick actions</string>
     <string name="setting_wear_quick_panel_source_description">Choose your configured buttons, or actions provided by the app currently playing.</string>
+    <string name="quick_panel_open_note_title">Opening the panel</string>
+    <string name="quick_panel_open_note_description">Double-tap the center of the now-playing screen to open the quick actions panel on the watch.</string>
     <string name="preview_current_app_action">Current app action</string>
     <string name="preview_notification_controls">Icon from media notification</string>
     <string name="setting_wear_queue_style">Queue style</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Use shortcut covers as background</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">When Queue style above is a Cover variant, a quick-panel action row with a fetched shortcut cover (track, playlist, artist…) also fills its pill with that art, like Up Next does. Shortcuts without a fetched cover (a plain app icon) are unaffected.</string>
+    <string name="setting_wear_list_row_size">List pill size</string>
+    <string name="setting_wear_list_row_size_description">Height of the full-width rows in the queue, menus and quick panel.</string>
     <string name="setting_wear_progress_style">Progress ring style</string>
     <string name="setting_wear_seek_style">Seek &amp; volume readout style</string>
     <string name="setting_wear_seek_layout">Seek panel layout</string>
@@ -607,34 +738,55 @@
         <item>expressive</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
-        <item>Edge arc</item>
+        <item>Edge arc (left)</item>
+        <item>Edge arc (tall)</item>
+        <item>Edge arc (right)</item>
+        <item>Edge arc (top)</item>
+        <item>Edge arc (bottom)</item>
+        <item>Full ring</item>
         <item>Center halo</item>
         <item>Horizontal meter</item>
     </string-array>
     <string-array name="wear_volume_layout_values">
         <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
         <item>halo</item>
         <item>meter</item>
     </string-array>
     <string-array name="wear_seek_layout_entries">
         <item>Edge ring</item>
+        <item>Edge ring (thin)</item>
+        <item>Edge ring (thick)</item>
         <item>Timeline</item>
         <item>Segmented timeline</item>
     </string-array>
     <string-array name="wear_seek_layout_values">
         <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
         <item>timeline</item>
         <item>segments</item>
     </string-array>
     <string-array name="wear_quick_panel_layout_entries">
         <item>Metadata first</item>
-        <item>Actions first</item>
-        <item>Compact deck</item>
+        <item>Arc</item>
+        <item>Hero</item>
+        <item>Grid</item>
+        <item>Labelled rows</item>
     </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
     <string-array name="wear_quick_panel_layout_values">
         <item>stacked</item>
-        <item>actions_first</item>
-        <item>compact</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
     </string-array>
     <string-array name="wear_progress_style_entries">
         <item>Solid</item>
@@ -670,6 +822,14 @@
         <item>Outline</item>
         <item>Solid theme</item>
         <item>Solid album</item>
+        <item>Micro</item>
+        <item>Shadow (no chrome)</item>
+        <item>Underline</item>
+        <item>Hairline outline</item>
+        <item>Giant album color</item>
+        <item>Mono</item>
+        <item>Tonal dark</item>
+        <item>Terminal</item>
     </string-array>
     <string-array name="wear_quick_panel_source_entries">
         <item>Configured buttons</item>
@@ -693,6 +853,14 @@
         <item>outline</item>
         <item>solid_theme</item>
         <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
     </string-array>
     <string-array name="wear_overlay_backdrop_entries">
         <item>Follow panel style</item>
@@ -754,6 +922,19 @@
         <item>ink</item>
         <item>groove</item>
     </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Compact</item>
+        <item>Normal</item>
+        <item>Tall</item>
+        <item>Extra tall</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
     <string-array name="wear_overlay_style_entries">
         <item>Glass</item>
         <item>Minimal (AMOLED)</item>
@@ -769,6 +950,10 @@
         <item>High Contrast</item>
         <item>Terminal</item>
         <item>Frost</item>
+        <item>Cover</item>
+            <item>Cover Blur</item>
+        <item>Cover Tonal</item>
+        <item>Cover Square</item>
     </string-array>
     <string-array name="wear_overlay_style_values">
         <item>glass</item>
@@ -785,6 +970,10 @@
         <item>contrast</item>
         <item>terminal</item>
         <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_entries">
@@ -805,6 +994,11 @@
         <item>High Contrast</item>
         <item>Terminal</item>
         <item>Frost</item>
+        <item>Ghost (no chrome)</item>
+        <item>Mist</item>
+        <item>Ink</item>
+        <item>Dot</item>
+        <item>Slab</item>
     </string-array>
     <string-array name="wear_quick_panel_style_values">
         <item>glass</item>
@@ -824,6 +1018,11 @@
         <item>contrast</item>
         <item>terminal</item>
         <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
     </string-array>
 
     <string-array name="wear_screen_theme_entries">
@@ -857,6 +1056,9 @@
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
         <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -877,6 +1079,9 @@
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
         <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
     </string-array>
     <string name="setting_wear_track_time_mode">Track time display</string>
     <string name="setting_wear_track_time_mode_description">When the track position (e.g. 1:23 / 3:45) is shown on the now-playing screen.</string>
@@ -997,9 +1202,13 @@
     <string-array name="album_art_style_entries">
         <item>Full cover</item>
         <item>Blurred background</item>
+        <item>Square (sharp corners)</item>
+        <item>Square (soft corners)</item>
+        <item>Square (rounded corners)</item>
         <item>Black &amp; white</item>
         <item>Blurred black &amp; white</item>
         <item>Expressive blur</item>
+        <item>Expressive</item>
         <item>Material tonal gradient</item>
         <item>Poster cover</item>
         <item>Studio gradient</item>
@@ -1007,15 +1216,24 @@
         <item>Halo glow</item>
         <item>Aurora ribbons</item>
         <item>Spectrum gradient</item>
+        <item>Corona sweep</item>
+        <item>Dusk fade</item>
+        <item>Bloom</item>
+        <item>Horizon fade</item>
+        <item>Ember glow</item>
         <item>Eclipse AMOLED black</item>
         <item>Hidden (solid black)</item>
     </string-array>
     <string-array name="album_art_style_values">
         <item>cover</item>
         <item>blur</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
         <item>bw</item>
         <item>blur_bw</item>
         <item>expressive</item>
+        <item>expressive_no_blur</item>
         <item>material</item>
         <item>poster</item>
         <item>studio</item>
@@ -1023,6 +1241,11 @@
         <item>halo</item>
         <item>aurora</item>
         <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
         <item>eclipse</item>
         <item>hidden</item>
     </string-array>
@@ -1036,6 +1259,41 @@
         <item>light</item>
         <item>dark</item>
         <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -1052,6 +1310,8 @@
 
     <string name="setting_close_timeout">Close timeout</string>
     <string name="setting_close_timeout_description">Svartifoss will automatically close itself when there is no music playing for <![CDATA[<b>%1$s seconds</b>]]>. Feature is disabled when timeout is set to 0 seconds. Please not that, to save battery, this option may not be too accurate at times and it might delay the closing for up to a minute.</string>
+    <string name="setting_wear_close_on_idle">Close on \"Nothing playing\"</string>
+    <string name="setting_wear_close_on_idle_description">Automatically closes the watch app about a minute after it reaches the idle \"Nothing playing\" screen, so it never lingers there. Independent of the close timeout above, which covers a paused track.</string>
     <string name="category_notifications">Notification popup</string>
     <string name="setting_enable_notifications">Show notification popup</string>
     <string name="setting_enable_notifications_description">This feature requires another app to manage notifications (Vibration Center for Wear).\n\nWhenever Vibration Center vibrates the watch, Svartifoss will display popup of the notification text, allowing you to glance at notification quickly without leaving Svartifoss.</string>
@@ -1081,6 +1341,8 @@
 
     <string name="setting_custom_accent_color">Accent color</string>
     <string name="setting_custom_accent_color_description">Choose a custom accent color for the app interface</string>
+    <string name="setting_mini_player">Mini player</string>
+    <string name="setting_mini_player_description">Shows a persistent now-playing bar above the bottom navigation whenever media is active. Enabled by default; turn it off to reclaim that space.</string>
     <string name="color_picker_title">Choose accent color</string>
     <string name="color_picker_reset">Reset</string>
     <string name="color_picker_apply">Apply</string>
@@ -1104,6 +1366,7 @@
     <string name="album_art_save_error">Failed to save cover art</string>
 
     <string name="action_play_liked_songs">Play liked songs (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Play liked songs (Spotify)</string>
     <string name="action_my_playlists">Streaming shortcuts</string>
     <string name="action_play_specific_playlist">Open streaming shortcut</string>
     <string name="action_choose_or_add_streaming_shortcut">Choose or add a streaming shortcut</string>
@@ -1113,6 +1376,8 @@
     <string name="playlist_shortcuts_empty">No streaming shortcuts yet — add them in the phone app settings</string>
     <string name="setting_playlist_shortcuts">Streaming shortcuts</string>
     <string name="setting_playlist_shortcuts_description">Open share links from the watch in YouTube Music, Spotify and other streaming apps</string>
+    <string name="setting_shortcut_artwork">Fetch shortcut artwork online</string>
+    <string name="setting_shortcut_artwork_description">Download a thumbnail for each saved shortcut from the service, shown on the phone list, the watch menu and assigned buttons. Each thumbnail is fetched once. This is the only online access besides the update check; only the public share link is sent. Off by default.</string>
     <string name="watch_streaming_shortcuts_empty">Add tracks, albums or playlists for Quick Actions and the watch menu</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d saved shortcut · Available in Quick Actions and the watch menu</item>
@@ -1129,6 +1394,8 @@
         <item>Android default</item>
         <item>Ask every time</item>
     </string-array>
+    <string name="setting_persistent_notification">Manage the \"Svartifoss active\" notification</string>
+    <string name="setting_persistent_notification_description">Opens this notification\'s Android settings — mute it, hide it from the lock screen, or otherwise adjust it. It can\'t be turned off entirely: Android requires an ongoing notification while the background service that talks to your watch is running.</string>
     <string name="setting_notification_access">Media notification access</string>
     <string name="setting_notification_access_enabled">Allowed · Tap to review Android settings</string>
     <string name="setting_notification_access_disabled">Not allowed · Required for notification media actions and automatic launch filters</string>
@@ -1140,6 +1407,10 @@
     <string name="category_privacy">Privacy</string>
     <string name="setting_crash_reporting">Send crash reports</string>
     <string name="setting_crash_reporting_description">Send Firebase Crashlytics diagnostics to help fix failures. Enabled by default; turn it off at any time.</string>
+    <string name="setting_announcements">Announcement notifications</string>
+    <string name="setting_announcements_description">Occasional notifications from the developer — new releases, important notices. Sent via Firebase Cloud Messaging; there\'s no account or user list involved. Enabled by default; turn it off at any time.</string>
+    <string name="announcement_notification_channel">Announcements</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
     <string name="playlist_shortcuts_help">Share a playlist, album or track directly to Svartifoss, paste a copied link, or add one manually. The watch asks the phone to open it; no service login is required.</string>
     <string name="back">Back</string>
     <string name="playlist_shortcuts_beta_badge">BETA</string>
@@ -1148,6 +1419,9 @@
     <string name="playlist_shortcuts_empty_hint">Add a shared track, album or playlist link to make it available on your watch.</string>
     <string name="playlist_shortcuts_add">Add shortcut</string>
     <string name="playlist_shortcuts_paste">Paste link</string>
+    <string name="playlist_shortcuts_reload_covers">Reload covers</string>
+    <string name="playlist_shortcuts_reloading_covers">Reloading covers…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Covers reloaded</string>
     <string name="playlist_shortcuts_edit">Edit shortcut</string>
     <string name="playlist_shortcut_save">Save shortcut</string>
     <string name="playlist_shortcut_editor_hint">Paste one link. Svartifoss identifies its app and content type automatically.</string>
@@ -1219,6 +1493,7 @@
     <string name="setting_update_check_now">Check for updates now</string>
     <string name="setting_update_check_now_description">Shows the latest version and lets you update the watch over Bluetooth</string>
     <string name="update_screen_title">Updates</string>
+    <string name="update_cover_content_description">Svartifoss, the waterfall the app is named after</string>
     <string name="update_notification_channel">App updates</string>
     <string name="update_available_title">Svartifoss %1$s is available</string>
     <string name="update_notification_text">Tap to update</string>

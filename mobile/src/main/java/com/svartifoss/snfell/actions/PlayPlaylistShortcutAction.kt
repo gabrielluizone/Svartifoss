@@ -68,11 +68,27 @@ class PlayPlaylistShortcutAction : SelectableAction {
         }
     }
 
+    /** Online thumbnail fetched for this shortcut (opt-in), if one was cached. Full-colour art,
+     *  so it must never be tinted. */
+    private val cachedThumbnail: Drawable? by lazy {
+        com.svartifoss.snfell.music.ShortcutArtworkStore.get(context, link)?.let { png ->
+            android.graphics.BitmapFactory.decodeByteArray(png, 0, png.size)?.let { bitmap ->
+                android.graphics.drawable.BitmapDrawable(context.resources, bitmap)
+            }
+        }
+    }
+
     override val defaultIconTintable: Boolean
-        get() = destinationAppIcon == null
+        get() = cachedThumbnail == null && destinationAppIcon == null
+
+    /** Only the fetched online thumbnail is genuine cover art - the destination app's launcher
+     * icon is still a real, non-tintable image, but stretching it across a whole pill just looks
+     * like a smeared logo, not a cover. */
+    override val defaultIsCoverArt: Boolean
+        get() = cachedThumbnail != null
 
     override val defaultIcon: Drawable
-        get() = destinationAppIcon ?: AppCompatResources.getDrawable(
+        get() = cachedThumbnail ?: destinationAppIcon ?: AppCompatResources.getDrawable(
                 context,
                 com.svartifoss.snfell.common.R.drawable.action_open_playlist
         )!!
@@ -146,7 +162,9 @@ class PlayPlaylistShortcutAction : SelectableAction {
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<PlayPlaylistShortcutAction> {
         override suspend fun handleAction(action: PlayPlaylistShortcutAction) {
-            service.playDeepLink(action.link)
+            // The saved name doubles as a playFromSearch query - the fallback that plays an artist
+            // page (URI-only playback just navigates) and that Spotify honors from outside.
+            service.playDeepLink(action.link, action.playlistName)
         }
     }
 }

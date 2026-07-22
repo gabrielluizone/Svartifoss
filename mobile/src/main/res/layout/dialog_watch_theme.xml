@@ -24,9 +24,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans"
             android:imeOptions="actionDone"
+            android:includeFontPadding="false"
             android:inputType="textCapSentences"
+            android:letterSpacing="0"
+            android:lineHeight="21sp"
             android:maxLength="48"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textSize="15sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">Redare și comenzi media</string>
+    <string name="complication_album_art_label">Coperta piesei curente</string>
+    <string name="complication_no_music">Nu se redă nimic</string>
+    <string name="tile_nothing_playing">Nu se redă nimic</string>
+    <string name="tile_open_app">Deschide Svartifoss</string>
+    <string name="tile_rewind_10">Înapoi 10 secunde</string>
+    <string name="tile_forward_10">Înainte 10 secunde</string>
+
+    <string name="shortcuts_tile_description">Comenzile tale rapide de streaming, la o atingere</string>
+    <string name="shortcuts_tile_title">Comenzi rapide</string>
+    <string name="shortcuts_tile_empty">Încă nicio comandă rapidă</string>
+    <string name="shortcuts_tile_more">Mai multe în aplicație</string>
+
+    <string name="idle_nothing_playing">Nu se redă nimic</string>
+    <string name="idle_hint">Redă ceva pe telefon</string>
+
+    <string name="no_phone">Niciun telefon conectat</string>
+    <string name="playback_stopped">Redare oprită</string>
+    <string name="error">EROARE</string>
+    <string name="error_play_services">Eroare Play Services</string>
+    <string name="button">Buton</string>
+    <string name="back_button">Înapoi</string>
+    <string name="turn_bezel_cw">Rotește ramela în sensul acelor de ceasornic</string>
+    <string name="turn_bezel_ccw">Rotește ramela în sens invers acelor de ceasornic</string>
+    <string name="quick_action_like">Îmi place</string>
+    <string name="quick_action_shuffle">Redare aleatorie</string>
+    <string name="quick_action_repeat">Repetă</string>
+    <string name="quick_action_repeat_all">Repetă tot</string>
+    <string name="quick_action_repeat_one">Repetă una</string>
+    <string name="quick_action_up_next">Urmează</string>
+    <string name="quick_actions_unavailable">Aplicația curentă nu are acțiuni rapide</string>
+    <string name="voice_search_prompt">Caută muzică</string>
+    <string name="queue_empty">Nicio coadă disponibilă</string>
+    <string name="queue_now_playing">Se redă acum</string>
+
+    <string name="hint_title">Cum se folosește</string>
+    <string name="hint_edges">Margini — atinge pentru acțiunile afișate</string>
+    <string name="hint_center">Centru — redare/pauză\nAtinge de două ori — acțiuni rapide</string>
+    <string name="hint_swipe_up">Glisează în sus — meniul de acțiuni</string>
+    <string name="hint_crown">Coroană — volum</string>
+    <string name="hint_dismiss">Am înțeles</string>
+
+    <string name="action_name_play">Redare</string>
+    <string name="action_name_pause">Pauză</string>
+    <string name="action_name_skip_prev">Piesa anterioară</string>
+    <string name="action_name_skip_next">Piesa următoare</string>
+    <string name="action_name_volume_up">Volum mai mare</string>
+    <string name="action_name_volume_down">Volum mai mic</string>
+    <string name="action_name_open_menu">Deschide meniul</string>
+    <string name="action_name_skip_30">Înainte 30 de secunde</string>
+    <string name="action_name_reverse_30">Înapoi 30 de secunde</string>
+    <string name="action_name_play_pause">Redare/Pauză</string>
+    <string name="action_name_stop">Oprește</string>
+    <string name="action_name_restart">Repornește piesa</string>
+    <string name="action_name_seek">Derulează prin piesă</string>
+    <string name="action_name_mute">Fără sunet</string>
+    <string name="action_name_search">Caută</string>
+    <string name="action_name_custom">Acțiune personalizată</string>
+    <string name="state_on">Activat</string>
+    <string name="state_off">Dezactivat</string>
+
+    <string name="update_notification_channel">Actualizări ale aplicației</string>
+    <string name="update_install_title">Actualizare Svartifoss</string>
+    <string name="update_install_tap">Atinge pentru a instala noua versiune</string>
+    <string name="update_install_failed">Instalarea a eșuat. Permite instalările din Svartifoss în setările ceasului și încearcă din nou de pe telefon.</string>
+</resources>

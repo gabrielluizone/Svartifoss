@@ -40,7 +40,8 @@ object ThemeAppearance {
             "aurora",
             "eclipse",
             "spectrum",
-            "material"
+            "material",
+            "immersive"
     )
 
     fun normalizeBaseFace(face: String?): String =

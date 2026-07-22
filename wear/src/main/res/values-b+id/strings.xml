@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">Pemutaran dan kontrol media</string>
+    <string name="complication_album_art_label">Sampul yang sedang diputar</string>
+    <string name="complication_no_music">Tidak ada yang diputar</string>
+    <string name="tile_nothing_playing">Tidak ada yang diputar</string>
+    <string name="tile_open_app">Buka Svartifoss</string>
+    <string name="tile_rewind_10">Mundur 10 detik</string>
+    <string name="tile_forward_10">Maju 10 detik</string>
+
+    <string name="shortcuts_tile_description">Pintasan streaming Anda, cukup satu ketukan</string>
+    <string name="shortcuts_tile_title">Pintasan</string>
+    <string name="shortcuts_tile_empty">Belum ada pintasan</string>
+    <string name="shortcuts_tile_more">Selengkapnya di aplikasi</string>
+
+    <string name="idle_nothing_playing">Tidak ada yang diputar</string>
+    <string name="idle_hint">Putar sesuatu di ponsel Anda</string>
+
+    <string name="no_phone">Tidak ada ponsel terhubung</string>
+    <string name="playback_stopped">Pemutaran dihentikan</string>
+    <string name="error">KESALAHAN</string>
+    <string name="error_play_services">Kesalahan Play Services</string>
+    <string name="button">Tombol</string>
+    <string name="back_button">Kembali</string>
+    <string name="turn_bezel_cw">Putar bezel searah jarum jam</string>
+    <string name="turn_bezel_ccw">Putar bezel berlawanan arah jarum jam</string>
+    <string name="quick_action_like">Suka</string>
+    <string name="quick_action_shuffle">Acak</string>
+    <string name="quick_action_repeat">Ulangi</string>
+    <string name="quick_action_repeat_all">Ulangi semua</string>
+    <string name="quick_action_repeat_one">Ulangi satu</string>
+    <string name="quick_action_up_next">Berikutnya</string>
+    <string name="quick_actions_unavailable">Aplikasi saat ini tidak punya aksi cepat</string>
+    <string name="voice_search_prompt">Cari musik</string>
+    <string name="queue_empty">Tidak ada antrean tersedia</string>
+    <string name="queue_now_playing">Sedang diputar</string>
+
+    <string name="hint_title">Cara pakai</string>
+    <string name="hint_edges">Tepi — ketuk untuk aksi yang ditampilkan</string>
+    <string name="hint_center">Tengah — putar/jeda\nKetuk dua kali — aksi cepat</string>
+    <string name="hint_swipe_up">Geser ke atas — menu aksi</string>
+    <string name="hint_crown">Mahkota — volume</string>
+    <string name="hint_dismiss">Mengerti</string>
+
+    <string name="action_name_play">Putar</string>
+    <string name="action_name_pause">Jeda</string>
+    <string name="action_name_skip_prev">Lagu sebelumnya</string>
+    <string name="action_name_skip_next">Lagu berikutnya</string>
+    <string name="action_name_volume_up">Volume naik</string>
+    <string name="action_name_volume_down">Volume turun</string>
+    <string name="action_name_open_menu">Buka menu</string>
+    <string name="action_name_skip_30">Maju 30 detik</string>
+    <string name="action_name_reverse_30">Mundur 30 detik</string>
+    <string name="action_name_play_pause">Putar/Jeda</string>
+    <string name="action_name_stop">Hentikan</string>
+    <string name="action_name_restart">Mulai ulang lagu</string>
+    <string name="action_name_seek">Geser di dalam lagu</string>
+    <string name="action_name_mute">Bisukan</string>
+    <string name="action_name_search">Cari</string>
+    <string name="action_name_custom">Aksi khusus</string>
+    <string name="state_on">Aktif</string>
+    <string name="state_off">Nonaktif</string>
+
+    <string name="update_notification_channel">Pembaruan aplikasi</string>
+    <string name="update_install_title">Pembaruan Svartifoss</string>
+    <string name="update_install_tap">Ketuk untuk memasang versi baru</string>
+    <string name="update_install_failed">Pemasangan gagal. Izinkan pemasangan dari Svartifoss di pengaturan jam tangan dan coba lagi dari ponsel.</string>
+</resources>

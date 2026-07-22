@@ -94,6 +94,8 @@ private val WATCH_APPEARANCE_PREF_KEYS = setOf(
     "album_art_dim_strength",
     "wear_player_shading_style",
     "wear_player_shading_intensity",
+    "wear_shading_color_mode",
+    "wear_shading_custom_color",
     "wear_album_art_fade",
     "overlay_blur_radius",
     "wear_dynamic_accent",
@@ -136,6 +138,7 @@ class WatchFaceFragment : Fragment() {
         private const val STATE_SELECTED_SECTION = "selectedWatchSection"
         private const val STATE_PREVIEW_PREFERENCE = "selectedWatchPreviewPreference"
         private var lastSelectedSection = 0
+        private const val NEUTRAL_ACCENT = 0xFF86A69D.toInt()
     }
 
     private val sections = listOf(
@@ -316,6 +319,14 @@ class WatchFaceFragment : Fragment() {
         selectedPreviewPreference = key
         preview?.showPreference(key, candidateValue)
     }
+
+    /** Exposes the preview's live album accent triple to the color-treatment picker dialog
+     *  (see ColorTreatmentPreference/WatchFacePrefsFragment) so its swatches match what's on
+     *  screen instead of re-extracting a possibly different palette. Falls back to a neutral gray
+     *  if the preview hasn't been created yet - not expected in practice, since the prefs page is
+     *  only shown alongside it. */
+    internal fun currentAlbumAccents(): Triple<Int, Int, Int> =
+            preview?.currentAlbumAccents() ?: Triple(NEUTRAL_ACCENT, NEUTRAL_ACCENT, NEUTRAL_ACCENT)
 
     private fun tintTabs() {
         val activity = activity as? MainActivity ?: return

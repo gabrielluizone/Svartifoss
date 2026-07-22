@@ -35,7 +35,7 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
         strokeWidth = 1.5f * Resources.getSystem().displayMetrics.density
     }
 
-    private val baseRadiusPx = BASE_RADIUS_DP * Resources.getSystem().displayMetrics.density
+    private val density = Resources.getSystem().displayMetrics.density
 
     private var centerX = 0f
     private var centerY = 0f
@@ -44,15 +44,25 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
     private var progress = 1f
     private var animator: ValueAnimator? = null
 
+    // Per-press envelope, set in press() - boosted stretches all three so the same drawable can
+    // stand in for a face's missing quadrant icon (see MainActivity.onTouchDown) rather than just
+    // acknowledging a touch point.
+    private var radiusPx = BASE_RADIUS_DP * density
+    private var peakAlpha = PEAK_ALPHA
+
     /** Starts (or restarts) the pulse at [x], [y] - called on touch-down. Like the center
-     *  pulse, it always plays its full fixed timeline regardless of when the finger lifts. */
-    fun press(x: Float, y: Float) {
+     *  pulse, it always plays its full fixed timeline regardless of when the finger lifts.
+     *  [boosted] plays a bigger, brighter, longer pulse - used on faces with no persistent
+     *  quadrant icon to flash, so the ripple alone has to carry that confirmation. */
+    fun press(x: Float, y: Float, boosted: Boolean = false) {
         centerX = x
         centerY = y
+        radiusPx = BASE_RADIUS_DP * density * (if (boosted) BOOST_RADIUS_MULTIPLIER else 1f)
+        peakAlpha = if (boosted) BOOST_PEAK_ALPHA else PEAK_ALPHA
 
         animator?.cancel()
         animator = ValueAnimator.ofFloat(0f, 1f).apply {
-            duration = DURATION_MS
+            duration = if (boosted) BOOST_DURATION_MS else DURATION_MS
             interpolator = AccelerateDecelerateInterpolator()
             addUpdateListener {
                 progress = it.animatedValue as Float
@@ -69,12 +79,12 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
     override fun draw(canvas: Canvas) {
         // Same envelope as the center pulse: alpha 0.9 -> 0 across the whole run while the ring
         // scales up, so it's brightest at the moment of impact and dissolves as it grows.
-        val alpha = (1f - progress) * PEAK_ALPHA
+        val alpha = (1f - progress) * peakAlpha
         if (alpha <= 0.01f) {
             return
         }
 
-        val radius = baseRadiusPx * (START_SCALE + (END_SCALE - START_SCALE) * progress)
+        val radius = radiusPx * (START_SCALE + (END_SCALE - START_SCALE) * progress)
 
         fillPaint.color = ColorUtils.setAlphaComponent(accentColor, (alpha * FILL_ALPHA_FRACTION * 255).toInt())
         strokePaint.color = ColorUtils.setAlphaComponent(lightenForStroke(accentColor), (alpha * 255).toInt())
@@ -113,5 +123,11 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
         private const val END_SCALE = 1.4f
         private const val PEAK_ALPHA = 0.9f
         private const val FILL_ALPHA_FRACTION = 0.16f
+
+        // Boosted stand-in for a face's missing quadrant icon (see press()) - bigger, brighter,
+        // longer than the plain touch-point acknowledgement.
+        private const val BOOST_DURATION_MS = 550L
+        private const val BOOST_RADIUS_MULTIPLIER = 1.3f
+        private const val BOOST_PEAK_ALPHA = 1f
     }
 }

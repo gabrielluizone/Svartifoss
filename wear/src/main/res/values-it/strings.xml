@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">Riproduzione e controlli multimediali</string>
+    <string name="complication_album_art_label">Copertina in riproduzione</string>
+    <string name="complication_no_music">Niente in riproduzione</string>
+    <string name="tile_nothing_playing">Niente in riproduzione</string>
+    <string name="tile_open_app">Apri Svartifoss</string>
+    <string name="tile_rewind_10">Indietro di 10 secondi</string>
+    <string name="tile_forward_10">Avanti di 10 secondi</string>
+
+    <string name="shortcuts_tile_description">Le tue scorciatoie di streaming, a portata di tocco</string>
+    <string name="shortcuts_tile_title">Scorciatoie</string>
+    <string name="shortcuts_tile_empty">Ancora nessuna scorciatoia</string>
+    <string name="shortcuts_tile_more">Altro nell\'app</string>
+
+    <string name="idle_nothing_playing">Niente in riproduzione</string>
+    <string name="idle_hint">Riproduci qualcosa sul telefono</string>
+
+    <string name="no_phone">Nessun telefono connesso</string>
+    <string name="playback_stopped">Riproduzione interrotta</string>
+    <string name="error">ERRORE</string>
+    <string name="error_play_services">Errore di Play Services</string>
+    <string name="button">Pulsante</string>
+    <string name="back_button">Indietro</string>
+    <string name="turn_bezel_cw">Ruota la ghiera in senso orario</string>
+    <string name="turn_bezel_ccw">Ruota la ghiera in senso antiorario</string>
+    <string name="quick_action_like">Mi piace</string>
+    <string name="quick_action_shuffle">Casuale</string>
+    <string name="quick_action_repeat">Ripeti</string>
+    <string name="quick_action_repeat_all">Ripeti tutto</string>
+    <string name="quick_action_repeat_one">Ripeti uno</string>
+    <string name="quick_action_up_next">In coda</string>
+    <string name="quick_actions_unavailable">L\'app attuale non ha azioni rapide</string>
+    <string name="voice_search_prompt">Cerca musica</string>
+    <string name="queue_empty">Nessuna coda disponibile</string>
+    <string name="queue_now_playing">In riproduzione</string>
+
+    <string name="hint_title">Come si usa</string>
+    <string name="hint_edges">Bordi — tocca per le azioni mostrate</string>
+    <string name="hint_center">Centro — riproduci/pausa\nDoppio tocco — azioni rapide</string>
+    <string name="hint_swipe_up">Scorri verso l\'alto — menu azioni</string>
+    <string name="hint_crown">Corona — volume</string>
+    <string name="hint_dismiss">Ho capito</string>
+
+    <string name="action_name_play">Riproduci</string>
+    <string name="action_name_pause">Pausa</string>
+    <string name="action_name_skip_prev">Traccia precedente</string>
+    <string name="action_name_skip_next">Traccia successiva</string>
+    <string name="action_name_volume_up">Alza il volume</string>
+    <string name="action_name_volume_down">Abbassa il volume</string>
+    <string name="action_name_open_menu">Apri il menu</string>
+    <string name="action_name_skip_30">Avanti di 30 secondi</string>
+    <string name="action_name_reverse_30">Indietro di 30 secondi</string>
+    <string name="action_name_play_pause">Riproduci/Pausa</string>
+    <string name="action_name_stop">Ferma</string>
+    <string name="action_name_restart">Riavvia traccia</string>
+    <string name="action_name_seek">Scorri nella traccia</string>
+    <string name="action_name_mute">Silenzia</string>
+    <string name="action_name_search">Cerca</string>
+    <string name="action_name_custom">Azione personalizzata</string>
+    <string name="state_on">Attivo</string>
+    <string name="state_off">Disattivo</string>
+
+    <string name="update_notification_channel">Aggiornamenti dell\'app</string>
+    <string name="update_install_title">Aggiornamento di Svartifoss</string>
+    <string name="update_install_tap">Tocca per installare la nuova versione</string>
+    <string name="update_install_failed">Installazione non riuscita. Consenti le installazioni da Svartifoss nelle impostazioni dell\'orologio e riprova dal telefono.</string>
+</resources>

@@ -204,4 +204,86 @@ class StreamingShortcutLinksTest {
         assertFalse(StreamingShortcutLinks.isSafeLink("javascript:alert(1)"))
         assertNull(StreamingShortcutLinks.extractSharedLink("this is not a streaming link"))
     }
+
+    @Test
+    fun artistLinksAreTreatedAsPlayable() {
+        // An artist share used to only navigate; it must now be playable so a play command is
+        // actually issued (Spotify plays the artist's top tracks from spotify:artist:...).
+        assertTrue(StreamingContentType.ARTIST.isPlayable)
+        assertTrue(
+            StreamingShortcutLinks.inspect("https://open.spotify.com/artist/abc123")
+                .contentType.isPlayable
+        )
+    }
+
+    @Test
+    fun detectsYoutubeMusicArtistLinkForms() {
+        // All three shapes a YouTube Music artist share can take. This matters beyond
+        // classification: playDeepLink only substitutes the shortcut's name as a playFromSearch
+        // query when the type is ARTIST, and that search is the one command that actually starts
+        // an artist playing - the URI on its own only navigates to the page.
+        assertEquals(
+            StreamingContentType.ARTIST,
+            StreamingShortcutLinks.inspect(
+                "https://music.youtube.com/channel/UCabc123").contentType
+        )
+        assertEquals(
+            StreamingContentType.ARTIST,
+            StreamingShortcutLinks.inspect(
+                "https://music.youtube.com/browse/UCabc123").contentType
+        )
+        assertEquals(
+            StreamingContentType.ARTIST,
+            StreamingShortcutLinks.inspect(
+                "https://music.youtube.com/@someartist").contentType
+        )
+    }
+
+    @Test
+    fun youtubeMusicBrowseIdsDistinguishAlbumsAndPlaylists() {
+        // Guards the browse/ prefix table: these ids are upper-case in the wild ("MPREb_", "VLPL"),
+        // and inspect() lower-cases path segments before matching, so the prefixes it compares
+        // against must stay lower-case too.
+        assertEquals(
+            StreamingContentType.ALBUM,
+            StreamingShortcutLinks.inspect(
+                "https://music.youtube.com/browse/MPREb_abc123").contentType
+        )
+        assertEquals(
+            StreamingContentType.PLAYLIST,
+            StreamingShortcutLinks.inspect(
+                "https://music.youtube.com/browse/VLPLabc123").contentType
+        )
+    }
+
+    @Test
+    fun spotifyLikedSongsCollectionIsPlayable() {
+        // The Play Spotify Liked Songs action relies on this URI classifying as a playable list.
+        assertEquals(
+            StreamingContentType.PLAYLIST,
+            StreamingShortcutLinks.detectContentType("spotify:collection:tracks")
+        )
+        assertTrue(
+            StreamingShortcutLinks.inspect("spotify:collection:tracks").contentType.isPlayable
+        )
+    }
+
+    @Test
+    fun youtubeMusicPlaybackUriIsCanonicalized() {
+        // youtu.be short links and plain youtube.com links must become music.youtube.com/watch,
+        // the shape that actually starts playback rather than only opening a page.
+        assertEquals(
+            "https://music.youtube.com/watch?v=abc123",
+            StreamingShortcutLinks.forPlayback("https://youtu.be/abc123?si=xyz")
+        )
+        assertEquals(
+            "https://music.youtube.com/watch?v=abc123",
+            StreamingShortcutLinks.forPlayback("https://www.youtube.com/watch?v=abc123")
+        )
+        // A share already in music.youtube.com form is left intact.
+        assertEquals(
+            "https://music.youtube.com/watch?list=LM",
+            StreamingShortcutLinks.forPlayback("https://music.youtube.com/watch?list=LM")
+        )
+    }
 }

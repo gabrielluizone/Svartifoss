@@ -28,9 +28,11 @@ enum class StreamingContentType {
     MIX,
     UNKNOWN;
 
-    /** Entities for which a MediaSession can reasonably accept playFromUri. */
+    /** Entities for which a MediaSession can reasonably accept playFromUri. ARTIST is included:
+     *  both Spotify (`spotify:artist:…` plays the artist's top tracks) and most apps interpret an
+     *  artist URI as "play this artist" rather than only navigating to the profile page. */
     val isPlayable: Boolean
-        get() = this == TRACK || this == PLAYLIST || this == ALBUM ||
+        get() = this == TRACK || this == PLAYLIST || this == ALBUM || this == ARTIST ||
                 this == SHOW || this == EPISODE || this == MIX
 }
 
@@ -226,8 +228,40 @@ object StreamingShortcutLinks {
         return spotifyEntity(listOf(pathParts[entityIndex], pathParts[entityIndex + 1]))
     }
 
-    /** URI passed to MediaSession.playFromUri when the active player advertises that command. */
-    fun forPlayback(rawLink: String): String = forInstalledApp(rawLink)
+    /** URI passed to MediaSession.playFromUri. For YouTube Music this canonicalises share links
+     *  (youtu.be short links, plain youtube.com, `/playlist`) into the `music.youtube.com/watch`
+     *  form, which is the shape that reliably *starts playback* rather than only opening a page -
+     *  the same distinction that makes the Liked Music `watch?list=LM` deep link work. */
+    fun forPlayback(rawLink: String): String {
+        val link = forInstalledApp(rawLink)
+        return if (detect(link) == StreamingService.YOUTUBE_MUSIC) {
+            youtubeMusicPlaybackUri(link)
+        } else {
+            link
+        }
+    }
+
+    private fun youtubeMusicPlaybackUri(rawLink: String): String {
+        val uri = parse(rawLink) ?: return rawLink
+        val host = uri.host?.lowercase(Locale.US).orEmpty()
+        // youtu.be/<id> short links: the video id is the first path segment.
+        if (hostMatches(host, "youtu.be")) {
+            val videoId = uri.path.orEmpty().trimStart('/').substringBefore('/')
+            if (videoId.isBlank()) return rawLink
+            val listParam = parseQuery(uri.rawQuery.orEmpty())["list"]
+            val suffix = if (!listParam.isNullOrBlank()) "&list=$listParam" else ""
+            return "https://music.youtube.com/watch?v=$videoId$suffix"
+        }
+        // Plain youtube.com watch/playlist links: retarget the host at the music app.
+        if (host == "youtube.com" || host == "www.youtube.com" || host == "m.youtube.com") {
+            return try {
+                URI("https", "music.youtube.com", uri.path, uri.query, uri.fragment).toString()
+            } catch (_: URISyntaxException) {
+                rawLink
+            }
+        }
+        return rawLink
+    }
 
     private fun spotifyWebUrl(rawLink: String): String? {
         val uri = parse(rawLink) ?: return null

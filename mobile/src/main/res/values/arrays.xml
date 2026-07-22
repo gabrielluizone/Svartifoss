@@ -27,6 +27,9 @@
         <item>condensed_medium</item>
         <item>cursive</item>
         <item>typewriter</item>
+        <item>poppins</item>
+        <item>montserrat</item>
+        <item>marcellus</item>
     </string-array>
     <string-array name="streaming_open_mode_values" translatable="false">
         <item>app</item>

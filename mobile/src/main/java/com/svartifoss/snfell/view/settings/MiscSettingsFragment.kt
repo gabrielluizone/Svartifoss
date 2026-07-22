@@ -31,9 +31,11 @@ import com.svartifoss.snfell.config.ConfigBackup
 import com.svartifoss.snfell.update.UpdateActivity
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
+import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import com.svartifoss.snfell.music.StreamingService
 import com.svartifoss.snfell.music.StreamingShortcutLinks
+import com.svartifoss.snfell.util.WearableAvailability
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.TitledActivity
 import com.matejdro.wearutils.logging.LogRetrievalTask
@@ -63,6 +65,8 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         const val SECTION_APPS = "apps"
         const val SECTION_DATA = "data"
         private const val ARG_SECTION = "settingsSection"
+
+        private const val DEVELOPER_GITHUB_URL = "https://github.com/gabrielluizone"
 
         fun newInstance(section: String) = MiscSettingsFragment().apply {
             arguments = Bundle().apply { putString(ARG_SECTION, section) }
@@ -173,9 +177,22 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
             // debounce avoids flashing the disconnected notice for connected watches.
             pendingNoWatchBannerJob = lifecycleScope.launch {
                 delay(600)
-                banner.isVisible = watchInfoProvider.value == null &&
+                val show = watchInfoProvider.value == null &&
                         watchInfoProvider.hasResolvedInitialValue &&
                         (section == SECTION_WATCH || section == SECTION_AUTOMATION)
+                if (show) {
+                    // "No watch connected" is misleading on a device that has no Data Layer at
+                    // all: no amount of pairing will help, and the settings below genuinely will
+                    // never apply. Say which of the two situations it actually is.
+                    val hasDataLayer = WearableAvailability.isAvailable(requireContext())
+                    banner.setTitle(
+                            if (hasDataLayer) R.string.setting_no_watch_banner
+                            else R.string.setting_no_wearable_api_banner)
+                    banner.setSummary(
+                            if (hasDataLayer) R.string.setting_no_watch_banner_description
+                            else R.string.setting_no_wearable_api_banner_description)
+                }
+                banner.isVisible = show
             }
         }
     }
@@ -193,6 +210,23 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                 applyTheme(newValue as String)
                 true
             }
+
+        findPreference<ListPreference>("app_language")?.let { languagePref ->
+            languagePref.summary = "%s"
+            languagePref.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, newValue ->
+                    // The preference is written by the framework right after this returns true,
+                    // and WatchPreferenceSyncCoordinator picks the change up from there and pushes
+                    // it - nothing here needs to talk to the watch itself.
+                    AppLanguage.apply(newValue as String)
+                    Toast.makeText(
+                            requireContext(),
+                            R.string.language_change_watch_notice,
+                            Toast.LENGTH_LONG
+                    ).show()
+                    true
+                }
+        }
 
         val accentPref = findPreference<Preference>("custom_accent_color")
         updateAccentColorSummary(accentPref)
@@ -265,6 +299,34 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                             Toast.LENGTH_LONG
                     ).show()
                 } catch (_: SecurityException) {
+                    Toast.makeText(
+                            requireContext(),
+                            R.string.setting_notification_access_unavailable,
+                            Toast.LENGTH_LONG
+                    ).show()
+                }
+                true
+            }
+
+        findPreference<Preference>("persistent_notification_settings")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                // The "Svartifoss active" notification can't be turned off from inside the app -
+                // it belongs to MusicService, a foreground service, and Android requires an
+                // ongoing notification for as long as one is running. This deep-links to that
+                // channel's own system settings page instead, same pattern as notification_access
+                // above, so the user can still mute/hide it themselves. Per-channel settings only
+                // exist on API 26+; older versions fall back to the app's notification settings.
+                val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+                            .putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+                            .putExtra(Settings.EXTRA_CHANNEL_ID, MusicService.KEY_NOTIFICATION_CHANNEL)
+                } else {
+                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                            .putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+                }
+                try {
+                    startActivity(intent)
+                } catch (_: ActivityNotFoundException) {
                     Toast.makeText(
                             requireContext(),
                             R.string.setting_notification_access_unavailable,
@@ -495,6 +557,12 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
             true
         }
 
+        findPreference<Preference>("contactDeveloper")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                contactDeveloper()
+                true
+            }
+
         findPreference<Preference>("licenses")!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 LicensesDialog.Builder(activity)
@@ -504,13 +572,65 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                         .show()
                 true
             }
+
+        findPreference<Preference>("aboutDeveloper")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                AlertDialog.Builder(requireContext())
+                        .setTitle(R.string.about_developer_dialog_title)
+                        .setMessage(R.string.about_developer_dialog_message)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show()
+                true
+            }
+
+        findPreference<Preference>("developerGithub")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(DEVELOPER_GITHUB_URL)))
+                true
+            }
+    }
+
+    /**
+     * Opens the user's mail app pre-addressed to the developer, with the app version already in the
+     * subject so a support mail arrives with the one fact that is always needed.
+     *
+     * ACTION_SENDTO + a `mailto:` URI rather than ACTION_SEND: it is the only form that resolves to
+     * mail clients *only*, so the chooser can't offer to "share" the message to unrelated apps. On
+     * a phone with no mail client at all the address is put on the clipboard instead, so the
+     * preference is never a dead end.
+     */
+    private fun contactDeveloper() {
+        val address = getString(R.string.contact_developer_email)
+        val version = try {
+            requireActivity().packageManager
+                    .getPackageInfo(requireActivity().packageName, 0).versionName ?: ""
+        } catch (ignored: PackageManager.NameNotFoundException) {
+            ""
+        }
+
+        val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$address")).apply {
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.contact_developer_subject, version))
+        }
+
+        try {
+            startActivity(Intent.createChooser(intent, getString(R.string.contact_developer_chooser)))
+        } catch (ignored: ActivityNotFoundException) {
+            val clipboard = requireContext()
+                    .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            clipboard.setPrimaryClip(ClipData.newPlainText(address, address))
+            Toast.makeText(
+                    requireContext(),
+                    R.string.contact_developer_no_client,
+                    Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
     private fun initDevSection() {
         val buildPref = findPreference<Preference>("dev_build_info")
         buildPref?.summary = buildShortBuildSummary()
         buildPref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            showBuildInfoDialog()
+            showEasterEgg()
             true
         }
 
@@ -525,6 +645,26 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                 copyDebugInfoToClipboard()
                 true
             }
+
+        findPreference<Preference>("dev_open_update_screen")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(requireContext(), UpdateActivity::class.java))
+                true
+            }
+
+        findPreference<Preference>("dev_disable_mode")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                disableDevMode()
+                true
+            }
+    }
+
+    private fun disableDevMode() {
+        devModeEnabled = false
+        versionClickCount = 0
+        preferenceManager.sharedPreferences?.edit()?.putBoolean(PREF_DEV_MODE, false)?.apply()
+        updateDevModeVisibility()
+        Toast.makeText(requireContext(), R.string.dev_mode_disabled, Toast.LENGTH_LONG).show()
     }
 
     private fun buildShortBuildSummary(): String {
@@ -564,14 +704,6 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
             @Suppress("DEPRECATION")
             packageInfo.versionCode.toString()
         }
-    }
-
-    private fun showBuildInfoDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.dev_build_info_dialog_title)
-            .setMessage(buildFullDebugInfo().trim())
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
     }
 
     private fun copyDebugInfoToClipboard() {
@@ -625,9 +757,10 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
     }
 
     private fun showEasterEgg() {
+        val view = layoutInflater.inflate(R.layout.dialog_svartifoss_easter_egg, null, false)
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.easter_egg_title)
-            .setMessage(R.string.easter_egg_message)
+            .setView(view)
             .setPositiveButton(R.string.easter_egg_ok, null)
             .show()
     }

@@ -134,7 +134,11 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
         PlayerBackgroundTreatment(state)
         PlayerShadingOverlay(state)
 
-        FaceClock(visible = state.showClock)
+        FaceClock(
+                visible = state.showClock,
+                color = Color(state.clockColor),
+                fontFamily = state.clockFont
+        )
 
         val sideContainer = Color(tonal(surfaceAccent, 0.74f, 0.40f, 0.92f))
         val centerContainer = Color(tonal(surfaceAccent, 0.87f, 0.30f, 0.90f))
@@ -179,16 +183,20 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     )
                 }
                 if (state.showArtist && state.artist.isNotEmpty()) {
-                    Text(
-                            text = state.artist,
-                            color = Color(state.artistColor),
-                            fontSize = 11.sp,
-                            fontFamily = state.artistFont,
-                            textAlign = TextAlign.Center,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(top = if (state.showTitle) 2.dp else 0.dp)
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(top = if (state.showTitle) 2.dp else 0.dp)) {
+                        SourceIconGlyph(state, 13.dp, Color(state.artistColor))
+                        Text(
+                                text = state.artist,
+                                color = Color(state.artistColor),
+                                fontSize = 11.sp,
+                                fontFamily = state.artistFont,
+                                textAlign = TextAlign.Center,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
         }
@@ -276,6 +284,16 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
             )
         }
 
+        if (state.showUpNextPill) {
+            AwakeUpNextPill(
+                    state = state,
+                    screen = screen,
+                    onClick = listener::onQueueTap,
+                    modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = screen * .07f)
+            )
+        }
     }
 }
 
@@ -325,15 +343,21 @@ private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
                     )
                 }
                 if (state.showArtist && state.artist.isNotEmpty()) {
-                    Text(
-                            text = state.artist,
-                            color = tint.copy(alpha = 0.55f * i),
-                            fontSize = 13.sp,
-                            fontFamily = state.artistFont,
-                            textAlign = TextAlign.Center,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                    )
+                    Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                    ) {
+                        AmbientSourceIconGlyph(state, 13.dp, tint.copy(alpha = 0.55f * i))
+                        Text(
+                                text = state.artist,
+                                color = tint.copy(alpha = 0.55f * i),
+                                fontSize = 13.sp,
+                                fontFamily = state.artistFont,
+                                textAlign = TextAlign.Center,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
         }

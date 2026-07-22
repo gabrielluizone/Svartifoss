@@ -170,6 +170,9 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
 
     override fun onResume() {
         super.onResume()
+        // Pick up edits made elsewhere (e.g. a saved shortcut renamed in the Apps screen) so an
+        // assigned shortcut action shows its current name/link instead of the snapshot value.
+        viewModel.refreshFromConfig()
         refreshQuickPanelSummary()
     }
 

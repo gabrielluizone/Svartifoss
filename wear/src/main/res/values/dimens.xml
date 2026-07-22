@@ -15,6 +15,11 @@
     <dimen name="quick_action_button_width">58dp</dimen>
     <dimen name="quick_action_button_height">52dp</dimen>
     <dimen name="quick_action_icon_size">26dp</dimen>
+    <!-- Height of every full-width quick-panel pill (Up Next and the action/shortcut rows).
+         Fixed rather than wrap_content on purpose: the action rows are sized by their 30dp icon
+         while Up Next stacks a two-line label, so content-driven heights made otherwise identical
+         pills differ by ~6% and the list read as ragged. -->
+    <dimen name="quick_action_row_height">54dp</dimen>
 
     <dimen name="screen_button_width">46dp</dimen>
     <dimen name="screen_button_height">38dp</dimen>

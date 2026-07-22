@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">پخش و کنترل‌های رسانه</string>
+    <string name="complication_album_art_label">کاور در حال پخش</string>
+    <string name="complication_no_music">چیزی در حال پخش نیست</string>
+    <string name="tile_nothing_playing">چیزی در حال پخش نیست</string>
+    <string name="tile_open_app">باز کردن Svartifoss</string>
+    <string name="tile_rewind_10">۱۰ ثانیه به عقب</string>
+    <string name="tile_forward_10">۱۰ ثانیه به جلو</string>
+
+    <string name="shortcuts_tile_description">میان‌برهای پخش شما، تنها با یک لمس</string>
+    <string name="shortcuts_tile_title">میان‌برها</string>
+    <string name="shortcuts_tile_empty">هنوز میان‌بری نیست</string>
+    <string name="shortcuts_tile_more">بیشتر در برنامه</string>
+
+    <string name="idle_nothing_playing">چیزی در حال پخش نیست</string>
+    <string name="idle_hint">چیزی روی گوشی خود پخش کنید</string>
+
+    <string name="no_phone">هیچ گوشی‌ای متصل نیست</string>
+    <string name="playback_stopped">پخش متوقف شد</string>
+    <string name="error">خطا</string>
+    <string name="error_play_services">خطای Play Services</string>
+    <string name="button">دکمه</string>
+    <string name="back_button">بازگشت</string>
+    <string name="turn_bezel_cw">قاب را در جهت عقربه‌های ساعت بچرخانید</string>
+    <string name="turn_bezel_ccw">قاب را خلاف جهت عقربه‌های ساعت بچرخانید</string>
+    <string name="quick_action_like">پسندیدن</string>
+    <string name="quick_action_shuffle">پخش تصادفی</string>
+    <string name="quick_action_repeat">تکرار</string>
+    <string name="quick_action_repeat_all">تکرار همه</string>
+    <string name="quick_action_repeat_one">تکرار یکی</string>
+    <string name="quick_action_up_next">بعدی</string>
+    <string name="quick_actions_unavailable">برنامه فعلی کنش سریع ندارد</string>
+    <string name="voice_search_prompt">جستجوی موسیقی</string>
+    <string name="queue_empty">صف در دسترس نیست</string>
+    <string name="queue_now_playing">در حال پخش</string>
+
+    <string name="hint_title">نحوه استفاده</string>
+    <string name="hint_edges">لبه‌ها — برای کنش‌های نمایش‌داده‌شده لمس کنید</string>
+    <string name="hint_center">مرکز — پخش/مکث\nدو بار لمس — کنش‌های سریع</string>
+    <string name="hint_swipe_up">به بالا بکشید — منوی کنش‌ها</string>
+    <string name="hint_crown">تاج — صدا</string>
+    <string name="hint_dismiss">متوجه شدم</string>
+
+    <string name="action_name_play">پخش</string>
+    <string name="action_name_pause">مکث</string>
+    <string name="action_name_skip_prev">قطعه قبلی</string>
+    <string name="action_name_skip_next">قطعه بعدی</string>
+    <string name="action_name_volume_up">افزایش صدا</string>
+    <string name="action_name_volume_down">کاهش صدا</string>
+    <string name="action_name_open_menu">باز کردن منو</string>
+    <string name="action_name_skip_30">۳۰ ثانیه به جلو</string>
+    <string name="action_name_reverse_30">۳۰ ثانیه به عقب</string>
+    <string name="action_name_play_pause">پخش/مکث</string>
+    <string name="action_name_stop">توقف</string>
+    <string name="action_name_restart">شروع دوباره قطعه</string>
+    <string name="action_name_seek">پیمایش در قطعه</string>
+    <string name="action_name_mute">بی‌صدا</string>
+    <string name="action_name_search">جستجو</string>
+    <string name="action_name_custom">کنش سفارشی</string>
+    <string name="state_on">روشن</string>
+    <string name="state_off">خاموش</string>
+
+    <string name="update_notification_channel">به‌روزرسانی‌های برنامه</string>
+    <string name="update_install_title">به‌روزرسانی Svartifoss</string>
+    <string name="update_install_tap">برای نصب نسخه جدید لمس کنید</string>
+    <string name="update_install_failed">نصب ناموفق بود. در تنظیمات ساعت اجازه نصب از Svartifoss را بدهید و دوباره از گوشی تلاش کنید.</string>
+</resources>

@@ -158,6 +158,27 @@ class CircularProgressSeekBar : View {
         }
 
     /**
+     * Multiplier on the ring's stroke width, driven by the "edge" seek layouts. Applies uniformly
+     * to every [RingStyle], so thickness stays orthogonal to appearance.
+     *
+     * Assigning it re-lays-out on purpose: [onMeasure] insets [circleBounds] by half the stroke to
+     * keep the ring inside the bezel, so a thicker ring that skipped the re-measure would be
+     * clipped by exactly the amount it grew.
+     */
+    var edgeStrokeScale: Float = 1f
+        set(value) {
+            val clamped = value.coerceIn(0.3f, 2.5f)
+            if (field != clamped) {
+                field = clamped
+                foregroundPaint.strokeWidth = baseStrokeWidth * clamped
+                requestLayout()
+                invalidate()
+            }
+        }
+
+    private val baseStrokeWidth = resources.getDimension(R.dimen.seek_bar_width)
+
+    /**
      * Progress fraction, 0f..1f. Ignored while the user is actively dragging the ring.
      *
      * Animates smoothly towards the new value instead of jumping, since this is normally fed a
@@ -288,7 +309,7 @@ class CircularProgressSeekBar : View {
         // The scratch paints are recolored/re-effected per draw; stroke geometry (and therefore
         // onMeasure's bounds and the touch band) stays that of the base solid ring for every
         // style, so seeking feels identical regardless of the visual.
-        val baseWidth = resources.getDimension(R.dimen.seek_bar_width)
+        val baseWidth = baseStrokeWidth * edgeStrokeScale
         foregroundPaint.pathEffect = null
         backgroundPaint.pathEffect = null
         foregroundPaint.shader = null

@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">Αναπαραγωγή και στοιχεία ελέγχου πολυμέσων</string>
+    <string name="complication_album_art_label">Εξώφυλλο τρέχοντος κομματιού</string>
+    <string name="complication_no_music">Δεν παίζει τίποτα</string>
+    <string name="tile_nothing_playing">Δεν παίζει τίποτα</string>
+    <string name="tile_open_app">Άνοιγμα Svartifoss</string>
+    <string name="tile_rewind_10">Πίσω 10 δευτερόλεπτα</string>
+    <string name="tile_forward_10">Μπροστά 10 δευτερόλεπτα</string>
+
+    <string name="shortcuts_tile_description">Οι συντομεύσεις streaming σου, με ένα άγγιγμα</string>
+    <string name="shortcuts_tile_title">Συντομεύσεις</string>
+    <string name="shortcuts_tile_empty">Δεν υπάρχουν συντομεύσεις ακόμη</string>
+    <string name="shortcuts_tile_more">Περισσότερα στην εφαρμογή</string>
+
+    <string name="idle_nothing_playing">Δεν παίζει τίποτα</string>
+    <string name="idle_hint">Παίξε κάτι στο τηλέφωνό σου</string>
+
+    <string name="no_phone">Δεν έχει συνδεθεί τηλέφωνο</string>
+    <string name="playback_stopped">Η αναπαραγωγή σταμάτησε</string>
+    <string name="error">ΣΦΑΛΜΑ</string>
+    <string name="error_play_services">Σφάλμα Play Services</string>
+    <string name="button">Κουμπί</string>
+    <string name="back_button">Πίσω</string>
+    <string name="turn_bezel_cw">Γύρισε τη στεφάνη δεξιόστροφα</string>
+    <string name="turn_bezel_ccw">Γύρισε τη στεφάνη αριστερόστροφα</string>
+    <string name="quick_action_like">Μου αρέσει</string>
+    <string name="quick_action_shuffle">Τυχαία σειρά</string>
+    <string name="quick_action_repeat">Επανάληψη</string>
+    <string name="quick_action_repeat_all">Επανάληψη όλων</string>
+    <string name="quick_action_repeat_one">Επανάληψη ενός</string>
+    <string name="quick_action_up_next">Ακολουθεί</string>
+    <string name="quick_actions_unavailable">Η τρέχουσα εφαρμογή δεν έχει γρήγορες ενέργειες</string>
+    <string name="voice_search_prompt">Αναζήτηση μουσικής</string>
+    <string name="queue_empty">Δεν υπάρχει διαθέσιμη ουρά</string>
+    <string name="queue_now_playing">Παίζει τώρα</string>
+
+    <string name="hint_title">Πώς χρησιμοποιείται</string>
+    <string name="hint_edges">Άκρα — άγγιξε για τις εμφανιζόμενες ενέργειες</string>
+    <string name="hint_center">Κέντρο — αναπαραγωγή/παύση\nΔιπλό άγγιγμα — γρήγορες ενέργειες</string>
+    <string name="hint_swipe_up">Σύρε προς τα πάνω — μενού ενεργειών</string>
+    <string name="hint_crown">Στεφάνι — ένταση</string>
+    <string name="hint_dismiss">Το κατάλαβα</string>
+
+    <string name="action_name_play">Αναπαραγωγή</string>
+    <string name="action_name_pause">Παύση</string>
+    <string name="action_name_skip_prev">Προηγούμενο κομμάτι</string>
+    <string name="action_name_skip_next">Επόμενο κομμάτι</string>
+    <string name="action_name_volume_up">Αύξηση έντασης</string>
+    <string name="action_name_volume_down">Μείωση έντασης</string>
+    <string name="action_name_open_menu">Άνοιγμα μενού</string>
+    <string name="action_name_skip_30">Μπροστά 30 δευτερόλεπτα</string>
+    <string name="action_name_reverse_30">Πίσω 30 δευτερόλεπτα</string>
+    <string name="action_name_play_pause">Αναπαραγωγή/Παύση</string>
+    <string name="action_name_stop">Διακοπή</string>
+    <string name="action_name_restart">Επανεκκίνηση κομματιού</string>
+    <string name="action_name_seek">Μετακίνηση στο κομμάτι</string>
+    <string name="action_name_mute">Σίγαση</string>
+    <string name="action_name_search">Αναζήτηση</string>
+    <string name="action_name_custom">Προσαρμοσμένη ενέργεια</string>
+    <string name="state_on">Ενεργό</string>
+    <string name="state_off">Ανενεργό</string>
+
+    <string name="update_notification_channel">Ενημερώσεις εφαρμογής</string>
+    <string name="update_install_title">Ενημέρωση Svartifoss</string>
+    <string name="update_install_tap">Άγγιξε για εγκατάσταση της νέας έκδοσης</string>
+    <string name="update_install_failed">Η εγκατάσταση απέτυχε. Επίτρεψε εγκαταστάσεις από το Svartifoss στις ρυθμίσεις του ρολογιού και δοκίμασε ξανά από το τηλέφωνο.</string>
+</resources>

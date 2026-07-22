@@ -10,6 +10,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.media.AudioManager
 import android.content.pm.ServiceInfo
 import android.database.ContentObserver
 import android.graphics.Bitmap
@@ -46,6 +47,7 @@ import com.google.android.gms.wearable.PutDataRequest
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.actions.ActionHandler
 import com.svartifoss.snfell.actions.OpenPlaylistAction
 import com.svartifoss.snfell.actions.PhoneAction
@@ -54,7 +56,10 @@ import com.svartifoss.snfell.actions.playback.RepeatAction
 import com.svartifoss.snfell.actions.playback.ShuffleAction
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.config.ActionConfig
@@ -112,7 +117,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private const val FORCE_STOP_PENDING_INTENT_REQUEST_CODE = 334
         private const val ACTION_STOP_SELF = "STOP_SELF"
         private const val ACTION_FORCE_STOP = "FORCE_STOP"
-        private const val KEY_NOTIFICATION_CHANNEL = "Service_Channel"
+        // Not private: MiscSettingsFragment links out to this channel's system settings page.
+        const val KEY_NOTIFICATION_CHANNEL = "Service_Channel"
         private const val KEY_NOTIFICATION_CHANNEL_ERRORS = "Error notifications"
 
         private const val NOTIFICATION_ID_PERSISTENT = 1
@@ -149,7 +155,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private val queueRefreshHandler = Handler(Looper.getMainLooper())
     private val notificationActionsChanged: () -> Unit = {
         queueRefreshHandler.post {
-            if (usesSessionQuickActions()) {
+            // The source icon is taken from the notification too, so a notification update has to
+            // re-transmit even when the quick panel is not bound to notification actions -
+            // otherwise the icon that arrives just after a track change never reaches the watch.
+            if (usesSessionQuickActions() || showSourceIconEnabled()) {
                 currentMediaController?.let(::buildMusicStateAndTransmit)
             }
         }
@@ -188,6 +197,17 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     // every transmit.
     private var lastSerializedArtSource: Bitmap? = null
     private var lastSerializedArt: ByteArray? = null
+    private var lastSourceIconPackage: String? = null
+    private var lastSourceIconBytes: ByteArray? = null
+    /** Whether [lastSourceIconBytes] came from the notification (tintable template) or the
+     *  launcher (full-colour artwork). Mirrored to the watch as MusicState.sourceIconTemplate. */
+    private var lastSourceIconIsTemplate = false
+    /** Last icon actually transmitted, so a late-arriving notification glyph defeats the
+     *  state dedupe the way changed album art does. */
+    private var previousSourceIconBytes: ByteArray? = null
+    /** Whether the current package has already had one state update pass without its media
+     *  notification. Gates the launcher fallback so it never flashes ahead of the real glyph. */
+    private var sourceIconAwaitedOnce = false
 
     // Guards against a transmit that suspended for art encoding finishing after a newer
     // transmit already shipped fresher state - see transmitToWear.
@@ -277,6 +297,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // standard notification-glyph fill - the raw brand asset has so much built-in
                 // padding it rendered visibly smaller than other apps' status icons.
                 .setSmallIcon(R.drawable.ic_notification_brand)
+                // Brand accent instead of the system default grey - matches the color used
+                // everywhere else outside MainActivity (LyraAccent is the single source of truth
+                // there too), rather than mixing in a separate hardcoded value here.
+                .setColor(LyraAccent.resolve(this))
 
         contentResolver.registerContentObserver(Settings.System.CONTENT_URI, true, volumeContentObserver)
 
@@ -287,12 +311,26 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         // ServiceCompat passes the FGS type on API 29+ (required on API 34+) and is a no-op arg
         // on older versions, so this stays correct across the minSdk 23.. range.
-        ServiceCompat.startForeground(
-                this,
-                NOTIFICATION_ID_PERSISTENT,
-                notificationBuilder.build(),
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
-        )
+        //
+        // onCreate can run after a background startForegroundService() (WatchListenerService /
+        // NotificationService). On API 31+ the promotion to foreground can still be refused with
+        // ForegroundServiceStartNotAllowedException (an IllegalStateException) when the OS considers
+        // us fully backgrounded. Catch it and stop the service rather than crash: letting onCreate
+        // throw kills the process, and swallowing it while staying alive gets us killed later for
+        // "did not call startForeground()". stopSelf() satisfies the start-timeout contract cleanly;
+        // control resumes the next time the app is foregrounded or the phone starts playing.
+        try {
+            ServiceCompat.startForeground(
+                    this,
+                    NOTIFICATION_ID_PERSISTENT,
+                    notificationBuilder.build(),
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+            )
+        } catch (e: IllegalStateException) {
+            Timber.w(e, "Could not promote MusicService to foreground from background; stopping")
+            stopSelf()
+            return
+        }
 
         active = true
         Timber.d("Service started")
@@ -441,10 +479,34 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     private fun togglePlayPause() {
-        currentMediaController?.let {
-            it.dispatchMediaButtonEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE))
-            it.dispatchMediaButtonEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE))
+        val controller = currentMediaController
+        if (controller != null) {
+            // Call the session's transport controls directly (play()/pause()) instead of
+            // dispatching a PLAY_PAUSE key event. A key event is routed through the media-button
+            // dispatcher and the session's onMediaButtonEvent before reaching onPlay/onPause - an
+            // extra hop that made the watch button feel slow next to the system media controls,
+            // which call the transport controls straight away. We already track playback state, so
+            // resolve the toggle here.
+            val isPlaying = controller.playbackState?.state == PlaybackState.STATE_PLAYING
+            if (isPlaying) {
+                controller.transportControls.pause()
+            } else {
+                controller.transportControls.play()
+            }
+        } else {
+            // Nothing is playing (the watch's "Nothing playing" screen): route a PLAY key through
+            // the audio framework so the most recent media app resumes - the same thing the
+            // phone's own play button or a Bluetooth remote does.
+            resumeLastMediaSession()
         }
+    }
+
+    /** Resumes the last-active media session when there is no current one, by dispatching a media
+     *  PLAY key through [AudioManager] (framework-routed to the most recent media app). */
+    private fun resumeLastMediaSession() {
+        val audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager ?: return
+        audioManager.dispatchMediaKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY))
+        audioManager.dispatchMediaKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PLAY))
     }
 
     private fun usesSessionQuickActions(): Boolean =
@@ -495,6 +557,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             return
         }
 
+        // The dedicated Like button: try the MediaSession custom action, then the app's like/save
+        // notification action (Spotify exposes "like" only there, in its expanded actions).
+        if (name == "like" && executeLikeCommand()) return
+
         val action: PhoneAction = when (name) {
             "like" -> LikeAction(this)
             "shuffle" -> ShuffleAction(this)
@@ -503,6 +569,22 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
 
         executeAction(action)
+    }
+
+    private fun executeLikeCommand(): Boolean {
+        val controller = currentMediaController ?: return false
+        controller.playbackState?.let { state ->
+            LikeAction.findLikeCustomAction(state)?.let { custom ->
+                controller.transportControls.sendCustomAction(custom.action, custom.extras)
+                scheduleStateRefresh()
+                return true
+            }
+        }
+        if (MediaNotificationActions.executeLike(controller.packageName, controller.sessionToken)) {
+            scheduleStateRefresh()
+            return true
+        }
+        return false
     }
 
     private fun executeAction(buttonInfo: ButtonInfo) {
@@ -674,6 +756,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
 
 
+        // Resolved before the state is built: the state carries whether this icon is a tintable
+        // notification template, and a late-arriving icon has to defeat the dedupe below.
+        val sourceIconBytes = resolveSourceIconBytes(mediaController)
+        musicStateBuilder.sourceIconTemplate = lastSourceIconIsTemplate
+        val sourceIconChanged = !sourceIconBytes.contentEqualsNullable(previousSourceIconBytes)
+
         val musicState = musicStateBuilder.build()
 
         // MediaMetadata is immutable, so as long as the source app hasn't published a new
@@ -687,7 +775,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val albumArtChanged = albumArt !== previousAlbumArt
 
         // Do not waste BT bandwitch and re-transmit equal music state
-        if (!albumArtChanged && musicState.equalsIgnoringTime(previousMusicState)) {
+        if (!albumArtChanged && !sourceIconChanged &&
+                musicState.equalsIgnoringTime(previousMusicState)) {
             return
         }
 
@@ -696,7 +785,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 previousMusicState?.artist != musicState.artist
         previousMusicState = musicState
         previousAlbumArt = albumArt
-        transmitToWear(musicState, albumArt)
+        previousSourceIconBytes = sourceIconBytes
+        transmitToWear(musicState, albumArt, sourceIconBytes)
 
         // Keep the watch's queue data (QueueActivity + the quick panel's "Up Next" preview)
         // in step with playback. It used to be pushed only when explicitly requested, so the
@@ -719,7 +809,100 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }, QUEUE_REFRESH_DEBOUNCE_MS)
     }
 
-    private fun transmitToWear(musicState: MusicState, originalAlbumArt: Bitmap?) {
+    /** PNG bytes of the source-icon face element. Prefers the *media notification's* small icon -
+     *  the branded glyph the status bar shows, which is what the element is meant to echo - and
+     *  falls back to the launcher icon only when no notification can ever arrive. Skipped
+     *  entirely when the user turned the element off, so its bytes never cross Bluetooth then.
+     *
+     *  The listener stores a new notification slightly *after* the media session publishes the
+     *  state change, so on a track or app switch there is a window where this app has no stored
+     *  notification yet. Falling back to the launcher icon during that window is what made the
+     *  original icon flash before the real one replaced it. With notification access granted the
+     *  fallback is therefore suppressed: the last known glyph for the *same* package is held
+     *  (silent refresh), and a genuinely new package simply shows no icon for that brief moment
+     *  rather than the wrong one. Only without notification access - where the small icon will
+     *  never come - is the launcher icon used, and then it is cached per package. */
+    /** The element is scoped per now-playing face ([FaceScopedPreferences.SCOPED_KEYS]), so
+     *  whether its bytes are worth sending depends on whichever face is actually active - not a
+     *  single global on/off. */
+    private fun showSourceIconEnabled(): Boolean = FaceScopedPreferences.getBoolean(
+            preferences,
+            MiscPreferences.WEAR_SHOW_SOURCE_ICON,
+            ThemeAppearance.resolve(preferences)
+    )
+
+    /** Whether the active face's album art style is one of the Square variants - scoped per face
+     *  the same way [showSourceIconEnabled] is, since the style can differ from one face to the
+     *  next. Square's entire point is showing the cover uncropped (see [PlayerBackgroundStyle]),
+     *  so the pre-transmit resize below must not center-crop it like every other style does. */
+    private fun isSquareAlbumArtStyle(): Boolean = PlayerBackgroundStyle.fromPreference(
+            FaceScopedPreferences.getString(
+                    preferences,
+                    MiscPreferences.ALBUM_ART_STYLE,
+                    ThemeAppearance.resolve(preferences)
+            )
+    ).squareCornerRadiusFraction != null
+
+    private fun resolveSourceIconBytes(controller: MediaController?): ByteArray? {
+        if (!showSourceIconEnabled()) {
+            lastSourceIconPackage = null
+            lastSourceIconBytes = null
+            lastSourceIconIsTemplate = false
+            sourceIconAwaitedOnce = false
+            return null
+        }
+        val packageName = controller?.packageName ?: return null
+        if (packageName != lastSourceIconPackage) {
+            lastSourceIconPackage = packageName
+            lastSourceIconBytes = null
+            lastSourceIconIsTemplate = false
+            sourceIconAwaitedOnce = false
+        }
+
+        MediaNotificationActions.smallIconForSession(packageName, controller.sessionToken)
+                ?.let { notificationIcon ->
+                    lastSourceIconBytes = notificationIcon
+                    lastSourceIconIsTemplate = true
+                    return notificationIcon
+                }
+
+        // Access granted and this is the *first* state for the app: its notification is almost
+        // certainly a beat behind the session. Show nothing for that beat rather than the launcher
+        // icon, which is what produced the visible flash. From the next update on, a still-missing
+        // notification means this player simply does not post a readable one, so the launcher
+        // fallback below applies and those apps keep an icon.
+        if (NotificationService.isEnabled(this) && !sourceIconAwaitedOnce) {
+            sourceIconAwaitedOnce = true
+            return lastSourceIconBytes
+        }
+
+        if (lastSourceIconBytes == null) {
+            lastSourceIconBytes = try {
+                rasterizeSourceIcon(packageManager.getApplicationIcon(packageName))
+            } catch (_: Exception) {
+                null
+            }
+            lastSourceIconIsTemplate = false
+        }
+        return lastSourceIconBytes
+    }
+
+    private fun rasterizeSourceIcon(drawable: android.graphics.drawable.Drawable): ByteArray? {
+        val size = 48
+        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        drawable.setBounds(0, 0, size, size)
+        drawable.draw(android.graphics.Canvas(bitmap))
+        return ByteArrayOutputStream().use { stream ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            stream.toByteArray()
+        }
+    }
+
+    private fun transmitToWear(
+            musicState: MusicState,
+            originalAlbumArt: Bitmap?,
+            sourceIconBytes: ByteArray?
+    ) {
         val mySequence = ++transmitSequence
 
         lifecycleScope.launchWithPlayServicesErrorHandling(this) {
@@ -765,10 +948,23 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     var albumArt = originalAlbumArt
                     val watchInfo = watchInfoProvider.value?.watchInfo
                     if (watchInfo != null) {
-                        albumArt = BitmapUtils.resizeAndCrop(albumArt,
-                                watchInfo.displayWidth,
-                                watchInfo.displayHeight,
-                                true)
+                        // Square styles show the cover uncropped, letterboxed inside a square
+                        // inset - the watch already renders that correctly, but only if the
+                        // bitmap it receives still has its original aspect ratio. Center-cropping
+                        // it to the watch's (square) display here, like every other style wants,
+                        // would destroy exactly what Square is supposed to preserve before the
+                        // watch ever sees it - shrinkPreservingRatio keeps the whole image instead,
+                        // just scaled down for the transfer.
+                        albumArt = if (isSquareAlbumArtStyle()) {
+                            BitmapUtils.shrinkPreservingRatio(albumArt,
+                                    watchInfo.displayWidth,
+                                    watchInfo.displayHeight)
+                        } else {
+                            BitmapUtils.resizeAndCrop(albumArt,
+                                    watchInfo.displayWidth,
+                                    watchInfo.displayHeight,
+                                    true)
+                        }
                     }
 
                     ByteArrayOutputStream().use { stream ->
@@ -790,6 +986,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             val putDataRequest = PutDataRequest.create(CommPaths.DATA_MUSIC_STATE)
             if (artBytes != null) {
                 putDataRequest.putAsset(CommPaths.ASSET_ALBUM_ART, Asset.createFromBytes(artBytes))
+            }
+            if (sourceIconBytes != null) {
+                putDataRequest.putAsset(
+                        CommPaths.ASSET_SOURCE_ICON, Asset.createFromBytes(sourceIconBytes))
             }
             putDataRequest.data = stateBytes
             putDataRequest.setUrgent()
@@ -939,7 +1139,17 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
             CustomLists.PLAYLIST_SHORTCUTS -> {
                 // The entry id IS the playlist's deep link - see OpenPlaylistShortcutsAction.
-                playDeepLink(customListItemAction.entryId)
+                //
+                // The saved name has to travel with it: playDeepLink can only play an *artist* by
+                // issuing playFromSearch for that name, because an artist URI merely navigates.
+                // Without it (as was the case here) picking an artist shortcut from the watch menu
+                // just opened the artist page and never started playback, while the very same
+                // shortcut assigned to a button worked - that path passes the name.
+                val link = customListItemAction.entryId
+                val savedName = PlaylistShortcutStorage.load(this)
+                        .firstOrNull { it.link == link }
+                        ?.name
+                playDeepLink(link, savedName)
             }
             CustomLists.HISTORY -> {
                 // Past-played entries have no mediaId to resume from - they're just remembered
@@ -1087,12 +1297,21 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     /** Opens a user-configured streaming link on the phone. This intentionally remains a link
      * hand-off rather than pretending to be an account/API integration. When requested, a known
     * installed streaming app is targeted; every targeted launch has an ACTION_VIEW fallback. */
-    fun playDeepLink(link: String) {
+    /**
+     * @param searchQuery the shortcut's name, used as a `playFromSearch` fallback. It is the only
+     *   command that reliably plays an *artist* (whose page URL only navigates) and that Spotify
+     *   honors from an external controller, so it materially improves both cases.
+     */
+    fun playDeepLink(link: String, searchQuery: String? = null) {
         if (!StreamingShortcutLinks.isSafeLink(link)) {
             Timber.e("Refusing unsafe or invalid streaming link")
             return
         }
         val service = StreamingShortcutLinks.detect(link)
+        val contentType = StreamingShortcutLinks.inspect(link).contentType
+        val query = searchQuery?.trim()?.takeIf { it.isNotEmpty() }
+        // An artist URI is not honored by playFromUri; its named search is what actually plays.
+        val preferSearch = contentType == StreamingContentType.ARTIST && query != null
         val openMode = preferences.getString(StreamingShortcutLinks.OPEN_MODE_KEY, null)
                 ?: if (preferences.getBoolean(
                                 StreamingShortcutLinks.PREFER_INSTALLED_APP_KEY,
@@ -1109,11 +1328,49 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 startStreamingLinkChooser(browserLink)) return
 
         // ACTION_VIEW only navigates to Spotify content; it does not promise playback. If that
-        // app is already the active MediaSession and explicitly advertises playFromUri, use the
-        // Android media contract first so tracks, albums and playlists actually start. Services
-        // that do not implement it continue through the normal deep-link fallback below.
-        if (targetPackage != null && requestStreamingPlayback(link, service, targetPackage)) return
+        // app already has a MediaSession, use the Android media contract first (playFromUri, or
+        // playFromSearch for artists) so tracks, albums, playlists and artists actually start.
+        if (targetPackage != null &&
+                requestStreamingPlayback(link, service, targetPackage, query, preferSearch)) return
 
+        if (targetPackage != null && (contentType.isPlayable || preferSearch)) {
+            // Ask the app's MediaBrowserService to play (the Android Auto/Assistant path). This
+            // wakes the app in the background with no Activity launch, so it works with the
+            // screen off/locked - where an ACTION_VIEW deep link merely queues navigation that
+            // e.g. YouTube Music only acts on once its UI reaches the foreground. Falls back to
+            // the visible deep-link flow when the app has no browser service, rejects the
+            // connection, or never starts playing.
+            lifecycleScope.launch {
+                val played = MediaBrowserPlayback.play(
+                        this@MusicService,
+                        targetPackage,
+                        StreamingShortcutLinks.forPlayback(link),
+                        query,
+                        preferSearch)
+                if (played) {
+                    scheduleStateRefresh()
+                } else {
+                    startStreamingLinkWithPlaybackNudge(
+                            link, service, targetPackage, browserLink, query, preferSearch)
+                }
+            }
+            return
+        }
+
+        startStreamingLinkWithPlaybackNudge(
+                link, service, targetPackage, browserLink, query, preferSearch)
+    }
+
+    /** The visible fallback: resolve the deep link into the target app (or a browser), then keep
+     *  nudging its media session for a few seconds because opening content does not start it. */
+    private fun startStreamingLinkWithPlaybackNudge(
+            link: String,
+            service: StreamingService,
+            targetPackage: String?,
+            browserLink: String,
+            searchQuery: String? = null,
+            preferSearch: Boolean = false
+    ) {
         val primaryLink = if (targetPackage != null) {
             StreamingShortcutLinks.forInstalledApp(link)
         } else browserLink
@@ -1123,7 +1380,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 lifecycleScope.launch {
                     for (i in 0..15) {
                         kotlinx.coroutines.delay(200)
-                        if (requestStreamingPlayback(link, service, targetPackage)) return@launch
+                        if (requestStreamingPlayback(
+                                        link, service, targetPackage, searchQuery, preferSearch)) {
+                            return@launch
+                        }
                     }
                 }
             }
@@ -1137,12 +1397,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun requestStreamingPlayback(
             link: String,
             service: StreamingService,
-            targetPackage: String
+            targetPackage: String,
+            searchQuery: String? = null,
+            preferSearch: Boolean = false
     ): Boolean {
         val info = StreamingShortcutLinks.inspect(link)
         if (info.service != service || !info.contentType.isPlayable) return false
-        val controller = currentMediaController ?: return false
-        if (controller.packageName != targetPackage) return false
+        // Prefer the tracked session when it is already the target app, but fall back to any live
+        // session that app has - it may be playing/paused without being the foreground one we
+        // mirror, and we can still hand it a command (this is what lets Spotify respond while it
+        // is running even though another app owns the current session).
+        val controller = currentMediaController?.takeIf { it.packageName == targetPackage }
+                ?: mediaSessionProvider.controllerForPackage(targetPackage)
+                ?: return false
         val actions = controller.playbackState?.actions ?: 0L
         val advertisesPlayFromUri = actions and PlaybackState.ACTION_PLAY_FROM_URI != 0L
         val advertisesPlayFromMediaId =
@@ -1150,6 +1417,16 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val playbackLink = StreamingShortcutLinks.forPlayback(link)
 
         return try {
+            // Artists (and anything else where URI playback is not honored) play via a named
+            // search - the one command Spotify and YouTube Music both accept from outside.
+            if (preferSearch && searchQuery != null) {
+                controller.transportControls.playFromSearch(searchQuery, Bundle.EMPTY)
+                scheduleStateRefresh()
+                return true
+            }
+            // For a precise entity (track/album/playlist) the URI is authoritative; a named search
+            // could match a different item, so it is NOT used as a substitute here - only artists
+            // (preferSearch, handled above) or the visible deep-link open below cover the rest.
             when {
                 advertisesPlayFromUri -> controller.transportControls.playFromUri(
                         Uri.parse(playbackLink),
@@ -1172,7 +1449,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // there is no acknowledgement channel and app-defined media ids may use another form.
             advertisesPlayFromUri
         } catch (error: RuntimeException) {
-            Timber.w(error, "Player rejected %s playFromUri", service.name)
+            Timber.w(error, "Player rejected %s playback command", service.name)
             false
         }
     }
@@ -1340,6 +1617,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 service.get()?.stopSelf()
             }
         }
+    }
+
+    /** ByteArray equality by content - the source-icon PNGs are fresh arrays each rasterization. */
+    private fun ByteArray?.contentEqualsNullable(other: ByteArray?): Boolean = when {
+        this === other -> true
+        this == null || other == null -> false
+        else -> contentEquals(other)
     }
 
     private fun MusicState.equalsIgnoringTime(other: MusicState?): Boolean {

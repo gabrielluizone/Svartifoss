@@ -83,9 +83,16 @@ class NotificationService : NotificationListenerService() {
         val musicServiceNotifyIntent = Intent(this, MusicService::class.java)
         musicServiceNotifyIntent.action = MusicService.ACTION_NOTIFICATION_SERVICE_ACTIVATED
         // MusicService calls startForeground() shortly after being started, and this callback
-        // fires from the system (no foreground UI) - startService() alone can throw
-        // ForegroundServiceStartNotAllowedException in that case on API 31+.
-        ContextCompat.startForegroundService(this, musicServiceNotifyIntent)
+        // fires from the system with no foreground UI - typically at boot / listener rebind, when
+        // the app is fully backgrounded. On API 31+ startForegroundService() can then be refused
+        // with ForegroundServiceStartNotAllowedException (an IllegalStateException); swallow it so
+        // the notification listener doesn't crash. The next media notification (or a watch command
+        // via WatchListenerService) starts the service once the app is allowed to again.
+        try {
+            ContextCompat.startForegroundService(this, musicServiceNotifyIntent)
+        } catch (e: IllegalStateException) {
+            Timber.w(e, "Could not start MusicService from background")
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !shouldRun()) {
             //Running notification service is not needed for this app to run, it only needs to be enabled.

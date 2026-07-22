@@ -94,7 +94,7 @@ import kotlin.math.sin
  * the queue. Previous/next/menu/volume are intentionally left to the three configurable mini
  * buttons and gestures, so the user owns that scarce space instead of each layout filling it.
  */
-private enum class CuratedLayout { VINYL, POSTER, STUDIO, HALO, AURORA, ECLIPSE, SPECTRUM, MATERIAL }
+private enum class CuratedLayout { VINYL, POSTER, STUDIO, HALO, AURORA, ECLIPSE, SPECTRUM, MATERIAL, IMMERSIVE }
 
 @Composable fun VinylFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) =
         CuratedPlayerFace(state, listener, CuratedLayout.VINYL)
@@ -119,6 +119,9 @@ private enum class CuratedLayout { VINYL, POSTER, STUDIO, HALO, AURORA, ECLIPSE,
 
 @Composable fun MaterialFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) =
         CuratedPlayerFace(state, listener, CuratedLayout.MATERIAL)
+
+@Composable fun ImmersiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) =
+        CuratedPlayerFace(state, listener, CuratedLayout.IMMERSIVE)
 
 @Composable
 private fun CuratedPlayerFace(
@@ -168,9 +171,25 @@ private fun CuratedPlayerFace(
             CuratedLayout.ECLIPSE -> EclipseComposition(state, listener, palette, progress, screen)
             CuratedLayout.SPECTRUM -> SpectrumComposition(state, listener, palette, progress, screen)
             CuratedLayout.MATERIAL -> MaterialComposition(state, listener, progress, screen)
+            CuratedLayout.IMMERSIVE -> ImmersiveComposition(state, listener, screen)
         }
 
-        FaceClock(visible = state.showClock)
+        FaceClock(
+                visible = state.showClock,
+                color = Color(state.clockColor),
+                fontFamily = state.clockFont
+        )
+
+        if (state.showUpNextPill) {
+            AwakeUpNextPill(
+                    state = state,
+                    screen = screen,
+                    onClick = listener::onQueueTap,
+                    modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = screen * .07f)
+            )
+        }
     }
 }
 
@@ -275,10 +294,16 @@ private fun BoxScope.VinylComposition(
     TrackFooter(state, y = screen * .30f, screen = screen, width = screen * .68f)
 }
 
+/**
+ * Minimalist, Spotify-style layout: the full-bleed cover fills the screen, the clock sits at the
+ * top, and only the track title and artist sit at the bottom over a legibility scrim. No progress
+ * ring or transport chrome - previous/next/volume/menu are left to the mini buttons and gestures,
+ * matching the shared curated contract (centre tap = play/pause, double tap = quick actions,
+ * long press = queue).
+ */
 @Composable
-private fun BoxScope.PosterComposition(
-        state: NowPlayingFaceState, listener: NowPlayingFaceListener,
-        progress: () -> Float, screen: Dp
+private fun BoxScope.ImmersiveComposition(
+        state: NowPlayingFaceState, listener: NowPlayingFaceListener, screen: Dp
 ) {
     InteractiveFocus(
             state = state,
@@ -287,9 +312,106 @@ private fun BoxScope.PosterComposition(
             modifier = Modifier.fillMaxSize(),
             animateHero = false
     ) {
-        if (state.showTitle || state.showArtist) PosterMetadata(state, screen)
+        Canvas(Modifier.matchParentSize()) {
+            drawRect(brush = Brush.verticalGradient(
+                    0f to Color.Transparent,
+                    .50f to Color.Transparent,
+                    1f to Color.Black.copy(alpha = .74f)))
+        }
+        if (state.showTitle || state.showArtist || state.showTrackTime) {
+            // Immersive deliberately keeps its text on the floor of the screen - that grounded
+            // block is the layout. Mini buttons are a separate view stacked above the face's
+            // ComposeView (screen_buttons_row is ordered after expressive_face in
+            // activity_main.xml), so they simply draw over the text instead of displacing it.
+            // Lifting the block to clear them, as this used to, made the text float mid-screen
+            // and broke the composition the face exists for.
+            val bottomPadding = screen * .13f
+            Column(
+                    Modifier.align(Alignment.BottomCenter)
+                            .padding(bottom = bottomPadding, start = screen * .1f, end = screen * .1f)
+                            .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (state.showTitle) {
+                    // AdaptiveTitleText, not a bare Text, so the user's Title text behaviour
+                    // (marquee / wrap / shrink-to-fit) actually applies here like it does on every
+                    // other face - Immersive was the one layout still hardcoding single-line ellipsis.
+                    AdaptiveTitleText(
+                            text = state.title,
+                            mode = state.titleTextMode,
+                            color = Color.White,
+                            fontSize = 17.sp,
+                            lineHeight = 19.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = state.titleFont,
+                            textAlign = TextAlign.Center
+                    )
+                }
+                if (state.showArtist) {
+                    Row(
+                            modifier = Modifier.padding(top = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                    ) {
+                        // Immersive's artist line is the largest of any face (13sp), so it carries
+                        // the full-size glyph.
+                        SourceIconGlyph(state, 15.dp, artistOrStatusColor(state, .82f))
+                        Text(
+                                artistOrStatus(state),
+                                color = artistOrStatusColor(state, .82f),
+                                fontSize = 13.sp,
+                                lineHeight = 15.sp,
+                                fontFamily = state.artistFont,
+                                textAlign = TextAlign.Center,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+                // Track time in the same MM:SS / MM:SS form as Poster/Studio (TrackFooter).
+                if (state.showTrackTime) {
+                    Text(
+                            stringResource(
+                                    R.string.playback_time_format,
+                                    formatFaceClockTime(state.positionMs),
+                                    formatFaceClockTime(state.durationMs)
+                            ),
+                            color = Color.White.copy(alpha = .70f),
+                            fontSize = 11.sp,
+                            lineHeight = 12.sp,
+                            fontFamily = state.artistFont,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            modifier = Modifier.padding(top = 5.dp)
+                    )
+                }
+            }
+        }
     }
+}
+
+@Composable
+private fun BoxScope.PosterComposition(
+        state: NowPlayingFaceState, listener: NowPlayingFaceListener,
+        progress: () -> Float, screen: Dp
+) {
     val posterProgressShown = state.showDefaultBottomPills && state.showInternalProgress
+    InteractiveFocus(
+            state = state,
+            listener = listener,
+            shape = RoundedCornerShape(0.dp),
+            modifier = Modifier.fillMaxSize(),
+            animateHero = false
+    ) {
+        if (state.showTitle || state.showArtist) PosterMetadata(state, screen)
+        // The artwork otherwise stays unobscured (no glyph at all) - this only appears when the
+        // user turns "Show player controls" on, same as every other curated face.
+        PlayPauseGlyph(
+                state, Color.White, screen * .09f,
+                modifier = Modifier.align(Alignment.BottomCenter)
+                        .offset(y = screen * (if (posterProgressShown) -.20f else -.24f))
+        )
+    }
     if (posterProgressShown) {
         LinearProgress(progress, Modifier.offset(y = screen * .32f)
                 .width(screen * .54f), Color(state.progressColor))
@@ -326,6 +448,13 @@ private fun BoxScope.StudioComposition(
                         style = Stroke(stroke, cap = StrokeCap.Round))
             }
         }
+        // Same bottom spot as the progress ring above (nests inside it when both show), so
+        // "Show player controls" actually does something here instead of the artwork always
+        // staying completely unobscured.
+        PlayPauseGlyph(
+                state, Color.White, orbR * .55f,
+                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = screen * .04f)
+        )
     }
     // Inside the bottom progress orb when it's drawn; anchored to the floor when it isn't,
     // instead of floating in the space the absent orb used to occupy.
@@ -446,16 +575,19 @@ private fun BoxScope.AuroraComposition(
                 horizontalAlignment = Alignment.Start
         ) {
             if (state.showArtist) {
-                Text(
-                        artistOrStatus(state).uppercase(),
-                        color = Color.White.copy(alpha = .70f),
-                        fontSize = 8.sp,
-                        lineHeight = 9.sp,
-                        letterSpacing = 1.8.sp,
-                        fontFamily = state.artistFont,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    SourceIconGlyph(state, 10.dp, Color.White.copy(alpha = .70f))
+                    Text(
+                            artistOrStatus(state).uppercase(),
+                            color = Color.White.copy(alpha = .70f),
+                            fontSize = 8.sp,
+                            lineHeight = 9.sp,
+                            letterSpacing = 1.8.sp,
+                            fontFamily = state.artistFont,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
             if (state.showTitle) {
                 AdaptiveTitleText(
@@ -669,10 +801,14 @@ private fun BoxScope.SpectrumHeader(
                     fontFamily = state.titleFont, textAlign = TextAlign.Center)
         }
         if (showArtist && state.showArtist) {
-            Text(artistOrStatus(state), color = Color(state.artistColor).copy(alpha = .78f),
-                    fontSize = 9.sp, lineHeight = 11.sp, letterSpacing = .35.sp, fontFamily = state.artistFont,
-                    textAlign = TextAlign.Center, maxLines = 1, overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = 2.dp))
+            Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(top = 2.dp)) {
+                SourceIconGlyph(state, 11.dp, Color(state.artistColor).copy(alpha = .78f))
+                Text(artistOrStatus(state), color = Color(state.artistColor).copy(alpha = .78f),
+                        fontSize = 9.sp, lineHeight = 11.sp, letterSpacing = .35.sp, fontFamily = state.artistFont,
+                        textAlign = TextAlign.Center, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
         }
     }
 }
@@ -686,17 +822,21 @@ private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (state.showArtist) {
-            Text(
-                    artistOrStatus(state).uppercase(),
-                    color = Color.White.copy(alpha = .58f),
-                    fontSize = 8.sp,
-                    lineHeight = 9.sp,
-                    letterSpacing = 2.sp,
-                    fontFamily = state.artistFont,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-            )
+            Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center) {
+                SourceIconGlyph(state, 10.dp, Color.White.copy(alpha = .58f))
+                Text(
+                        artistOrStatus(state).uppercase(),
+                        color = Color.White.copy(alpha = .58f),
+                        fontSize = 8.sp,
+                        lineHeight = 9.sp,
+                        letterSpacing = 2.sp,
+                        fontFamily = state.artistFont,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                )
+            }
         }
         if (state.showTitle) {
             AdaptiveTitleText(
@@ -724,35 +864,38 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (state.showTitle) {
-            // Always reserve exactly two lines (instead of the user's adaptive text mode): the
-            // Poster/Studio compositions center this block, so a title jumping between one and
-            // two lines shifted everything below it on every track change.
-            Text(
-                    state.title,
+            // AdaptiveTitleText, not a bare Text, so the user's Title text behaviour actually
+            // applies here like it does on every other face - this centered block growing with
+            // more lines can shift the composition below it, but that's the user's own choice of
+            // text mode to accept, the same trade-off every other face already lives with.
+            AdaptiveTitleText(
+                    text = state.title,
+                    mode = state.titleTextMode,
                     color = Color.White,
                     fontSize = 22.sp,
                     lineHeight = 24.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = state.titleFont,
-                    textAlign = TextAlign.Center,
-                    minLines = 1,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    textAlign = TextAlign.Center
             )
         }
         if (state.showArtist) {
-            Text(
-                    artistOrStatus(state).uppercase(),
-                    color = artistOrStatusColor(state, .76f),
-                    fontSize = 8.sp,
-                    lineHeight = 9.sp,
-                    letterSpacing = 1.55.sp,
-                    fontFamily = state.artistFont,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = if (state.showTitle) 6.dp else 0.dp)
-            )
+            Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(top = if (state.showTitle) 6.dp else 0.dp)) {
+                SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .76f))
+                Text(
+                        artistOrStatus(state).uppercase(),
+                        color = artistOrStatusColor(state, .76f),
+                        fontSize = 8.sp,
+                        lineHeight = 9.sp,
+                        letterSpacing = 1.55.sp,
+                        fontFamily = state.artistFont,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }
@@ -766,33 +909,35 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (state.showTitle) {
-            // Fixed two lines for the same layout-stability reason as PosterMetadata above.
-            Text(
-                    state.title,
+            // AdaptiveTitleText for the same reason as PosterMetadata above.
+            AdaptiveTitleText(
+                    text = state.title,
+                    mode = state.titleTextMode,
                     color = Color.White,
                     fontSize = 15.sp,
                     lineHeight = 17.sp,
                     fontWeight = FontWeight.Medium,
                     fontFamily = state.titleFont,
-                    textAlign = TextAlign.Center,
-                    minLines = 1,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    textAlign = TextAlign.Center
             )
         }
         if (state.showArtist) {
-            Text(
-                    artistOrStatus(state).uppercase(),
-                    color = artistOrStatusColor(state, .62f),
-                    fontSize = 8.sp,
-                    lineHeight = 9.sp,
-                    letterSpacing = 1.2.sp,
-                    fontFamily = state.artistFont,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = if (state.showTitle) 5.dp else 0.dp)
-            )
+            Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(top = if (state.showTitle) 5.dp else 0.dp)) {
+                SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .62f))
+                Text(
+                        artistOrStatus(state).uppercase(),
+                        color = artistOrStatusColor(state, .62f),
+                        fontSize = 8.sp,
+                        lineHeight = 9.sp,
+                        letterSpacing = 1.2.sp,
+                        fontFamily = state.artistFont,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }
@@ -819,21 +964,27 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
             )
         }
         if (state.showArtist) {
-            Text(
-                    artistOrStatus(state),
-                    color = Color.White.copy(alpha = .70f),
-                    fontSize = 8.sp,
-                    lineHeight = 10.sp,
-                    letterSpacing = .55.sp,
-                    fontFamily = state.artistFont,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+            // The tonal pill wraps the icon too, so the glyph reads as part of the same chip
+            // rather than floating loose beside it.
+            Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(top = if (state.showTitle) 3.dp else 0.dp)
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color.White.copy(alpha = .09f))
-                            .padding(horizontal = 8.dp, vertical = 2.dp)
-            )
+                            .padding(horizontal = 8.dp, vertical = 2.dp)) {
+                SourceIconGlyph(state, 10.dp, Color.White.copy(alpha = .70f))
+                Text(
+                        artistOrStatus(state),
+                        color = Color.White.copy(alpha = .70f),
+                        fontSize = 8.sp,
+                        lineHeight = 10.sp,
+                        letterSpacing = .55.sp,
+                        fontFamily = state.artistFont,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }
@@ -860,19 +1011,23 @@ private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
             )
         }
         if (state.showArtist) {
-            Text(
-                    artistOrStatus(state).uppercase(),
-                    color = Color.White.copy(alpha = .48f),
-                    fontSize = 8.sp,
-                    lineHeight = 9.sp,
-                    letterSpacing = 2.4.sp,
-                    fontWeight = FontWeight.Light,
-                    fontFamily = state.artistFont,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = if (state.showTitle) 3.dp else 0.dp)
-            )
+            Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(top = if (state.showTitle) 3.dp else 0.dp)) {
+                SourceIconGlyph(state, 10.dp, Color.White.copy(alpha = .48f))
+                Text(
+                        artistOrStatus(state).uppercase(),
+                        color = Color.White.copy(alpha = .48f),
+                        fontSize = 8.sp,
+                        lineHeight = 9.sp,
+                        letterSpacing = 2.4.sp,
+                        fontWeight = FontWeight.Light,
+                        fontFamily = state.artistFont,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }
@@ -1109,7 +1264,9 @@ private fun AlbumArtwork(state: NowPlayingFaceState, shape: Shape, p: CuratedPal
 }
 
 @Composable
-private fun PlayPauseGlyph(state: NowPlayingFaceState, tint: Color, size: Dp) {
+private fun PlayPauseGlyph(
+        state: NowPlayingFaceState, tint: Color, size: Dp, modifier: Modifier = Modifier
+) {
     if (!state.showControls) return
     Icon(
             painter = painterResource(
@@ -1118,7 +1275,7 @@ private fun PlayPauseGlyph(state: NowPlayingFaceState, tint: Color, size: Dp) {
             ),
             contentDescription = null,
             tint = tint.copy(alpha = state.screenTheme.tokens.iconAlpha),
-            modifier = Modifier.size(size * state.screenTheme.tokens.iconScale)
+            modifier = modifier.size(size * state.screenTheme.tokens.iconScale)
     )
 }
 
@@ -1199,7 +1356,8 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
                         layout !in setOf(
                                 CuratedLayout.ECLIPSE,
                                 CuratedLayout.POSTER,
-                                CuratedLayout.STUDIO
+                                CuratedLayout.STUDIO,
+                                CuratedLayout.IMMERSIVE
                         )) {
                     drawCircle(tint.copy(alpha = .42f * intensity), radius = size.minDimension * .12f,
                             style = Stroke(1.5.dp.toPx()))
@@ -1207,9 +1365,15 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
             }
         }
         if (state.ambientShowTrackInfo && (state.showTitle || state.showArtist)) {
-            val metadataModifier = if (
-                layout == CuratedLayout.POSTER || layout == CuratedLayout.STUDIO
-            ) {
+            // Immersive and Eclipse (AMOLED) share Poster/Studio's centred two-line AOD metadata
+            // so every full-art/true-black layout reads consistently in ambient.
+            val centredMetadata = layout in setOf(
+                    CuratedLayout.POSTER,
+                    CuratedLayout.STUDIO,
+                    CuratedLayout.ECLIPSE,
+                    CuratedLayout.IMMERSIVE
+            )
+            val metadataModifier = if (centredMetadata) {
                 Modifier.align(Alignment.Center).width(screen * .72f)
             } else {
                 Modifier.align(Alignment.TopCenter).padding(top = screen * .20f).width(screen * .62f)
@@ -1221,15 +1385,21 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
                             fontSize = if (layout == CuratedLayout.POSTER) 17.sp else 15.sp,
                             fontWeight = FontWeight.Bold, fontFamily = state.titleFont,
                             textAlign = TextAlign.Center,
-                            maxLines = if (layout == CuratedLayout.POSTER ||
-                                    layout == CuratedLayout.STUDIO) 2 else 1,
+                            maxLines = if (centredMetadata) 2 else 1,
                             overflow = TextOverflow.Ellipsis)
                 }
                 if (state.showArtist) {
-                    Text(state.artist, color = tint.copy(alpha = .48f * intensity), fontSize = 10.sp,
-                            fontFamily = state.artistFont, textAlign = TextAlign.Center,
-                            maxLines = 1, overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(top = if (state.showTitle) 4.dp else 0.dp))
+                    Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(top = if (state.showTitle) 4.dp else 0.dp)
+                    ) {
+                        // Which app is playing, as a monochrome template flattened to the AOD tint.
+                        AmbientSourceIconGlyph(state, 11.dp, tint.copy(alpha = .48f * intensity))
+                        Text(state.artist, color = tint.copy(alpha = .48f * intensity), fontSize = 10.sp,
+                                fontFamily = state.artistFont, textAlign = TextAlign.Center,
+                                maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
                 }
             }
         }
@@ -1315,13 +1485,26 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
                         )
                     }
                 }
-            } else if (layout != CuratedLayout.POSTER && layout != CuratedLayout.STUDIO) {
+            } else if (layout !in setOf(
+                            CuratedLayout.POSTER,
+                            CuratedLayout.STUDIO,
+                            // Eclipse (true-black AMOLED) and Immersive keep their ambient screen
+                            // free of a static centre play/pause: it is display-only in AOD (input
+                            // is dead there), and a frozen icon just clutters their minimal identity.
+                            CuratedLayout.ECLIPSE,
+                            CuratedLayout.IMMERSIVE
+                    )) {
                 Icon(painterResource(if (state.playing) commonR.drawable.action_pause else commonR.drawable.action_play),
                         null, tint = tint.copy(alpha = .66f * intensity), modifier = Modifier.align(Alignment.Center)
                         .size(screen * .09f))
             }
         }
-        if (layout == CuratedLayout.MATERIAL && state.ambientShowPills) {
+        // Every curated layout offers the pill, not just Material: the non-Material ambient ring is
+        // drawn from 130deg over 280deg, so it stops at 50deg and leaves the entire bottom of the
+        // dial (50deg..130deg) empty - exactly the band the pill occupies. Nothing else is anchored
+        // to BottomCenter in any layout, so the one placement clears the center glyph, the ring and
+        // the centred metadata block alike.
+        if (state.ambientShowPills) {
             AmbientUpNextPill(
                     state = state,
                     screen = screen,
@@ -1366,16 +1549,22 @@ private fun BoxScope.MaterialComposition(
             )
         }
         if (state.showArtist && state.artist.isNotEmpty()) {
-            Text(
-                    text = state.artist,
-                    color = artistOrStatusColor(state, 0.70f),
-                    fontSize = 13.sp,
-                    fontFamily = state.artistFont,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+            Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(top = 2.dp)
-            )
+            ) {
+                SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, 0.70f))
+                Text(
+                        text = state.artist,
+                        color = artistOrStatusColor(state, 0.70f),
+                        fontSize = 13.sp,
+                        fontFamily = state.artistFont,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 

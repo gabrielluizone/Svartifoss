@@ -42,7 +42,7 @@ object OverlayBackdropResolver {
         if (requested != OverlayBackdrop.FOLLOW_STYLE) return requested
 
         return when (contentStyle) {
-            "glass", "glass_white", "glass_tonal", "outline_glass_white", "frost", "pill" ->
+            "glass", "glass_white", "glass_tonal", "outline_glass_white", "frost", "mist", "pill" ->
                 OverlayBackdrop.GLASS
             "tonal", "ink", "expressive" -> OverlayBackdrop.SOLID_ALBUM
             "gradient", "aurora" -> OverlayBackdrop.GRADIENT

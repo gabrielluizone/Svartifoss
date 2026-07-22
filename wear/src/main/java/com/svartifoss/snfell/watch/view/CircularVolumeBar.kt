@@ -84,15 +84,43 @@ enum class VolumeStyle {
     }
 }
 
+/**
+ * Composition of the volume indicator. Every arc variant is expressed purely as a bounds/start/
+ * sweep triple ([activeArcBounds], [activeArcStart], [activeArcSweep]), which drawing, the
+ * Material thumb and hit-testing all read - so a new arc geometry works with all 18 [VolumeStyle]s
+ * and stays draggable without touching any of them.
+ *
+ * A **negative sweep** means the arc fills counter-clockwise from its start. That is what keeps
+ * "up is louder" true on the mirrored right-hand and bottom arcs, instead of having them fill
+ * downwards or right-to-left.
+ */
 enum class VolumeLayout {
+    /** Left bezel arc, filling bottom-to-top (the original look). */
     EDGE,
+    /** The left arc stretched over a longer span of the bezel, for finer dragging. */
+    EDGE_TALL,
+    /** Mirror of [EDGE] on the right bezel, for left-handed wear or a rotated watch. */
+    EDGE_RIGHT,
+    /** Arc across the top of the bezel, filling left-to-right. */
+    EDGE_TOP,
+    /** Arc across the bottom of the bezel, filling left-to-right. */
+    EDGE_BOTTOM,
+    /** Complete bezel ring, filling clockwise from 12 o'clock. */
+    RING,
+    /** Small centred arc rather than a bezel one. */
     HALO,
+    /** Horizontal level bar, unrelated to the bezel geometry. */
     METER;
 
     companion object {
         fun fromPref(value: String?): VolumeLayout = when (value) {
             "halo" -> HALO
             "meter" -> METER
+            "edge_tall" -> EDGE_TALL
+            "edge_right" -> EDGE_RIGHT
+            "edge_top" -> EDGE_TOP
+            "edge_bottom" -> EDGE_BOTTOM
+            "ring" -> RING
             else -> EDGE
         }
     }
@@ -400,11 +428,31 @@ class CircularVolumeBar : android.view.View {
     private fun activeArcBounds(): RectF =
             if (barLayout == VolumeLayout.HALO) haloBounds else circleBounds
 
-    private fun activeArcStart(): Float =
-            if (barLayout == VolumeLayout.HALO) HALO_START_DEG else ARC_START_DEG
+    // Canvas.drawArc convention: 0deg = 3 o'clock, increasing clockwise. So 90 = bottom,
+    // 180 = left, 270 = top. Each pair below is written as (start, sweep) with the start at the
+    // *quiet* end, so a negative sweep is used wherever filling towards "louder" runs
+    // counter-clockwise.
+    private fun activeArcStart(): Float = when (barLayout) {
+        VolumeLayout.HALO -> HALO_START_DEG
+        VolumeLayout.EDGE_TALL -> 100f
+        // 50deg is the lower-right; sweeping back through 0deg reaches the upper right.
+        VolumeLayout.EDGE_RIGHT -> 50f
+        VolumeLayout.EDGE_TOP -> 235f
+        // 125deg is the lower-left; sweeping back through 90deg reaches the lower right.
+        VolumeLayout.EDGE_BOTTOM -> 125f
+        VolumeLayout.RING -> 270f
+        else -> ARC_START_DEG
+    }
 
-    private fun activeArcSweep(): Float =
-            if (barLayout == VolumeLayout.HALO) HALO_SWEEP_DEG else ARC_SWEEP_DEG
+    private fun activeArcSweep(): Float = when (barLayout) {
+        VolumeLayout.HALO -> HALO_SWEEP_DEG
+        VolumeLayout.EDGE_TALL -> 160f
+        VolumeLayout.EDGE_RIGHT -> -100f
+        VolumeLayout.EDGE_TOP -> 70f
+        VolumeLayout.EDGE_BOTTOM -> -70f
+        VolumeLayout.RING -> 360f
+        else -> ARC_SWEEP_DEG
+    }
 
     /** Horizontal level composition. The selected paint style still controls its material, but
      * this geometry is intentionally unrelated to the bezel arc. */
@@ -484,8 +532,17 @@ class CircularVolumeBar : android.view.View {
         // Same convention as Canvas.drawArc: 0deg = East, increasing clockwise (screen Y is
         // already "down", so atan2(dy, dx) lines up with it directly, no extra offset needed).
         val angleDeg = (Math.toDegrees(atan2(dy, dx).toDouble()) + 360.0) % 360.0
-        val delta = ((angleDeg - activeArcStart()) + 360.0) % 360.0
-        val withinArc = delta <= activeArcSweep().toDouble()
+        val start = activeArcStart()
+        val sweep = activeArcSweep()
+        // How far the touch sits from the arc's start measured *in the arc's own fill direction*,
+        // so counter-clockwise arcs (negative sweep) hit-test and scrub the same way.
+        val delta = if (sweep >= 0f) {
+            ((angleDeg - start) + 360.0) % 360.0
+        } else {
+            ((start - angleDeg) + 360.0) % 360.0
+        }
+        val span = kotlin.math.abs(sweep).toDouble()
+        val withinArc = delta <= span
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -513,7 +570,7 @@ class CircularVolumeBar : android.view.View {
             else -> return false
         }
 
-        val fraction = (delta / activeArcSweep()).toFloat().coerceIn(0f, 1f)
+        val fraction = (delta / span).toFloat().coerceIn(0f, 1f)
         volume = fraction
         onVolumeChanged?.invoke(fraction)
 

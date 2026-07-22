@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.PhoneAction
+import com.svartifoss.snfell.common.CenterButton
 import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.SwipeGesture
@@ -105,8 +106,28 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         setupTouchZone(binding.iconBottom, ScreenQuadrant.BOTTOM, R.string.touch_zone_bottom)
         setupTouchZone(binding.iconLeft, ScreenQuadrant.LEFT, R.string.touch_zone_left)
         setupTouchZone(binding.iconRight, ScreenQuadrant.RIGHT, R.string.touch_zone_right)
+        setupCenterButton()
         setupSwipeGestureRows()
         setupScreenButtonRows()
+    }
+
+    /** The center-tap zone: unlike the four quadrants, it always does *something* even when
+     *  unconfigured (toggles play/pause), and only single tap is reassignable here - double tap
+     *  and long press keep their fixed quick-panel/queue behavior, so the picker is opened in
+     *  single-action mode (same flag the mini-button slots use). */
+    private fun setupCenterButton() {
+        val imageView = binding.iconCenter ?: return
+        imageView.isClickable = true
+        imageView.isFocusable = true
+        imageView.setOnClickListener {
+            configureButton(
+                false,
+                CenterButton.TAP,
+                getString(R.string.touch_zone_center),
+                supportsLongPress = false,
+                singleActionOnly = true
+            )
+        }
     }
 
     private fun setupTouchZone(imageView: ImageView, quadrant: Int, label: Int) {
@@ -265,6 +286,9 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         val leftAction = it.getScreenAction(ButtonInfo(false, ScreenQuadrant.LEFT, GESTURE_SINGLE_TAP))
         setTouchZoneIcon(binding.iconLeft, R.string.touch_zone_left, leftAction)
 
+        val centerAction = it.getScreenAction(ButtonInfo(false, CenterButton.TAP, GESTURE_SINGLE_TAP))
+        setCenterButtonIcon(binding.iconCenter, centerAction)
+
         for ((code, tile) in swipeGestureRows) {
             val action = it.getScreenAction(ButtonInfo(false, code, GESTURE_SINGLE_TAP))
             setTileIcon(tile, action)
@@ -304,6 +328,28 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
             R.string.touch_zone_action,
             getString(label),
             phoneAction?.title ?: getString(R.string.no_action)
+        )
+    }
+
+    /** Unlike the four quadrants, an unconfigured center button isn't a no-op - it toggles
+     *  play/pause - so its placeholder is that real default icon/label instead of the muted "+"
+     *  [setTouchZoneIcon] shows for a quadrant that truly does nothing yet. */
+    private fun setCenterButtonIcon(imageView: ImageView, phoneAction: PhoneAction?) {
+        if (phoneAction == null) {
+            val icon = ContextCompat.getDrawable(requireContext(), com.svartifoss.snfell.common.R.drawable.action_play_pause)
+                ?.mutate()
+            icon?.setTint(Color.WHITE)
+            imageView.clearColorFilter()
+            imageView.setImageDrawable(icon)
+            imageView.alpha = 1f
+        } else {
+            setIcon(imageView, phoneAction)
+        }
+
+        imageView.contentDescription = getString(
+            R.string.touch_zone_action,
+            getString(R.string.touch_zone_center),
+            phoneAction?.title ?: getString(R.string.action_play_pause)
         )
     }
 

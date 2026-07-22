@@ -16,6 +16,7 @@ import com.svartifoss.snfell.actions.SelectableAction
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.isPlaying
 import kotlinx.coroutines.delay
+import timber.log.Timber
 import javax.inject.Inject
 
 class AppPlayAction : SelectableAction {
@@ -103,7 +104,15 @@ class AppPlayAction : SelectableAction {
             // Some players do not handle background starts very well. Start their UI activity first.
             val launcherActivity = androidContext.packageManager.getLaunchIntentForPackage(receiverComponent.packageName)
             if (launcherActivity != null) {
-                androidContext.startActivity(launcherActivity)
+                // Starting another app's UI from this background service is subject to
+                // background activity-launch limits (Android 10+, tightened on Android 14) and
+                // usually just no-ops; some OEMs throw instead. Guard so a refusal doesn't crash
+                // the action - the MediaBrowser/key-event path below is the reliable fallback.
+                try {
+                    androidContext.startActivity(launcherActivity)
+                } catch (e: Exception) {
+                    Timber.w(e, "Could not launch ${receiverComponent.packageName} UI from background")
+                }
                 delay(500)
 
                 if (service.currentMediaController?.packageName == receiverComponent.packageName &&

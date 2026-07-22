@@ -1,0 +1,5 @@
+<resources>
+    <!-- "Svartifoss" is a proper name and stays untranslated - only the ongoing-notification
+         status text needs a translation. -->
+    <string name="music_control_active">Svartifoss 正在运行</string>
+</resources>

@@ -36,14 +36,14 @@ object MediaBrowserSearch {
         }
     }
 
-    private fun findBrowserService(context: Context, packageName: String): ComponentName? {
+    internal fun findBrowserService(context: Context, packageName: String): ComponentName? {
         val intent = Intent("android.media.browse.MediaBrowserService").setPackage(packageName)
         val resolveInfo = context.packageManager.queryIntentServices(intent, 0).firstOrNull()
                 ?: return null
         return ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name)
     }
 
-    private suspend fun connect(context: Context, component: ComponentName): MediaBrowserCompat? =
+    internal suspend fun connect(context: Context, component: ComponentName): MediaBrowserCompat? =
             suspendCancellableCoroutine { continuation ->
                 lateinit var browser: MediaBrowserCompat
                 browser = MediaBrowserCompat(

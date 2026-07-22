@@ -1,9 +1,888 @@
 {
-  "schemaVersion": 1,
-  "exportedAt": 1783205596712,
-  "buttonConfigPlaying": "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\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8OAAAAQgB1AHQAdABvAG4AQQBjAHQAaQBvAG4ALgAxAAAAAAAZAAAAPAEAAEJOREwEAAAAEwAAAEIAdQBuAGQAbABhAGIAbABlAC4AQwBsAGEAcwBzAE4AYQBtAGUAAAAAAAAAQQAAAGMAbwBtAC4AcwB2AGEAcgB0AGkAZgBvAHMAcwAuAHMAbgBmAGUAbABsAC4AYQBjAHQAaQBvAG4AcwAuAHAAbABhAHkAYgBhAGMAawAuAFIAZQB2AGUAcgBzAGUAVABoAGkAcgB0AHkAUwBlAGMAbwBuAGQAcwBBAGMAdABpAG8AbgAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAP\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8SAAAAUwBFAEMATwBOAEQAUwBfAFQATwBfAFIARQBWAEUAUgBTAEUAAAAAAAEAAAAKAAAADgAAAEIAdQB0AHQAbwBuAEEAYwB0AGkAbwBuAC4AMgAAAAAAGQAAAHgBAABCTkRMAwAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADkAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGEAYwB0AGkAbwBuAHMALgBPAHAAZQBuAFAAbABhAHkAbABpAHMAdABTAGgAbwByAHQAYwB1AHQAcwBBAGMAdABpAG8AbgAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAAAAAAA9AAAAYQBuAGQAcgBvAGkAZAAuAHIAZQBzAG8AdQByAGMAZQA6AC8ALwBjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAvAGQAcgBhAHcAYQBiAGwAZQAvAGkAYwBfAHkAdABfAG0AdQBzAGkAYwAAAAwAAABDAFUAUwBUAE8ATQBfAFQASQBUAEwARQAAAAAA\/\/\/\/\/w4AAABCAHUAdAB0AG8AbgBBAGMAdABpAG8AbgAuADMAAAAAABkAAAD0AAAAQk5ETAMAAAATAAAAQgB1AG4AZABsAGEAYgBsAGUALgBDAGwAYQBzAHMATgBhAG0AZQAAAAAAAAA3AAAAYwBvAG0ALgBzAHYAYQByAHQAaQBmAG8AcwBzAC4AcwBuAGYAZQBsAGwALgBhAGMAdABpAG8AbgBzAC4AcABsAGEAeQBiAGEAYwBrAC4AUwBrAGkAcABUAG8ATgBlAHgAdABBAGMAdABpAG8AbgAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAP\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8OAAAAQgB1AHQAdABvAG4AQQBjAHQAaQBvAG4ALgA0AAAAAAAZAAAAMAEAAEJOREwEAAAADwAAAFMARQBDAE8ATgBEAFMAXwBUAE8AXwBTAEsASQBQAAAAAQAAAAoAAAATAAAAQgB1AG4AZABsAGEAYgBsAGUALgBDAGwAYQBzAHMATgBhAG0AZQAAAAAAAAA+AAAAYwBvAG0ALgBzAHYAYQByAHQAaQBmAG8AcwBzAC4AcwBuAGYAZQBsAGwALgBhAGMAdABpAG8AbgBzAC4AcABsAGEAeQBiAGEAYwBrAC4AUwBrAGkAcABUAGgAaQByAHQAeQBTAGUAYwBvAG4AZABzAEEAYwB0AGkAbwBuAAAAAAAPAAAAQwBVAFMAVABPAE0AXwBJAEMATwBOAF8AVQBSAEkAAAD\/\/\/\/\/DAAAAEMAVQBTAFQATwBNAF8AVABJAFQATABFAAAAAAD\/\/\/\/\/DgAAAEIAdQB0AHQAbwBuAEEAYwB0AGkAbwBuAC4ANQAAAAAAGQAAAHQBAABCTkRMAwAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADAAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGEAYwB0AGkAbwBuAHMALgBPAHAAZQBuAFAAbABhAHkAbABpAHMAdABBAGMAdABpAG8AbgAAAAAADwAAAEMAVQBTAFQATwBNAF8ASQBDAE8ATgBfAFUAUgBJAAAAAAAAAEIAAABhAG4AZAByAG8AaQBkAC4AcgBlAHMAbwB1AHIAYwBlADoALwAvAGMAbwBtAC4AcwB2AGEAcgB0AGkAZgBvAHMAcwAuAHMAbgBmAGUAbABsAC8AZAByAGEAdwBhAGIAbABlAC8AaQBjAF8AcABsAGEAeQBsAGkAcwB0AF8AcABsAGEAeQAAAAAADAAAAEMAVQBTAFQATwBNAF8AVABJAFQATABFAAAAAAD\/\/\/\/\/DgAAAEIAdQB0AHQAbwBuAEEAYwB0AGkAbwBuAC4ANgAAAAAAGQAAAOAAAABCTkRMAwAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAACwAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGEAYwB0AGkAbwBuAHMALgBPAHAAZQBuAE0AZQBuAHUAQQBjAHQAaQBvAG4AAAAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAP\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8OAAAAQgB1AHQAdABvAG4AQQBjAHQAaQBvAG4ALgA3AAAAAAAZAAAA\/AAAAEJOREwDAAAAEwAAAEIAdQBuAGQAbABhAGIAbABlAC4AQwBsAGEAcwBzAE4AYQBtAGUAAAAAAAAAOgAAAGMAbwBtAC4AcwB2AGEAcgB0AGkAZgBvAHMAcwAuAHMAbgBmAGUAbABsAC4AYQBjAHQAaQBvAG4AcwAuAFAAbABhAHkATABpAGsAZQBkAFMAbwBuAGcAcwBTAGgAdQBmAGYAbABlAGQAQQBjAHQAaQBvAG4AAAAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAP\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8=",
-  "buttonConfigStopped": "AAANaGANAABCTkRMCwAAAAsAAABCAHUAdAB0AG8AbgBDAG8AdQBuAHQAAAABAAAABQAAAAwAAABCAHUAdAB0AG8AbgBJAG4AZgBvAC4AMAAAAAAAGQAAACQBAABCTkRMBAAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADQAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGMAbwBtAG0AbwBuAC4AYgB1AHQAdABvAG4AYwBvAG4AZgBpAGcALgBCAHUAdAB0AG8AbgBJAG4AZgBvAAAAAAAPAAAAUABIAFkAUwBJAEMAQQBMAF8AQgBVAFQAVABPAE4AAAABAAAAAAAAAAwAAABCAFUAVABUAE8ATgBfAEkATgBEAEUAWAAAAAAAAQAAAAAAAAAOAAAAQgBVAFQAVABPAE4AXwBHAEUAUwBUAFUAUgBFAAAAAAABAAAAAAAAAAwAAABCAHUAdAB0AG8AbgBJAG4AZgBvAC4AMQAAAAAAGQAAACQBAABCTkRMBAAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADQAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGMAbwBtAG0AbwBuAC4AYgB1AHQAdABvAG4AYwBvAG4AZgBpAGcALgBCAHUAdAB0AG8AbgBJAG4AZgBvAAAAAAAPAAAAUABIAFkAUwBJAEMAQQBMAF8AQgBVAFQAVABPAE4AAAABAAAAAAAAAAwAAABCAFUAVABUAE8ATgBfAEkATgBEAEUAWAAAAAAAAQAAAAIAAAAOAAAAQgBVAFQAVABPAE4AXwBHAEUAUwBUAFUAUgBFAAAAAAABAAAAAAAAAAwAAABCAHUAdAB0AG8AbgBJAG4AZgBvAC4AMgAAAAAAGQAAACQBAABCTkRMBAAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADQAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGMAbwBtAG0AbwBuAC4AYgB1AHQAdABvAG4AYwBvAG4AZgBpAGcALgBCAHUAdAB0AG8AbgBJAG4AZgBvAAAAAAAPAAAAUABIAFkAUwBJAEMAQQBMAF8AQgBVAFQAVABPAE4AAAABAAAAAAAAAAwAAABCAFUAVABUAE8ATgBfAEkATgBEAEUAWAAAAAAAAQAAAAMAAAAOAAAAQgBVAFQAVABPAE4AXwBHAEUAUwBUAFUAUgBFAAAAAAABAAAAAAAAAAwAAABCAHUAdAB0AG8AbgBJAG4AZgBvAC4AMwAAAAAAGQAAACQBAABCTkRMBAAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADQAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGMAbwBtAG0AbwBuAC4AYgB1AHQAdABvAG4AYwBvAG4AZgBpAGcALgBCAHUAdAB0AG8AbgBJAG4AZgBvAAAAAAAPAAAAUABIAFkAUwBJAEMAQQBMAF8AQgBVAFQAVABPAE4AAAABAAAAAAAAAAwAAABCAFUAVABUAE8ATgBfAEkATgBEAEUAWAAAAAAAAQAAAAcAAAAOAAAAQgBVAFQAVABPAE4AXwBHAEUAUwBUAFUAUgBFAAAAAAABAAAAAAAAAAwAAABCAHUAdAB0AG8AbgBJAG4AZgBvAC4ANAAAAAAAGQAAACQBAABCTkRMBAAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADQAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGMAbwBtAG0AbwBuAC4AYgB1AHQAdABvAG4AYwBvAG4AZgBpAGcALgBCAHUAdAB0AG8AbgBJAG4AZgBvAAAAAAAPAAAAUABIAFkAUwBJAEMAQQBMAF8AQgBVAFQAVABPAE4AAAABAAAAAAAAAAwAAABCAFUAVABUAE8ATgBfAEkATgBEAEUAWAAAAAAAAQAAAAkAAAAOAAAAQgBVAFQAVABPAE4AXwBHAEUAUwBUAFUAUgBFAAAAAAABAAAAAAAAAA4AAABCAHUAdAB0AG8AbgBBAGMAdABpAG8AbgAuADAAAAAAABkAAAD0AAAAQk5ETAMAAAATAAAAQgB1AG4AZABsAGEAYgBsAGUALgBDAGwAYQBzAHMATgBhAG0AZQAAAAAAAAA3AAAAYwBvAG0ALgBzAHYAYQByAHQAaQBmAG8AcwBzAC4AcwBuAGYAZQBsAGwALgBhAGMAdABpAG8AbgBzAC4AcABsAGEAeQBiAGEAYwBrAC4AUwBrAGkAcABUAG8AUAByAGUAdgBBAGMAdABpAG8AbgAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAP\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8OAAAAQgB1AHQAdABvAG4AQQBjAHQAaQBvAG4ALgAxAAAAAAAZAAAA9AAAAEJOREwDAAAAEwAAAEIAdQBuAGQAbABhAGIAbABlAC4AQwBsAGEAcwBzAE4AYQBtAGUAAAAAAAAANwAAAGMAbwBtAC4AcwB2AGEAcgB0AGkAZgBvAHMAcwAuAHMAbgBmAGUAbABsAC4AYQBjAHQAaQBvAG4AcwAuAHAAbABhAHkAYgBhAGMAawAuAFMAawBpAHAAVABvAE4AZQB4AHQAQQBjAHQAaQBvAG4AAAAPAAAAQwBVAFMAVABPAE0AXwBJAEMATwBOAF8AVQBSAEkAAAD\/\/\/\/\/DAAAAEMAVQBTAFQATwBNAF8AVABJAFQATABFAAAAAAD\/\/\/\/\/DgAAAEIAdQB0AHQAbwBuAEEAYwB0AGkAbwBuAC4AMgAAAAAAGQAAAOgAAABCTkRMAwAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADEAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGEAYwB0AGkAbwBuAHMALgBwAGwAYQB5AGIAYQBjAGsALgBMAGkAawBlAEEAYwB0AGkAbwBuAAAADwAAAEMAVQBTAFQATwBNAF8ASQBDAE8ATgBfAFUAUgBJAAAA\/\/\/\/\/wwAAABDAFUAUwBUAE8ATQBfAFQASQBUAEwARQAAAAAA\/\/\/\/\/w4AAABCAHUAdAB0AG8AbgBBAGMAdABpAG8AbgAuADMAAAAAABkAAAB8AQAAQk5ETAMAAAATAAAAQgB1AG4AZABsAGEAYgBsAGUALgBDAGwAYQBzAHMATgBhAG0AZQAAAAAAAAA6AAAAYwBvAG0ALgBzAHYAYQByAHQAaQBmAG8AcwBzAC4AcwBuAGYAZQBsAGwALgBhAGMAdABpAG8AbgBzAC4AUABsAGEAeQBMAGkAawBlAGQAUwBvAG4AZwBzAFMAaAB1AGYAZgBsAGUAZABBAGMAdABpAG8AbgAAAAAADwAAAEMAVQBTAFQATwBNAF8ASQBDAE8ATgBfAFUAUgBJAAAAAAAAAD0AAABhAG4AZAByAG8AaQBkAC4AcgBlAHMAbwB1AHIAYwBlADoALwAvAGMAbwBtAC4AcwB2AGEAcgB0AGkAZgBvAHMAcwAuAHMAbgBmAGUAbABsAC8AZAByAGEAdwBhAGIAbABlAC8AaQBjAF8AeQB0AF8AbQB1AHMAaQBjAAAADAAAAEMAVQBTAFQATwBNAF8AVABJAFQATABFAAAAAAD\/\/\/\/\/DgAAAEIAdQB0AHQAbwBuAEEAYwB0AGkAbwBuAC4ANAAAAAAAGQAAAGwBAABCTkRMAwAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAACwAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGEAYwB0AGkAbwBuAHMALgBPAHAAZQBuAE0AZQBuAHUAQQBjAHQAaQBvAG4AAAAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAAAAAABCAAAAYQBuAGQAcgBvAGkAZAAuAHIAZQBzAG8AdQByAGMAZQA6AC8ALwBjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAvAGQAcgBhAHcAYQBiAGwAZQAvAGEAYwB0AGkAbwBuAF8AbwBwAGUAbgBfAG0AZQBuAHUAAAAAAAwAAABDAFUAUwBUAE8ATQBfAFQASQBUAEwARQAAAAAA\/\/\/\/\/w==",
-  "actionList": "AAAOVEwOAABCTkRMCAAAAAsAAABBAGMAdABpAG8AbgBDAG8AdQBuAHQAAAABAAAABwAAAAEAAAAwAAAAGQAAAPQBAABCTkRMBQAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADMAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGEAYwB0AGkAbwBuAHMALgBhAHAAcABwAGwAYQB5AC4AQQBwAHAAUABsAGEAeQBBAGMAdABpAG8AbgAAAA4AAABDAE8ATQBQAE8ATgBFAE4AVABfAE4AQQBNAEUAAAAAAAAAAAA9AAAAYwBvAGQAZQAuAG4AYQBtAGUALgBtAG8AbgBrAGUAeQAuAHIAZQB0AHIAbwBtAHUAcwBpAGMALgBzAGUAcgB2AGkAYwBlAC4ATQBlAGQAaQBhAEIAdQB0AHQAbwBuAEkAbgB0AGUAbgB0AFIAZQBjAGUAaQB2AGUAcgAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAP\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8MAAAAUABBAEMASwBBAEcARQBfAE4AQQBNAEUAAAAAAAAAAAAbAAAAYwBvAGQAZQAuAG4AYQBtAGUALgBtAG8AbgBrAGUAeQAuAHIAZQB0AHIAbwBtAHUAcwBpAGMAAAABAAAAMQAAABkAAADUAQAAQk5ETAUAAAATAAAAQgB1AG4AZABsAGEAYgBsAGUALgBDAGwAYQBzAHMATgBhAG0AZQAAAAAAAAAzAAAAYwBvAG0ALgBzAHYAYQByAHQAaQBmAG8AcwBzAC4AcwBuAGYAZQBsAGwALgBhAGMAdABpAG8AbgBzAC4AYQBwAHAAcABsAGEAeQAuAEEAcABwAFAAbABhAHkAQQBjAHQAaQBvAG4AAAAOAAAAQwBPAE0AUABPAE4ARQBOAFQAXwBOAEEATQBFAAAAAAAAAAAAKgAAAGEAbgBkAHIAbwBpAGQAeAAuAG0AZQBkAGkAYQAuAHMAZQBzAHMAaQBvAG4ALgBNAGUAZABpAGEAQgB1AHQAdABvAG4AUgBlAGMAZQBpAHYAZQByAAAAAAAPAAAAQwBVAFMAVABPAE0AXwBJAEMATwBOAF8AVQBSAEkAAAD\/\/\/\/\/DAAAAEMAVQBTAFQATwBNAF8AVABJAFQATABFAAAAAAD\/\/\/\/\/DAAAAFAAQQBDAEsAQQBHAEUAXwBOAEEATQBFAAAAAAAAAAAAHAAAAGMAbwBtAC4AZwBvAG8AZwBsAGUALgBhAG4AZAByAG8AaQBkAC4AYQBwAHAAcwAuAGQAbwBjAHMAAAAAAAEAAAAyAAAAGQAAAOQBAABCTkRMBQAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADMAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGEAYwB0AGkAbwBuAHMALgBhAHAAcABwAGwAYQB5AC4AQQBwAHAAUABsAGEAeQBBAGMAdABpAG8AbgAAAA4AAABDAE8ATQBQAE8ATgBFAE4AVABfAE4AQQBNAEUAAAAAAAAAAAAqAAAAYQBuAGQAcgBvAGkAZAB4AC4AbQBlAGQAaQBhAC4AcwBlAHMAcwBpAG8AbgAuAE0AZQBkAGkAYQBCAHUAdAB0AG8AbgBSAGUAYwBlAGkAdgBlAHIAAAAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAP\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8MAAAAUABBAEMASwBBAEcARQBfAE4AQQBNAEUAAAAAAAAAAAAlAAAAYwBvAG0ALgBnAG8AbwBnAGwAZQAuAGEAbgBkAHIAbwBpAGQALgBhAHAAcABzAC4AeQBvAHUAdAB1AGIAZQAuAG0AdQBzAGkAYwAAAAEAAAAzAAAAGQAAAHgCAABCTkRMBQAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADMAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGEAYwB0AGkAbwBuAHMALgBhAHAAcABwAGwAYQB5AC4AQQBwAHAAUABsAGEAeQBBAGMAdABpAG8AbgAAAA4AAABDAE8ATQBQAE8ATgBFAE4AVABfAE4AQQBNAEUAAAAAAAAAAAB+AAAAYwBvAG0ALgBnAG8AbwBnAGwAZQAuAGEAbgBkAHIAbwBpAGQALgBsAGkAYgByAGEAcgBpAGUAcwAuAHkAbwB1AHQAdQBiAGUALgBwAGwAYQB5AGUAcgAuAHUAaQAuAG0AZQBkAGkAYQBzAGUAcwBzAGkAbwBuAC4ATQBlAGQAaQBhAEIAdQB0AHQAbwBuAEkAbgB0AGUAbgB0AFIAZQBjAGUAaQB2AGUAcgBQAHIAbwB2AGkAZABlAHIAJABEAGUAZgBhAHUAbAB0AE0AZQBkAGkAYQBCAHUAdAB0AG8AbgBJAG4AdABlAG4AdABSAGUAYwBlAGkAdgBlAHIAAAAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAP\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8MAAAAUABBAEMASwBBAEcARQBfAE4AQQBNAEUAAAAAAAAAAAAaAAAAYwBvAG0ALgBnAG8AbwBnAGwAZQAuAGEAbgBkAHIAbwBpAGQALgB5AG8AdQB0AHUAYgBlAAAAAAABAAAANAAAABkAAADcAQAAQk5ETAUAAAATAAAAQgB1AG4AZABsAGEAYgBsAGUALgBDAGwAYQBzAHMATgBhAG0AZQAAAAAAAAAzAAAAYwBvAG0ALgBzAHYAYQByAHQAaQBmAG8AcwBzAC4AcwBuAGYAZQBsAGwALgBhAGMAdABpAG8AbgBzAC4AYQBwAHAAcABsAGEAeQAuAEEAcABwAFAAbABhAHkAQQBjAHQAaQBvAG4AAAAOAAAAQwBPAE0AUABPAE4ARQBOAFQAXwBOAEEATQBFAAAAAAAAAAAALgAAAGMAbwBtAC4AcgB5AGEAbgBoAGUAaQBzAGUALgBhAHUAZABpAG8AcwBlAHIAdgBpAGMAZQAuAE0AZQBkAGkAYQBCAHUAdAB0AG8AbgBSAGUAYwBlAGkAdgBlAHIAAAAAAA8AAABDAFUAUwBUAE8ATQBfAEkAQwBPAE4AXwBVAFIASQAAAP\/\/\/\/8MAAAAQwBVAFMAVABPAE0AXwBUAEkAVABMAEUAAAAAAP\/\/\/\/8MAAAAUABBAEMASwBBAEcARQBfAE4AQQBNAEUAAAAAAAAAAAAcAAAAYwBvAG0ALgBwAGEAbABsAG8ALgBwAGEAcwBzAGkAbwBuAHQAaQBtAGUAcgBzAGMAbwBwAGUAZAAAAAAAAQAAADUAAAAZAAAAxAEAAEJOREwFAAAAEwAAAEIAdQBuAGQAbABhAGIAbABlAC4AQwBsAGEAcwBzAE4AYQBtAGUAAAAAAAAAMwAAAGMAbwBtAC4AcwB2AGEAcgB0AGkAZgBvAHMAcwAuAHMAbgBmAGUAbABsAC4AYQBjAHQAaQBvAG4AcwAuAGEAcABwAHAAbABhAHkALgBBAHAAcABQAGwAYQB5AEEAYwB0AGkAbwBuAAAADgAAAEMATwBNAFAATwBOAEUATgBUAF8ATgBBAE0ARQAAAAAAAAAAACoAAABvAHIAZwAuAHQAZQBsAGUAZwByAGEAbQAuAG0AZQBzAHMAZQBuAGcAZQByAC4ATQB1AHMAaQBjAFAAbABhAHkAZQByAFIAZQBjAGUAaQB2AGUAcgAAAAAADwAAAEMAVQBTAFQATwBNAF8ASQBDAE8ATgBfAFUAUgBJAAAA\/\/\/\/\/wwAAABDAFUAUwBUAE8ATQBfAFQASQBUAEwARQAAAAAA\/\/\/\/\/wwAAABQAEEAQwBLAEEARwBFAF8ATgBBAE0ARQAAAAAAAAAAABQAAAB0AHcALgBuAGUAawBvAG0AaQBtAGkALgBuAGUAawBvAGcAcgBhAG0AAAAAAAEAAAA2AAAAGQAAANQBAABCTkRMBQAAABMAAABCAHUAbgBkAGwAYQBiAGwAZQAuAEMAbABhAHMAcwBOAGEAbQBlAAAAAAAAADMAAABjAG8AbQAuAHMAdgBhAHIAdABpAGYAbwBzAHMALgBzAG4AZgBlAGwAbAAuAGEAYwB0AGkAbwBuAHMALgBhAHAAcABwAGwAYQB5AC4AQQBwAHAAUABsAGEAeQBBAGMAdABpAG8AbgAAAA4AAABDAE8ATQBQAE8ATgBFAE4AVABfAE4AQQBNAEUAAAAAAAAAAAAzAAAAbwByAGcALgB0AGUAbABlAGcAcgBhAG0ALgBtAGUAcwBzAGUAbgBnAGUAcgAuAHYAbwBpAHAALgBWAG8ASQBQAE0AZQBkAGkAYQBCAHUAdAB0AG8AbgBSAGUAYwBlAGkAdgBlAHIAAAAPAAAAQwBVAFMAVABPAE0AXwBJAEMATwBOAF8AVQBSAEkAAAD\/\/\/\/\/DAAAAEMAVQBTAFQATwBNAF8AVABJAFQATABFAAAAAAD\/\/\/\/\/DAAAAFAAQQBDAEsAQQBHAEUAXwBOAEEATQBFAAAAAAAAAAAAFAAAAHQAdwAuAG4AZQBrAG8AbQBpAG0AaQAuAG4AZQBrAG8AZwByAGEAbQAAAAAA",
+  "schemaVersion": 4,
+  "exportedAt": 1784717745597,
+  "buttonConfigPlaying": {
+    "ButtonInfo.10": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 14
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonCount": {
+      "t": "i",
+      "v": 11
+    },
+    "ButtonAction.10": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.PauseAction"
+        }
+      }
+    },
+    "ButtonInfo.0": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.1": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 1
+        }
+      }
+    },
+    "ButtonInfo.2": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 1
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.3": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 2
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.4": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 2
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 1
+        }
+      }
+    },
+    "ButtonInfo.5": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 3
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.6": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 3
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 1
+        }
+      }
+    },
+    "ButtonInfo.7": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 7
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.8": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 8
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.9": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 9
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonAction.0": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.SkipToPrevAction"
+        }
+      }
+    },
+    "ButtonAction.1": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.ReverseThirtySecondsAction"
+        },
+        "SECONDS_TO_REVERSE": {
+          "t": "i",
+          "v": 10
+        }
+      }
+    },
+    "ButtonAction.2": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.OpenPlaylistShortcutsAction"
+        },
+        "CUSTOM_ICON_URI": {
+          "t": "s",
+          "v": "android.resource://com.svartifoss.snfell/drawable/ic_album"
+        }
+      }
+    },
+    "ButtonAction.3": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.SkipToNextAction"
+        }
+      }
+    },
+    "ButtonAction.4": {
+      "t": "p",
+      "v": {
+        "SECONDS_TO_SKIP": {
+          "t": "i",
+          "v": 10
+        },
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.SkipThirtySecondsAction"
+        }
+      }
+    },
+    "ButtonAction.5": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.OpenPlaylistAction"
+        },
+        "CUSTOM_ICON_URI": {
+          "t": "s",
+          "v": "android.resource://com.svartifoss.snfell/drawable/ic_queue_music"
+        }
+      }
+    },
+    "ButtonAction.6": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.OpenMenuAction"
+        }
+      }
+    },
+    "ButtonAction.7": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.OpenPlaylistAction"
+        },
+        "CUSTOM_ICON_URI": {
+          "t": "s",
+          "v": "android.resource://com.svartifoss.snfell/drawable/ic_queue_music"
+        }
+      }
+    },
+    "ButtonAction.8": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayLikedSongsShuffledAction"
+        }
+      }
+    },
+    "ButtonAction.9": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.OpenPlaylistShortcutsAction"
+        },
+        "CUSTOM_ICON_URI": {
+          "t": "s",
+          "v": "android.resource://com.svartifoss.snfell/drawable/ic_more_vert"
+        },
+        "CUSTOM_TITLE": {
+          "t": "s",
+          "v": "Show all saved shortcuts"
+        }
+      }
+    }
+  },
+  "buttonConfigStopped": {
+    "ButtonCount": {
+      "t": "i",
+      "v": 8
+    },
+    "ButtonInfo.0": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.1": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 1
+        }
+      }
+    },
+    "ButtonInfo.2": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 2
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.3": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 2
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 1
+        }
+      }
+    },
+    "ButtonInfo.4": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 3
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.5": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 7
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.6": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 9
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonInfo.7": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.common.buttonconfig.ButtonInfo"
+        },
+        "PHYSICAL_BUTTON": {
+          "t": "i",
+          "v": 0
+        },
+        "BUTTON_INDEX": {
+          "t": "i",
+          "v": 14
+        },
+        "BUTTON_GESTURE": {
+          "t": "i",
+          "v": 0
+        }
+      }
+    },
+    "ButtonAction.0": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.ReverseThirtySecondsAction"
+        },
+        "SECONDS_TO_REVERSE": {
+          "t": "i",
+          "v": 30
+        }
+      }
+    },
+    "ButtonAction.1": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.SkipToPrevAction"
+        }
+      }
+    },
+    "ButtonAction.2": {
+      "t": "p",
+      "v": {
+        "SECONDS_TO_SKIP": {
+          "t": "i",
+          "v": 30
+        },
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.SkipThirtySecondsAction"
+        }
+      }
+    },
+    "ButtonAction.3": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.SkipToNextAction"
+        }
+      }
+    },
+    "ButtonAction.4": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.LikeAction"
+        }
+      }
+    },
+    "ButtonAction.5": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.appplay.AppPlayAction"
+        },
+        "COMPONENT_NAME": {
+          "t": "s",
+          "v": "com.spotify.mediasession.mediasession.receiver.MediaButtonReceiver"
+        },
+        "CUSTOM_ICON_URI": {
+          "t": "s",
+          "v": "content://website.leifs.delta.fileProvider/cache_files/Spotify%20Alt%201.png"
+        },
+        "PACKAGE_NAME": {
+          "t": "s",
+          "v": "com.spotify.music"
+        }
+      }
+    },
+    "ButtonAction.6": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.appplay.AppPlayAction"
+        },
+        "COMPONENT_NAME": {
+          "t": "s",
+          "v": "androidx.media.session.MediaButtonReceiver"
+        },
+        "CUSTOM_ICON_URI": {
+          "t": "s",
+          "v": "content://website.leifs.delta.fileProvider/cache_files/Youtube%20Music%20Vanced.png"
+        },
+        "PACKAGE_NAME": {
+          "t": "s",
+          "v": "com.google.android.apps.youtube.music"
+        }
+      }
+    },
+    "ButtonAction.7": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.playback.PlayAction"
+        }
+      }
+    }
+  },
+  "actionList": {
+    "ActionCount": {
+      "t": "i",
+      "v": 14
+    },
+    "0": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
+        },
+        "PLAYLIST_LINK": {
+          "t": "s",
+          "v": "https://music.youtube.com/playlist?list=OLAK5uy_lGIq-5a77uvJTHLkGdr-tKyMe44PNcE6U&shuffle=true"
+        },
+        "PLAYLIST_NAME": {
+          "t": "s",
+          "v": "Give Up the Ghost"
+        }
+      }
+    },
+    "1": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
+        },
+        "PLAYLIST_LINK": {
+          "t": "s",
+          "v": "https://music.youtube.com/watch?v=QX52_M4mbDY"
+        },
+        "PLAYLIST_NAME": {
+          "t": "s",
+          "v": "Invencible"
+        }
+      }
+    },
+    "2": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
+        },
+        "PLAYLIST_LINK": {
+          "t": "s",
+          "v": "https://music.youtube.com/watch?v=feBUX2LV4DI"
+        },
+        "PLAYLIST_NAME": {
+          "t": "s",
+          "v": "Dirt"
+        }
+      }
+    },
+    "3": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
+        },
+        "PLAYLIST_LINK": {
+          "t": "s",
+          "v": "https://open.spotify.com/playlist/3hi7onPSwlyMzSdVGjTMJY?pi=8MD_NNkKSz6SD"
+        },
+        "PLAYLIST_NAME": {
+          "t": "s",
+          "v": "The Cranberries: Best Of The Best"
+        }
+      }
+    },
+    "4": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
+        },
+        "PLAYLIST_LINK": {
+          "t": "s",
+          "v": "https://music.youtube.com/watch?v=X3gEndp9Ppk"
+        },
+        "PLAYLIST_NAME": {
+          "t": "s",
+          "v": "Breath Of A Germ"
+        }
+      }
+    },
+    "5": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
+        },
+        "PLAYLIST_LINK": {
+          "t": "s",
+          "v": "https://open.spotify.com/track/4PGeXRCNgHAAsvx6NWKcqE"
+        },
+        "PLAYLIST_NAME": {
+          "t": "s",
+          "v": "Just My Imagination"
+        }
+      }
+    },
+    "6": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
+        },
+        "PLAYLIST_LINK": {
+          "t": "s",
+          "v": "https://music.youtube.com/playlist?list=OLAK5uy_lCKktqeRh7ZtFd-T6L-yNhZAyg7ykQLdk&shuffle=true"
+        },
+        "PLAYLIST_NAME": {
+          "t": "s",
+          "v": "This Is Acting"
+        }
+      }
+    },
+    "7": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayPlaylistShortcutAction"
+        },
+        "PLAYLIST_LINK": {
+          "t": "s",
+          "v": "https://open.spotify.com/artist/53A0W3U0s8diEn9RhXQhVz"
+        },
+        "PLAYLIST_NAME": {
+          "t": "s",
+          "v": "Keane"
+        }
+      }
+    },
+    "8": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.appplay.AppPlayAction"
+        },
+        "COMPONENT_NAME": {
+          "t": "s",
+          "v": "androidx.media.session.MediaButtonReceiver"
+        },
+        "CUSTOM_TITLE": {
+          "t": "s",
+          "v": "Play YT Music"
+        },
+        "PACKAGE_NAME": {
+          "t": "s",
+          "v": "com.google.android.apps.youtube.music"
+        }
+      }
+    },
+    "9": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.appplay.AppPlayAction"
+        },
+        "COMPONENT_NAME": {
+          "t": "s",
+          "v": "code.name.monkey.retromusic.service.MediaButtonIntentReceiver"
+        },
+        "PACKAGE_NAME": {
+          "t": "s",
+          "v": "code.name.monkey.retromusic"
+        }
+      }
+    },
+    "10": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.appplay.AppPlayAction"
+        },
+        "COMPONENT_NAME": {
+          "t": "s",
+          "v": "com.spotify.mediasession.mediasession.receiver.MediaButtonReceiver"
+        },
+        "PACKAGE_NAME": {
+          "t": "s",
+          "v": "com.spotify.music"
+        }
+      }
+    },
+    "11": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.PlayLikedSongsAction"
+        },
+        "CUSTOM_TITLE": {
+          "t": "s",
+          "v": "Liked Songs"
+        }
+      }
+    },
+    "12": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.OpenPlaylistShortcutsAction"
+        },
+        "CUSTOM_ICON_URI": {
+          "t": "s",
+          "v": "android.resource://com.svartifoss.snfell/drawable/ic_open_in_new"
+        },
+        "CUSTOM_TITLE": {
+          "t": "s",
+          "v": "Shortcuts"
+        }
+      }
+    },
+    "13": {
+      "t": "p",
+      "v": {
+        "Bundlable.ClassName": {
+          "t": "s",
+          "v": "com.svartifoss.snfell.actions.OpenMenuAction"
+        },
+        "CUSTOM_ICON_URI": {
+          "t": "s",
+          "v": "android.resource://com.svartifoss.snfell/drawable/ic_menu_slideshow"
+        }
+      }
+    }
+  },
   "preferences": {
     "always_show_time": true,
     "pause_on_swipe_exit": false,
@@ -11,9 +890,13 @@
     "rotating_crown_sensitivity": "40",
     "rotary_seek": false,
     "haptic_feedback": false,
+    "app_language": "system",
     "disable_ambient_physical_double_click": false,
     "auto_start_mode": "SHOW_ICON",
     "close_timeout": "0",
+    "wear_close_on_idle": true,
+    "enable_notification_popup": false,
+    "notification_timeout": "10",
     "always_select_center_action": true,
     "dim_album_art": true,
     "album_art_style": "cover",
@@ -21,12 +904,17 @@
     "album_art_dim_strength": "80",
     "wear_player_shading_style": "follow",
     "wear_player_shading_intensity": "balanced",
+    "wear_show_source_icon": false,
     "volume_overlay_timeout": "1000",
     "rotary_deadzone": "6",
     "ambient_album_art_opacity": "55",
     "wear_center_long_press_queue": true,
+    "wear_screen_face": "immersive",
+    "wear_active_custom_theme_id": "99b7d2ee-d812-4f25-bc9e-f61a72fd76bf",
+    "wear_custom_theme_schema": "1",
+    "wear_custom_theme_complete": true,
+    "wear_custom_theme_revision": "4",
     "wear_screen_theme": "default",
-    "wear_quick_panel_source": "manual",
     "wear_track_time_mode": "always",
     "wear_dynamic_accent": true,
     "wear_album_art_fade": true,
@@ -34,6 +922,673 @@
     "screen_buttons_curve_style": "flat",
     "screen_buttons_bg_style": "glass",
     "screen_buttons_opacity": "100",
-    "overlay_blur_radius": "90"
+    "overlay_blur_radius": "90",
+    "wear_quick_panel_source": "session",
+    "wear_font@immersive": "montserrat",
+    "wear_quick_panel_layout@immersive": "stacked",
+    "wear_aod_show_track_info@material": true,
+    "wear_shading_color_mode@studio": "black",
+    "wear_volume_layout@studio": "edge",
+    "wear_progress_desaturated@custom_active": false,
+    "wear_edge_seek_enabled@custom_active": true,
+    "wear_seek_style@poster": "underline",
+    "wear_player_shading_style@expressive": "edge_vignette_strong",
+    "wear_quadrant_tap_flash@poster": false,
+    "wear_show_source_icon@poster": false,
+    "wear_show_track_title@poster": true,
+    "wear_color_treatment@immersive": "expressive",
+    "wear_progress_color_mode@immersive": "follow",
+    "wear_clock_color_mode@expressive": "dynamic",
+    "wear_color_treatment@studio": "normal",
+    "wear_aod_show_clock@studio": true,
+    "wear_internal_progress_visible@expressive": true,
+    "wear_aod_show_transport@material": true,
+    "wear_aod_style@immersive": "chrono",
+    "wear_clock_custom_color@custom_active": "",
+    "wear_artist_custom_color@custom_active": "#FFFFFF",
+    "wear_queue_style@custom_active": "minimal",
+    "wear_clock_opacity@custom_active": "60",
+    "overlay_blur_radius@poster": "10",
+    "wear_progress_color_mode@custom_active": "desaturated",
+    "wear_overlay_backdrop_style@immersive": "gradient",
+    "wear_seek_layout@expressive": "edge_thick",
+    "wear_artist_desaturated@custom_active": false,
+    "wear_title_text_mode@custom_active": "wrap5",
+    "wear_aod_show_track_info@expressive": true,
+    "wear_expressive_seek_mode@material": "central",
+    "wear_shading_color_mode@immersive": "black",
+    "wear_aod_show_art@material": false,
+    "wear_edge_progress_visible@poster": false,
+    "wear_progress_style@studio": "watch_ticks_60",
+    "screen_buttons_bg_style@custom_active": "glass",
+    "dim_album_art@custom_active": true,
+    "wear_quick_panel_shortcut_cover@poster": false,
+    "wear_overlay_backdrop_style@classic": "follow",
+    "wear_volume_layout@custom_active": "edge",
+    "wear_quick_panel_color_mode@studio": "desaturated",
+    "wear_progress_style@immersive": "watch_dots_60",
+    "wear_volume_style@custom_active": "prism",
+    "wear_aod_art_treatment@studio": "blur",
+    "wear_aod_intensity@expressive": "100",
+    "wear_quadrant_tap_flash@custom_active": false,
+    "wear_aod_show_pills@classic": true,
+    "wear_shading_custom_color@custom_active": "",
+    "wear_quick_panel_layout@material": "stacked",
+    "screen_buttons_shape@studio": "pill",
+    "wear_quadrant_tap_flash@classic": false,
+    "album_art_dim_strength@custom_active": "80",
+    "wear_quick_panel_shortcut_cover@custom_active": true,
+    "wear_list_row_size@material": "normal",
+    "wear_title_text_mode@poster": "marquee",
+    "wear_player_shading_intensity@custom_active": "balanced",
+    "wear_show_track_artist@classic": true,
+    "screen_buttons_curve_style@studio": "arc",
+    "wear_volume_style@poster": "minimal",
+    "wear_aod_style@classic": "classic",
+    "album_art_style@custom_active": "square",
+    "wear_volume_color_mode@custom_active": "follow",
+    "wear_quick_panel_layout@classic": "stacked",
+    "wear_volume_layout@immersive": "meter",
+    "wear_clock_opacity@material": "60",
+    "wear_queue_style@classic": "glass",
+    "wear_artist_color_mode@poster": "desaturated",
+    "dim_album_art@classic": true,
+    "wear_aod_show_art@expressive": false,
+    "wear_overlay_backdrop_style@custom_active": "acrylic",
+    "wear_track_time_mode@custom_active": "always",
+    "wear_show_track_artist@expressive": true,
+    "wear_aod_show_clock@poster": true,
+    "wear_aod_style@studio": "follow",
+    "wear_queue_style@immersive": "cover_tonal",
+    "wear_aod_show_art@classic": false,
+    "ambient_album_art_opacity@custom_active": "55",
+    "screen_buttons_opacity@custom_active": "100",
+    "wear_internal_progress_visible@studio": false,
+    "wear_show_track_artist@poster": true,
+    "wear_font@classic": "google_sans",
+    "wear_color_treatment@classic": "expressive",
+    "wear_overlay_backdrop_style@studio": "acrylic",
+    "wear_show_track_artist@studio": true,
+    "wear_quick_panel_style@expressive": "tonal",
+    "wear_title_text_mode@classic": "smart",
+    "wear_quick_panel_style@material": "material",
+    "screen_buttons_bg_style@material": "transparent",
+    "screen_buttons_shape@poster": "pill",
+    "always_show_time@custom_active": false,
+    "wear_quadrant_tap_flash@material": false,
+    "wear_show_track_title@material": true,
+    "wear_show_source_icon@studio": true,
+    "wear_gestures_mode@custom_active": "always",
+    "wear_show_source_icon@custom_active": true,
+    "wear_up_next_pill_style@expressive": "follow",
+    "wear_aod_style@expressive": "follow",
+    "wear_clock_color_mode@custom_active": "dynamic",
+    "wear_overlay_backdrop_style@poster": "acrylic",
+    "wear_volume_style@immersive": "prism",
+    "wear_aod_show_track_info@poster": true,
+    "wear_internal_progress_visible@custom_active": false,
+    "wear_overlay_backdrop_style@material": "black",
+    "wear_classic_icons_visible@custom_active": false,
+    "wear_edge_seek_enabled@expressive": true,
+    "wear_quick_panel_shortcut_cover@expressive": false,
+    "wear_progress_color_mode@classic": "follow",
+    "wear_aod_show_pills@custom_active": true,
+    "wear_aod_show_transport@expressive": true,
+    "wear_progress_style@classic": "solid",
+    "wear_clock_color_mode@studio": "white",
+    "wear_edge_progress_visible@custom_active": true,
+    "wear_volume_color_mode@poster": "desaturated",
+    "screen_buttons_bg_style@studio": "glass",
+    "wear_aod_art_treatment@immersive": "blur",
+    "wear_progress_color_mode@poster": "desaturated",
+    "wear_aod_show_clock@immersive": true,
+    "wear_aod_style@poster": "follow",
+    "wear_show_track_title@studio": true,
+    "wear_mini_buttons_mode@classic": "always",
+    "wear_artist_color_mode@material": "follow",
+    "wear_aod_art_treatment@custom_active": "blur",
+    "wear_dynamic_accent@custom_active": true,
+    "wear_aod_intensity@material": "100",
+    "wear_volume_layout@expressive": "halo",
+    "wear_normal_color@studio": "",
+    "wear_progress_style@material": "solid",
+    "wear_seek_style@studio": "underline",
+    "screen_buttons_curve_style@custom_active": "arc",
+    "wear_aod_style@material": "follow",
+    "wear_aod_color_mode@studio": "album",
+    "wear_up_next_pill_style@material": "follow",
+    "wear_quadrant_tap_flash@studio": false,
+    "wear_screen_theme@custom_active": "default",
+    "wear_edge_progress_visible@immersive": false,
+    "wear_quick_panel_style@classic": "glass",
+    "wear_shading_color_mode@poster": "black",
+    "wear_quick_panel_color_mode@poster": "follow",
+    "wear_font@custom_active": "sans_medium",
+    "wear_seek_layout@poster": "timeline",
+    "wear_list_row_size@poster": "normal",
+    "wear_font@studio": "sans_medium",
+    "wear_artist_color_mode@immersive": "follow",
+    "wear_aod_show_clock@custom_active": true,
+    "wear_show_track_artist@immersive": true,
+    "wear_quick_panel_style@custom_active": "dot",
+    "wear_classic_icons_visible@poster": false,
+    "wear_aod_art_treatment@poster": "blur",
+    "wear_quick_panel_custom_color@custom_active": "",
+    "dim_album_art@expressive": true,
+    "dim_album_art@immersive": true,
+    "wear_quick_panel_shortcut_cover@classic": false,
+    "wear_gestures_mode@classic": "always",
+    "wear_aod_show_track_info@immersive": true,
+    "wear_queue_style@material": "glass",
+    "wear_shading_color_mode@material": "black",
+    "wear_show_up_next_pill@expressive": false,
+    "screen_buttons_shape@immersive": "pill",
+    "wear_show_up_next_pill@material": false,
+    "wear_classic_icons_visible@immersive": true,
+    "wear_quick_panel_color_mode@custom_active": "desaturated",
+    "wear_classic_icons_visible@material": true,
+    "wear_classic_icons_visible@classic": false,
+    "wear_gestures_mode@poster": "always",
+    "album_art_blur_radius@custom_active": "100",
+    "wear_up_next_pill_style@studio": "follow",
+    "wear_aod_show_progress@classic": true,
+    "wear_aod_show_transport@immersive": true,
+    "wear_normal_color@custom_active": "",
+    "wear_progress_custom_color@studio": "#FFFFFF",
+    "wear_aod_show_pills@material": true,
+    "wear_mini_buttons_mode@custom_active": "never",
+    "wear_aod_art_treatment@material": "blur",
+    "wear_show_up_next_pill@poster": false,
+    "wear_volume_color_mode@immersive": "follow",
+    "wear_shading_color_mode@custom_active": "desaturated",
+    "wear_quick_panel_color_mode@material": "follow",
+    "wear_aod_show_transport@poster": true,
+    "wear_aod_show_progress@poster": true,
+    "wear_quick_panel_style@immersive": "glass_tonal",
+    "screen_buttons_shape@expressive": "pill",
+    "wear_aod_intensity@immersive": "100",
+    "wear_quadrant_tap_flash@expressive": false,
+    "wear_clock_color_mode@immersive": "dynamic",
+    "wear_volume_color_mode@material": "follow",
+    "wear_aod_color_mode@custom_active": "album",
+    "wear_quick_panel_layout@studio": "stacked",
+    "wear_expressive_seek_mode@studio": "central",
+    "wear_volume_layout@poster": "edge",
+    "wear_aod_show_art@immersive": false,
+    "wear_mini_buttons_mode@poster": "never",
+    "dim_album_art@studio": true,
+    "wear_edge_progress_visible@material": false,
+    "wear_font@material": "roboto",
+    "wear_quick_panel_style@studio": "ink",
+    "wear_aod_show_art@poster": false,
+    "wear_clock_opacity@poster": "60",
+    "wear_title_text_mode@immersive": "marquee",
+    "screen_buttons_bg_style@expressive": "uniform_glass_light",
+    "wear_gestures_mode@material": "always",
+    "wear_list_row_size@custom_active": "normal",
+    "wear_progress_color_mode@studio": "normal",
+    "wear_aod_color_mode@poster": "album",
+    "wear_queue_style@poster": "cover_tonal",
+    "wear_album_art_fade@custom_active": true,
+    "wear_progress_style@custom_active": "watch_ticks_60",
+    "wear_title_text_mode@material": "marquee",
+    "wear_title_text_mode@expressive": "marquee",
+    "wear_aod_show_progress@expressive": true,
+    "wear_gestures_mode@immersive": "always",
+    "wear_edge_seek_enabled@studio": true,
+    "wear_edge_seek_enabled@material": true,
+    "wear_list_row_size@immersive": "tall",
+    "wear_show_track_title@custom_active": true,
+    "ambient_album_art_opacity@classic": "100",
+    "wear_aod_art_treatment@expressive": "blur",
+    "wear_show_track_title@immersive": true,
+    "wear_expressive_seek_mode@classic": "central",
+    "wear_aod_show_transport@classic": true,
+    "wear_mini_buttons_mode@immersive": "never",
+    "wear_aod_show_track_info@custom_active": true,
+    "wear_seek_style@custom_active": "underline",
+    "wear_aod_art_treatment@classic": "blur",
+    "wear_seek_layout@immersive": "edge_thick",
+    "wear_volume_style@classic": "glass",
+    "wear_aod_custom_color@custom_active": "",
+    "wear_aod_show_pills@studio": true,
+    "screen_buttons_curve_style@expressive": "arc",
+    "wear_edge_progress_visible@classic": true,
+    "wear_clock_opacity@immersive": "60",
+    "wear_list_row_size@studio": "normal",
+    "wear_progress_style@expressive": "watch_dots_60",
+    "wear_volume_color_mode@classic": "desaturated",
+    "wear_seek_layout@material": "edge",
+    "wear_quick_panel_color_mode@expressive": "expressive",
+    "wear_quick_panel_color_mode@immersive": "follow",
+    "wear_track_time_mode@immersive": "never",
+    "album_art_style@immersive": "cover",
+    "wear_progress_color_mode@material": "follow",
+    "wear_gestures_mode@expressive": "always",
+    "screen_buttons_shape@classic": "pill",
+    "wear_volume_style@studio": "prism",
+    "overlay_blur_radius@custom_active": "35",
+    "wear_volume_custom_color@custom_active": "",
+    "wear_aod_show_clock@expressive": true,
+    "wear_seek_layout@studio": "edge",
+    "wear_color_treatment@custom_active": "expressive",
+    "wear_show_up_next_pill@immersive": false,
+    "wear_list_row_size@expressive": "normal",
+    "screen_buttons_curve_style@material": "arc",
+    "album_art_blur_radius@studio": "100",
+    "wear_aod_intensity@poster": "100",
+    "wear_internal_progress_visible@poster": true,
+    "wear_expressive_seek_mode@expressive": "central",
+    "wear_clock_color_mode@classic": "dynamic",
+    "wear_quick_panel_layout@expressive": "stacked",
+    "wear_up_next_pill_style@classic": "follow",
+    "screen_buttons_curve_style@poster": "arc",
+    "wear_show_track_artist@custom_active": true,
+    "wear_show_up_next_pill@classic": false,
+    "wear_show_track_title@classic": true,
+    "wear_volume_color_mode@expressive": "follow",
+    "wear_aod_show_progress@custom_active": false,
+    "wear_aod_show_progress@material": true,
+    "wear_artist_color_mode@studio": "follow",
+    "wear_aod_intensity@studio": "100",
+    "wear_title_text_mode@studio": "marquee",
+    "wear_seek_layout@classic": "edge",
+    "wear_aod_show_track_info@classic": true,
+    "wear_internal_progress_visible@material": true,
+    "wear_mini_buttons_mode@expressive": "always",
+    "wear_aod_show_clock@material": true,
+    "wear_seek_layout@custom_active": "edge_thin",
+    "wear_aod_color_mode@classic": "album",
+    "wear_aod_color_mode@expressive": "album",
+    "wear_show_source_icon@classic": true,
+    "wear_seek_style@immersive": "solid_album",
+    "wear_quick_panel_shortcut_cover@immersive": true,
+    "wear_artist_color_mode@custom_active": "follow",
+    "wear_progress_style@poster": "solid",
+    "screen_buttons_curve_style@classic": "arc",
+    "wear_aod_show_pills@immersive": false,
+    "wear_expressive_seek_mode@poster": "central",
+    "wear_aod_show_clock@classic": true,
+    "wear_aod_show_pills@poster": false,
+    "wear_aod_style@custom_active": "follow",
+    "wear_edge_seek_enabled@classic": true,
+    "wear_aod_color_mode@immersive": "album",
+    "wear_edge_seek_enabled@immersive": true,
+    "wear_color_treatment@expressive": "expressive",
+    "wear_aod_show_transport@studio": true,
+    "wear_progress_custom_color@custom_active": "#FFFFFF",
+    "wear_aod_show_progress@immersive": true,
+    "wear_up_next_pill_style@custom_active": "follow",
+    "wear_shading_color_mode@expressive": "black",
+    "wear_show_track_title@expressive": true,
+    "screen_buttons_bg_style@classic": "translucent_album_exp",
+    "wear_quick_panel_color_mode@classic": "desaturated",
+    "wear_font@expressive": "google_sans",
+    "wear_clock_opacity@classic": "60",
+    "screen_buttons_shape@material": "pill",
+    "wear_queue_style@studio": "cover_tonal",
+    "wear_edge_seek_enabled@poster": true,
+    "wear_seek_style@material": "plain",
+    "wear_quick_panel_shortcut_cover@studio": true,
+    "wear_aod_show_pills@expressive": true,
+    "wear_show_up_next_pill@custom_active": false,
+    "wear_show_source_icon@expressive": true,
+    "wear_artist_custom_color@studio": "#FFFFFF",
+    "wear_quick_panel_layout@custom_active": "stacked",
+    "wear_volume_layout@material": "edge",
+    "wear_mini_buttons_mode@material": "always",
+    "wear_expressive_seek_mode@custom_active": "central",
+    "wear_color_treatment@poster": "expressive",
+    "wear_overlay_backdrop_style@expressive": "acrylic",
+    "wear_shading_color_mode@classic": "black",
+    "always_show_time@immersive": true,
+    "wear_expressive_seek_mode@immersive": "central",
+    "wear_volume_layout@classic": "edge",
+    "wear_color_treatment@material": "desaturated",
+    "wear_edge_progress_visible@expressive": false,
+    "wear_progress_color_mode@expressive": "follow",
+    "wear_gestures_mode@studio": "always",
+    "wear_font@poster": "poppins",
+    "wear_mini_buttons_mode@studio": "never",
+    "wear_show_source_icon@immersive": true,
+    "wear_aod_intensity@classic": "100",
+    "wear_clock_opacity@studio": "60",
+    "wear_quadrant_tap_flash@immersive": false,
+    "wear_artist_color_mode@classic": "follow",
+    "wear_quick_panel_shortcut_cover@material": false,
+    "wear_edge_progress_visible@studio": false,
+    "wear_classic_icons_visible@studio": false,
+    "wear_volume_style@material": "glass",
+    "wear_artist_color_mode@expressive": "follow",
+    "wear_show_up_next_pill@studio": false,
+    "wear_clock_color_mode@material": "white",
+    "wear_up_next_pill_style@poster": "follow",
+    "wear_internal_progress_visible@classic": true,
+    "album_art_dim_strength@expressive": "150",
+    "wear_up_next_pill_style@immersive": "follow",
+    "wear_quick_panel_style@poster": "frost",
+    "overlay_blur_radius@studio": "35",
+    "album_art_style@expressive": "expressive_no_blur",
+    "wear_player_shading_style@custom_active": "edge_vignette_strong",
+    "wear_aod_intensity@custom_active": "100",
+    "wear_list_row_size@classic": "normal",
+    "wear_clock_color_mode@poster": "white",
+    "wear_aod_show_art@custom_active": false,
+    "wear_aod_show_art@studio": false,
+    "wear_aod_show_track_info@studio": true,
+    "screen_buttons_shape@custom_active": "pill",
+    "wear_volume_color_mode@studio": "follow",
+    "screen_buttons_curve_style@immersive": "arc",
+    "wear_classic_icons_visible@expressive": true,
+    "wear_show_source_icon@material": true,
+    "wear_internal_progress_visible@immersive": true,
+    "album_art_style@studio": "studio",
+    "wear_seek_style@classic": "plain",
+    "wear_aod_color_mode@material": "album",
+    "wear_quick_panel_layout@poster": "stacked",
+    "wear_clock_opacity@expressive": "60",
+    "wear_aod_show_progress@studio": false,
+    "wear_show_track_artist@material": true,
+    "wear_aod_show_transport@custom_active": true
+  },
+  "watchThemes": {
+    "schemaVersion": 1,
+    "activeProfileId": "99b7d2ee-d812-4f25-bc9e-f61a72fd76bf",
+    "profiles": [
+      {
+        "id": "99b7d2ee-d812-4f25-bc9e-f61a72fd76bf",
+        "name": "Minimal",
+        "baseFace": "immersive",
+        "createdAt": 1784687764678,
+        "updatedAt": 1784689151149,
+        "revision": 4,
+        "settings": {
+          "always_show_time": {
+            "type": "boolean",
+            "value": false
+          },
+          "dim_album_art": {
+            "type": "boolean",
+            "value": true
+          },
+          "album_art_style": {
+            "type": "string",
+            "value": "square"
+          },
+          "album_art_blur_radius": {
+            "type": "int",
+            "value": 100
+          },
+          "album_art_dim_strength": {
+            "type": "int",
+            "value": 80
+          },
+          "wear_player_shading_style": {
+            "type": "string",
+            "value": "edge_vignette_strong"
+          },
+          "wear_player_shading_intensity": {
+            "type": "string",
+            "value": "balanced"
+          },
+          "wear_shading_color_mode": {
+            "type": "string",
+            "value": "desaturated"
+          },
+          "wear_shading_custom_color": {
+            "type": "string",
+            "value": ""
+          },
+          "wear_show_source_icon": {
+            "type": "boolean",
+            "value": true
+          },
+          "ambient_album_art_opacity": {
+            "type": "int",
+            "value": 55
+          },
+          "wear_aod_style": {
+            "type": "string",
+            "value": "follow"
+          },
+          "wear_aod_show_art": {
+            "type": "boolean",
+            "value": false
+          },
+          "wear_aod_art_treatment": {
+            "type": "string",
+            "value": "blur"
+          },
+          "wear_aod_show_clock": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_aod_show_track_info": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_aod_color_mode": {
+            "type": "string",
+            "value": "album"
+          },
+          "wear_aod_custom_color": {
+            "type": "string",
+            "value": ""
+          },
+          "wear_aod_show_transport": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_aod_show_progress": {
+            "type": "boolean",
+            "value": false
+          },
+          "wear_aod_show_pills": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_aod_intensity": {
+            "type": "int",
+            "value": 100
+          },
+          "wear_clock_color_mode": {
+            "type": "string",
+            "value": "dynamic"
+          },
+          "wear_clock_custom_color": {
+            "type": "string",
+            "value": ""
+          },
+          "wear_clock_opacity": {
+            "type": "int",
+            "value": 60
+          },
+          "wear_show_track_title": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_show_track_artist": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_classic_icons_visible": {
+            "type": "boolean",
+            "value": false
+          },
+          "wear_internal_progress_visible": {
+            "type": "boolean",
+            "value": false
+          },
+          "wear_edge_progress_visible": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_edge_seek_enabled": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_expressive_seek_mode": {
+            "type": "string",
+            "value": "central"
+          },
+          "wear_screen_theme": {
+            "type": "string",
+            "value": "default"
+          },
+          "wear_quadrant_tap_flash": {
+            "type": "boolean",
+            "value": false
+          },
+          "wear_font": {
+            "type": "string",
+            "value": "sans_medium"
+          },
+          "wear_track_time_mode": {
+            "type": "string",
+            "value": "always"
+          },
+          "wear_dynamic_accent": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_color_treatment": {
+            "type": "string",
+            "value": "expressive"
+          },
+          "wear_normal_color": {
+            "type": "string",
+            "value": ""
+          },
+          "wear_album_art_fade": {
+            "type": "boolean",
+            "value": true
+          },
+          "screen_buttons_curve_style": {
+            "type": "string",
+            "value": "arc"
+          },
+          "screen_buttons_bg_style": {
+            "type": "string",
+            "value": "glass"
+          },
+          "screen_buttons_opacity": {
+            "type": "int",
+            "value": 100
+          },
+          "screen_buttons_shape": {
+            "type": "string",
+            "value": "pill"
+          },
+          "wear_mini_buttons_mode": {
+            "type": "string",
+            "value": "never"
+          },
+          "wear_gestures_mode": {
+            "type": "string",
+            "value": "always"
+          },
+          "overlay_blur_radius": {
+            "type": "int",
+            "value": 35
+          },
+          "wear_overlay_backdrop_style": {
+            "type": "string",
+            "value": "acrylic"
+          },
+          "wear_volume_style": {
+            "type": "string",
+            "value": "prism"
+          },
+          "wear_volume_layout": {
+            "type": "string",
+            "value": "edge"
+          },
+          "wear_quick_panel_style": {
+            "type": "string",
+            "value": "dot"
+          },
+          "wear_quick_panel_layout": {
+            "type": "string",
+            "value": "stacked"
+          },
+          "wear_up_next_pill_style": {
+            "type": "string",
+            "value": "follow"
+          },
+          "wear_show_up_next_pill": {
+            "type": "boolean",
+            "value": false
+          },
+          "wear_queue_style": {
+            "type": "string",
+            "value": "minimal"
+          },
+          "wear_quick_panel_shortcut_cover": {
+            "type": "boolean",
+            "value": true
+          },
+          "wear_list_row_size": {
+            "type": "string",
+            "value": "normal"
+          },
+          "wear_progress_style": {
+            "type": "string",
+            "value": "watch_ticks_60"
+          },
+          "wear_seek_style": {
+            "type": "string",
+            "value": "underline"
+          },
+          "wear_seek_layout": {
+            "type": "string",
+            "value": "edge_thin"
+          },
+          "wear_title_text_mode": {
+            "type": "string",
+            "value": "wrap5"
+          },
+          "wear_artist_color_mode": {
+            "type": "string",
+            "value": "follow"
+          },
+          "wear_artist_custom_color": {
+            "type": "string",
+            "value": "#FFFFFF"
+          },
+          "wear_artist_desaturated": {
+            "type": "boolean",
+            "value": false
+          },
+          "wear_progress_color_mode": {
+            "type": "string",
+            "value": "desaturated"
+          },
+          "wear_progress_custom_color": {
+            "type": "string",
+            "value": "#FFFFFF"
+          },
+          "wear_progress_desaturated": {
+            "type": "boolean",
+            "value": false
+          },
+          "wear_volume_color_mode": {
+            "type": "string",
+            "value": "follow"
+          },
+          "wear_volume_custom_color": {
+            "type": "string",
+            "value": ""
+          },
+          "wear_quick_panel_color_mode": {
+            "type": "string",
+            "value": "desaturated"
+          },
+          "wear_quick_panel_custom_color": {
+            "type": "string",
+            "value": ""
+          }
+        }
+      }
+    ]
   }
 }

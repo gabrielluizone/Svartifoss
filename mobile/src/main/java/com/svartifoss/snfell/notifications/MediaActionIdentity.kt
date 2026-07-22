@@ -101,8 +101,12 @@ internal fun inferMediaActionSemantic(vararg hints: String?): String {
 
         (hasAny("thumbs", "thumb") && hasAny("up")) ||
                 hasAny("like", "liked", "favorite", "favourite", "favorito", "favorita",
-                        "curtir", "curtido", "heart", "gostei") ||
-                hasPhrase("me gusta", "j aime") ->
+                        "curtir", "curtido", "heart", "gostei",
+                        // Spotify surfaces "like" as save-to-library / collection.
+                        "save", "saved", "salvar", "guardar", "library", "biblioteca",
+                        "collection") ||
+                hasPhrase("me gusta", "j aime", "save to", "add to liked", "your library",
+                        "adicionar", "sua biblioteca") ->
             MediaActionSemantics.LIKE
 
         hasAny("shuffle", "random", "aleatorio", "aleatoria", "embaralhar", "mezclar",

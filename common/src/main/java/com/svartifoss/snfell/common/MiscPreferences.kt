@@ -24,6 +24,16 @@ object MiscPreferences {
 
     val HAPTIC_FEEDBACK: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("haptic_feedback", true)
 
+    /**
+     * UI language as a BCP-47 tag ("en", "pt-BR"), or [AppLocales.SYSTEM] to follow the device.
+     *
+     * Deliberately synced to the watch rather than left per-device: the two APKs are separate
+     * installs with their own system locales, so without this a user who picks Portuguese on the
+     * phone would still get an English watch. Both sides resolve it through [AppLocales].
+     */
+    val APP_LANGUAGE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("app_language", AppLocales.SYSTEM)
+
     val DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("disable_ambient_physical_double_click", false)
 
     // Legacy boolean superseded by AUTO_START_MODE. Kept only so the one-time migration in
@@ -36,6 +46,11 @@ object MiscPreferences {
     val AUTO_START_APP_BLACKLIST: PreferenceDefinition<Set<String>> = SimplePreferenceDefinition("auto_start_apps_blacklist", emptySet())
 
     val CLOSE_TIMEOUT: PreferenceDefinition<Int> = SimplePreferenceDefinition("close_timeout", 0)
+
+    /** Auto-closes the watch app shortly after it reaches the truly-idle "Nothing playing" state
+     *  (no track at all), so it never lingers there. Independent of [CLOSE_TIMEOUT], which governs
+     *  the general non-playing (paused) case and stays off unless the user sets it. */
+    val WEAR_CLOSE_ON_IDLE: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_close_on_idle", true)
 
     val ENABLE_NOTIFICATION_POPUP: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("enable_notification_popup", false)
 
@@ -53,16 +68,32 @@ object MiscPreferences {
     /** Blur radius in pixels when album art style is set to blur (API 31+ GPU blur). */
     val ALBUM_ART_BLUR_RADIUS: PreferenceDefinition<Int> = SimplePreferenceDefinition("album_art_blur_radius", 35)
 
-    /** Legacy free-form dim percentage, retained so old backups remain readable. */
+    /** Shading strength as a direct percentage (0..[SHADING_MAX_PERCENT]); the live source. */
     val ALBUM_ART_DIM_STRENGTH: PreferenceDefinition<Int> = SimplePreferenceDefinition("album_art_dim_strength", 80)
 
     /** Artwork/player shading selected independently from the structural face. */
     val WEAR_PLAYER_SHADING_STYLE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_player_shading_style", "follow")
 
-    /** Shared named strength: soft, balanced or strong. */
+    /** Legacy named strength (soft/balanced/strong), superseded by the numeric
+     *  [ALBUM_ART_DIM_STRENGTH]; kept only to migrate old values. */
     val WEAR_PLAYER_SHADING_INTENSITY: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_player_shading_intensity", "balanced")
+
+    /** Colour of the shading gradient: "black" (default), "album", "desaturated" or "custom". */
+    val WEAR_SHADING_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_shading_color_mode", "black")
+
+    /** Hex colour (#RRGGBB) used when [WEAR_SHADING_COLOR_MODE] is "custom". */
+    val WEAR_SHADING_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_shading_custom_color", "")
+
+    /** Shows the currently-playing app's icon next to the artist line, on every face. The phone
+     *  sends the icon from that app's media notification (the branded status-bar glyph), falling
+     *  back to its launcher icon when no media notification is readable. On by default; the phone
+     *  skips sending the icon entirely when this is off, to save Bluetooth. */
+    val WEAR_SHOW_SOURCE_ICON: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_show_source_icon", true)
 
     /** How long volume/seek overlays stay visible after adjustment (milliseconds). */
     val VOLUME_OVERLAY_TIMEOUT: PreferenceDefinition<Int> = SimplePreferenceDefinition("volume_overlay_timeout", 1000)
@@ -126,6 +157,24 @@ object MiscPreferences {
     /** Overall AOD brightness (20-100%): scales the alpha of the expressive AOD's outlines,
      *  glyphs and text, and of the classic/minimal AOD text block. Lower = dimmer = cheaper. */
     val WEAR_AOD_INTENSITY: PreferenceDefinition<Int> = SimplePreferenceDefinition("wear_aod_intensity", 100)
+
+    // --- Awake clock (the "always show time" clock at the top of the now-playing screen; the AOD
+    //     clock has its own AOD colour mode above). Face-scoped appearance prefs. ---
+
+    /** Where the awake clock takes its colour: "white" (the historical semi-transparent white),
+     *  "dynamic" (white or black by the luminance of the small artwork region *under the clock*,
+     *  not the whole cover), "album" (the album/theme accent) or "custom" ([WEAR_CLOCK_CUSTOM_COLOR]).
+     *  The colour opacity is applied separately via [WEAR_CLOCK_OPACITY]. */
+    val WEAR_CLOCK_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_clock_color_mode", "white")
+
+    /** Hex colour (#RRGGBB) used when [WEAR_CLOCK_COLOR_MODE] is "custom". */
+    val WEAR_CLOCK_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_clock_custom_color", "")
+
+    /** Awake clock opacity, 10-100%. Default 60 reproduces the old 0x99 (~60%) alpha. */
+    val WEAR_CLOCK_OPACITY: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_clock_opacity", 60)
 
     // --- Wear OS experience toggles (configured on phone, synced to watch) ---
 
@@ -227,6 +276,15 @@ object MiscPreferences {
      *  independent appearance settings. */
     val WEAR_SCREEN_THEME: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_screen_theme", "default")
 
+    /** Classic face only (Compose faces never show quadrant hint icons at all): when a quadrant's
+     *  tap/double-tap/long-press fires its action, briefly flashes that icon to full opacity and
+     *  back down to the current Screen Theme's resting alpha - most useful on Hidden, where the
+     *  icon is otherwise invisible and gives no confirmation of which action just fired, but
+     *  available on every theme. Independent of the existing scale-bounce pulse, which keeps
+     *  running unconditionally regardless of this toggle. */
+    val WEAR_QUADRANT_TAP_FLASH: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_quadrant_tap_flash", false)
+
     /** Typeface for title/artist text on every player layout. The catalog combines the bundled
      *  Google Sans/Love Letter faces with Android system-family aliases (rounded, light, thin,
      *  medium, black, small caps, casual, serif, mono, condensed and cursive). The older bundled
@@ -244,8 +302,9 @@ object MiscPreferences {
 
     /** One color policy for the complete interactive watch UI. "normal" uses the user's fixed
      * [WEAR_NORMAL_COLOR], "desaturated" derives a softened accent from the current cover and
-     * "expressive" uses the full album palette. This supersedes the old independent
-     * artist/progress switches, which remain readable only for migration. */
+     * "expressive" uses the full album palette (distinct primary/secondary/tertiary swatches).
+     * This supersedes the old independent artist/progress switches, which remain readable only
+     * for migration. */
     val WEAR_COLOR_TREATMENT: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_color_treatment", "expressive")
 
@@ -262,9 +321,9 @@ object MiscPreferences {
             SimplePreferenceDefinition("wear_title_text_mode", "smart")
 
     /** Per-surface treatment for artist text: "follow" inherits [WEAR_COLOR_TREATMENT], while
-     *  "normal", "desaturated" and "expressive" override it for this target only. Historical
-     *  "neutral"/"album"/"custom" values are still accepted by the watch and migrated by the
-     *  phone settings UI. */
+     *  "normal", "desaturated" and "expressive" override it for this target only.
+     *  Historical "neutral"/"album"/"custom" values are still accepted by the watch and migrated
+     *  by the phone settings UI. */
     val WEAR_ARTIST_COLOR_MODE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_artist_color_mode", "follow")
 
@@ -340,6 +399,28 @@ object MiscPreferences {
     val WEAR_SCREEN_BUTTONS_SHAPE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("screen_buttons_shape", "pill")
 
+    /**
+     * When the mini-buttons row may appear on this layout, as one of [ActivityVisibility]'s values
+     * ("always" / "playing" / "paused" / "never"), mirroring the Track-time display option.
+     * "playing" is [MusicViewModel][com.svartifoss.snfell.watch.view.MusicViewModel]'s `playing`
+     * flag (true only during actual playback); a paused session and true idle both count as
+     * "paused". Face-scoped and independent from the row's configured slots - "never" hides the row
+     * and reclaims its space regardless of what is assigned, and the assignments still apply on
+     * every other layout.
+     */
+    val WEAR_MINI_BUTTONS_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_mini_buttons_mode", ActivityVisibility.ALWAYS)
+
+    /**
+     * When the four configurable screen gestures - the [ScreenQuadrant] taps/double-taps/
+     * long-presses and the up/down/left [SwipeGesture]s - do anything on this layout, as an
+     * [ActivityVisibility] value. Face-scoped and independent from their assignments in the Controls
+     * tab. The centre tap (play/pause) and the quick-actions double-tap are separate, fixed
+     * interactions and are never affected.
+     */
+    val WEAR_GESTURES_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_gestures_mode", ActivityVisibility.ALWAYS)
+
 
 
     // The quick actions panel (double-tap center) is configured entirely through the
@@ -395,13 +476,48 @@ object MiscPreferences {
     val WEAR_QUICK_PANEL_LAYOUT: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_quick_panel_layout", "stacked")
 
+    /** Dedicated background style for the awake Up Next pill in the quick-actions panel,
+     *  independent from [WEAR_QUICK_PANEL_STYLE]. "follow" keeps the historical behaviour (the pill
+     *  follows the quick-panel style); the rest give it its own fill: "accent", "translucent"
+     *  (frosted semi-white), "white", "white_blur" (frosted white), "black", "dynamic" (a dark tone
+     *  derived from the album accent). Face-scoped. Text/icon colour auto-contrasts. */
+    val WEAR_UP_NEXT_PILL_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_up_next_pill_style", "follow")
+
+    /** Whether to show an Up Next pill at the bottom of the player (the same information the AOD
+     *  pill carries, on the main screen). Face-scoped. Meant to fill the space the mini-buttons row
+     *  would take, so the watch only actually draws it while that row is not showing. */
+    val WEAR_SHOW_UP_NEXT_PILL: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_show_up_next_pill", false)
+
     /** Whether the quick panel follows the active app's MediaSession actions or its manual slots. */
     val WEAR_QUICK_PANEL_SOURCE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_quick_panel_source", "manual")
 
     /** Visual style of the playback queue screen. */
+    /** Every list-style value that fills a pill with the entry's own artwork. The phone checks
+     *  this to decide whether to send higher-resolution covers, and the preview to draw them;
+     *  the watch resolves the same values through QueueStyle.isCover. */
+    val COVER_LIST_STYLES: Set<String> = setOf(
+            "cover", "cover_blur", "cover_tonal", "cover_compact", "cover_tall", "cover_square")
+
     val WEAR_QUEUE_STYLE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_queue_style", "glass")
+
+    /** When [WEAR_QUEUE_STYLE] is a Cover variant, whether an eligible quick-panel action row
+     *  (one whose icon is genuine fetched cover art - e.g. a streaming shortcut's cached
+     *  thumbnail - not just a generic app icon) also fills its pill with that art, the same
+     *  treatment the Up Next row gets. Off by default: the underlying online-thumbnail fetch is
+     *  itself opt-in, and not every user wants their shortcut rows turned into cover art. */
+    val WEAR_QUICK_PANEL_SHORTCUT_COVER: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_quick_panel_shortcut_cover", false)
+
+    /** Height of the full-width list pills - "compact", "normal", "tall" or "xtall". Applies to
+     *  every list style, not just the cover ones, so a user can have roomy Tonal rows as easily as
+     *  roomy Cover rows. The style contributes the padding rhythm; this contributes the content
+     *  height they wrap. */
+    val WEAR_LIST_ROW_SIZE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_list_row_size", "normal")
 
     /** Visual style of the edge progress/seek ring: "solid" (default), "dashed", "dots",
      *  "hairline", "comet", or one of the clock-index styles (60 dots, 60 ticks, 12 segments) -
@@ -424,6 +540,21 @@ object MiscPreferences {
     val CRASH_REPORTING_ENABLED: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("crash_reporting_enabled", true)
 
+    /** Phone-local opt-out for developer announcement push notifications (Firebase Cloud
+     *  Messaging). Enabled by default; gates the topic subscription in AnnouncementNotifications.
+     *  Deliberately excluded from config backup/import and from EXPORTABLE, same reasoning as
+     *  [CRASH_REPORTING_ENABLED] - it is this device's own consent choice, and announcements are a
+     *  phone-only concept with no watch-side meaning. */
+    val ANNOUNCEMENTS_ENABLED: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("announcements_enabled", true)
+
+    /** Shows/hides the phone app's persistent mini player bar (the currently-playing summary
+     *  docked above the bottom nav). Enabled by default. Deliberately excluded from EXPORTABLE:
+     *  it is a phone-UI-only concept with no watch-side meaning, so it neither syncs to the
+     *  watch nor needs to survive a config backup/restore. */
+    val MINI_PLAYER_ENABLED: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("mini_player_enabled", true)
+
     fun isAnyKindOfAutoStartEnabled(preferences: SharedPreferences): Boolean {
         return Preferences.getBoolean(preferences, AUTO_START) || Preferences.getEnum(preferences, AUTO_START_MODE) != AutoStartMode.OFF
     }
@@ -433,30 +564,38 @@ object MiscPreferences {
      *  the config export/import feature - add new preferences here too when adding them above. */
     val EXPORTABLE: List<PreferenceDefinition<*>> = listOf(
             ALWAYS_SHOW_TIME, PAUSE_ON_SWIPE_EXIT, ROTATING_CROWN_OFF_PERIOD, ROTATING_CROWN_SENSITIVITY,
-            ROTARY_SEEK, HAPTIC_FEEDBACK, DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT, AUTO_START_MODE,
-            AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
+            ROTARY_SEEK, HAPTIC_FEEDBACK, APP_LANGUAGE,
+            DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT, AUTO_START_MODE,
+            AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, WEAR_CLOSE_ON_IDLE,
+            ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
             ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_BLUR_RADIUS,
             ALBUM_ART_DIM_STRENGTH, WEAR_PLAYER_SHADING_STYLE, WEAR_PLAYER_SHADING_INTENSITY,
+            WEAR_SHADING_COLOR_MODE, WEAR_SHADING_CUSTOM_COLOR, WEAR_SHOW_SOURCE_ICON,
             VOLUME_OVERLAY_TIMEOUT, ROTARY_DEADZONE, AMBIENT_ALBUM_ART_OPACITY,
             WEAR_AOD_STYLE, WEAR_AOD_SHOW_ART, WEAR_AOD_ART_TREATMENT,
             WEAR_AOD_SHOW_CLOCK, WEAR_AOD_SHOW_TRACK_INFO,
             WEAR_AOD_COLOR_MODE, WEAR_AOD_CUSTOM_COLOR, WEAR_AOD_SHOW_TRANSPORT, WEAR_AOD_SHOW_PROGRESS,
             WEAR_AOD_SHOW_PILLS, WEAR_AOD_INTENSITY,
+            WEAR_CLOCK_COLOR_MODE, WEAR_CLOCK_CUSTOM_COLOR, WEAR_CLOCK_OPACITY,
             WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_FACE,
             WEAR_ACTIVE_CUSTOM_THEME_ID, WEAR_CUSTOM_THEME_SCHEMA,
             WEAR_CUSTOM_THEME_COMPLETE, WEAR_CUSTOM_THEME_REVISION,
             WEAR_SHOW_TRACK_TITLE, WEAR_SHOW_TRACK_ARTIST,
             WEAR_PLAYER_CONTROLS_VISIBLE, WEAR_INTERNAL_PROGRESS_VISIBLE,
             WEAR_EDGE_PROGRESS_VISIBLE, WEAR_EDGE_SEEK_ENABLED,
-            WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_FONT,
+            WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
             WEAR_TRACK_TIME_MODE,
             WEAR_DYNAMIC_ACCENT, WEAR_COLOR_TREATMENT, WEAR_NORMAL_COLOR,
             WEAR_ALBUM_ART_FADE, WEAR_SCREEN_BUTTONS_OFFSET, WEAR_SCREEN_BUTTONS_CURVE_STYLE,
             WEAR_SCREEN_BUTTONS_BG, WEAR_SCREEN_BUTTONS_OPACITY, WEAR_SCREEN_BUTTONS_SHAPE,
+            WEAR_MINI_BUTTONS_MODE, WEAR_GESTURES_MODE,
             WEAR_OVERLAY_BLUR_RADIUS,
             WEAR_OVERLAY_BACKDROP_STYLE,
             WEAR_VOLUME_STYLE, WEAR_VOLUME_LAYOUT,
-            WEAR_QUICK_PANEL_STYLE, WEAR_QUICK_PANEL_LAYOUT, WEAR_QUICK_PANEL_SOURCE, WEAR_QUEUE_STYLE,
+            WEAR_QUICK_PANEL_STYLE, WEAR_QUICK_PANEL_LAYOUT, WEAR_UP_NEXT_PILL_STYLE,
+            WEAR_SHOW_UP_NEXT_PILL,
+            WEAR_QUICK_PANEL_SOURCE, WEAR_QUEUE_STYLE, WEAR_QUICK_PANEL_SHORTCUT_COVER,
+            WEAR_LIST_ROW_SIZE,
             WEAR_PROGRESS_STYLE, WEAR_SEEK_STYLE, WEAR_SEEK_LAYOUT,
             WEAR_TITLE_TEXT_MODE, WEAR_ARTIST_COLOR_MODE, WEAR_ARTIST_CUSTOM_COLOR, WEAR_ARTIST_DESATURATED,
             WEAR_PROGRESS_COLOR_MODE, WEAR_PROGRESS_CUSTOM_COLOR, WEAR_PROGRESS_DESATURATED,

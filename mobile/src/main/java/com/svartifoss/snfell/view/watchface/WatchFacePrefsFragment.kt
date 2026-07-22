@@ -3,6 +3,8 @@ package com.svartifoss.snfell.view.watchface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -15,8 +17,12 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
+import androidx.core.content.ContextCompat
+import com.svartifoss.snfell.view.settings.ColorTreatmentPreference
 import com.svartifoss.snfell.view.settings.FaceScopedPreferenceDataStore
 import com.svartifoss.snfell.view.settings.HexColorDotPreference
+import com.svartifoss.snfell.view.settings.lyraRuntimeAccent
+import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity
 import com.svartifoss.snfell.view.settings.parseHexOrDefault
 import com.svartifoss.snfell.view.settings.showLyraColorPickerDialog
@@ -39,6 +45,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         const val SECTION_PANELS = "panels"
         const val SECTION_MINI_BUTTONS = "miniButtons"
         private const val ARG_SECTION = "watchAppearanceSection"
+        private const val DEFAULT_SWATCH_COLOR = 0xFF86A69D.toInt()
 
         fun newInstance(section: String) = WatchFacePrefsFragment().apply {
             arguments = Bundle().apply { putString(ARG_SECTION, section) }
@@ -86,7 +93,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         migrateLegacyColorSettings()
         preferenceManager.preferenceDataStore = store
         addPreferencesFromResource(R.xml.watch_face_settings)
+        wirePreferences()
+    }
 
+    /** Everything that turns the inflated preference tree into a working screen. Extracted so
+     *  [resetCurrentFaceAppearance] can rebuild the screen from the (now cleared) values. */
+    private fun wirePreferences() {
         applyArchivedOptionFilters()
         initListSummaries()
         initFaceDependencies()
@@ -118,6 +130,15 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 desaturatedKey = null,
                 customColorDescription = R.string.setting_wear_quick_panel_custom_color_description
         )
+        // Shading color modes are black/album/desaturated/custom; only "custom" reveals the color
+        // row, which the shared dependency logic already produces since there is no "normal" here.
+        initAccentColorTarget(
+                modeKey = "wear_shading_color_mode",
+                customColorKey = "wear_shading_custom_color",
+                desaturatedKey = null,
+                customColorDescription = R.string.setting_wear_shading_custom_color_description
+        )
+        initApplyToAllFaces()
         initAccentColorTarget(
                 modeKey = "wear_aod_color_mode",
                 customColorKey = "wear_aod_custom_color",
@@ -125,6 +146,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 // lightness for legibility on the pure-black ambient background.
                 desaturatedKey = null,
                 customColorDescription = R.string.setting_wear_aod_custom_color_description
+        )
+        // Clock colour modes are white/dynamic/album/custom; only "custom" reveals the colour row.
+        initAccentColorTarget(
+                modeKey = "wear_clock_color_mode",
+                customColorKey = "wear_clock_custom_color",
+                desaturatedKey = null,
+                customColorDescription = R.string.setting_wear_clock_custom_color_description
         )
         findPreference<Preference>("screen_buttons_hint")?.onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
@@ -156,12 +184,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             "wear_queue_style",
             "album_art_style",
             "wear_player_shading_style",
-            "wear_player_shading_intensity",
             "wear_color_treatment",
             "wear_artist_color_mode",
             "wear_progress_color_mode",
             "wear_volume_color_mode",
             "wear_quick_panel_color_mode",
+            "wear_shading_color_mode",
             "wear_progress_style",
             "screen_buttons_bg_style",
             "screen_buttons_shape"
@@ -185,27 +213,53 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             SECTION_COLORS -> setOf("cat_wf_colors")
             SECTION_AOD -> setOf("cat_wf_aod")
             SECTION_PANELS -> setOf("cat_wf_overlays")
-            SECTION_MINI_BUTTONS -> setOf("cat_wf_mini_buttons")
-            else -> setOf("cat_wf_face")
+            // Mini buttons and the screen-gestures toggles are both input controls, so they share
+            // the one section.
+            SECTION_MINI_BUTTONS -> setOf("cat_wf_mini_buttons", "cat_wf_gestures")
+            // Style (face) page also carries the awake clock and the layout reset / apply-to-all
+            // actions, which operate on the whole face's look.
+            else -> setOf("cat_wf_face", "cat_wf_clock", "cat_wf_layout_actions")
         }
 
         listOf(
             "cat_wf_face",
+            "cat_wf_clock",
             "cat_wf_aod",
             "cat_wf_overlays",
             "cat_wf_background",
             "cat_wf_colors",
-            "cat_wf_mini_buttons"
+            "cat_wf_mini_buttons",
+            "cat_wf_gestures",
+            "cat_wf_layout_actions"
         ).forEach { key ->
             findPreference<Preference>(key)?.isVisible = key in visibleCategories
         }
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
+        // The swatch data has no route from a bare Preference to the live album accent, so it
+        // must be refreshed here, right before the dialog is built - see
+        // ColorTreatmentPreference's class doc.
+        if (preference is ColorTreatmentPreference) {
+            refreshColorTreatmentSwatches(preference)
+        }
         super.onDisplayPreferenceDialog(preference)
         // Preference dialogs inflate with the static theme colors; once the dialog is up,
         // re-tint it with the accent currently on screen.
         view?.post { tintOpenLyraPreferenceDialog() }
+    }
+
+    /** Feeds a [ColorTreatmentPreference] the current album accent and effective Normal color so
+     *  its dialog's swatches match what the preview would actually show for each option. */
+    private fun refreshColorTreatmentSwatches(pref: ColorTreatmentPreference) {
+        pref.albumAccents = (parentFragment as? WatchFaceFragment)?.currentAlbumAccents()
+                ?: Triple(DEFAULT_SWATCH_COLOR, DEFAULT_SWATCH_COLOR, DEFAULT_SWATCH_COLOR)
+        pref.globalTreatmentValue = readStringPreference("wear_color_treatment", "expressive")
+        val targetCustomHex = pref.customColorKey
+                ?.let { store.getString(it, null) }
+                ?.takeUnless { it.isBlank() }
+        val normalHex = targetCustomHex ?: store.getString("wear_normal_color", null)
+        pref.normalPreviewColor = parseHexOrDefault(normalHex)
     }
 
     override fun onResume() {
@@ -260,6 +314,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 "wear_normal_color", R.string.setting_wear_normal_color_description)
         updateAccentColorTargetSummary(findPreference("wear_aod_custom_color"),
                 "wear_aod_custom_color", R.string.setting_wear_aod_custom_color_description)
+        updateAccentColorTargetSummary(findPreference("wear_clock_custom_color"),
+                "wear_clock_custom_color", R.string.setting_wear_clock_custom_color_description)
         updateAccentColorTargetSummary(findPreference("wear_artist_custom_color"),
                 "wear_artist_custom_color", R.string.setting_wear_artist_custom_color_description)
         updateAccentColorTargetSummary(findPreference("wear_progress_custom_color"),
@@ -358,6 +414,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             "wear_aod_custom_color",
             null,
             readStringPreference("wear_aod_color_mode", "white")
+        )
+        updateAccentColorTargetDependencies(
+            "wear_clock_color_mode",
+            "wear_clock_custom_color",
+            null,
+            readStringPreference("wear_clock_color_mode", "white")
         )
         listOf(
                 "wear_artist_color_mode" to "wear_artist_custom_color",
@@ -472,6 +534,141 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 ?.onWatchPreferenceInteraction(section, key, candidateValue)
     }
 
+    private fun initApplyToAllFaces() {
+        findPreference<Preference>("apply_appearance_to_all_faces")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    AlertDialog.Builder(requireContext())
+                            .setTitle(R.string.apply_appearance_confirm_title)
+                            .setMessage(R.string.apply_appearance_confirm_message)
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .setPositiveButton(R.string.apply_appearance_confirm_button) { _, _ ->
+                                applyCurrentAppearanceToAllFaces()
+                                Toast.makeText(requireContext(),
+                                        R.string.apply_appearance_done, Toast.LENGTH_SHORT).show()
+                            }
+                            .show()
+                            .tintLyraButtons()
+                    true
+                }
+
+        findPreference<Preference>("reset_appearance")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    AlertDialog.Builder(requireContext())
+                            .setTitle(R.string.reset_appearance_confirm_title)
+                            .setMessage(R.string.reset_appearance_confirm_message)
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .setPositiveButton(R.string.reset_appearance_confirm_button) { _, _ ->
+                                resetCurrentFaceAppearance()
+                                Toast.makeText(requireContext(),
+                                        R.string.reset_appearance_done, Toast.LENGTH_SHORT).show()
+                            }
+                            .show()
+                            .tintLyraButtons()
+                    true
+                }
+
+        findPreference<Preference>("reset_all_faces")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    AlertDialog.Builder(requireContext())
+                            .setTitle(R.string.reset_all_faces_confirm_title)
+                            .setMessage(R.string.reset_all_faces_confirm_message)
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .setPositiveButton(R.string.reset_all_faces_confirm_button) { _, _ ->
+                                resetAllFacesAppearance()
+                                Toast.makeText(requireContext(),
+                                        R.string.reset_all_faces_done, Toast.LENGTH_SHORT).show()
+                            }
+                            .show()
+                            .tintLyraButtons()
+                    true
+                }
+    }
+
+    /** Recolours a shown confirm dialog's buttons to match the accent currently on screen, the same
+     *  runtime-accent treatment the Lyra preference/colour-picker dialogs get. Without it the buttons
+     *  inflate with the static theme green instead of the active (including album-dynamic) accent. */
+    private fun AlertDialog.tintLyraButtons() {
+        val accent = lyraRuntimeAccent()
+        val secondary = ContextCompat.getColor(requireContext(), R.color.lyra_text_secondary)
+        getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(accent)
+        getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(secondary)
+        getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(secondary)
+    }
+
+    /** Clears every explicitly-set appearance value for the current scope, so the layout falls back
+     *  to its per-face defaults - the "reset this layout to its original look" action. Only the
+     *  scoped appearance keys are touched; behaviour prefs and the face selector are untouched.
+     *  Writing (removing) the flat scoped keys triggers the normal phone -> watch sync, and the
+     *  preview/controls re-read via refreshConditionalPreferences below. */
+    private fun resetCurrentFaceAppearance() {
+        val currentScope = FaceScopedPreferences.scopeFor(ThemeAppearance.resolve(rawPrefs))
+        val editor = rawPrefs.edit()
+        for (baseKey in FaceScopedPreferences.SCOPED_KEYS) {
+            editor.remove(FaceScopedPreferences.scopedKey(baseKey, currentScope))
+        }
+        editor.apply()
+        // The preference controls cache their shown values; re-inflate the screen so it reflects
+        // the defaults immediately instead of only after a re-open. The data store binding on the
+        // preference manager persists across this, so the rebuilt controls read the cleared values.
+        setPreferencesFromResource(R.xml.watch_face_settings, null)
+        wirePreferences()
+    }
+
+    /** Restores every built-in face to its factory look - the recovery action for "someone changed
+     *  the built-in themes and can't get back". Deactivates any active custom theme first (so the
+     *  reset is actually visible and can't rewrite a saved profile), then clears every scoped
+     *  appearance value for all faces plus the custom snapshot scope and the legacy global keys, so
+     *  each face falls back purely to its per-face definition default. The chosen face, saved custom
+     *  themes and behaviour prefs are left untouched. Removing the flat scoped keys triggers the
+     *  normal phone -> watch sync; the screen is re-inflated so the controls show the defaults. */
+    private fun resetAllFacesAppearance() {
+        // Return to the built-in face (keeping the current one) before wiping values, so an active
+        // custom theme doesn't leave the reset with no visible effect.
+        val currentFace = ThemeAppearance.resolve(rawPrefs).baseFace
+        WatchThemeRepository(requireContext()).applyBuiltIn(rawPrefs, currentFace)
+
+        val editor = rawPrefs.edit()
+        for (baseKey in FaceScopedPreferences.SCOPED_KEYS) {
+            for (face in ThemeAppearance.ALLOWED_BASE_FACES) {
+                editor.remove(FaceScopedPreferences.scopedKey(baseKey, face))
+            }
+            editor.remove(FaceScopedPreferences.scopedKey(baseKey, ThemeAppearance.CUSTOM_SCOPE))
+            editor.remove(baseKey)
+        }
+        editor.apply()
+
+        setPreferencesFromResource(R.xml.watch_face_settings, null)
+        wirePreferences()
+    }
+
+    /** Copies the current appearance scope's explicitly-set values onto every built-in face scope,
+     *  so a look built on one face becomes the starting point for all of them. Keys the user never
+     *  chose are left untouched, so each face keeps its own per-face default where nothing was set.
+     *  Writing the flat scoped keys triggers the normal phone -> watch preference sync. */
+    private fun applyCurrentAppearanceToAllFaces() {
+        val currentScope = FaceScopedPreferences.scopeFor(ThemeAppearance.resolve(rawPrefs))
+        val snapshot = rawPrefs.all
+        val editor = rawPrefs.edit()
+        for (baseKey in FaceScopedPreferences.SCOPED_KEYS) {
+            val sourceKey = FaceScopedPreferences.scopedKey(baseKey, currentScope)
+            val value = snapshot[sourceKey] ?: continue
+            for (face in ThemeAppearance.ALLOWED_BASE_FACES) {
+                val targetKey = FaceScopedPreferences.scopedKey(baseKey, face)
+                if (targetKey == sourceKey) continue
+                when (value) {
+                    is String -> editor.putString(targetKey, value)
+                    is Boolean -> editor.putBoolean(targetKey, value)
+                    is Int -> editor.putInt(targetKey, value)
+                    is Long -> editor.putLong(targetKey, value)
+                    is Float -> editor.putFloat(targetKey, value)
+                    is Set<*> -> @Suppress("UNCHECKED_CAST")
+                        editor.putStringSet(targetKey, value as Set<String>)
+                }
+            }
+        }
+        editor.apply()
+    }
+
     /** Keeps face-specific settings aligned with the renderer selected in the preview. */
     private fun initFaceDependencies() {
         updateFaceDependencies()
@@ -490,6 +687,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         findPreference<Preference>("wear_edge_progress_visible")?.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _, newValue ->
                     updatePlayerCapabilityVisibility(overrideEdgeVisible = newValue as? Boolean)
+                    true
+                }
+        findPreference<Preference>("wear_edge_seek_enabled")?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, newValue ->
+                    updatePlayerCapabilityVisibility(overrideEdgeSeekEnabled = newValue as? Boolean)
                     true
                 }
     }
@@ -511,10 +713,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * when the user returns to a compatible face. */
     private fun updatePlayerCapabilityVisibility(
             overrideFace: String? = null,
-            overrideEdgeVisible: Boolean? = null
+            overrideEdgeVisible: Boolean? = null,
+            overrideEdgeSeekEnabled: Boolean? = null
     ) {
         val face = overrideFace ?: readStringPreference("wear_screen_face", "classic")
         val edgeVisible = overrideEdgeVisible ?: store.getBoolean("wear_edge_progress_visible", true)
+        val edgeSeekEnabled =
+                overrideEdgeSeekEnabled ?: store.getBoolean("wear_edge_seek_enabled", true)
         // Every layout now reads this through AdaptiveTitleText, not just Classic's own
         // OutlineTextView - it always applies.
         findPreference<Preference>("wear_title_text_mode")?.isVisible = true
@@ -527,7 +732,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         findPreference<Preference>("wear_internal_progress_visible")?.isVisible = face in setOf(
                 "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum"
         )
-        findPreference<Preference>("wear_progress_style")?.isVisible = edgeVisible
+        // The ring's own style still matters even with the always-visible resting ring turned
+        // off: CircularProgressSeekBar.shouldDrawEdgeProgress reveals it for the lifetime of an
+        // active drag regardless of that setting, so hiding the picker whenever dragging can
+        // still show the ring would leave no way to choose what that temporary reveal looks like.
+        findPreference<Preference>("wear_progress_style")?.isVisible = edgeVisible || edgeSeekEnabled
+        // Quadrant hint icons only exist on Classic - every Compose face hides them entirely.
+        findPreference<Preference>("wear_quadrant_tap_flash")?.isVisible = face == "classic"
     }
 
     private fun updateBackgroundCapabilityVisibility() {
@@ -539,10 +750,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         listOf(
                 "dim_album_art",
                 "wear_player_shading_style",
-                "wear_player_shading_intensity",
+                "album_art_dim_strength",
+                "wear_shading_color_mode",
                 "wear_album_art_fade"
         )
                 .forEach { key -> findPreference<Preference>(key)?.isVisible = true }
+        // The custom-color row is governed by initAccentColorTarget (visible only in "custom").
     }
 
     /** The three detailed AOD controls are rendered only by the visual (Compose) AOD faces. */
@@ -555,15 +768,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val effectiveStyle = if (selectedStyle == "follow") face else selectedStyle
         val visualStyle = effectiveStyle in setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-            "spectrum", "material"
+            "spectrum", "material", "immersive"
         )
         findPreference<Preference>("wear_aod_show_transport")?.isVisible = visualStyle
         findPreference<Preference>("wear_aod_show_progress")?.isVisible = visualStyle
-        // Only Expressive owns a fixed bottom pill trio. Curated layouts deliberately leave
-        // this strip to the user's mini buttons, so exposing this toggle there would do nothing.
-        findPreference<Preference>("wear_aod_show_pills")?.isVisible =
-                effectiveStyle == "expressive" || effectiveStyle == "material"
-        val artworkSupported = effectiveStyle !in setOf("minimal", "eclipse")
+        // The Up Next pill is offered on every visual AOD face now (not just Expressive/Material).
+        findPreference<Preference>("wear_aod_show_pills")?.isVisible = visualStyle
+        val artworkSupported = effectiveStyle !in setOf("chrono", "eclipse")
         findPreference<Preference>("wear_aod_show_art")?.isVisible = artworkSupported
         findPreference<Preference>("wear_aod_art_treatment")?.isVisible = artworkSupported
         findPreference<Preference>("ambient_album_art_opacity")?.isVisible = artworkSupported

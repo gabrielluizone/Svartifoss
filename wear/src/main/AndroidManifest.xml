@@ -55,6 +55,18 @@
 
         <activity android:name="com.matejdro.wearutils.companionnotice.PhoneAppNoticeActivity" />
 
+        <!-- Invisible bridge launched by a ShortcutsTileService chip: opens the shortcut on the
+             phone and asks it to play, then finishes. Exported because the Tile framework (a
+             separate system process) starts it; it only accepts a shortcut entry-id it validates
+             as a safe URI scheme before opening. -->
+        <activity
+            android:name=".watch.tile.ShortcutLaunchActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <service
             android:name=".watch.communication.PreferencesReceiver"
             android:exported="true"
@@ -91,6 +103,22 @@
                 <data
                     android:host="*"
                     android:pathPrefix="/IdleMessages"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
+        <!-- Low-latency preference delivery: applies a settings change promptly instead of waiting
+             for the /Settings DataItem to sync out of doze. Path must match
+             CommPaths.MESSAGE_APPLY_PREFERENCES. -->
+        <service
+            android:name=".watch.communication.PreferenceMessageReceiver"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/PreferencesSync"
                     android:scheme="wear" />
             </intent-filter>
         </service>
@@ -175,6 +203,23 @@
             android:exported="true"
             android:label="@string/tile_label"
             android:description="@string/tile_description"
+            android:icon="@drawable/ic_complication_picker"
+            android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
+            <intent-filter>
+                <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="androidx.wear.tiles.PREVIEW"
+                android:resource="@drawable/tile_preview" />
+        </service>
+
+        <!-- Browse Tile: the user's streaming shortcuts, one tap away -->
+        <service
+            android:name=".watch.tile.ShortcutsTileService"
+            android:exported="true"
+            android:label="@string/shortcuts_tile_label"
+            android:description="@string/shortcuts_tile_description"
             android:icon="@drawable/ic_complication_picker"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
             <intent-filter>

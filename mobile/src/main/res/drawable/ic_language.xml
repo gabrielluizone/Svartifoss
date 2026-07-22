@@ -1,0 +1,15 @@
+<!-- Material Symbols Outlined "language", weight 400, grade 0 (fonts.google.com/icons).
+     Its viewBox is "0 -960 960 960" - translateY shifts that into Android's 0..viewportHeight
+     coordinate space. Tinted at usage (settings list). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960"
+    android:tint="?attr/colorControlNormal">
+    <group android:translateY="960">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M480,-80q-83,0 -156,-31.5T197,-197q-54,-54 -85.5,-127T80,-480q0,-83 31.5,-156T197,-763q54,-54 127,-85.5T480,-880q83,0 156,31.5T763,-763q54,54 85.5,127T880,-480q0,83 -31.5,156T763,-197q-54,54 -127,85.5T480,-80ZM480,-162q26,-36 45,-75t31,-83L404,-320q12,44 31,83t45,75ZM376,-176q-18,-33 -31.5,-68.5T322,-320L204,-320q29,50 72.5,87t99.5,57ZM584,-176q56,-20 99.5,-57t72.5,-87L638,-320q-9,40 -22.5,75.5T584,-176ZM170,-400l136,0q-3,-20 -4.5,-39.5T300,-480q0,-21 1.5,-40.5T306,-560L170,-560q-5,20 -7.5,39.5T160,-480q0,21 2.5,40.5T170,-400ZM388,-400l184,0q3,-20 4.5,-39.5T578,-480q0,-21 -1.5,-40.5T572,-560L388,-560q-3,20 -4.5,39.5T382,-480q0,21 1.5,40.5T388,-400ZM654,-400l136,0q5,-20 7.5,-39.5T800,-480q0,-21 -2.5,-40.5T790,-560L654,-560q3,20 4.5,39.5T660,-480q0,21 -1.5,40.5T654,-400ZM638,-640l118,0q-29,-50 -72.5,-87T584,-784q18,33 31.5,68.5T638,-640ZM404,-640l152,0q-12,-44 -31,-83t-45,-75q-26,36 -45,75t-31,83ZM204,-640l118,0q9,-40 22.5,-75.5T376,-784q-56,20 -99.5,57T204,-640Z" />
+    </group>
+</vector>

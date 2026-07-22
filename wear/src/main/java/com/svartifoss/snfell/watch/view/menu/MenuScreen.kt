@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -52,6 +54,12 @@ import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
 import com.svartifoss.snfell.watch.view.compose.LoadingSpinner
+import com.svartifoss.snfell.watch.view.queue.QueueStyle
+import com.svartifoss.snfell.watch.view.queue.coverFill
+import com.svartifoss.snfell.watch.view.queue.blurredCover
+import com.svartifoss.snfell.watch.view.queue.coverScrimFor
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.draw.paint
 
 /** What [MenuScreen] is currently showing. */
 sealed interface MenuContent {
@@ -79,6 +87,9 @@ private const val SUBTITLE_ALPHA = 0.65f
 fun MenuScreen(
         content: MenuContent?,
         alwaysPickCenter: Boolean,
+        /** The queue's list style. Its cover variations make custom-list rows whose entry has a
+         *  thumbnail render it full-bleed behind the label instead of as a 30dp circle. */
+        coverStyle: QueueStyle = QueueStyle.GLASS,
         onActionClick: (index: Int) -> Unit,
         onEntryClick: (listId: String, entryId: String) -> Unit,
         onEntryLongClick: (listId: String, entryId: String) -> Unit,
@@ -147,6 +158,7 @@ fun MenuScreen(
                                             null
                                         },
                                         icon = item.icon,
+                                        coverStyle = coverStyle,
                                         onClick = if (alwaysPickCenter) onCenterConfirm
                                                   else { { onEntryClick(content.list.listId, item.listItem.entryId) } },
                                         onLongClick = if (deletable) {
@@ -183,10 +195,21 @@ private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
     ) {
         val icon = remember(action.icon) { action.icon?.toImageBitmapOrNull() }
         if (icon != null) {
+            // A full-colour cover (e.g. a streaming shortcut's fetched artwork, iconTintable=false)
+            // gets the same circular clip + center-crop the custom-list rows use, so a rectangular
+            // or square thumbnail sits fully inside the circle instead of showing as a raw square.
+            // Monochrome action glyphs (iconTintable=true) stay unclipped - circling a glyph looks
+            // wrong. Mirrors CustomEntryRow's thumbnail and the quick panel's isArtwork rule.
+            val isArtwork = !action.iconTintable
             Image(
                     bitmap = icon,
                     contentDescription = null,
-                    modifier = Modifier.size(30.dp)
+                    contentScale = if (isArtwork) ContentScale.Crop else ContentScale.Fit,
+                    modifier = if (isArtwork) {
+                        Modifier.size(30.dp).clip(CircleShape)
+                    } else {
+                        Modifier.size(30.dp)
+                    }
             )
             Spacer(Modifier.width(10.dp))
         }
@@ -210,14 +233,32 @@ private fun CustomEntryRow(
         title: String,
         subtitle: String?,
         icon: Bitmap?,
+        coverStyle: QueueStyle,
         onClick: () -> Unit,
         onLongClick: (() -> Unit)? = null
 ) {
+    // Only a row that actually has a thumbnail can be cover-filled; the rest keep the plain pill,
+    // which matters because shortcut artwork is opt-in and most entries have none.
+    val cover = if (coverStyle.isCover) icon else null
+    val coverImage = remember(cover, coverStyle) {
+        cover?.let { if (coverStyle == QueueStyle.COVER_BLUR) blurredCover(it) else it }
+                ?.asImageBitmap()
+    }
     Row(
             modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(26.dp))
                     .background(PILL_COLOR)
+                    .then(
+                            if (coverImage != null) {
+                                Modifier.coverFill(
+                                        coverImage,
+                                        RoundedCornerShape(26.dp),
+                                        coverScrimFor(coverStyle, Color(WatchTheme.ACCENT_DEFAULT)))
+                            } else {
+                                Modifier
+                            }
+                    )
                     .combinedClickable(
                             onClick = onClick,
                             onLongClick = onLongClick
@@ -225,13 +266,16 @@ private fun CustomEntryRow(
                     .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
     ) {
-        if (icon != null) {
+        if (icon != null && (coverImage == null || coverStyle.coverKeepsThumbnail)) {
             Image(
                     bitmap = icon.asImageBitmap(),
                     contentDescription = null,
+                    // Circular clip + center-crop so album/cover thumbnails sit fully inside the
+                    // circle, and a rectangular source fills it without letterbox bars.
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                             .size(30.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(CircleShape)
             )
             Spacer(Modifier.width(10.dp))
         }

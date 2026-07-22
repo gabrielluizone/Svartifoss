@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The locales the app ships translations for, exposed to the Android 13+ per-app language
+     picker in system Settings (wired via android:localeConfig in the manifest). Must stay in step
+     with AppLocales.SUPPORTED, the app_language_* picker arrays, and the values-<code> folders. -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="pt-BR" />
+    <locale android:name="pt-PT" />
+    <locale android:name="de" />
+    <locale android:name="es" />
+    <locale android:name="it" />
+    <locale android:name="nl" />
+    <locale android:name="ru" />
+    <locale android:name="el" />
+    <locale android:name="ro" />
+    <locale android:name="id" />
+    <locale android:name="fa" />
+    <locale android:name="zh-Hans" />
+</locale-config>

@@ -23,6 +23,10 @@ object WatchTheme {
 
     const val COLOR_WHITE = 0xFFFFFFFF.toInt()
 
+    /** The historical default awake-clock colour (semi-transparent white, matching the old
+     *  hardcoded 0x99FFFFFF the View and Compose clocks both used). */
+    const val COLOR_WHITE_60 = 0x99FFFFFF.toInt()
+
     /** Lifted near-black for idle pills/cards/buttons on the OLED-black background. */
     const val SURFACE_DARK = 0xFF1E1E20.toInt()
 
@@ -84,6 +88,25 @@ val LoveLetterTypewriterFamily = FontFamily(
         Font(R.font.love_letter_typewriter, FontWeight.Bold),
         Font(R.font.love_letter_typewriter, FontWeight.Medium),
         Font(R.font.love_letter_typewriter, FontWeight.Light)
+)
+
+/** Bundled free (OFL) typefaces offered as redistributable alternatives to popular commercial
+ *  faces: Poppins/Montserrat are geometric sans in the vein of Circular/Proxima Nova, and
+ *  Marcellus is an elegant humanist roman evoking Optima. */
+val PoppinsFamily = FontFamily(
+        Font(R.font.poppins_regular, FontWeight.Normal),
+        Font(R.font.poppins_bold, FontWeight.Bold)
+)
+
+val MontserratFamily = FontFamily(
+        Font(R.font.montserrat_regular, FontWeight.Normal),
+        Font(R.font.montserrat_bold, FontWeight.Bold)
+)
+
+val MarcellusFamily = FontFamily(
+        Font(R.font.marcellus_regular, FontWeight.Normal),
+        // Marcellus ships a single weight; reuse it for bold so the family never falls back.
+        Font(R.font.marcellus_regular, FontWeight.Bold)
 )
 
 /**
@@ -151,6 +174,9 @@ fun watchFontFamily(key: String?): FontFamily = when (key) {
     "roboto" -> FontFamily.Default
     "typewriter" -> MomsTypewriterFamily
     "love_letter" -> LoveLetterTypewriterFamily
+    "poppins" -> PoppinsFamily
+    "montserrat" -> MontserratFamily
+    "marcellus" -> MarcellusFamily
     "serif" -> FontFamily.Serif
     "monospace" -> FontFamily.Monospace
     "cursive" -> FontFamily.Cursive
@@ -167,6 +193,9 @@ fun watchFontTypeface(context: Context, key: String?): Typeface = when (key) {
     "roboto" -> Typeface.DEFAULT
     "typewriter" -> ResourcesCompat.getFont(context, R.font.moms_typewriter)
     "love_letter" -> ResourcesCompat.getFont(context, R.font.love_letter_typewriter)
+    "poppins" -> ResourcesCompat.getFont(context, R.font.poppins_regular)
+    "montserrat" -> ResourcesCompat.getFont(context, R.font.montserrat_regular)
+    "marcellus" -> ResourcesCompat.getFont(context, R.font.marcellus_regular)
     "serif" -> Typeface.SERIF
     "monospace" -> Typeface.MONOSPACE
     "cursive" -> Typeface.create("cursive", Typeface.NORMAL)

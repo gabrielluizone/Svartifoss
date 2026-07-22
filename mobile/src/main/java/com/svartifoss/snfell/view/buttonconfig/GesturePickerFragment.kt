@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentContainerView
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.NullAction
 import com.svartifoss.snfell.actions.PhoneAction
+import com.svartifoss.snfell.common.CenterButton
 import com.svartifoss.snfell.common.buttonconfig.ButtonGesture
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_DOUBLE_TAP
@@ -157,6 +158,11 @@ class GesturePickerFragment : DialogFragment() {
             binding.doublePressDescription.isVisible = false
             binding.doublePressButton.isVisible = false
         }
+
+        // The center tap zone is the one button whose non-editable gestures still do something
+        // (double tap opens the quick panel) - call that out since nothing else on screen does.
+        binding.centerButtonNote.isVisible =
+                !baseButtonInfo.physicalButton && baseButtonInfo.buttonCode == CenterButton.TAP
 
         binding.customizeIcon.setOnClickListener { startIconSelection() }
         binding.singlePressButton.setOnClickListener { changeAction(GESTURE_SINGLE_TAP) }

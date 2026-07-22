@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">Reprodução e controlos de multimédia</string>
+    <string name="complication_album_art_label">Capa em reprodução</string>
+    <string name="complication_no_music">Nada em reprodução</string>
+    <string name="tile_nothing_playing">Nada em reprodução</string>
+    <string name="tile_open_app">Abrir o Svartifoss</string>
+    <string name="tile_rewind_10">Recuar 10 segundos</string>
+    <string name="tile_forward_10">Avançar 10 segundos</string>
+
+    <string name="shortcuts_tile_description">Os teus atalhos de streaming, a um toque</string>
+    <string name="shortcuts_tile_title">Atalhos</string>
+    <string name="shortcuts_tile_empty">Ainda sem atalhos</string>
+    <string name="shortcuts_tile_more">Mais na aplicação</string>
+
+    <string name="idle_nothing_playing">Nada em reprodução</string>
+    <string name="idle_hint">Reproduz algo no telemóvel</string>
+
+    <string name="no_phone">Nenhum telemóvel ligado</string>
+    <string name="playback_stopped">Reprodução parada</string>
+    <string name="error">ERRO</string>
+    <string name="error_play_services">Erro dos Play Services</string>
+    <string name="button">Botão</string>
+    <string name="back_button">Voltar</string>
+    <string name="turn_bezel_cw">Roda o aro no sentido dos ponteiros do relógio</string>
+    <string name="turn_bezel_ccw">Roda o aro no sentido contrário aos ponteiros do relógio</string>
+    <string name="quick_action_like">Gosto</string>
+    <string name="quick_action_shuffle">Aleatório</string>
+    <string name="quick_action_repeat">Repetir</string>
+    <string name="quick_action_repeat_all">Repetir tudo</string>
+    <string name="quick_action_repeat_one">Repetir uma</string>
+    <string name="quick_action_up_next">A seguir</string>
+    <string name="quick_actions_unavailable">A aplicação atual não tem ações rápidas</string>
+    <string name="voice_search_prompt">Procurar música</string>
+    <string name="queue_empty">Nenhuma fila disponível</string>
+    <string name="queue_now_playing">Em reprodução</string>
+
+    <string name="hint_title">Como usar</string>
+    <string name="hint_edges">Extremidades — toca para as ações mostradas</string>
+    <string name="hint_center">Centro — reproduzir/pausar\nToca duas vezes — ações rápidas</string>
+    <string name="hint_swipe_up">Desliza para cima — menu de ações</string>
+    <string name="hint_crown">Coroa — volume</string>
+    <string name="hint_dismiss">Entendido</string>
+
+    <string name="action_name_play">Reproduzir</string>
+    <string name="action_name_pause">Pausar</string>
+    <string name="action_name_skip_prev">Faixa anterior</string>
+    <string name="action_name_skip_next">Faixa seguinte</string>
+    <string name="action_name_volume_up">Aumentar volume</string>
+    <string name="action_name_volume_down">Diminuir volume</string>
+    <string name="action_name_open_menu">Abrir menu</string>
+    <string name="action_name_skip_30">Avançar 30 segundos</string>
+    <string name="action_name_reverse_30">Recuar 30 segundos</string>
+    <string name="action_name_play_pause">Reproduzir/Pausar</string>
+    <string name="action_name_stop">Parar</string>
+    <string name="action_name_restart">Reiniciar faixa</string>
+    <string name="action_name_seek">Percorrer a faixa</string>
+    <string name="action_name_mute">Sem som</string>
+    <string name="action_name_search">Procurar</string>
+    <string name="action_name_custom">Ação personalizada</string>
+    <string name="state_on">Ligado</string>
+    <string name="state_off">Desligado</string>
+
+    <string name="update_notification_channel">Atualizações da aplicação</string>
+    <string name="update_install_title">Atualização do Svartifoss</string>
+    <string name="update_install_tap">Toca para instalar a nova versão</string>
+    <string name="update_install_failed">Falha na instalação. Permite instalações do Svartifoss nas definições do relógio e tenta novamente a partir do telemóvel.</string>
+</resources>

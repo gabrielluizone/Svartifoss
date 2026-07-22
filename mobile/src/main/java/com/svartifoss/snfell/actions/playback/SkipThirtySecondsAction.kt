@@ -27,7 +27,15 @@ class SkipThirtySecondsAction : SelectableAction {
 
     override fun retrieveTitle(): String = context.getString(R.string.action_skip_seconds, secondsToSkip)
     override val defaultIcon: Drawable
-        get() = AppCompatResources.getDrawable(context, com.svartifoss.snfell.common.R.drawable.action_skip_30_seconds)!!
+        get() = AppCompatResources.getDrawable(context, iconResForSeconds(secondsToSkip))!!
+
+    /** Dedicated 5s/10s glyphs when the amount matches exactly; the generic skip glyph otherwise.
+     *  A "5" icon on a 15s skip would misread, so only exact matches swap. */
+    private fun iconResForSeconds(seconds: Int): Int = when (seconds) {
+        5 -> com.svartifoss.snfell.common.R.drawable.action_forward_5
+        10 -> com.svartifoss.snfell.common.R.drawable.action_forward_10
+        else -> com.svartifoss.snfell.common.R.drawable.action_skip_30_seconds
+    }
     override val configFragment: Class<out ActionConfigFragment<out PhoneAction>>
         get() = SkipSecondsConfigFragment::class.java
 

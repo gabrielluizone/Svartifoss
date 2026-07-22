@@ -10,6 +10,12 @@
     <string name="tile_rewind_10">Voltar 10 segundos</string>
     <string name="tile_forward_10">Avançar 10 segundos</string>
 
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_description">Seus atalhos de streaming a um toque</string>
+    <string name="shortcuts_tile_title">Atalhos</string>
+    <string name="shortcuts_tile_empty">Nenhum atalho ainda</string>
+    <string name="shortcuts_tile_more">Mais no app</string>
+
     <!-- Idle (nothing-playing) state on the now-playing screen -->
     <string name="idle_nothing_playing">Nada tocando</string>
     <string name="idle_hint">Toque algo no seu celular</string>

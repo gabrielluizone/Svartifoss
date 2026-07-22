@@ -36,5 +36,8 @@ message WatchList {
     // Explicitly distinguishes monochrome templates from full-colour launcher/gallery artwork.
     optional bool iconTintable = 3;
     optional string remoteUri = 4;
+    // True only for genuine fetched cover art (e.g. a streaming shortcut's cached thumbnail) -
+    // never a generic app-launcher icon - eligible to fill a whole quick-panel pill's background.
+    optional bool iconIsCoverArt = 5;
   }
 }

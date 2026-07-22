@@ -56,6 +56,20 @@
             android:textSize="11sp"
             android:textStyle="bold" />
 
+        <ImageButton
+            android:id="@+id/button_reload_covers"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/playlist_shortcuts_reload_covers"
+            android:padding="12dp"
+            android:src="@drawable/ic_autorenew"
+            android:tint="@color/lyra_on_surface"
+            android:visibility="gone"
+            tools:ignore="UseAppTint"
+            tools:visibility="visible" />
+
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView

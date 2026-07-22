@@ -53,7 +53,11 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
                         iconTintable,
                         it.value.remoteUri.takeIf { _ ->
                             it.value.hasRemoteUri() && it.value.remoteUri.isNotBlank()
-                        })
+                        },
+                        // A corrupt/undecodable asset already fell back to the local template
+                        // above - that fallback glyph is never cover art either.
+                        isCoverArt = !usesLocalTemplate &&
+                                it.value.hasIconIsCoverArt() && it.value.iconIsCoverArt)
             }.toList()
 
             config.postValue(actions)

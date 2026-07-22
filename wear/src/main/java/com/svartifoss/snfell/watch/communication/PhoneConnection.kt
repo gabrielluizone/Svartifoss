@@ -60,6 +60,8 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
     val musicState = ListenableLiveData<Resource<MusicState>>()
     val albumArt = ListenableLiveData<Bitmap?>()
+    /** Icon of the app currently playing (or null when unavailable / the element is off). */
+    val sourceIcon = ListenableLiveData<Bitmap?>()
     val customList = ListenableLiveData<CustomListWithBitmaps>()
     /** Persistent cache used only by Streaming shortcuts. Queue/search data cannot overwrite it. */
     val streamingShortcuts = ListenableLiveData<CustomListWithBitmaps>()
@@ -94,6 +96,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     // Data Layer asset id (content-derived) of the currently decoded album art - lets an
     // unchanged cover riding along on every state put be skipped without decoding it again.
     private var lastAlbumArtAssetId: String? = null
+    private var lastSourceIconAssetId: String? = null
 
     private var sendingVolume = false
     private var nextVolume = -1f
@@ -106,6 +109,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     init {
         lifecycleObserver.addLiveData(musicState)
         lifecycleObserver.addLiveData(albumArt)
+        lifecycleObserver.addLiveData(sourceIcon)
         lifecycleObserver.addLiveData(streamingShortcuts)
     }
 
@@ -353,6 +357,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                                     sendAck()
 
                                     deliverAlbumArt(dataItem, receivedMusicState)
+                                    deliverSourceIcon(dataItem)
                                 }
                             }
                             CommPaths.DATA_NOTIFICATION -> {
@@ -449,6 +454,22 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             lastAlbumArtAssetId = null
             albumArt.postValue(null)
         }
+    }
+
+    /** Decodes the optional source-app icon asset. It only changes when the playing app changes
+     *  (the phone dedupes it), so track by asset id and keep the cached bitmap otherwise. */
+    private suspend fun deliverSourceIcon(dataItem: DataItem) {
+        val asset = dataItem.assets[CommPaths.ASSET_SOURCE_ICON]
+        if (asset == null) {
+            lastSourceIconAssetId = null
+            sourceIcon.postValue(null)
+            return
+        }
+        if (asset.id == lastSourceIconAssetId && sourceIcon.value != null) return
+        val bytes = dataClient.getByteArrayAsset(asset)
+        val bitmap = bytes?.let { withContext(Dispatchers.Default) { BitmapUtils.deserialize(it) } }
+        lastSourceIconAssetId = asset.id
+        sourceIcon.postValue(bitmap)
     }
 
     private suspend fun loadCurrentMusicState() {

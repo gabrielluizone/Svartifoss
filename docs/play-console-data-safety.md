@@ -11,9 +11,12 @@ double-check the precise checkboxes against the current form and Firebase's
 [Android disclosure guide](https://firebase.google.com/docs/android/play-data-disclosure)
 before submitting.
 
-The phone app includes both Firebase Crashlytics and Firebase Analytics. It
-does not log custom Analytics events, but the Analytics SDK still collects its
-standard automatic app/session events.
+The phone app includes Firebase Crashlytics, Firebase Analytics, and Firebase
+Cloud Messaging. It does not log custom Analytics events, but the Analytics
+SDK still collects its standard automatic app/session events. Cloud Messaging
+is topic-based only (see `AnnouncementNotifications.kt` /
+`AnnouncementMessagingService.kt`) - there is no server of ours and no
+per-user targeting, registration, or token storage.
 
 ---
 
@@ -36,6 +39,7 @@ server you operate.
 | App activity | App interactions | Yes | With Google (Firebase Analytics) | Analytics | Automatically collected app lifecycle, screen-view and session events; Svartifoss does not add custom events. |
 | Location | Approximate location | Yes | With Google (Firebase Analytics) | Analytics | Coarse location derived by Google from a masked IP address; Svartifoss never requests GPS location. |
 | Device or other IDs | Device or other IDs | Yes | With Google (Firebase Analytics) | Analytics | Per-installation app-instance ID and SDK-supported device identifiers used to compute usage metrics. No Svartifoss account or user ID is attached. |
+| Device or other IDs | Device or other IDs | Yes | With Google (Firebase Cloud Messaging) | Push notification delivery | The install's FCM registration token, held by Google's messaging infrastructure to route messages to a shared topic. Svartifoss never receives, stores, or sees this token itself - there is no server of ours to receive it. |
 
 **Everything else in Play's standard list — Personal info,
 Financial info, Health and fitness, Messages, Photos/videos, Audio files,
@@ -64,5 +68,5 @@ permissions:
 |---|---|
 | Is all data encrypted in transit? | Yes — the Firebase SDKs use HTTPS. |
 | Do you provide a way for users to request data deletion? | There's no user account in Svartifoss to tie a deletion request to. If Play Console requires an answer here, the honest one is that there's no in-app deletion mechanism, since no personal/account data is collected in the first place — only installation-scoped diagnostics and usage data via Firebase's infrastructure. |
-| Is data collection required or optional? | Crashlytics is optional: "Send crash reports" is enabled by default but can be disabled in-app. Crashlytics automatic upload remains off; queued reports are sent manually only after the app reads this choice. Firebase Analytics automatic collection is not currently exposed as a user setting. Neither gates a core app feature. |
+| Is data collection required or optional? | Crashlytics is optional: "Send crash reports" is enabled by default but can be disabled in-app. Crashlytics automatic upload remains off; queued reports are sent manually only after the app reads this choice. Cloud Messaging is likewise optional: "Announcement notifications" is enabled by default and, when disabled, unsubscribes the install from the shared topic. Firebase Analytics automatic collection is not currently exposed as a user setting. None of the three gate a core app feature. |
 | Do you use the data for advertising or sell it? | No. No ads SDK is present, and nothing is sold. |

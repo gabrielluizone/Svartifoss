@@ -20,9 +20,13 @@ import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.matejdro.wearutils.miscutils.VibratorCompat
 import com.matejdro.wearutils.preferences.definition.Preferences
 import dagger.hilt.android.AndroidEntryPoint
+import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.watch.view.queue.QueueStyle
 
 /**
  * Full-screen Compose menu replacing the old bottom drawer: shows either the configurable
@@ -38,6 +42,12 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class MenuActivity : ComponentActivity() {
+    // ComponentActivity, so AppCompat's pre-33 locale backport would skip this screen - see
+    // WatchLanguage.
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(WatchLanguage.attach(newBase))
+    }
+
     companion object {
         const val EXTRA_SHOW_CUSTOM_LIST = "ShowCustomList"
         const val EXTRA_CUSTOM_LIST_ID = "CustomListId"
@@ -97,9 +107,19 @@ class MenuActivity : ComponentActivity() {
                 Preferences.getBoolean(it, MiscPreferences.ALWAYS_SELECT_CENTER_ACTION)
             } ?: false
 
+            // The menu has no style picker of its own; it follows the queue's, so the two
+            // browse-style lists stay visually consistent. Only the cover treatment is read -
+            // every other queue style leaves these rows on their standard pill.
+            val coverStyle = preferences?.let {
+                QueueStyle.fromPref(FaceScopedPreferences.getString(
+                        it, MiscPreferences.WEAR_QUEUE_STYLE, ThemeAppearance.resolve(it)
+                ))
+            } ?: QueueStyle.GLASS
+
             MenuScreen(
                     content = content,
                     alwaysPickCenter = alwaysPickCenter,
+                    coverStyle = coverStyle,
                     onActionClick = { index -> returnAction(index) },
                     onEntryClick = { listId, entryId -> returnCustomEntry(listId, entryId) },
                     onEntryLongClick = { listId, entryId -> deleteEntry(listId, entryId) },

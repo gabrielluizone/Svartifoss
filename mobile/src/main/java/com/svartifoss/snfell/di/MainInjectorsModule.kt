@@ -4,6 +4,7 @@ import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.view.actionlist.ActionEditorActivity
 import com.svartifoss.snfell.view.buttonconfig.ActionPickerActivity
 import com.svartifoss.snfell.view.mainactivity.MainActivity
+import com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -21,4 +22,7 @@ abstract class MainInjectorsModule {
 
     @ContributesAndroidInjector
     abstract fun contributeActionEditorActivity(): ActionEditorActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributePlaylistShortcutsActivity(): PlaylistShortcutsActivity
 }

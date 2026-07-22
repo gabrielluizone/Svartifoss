@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable
 import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.PlayerShadingStyle
+import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 
 /**
  * Canvas renderer for Classic's artwork shading. Compose and the phone preview mirror these
@@ -21,13 +22,17 @@ class PlayerShadingDrawable(
         private val style: PlayerShadingStyle,
         private val intensity: Float,
         private val primary: Int,
-        private val secondary: Int
+        private val secondary: Int,
+        // Colour of the darkening gradient. Black by default; the user can tint it with the album
+        // accent, a desaturated tone, or a custom colour (already resolved to a dark tone).
+        private val shadingColor: Int = Color.BLACK
 ) : Drawable() {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var drawableAlpha = 255
 
     private fun scaledAlpha(maxAlpha: Float): Int =
-            (255f * maxAlpha * intensity.coerceIn(0f, 1f) * (drawableAlpha / 255f))
+            (255f * maxAlpha * intensity.coerceIn(0f, SHADING_MAX_MULTIPLIER) *
+                    (drawableAlpha / 255f))
                     .toInt().coerceIn(0, 255)
 
     override fun draw(canvas: Canvas) {
@@ -41,32 +46,51 @@ class PlayerShadingDrawable(
         val cy = b.exactCenterY()
 
         paint.shader = when (style) {
-            PlayerShadingStyle.EDGE_VIGNETTE -> RadialGradient(
-                    cx, cy, maxOf(b.width(), b.height()) * .67f,
-                    intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
-                            ColorUtils.setAlphaComponent(Color.BLACK, scaledAlpha(.82f))),
-                    floatArrayOf(0f, .46f, 1f), Shader.TileMode.CLAMP)
+            PlayerShadingStyle.EDGE_VIGNETTE,
+            PlayerShadingStyle.EDGE_VIGNETTE_STRONG,
+            PlayerShadingStyle.EDGE_VIGNETTE_HEAVY -> {
+                val baseStop = when (style) {
+                    PlayerShadingStyle.EDGE_VIGNETTE_HEAVY -> 0.0f
+                    PlayerShadingStyle.EDGE_VIGNETTE_STRONG -> 0.15f
+                    else -> 0.46f
+                }
+                val radiusMult = when (style) {
+                    PlayerShadingStyle.EDGE_VIGNETTE_HEAVY -> 0.475f
+                    PlayerShadingStyle.EDGE_VIGNETTE_STRONG -> 0.525f
+                    else -> 0.67f
+                }
+                val outerAlpha = when (style) {
+                    PlayerShadingStyle.EDGE_VIGNETTE_HEAVY -> 1.0f
+                    PlayerShadingStyle.EDGE_VIGNETTE_STRONG -> 1.0f
+                    else -> 0.82f
+                }
+                RadialGradient(
+                        cx, cy, maxOf(b.width(), b.height()) * radiusMult,
+                        intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(outerAlpha))),
+                        floatArrayOf(0f, baseStop, 1f), Shader.TileMode.CLAMP)
+            }
 
             PlayerShadingStyle.BOTTOM_CORNER -> LinearGradient(
                     left, top, right, bottom,
                     intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
-                            ColorUtils.setAlphaComponent(Color.BLACK, scaledAlpha(.94f))),
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.94f))),
                     floatArrayOf(0f, .42f, 1f), Shader.TileMode.CLAMP)
 
             PlayerShadingStyle.FOLLOW,
             PlayerShadingStyle.BOTTOM_FADE -> LinearGradient(
                     0f, top, 0f, bottom,
                     intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
-                            ColorUtils.setAlphaComponent(Color.BLACK, scaledAlpha(.94f))),
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.94f))),
                     floatArrayOf(0f, .34f, 1f), Shader.TileMode.CLAMP)
 
             PlayerShadingStyle.FLOOR_CEILING -> LinearGradient(
                     0f, top, 0f, bottom,
                     intArrayOf(
-                            ColorUtils.setAlphaComponent(Color.BLACK, scaledAlpha(.55f)),
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.55f)),
                             Color.TRANSPARENT,
                             Color.TRANSPARENT,
-                            ColorUtils.setAlphaComponent(Color.BLACK, scaledAlpha(.88f))),
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.88f))),
                     floatArrayOf(0f, .30f, .60f, 1f), Shader.TileMode.CLAMP)
 
             PlayerShadingStyle.FULL_FILTER -> null
@@ -82,16 +106,16 @@ class PlayerShadingDrawable(
             PlayerShadingStyle.SIDE_CURTAINS -> LinearGradient(
                     left, 0f, right, 0f,
                     intArrayOf(
-                            ColorUtils.setAlphaComponent(Color.BLACK, scaledAlpha(.72f)),
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.72f)),
                             Color.TRANSPARENT,
                             Color.TRANSPARENT,
-                            ColorUtils.setAlphaComponent(Color.BLACK, scaledAlpha(.72f))),
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.72f))),
                     floatArrayOf(0f, .34f, .66f, 1f), Shader.TileMode.CLAMP)
         }
 
         paint.color = when (style) {
             PlayerShadingStyle.FULL_FILTER ->
-                ColorUtils.setAlphaComponent(Color.BLACK, scaledAlpha(.55f))
+                ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.55f))
             PlayerShadingStyle.ALBUM_TINT ->
                 ColorUtils.setAlphaComponent(darkAlbumTone(primary), scaledAlpha(.52f))
             else -> Color.WHITE
@@ -100,8 +124,7 @@ class PlayerShadingDrawable(
         paint.shader = null
     }
 
-    private fun darkAlbumTone(color: Int): Int = PaletteTransforms.tonalSurface(
-            color, lightness = .13f, minSat = .25f, maxSat = .78f)
+    private fun darkAlbumTone(color: Int): Int = PaletteTransforms.shadingTone(color)
 
     override fun setAlpha(alpha: Int) {
         drawableAlpha = alpha.coerceIn(0, 255)

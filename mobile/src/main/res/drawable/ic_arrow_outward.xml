@@ -1,0 +1,15 @@
+<!-- Material Symbols "arrow_outward" (fonts.google.com/icons). Auto-converted from SVG;
+     viewBox 0 -960 960 960 shifted into Android's coordinate space via the group translate.
+     Tinted at usage. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960"
+    android:tint="?attr/colorControlNormal">
+    <group android:translateY="960">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z" />
+    </group>
+</vector>

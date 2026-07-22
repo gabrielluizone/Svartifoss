@@ -15,15 +15,16 @@ class PlayerShadingTest {
         assertEquals(PlayerShadingStyle.FOLLOW, PlayerShadingStyle.fromPreference(null))
     }
 
-    @Test fun `three intensity levels stay ordered`() {
-        assertEquals(.45f, PlayerShadingIntensity.SOFT.multiplier)
-        assertEquals(.80f, PlayerShadingIntensity.BALANCED.multiplier)
-        assertEquals(1f, PlayerShadingIntensity.STRONG.multiplier)
+    @Test fun `numeric shading ceiling allows more than full strength`() {
+        assertEquals(150, SHADING_MAX_PERCENT)
+        assertEquals(1.5f, SHADING_MAX_MULTIPLIER)
     }
 
-    @Test fun `legacy percentages resolve to the nearest named band`() {
-        assertEquals(PlayerShadingIntensity.SOFT, PlayerShadingIntensity.fromLegacyPercent(35))
-        assertEquals(PlayerShadingIntensity.BALANCED, PlayerShadingIntensity.fromLegacyPercent(80))
-        assertEquals(PlayerShadingIntensity.STRONG, PlayerShadingIntensity.fromLegacyPercent(100))
+    @Test fun `legacy named levels migrate to their percentage`() {
+        assertEquals(45, PlayerShadingIntensity.percentFor("soft"))
+        assertEquals(80, PlayerShadingIntensity.percentFor("balanced"))
+        assertEquals(100, PlayerShadingIntensity.percentFor("strong"))
+        // Unknown/empty falls back to the balanced default.
+        assertEquals(80, PlayerShadingIntensity.percentFor(null))
     }
 }

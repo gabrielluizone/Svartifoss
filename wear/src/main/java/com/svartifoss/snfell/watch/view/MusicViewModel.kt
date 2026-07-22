@@ -40,6 +40,10 @@ data class PlaybackPosition(val positionMs: Long, val durationMs: Long, val seek
 
 private const val POSITION_TICK_INTERVAL_MS = 500L
 
+/** How long the app may sit on the idle "Nothing playing" screen before it closes itself
+ *  (when [MiscPreferences.WEAR_CLOSE_ON_IDLE] is on). */
+private const val IDLE_CLOSE_SECONDS = 60
+
 @HiltViewModel
 class MusicViewModel @Inject constructor(
         private val application: Application,
@@ -91,6 +95,9 @@ class MusicViewModel @Inject constructor(
 
     val albumArt
         get() = phoneConnection.albumArt
+
+    val sourceIcon
+        get() = phoneConnection.sourceIcon
 
     fun updateTimers() {
         if (closeDeadline < System.currentTimeMillis()) {
@@ -384,9 +391,25 @@ class MusicViewModel @Inject constructor(
         closeDeadline = Long.MAX_VALUE
         handler.removeCallbacks(closeRunnable)
         if (!playing) {
-            val timeout = Preferences.getInt(preferences.value!!, MiscPreferences.CLOSE_TIMEOUT)
-            if (timeout > 0) {
-                val timeoutMs = timeout * 1000L
+            val prefs = preferences.value!!
+            val configuredTimeout = Preferences.getInt(prefs, MiscPreferences.CLOSE_TIMEOUT)
+            // Truly idle = nothing playing at all (the "Nothing playing" screen), as opposed to a
+            // paused track that still has metadata. Idle auto-closes on its own short timer so the
+            // app never lingers there; the paused case stays governed by the user's Close timeout.
+            val idle = it?.data == null ||
+                    (it.data?.playing != true && it.data?.title.isNullOrBlank() == true)
+            val idleTimeout = if (idle &&
+                    Preferences.getBoolean(prefs, MiscPreferences.WEAR_CLOSE_ON_IDLE)) {
+                IDLE_CLOSE_SECONDS
+            } else {
+                0
+            }
+            // Fire on whichever applicable timeout is sooner.
+            val effectiveSeconds = listOf(configuredTimeout, idleTimeout)
+                    .filter { seconds -> seconds > 0 }
+                    .minOrNull() ?: 0
+            if (effectiveSeconds > 0) {
+                val timeoutMs = effectiveSeconds * 1000L
                 closeDeadline = System.currentTimeMillis() + timeoutMs
                 handler.postDelayed(closeRunnable, timeoutMs)
             }

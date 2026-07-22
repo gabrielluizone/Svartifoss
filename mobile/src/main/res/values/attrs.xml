@@ -6,4 +6,12 @@
         <!-- String-array of per-entry descriptions, parallel to android:entries/entryValues. -->
         <attr name="descriptions" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="ColorTreatmentPreference">
+        <!-- The preference key holding this target's own custom color (e.g.
+             wear_artist_custom_color), consulted for the "Normal" row's swatch preview before
+             falling back to the global wear_normal_color. Omit for the global watch-wide picker,
+             which has no per-target override to consult. -->
+        <attr name="customColorKey" format="string" />
+    </declare-styleable>
 </resources>

@@ -1,0 +1,1083 @@
+<resources>
+    <string name="setting_no_wearable_api_banner">Το Wear OS δεν υποστηρίζεται σε αυτή τη συσκευή</string>
+    <string name="setting_no_wearable_api_banner_description">Αυτή η συσκευή δεν διαθέτει το στοιχείο Wear OS των Υπηρεσιών Google Play, που χρειάζεται το Svartifoss για να επικοινωνήσει με ένα ρολόι. Η σύζευξη δεν θα βοηθήσει — η εφαρμογή του τηλεφώνου δεν μπορεί να προσεγγίσει ρολόι εδώ. Όλα παρακάτω αποθηκεύονται ούτως ή άλλως και θα εφαρμοστούν αν εγκαταστήσετε το Svartifoss σε συσκευή που το υποστηρίζει.</string>
+    <string name="setting_no_watch_banner">Δεν υπάρχει συνδεδεμένο ρολόι</string>
+    <string name="setting_no_watch_banner_description">Αυτές οι ρυθμίσεις συγχρονίζονται με το ρολόι Wear OS, οπότε δεν θα εφαρμοστούν ορατά μέχρι να συζευχθεί και να συνδεθεί ένα — αλλά όλα παρακάτω είναι ήδη δικά σας για διαμόρφωση.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Εμφάνιση</string>
+    <string name="setting_theme">Θέμα</string>
+    <string name="theme_light">Καθαρό λευκό</string>
+    <string name="theme_dark">Απόλυτο μαύρο</string>
+    <string name="theme_system">Ακολούθηση συστήματος</string>
+    <string name="setting_language">Γλώσσα</string>
+    <string name="language_system">Ακολούθηση συστήματος</string>
+    <string name="language_change_watch_notice">Το ρολόι ακολουθεί κι αυτή τη γλώσσα, μόλις συγχρονιστεί.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Προγραμματιστής</string>
+    <string name="dev_mode_unlocked">Η λειτουργία προγραμματιστή ενεργοποιήθηκε ✦</string>
+    <string name="dev_mode_clicks_remaining">Ακόμη %1$d πατήματα για ξεκλείδωμα λειτουργίας προγραμματιστή</string>
+    <string name="dev_disable_mode">Απενεργοποίηση λειτουργίας προγραμματιστή</string>
+    <string name="dev_disable_mode_description">Απόκρυψη αυτής της ενότητας ξανά — πατήστε επτά φορές στο \"Εγκατεστημένη έκδοση\" για να την επαναφέρετε</string>
+    <string name="dev_mode_disabled">Η λειτουργία προγραμματιστή απενεργοποιήθηκε</string>
+    <string name="dev_build_info">Πληροφορίες έκδοσης</string>
+    <string name="dev_sync_watch">Αναγκαστικός συγχρονισμός ρυθμίσεων ρολογιού</string>
+    <string name="dev_sync_watch_description">Άμεση αποστολή όλων των τρεχουσών ρυθμίσεων στο συζευγμένο ρολόι</string>
+    <string name="dev_sync_watch_done">Οι ρυθμίσεις συγχρονίστηκαν με το ρολόι</string>
+    <string name="dev_copy_debug_info">Αντιγραφή πληροφοριών αποσφαλμάτωσης</string>
+    <string name="dev_copy_debug_info_description">Αντιγραφή στοιχείων έκδοσης και συσκευής στο πρόχειρο</string>
+    <string name="dev_show_archived">Εμφάνιση αρχειοθετημένων επιλογών</string>
+    <string name="dev_show_archived_description">Αποκάλυψη διατάξεων και ρυθμίσεων ρολογιού που αρχειοθετήθηκαν λόγω γνωστών προβλημάτων</string>
+    <string name="dev_copy_debug_info_done">Οι πληροφορίες αποσφαλμάτωσης αντιγράφηκαν</string>
+    <string name="dev_open_update_screen">Άνοιγμα οθόνης ενημερώσεων</string>
+    <string name="dev_open_update_screen_description">Προεπισκόπηση της οθόνης Ενημερώσεις (banner εξωφύλλου, διάταξη σημειώσεων έκδοσης) χωρίς αναμονή για πραγματική έκδοση</string>
+    <string name="dev_watch_layout_bounds">Εμφάνιση ορίων διάταξης ρολογιού</string>
+    <string name="dev_watch_layout_bounds_description">Περίγραμμα ορατών στοιχείων του player και περιοχών αφής στο ρολόι. Μόνο διαγνωστική επικάλυψη.</string>
+    <string name="dev_watch_player_info">Εμφάνιση πληροφοριών player ρολογιού</string>
+    <string name="dev_watch_player_info_description">Επικάλυψη ενεργού όψης, κατάστασης αναπαραγωγής, προόδου και πληροφοριών απόδοσης στο ρολόι.</string>
+    <string name="pref_reset_default">Επαναφορά προεπιλογών</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Βρήκατε τον κρυμμένο καταρράκτη.\n\nSvartifoss — μαύρες βασαλτικές κολόνες\nπλαισιώνουν έναν καταρράκτη στην Ισλανδία,\nμια υπενθύμιση ότι η μουσική ρέει\nόπως το νερό μέσα από την πέτρα.\n\n♪ Φτιαγμένο με φροντίδα. ♪</string>
+    <string name="easter_egg_ok">Κλείσιμο</string>
+
+    <string name="nav_watch_face">Ρολόι</string>
+    <string name="watch_face_header">Εμφάνιση ρολογιού</string>
+    <string name="nav_controls">Χειριστήρια</string>
+    <string name="nav_actions">Ενέργειες</string>
+    <string name="nav_settings">Ρυθμίσεις</string>
+
+    <string name="controls_header">Χειριστήρια</string>
+    <string name="controls_state_playing">Μουσική παίζει</string>
+    <string name="controls_state_stopped">Καμία αναπαραγωγή</string>
+    <string name="controls_playing_description">Επιλέξτε τι κάνει κάθε είσοδος όσο παίζει μουσική. Αυτή η ρύθμιση είναι ανεξάρτητη από την κατάσταση χωρίς αναπαραγωγή.</string>
+    <string name="controls_stopped_description">Επιλέξτε τι κάνει κάθε είσοδος πριν ξεκινήσει η αναπαραγωγή ή αφού σταματήσει. Αυτή η ρύθμιση είναι ανεξάρτητη από την κατάσταση αναπαραγωγής.</string>
+
+    <string name="watch_live_preview">Ζωντανή προεπισκόπηση ρολογιού</string>
+    <string name="watch_preview_description">Ζωντανή προεπισκόπηση της επιλεγμένης επιφάνειας ρολογιού. Οι αλλαγές εμφανίζονται εδώ πριν τις δοκιμάσετε στο ρολόι.</string>
+    <string name="watch_section_style">Player</string>
+    <string name="watch_section_style_description">Επιλέξτε τη διάταξη του player και πώς συμπεριφέρονται ο τίτλος, ο χρόνος και η πρόοδος.</string>
+    <string name="watch_section_background">Φόντο</string>
+    <string name="watch_section_background_description">Ελέγξτε το εξώφυλλο άλμπουμ, τη θόλωση, το ξεθώριασμα και την αναγνωσιμότητα πίσω από τον player.</string>
+    <string name="watch_section_colors">Χρώματα</string>
+    <string name="watch_section_colors_description">Ρυθμίστε τα χρώματα καλλιτέχνη, δακτυλίου προόδου και τόνου βάσει άλμπουμ.</string>
+    <string name="watch_section_aod">Πάντα ενεργό</string>
+    <string name="watch_section_aod_description">Διαμορφώστε την οθόνη χαμηλής κατανάλωσης και δείτε την εμφάνισή της σε αδράνεια στην προεπισκόπηση.</string>
+    <string name="watch_section_panels">Πάνελ</string>
+    <string name="watch_section_panels_description">Στυλάρετε την ένταση, την αναζήτηση, το γρήγορο πάνελ και την ουρά· η εστίαση σε μια γραμμή ανοίγει αυτή την επιφάνεια στην προεπισκόπηση.</string>
+    <string name="watch_section_mini_buttons">Μίνι κουμπιά</string>
+    <string name="watch_section_mini_buttons_description">Στυλάρετε την προαιρετική γραμμή συντομεύσεων. Πατήστε \"Μίνι κουμπιά\" παρακάτω για να αναθέσετε τις ενέργειές τους στα Χειριστήρια.</string>
+
+    <string name="settings_section_general">Γενικά</string>
+    <string name="settings_section_general_description">Θέμα εφαρμογής, χρώμα τόνου και προτιμήσεις ενημερώσεων.</string>
+    <string name="settings_section_watch">Συμπεριφορά</string>
+    <string name="settings_section_watch_description">Κορώνα, αφή, δόνηση και συμπεριφορά μενού ενεργειών στο ρολόι σας.</string>
+    <string name="settings_section_automation">Αυτοματοποίηση</string>
+    <string name="settings_section_automation_description">Επιλέξτε πότε ανοίγει και κλείνει αυτόματα το Svartifoss.</string>
+    <string name="settings_section_apps">Εφαρμογές</string>
+    <string name="settings_section_apps_description">Διαμορφώστε υπηρεσίες μουσικής και ενσωματώσεις ανά εφαρμογή σε ένα μέρος.</string>
+    <string name="settings_section_data">Δεδομένα &amp; υποστήριξη</string>
+    <string name="settings_section_data_description">Δημιουργήστε αντίγραφο ασφαλείας της ρύθμισής σας, ελέγξτε την έκδοση, τα διαγνωστικά ή λάβετε βοήθεια.</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Πώς να χρησιμοποιήσετε το Svartifoss</string>
+    <string name="tutorial_intro">Το Svartifoss μετατρέπει το ρολόι σας σε τηλεχειριστήριο για τη μουσική που παίζει στο τηλέφωνό σας. Ορίστε όλα όσα μπορείτε να κάνετε από τον καρπό σας.</string>
+
+    <string name="tutorial_taps_title">Πατήστε τις ζώνες οθόνης</string>
+    <string name="tutorial_taps_desc">Η οθόνη του ρολογιού χωρίζεται σε τέσσερις ζώνες — πάνω, κάτω, αριστερά και δεξιά. Το πάτημα μιας ζώνης εκτελεί την ενέργεια που της αναθέσατε. Από προεπιλογή, η αριστερή ζώνη αναπαράγει ή θέτει σε παύση, η δεξιά μεταβαίνει στο επόμενο κομμάτι, και η πάνω και κάτω αλλάζουν την ένταση.</string>
+
+    <string name="tutorial_gestures_title">Απλό, διπλό &amp; παρατεταμένο πάτημα</string>
+    <string name="tutorial_gestures_desc">Κάθε ζώνη περιέχει τρεις ξεχωριστές ενέργειες: μία για απλό πάτημα, μία για διπλό πάτημα και μία για παρατεταμένο πάτημα. Για παράδειγμα, ένα απλό πάτημα στο κέντρο μπορεί να θέσει τη μουσική σε παύση, ενώ ένα διπλό πάτημα ανοίγει το μενού ενεργειών — δεν θα το δείτε αυτό εκτός αν το ρυθμίσετε, οπότε προσαρμόστε το κατά βούληση.</string>
+
+    <string name="tutorial_buttons_title">Φυσικά κουμπιά</string>
+    <string name="tutorial_buttons_desc">Αν το ρολόι σας έχει πλαϊνά κουμπιά, μπορείτε να αναθέσετε ενέργειες απλού, διπλού και παρατεταμένου πατήματος και σε αυτά. Συνεχίζουν να λειτουργούν ακόμη και όταν η οθόνη είναι σβηστή.</string>
+
+    <string name="tutorial_rotary_title">Περιστρεφόμενη κορώνα</string>
+    <string name="tutorial_rotary_desc">Περιστρέψτε την κορώνα ή το πλαίσιο για να αλλάξετε την ένταση. Προτιμάτε να προωθείτε το τραγούδι; Ενεργοποιήστε την \"Αναζήτηση με περιστροφική κορώνα\" στις Ρυθμίσεις.</string>
+
+    <string name="tutorial_swipe_up_title">Σύρσιμο πάνω, κάτω, αριστερά &amp; δεξιά</string>
+    <string name="tutorial_swipe_up_desc">Το σύρσιμο πάνω, κάτω ή αριστερά στην οθόνη αναπαραγωγής μπορεί να ρυθμιστεί ώστε να ανοίγει οτιδήποτε — το μενού ενεργειών, την ουρά αναπαραγωγής, παράλειψη κομματιών, τις λίστες αναπαραγωγής σας και άλλα. Ρυθμίστε καθένα στα Χειριστήρια, επιλέγοντας Μουσική παίζει ή Καμία αναπαραγωγή. Από προεπιλογή, το σύρσιμο προς τα πάνω ανοίγει το μενού ενεργειών και τα υπόλοιπα δεν κάνουν τίποτα μέχρι να τα αναθέσετε. Το σύρσιμο προς τα δεξιά παραμένει ανέγγιχτο — είναι η καθολική χειρονομία του Wear OS για έξοδο από την εφαρμογή.</string>
+    <string name="tutorial_yt_music_title">Συντομεύσεις YouTube Music</string>
+    <string name="tutorial_yt_music_desc">Αναθέστε \"Αναπαραγωγή αγαπημένων τραγουδιών\", \"Αναπαραγωγή αγαπημένων τραγουδιών, τυχαία\" ή \"Οι λίστες μου\" σε οποιοδήποτε κουμπί, χειρονομία ή σύρσιμο για να μεταβείτε απευθείας στη μουσική σας χωρίς να αγγίξετε το τηλέφωνο. Το \"Ιστορικό αναζήτησης\" θυμάται τις πρόσφατες αναζητήσεις σας στο ρολόι — πατήστε παρατεταμένα σε μία για να τη διαγράψετε.</string>
+
+    <string name="tutorial_exit_title">Σύρσιμο για έξοδο</string>
+    <string name="tutorial_exit_desc">Σύρετε από το αριστερό άκρο για να αφήσετε τον player. Μπορεί να θέσει την αναπαραγωγή σε παύση αυτόματα όταν βγαίνετε — ενεργοποιήστε το στις Ρυθμίσεις.</string>
+
+    <string name="tutorial_tile_title">Πλακίδιο γρήγορου ελέγχου</string>
+    <string name="tutorial_tile_desc">Σύρετε το πρόσωπο του ρολογιού πλαγίως στο πλακίδιο Svartifoss για άμεση αναπαραγωγή, παύση και παράλειψη χωρίς άνοιγμα της εφαρμογής.</string>
+
+    <string name="tutorial_complication_title">Επιπλοκή πρόσωπου ρολογιού</string>
+    <string name="tutorial_complication_desc">Προσθέστε την επιπλοκή εξωφύλλου άλμπουμ του Svartifoss στο πρόσωπο του ρολογιού σας για να βλέπετε το τρέχον εξώφυλλο με μια ματιά. Πατήστε το για να ανοίξετε τον player.</string>
+
+    <string name="tutorial_system_title">Χειριστήρια πολυμέσων συστήματος</string>
+    <string name="tutorial_system_desc">Το τρέχον κομμάτι εμφανίζεται επίσης στα δικά του χειριστήρια πολυμέσων του ρολογιού και στις πρόσφατες εφαρμογές, ώστε να μπορείτε να ελέγχετε την αναπαραγωγή και από εκεί.</string>
+
+    <string name="tutorial_tip">Συμβουλή: ρυθμίστε και τις δύο καταστάσεις στα Χειριστήρια, στη συνέχεια οργανώστε το μενού στις Ενέργειες.</string>
+
+    <string name="navigation_drawer_open">Άνοιγμα συρταριού πλοήγησης</string>
+    <string name="navigation_drawer_close">Κλείσιμο συρταριού πλοήγησης</string>
+
+    <string name="action_settings">Ρυθμίσεις</string>
+    <string name="action_pause">Παύση</string>
+    <string name="action_play">Αναπαραγωγή</string>
+    <string name="action_skip_prev">Προηγούμενο</string>
+    <string name="action_skip_next">Επόμενο</string>
+    <string name="action_play_pause">Αναπαραγωγή / Παύση</string>
+    <string name="action_stop">Διακοπή</string>
+    <string name="action_restart">Επανεκκίνηση κομματιού</string>
+    <string name="action_mute">Σίγαση / Κατάργηση σίγασης</string>
+    <string name="action_skip_seconds">Προώθηση %1$d δευτερολέπτων</string>
+    <string name="action_reverse_seconds">Οπισθοδρόμηση %1$d δευτερολέπτων</string>
+    <string name="action_like">Μου αρέσει</string>
+    <string name="action_shuffle">Τυχαία σειρά</string>
+    <string name="action_repeat">Επανάληψη</string>
+    <string name="action_repeat_one">Επανάληψη ενός</string>
+    <string name="action_search">Αναζήτηση μουσικής</string>
+    <string name="group_playback_controls">Χειριστήρια αναπαραγωγής</string>
+    <string name="group_streaming_shortcuts">Κομμάτια, άλμπουμ &amp; λίστες αναπαραγωγής</string>
+    <string name="pick_action">Επιλογή ενέργειας</string>
+    <string name="action_opens_more">Πολλαπλές επιλογές</string>
+    <string name="action_volume_up">Αύξηση έντασης</string>
+    <string name="volume_down">Μείωση έντασης</string>
+    <string name="group_volume_controls">Χειριστήρια έντασης</string>
+    <string name="no_watch_detected">Δεν εντοπίστηκε ρολόι</string>
+    <string name="connection_instructions">Ανοίξτε το Svartifoss στο ρολόι για να ξεκινήσει η σύνδεση</string>
+    <string name="playing_controls">Χειριστήρια κατά την αναπαραγωγή</string>
+    <string name="stopped_controls">Χειριστήρια χωρίς αναπαραγωγή</string>
+    <string name="actions_menu">Μενού ενεργειών</string>
+    <string name="actions_intro">Διαμορφώστε και τις δύο επιφάνειες ενεργειών του ρολογιού σας με χειριστήρια αναπαραγωγής, εφαρμογές ή αποθηκευμένα κομμάτια, άλμπουμ και λίστες αναπαραγωγής. Το γρήγορο πάνελ παραμένει συμπαγές· το μενού παρακάτω μπορεί να περιέχει μεγαλύτερη διατεταγμένη λίστα.</string>
+    <string name="actions_quick_panel_section">Γρήγορο πάνελ</string>
+    <string name="actions_watch_menu_section">Μενού στο ρολόι</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d ενέργεια · Πατήστε για επεξεργασία · Κρατήστε πατημένο και σύρετε για αναδιάταξη</item>
+        <item quantity="other">%1$d ενέργειες · Πατήστε για επεξεργασία · Κρατήστε πατημένο και σύρετε για αναδιάταξη</item>
+    </plurals>
+    <string name="actions_reorder_description">Διατεταγμένο μενού ενεργειών. Αγγίξτε και κρατήστε πατημένο για σύρσιμο, χρησιμοποιήστε τις ενέργειες προσβασιμότητας Μετακίνηση πάνω ή Μετακίνηση κάτω, ή πατήστε Ctrl+Πάνω/Κάτω σε πληκτρολόγιο.</string>
+    <string name="actions_move_up">Μετακίνηση πάνω</string>
+    <string name="actions_move_down">Μετακίνηση κάτω</string>
+    <string name="actions_moved_to_position">Το %1$s μετακινήθηκε στη θέση %2$d από %3$d.</string>
+    <string name="actions_empty">Δεν υπάρχουν ενέργειες ακόμη. Χρησιμοποιήστε το κουμπί προσθήκης για να δημιουργήσετε την πρώτη.</string>
+    <string name="actions_add">Προσθήκη ενέργειας</string>
+    <string name="on_screen_buttons">ΖΩΝΕΣ ΑΦΗΣ</string>
+    <string name="physical_buttons">ΦΥΣΙΚΑ ΚΟΥΜΠΙΑ</string>
+    <string name="physical_buttons_disconnected">Συνδεθείτε και ανοίξτε το Svartifoss στο ρολόι σας για να διαμορφώσετε τα φυσικά του κουμπιά. Οι ζώνες αφής, τα συρσίματα και τα μίνι κουμπιά είναι ήδη διαθέσιμα.</string>
+    <string name="physical_buttons_unavailable">Αυτό το ρολόι δεν ανέφερε ρυθμιζόμενα φυσικά κουμπιά.</string>
+    <string name="tap_a_zone_to_configure">Πατήστε μια ζώνη στο ρολόι για να αναθέσετε μια ενέργεια</string>
+    <string name="touch_zone_top">Πάνω ζώνη</string>
+    <string name="touch_zone_bottom">Κάτω ζώνη</string>
+    <string name="touch_zone_left">Αριστερή ζώνη</string>
+    <string name="touch_zone_right">Δεξιά ζώνη</string>
+    <string name="touch_zone_center">Κεντρικό πάτημα</string>
+    <string name="touch_zone_action">%1$s: %2$s. Πατήστε για διαμόρφωση.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">ΧΕΙΡΟΝΟΜΙΕΣ ΣΥΡΣΙΜΑΤΟΣ</string>
+    <string name="tap_a_swipe_to_configure">Πατήστε μια κατεύθυνση για να επιλέξετε τι ανοίγει</string>
+    <string name="swipe_gesture_up">Σύρσιμο πάνω</string>
+    <string name="swipe_gesture_down">Σύρσιμο κάτω</string>
+    <string name="swipe_gesture_left">Σύρσιμο αριστερά</string>
+    <!-- Short captions shown under each tile's icon -->
+    <string name="swipe_gesture_label_up">Πάνω</string>
+    <string name="swipe_gesture_label_down">Κάτω</string>
+    <string name="swipe_gesture_label_left">Αριστερά</string>
+
+    <string name="screen_buttons">ΜΙΝΙ ΚΟΥΜΠΙΑ</string>
+    <string name="tap_a_screen_button_to_configure">Έως τρία ορατά κουμπιά κοντά στο κάτω μέρος της οθόνης του ρολογιού — πατήστε μια θέση για να αναθέσετε μια ενέργεια</string>
+    <string name="screen_button_1">Μίνι κουμπί 1 (αριστερά)</string>
+    <string name="screen_button_2">Μίνι κουμπί 2 (μέση)</string>
+    <string name="screen_button_3">Μίνι κουμπί 3 (δεξιά)</string>
+    <string name="screen_button_label_1">Κουμπί 1</string>
+    <string name="screen_button_label_2">Κουμπί 2</string>
+    <string name="screen_button_label_3">Κουμπί 3</string>
+    <string name="no_action">Καμία ενέργεια</string>
+    <string name="gesture_single_press">Απλό πάτημα</string>
+    <string name="gesture_double_press">Διπλό πάτημα</string>
+    <string name="gesture_long_press">Παρατεταμένο πάτημα</string>
+    <string name="gesture_swipe_action">Ενέργεια</string>
+    <string name="center_button_quick_panel_note">Το διπλό πάτημα στο κέντρο της οθόνης αναπαραγωγής ανοίγει πάντα το πάνελ γρήγορων ενεργειών, ανεξάρτητα από το τι αναθέτετε εδώ.</string>
+    <string name="start_playback">Έναρξη αναπαραγωγής</string>
+    <string name="uninstalled_app">Απεγκατεστημένη εφαρμογή</string>
+
+    <string name="play_app">Αναπαραγωγή %1$s</string>
+    <string name="tasker_task">Εργασία Tasker</string>
+    <string name="icon_selection_title">Επιλογή εικονιδίου</string>
+    <string name="icon_selection_gallery">Από τη συλλογή</string>
+    <string name="icon_selection_no_icon_pack">Αυτή η λειτουργία σάς επιτρέπει να επιλέξετε προσαρμοσμένο εικονίδιο για την ενέργειά σας από ένα
+        εγκατεστημένο πακέτο εικονιδίων.\n\nΔυστυχώς φαίνεται ότι δεν έχετε εγκατεστημένα πακέτα εικονιδίων.</string>
+    <string name="icon_selection_no_storage_permission">Αυτή η λειτουργία σάς επιτρέπει να επιλέξετε προσαρμοσμένο εικονίδιο για την ενέργειά σας από ένα
+        εγκατεστημένο πακέτο εικονιδίων.\n\nΟρισμένα πακέτα εικονιδίων απαιτούν οι εφαρμογές να έχουν άδεια αποθήκευσης. Θα χρειαστεί να την επιτρέψετε για να χρησιμοποιήσετε αυτή τη λειτουργία.</string>
+    <string name="delete">Διαγραφή</string>
+    <string name="action_text">Κείμενο ενέργειας</string>
+    <string name="swap_action">Ανταλλαγή ενέργειας</string>
+    <string name="open_actions_menu">Άνοιγμα μενού ενεργειών</string>
+    <string name="open_playlist_menu">Εμφάνιση τρέχουσας λίστας αναπαραγωγής</string>
+    <string name="misc_settings">Διάφορες ρυθμίσεις</string>
+
+    <string name="category_backup">Αντίγραφο ασφαλείας</string>
+    <string name="export_config">Εξαγωγή ρύθμισης</string>
+    <string name="export_config_description">Αποθηκεύστε τις αναθέσεις κουμπιών, τη λίστα ενεργειών και τις ρυθμίσεις ρολογιού σε αρχείο</string>
+    <string name="import_config">Εισαγωγή ρύθμισης</string>
+    <string name="import_config_description">Επαναφέρετε αναθέσεις κουμπιών, λίστα ενεργειών και ρυθμίσεις ρολογιού από αρχείο</string>
+    <string name="export_config_done">Η ρύθμιση εξήχθη</string>
+    <string name="export_config_failed">Δεν ήταν δυνατή η εξαγωγή της ρύθμισης</string>
+    <string name="import_config_done_title">Επιτυχής εισαγωγή</string>
+    <string name="import_config_done_message">Το Svartifoss χρειάζεται επανεκκίνηση για να εφαρμόσει την εισαγόμενη ρύθμιση.</string>
+    <string name="import_config_failed">Δεν ήταν δυνατή η εισαγωγή της ρύθμισης — το αρχείο ενδέχεται να είναι μη έγκυρο ή από ασύμβατη έκδοση</string>
+    <string name="action_restart_now">Επανεκκίνηση τώρα</string>
+
+    <string name="category_about">Σχετικά</string>
+    <string name="category_music_screen">Οθόνη μουσικής</string>
+    <string name="category_watch_screen">Οθόνη ρολογιού</string>
+    <string name="category_mini_buttons">Μίνι κουμπιά</string>
+    <string name="category_screen_face">Εμφάνιση player</string>
+    <string name="category_album_background">Φόντο άλμπουμ</string>
+    <string name="category_music_colors">Χρώματα από τη μουσική</string>
+    <string name="preview_sample_title">Τίτλος τραγουδιού</string>
+    <string name="preview_sample_artist">Όνομα καλλιτέχνη</string>
+    <string name="preview_sample_next_title">Επόμενο τραγούδι</string>
+    <string name="preview_playback_stopped">Η αναπαραγωγή σταμάτησε</string>
+    <string name="category_gestures">Χειρονομίες &amp; είσοδος</string>
+    <string name="setting_overlay_blur_radius">Θόλωση επικάλυψης</string>
+    <string name="setting_overlay_blur_radius_description">Ένταση θόλωσης (px) του θαμπού φόντου πίσω από τους δακτυλίους έντασης/αναζήτησης και το πάνελ γρήγορων ενεργειών — ανεξάρτητη από τη θόλωση φόντου εξωφύλλου άλμπουμ</string>
+    <string name="category_action_list">Λίστα ενεργειών</string>
+    <string name="category_automation">Αυτοματοποίηση</string>
+    <string name="installed_version">Εγκατεστημένη έκδοση</string>
+    <string name="get_support">Λήψη υποστήριξης</string>
+    <string name="get_support_description">Αποστολή αρχείων καταγραφής εφαρμογής στον προγραμματιστή για υποστήριξη</string>
+    <string name="contact_developer">Επικοινωνία με τον προγραμματιστή</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — επικοινωνία</string>
+    <string name="contact_developer_chooser">Αποστολή email</string>
+    <string name="contact_developer_no_client">Δεν υπάρχει εγκατεστημένη εφαρμογή email. Η διεύθυνση αντιγράφηκε στο πρόχειρο.</string>
+    <string name="about_developer_title">Σχετικά με τον προγραμματιστή</string>
+    <string name="about_developer_dialog_message">Το Svartifoss ξεκίνησε ως προσωπικό έργο — ήθελα να φέρω το Music Center for Wear στο σήμερα, απλώς για να μπορώ να το χρησιμοποιώ ο ίδιος κάθε μέρα. Πήγε αρκετά καλά ώστε να αποφασίσω να το μοιραστώ με όλους. Αυτή είναι η πρώτη μου εφαρμογή, και δεν υπάρχει τίποτα σαν να βλέπεις κάτι που έφτιαξες να αποδεικνύεται χρήσιμο και για άλλους ανθρώπους.</string>
+    <string name="licenses">Άδειες ανοιχτού κώδικα</string>
+    <string name="setting_always_show_time">Πάντα εμφάνιση ώρας</string>
+    <string name="setting_always_show_time_off_description">Η τρέχουσα ώρα θα εμφανίζεται μόνο σε λειτουργία αδράνειας</string>
+    <string name="setting_always_show_time_on_description">Η τρέχουσα ώρα θα εμφανίζεται πάντα. Το πάνω εικονίδιο ενέργειας δεν θα είναι ορατό (θα αντικατασταθεί από το ρολόι), αλλά η ενέργεια θα εξακολουθεί να λειτουργεί κανονικά.</string>
+    <string name="tap_to_force_stop">Πατήστε για διακοπή των χειριστηρίων</string>
+    <string name="notification_action_stop">Διακοπή</string>
+    <string name="notification_action_force_stop">Εξαναγκασμένη διακοπή</string>
+    <string name="error_notification_access">Δεν υπάρχει πρόσβαση σε ειδοποιήσεις. Ελέγξτε το τηλέφωνο.</string>
+    <string name="error_notifications">Ειδοποιήσεις σφαλμάτων</string>
+    <string name="notification_access_notification_title">Το Svartifoss χρειάζεται πρόσβαση σε ειδοποιήσεις</string>
+    <string name="notification_access_notification_title_description">Πατήστε αυτή την ειδοποίηση και ελέγξτε το Svartifoss για να διορθώσετε το πρόβλημα</string>
+    <string name="error_service_not_enabled">Απαιτείται πρόσβαση σε ειδοποιήσεις</string>
+    <string name="error_service_not_enabled_description">Για να ελέγχετε τη μουσική από το ρολόι σας, το Svartifoss χρειάζεται πρόσβαση σε ειδοποιήσεις — έτσι το Android του επιτρέπει να βλέπει ποια εφαρμογή παίζει και να της στέλνει εντολές αναπαραγωγής, παύσης και παράλειψης.\n\nΤο Svartifoss δεν διαβάζει ποτέ το περιεχόμενο των ειδοποιήσεών σας. Χρησιμοποιεί αυτή την άδεια μόνο για να βρει την ενεργή περίοδο σύνδεσης πολυμέσων.\n\nΠατήστε \"Άνοιγμα Ρυθμίσεων\", μετά ενεργοποιήστε το Svartifoss στην πρόσβαση ειδοποιήσεων.</string>
+    <string name="action_open_settings">Άνοιγμα Ρυθμίσεων</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog -->
+    <string name="no_watch_app_title">Εγκαταστήστε το Svartifoss στο ρολόι σας</string>
+    <string name="no_watch_app_description">Το Svartifoss δεν κατάφερε να βρει την εφαρμογή ρολογιού του στο συζευγμένο ρολόι Wear OS σας. Οι εφαρμογές τηλεφώνου και ρολογιού λειτουργούν μαζί — χωρίς την εφαρμογή ρολογιού, ο έλεγχος της αναπαραγωγής από τον καρπό σας δεν θα λειτουργήσει.\n\nΤο Svartifoss δεν βρίσκεται στο Play Store — η εφαρμογή ρολογιού εγκαθίσταται ξεχωριστά με sideload (π.χ. με Wear Installer). Πατήστε \"Προβολή εκδόσεων\" για να ανοίξετε τη σελίδα εκδόσεων του GitHub και να πάρετε το APK του ρολογιού. Αν μόλις το εγκαταστήσατε, δώστε του ένα λεπτό να ολοκληρώσει τον συγχρονισμό.</string>
+    <string name="no_watch_app_button">Προβολή εκδόσεων</string>
+    <string name="required_permission">Απαιτούμενη άδεια</string>
+    <string name="setting_pause_on_swipe_exit">Παύση αναπαραγωγής κατά την έξοδο με σύρσιμο</string>
+    <string name="setting_pause_on_swipe_exit_description">Θέτει αυτόματα σε παύση οποιαδήποτε αναπαραγωγή κατά την έξοδο από το Svartifoss στο ρολόι μέσω της χειρονομίας σύρσιμο-αριστερά.\n\nΗ έξοδος μέσω κουμπιού λειτουργίας δεν επηρεάζεται και δεν θα θέσει ποτέ αυτόματα σε παύση.</string>
+    <string name="setting_rotating_crown_off_period">Καθυστέρηση περιστροφικής εισόδου μετά το άναμμα της οθόνης</string>
+    <string name="setting_rotating_crown_off_period_description">Οι περιστροφικές είσοδοι (π.χ. περιστρεφόμενες κορώνες) μπορεί να είναι υπερβολικά ευαίσθητες σε ορισμένες συσκευές. Για να αποτραπούν τυχαίες αλλαγές έντασης, η περιστροφική είσοδος θα απενεργοποιηθεί για <![CDATA[<b>%1$s χιλιοστά του δευτερολέπτου</b>]]> αφού ανάψετε την οθόνη.</string>
+    <string name="setting_rotary_seek">Αναζήτηση με περιστροφική κορώνα</string>
+    <string name="setting_rotary_seek_description">Όταν είναι ενεργοποιημένο, η περιστροφή της κορώνας προωθεί το τρέχον κομμάτι αντί να αλλάζει την ένταση. Η ένταση μπορεί ακόμη να αλλάξει με κουμπιά στην οθόνη ή φυσικά κουμπιά.</string>
+    <string name="setting_rotating_sensitivity">Ευαισθησία περιστροφικής εισόδου</string>
+    <string name="setting_rotating_sensitivity_description">Ευαισθησία της περιστροφικής εισόδου. Μεγαλύτερος αριθμός σημαίνει ότι η κίνηση της κορώνας με τον ίδιο τρόπο θα αυξήσει περισσότερο την ένταση. Αυτή τη στιγμή ορισμένο σε <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Απενεργοποίηση διπλού κλικ φυσικού κουμπιού σε αδράνεια</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Ορισμένα ρολόγια έχουν προβληματικά κουμπιά όπου ένα μεμονωμένο κλικ του φυσικού κουμπιού σε λειτουργία αδράνειας καταγράφεται μερικές φορές ως διπλό κλικ.\n\nΑν το αντιμετωπίζετε αυτό, μπορείτε να ενεργοποιήσετε αυτή την επιλογή για να απενεργοποιήσετε εντελώς τα διπλά κλικ σε λειτουργία αδράνειας (π.χ. το διπλό κλικ θα ενεργοποιεί απλώς την ενέργεια μεμονωμένου κλικ). Το διπλό κλικ όταν το ρολόι είναι ενεργό δεν επηρεάζεται.</string>
+    <string name="setting_haptic_feedback">Απτική ανάδραση</string>
+    <string name="setting_haptic_feedback_description">Δόνηση του ρολογιού κατά το πάτημα κουμπιών.</string>
+    <string name="setting_auto_start">Αυτόματο άνοιγμα του Svartifoss</string>
+    <string name="setting_auto_start_description">Αυτόματο άνοιγμα του Svartifoss στο ρολόι όταν ξεκινά η αναπαραγωγή μουσικής στο τηλέφωνο.</string>
+    <string name="setting_auto_start_apps_blacklist">Εφαρμογές αυτόματης εκκίνησης</string>
+    <string name="setting_auto_start_apps_blacklist_description">Λίστα εφαρμογών πολυμέσων που μπορούν να ξεκινήσουν αυτόματα το Svartifoss</string>
+    <string name="setting_dim_album_art">Σκίαση player</string>
+    <string name="setting_dim_album_art_description">Προσθέστε μια επιλεγμένη από εσάς επεξεργασία σκιάς μεταξύ του εξωφύλλου και των χειριστηρίων του player.</string>
+    <string name="setting_album_art_style">Στυλ εξωφύλλου άλμπουμ</string>
+    <string name="setting_album_art_style_description">Επιλέξτε πώς φαίνεται το φόντο αναπαραγωγής στο ρολόι.</string>
+    <string name="setting_album_art_blur_radius">Ένταση θόλωσης</string>
+    <string name="setting_album_art_blur_radius_description">Ένταση της θόλωσης πλήρους οθόνης όποτε το επιλεγμένο φόντο χρησιμοποιεί θόλωση. Αυτή τη στιγμή <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Ένταση σκοτεινιάσματος</string>
+    <string name="setting_album_art_dim_strength_description">Πόσο έντονα σκοτεινιάζει το εξώφυλλο άλμπουμ για την αναγνωσιμότητα του κειμένου. Αυτή τη στιγμή <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Στυλ σκίασης</string>
+    <string name="setting_player_shading_intensity">Ένταση σκίασης</string>
+    <string name="setting_player_shading_intensity_description">Πόσο έντονα η σκίαση σκοτεινιάζει το φόντο. Το 100%% είναι η πλήρης ένταση· ανεβάστε παραπάνω για επιπλέον αντίθεση (έως 150%%). Αυτή τη στιγμή <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Εφαρμογή αυτής της εμφάνισης σε όλες τις όψεις</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Αντιγραφή των ρυθμίσεων εμφάνισης αυτής της όψης σε κάθε άλλη όψη</string>
+    <string name="apply_appearance_confirm_title">Εφαρμογή σε όλες τις όψεις;</string>
+    <string name="apply_appearance_confirm_message">Αυτό αντικαθιστά τις ρυθμίσεις εμφάνισης κάθε άλλης όψης με την τρέχουσα. Δεν θα αλλάξει τις ρυθμίσεις συμπεριφοράς σας.</string>
+    <string name="apply_appearance_confirm_button">Εφαρμογή</string>
+    <string name="apply_appearance_done">Εφαρμόστηκε σε όλες τις όψεις</string>
+    <string name="category_wf_layout_actions">Διάταξη</string>
+    <string name="setting_reset_appearance">Επαναφορά αυτής της διάταξης</string>
+    <string name="setting_reset_appearance_description">Επαναφορά της εμφάνισης αυτής της όψης στις αρχικές προεπιλογές</string>
+    <string name="reset_appearance_confirm_title">Επαναφορά αυτής της διάταξης;</string>
+    <string name="reset_appearance_confirm_message">Οι ρυθμίσεις εμφάνισης αυτής της όψης επιστρέφουν στις προεπιλογές τους. Οι ρυθμίσεις συμπεριφοράς σας και οι άλλες όψεις δεν επηρεάζονται.</string>
+    <string name="reset_appearance_confirm_button">Επαναφορά</string>
+    <string name="reset_appearance_done">Η διάταξη επαναφέρθηκε στις προεπιλογές</string>
+    <string name="setting_reset_all_faces">Επαναφορά όλων των όψεων στην προεπιλογή</string>
+    <string name="setting_reset_all_faces_description">Επαναφορά της εμφάνισης κάθε ενσωματωμένης όψης στις αρχικές προεπιλογές</string>
+    <string name="reset_all_faces_confirm_title">Επαναφορά όλων των όψεων;</string>
+    <string name="reset_all_faces_confirm_message">Η εμφάνιση κάθε ενσωματωμένης όψης επιστρέφει στις αρχικές προεπιλογές, και οποιοδήποτε ενεργό προσαρμοσμένο θέμα απενεργοποιείται. Τα αποθηκευμένα προσαρμοσμένα θέματά σας, οι ρυθμίσεις συμπεριφοράς και η επιλεγμένη όψη διατηρούνται.</string>
+    <string name="reset_all_faces_confirm_button">Επαναφορά όλων</string>
+    <string name="reset_all_faces_done">Όλες οι όψεις επαναφέρθηκαν στις προεπιλογές</string>
+    <string name="setting_player_shading_color">Χρώμα σκίασης</string>
+    <string name="setting_wear_shading_custom_color">Προσαρμοσμένο χρώμα σκίασης</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Μαύρο</item>
+        <item>Τόνος άλμπουμ</item>
+        <item>Αποκορεσμένο άλμπουμ</item>
+        <item>Προσαρμοσμένο χρώμα</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Ακολούθηση θέματος player</item>
+        <item>Βινιέτα άκρου</item>
+        <item>Βινιέτα άκρου (Έντονη)</item>
+        <item>Βινιέτα άκρου (Βαριά)</item>
+        <item>Κάτω γωνία</item>
+        <item>Ξεθώριασμα κάτω</item>
+        <item>Δάπεδο και οροφή</item>
+        <item>Φίλτρο πλήρους οθόνης</item>
+        <item>Χρωματισμός άλμπουμ</item>
+        <item>Διβάθμια διαβάθμιση άλμπουμ</item>
+        <item>Πλαϊνές κουρτίνες</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Αδιαφάνεια εξωφύλλου σε αδράνεια</string>
+    <string name="setting_ambient_album_art_opacity_description">Πόσο ορατό παραμένει το εξώφυλλο άλμπουμ σε λειτουργία αδράνειας. Αυτή τη στιγμή <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Χρονικό όριο επικάλυψης έντασης/αναζήτησης</string>
+    <string name="setting_volume_overlay_timeout_description">Πόσο καιρό παραμένουν στην οθόνη οι επικαλύψεις έντασης και αναζήτησης μετά την προσαρμογή. Αυτή τη στιγμή <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Νεκρή ζώνη περιστροφής</string>
+    <string name="setting_rotary_deadzone_description">Ελάχιστη κίνηση κορώνας πριν εφαρμοστούν αλλαγές έντασης ή αναζήτησης. Βοηθά στην αποτροπή τυχαίων προσαρμογών. Αυτή τη στιγμή <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Εμπειρία Wear</string>
+    <string name="setting_swipe_gestures_hint">Χειρονομίες σύρσιματος</string>
+    <string name="setting_swipe_gestures_hint_description">Το σύρσιμο πάνω/κάτω/αριστερά μπορεί καθένα να ανοίγει οποιαδήποτε ενέργεια. Πατήστε εδώ για να τα διαμορφώσετε για Μουσική παίζει ή Καμία αναπαραγωγή. Το σύρσιμο δεξιά παραμένει δεσμευμένο για έξοδο από την εφαρμογή.</string>
+    <string name="setting_screen_buttons_hint">Μίνι κουμπιά</string>
+    <string name="setting_screen_buttons_hint_description">Έως τρία ορατά κουμπιά, καθένα με ενέργειες πατήματος και παρατεταμένου πατήματος. Πατήστε εδώ για να τα διαμορφώσετε για Μουσική παίζει ή Καμία αναπαραγωγή.</string>
+    <string name="dev_screen_buttons_offset">Θέση μίνι κουμπιών</string>
+    <string name="dev_screen_buttons_offset_description">Προτιμώμενη απόσταση σε dp μεταξύ του κάτω μέρους της οθόνης του ρολογιού και των μίνι κουμπιών (προεπιλογή 42). Η γραμμή εξακολουθεί να προσαρμόζεται αυτόματα μακριά από μεγάλους τίτλους.</string>
+    <string name="setting_screen_buttons_tilt">Κλίση κουμπιών</string>
+    <string name="setting_screen_buttons_tilt_description">Πόσο τα πλαϊνά κουμπιά ακολουθούν την καμπύλη της οθόνης. 0 = ευθεία γραμμή· 100 = πλήρες τόξο με κεκλιμένα εικονίδια.</string>
+    <string name="setting_screen_buttons_bg">Φόντο μίνι κουμπιών</string>
+    <string name="setting_screen_buttons_opacity">Αδιαφάνεια μίνι κουμπιών</string>
+    <string name="setting_screen_buttons_opacity_description">Αδιαφάνεια ολόκληρης της ομάδας μίνι κουμπιών (0–100%%). Αυτή τη στιγμή <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Πάνελ γρήγορων ενεργειών</string>
+    <string name="quick_panel_config_hint">Αυτά είναι τα κουμπιά του πάνελ που ανοίγει με διπλό πάτημα στο κέντρο της οθόνης του ρολογιού. Πατήστε μια γραμμή για να επιλέξετε την ενέργειά της (\"Καμία\" την αποκρύπτει)· κρατήστε πατημένο για επαναφορά της προεπιλογής.</string>
+    <string name="quick_panel_slot_1">Κουμπί 1</string>
+    <string name="quick_panel_slot_2">Κουμπί 2</string>
+    <string name="quick_panel_slot_3">Κουμπί 3</string>
+    <string name="quick_panel_slot_long">Μακρύ κουμπί</string>
+    <string name="quick_panel_slot_default">%1$s (προεπιλογή)</string>
+    <string name="quick_panel_slot_hidden">Κρυφό</string>
+    <string name="quick_panel_default_like">Μου αρέσει</string>
+    <string name="quick_panel_default_shuffle">Τυχαία σειρά</string>
+    <string name="quick_panel_default_repeat">Επανάληψη</string>
+    <string name="quick_panel_default_up_next">Ακολουθεί</string>
+    <string name="setting_wear_center_long_press_queue">Παρατεταμένο πάτημα κέντρου για την ουρά</string>
+    <string name="setting_wear_center_long_press_queue_description">Κρατήστε πατημένο το κέντρο της οθόνης αναπαραγωγής για να ανοίξει η ουρά αναπαραγωγής.</string>
+    <string name="setting_wear_screen_face">Βασική διάταξη</string>
+    <string name="setting_wear_screen_face_description">Επιλέξτε τη δομή που χρησιμοποιεί αυτό το θέμα. Τα αποθηκευμένα θέματα μπορούν να συνδυάσουν αυτή τη διάταξη με τη δική τους γραμματοσειρά, χρώματα, θόλωση, σκίαση, AOD και πάνελ.</string>
+    <string name="setting_wear_show_track_title">Εμφάνιση τίτλου τραγουδιού</string>
+    <string name="setting_wear_show_track_title_description">Εμφάνιση του ονόματος του τρέχοντος τραγουδιού στον player</string>
+    <string name="setting_wear_show_track_artist">Εμφάνιση ονόματος καλλιτέχνη</string>
+    <string name="setting_wear_show_track_artist_description">Εμφάνιση του τρέχοντος καλλιτέχνη στον player</string>
+    <string name="setting_wear_show_source_icon">Εμφάνιση εικονιδίου εφαρμογής αναπαραγωγής</string>
+    <string name="setting_wear_show_source_icon_description">Εμφάνιση του εικονιδίου της εφαρμογής που παίζει τρέχουσα δίπλα στον καλλιτέχνη. Χρησιμοποιεί το εικονίδιο από την ειδοποίηση πολυμέσων της. Όταν είναι απενεργοποιημένο, το εικονίδιο δεν αποστέλλεται ποτέ στο ρολόι.</string>
+    <string name="setting_wear_player_controls_visible">Εμφάνιση χειριστηρίων player</string>
+    <string name="setting_wear_player_controls_visible_description">Εμφάνιση ή απόκρυψη ενσωματωμένων κουμπιών στις διατάξεις Classic, Poster, Studio και άλλες ρυθμιζόμενες χωρίς απενεργοποίηση των περιοχών αφής τους</string>
+    <string name="setting_wear_quadrant_tap_flash">Αναλαμπή εικονιδίου κατά το πάτημα</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Όταν ενεργοποιείται η ενέργεια μιας γωνιακής ζώνης, αναλάμψτε σύντομα το εικονίδιό της σε πλήρη φωτεινότητα — ιδιαίτερα χρήσιμο στο στυλ οθόνης Κρυφό, όπου το εικονίδιο είναι διαφορετικά αόρατο και δεν δίνει επιβεβαίωση για το ποια ενέργεια μόλις εκτελέστηκε.</string>
+    <string name="setting_wear_internal_progress_visible">Δείκτης προόδου διάταξης</string>
+    <string name="setting_wear_internal_progress_visible_description">Εμφάνιση του επιπλέον δείκτη προόδου σχεδιασμένου σε αυτή τη διάταξη. Οι δακτύλιοι κουμπιού αναπαραγωγής Expressive και Material αποτελούν μέρος των χειριστηρίων τους και παραμένουν διαθέσιμοι.</string>
+    <string name="setting_wear_edge_progress_visible">Εμφάνιση τόξου προόδου στο άκρο</string>
+    <string name="setting_wear_edge_progress_visible_description">Απόκρυψη μόνο του οπτικού τόξου γύρω από την οθόνη. Η αναζήτηση από το άκρο παραμένει ανεξάρτητη επιλογή.</string>
+    <string name="setting_wear_edge_seek_enabled">Αναζήτηση από το άκρο της οθόνης</string>
+    <string name="setting_wear_edge_seek_enabled_description">Πατήστε ή σύρετε κατά μήκος του άκρου της οθόνης για μετάβαση σε ακριβές σημείο, ακόμη και όταν το τόξο του είναι κρυφό</string>
+    <string name="setting_wear_screen_theme">Στυλ ελέγχου</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Ισορροπημένο</string>
+    <string name="wear_screen_theme_default_description">Τυπική ιεραρχία και μεγέθη χειριστηρίων.</string>
+    <string name="wear_screen_theme_minimal">Μινιμαλιστικό</string>
+    <string name="wear_screen_theme_minimal_description">Χρησιμοποιεί μικρότερα, πιο διακριτικά χειριστήρια διατηρώντας κάθε ενέργεια ορατή και χρησιμοποιήσιμη.</string>
+    <string name="wear_screen_theme_compact">Συμπαγές</string>
+    <string name="wear_screen_theme_compact_description">Χρησιμοποιεί πιο σφιχτή επεξεργασία χειριστηρίων χωρίς αλλαγή των ενεργειών σας.</string>
+    <string name="wear_screen_theme_cinema">Κινηματογράφος</string>
+    <string name="wear_screen_theme_cinema_description">Απαλύνει τα χειριστήρια χωρίς αλλαγή του εξωφύλλου.</string>
+    <string name="wear_screen_theme_vivid">Ζωηρό</string>
+    <string name="wear_screen_theme_vivid_description">Χρησιμοποιεί μεγαλύτερα, πιο εμφανή χειριστήρια.</string>
+    <string name="wear_screen_theme_contrast">Υψηλή αντίθεση</string>
+    <string name="wear_screen_theme_contrast_description">Χρησιμοποιεί μεγαλύτερα χειριστήρια για ευκολότερη ανάγνωση.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Χρησιμοποιεί συμπαγή, ελαφρώς σκοτεινιασμένα χειριστήρια. Δεν σκοτεινιάζει το ίδιο το φόντο — χρησιμοποιήστε τις ρυθμίσεις φόντου γι\' αυτό.</string>
+    <string name="wear_screen_theme_hidden">Κρυφό</string>
+    <string name="wear_screen_theme_hidden_description">Αποκρύπτει εντελώς όλα τα εικονίδια ελέγχου. Οι περιοχές αφής παραμένουν ενεργές και πλήρως λειτουργικές.</string>
+    <string name="setting_wear_font">Γραμματοσειρά</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Η προεπιλεγμένη γραμματοσειρά της εφαρμογής.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Η κλασική γραμματοσειρά συστήματος του Android.</string>
+    <string name="wear_font_rounded">Στρογγυλεμένη</string>
+    <string name="wear_font_rounded_description">Φιλικές μοντέρνες μορφές γραμμάτων με απαλά στρογγυλεμένα άκρα.</string>
+    <string name="wear_font_sans_light">Μοντέρνα Ελαφριά</string>
+    <string name="wear_font_sans_light_description">Μια καθαρή, αέρινη sans-serif με ελαφρύτερο οπτικό βάρος.</string>
+    <string name="wear_font_sans_thin">Υπερλεπτή</string>
+    <string name="wear_font_sans_thin_description">Ένα εξαιρετικά ελαφρύ στυλ οθόνης για ένα μινιμαλιστικό player.</string>
+    <string name="wear_font_sans_medium">Μοντέρνα Μεσαία</string>
+    <string name="wear_font_sans_medium_description">Μια κοφτερή sans-serif με πιο έντονες, συμπαγείς γραμμές.</string>
+    <string name="wear_font_sans_black">Έντονη</string>
+    <string name="wear_font_sans_black_description">Μια τολμηρή οικογένεια οθόνης με μέγιστη οπτική επίδραση.</string>
+    <string name="wear_font_small_caps">Μικρά κεφαλαία</string>
+    <string name="wear_font_small_caps_description">Συμπαγείς μορφές σε σχήμα κεφαλαίων με εκδοτικό αίσθημα.</string>
+    <string name="wear_font_casual">Καθημερινή</string>
+    <string name="wear_font_casual_description">Μια παιχνιδιάρικη χειρόγραφη οικογένεια συστήματος.</string>
+    <string name="wear_font_typewriter">Γραφομηχανή (Αρχειοθετημένη)</string>
+    <string name="wear_font_typewriter_description">Μια ρετρό εμφάνιση γραφομηχανής (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Μια στρογγυλεμένη γεωμετρική sans, μια δωρεάν (OFL) εναλλακτική στο πνεύμα της Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Μια καθαρή γεωμετρική sans, μια δωρεάν (OFL) εναλλακτική στο πνεύμα της Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Μια κομψή ουμανιστική ρωμαϊκή, μια δωρεάν (OFL) εναλλακτική στο πνεύμα της Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Ένα πιο απαλό στυλ γραφομηχανής (Love Letter Typewriter) — κανονικά προορίζεται για κομμάτια με θέμα \"Lain\".</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Μια κλασική γραμματοσειρά serif.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">Γράμματα serif σταθερού πλάτους με χαρακτηριστική εκδοτική/τερματική εμφάνιση.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Σταθερό πλάτος, τεχνική εμφάνιση.</string>
+    <string name="wear_font_condensed">Στενή</string>
+    <string name="wear_font_condensed_description">Στενότερες μορφές γραμμάτων που χωρούν περισσότερο κείμενο.</string>
+    <string name="wear_font_condensed_light">Στενή Ελαφριά</string>
+    <string name="wear_font_condensed_light_description">Μια στενή, ελαφρύτερη οικογένεια για μεγάλους τίτλους.</string>
+    <string name="wear_font_condensed_medium">Στενή Μεσαία</string>
+    <string name="wear_font_condensed_medium_description">Μια στενή οικογένεια με πιο έντονες γραμμές και εξαιρετική αναγνωσιμότητα.</string>
+    <string name="wear_font_cursive">Καλλιγραφική</string>
+    <string name="wear_font_cursive_description">Μια διακοσμητική χειρόγραφη γραμματοσειρά.</string>
+    <string name="setting_wear_dynamic_accent">Δυναμικός τόνος στο ρολόι</string>
+    <string name="setting_wear_dynamic_accent_description">Προσαρμόστε τα χρώματα ρολογιού βάσει άλμπουμ στο τρέχον εξώφυλλο. Όταν είναι απενεργοποιημένο, οι επιλογές χρώματος Άλμπουμ χρησιμοποιούν τον στατικό τόνο θέματος.</string>
+    <string name="setting_wear_album_art_fade">Μετάβαση ξεθωριάσματος εξωφύλλου</string>
+    <string name="setting_wear_album_art_fade_description">Ομαλό ξεθώριασμα του εξωφύλλου άλμπουμ όταν αλλάζει το κομμάτι.</string>
+    <string name="setting_wear_title_text_mode">Συμπεριφορά κειμένου τίτλου</string>
+    <string name="setting_wear_title_text_mode_description">Πώς συμπεριφέρεται ο τίτλος αναπαραγωγής όταν δεν χωράει: Αυτόματο συνδυάζει συρρίκνωση, αναδίπλωση και κύλιση· οι άλλες επιλογές κάνουν μία συμπεριφορά αποκλειστική.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Αυτόματο (συρρίκνωση, μετά αναδίπλωση, μετά κύλιση)</item>
+        <item>Κύλιση (μαρκίζα)</item>
+        <item>Αναδίπλωση σε δύο γραμμές</item>
+        <item>Αναδίπλωση σε τρεις γραμμές</item>
+        <item>Αναδίπλωση σε πέντε γραμμές</item>
+        <item>Στατικό (μία γραμμή, χωρίς κύλιση ή συρρίκνωση)</item>
+        <item>Συρρίκνωση για προσαρμογή</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Χρώμα κειμένου καλλιτέχνη</string>
+    <string name="setting_wear_artist_custom_color">Προσαρμοσμένο χρώμα καλλιτέχνη</string>
+    <string name="setting_wear_artist_custom_color_description">Επιλέξτε το χρώμα καλλιτέχνη που χρησιμοποιείται με την Κανονική επεξεργασία</string>
+    <string name="setting_wear_artist_desaturated">Αποκορεσμένο χρώμα καλλιτέχνη</string>
+    <string name="setting_wear_artist_desaturated_description">Απαλύνει το χρώμα κειμένου καλλιτέχνη βάσει άλμπουμ — ισχύει μόνο όταν το \"Χρώμα κειμένου καλλιτέχνη\" είναι ορισμένο σε Χρώμα άλμπουμ</string>
+
+    <string name="setting_wear_progress_color">Χρώμα μπάρας προόδου</string>
+    <string name="setting_wear_progress_custom_color">Προσαρμοσμένο χρώμα μπάρας προόδου</string>
+    <string name="setting_wear_progress_custom_color_description">Επιλέξτε το χρώμα προόδου και αναζήτησης που χρησιμοποιείται με την Κανονική επεξεργασία</string>
+    <string name="setting_wear_progress_desaturated">Αποκορεσμένο χρώμα μπάρας προόδου</string>
+    <string name="setting_wear_progress_desaturated_description">Απαλύνει το χρώμα μπάρας προόδου βάσει άλμπουμ — ισχύει μόνο όταν το \"Χρώμα μπάρας προόδου\" είναι ορισμένο σε Χρώμα άλμπουμ</string>
+
+    <string name="setting_wear_volume_color">Χρώμα μπάρας έντασης</string>
+    <string name="setting_wear_volume_custom_color">Προσαρμοσμένο χρώμα έντασης</string>
+    <string name="setting_wear_volume_custom_color_description">Επιλέξτε το χρώμα έντασης που χρησιμοποιείται με την Κανονική επεξεργασία</string>
+    <string name="setting_wear_quick_panel_color">Χρώμα Γρήγορων Ενεργειών</string>
+    <string name="setting_wear_quick_panel_custom_color">Προσαρμοσμένο χρώμα Γρήγορων Ενεργειών</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Επιλέξτε το χρώμα Γρήγορων Ενεργειών που χρησιμοποιείται με την Κανονική επεξεργασία</string>
+    <string name="setting_wear_shading_custom_color_description">Επιλέξτε το χρώμα που χρωματίζει τη διαβάθμιση σκίασης</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Ουδέτερο (στατικό χρώμα θέματος)</item>
+        <item>Χρώμα άλμπουμ</item>
+        <item>Προσαρμοσμένο χρώμα</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Αναζήτηση Expressive</string>
+    <string name="setting_wear_expressive_seek_mode_description">Πώς να προωθείτε το κομμάτι με αφή στην όψη Expressive. Ο κεντρικός δακτύλιος κάνει σύρσιμο τον δακτύλιο γύρω από το κουμπί αναπαραγωγής· ο δακτύλιος άκρου εμφανίζει επίσης τον δακτύλιο πλαισίου Classic· το Κανένα αφήνει την αναζήτηση μόνο στην περιστροφική κορώνα.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Κεντρικός δακτύλιος</item>
+        <item>Δακτύλιος άκρου</item>
+        <item>Κανένα</item>
+    </string-array>
+
+    <string name="category_wear_aod">Οθόνη πάντα ενεργή</string>
+    <string name="setting_wear_aod_style">Στυλ πάντα ενεργό</string>
+    <string name="setting_wear_aod_style_description">Πώς φαίνεται η οθόνη αναπαραγωγής όσο το ρολόι είναι σε λειτουργία αδράνειας. Το Ακολούθηση όψης ταιριάζει με την επιλεγμένη όψη· το Μινιμαλιστικό εμφανίζει μόνο σκοτεινιασμένο κείμενο σε καθαρό μαύρο για τη μέγιστη διάρκεια μπαταρίας.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Ακολούθηση όψης</item>
+        <item>Classic</item>
+        <item>Expressive (με περίγραμμα)</item>
+        <item>Material (με περίγραμμα)</item>
+        <item>Χειριστήρια AMOLED</item>
+        <item>Chrono (μεγάλο ρολόι)</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Χρώμα πάντα ενεργό</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Λευκό</item>
+        <item>Χρώμα άλμπουμ</item>
+        <item>Προσαρμοσμένο χρώμα</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Λευκό</item>
+        <item>Δυναμικό (βάσει περιοχής κάτω από το ρολόι)</item>
+        <item>Χρώμα άλμπουμ</item>
+        <item>Προσαρμοσμένο χρώμα</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Ακολούθηση στυλ πάνελ</item>
+        <item>Διαφανές (χωρίς φόντο)</item>
+        <item>Τόνος άλμπουμ</item>
+        <item>Ημιδιαφανές</item>
+        <item>Λευκό</item>
+        <item>Θαμπό λευκό</item>
+        <item>Μαύρο</item>
+        <item>Δυναμικό (τόνος άλμπουμ)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Φόντο χαπιού Ακολουθεί</string>
+    <string name="setting_wear_show_up_next_pill">Χάπι Ακολουθεί στον player</string>
+    <string name="setting_wear_show_up_next_pill_description">Εμφάνιση χαπιού Ακολουθεί στο κάτω μέρος της οθόνης αναπαραγωγής. Καταλαμβάνει τον χώρο που θα καταλάμβανε η γραμμή μίνι κουμπιών, οπότε εμφανίζεται μόνο όσο αυτή η γραμμή δεν εμφανίζεται.</string>
+    <string name="category_wf_clock">Ρολόι</string>
+    <string name="setting_wear_clock_color">Χρώμα ρολογιού</string>
+    <string name="setting_wear_clock_custom_color">Προσαρμοσμένο χρώμα ρολογιού</string>
+    <string name="setting_wear_clock_custom_color_description">Πατήστε για να επιλέξετε το χρώμα ρολογιού που χρησιμοποιείται όταν το Χρώμα ρολογιού είναι ορισμένο σε Προσαρμοσμένο χρώμα</string>
+    <string name="setting_wear_clock_opacity">Αδιαφάνεια ρολογιού</string>
+    <string name="setting_wear_clock_opacity_description">Πόσο αδιαφανές είναι το πάντα εμφανιζόμενο ρολόι (10–100%%). Αυτή τη στιγμή <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Προσαρμοσμένο χρώμα πάντα ενεργό</string>
+    <string name="setting_wear_aod_custom_color_description">Πατήστε για να επιλέξετε το χρώμα που χρησιμοποιείται για το πάντα ενεργό κείμενο, χειριστήρια και ρολόι όταν το \"Χρώμα πάντα ενεργό\" είναι ορισμένο σε Προσαρμοσμένο χρώμα</string>
+    <string name="setting_wear_aod_intensity">Φωτεινότητα πάντα ενεργό</string>
+    <string name="setting_wear_aod_intensity_description">Πόσο φωτεινά αποδίδεται η οθόνη πάντα ενεργή (20–100%%). Χαμηλότερο είναι πιο σκούρο και χρησιμοποιεί λιγότερη μπαταρία. Αυτή τη στιγμή <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Κουμπιά μεταφοράς στην οθόνη πάντα ενεργή</string>
+    <string name="setting_wear_aod_show_transport_description">Εμφάνιση των κουμπιών με περίγραμμα προηγούμενο/αναπαραγωγή/επόμενο σε υποστηριζόμενα οπτικά στυλ πάντα ενεργά. Δεν μπορούν να πατηθούν όσο η οθόνη είναι σκοτεινιασμένη, αλλά ένα πάτημα ξυπνά το ρολόι με το κουμπί ήδη κάτω από το δάχτυλό σας.</string>
+    <string name="setting_wear_aod_show_progress">Δακτύλιος προόδου στην οθόνη πάντα ενεργή</string>
+    <string name="setting_wear_aod_show_progress_description">Εμφάνιση του δακτυλίου προόδου γύρω από το κουμπί αναπαραγωγής σε λειτουργία αδράνειας — η θέση ανανεώνεται εκεί περίπου μία φορά το λεπτό</string>
+    <string name="setting_wear_aod_show_pills">Ακολουθεί στην οθόνη πάντα ενεργή</string>
+    <string name="setting_wear_aod_show_pills_description">Εμφάνιση στατικού χαπιού Ακολουθεί με περίγραμμα στο κάτω μέρος των οπτικών στυλ πάντα ενεργών</string>
+    <string name="category_wf_gestures">Χειρονομίες οθόνης</string>
+    <string name="setting_wear_mini_buttons_mode">Εμφάνιση μίνι κουμπιών</string>
+    <string name="setting_wear_gestures_mode">Χειρονομίες οθόνης</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Πάντα</item>
+        <item>Μόνο κατά την αναπαραγωγή</item>
+        <item>Μόνο σε παύση</item>
+        <item>Ποτέ</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Εξώφυλλο άλμπουμ στην οθόνη πάντα ενεργή</string>
+    <string name="setting_wear_aod_show_art_description">Διατηρήστε το σκοτεινιασμένο εξώφυλλο άλμπουμ ορατό σε λειτουργία αδράνειας. Η απενεργοποίηση εμφανίζει καθαρά μαύρο φόντο, το οποίο εξοικονομεί αισθητά περισσότερη μπαταρία σε οθόνες AMOLED.</string>
+    <string name="setting_wear_aod_art_treatment">Στυλ εξωφύλλου πάντα ενεργό</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Απαλή θόλωση</item>
+        <item>Καθαρό εξώφυλλο</item>
+        <item>Μονόχρωμη θόλωση</item>
+        <item>Ακολούθηση επεξεργασίας εξωφύλλου player</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Ρολόι στην οθόνη πάντα ενεργή</string>
+    <string name="setting_wear_aod_show_clock_description">Εμφάνιση του ρολογιού όταν το ρολόι είναι σε λειτουργία αδράνειας</string>
+    <string name="setting_wear_aod_show_track_info">Πληροφορίες κομματιού στην οθόνη πάντα ενεργή</string>
+    <string name="setting_wear_aod_show_track_info_description">Εμφάνιση του τίτλου και του καλλιτέχνη του κομματιού σε λειτουργία αδράνειας</string>
+
+    <string name="category_overlays_queue">Επικαλύψεις &amp; ουρά</string>
+    <string name="setting_wear_overlay_backdrop_style">Φόντο πάνελ</string>
+    <string name="setting_wear_volume_style">Στυλ έντασης</string>
+    <string name="setting_wear_volume_layout">Διάταξη έντασης</string>
+    <string name="setting_wear_quick_panel_style">Στυλ γρήγορου πάνελ</string>
+    <string name="setting_wear_quick_panel_layout">Διάταξη γρήγορου πάνελ</string>
+    <string name="setting_wear_quick_panel_source">Γρήγορες ενέργειες</string>
+    <string name="setting_wear_quick_panel_source_description">Επιλέξτε τα ρυθμισμένα κουμπιά σας, ή ενέργειες που παρέχονται από την τρέχουσα εφαρμογή αναπαραγωγής.</string>
+    <string name="quick_panel_open_note_title">Άνοιγμα του πάνελ</string>
+    <string name="quick_panel_open_note_description">Διπλό πάτημα στο κέντρο της οθόνης αναπαραγωγής για να ανοίξει το πάνελ γρήγορων ενεργειών στο ρολόι.</string>
+    <string name="preview_current_app_action">Ενέργεια τρέχουσας εφαρμογής</string>
+    <string name="preview_notification_controls">Εικονίδιο από ειδοποίηση πολυμέσων</string>
+    <string name="setting_wear_queue_style">Στυλ ουράς</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Χρήση εξωφύλλων συντόμευσης ως φόντο</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Όταν το Στυλ ουράς παραπάνω είναι μια παραλλαγή Εξωφύλλου, μια γραμμή ενέργειας του γρήγορου πάνελ με ένα ανακτημένο εξώφυλλο συντόμευσης (κομμάτι, λίστα αναπαραγωγής, καλλιτέχνης…) γεμίζει επίσης το χάπι της με αυτό το εξώφυλλο, όπως κάνει το Ακολουθεί. Συντομεύσεις χωρίς ανακτημένο εξώφυλλο (απλό εικονίδιο εφαρμογής) δεν επηρεάζονται.</string>
+    <string name="setting_wear_list_row_size">Μέγεθος χαπιού λίστας</string>
+    <string name="setting_wear_list_row_size_description">Ύψος των γραμμών πλήρους πλάτους στην ουρά, τα μενού και το γρήγορο πάνελ.</string>
+    <string name="setting_wear_progress_style">Στυλ δακτυλίου προόδου</string>
+    <string name="setting_wear_seek_style">Στυλ ένδειξης αναζήτησης &amp; έντασης</string>
+    <string name="setting_wear_seek_layout">Διάταξη πάνελ αναζήτησης</string>
+    <string name="setting_wear_color_treatment">Επεξεργασία χρώματος ρολογιού</string>
+    <string name="setting_wear_normal_color">Κανονικό χρώμα</string>
+    <string name="setting_wear_normal_color_description">Επιλέξτε το ενιαίο χρώμα που χρησιμοποιείται από τόνους τίτλου, πρόοδο, ένταση, πάνελ και χρωματισμό μίνι κουμπιών σε λειτουργία Κανονικό</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Κανονικό (επιλεγμένο χρώμα)</item>
+        <item>Αποκορεσμένο (απαλό χρώμα άλμπουμ)</item>
+        <item>Expressive (πλήρης παλέτα άλμπουμ)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Ακολούθηση επεξεργασίας ρολογιού</item>
+        <item>Κανονικό (επιλεγμένο χρώμα)</item>
+        <item>Αποκορεσμένο (απαλό χρώμα άλμπουμ)</item>
+        <item>Expressive (πλήρης παλέτα άλμπουμ)</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Τόξο άκρου (αριστερά)</item>
+        <item>Τόξο άκρου (ψηλό)</item>
+        <item>Τόξο άκρου (δεξιά)</item>
+        <item>Τόξο άκρου (πάνω)</item>
+        <item>Τόξο άκρου (κάτω)</item>
+        <item>Πλήρης δακτύλιος</item>
+        <item>Κεντρικό φωτοστέφανο</item>
+        <item>Οριζόντιο μετρητή</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Δακτύλιος άκρου</item>
+        <item>Δακτύλιος άκρου (λεπτός)</item>
+        <item>Δακτύλιος άκρου (χοντρός)</item>
+        <item>Χρονογραμμή</item>
+        <item>Τμηματοποιημένη χρονογραμμή</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Μεταδεδομένα πρώτα</item>
+        <item>Τόξο</item>
+        <item>Hero</item>
+        <item>Πλέγμα</item>
+        <item>Γραμμές με ετικέτες</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Συμπαγές</item>
+        <item>Διακεκομμένο</item>
+        <item>Κουκκίδες</item>
+        <item>Λεπτή γραμμή</item>
+        <item>Κομήτης</item>
+        <item>60 κουκκίδες ρολογιού</item>
+        <item>60 δείκτες ρολογιού</item>
+        <item>Τμήματα 12 ωρών</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Απλό</item>
+        <item>Γυάλινο χάπι</item>
+        <item>Χάπι Expressive</item>
+        <item>Χάπι Material</item>
+        <item>Λευκό χάπι</item>
+        <item>Γιγάντιο</item>
+        <item>Θέση / σύνολο</item>
+        <item>Λευκό γυαλί</item>
+        <item>Ημιδιαφανές άλμπουμ</item>
+        <item>Λάμψη άλμπουμ</item>
+        <item>Περίγραμμα</item>
+        <item>Συμπαγές θέμα</item>
+        <item>Συμπαγές άλμπουμ</item>
+        <item>Μίκρο</item>
+        <item>Σκιά (χωρίς χρωματισμό)</item>
+        <item>Υπογράμμιση</item>
+        <item>Λεπτό περίγραμμα</item>
+        <item>Γιγάντιο χρώμα άλμπουμ</item>
+        <item>Μονόχρωμο</item>
+        <item>Τονικό σκούρο</item>
+        <item>Τερματικό</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Ρυθμισμένα κουμπιά</item>
+        <item>Από την τρέχουσα εφαρμογή πολυμέσων</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Ακολούθηση στυλ πάνελ</item>
+        <item>Θόλωση άλμπουμ (ακρυλικό)</item>
+        <item>Συμπαγές μαύρο</item>
+        <item>Συμπαγές χρώμα άλμπουμ</item>
+        <item>Γυαλί</item>
+        <item>Διαβάθμιση άλμπουμ</item>
+        <item>Διβάθμιο άλμπουμ</item>
+        <item>Πρίσμα</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Γυαλί</item>
+        <item>Μινιμαλιστικό (AMOLED)</item>
+        <item>Material</item>
+        <item>Τονικό</item>
+        <item>Νέον</item>
+        <item>Ανοιχτό</item>
+        <item>Διαβάθμιση</item>
+        <item>Μονόχρωμο</item>
+        <item>Περίγραμμα</item>
+        <item>Διβάθμιο</item>
+        <item>Πρίσμα</item>
+        <item>Υψηλή αντίθεση</item>
+        <item>Τερματικό</item>
+        <item>Πάχνη</item>
+        <item>Τμήματα</item>
+        <item>Aurora</item>
+        <item>Μελάνι</item>
+        <item>Αυλάκωση</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Συμπαγές</item>
+        <item>Κανονικό</item>
+        <item>Ψηλό</item>
+        <item>Πολύ ψηλό</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Γυαλί</item>
+        <item>Μινιμαλιστικό (AMOLED)</item>
+        <item>Material</item>
+        <item>Τονικό</item>
+        <item>Νέον</item>
+        <item>Ανοιχτό</item>
+        <item>Διαβάθμιση</item>
+        <item>Μονόχρωμο</item>
+        <item>Περίγραμμα</item>
+        <item>Διβάθμιο</item>
+        <item>Πρίσμα</item>
+        <item>Υψηλή αντίθεση</item>
+        <item>Τερματικό</item>
+        <item>Πάχνη</item>
+        <item>Εξώφυλλο</item>
+        <item>Θολό εξώφυλλο</item>
+        <item>Εξώφυλλο Τονικό</item>
+        <item>Τετράγωνο εξώφυλλο</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Γυαλί</item>
+        <item>Λευκό γυαλί</item>
+        <item>Γυαλί Τονικό</item>
+        <item>Μινιμαλιστικό (AMOLED)</item>
+        <item>Material</item>
+        <item>Τονικό</item>
+        <item>Νέον</item>
+        <item>Ανοιχτό</item>
+        <item>Διαβάθμιση</item>
+        <item>Μονόχρωμο</item>
+        <item>Περίγραμμα</item>
+        <item>Περίγραμμα Λευκό Γυαλί</item>
+        <item>Διβάθμιο</item>
+        <item>Πρίσμα</item>
+        <item>Υψηλή αντίθεση</item>
+        <item>Τερματικό</item>
+        <item>Πάχνη</item>
+        <item>Ghost (χωρίς χρωματισμό)</item>
+        <item>Ομίχλη</item>
+        <item>Μελάνι</item>
+        <item>Κουκκίδα</item>
+        <item>Πλάκα</item>
+    </string-array>
+
+    <string name="setting_wear_track_time_mode">Εμφάνιση χρόνου κομματιού</string>
+    <string name="setting_wear_track_time_mode_description">Πότε εμφανίζεται η θέση του κομματιού (π.χ. 1:23 / 3:45) στην οθόνη αναπαραγωγής.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Πάντα</item>
+        <item>Μόνο κατά την αναπαραγωγή</item>
+        <item>Μόνο σε παύση</item>
+        <item>Ποτέ</item>
+    </string-array>
+
+    <string name="setting_screen_buttons_curve">Καμπυλότητα μίνι κουμπιών</string>
+    <string name="setting_screen_buttons_curve_description">Επιλέξτε το στυλ καμπυλότητας για τα μίνι κουμπιά: επίπεδο, τόξο, απαλό, καμπύλο.</string>
+    <string name="setting_screen_buttons_shape">Σχήμα μίνι κουμπιών</string>
+    <string name="setting_screen_buttons_shape_description">Επιλέξτε το σχήμα και τη μορφή διάταξης των μίνι κουμπιών.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Χάπι (Προεπιλογή)</item>
+        <item>Κύκλος</item>
+        <item>Τετράγωνο</item>
+        <item>Στρογγυλεμένο τετράγωνο (Απαλό)</item>
+        <item>Στρογγυλεμένο τετράγωνο (Μεσαίο)</item>
+        <item>Squircle</item>
+        <item>Φύλλο</item>
+        <item>Σταγόνα</item>
+        <item>Χάπι (Πλατύ Μικρό)</item>
+        <item>Χάπι (Πλατύ Μεσαίο)</item>
+        <item>Χάπι (Πλατύ Μεγάλο)</item>
+        <item>Χάπι (Πλατύ Πολύ Μεγάλο)</item>
+        <item>Στρογγυλεμένο ορθογώνιο (Μικρό)</item>
+        <item>Στρογγυλεμένο ορθογώνιο (Μεσαίο)</item>
+        <item>Στρογγυλεμένο ορθογώνιο (Μεγάλο)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Επίπεδο</item>
+        <item>Τόξο</item>
+        <item>Ελαφριά καμπύλη</item>
+        <item>Απαλή καμπύλη</item>
+        <item>Μεσαία καμπύλη</item>
+        <item>Καμπύλο</item>
+        <item>Ακραία καμπύλη</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Προεπιλεγμένο φόντο</item>
+        <item>Γυαλί (ομοιόμορφο)</item>
+        <item>Γυαλί (ανοιχτό)</item>
+        <item>Ημιδιαφανές άλμπουμ</item>
+        <item>Ημιδιαφανές άλμπουμ Exp</item>
+        <item>Λάμψη άλμπουμ</item>
+        <item>Λάμψη Exp</item>
+        <item>Συμπαγές θέμα</item>
+        <item>Συμπαγές άλμπουμ</item>
+        <item>Συμπαγές Exp άλμπουμ</item>
+        <item>Περίγραμμα</item>
+        <item>Περίγραμμα Exp άλμπουμ</item>
+        <item>Μόνο εικονίδιο (διαφανές)</item>
+        <item>Εικονίδιο Exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Ουδέτερο</item>
+        <item>Χρώμα άλμπουμ</item>
+        <item>Προσαρμοσμένο χρώμα</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Πλήρες εξώφυλλο</item>
+        <item>Θολό φόντο</item>
+        <item>Τετράγωνο (κοφτερές γωνίες)</item>
+        <item>Τετράγωνο (απαλές γωνίες)</item>
+        <item>Τετράγωνο (στρογγυλεμένες γωνίες)</item>
+        <item>Ασπρόμαυρο</item>
+        <item>Θολό ασπρόμαυρο</item>
+        <item>Θόλωση Expressive</item>
+        <item>Expressive</item>
+        <item>Τονική διαβάθμιση Material</item>
+        <item>Εξώφυλλο Poster</item>
+        <item>Διαβάθμιση Studio</item>
+        <item>Ακτινική λάμψη Vinyl</item>
+        <item>Λάμψη Halo</item>
+        <item>Κορδέλες Aurora</item>
+        <item>Διαβάθμιση Spectrum</item>
+        <item>Σάρωση Corona</item>
+        <item>Ξεθώριασμα σούρουπου</item>
+        <item>Bloom</item>
+        <item>Ξεθώριασμα ορίζοντα</item>
+        <item>Λάμψη θράκας</item>
+        <item>Eclipse AMOLED μαύρο</item>
+        <item>Κρυφό (συμπαγές μαύρο)</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Χρονικό όριο κλεισίματος</string>
+    <string name="setting_close_timeout_description">Το Svartifoss θα κλείσει αυτόματα όταν δεν παίζει μουσική για <![CDATA[<b>%1$s δευτερόλεπτα</b>]]>. Η λειτουργία απενεργοποιείται όταν το χρονικό όριο είναι ορισμένο σε 0 δευτερόλεπτα. Σημειώστε ότι, για εξοικονόμηση μπαταρίας, αυτή η επιλογή μπορεί ενίοτε να μην είναι πολύ ακριβής και μπορεί να καθυστερήσει το κλείσιμο έως και ένα λεπτό.</string>
+    <string name="setting_wear_close_on_idle">Κλείσιμο σε \"Καμία αναπαραγωγή\"</string>
+    <string name="setting_wear_close_on_idle_description">Κλείνει αυτόματα την εφαρμογή του ρολογιού περίπου ένα λεπτό αφού φτάσει στην ανενεργή οθόνη \"Καμία αναπαραγωγή\", ώστε να μην παραμένει ποτέ εκεί. Ανεξάρτητο από το χρονικό όριο κλεισίματος παραπάνω, που καλύπτει μια παύση κομματιού.</string>
+    <string name="category_notifications">Αναδυόμενη ειδοποίηση</string>
+    <string name="setting_enable_notifications">Εμφάνιση αναδυόμενης ειδοποίησης</string>
+    <string name="setting_enable_notifications_description">Αυτή η λειτουργία απαιτεί μια άλλη εφαρμογή για τη διαχείριση ειδοποιήσεων (Vibration Center for Wear).\n\nΟποτεδήποτε το Vibration Center δονεί το ρολόι, το Svartifoss θα εμφανίζει αναδυόμενο παράθυρο με το κείμενο της ειδοποίησης, επιτρέποντάς σας να ρίξετε μια γρήγορη ματιά χωρίς να βγείτε από το Svartifoss.</string>
+    <string name="setting_notification_timeout">Χρονικό όριο αναδυόμενης ειδοποίησης</string>
+    <string name="setting_notification_timeout_description">Η αναδυόμενη ειδοποίηση θα κλείσει αυτόματα μετά από <![CDATA[<b>%1$s δευτερόλεπτα</b>]]>. Εισάγετε 0 για απενεργοποίηση αυτόματου κλεισίματος.</string>
+    <string name="app_required">Απαιτείται εφαρμογή</string>
+    <string name="vibration_center_required_description">Για να χρησιμοποιήσετε αυτή τη λειτουργία, θα χρειαστεί να εγκαταστήσετε μια άλλη (δωρεάν) εφαρμογή: Vibration Center for Wear.</string>
+    <string name="open_play_store">Άνοιγμα Play Store</string>
+    <string name="error_no_notification_service_support">Λυπούμαστε, η συσκευή σας δεν φαίνεται να υποστηρίζει υπηρεσίες ειδοποιήσεων</string>
+    <string name="setting_always_select_center_action">Πάντα επιλογή κεντρικής ενέργειας</string>
+    <string name="setting_always_select_center_action_description">Όταν είναι ενεργοποιημένο, το πάτημα στη λίστα ενεργειών θα επιλέγει πάντα την κεντρική (τονισμένη) επιλογή, ανεξάρτητα από την επιλογή που πατήσατε.</string>
+    <string name="change_icon">Αλλαγή εικονιδίου</string>
+    <string name="please_wait">Παρακαλώ περιμένετε</string>
+
+    <string name="error_playlist_not_supported">Δεν υποστηρίζεται από αυτή την εφαρμογή πολυμέσων</string>
+    <string name="error_search_no_results">Δεν βρέθηκαν αποτελέσματα</string>
+    <string name="seconds_to_skip">Δευτερόλεπτα προώθησης:</string>
+    <string name="seconds_to_reverse">Δευτερόλεπτα οπισθοδρόμησης:</string>
+
+    <string name="setting_dynamic_accent_color">Δυναμικό χρώμα τόνου</string>
+    <string name="setting_dynamic_accent_color_description">Όταν είναι ενεργοποιημένο, το χρώμα τόνου (SeekBar, ενεργό στοιχείο ουράς) προσαρμόζεται αυτόματα στο κυρίαρχο χρώμα του τρέχοντος εξωφύλλου άλμπουμ.</string>
+    <string name="setting_desaturated_color">Αποκορεσμένο χρώμα</string>
+    <string name="setting_desaturated_color_description">Προσαρμόζει τον κορεσμό και τη φωτεινότητα του εξαγόμενου χρώματος για να εξασφαλίσει υψηλή αναγνωσιμότητα και αντίθεση ανάλογα με το ενεργό θέμα.</string>
+
+    <string name="queue_header">Ουρά αναπαραγωγής</string>
+    <string name="queue_unavailable">Η ουρά δεν είναι διαθέσιμη</string>
+
+    <string name="setting_custom_accent_color">Χρώμα τόνου</string>
+    <string name="setting_custom_accent_color_description">Επιλέξτε ένα προσαρμοσμένο χρώμα τόνου για τη διεπαφή της εφαρμογής</string>
+    <string name="setting_mini_player">Μίνι player</string>
+    <string name="setting_mini_player_description">Εμφανίζει μια μόνιμη γραμμή αναπαραγωγής πάνω από την κάτω πλοήγηση όποτε τα πολυμέσα είναι ενεργά. Ενεργοποιημένο από προεπιλογή· απενεργοποιήστε το για να ανακτήσετε αυτόν τον χώρο.</string>
+    <string name="color_picker_title">Επιλογή χρώματος τόνου</string>
+    <string name="color_picker_reset">Επαναφορά</string>
+    <string name="color_picker_apply">Εφαρμογή</string>
+    <string name="color_picker_default">Προεπιλογή</string>
+    <string name="color_picker_invalid">Μη έγκυρος κωδικός χρώματος</string>
+    <string name="color_picker_current">Τρέχον: %s</string>
+
+    <string name="drawer_version_format">Έκδοση %1$s</string>
+    <string name="drawer_tagline">Συνοδευτική εφαρμογή για Wear OS</string>
+    <string name="drawer_about_heading">Σχετικά</string>
+    <string name="drawer_about_summary">Το Svartifoss σάς επιτρέπει να ελέγχετε τη μουσική στο τηλέφωνό σας από το ρολόι Wear OS — με ένα πλήρως προσαρμόσιμο τηλεχειριστήριο προσαρμοσμένο στη συσκευή σας.</string>
+    <string name="drawer_name_heading">Το όνομα</string>
+    <string name="drawer_name_meaning">Το Svartifoss σημαίνει «Μαύρος Καταρράκτης» στα ισλανδικά — ονομάστηκε από τον καταρράκτη στο Εθνικό Πάρκο Vatnajökull, όπου σκούρες βασαλτικές κολόνες πλαισιώνουν έναν στενό καταρράκτη. Όπως το νερό πάνω από την πέτρα, η μουσική ρέει μέσα από την εφαρμογή.</string>
+    <string name="drawer_sync_heading">Συγχρονισμός</string>
+    <string name="drawer_sync_summary">Οι ρυθμίσεις ρολογιού διαμορφώνονται εδώ στο τηλέφωνο και συγχρονίζονται αυτόματα με το συζευγμένο ρολόι σας.</string>
+    <string name="drawer_support_heading">Υποστήριξη</string>
+    <string name="drawer_support_summary">Το Svartifoss είναι δωρεάν και ανοιχτού κώδικα — κεράστε με έναν καφέ αν σας φανεί χρήσιμο :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Λήψη εξωφύλλου</string>
+    <string name="album_art_saved">Το εξώφυλλο αποθηκεύτηκε στη συλλογή</string>
+    <string name="album_art_save_error">Αποτυχία αποθήκευσης εξωφύλλου</string>
+
+    <string name="action_play_liked_songs">Αναπαραγωγή αγαπημένων τραγουδιών (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Αναπαραγωγή αγαπημένων τραγουδιών (Spotify)</string>
+    <string name="action_my_playlists">Συντομεύσεις streaming</string>
+    <string name="action_play_specific_playlist">Άνοιγμα συντόμευσης streaming</string>
+    <string name="action_choose_or_add_streaming_shortcut">Επιλογή ή προσθήκη συντόμευσης streaming</string>
+    <string name="action_show_streaming_library">Εμφάνιση όλων των αποθηκευμένων συντομεύσεων</string>
+    <string name="playlist_shortcut_pick_title">Επιλογή συντόμευσης</string>
+    <string name="playlist_shortcut_pick_empty">Δεν υπάρχουν αποθηκευμένες συντομεύσεις streaming ακόμη — προσθέστε μία παρακάτω, μετά πατήστε την για να την επιλέξετε</string>
+    <string name="playlist_shortcuts_empty">Δεν υπάρχουν συντομεύσεις streaming ακόμη — προσθέστε τις στις ρυθμίσεις της εφαρμογής τηλεφώνου</string>
+    <string name="setting_playlist_shortcuts">Συντομεύσεις streaming</string>
+    <string name="setting_playlist_shortcuts_description">Άνοιγμα συνδέσμων κοινοποίησης από το ρολόι στο YouTube Music, Spotify και άλλες εφαρμογές streaming</string>
+    <string name="setting_shortcut_artwork">Λήψη εξωφύλλων συντόμευσης διαδικτυακά</string>
+    <string name="setting_shortcut_artwork_description">Λήψη μικρογραφίας για κάθε αποθηκευμένη συντόμευση από την υπηρεσία, εμφανίζεται στη λίστα τηλεφώνου, το μενού ρολογιού και τα ανατεθειμένα κουμπιά. Κάθε μικρογραφία λαμβάνεται μία φορά. Αυτή είναι η μόνη διαδικτυακή πρόσβαση εκτός από τον έλεγχο ενημερώσεων· αποστέλλεται μόνο ο δημόσιος σύνδεσμος κοινοποίησης. Απενεργοποιημένο από προεπιλογή.</string>
+    <string name="watch_streaming_shortcuts_empty">Προσθέστε κομμάτια, άλμπουμ ή λίστες αναπαραγωγής για Γρήγορες Ενέργειες και το μενού ρολογιού</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d αποθηκευμένη συντόμευση · Διαθέσιμη στις Γρήγορες Ενέργειες και το μενού ρολογιού</item>
+        <item quantity="other">%1$d αποθηκευμένες συντομεύσεις · Διαθέσιμες στις Γρήγορες Ενέργειες και το μενού ρολογιού</item>
+    </plurals>
+    <string name="category_music_apps">Εφαρμογές &amp; υπηρεσίες μουσικής</string>
+    <string name="setting_apps_integrations">Υποστηριζόμενες υπηρεσίες μουσικής</string>
+    <string name="setting_apps_integrations_description">Οι σύνδεσμοι λειτουργούν με YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music και SoundCloud. Δεν απαιτείται πρόσβαση σε λογαριασμό.</string>
+    <string name="setting_apps_integrations_none">Δεν εντοπίστηκε υποστηριζόμενη εφαρμογή. Οι συντομεύσεις μπορούν ακόμη να ανοίξουν σε πρόγραμμα περιήγησης ή άλλη συμβατή εφαρμογή.</string>
+    <string name="setting_apps_integrations_installed">%1$d από %2$d εντοπίστηκαν: %3$s</string>
+    <string name="setting_streaming_open_mode">Άνοιγμα συνδέσμων streaming με</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Εντοπισμένη εφαρμογή streaming</item>
+        <item>Προεπιλογή Android</item>
+        <item>Ερώτηση κάθε φορά</item>
+    </string-array>
+    <string name="setting_notification_access">Πρόσβαση ειδοποιήσεων πολυμέσων</string>
+    <string name="setting_notification_access_enabled">Επιτρέπεται · Πατήστε για να ελέγξετε τις ρυθμίσεις Android</string>
+    <string name="setting_notification_access_disabled">Δεν επιτρέπεται · Απαιτείται για ενέργειες πολυμέσων ειδοποιήσεων και φίλτρα αυτόματης εκκίνησης</string>
+    <string name="setting_notification_access_unavailable">Οι ρυθμίσεις πρόσβασης ειδοποιήσεων δεν είναι διαθέσιμες σε αυτή τη συσκευή</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d αποθηκευμένη συντόμευση · Πατήστε για διαχείριση ή εισαγωγή συνδέσμων</item>
+        <item quantity="other">%1$d αποθηκευμένες συντομεύσεις · Πατήστε για διαχείριση ή εισαγωγή συνδέσμων</item>
+    </plurals>
+    <string name="category_privacy">Απόρρητο</string>
+    <string name="setting_crash_reporting">Αποστολή αναφορών σφαλμάτων</string>
+    <string name="setting_crash_reporting_description">Αποστολή διαγνωστικών Firebase Crashlytics για βοήθεια στη διόρθωση σφαλμάτων. Ενεργοποιημένο από προεπιλογή· απενεργοποιήστε το οποτεδήποτε.</string>
+    <string name="setting_announcements">Ειδοποιήσεις ανακοινώσεων</string>
+    <string name="setting_announcements_description">Περιστασιακές ειδοποιήσεις από τον προγραμματιστή — νέες εκδόσεις, σημαντικές ειδοποιήσεις. Αποστέλλονται μέσω Firebase Cloud Messaging· δεν εμπλέκεται λογαριασμός ή λίστα χρηστών. Ενεργοποιημένο από προεπιλογή· απενεργοποιήστε το οποτεδήποτε.</string>
+    <string name="announcement_notification_channel">Ανακοινώσεις</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Κοινοποιήστε μια λίστα αναπαραγωγής, άλμπουμ ή κομμάτι απευθείας στο Svartifoss, επικολλήστε έναν αντιγραμμένο σύνδεσμο, ή προσθέστε έναν χειροκίνητα. Το ρολόι ζητά από το τηλέφωνο να τον ανοίξει· δεν απαιτείται σύνδεση υπηρεσίας.</string>
+    <string name="back">Πίσω</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Η μουσική σας, ένα πάτημα μακριά</string>
+    <string name="playlist_shortcuts_yours">Οι συντομεύσεις σας</string>
+    <string name="playlist_shortcuts_empty_hint">Προσθέστε έναν κοινοποιημένο σύνδεσμο κομματιού, άλμπουμ ή λίστας αναπαραγωγής για να τον κάνετε διαθέσιμο στο ρολόι σας.</string>
+    <string name="playlist_shortcuts_add">Προσθήκη συντόμευσης</string>
+    <string name="playlist_shortcuts_paste">Επικόλληση συνδέσμου</string>
+    <string name="playlist_shortcuts_reload_covers">Επαναφόρτωση εξωφύλλων</string>
+    <string name="playlist_shortcuts_reloading_covers">Επαναφόρτωση εξωφύλλων…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Τα εξώφυλλα επαναφορτώθηκαν</string>
+    <string name="playlist_shortcuts_edit">Επεξεργασία συντόμευσης</string>
+    <string name="playlist_shortcut_save">Αποθήκευση συντόμευσης</string>
+    <string name="playlist_shortcut_editor_hint">Επικολλήστε έναν σύνδεσμο. Το Svartifoss αναγνωρίζει αυτόματα την εφαρμογή και τον τύπο περιεχομένου του.</string>
+    <string name="playlist_shortcut_detection_waiting">Αναμονή για σύνδεσμο streaming</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Υποστηρίζονται Spotify, YouTube Music, Apple Music, TIDAL, Deezer και άλλα.</string>
+    <string name="playlist_shortcut_detected_format">Εντοπίστηκε: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Όνομα</string>
+    <string name="playlist_shortcut_link_hint">Σύνδεσμος κοινοποίησης ή URI εφαρμογής</string>
+    <string name="playlist_shortcut_shuffle">Αναπαραγωγή τυχαία (μόνο YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Σύνδεσμος</string>
+    <string name="playlist_type_track">Κομμάτι</string>
+    <string name="playlist_type_playlist">Λίστα αναπαραγωγής</string>
+    <string name="playlist_type_album">Άλμπουμ</string>
+    <string name="playlist_type_artist">Καλλιτέχνης</string>
+    <string name="playlist_type_show">Εκπομπή</string>
+    <string name="playlist_type_episode">Επεισόδιο</string>
+    <string name="playlist_type_mix">Μιξ</string>
+    <string name="playlist_badge_shuffle">Τυχαία σειρά</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Δεν έχουν προστεθεί συντομεύσεις streaming ακόμη</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d αποθηκευμένη</item>
+        <item quantity="other">%1$d αποθηκευμένες</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Διατεταγμένες συντομεύσεις streaming. Αγγίξτε και κρατήστε πατημένο για σύρσιμο, χρησιμοποιήστε τις ενέργειες προσβασιμότητας Μετακίνηση πάνω ή Μετακίνηση κάτω, ή πατήστε Ctrl+Πάνω/Κάτω σε πληκτρολόγιο.</string>
+    <string name="playlist_shortcut_more_options">Περισσότερες επιλογές για %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Επεξεργασία</string>
+    <string name="playlist_shortcut_menu_open">Άνοιγμα τώρα</string>
+    <string name="playlist_shortcut_menu_copy">Αντιγραφή συνδέσμου</string>
+    <string name="playlist_shortcut_menu_duplicate">Διπλασιασμός</string>
+    <string name="playlist_shortcut_menu_share">Κοινοποίηση</string>
+    <string name="playlist_shortcut_menu_delete">Διαγραφή</string>
+    <string name="playlist_shortcut_open_failed">Καμία εφαρμογή δεν μπορεί να ανοίξει αυτόν τον σύνδεσμο</string>
+    <string name="streaming_shortcut_choose_app">Άνοιγμα συνδέσμου streaming με</string>
+    <string name="playlist_shortcut_link_copied">Ο σύνδεσμος αντιγράφηκε</string>
+    <string name="playlist_shortcut_import_invalid">Το κοινοποιημένο κείμενο δεν περιέχει έγκυρο σύνδεσμο streaming</string>
+    <string name="playlist_shortcut_clipboard_invalid">Το πρόχειρο δεν περιέχει έγκυρο σύνδεσμο streaming</string>
+    <string name="playlist_shortcut_name_required">Εισάγετε ένα όνομα συντόμευσης</string>
+    <string name="playlist_shortcut_link_invalid">Εισάγετε έναν έγκυρο σύνδεσμο ιστού ή URI εφαρμογής</string>
+    <string name="playlist_shortcut_service_invalid">Επικολλήστε έναν έγκυρο σύνδεσμο για να εντοπιστεί η υπηρεσία του</string>
+    <string name="playlist_shortcut_service_generic">Συμβατός σύνδεσμος · Το Android θα επιλέξει μια εφαρμογή</string>
+    <string name="playlist_shortcut_service_installed">%1$s εγκατεστημένο · Έτοιμο να ανοίξει στην εφαρμογή του</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s δεν είναι εγκατεστημένο · Μπορεί να χρησιμοποιηθεί πρόγραμμα περιήγησης ή συμβατή εφαρμογή</string>
+    <string name="playlist_shortcut_copy_name">Αντίγραφο %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">Αντίγραφο %1$s %2$d</string>
+    <string name="playlist_shortcut_duplicated">Το %1$s δημιουργήθηκε</string>
+    <string name="playlist_shortcut_share_title">Κοινοποίηση συντόμευσης streaming</string>
+    <string name="playlist_shortcut_share_failed">Δεν υπάρχει διαθέσιμη εφαρμογή για κοινοποίηση αυτής της συντόμευσης</string>
+    <string name="playlist_shortcut_deleted">Το %1$s διαγράφηκε</string>
+    <string name="playlist_shortcut_undo">Αναίρεση</string>
+
+    <string name="action_play_liked_songs_shuffled">Αναπαραγωγή αγαπημένων τραγουδιών, τυχαία (YT Music)</string>
+    <string name="action_search_history">Ιστορικό αναζήτησης</string>
+    <string name="search_history_empty">Δεν υπάρχουν πρόσφατες αναζητήσεις ακόμη</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Ενημερώσεις</string>
+    <string name="setting_update_check">Ειδοποίηση για νέες εκδόσεις</string>
+    <string name="setting_update_check_description">Ελέγχει το GitHub περίπου μία φορά την ημέρα για νέες εκδόσεις και εμφανίζει ειδοποίηση</string>
+    <string name="setting_update_prereleases">Συμπερίληψη προ-εκδόσεων</string>
+    <string name="setting_update_prereleases_description">Λάβετε επίσης ειδοποιήσεις για εκδόσεις beta</string>
+    <string name="setting_update_check_now">Έλεγχος ενημερώσεων τώρα</string>
+    <string name="setting_update_check_now_description">Εμφανίζει την τελευταία έκδοση και σας επιτρέπει να ενημερώσετε το ρολόι μέσω Bluetooth</string>
+    <string name="update_screen_title">Ενημερώσεις</string>
+    <string name="update_cover_content_description">Svartifoss, ο καταρράκτης που δίνει το όνομα στην εφαρμογή</string>
+    <string name="update_notification_channel">Ενημερώσεις εφαρμογής</string>
+    <string name="update_available_title">Το Svartifoss %1$s είναι διαθέσιμο</string>
+    <string name="update_notification_text">Πατήστε για ενημέρωση</string>
+    <string name="update_available_action">Διαθέσιμη ενημέρωση</string>
+    <string name="update_installed_phone">Τηλέφωνο: %1$s</string>
+    <string name="update_installed_versions">Τηλέφωνο: %1$s · Ρολόι: %2$s</string>
+    <string name="update_watch_version_unknown">άγνωστη</string>
+    <string name="update_checking">Έλεγχος για ενημερώσεις…</string>
+    <string name="update_check_failed">Δεν ήταν δυνατός ο έλεγχος για ενημερώσεις. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
+    <string name="update_available_line">Νέα έκδοση: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(προ-έκδοση)</string>
+    <string name="update_up_to_date">Έχετε την τελευταία έκδοση (%1$s)</string>
+    <string name="update_no_wear_asset">Αυτή η έκδοση δεν έχει APK ρολογιού για αποστολή.</string>
+    <string name="update_watch_hint">Το \"Ενημέρωση ρολογιού\" κατεβάζει τη νέα εφαρμογή ρολογιού και τη στέλνει μέσω Bluetooth — επιβεβαιώνετε την εγκατάσταση στο ίδιο το ρολόι, χωρίς καλώδιο ή Wear Installer.</string>
+    <string name="update_downloading">Λήψη… %1$d%%</string>
+    <string name="update_connecting_watch">Σύνδεση με το ρολόι…</string>
+    <string name="update_transferring">Αποστολή στο ρολόι… %1$d%%</string>
+    <string name="update_confirm_on_watch">Στάλθηκε! Εμφανίστηκε ειδοποίηση στο ρολόι — πατήστε την εκεί για εγκατάσταση.</string>
+    <string name="update_no_watch">Δεν υπάρχει συνδεδεμένο ρολόι.</string>
+    <string name="update_push_failed">Η αποστολή της ενημέρωσης στο ρολόι απέτυχε. Δοκιμάστε ξανά.</string>
+    <string name="update_watch_button">Ενημέρωση ρολογιού</string>
+    <string name="update_open_release_button">Άνοιγμα σελίδας έκδοσης</string>
+    <string name="update_watch_behind">Το ρολόι σας είναι ακόμη στην έκδοση %1$s — στείλτε του την ενημέρωση παρακάτω.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Διατηρήστε τις εφαρμογές τηλεφώνου και ρολογιού συγχρονισμένες</string>
+    <string name="update_state_checking">Έλεγχος για ενημερώσεις…</string>
+    <string name="update_state_current">Είστε ενημερωμένοι</string>
+    <string name="update_state_current_sub">Εκτελείτε την τελευταία έκδοση, %1$s</string>
+    <string name="update_state_available">Διαθέσιμη ενημέρωση</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Δεν ήταν δυνατός ο έλεγχος για ενημερώσεις</string>
+    <string name="update_state_failed_sub">Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά</string>
+    <string name="update_device_phone">Τηλέφωνο</string>
+    <string name="update_device_watch">Ρολόι</string>
+    <string name="update_versions_header">Εγκατεστημένη</string>
+    <string name="update_whats_new">Τι νέο υπάρχει</string>
+    <string name="update_phone_button">Ενημέρωση τηλεφώνου</string>
+    <string name="update_installing">Άνοιγμα του προγράμματος εγκατάστασης…</string>
+    <string name="update_install_permission_needed">Επιτρέψτε την εγκατάσταση εφαρμογών από το Svartifoss, μετά πατήστε ξανά Ενημέρωση τηλεφώνου.</string>
+    <string name="update_phone_failed">Η λήψη της ενημέρωσης τηλεφώνου απέτυχε. Δοκιμάστε ξανά.</string>
+</resources>

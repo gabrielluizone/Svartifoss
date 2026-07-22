@@ -54,6 +54,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Cover banner: the same Svartifoss waterfall from the About easter egg, as a
+                 title card ahead of what can be a long release-notes list below. -->
+            <com.svartifoss.snfell.view.settings.SvartifossWaterfallView
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="@string/update_cover_content_description" />
+
             <!-- Hero status band: the one question the page answers - am I current? -->
             <LinearLayout
                 android:layout_width="match_parent"

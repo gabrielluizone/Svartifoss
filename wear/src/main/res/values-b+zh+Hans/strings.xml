@@ -1,0 +1,67 @@
+<resources>
+    <string name="tile_description">正在播放和媒体控制</string>
+    <string name="complication_album_art_label">正在播放的封面</string>
+    <string name="complication_no_music">没有正在播放</string>
+    <string name="tile_nothing_playing">没有正在播放</string>
+    <string name="tile_open_app">打开 Svartifoss</string>
+    <string name="tile_rewind_10">后退 10 秒</string>
+    <string name="tile_forward_10">快进 10 秒</string>
+
+    <string name="shortcuts_tile_description">你的流媒体快捷方式，一触即达</string>
+    <string name="shortcuts_tile_title">快捷方式</string>
+    <string name="shortcuts_tile_empty">还没有快捷方式</string>
+    <string name="shortcuts_tile_more">在应用中查看更多</string>
+
+    <string name="idle_nothing_playing">没有正在播放</string>
+    <string name="idle_hint">在手机上播放一些内容</string>
+
+    <string name="no_phone">未连接手机</string>
+    <string name="playback_stopped">已停止播放</string>
+    <string name="error">错误</string>
+    <string name="error_play_services">Play 服务错误</string>
+    <string name="button">按钮</string>
+    <string name="back_button">返回</string>
+    <string name="turn_bezel_cw">顺时针转动表圈</string>
+    <string name="turn_bezel_ccw">逆时针转动表圈</string>
+    <string name="quick_action_like">喜欢</string>
+    <string name="quick_action_shuffle">随机播放</string>
+    <string name="quick_action_repeat">重复</string>
+    <string name="quick_action_repeat_all">全部重复</string>
+    <string name="quick_action_repeat_one">单曲重复</string>
+    <string name="quick_action_up_next">即将播放</string>
+    <string name="quick_actions_unavailable">当前应用没有快捷操作</string>
+    <string name="voice_search_prompt">搜索音乐</string>
+    <string name="queue_empty">没有可用的队列</string>
+    <string name="queue_now_playing">正在播放</string>
+
+    <string name="hint_title">使用方法</string>
+    <string name="hint_edges">边缘 — 点按以执行显示的操作</string>
+    <string name="hint_center">中心 — 播放/暂停\n双击 — 快捷操作</string>
+    <string name="hint_swipe_up">向上滑动 — 操作菜单</string>
+    <string name="hint_crown">表冠 — 音量</string>
+    <string name="hint_dismiss">知道了</string>
+
+    <string name="action_name_play">播放</string>
+    <string name="action_name_pause">暂停</string>
+    <string name="action_name_skip_prev">上一曲</string>
+    <string name="action_name_skip_next">下一曲</string>
+    <string name="action_name_volume_up">调高音量</string>
+    <string name="action_name_volume_down">调低音量</string>
+    <string name="action_name_open_menu">打开菜单</string>
+    <string name="action_name_skip_30">快进 30 秒</string>
+    <string name="action_name_reverse_30">后退 30 秒</string>
+    <string name="action_name_play_pause">播放/暂停</string>
+    <string name="action_name_stop">停止</string>
+    <string name="action_name_restart">重新播放本曲</string>
+    <string name="action_name_seek">在曲目中拖动</string>
+    <string name="action_name_mute">静音</string>
+    <string name="action_name_search">搜索</string>
+    <string name="action_name_custom">自定义操作</string>
+    <string name="state_on">开</string>
+    <string name="state_off">关</string>
+
+    <string name="update_notification_channel">应用更新</string>
+    <string name="update_install_title">Svartifoss 更新</string>
+    <string name="update_install_tap">点按以安装新版本</string>
+    <string name="update_install_failed">安装失败。请在手表设置中允许来自 Svartifoss 的安装，然后从手机重试。</string>
+</resources>

@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.watch.view.queue
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -15,6 +16,7 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -24,6 +26,12 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class QueueActivity : ComponentActivity() {
+    // ComponentActivity, so AppCompat's pre-33 locale backport would skip this screen - see
+    // WatchLanguage.
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(WatchLanguage.attach(newBase))
+    }
+
     private val viewModel: QueueViewModel by viewModels()
     // Guard against finish() being called more than once (Compose dismiss + noHistory + system
     // swipe can all fire close events; only the first one should take effect).
@@ -69,6 +77,11 @@ class QueueActivity : ComponentActivity() {
                 MiscPreferences.WEAR_QUEUE_STYLE,
                 ThemeAppearance.resolve(prefs)
         ))
+        val rowSize = QueueRowSize.fromPref(FaceScopedPreferences.getString(
+                prefs,
+                MiscPreferences.WEAR_LIST_ROW_SIZE,
+                ThemeAppearance.resolve(prefs)
+        ))
 
         setContent {
             // No default value: null means the phone hasn't answered the queue request yet, which
@@ -91,7 +104,8 @@ class QueueActivity : ComponentActivity() {
                         safeFinish()
                     },
                     onDismiss = { safeFinish() },
-                    style = queueStyle
+                    style = queueStyle,
+                    rowSize = rowSize
             )
         }
     }

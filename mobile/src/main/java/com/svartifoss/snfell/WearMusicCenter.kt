@@ -7,11 +7,13 @@ import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.di.DaggerAppComponent
 import com.svartifoss.snfell.logging.CrashlyticsExceptionWearHandler
 import com.svartifoss.snfell.logging.CrashReporting
+import com.svartifoss.snfell.notifications.AnnouncementNotifications
 import com.svartifoss.snfell.logging.TimberCrashlytics
 import com.matejdro.wearutils.logging.FileLogger
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import com.svartifoss.snfell.view.settings.AppLanguage
 import pl.tajchert.exceptionwear.ExceptionDataListenerService
 import timber.log.Timber
 import javax.inject.Inject
@@ -32,6 +34,7 @@ class WearMusicCenter : Application(), HasAndroidInjector {
         super.onCreate()
 
         CrashReporting.initialize(this)
+        AnnouncementNotifications.initialize(this)
 
         Timber.setAppTag("WearMusicCenter")
 
@@ -48,6 +51,8 @@ class WearMusicCenter : Application(), HasAndroidInjector {
         Timber.plant(fileLogger)
 
         applyThemeFromPreferences()
+        // Before any activity is created, so the first screen is already in the chosen language.
+        AppLanguage.applyStored(this)
 
         // Application lifetime, rather than a Settings Fragment lifecycle, owns phone -> watch
         // preference delivery. This also performs one startup repair sync for a stale watch.

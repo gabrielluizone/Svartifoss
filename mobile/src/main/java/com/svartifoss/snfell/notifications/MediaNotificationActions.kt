@@ -72,7 +72,15 @@ object MediaNotificationActions {
             val notificationKey: String,
             val sessionToken: MediaSession.Token?,
             val postedAt: Long,
-            val actions: List<StoredAction>
+            val actions: List<StoredAction>,
+            // The app's "like/save" action found across ALL notification actions (not only the
+            // compact set mirrored to the watch): Spotify's heart lives in the expanded actions,
+            // so the dedicated Like button on the watch needs a way to reach it. Phone-only.
+            val likeIntent: PendingIntent?,
+            // The notification's own small icon (the branded glyph the status bar shows), used
+            // as the watch's source-icon element. This is what users recognise as "the app icon
+            // in the notification"; the launcher icon is different, chunkier artwork.
+            val smallIconPng: ByteArray?
     )
 
     private val notifications = LinkedHashMap<String, StoredNotification>()
@@ -164,7 +172,9 @@ object MediaNotificationActions {
                                 notificationKey = sbn.key,
                                 sessionToken = sessionToken,
                                 postedAt = sbn.postTime,
-                                actions = actions
+                                actions = actions,
+                                likeIntent = findLikeIntent(notificationActions),
+                                smallIconPng = loadSmallIconPng(context, sbn)
                         )
                     }
         } else {
@@ -254,6 +264,39 @@ object MediaNotificationActions {
 
     fun isNotificationAction(actionId: String): Boolean = actionId.startsWith(ACTION_PREFIX)
 
+    /** Fires the app's like/save notification action (e.g. Spotify's heart) for the active
+     *  package/session, if one was found. Lets the watch's dedicated Like button work for apps
+     *  that expose "like" only as a notification action, not a MediaSession custom action. */
+    fun executeLike(packageName: String, sessionToken: MediaSession.Token?): Boolean {
+        val intent = synchronized(this) {
+            notifications.values.asSequence()
+                    .filter { notification ->
+                        notification.packageName == packageName &&
+                                (sessionToken == null || notification.sessionToken == null ||
+                                        notification.sessionToken == sessionToken)
+                    }
+                    .mapNotNull { it.likeIntent }
+                    .firstOrNull()
+        } ?: return false
+        return try {
+            intent.send()
+            true
+        } catch (_: PendingIntent.CanceledException) {
+            false
+        }
+    }
+
+    /** First notification action (across the full list, not just the compact set) classified as a
+     *  like/save, so the Like button can reach a heart that lives in the expanded actions. */
+    private fun findLikeIntent(notificationActions: Array<out Notification.Action>): PendingIntent? {
+        for (action in notificationActions) {
+            val intent = action.actionIntent ?: continue
+            val semantic = notificationActionSemantic(action, action.title?.toString().orEmpty())
+            if (semantic == MediaActionSemantics.LIKE) return intent
+        }
+        return null
+    }
+
     /** Rasterizes a framework MediaSession.CustomAction resource in the publishing app's own
      * package context. Resource ids are package-local and therefore cannot cross to Wear as-is. */
     fun loadRemoteActionIcon(
@@ -265,6 +308,37 @@ object MediaNotificationActions {
         return loadRemoteResourceDrawable(context, packageName, resourceId)?.let(::rasterizePng)
     }
 
+    /**
+     * PNG of the small icon published by the media notification of [packageName] - the same glyph
+     * the status bar shows. Token matching wins when available, mirroring [actionsForSession];
+     * null when that app currently has no stored media notification, in which case the caller is
+     * expected to fall back to the launcher icon.
+     */
+    fun smallIconForSession(
+            packageName: String,
+            sessionToken: MediaSession.Token?
+    ): ByteArray? = synchronized(this) {
+        val candidates = notifications.values.filter { it.packageName == packageName }
+        val match = sessionToken?.let { token -> candidates.lastOrNull { it.sessionToken == token } }
+                ?: candidates.maxByOrNull { it.postedAt }
+        match?.smallIconPng
+    }
+
+    /** Rasterizes the notification's small icon. Shares [rasterizePng] with the action icons, so
+     * the glyph arrives on the same optical canvas and flat-white template tint the watch already
+     * knows how to tint. */
+    @Suppress("DEPRECATION")
+    private fun loadSmallIconPng(context: Context, sbn: StatusBarNotification): ByteArray? = try {
+        val notification = sbn.notification
+        val drawable = notification.smallIcon?.let { icon ->
+            createThemedPackageContext(context, sbn.packageName)?.let(icon::loadDrawable)
+                    ?: icon.loadDrawable(context)
+        } ?: loadRemoteResourceDrawable(context, sbn.packageName, notification.icon)
+        drawable?.let(::rasterizePng)
+    } catch (_: Exception) {
+        null
+    }
+
     private fun notifyChanged() {
         listeners.forEach { it.invoke() }
     }
@@ -273,6 +347,7 @@ object MediaNotificationActions {
     private fun StoredNotification.hasSamePublicContent(other: StoredNotification): Boolean =
             packageName == other.packageName &&
                     sessionToken == other.sessionToken &&
+                    smallIconPng.contentEqualsNullable(other.smallIconPng) &&
                     actions.size == other.actions.size &&
                     actions.zip(other.actions).all { (left, right) ->
                         left.publicAction.id == right.publicAction.id &&

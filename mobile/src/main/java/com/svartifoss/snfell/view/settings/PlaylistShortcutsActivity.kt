@@ -6,6 +6,8 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.NinePatchDrawable
@@ -87,7 +89,12 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
     private lateinit var listSummary: TextView
     private var pickMode = false
 
+    @javax.inject.Inject
+    @com.svartifoss.snfell.di.GlobalConfig
+    lateinit var actionConfig: com.svartifoss.snfell.config.ActionConfig
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        dagger.android.AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist_shortcuts)
 
@@ -145,6 +152,7 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
             }
         }
         findViewById<View>(R.id.button_back).setOnClickListener { finish() }
+        findViewById<View>(R.id.button_reload_covers).setOnClickListener { reloadAllArtwork() }
         findViewById<MaterialButton>(R.id.button_paste).apply {
             setOnClickListener { pasteShortcutFromClipboard() }
             backgroundTintList = ColorStateList.valueOf(
@@ -182,6 +190,16 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
             updateEmptyState()
             handleIncomingShare(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // The reload button's visibility depends on the Settings toggle, which may have changed
+        // while this screen was backgrounded.
+        updateEmptyState()
+        // Downloads any missing thumbnails (once) - covers returning here after enabling the
+        // toggle in Settings, and shortcuts added on a previous run before it was on.
+        refreshArtwork()
     }
 
     override fun onDestroy() {
@@ -286,9 +304,11 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         val linkLayout = editor.findViewById<TextInputLayout>(R.id.link_layout)
         val nameInput = editor.findViewById<TextInputEditText>(R.id.name_input).apply {
             setText(existing?.name ?: initialName)
+            LyraAccent.applyToEditText(this)
         }
         val linkInput = editor.findViewById<TextInputEditText>(R.id.link_input).apply {
             setText(StreamingShortcutLinks.stripShuffle(existing?.link ?: initialLink))
+            LyraAccent.applyToEditText(this)
         }
         editor.findViewById<TextView>(R.id.editor_title).setText(
                 if (existing == null) R.string.playlist_shortcuts_add
@@ -420,15 +440,22 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
                     link = StreamingShortcutLinks.withYoutubeShuffle(link)
                 }
                 if (editIndex != null && editIndex in shortcuts.indices) {
+                    val previousLink = shortcuts[editIndex].link
                     shortcuts[editIndex] = PlaylistShortcut(name, link)
                     persist()
                     listAdapter.notifyItemChanged(editIndex)
+                    // Keep copies already bound to buttons/gestures/quick panel/action list in sync
+                    // with the edited name/link (they baked the old values at assignment time).
+                    com.svartifoss.snfell.actions.PlaylistShortcutActionSync.propagateEdit(
+                            this@PlaylistShortcutsActivity, actionConfig, previousLink, name, link)
                 } else {
                     shortcuts.add(PlaylistShortcut(name, link))
                     persist()
                     listAdapter.notifyItemInserted(shortcuts.size - 1)
                     updateEmptyState()
                 }
+                // Fetch the new/edited shortcut's online thumbnail (opt-in), then re-sync.
+                refreshArtwork()
                 dialog.dismiss()
             }
         }
@@ -627,8 +654,40 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         }.show()
     }
 
+    /** Resets a recycled source-icon view from the full-bleed thumbnail presentation back to the
+     *  padded, centered glyph/app-icon look. */
+    private fun restoreGlyphSlot(view: ImageView) {
+        val pad = (10 * resources.displayMetrics.density).toInt()
+        view.setPadding(pad, pad, pad, pad)
+        view.scaleType = ImageView.ScaleType.FIT_CENTER
+        view.clipToOutline = false
+    }
+
     private fun persist() {
         PlaylistShortcutStorage.save(this, shortcuts)
+        // A removed shortcut's cached thumbnail is no longer needed.
+        com.svartifoss.snfell.music.ShortcutArtworkStore.retainOnly(
+                this, shortcuts.map { it.link })
+    }
+
+    /**
+     * When online artwork is enabled, downloads a thumbnail (once) for any shortcut that lacks
+     * one, then refreshes the list and re-syncs to the watch. No-op when the feature is off, so
+     * nothing touches the network unless the user opted in.
+     */
+    private fun refreshArtwork() {
+        if (!com.svartifoss.snfell.music.ShortcutArtworkFetcher.isEnabled(this)) return
+        val snapshot = shortcuts.toList()
+        lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            val changed = com.svartifoss.snfell.music.ShortcutArtworkFetcher.ensureCachedAll(
+                    this@PlaylistShortcutsActivity, snapshot)
+            if (changed) {
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    listAdapter.notifyDataSetChanged()
+                }
+                PlaylistShortcutStorage.syncToWatch(this@PlaylistShortcutsActivity)
+            }
+        }
     }
 
     private fun updateEmptyState() {
@@ -642,6 +701,34 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         if (!empty) {
             listSummary.text = resources.getQuantityString(
                     R.plurals.playlist_shortcuts_summary, shortcuts.size, shortcuts.size)
+        }
+        findViewById<View>(R.id.button_reload_covers).visibility =
+                if (!empty && com.svartifoss.snfell.music.ShortcutArtworkFetcher.isEnabled(this))
+                    View.VISIBLE
+                else
+                    View.GONE
+    }
+
+    /** Force-refetches every saved shortcut's cover, bypassing the "already cached" skip -
+     *  unlike [refreshArtwork], which only fills in what is missing. Lets the user pick up a
+     *  changed remote cover, or benefit from a raised [com.svartifoss.snfell.music.ShortcutArtworkFetcher.MAX_THUMBNAIL_PX]
+     *  on thumbnails that were cached before it increased. */
+    private fun reloadAllArtwork() {
+        if (shortcuts.isEmpty()) return
+        val snapshot = shortcuts.toList()
+        Toast.makeText(this, R.string.playlist_shortcuts_reloading_covers, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            val changed = com.svartifoss.snfell.music.ShortcutArtworkFetcher.ensureCachedAll(
+                    this@PlaylistShortcutsActivity, snapshot, force = true)
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                if (changed) listAdapter.notifyDataSetChanged()
+                Toast.makeText(
+                        this@PlaylistShortcutsActivity,
+                        R.string.playlist_shortcuts_covers_reloaded,
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
+            if (changed) PlaylistShortcutStorage.syncToWatch(this@PlaylistShortcutsActivity)
         }
     }
 
@@ -663,6 +750,11 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
             holder.subtitle.text = PlaylistShortcutStorage.describe(
                     this@PlaylistShortcutsActivity, shortcut)
             val service = StreamingShortcutLinks.detect(shortcut.link)
+            val thumbnailPng = com.svartifoss.snfell.music.ShortcutArtworkStore.get(
+                    this@PlaylistShortcutsActivity, shortcut.link)
+            val thumbnail = thumbnailPng?.let {
+                android.graphics.BitmapFactory.decodeByteArray(it, 0, it.size)
+            }
             val installedIcon = service.packageName?.let { packageName ->
                 try {
                     packageManager.getApplicationIcon(packageName)
@@ -670,10 +762,20 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
                     null
                 }
             }
-            if (installedIcon != null) {
+            if (thumbnail != null) {
+                // Online cover art (opt-in): full colour, filling the circular slot (the oval
+                // background clips it via clipToOutline), never tinted or padded.
+                holder.sourceIcon.imageTintList = null
+                holder.sourceIcon.setPadding(0, 0, 0, 0)
+                holder.sourceIcon.scaleType = ImageView.ScaleType.CENTER_CROP
+                holder.sourceIcon.clipToOutline = true
+                holder.sourceIcon.setImageBitmap(thumbnail)
+            } else if (installedIcon != null) {
+                restoreGlyphSlot(holder.sourceIcon)
                 holder.sourceIcon.imageTintList = null
                 holder.sourceIcon.setImageDrawable(installedIcon)
             } else {
+                restoreGlyphSlot(holder.sourceIcon)
                 holder.sourceIcon.imageTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(
                         this@PlaylistShortcutsActivity,

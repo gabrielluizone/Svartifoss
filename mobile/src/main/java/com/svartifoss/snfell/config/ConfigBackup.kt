@@ -6,6 +6,7 @@ import android.util.Base64
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import com.svartifoss.snfell.util.BundleFileSerialization
 import com.svartifoss.snfell.util.BundleJson
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
@@ -29,13 +30,23 @@ import java.io.IOException
  * (with a decodability check) so old backups keep working, but new exports never produce them.
  */
 object ConfigBackup {
-    private const val SCHEMA_VERSION = 3
+    private const val SCHEMA_VERSION = 4
     private const val WATCH_THEMES_KEY = "watchThemes"
+    private const val USER_DATA_KEY = "userData"
 
     private val CONFIG_FILES = mapOf(
             "buttonConfigPlaying" to "action_config_playing",
             "buttonConfigStopped" to "action_config_stopped",
             "actionList" to "actions_list"
+    )
+
+    /** Personal runtime data stored as JSON strings in the default preferences: saved streaming
+     *  shortcuts, plus search and track history. Included so a reinstall keeps the user's own
+     *  library and history (opt-in via the same single backup file). */
+    private val USER_DATA_KEYS = listOf(
+            "playlist_shortcuts",
+            "search_history",
+            "track_history"
     )
 
     fun export(context: Context, preferences: SharedPreferences): JSONObject {
@@ -79,6 +90,13 @@ object ConfigBackup {
         // never mirrored wholesale to Wear. Export it explicitly; the repository first captures
         // any edits made to the active custom snapshot in the shared Watch editor.
         json.put(WATCH_THEMES_KEY, WatchThemeRepository(context).exportToJson(preferences))
+
+        // Personal runtime data (saved shortcuts, search/track history) as opaque JSON strings.
+        val userDataJson = JSONObject()
+        for (key in USER_DATA_KEYS) {
+            (allPrefs[key] as? String)?.let { userDataJson.put(key, it) }
+        }
+        json.put(USER_DATA_KEY, userDataJson)
 
         return json
     }
@@ -158,6 +176,14 @@ object ConfigBackup {
                         key, (0 until value.length()).map { value.getString(it) }.toSet())
             }
         }
+        // Restore personal runtime data (saved shortcuts, search/track history) if present. Older
+        // backups (schema <= 3) simply omit it and leave whatever is already on the phone.
+        val userDataJson = json.optJSONObject(USER_DATA_KEY)
+        if (userDataJson != null) {
+            for (key in USER_DATA_KEYS) {
+                if (userDataJson.has(key)) editor.putString(key, userDataJson.getString(key))
+            }
+        }
         if (themesJson == null) {
             // A schema-1/2 backup cannot describe the custom profile that may currently be
             // active. Deactivate that projection in the same preference transaction; otherwise
@@ -169,6 +195,12 @@ object ConfigBackup {
             editor.putBoolean(MiscPreferences.WEAR_CUSTOM_THEME_COMPLETE.key, false)
         }
         editor.apply()
+
+        // Push the restored shortcut library to the watch's dedicated cache so it appears there
+        // without waiting for the next manual edit.
+        if (userDataJson != null && userDataJson.has("playlist_shortcuts")) {
+            PlaylistShortcutStorage.syncToWatch(context)
+        }
 
         // Schema 1/2 backups have no theme library and retain whatever is already on the phone.
         // Schema 3 replaces the library as one validated unit and re-materializes its active

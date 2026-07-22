@@ -70,18 +70,27 @@ class PlayerConfigurationTest {
 
     @Test
     fun miniButtonsAppearForPlayingOrPausedTracksButNotIdle() {
-        assertTrue(hasActiveMiniButtons(configured = true, idle = false))
-        assertFalse(hasActiveMiniButtons(configured = true, idle = true))
-        assertFalse(hasActiveMiniButtons(configured = false, idle = false))
+        assertTrue(hasActiveMiniButtons(configured = true, idle = false, enabledForFace = true))
+        assertFalse(hasActiveMiniButtons(configured = true, idle = true, enabledForFace = true))
+        assertFalse(hasActiveMiniButtons(configured = false, idle = false, enabledForFace = true))
 
-        assertTrue(shouldShowMiniButtons(
-                configured = true, idle = false, ambient = false, overlayActive = false))
-        assertFalse(shouldShowMiniButtons(
-                configured = true, idle = true, ambient = false, overlayActive = false))
-        assertFalse(shouldShowMiniButtons(
-                configured = true, idle = false, ambient = true, overlayActive = false))
-        assertFalse(shouldShowMiniButtons(
-                configured = true, idle = false, ambient = false, overlayActive = true))
+        assertTrue(shouldShowMiniButtons(configured = true, idle = false, ambient = false,
+                overlayActive = false, enabledForFace = true))
+        assertFalse(shouldShowMiniButtons(configured = true, idle = true, ambient = false,
+                overlayActive = false, enabledForFace = true))
+        assertFalse(shouldShowMiniButtons(configured = true, idle = false, ambient = true,
+                overlayActive = false, enabledForFace = true))
+        assertFalse(shouldShowMiniButtons(configured = true, idle = false, ambient = false,
+                overlayActive = true, enabledForFace = true))
+    }
+
+    @Test
+    fun miniButtonsStayHiddenWhenDisabledForTheFaceRegardlessOfOtherState() {
+        // The mini-buttons mode resolving to "off now" for the active face overrides every other
+        // condition - a configured, playing, non-ambient, no-overlay state would otherwise show it.
+        assertFalse(hasActiveMiniButtons(configured = true, idle = false, enabledForFace = false))
+        assertFalse(shouldShowMiniButtons(configured = true, idle = false, ambient = false,
+                overlayActive = false, enabledForFace = false))
     }
 
     @Test

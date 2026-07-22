@@ -9,10 +9,12 @@ import android.graphics.Path
 import android.graphics.PixelFormat
 import android.graphics.RadialGradient
 import android.graphics.Shader
+import android.graphics.SweepGradient
 import android.graphics.drawable.Drawable
 import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 
 /** Native counterpart of Compose's PlayerBackgroundTreatment for the Classic layout. */
 class PlayerBackgroundDrawable(
@@ -35,7 +37,8 @@ class PlayerBackgroundDrawable(
             (255f * base * drawableAlpha / 255f).toInt().coerceIn(0, 255)
 
     private fun authoredAlpha(base: Float): Int =
-            (255f * base * authoredStrength.coerceIn(0f, 1.25f) * drawableAlpha / 255f)
+            (255f * base * authoredStrength.coerceIn(0f, AUTHORED_STRENGTH_CEILING) *
+                    drawableAlpha / 255f)
                     .toInt().coerceIn(0, 255)
 
     override fun draw(canvas: Canvas) {
@@ -62,9 +65,13 @@ class PlayerBackgroundDrawable(
             PlayerBackgroundStyle.COVER,
             PlayerBackgroundStyle.BLUR,
             PlayerBackgroundStyle.BLACK_AND_WHITE,
-            PlayerBackgroundStyle.BLURRED_BLACK_AND_WHITE -> Unit
+            PlayerBackgroundStyle.BLURRED_BLACK_AND_WHITE,
+            PlayerBackgroundStyle.SQUARE_SHARP,
+            PlayerBackgroundStyle.SQUARE_SOFT,
+            PlayerBackgroundStyle.SQUARE -> Unit
 
-            PlayerBackgroundStyle.EXPRESSIVE -> {
+            PlayerBackgroundStyle.EXPRESSIVE,
+            PlayerBackgroundStyle.EXPRESSIVE_NO_BLUR -> {
                 paint.color = ColorUtils.setAlphaComponent(
                         PaletteTransforms.tonalSurface(primary, .30f, .30f, .90f), fixedAlpha(.45f))
                 canvas.drawRect(left, top, right, bottom, paint)
@@ -226,6 +233,82 @@ class PlayerBackgroundDrawable(
                 canvas.drawRect(left, top, right, bottom, paint)
             }
 
+            PlayerBackgroundStyle.CORONA -> {
+                // Color lives only in a soft ring hugging the rim - a wide stroked circle, not a
+                // full-bleed fill - so the cover stays fully legible through its center and only
+                // the border picks up the sweep's hues.
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.16f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                stroke.shader = SweepGradient(
+                        cx, cy,
+                        intArrayOf(tunedTertiary, tunedPrimary, tunedSecondary, tunedTertiary),
+                        null)
+                stroke.strokeWidth = minDimension * .24f
+                stroke.alpha = fixedAlpha(.58f)
+                canvas.drawCircle(cx, cy, maxDimension * .44f, stroke)
+                stroke.shader = null
+                stroke.alpha = 255
+            }
+
+            PlayerBackgroundStyle.DUSK -> {
+                // No base fill at all - the fade itself is the only treatment, so the top of the
+                // cover stays untouched and only the lower band darkens toward black.
+                paint.shader = LinearGradient(
+                        0f, top, 0f, bottom,
+                        intArrayOf(
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(deep, fixedAlpha(.38f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.70f))),
+                        floatArrayOf(0f, .60f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.BLOOM -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.16f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(
+                        left + width * .22f, top + height * .26f, minDimension * .52f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.38f)),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, .85f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(
+                        left + width * .80f, top + height * .22f, minDimension * .46f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.32f)),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, .85f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(
+                        left + width * .50f, top + height * .88f, minDimension * .48f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.28f)),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, .85f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.HORIZON -> {
+                paint.shader = LinearGradient(
+                        0f, top, 0f, bottom,
+                        intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.62f))),
+                        floatArrayOf(0f, .72f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.EMBER -> {
+                paint.shader = RadialGradient(
+                        left + width * .82f, top + height * .84f, minDimension * .46f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.40f)),
+                                ColorUtils.setAlphaComponent(deep, fixedAlpha(.22f)),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
             PlayerBackgroundStyle.ECLIPSE,
             PlayerBackgroundStyle.HIDDEN -> {
                 paint.shader = null
@@ -249,4 +332,11 @@ class PlayerBackgroundDrawable(
 
     @Deprecated("Deprecated in Android")
     override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
+
+    companion object {
+        // Callers pass authoredStrength = shadingMultiplier / 0.8 (the reference balanced anchor,
+        // so 80% == 1.0). The safety clamp must admit the maximum multiplier through that same
+        // mapping, otherwise stronger-than-100% shading would be silently capped here.
+        private val AUTHORED_STRENGTH_CEILING = SHADING_MAX_MULTIPLIER / 0.8f
+    }
 }

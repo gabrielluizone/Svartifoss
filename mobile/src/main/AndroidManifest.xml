@@ -44,6 +44,14 @@
         <intent>
             <action android:name="android.media.browse.MediaBrowserService" />
         </intent>
+        <!-- Lets the "which apps count as music" list (MusicAppListPreference) enumerate installed
+             apps that have a launcher icon on Android 11+ (API 30+), where getInstalledPackages()
+             is otherwise filtered to only the packages declared above. This is the Play-policy-safe
+             alternative to QUERY_ALL_PACKAGES. -->
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
     </queries>
 
     <application
@@ -54,6 +62,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:localeConfig="@xml/locales_config"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <!-- Firebase's provider starts before Application.onCreate. Automatic Crashlytics upload
              therefore stays off permanently; CrashReporting sends or deletes queued reports only
@@ -96,6 +105,20 @@
         <service
             android:name=".music.MusicService"
             android:foregroundServiceType="mediaPlayback"/>
+
+        <!-- Developer announcement push notifications - see AnnouncementNotifications /
+             AnnouncementMessagingService. No backend: delivery is entirely topic-based. -->
+        <service
+            android:name=".notifications.AnnouncementMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_brand"/>
 
         <service
             android:name="pl.tajchert.exceptionwear.ExceptionDataListenerService"

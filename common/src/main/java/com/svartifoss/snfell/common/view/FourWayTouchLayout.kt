@@ -48,6 +48,8 @@ class FourWayTouchLayout : FrameLayout,
         if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
             tapPulse.release()
             listener?.onTouchUp()
+        } else if (event.actionMasked == MotionEvent.ACTION_MOVE) {
+            listener?.onTouchMove(event.x, event.y)
         }
 
         return gestureDetector.onTouchEvent(event)
@@ -199,6 +201,12 @@ class FourWayTouchLayout : FrameLayout,
          *  feedback at a higher z-order where it will actually be visible. Default no-op so
          *  existing listeners (e.g. the phone's touch-zone picker) don't need to implement it. */
         fun onTouchDown(x: Float, y: Float) {}
+
+        /** Live position while the finger is down, fired for every ACTION_MOVE between
+         *  [onTouchDown] and [onTouchUp] - lets a host record the path of an in-progress gesture
+         *  (e.g. a swipe trail) before it's classified as a tap, swipe, or long-press. Default
+         *  no-op so existing listeners don't need to implement it. */
+        fun onTouchMove(x: Float, y: Float) {}
 
         /** Matches a prior [onTouchDown] - fired on ACTION_UP/ACTION_CANCEL. */
         fun onTouchUp() {}

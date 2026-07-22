@@ -30,8 +30,14 @@ class LikeAction : SelectableAction {
         get() = AppCompatResources.getDrawable(context, com.svartifoss.snfell.common.R.drawable.action_like)!!
 
     companion object {
-        private val LIKE_NAME_HINTS = listOf("like", "thumb", "favorite", "favourite", "love")
-        private val ALREADY_LIKED_HINTS = listOf("unlike", "remove", "undo", "unfavorite", "unfavourite")
+        // "heart"/"save"/"collection"/"library" cover Spotify, whose save-to-Liked-Songs custom
+        // action reads "Save to Your Library" / heart rather than the word "like".
+        private val LIKE_NAME_HINTS = listOf(
+                "like", "thumb", "favorite", "favourite", "love",
+                "heart", "save", "collection", "library")
+        private val ALREADY_LIKED_HINTS = listOf(
+                "unlike", "remove", "undo", "unfavorite", "unfavourite",
+                "unsave", "saved", "unheart", "in_library", "in library")
 
         fun findLikeCustomAction(playbackState: PlaybackState): PlaybackState.CustomAction? {
             return playbackState.customActions.orEmpty().firstOrNull { customAction ->

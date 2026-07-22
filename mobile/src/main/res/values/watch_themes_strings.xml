@@ -49,4 +49,5 @@
     <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
     <string name="watch_theme_face_spectrum">Spectrum</string>
     <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Immersive</string>
 </resources>

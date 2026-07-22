@@ -1,0 +1,1083 @@
+<resources>
+    <string name="setting_no_wearable_api_banner">Wear OS wordt niet ondersteund op dit apparaat</string>
+    <string name="setting_no_wearable_api_banner_description">Dit apparaat heeft geen Wear OS-component van Google Play-services, die Svartifoss nodig heeft om met een horloge te communiceren. Koppelen helpt niet — de telefoon-app kan hier geen horloge bereiken. Alles hieronder wordt toch opgeslagen en toegepast zodra je Svartifoss op een ondersteund apparaat installeert.</string>
+    <string name="setting_no_watch_banner">Geen horloge verbonden</string>
+    <string name="setting_no_watch_banner_description">Deze instellingen worden gesynchroniseerd met je Wear OS-horloge en worden pas zichtbaar toegepast zodra er een gekoppeld en verbonden is — maar je kunt alles hieronder nu al configureren.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Uiterlijk</string>
+    <string name="setting_theme">Thema</string>
+    <string name="theme_light">Helder wit</string>
+    <string name="theme_dark">Puur zwart</string>
+    <string name="theme_system">Systeem volgen</string>
+    <string name="setting_language">Taal</string>
+    <string name="language_system">Systeem volgen</string>
+    <string name="language_change_watch_notice">Het horloge volgt deze taal ook zodra het synchroniseert.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Ontwikkelaar</string>
+    <string name="dev_mode_unlocked">Ontwikkelaarsmodus ingeschakeld ✦</string>
+    <string name="dev_mode_clicks_remaining">Nog %1$d tikken om ontwikkelaarsmodus te ontgrendelen</string>
+    <string name="dev_disable_mode">Ontwikkelaarsmodus uitschakelen</string>
+    <string name="dev_disable_mode_description">Verberg deze sectie weer — tik zeven keer op \"Geïnstalleerde versie\" om hem terug te halen</string>
+    <string name="dev_mode_disabled">Ontwikkelaarsmodus uitgeschakeld</string>
+    <string name="dev_build_info">Build-info</string>
+    <string name="dev_sync_watch">Horloge-instellingen forceren synchroniseren</string>
+    <string name="dev_sync_watch_description">Alle huidige instellingen direct naar het gekoppelde horloge sturen</string>
+    <string name="dev_sync_watch_done">Instellingen gesynchroniseerd met het horloge</string>
+    <string name="dev_copy_debug_info">Debuginfo kopiëren</string>
+    <string name="dev_copy_debug_info_description">Build- en apparaatgegevens naar het klembord kopiëren</string>
+    <string name="dev_show_archived">Gearchiveerde opties tonen</string>
+    <string name="dev_show_archived_description">Horloge-indelingen en instellingen tonen die zijn gearchiveerd vanwege bekende problemen</string>
+    <string name="dev_copy_debug_info_done">Debuginfo gekopieerd</string>
+    <string name="dev_open_update_screen">Updatescherm openen</string>
+    <string name="dev_open_update_screen_description">Bekijk het scherm Updates (omslagbanner, indeling van releasenotities) zonder op een echte release te wachten</string>
+    <string name="dev_watch_layout_bounds">Grenzen van horloge-indeling tonen</string>
+    <string name="dev_watch_layout_bounds_description">Zichtbare spelerelementen en aanraakzones op het horloge omlijnen. Alleen diagnostische overlay.</string>
+    <string name="dev_watch_player_info">Info over horlogespeler tonen</string>
+    <string name="dev_watch_player_info_description">Actieve gezicht, afspeelstatus, voortgang en renderinformatie op het horloge weergeven.</string>
+    <string name="pref_reset_default">Standaardwaarden herstellen</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Je hebt de verborgen waterval gevonden.\n\nSvartifoss — zwarte basaltzuilen\nomlijsten een waterval in IJsland,\neen herinnering dat muziek stroomt\nzoals water door steen.\n\n♪ Met zorg gemaakt. ♪</string>
+    <string name="easter_egg_ok">Sluiten</string>
+
+    <string name="nav_watch_face">Horloge</string>
+    <string name="watch_face_header">Uiterlijk van horloge</string>
+    <string name="nav_controls">Bediening</string>
+    <string name="nav_actions">Acties</string>
+    <string name="nav_settings">Instellingen</string>
+
+    <string name="controls_header">Bediening</string>
+    <string name="controls_state_playing">Muziek speelt af</string>
+    <string name="controls_state_stopped">Geen afspelen</string>
+    <string name="controls_playing_description">Kies wat elke invoer doet terwijl er muziek afspeelt. Deze configuratie staat los van de status zonder afspelen.</string>
+    <string name="controls_stopped_description">Kies wat elke invoer doet voordat het afspelen begint of nadat het stopt. Deze configuratie staat los van de afspeelstatus.</string>
+
+    <string name="watch_live_preview">Live voorbeeld van horloge</string>
+    <string name="watch_preview_description">Live voorbeeld van het geselecteerde horlogeoppervlak. Wijzigingen verschijnen hier voordat je ze op het horloge probeert.</string>
+    <string name="watch_section_style">Speler</string>
+    <string name="watch_section_style_description">Kies de spelerindeling en hoe titel, tijd en voortgang zich gedragen.</string>
+    <string name="watch_section_background">Achtergrond</string>
+    <string name="watch_section_background_description">Bepaal albumhoes, vervaging, uitdoving en leesbaarheid achter de speler.</string>
+    <string name="watch_section_colors">Kleuren</string>
+    <string name="watch_section_colors_description">Stem de kleuren van artiest, voortgangsring en op het album gebaseerd accent af.</string>
+    <string name="watch_section_aod">Altijd aan</string>
+    <string name="watch_section_aod_description">Configureer het energiezuinige scherm en bekijk het ambient-uiterlijk in het voorbeeld.</string>
+    <string name="watch_section_panels">Panelen</string>
+    <string name="watch_section_panels_description">Stel volume, zoeken, snelpaneel en wachtrij vorm; het focussen van een rij opent dat oppervlak in het voorbeeld.</string>
+    <string name="watch_section_mini_buttons">Miniknoppen</string>
+    <string name="watch_section_mini_buttons_description">Stel de optionele snelkoppelingsrij vorm. Tik hieronder op \"Miniknoppen\" om hun acties toe te wijzen in Bediening.</string>
+
+    <string name="settings_section_general">Algemeen</string>
+    <string name="settings_section_general_description">App-thema, accentkleur en updatevoorkeuren.</string>
+    <string name="settings_section_watch">Gedrag</string>
+    <string name="settings_section_watch_description">Kroon, aanraking, trilling en gedrag van het actiemenu op je horloge.</string>
+    <string name="settings_section_automation">Automatisering</string>
+    <string name="settings_section_automation_description">Kies wanneer Svartifoss automatisch opent en sluit.</string>
+    <string name="settings_section_apps">Apps</string>
+    <string name="settings_section_apps_description">Configureer muziekdiensten en app-specifieke integraties op één plek.</string>
+    <string name="settings_section_data">Gegevens en ondersteuning</string>
+    <string name="settings_section_data_description">Maak een back-up van je instellingen, controleer de versie, diagnostiek of vraag hulp.</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Svartifoss gebruiken</string>
+    <string name="tutorial_intro">Svartifoss maakt van je horloge een afstandsbediening voor de muziek die op je telefoon speelt. Hier is alles wat je vanaf je pols kunt doen.</string>
+
+    <string name="tutorial_taps_title">Tik op de schermzones</string>
+    <string name="tutorial_taps_desc">Het horlogescherm is verdeeld in vier zones — boven, onder, links en rechts. Tikken op een zone voert de actie uit die je eraan hebt toegewezen. Standaard speelt de linkerzone af of pauzeert, springt de rechterzone naar het volgende nummer, en veranderen boven en onder het volume.</string>
+
+    <string name="tutorial_gestures_title">Enkele, dubbele en lange druk</string>
+    <string name="tutorial_gestures_desc">Elke zone heeft drie afzonderlijke acties: één voor een enkele tik, één voor een dubbele tik en één voor een lange druk. Bijvoorbeeld, een enkele tik in het midden kan de muziek pauzeren terwijl een dubbele tik het actiemenu opent — je ziet dit pas als je het instelt, dus pas het naar smaak aan.</string>
+
+    <string name="tutorial_buttons_title">Fysieke knoppen</string>
+    <string name="tutorial_buttons_desc">Als je horloge zijknoppen heeft, kun je ook daaraan acties voor enkele, dubbele en lange druk toewijzen. Ze blijven werken, zelfs als het scherm uit is.</string>
+
+    <string name="tutorial_rotary_title">Draaikroon</string>
+    <string name="tutorial_rotary_desc">Draai de kroon of lunette om het volume te veranderen. Liever door het nummer spoelen? Zet \"Zoeken met draaikroon\" aan in Instellingen.</string>
+
+    <string name="tutorial_swipe_up_title">Vegen omhoog, omlaag, links en rechts</string>
+    <string name="tutorial_swipe_up_desc">Vegen omhoog, omlaag of naar links op het nu-afspelend-scherm kan elk zo worden ingesteld dat het iets opent — het actiemenu, de afspeelwachtrij, nummers overslaan, je afspeellijsten en meer. Configureer elk in Bediening, met Muziek speelt af of Geen afspelen. Standaard opent vegen omhoog het actiemenu en doen de anderen niets totdat je ze toewijst. Vegen naar rechts blijft ongewijzigd — dat is het universele Wear OS-gebaar om de app te verlaten.</string>
+    <string name="tutorial_yt_music_title">YouTube Music-snelkoppelingen</string>
+    <string name="tutorial_yt_music_desc">Wijs \"Leuk gevonden nummers afspelen\", \"Leuk gevonden nummers afspelen, willekeurig\" of \"Mijn afspeellijsten\" toe aan elke knop, gebaar of veeg om direct naar je muziek te springen zonder de telefoon aan te raken. \"Zoekgeschiedenis\" onthoudt je recente zoekopdrachten op het horloge — houd er een ingedrukt om te verwijderen.</string>
+
+    <string name="tutorial_exit_title">Vegen om af te sluiten</string>
+    <string name="tutorial_exit_desc">Veeg vanaf de linkerrand om de speler te verlaten. Het kan afspelen automatisch pauzeren wanneer je afsluit — schakel dit in bij Instellingen.</string>
+
+    <string name="tutorial_tile_title">Tile voor snelle bediening</string>
+    <string name="tutorial_tile_desc">Veeg de wijzerplaat opzij naar de Svartifoss-tile voor direct afspelen, pauzeren en overslaan zonder de app te openen.</string>
+
+    <string name="tutorial_complication_title">Complicatie op wijzerplaat</string>
+    <string name="tutorial_complication_desc">Voeg de Svartifoss-albumhoescomplicatie toe aan je wijzerplaat om de huidige hoes in één oogopslag te zien. Tik erop om de speler te openen.</string>
+
+    <string name="tutorial_system_title">Systeem-mediabediening</string>
+    <string name="tutorial_system_desc">Het huidige nummer verschijnt ook in de eigen mediabediening van je horloge en in recente apps, zodat je de afspeelbediening ook daarvandaan kunt bedienen.</string>
+
+    <string name="tutorial_tip">Tip: configureer beide statussen in Bediening en organiseer daarna het menu in Acties.</string>
+
+    <string name="navigation_drawer_open">Navigatiemenu openen</string>
+    <string name="navigation_drawer_close">Navigatiemenu sluiten</string>
+
+    <string name="action_settings">Instellingen</string>
+    <string name="action_pause">Pauzeren</string>
+    <string name="action_play">Afspelen</string>
+    <string name="action_skip_prev">Vorige</string>
+    <string name="action_skip_next">Volgende</string>
+    <string name="action_play_pause">Afspelen / Pauzeren</string>
+    <string name="action_stop">Stoppen</string>
+    <string name="action_restart">Nummer opnieuw starten</string>
+    <string name="action_mute">Dempen / Opheffen</string>
+    <string name="action_skip_seconds">%1$d seconden vooruit</string>
+    <string name="action_reverse_seconds">%1$d seconden terug</string>
+    <string name="action_like">Vind ik leuk</string>
+    <string name="action_shuffle">Shuffle</string>
+    <string name="action_repeat">Herhalen</string>
+    <string name="action_repeat_one">Eén herhalen</string>
+    <string name="action_search">Muziek zoeken</string>
+    <string name="group_playback_controls">Afspeelbediening</string>
+    <string name="group_streaming_shortcuts">Nummers, albums en afspeellijsten</string>
+    <string name="pick_action">Actie kiezen</string>
+    <string name="action_opens_more">Meerdere opties</string>
+    <string name="action_volume_up">Volume verhogen</string>
+    <string name="volume_down">Volume verlagen</string>
+    <string name="group_volume_controls">Volumebediening</string>
+    <string name="no_watch_detected">Geen horloge gedetecteerd</string>
+    <string name="connection_instructions">Open Svartifoss op het horloge om de verbinding te starten</string>
+    <string name="playing_controls">Bediening tijdens afspelen</string>
+    <string name="stopped_controls">Bediening zonder afspelen</string>
+    <string name="actions_menu">Actiemenu</string>
+    <string name="actions_intro">Configureer beide actie-oppervlakken van je horloge met afspeelbediening, apps of opgeslagen nummers, albums en afspeellijsten. Het snelpaneel blijft compact; het menu hieronder kan een langere geordende lijst bevatten.</string>
+    <string name="actions_quick_panel_section">Snelpaneel</string>
+    <string name="actions_watch_menu_section">Menu op horloge</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d actie · Tik om te bewerken · Houd vast en sleep om te herschikken</item>
+        <item quantity="other">%1$d acties · Tik om te bewerken · Houd vast en sleep om te herschikken</item>
+    </plurals>
+    <string name="actions_reorder_description">Geordend actiemenu. Aanraken en vasthouden om te slepen, gebruik de toegankelijkheidsacties Omhoog verplaatsen of Omlaag verplaatsen, of druk op Ctrl+Omhoog/Omlaag op een toetsenbord.</string>
+    <string name="actions_move_up">Omhoog verplaatsen</string>
+    <string name="actions_move_down">Omlaag verplaatsen</string>
+    <string name="actions_moved_to_position">%1$s verplaatst naar positie %2$d van %3$d.</string>
+    <string name="actions_empty">Nog geen acties. Gebruik de toevoegknop om de eerste te maken.</string>
+    <string name="actions_add">Actie toevoegen</string>
+    <string name="on_screen_buttons">AANRAAKZONES</string>
+    <string name="physical_buttons">FYSIEKE KNOPPEN</string>
+    <string name="physical_buttons_disconnected">Verbind en open Svartifoss op je horloge om de fysieke knoppen te configureren. Aanraakzones, vegen en miniknoppen zijn nu al beschikbaar.</string>
+    <string name="physical_buttons_unavailable">Dit horloge meldde geen configureerbare fysieke knoppen.</string>
+    <string name="tap_a_zone_to_configure">Tik op een zone op het horloge om een actie toe te wijzen</string>
+    <string name="touch_zone_top">Bovenzone</string>
+    <string name="touch_zone_bottom">Onderzone</string>
+    <string name="touch_zone_left">Linkerzone</string>
+    <string name="touch_zone_right">Rechterzone</string>
+    <string name="touch_zone_center">Tik in het midden</string>
+    <string name="touch_zone_action">%1$s: %2$s. Tik om te configureren.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">VEEGGEBAREN</string>
+    <string name="tap_a_swipe_to_configure">Tik op een richting om te kiezen wat het opent</string>
+    <string name="swipe_gesture_up">Veeg omhoog</string>
+    <string name="swipe_gesture_down">Veeg omlaag</string>
+    <string name="swipe_gesture_left">Veeg naar links</string>
+    <!-- Short captions shown under each tile's icon -->
+    <string name="swipe_gesture_label_up">Omhoog</string>
+    <string name="swipe_gesture_label_down">Omlaag</string>
+    <string name="swipe_gesture_label_left">Links</string>
+
+    <string name="screen_buttons">MINIKNOPPEN</string>
+    <string name="tap_a_screen_button_to_configure">Tot drie zichtbare knoppen onderaan het horlogescherm — tik op een plek om een actie toe te wijzen</string>
+    <string name="screen_button_1">Miniknop 1 (links)</string>
+    <string name="screen_button_2">Miniknop 2 (midden)</string>
+    <string name="screen_button_3">Miniknop 3 (rechts)</string>
+    <string name="screen_button_label_1">Knop 1</string>
+    <string name="screen_button_label_2">Knop 2</string>
+    <string name="screen_button_label_3">Knop 3</string>
+    <string name="no_action">Geen actie</string>
+    <string name="gesture_single_press">Enkele druk</string>
+    <string name="gesture_double_press">Dubbele druk</string>
+    <string name="gesture_long_press">Lange druk</string>
+    <string name="gesture_swipe_action">Actie</string>
+    <string name="center_button_quick_panel_note">Dubbeltikken op het midden van het nu-afspelend-scherm opent altijd het snelle-actiespaneel, ongeacht wat je hier toewijst.</string>
+    <string name="start_playback">Afspelen starten</string>
+    <string name="uninstalled_app">Verwijderde app</string>
+
+    <string name="play_app">%1$s afspelen</string>
+    <string name="tasker_task">Tasker-taak</string>
+    <string name="icon_selection_title">Pictogramselectie</string>
+    <string name="icon_selection_gallery">Uit galerij</string>
+    <string name="icon_selection_no_icon_pack">Met deze functie kun je een aangepast pictogram voor je actie kiezen uit een
+        geïnstalleerd pictogrampakket.\n\nHelaas lijk je geen pictogrampakketten geïnstalleerd te hebben.</string>
+    <string name="icon_selection_no_storage_permission">Met deze functie kun je een aangepast pictogram voor je actie kiezen uit een
+        geïnstalleerd pictogrampakket.\n\nSommige pictogrampakketten vereisen dat apps opslagtoestemming hebben. Je moet dit toestaan om deze functie te gebruiken.</string>
+    <string name="delete">Verwijderen</string>
+    <string name="action_text">Actietekst</string>
+    <string name="swap_action">Actie wisselen</string>
+    <string name="open_actions_menu">Actiemenu openen</string>
+    <string name="open_playlist_menu">Huidige afspeellijst tonen</string>
+    <string name="misc_settings">Overige instellingen</string>
+
+    <string name="category_backup">Back-up</string>
+    <string name="export_config">Configuratie exporteren</string>
+    <string name="export_config_description">Sla je knoptoewijzingen, actielijst en horloge-instellingen op in een bestand</string>
+    <string name="import_config">Configuratie importeren</string>
+    <string name="import_config_description">Herstel knoptoewijzingen, actielijst en horloge-instellingen uit een bestand</string>
+    <string name="export_config_done">Configuratie geëxporteerd</string>
+    <string name="export_config_failed">Kon configuratie niet exporteren</string>
+    <string name="import_config_done_title">Importeren geslaagd</string>
+    <string name="import_config_done_message">Svartifoss moet opnieuw opstarten om de geïmporteerde configuratie toe te passen.</string>
+    <string name="import_config_failed">Kon configuratie niet importeren — het bestand is mogelijk ongeldig of van een incompatibele versie</string>
+    <string name="action_restart_now">Nu opnieuw opstarten</string>
+
+    <string name="category_about">Over</string>
+    <string name="category_music_screen">Muziekscherm</string>
+    <string name="category_watch_screen">Horlogescherm</string>
+    <string name="category_mini_buttons">Miniknoppen</string>
+    <string name="category_screen_face">Uiterlijk van speler</string>
+    <string name="category_album_background">Albumachtergrond</string>
+    <string name="category_music_colors">Kleuren uit de muziek</string>
+    <string name="preview_sample_title">Nummertitel</string>
+    <string name="preview_sample_artist">Naam artiest</string>
+    <string name="preview_sample_next_title">Volgend nummer</string>
+    <string name="preview_playback_stopped">Afspelen gestopt</string>
+    <string name="category_gestures">Gebaren en invoer</string>
+    <string name="setting_overlay_blur_radius">Overlay-vervaging</string>
+    <string name="setting_overlay_blur_radius_description">Vervagingssterkte (px) van de matte achtergrond achter de volume-/zoekringen en het snelle-actiespaneel — onafhankelijk van de vervaging van de albumhoesachtergrond</string>
+    <string name="category_action_list">Actielijst</string>
+    <string name="category_automation">Automatisering</string>
+    <string name="installed_version">Geïnstalleerde versie</string>
+    <string name="get_support">Ondersteuning krijgen</string>
+    <string name="get_support_description">Applicatielogboeken naar de ontwikkelaar sturen voor ondersteuning</string>
+    <string name="contact_developer">Contact opnemen met de ontwikkelaar</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — contact</string>
+    <string name="contact_developer_chooser">E-mail versturen</string>
+    <string name="contact_developer_no_client">Geen e-mailapp geïnstalleerd. Adres gekopieerd naar het klembord.</string>
+    <string name="about_developer_title">Over de ontwikkelaar</string>
+    <string name="about_developer_dialog_message">Svartifoss begon als persoonlijk project — ik wilde Music Center for Wear bijwerken naar wat vandaag mogelijk is, gewoon om het zelf elke dag te kunnen gebruiken. Het werd goed genoeg om te besluiten het met iedereen te delen. Dit is mijn eerste app, en er gaat niets boven zien dat iets wat je hebt gebouwd ook voor anderen nuttig blijkt te zijn.</string>
+    <string name="licenses">Open source-licenties</string>
+    <string name="setting_always_show_time">Tijd altijd tonen</string>
+    <string name="setting_always_show_time_off_description">De huidige tijd wordt alleen getoond in ambient-modus</string>
+    <string name="setting_always_show_time_on_description">De huidige tijd wordt altijd getoond. Het bovenste actiepictogram is niet zichtbaar (het wordt vervangen door de klok), maar de actie blijft normaal werken.</string>
+    <string name="tap_to_force_stop">Tik om de bediening te stoppen</string>
+    <string name="notification_action_stop">Stoppen</string>
+    <string name="notification_action_force_stop">Geforceerd stoppen</string>
+    <string name="error_notification_access">Geen toegang tot meldingen. Controleer de telefoon.</string>
+    <string name="error_notifications">Foutmeldingen</string>
+    <string name="notification_access_notification_title">Svartifoss heeft toegang tot meldingen nodig</string>
+    <string name="notification_access_notification_title_description">Tik op deze melding en controleer Svartifoss om het probleem op te lossen</string>
+    <string name="error_service_not_enabled">Toegang tot meldingen nodig</string>
+    <string name="error_service_not_enabled_description">Om muziek te bedienen vanaf je horloge, heeft Svartifoss toegang tot meldingen nodig — zo kan Android zien welke app afspeelt en er afspeel-, pauzeer- en overslaancommando\'s naartoe sturen.\n\nSvartifoss leest nooit de inhoud van je meldingen. Het gebruikt deze toestemming alleen om de actieve mediasessie te vinden.\n\nTik op \"Instellingen openen\" en schakel daarna Svartifoss in bij toegang tot meldingen.</string>
+    <string name="action_open_settings">Instellingen openen</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog -->
+    <string name="no_watch_app_title">Installeer Svartifoss op je horloge</string>
+    <string name="no_watch_app_description">Svartifoss kon zijn horloge-app niet vinden op je gekoppelde Wear OS-horloge. De telefoon- en horloge-app werken samen — zonder de horloge-app werkt het bedienen van afspelen vanaf je pols niet.\n\nSvartifoss staat niet in de Play Store — de horloge-app wordt apart via sideload geïnstalleerd (bijvoorbeeld met Wear Installer). Tik op \"Releases bekijken\" om de GitHub-releasepagina te openen en de horloge-APK te downloaden. Als je hem net hebt geïnstalleerd, geef hem dan een minuut om te synchroniseren.</string>
+    <string name="no_watch_app_button">Releases bekijken</string>
+    <string name="required_permission">Vereiste toestemming</string>
+    <string name="setting_pause_on_swipe_exit">Afspelen pauzeren bij afsluiten via vegen</string>
+    <string name="setting_pause_on_swipe_exit_description">Pauzeert automatisch alles wat afspeelt wanneer je Svartifoss op het horloge verlaat via het naar-links-vegen-gebaar.\n\nAfsluiten via de aan/uit-knop wordt hier niet door beïnvloed en pauzeert nooit automatisch.</string>
+    <string name="setting_rotating_crown_off_period">Vertraging draaiende invoer na scherm-aan</string>
+    <string name="setting_rotating_crown_off_period_description">Draaiende invoer (bijvoorbeeld draaikronen) kan te gevoelig zijn op sommige apparaten. Om per ongeluk het volume te veranderen te voorkomen, wordt draaiende invoer uitgeschakeld gedurende <![CDATA[<b>%1$s milliseconden</b>]]> nadat je het scherm aanzet.</string>
+    <string name="setting_rotary_seek">Zoeken met draaikroon</string>
+    <string name="setting_rotary_seek_description">Wanneer ingeschakeld, spoelt het draaien van de kroon door het huidige nummer in plaats van het volume te veranderen. Het volume kan nog steeds worden aangepast met knoppen op het scherm of fysieke knoppen.</string>
+    <string name="setting_rotating_sensitivity">Gevoeligheid draaiende invoer</string>
+    <string name="setting_rotating_sensitivity_description">Gevoeligheid van draaiende invoer. Een hoger getal betekent dat het bewegen van de draaikroon op dezelfde manier het volume meer verhoogt. Momenteel ingesteld op <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Dubbelklikken fysieke knop in ambient uitschakelen</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Sommige horloges hebben knoppen met een fout waarbij een enkele klik op de fysieke knop in ambient-modus soms als dubbelklik wordt geregistreerd.\n\nAls je dit ondervindt, kun je deze optie inschakelen om dubbelklikken in ambient-modus volledig uit te schakelen (bijvoorbeeld, twee keer klikken activeert dan alleen de actie voor enkele klik). Twee keer klikken wanneer het horloge actief is, wordt hier niet door beïnvloed.</string>
+    <string name="setting_haptic_feedback">Haptische feedback</string>
+    <string name="setting_haptic_feedback_description">Het horloge laten trillen bij het indrukken van knoppen.</string>
+    <string name="setting_auto_start">Svartifoss automatisch openen</string>
+    <string name="setting_auto_start_description">Svartifoss automatisch openen op het horloge wanneer muziekafspelen begint op de telefoon.</string>
+    <string name="setting_auto_start_apps_blacklist">Automatisch-starten-apps</string>
+    <string name="setting_auto_start_apps_blacklist_description">Lijst met media-apps die Svartifoss automatisch mogen starten</string>
+    <string name="setting_dim_album_art">Spelerschaduw</string>
+    <string name="setting_dim_album_art_description">Voeg een door jou gekozen schaduwbehandeling toe tussen de hoes en de spelerbediening.</string>
+    <string name="setting_album_art_style">Albumhoesstijl</string>
+    <string name="setting_album_art_style_description">Kies hoe de nu-afspelend-achtergrond eruitziet op het horloge.</string>
+    <string name="setting_album_art_blur_radius">Vervagingsintensiteit</string>
+    <string name="setting_album_art_blur_radius_description">Sterkte van de volledige-schermvervaging wanneer de geselecteerde achtergrond vervaging gebruikt. Momenteel <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Verduisteringssterkte</string>
+    <string name="setting_album_art_dim_strength_description">Hoe sterk de albumhoes wordt verduisterd voor de leesbaarheid van tekst. Momenteel <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Schaduwstijl</string>
+    <string name="setting_player_shading_intensity">Schaduwintensiteit</string>
+    <string name="setting_player_shading_intensity_description">Hoe sterk de schaduw de achtergrond verdonkert. 100%% is volle sterkte; ga hoger voor extra contrast (tot 150%%). Momenteel <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Dit uiterlijk toepassen op alle gezichten</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Kopieer de uiterlijkinstellingen van dit gezicht naar elk ander gezicht</string>
+    <string name="apply_appearance_confirm_title">Op alle gezichten toepassen?</string>
+    <string name="apply_appearance_confirm_message">Dit overschrijft de uiterlijkinstellingen van alle andere gezichten met de huidige. Je gedragsinstellingen worden niet gewijzigd.</string>
+    <string name="apply_appearance_confirm_button">Toepassen</string>
+    <string name="apply_appearance_done">Toegepast op alle gezichten</string>
+    <string name="category_wf_layout_actions">Indeling</string>
+    <string name="setting_reset_appearance">Deze indeling herstellen</string>
+    <string name="setting_reset_appearance_description">Herstel het uiterlijk van dit gezicht naar de oorspronkelijke standaardwaarden</string>
+    <string name="reset_appearance_confirm_title">Deze indeling herstellen?</string>
+    <string name="reset_appearance_confirm_message">De uiterlijkinstellingen van dit gezicht keren terug naar de standaardwaarden. Je gedragsinstellingen en andere gezichten worden niet beïnvloed.</string>
+    <string name="reset_appearance_confirm_button">Herstellen</string>
+    <string name="reset_appearance_done">Indeling hersteld naar standaardwaarden</string>
+    <string name="setting_reset_all_faces">Alle gezichten herstellen naar standaard</string>
+    <string name="setting_reset_all_faces_description">Herstel het uiterlijk van elk ingebouwd gezicht naar de oorspronkelijke standaardwaarden</string>
+    <string name="reset_all_faces_confirm_title">Alle gezichten herstellen?</string>
+    <string name="reset_all_faces_confirm_message">Het uiterlijk van elk ingebouwd gezicht keert terug naar de oorspronkelijke standaardwaarden, en elk actief aangepast thema wordt uitgeschakeld. Je opgeslagen aangepaste thema\'s, gedragsinstellingen en gekozen gezicht blijven behouden.</string>
+    <string name="reset_all_faces_confirm_button">Alles herstellen</string>
+    <string name="reset_all_faces_done">Alle gezichten hersteld naar standaardwaarden</string>
+    <string name="setting_player_shading_color">Schaduwkleur</string>
+    <string name="setting_wear_shading_custom_color">Aangepaste schaduwkleur</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Zwart</item>
+        <item>Albumaccent</item>
+        <item>Ontsatureerd album</item>
+        <item>Aangepaste kleur</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Spelerthema volgen</item>
+        <item>Randvignet</item>
+        <item>Randvignet (sterk)</item>
+        <item>Randvignet (zwaar)</item>
+        <item>Onderhoek</item>
+        <item>Onderin vervagen</item>
+        <item>Vloer en plafond</item>
+        <item>Volledige-schermfilter</item>
+        <item>Albumkleurwas</item>
+        <item>Tweekleurig albumverloop</item>
+        <item>Zijgordijnen</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Albumhoesdekking in ambient</string>
+    <string name="setting_ambient_album_art_opacity_description">Hoe zichtbaar de albumhoes blijft in ambient-modus. Momenteel <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Time-out volume-/zoekoverlay</string>
+    <string name="setting_volume_overlay_timeout_description">Hoe lang volume- en zoekoverlays op het scherm blijven na aanpassing. Momenteel <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Dode zone draaikroon</string>
+    <string name="setting_rotary_deadzone_description">Minimale kroonbeweging voordat volume- of zoekwijzigingen worden toegepast. Helpt onbedoelde aanpassingen te voorkomen. Momenteel <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Wear-ervaring</string>
+    <string name="setting_swipe_gestures_hint">Veeggebaren</string>
+    <string name="setting_swipe_gestures_hint_description">Vegen omhoog/omlaag/links kan elk elke actie openen. Tik hier om ze te configureren voor Muziek speelt af of Geen afspelen. Vegen naar rechts blijft gereserveerd om de app te verlaten.</string>
+    <string name="setting_screen_buttons_hint">Miniknoppen</string>
+    <string name="setting_screen_buttons_hint_description">Tot drie zichtbare knoppen, elk met tik- en lange-druk-acties. Tik hier om ze te configureren voor Muziek speelt af of Geen afspelen.</string>
+    <string name="dev_screen_buttons_offset">Positie miniknoppen</string>
+    <string name="dev_screen_buttons_offset_description">Voorkeursafstand in dp tussen de onderkant van het horlogescherm en de miniknoppen (standaard 42). De rij past zich nog steeds zelf aan om weg te blijven van lange titels.</string>
+    <string name="setting_screen_buttons_tilt">Knopkanteling</string>
+    <string name="setting_screen_buttons_tilt_description">Hoeveel de zijknoppen de kromming van het scherm volgen. 0 = rechte rij; 100 = volledige boog met gekantelde pictogrammen.</string>
+    <string name="setting_screen_buttons_bg">Achtergrond miniknoppen</string>
+    <string name="setting_screen_buttons_opacity">Dekking miniknoppen</string>
+    <string name="setting_screen_buttons_opacity_description">Dekking van de hele groep miniknoppen (0–100%%). Momenteel <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Snelle-actiespaneel</string>
+    <string name="quick_panel_config_hint">Dit zijn de knoppen van het paneel dat wordt geopend door dubbel te tikken op het midden van het horlogescherm. Tik op een rij om de actie ervan te kiezen (\"Geen\" verbergt hem); houd vast om de standaard te herstellen.</string>
+    <string name="quick_panel_slot_1">Knop 1</string>
+    <string name="quick_panel_slot_2">Knop 2</string>
+    <string name="quick_panel_slot_3">Knop 3</string>
+    <string name="quick_panel_slot_long">Lange knop</string>
+    <string name="quick_panel_slot_default">%1$s (standaard)</string>
+    <string name="quick_panel_slot_hidden">Verborgen</string>
+    <string name="quick_panel_default_like">Vind ik leuk</string>
+    <string name="quick_panel_default_shuffle">Shuffle</string>
+    <string name="quick_panel_default_repeat">Herhalen</string>
+    <string name="quick_panel_default_up_next">Volgende</string>
+    <string name="setting_wear_center_long_press_queue">Lange druk in midden voor wachtrij</string>
+    <string name="setting_wear_center_long_press_queue_description">Houd het midden van het nu-afspelend-scherm ingedrukt om de afspeelwachtrij te openen.</string>
+    <string name="setting_wear_screen_face">Basisindeling</string>
+    <string name="setting_wear_screen_face_description">Kies de structuur die door dit thema wordt gebruikt. Opgeslagen thema\'s kunnen deze indeling combineren met hun eigen lettertype, kleuren, vervaging, schaduw, AOD en panelen.</string>
+    <string name="setting_wear_show_track_title">Nummertitel tonen</string>
+    <string name="setting_wear_show_track_title_description">Toon de naam van het huidige nummer op de speler</string>
+    <string name="setting_wear_show_track_artist">Naam artiest tonen</string>
+    <string name="setting_wear_show_track_artist_description">Toon de huidige artiest op de speler</string>
+    <string name="setting_wear_show_source_icon">Pictogram van afspelende app tonen</string>
+    <string name="setting_wear_show_source_icon_description">Toon het pictogram van de app die momenteel afspeelt naast de artiest. Gebruikt het pictogram uit de mediamelding. Indien uitgeschakeld, wordt het pictogram nooit naar het horloge gestuurd.</string>
+    <string name="setting_wear_player_controls_visible">Spelerbediening tonen</string>
+    <string name="setting_wear_player_controls_visible_description">Toon of verberg ingebouwde knoppen in Classic-, Poster-, Studio- en andere configureerbare indelingen zonder hun aanraakzones uit te schakelen</string>
+    <string name="setting_wear_quadrant_tap_flash">Pictogram opflitsen bij tikken</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Wanneer de actie van een hoekzone wordt geactiveerd, laat het pictogram kort opflitsen naar volle helderheid — vooral handig bij de besturingsstijl Verborgen, waar het pictogram anders onzichtbaar is en geen bevestiging geeft van welke actie zojuist is uitgevoerd.</string>
+    <string name="setting_wear_internal_progress_visible">Voortgangsindicator indeling</string>
+    <string name="setting_wear_internal_progress_visible_description">Toon de extra voortgangsindicator die in deze indeling is ontworpen. De afspeelknopringen van Expressive en Material maken deel uit van hun bediening en blijven beschikbaar.</string>
+    <string name="setting_wear_edge_progress_visible">Voortgangsboog aan rand tonen</string>
+    <string name="setting_wear_edge_progress_visible_description">Verberg alleen de visuele boog rond het scherm. Zoeken via de rand blijft een onafhankelijke optie.</string>
+    <string name="setting_wear_edge_seek_enabled">Zoeken vanaf schermrand</string>
+    <string name="setting_wear_edge_seek_enabled_description">Tik of sleep langs de schermrand om naar een exact punt te springen, zelfs wanneer de boog verborgen is</string>
+    <string name="setting_wear_screen_theme">Bedieningsstijl</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Gebalanceerd</string>
+    <string name="wear_screen_theme_default_description">Standaardhiërarchie en bedieningsgroottes.</string>
+    <string name="wear_screen_theme_minimal">Minimaal</string>
+    <string name="wear_screen_theme_minimal_description">Gebruikt kleinere, rustigere bediening terwijl elke actie zichtbaar en bruikbaar blijft.</string>
+    <string name="wear_screen_theme_compact">Compact</string>
+    <string name="wear_screen_theme_compact_description">Gebruikt een strakkere bedieningsbehandeling zonder je acties te wijzigen.</string>
+    <string name="wear_screen_theme_cinema">Bioscoop</string>
+    <string name="wear_screen_theme_cinema_description">Verzacht de bediening zonder de albumhoes te wijzigen.</string>
+    <string name="wear_screen_theme_vivid">Levendig</string>
+    <string name="wear_screen_theme_vivid_description">Gebruikt grotere, prominentere bediening.</string>
+    <string name="wear_screen_theme_contrast">Hoog contrast</string>
+    <string name="wear_screen_theme_contrast_description">Gebruikt grotere bediening voor gemakkelijker lezen.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Gebruikt compacte, licht gedimde bediening. Het verdonkert de achtergrond zelf niet — gebruik daarvoor de achtergrondinstellingen.</string>
+    <string name="wear_screen_theme_hidden">Verborgen</string>
+    <string name="wear_screen_theme_hidden_description">Verbergt alle bedieningspictogrammen volledig. Aanraakzones blijven actief en volledig functioneel.</string>
+    <string name="setting_wear_font">Lettertype</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Het standaardlettertype van de app.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Het klassieke systeemlettertype van Android.</string>
+    <string name="wear_font_rounded">Afgerond</string>
+    <string name="wear_font_rounded_description">Vriendelijke moderne lettervormen met zacht afgeronde uiteinden.</string>
+    <string name="wear_font_sans_light">Modern Licht</string>
+    <string name="wear_font_sans_light_description">Een strakke, luchtige schreefloze letter met een lichter visueel gewicht.</string>
+    <string name="wear_font_sans_thin">Ultradun</string>
+    <string name="wear_font_sans_thin_description">Een extra lichte display-stijl voor een minimalistische speler.</string>
+    <string name="wear_font_sans_medium">Modern Medium</string>
+    <string name="wear_font_sans_medium_description">Een scherpe schreefloze letter met sterkere, compacte lijnen.</string>
+    <string name="wear_font_sans_black">Vet</string>
+    <string name="wear_font_sans_black_description">Een gedurfde displayfamilie met maximale visuele impact.</string>
+    <string name="wear_font_small_caps">Kleine kapitalen</string>
+    <string name="wear_font_small_caps_description">Compacte, hoofdletterachtige vormen met een redactioneel gevoel.</string>
+    <string name="wear_font_casual">Casual</string>
+    <string name="wear_font_casual_description">Een speelse handgeschreven systeemfamilie.</string>
+    <string name="wear_font_typewriter">Typemachine (gearchiveerd)</string>
+    <string name="wear_font_typewriter_description">Een retro typemachine-look (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Een afgeronde geometrische schreefloze letter, een vrij (OFL) alternatief in de geest van Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Een strakke geometrische schreefloze letter, een vrij (OFL) alternatief in de geest van Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Een elegante humanistische romein, een vrij (OFL) alternatief in de geest van Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Een zachtere typemachine-stijl (Love Letter Typewriter) — normaal gereserveerd voor \"Lain\"-thema-nummers.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Een klassiek schreefletter.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">Schreefletters met vaste breedte en een kenmerkende redactionele/terminal-look.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Vaste breedte, technische look.</string>
+    <string name="wear_font_condensed">Smal</string>
+    <string name="wear_font_condensed_description">Smallere lettervormen die meer tekst bevatten.</string>
+    <string name="wear_font_condensed_light">Smal Licht</string>
+    <string name="wear_font_condensed_light_description">Een smalle, lichtere familie voor lange titels.</string>
+    <string name="wear_font_condensed_medium">Smal Medium</string>
+    <string name="wear_font_condensed_medium_description">Een smalle familie met sterkere lijnen en uitstekende leesbaarheid.</string>
+    <string name="wear_font_cursive">Cursief</string>
+    <string name="wear_font_cursive_description">Een decoratief handgeschreven lettertype.</string>
+    <string name="setting_wear_dynamic_accent">Dynamisch accent op horloge</string>
+    <string name="setting_wear_dynamic_accent_description">Pas op het album gebaseerde horlogekleuren aan aan de huidige hoes. Indien uitgeschakeld, gebruiken Albumkleurkeuzes het statische themaaccent.</string>
+    <string name="setting_wear_album_art_fade">Overgangsvervaging albumhoes</string>
+    <string name="setting_wear_album_art_fade_description">Vervaag de albumhoes zachtjes wanneer het nummer wijzigt.</string>
+    <string name="setting_wear_title_text_mode">Gedrag titeltekst</string>
+    <string name="setting_wear_title_text_mode_description">Hoe de nu-afspelend-titel zich gedraagt wanneer hij niet past: Automatisch combineert verkleinen, afbreken en scrollen; de andere opties maken één gedrag exclusief.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automatisch (verkleinen, dan afbreken, dan scrollen)</item>
+        <item>Scrollen (lopende tekst)</item>
+        <item>Afbreken naar twee regels</item>
+        <item>Afbreken naar drie regels</item>
+        <item>Afbreken naar vijf regels</item>
+        <item>Statisch (één regel, geen scrollen of verkleinen)</item>
+        <item>Verkleinen om te passen</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Tekstkleur artiest</string>
+    <string name="setting_wear_artist_custom_color">Aangepaste kleur artiest</string>
+    <string name="setting_wear_artist_custom_color_description">Kies de artiestkleur die wordt gebruikt bij de behandeling Normaal</string>
+    <string name="setting_wear_artist_desaturated">Ontsatureerde artiestkleur</string>
+    <string name="setting_wear_artist_desaturated_description">Verzacht de op het album gebaseerde tekstkleur van de artiest — geldt alleen wanneer \"Tekstkleur artiest\" is ingesteld op Albumkleur</string>
+
+    <string name="setting_wear_progress_color">Kleur voortgangsbalk</string>
+    <string name="setting_wear_progress_custom_color">Aangepaste kleur voortgangsbalk</string>
+    <string name="setting_wear_progress_custom_color_description">Kies de voortgangs- en zoekkleur die wordt gebruikt bij de behandeling Normaal</string>
+    <string name="setting_wear_progress_desaturated">Ontsatureerde kleur voortgangsbalk</string>
+    <string name="setting_wear_progress_desaturated_description">Verzacht de op het album gebaseerde kleur van de voortgangsbalk — geldt alleen wanneer \"Kleur voortgangsbalk\" is ingesteld op Albumkleur</string>
+
+    <string name="setting_wear_volume_color">Kleur volumebalk</string>
+    <string name="setting_wear_volume_custom_color">Aangepaste volumekleur</string>
+    <string name="setting_wear_volume_custom_color_description">Kies de volumekleur die wordt gebruikt bij de behandeling Normaal</string>
+    <string name="setting_wear_quick_panel_color">Kleur Snelle Acties</string>
+    <string name="setting_wear_quick_panel_custom_color">Aangepaste kleur Snelle Acties</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Kies de kleur van Snelle Acties die wordt gebruikt bij de behandeling Normaal</string>
+    <string name="setting_wear_shading_custom_color_description">Kies de kleur die het schaduwverloop tint</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Neutraal (statische themakleur)</item>
+        <item>Albumkleur</item>
+        <item>Aangepaste kleur</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Expressive-zoeken</string>
+    <string name="setting_wear_expressive_seek_mode_description">Hoe je met aanraking door het nummer scrolt op het Expressive-gezicht. Centrale ring maakt de ring rond de afspeelknop versleepbaar; Randring toont ook de Classic-lunetring; Geen laat zoeken alleen over aan de draaikroon.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Centrale ring</item>
+        <item>Randring</item>
+        <item>Geen</item>
+    </string-array>
+
+    <string name="category_wear_aod">Altijd-aan-scherm</string>
+    <string name="setting_wear_aod_style">Altijd-aan-stijl</string>
+    <string name="setting_wear_aod_style_description">Hoe het nu-afspelend-scherm eruitziet terwijl het horloge in ambient-modus is. Gezicht volgen komt overeen met het geselecteerde gezicht; Minimaal toont alleen gedimde tekst op puur zwart voor de langste accuduur.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Gezicht volgen</item>
+        <item>Classic</item>
+        <item>Expressive (omlijnd)</item>
+        <item>Material (omlijnd)</item>
+        <item>AMOLED-bediening</item>
+        <item>Chrono (grote klok)</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Altijd-aan-kleur</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Wit</item>
+        <item>Albumkleur</item>
+        <item>Aangepaste kleur</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Wit</item>
+        <item>Dynamisch (op gebied onder de klok)</item>
+        <item>Albumkleur</item>
+        <item>Aangepaste kleur</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Paneelstijl volgen</item>
+        <item>Transparant (geen achtergrond)</item>
+        <item>Albumaccent</item>
+        <item>Doorschijnend</item>
+        <item>Wit</item>
+        <item>Mat wit</item>
+        <item>Zwart</item>
+        <item>Dynamisch (albumtoon)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Achtergrond Volgende-pil</string>
+    <string name="setting_wear_show_up_next_pill">Volgende-pil op speler</string>
+    <string name="setting_wear_show_up_next_pill_description">Toon een Volgende-pil onderaan het nu-afspelend-scherm. Deze vult de ruimte die de miniknoppenrij zou innemen, dus verschijnt alleen wanneer die rij niet wordt getoond.</string>
+    <string name="category_wf_clock">Klok</string>
+    <string name="setting_wear_clock_color">Klokkleur</string>
+    <string name="setting_wear_clock_custom_color">Aangepaste klokkleur</string>
+    <string name="setting_wear_clock_custom_color_description">Tik om de klokkleur te kiezen die wordt gebruikt wanneer Klokkleur is ingesteld op Aangepaste kleur</string>
+    <string name="setting_wear_clock_opacity">Klokdekking</string>
+    <string name="setting_wear_clock_opacity_description">Hoe ondoorzichtig de altijd getoonde klok is (10–100%%). Momenteel <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Aangepaste altijd-aan-kleur</string>
+    <string name="setting_wear_aod_custom_color_description">Tik om de kleur te kiezen die wordt gebruikt voor altijd-aan-tekst, -bediening en -klok wanneer \"Altijd-aan-kleur\" is ingesteld op Aangepaste kleur</string>
+    <string name="setting_wear_aod_intensity">Altijd-aan-helderheid</string>
+    <string name="setting_wear_aod_intensity_description">Hoe helder het altijd-aan-scherm wordt weergegeven (20–100%%). Lager is dimmer en gebruikt minder batterij. Momenteel <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Transportknoppen op altijd-aan-scherm</string>
+    <string name="setting_wear_aod_show_transport_description">Toon de omlijnde vorige/afspelen/volgende-knoppen in ondersteunde visuele altijd-aan-stijlen. Ze kunnen niet worden aangetikt terwijl het scherm gedimd is, maar een tik wekt het horloge met de knop al onder je vinger.</string>
+    <string name="setting_wear_aod_show_progress">Voortgangsring op altijd-aan-scherm</string>
+    <string name="setting_wear_aod_show_progress_description">Toon de voortgangsring rond de afspeelknop in ambient-modus — de positie wordt daar slechts ongeveer eens per minuut vernieuwd</string>
+    <string name="setting_wear_aod_show_pills">Volgende op altijd-aan-scherm</string>
+    <string name="setting_wear_aod_show_pills_description">Toon een statische, omlijnde Volgende-pil onderaan de visuele altijd-aan-stijlen</string>
+    <string name="category_wf_gestures">Schermgebaren</string>
+    <string name="setting_wear_mini_buttons_mode">Miniknoppen tonen</string>
+    <string name="setting_wear_gestures_mode">Schermgebaren</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Altijd</item>
+        <item>Alleen tijdens afspelen</item>
+        <item>Alleen bij pauze</item>
+        <item>Nooit</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Albumhoes op altijd-aan-scherm</string>
+    <string name="setting_wear_aod_show_art_description">Houd de gedimde albumhoes zichtbaar in ambient-modus. Uitschakelen toont een puur zwarte achtergrond, wat merkbaar meer batterij bespaart op AMOLED-schermen.</string>
+    <string name="setting_wear_aod_art_treatment">Stijl altijd-aan-albumhoes</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Zachte vervaging</item>
+        <item>Heldere hoes</item>
+        <item>Monochrome vervaging</item>
+        <item>Albumhoesbehandeling van speler volgen</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Klok op altijd-aan-scherm</string>
+    <string name="setting_wear_aod_show_clock_description">Toon de klok wanneer het horloge in ambient-modus is</string>
+    <string name="setting_wear_aod_show_track_info">Nummerinfo op altijd-aan-scherm</string>
+    <string name="setting_wear_aod_show_track_info_description">Toon de titel en artiest van het nummer in ambient-modus</string>
+
+    <string name="category_overlays_queue">Overlays en wachtrij</string>
+    <string name="setting_wear_overlay_backdrop_style">Paneelachtergrond</string>
+    <string name="setting_wear_volume_style">Volumestijl</string>
+    <string name="setting_wear_volume_layout">Volume-indeling</string>
+    <string name="setting_wear_quick_panel_style">Snelpaneelstijl</string>
+    <string name="setting_wear_quick_panel_layout">Snelpaneelindeling</string>
+    <string name="setting_wear_quick_panel_source">Snelle acties</string>
+    <string name="setting_wear_quick_panel_source_description">Kies je geconfigureerde knoppen, of acties aangeboden door de momenteel afspelende app.</string>
+    <string name="quick_panel_open_note_title">Het paneel openen</string>
+    <string name="quick_panel_open_note_description">Dubbeltik op het midden van het nu-afspelend-scherm om het snelle-actiespaneel op het horloge te openen.</string>
+    <string name="preview_current_app_action">Actie huidige app</string>
+    <string name="preview_notification_controls">Pictogram uit mediamelding</string>
+    <string name="setting_wear_queue_style">Wachtrijstijl</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Snelkoppelingshoezen gebruiken als achtergrond</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Wanneer de Wachtrijstijl hierboven een Hoes-variant is, vult een actierij van het snelpaneel met een opgehaalde snelkoppelingshoes (nummer, afspeellijst, artiest…) ook zijn pil met die afbeelding, zoals Volgende doet. Snelkoppelingen zonder opgehaalde hoes (alleen een app-pictogram) worden niet beïnvloed.</string>
+    <string name="setting_wear_list_row_size">Formaat lijstpil</string>
+    <string name="setting_wear_list_row_size_description">Hoogte van de rijen over de volledige breedte in de wachtrij, menu\'s en snelpaneel.</string>
+    <string name="setting_wear_progress_style">Stijl voortgangsring</string>
+    <string name="setting_wear_seek_style">Stijl zoek- en volumeweergave</string>
+    <string name="setting_wear_seek_layout">Indeling zoekpaneel</string>
+    <string name="setting_wear_color_treatment">Kleurbehandeling horloge</string>
+    <string name="setting_wear_normal_color">Normale kleur</string>
+    <string name="setting_wear_normal_color_description">Kies de ene kleur die wordt gebruikt door titelaccenten, voortgang, volume, panelen en miniknopchroom in modus Normaal</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normaal (gekozen kleur)</item>
+        <item>Ontsatureerd (zachte albumkleur)</item>
+        <item>Expressive (volledig albumpalet)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Horlogebehandeling volgen</item>
+        <item>Normaal (gekozen kleur)</item>
+        <item>Ontsatureerd (zachte albumkleur)</item>
+        <item>Expressive (volledig albumpalet)</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Randboog (links)</item>
+        <item>Randboog (hoog)</item>
+        <item>Randboog (rechts)</item>
+        <item>Randboog (boven)</item>
+        <item>Randboog (onder)</item>
+        <item>Volledige ring</item>
+        <item>Centrale halo</item>
+        <item>Horizontale meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Randring</item>
+        <item>Randring (dun)</item>
+        <item>Randring (dik)</item>
+        <item>Tijdlijn</item>
+        <item>Gesegmenteerde tijdlijn</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metadata eerst</item>
+        <item>Boog</item>
+        <item>Hero</item>
+        <item>Raster</item>
+        <item>Gelabelde rijen</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Effen</item>
+        <item>Gestippeld</item>
+        <item>Punten</item>
+        <item>Dunne lijn</item>
+        <item>Komeet</item>
+        <item>60 klokstippen</item>
+        <item>60 klokstreepjes</item>
+        <item>12-uurs segmenten</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Eenvoudig</item>
+        <item>Glazen pil</item>
+        <item>Expressive-pil</item>
+        <item>Material-pil</item>
+        <item>Witte pil</item>
+        <item>Enorm</item>
+        <item>Positie / totaal</item>
+        <item>Glazen wit</item>
+        <item>Doorschijnend album</item>
+        <item>Albumgloed</item>
+        <item>Omlijning</item>
+        <item>Effen thema</item>
+        <item>Effen album</item>
+        <item>Micro</item>
+        <item>Schaduw (geen chroom)</item>
+        <item>Onderstreping</item>
+        <item>Dunne omlijning</item>
+        <item>Enorme albumkleur</item>
+        <item>Mono</item>
+        <item>Tonaal donker</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Geconfigureerde knoppen</item>
+        <item>Van huidige media-app</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Paneelstijl volgen</item>
+        <item>Albumvervaging (acryl)</item>
+        <item>Effen zwart</item>
+        <item>Effen albumkleur</item>
+        <item>Glas</item>
+        <item>Albumverloop</item>
+        <item>Album-tweekleur</item>
+        <item>Prisma</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Glas</item>
+        <item>Minimaal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonaal</item>
+        <item>Neon</item>
+        <item>Licht</item>
+        <item>Verloop</item>
+        <item>Mono</item>
+        <item>Omlijning</item>
+        <item>Tweekleur</item>
+        <item>Prisma</item>
+        <item>Hoog contrast</item>
+        <item>Terminal</item>
+        <item>Rijp</item>
+        <item>Segmenten</item>
+        <item>Aurora</item>
+        <item>Inkt</item>
+        <item>Groef</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Compact</item>
+        <item>Normaal</item>
+        <item>Hoog</item>
+        <item>Extra hoog</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Glas</item>
+        <item>Minimaal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonaal</item>
+        <item>Neon</item>
+        <item>Licht</item>
+        <item>Verloop</item>
+        <item>Mono</item>
+        <item>Omlijning</item>
+        <item>Tweekleur</item>
+        <item>Prisma</item>
+        <item>Hoog contrast</item>
+        <item>Terminal</item>
+        <item>Rijp</item>
+        <item>Hoes</item>
+        <item>Hoes vervaagd</item>
+        <item>Hoes Tonaal</item>
+        <item>Hoes Vierkant</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Glas</item>
+        <item>Glas wit</item>
+        <item>Glas Tonaal</item>
+        <item>Minimaal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonaal</item>
+        <item>Neon</item>
+        <item>Licht</item>
+        <item>Verloop</item>
+        <item>Mono</item>
+        <item>Omlijning</item>
+        <item>Omlijning Glas Wit</item>
+        <item>Tweekleur</item>
+        <item>Prisma</item>
+        <item>Hoog contrast</item>
+        <item>Terminal</item>
+        <item>Rijp</item>
+        <item>Ghost (geen chroom)</item>
+        <item>Nevel</item>
+        <item>Inkt</item>
+        <item>Stip</item>
+        <item>Plaat</item>
+    </string-array>
+
+    <string name="setting_wear_track_time_mode">Weergave nummertijd</string>
+    <string name="setting_wear_track_time_mode_description">Wanneer de nummerpositie (bijv. 1:23 / 3:45) wordt getoond op het nu-afspelend-scherm.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Altijd</item>
+        <item>Alleen tijdens afspelen</item>
+        <item>Alleen bij pauze</item>
+        <item>Nooit</item>
+    </string-array>
+
+    <string name="setting_screen_buttons_curve">Kromming miniknoppen</string>
+    <string name="setting_screen_buttons_curve_description">Selecteer de krommingsstijl voor miniknoppen: plat, boog, zacht, gebogen.</string>
+    <string name="setting_screen_buttons_shape">Vorm miniknoppen</string>
+    <string name="setting_screen_buttons_shape_description">Selecteer de vorm en het indelingsformaat van miniknoppen.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pil (standaard)</item>
+        <item>Cirkel</item>
+        <item>Vierkant</item>
+        <item>Afgerond vierkant (zacht)</item>
+        <item>Afgerond vierkant (medium)</item>
+        <item>Squircle</item>
+        <item>Blad</item>
+        <item>Druppel</item>
+        <item>Pil (breed klein)</item>
+        <item>Pil (breed medium)</item>
+        <item>Pil (breed groot)</item>
+        <item>Pil (breed extra groot)</item>
+        <item>Afgerond rechthoek (klein)</item>
+        <item>Afgerond rechthoek (medium)</item>
+        <item>Afgerond rechthoek (groot)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Plat</item>
+        <item>Boog</item>
+        <item>Lichte kromming</item>
+        <item>Zachte kromming</item>
+        <item>Gemiddelde kromming</item>
+        <item>Gebogen</item>
+        <item>Extreme kromming</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Standaardachtergrond</item>
+        <item>Glas (uniform)</item>
+        <item>Glas (licht)</item>
+        <item>Doorschijnend album</item>
+        <item>Doorschijnend album Exp</item>
+        <item>Albumgloed</item>
+        <item>Gloed Exp</item>
+        <item>Effen thema</item>
+        <item>Effen album</item>
+        <item>Effen Exp album</item>
+        <item>Omlijning</item>
+        <item>Omlijning Exp album</item>
+        <item>Alleen pictogram (transparant)</item>
+        <item>Pictogram Exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Neutraal</item>
+        <item>Albumkleur</item>
+        <item>Aangepaste kleur</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Volledige hoes</item>
+        <item>Vervaagde achtergrond</item>
+        <item>Vierkant (scherpe hoeken)</item>
+        <item>Vierkant (zachte hoeken)</item>
+        <item>Vierkant (afgeronde hoeken)</item>
+        <item>Zwart-wit</item>
+        <item>Vervaagd zwart-wit</item>
+        <item>Expressive-vervaging</item>
+        <item>Expressive</item>
+        <item>Material tonaal verloop</item>
+        <item>Poster-hoes</item>
+        <item>Studio-verloop</item>
+        <item>Vinyl radiale gloed</item>
+        <item>Halo-gloed</item>
+        <item>Aurora-linten</item>
+        <item>Spectrum-verloop</item>
+        <item>Corona-veeg</item>
+        <item>Schemervervaging</item>
+        <item>Bloom</item>
+        <item>Horizonvervaging</item>
+        <item>Sintelgloed</item>
+        <item>Eclipse AMOLED zwart</item>
+        <item>Verborgen (effen zwart)</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Time-out sluiten</string>
+    <string name="setting_close_timeout_description">Svartifoss sluit zichzelf automatisch wanneer er <![CDATA[<b>%1$s seconden</b>]]> geen muziek afspeelt. De functie is uitgeschakeld wanneer de time-out is ingesteld op 0 seconden. Merk op dat deze optie, om batterij te sparen, soms niet erg nauwkeurig kan zijn en het sluiten tot een minuut kan vertragen.</string>
+    <string name="setting_wear_close_on_idle">Sluiten bij \"Niets afspelend\"</string>
+    <string name="setting_wear_close_on_idle_description">Sluit de horloge-app automatisch ongeveer een minuut nadat het inactieve scherm \"Niets afspelend\" is bereikt, zodat het daar nooit blijft hangen. Onafhankelijk van de sluit-time-out hierboven, die een gepauzeerd nummer dekt.</string>
+    <string name="category_notifications">Meldingspop-up</string>
+    <string name="setting_enable_notifications">Meldingspop-up tonen</string>
+    <string name="setting_enable_notifications_description">Deze functie vereist een andere app om meldingen te beheren (Vibration Center for Wear).\n\nElke keer dat Vibration Center het horloge laat trillen, toont Svartifoss een pop-up van de meldingstekst, zodat je snel een blik kunt werpen zonder Svartifoss te verlaten.</string>
+    <string name="setting_notification_timeout">Time-out meldingspop-up</string>
+    <string name="setting_notification_timeout_description">De meldingspop-up sluit zichzelf automatisch na <![CDATA[<b>%1$s seconden</b>]]>. Voer 0 in om automatisch sluiten uit te schakelen.</string>
+    <string name="app_required">App vereist</string>
+    <string name="vibration_center_required_description">Om deze functie te gebruiken, moet je een andere (gratis) app installeren: Vibration Center for Wear.</string>
+    <string name="open_play_store">Play Store openen</string>
+    <string name="error_no_notification_service_support">Sorry, je apparaat lijkt geen meldingsservices te ondersteunen</string>
+    <string name="setting_always_select_center_action">Altijd centrale actie selecteren</string>
+    <string name="setting_always_select_center_action_description">Indien ingeschakeld, selecteert het tikken op de actielijst altijd de centrale (gemarkeerde) optie, ongeacht welke optie je aantikte.</string>
+    <string name="change_icon">Pictogram wijzigen</string>
+    <string name="please_wait">Even geduld</string>
+
+    <string name="error_playlist_not_supported">Niet ondersteund door deze media-app</string>
+    <string name="error_search_no_results">Geen resultaten gevonden</string>
+    <string name="seconds_to_skip">Seconden vooruitspoelen:</string>
+    <string name="seconds_to_reverse">Seconden terugspoelen:</string>
+
+    <string name="setting_dynamic_accent_color">Dynamische accentkleur</string>
+    <string name="setting_dynamic_accent_color_description">Indien ingeschakeld, past de accentkleur (SeekBar, actief wachtrij-item) zich automatisch aan de dominante kleur van de huidige albumhoes aan.</string>
+    <string name="setting_desaturated_color">Ontsatureerde kleur</string>
+    <string name="setting_desaturated_color_description">Past de verzadiging en helderheid van de geëxtraheerde kleur aan om hoge leesbaarheid en contrast te garanderen, afhankelijk van het actieve thema.</string>
+
+    <string name="queue_header">Afspeelwachtrij</string>
+    <string name="queue_unavailable">Wachtrij niet beschikbaar</string>
+
+    <string name="setting_custom_accent_color">Accentkleur</string>
+    <string name="setting_custom_accent_color_description">Kies een aangepaste accentkleur voor de app-interface</string>
+    <string name="setting_mini_player">Mini-speler</string>
+    <string name="setting_mini_player_description">Toont een permanente nu-afspelend-balk boven de onderste navigatie wanneer media actief is. Standaard ingeschakeld; schakel uit om die ruimte terug te krijgen.</string>
+    <string name="color_picker_title">Accentkleur kiezen</string>
+    <string name="color_picker_reset">Herstellen</string>
+    <string name="color_picker_apply">Toepassen</string>
+    <string name="color_picker_default">Standaard</string>
+    <string name="color_picker_invalid">Ongeldige kleurcode</string>
+    <string name="color_picker_current">Huidig: %s</string>
+
+    <string name="drawer_version_format">Versie %1$s</string>
+    <string name="drawer_tagline">Companion-app voor Wear OS</string>
+    <string name="drawer_about_heading">Over</string>
+    <string name="drawer_about_summary">Svartifoss laat je muziek op je telefoon bedienen vanaf je Wear OS-horloge — met een volledig aanpasbare afstandsbediening op maat van je apparaat.</string>
+    <string name="drawer_name_heading">De naam</string>
+    <string name="drawer_name_meaning">Svartifoss betekent \"Zwarte Waterval\" in het IJslands — genoemd naar de waterval in Vatnajökull National Park, waar donkere basaltzuilen een smalle waterval omlijsten. Zoals water over steen, stroomt muziek door de app.</string>
+    <string name="drawer_sync_heading">Synchronisatie</string>
+    <string name="drawer_sync_summary">Horloge-instellingen worden hier op de telefoon geconfigureerd en automatisch gesynchroniseerd met je gekoppelde horloge.</string>
+    <string name="drawer_support_heading">Ondersteuning</string>
+    <string name="drawer_support_summary">Svartifoss is gratis en open source — trakteer me op een koffie als het nuttig voor je is :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Hoes downloaden</string>
+    <string name="album_art_saved">Hoes opgeslagen in galerij</string>
+    <string name="album_art_save_error">Kon hoes niet opslaan</string>
+
+    <string name="action_play_liked_songs">Leuk gevonden nummers afspelen (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Leuk gevonden nummers afspelen (Spotify)</string>
+    <string name="action_my_playlists">Streamingsnelkoppelingen</string>
+    <string name="action_play_specific_playlist">Streamingsnelkoppeling openen</string>
+    <string name="action_choose_or_add_streaming_shortcut">Streamingsnelkoppeling kiezen of toevoegen</string>
+    <string name="action_show_streaming_library">Alle opgeslagen snelkoppelingen tonen</string>
+    <string name="playlist_shortcut_pick_title">Snelkoppeling kiezen</string>
+    <string name="playlist_shortcut_pick_empty">Nog geen streamingsnelkoppelingen opgeslagen — voeg er hieronder een toe en tik er dan op om te kiezen</string>
+    <string name="playlist_shortcuts_empty">Nog geen streamingsnelkoppelingen — voeg ze toe in de instellingen van de telefoon-app</string>
+    <string name="setting_playlist_shortcuts">Streamingsnelkoppelingen</string>
+    <string name="setting_playlist_shortcuts_description">Open gedeelde links vanaf het horloge in YouTube Music, Spotify en andere streaming-apps</string>
+    <string name="setting_shortcut_artwork">Snelkoppelingshoezen online ophalen</string>
+    <string name="setting_shortcut_artwork_description">Download een miniatuur voor elke opgeslagen snelkoppeling van de dienst, getoond in de telefoonlijst, het horlogemenu en toegewezen knoppen. Elke miniatuur wordt één keer opgehaald. Dit is de enige online toegang naast de updatecontrole; alleen de openbare deellink wordt verzonden. Standaard uitgeschakeld.</string>
+    <string name="watch_streaming_shortcuts_empty">Voeg nummers, albums of afspeellijsten toe voor Snelle Acties en het horlogemenu</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d opgeslagen snelkoppeling · Beschikbaar in Snelle Acties en het horlogemenu</item>
+        <item quantity="other">%1$d opgeslagen snelkoppelingen · Beschikbaar in Snelle Acties en het horlogemenu</item>
+    </plurals>
+    <string name="category_music_apps">Muziekapps en -diensten</string>
+    <string name="setting_apps_integrations">Ondersteunde muziekdiensten</string>
+    <string name="setting_apps_integrations_description">Links werken met YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music en SoundCloud. Er is geen accounttoegang vereist.</string>
+    <string name="setting_apps_integrations_none">Geen ondersteunde app gedetecteerd. Snelkoppelingen kunnen nog steeds openen in een browser of andere compatibele app.</string>
+    <string name="setting_apps_integrations_installed">%1$d van %2$d gedetecteerd: %3$s</string>
+    <string name="setting_streaming_open_mode">Streaminglinks openen met</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Gedetecteerde streaming-app</item>
+        <item>Android-standaard</item>
+        <item>Elke keer vragen</item>
+    </string-array>
+    <string name="setting_notification_access">Toegang tot mediameldingen</string>
+    <string name="setting_notification_access_enabled">Toegestaan · Tik om de Android-instellingen te bekijken</string>
+    <string name="setting_notification_access_disabled">Niet toegestaan · Vereist voor mediameldingsacties en automatische startfilters</string>
+    <string name="setting_notification_access_unavailable">Instellingen voor toegang tot meldingen zijn niet beschikbaar op dit apparaat</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d opgeslagen snelkoppeling · Tik om links te beheren of importeren</item>
+        <item quantity="other">%1$d opgeslagen snelkoppelingen · Tik om links te beheren of importeren</item>
+    </plurals>
+    <string name="category_privacy">Privacy</string>
+    <string name="setting_crash_reporting">Crashrapporten verzenden</string>
+    <string name="setting_crash_reporting_description">Verstuur Firebase Crashlytics-diagnostiek om storingen te helpen oplossen. Standaard ingeschakeld; schakel op elk moment uit.</string>
+    <string name="setting_announcements">Aankondigingsmeldingen</string>
+    <string name="setting_announcements_description">Af en toe meldingen van de ontwikkelaar — nieuwe releases, belangrijke berichten. Verzonden via Firebase Cloud Messaging; er is geen account of gebruikerslijst bij betrokken. Standaard ingeschakeld; schakel op elk moment uit.</string>
+    <string name="announcement_notification_channel">Aankondigingen</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Deel een afspeellijst, album of nummer direct naar Svartifoss, plak een gekopieerde link, of voeg er handmatig een toe. Het horloge vraagt de telefoon om het te openen; er is geen dienstinlog vereist.</string>
+    <string name="back">Terug</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Jouw muziek, één tik verwijderd</string>
+    <string name="playlist_shortcuts_yours">Jouw snelkoppelingen</string>
+    <string name="playlist_shortcuts_empty_hint">Voeg een gedeelde nummer-, album- of afspeellijstlink toe om hem beschikbaar te maken op je horloge.</string>
+    <string name="playlist_shortcuts_add">Snelkoppeling toevoegen</string>
+    <string name="playlist_shortcuts_paste">Link plakken</string>
+    <string name="playlist_shortcuts_reload_covers">Hoezen opnieuw laden</string>
+    <string name="playlist_shortcuts_reloading_covers">Hoezen opnieuw laden…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Hoezen opnieuw geladen</string>
+    <string name="playlist_shortcuts_edit">Snelkoppeling bewerken</string>
+    <string name="playlist_shortcut_save">Snelkoppeling opslaan</string>
+    <string name="playlist_shortcut_editor_hint">Plak een link. Svartifoss identificeert automatisch de app en het inhoudstype.</string>
+    <string name="playlist_shortcut_detection_waiting">Wachten op een streaminglink</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer en meer worden ondersteund.</string>
+    <string name="playlist_shortcut_detected_format">Gedetecteerd: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Naam</string>
+    <string name="playlist_shortcut_link_hint">Deellink of app-URI</string>
+    <string name="playlist_shortcut_shuffle">Shuffle afspelen (alleen YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Link</string>
+    <string name="playlist_type_track">Nummer</string>
+    <string name="playlist_type_playlist">Afspeellijst</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">Artiest</string>
+    <string name="playlist_type_show">Programma</string>
+    <string name="playlist_type_episode">Aflevering</string>
+    <string name="playlist_type_mix">Mix</string>
+    <string name="playlist_badge_shuffle">Shuffle</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Nog geen streamingsnelkoppelingen toegevoegd</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d opgeslagen</item>
+        <item quantity="other">%1$d opgeslagen</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Geordende streamingsnelkoppelingen. Aanraken en vasthouden om te slepen, gebruik de toegankelijkheidsacties Omhoog verplaatsen of Omlaag verplaatsen, of druk op Ctrl+Omhoog/Omlaag op een toetsenbord.</string>
+    <string name="playlist_shortcut_more_options">Meer opties voor %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Bewerken</string>
+    <string name="playlist_shortcut_menu_open">Nu openen</string>
+    <string name="playlist_shortcut_menu_copy">Link kopiëren</string>
+    <string name="playlist_shortcut_menu_duplicate">Dupliceren</string>
+    <string name="playlist_shortcut_menu_share">Delen</string>
+    <string name="playlist_shortcut_menu_delete">Verwijderen</string>
+    <string name="playlist_shortcut_open_failed">Geen enkele app kan deze link openen</string>
+    <string name="streaming_shortcut_choose_app">Streaminglink openen met</string>
+    <string name="playlist_shortcut_link_copied">Link gekopieerd</string>
+    <string name="playlist_shortcut_import_invalid">De gedeelde tekst bevat geen geldige streaminglink</string>
+    <string name="playlist_shortcut_clipboard_invalid">Het klembord bevat geen geldige streaminglink</string>
+    <string name="playlist_shortcut_name_required">Voer een naam voor de snelkoppeling in</string>
+    <string name="playlist_shortcut_link_invalid">Voer een geldige weblink of app-URI in</string>
+    <string name="playlist_shortcut_service_invalid">Plak een geldige link om de dienst te detecteren</string>
+    <string name="playlist_shortcut_service_generic">Compatibele link · Android kiest een app</string>
+    <string name="playlist_shortcut_service_installed">%1$s geïnstalleerd · Klaar om te openen in de eigen app</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s niet geïnstalleerd · Een browser of compatibele app kan worden gebruikt</string>
+    <string name="playlist_shortcut_copy_name">%1$s kopie</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s kopie %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s gemaakt</string>
+    <string name="playlist_shortcut_share_title">Streamingsnelkoppeling delen</string>
+    <string name="playlist_shortcut_share_failed">Geen app beschikbaar om deze snelkoppeling te delen</string>
+    <string name="playlist_shortcut_deleted">%1$s verwijderd</string>
+    <string name="playlist_shortcut_undo">Ongedaan maken</string>
+
+    <string name="action_play_liked_songs_shuffled">Leuk gevonden nummers afspelen, willekeurig (YT Music)</string>
+    <string name="action_search_history">Zoekgeschiedenis</string>
+    <string name="search_history_empty">Nog geen recente zoekopdrachten</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Updates</string>
+    <string name="setting_update_check">Melden bij nieuwe versies</string>
+    <string name="setting_update_check_description">Controleert GitHub ongeveer eens per dag op nieuwe releases en toont een melding</string>
+    <string name="setting_update_prereleases">Voorafgaande releases meenemen</string>
+    <string name="setting_update_prereleases_description">Ook meldingen ontvangen over bètaversies</string>
+    <string name="setting_update_check_now">Nu op updates controleren</string>
+    <string name="setting_update_check_now_description">Toont de nieuwste versie en laat je het horloge bijwerken via Bluetooth</string>
+    <string name="update_screen_title">Updates</string>
+    <string name="update_cover_content_description">Svartifoss, de waterval waarnaar de app is genoemd</string>
+    <string name="update_notification_channel">App-updates</string>
+    <string name="update_available_title">Svartifoss %1$s is beschikbaar</string>
+    <string name="update_notification_text">Tik om bij te werken</string>
+    <string name="update_available_action">Update beschikbaar</string>
+    <string name="update_installed_phone">Telefoon: %1$s</string>
+    <string name="update_installed_versions">Telefoon: %1$s · Horloge: %2$s</string>
+    <string name="update_watch_version_unknown">onbekend</string>
+    <string name="update_checking">Zoeken naar updates…</string>
+    <string name="update_check_failed">Kon niet controleren op updates. Controleer je verbinding en probeer opnieuw.</string>
+    <string name="update_available_line">Nieuwe versie: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(voorafgaande release)</string>
+    <string name="update_up_to_date">Je hebt de nieuwste versie (%1$s)</string>
+    <string name="update_no_wear_asset">Deze release heeft geen horloge-APK om te versturen.</string>
+    <string name="update_watch_hint">\"Horloge bijwerken\" downloadt de nieuwe horloge-app en stuurt hem via Bluetooth — je bevestigt de installatie op het horloge zelf, geen kabel of Wear Installer nodig.</string>
+    <string name="update_downloading">Downloaden… %1$d%%</string>
+    <string name="update_connecting_watch">Verbinden met het horloge…</string>
+    <string name="update_transferring">Versturen naar het horloge… %1$d%%</string>
+    <string name="update_confirm_on_watch">Verzonden! Er verscheen een melding op het horloge — tik erop daar om te installeren.</string>
+    <string name="update_no_watch">Geen horloge verbonden.</string>
+    <string name="update_push_failed">Het versturen van de update naar het horloge is mislukt. Probeer opnieuw.</string>
+    <string name="update_watch_button">Horloge bijwerken</string>
+    <string name="update_open_release_button">Releasepagina openen</string>
+    <string name="update_watch_behind">Je horloge staat nog op %1$s — stuur hieronder de update ernaartoe.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Houd de telefoon- en horloge-apps gesynchroniseerd</string>
+    <string name="update_state_checking">Zoeken naar updates…</string>
+    <string name="update_state_current">Je bent up-to-date</string>
+    <string name="update_state_current_sub">Je gebruikt de nieuwste release, %1$s</string>
+    <string name="update_state_available">Update beschikbaar</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Kon niet controleren op updates</string>
+    <string name="update_state_failed_sub">Controleer je verbinding en probeer opnieuw</string>
+    <string name="update_device_phone">Telefoon</string>
+    <string name="update_device_watch">Horloge</string>
+    <string name="update_versions_header">Geïnstalleerd</string>
+    <string name="update_whats_new">Wat is er nieuw</string>
+    <string name="update_phone_button">Telefoon bijwerken</string>
+    <string name="update_installing">Installatieprogramma openen…</string>
+    <string name="update_install_permission_needed">Sta toe dat apps van Svartifoss worden geïnstalleerd en tik daarna opnieuw op Telefoon bijwerken.</string>
+    <string name="update_phone_failed">Het downloaden van de telefoonupdate is mislukt. Probeer opnieuw.</string>
+</resources>

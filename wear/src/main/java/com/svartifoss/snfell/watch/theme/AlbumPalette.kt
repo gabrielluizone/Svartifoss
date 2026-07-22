@@ -33,8 +33,11 @@ internal fun selectPrimaryAccent(
 
 /**
  * Selects additional colours without synthesizing a hue. [rankedColors] must contain quantized
- * colours from the artwork, most-populated first. Null tells the renderer to create a same-hue
- * lightness variant when the cover is monochromatic.
+ * colours from the artwork in priority order - callers put Palette's named tonal swatches
+ * (Vibrant/Muted/LightVibrant/...) ahead of raw population-ranked ones, since two of the
+ * most-populous swatches are often near-duplicate shades of the same dominant hue, while the
+ * named swatches are chosen by Palette specifically to be tonally distinct from each other. Null
+ * tells the renderer to create a same-hue lightness variant when the cover is monochromatic.
  */
 internal fun selectAlbumCompanionColors(
         primary: Int,

@@ -58,7 +58,8 @@ class WatchThemeRepository(context: Context) {
                 "aurora" to R.string.watch_theme_face_aurora,
                 "eclipse" to R.string.watch_theme_face_eclipse,
                 "spectrum" to R.string.watch_theme_face_spectrum,
-                "material" to R.string.watch_theme_face_material
+                "material" to R.string.watch_theme_face_material,
+                "immersive" to R.string.watch_theme_face_immersive
         )
 
         fun displayNameForFace(context: Context, face: String): String =
