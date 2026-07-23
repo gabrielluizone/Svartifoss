@@ -339,57 +339,64 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         }
 
         scope?.launchWithErrorHandling(context, musicState) {
+            // A reconnecting watch can receive one buffer holding several TYPE_CHANGED revisions
+            // of the same path (e.g. a handful of MusicState puts queued while it was
+            // unreachable/asleep) - Play Services does not collapse those before delivery. Keeping
+            // every one and applying them in order replayed each queued track change/asset in
+            // sequence instead of jumping straight to the latest, so only the newest event per
+            // path survives here.
+            val latestByPath = LinkedHashMap<String, DataItem>()
             frozenData.filter { it.type == DataEvent.TYPE_CHANGED }
-                    .map { it.dataItem }
-                    .forEach {
-                        when (it.uri.path) {
-                            CommPaths.DATA_MUSIC_STATE -> {
-                                val dataItem = it.freeze()
+                    .forEach { latestByPath[it.dataItem.uri.path] = it.dataItem }
+            latestByPath.values.forEach {
+                when (it.uri.path) {
+                    CommPaths.DATA_MUSIC_STATE -> {
+                        val dataItem = it.freeze()
 
-                                val receivedMusicState = MusicState.parseFrom(dataItem.data)
+                        val receivedMusicState = MusicState.parseFrom(dataItem.data)
 
-                                if (receivedMusicState.error) {
-                                    lastDeliveredMusicState = null
-                                    musicState.postValue(Resource.error(receivedMusicState.title, null))
-                                } else {
-                                    deliverMusicState(receivedMusicState)
+                        if (receivedMusicState.error) {
+                            lastDeliveredMusicState = null
+                            musicState.postValue(Resource.error(receivedMusicState.title, null))
+                        } else {
+                            deliverMusicState(receivedMusicState)
 
-                                    sendAck()
+                            sendAck()
 
-                                    deliverAlbumArt(dataItem, receivedMusicState)
-                                    deliverSourceIcon(dataItem)
-                                }
-                            }
-                            CommPaths.DATA_NOTIFICATION -> {
-                                val dataItem = it.freeze()
-                                val receivedNotification = Notification.parseFrom(dataItem.data)
-
-                                sendAck()
-
-                                val pictureData = dataItem.assets[CommPaths.ASSET_NOTIFICATION_BACKGROUND]
-                                        ?.let { asset -> dataClient.getByteArrayAsset(asset) }
-                                val picture = pictureData?.let { bytes ->
-                                    withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
-                                }
-
-                                val mergedNotification = com.svartifoss.snfell.watch.model.Notification(
-                                        receivedNotification.title,
-                                        receivedNotification.description,
-                                        picture,
-                                        System.currentTimeMillis()
-                                )
-
-                                notification.postValue(mergedNotification)
-                            }
-                            CommPaths.DATA_PLAYING_ACTION_CONFIG -> rawPlaybackConfig.postValue(it.freeze())
-                            CommPaths.DATA_STOPPING_ACTION_CONFIG -> rawStoppedConfig.postValue(it.freeze())
-                            CommPaths.DATA_LIST_ITEMS -> rawActionMenuConfig.postValue(it.freeze())
-                            CommPaths.DATA_CUSTOM_LIST ->
-                                customList.postValue(decodeCustomList(it.freeze()))
-                            CommPaths.DATA_STREAMING_SHORTCUTS ->
-                                streamingShortcuts.postValue(decodeCustomList(it.freeze()))
+                            deliverAlbumArt(dataItem, receivedMusicState)
+                            deliverSourceIcon(dataItem)
                         }
                     }
+                    CommPaths.DATA_NOTIFICATION -> {
+                        val dataItem = it.freeze()
+                        val receivedNotification = Notification.parseFrom(dataItem.data)
+
+                        sendAck()
+
+                        val pictureData = dataItem.assets[CommPaths.ASSET_NOTIFICATION_BACKGROUND]
+                                ?.let { asset -> dataClient.getByteArrayAsset(asset) }
+                        val picture = pictureData?.let { bytes ->
+                            withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
+                        }
+
+                        val mergedNotification = com.svartifoss.snfell.watch.model.Notification(
+                                receivedNotification.title,
+                                receivedNotification.description,
+                                picture,
+                                System.currentTimeMillis()
+                        )
+
+                        notification.postValue(mergedNotification)
+                    }
+                    CommPaths.DATA_PLAYING_ACTION_CONFIG -> rawPlaybackConfig.postValue(it.freeze())
+                    CommPaths.DATA_STOPPING_ACTION_CONFIG -> rawStoppedConfig.postValue(it.freeze())
+                    CommPaths.DATA_LIST_ITEMS -> rawActionMenuConfig.postValue(it.freeze())
+                    CommPaths.DATA_CUSTOM_LIST ->
+                        customList.postValue(decodeCustomList(it.freeze()))
+                    CommPaths.DATA_STREAMING_SHORTCUTS ->
+                        streamingShortcuts.postValue(decodeCustomList(it.freeze()))
+                }
+            }
         }
     }
 

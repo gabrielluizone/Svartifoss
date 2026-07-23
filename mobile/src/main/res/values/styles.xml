@@ -86,6 +86,16 @@
         <item name="buttonBarNeutralButtonStyle">@style/LyraDialogButton</item>
         <item name="android:fontFamily">@font/google_sans</item>
         <item name="fontFamily">@font/google_sans</item>
+        <!-- A ListPreference's radio-choice dialog (e.g. "Track time display") renders the
+             platform's CheckedTextView row, whose vertical centering assumes Roboto's font
+             metrics. Google Sans's extra font padding pushed the label out of line with its
+             radio dot; disabling it here (same fix already applied by hand to the app's own
+             OutlineTextViews) puts every such dialog's text back on the dot's centerline. -->
+        <item name="android:checkedTextViewStyle">@style/LyraCheckedTextView</item>
+    </style>
+
+    <style name="LyraCheckedTextView" parent="@android:style/Widget.Material.CheckedTextView">
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="AppTheme.Dialog" parent="LyraDialogBase">
