@@ -1,12 +1,5 @@
 # Changelog
 
-## Unreleased
-
-- **Fixed a watch state replay bug.** While the watch was disconnected or asleep, Google Play Services could queue up several updates to the same state (skipping tracks repeatedly, or hopping through themes/settings on the phone) and replay all of them on reconnect; the watch marched through every queued update one by one instead of jumping straight to the latest — visible as playback "catching up" through each intermediate track, or the watch face flickering through each intermediate theme, once you touched it. The watch now stamps each update with a running sequence and discards the older, replayed ones, so it lands on the final state directly. This holds even when the queued updates arrive spread across several deliveries (the earlier fix only collapsed a single batch) and now covers watch appearance/theme changes as well as now-playing state.
-- **Studio theme's default color treatment is now Expressive**, matching the other album-accent faces, instead of Normal.
-- **The character counter in "Create a new theme"/"Rename theme" now follows the accent color** instead of staying Material's default green.
-- **Fixed text sitting off its radio dot in list-choice settings dialogs** (e.g. Track time display). The bundled Google Sans font's extra line padding pushed the label out of line with the platform radio indicator; every such dialog now renders on the same centerline.
-
 ## 3.0
 
 A major update: streaming shortcuts that actually start playback (including in the background), the new minimalist Immersive layout, free bundled fonts, optional online shortcut artwork and the playing-app icon, a redesigned numeric/colored shading system, and many watch-app quality-of-life fixes.
@@ -223,6 +216,11 @@ A major update: streaming shortcuts that actually start playback (including in t
 - **Square album art style no longer arrives pre-cropped on the watch.** The phone resizes every cover to the watch's (square) display before sending it, to save on the Bluetooth transfer - fine for every other style, but it defeated Square's entire point of showing the cover uncropped: a wide or tall cover had already lost its non-square edges before the watch's own letterboxing ever ran. The pre-transmit resize now preserves the original aspect ratio when Square is the active style, instead of center-cropping it to a square like every other style does.
 - **The "Svartifoss active" notification now uses the app's own accent color** instead of the system's default grey.
 - **New: a settings shortcut to manage the "Svartifoss active" notification.** Opens that notification's own Android channel settings directly - mute it, hide it from the lock screen, or otherwise adjust it. It can't be turned off entirely from inside the app, since Android requires an ongoing notification for as long as the background service that talks to the watch is running - but everything else about it is now one tap away, and it's isolated to its own notification channel, so adjusting it can't affect update, error or announcement notifications.
+- **Fixed a watch state replay bug.** While the watch was disconnected or asleep, Google Play Services could queue up several updates to the same state (skipping tracks repeatedly, or hopping through themes/settings on the phone) and replay all of them on reconnect; the watch marched through every queued update one by one instead of jumping straight to the latest — visible as playback "catching up" through each intermediate track, or the watch face flickering through each intermediate theme, once you touched it. The watch now stamps each update with a running sequence and discards the older, replayed ones, so it lands on the final state directly, even when the queued updates arrive spread across several deliveries - covering watch appearance/theme changes as well as now-playing state.
+- **Studio theme's default color treatment is now Expressive**, matching the other album-accent faces, instead of Normal.
+- **Expressive's clock color now defaults to White**, matching its sibling album-accent faces, instead of Dynamic.
+- **The character counter in "Create a new theme"/"Rename theme" now follows the accent color** instead of staying Material's default green.
+- **Fixed text sitting off its radio dot in list-choice settings dialogs** (e.g. Track time display). The bundled Google Sans font's extra line padding pushed the label out of line with the platform radio indicator; every such dialog now renders on the same centerline.
 
 ## 2.2.2
 
