@@ -26,10 +26,11 @@ by matejdro — same lineage, new name, and a full Wear OS modernization since
 the fork.
 
 <p align="center">
-  <img src="docs/images/watch-nowplaying.png" width="215" alt="Now-playing screen" />
-  <img src="docs/images/watch-minibuttons.png" width="215" alt="Now-playing with mini buttons" />
-  <img src="docs/images/watch-seekring.png" width="215" alt="Edge seek ring and mini buttons" />
+  <img src="docs/images/watch-nowplaying.png" width="215" alt="Classic now-playing screen" />
+  <img src="docs/images/watch-expressive-blue.jpg" width="215" alt="Expressive face, album-derived palette" />
+  <img src="docs/images/watch-poster.jpg" width="215" alt="Poster face, full-bleed album art" />
 </p>
+<p align="center"><em>Same watch, three of the eleven built-in faces &mdash; each one built from whatever's playing</em></p>
 
 ## Contents
 
@@ -45,41 +46,54 @@ the fork.
 
 | | |
 |---|---|
-| **Now-playing screen** | Album art, an optional edge progress ring that can be made draggable on every layout, and optional rotary-crown seek. Song title and artist can each be hidden independently; when the title is shown, its sizing behavior is configurable. |
-| **Configurable input** | Assign any supported action — play/pause, skip, volume, shuffle, repeat (including repeat-one), like/favorite, search, playlist shortcuts, Tasker tasks, opening another app — to physical buttons, screen quadrants (tap zones), or swipe gestures (up/down/left). |
-| **Quick actions panel** | A secondary panel (double-tap to open) that can use four manually configured shortcuts or mirror the current media notification's real actions and icons. |
-| **Queue and play history** | Browse the app's real playback queue when one is exposed, or fall back to a locally tracked play-history list when it isn't (common on apps that don't publish a skippable queue). |
+| **Eleven now-playing faces** | Classic, Expressive, and a curated collection (Poster, Studio, Vinyl, Halo, Aurora, Eclipse, Spectrum, Material, and the Spotify-style Immersive layout) — each one builds its gradients, accents and progress treatment from the album art actually playing. An optional edge progress ring can be made draggable on every layout, with optional rotary-crown seek. Title and artist can each be hidden independently, with configurable sizing/marquee behavior. |
+| **Configurable input** | Assign any supported action — play/pause, skip, volume, shuffle, repeat (including repeat-one), like/favorite, search, playlist shortcuts, Tasker tasks, opening another app — to physical buttons, screen quadrants (tap zones), swipe gestures (up/down/left), or the now-configurable center tap. |
+| **Quick actions panel** | Four distinct layouts — Arc, Hero, Grid, and Labelled rows — each in a choice of styles, from full glass containers down to a bare accent marker. Slots can be manually assigned or mirror the current media notification's real actions and icons. |
+| **Queue and play history** | Browse the app's real playback queue when one is exposed, or fall back to a locally tracked play-history list when it isn't. A dozen+ visual styles, including cover-art rows that mirror each entry's own artwork. |
 | **Full action menu** | A full-screen list for anything not bound to a button or gesture. |
 | **Search** | Trigger a voice or keyboard search against the currently playing app's media library directly from the watch, with a history of past searches you can replay or delete. |
-| **Playlist shortcuts** | Name and save deep links to specific playlists (with an optional "start shuffled" flag), managed from the phone and reachable from the watch as a list or bound straight to a button. |
-| **Glanceable surfaces** | A Tile with track info, previous/play-pause/next and ±10-second seek controls, plus a watch-face complication showing the current album art / title. |
+| **Playlist shortcuts that actually play** | Save links from Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music or SoundCloud — the watch drives real playback through progressively stronger contracts (an active session, the app's background media browser, then a visible fallback), so a shortcut starts playing instead of just opening a link. A second Tile lists them as tappable chips. |
+| **Glanceable surfaces** | A media Tile (track info, transport, ±10s seek) that follows the album's accent color, a Shortcuts Tile for one-tap playlist access, and a watch-face complication showing the current album art / title. |
 
 <p align="center">
-  <img src="docs/images/watch-quickpanel.png" width="215" alt="Quick actions panel" />
-  <img src="docs/images/watch-queue.png" width="215" alt="Queue screen" />
+  <img src="docs/images/mural-panel-rows.jpg" width="215" alt="Quick actions panel, labelled-rows layout" />
+  <img src="docs/images/mural-queue-covers.jpg" width="215" alt="Queue screen with cover-art rows" />
   <img src="docs/images/watch-menu.png" width="215" alt="Actions menu and playlist shortcuts" />
 </p>
 <p align="center"><em>Quick-actions panel&nbsp;·&nbsp;queue&nbsp;·&nbsp;actions menu &amp; playlist shortcuts</em></p>
 
 ### Look and feel
 
-- Multiple screen themes (default, minimal, compact, cinema) and album-art
-  display styles (full cover, blurred, black-and-white, blurred B&W, or
-  hidden), with adjustable blur radius, dim strength, and ambient-mode
-  opacity.
-- Accent color can follow the current album art or be fixed to a custom
-  color. The artist text and the progress bar each have their own independent
-  color source (neutral, album, or custom, with an optional desaturate
-  option), on top of the mini-buttons row and quick panel/menu accent.
-- Per-surface layout options for the mini-buttons row and quick panel: multiple curve styles (flat up to extreme curvature), custom shapes (pill, wide, square, rounded rect, squircle, leaf, drop, and circle), background styles (glass, glass white, translucent album, solid, transparent), and color source.
-- Customizable seek and volume readout overlay styles: glass pill, glass white, expressive, material, white, giant, split (position/total), translucent album, glow, outline, and solid.
+- **Save your own look as a named theme.** Pick a base face, then combine its
+  typography, colors, artwork treatment, dim/shading, always-on display,
+  progress, panels and mini-buttons in one live editor. Apply, duplicate,
+  rename or delete profiles — each stays independent, so editing one never
+  touches the others.
+- Multiple screen themes (default, minimal, compact, cinema, vivid, contrast,
+  AMOLED, hidden) and a dozen+ album-art styles: full cover, blurred,
+  black-and-white, **Square** (uncropped, three corner styles), and gradient
+  treatments like Corona, Dusk, Bloom, Horizon and Ember — each with
+  adjustable blur radius, dim strength, and ambient-mode opacity.
+- **Color treatment pickers show what they'll actually look like**: each
+  option (Normal, Desaturated, Expressive) renders live swatches computed
+  from the current album art, instead of a blind text list. Artist text, the
+  progress bar, volume, seek and the quick panel can each follow the watch
+  treatment or override it independently.
+- Per-surface layout options for the mini-buttons row and quick panel:
+  multiple curve styles, custom shapes (pill, wide, square, rounded rect,
+  squircle, leaf, drop, circle), background styles, and color source.
+- A dozen+ seek and volume readout styles (glass pill, expressive, material,
+  giant, position/total, terminal, mono, hairline, and more), plus volume
+  layouts that can sit on any edge of the bezel or wrap it as a full ring.
+- 18 typefaces for track title/artist, including three free bundled fonts
+  (Poppins, Montserrat, Marcellus).
 
 <p align="center">
-  <img src="docs/images/watch-minimal.png" width="215" alt="Minimal screen theme" />
-  <img src="docs/images/watch-seek.png" width="215" alt="Rotary-crown seek overlay" />
-  <img src="docs/images/watch-volume.png" width="215" alt="Volume overlay" />
+  <img src="docs/images/watch-studio.jpg" width="215" alt="Studio face" />
+  <img src="docs/images/watch-halo.jpg" width="215" alt="Halo face" />
+  <img src="docs/images/face-eclipse-yellow.jpg" width="215" alt="Eclipse (AMOLED true-black) face" />
 </p>
-<p align="center"><em>Minimal theme&nbsp;·&nbsp;rotary-crown seek&nbsp;·&nbsp;volume overlay</em></p>
+<p align="center"><em>Studio&nbsp;·&nbsp;Halo&nbsp;·&nbsp;Eclipse — three of the curated collection</em></p>
 
 ### On the phone
 
@@ -87,10 +101,17 @@ the fork.
   plus watch-facing preferences (themes, colors, timeouts, rotary behavior).
 - A **Watch** tab with a live miniature that previews exactly how the
   now-playing screen will look — mirroring the track currently playing on the
-  phone — as you tweak the appearance.
+  phone — as you tweak the appearance, including your saved custom themes.
 - Custom icon picker and color picker for personalizing actions.
-- An **Apps** settings section for service-specific integrations, starting with
-  YouTube Music playlist shortcuts and ready for more streaming services.
+- A redesigned **Streaming shortcuts** screen: live link inspection,
+  share/clipboard input, drag reordering, Open now / Copy link / Undo after
+  deletion, and recognized links across seven services. An optional,
+  off-by-default toggle fetches each shortcut's real cover art once from the
+  service's public preview data.
+- **13 languages**: English, Brazilian Portuguese, European Portuguese,
+  German, Spanish, Italian, Dutch, Russian, Greek, Romanian, Indonesian,
+  Persian, and Simplified Chinese — covering both apps and their shared
+  strings.
 - A short in-app guide covering how to use Svartifoss on the watch.
 - **Built-in updates**: a notification when a new release is out (with an
   optional pre-release channel), and one-tap watch updates — the phone
@@ -98,13 +119,13 @@ the fork.
   the install on the wrist instead of re-running ADB or Wear Installer.
 
 <p align="center">
-  <img src="docs/images/phone-playing.jpg" width="150" alt="Playing controls configuration" />
+  <img src="docs/images/phone-themes.jpg" width="150" alt="Watch themes manager" />
+  <img src="docs/images/phone-color-treatment.jpg" width="150" alt="Color treatment picker with live swatches" />
   <img src="docs/images/phone-pick-action.jpg" width="150" alt="Action picker" />
-  <img src="docs/images/phone-settings.jpg" width="150" alt="Settings" />
-  <img src="docs/images/phone-watch-tab.jpg" width="150" alt="Watch tab with live preview" />
-  <img src="docs/images/phone-watch-tab-styles.jpg" width="150" alt="Overlays and queue style picker" />
+  <img src="docs/images/phone-seek-styles.jpg" width="150" alt="Seek & volume readout style picker" />
+  <img src="docs/images/phone-button-shapes.jpg" width="150" alt="Mini-buttons shape picker" />
 </p>
-<p align="center"><em>Per-zone / gesture / button config&nbsp;·&nbsp;action picker&nbsp;·&nbsp;settings&nbsp;·&nbsp;Watch tab live preview&nbsp;·&nbsp;overlay &amp; queue styles</em></p>
+<p align="center"><em>Watch themes manager&nbsp;·&nbsp;color treatment swatches&nbsp;·&nbsp;action picker&nbsp;·&nbsp;seek/volume styles&nbsp;·&nbsp;mini-button shapes</em></p>
 
 ### Under the hood
 
@@ -112,11 +133,12 @@ the fork.
   connection — no account or app server is involved. The internet is touched
   only by the optional update check (a small anonymous request to the GitHub
   API, off-switch in Settings), by Firebase diagnostics that help development,
-  and by occasional developer announcement notifications sent via Firebase
-  Cloud Messaging (topic-based, no account or server of ours). Crash
-  reporting and announcement notifications are both enabled by default and
-  can each be disabled at any time under Settings → Data & support →
-  Privacy.
+  by occasional developer announcement notifications sent via Firebase
+  Cloud Messaging (topic-based, no account or server of ours), and — only if
+  you opt in — by the shortcut-artwork fetch, which goes straight to the
+  streaming service itself. Crash reporting, announcement notifications and
+  shortcut artwork are each independently toggleable under Settings → Data &
+  support → Privacy or Apps.
 - Works with any app that publishes a standard Android media session; extra
   features like like/shuffle/repeat and search rely on optional media-session
   extensions some apps expose (availability varies by app).
