@@ -16,18 +16,24 @@ Cloud Messaging. It does not log custom Analytics events, but the Analytics
 SDK still collects its standard automatic app/session events. Cloud Messaging
 is topic-based only (see `AnnouncementNotifications.kt` /
 `AnnouncementMessagingService.kt`) - there is no server of ours and no
-per-user targeting, registration, or token storage.
+per-user targeting, registration, or token storage. Separately, an
+off-by-default setting (`streaming_shortcut_artwork`, see
+`ShortcutArtworkFetcher.kt`) sends a saved shortcut's public share link
+directly to that streaming service's own oEmbed endpoint (Spotify, YouTube,
+SoundCloud, Deezer) to fetch a cover thumbnail - no Firebase/Google
+involvement in that request.
 
 ---
 
 ## Does your app collect or share any of the required user data types?
 
-**Yes** — because of Firebase Crashlytics (crash reporting) and the standard
-automatic collection performed by Firebase Analytics.
-Everything else the app touches (media metadata, button configs, search
-history, playlist shortcuts) stays on-device or goes only to the user's own
-paired watch over the local Wearable Data Layer connection — never to a
-server you operate.
+**Yes** — because of Firebase Crashlytics (crash reporting), the standard
+automatic collection performed by Firebase Analytics, and (only if the user
+opts in) the shortcut-artwork fetch to the streaming service's own oEmbed
+endpoint. Everything else the app touches (media metadata, button configs,
+search history, playlist shortcuts) stays on-device or goes only to the
+user's own paired watch over the local Wearable Data Layer connection —
+never to a server you operate.
 
 ## Data types to report
 
@@ -40,6 +46,7 @@ server you operate.
 | Location | Approximate location | Yes | With Google (Firebase Analytics) | Analytics | Coarse location derived by Google from a masked IP address; Svartifoss never requests GPS location. |
 | Device or other IDs | Device or other IDs | Yes | With Google (Firebase Analytics) | Analytics | Per-installation app-instance ID and SDK-supported device identifiers used to compute usage metrics. No Svartifoss account or user ID is attached. |
 | Device or other IDs | Device or other IDs | Yes | With Google (Firebase Cloud Messaging) | Push notification delivery | The install's FCM registration token, held by Google's messaging infrastructure to route messages to a shared topic. Svartifoss never receives, stores, or sees this token itself - there is no server of ours to receive it. |
+| App activity | Other user-generated content | Only if the user enables it | With the streaming service (Spotify/YouTube/SoundCloud/Deezer) | Fetching a cover thumbnail for a saved shortcut | Off by default ("Fetch shortcut artwork online"). Only the already-public share link the user saved is sent, directly to that service's own oEmbed endpoint - no account, API key, or Svartifoss/Google identifier is attached. |
 
 **Everything else in Play's standard list — Personal info,
 Financial info, Health and fitness, Messages, Photos/videos, Audio files,
