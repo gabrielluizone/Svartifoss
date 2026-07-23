@@ -304,6 +304,21 @@
     padding: 14px;
   }
   .sync-frame img { border-radius: 6px; }
+  /* Cross-fading slideshow: stacked images, only the active one visible. */
+  .slideshow { position: relative; width: 100%; }
+  .slideshow.watch { aspect-ratio: 1 / 1; }
+  .slideshow.phone { aspect-ratio: 1080 / 2160; }
+  .slideshow img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+  .slideshow img.is-active { opacity: 1; }
   .sync-frame .cap {
     font-size: 12px;
     font-weight: 500;
@@ -737,7 +752,13 @@
     </div>
     <div class="sync-pair">
       <div class="sync-frame">
-        <img src="images/phone-pick-action.jpg" alt="Picking an action to assign on the phone app">
+        <div class="slideshow phone" data-slideshow="phone" role="img" aria-label="Configuring Svartifoss on the phone app">
+          <img class="is-active" src="images/phone-pick-action.jpg" alt="">
+          <img src="images/phone-themes.jpg" alt="">
+          <img src="images/phone-seek-styles.jpg" alt="">
+          <img src="images/phone-queue-styles.jpg" alt="">
+          <img src="images/phone-color-treatment.jpg" alt="">
+        </div>
         <div class="cap">Assign on the phone</div>
       </div>
       <div class="sync-arrow" aria-hidden="true">
@@ -746,7 +767,14 @@
         <div class="line"></div>
       </div>
       <div class="sync-frame">
-        <img src="images/watch-sync-live.jpg" alt="The configured controls shown live on the watch">
+        <div class="slideshow watch" data-slideshow="watch" role="img" aria-label="The configured now-playing screen live on the watch, cycling through faces">
+          <img class="is-active" src="images/watch-sync-live.jpg" alt="">
+          <img src="images/face-poster-abaddream.jpg" alt="">
+          <img src="images/face-expressive-pink.jpg" alt="">
+          <img src="images/watch-studio.jpg" alt="">
+          <img src="images/face-poster-nirvana.jpg" alt="">
+          <img src="images/watch-face-olive.jpg" alt="">
+        </div>
         <div class="cap">Live on the watch</div>
       </div>
     </div>
@@ -999,6 +1027,24 @@
 
 <script>
 (function () {
+  // Cross-fading slideshows in the "How it works" pair. Honours reduced-motion by
+  // leaving the first frame static. Staggered intervals keep the two sides from
+  // flipping in lockstep.
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function initSlideshow(el, intervalMs) {
+    if (!el || reduceMotion) return;
+    var slides = el.querySelectorAll('img');
+    if (slides.length < 2) return;
+    var i = 0;
+    setInterval(function () {
+      slides[i].classList.remove('is-active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('is-active');
+    }, intervalMs);
+  }
+  initSlideshow(document.querySelector('[data-slideshow="watch"]'), 3400);
+  initSlideshow(document.querySelector('[data-slideshow="phone"]'), 4300);
+
   var strip = document.querySelector('.filmstrip');
   var prevBtn = document.querySelector('[data-film-prev]');
   var nextBtn = document.querySelector('[data-film-next]');
