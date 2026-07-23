@@ -811,7 +811,7 @@
     "wear_show_track_title@poster": true,
     "wear_color_treatment@immersive": "expressive",
     "wear_progress_color_mode@immersive": "follow",
-    "wear_clock_color_mode@expressive": "dynamic",
+    "wear_clock_color_mode@expressive": "white",
     "wear_color_treatment@studio": "expressive",
     "wear_aod_show_clock@studio": true,
     "wear_internal_progress_visible@expressive": true,
