@@ -328,6 +328,32 @@
     .sync-arrow svg.icon { transform: rotate(90deg); }
   }
 
+  /* ================= MURAL (possibilities section) ================= */
+  .mural { display: flex; flex-direction: column; gap: 36px; }
+  .mural-group h3 {
+    font-family: var(--face);
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin: 0 0 16px;
+  }
+  .mural-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .mural-disc {
+    flex: 0 0 auto;
+    width: 118px;
+    height: 118px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--carbon);
+    background: var(--shadow);
+  }
+  .mural-disc img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 640px) {
+    .mural-disc { width: 84px; height: 84px; }
+  }
+
   /* ================= SPEC GRID (customize section) ================= */
   .spec-grid {
     display: grid;
@@ -589,6 +615,7 @@
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#look">Look &amp; feel</a>
+      <a href="#possibilities">Possibilities</a>
       <a href="#customize">Customize</a>
       <a href="#install">Install</a>
       <a href="https://github.com/gabrielluizone/Svartifoss">GitHub</a>
@@ -727,7 +754,7 @@
       <div class="filmstrip" tabindex="0" role="region" aria-label="Watch screen gallery">
         <div class="film-card"><div class="disc"><img src="images/watch-nowplaying.png" alt="Classic now-playing screen"></div><div class="cap">Classic</div></div>
         <div class="film-card"><div class="disc"><img src="images/watch-expressive-blue.jpg" alt="Expressive face with a blue album-derived palette"></div><div class="cap">Expressive</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-expressive-green.jpg" alt="Expressive face with a green album-derived palette and Up Next pill"></div><div class="cap">Expressive</div></div>
+        <div class="film-card"><div class="disc"><img src="images/watch-face-olive.jpg" alt="Vinyl face with a symmetric album-art motif"></div><div class="cap">Vinyl</div></div>
         <div class="film-card"><div class="disc"><img src="images/watch-poster-vivid.jpg" alt="Poster face with vivid full-bleed album art"></div><div class="cap">Poster</div></div>
         <div class="film-card"><div class="disc"><img src="images/watch-poster.jpg" alt="Poster face with a bright yellow album cover"></div><div class="cap">Poster</div></div>
         <div class="film-card"><div class="disc"><img src="images/watch-studio.jpg" alt="Studio face, a restrained legibility-first layout"></div><div class="cap">Studio</div></div>
@@ -744,6 +771,54 @@
       <button type="button" class="film-nav next" aria-label="Scroll right" data-film-next>
         <svg class="icon"><use href="#i-arrow-forward"/></svg>
       </button>
+    </div>
+  </div>
+</section>
+
+<section id="possibilities">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow muted">Possibilities</div>
+      <h2>The overlays get the same treatment.</h2>
+      <p>Volume, seek, the quick-actions panel, the queue — each ships its own wardrobe of looks, mixed and matched independently of whichever face is running underneath.</p>
+    </div>
+    <div class="mural">
+      <div class="mural-group">
+        <h3>Volume</h3>
+        <div class="mural-row">
+          <div class="mural-disc"><img src="images/mural-volume-ring.jpg" alt="Volume overlay: thin arc ring"></div>
+          <div class="mural-disc"><img src="images/mural-volume-dotted.jpg" alt="Volume overlay: dotted arc with pill readout"></div>
+          <div class="mural-disc"><img src="images/mural-volume-split.jpg" alt="Volume overlay: split dual arc"></div>
+          <div class="mural-disc"><img src="images/mural-volume-pillbar.jpg" alt="Volume overlay: horizontal pill bar"></div>
+          <div class="mural-disc"><img src="images/mural-volume-dark.jpg" alt="Volume overlay: dark minimal ring"></div>
+          <div class="mural-disc"><img src="images/mural-volume-warm.jpg" alt="Volume overlay: warm album-toned ring"></div>
+        </div>
+      </div>
+      <div class="mural-group">
+        <h3>Seek &amp; progress</h3>
+        <div class="mural-row">
+          <div class="mural-disc"><img src="images/mural-seek-dial.jpg" alt="Seek overlay: clock-dial ticks"></div>
+          <div class="mural-disc"><img src="images/mural-seek-ring.jpg" alt="Seek overlay: expressive ring"></div>
+          <div class="mural-disc"><img src="images/mural-seek-dotted.jpg" alt="Seek overlay: dotted ring with pill readout"></div>
+          <div class="mural-disc"><img src="images/mural-seek-dark.jpg" alt="Seek overlay: dark minimal ring"></div>
+          <div class="mural-disc"><img src="images/mural-seek-linear.jpg" alt="Seek overlay: linear scrub bar over album art"></div>
+        </div>
+      </div>
+      <div class="mural-group">
+        <h3>Quick panel</h3>
+        <div class="mural-row">
+          <div class="mural-disc"><img src="images/mural-panel-round.jpg" alt="Quick panel: round icon slots with an Up Next row"></div>
+          <div class="mural-disc"><img src="images/mural-panel-rows.jpg" alt="Quick panel: labelled full-width rows"></div>
+        </div>
+      </div>
+      <div class="mural-group">
+        <h3>Queue</h3>
+        <div class="mural-row">
+          <div class="mural-disc"><img src="images/mural-queue-photos.jpg" alt="Queue: cover-art rows"></div>
+          <div class="mural-disc"><img src="images/mural-queue-cards.jpg" alt="Queue: tonal cards"></div>
+          <div class="mural-disc"><img src="images/mural-queue-select.jpg" alt="Queue: selected-row highlight style"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
