@@ -95,7 +95,9 @@ import java.io.ByteArrayOutputStream
 import java.lang.ref.WeakReference
 import java.nio.ByteBuffer
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicLong
 import javax.inject.Inject
+import kotlin.math.max
 import com.svartifoss.snfell.common.R as commonR
 
 data class TrackHistoryEntry(val artist: String, val title: String)
@@ -126,6 +128,17 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         var active = false
             private set
+
+        // Monotonic sequence stamped on every DATA_MUSIC_STATE put (MusicState.seq). Wall-clock
+        // seeded and process-lifetime so it keeps increasing across MusicService re-creation and
+        // even a phone process restart - the watch persists the last seq it applied only in
+        // memory, but a restarted phone must still out-number whatever old revision is sitting in
+        // the Data Layer store, or the watch would gate the fresh state away as "stale". The watch
+        // uses it to drop the older buffered revisions Play Services replays on reconnect.
+        private val musicStateSequence = AtomicLong(System.currentTimeMillis())
+
+        private fun nextMusicSeq(): Long =
+                musicStateSequence.updateAndGet { max(it + 1L, System.currentTimeMillis()) }
     }
 
     private lateinit var messageClient: MessageClient
@@ -906,8 +919,6 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val mySequence = ++transmitSequence
 
         lifecycleScope.launchWithPlayServicesErrorHandling(this) {
-            val stateBytes = musicState.toByteArray()
-
             val previousArtSource = lastSerializedArtSource
             val artChanged = when {
                 originalAlbumArt === previousArtSource -> false
@@ -932,7 +943,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // albumArtPending tells the watch "the cover for this state is in transit" so it
                 // keeps the previous cover up (smooth crossfade once the new one lands) instead
                 // of blanking - as opposed to a final state that genuinely has no art.
-                stateOnlyRequest.data = musicState.toBuilder().setAlbumArtPending(true).build().toByteArray()
+                stateOnlyRequest.data = musicState.toBuilder()
+                        .setAlbumArtPending(true)
+                        .setSeq(nextMusicSeq())
+                        .build().toByteArray()
                 stateOnlyRequest.setUrgent()
                 dataClient.putDataItem(stateOnlyRequest).await()
             }
@@ -991,7 +1005,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 putDataRequest.putAsset(
                         CommPaths.ASSET_SOURCE_ICON, Asset.createFromBytes(sourceIconBytes))
             }
-            putDataRequest.data = stateBytes
+            // Stamp the sequence at the actual put (not on the early stateBytes snapshot) so it
+            // reflects true send order relative to the state-only put above.
+            putDataRequest.data = musicState.toBuilder().setSeq(nextMusicSeq()).build().toByteArray()
             putDataRequest.setUrgent()
 
             dataClient.putDataItem(putDataRequest).await()
@@ -1026,7 +1042,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         val putDataRequest = PutDataRequest.create(CommPaths.DATA_MUSIC_STATE)
 
-        putDataRequest.data = musicState.toByteArray()
+        putDataRequest.data = musicState.toBuilder().setSeq(nextMusicSeq()).build().toByteArray()
         putDataRequest.setUrgent()
 
         dataClient.putDataItem(putDataRequest).await()

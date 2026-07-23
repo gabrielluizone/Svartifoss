@@ -93,6 +93,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     // change. See deliverMusicState.
     private var lastDeliveredMusicState: MusicState? = null
 
+    // Highest MusicState.seq applied so far. The phone stamps a wall-clock-monotonic seq on every
+    // DATA_MUSIC_STATE put, so when Play Services replays the buffered revisions of a watch that
+    // was unreachable (skip-skip-skip while asleep), the older ones can be discarded instead of
+    // marching through each stale track one by one. Process-lifetime (this is a @Singleton) and
+    // in-memory only: the phone's seq out-numbers any stored revision across a phone restart, and
+    // a watch restart resets to 0 and re-seeds from loadCurrentMusicState.
+    private var lastAppliedMusicSeq: Long = 0L
+
     // Data Layer asset id (content-derived) of the currently decoded album art - lets an
     // unchanged cover riding along on every state put be skipped without decoding it again.
     private var lastAlbumArtAssetId: String? = null
@@ -339,21 +347,41 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         }
 
         scope?.launchWithErrorHandling(context, musicState) {
-            // A reconnecting watch can receive one buffer holding several TYPE_CHANGED revisions
-            // of the same path (e.g. a handful of MusicState puts queued while it was
-            // unreachable/asleep) - Play Services does not collapse those before delivery. Keeping
-            // every one and applying them in order replayed each queued track change/asset in
-            // sequence instead of jumping straight to the latest, so only the newest event per
-            // path survives here.
-            val latestByPath = LinkedHashMap<String, DataItem>()
+            // A reconnecting watch can receive several TYPE_CHANGED revisions of the same path
+            // (e.g. a handful of MusicState puts queued while it was unreachable/asleep) - Play
+            // Services does not collapse those before delivery. Keeping every one and applying
+            // them in order replayed each queued track change/asset in sequence instead of jumping
+            // straight to the latest. Collapsing to the newest event per path handles the case
+            // where they all land in one buffer; the real flood usually spans several onDataChanged
+            // callbacks, which the per-path monotonic guards below (MusicState.seq here,
+            // SYNC_REVISION_KEY for prefs, revision-agnostic latest-wins for configs) also cover.
+            val latestByPath = LinkedHashMap<String?, DataItem>()
             frozenData.filter { it.type == DataEvent.TYPE_CHANGED }
-                    .forEach { latestByPath[it.dataItem.uri.path] = it.dataItem }
+                    .forEach { event ->
+                        val item = event.dataItem
+                        val path = item.uri.path
+                        val existing = latestByPath[path]
+                        // Buffer order isn't guaranteed, so for music state keep the higher seq
+                        // rather than the last-iterated item.
+                        if (existing != null && path == CommPaths.DATA_MUSIC_STATE &&
+                                musicSeqOf(item) < musicSeqOf(existing)) {
+                            return@forEach
+                        }
+                        latestByPath[path] = item
+                    }
             latestByPath.values.forEach {
                 when (it.uri.path) {
                     CommPaths.DATA_MUSIC_STATE -> {
                         val dataItem = it.freeze()
 
                         val receivedMusicState = MusicState.parseFrom(dataItem.data)
+
+                        // Drop a stale revision replayed after a newer one already applied. seq is
+                        // wall-clock monotonic per put; 0 = a pre-seq phone build, never gated.
+                        if (receivedMusicState.seq != 0L &&
+                                receivedMusicState.seq < lastAppliedMusicSeq) {
+                            return@forEach
+                        }
 
                         if (receivedMusicState.error) {
                             lastDeliveredMusicState = null
@@ -365,6 +393,10 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
                             deliverAlbumArt(dataItem, receivedMusicState)
                             deliverSourceIcon(dataItem)
+                        }
+
+                        if (receivedMusicState.seq > lastAppliedMusicSeq) {
+                            lastAppliedMusicSeq = receivedMusicState.seq
                         }
                     }
                     CommPaths.DATA_NOTIFICATION -> {
@@ -405,13 +437,15 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     }
 
     /**
-     * Posts [state] unless it matches the last delivered one modulo the albumArtPending flag -
-     * skipping the second put of the two-put track change (see [lastDeliveredMusicState]).
+     * Posts [state] unless it matches the last delivered one modulo the albumArtPending flag and
+     * the seq - skipping the second put of the two-put track change (see [lastDeliveredMusicState]).
      * Must be called without suspending after parsing, so the tracker is updated before the
      * next queued put's coroutine gets a chance to run.
      */
     private fun deliverMusicState(state: MusicState) {
-        val comparable = state.toBuilder().setAlbumArtPending(false).build()
+        // Clear seq too: the two puts of one track change differ only in albumArtPending and seq,
+        // and comparing seq would defeat the dedupe and re-run every observer twice per change.
+        val comparable = state.toBuilder().setAlbumArtPending(false).clearSeq().build()
         if (comparable == lastDeliveredMusicState) {
             return
         }
@@ -492,6 +526,11 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         }
 
         val storedState = MusicState.parseFrom(dataItem.data)
+        // Seed the seq guard from the store's current (latest) revision so the buffered older
+        // puts that onDataChanged is about to replay on reconnect are gated as stale from the off.
+        if (storedState.seq > lastAppliedMusicSeq) {
+            lastAppliedMusicSeq = storedState.seq
+        }
         if (storedState.error) {
             // A stored error ("nothing playing" etc.) may predate whatever the phone is about to
             // send in response to MESSAGE_WATCH_OPENED - keep showing loading instead.
@@ -501,6 +540,15 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         deliverMusicState(storedState)
         deliverAlbumArt(dataItem, storedState)
     }
+
+    /** Parses just the transport seq off a music-state DataItem for the in-buffer collapse; a
+     *  malformed or pre-seq item reads as 0 (never gated). */
+    private fun musicSeqOf(dataItem: DataItem): Long =
+            try {
+                MusicState.parseFrom(dataItem.data).seq
+            } catch (e: Exception) {
+                0L
+            }
 
     private suspend fun loadCurrentActionConfig(configPath: String, targetLiveData: MutableLiveData<DataItem>) {
         val dataItems = dataClient.getDataItems(
