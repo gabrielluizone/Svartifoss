@@ -327,6 +327,10 @@
     <string name="reset_all_faces_confirm_message">Every built-in face\'s appearance goes back to its original defaults, and any active custom theme is switched off. Your saved custom themes, behavior settings and chosen face are kept.</string>
     <string name="reset_all_faces_confirm_button">Reset all</string>
     <string name="reset_all_faces_done">All faces reset to defaults</string>
+    <string name="face_reset_migration_title">Update your watch appearance</string>
+    <string name="face_reset_migration_message">You updated from an older version where every watch face shared one set of appearance settings. Each face now remembers its own, so your old settings may look mismatched on faces you never customized directly. We recommend resetting all faces to their new defaults, or clearing the app\'s data for a completely fresh start.</string>
+    <string name="face_reset_migration_reset_button">Reset all faces</string>
+    <string name="face_reset_migration_clear_data_button">Clear app data</string>
     <string name="setting_player_shading_color">Shading color</string>
     <string name="setting_wear_shading_custom_color">Custom shading color</string>
     <string-array name="wear_shading_color_mode_entries">
@@ -1535,4 +1539,7 @@
     <string name="update_installing">Opening the installer\u2026</string>
     <string name="update_install_permission_needed">Allow installing apps from Svartifoss, then tap Update phone again.</string>
     <string name="update_phone_failed">Downloading the phone update failed. Try again.</string>
+    <string name="update_install_notification_title">Svartifoss update</string>
+    <string name="update_install_notification_tap">Tap to install the new version</string>
+    <string name="update_install_notification_failed">Install failed. Allow installs from Svartifoss in Settings and try again.</string>
 </resources>

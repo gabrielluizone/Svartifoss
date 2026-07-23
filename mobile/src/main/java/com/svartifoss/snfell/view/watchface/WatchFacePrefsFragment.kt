@@ -50,6 +50,29 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         fun newInstance(section: String) = WatchFacePrefsFragment().apply {
             arguments = Bundle().apply { putString(ARG_SECTION, section) }
         }
+
+        /** Restores every built-in face to its factory look - the recovery action for "someone
+         *  changed the built-in themes and can't get back". Deactivates any active custom theme
+         *  first (so the reset is actually visible and can't rewrite a saved profile), then clears
+         *  every scoped appearance value for all faces plus the custom snapshot scope and the
+         *  legacy global keys, so each face falls back purely to its per-face definition default.
+         *  The chosen face, saved custom themes and behaviour prefs are left untouched. Removing
+         *  the flat scoped keys triggers the normal phone -> watch sync. Extracted out of the
+         *  fragment so [FaceResetMigrationPrompt] can call the same logic without a UI. */
+        fun resetAllFaces(context: android.content.Context, prefs: SharedPreferences) {
+            val currentFace = ThemeAppearance.resolve(prefs).baseFace
+            WatchThemeRepository(context).applyBuiltIn(prefs, currentFace)
+
+            val editor = prefs.edit()
+            for (baseKey in FaceScopedPreferences.SCOPED_KEYS) {
+                for (face in ThemeAppearance.ALLOWED_BASE_FACES) {
+                    editor.remove(FaceScopedPreferences.scopedKey(baseKey, face))
+                }
+                editor.remove(FaceScopedPreferences.scopedKey(baseKey, ThemeAppearance.CUSTOM_SCOPE))
+                editor.remove(baseKey)
+            }
+            editor.apply()
+        }
     }
 
     private var section = SECTION_STYLE
@@ -622,21 +645,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      *  themes and behaviour prefs are left untouched. Removing the flat scoped keys triggers the
      *  normal phone -> watch sync; the screen is re-inflated so the controls show the defaults. */
     private fun resetAllFacesAppearance() {
-        // Return to the built-in face (keeping the current one) before wiping values, so an active
-        // custom theme doesn't leave the reset with no visible effect.
-        val currentFace = ThemeAppearance.resolve(rawPrefs).baseFace
-        WatchThemeRepository(requireContext()).applyBuiltIn(rawPrefs, currentFace)
-
-        val editor = rawPrefs.edit()
-        for (baseKey in FaceScopedPreferences.SCOPED_KEYS) {
-            for (face in ThemeAppearance.ALLOWED_BASE_FACES) {
-                editor.remove(FaceScopedPreferences.scopedKey(baseKey, face))
-            }
-            editor.remove(FaceScopedPreferences.scopedKey(baseKey, ThemeAppearance.CUSTOM_SCOPE))
-            editor.remove(baseKey)
-        }
-        editor.apply()
-
+        resetAllFaces(requireContext(), rawPrefs)
         setPreferencesFromResource(R.xml.watch_face_settings, null)
         wirePreferences()
     }

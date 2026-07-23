@@ -1,11 +1,12 @@
 package com.svartifoss.snfell.update
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInstaller
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import androidx.core.content.FileProvider
 import java.io.File
 import java.io.IOException
 
@@ -28,7 +29,7 @@ class PhoneApkInstaller(private val context: Context) {
     }
 
     /**
-     * @throws IOException on download errors (the caller shows a retry message)
+     * @throws IOException on download or validation errors (the caller shows a retry message)
      */
     suspend fun installLatest(release: UpdateChecker.ReleaseInfo, onProgress: (Progress) -> Unit) {
         val apkUrl = release.mobileApkUrl
@@ -40,13 +41,25 @@ class PhoneApkInstaller(private val context: Context) {
             return
         }
 
-        val apkFile = File(context.cacheDir, "phone-update.apk")
+        val apkFile = File(context.cacheDir, APK_FILE_NAME)
         ApkDownloader.download(apkUrl, release.mobileApkSize, apkFile) { percent ->
             onProgress(Progress.Downloading(percent))
         }
 
         onProgress(Progress.Installing)
-        launchInstaller(apkFile)
+
+        // ApkDownloader already checked the downloaded byte count against the expected size,
+        // which catches a truncated transfer (a known HttpURLConnection redirect bug - see
+        // ApkDownloader). It can't catch same-length corruption (a re-encoding proxy, bit flips),
+        // which would otherwise reach the system installer as a raw, unlocalized "There was a
+        // problem parsing the package" failure. Confirm the file is actually a well-formed APK for
+        // this exact package first, mirroring the watch's ApkReceiverService.validateApk.
+        if (!isValidUpdateApk(apkFile)) {
+            apkFile.delete()
+            throw IOException("Downloaded file is not a valid Svartifoss update APK")
+        }
+
+        commitInstallSession(apkFile)
     }
 
     private fun canInstall(): Boolean =
@@ -64,20 +77,44 @@ class PhoneApkInstaller(private val context: Context) {
         )
     }
 
-    private fun launchInstaller(apkFile: File) {
-        val uri = FileProvider.getUriForFile(context, APK_AUTHORITY, apkFile)
-        context.startActivity(
-                Intent(Intent.ACTION_VIEW)
-                        .setDataAndType(uri, "application/vnd.android.package-archive")
-                        .addFlags(
-                                Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                                        Intent.FLAG_ACTIVITY_NEW_TASK
-                        )
-        )
+    private fun isValidUpdateApk(apkFile: File): Boolean {
+        val info = context.packageManager.getPackageArchiveInfo(apkFile.absolutePath, 0)
+        return info != null && info.packageName == context.packageName
+    }
+
+    /**
+     * Commits the downloaded APK through a [PackageInstaller] session instead of firing
+     * ACTION_VIEW at the file - the session API validates the archive itself and reports failures
+     * through [PhoneInstallResultReceiver] instead of silently handing a possibly-bad file to
+     * whatever installer UI the OS provides. Mirrors the watch's ApkReceiverService.startInstall.
+     */
+    private fun commitInstallSession(apkFile: File) {
+        val installer = context.packageManager.packageInstaller
+        val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL)
+        params.setAppPackageName(context.packageName)
+        params.setSize(apkFile.length())
+
+        val sessionId = installer.createSession(params)
+        installer.openSession(sessionId).use { session ->
+            session.openWrite(APK_FILE_NAME, 0, apkFile.length()).use { output ->
+                apkFile.inputStream().use { input -> input.copyTo(output, 64 * 1024) }
+                session.fsync(output)
+            }
+
+            val resultIntent = Intent(context, PhoneInstallResultReceiver::class.java)
+                    .setAction(PhoneInstallResultReceiver.ACTION_INSTALL_RESULT)
+            val resultPendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    sessionId,
+                    resultIntent,
+                    // Mutable: the installer fills in the status extras.
+                    PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            session.commit(resultPendingIntent.intentSender)
+        }
     }
 
     companion object {
-        /** Must match the FileProvider authority declared in the manifest. */
-        const val APK_AUTHORITY = "com.svartifoss.snfell.apkprovider"
+        const val APK_FILE_NAME = "phone-update.apk"
     }
 }

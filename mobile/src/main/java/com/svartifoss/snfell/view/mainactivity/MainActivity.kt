@@ -177,6 +177,11 @@ class MainActivity : WearCompanionPhoneActivity(),
             startActivity(Intent(this, com.svartifoss.snfell.update.UpdateActivity::class.java))
         }
 
+        // Users updating from a build older than 3.0's per-face appearance scoping: their old
+        // single global appearance value now bleeds into whichever per-face defaults it happens
+        // to match, so recommend resetting watch appearance to actually land on the new defaults.
+        com.svartifoss.snfell.view.watchface.FaceResetMigrationPrompt.maybeShow(this)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

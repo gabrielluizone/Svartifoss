@@ -185,17 +185,15 @@
 
         </provider>
 
-        <!-- Serves the downloaded phone-update APK to the system installer (see PhoneApkInstaller);
-             a separate authority so it never interferes with the log-sending provider above. -->
-        <provider
-            android:authorities="com.svartifoss.snfell.apkprovider"
-            android:name="androidx.core.content.FileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/apk_paths" />
-        </provider>
+        <receiver
+            android:name=".update.PhoneInstallResultReceiver"
+            android:exported="false">
+            <intent-filter>
+                <!-- Fires in the NEW app version right after a successful self-update - the
+                     reliable place to clean the cached APK and dismiss the install notice. -->
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

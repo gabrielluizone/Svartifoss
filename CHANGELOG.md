@@ -221,6 +221,8 @@ A major update: streaming shortcuts that actually start playback (including in t
 - **Expressive's clock color now defaults to White**, matching its sibling album-accent faces, instead of Dynamic.
 - **The character counter in "Create a new theme"/"Rename theme" now follows the accent color** instead of staying Material's default green.
 - **Fixed text sitting off its radio dot in list-choice settings dialogs** (e.g. Track time display). The bundled Google Sans font's extra line padding pushed the label out of line with the platform radio indicator; every such dialog now renders on the same centerline.
+- **Fixed "Update phone" potentially failing with "There was a problem parsing the package."** The download-size check added in 2.2.2 only caught a truncated transfer; content corrupted in transit without changing length (a re-encoding proxy, a bit flip) still reached the system installer as that raw, unlocalized failure. The downloaded update is now verified as a genuine, correctly-packaged APK for this app before it's ever handed off, and installed through the same robust PackageInstaller session already used for watch updates instead of a plain "open this file" request.
+- **Users updating from a version older than 3.0 now see a one-time reminder to reset watch appearance.** Older versions shared one appearance setting across every watch face; updating in place could leave those old values bleeding into the per-face defaults 3.0 introduced, looking like a broken or mismatched style on faces never explicitly customized. The first launch after such an update now recommends resetting all faces to their new defaults, or clearing the app's data for a fully fresh start.
 
 ## 2.2.2
 
