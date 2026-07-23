@@ -283,6 +283,7 @@
   /* ================= SECTION shell ================= */
   section { position: relative; padding: 88px 0; border-bottom: 1px solid var(--carbon); }
   section:last-of-type { border-bottom: none; }
+  #possibilities { background: var(--shadow); }
   .section-head { max-width: 640px; margin-bottom: 52px; }
   .section-head h2 { font-size: clamp(28px, 3.8vw, 42px); margin-top: 14px; }
   .section-head p { color: var(--ash); font-size: 16px; margin-top: 16px; max-width: 56ch; }
@@ -303,6 +304,21 @@
     padding: 14px;
   }
   .sync-frame img { border-radius: 6px; }
+  /* Cross-fading slideshow: stacked images, only the active one visible. */
+  .slideshow { position: relative; width: 100%; }
+  .slideshow.watch { aspect-ratio: 1 / 1; }
+  .slideshow.phone { aspect-ratio: 1080 / 2160; }
+  .slideshow img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+  .slideshow img.is-active { opacity: 1; }
   .sync-frame .cap {
     font-size: 12px;
     font-weight: 500;
@@ -328,30 +344,94 @@
     .sync-arrow svg.icon { transform: rotate(90deg); }
   }
 
-  /* ================= MURAL (possibilities section) ================= */
-  .mural { display: flex; flex-direction: column; gap: 36px; }
-  .mural-group h3 {
+  /* ================= FACES WALL (look section) ================= */
+  .faces-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 34px 24px;
+  }
+  .face-tile { text-align: center; }
+  .face-tile .disc {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--carbon);
+    background: radial-gradient(circle at 50% 35%, #1a1a1a, #0d0d0d 72%);
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  }
+  .face-tile .disc img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .face-tile:hover .disc {
+    transform: translateY(-5px);
+    border-color: var(--sage);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5);
+  }
+  .face-tile .style {
+    margin-top: 14px;
     font-family: var(--face);
     font-weight: 700;
-    font-size: 12.5px;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--sage);
-    margin: 0 0 16px;
+    font-size: 14px;
+    color: var(--snow);
+    letter-spacing: 0.01em;
   }
-  .mural-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .face-tile .track {
+    font-size: 11.5px;
+    color: var(--ash-dim);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 640px) {
+    .faces-wall { grid-template-columns: repeat(2, 1fr); gap: 26px 16px; }
+  }
+
+  /* ================= MURAL (possibilities section) ================= */
+  .mural { display: flex; flex-direction: column; gap: 44px; }
+  .mural-group { display: grid; grid-template-columns: 150px 1fr; gap: 24px; align-items: start; }
+  .mural-label .n {
+    font-family: var(--face);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--snow);
+    letter-spacing: -0.01em;
+  }
+  .mural-label .k {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--ash-dim);
+  }
+  .mural-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px 14px;
+  }
+  .mural-cell { text-align: center; }
   .mural-disc {
-    flex: 0 0 auto;
-    width: 118px;
-    height: 118px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     overflow: hidden;
     border: 1px solid var(--carbon);
     background: var(--shadow);
+    transition: transform 0.2s ease, border-color 0.2s ease;
   }
   .mural-disc img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  @media (max-width: 640px) {
-    .mural-disc { width: 84px; height: 84px; }
+  .mural-cell:hover .mural-disc { transform: translateY(-3px); border-color: var(--sage); }
+  .mural-cell .cap {
+    font-size: 11px;
+    color: var(--ash-dim);
+    margin-top: 9px;
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 900px) {
+    .mural-group { grid-template-columns: 1fr; gap: 14px; }
+    .mural-row { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .mural-row { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* ================= SPEC GRID (customize section) ================= */
@@ -668,11 +748,17 @@
     <div class="section-head">
       <div class="eyebrow muted">How it works</div>
       <h2>Set it up on your phone.<br>It's on your watch instantly.</h2>
-      <p>Every button, gesture, and screen is yours to assign from the phone app. The watch mirrors it over the local Wearable Data Layer — no account or Svartifoss server. Beyond your two devices, the app only talks to GitHub for the optional update check and to Firebase for diagnostics and occasional developer announcement notifications; both Crashlytics reports and announcement notifications can be switched off under Data &amp; support → Privacy.</p>
+      <p>Every button, gesture, and screen is yours to assign from the phone app. The watch mirrors it over the local Wearable Data Layer — no account or Svartifoss server. Beyond your two devices, the app only talks to GitHub for the optional update check, to Firebase for diagnostics and occasional developer announcement notifications, and — only if you opt in — to the streaming service itself to fetch a saved shortcut's cover art. Crashlytics reports, announcement notifications, and shortcut artwork can all be switched off under Data &amp; support → Privacy or Apps.</p>
     </div>
     <div class="sync-pair">
       <div class="sync-frame">
-        <img src="images/phone-pick-action.jpg" alt="Picking an action to assign on the phone app">
+        <div class="slideshow phone" data-slideshow="phone" role="img" aria-label="Configuring Svartifoss on the phone app">
+          <img class="is-active" src="images/phone-pick-action.jpg" alt="">
+          <img src="images/phone-themes.jpg" alt="">
+          <img src="images/phone-seek-styles.jpg" alt="">
+          <img src="images/phone-queue-styles.jpg" alt="">
+          <img src="images/phone-color-treatment.jpg" alt="">
+        </div>
         <div class="cap">Assign on the phone</div>
       </div>
       <div class="sync-arrow" aria-hidden="true">
@@ -681,7 +767,14 @@
         <div class="line"></div>
       </div>
       <div class="sync-frame">
-        <img src="images/watch-minibuttons.png" alt="The assigned action shown as a mini button on the watch">
+        <div class="slideshow watch" data-slideshow="watch" role="img" aria-label="The configured now-playing screen live on the watch, cycling through faces">
+          <img class="is-active" src="images/watch-sync-live.jpg" alt="">
+          <img src="images/face-poster-abaddream.jpg" alt="">
+          <img src="images/face-expressive-pink.jpg" alt="">
+          <img src="images/watch-studio.jpg" alt="">
+          <img src="images/face-poster-nirvana.jpg" alt="">
+          <img src="images/watch-face-olive.jpg" alt="">
+        </div>
         <div class="cap">Live on the watch</div>
       </div>
     </div>
@@ -743,34 +836,26 @@
 <section id="look">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow muted">Look &amp; feel</div>
-      <h2>A dozen faces. Every one, yours to tune.</h2>
-      <p>Expressive, Poster, Studio, Halo, and the rest of the curated collection each build their look from the album art itself — swap between them, or reshape one down to its progress ring and mini-buttons, all previewed live from the phone before you commit.</p>
+      <div class="eyebrow muted">Faces</div>
+      <h2>A dozen faces. Every one drawn from the art.</h2>
+      <p>Immersive, Poster, Studio, Expressive, Classic and more — each face rebuilds its palette, gradients and progress from the cover that's playing, so the same watch looks like a different device track to track. Pick one per playing state and preview it live from the phone.</p>
     </div>
-    <div class="filmstrip-wrap">
-      <button type="button" class="film-nav prev" aria-label="Scroll left" data-film-prev>
-        <svg class="icon"><use href="#i-arrow-back"/></svg>
-      </button>
-      <div class="filmstrip" tabindex="0" role="region" aria-label="Watch screen gallery">
-        <div class="film-card"><div class="disc"><img src="images/watch-nowplaying.png" alt="Classic now-playing screen"></div><div class="cap">Classic</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-expressive-blue.jpg" alt="Expressive face with a blue album-derived palette"></div><div class="cap">Expressive</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-face-olive.jpg" alt="Vinyl face with a symmetric album-art motif"></div><div class="cap">Vinyl</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-poster-vivid.jpg" alt="Poster face with vivid full-bleed album art"></div><div class="cap">Poster</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-poster.jpg" alt="Poster face with a bright yellow album cover"></div><div class="cap">Poster</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-studio.jpg" alt="Studio face, a restrained legibility-first layout"></div><div class="cap">Studio</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-halo.jpg" alt="Halo face with a soft glow ring"></div><div class="cap">Halo</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-seekring.png" alt="Edge seek ring with mini buttons"></div><div class="cap">Edge seek ring</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-minibuttons.png" alt="Mini buttons row"></div><div class="cap">Mini buttons</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-quickpanel.png" alt="Quick actions panel"></div><div class="cap">Quick panel</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-queue.png" alt="Queue screen"></div><div class="cap">Queue</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-menu.png" alt="Actions menu"></div><div class="cap">Actions menu</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-minimal.png" alt="Minimal screen theme"></div><div class="cap">Minimal theme</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-seek.png" alt="Rotary crown seek overlay"></div><div class="cap">Crown seek</div></div>
-        <div class="film-card"><div class="disc"><img src="images/watch-volume.png" alt="Volume overlay"></div><div class="cap">Volume overlay</div></div>
-      </div>
-      <button type="button" class="film-nav next" aria-label="Scroll right" data-film-next>
-        <svg class="icon"><use href="#i-arrow-forward"/></svg>
-      </button>
+    <div class="faces-wall">
+      <div class="face-tile"><div class="disc"><img src="images/face-poster-abaddream.jpg" alt="Immersive face, A Bad Dream by Keane" loading="lazy"></div><div class="style">Immersive</div><div class="track">A Bad Dream</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/watch-expressive-blue.jpg" alt="Expressive face, Atlantic by Keane" loading="lazy"></div><div class="style">Expressive</div><div class="track">Atlantic</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/watch-poster.jpg" alt="Poster face, Creep by Radiohead" loading="lazy"></div><div class="style">Poster</div><div class="track">Creep</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/watch-studio.jpg" alt="Immersive face, Your Confession by hikota" loading="lazy"></div><div class="style">Immersive</div><div class="track">Your Confession</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/face-poster-nirvana.jpg" alt="Poster face, Smells Like Teen Spirit by Nirvana" loading="lazy"></div><div class="style">Poster</div><div class="track">Smells Like Teen Spirit</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/watch-face-olive.jpg" alt="Poster face, Somewhere Only We Know by Keane" loading="lazy"></div><div class="style">Poster</div><div class="track">Somewhere Only We Know</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/face-expressive-cream.jpg" alt="Expressive face, Breaking the Habit by Linkin Park" loading="lazy"></div><div class="style">Expressive</div><div class="track">Breaking the Habit</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/face-poster-greenday.jpg" alt="Studio face, Boulevard of Broken Dreams by Green Day" loading="lazy"></div><div class="style">Studio</div><div class="track">Boulevard of Broken Dreams</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/face-eclipse-yellow.jpg" alt="Studio face, Yellow by Coldplay" loading="lazy"></div><div class="style">Studio</div><div class="track">Yellow</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/watch-halo.jpg" alt="Immersive face, Talking To Sirens by Thirteen Senses" loading="lazy"></div><div class="style">Immersive</div><div class="track">Talking To Sirens</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/face-classic-decode.jpg" alt="Classic face, Decode by Paramore" loading="lazy"></div><div class="style">Classic</div><div class="track">Decode</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/face-studio-side.jpg" alt="Studio face, Side by Travis" loading="lazy"></div><div class="style">Studio</div><div class="track">Side</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/face-expressive-pink.jpg" alt="Expressive face, Invincible by Muse" loading="lazy"></div><div class="style">Expressive</div><div class="track">Invincible</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/watch-poster-vivid.jpg" alt="Immersive face, Uprising by Muse" loading="lazy"></div><div class="style">Immersive</div><div class="track">Uprising</div></div>
+      <div class="face-tile"><div class="disc"><img src="images/face-immersive-temporary.jpg" alt="Studio face with an Up Next pill" loading="lazy"></div><div class="style">Studio</div><div class="track">i was only temporary</div></div>
     </div>
   </div>
 </section>
@@ -779,44 +864,52 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow muted">Possibilities</div>
-      <h2>The overlays get the same treatment.</h2>
-      <p>Volume, seek, the quick-actions panel, the queue — each ships its own wardrobe of looks, mixed and matched independently of whichever face is running underneath.</p>
+      <h2>Every overlay is its own wardrobe.</h2>
+      <p>Volume, seek, the quick-actions panel and the queue each carry a full catalog of styles — a sample of each is below. Mix and match them freely; none of it is tied to whichever face is running underneath.</p>
     </div>
     <div class="mural">
       <div class="mural-group">
-        <h3>Volume</h3>
+        <div class="mural-label"><span class="n">Volume</span><span class="k">6 of the readout styles</span></div>
         <div class="mural-row">
-          <div class="mural-disc"><img src="images/mural-volume-ring.jpg" alt="Volume overlay: thin arc ring"></div>
-          <div class="mural-disc"><img src="images/mural-volume-dotted.jpg" alt="Volume overlay: dotted arc with pill readout"></div>
-          <div class="mural-disc"><img src="images/mural-volume-split.jpg" alt="Volume overlay: split dual arc"></div>
-          <div class="mural-disc"><img src="images/mural-volume-pillbar.jpg" alt="Volume overlay: horizontal pill bar"></div>
-          <div class="mural-disc"><img src="images/mural-volume-dark.jpg" alt="Volume overlay: dark minimal ring"></div>
-          <div class="mural-disc"><img src="images/mural-volume-warm.jpg" alt="Volume overlay: warm album-toned ring"></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-ring.jpg" alt="Volume overlay: thin arc ring" loading="lazy"></div><div class="cap">Ring</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-dotted.jpg" alt="Volume overlay: dotted arc with pill readout" loading="lazy"></div><div class="cap">Dotted</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-split.jpg" alt="Volume overlay: dark minimal arc" loading="lazy"></div><div class="cap">Minimal</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-pillbar.jpg" alt="Volume overlay: horizontal pill bar" loading="lazy"></div><div class="cap">Pill bar</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-dark.jpg" alt="Volume overlay: glass ring" loading="lazy"></div><div class="cap">Glass</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-warm.jpg" alt="Volume overlay: warm album-toned ring" loading="lazy"></div><div class="cap">Album tone</div></div>
         </div>
       </div>
       <div class="mural-group">
-        <h3>Seek &amp; progress</h3>
+        <div class="mural-label"><span class="n">Seek</span><span class="k">scrub &amp; progress</span></div>
         <div class="mural-row">
-          <div class="mural-disc"><img src="images/mural-seek-dial.jpg" alt="Seek overlay: clock-dial ticks"></div>
-          <div class="mural-disc"><img src="images/mural-seek-ring.jpg" alt="Seek overlay: expressive ring"></div>
-          <div class="mural-disc"><img src="images/mural-seek-dotted.jpg" alt="Seek overlay: dotted ring with pill readout"></div>
-          <div class="mural-disc"><img src="images/mural-seek-dark.jpg" alt="Seek overlay: dark minimal ring"></div>
-          <div class="mural-disc"><img src="images/mural-seek-linear.jpg" alt="Seek overlay: linear scrub bar over album art"></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-dial.jpg" alt="Seek overlay: clock-dial ticks" loading="lazy"></div><div class="cap">Clock dial</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-linear.jpg" alt="Seek overlay: linear scrub bar over album art" loading="lazy"></div><div class="cap">Linear</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-dotted-blue.jpg" alt="Seek overlay: dotted ring with pill readout" loading="lazy"></div><div class="cap">Dotted</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-ring.jpg" alt="Seek overlay: thin AMOLED ring" loading="lazy"></div><div class="cap">Thin ring</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-dotted.jpg" alt="Seek overlay: album-toned dotted ring" loading="lazy"></div><div class="cap">Album dots</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-warm.jpg" alt="Seek overlay: warm minimal ring" loading="lazy"></div><div class="cap">Album tone</div></div>
         </div>
       </div>
       <div class="mural-group">
-        <h3>Quick panel</h3>
+        <div class="mural-label"><span class="n">Quick panel</span><span class="k">double-tap actions</span></div>
         <div class="mural-row">
-          <div class="mural-disc"><img src="images/mural-panel-round.jpg" alt="Quick panel: round icon slots with an Up Next row"></div>
-          <div class="mural-disc"><img src="images/mural-panel-rows.jpg" alt="Quick panel: labelled full-width rows"></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-round.jpg" alt="Quick panel: round icon slots with an Up Next row" loading="lazy"></div><div class="cap">Round slots</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-gold.jpg" alt="Quick panel: warm round slots" loading="lazy"></div><div class="cap">Album tint</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-red.jpg" alt="Quick panel: two-slot compact layout" loading="lazy"></div><div class="cap">Compact</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-check.jpg" alt="Quick panel: state-aware toggle slot" loading="lazy"></div><div class="cap">State-aware</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-rows.jpg" alt="Quick panel: labelled full-width rows" loading="lazy"></div><div class="cap">Labelled rows</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-labelblue.jpg" alt="Quick panel: album-tinted labelled rows" loading="lazy"></div><div class="cap">Album rows</div></div>
         </div>
       </div>
       <div class="mural-group">
-        <h3>Queue</h3>
+        <div class="mural-label"><span class="n">Queue</span><span class="k">up-next &amp; history</span></div>
         <div class="mural-row">
-          <div class="mural-disc"><img src="images/mural-queue-photos.jpg" alt="Queue: cover-art rows"></div>
-          <div class="mural-disc"><img src="images/mural-queue-cards.jpg" alt="Queue: tonal cards"></div>
-          <div class="mural-disc"><img src="images/mural-queue-select.jpg" alt="Queue: selected-row highlight style"></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-photos.jpg" alt="Queue: album-tinted rows with cover thumbnails" loading="lazy"></div><div class="cap">Cover rows</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-select.jpg" alt="Queue: AMOLED rows with selected highlight" loading="lazy"></div><div class="cap">AMOLED</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-tonal.jpg" alt="Queue: tonal gradient cards" loading="lazy"></div><div class="cap">Tonal cards</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-covers.jpg" alt="Queue: full cover-photo rows" loading="lazy"></div><div class="cap">Photo rows</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-cards.jpg" alt="Queue: gold tonal cards" loading="lazy"></div><div class="cap">Gold cards</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-olive.jpg" alt="Queue: album-tinted rows" loading="lazy"></div><div class="cap">Album tint</div></div>
         </div>
       </div>
     </div>
@@ -934,6 +1027,24 @@
 
 <script>
 (function () {
+  // Cross-fading slideshows in the "How it works" pair. Honours reduced-motion by
+  // leaving the first frame static. Staggered intervals keep the two sides from
+  // flipping in lockstep.
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function initSlideshow(el, intervalMs) {
+    if (!el || reduceMotion) return;
+    var slides = el.querySelectorAll('img');
+    if (slides.length < 2) return;
+    var i = 0;
+    setInterval(function () {
+      slides[i].classList.remove('is-active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('is-active');
+    }, intervalMs);
+  }
+  initSlideshow(document.querySelector('[data-slideshow="watch"]'), 2500);
+  initSlideshow(document.querySelector('[data-slideshow="phone"]'), 3200);
+
   var strip = document.querySelector('.filmstrip');
   var prevBtn = document.querySelector('[data-film-prev]');
   var nextBtn = document.querySelector('[data-film-next]');

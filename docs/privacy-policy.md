@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 21-07-2026**
+**Last updated: 23-07-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -15,7 +15,10 @@ Google Firebase Crashlytics and Analytics for diagnostics, plus Firebase
 Cloud Messaging for occasional developer announcements. Crash reporting and
 announcement notifications are both enabled by default and can each be
 disabled at any time — see [Crash reports](#crash-reports) and
-[Announcement notifications](#announcement-notifications) below.
+[Announcement notifications](#announcement-notifications) below. A separate,
+**off-by-default** setting can also fetch cover art for your saved playlist
+shortcuts directly from the streaming service — see
+[Streaming shortcut artwork](#streaming-shortcut-artwork-optional) below.
 
 ## What the app needs access to, and why
 
@@ -51,7 +54,7 @@ all.
 | Storage (legacy, only on very old Android versions) / Photos | Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option.                                                  |
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
-| Internet                                                     | Used for optional update checks and the Firebase diagnostics described below. Core playback mirroring and control work locally between your two devices.                         |
+| Internet                                                     | Used for optional update checks, the Firebase diagnostics described below, and (only if you turn it on) fetching shortcut artwork directly from the streaming service. Core playback mirroring and control work locally between your two devices.                         |
 
 ## What's stored locally on your phone
 
@@ -121,6 +124,23 @@ permission still applies on top of this setting.
 This uses Google's Firebase infrastructure, governed by
 [Google's Privacy Policy](https://policies.google.com/privacy) and
 [Firebase's data processing terms](https://firebase.google.com/support/privacy).
+
+## Streaming shortcut artwork (optional)
+
+If you save a playlist/track shortcut and turn on **Fetch shortcut artwork
+online** (Settings → Apps → Music apps & services — **off by default**),
+Svartifoss sends that shortcut's public share link to the corresponding
+streaming service's own public **oEmbed** endpoint (Spotify, YouTube,
+SoundCloud, or Deezer) to download a cover thumbnail, shown on the phone,
+the watch menu, and any button you assign it to. Each thumbnail is fetched
+once and cached on-device.
+
+Only the link itself — already a public share URL you chose to save — is
+sent; no account, API key, or other personal data is attached. This request
+goes directly to the streaming service, not through any server of ours, and
+is governed by that service's own privacy policy, not this one. Apple
+Music, Amazon Music, and Tidal have no public oEmbed endpoint, so shortcuts
+to those services always fall back to a generic app icon instead.
 
 ## Usage diagnostics
 
