@@ -10,7 +10,7 @@
 [![Latest Release](https://img.shields.io/github/v/release/gabrielluizone/Svartifoss?label=Release)](https://github.com/gabrielluizone/Svartifoss/releases)
 [![Downloads](https://img.shields.io/github/downloads/gabrielluizone/Svartifoss/latest/total?label=Downloads)](https://github.com/gabrielluizone/Svartifoss/releases/latest)
 [![Last Commit](https://img.shields.io/github/last-commit/gabrielluizone/Svartifoss)](https://github.com/gabrielluizone/Svartifoss/commits)
-![Visitors](https://komarev.com/ghpvc/?username=gabrielluizone&repo=Svartifoss&label=visitors&color=blue)
+![Visitors](https://komarev.com/ghpvc/?username=gabrielluizone&repo=Svartifoss&label=Visitors&color=blue)
 
 **Control the music playing on your phone from a Wear OS watch** — physical
 buttons, screen gestures, the digital crown, a quick-actions panel, a Tile,
