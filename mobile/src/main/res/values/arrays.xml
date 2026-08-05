@@ -10,6 +10,7 @@
     </string-array>
     <string-array name="wear_font_values" translatable="false">
         <item>google_sans</item>
+        <item>google_sans_flex</item>
         <item>roboto</item>
         <item>rounded</item>
         <item>sans_light</item>

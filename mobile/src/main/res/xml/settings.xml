@@ -277,6 +277,21 @@
             android:layout="@layout/pref_switch_item" />
 
         <Preference
+            android:key="queue_media_permission"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_queue_local_artwork"
+            android:summary="@string/setting_queue_local_artwork_description"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="queue_remote_artwork"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_queue_remote_artwork"
+            android:summary="@string/setting_queue_remote_artwork_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <Preference
             android:key="notification_access"
             android:icon="@drawable/ic_bell"
             android:title="@string/setting_notification_access"

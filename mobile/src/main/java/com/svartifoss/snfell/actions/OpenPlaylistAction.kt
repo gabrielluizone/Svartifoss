@@ -1,9 +1,6 @@
 package com.svartifoss.snfell.actions
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
@@ -18,12 +15,24 @@ import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.music.MusicService
+import com.svartifoss.snfell.music.QueueArtworkResolver
 import com.svartifoss.snfell.proto.CustomList
 import com.matejdro.wearutils.miscutils.BitmapUtils
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
+
+/** Matches the now-playing cover's quality in `MusicService.transmitToWear`; visually lossless at
+ *  a 30dp thumbnail while keeping the 20-entry payload small. */
+private const val THUMBNAIL_JPEG_QUALITY = 85
+
+/** Ceiling on resolving one entry's cover. Tighter than QueueArtworkResolver's own 8s connect +
+ *  8s read, so a stalled request cannot come anywhere near doubling the time the queue takes to
+ *  appear on the watch. Entries resolve concurrently, so this is roughly the whole step's budget. */
+private const val ARTWORK_RESOLVE_TIMEOUT_MS = 10_000L
 
 class OpenPlaylistAction : SelectableAction {
     constructor(context: Context) : super(context)
@@ -35,8 +44,12 @@ class OpenPlaylistAction : SelectableAction {
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<OpenPlaylistAction> {
         override suspend fun handleAction(action: OpenPlaylistAction) {
-            val playlist = service.currentMediaController?.queue?.take(20)
+            val playlist = service.resolvePlaybackQueue()?.take(20)
             val putDataRequest = PutDataRequest.create(CommPaths.DATA_CUSTOM_LIST)
+
+            // Read once per queue rather than per entry: 20 items would otherwise hit the same
+            // preference 20 times, and a toggle flipped mid-build would give a half-remote queue.
+            val allowRemoteArtwork = QueueArtworkResolver.remoteArtworkEnabled(service)
 
             // 96px suits the 30dp circular thumbnail every other queue style draws, but the Cover
             // style stretches the same art across the whole pill, where it looked visibly soft.
@@ -44,19 +57,68 @@ class OpenPlaylistAction : SelectableAction {
             // queue is up to 20 entries and each one crosses Bluetooth.
             val thumbnailSize = if (coverQueueStyleActive()) 320 else 96
 
+            // The row that is actually playing can reuse the cover already decoded for the player,
+            // with no network call and no media permission - see MusicService.currentAlbumArt for
+            // why streaming clients leave that entry's own description empty.
+            val playingQueueId = service.currentMediaController?.playbackState?.activeQueueItemId
+
             val listId: String
             val protoList = if (playlist != null && playlist.isNotEmpty()) {
                 listId = CustomLists.PLAYLIST
+
+                // Apps publish queue covers in several different places - a ready Bitmap, a local
+                // content URI, an extras key, a MediaStore library id, or a remote URL.
+                // QueueArtworkResolver walks all of them cheapest-first; the watch still collapses
+                // the thumbnail slot when nothing is reachable. Resolved concurrently rather than
+                // one entry at a time - up to 20 entries each with their own network/disk step
+                // would otherwise serialize into several seconds of wall-clock time before the
+                // queue appears, even though every individual fetch is already off the main thread.
+                val artworks = coroutineScope {
+                    playlist.map { queueItem ->
+                        async {
+                            try {
+                                // Capped so one unreachable cover cannot hold up the whole queue:
+                                // the DataItem is only sent once every entry has resolved, and with
+                                // the remote fetch on that means waiting on real network I/O. A
+                                // slow entry simply arrives coverless rather than delaying the list.
+                                withTimeoutOrNull(ARTWORK_RESOLVE_TIMEOUT_MS) {
+                                    QueueArtworkResolver.resolve(
+                                            service, queueItem.description, allowRemoteArtwork,
+                                            // Hosts that take the size from the URL are asked for
+                                            // exactly what this queue style needs - see
+                                            // QueueArtworkResolver.sizedArtworkUrl.
+                                            targetPx = thumbnailSize)
+                                }
+                                // Applied after the timeout, never inside it: this one is an
+                                // already-decoded in-memory bitmap, so the playing row keeps its
+                                // cover even when the network side gave up.
+                                        ?: service.currentAlbumArt?.takeIf {
+                                            playingQueueId != null &&
+                                                    queueItem.queueId == playingQueueId
+                                        }
+                            } catch (e: Exception) {
+                                Timber.w(e, "Queue cover resolution failed for %s",
+                                        queueItem.description.title)
+                                null
+                            }
+                        }
+                    }.map { it.await() }
+                }
+
+                // One line that answers "why are the covers missing" without reading twenty
+                // per-entry lines: how many entries resolved, and whether the remote fetch that
+                // most streaming clients depend on was even permitted to run.
+                Timber.i(
+                        "Queue built: %d entries, %d covers resolved, remote fetch %s",
+                        playlist.size,
+                        artworks.count { it != null },
+                        if (allowRemoteArtwork) "enabled" else "DISABLED")
+
                 playlist.mapIndexed { index, queueItem ->
-                    // MediaDescription may carry the cover either as a ready Bitmap or as a local
-                    // content URI. Attach only artwork the player actually publishes; the watch
-                    // deliberately collapses the thumbnail slot when this is null.
-                    val artwork = queueItem.description.iconBitmap
-                            ?: loadLocalArtwork(queueItem.description.iconUri)
-                    artwork?.let { bitmap ->
+                    artworks[index]?.let { bitmap ->
                         val thumbnail = BitmapUtils.shrinkPreservingRatio(
                                 bitmap, thumbnailSize, thumbnailSize, true)
-                        BitmapUtils.serialize(thumbnail)?.let { bytes ->
+                        encodeThumbnail(thumbnail)?.let { bytes ->
                             putDataRequest.putAsset(index.toString(), Asset.createFromBytes(bytes))
                         }
                     }
@@ -111,6 +173,30 @@ class OpenPlaylistAction : SelectableAction {
             Wearable.getDataClient(service).putDataItem(putDataRequest).await()
         }
 
+        /**
+         * JPEG bytes for one queue thumbnail, or null when the bitmap cannot be encoded.
+         *
+         * Deliberately **not** `BitmapUtils.serialize`, which encodes lossless PNG: cover art is
+         * photographic and has no alpha, so PNG comes out several times larger than JPEG for no
+         * visible gain - the exact reasoning `MusicService.transmitToWear` already records for the
+         * now-playing cover, which is why that one arrives reliably. A queue sends up to 20 of
+         * these in a single DataItem, so the multiplier matters far more here: at the 320px size a
+         * Cover style asks for, twenty PNGs are megabytes of Bluetooth transfer, which is slow
+         * enough to look like the covers simply never arrive.
+         */
+        private fun encodeThumbnail(bitmap: android.graphics.Bitmap?): ByteArray? {
+            if (bitmap == null) return null
+            return java.io.ByteArrayOutputStream().use { stream ->
+                if (!bitmap.compress(
+                                android.graphics.Bitmap.CompressFormat.JPEG,
+                                THUMBNAIL_JPEG_QUALITY,
+                                stream)) {
+                    return null
+                }
+                stream.toByteArray()
+            }
+        }
+
         /** Whether the watch's queue is set to the cover-filled pill style, which needs the
          *  larger artwork. Read from the phone's own copy of the synced preference. */
         private fun coverQueueStyleActive(): Boolean {
@@ -122,20 +208,5 @@ class OpenPlaylistAction : SelectableAction {
             ) in MiscPreferences.COVER_LIST_STYLES
         }
 
-        /** Remote http(s) covers are intentionally skipped: opening the queue must never wait on
-         * network I/O. content/file URIs already granted to the media controller are cheap and
-         * safe to decode on the IO dispatcher. */
-        private suspend fun loadLocalArtwork(uri: Uri?): Bitmap? {
-            if (uri == null || uri.scheme in setOf("http", "https")) return null
-            return withContext(Dispatchers.IO) {
-                try {
-                    service.contentResolver.openInputStream(uri)?.use { stream ->
-                        BitmapFactory.decodeStream(stream)
-                    }
-                } catch (_: Exception) {
-                    null
-                }
-            }
-        }
     }
 }

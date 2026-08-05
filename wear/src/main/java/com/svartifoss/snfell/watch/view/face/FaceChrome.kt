@@ -51,7 +51,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import com.svartifoss.snfell.common.WatchTypography
 import androidx.core.graphics.ColorUtils
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
@@ -730,8 +732,22 @@ internal fun AdaptiveTitleText(
         letterSpacing: TextUnit = TextUnit.Unspecified,
         lineHeight: TextUnit = TextUnit.Unspecified,
         textAlign: TextAlign = TextAlign.Center,
-        minFontSize: TextUnit = (fontSize.value * 0.62f).sp
+        minFontSize: TextUnit = (fontSize.value * 0.62f).sp,
+        typography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT
 ) {
+    // Each field's default value means "keep what this face designed for this line", not "use a
+    // plain 400/upright/unspaced default" - otherwise simply shipping these controls would flatten
+    // every face that deliberately sets its title Bold or its artist line wide-tracked. Only a
+    // value the user actually moved away from the identity overrides the face.
+    val fontSize = if (typography.scale == 1f) fontSize else typography.scaled(fontSize.value).sp
+    val minFontSize =
+            if (typography.scale == 1f) minFontSize else typography.scaled(minFontSize.value).sp
+    val fontWeight = if (typography.weight == 400) fontWeight else FontWeight(typography.weight)
+    val fontStyle = if (typography.italic) FontStyle.Italic else fontStyle
+    val letterSpacing =
+            if (typography.trackingEm == 0f) letterSpacing else typography.trackingEm.em
+    val color = if (typography.alpha == 1f) color else color.copy(alpha = color.alpha * typography.alpha)
+
     val wrapLines = when (mode) {
         "static" -> 1
         "wrap" -> 2
@@ -883,17 +899,61 @@ private fun SmartTitleText(
 internal fun SourceIconGlyph(state: NowPlayingFaceState, size: Dp, tint: Color) {
     val icon = state.sourceIcon
     if (icon == null || state.ambient) return
+    // The user's size/opacity controls are applied here rather than at each face's call site, so
+    // every layout honours them from one place and the trailing Spacer keeps its proportion to the
+    // glyph (a resized icon with a fixed gap reads as misaligned against the artist line).
+    val spec = state.sourceIconTypography
+    val size = if (spec.scale == 1f) size else size * spec.scale
+    val tint = if (spec.alpha == 1f) tint else tint.copy(alpha = tint.alpha * spec.alpha)
     Image(
             bitmap = icon,
             contentDescription = null,
             contentScale = ContentScale.Fit,
             // The notification small icon is a flat white template: tinted to the caller's own
             // artist colour (alpha included) it reads as part of that line instead of a foreign
-            // white blob. The launcher-icon fallback is real artwork and stays untinted.
+            // white blob. The launcher-icon fallback is real artwork and stays untinted - its own
+            // opacity is applied through alpha instead.
             colorFilter = if (state.sourceIconTemplate) ColorFilter.tint(tint) else null,
+            alpha = if (state.sourceIconTemplate) 1f else spec.alpha,
             modifier = Modifier.size(size).clip(RoundedCornerShape(size * .27f))
     )
     Spacer(Modifier.width(size * .33f))
+}
+
+/**
+ * A track artist line honouring the user's per-element typography ([NowPlayingFaceState.artistTypography]).
+ *
+ * The artist line is a plain single line on every face, so it needs none of [AdaptiveTitleText]'s
+ * overflow strategies - but it does need the same "a default value means keep what the face
+ * designed" merge, which is why faces call this instead of styling a bare [Text] themselves.
+ */
+@Composable
+internal fun ArtistLineText(
+        text: String,
+        state: NowPlayingFaceState,
+        color: Color,
+        fontSize: TextUnit,
+        modifier: Modifier = Modifier,
+        fontWeight: FontWeight? = null,
+        lineHeight: TextUnit = TextUnit.Unspecified,
+        letterSpacing: TextUnit = TextUnit.Unspecified,
+        textAlign: TextAlign = TextAlign.Center
+) {
+    val spec = state.artistTypography
+    Text(
+            text = text,
+            color = if (spec.alpha == 1f) color else color.copy(alpha = color.alpha * spec.alpha),
+            fontSize = if (spec.scale == 1f) fontSize else spec.scaled(fontSize.value).sp,
+            fontWeight = if (spec.weight == 400) fontWeight else FontWeight(spec.weight),
+            fontStyle = state.artistFontStyle,
+            fontFamily = state.artistFont,
+            lineHeight = lineHeight,
+            letterSpacing = if (spec.trackingEm == 0f) letterSpacing else spec.trackingEm.em,
+            textAlign = textAlign,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = modifier
+    )
 }
 
 /**

@@ -16,6 +16,7 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import androidx.core.content.ContextCompat
 import com.svartifoss.snfell.view.settings.ColorTreatmentPreference
@@ -41,6 +42,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         const val SECTION_STYLE = "style"
         const val SECTION_BACKGROUND = "background"
         const val SECTION_COLORS = "colors"
+        const val SECTION_TYPOGRAPHY = "typography"
         const val SECTION_AOD = "aod"
         const val SECTION_PANELS = "panels"
         const val SECTION_MINI_BUTTONS = "miniButtons"
@@ -126,8 +128,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         initListSummaries()
         initFaceDependencies()
         initBlurRadiusDependency()
+        initTypographyDependencies()
         initMiniButtonOpacityValidation()
         initAodPercentageValidation()
+        initTypographyValidation()
         initUnifiedColorTreatment()
         initAccentColorTarget(
                 modeKey = "wear_artist_color_mode",
@@ -239,6 +243,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             // Mini buttons and the screen-gestures toggles are both input controls, so they share
             // the one section.
             SECTION_MINI_BUTTONS -> setOf("cat_wf_mini_buttons", "cat_wf_gestures")
+            // Text (font/title/artist/icon) is its own page, split out of Player so that screen
+            // does not carry every typography control on top of the layout/behavior ones.
+            // cat_wf_typography_flex is deliberately excluded here: it needs the *font choice*
+            // as well as the section, so it is handled below instead of by plain set membership.
+            SECTION_TYPOGRAPHY -> setOf(
+                    "cat_wf_typography_font", "cat_wf_typography_title",
+                    "cat_wf_typography_artist", "cat_wf_typography_icon")
             // Style (face) page also carries the awake clock and the layout reset / apply-to-all
             // actions, which operate on the whole face's look.
             else -> setOf("cat_wf_face", "cat_wf_clock", "cat_wf_layout_actions")
@@ -251,12 +262,20 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             "cat_wf_overlays",
             "cat_wf_background",
             "cat_wf_colors",
+            "cat_wf_typography_font",
+            "cat_wf_typography_title",
+            "cat_wf_typography_artist",
+            "cat_wf_typography_icon",
             "cat_wf_mini_buttons",
             "cat_wf_gestures",
             "cat_wf_layout_actions"
         ).forEach { key ->
             findPreference<Preference>(key)?.isVisible = key in visibleCategories
         }
+        // Visible only on the Text page, and only once Google Sans Flex is actually chosen -
+        // ANDed explicitly rather than folded into visibleCategories above, since this category's
+        // visibility depends on a preference *value*, not just which section is showing.
+        updateFlexAxesVisibility()
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -278,6 +297,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         pref.albumAccents = (parentFragment as? WatchFaceFragment)?.currentAlbumAccents()
                 ?: Triple(DEFAULT_SWATCH_COLOR, DEFAULT_SWATCH_COLOR, DEFAULT_SWATCH_COLOR)
         pref.globalTreatmentValue = readStringPreference("wear_color_treatment", "expressive")
+        pref.colorModifierValue = readStringPreference("wear_color_modifier", "none")
+        pref.colorHueShiftValue = store.getString("wear_color_hue_shift", null)?.toIntOrNull() ?: 0
         val targetCustomHex = pref.customColorKey
                 ?.let { store.getString(it, null) }
                 ?.takeUnless { it.isBlank() }
@@ -430,6 +451,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val aodStyle = readStringPreference("wear_aod_style", "follow")
         updateFaceDependencies(face, aodStyle)
         updateBlurRadiusEnabled(readStringPreference("album_art_style", "cover"))
+        updateFlexAxesVisibility()
         updateUnifiedColorTreatmentVisibility(
                 readStringPreference("wear_color_treatment", "expressive"))
         updateAccentColorTargetDependencies(
@@ -502,6 +524,49 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private fun initAodPercentageValidation() {
         validateNumericPercentage("wear_aod_intensity", 20..100)
         validateNumericPercentage("ambient_album_art_opacity", 20..100)
+    }
+
+    /**
+     * Same guard for the typography, Flex-axis and palette-shift numbers. Their ranges mirror the
+     * clamps in `WatchTypography`/`SurfacePaletteResolver`, so a rejected value can never be
+     * persisted as one number and rendered as another.
+     */
+    private fun initTypographyValidation() {
+        for (key in listOf("wear_title_font_weight", "wear_artist_font_weight")) {
+            validateNumericPercentage(
+                    key, WatchTypography.FLEX_WEIGHT_MIN..WatchTypography.FLEX_WEIGHT_MAX)
+        }
+        for (key in listOf(
+                "wear_title_font_scale", "wear_artist_font_scale", "wear_source_icon_scale")) {
+            validateNumericPercentage(
+                    key, MiscPreferences.TYPOGRAPHY_MIN_SCALE..MiscPreferences.TYPOGRAPHY_MAX_SCALE)
+        }
+        for (key in listOf(
+                "wear_title_font_opacity", "wear_artist_font_opacity", "wear_source_icon_opacity")) {
+            validateNumericPercentage(key, MiscPreferences.TYPOGRAPHY_MIN_OPACITY..100)
+        }
+        for (key in listOf("wear_title_font_tracking", "wear_artist_font_tracking")) {
+            validateNumericPercentage(
+                    key,
+                    MiscPreferences.TYPOGRAPHY_MIN_TRACKING..MiscPreferences.TYPOGRAPHY_MAX_TRACKING)
+        }
+        validateNumericPercentage(
+                "wear_font_flex_width",
+                WatchTypography.FLEX_WIDTH_MIN.toInt()..WatchTypography.FLEX_WIDTH_MAX.toInt())
+        validateNumericPercentage(
+                "wear_font_flex_optical_size",
+                WatchTypography.FLEX_OPTICAL_SIZE_MIN.toInt()..
+                        WatchTypography.FLEX_OPTICAL_SIZE_MAX.toInt())
+        validateNumericPercentage(
+                "wear_font_flex_grade",
+                WatchTypography.FLEX_GRADE_MIN.toInt()..WatchTypography.FLEX_GRADE_MAX.toInt())
+        validateNumericPercentage(
+                "wear_font_flex_roundness",
+                WatchTypography.FLEX_ROUNDNESS_MIN.toInt()..
+                        WatchTypography.FLEX_ROUNDNESS_MAX.toInt())
+        // 359, not 360: a full turn is the same hue as 0, so allowing it would give two different
+        // stored values that render identically.
+        validateNumericPercentage("wear_color_hue_shift", 0..359)
     }
 
     private fun validateNumericPercentage(key: String, range: IntRange) {
@@ -798,6 +863,23 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     updateBlurRadiusEnabled(newValue as? String)
                     true
                 }
+    }
+
+    /** The Google Sans Flex axis category is meaningless for every other font, so it stays hidden
+     *  until that font is actually selected - same idiom as [initBlurRadiusDependency]. */
+    private fun initTypographyDependencies() {
+        updateFlexAxesVisibility()
+        findPreference<ListPreference>("wear_font")?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, newValue ->
+                    updateFlexAxesVisibility(newValue as? String)
+                    true
+                }
+    }
+
+    private fun updateFlexAxesVisibility(overrideValue: String? = null) {
+        val value = overrideValue ?: readStringPreference("wear_font", "google_sans")
+        findPreference<Preference>("cat_wf_typography_flex")?.isVisible =
+                section == SECTION_TYPOGRAPHY && WatchTypography.isFlexFont(value)
     }
 
     private fun updateBlurRadiusEnabled(overrideValue: String? = null) {

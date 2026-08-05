@@ -17,8 +17,9 @@ import androidx.preference.ListPreference
 import androidx.preference.PreferenceDialogFragmentCompat
 import com.matejdro.wearutils.preferences.compat.PreferenceWithDialog
 import com.svartifoss.snfell.R
-import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.SurfaceColorTreatment
+import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.view.LyraAccent
 
 /**
@@ -55,6 +56,16 @@ class ColorTreatmentPreference @JvmOverloads constructor(
      *  picker itself, which has no Follow option. */
     var globalTreatmentValue: String = "expressive"
 
+    /** The active tone modifier ("wear_color_modifier"), applied to every swatch so the rows show
+     *  what the surface will really look like rather than the unmodified treatment. Set by the
+     *  owning fragment; see the class doc. */
+    var colorModifierValue: String = "none"
+
+    /** The active palette hue shift ("wear_color_hue_shift"), applied to every swatch so the rows
+     *  show the real colours - without it the swatches would keep promising the unshifted primary
+     *  the treatment alone produces. Set by the owning fragment; see the class doc. */
+    var colorHueShiftValue: Int = 0
+
     init {
         val typed = context.obtainStyledAttributes(attrs, R.styleable.ColorTreatmentPreference)
         customColorKey = typed.getString(R.styleable.ColorTreatmentPreference_customColorKey)
@@ -90,22 +101,22 @@ class ColorTreatmentPreference @JvmOverloads constructor(
             val global = SurfaceColorTreatment.fromPreference(
                     pref.globalTreatmentValue, default = SurfaceColorTreatment.EXPRESSIVE)
 
-            fun swatchesFor(value: String): Triple<Int, Int, Int> =
-                    when (SurfaceColorTreatment.fromPreference(value).resolveAgainst(global)) {
-                        SurfaceColorTreatment.NORMAL -> Triple(
-                                pref.normalPreviewColor,
-                                PaletteTransforms.sameHueTone(pref.normalPreviewColor, .42f),
-                                PaletteTransforms.sameHueTone(pref.normalPreviewColor, .68f))
-                        SurfaceColorTreatment.DESATURATED -> Triple(
-                                PaletteTransforms.softenedAlbumAccent(rawPrimary),
-                                PaletteTransforms.softenedAlbumAccent(rawSecondary),
-                                PaletteTransforms.softenedAlbumAccent(rawTertiary))
-                        // FOLLOW can't survive resolveAgainst against a non-FOLLOW global (and the
-                        // global picker itself never has a Follow row), but the branch must still
-                        // exist for exhaustiveness.
-                        SurfaceColorTreatment.EXPRESSIVE, SurfaceColorTreatment.FOLLOW ->
-                            Triple(rawPrimary, rawSecondary, rawTertiary)
-                    }
+            val modifier = ColorModifier.fromPreference(pref.colorModifierValue)
+
+            // Derived by the same `common` resolver the watch and the preview use, so a row's
+            // swatches cannot promise a palette the watch renders differently - and a treatment
+            // added later shows real colours here without this dialog being touched.
+            fun swatchesFor(value: String): Triple<Int, Int, Int> {
+                val triad = SurfacePaletteResolver.derive(
+                        SurfaceColorTreatment.fromPreference(value).resolveAgainst(global),
+                        modifier,
+                        rawPrimary,
+                        rawSecondary,
+                        rawTertiary,
+                        pref.normalPreviewColor,
+                        pref.colorHueShiftValue.toFloat())
+                return Triple(triad.primary, triad.secondary, triad.tertiary)
+            }
 
             val adapter = object : BaseAdapter() {
                 override fun getCount() = entries.size

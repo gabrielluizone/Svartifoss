@@ -44,14 +44,13 @@ object CrashReporting : SharedPreferences.OnSharedPreferenceChangeListener {
         enabled = allowReports
 
         FirebaseCrashlytics.getInstance().apply {
-            // Never opt into automatic collection here. This explicit false also replaces any
-            // persisted override left by an older build that used the SDK's automatic mode.
-            setCrashlyticsCollectionEnabled(false)
-            if (allowReports) {
-                // Fatal reports are finalized after the next process start. Send only after the
-                // current preference has been read, so startup never bypasses the privacy gate.
-                sendUnsentReports()
-            } else {
+            // A collection flag controla toda a captura de dados e sessões do Crashlytics.
+            // Se for false, o Crashlytics é 100% desligado e não monitora a versão (Release Monitoring).
+            // Passamos o allowReports aqui. Como no Manifest a collection está desligada por padrão,
+            // o Crashlytics não fará upload de nada no startup até que esta linha rode com `true`.
+            setCrashlyticsCollectionEnabled(allowReports)
+            
+            if (!allowReports) {
                 // An explicit opt-out removes reports queued while consent was enabled; they must
                 // not be uploaded if the user changes their mind again later.
                 deleteUnsentReports()

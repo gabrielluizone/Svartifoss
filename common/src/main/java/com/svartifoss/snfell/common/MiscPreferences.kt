@@ -292,6 +292,105 @@ object MiscPreferences {
      *  enabled. Decoded by watchFontFamily and mirrored by WatchPreviewView. */
     val WEAR_FONT: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_font", "google_sans")
 
+    // --- Per-element typography, layered on top of the single [WEAR_FONT] family choice ---
+    //
+    // Title and artist are styled independently because they carry different weight in the
+    // hierarchy: users overwhelmingly want a heavier/larger title against a lighter, dimmer
+    // artist line. Every value here is a *delta* over the face's own designed size, never an
+    // absolute sp - the curated faces size their text against a 192dp reference watch, so an
+    // absolute override would break their layout on any other screen size. Defaults are the
+    // exact identity (weight 400, no italic, 100% size/opacity, no extra tracking), so an
+    // install that never opens these controls renders bit-for-bit as it did before they existed.
+    // Decoded by [WatchTypography], mirrored by WatchPreviewView.
+
+    /** Track title weight, 100-900 in CSS-style steps. 400 is the face's normal weight. */
+    val WEAR_TITLE_FONT_WEIGHT: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_title_font_weight", 400)
+
+    /** Renders the track title italic. Synthesized by the platform for families with no italic
+     *  cut, which every bundled face is - so this is always available, never silently ignored. */
+    val WEAR_TITLE_FONT_ITALIC: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_title_font_italic", false)
+
+    /** Track title size as a percentage of the face's designed size
+     *  ([TYPOGRAPHY_MIN_SCALE]..[TYPOGRAPHY_MAX_SCALE]). */
+    val WEAR_TITLE_FONT_SCALE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_title_font_scale", 100)
+
+    /** Track title opacity, [TYPOGRAPHY_MIN_OPACITY]-100%. */
+    val WEAR_TITLE_FONT_OPACITY: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_title_font_opacity", 100)
+
+    /** Extra title letter spacing in hundredths of an em
+     *  ([TYPOGRAPHY_MIN_TRACKING]..[TYPOGRAPHY_MAX_TRACKING]); 0 keeps the font's own metrics. */
+    val WEAR_TITLE_FONT_TRACKING: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_title_font_tracking", 0)
+
+    /** Artist line weight, 100-900. See [WEAR_TITLE_FONT_WEIGHT]. */
+    val WEAR_ARTIST_FONT_WEIGHT: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_artist_font_weight", 400)
+
+    /** Renders the artist line italic. See [WEAR_TITLE_FONT_ITALIC]. */
+    val WEAR_ARTIST_FONT_ITALIC: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_artist_font_italic", false)
+
+    /** Artist line size percentage. See [WEAR_TITLE_FONT_SCALE]. */
+    val WEAR_ARTIST_FONT_SCALE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_artist_font_scale", 100)
+
+    /** Artist line opacity. See [WEAR_TITLE_FONT_OPACITY]. */
+    val WEAR_ARTIST_FONT_OPACITY: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_artist_font_opacity", 100)
+
+    /** Extra artist letter spacing. See [WEAR_TITLE_FONT_TRACKING]. */
+    val WEAR_ARTIST_FONT_TRACKING: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_artist_font_tracking", 0)
+
+    /** Size of the playing-app icon next to the artist line, as a percentage of its designed size
+     *  ([TYPOGRAPHY_MIN_SCALE]..[TYPOGRAPHY_MAX_SCALE]). Only meaningful while
+     *  [WEAR_SHOW_SOURCE_ICON] is on. */
+    val WEAR_SOURCE_ICON_SCALE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_source_icon_scale", 100)
+
+    /** Playing-app icon opacity, [TYPOGRAPHY_MIN_OPACITY]-100%. */
+    val WEAR_SOURCE_ICON_OPACITY: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_source_icon_opacity", 100)
+
+    // --- Google Sans Flex variable-font axes (WatchTypography.FLEX_*) ---
+    //
+    // Only meaningful while WEAR_FONT is "google_sans_flex" - every other bundled font has no
+    // variable axes to move. Deliberately global rather than per title/artist: unlike weight
+    // (WEAR_TITLE_FONT_WEIGHT / WEAR_ARTIST_FONT_WEIGHT, reused as this font's own wght axis) a
+    // mismatched width/roundness/grade between the two lines would read as a rendering glitch, not
+    // a hierarchy choice. See WatchTypography.flexVariationSettings for how all six axes combine.
+
+    /** Google Sans Flex `wdth` axis, [WatchTypography.FLEX_WIDTH_MIN]..[WatchTypography.FLEX_WIDTH_MAX]. */
+    val WEAR_FONT_FLEX_WIDTH: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_font_flex_width", 100)
+
+    /** Google Sans Flex `opsz` axis, [WatchTypography.FLEX_OPTICAL_SIZE_MIN]..[WatchTypography.FLEX_OPTICAL_SIZE_MAX]. */
+    val WEAR_FONT_FLEX_OPTICAL_SIZE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_font_flex_optical_size", 18)
+
+    /** Google Sans Flex `GRAD` axis, [WatchTypography.FLEX_GRADE_MIN]..[WatchTypography.FLEX_GRADE_MAX]. */
+    val WEAR_FONT_FLEX_GRADE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_font_flex_grade", 0)
+
+    /** Google Sans Flex `ROND` axis, [WatchTypography.FLEX_ROUNDNESS_MIN]..[WatchTypography.FLEX_ROUNDNESS_MAX]. */
+    val WEAR_FONT_FLEX_ROUNDNESS: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_font_flex_roundness", 0)
+
+    /** Bounds for the percentage-based typography controls. The scale ceiling is deliberately
+     *  modest: the faces reserve fixed vertical space for the title/artist block, so a larger
+     *  multiplier would push the artist line under the transport controls rather than look bigger.
+     *  The opacity floor keeps text from being configured into complete invisibility, which reads
+     *  as a rendering bug rather than a setting. */
+    const val TYPOGRAPHY_MIN_SCALE: Int = 70
+    const val TYPOGRAPHY_MAX_SCALE: Int = 140
+    const val TYPOGRAPHY_MIN_OPACITY: Int = 20
+    const val TYPOGRAPHY_MIN_TRACKING: Int = -5
+    const val TYPOGRAPHY_MAX_TRACKING: Int = 20
+
     /** When the track position ("1:23 / 3:45") is shown on the now-playing screen: "always",
      *  "playing" (only while music plays), "paused" (only while paused) or "never". */
     val WEAR_TRACK_TIME_MODE: PreferenceDefinition<String> =
@@ -311,6 +410,24 @@ object MiscPreferences {
     /** Hex color (#RRGGBB) used by the unified "normal" color treatment. */
     val WEAR_NORMAL_COLOR: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_normal_color", "")
+
+    /** Tone filter applied on top of whatever [WEAR_COLOR_TREATMENT] produced: "none" (identity),
+     *  "vibrant", "pastel", "warm" or "cool". Orthogonal to the treatment on purpose, so e.g.
+     *  "triadic + pastel" needs no extra treatment value. Decoded by [ColorModifier]. */
+    val WEAR_COLOR_MODIFIER: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_color_modifier", "none")
+
+    /**
+     * Turns the whole album-derived palette around the hue wheel, in degrees (0-359).
+     *
+     * Every treatment anchors its *primary* to the album's own hue and only rotates the companion
+     * slots, so on its own the main accent never changes between treatments. This shifts all three
+     * slots together, which varies that primary while leaving each harmony's internal angles
+     * intact. 0 is the identity; a hand-picked Normal colour is never shifted
+     * ([SurfacePaletteResolver.derive]).
+     */
+    val WEAR_COLOR_HUE_SHIFT: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_color_hue_shift", 0)
 
     /** How the now-playing title text behaves when it doesn't fit its available width: "smart"
      *  (default - shrinks first, wraps to 2 lines if that helps, and only scrolls as a last
@@ -585,7 +702,15 @@ object MiscPreferences {
             WEAR_EDGE_PROGRESS_VISIBLE, WEAR_EDGE_SEEK_ENABLED,
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
             WEAR_TRACK_TIME_MODE,
-            WEAR_DYNAMIC_ACCENT, WEAR_COLOR_TREATMENT, WEAR_NORMAL_COLOR,
+            WEAR_DYNAMIC_ACCENT, WEAR_COLOR_TREATMENT, WEAR_NORMAL_COLOR, WEAR_COLOR_MODIFIER,
+            WEAR_COLOR_HUE_SHIFT,
+            WEAR_TITLE_FONT_WEIGHT, WEAR_TITLE_FONT_ITALIC, WEAR_TITLE_FONT_SCALE,
+            WEAR_TITLE_FONT_OPACITY, WEAR_TITLE_FONT_TRACKING,
+            WEAR_ARTIST_FONT_WEIGHT, WEAR_ARTIST_FONT_ITALIC, WEAR_ARTIST_FONT_SCALE,
+            WEAR_ARTIST_FONT_OPACITY, WEAR_ARTIST_FONT_TRACKING,
+            WEAR_SOURCE_ICON_SCALE, WEAR_SOURCE_ICON_OPACITY,
+            WEAR_FONT_FLEX_WIDTH, WEAR_FONT_FLEX_OPTICAL_SIZE,
+            WEAR_FONT_FLEX_GRADE, WEAR_FONT_FLEX_ROUNDNESS,
             WEAR_ALBUM_ART_FADE, WEAR_SCREEN_BUTTONS_OFFSET, WEAR_SCREEN_BUTTONS_CURVE_STYLE,
             WEAR_SCREEN_BUTTONS_BG, WEAR_SCREEN_BUTTONS_OPACITY, WEAR_SCREEN_BUTTONS_SHAPE,
             WEAR_MINI_BUTTONS_MODE, WEAR_GESTURES_MODE,

@@ -14,6 +14,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.LinearInterpolator
+import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.R
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -81,6 +82,11 @@ class CircularProgressSeekBar : View {
         // Slightly longer than MusicViewModel's tick interval so each animation is still
         // in flight (and gets smoothly redirected) when the next tick's value arrives.
         private const val PROGRESS_ANIMATION_DURATION_MS = 600L
+
+        /** Hue-distance floor (degrees) for [hasVisibleHueSpread] - matches
+         *  [ColorHarmony.MIN_DUOTONE_HUE_GAP], the same bar the palette math itself uses to decide
+         *  two colors are worth showing as a pair rather than one. */
+        private const val MIN_VISIBLE_HUE_SPREAD = ColorHarmony.MIN_DUOTONE_HUE_GAP
     }
 
     private val foregroundPaint: Paint = Paint()
@@ -148,6 +154,37 @@ class CircularProgressSeekBar : View {
             foregroundPaint.color = value
             invalidate()
         }
+
+    private var secondaryColorInt: Int = 0
+    private var tertiaryColorInt: Int = 0
+
+    /**
+     * Companion colors for a multi-hue [SurfaceColorTreatment][com.svartifoss.snfell.common.SurfaceColorTreatment]
+     * (Triadic, Complementary, Analogous, Duotone...). [RingStyle.SOLID] blends them into the arc
+     * as a sweep gradient instead of one flat tint, which is what actually makes those treatments
+     * visible on the classic face - the ring is its only always-on-screen colored element, unlike
+     * the volume overlay or quick panel, which only show a treatment's secondary/tertiary briefly.
+     *
+     * A treatment whose secondary/tertiary sit close to the primary hue (Normal, Desaturated,
+     * Expressive on typical single-hue art, Monochrome) renders exactly as before: see
+     * [hasVisibleHueSpread].
+     */
+    fun setPaletteColors(primary: Int, secondary: Int, tertiary: Int) {
+        val changed = foregroundPaint.color != primary ||
+                secondaryColorInt != secondary || tertiaryColorInt != tertiary
+        foregroundPaint.color = primary
+        secondaryColorInt = secondary
+        tertiaryColorInt = tertiary
+        if (changed) invalidate()
+    }
+
+    /** True when the companion colors carry a genuinely different hue from the primary - below
+     *  this, a gradient would just be visual noise over what reads as a solid color anyway. */
+    private fun hasVisibleHueSpread(): Boolean {
+        val primary = foregroundPaint.color
+        return ColorHarmony.hueDistance(primary, secondaryColorInt) >= MIN_VISIBLE_HUE_SPREAD ||
+                ColorHarmony.hueDistance(primary, tertiaryColorInt) >= MIN_VISIBLE_HUE_SPREAD
+    }
 
     var ringStyle: RingStyle = RingStyle.SOLID
         set(value) {
@@ -321,7 +358,25 @@ class CircularProgressSeekBar : View {
         when (ringStyle) {
             RingStyle.SOLID -> {
                 canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
-                canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
+                // A flat single-hue treatment (Normal, Desaturated, Expressive/Monochrome on most
+                // covers) falls under the threshold and draws exactly as before - only a treatment
+                // that deliberately rotates hue (Triadic, Complementary, Analogous, Duotone) gets
+                // the gradient, so this is additive rather than a restyle of the existing look.
+                if (sweep > 1f && hasVisibleHueSpread()) {
+                    val shader = SweepGradient(
+                            circleBounds.centerX(), circleBounds.centerY(),
+                            intArrayOf(foregroundPaint.color, secondaryColorInt, tertiaryColorInt),
+                            floatArrayOf(0f, (sweep / 360f * 0.5f), (sweep / 360f).coerceAtMost(1f))
+                    )
+                    val rotate = Matrix()
+                    rotate.setRotate(-90f, circleBounds.centerX(), circleBounds.centerY())
+                    shader.setLocalMatrix(rotate)
+                    foregroundPaint.shader = shader
+                    canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
+                    foregroundPaint.shader = null
+                } else {
+                    canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
+                }
             }
             RingStyle.DASHED -> {
                 val dash = DashPathEffect(floatArrayOf(baseWidth * 1.9f, baseWidth * 1.5f), 0f)

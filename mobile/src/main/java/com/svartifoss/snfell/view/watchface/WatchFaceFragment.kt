@@ -145,6 +145,7 @@ class WatchFaceFragment : Fragment() {
         Section(WatchFacePrefsFragment.SECTION_STYLE, R.string.watch_section_style),
         Section(WatchFacePrefsFragment.SECTION_BACKGROUND, R.string.watch_section_background),
         Section(WatchFacePrefsFragment.SECTION_COLORS, R.string.watch_section_colors),
+        Section(WatchFacePrefsFragment.SECTION_TYPOGRAPHY, R.string.watch_section_typography),
         Section(WatchFacePrefsFragment.SECTION_AOD, R.string.watch_section_aod),
         Section(WatchFacePrefsFragment.SECTION_PANELS, R.string.watch_section_panels),
         Section(WatchFacePrefsFragment.SECTION_MINI_BUTTONS, R.string.watch_section_mini_buttons)

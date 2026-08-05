@@ -202,6 +202,21 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
     private var previousMusicState: MusicState? = null
     private var previousAlbumArt: Bitmap? = null
+
+    /**
+     * The cover currently shown on the watch's now-playing screen, or null when there is none.
+     *
+     * Exposed so the queue can reuse it for the entry that is actually playing. Media3-based
+     * streaming clients (Echo Music and other YouTube Music front-ends) publish queue covers only
+     * as remote URLs - `MediaSessionLegacyStub` attaches a bitmap to a queue item solely when the
+     * app embedded raw `artworkData`, while the *current track's* metadata goes through
+     * `loadBitmapFromMetadata`, which downloads it. That asymmetry is why such players show art on
+     * the player but a queue of blank thumbnails. Handing this already-decoded bitmap to the queue
+     * costs no network call and no permission, so the playing row is never blank.
+     */
+    val currentAlbumArt: Bitmap?
+        get() = previousAlbumArt
+
     var currentMediaController: MediaController? = null
     private var startedFromWatch = false
 
@@ -238,6 +253,20 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     /** Most recently played tracks, newest first. Used as a fallback when [MediaController.getQueue] is unavailable.
      *  Persisted via [TrackHistoryStorage] so it survives this service being torn down and recreated. */
     val recentTrackHistory = ArrayDeque<TrackHistoryEntry>()
+
+    /**
+     * The playing app's queue, or null when it genuinely publishes none (the caller then falls
+     * back to [recentTrackHistory]).
+     *
+     * Prefers the tracked controller's own queue and only then looks at the app's other live
+     * sessions - see [ActiveMediaSessionProvider.siblingQueueForPackage] for why an app can have a
+     * queue on a session that is not the one playing.
+     */
+    fun resolvePlaybackQueue(): List<android.media.session.MediaSession.QueueItem>? {
+        val controller = currentMediaController ?: return null
+        controller.queue?.takeIf { it.isNotEmpty() }?.let { return it }
+        return mediaSessionProvider.siblingQueueForPackage(controller.packageName, controller)
+    }
 
     private var currentVolume = 0
 

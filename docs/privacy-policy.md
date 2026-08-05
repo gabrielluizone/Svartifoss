@@ -51,10 +51,11 @@ all.
 | Permission                                                   | What it's for                                                                                                                                                                                  |
 | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Foreground service / "Post notifications"                    | Keeps the phone↔watch connection alive while music plays, shown as a persistent notification (required by Android for background media apps). Also required to show the optional developer announcement notifications described below.                                                 |
-| Storage (legacy, only on very old Android versions) / Photos | Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option.                                                  |
+| Photos                                                       | Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option.                                                  |
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
-| Internet                                                     | Used for optional update checks, the Firebase diagnostics described below, and (only if you turn it on) fetching shortcut artwork directly from the streaming service. Core playback mirroring and control work locally between your two devices.                         |
+| Music and audio (Android 13+) / Storage (older versions)     | Only used to read album covers for entries in the playback queue, when the music app publishes them as references into your music library rather than as images. Requested from Settings → Apps, never at startup, and only ever read locally — nothing is uploaded. Decline it and the queue simply shows blank thumbnails. On very old Android versions the same legacy Storage permission also covers saving the current album art to your gallery, which only happens if you tap that option. |
+| Internet                                                     | Used for optional update checks, the Firebase diagnostics described below, and — only if you turn them on — fetching shortcut artwork from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.                         |
 
 ## What's stored locally on your phone
 
@@ -141,6 +142,34 @@ goes directly to the streaming service, not through any server of ours, and
 is governed by that service's own privacy policy, not this one. Apple
 Music, Amazon Music, and Tidal have no public oEmbed endpoint, so shortcuts
 to those services always fall back to a generic app icon instead.
+
+## Playback queue covers (optional)
+
+Music apps publish the cover for each queue entry in one of two ways, and
+neither is read unless you opt in.
+
+**From your library.** Local players (Retro Music and similar) reference a
+cover already stored on your device. Reading those needs Android's music and
+audio permission, requested from the "Queue covers from your library" row in
+Settings → Apps. This is a purely local read — no network access is involved
+and nothing about your library is uploaded, transmitted to the watch beyond
+the covers for the up-to-20 queue entries being displayed, or shared with
+anyone. Declining leaves the queue working with blank thumbnails.
+
+**From the internet.** Streaming clients publish a cover URL instead of an
+image. **Fetch queue covers online** (Settings → Apps, and the Watch face
+tab's Panels section) downloads each such cover once and caches it on the
+phone. Only the cover URL the music app itself published is requested; no
+account, API key, or other personal data is attached, and the request goes
+directly to whatever host that app pointed at, not through any server of
+ours.
+
+This one is **on by default**, unlike the optional shortcut artwork above.
+The reason is that a streaming app's queue has no other cover source at all,
+so leaving it off produced a queue of permanently blank rows rather than a
+degraded one. Turning it off is a single switch, and with it off remote
+covers are skipped entirely and those entries show blank thumbnails — the
+queue itself, and everything else in the app, keeps working offline.
 
 ## Usage diagnostics
 

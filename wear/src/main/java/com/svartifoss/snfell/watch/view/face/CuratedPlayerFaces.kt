@@ -339,6 +339,7 @@ private fun BoxScope.ImmersiveComposition(
                     AdaptiveTitleText(
                             text = state.title,
                             mode = state.titleTextMode,
+                            typography = state.titleTypography,
                             color = Color.White,
                             fontSize = 17.sp,
                             lineHeight = 19.sp,
@@ -593,6 +594,7 @@ private fun BoxScope.AuroraComposition(
                 AdaptiveTitleText(
                         state.title,
                         mode = state.titleTextMode,
+                        typography = state.titleTypography,
                         color = Color.White,
                         fontSize = 19.sp,
                         lineHeight = 20.sp,
@@ -796,6 +798,7 @@ private fun BoxScope.SpectrumHeader(
     ) {
         if (state.showTitle) {
             AdaptiveTitleText(state.title.uppercase(), mode = state.titleTextMode,
+                    typography = state.titleTypography,
                     color = Color.White.copy(alpha = .92f), fontSize = 12.sp, lineHeight = 14.sp,
                     letterSpacing = 1.1.sp, fontWeight = FontWeight.Bold,
                     fontFamily = state.titleFont, textAlign = TextAlign.Center)
@@ -805,9 +808,9 @@ private fun BoxScope.SpectrumHeader(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(top = 2.dp)) {
                 SourceIconGlyph(state, 11.dp, Color(state.artistColor).copy(alpha = .78f))
-                Text(artistOrStatus(state), color = Color(state.artistColor).copy(alpha = .78f),
-                        fontSize = 9.sp, lineHeight = 11.sp, letterSpacing = .35.sp, fontFamily = state.artistFont,
-                        textAlign = TextAlign.Center, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                ArtistLineText(artistOrStatus(state), state,
+                        color = Color(state.artistColor).copy(alpha = .78f),
+                        fontSize = 9.sp, lineHeight = 11.sp, letterSpacing = .35.sp)
             }
         }
     }
@@ -842,6 +845,7 @@ private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
             AdaptiveTitleText(
                     state.title.uppercase(),
                     mode = state.titleTextMode,
+                    typography = state.titleTypography,
                     color = Color.White,
                     fontSize = 11.sp,
                     lineHeight = 13.sp,
@@ -871,6 +875,7 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
+                    typography = state.titleTypography,
                     color = Color.White,
                     fontSize = 22.sp,
                     lineHeight = 24.sp,
@@ -913,6 +918,7 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
+                    typography = state.titleTypography,
                     color = Color.White,
                     fontSize = 15.sp,
                     lineHeight = 17.sp,
@@ -954,6 +960,7 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
             AdaptiveTitleText(
                     state.title,
                     mode = state.titleTextMode,
+                    typography = state.titleTypography,
                     color = Color.White.copy(alpha = .94f),
                     fontSize = 14.sp,
                     lineHeight = 16.sp,
@@ -1001,6 +1008,7 @@ private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
             AdaptiveTitleText(
                     state.title.uppercase(),
                     mode = state.titleTextMode,
+                    typography = state.titleTypography,
                     color = Color.White.copy(alpha = .88f),
                     fontSize = 14.sp,
                     lineHeight = 17.sp,
@@ -1540,6 +1548,7 @@ private fun BoxScope.MaterialComposition(
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
+                    typography = state.titleTypography,
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
@@ -1555,14 +1564,11 @@ private fun BoxScope.MaterialComposition(
                     modifier = Modifier.padding(top = 2.dp)
             ) {
                 SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, 0.70f))
-                Text(
+                ArtistLineText(
                         text = state.artist,
+                        state = state,
                         color = artistOrStatusColor(state, 0.70f),
-                        fontSize = 13.sp,
-                        fontFamily = state.artistFont,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        fontSize = 13.sp
                 )
             }
         }

@@ -33,6 +33,7 @@ import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
+import com.svartifoss.snfell.music.QueueArtworkResolver
 import com.svartifoss.snfell.music.StreamingService
 import com.svartifoss.snfell.music.StreamingShortcutLinks
 import com.svartifoss.snfell.util.WearableAvailability
@@ -87,6 +88,22 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
     private val importConfigLauncher = registerForActivityResult(
             ActivityResultContracts.OpenDocument()
     ) { uri -> uri?.let { importConfigFrom(it) } }
+
+    /** Media access for local-library queue covers - see [QueueArtworkResolver]. Requested from
+     *  its own preference row rather than at startup, so the grant dialog appears with the reason
+     *  already on screen instead of unprompted on first launch. */
+    private val mediaPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        refreshQueueArtworkSummary()
+        val context = context ?: return@registerForActivityResult
+        Toast.makeText(
+                context,
+                if (granted) R.string.setting_queue_local_artwork_granted
+                else R.string.setting_queue_local_artwork_denied,
+                Toast.LENGTH_LONG
+        ).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         section = arguments?.getString(ARG_SECTION) ?: SECTION_GENERAL
@@ -279,6 +296,31 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
 
     /** Phone-side app capabilities live together here: streaming link routing, shortcut import,
      * notification-listener access and the per-music-app automatic-launch filter. */
+    /** Reflects whether media access is currently granted, so the row states the actual situation
+     *  instead of always inviting a grant that may already have happened. */
+    private fun refreshQueueArtworkSummary() {
+        val preference = findPreference<Preference>("queue_media_permission") ?: return
+        val context = context ?: return
+        preference.setSummary(
+                if (QueueArtworkResolver.hasMediaPermission(context)) {
+                    R.string.setting_queue_local_artwork_granted
+                } else {
+                    R.string.setting_queue_local_artwork_description
+                })
+    }
+
+    private fun openAppDetailsSettings() {
+        try {
+            startActivity(Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", requireContext().packageName, null)))
+        } catch (_: ActivityNotFoundException) {
+            Toast.makeText(requireContext(),
+                    R.string.setting_notification_access_unavailable,
+                    Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun initAppsSection() {
         migrateStreamingOpenMode()
 
@@ -287,6 +329,19 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                 startActivity(Intent(requireContext(), PlaylistShortcutsActivity::class.java))
                 true
             }
+
+        findPreference<Preference>("queue_media_permission")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                if (QueueArtworkResolver.hasMediaPermission(requireContext())) {
+                    // Already granted - the only way back from here is the system app settings,
+                    // since a granted runtime permission cannot be revoked by the app itself.
+                    openAppDetailsSettings()
+                } else {
+                    mediaPermissionLauncher.launch(QueueArtworkResolver.MEDIA_PERMISSION)
+                }
+                true
+            }
+        refreshQueueArtworkSummary()
 
         findPreference<Preference>("notification_access")?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
@@ -363,6 +418,10 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
      * every service listed in [StreamingService]. */
     private fun refreshAppsSection() {
         if (preferenceScreen == null || !isAdded) return
+
+        // The grant can also be changed from Android's own app settings, so re-read it on every
+        // return to this screen rather than only after our own request completes.
+        refreshQueueArtworkSummary()
 
         val supportedServices = StreamingService.values().filter { it.packageName != null }
         val installedServices = supportedServices.filter { service ->

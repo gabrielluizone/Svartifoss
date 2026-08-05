@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Android 13+ replacement for READ_EXTERNAL_STORAGE, which stopped being grantable at
+         targetSdk 33. Used only to decode MediaStore album art for playback-queue entries whose
+         player publishes covers as content:// library URIs (see QueueArtworkResolver); the queue
+         degrades to blank thumbnails when it is not granted, so it is requested in context rather
+         than at startup. -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.VIBRATE" />

@@ -174,6 +174,7 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     AdaptiveTitleText(
                             text = state.title,
                             mode = state.titleTextMode,
+                            typography = state.titleTypography,
                             color = Color.White,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
@@ -187,14 +188,11 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.padding(top = if (state.showTitle) 2.dp else 0.dp)) {
                         SourceIconGlyph(state, 13.dp, Color(state.artistColor))
-                        Text(
+                        ArtistLineText(
                                 text = state.artist,
+                                state = state,
                                 color = Color(state.artistColor),
-                                fontSize = 11.sp,
-                                fontFamily = state.artistFont,
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                                fontSize = 11.sp
                         )
                     }
                 }

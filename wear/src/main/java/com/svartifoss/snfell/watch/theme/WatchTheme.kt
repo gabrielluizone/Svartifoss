@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
@@ -73,6 +74,67 @@ val GoogleSansFamily = FontFamily(
         Font(R.font.google_sans_regular, FontWeight.Normal),
         Font(R.font.google_sans_bold, FontWeight.Bold)
 )
+
+/**
+ * Google Sans Flex at its own default instance (wght 400, every other axis at its `fvar` default -
+ * see [com.svartifoss.snfell.common.WatchTypography.IDENTITY_FLEX_AXES]). Used wherever a single,
+ * non-variable [FontFamily] is enough - the font catalog fallback and the awake clock, which
+ * deliberately does not follow the per-element weight/axis controls (see
+ * [com.svartifoss.snfell.watch.view.face.NowPlayingFaceState.clockFont]).
+ *
+ * Title/artist text needs a *different* instance per element (their own weight/slant plus the
+ * shared width/optical-size/grade/roundness axes), which a single static [FontFamily] cannot
+ * express - see [flexFontFamily] for that path.
+ */
+val GoogleSansFlexFamily = FontFamily(Font(R.font.google_sans_flex, FontWeight.Normal))
+
+/**
+ * A Google Sans Flex [FontFamily] pinned to one element's resolved axis values. Built fresh per
+ * call rather than cached: title and artist typically differ (their own weight/slant), and the
+ * four shared axes can change independently, so there is no single stable instance to reuse the
+ * way [GoogleSansFlexFamily] is for axis-agnostic callers.
+ *
+ * `wght`/`slnt` use [spec]'s own weight/italic - the same pair every other font's [Typeface.create]
+ * weight-matching path already reads - so Flex does not introduce a second, conflicting weight
+ * control; `wdth`/`opsz`/`GRAD`/`ROND` come from the shared [axes]. The classic View face resolves
+ * the equivalent instance via `Typeface.Builder.setFontVariationSettings`
+ * ([com.svartifoss.snfell.common.WatchTypography.flexVariationSettings]), built from the same
+ * [spec]/[axes] pair, so both rendering paths agree.
+ */
+@OptIn(androidx.compose.ui.text.ExperimentalTextApi::class)
+fun flexFontFamily(
+        spec: com.svartifoss.snfell.common.WatchTypography.TextSpec,
+        axes: com.svartifoss.snfell.common.WatchTypography.FlexAxes
+): FontFamily {
+    val weight = spec.weight.coerceIn(1, 1000)
+    val slant = if (spec.italic) {
+        com.svartifoss.snfell.common.WatchTypography.FLEX_SLANT_ITALIC
+    } else {
+        com.svartifoss.snfell.common.WatchTypography.FLEX_SLANT_UPRIGHT
+    }
+    return FontFamily(
+            Font(
+                    resId = R.font.google_sans_flex,
+                    weight = FontWeight(weight),
+                    // Declared to match what callers (AdaptiveTitleText/ArtistLineText) request at
+                    // the Text() level - an exact match skips Compose's synthetic italic, which
+                    // would otherwise double up on top of the real `slnt` axis already below.
+                    style = if (spec.italic) {
+                        androidx.compose.ui.text.font.FontStyle.Italic
+                    } else {
+                        androidx.compose.ui.text.font.FontStyle.Normal
+                    },
+                    variationSettings = FontVariation.Settings(
+                            FontVariation.weight(weight),
+                            FontVariation.width(axes.width),
+                            FontVariation.Setting("opsz", axes.opticalSize),
+                            FontVariation.slant(slant),
+                            FontVariation.grade(axes.grade.toInt()),
+                            FontVariation.Setting("ROND", axes.roundness)
+                    )
+            )
+    )
+}
 
 /** Mom's Typewriter — a retro typewriter-style font, available for curated face text. */
 val MomsTypewriterFamily = FontFamily(
@@ -172,6 +234,7 @@ private val modernSystemTypefaceNames = mapOf(
  */
 fun watchFontFamily(key: String?): FontFamily = when (key) {
     "roboto" -> FontFamily.Default
+    "google_sans_flex" -> GoogleSansFlexFamily
     "typewriter" -> MomsTypewriterFamily
     "love_letter" -> LoveLetterTypewriterFamily
     "poppins" -> PoppinsFamily
@@ -191,6 +254,10 @@ fun watchFontFamily(key: String?): FontFamily = when (key) {
  *  and fallback identical to it so classic and Compose faces render the exact same choice. */
 fun watchFontTypeface(context: Context, key: String?): Typeface = when (key) {
     "roboto" -> Typeface.DEFAULT
+    // The plain (non-variable) instance - callers that need per-element axis control use
+    // WatchTheme.flexTypeface instead, which every classic-face draw site already does
+    // (applyClassicFont / styledClassicTypeface in MainActivity).
+    "google_sans_flex" -> ResourcesCompat.getFont(context, R.font.google_sans_flex)
     "typewriter" -> ResourcesCompat.getFont(context, R.font.moms_typewriter)
     "love_letter" -> ResourcesCompat.getFont(context, R.font.love_letter_typewriter)
     "poppins" -> ResourcesCompat.getFont(context, R.font.poppins_regular)
@@ -203,3 +270,43 @@ fun watchFontTypeface(context: Context, key: String?): Typeface = when (key) {
     else -> key?.let(modernSystemTypefaceNames::get)?.let { Typeface.create(it, Typeface.NORMAL) }
             ?: ResourcesCompat.getFont(context, R.font.google_sans_regular)
 } ?: Typeface.DEFAULT
+
+/** Cached copy of the bundled Flex font, extracted once per process. `Typeface.Builder` has no
+ *  constructor for a `res/font` resource id directly (only `File`, `FileDescriptor`, an asset path,
+ *  or a raw filesystem path) - see [flexTypeface]. */
+private var cachedFlexFontFile: java.io.File? = null
+
+private fun flexFontFile(context: Context): java.io.File {
+    cachedFlexFontFile?.takeIf { it.length() > 0L }?.let { return it }
+    val target = java.io.File(context.applicationContext.cacheDir, "google_sans_flex_variable.ttf")
+    if (!target.exists() || target.length() == 0L) {
+        context.resources.openRawResource(R.font.google_sans_flex).use { input ->
+            target.outputStream().use { output -> input.copyTo(output) }
+        }
+    }
+    cachedFlexFontFile = target
+    return target
+}
+
+/**
+ * [flexFontFamily]'s [Typeface] counterpart for the classic View face, via
+ * `Typeface.Builder(File).setFontVariationSettings(String)` (API 26+, matching this module's
+ * minSdk). Falls back to the plain (non-variable) instance if the builder ever throws, which the
+ * platform's own docs note can happen for a malformed variation string - defensive here since a
+ * bad axis combination must never crash the now-playing screen.
+ */
+fun flexTypeface(
+        context: Context,
+        spec: com.svartifoss.snfell.common.WatchTypography.TextSpec,
+        axes: com.svartifoss.snfell.common.WatchTypography.FlexAxes
+): Typeface {
+    val settings = com.svartifoss.snfell.common.WatchTypography.flexVariationSettings(spec, axes)
+    return try {
+        Typeface.Builder(flexFontFile(context))
+                .setFontVariationSettings(settings)
+                .build() ?: ResourcesCompat.getFont(context, R.font.google_sans_flex) ?: Typeface.DEFAULT
+    } catch (e: Exception) {
+        timber.log.Timber.w(e, "Flex variation settings rejected: %s", settings)
+        ResourcesCompat.getFont(context, R.font.google_sans_flex) ?: Typeface.DEFAULT
+    }
+}

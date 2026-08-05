@@ -1,5 +1,37 @@
 # Changelog
 
+## 3.1-beta1
+
+**Beta — not a finished release.** Colour treatments that build a real palette from the album instead of repeating one swatch, per-element typography (including a full Google Sans Flex variable-font axis editor) for the track title and artist, and a queue that finally shows covers from local and streaming players alike.
+
+### Watch colours
+
+- **Five new colour treatments.** Alongside Normal / Desaturated / Expressive, the Watch face tab now offers **Complementary** (the album accent plus its opposite hue), **Triadic** (three hues evenly spaced around the wheel), **Analogous** (neighbouring hues, the subtlest of the set), **Monochrome** (one hue in three tones, Material-You style) and **Duotone** (two colours that genuinely appear in the artwork). They apply face-wide or per surface (artist, progress, volume, quick panel) exactly like the existing treatments, and the picker's swatches preview each one's real colours.
+- **New: Tone.** A filter applied on top of whichever treatment is selected — **Vibrant**, **Pastel**, **Warm** or **Cool** — so combinations like "triadic but pastel" need no extra treatment of their own. Defaults to None, which changes nothing.
+- **New: Color shift.** Every treatment anchors its *main* colour to the album's own hue and only rotates the companion colours, so the main accent stayed the same no matter which treatment you picked. This turns the whole palette around the colour wheel (0–359°), varying that main colour while keeping each harmony's internal angles intact. 0 keeps the album colour as-is; a fixed Normal colour you picked by hand is never shifted.
+- **Black-and-white covers no longer get an invented colour.** Every harmony needs a hue to rotate, and a greyscale cover has none; rather than producing three identical greys (or clamping a grey up into an arbitrary tint), the harmonies fall back to a tonal ladder on such artwork.
+- The watch, the phone preview and the treatment picker's swatches now derive palettes through one shared implementation, so a colour shown on the phone is the colour the watch renders.
+
+### Typography
+
+- **New "Text" tab**, split out of Player so the font, title, artist and app-icon controls are no longer buried in one long list — each is now its own labelled group.
+- **The title and artist can now be styled independently**, on top of the existing font choice: **weight** (a free 1–1000 value, not a fixed dropdown), **italic**, **size** (70–140% of the face's own size), **opacity** and **letter spacing**. Each face's designed look is the default, so nothing changes until you move a control — and a face that deliberately draws its title bold stays bold unless you pick a different weight.
+- **New typeface: Google Sans Flex**, a real variable font. Selecting it unlocks four additional sliders — **width**, **optical size**, **grade** and **roundness** — read straight from the font's own axis ranges, so the whole watch face's character is yours to tune, not just its weight.
+- **The playing app's icon is now adjustable too** — size and opacity, independently of the artist text next to it.
+- All of these are per watch face and travel with custom themes and config backups, like every other appearance setting.
+
+### Playback queue
+
+- **Queue covers now work with local music players.** Players like Retro Music publish each queue entry's cover as a reference into your music library rather than as an image. Reading those needs media access, which the app could no longer hold on Android 13 and newer — so the queue silently showed blank thumbnails. There is now a "Queue covers from your library" row under Settings → Apps that requests it, in context and only when you ask. Nothing is sent anywhere; the queue simply keeps showing blank thumbnails if you decline.
+- **Fixed: pausing sent the watch to the "Nothing playing" screen.** A paused track is meant to keep its title with a "Playback Stopped" line; instead the watch dropped to the idle screen. The first update after a pause was correct, so this only struck on the *next* one — a volume change, another app's session appearing, the app reconnecting — which is why it looked intermittent.
+- **Queue covers are sent as JPEG rather than lossless PNG.** Cover art is photographic and has no transparency, so PNG was several times larger for no visible gain — the same reasoning the now-playing cover already used. With up to 20 thumbnails in one transfer the difference is large enough that, at the size a Cover queue style asks for, the covers could take so long over Bluetooth that they appeared never to arrive.
+- **The playing track's cover now always shows in the queue.** It reuses the cover already on the now-playing screen, so it needs no download and no permission — previously a streaming app could show art on the player while its queue, including the row that was playing, stayed blank.
+- **Queue covers now work with streaming players.** Clients like Echo Music and other YouTube Music front-ends publish each queue cover as a link rather than an image, and those were previously skipped outright so that opening the queue could never wait on the network — which left those queues permanently blank. They are now downloaded once each and cached on the phone. **On by default**, because unlike a shortcut thumbnail (which falls back to an app icon) a streaming queue has no other cover source at all; one switch turns it off, in **both** Settings → Apps and the Watch face tab's Panels section, and only the cover URL the player itself published is ever requested.
+- **Streaming covers are no longer pixelated.** Those players publish a *list-sized* thumbnail — often 60px, sized for the phone's own compact rows — which looked coarse stretched across the watch's Cover pill. The size is now requested up front, so the cover arrives at the resolution the watch actually draws it at.
+- **A slow cover can no longer hold up the queue.** The list is only sent once every entry's cover has resolved, so with the online fetch on that meant waiting on real network requests; each one is now capped, and an entry that doesn't answer in time simply arrives without a cover.
+- **Queue covers are found in more places.** Beyond the entry's own image and local URI, the app now also reads the artwork keys apps put in the entry's extras, and can resolve a library track's cover directly.
+- **A queue on a second session is no longer missed.** Some players run more than one media session at once — Retro Music ships a separate Wear browser session alongside its playback one — and only one of them carries the queue. If the session that is playing has none, the app now checks that app's other live sessions before falling back to play history.
+
 ## 3.0
 
 A major update: streaming shortcuts that actually start playback (including in the background), the new minimalist Immersive layout, free bundled fonts, optional online shortcut artwork and the playing-app icon, a redesigned numeric/colored shading system, and many watch-app quality-of-life fixes.

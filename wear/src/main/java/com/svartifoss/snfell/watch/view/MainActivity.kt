@@ -104,8 +104,11 @@ import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.QuickPanelButtons
 import com.svartifoss.snfell.common.ScreenButtons
+import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.SurfaceColorTreatment
+import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.common.SwipeGesture
+import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.resolveAodArtwork
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
@@ -132,6 +135,7 @@ import com.svartifoss.snfell.watch.theme.SwatchInfo
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.theme.lainFont
 import com.svartifoss.snfell.watch.theme.watchFontTypeface
+import com.svartifoss.snfell.watch.theme.flexTypeface
 import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
 import com.svartifoss.snfell.watch.theme.selectPrimaryAccent
 import com.svartifoss.snfell.common.AppLocales
@@ -193,6 +197,13 @@ class MainActivity : WearCompanionWatchActivity(),
     companion object {
         const val EXTRA_OPEN_VOICE_SEARCH = "OpenVoiceSearch"
         private const val KEY_SEARCH_QUERY = "search_query"
+
+        /** The classic face's designed text sizes, which the user's size scale multiplies. Named
+         *  so the initial setup and applyClassicTypography cannot drift out of step. */
+        private const val CLASSIC_TITLE_MAX_SP = 46f
+        private const val CLASSIC_TITLE_MIN_SP = 25f
+        private const val CLASSIC_ARTIST_MAX_SP = 16f
+        private const val CLASSIC_ARTIST_MIN_SP = 9f
 
         private const val MESSAGE_HIDE_VOLUME = 10
         private const val MESSAGE_UPDATE_CLOCK = 11
@@ -311,6 +322,14 @@ class MainActivity : WearCompanionWatchActivity(),
      * themes keep their historical `key@face` scope; a saved custom theme renders its validated
      * [AppearanceContext.baseFace] while reading the isolated active-theme snapshot. */
     private var appearanceContext: AppearanceContext = AppearanceContext.BuiltIn("classic")
+    /** Per-element typography, resolved once per preference read and shared by the classic View
+     *  face ([applyClassicTypography]) and every Compose face (through the face state). */
+    private var titleTypography = WatchTypography.IDENTITY_TEXT
+    private var artistTypography = WatchTypography.IDENTITY_TEXT
+    /** Google Sans Flex's shared width/optical-size/grade/roundness axes - see
+     *  [WatchTypography.flexAxes]. Only consulted when the active font is actually Flex. */
+    private var flexAxes = WatchTypography.IDENTITY_FLEX_AXES
+    private var sourceIconTypography = WatchTypography.IDENTITY_ICON
     private var showTrackTitle = true
     private var showTrackArtist = true
     private var playerControlsVisible = true
@@ -402,6 +421,9 @@ class MainActivity : WearCompanionWatchActivity(),
      * only by [resolveLegacyColorTreatment] when a phone has not migrated them yet. */
     private var colorTreatment = "expressive"
     private var normalColor = ""
+    private var colorModifier = ColorModifier.NONE
+    /** Degrees the whole album-derived palette is turned by - see [MiscPreferences.WEAR_COLOR_HUE_SHIFT]. */
+    private var colorHueShift = 0f
     private var artistColorMode = "follow"
     private var artistCustomColor = ""
     private var artistLegacyDesaturated = false
@@ -811,8 +833,11 @@ class MainActivity : WearCompanionWatchActivity(),
 
         // Title's floor (22sp) is kept comfortably above artist's ceiling (16sp) so the title
         // stays visually dominant even when a long title has to shrink to fit two lines.
-        binding.textArtist.enableSmartWordSizing(maxSizeSp = 16f, minSizeSp = 9f)
-        binding.textTitle.enableSmartWordSizing(maxSizeSp = 46f, minSizeSp = 25f)
+        // applyClassicTypography re-applies these with the user's size scale once preferences load.
+        binding.textArtist.enableSmartWordSizing(
+                maxSizeSp = CLASSIC_ARTIST_MAX_SP, minSizeSp = CLASSIC_ARTIST_MIN_SP)
+        binding.textTitle.enableSmartWordSizing(
+                maxSizeSp = CLASSIC_TITLE_MAX_SP, minSizeSp = CLASSIC_TITLE_MIN_SP)
         // Same idea for the quick-actions panel's copy of the title/artist - without this a long
         // title just sat there clipped instead of shrinking a bit and then scrolling.
         binding.quickActionPanelTitle.enableSmartWordSizing(maxSizeSp = 18f, minSizeSp = 15f)
@@ -1169,9 +1194,72 @@ class MainActivity : WearCompanionWatchActivity(),
         } else {
             wearFontKey
         }
-        val typeface = Typeface.create(watchFontTypeface(this, effectiveKey), Typeface.BOLD)
-        binding.textTitle.typeface = typeface
-        binding.textArtist.typeface = typeface
+        if (WatchTypography.isFlexFont(effectiveKey)) {
+            // Flex needs its own real variable-font instance per element (wght/slnt from that
+            // element's spec, plus the shared wdth/opsz/GRAD/ROND) rather than the generic
+            // weight-matching styledClassicTypeface applies to every other font - see flexTypeface.
+            binding.textTitle.typeface = flexTypeface(this, titleTypography, flexAxes)
+            binding.textArtist.typeface = flexTypeface(this, artistTypography, flexAxes)
+            return
+        }
+        val base = watchFontTypeface(this, effectiveKey)
+        binding.textTitle.typeface = styledClassicTypeface(base, titleTypography)
+        binding.textArtist.typeface = styledClassicTypeface(base, artistTypography)
+    }
+
+    /**
+     * [base] with the user's weight/slant applied, for the View-based classic face.
+     *
+     * The classic face has always drawn both lines bold, so the identity weight (400) must keep
+     * producing exactly [Typeface.BOLD] - resolving it to a "normal" 400 face instead would visibly
+     * lighten every existing install the moment these controls shipped. Any other weight is a
+     * deliberate choice and uses the real numeric-weight API where the platform has it (API 28+),
+     * falling back to the coarse bold/normal flags on older watches, which is the most those can
+     * express.
+     */
+    private fun styledClassicTypeface(
+            base: Typeface,
+            spec: WatchTypography.TextSpec
+    ): Typeface {
+        if (spec.weight == 400) {
+            return Typeface.create(base, if (spec.italic) Typeface.BOLD_ITALIC else Typeface.BOLD)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return Typeface.create(base, spec.weight, spec.italic)
+        }
+        val style = when {
+            spec.weight >= 600 && spec.italic -> Typeface.BOLD_ITALIC
+            spec.weight >= 600 -> Typeface.BOLD
+            spec.italic -> Typeface.ITALIC
+            else -> Typeface.NORMAL
+        }
+        return Typeface.create(base, style)
+    }
+
+    /**
+     * Applies the size/opacity/tracking half of the typography preferences to the classic face.
+     * Weight and slant travel with the typeface instead ([applyClassicFont]), which also has to run
+     * on every track change for the Lain easter egg.
+     *
+     * Opacity goes on the View's own alpha rather than into the text colour: the artist line's
+     * colour is recomputed from the album palette on every metadata update
+     * ([resolvedArtistTextColor]), so baking alpha into it would be overwritten on the next track.
+     */
+    private fun applyClassicTypography() {
+        binding.textTitle.enableSmartWordSizing(
+                maxSizeSp = titleTypography.scaled(CLASSIC_TITLE_MAX_SP),
+                minSizeSp = titleTypography.scaled(CLASSIC_TITLE_MIN_SP))
+        binding.textArtist.enableSmartWordSizing(
+                maxSizeSp = artistTypography.scaled(CLASSIC_ARTIST_MAX_SP),
+                minSizeSp = artistTypography.scaled(CLASSIC_ARTIST_MIN_SP))
+        binding.textTitle.letterSpacing = titleTypography.trackingEm
+        binding.textArtist.letterSpacing = artistTypography.trackingEm
+        binding.textTitle.alpha = titleTypography.alpha
+        binding.textArtist.alpha = artistTypography.alpha
+        applyClassicFont(
+                binding.textTitle.text?.toString().orEmpty(),
+                binding.textArtist.text?.toString().orEmpty())
+        applyClassicSourceIcon()
     }
 
     /**
@@ -1245,13 +1333,17 @@ class MainActivity : WearCompanionWatchActivity(),
         // A square box sized off the artist line's own text size, with FIT_CENTER below keeping
         // the icon's own aspect ratio inside it - forcing non-square source art into a square
         // stretched it, which made the glyph look skewed next to the artist name.
-        val box = (binding.textArtist.textSize * 1.1f).toInt().coerceAtLeast(1)
+        // The box already tracks the artist line's size; the icon's own scale multiplies that, so
+        // resizing the icon stays independent of resizing the text next to it.
+        val box = (binding.textArtist.textSize * 1.1f * sourceIconTypography.scale)
+                .toInt().coerceAtLeast(1)
         val params = iconView.layoutParams as LinearLayout.LayoutParams
         params.width = box
         params.height = box
         params.marginEnd = (binding.textArtist.textSize * .28f).toInt()
         iconView.layoutParams = params
 
+        iconView.alpha = sourceIconTypography.alpha
         iconView.scaleType = ImageView.ScaleType.FIT_CENTER
         iconView.setImageBitmap(icon)
         // A notification small icon is a flat white template, so it has to be tinted to the
@@ -1407,29 +1499,22 @@ class MainActivity : WearCompanionWatchActivity(),
     ): SurfacePalette {
         val selected = SurfaceColorTreatment.fromPreference(mode, legacyDesaturated)
         val treatment = selected.resolveAgainst(resolvedGlobalColorTreatment())
-        return when (treatment) {
-            SurfaceColorTreatment.NORMAL -> {
-                val fixed = (if (selected == SurfaceColorTreatment.FOLLOW) null
-                        else parseHexColorOrNull(customColor))
-                        ?: parseHexColorOrNull(normalColor)
-                        ?: defaultSeekBarColor
-                SurfacePalette(
-                        fixed,
-                        albumToneFallback(fixed, .42f),
-                        albumToneFallback(fixed, .68f),
-                        treatment)
-            }
-            SurfaceColorTreatment.DESATURATED -> SurfacePalette(
-                    PaletteTransforms.softenedAlbumAccent(rawPrimary),
-                    PaletteTransforms.softenedAlbumAccent(rawSecondary),
-                    PaletteTransforms.softenedAlbumAccent(rawTertiary),
-                    treatment)
-            SurfaceColorTreatment.EXPRESSIVE ->
-                SurfacePalette(rawPrimary, rawSecondary, rawTertiary, treatment)
-            SurfaceColorTreatment.FOLLOW ->
-                SurfacePalette(rawPrimary, rawSecondary, rawTertiary,
-                        SurfaceColorTreatment.EXPRESSIVE)
-        }
+        val fixed = (if (selected == SurfaceColorTreatment.FOLLOW) null
+                else parseHexColorOrNull(customColor))
+                ?: parseHexColorOrNull(normalColor)
+                ?: defaultSeekBarColor
+        val triad = SurfacePaletteResolver.derive(
+                treatment, colorModifier, rawPrimary, rawSecondary, rawTertiary, fixed,
+                colorHueShift)
+        return SurfacePalette(
+                triad.primary,
+                triad.secondary,
+                triad.tertiary,
+                // FOLLOW can only survive resolveAgainst when the global is FOLLOW too; report the
+                // treatment the resolver actually applied so downstream `== NORMAL` checks (which
+                // gate palette extraction and the Material surface softening) stay correct.
+                if (treatment == SurfaceColorTreatment.FOLLOW) SurfaceColorTreatment.EXPRESSIVE
+                else treatment)
     }
 
     private fun resolvedArtistTextColor(): Int =
@@ -1449,23 +1534,21 @@ class MainActivity : WearCompanionWatchActivity(),
                 ?: albumToneFallback(color, .42f)
         val sourceTertiary = rawTertiaryAccentColor.takeIf { it != 0 }
                 ?: albumToneFallback(color, .68f)
-        when (colorTreatment) {
-            "normal" -> {
-                currentAccentColor = parseHexColorOrNull(normalColor) ?: defaultSeekBarColor
-                currentSecondaryAccentColor = albumToneFallback(currentAccentColor, .42f)
-                currentTertiaryAccentColor = albumToneFallback(currentAccentColor, .68f)
-            }
-            "desaturated" -> {
-                currentAccentColor = PaletteTransforms.softenedAlbumAccent(color)
-                currentSecondaryAccentColor = PaletteTransforms.softenedAlbumAccent(sourceSecondary)
-                currentTertiaryAccentColor = PaletteTransforms.softenedAlbumAccent(sourceTertiary)
-            }
-            else -> {
-                currentAccentColor = color
-                currentSecondaryAccentColor = sourceSecondary
-                currentTertiaryAccentColor = sourceTertiary
-            }
-        }
+        // Routed through the shared resolver rather than a local `when` over the raw preference
+        // string: that older form treated every unrecognised value as Expressive, so each harmony
+        // treatment added later would have silently rendered as the plain album accent here while
+        // the per-surface palettes below applied it correctly.
+        val globalTriad = SurfacePaletteResolver.derive(
+                resolvedGlobalColorTreatment(),
+                colorModifier,
+                color,
+                sourceSecondary,
+                sourceTertiary,
+                parseHexColorOrNull(normalColor) ?: defaultSeekBarColor,
+                colorHueShift)
+        currentAccentColor = globalTriad.primary
+        currentSecondaryAccentColor = globalTriad.secondary
+        currentTertiaryAccentColor = globalTriad.tertiary
         val artistPalette = resolveSurfacePalette(
                 artistColorMode, artistCustomColor, artistLegacyDesaturated,
                 color, sourceSecondary, sourceTertiary)
@@ -1489,7 +1572,8 @@ class MainActivity : WearCompanionWatchActivity(),
         quickPanelSecondaryAccentColor = quickPalette.secondary
         quickPanelTertiaryAccentColor = quickPalette.tertiary
 
-        binding.seekBar.progressColor = progressAccentColor
+        binding.seekBar.setPaletteColors(
+                progressAccentColor, progressSecondaryAccentColor, progressTertiaryAccentColor)
         binding.seekOverlayMeter.accentColor = progressAccentColor
         binding.volumeBar.progressColor = volumeAccentColor
         binding.volumeBar.secondaryColor = volumeSecondaryAccentColor
@@ -3400,6 +3484,8 @@ class MainActivity : WearCompanionWatchActivity(),
         )
         colorTreatment = resolveColorTreatmentPreference()
         normalColor = resolveNormalColorPreference()
+        colorModifier = ColorModifier.fromPreference(faceString(MiscPreferences.WEAR_COLOR_MODIFIER))
+        colorHueShift = faceInt(MiscPreferences.WEAR_COLOR_HUE_SHIFT).toFloat()
         artistColorMode = faceString(MiscPreferences.WEAR_ARTIST_COLOR_MODE)
         artistCustomColor = faceString(MiscPreferences.WEAR_ARTIST_CUSTOM_COLOR)
         artistLegacyDesaturated = faceBool(MiscPreferences.WEAR_ARTIST_DESATURATED)
@@ -3421,7 +3507,7 @@ class MainActivity : WearCompanionWatchActivity(),
                 SurfaceColorTreatment.fromPreference(volumeColorMode).resolveAgainst(globalTreatment),
                 SurfaceColorTreatment.fromPreference(quickPanelColorMode).resolveAgainst(globalTreatment),
                 globalTreatment
-        ).any { treatment -> treatment != SurfaceColorTreatment.NORMAL }
+        ).any { treatment -> treatment.isAlbumDerived }
         albumArtFadeEnabled = faceBool(MiscPreferences.WEAR_ALBUM_ART_FADE)
         // Faces that draw the cover themselves (Poster & co.) honor the fade through their own
         // Crossfade; the host ImageView keeps handling it for classic/expressive backgrounds.
@@ -3479,6 +3565,19 @@ class MainActivity : WearCompanionWatchActivity(),
         // Every Compose face reads the same raw preference value through AdaptiveTitleText now,
         // instead of each hardcoding one fixed overflow strategy the way they used to.
         updateFaceState { it.copy(titleTextMode = titleTextModePref ?: "smart") }
+
+        titleTypography = WatchTypography.titleSpec(preferences, appearanceContext)
+        artistTypography = WatchTypography.artistSpec(preferences, appearanceContext)
+        sourceIconTypography = WatchTypography.sourceIconSpec(preferences, appearanceContext)
+        flexAxes = WatchTypography.flexAxes(preferences, appearanceContext)
+        updateFaceState {
+            it.copy(
+                    titleTypography = titleTypography,
+                    artistTypography = artistTypography,
+                    sourceIconTypography = sourceIconTypography,
+                    flexAxes = flexAxes)
+        }
+        applyClassicTypography()
 
         // Re-apply the last raw palette so changing Normal/Desaturated/Expressive updates every
         // consumer immediately, without waiting for a new album-art callback.

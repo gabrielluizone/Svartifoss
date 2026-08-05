@@ -28,9 +28,9 @@ involvement in that request.
 ## Does your app collect or share any of the required user data types?
 
 **Yes** — because of Firebase Crashlytics (crash reporting), the standard
-automatic collection performed by Firebase Analytics, and (only if the user
-opts in) the shortcut-artwork fetch to the streaming service's own oEmbed
-endpoint. Everything else the app touches (media metadata, button configs,
+automatic collection performed by Firebase Analytics, the queue-cover fetch
+(on by default, one switch to disable) and (only if the user opts in) the
+shortcut-artwork fetch to the streaming service's own oEmbed endpoint. Everything else the app touches (media metadata, button configs,
 search history, playlist shortcuts) stays on-device or goes only to the
 user's own paired watch over the local Wearable Data Layer connection —
 never to a server you operate.
@@ -47,6 +47,7 @@ never to a server you operate.
 | Device or other IDs | Device or other IDs | Yes | With Google (Firebase Analytics) | Analytics | Per-installation app-instance ID and SDK-supported device identifiers used to compute usage metrics. No Svartifoss account or user ID is attached. |
 | Device or other IDs | Device or other IDs | Yes | With Google (Firebase Cloud Messaging) | Push notification delivery | The install's FCM registration token, held by Google's messaging infrastructure to route messages to a shared topic. Svartifoss never receives, stores, or sees this token itself - there is no server of ours to receive it. |
 | App activity | Other user-generated content | Only if the user enables it | With the streaming service (Spotify/YouTube/SoundCloud/Deezer) | Fetching a cover thumbnail for a saved shortcut | Off by default ("Fetch shortcut artwork online"). Only the already-public share link the user saved is sent, directly to that service's own oEmbed endpoint - no account, API key, or Svartifoss/Google identifier is attached. |
+| App activity | Other user-generated content | Yes, unless the user turns it off | With whatever host the playing music app published | Downloading a cover for a playback-queue entry | **On by default** ("Fetch queue covers online", see `QueueArtworkResolver.kt`) - a streaming app's queue exposes no other cover source, so off meant permanently blank rows. Only the cover URL the music app itself put on the queue entry is requested, and only for entries currently being shown on the watch - no account, API key, or Svartifoss/Google identifier is attached. A single switch (Settings → Apps, or Watch face → Panels) disables it. |
 
 **Everything else in Play's standard list — Personal info,
 Financial info, Health and fitness, Messages, Photos/videos, Audio files,
@@ -65,6 +66,13 @@ permissions:
   never leaves the device. This is a local write the user initiates, not
   data the developer collects — do **not** mark "Photos and videos" as
   collected.
+- **Audio files / Music**: the app requests `READ_MEDIA_AUDIO` (Android 13+)
+  purely to decode album covers that a local music player referenced from the
+  device's own media library for the queue entries currently shown on the
+  watch. It never reads audio content, never enumerates the library, and
+  nothing leaves the device, so this should **not** be marked as "Audio
+  files" data collection. The permission is requested in context from
+  Settings → Apps and the queue works without it.
 - **Search history / playlist shortcuts / recently-played tracks**: stored
   only in the app's private local storage. Not collected by the developer,
   so not reportable here either.

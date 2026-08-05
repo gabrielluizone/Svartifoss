@@ -64,6 +64,8 @@
     <string name="watch_section_background_description">Control album art, blur, fading and readability behind the player.</string>
     <string name="watch_section_colors">Colors</string>
     <string name="watch_section_colors_description">Tune the artist, progress ring and album-based accent colors.</string>
+    <string name="watch_section_typography">Text</string>
+    <string name="watch_section_typography_description">Choose a typeface and style the title, artist and app icon independently.</string>
     <string name="watch_section_aod">Always-on</string>
     <string name="watch_section_aod_description">Configure the low-power screen and see its ambient appearance in the preview.</string>
     <string name="watch_section_panels">Panels</string>
@@ -236,6 +238,21 @@
     <string name="category_screen_face">Player appearance</string>
     <string name="category_album_background">Album background</string>
     <string name="category_music_colors">Colors from the music</string>
+    <string name="category_wf_typography_font">Typeface</string>
+    <string name="category_wf_typography_title">Title</string>
+    <string name="category_wf_typography_artist">Artist</string>
+    <string name="category_wf_typography_icon">App icon</string>
+    <string name="category_wf_typography_flex">Google Sans Flex axes</string>
+    <string name="setting_wear_font_flex_hint_title">About these controls</string>
+    <string name="setting_wear_flex_axes_hint">These fine-tune Google Sans Flex specifically — pick it above to use them. Title and artist weight/italic above already set this font\'s own weight (wght) and slant (slnt) axes; the four controls below apply to the whole face.</string>
+    <string name="setting_wear_font_flex_width">Width</string>
+    <string name="setting_wear_font_flex_width_description">Horizontal stretch, from condensed to expanded (25–151). 100 is the font\'s normal width.</string>
+    <string name="setting_wear_font_flex_optical_size">Optical size</string>
+    <string name="setting_wear_font_flex_optical_size_description">Adjusts stroke detail for the text\'s effective size (6–144). Lower values suit small text; higher values suit large display text.</string>
+    <string name="setting_wear_font_flex_grade">Grade</string>
+    <string name="setting_wear_font_flex_grade_description">Shifts weight slightly without changing layout (0–100) — a subtle way to punch up contrast on a dark screen.</string>
+    <string name="setting_wear_font_flex_roundness">Roundness</string>
+    <string name="setting_wear_font_flex_roundness_description">Blends stroke terminals from sharp (0) to fully rounded (100) for a friendlier feel.</string>
     <string name="preview_sample_title">Song title</string>
     <string name="preview_sample_artist">Artist name</string>
     <string name="preview_sample_next_title">Next song</string>
@@ -444,6 +461,8 @@
     <string name="setting_wear_font">Typeface</string>
     <string name="wear_font_google_sans">Google Sans</string>
     <string name="wear_font_google_sans_description">The app\'s default typeface.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">A variable version of Google Sans with adjustable width, optical size, grade and roundness — unlocks the axis controls below.</string>
     <string name="wear_font_roboto">Roboto</string>
     <string name="wear_font_roboto_description">Android\'s classic system typeface.</string>
     <string name="wear_font_rounded">Rounded</string>
@@ -723,23 +742,77 @@
         <item>Normal (chosen color)</item>
         <item>Desaturated (soft album color)</item>
         <item>Expressive (full album palette)</item>
+        <item>Complementary (album + opposite)</item>
+        <item>Triadic (three album hues)</item>
+        <item>Analogous (neighboring hues)</item>
+        <item>Monochrome (one hue, three tones)</item>
+        <item>Duotone (two album colors)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>Follow watch treatment</item>
         <item>Normal (chosen color)</item>
         <item>Desaturated (soft album color)</item>
         <item>Expressive (full album palette)</item>
+        <item>Complementary (album + opposite)</item>
+        <item>Triadic (three album hues)</item>
+        <item>Analogous (neighboring hues)</item>
+        <item>Monochrome (one hue, three tones)</item>
+        <item>Duotone (two album colors)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_values">
         <item>follow</item>
         <item>normal</item>
         <item>desaturated</item>
         <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
     </string-array>
     <string-array name="wear_color_treatment_values">
         <item>normal</item>
         <item>desaturated</item>
         <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Title weight</string>
+    <string name="setting_wear_title_font_italic">Italic title</string>
+    <string name="setting_wear_title_font_scale">Title size</string>
+    <string name="setting_wear_title_font_opacity">Title opacity</string>
+    <string name="setting_wear_title_font_tracking">Title letter spacing</string>
+    <string name="setting_wear_artist_font_weight">Artist weight</string>
+    <string name="setting_wear_artist_font_italic">Italic artist</string>
+    <string name="setting_wear_artist_font_scale">Artist size</string>
+    <string name="setting_wear_artist_font_opacity">Artist opacity</string>
+    <string name="setting_wear_artist_font_tracking">Artist letter spacing</string>
+    <string name="setting_wear_source_icon_scale">App icon size</string>
+    <string name="setting_wear_source_icon_opacity">App icon opacity</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 is the face\'s normal weight; higher is bolder. For Google Sans Flex this is that font\'s own weight axis</string>
+    <string name="setting_wear_typography_scale_description">Percentage of the face\'s own size (70–140). 100 keeps each layout\'s designed size</string>
+    <string name="setting_wear_typography_opacity_description">Percentage (20–100). 100 keeps the face\'s own opacity</string>
+    <string name="setting_wear_typography_tracking_description">Extra space between letters, in hundredths of an em (−5 to 20). 0 keeps the font\'s own spacing</string>
+    <string name="setting_wear_color_modifier">Tone</string>
+    <string name="setting_wear_color_modifier_description">Adjust the whole palette without changing how it is derived — works with every color treatment</string>
+    <string name="setting_wear_color_hue_shift">Color shift</string>
+    <string name="setting_wear_color_hue_shift_description">Rotates the album palette around the color wheel, in degrees (0–359). Every treatment keeps its main color on the album\'s own hue, so this is what varies it. 0 uses the album color as-is; a fixed Normal color is never shifted.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>None</item>
+        <item>Vibrant</item>
+        <item>Pastel</item>
+        <item>Warm</item>
+        <item>Cool</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Edge arc (left)</item>
@@ -1043,6 +1116,7 @@
     </string-array>
     <string-array name="wear_font_entries">
         <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
         <item>@string/wear_font_roboto</item>
         <item>@string/wear_font_rounded</item>
         <item>@string/wear_font_sans_light</item>
@@ -1066,6 +1140,7 @@
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
         <item>@string/wear_font_roboto_description</item>
         <item>@string/wear_font_rounded_description</item>
         <item>@string/wear_font_sans_light_description</item>
@@ -1381,7 +1456,14 @@
     <string name="setting_playlist_shortcuts">Streaming shortcuts</string>
     <string name="setting_playlist_shortcuts_description">Open share links from the watch in YouTube Music, Spotify and other streaming apps</string>
     <string name="setting_shortcut_artwork">Fetch shortcut artwork online</string>
-    <string name="setting_shortcut_artwork_description">Download a thumbnail for each saved shortcut from the service, shown on the phone list, the watch menu and assigned buttons. Each thumbnail is fetched once. This is the only online access besides the update check; only the public share link is sent. Off by default.</string>
+    <string name="setting_shortcut_artwork_description">Download a thumbnail for each saved shortcut from the service, shown on the phone list, the watch menu and assigned buttons. Each thumbnail is fetched once; only the public share link is sent. Off by default.</string>
+    <string name="setting_queue_local_artwork">Queue covers from your library</string>
+    <string name="setting_queue_local_artwork_description">Local music players publish queue covers as library references. Grant media access so they can be shown on the watch queue. No internet access is involved.</string>
+    <string name="setting_queue_local_artwork_granted">Media access granted — local queue covers will be shown</string>
+    <string name="setting_queue_local_artwork_denied">Media access denied. Enable it in Android settings to show local queue covers.</string>
+    <string name="setting_queue_remote_artwork">Fetch queue covers online</string>
+    <string name="setting_queue_remote_artwork_short_description">Streaming apps (YouTube Music clients, Echo Music…) publish queue covers as links, not images, so this downloads and caches them. Turn it off to keep the queue fully offline — those rows then show no cover at all.</string>
+    <string name="setting_queue_remote_artwork_description">Streaming players publish queue covers as links rather than images. Download each one once, cached on this phone, to show them on the watch queue. Only the cover URL the player already published is requested — no account or personal data. On by default; turn it off to keep the queue fully offline.</string>
     <string name="watch_streaming_shortcuts_empty">Add tracks, albums or playlists for Quick Actions and the watch menu</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d saved shortcut · Available in Quick Actions and the watch menu</item>

@@ -22,30 +22,6 @@
             android:layout="@layout/pref_item" />
 
 
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="true"
-            android:key="wear_show_track_title"
-            android:icon="@drawable/ic_music_note"
-            android:title="@string/setting_wear_show_track_title"
-            android:summary="@string/setting_wear_show_track_title_description"
-            android:layout="@layout/pref_switch_item" />
-
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="true"
-            android:key="wear_show_track_artist"
-            android:icon="@drawable/ic_person"
-            android:title="@string/setting_wear_show_track_artist"
-            android:summary="@string/setting_wear_show_track_artist_description"
-            android:layout="@layout/pref_switch_item" />
-
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="true"
-            android:key="wear_show_source_icon"
-            android:icon="@drawable/ic_apps"
-            android:title="@string/setting_wear_show_source_icon"
-            android:summary="@string/setting_wear_show_source_icon_description"
-            android:layout="@layout/pref_switch_item" />
-
         <com.svartifoss.snfell.view.settings.DescribedListPreference
             android:key="wear_screen_theme"
             android:icon="@drawable/ic_palette"
@@ -54,16 +30,6 @@
             android:entries="@array/wear_screen_theme_entries"
             android:entryValues="@array/wear_screen_theme_values"
             app:descriptions="@array/wear_screen_theme_descriptions"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.DescribedListPreference
-            android:key="wear_font"
-            android:icon="@drawable/ic_text_fields"
-            android:defaultValue="google_sans"
-            android:title="@string/setting_wear_font"
-            android:entries="@array/wear_font_entries"
-            android:entryValues="@array/wear_font_values"
-            app:descriptions="@array/wear_font_descriptions"
             android:layout="@layout/pref_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
@@ -117,17 +83,6 @@
             android:layout="@layout/pref_item" />
 
         <ListPreference
-            android:defaultValue="smart"
-            android:key="wear_title_text_mode"
-            android:icon="@drawable/ic_text_fields"
-            android:dependency="wear_show_track_title"
-            android:title="@string/setting_wear_title_text_mode"
-            android:summary="%s"
-            android:entries="@array/wear_title_text_mode_entries"
-            android:entryValues="@array/wear_title_text_mode_values"
-            android:layout="@layout/pref_item" />
-
-        <ListPreference
             android:key="wear_track_time_mode"
             android:icon="@drawable/ic_history"
             android:defaultValue="always"
@@ -145,6 +100,235 @@
             android:summaryOn="@string/setting_always_show_time_on_description"
             android:title="@string/setting_always_show_time"
             android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_typography_font"
+        android:title="@string/category_wf_typography_font"
+        android:layout="@layout/pref_category_header">
+
+        <com.svartifoss.snfell.view.settings.DescribedListPreference
+            android:key="wear_font"
+            android:icon="@drawable/ic_text_fields"
+            android:defaultValue="google_sans"
+            android:title="@string/setting_wear_font"
+            android:entries="@array/wear_font_entries"
+            android:entryValues="@array/wear_font_values"
+            app:descriptions="@array/wear_font_descriptions"
+            android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_typography_title"
+        android:title="@string/category_wf_typography_title"
+        android:layout="@layout/pref_category_header">
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_show_track_title"
+            android:icon="@drawable/ic_music_note"
+            android:title="@string/setting_wear_show_track_title"
+            android:summary="@string/setting_wear_show_track_title_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <ListPreference
+            android:defaultValue="smart"
+            android:key="wear_title_text_mode"
+            android:icon="@drawable/ic_text_fields"
+            android:dependency="wear_show_track_title"
+            android:title="@string/setting_wear_title_text_mode"
+            android:summary="%s"
+            android:entries="@array/wear_title_text_mode_entries"
+            android:entryValues="@array/wear_title_text_mode_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="400"
+            android:key="wear_title_font_weight"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_title_font_weight"
+            android:summary="@string/setting_wear_typography_weight_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_title" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_title_font_italic"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_title_font_italic"
+            android:layout="@layout/pref_switch_item"
+            android:dependency="wear_show_track_title" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_title_font_scale"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_title_font_scale"
+            android:summary="@string/setting_wear_typography_scale_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_title" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_title_font_opacity"
+            android:icon="@drawable/ic_opacity"
+            android:title="@string/setting_wear_title_font_opacity"
+            android:summary="@string/setting_wear_typography_opacity_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_title" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_title_font_tracking"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_title_font_tracking"
+            android:summary="@string/setting_wear_typography_tracking_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_typography_artist"
+        android:title="@string/category_wf_typography_artist"
+        android:layout="@layout/pref_category_header">
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_show_track_artist"
+            android:icon="@drawable/ic_person"
+            android:title="@string/setting_wear_show_track_artist"
+            android:summary="@string/setting_wear_show_track_artist_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="400"
+            android:key="wear_artist_font_weight"
+            android:icon="@drawable/ic_person"
+            android:title="@string/setting_wear_artist_font_weight"
+            android:summary="@string/setting_wear_typography_weight_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_artist" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_artist_font_italic"
+            android:icon="@drawable/ic_person"
+            android:title="@string/setting_wear_artist_font_italic"
+            android:layout="@layout/pref_switch_item"
+            android:dependency="wear_show_track_artist" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_artist_font_scale"
+            android:icon="@drawable/ic_person"
+            android:title="@string/setting_wear_artist_font_scale"
+            android:summary="@string/setting_wear_typography_scale_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_artist" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_artist_font_opacity"
+            android:icon="@drawable/ic_opacity"
+            android:title="@string/setting_wear_artist_font_opacity"
+            android:summary="@string/setting_wear_typography_opacity_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_artist" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_artist_font_tracking"
+            android:icon="@drawable/ic_person"
+            android:title="@string/setting_wear_artist_font_tracking"
+            android:summary="@string/setting_wear_typography_tracking_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_artist" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_typography_icon"
+        android:title="@string/category_wf_typography_icon"
+        android:layout="@layout/pref_category_header">
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_show_source_icon"
+            android:icon="@drawable/ic_apps"
+            android:title="@string/setting_wear_show_source_icon"
+            android:summary="@string/setting_wear_show_source_icon_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_source_icon_scale"
+            android:icon="@drawable/ic_apps"
+            android:title="@string/setting_wear_source_icon_scale"
+            android:summary="@string/setting_wear_typography_scale_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_source_icon" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_source_icon_opacity"
+            android:icon="@drawable/ic_opacity"
+            android:title="@string/setting_wear_source_icon_opacity"
+            android:summary="@string/setting_wear_typography_opacity_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_source_icon" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_typography_flex"
+        android:title="@string/category_wf_typography_flex"
+        android:layout="@layout/pref_category_header">
+
+        <!-- Informational only: explains how these four axes relate to the weight/italic controls
+             already in the Title/Artist categories above, which is not obvious from either screen
+             alone. -->
+        <Preference
+            android:key="wear_flex_axes_hint"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_hint_title"
+            android:summary="@string/setting_wear_flex_axes_hint"
+            android:selectable="false"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_font_flex_width"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_width"
+            android:summary="@string/setting_wear_font_flex_width_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="18"
+            android:key="wear_font_flex_optical_size"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_optical_size"
+            android:summary="@string/setting_wear_font_flex_optical_size_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_font_flex_grade"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_grade"
+            android:summary="@string/setting_wear_font_flex_grade_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_font_flex_roundness"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_roundness"
+            android:summary="@string/setting_wear_font_flex_roundness_description"
+            android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 
@@ -450,6 +634,19 @@
             android:entryValues="@array/wear_list_row_size_values"
             android:layout="@layout/pref_item" />
 
+        <!-- Deliberately the same global key as the row in Settings -> Apps (it is not in
+             FaceScopedPreferences.SCOPED_KEYS, so the face-scoped data store passes it straight
+             through unscoped). Mirrored here because this is where someone styling the queue
+             actually notices the covers are missing - the Settings row alone proved undiscoverable
+             for exactly that reason. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="queue_remote_artwork"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_queue_remote_artwork"
+            android:summary="@string/setting_queue_remote_artwork_short_description"
+            android:layout="@layout/pref_switch_item" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -553,6 +750,24 @@
             android:summary="%s"
             android:entries="@array/wear_color_treatment_entries"
             android:entryValues="@array/wear_color_treatment_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="none"
+            android:key="wear_color_modifier"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_color_modifier"
+            android:summary="%s"
+            android:entries="@array/wear_color_modifier_entries"
+            android:entryValues="@array/wear_color_modifier_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_color_hue_shift"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_color_hue_shift"
+            android:summary="@string/setting_wear_color_hue_shift_description"
             android:layout="@layout/pref_item" />
 
         <com.svartifoss.snfell.view.settings.HexColorDotPreference

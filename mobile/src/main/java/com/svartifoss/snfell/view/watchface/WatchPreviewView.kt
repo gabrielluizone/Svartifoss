@@ -28,6 +28,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
+import timber.log.Timber
 import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -44,7 +45,12 @@ import com.svartifoss.snfell.common.QuickPanelButtons
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.ScreenTheme as SharedScreenTheme
 import com.svartifoss.snfell.common.ScreenThemeTokens
+import android.os.Build
+import com.svartifoss.snfell.common.ColorHarmony
+import com.svartifoss.snfell.common.WatchTypography
+import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.SurfaceColorTreatment
+import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.resolveAodArtwork
 import com.svartifoss.snfell.common.R as commonR
@@ -192,6 +198,14 @@ class WatchPreviewView @JvmOverloads constructor(
     private var shadingCustomColor = ""
     private var colorTreatment = "expressive"
     private var normalColor = ""
+    private var colorModifier = "none"
+    private var colorHueShift = 0f
+    /** Per-element typography, mirroring what the watch resolves through WatchTypography. There is
+     *  deliberately no source-icon spec here: this preview has never drawn the playing-app glyph,
+     *  so there is nothing for its size/opacity to affect. */
+    private var titleTypographySpec = WatchTypography.IDENTITY_TEXT
+    private var artistTypographySpec = WatchTypography.IDENTITY_TEXT
+    private var flexAxesSpec = WatchTypography.IDENTITY_FLEX_AXES
     private var artistMode = "follow"
     private var artistCustom = ""
     private var artistDesaturated = false
@@ -300,13 +314,100 @@ class WatchPreviewView @JvmOverloads constructor(
         }
     }
 
-    /** Title/artist typeface for the current font choice, matching the bold/regular Google Sans
-     *  variants this class already preloads. Use at every title/artist draw site instead of the
-     *  raw fontBold/fontRegular fields; leave chrome text (readouts, labels) on Google Sans. */
+    /**
+     * Title/artist typeface for the current font choice, matching the bold/regular Google Sans
+     * variants this class already preloads. Use at every title/artist draw site instead of the
+     * raw fontBold/fontRegular fields; leave chrome text (readouts, labels) on Google Sans.
+     *
+     * [bold] doubles as the element selector - every title draws bold and every artist line
+     * regular - so the user's per-element weight/slant is resolved here, mirroring what
+     * `AdaptiveTitleText`/`ArtistLineText` do on the watch. It also applies that element's letter
+     * spacing to [textPaint], since callers configure the shared paint through this function
+     * anyway; size and opacity are applied by the callers that own those values.
+     */
     private fun titleTypeface(bold: Boolean): Typeface? {
-        val base = titleFontBase() ?: return if (bold) fontBold else fontRegular
-        return Typeface.create(base, if (bold) Typeface.BOLD else Typeface.NORMAL)
+        val spec = if (bold) titleTypographySpec else artistTypographySpec
+        textPaint.letterSpacing = spec.trackingEm
+        // Lain wins over every font choice including Flex, matching NowPlayingFaceState.titleFont/
+        // artistFont's precedence on the watch.
+        if (!previewLainTriggered() && WatchTypography.isFlexFont(wearFontKey)) {
+            return flexPreviewTypeface(spec)
+        }
+        val base = titleFontBase() ?: return styledPreviewTypeface(
+                if (bold) fontBold else fontRegular, bold, spec)
+        return styledPreviewTypeface(base, bold, spec)
     }
+
+    /** Cached copy of the bundled Flex font, extracted once per process - mirrors the watch's
+     *  identically-named private helper in WatchTheme.kt (mobile cannot depend on wear). */
+    private var cachedFlexFontFile: java.io.File? = null
+
+    private fun flexFontFile(): java.io.File {
+        cachedFlexFontFile?.takeIf { it.length() > 0L }?.let { return it }
+        val target = java.io.File(context.cacheDir, "google_sans_flex_variable.ttf")
+        if (!target.exists() || target.length() == 0L) {
+            context.resources.openRawResource(R.font.google_sans_flex).use { input ->
+                target.outputStream().use { output -> input.copyTo(output) }
+            }
+        }
+        cachedFlexFontFile = target
+        return target
+    }
+
+    /** [titleTypeface]'s Google Sans Flex path: the same `Typeface.Builder(File)
+     *  .setFontVariationSettings(String)` the watch's `flexTypeface` uses, built from the same
+     *  [WatchTypography.flexVariationSettings] string, so the preview cannot show an axis
+     *  combination the watch renders differently. */
+    private fun flexPreviewTypeface(spec: WatchTypography.TextSpec): Typeface? {
+        val settings = WatchTypography.flexVariationSettings(spec, flexAxesSpec)
+        return try {
+            Typeface.Builder(flexFontFile())
+                    .setFontVariationSettings(settings)
+                    .build()
+        } catch (e: Exception) {
+            Timber.w(e, "Flex variation settings rejected in preview: %s", settings)
+            ResourcesCompat.getFont(context, R.font.google_sans_flex)
+        }
+    }
+
+    /** Mirrors the watch's `styledClassicTypeface`: the identity weight (400) keeps the preview's
+     *  designed bold/regular split, and any other weight uses the numeric API where available. */
+    private fun styledPreviewTypeface(
+            base: Typeface?,
+            bold: Boolean,
+            spec: WatchTypography.TextSpec
+    ): Typeface? {
+        if (base == null) return null
+        if (spec.weight == 400) {
+            val style = when {
+                bold && spec.italic -> Typeface.BOLD_ITALIC
+                bold -> Typeface.BOLD
+                spec.italic -> Typeface.ITALIC
+                else -> Typeface.NORMAL
+            }
+            return Typeface.create(base, style)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return Typeface.create(base, spec.weight, spec.italic)
+        }
+        val style = when {
+            spec.weight >= 600 && spec.italic -> Typeface.BOLD_ITALIC
+            spec.weight >= 600 -> Typeface.BOLD
+            spec.italic -> Typeface.ITALIC
+            else -> Typeface.NORMAL
+        }
+        return Typeface.create(base, style)
+    }
+
+    /** [color] with the artist line's configured opacity applied. */
+    private fun artistAlpha(color: Int): Int = Color.argb(
+            artistTypographySpec.applyAlpha(Color.alpha(color)),
+            Color.red(color), Color.green(color), Color.blue(color))
+
+    /** [color] with the track title's configured opacity applied. */
+    private fun titleAlpha(color: Int): Int = Color.argb(
+            titleTypographySpec.applyAlpha(Color.alpha(color)),
+            Color.red(color), Color.green(color), Color.blue(color))
 
     init {
         refresh()
@@ -443,6 +544,35 @@ class WatchPreviewView @JvmOverloads constructor(
         overlayBackdropStyle = readString("wear_overlay_backdrop_style", "follow")
         colorTreatment = readString("wear_color_treatment", "expressive")
         normalColor = readString("wear_normal_color", "")
+        colorModifier = readString("wear_color_modifier", "none")
+        colorHueShift = readInt("wear_color_hue_shift", 0).toFloat()
+
+        // Read through the preview's own candidate-aware readers rather than WatchTypography's
+        // SharedPreferences accessors, so an option being previewed live (before Android commits
+        // it) shows up here the way every other appearance preference does.
+        titleTypographySpec = WatchTypography.TextSpec(
+                weight = WatchTypography.normalizeWeight(readInt("wear_title_font_weight", 400)),
+                italic = readBoolean("wear_title_font_italic", false),
+                scale = WatchTypography.normalizeScale(readInt("wear_title_font_scale", 100)),
+                alpha = WatchTypography.normalizeOpacity(readInt("wear_title_font_opacity", 100)),
+                trackingEm = WatchTypography.normalizeTracking(readInt("wear_title_font_tracking", 0)))
+        artistTypographySpec = WatchTypography.TextSpec(
+                weight = WatchTypography.normalizeWeight(readInt("wear_artist_font_weight", 400)),
+                italic = readBoolean("wear_artist_font_italic", false),
+                scale = WatchTypography.normalizeScale(readInt("wear_artist_font_scale", 100)),
+                alpha = WatchTypography.normalizeOpacity(readInt("wear_artist_font_opacity", 100)),
+                trackingEm = WatchTypography.normalizeTracking(readInt("wear_artist_font_tracking", 0)))
+        flexAxesSpec = WatchTypography.FlexAxes(
+                width = readInt("wear_font_flex_width", 100)
+                        .toFloat().coerceIn(WatchTypography.FLEX_WIDTH_MIN, WatchTypography.FLEX_WIDTH_MAX),
+                opticalSize = readInt("wear_font_flex_optical_size", 18)
+                        .toFloat().coerceIn(
+                                WatchTypography.FLEX_OPTICAL_SIZE_MIN, WatchTypography.FLEX_OPTICAL_SIZE_MAX),
+                grade = readInt("wear_font_flex_grade", 0)
+                        .toFloat().coerceIn(WatchTypography.FLEX_GRADE_MIN, WatchTypography.FLEX_GRADE_MAX),
+                roundness = readInt("wear_font_flex_roundness", 0)
+                        .toFloat().coerceIn(
+                                WatchTypography.FLEX_ROUNDNESS_MIN, WatchTypography.FLEX_ROUNDNESS_MAX))
         artistMode = readString("wear_artist_color_mode", "follow")
         artistCustom = readString("wear_artist_custom_color", "")
         artistDesaturated = readBoolean("wear_artist_desaturated", false)
@@ -831,11 +961,23 @@ class WatchPreviewView @JvmOverloads constructor(
 
     private fun rawAlbumAccent(): Int = liveAccent ?: SAMPLE_ALBUM_ACCENT
 
-    private fun albumAccent(): Int = when (colorTreatment) {
-        "normal" -> parseHexOrNull(normalColor) ?: ACCENT_NEUTRAL
-        "desaturated" -> PaletteTransforms.softenedAlbumAccent(rawAlbumAccent())
-        else -> rawAlbumAccent()
-    }
+    /**
+     * The face-wide palette, mirroring `MainActivity.applyAccentColor` on the watch. Both sides
+     * call the shared resolver rather than switching on the raw preference string, which used to
+     * treat any unrecognised value as Expressive - so a treatment the phone offers but this `when`
+     * had not learned yet would preview as a plain album accent while the watch rendered it.
+     */
+    private fun globalTriad(): ColorHarmony.Triad = SurfacePaletteResolver.derive(
+            SurfaceColorTreatment.fromPreference(
+                    colorTreatment, default = SurfaceColorTreatment.EXPRESSIVE),
+            ColorModifier.fromPreference(colorModifier),
+            rawAlbumAccent(),
+            rawSecondaryAccent(),
+            rawTertiaryAccent(),
+            parseHexOrNull(normalColor) ?: ACCENT_NEUTRAL,
+            colorHueShift)
+
+    private fun albumAccent(): Int = globalTriad().primary
 
     /** Colour that tints the shading gradient; mirrors MainActivity.resolvedShadingColor. */
     private fun resolvedShadingColor(): Int {
@@ -850,33 +992,12 @@ class WatchPreviewView @JvmOverloads constructor(
         }
     }
 
-    /** Real secondary/tertiary cover swatches. A monochromatic live cover falls back to a
-     * same-hue tone; the generated sample uses colours actually present in [buildSampleArt]. */
-    private fun albumSecondaryAccent(): Int = when {
-        // Normal is a single-hue-with-lightness-variant shape - unlike Expressive, it doesn't
-        // use the album's actually-distinct secondary swatch.
-        colorTreatment == "normal" -> sameHueTone(albumAccent(), .42f)
-        colorTreatment == "desaturated" -> PaletteTransforms.softenedAlbumAccent(
-                if (liveAccent != null) {
-                    liveSecondaryAccent ?: sameHueTone(liveAccent!!, .42f)
-                } else {
-                    SAMPLE_ALBUM_SECONDARY
-                })
-        liveAccent != null -> liveSecondaryAccent ?: sameHueTone(liveAccent!!, .42f)
-        else -> SAMPLE_ALBUM_SECONDARY
-    }
+    /** Real secondary/tertiary cover swatches, run through the face-wide treatment. A monochromatic
+     * live cover falls back to a same-hue tone (see [rawSecondaryAccent]); the generated sample uses
+     * colours actually present in [buildSampleArt]. */
+    private fun albumSecondaryAccent(): Int = globalTriad().secondary
 
-    private fun albumTertiaryAccent(): Int = when {
-        colorTreatment == "normal" -> sameHueTone(albumAccent(), .68f)
-        colorTreatment == "desaturated" -> PaletteTransforms.softenedAlbumAccent(
-                if (liveAccent != null) {
-                    liveTertiaryAccent ?: sameHueTone(liveAccent!!, .68f)
-                } else {
-                    SAMPLE_ALBUM_TERTIARY
-                })
-        liveAccent != null -> liveTertiaryAccent ?: sameHueTone(liveAccent!!, .68f)
-        else -> SAMPLE_ALBUM_TERTIARY
-    }
+    private fun albumTertiaryAccent(): Int = globalTriad().tertiary
 
     private fun sameHueTone(color: Int, lightness: Float): Int {
         val hsl = FloatArray(3)
@@ -1017,6 +1138,11 @@ class WatchPreviewView @JvmOverloads constructor(
     ): TitlePlan {
         val text = textOverride ?: displayTitle()
         textPaint.typeface = titleTypeface(bold = true)
+        // Scaling the whole size band (not just the ceiling) keeps the shrink/wrap cascade's
+        // proportions, so a scaled title still degrades the way the unscaled one does.
+        val maxSize = titleTypographySpec.scaled(maxSize)
+        val floorSize = titleTypographySpec.scaled(floorSize)
+        val wrapFloor = titleTypographySpec.scaled(wrapFloor)
 
         fun wrapPlan(size: Float, maxLines: Int): TitlePlan {
             textPaint.textSize = size
@@ -1099,18 +1225,33 @@ class WatchPreviewView @JvmOverloads constructor(
         return SurfaceColorTreatment.fromPreference(mode, legacyDesaturated).resolveAgainst(global)
     }
 
+    /**
+     * The full three-colour palette for a surface, derived by the same `common` resolver the watch
+     * uses. The preview previously had its own `when` over the treatment enum for the primary and
+     * another for the companions; every treatment added since would have needed both to be edited
+     * in step with the watch's copy, which is the drift this shared resolver removes.
+     */
+    private fun surfaceTriad(
+            mode: String,
+            custom: String,
+            legacyDesaturated: Boolean
+    ): ColorHarmony.Triad {
+        val selected = SurfaceColorTreatment.fromPreference(mode, legacyDesaturated)
+        val fixed = (if (selected == SurfaceColorTreatment.FOLLOW) null else parseHexOrNull(custom))
+                ?: parseHexOrNull(normalColor)
+                ?: ACCENT_NEUTRAL
+        return SurfacePaletteResolver.derive(
+                resolvedTreatment(mode, legacyDesaturated),
+                ColorModifier.fromPreference(colorModifier),
+                rawAlbumAccent(),
+                rawSecondaryAccent(),
+                rawTertiaryAccent(),
+                fixed,
+                colorHueShift)
+    }
+
     private fun resolveTint(mode: String, custom: String, legacyDesaturated: Boolean): Int =
-            when (resolvedTreatment(mode, legacyDesaturated)) {
-                SurfaceColorTreatment.NORMAL ->
-                    (if (SurfaceColorTreatment.fromPreference(mode, legacyDesaturated) ==
-                                    SurfaceColorTreatment.FOLLOW) null else parseHexOrNull(custom))
-                        ?: parseHexOrNull(normalColor)
-                        ?: ACCENT_NEUTRAL
-                SurfaceColorTreatment.DESATURATED ->
-                    PaletteTransforms.softenedAlbumAccent(rawAlbumAccent())
-                SurfaceColorTreatment.EXPRESSIVE -> rawAlbumAccent()
-                SurfaceColorTreatment.FOLLOW -> albumAccent() // resolvedAgainst prevents this.
-            }
+            surfaceTriad(mode, custom, legacyDesaturated).primary
 
     private fun volumeAccent(): Int =
             resolveTint(volumeColorMode, volumeCustomColor, legacyDesaturated = false)
@@ -1118,23 +1259,11 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun quickPanelAccent(): Int =
             resolveTint(quickPanelColorMode, quickPanelCustomColor, legacyDesaturated = false)
 
-    private fun resolveCompanionTint(
-            mode: String,
-            custom: String,
-            legacyDesaturated: Boolean,
-            rawCompanion: Int,
-            normalLightness: Float
-    ): Int = when (resolvedTreatment(mode, legacyDesaturated)) {
-        SurfaceColorTreatment.NORMAL -> sameHueTone(
-                (if (SurfaceColorTreatment.fromPreference(mode, legacyDesaturated) ==
-                                SurfaceColorTreatment.FOLLOW) null else parseHexOrNull(custom))
-                        ?: parseHexOrNull(normalColor)
-                        ?: ACCENT_NEUTRAL,
-                normalLightness)
-        SurfaceColorTreatment.DESATURATED -> PaletteTransforms.softenedAlbumAccent(rawCompanion)
-        SurfaceColorTreatment.EXPRESSIVE -> rawCompanion
-        SurfaceColorTreatment.FOLLOW -> rawCompanion // resolvedAgainst normally prevents this.
-    }
+    private fun resolveSecondaryTint(mode: String, custom: String, legacyDesaturated: Boolean): Int =
+            surfaceTriad(mode, custom, legacyDesaturated).secondary
+
+    private fun resolveTertiaryTint(mode: String, custom: String, legacyDesaturated: Boolean): Int =
+            surfaceTriad(mode, custom, legacyDesaturated).tertiary
 
     private fun rawSecondaryAccent(): Int = if (liveAccent != null) {
         liveSecondaryAccent ?: sameHueTone(liveAccent!!, .42f)
@@ -1155,17 +1284,17 @@ class WatchPreviewView @JvmOverloads constructor(
     fun currentAlbumAccents(): Triple<Int, Int, Int> =
             Triple(rawAlbumAccent(), rawSecondaryAccent(), rawTertiaryAccent())
 
-    private fun volumeSecondaryAccent(): Int = resolveCompanionTint(
-            volumeColorMode, volumeCustomColor, false, rawSecondaryAccent(), .42f)
+    private fun volumeSecondaryAccent(): Int =
+            resolveSecondaryTint(volumeColorMode, volumeCustomColor, false)
 
-    private fun volumeTertiaryAccent(): Int = resolveCompanionTint(
-            volumeColorMode, volumeCustomColor, false, rawTertiaryAccent(), .68f)
+    private fun volumeTertiaryAccent(): Int =
+            resolveTertiaryTint(volumeColorMode, volumeCustomColor, false)
 
-    private fun quickPanelSecondaryAccent(): Int = resolveCompanionTint(
-            quickPanelColorMode, quickPanelCustomColor, false, rawSecondaryAccent(), .42f)
+    private fun quickPanelSecondaryAccent(): Int =
+            resolveSecondaryTint(quickPanelColorMode, quickPanelCustomColor, false)
 
-    private fun quickPanelTertiaryAccent(): Int = resolveCompanionTint(
-            quickPanelColorMode, quickPanelCustomColor, false, rawTertiaryAccent(), .68f)
+    private fun quickPanelTertiaryAccent(): Int =
+            resolveTertiaryTint(quickPanelColorMode, quickPanelCustomColor, false)
 
     /** WatchTheme.accentForText: lift lightness so accents read on the dark screen. */
     private fun accentForText(color: Int): Int {
@@ -4246,6 +4375,23 @@ class WatchPreviewView @JvmOverloads constructor(
             fillPaint.color = progressColor
             canvas.drawCircle(cx + r * cos(headRad).toFloat(),
                     cy + r * sin(headRad).toFloat(), baseStroke * 0.5f, fillPaint)
+        } else if (sweep > 1f &&
+                (ColorHarmony.hueDistance(progressColor, resolveSecondaryTint(progressMode, progressCustom, progressDesaturated)) >= ColorHarmony.MIN_DUOTONE_HUE_GAP ||
+                        ColorHarmony.hueDistance(progressColor, resolveTertiaryTint(progressMode, progressCustom, progressDesaturated)) >= ColorHarmony.MIN_DUOTONE_HUE_GAP)) {
+            // Mirrors CircularProgressSeekBar's RingStyle.SOLID gradient: a treatment whose
+            // secondary/tertiary sit close to the primary hue draws exactly as before (the `else`
+            // below), so this is additive rather than a restyle of Normal/Desaturated/Expressive.
+            val shader = SweepGradient(cx, cy,
+                    intArrayOf(progressColor,
+                            resolveSecondaryTint(progressMode, progressCustom, progressDesaturated),
+                            resolveTertiaryTint(progressMode, progressCustom, progressDesaturated)),
+                    floatArrayOf(0f, (sweep / 360f * 0.5f), (sweep / 360f).coerceAtMost(1f)))
+            val rotate = Matrix()
+            rotate.setRotate(-90f, cx, cy)
+            shader.setLocalMatrix(rotate)
+            strokePaint.shader = shader
+            canvas.drawArc(ringRect, -90f, sweep, false, strokePaint)
+            strokePaint.shader = null
         } else {
             canvas.drawArc(ringRect, -90f, sweep, false, strokePaint)
         }
@@ -4317,7 +4463,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
         // 14dp (not the raw 16sp) so the artist reads at the same on-screen size as a real
         // watch, which is physically larger than this preview's 192dp geometry model.
-        val artistSize = dp(14f)
+        val artistSize = artistTypographySpec.scaled(dp(14f))
         val classicTitleTypeface = titleTypeface(bold = true)
         textPaint.typeface = classicTitleTypeface
         textPaint.textSize = artistSize
@@ -4349,9 +4495,11 @@ class WatchPreviewView @JvmOverloads constructor(
             textPaint.typeface = classicTitleTypeface
             textPaint.textSize = artistSize
             if (isPlayingShown()) {
-                textPaint.color = artistColor
+                textPaint.color = artistAlpha(artistColor)
                 canvas.drawText(ellipsize(displayArtist(), textWidth), cx, y - artistFm.ascent, textPaint)
             } else {
+                // Status text ignores the artist opacity: it is an error/state message, and the
+                // same rule keeps it visible on the watch regardless of metadata visibility.
                 textPaint.color = Color.WHITE
                 canvas.drawText(context.getString(R.string.preview_playback_stopped), cx, y - artistFm.ascent, textPaint)
             }
@@ -4361,7 +4509,7 @@ class WatchPreviewView @JvmOverloads constructor(
         // Title (as many lines as the text mode allows, or scrolling in marquee mode).
         if (titleVisible) {
             textPaint.typeface = classicTitleTypeface
-            textPaint.color = Color.WHITE
+            textPaint.color = titleAlpha(Color.WHITE)
             textPaint.textSize = plan.size
             if (plan.marquee) {
                 drawMarqueeText(canvas, plan.lines.first(), cx, y - titleFm.ascent, textWidth)
@@ -5034,9 +5182,9 @@ class WatchPreviewView @JvmOverloads constructor(
         // Artist, or the "Playback Stopped" status in white while paused (the watch's expressive
         // face mirrors the same textArtist line the classic face swaps).
         textPaint.typeface = titleTypeface(bold = false)
-        textPaint.textSize = dp(12f)
+        textPaint.textSize = artistTypographySpec.scaled(dp(12f))
         if (isPlayingShown() && showTrackArtist) {
-            textPaint.color = artistColor
+            textPaint.color = artistAlpha(artistColor)
             canvas.drawText(ellipsize(displayArtist(), radius * 1.45f), cx, cy - radius + dp(57f), textPaint)
         } else if (!isPlayingShown()) {
             textPaint.color = Color.WHITE

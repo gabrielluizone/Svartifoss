@@ -1,10 +1,16 @@
 package com.svartifoss.snfell.watch.view.face
 
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.em
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
+import com.svartifoss.snfell.watch.theme.flexFontFamily
 import com.svartifoss.snfell.watch.theme.lainFont
 import com.svartifoss.snfell.watch.theme.watchFontFamily
 
@@ -243,29 +249,83 @@ data class NowPlayingFaceState(
         val rightActionIconTintable: Boolean = true,
         val leftActionDescription: String? = null,
         val rightActionDescription: String? = null,
+        /** Per-element typography resolved from the user's title preferences. Layers weight, slant,
+         *  size, opacity and tracking over the [fontKey] family; the defaults are the exact
+         *  identity, so a face that never consults these renders unchanged. */
+        val titleTypography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
+        /** As [titleTypography], for the artist line. Independent on purpose - a heavier title
+         *  against a lighter artist line is the common ask. */
+        val artistTypography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
+        /** Size/opacity for [sourceIcon]. */
+        val sourceIconTypography: WatchTypography.IconSpec = WatchTypography.IDENTITY_ICON,
+        /** Google Sans Flex's shared width/optical-size/grade/roundness axes - only consulted when
+         *  [fontKey] is [WatchTypography.FLEX_FONT_KEY]. See [WatchTypography.flexAxes]. */
+        val flexAxes: WatchTypography.FlexAxes = WatchTypography.IDENTITY_FLEX_AXES,
 ) {
     /**
      * The [FontFamily] to use for the track title. The Lain keyword easter egg (title or artist
      * containing a trigger word, case-insensitive substring) always wins; otherwise the user's
      * [fontKey] choice applies, defaulting to [GoogleSansFamily] so normal tracks are unaffected.
+     * Google Sans Flex additionally bakes in [titleTypography]'s own weight/slant plus [flexAxes],
+     * since its variable axes need a per-element instance no plain family lookup can express - see
+     * [flexFontFamily].
      */
     val titleFont: FontFamily
-        get() = lainFont(title) ?: lainFont(artist) ?: watchFontFamily(fontKey)
+        get() = lainFont(title) ?: lainFont(artist) ?: run {
+            if (WatchTypography.isFlexFont(fontKey)) {
+                flexFontFamily(titleTypography, flexAxes)
+            } else {
+                watchFontFamily(fontKey)
+            }
+        }
 
     /**
-     * The [FontFamily] to use for the artist line — always matched with [titleFont] so both
-     * lines flip to the typewriter style together whenever the track qualifies.
+     * The [FontFamily] to use for the artist line. Matches [titleFont] for the Lain easter egg and
+     * for every ordinary font choice (both lines share one family, weight/slant applied separately
+     * by the caller); for Google Sans Flex it instead bakes in [artistTypography]'s own weight/
+     * slant, since Flex's variable axes make title/artist genuinely different font instances.
      */
     val artistFont: FontFamily
-        get() = titleFont
+        get() = lainFont(title) ?: lainFont(artist) ?: run {
+            if (WatchTypography.isFlexFont(fontKey)) {
+                flexFontFamily(artistTypography, flexAxes)
+            } else {
+                watchFontFamily(fontKey)
+            }
+        }
+
+    /** [titleTypography]'s weight as a Compose [FontWeight]. */
+    val titleFontWeight: FontWeight get() = FontWeight(titleTypography.weight)
+
+    /** [artistTypography]'s weight as a Compose [FontWeight]. */
+    val artistFontWeight: FontWeight get() = FontWeight(artistTypography.weight)
+
+    /** [titleTypography]'s slant, or null to leave the face's own choice alone. */
+    val titleFontStyle: FontStyle? get() = FontStyle.Italic.takeIf { titleTypography.italic }
+
+    /** [artistTypography]'s slant, or null to leave the face's own choice alone. */
+    val artistFontStyle: FontStyle? get() = FontStyle.Italic.takeIf { artistTypography.italic }
+
+    /** [titleTypography]'s extra tracking as a Compose [TextUnit]. */
+    val titleLetterSpacing: TextUnit get() = titleTypography.trackingEm.em
+
+    /** [artistTypography]'s extra tracking as a Compose [TextUnit]. */
+    val artistLetterSpacing: TextUnit get() = artistTypography.trackingEm.em
 
     /**
      * The [FontFamily] for the awake clock. Follows the user's [fontKey] choice like the track
      * text does, but deliberately ignores the Lain easter egg: the clock is chrome, not track
-     * text, so it should not flip typeface based on what is playing.
+     * text, so it should not flip typeface based on what is playing. For Google Sans Flex it still
+     * picks up the shared [flexAxes] (width/optical-size/grade/roundness are described to the user
+     * as applying "to the whole face") at the identity weight/slant, since the clock has no weight
+     * control of its own.
      */
     val clockFont: FontFamily
-        get() = watchFontFamily(fontKey)
+        get() = if (WatchTypography.isFlexFont(fontKey)) {
+            flexFontFamily(WatchTypography.IDENTITY_TEXT, flexAxes)
+        } else {
+            watchFontFamily(fontKey)
+        }
 }
 
 /** Events a face raises back to the host. Implemented by MainActivity, which routes them into
