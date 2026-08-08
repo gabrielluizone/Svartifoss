@@ -58,8 +58,8 @@ Its costs:
 - **It is a binary blob.** `app-remote-lib/` contains `spotify-app-remote-release-0.8.0.aar` (132KB),
   docs, and a 28-byte `build.gradle`. There is no source. The repository's Apache-2.0 licence covers
   the samples and the auth library, not this artifact. Shipping it puts a proprietary dependency
-  inside an APK served from the project's own F-Droid repo — exactly what F-Droid's `NonFreeDep`
-  anti-feature exists to flag.
+  inside an otherwise GPLv3 app — the kind of dependency F-Droid's `NonFreeDep` anti-feature exists
+  to flag, and a licence question regardless of how the app is distributed.
 - **It is stale.** Still labelled a Beta release; the repository's last push was 2024-08-19,
   two years before this assessment.
 - **Premium is required** to play a track URI.

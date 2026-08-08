@@ -98,6 +98,6 @@ than playing a single track. Good behaviour to expect from Media3 clients genera
 Spotify, Apple Music and Amazon Music are closed source, so none of the above can be established for
 them by reading. Spotify publishes an App Remote SDK that would answer the "artist page does not
 play" case properly, at the cost of a registered client id, a Premium requirement for playback
-control, and a proprietary dependency that conflicts with the self-hosted F-Droid repo. Whether
+control, and a proprietary dependency in an otherwise GPLv3 codebase. Whether
 Apple Music or Amazon Music expose any public control API on Android is unverified — do not assume
 either way without checking.

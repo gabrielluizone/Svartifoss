@@ -27,4 +27,4 @@ Works with your music app: Svartifoss is currently developed and tested primaril
 
 Svartifoss is free and open source (GPLv3) — a continuation of Music Center for Wear by matejdro. Full source code: https://github.com/gabrielluizone/Svartifoss
 
-Note: this app depends on Google Play Services (Wearable Data Layer API) for phone-watch communication, and optionally on Firebase for crash reporting and anonymous analytics. It is distributed here as a self-hosted repository rather than through the official F-Droid repo for that reason.
+Note: this app depends on Google Play Services (Wearable Data Layer API) for phone-watch communication, and optionally on Firebase for crash reporting and anonymous analytics. Those dependencies are why it is distributed as a sideloadable APK rather than through F-Droid.
