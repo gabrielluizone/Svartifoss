@@ -114,6 +114,9 @@ internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
         when (style) {
             PlayerBackgroundStyle.COVER,
             PlayerBackgroundStyle.BLUR,
+            // Frosting lives in the bitmap itself (FrostedEdges), so like every other plain
+            // artwork treatment this layer draws nothing on top of it.
+            PlayerBackgroundStyle.FROSTED,
             PlayerBackgroundStyle.BLACK_AND_WHITE,
             PlayerBackgroundStyle.BLURRED_BLACK_AND_WHITE,
             PlayerBackgroundStyle.SQUARE_SHARP,
@@ -733,7 +736,13 @@ internal fun AdaptiveTitleText(
         lineHeight: TextUnit = TextUnit.Unspecified,
         textAlign: TextAlign = TextAlign.Center,
         minFontSize: TextUnit = (fontSize.value * 0.62f).sp,
-        typography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT
+        typography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
+        // How many lines the text actually settled on. A face on a round screen cannot inset its
+        // title correctly without this: the usable chord depends on how deep the block reaches, so
+        // the caller has to know whether it wrapped before it can pick a width (see
+        // RoundScreenText). Reported after the size/line cascade below has converged, not on every
+        // intermediate measurement, or the caller would chase sizes that are about to change.
+        onLineCount: ((Int) -> Unit)? = null
 ) {
     // Each field's default value means "keep what this face designed for this line", not "use a
     // plain 400/upright/unspaced default" - otherwise simply shipping these controls would flatten
@@ -768,15 +777,16 @@ internal fun AdaptiveTitleText(
                 textAlign = textAlign,
                 maxLines = wrapLines,
                 overflow = TextOverflow.Ellipsis,
-                modifier = modifier
+                modifier = modifier,
+                onTextLayout = { onLineCount?.invoke(it.lineCount) }
         )
         mode == "shrink" -> ShrinkToFitTitleText(
                 text, fontSize, minFontSize, color, fontWeight, fontStyle, fontFamily,
-                letterSpacing, textAlign, modifier
+                letterSpacing, textAlign, modifier, onLineCount
         )
         mode == "smart" -> SmartTitleText(
                 text, fontSize, minFontSize, color, fontWeight, fontStyle, fontFamily,
-                letterSpacing, lineHeight, textAlign, modifier
+                letterSpacing, lineHeight, textAlign, modifier, onLineCount
         )
         else -> Text( // "marquee", and the fallback for any value this build doesn't know yet.
                 text = text,
@@ -789,7 +799,8 @@ internal fun AdaptiveTitleText(
                 textAlign = textAlign,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = modifier.basicMarquee()
+                modifier = modifier.basicMarquee(),
+                onTextLayout = { onLineCount?.invoke(1) }
         )
     }
 }
@@ -806,7 +817,8 @@ private fun ShrinkToFitTitleText(
         fontFamily: FontFamily?,
         letterSpacing: TextUnit,
         textAlign: TextAlign,
-        modifier: Modifier
+        modifier: Modifier,
+        onLineCount: ((Int) -> Unit)? = null
 ) {
     var fontSize by remember(text, maxFontSize) { mutableStateOf(maxFontSize) }
     var ready by remember(text, maxFontSize) { mutableStateOf(false) }
@@ -830,6 +842,9 @@ private fun ShrinkToFitTitleText(
                     fontSize = (fontSize.value - 1f).coerceAtLeast(minFontSize.value).sp
                 } else {
                     ready = true
+                    // Always one line by construction; reported anyway so a caller can size its
+                    // band the same way regardless of which mode the user picked.
+                    onLineCount?.invoke(1)
                 }
             }
     )
@@ -849,7 +864,8 @@ private fun SmartTitleText(
         letterSpacing: TextUnit,
         lineHeight: TextUnit,
         textAlign: TextAlign,
-        modifier: Modifier
+        modifier: Modifier,
+        onLineCount: ((Int) -> Unit)? = null
 ) {
     var fontSize by remember(text, maxFontSize) { mutableStateOf(maxFontSize) }
     var maxLines by remember(text, maxFontSize) { mutableStateOf(1) }
@@ -870,16 +886,37 @@ private fun SmartTitleText(
             modifier = modifier.graphicsLayer { alpha = if (ready) 1f else 0f },
             onTextLayout = { result ->
                 when {
-                    !result.hasVisualOverflow -> ready = true
+                    !result.hasVisualOverflow -> {
+                        ready = true
+                        onLineCount?.invoke(result.lineCount)
+                    }
                     fontSize > minFontSize ->
                         fontSize = (fontSize.value - 1f).coerceAtLeast(minFontSize.value).sp
                     maxLines == 1 -> maxLines = 2
                     // Already at the floor size on two lines and still overflowing: accept the
                     // ellipsis rather than looping forever on a title with no room left to give.
-                    else -> ready = true
+                    else -> {
+                        ready = true
+                        onLineCount?.invoke(result.lineCount)
+                    }
                 }
             }
     )
+}
+
+/**
+ * The colour a face should draw its title in: the user's choice when they made one, otherwise the
+ * [designed] colour that face chose for itself.
+ *
+ * The face's own **alpha is always preserved**, which is the whole reason this is a function rather
+ * than a plain null-coalesce. Several faces deliberately sit their title at .88-.94 opacity against
+ * a bright cover; taking a user colour wholesale would snap all of them to fully opaque and quietly
+ * restyle compositions the user never touched. Only the hue changes.
+ */
+@Composable
+internal fun titleTextColor(state: NowPlayingFaceState, designed: Color): Color {
+    val chosen = state.titleColor ?: return designed
+    return Color(chosen).copy(alpha = designed.alpha)
 }
 
 /**

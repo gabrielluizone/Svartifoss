@@ -80,6 +80,18 @@ internal fun shouldEnableCentralSeek(expressiveSeekMode: String): Boolean =
  * burn-in-audited and cheap on AMOLED (no fills, no marquee, no clock of its own; the host's
  * jiggled ambient clock covers time).
  */
+/**
+ * One entry of the playback queue, ready to draw: text plus the cover the phone already resolved
+ * and shipped as a queue thumbnail (see `QueueArtworkResolver`). [art] is null whenever that
+ * resolution found nothing, which is common for streaming players.
+ */
+data class QueueCard(
+        val entryId: String,
+        val title: String,
+        val artist: String,
+        val art: androidx.compose.ui.graphics.ImageBitmap?
+)
+
 data class NowPlayingFaceState(
         val title: String = "",
         val artist: String = "",
@@ -141,12 +153,30 @@ data class NowPlayingFaceState(
         /** Resolved artist text color (already accounts for color mode, desaturation and the
          *  plain-white status-message override - it mirrors the classic artist line exactly). */
         val artistColor: Int = WatchTheme.ACCENT_DEFAULT,
+        /**
+         * Colour for the track title, or null to keep whatever colour the face designed.
+         *
+         * Null is the default and the normal case: every face draws its title in its own white,
+         * several at deliberately different alphas, so there is no single "title colour" to fall
+         * back to. Faces read it through [titleTextColor], which preserves their own alpha.
+         */
+        val titleColor: Int? = null,
         /** Queue entry immediately after the current item. The host refreshes it when a visual AOD
          *  that exposes Up Next becomes active. Empty values mean that the playing app did not
          *  publish a usable queue; ambient faces render a quiet unavailable state instead of stale
          *  metadata. */
         val upNextTitle: String = "",
         val upNextArtist: String = "",
+
+        /**
+         * The playback queue as renderable cards, current track first, for faces that show the
+         * queue itself rather than a single "up next" line.
+         *
+         * Empty for every other face and whenever the player publishes no queue - a face that
+         * consumes this must degrade to the current track alone rather than showing nothing, since
+         * "no queue at all" is a common and legitimate state (see the queue notes in CLAUDE.md).
+         */
+        val queueCards: List<QueueCard> = emptyList(),
         /** Resolved progress accent (already accounts for the progress color mode). */
         val progressColor: Int = WatchTheme.ACCENT_DEFAULT,
         /** Raw universal progress-ring style (solid/dashed/dots/hairline/comet). Interactive
@@ -206,6 +236,12 @@ data class NowPlayingFaceState(
         /** The user's font choice for title/artist text (MiscPreferences.WEAR_FONT key). Resolved
          *  through [watchFontFamily]; the Lain keyword easter egg still takes precedence. */
         val fontKey: String = "google_sans",
+        /** The clock's own font choice (MiscPreferences.WEAR_CLOCK_FONT), or "follow"/null to keep
+         *  tracking [fontKey] as the clock always did. Resolved by [WatchTypography.clockFontKey]. */
+        val clockFontKey: String? = null,
+        /** The clock's weight/italic/size/tracking. Its opacity is *not* here - that is baked into
+         *  [clockColor] from WEAR_CLOCK_OPACITY, so [WatchTypography.clockSpec] pins alpha at 1. */
+        val clockTypography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
         /** MiscPreferences.WEAR_TITLE_TEXT_MODE's raw value ("smart"/"marquee"/"wrap"/"shrink"),
          *  read by every face's title/artist text through AdaptiveTitleText - previously only the
          *  classic face's OutlineTextView consulted this. */
@@ -313,18 +349,23 @@ data class NowPlayingFaceState(
     val artistLetterSpacing: TextUnit get() = artistTypography.trackingEm.em
 
     /**
-     * The [FontFamily] for the awake clock. Follows the user's [fontKey] choice like the track
-     * text does, but deliberately ignores the Lain easter egg: the clock is chrome, not track
-     * text, so it should not flip typeface based on what is playing. For Google Sans Flex it still
-     * picks up the shared [flexAxes] (width/optical-size/grade/roundness are described to the user
-     * as applying "to the whole face") at the identity weight/slant, since the clock has no weight
+     * The [FontFamily] for the awake clock: [clockFontKey] when the user picked one, otherwise
+     * [fontKey] as the clock always followed.
+     *
+     * Deliberately ignores the Lain easter egg either way: the clock is chrome, not track text, so
+     * it should not flip typeface based on what is playing. For Google Sans Flex it still picks up
+     * the shared [flexAxes] (width/optical-size/grade/roundness are described to the user as
+     * applying "to the whole face") at the identity weight/slant, since the clock has no weight
      * control of its own.
      */
     val clockFont: FontFamily
-        get() = if (WatchTypography.isFlexFont(fontKey)) {
-            flexFontFamily(WatchTypography.IDENTITY_TEXT, flexAxes)
-        } else {
-            watchFontFamily(fontKey)
+        get() {
+            val resolved = WatchTypography.clockFontKey(clockFontKey, fontKey)
+            return if (WatchTypography.isFlexFont(resolved)) {
+                flexFontFamily(clockTypography, flexAxes)
+            } else {
+                watchFontFamily(resolved)
+            }
         }
 }
 

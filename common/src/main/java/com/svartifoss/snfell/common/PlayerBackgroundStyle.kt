@@ -11,10 +11,20 @@ enum class PlayerBackgroundStyle(
         val preferenceValue: String,
         val blurredArtwork: Boolean = false,
         val grayscaleArtwork: Boolean = false,
-        val hidesArtwork: Boolean = false
+        val hidesArtwork: Boolean = false,
+        val frostedEdges: Boolean = false
 ) {
     COVER("cover"),
     BLUR("blur", blurredArtwork = true),
+    /**
+     * Sharp in the middle, frosted glass towards the rim - see [FrostedEdges].
+     *
+     * [frostedEdges] rather than [blurredArtwork]: the two are mutually exclusive treatments of
+     * the same bitmap (blurring the whole image and then frosting its edge would just be a blur),
+     * but frosting still wants the "Blur radius" preference to govern its strength, which
+     * [usesBlurRadius] grants separately.
+     */
+    FROSTED("frosted", frostedEdges = true),
     BLACK_AND_WHITE("bw", grayscaleArtwork = true),
     BLURRED_BLACK_AND_WHITE(
             "blur_bw",
@@ -62,12 +72,12 @@ enum class PlayerBackgroundStyle(
     HIDDEN("hidden", hidesArtwork = true);
 
     val usesBlurRadius: Boolean
-        get() = blurredArtwork
+        get() = blurredArtwork || frostedEdges
 
     /** Styles that only transform the host image and therefore need the shared default fade. */
     val isPlainArtworkTreatment: Boolean
         get() = this == COVER || this == BLUR || this == BLACK_AND_WHITE ||
-                this == BLURRED_BLACK_AND_WHITE ||
+                this == BLURRED_BLACK_AND_WHITE || this == FROSTED ||
                 this == SQUARE_SHARP || this == SQUARE_SOFT || this == SQUARE
 
     /** Fraction of the inset square's own side used as its corner radius, or null for a style
@@ -101,6 +111,9 @@ enum class PlayerBackgroundStyle(
             "aurora" -> AURORA
             "spectrum" -> SPECTRUM
             "eclipse" -> ECLIPSE
+            // A rail of sharp covers needs a quiet backdrop; the full-bleed sharp cover the
+            // default would give competes with every card on screen.
+            "carousel" -> EXPRESSIVE
             else -> COVER
         }
     }

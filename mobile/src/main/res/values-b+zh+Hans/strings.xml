@@ -503,6 +503,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>景深</item>
+        <item>轮播</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive 快进</string>
@@ -615,12 +617,22 @@
         <item>普通（所选颜色）</item>
         <item>去饱和（柔和专辑色）</item>
         <item>Expressive（完整专辑调色板）</item>
+        <item>互补色（专辑 + 对比色）</item>
+        <item>三色（专辑三种色相）</item>
+        <item>邻近色（相邻色相）</item>
+        <item>单色（一种色相，三个色调）</item>
+        <item>双色调（专辑两种颜色）</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>跟随手表处理方式</item>
         <item>普通（所选颜色）</item>
         <item>去饱和（柔和专辑色）</item>
         <item>Expressive（完整专辑调色板）</item>
+        <item>互补色（专辑 + 对比色）</item>
+        <item>三色（专辑三种色相）</item>
+        <item>邻近色（相邻色相）</item>
+        <item>单色（一种色相，三个色调）</item>
+        <item>双色调（专辑两种颜色）</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>边缘弧（左）</item>
@@ -692,6 +704,9 @@
         <item>专辑渐变</item>
         <item>专辑双色</item>
         <item>棱镜</item>
+        <item>液态玻璃</item>
+        <item>Expressive 模糊</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>玻璃</item>
@@ -831,6 +846,7 @@
     <string-array name="album_art_style_entries">
         <item>完整封面</item>
         <item>模糊背景</item>
+        <item>磨砂边缘</item>
         <item>方形（尖角）</item>
         <item>方形（柔角）</item>
         <item>方形（圆角）</item>

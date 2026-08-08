@@ -26,6 +26,7 @@ import android.content.pm.ApplicationInfo
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.RotaryAction
 import com.svartifoss.snfell.common.model.AutoStartMode
 import com.svartifoss.snfell.config.ConfigBackup
 import com.svartifoss.snfell.update.UpdateActivity
@@ -132,6 +133,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         devModeEnabled = preferenceManager.sharedPreferences?.getBoolean(PREF_DEV_MODE, false) == true
 
         initAppearanceSection()
+        migrateRotarySeekSetting()
         initNavigationLinks()
         initAppsSection()
         initAutomationSection()
@@ -161,7 +163,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
 
         val visibleCategories = when (section) {
             SECTION_WATCH -> setOf("cat_gestures", "cat_action_list", "cat_notifications")
-            SECTION_AUTOMATION -> setOf("cat_automation")
+            SECTION_AUTOMATION -> setOf("cat_automation", "cat_idle")
             SECTION_APPS -> setOf("cat_apps")
             SECTION_DATA -> setOf("cat_backup", "cat_privacy", "cat_about")
             else -> setOf("cat_updates", "cat_appearance")
@@ -495,6 +497,24 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                     )
                     true
                 }
+    }
+
+    /**
+     * Seeds the three-way rotary preference from the legacy `rotary_seek` boolean the first time
+     * this section is opened. [RotaryAction.resolve] already falls back to the boolean at read
+     * time, so this is purely so the picker shows the behaviour actually in force instead of its
+     * XML default. The legacy key is deliberately left in place: the watch resolves through the
+     * same fallback, and deleting it would flip an out-of-date watch back to volume until the new
+     * key synced across.
+     */
+    private fun migrateRotarySeekSetting() {
+        val preferences = preferenceManager.sharedPreferences!!
+        if (preferences.contains("wear_rotary_action")) {
+            return
+        }
+        val resolved = RotaryAction.resolve(
+                null, Preferences.getBoolean(preferences, MiscPreferences.ROTARY_SEEK))
+        findPreference<ListPreference>("wear_rotary_action")?.value = resolved.preferenceValue
     }
 
     private fun migrateOldAutoStartSetting() {

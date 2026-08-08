@@ -504,6 +504,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>Βάθος</item>
+        <item>Καρουζέλ</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Αναζήτηση Expressive</string>
@@ -616,12 +618,22 @@
         <item>Κανονικό (επιλεγμένο χρώμα)</item>
         <item>Αποκορεσμένο (απαλό χρώμα άλμπουμ)</item>
         <item>Expressive (πλήρης παλέτα άλμπουμ)</item>
+        <item>Συμπληρωματικό (άλμπουμ + αντίθετο)</item>
+        <item>Τριαδικό (τρεις αποχρώσεις άλμπουμ)</item>
+        <item>Ανάλογο (γειτονικές αποχρώσεις)</item>
+        <item>Μονόχρωμο (μία απόχρωση, τρεις τόνοι)</item>
+        <item>Διχρωμία (δύο χρώματα άλμπουμ)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>Ακολούθηση επεξεργασίας ρολογιού</item>
         <item>Κανονικό (επιλεγμένο χρώμα)</item>
         <item>Αποκορεσμένο (απαλό χρώμα άλμπουμ)</item>
         <item>Expressive (πλήρης παλέτα άλμπουμ)</item>
+        <item>Συμπληρωματικό (άλμπουμ + αντίθετο)</item>
+        <item>Τριαδικό (τρεις αποχρώσεις άλμπουμ)</item>
+        <item>Ανάλογο (γειτονικές αποχρώσεις)</item>
+        <item>Μονόχρωμο (μία απόχρωση, τρεις τόνοι)</item>
+        <item>Διχρωμία (δύο χρώματα άλμπουμ)</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Τόξο άκρου (αριστερά)</item>
@@ -693,6 +705,9 @@
         <item>Διαβάθμιση άλμπουμ</item>
         <item>Διβάθμιο άλμπουμ</item>
         <item>Πρίσμα</item>
+        <item>Υγρό γυαλί</item>
+        <item>Θόλωση Expressive</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Γυαλί</item>
@@ -832,6 +847,7 @@
     <string-array name="album_art_style_entries">
         <item>Πλήρες εξώφυλλο</item>
         <item>Θολό φόντο</item>
+        <item>Παγωμένες άκρες</item>
         <item>Τετράγωνο (κοφτερές γωνίες)</item>
         <item>Τετράγωνο (απαλές γωνίες)</item>
         <item>Τετράγωνο (στρογγυλεμένες γωνίες)</item>

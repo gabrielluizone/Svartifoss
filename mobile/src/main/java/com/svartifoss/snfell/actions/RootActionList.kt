@@ -36,6 +36,7 @@ class RootActionList : PhoneAction {
                 OpenPlaylistAction(context),
                 SearchAction(context),
                 OpenSearchHistoryAction(context),
+                OpenLibraryAction(context),
                 PlayLikedSongsAction(context),
                 PlayLikedSongsShuffledAction(context),
                 PlaySpotifyLikedSongsAction(context)

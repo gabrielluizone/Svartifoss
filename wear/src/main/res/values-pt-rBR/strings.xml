@@ -19,6 +19,8 @@
     <!-- Idle (nothing-playing) state on the now-playing screen -->
     <string name="idle_nothing_playing">Nada tocando</string>
     <string name="idle_hint">Toque algo no seu celular</string>
+    <string name="idle_hint_resume">Toque para retomar o último app</string>
+    <string name="idle_resume">Retomar reprodução</string>
 
     <string name="no_phone">Nenhum celular conectado</string>
     <string name="playback_stopped">Reprodução parada</string>

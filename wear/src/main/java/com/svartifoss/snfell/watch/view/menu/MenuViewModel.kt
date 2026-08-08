@@ -55,6 +55,15 @@ class MenuViewModel @Inject constructor(
         viewModelScope.launch { phoneConnection.deleteCustomListItem(listId, entryId) }
     }
 
+    /**
+     * Selects an entry without closing the menu, for rows whose result is another list rather than
+     * playback - currently walking into a library folder. The phone answers by pushing the next
+     * page, which lands in [customList] and swaps the content in place.
+     */
+    fun selectCustomListEntry(listId: String, entryId: String) {
+        viewModelScope.launch { phoneConnection.executeCustomMenuAction(listId, entryId) }
+    }
+
     override fun onCleared() {
         super.onCleared()
         // Detach the provider's observeForever hook on PhoneConnection's (@Singleton) LiveData.

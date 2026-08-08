@@ -31,8 +31,11 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.foundation.AnchorType
 import androidx.wear.compose.foundation.CurvedLayout
@@ -40,7 +43,9 @@ import androidx.wear.compose.foundation.CurvedTextStyle
 import androidx.wear.compose.foundation.basicCurvedText
 import androidx.wear.compose.foundation.lazy.ScalingLazyListState
 import androidx.wear.compose.material3.Text
+import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
+import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -91,6 +96,7 @@ internal fun CurvedClock(visible: Boolean, contentAlpha: Float = 1f) {
 
     // Read here: CurvedLayout's content lambda is a CurvedScope, not a composable context.
     val time = rememberWallClockTime()
+    val fontFamily = LocalWatchUiFontFamily.current
 
     CurvedLayout(
             modifier = Modifier.graphicsLayer { alpha = clockAlpha.value },
@@ -102,7 +108,7 @@ internal fun CurvedClock(visible: Boolean, contentAlpha: Float = 1f) {
                 style = CurvedTextStyle(
                         fontSize = 16.sp,
                         color = Color.White.copy(alpha = 0.75f),
-                        fontFamily = GoogleSansFamily,
+                        fontFamily = fontFamily,
                         fontWeight = FontWeight.Normal
                 )
         )
@@ -124,7 +130,13 @@ internal fun CurvedClock(visible: Boolean, contentAlpha: Float = 1f) {
 internal fun FaceClock(
         visible: Boolean,
         color: Color = Color(0x99FFFFFF),
-        fontFamily: FontFamily = GoogleSansFamily
+        // Deliberately not LocalWatchUiFontFamily: that local is the *chrome* font (menu, queue),
+        // while every player face resolves and passes its own per-face font explicitly. This
+        // default only covers a caller that hasn't wired the prefs through yet.
+        fontFamily: FontFamily = GoogleSansFamily,
+        // Identity by default, meaning "the size and weight this chrome was designed at". Only a
+        // value the user moved away from identity changes anything here.
+        typography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT
 ) {
     val clockAlpha = animateFloatAsState(
             targetValue = if (visible) 1f else 0f,
@@ -136,12 +148,22 @@ internal fun FaceClock(
         Text(
                 text = time,
                 color = color,
-                fontSize = 15.sp,
+                fontSize = typography.scaled(FACE_CLOCK_SP).sp,
+                fontWeight = FontWeight(typography.weight),
+                fontStyle = if (typography.italic) FontStyle.Italic else null,
                 fontFamily = fontFamily,
+                letterSpacing = if (typography.trackingEm == 0f) {
+                    TextUnit.Unspecified
+                } else {
+                    typography.trackingEm.em
+                },
                 modifier = Modifier.align(Alignment.TopCenter).padding(top = 5.dp)
         )
     }
 }
+
+/** The Compose faces' designed clock size, matching the classic face's CLASSIC_CLOCK_SP. */
+private const val FACE_CLOCK_SP = 15f
 
 /**
  * Thin curved scroll indicator that hugs the right bezel and auto-hides ~1.2s after scrolling stops.

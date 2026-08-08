@@ -505,6 +505,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>Tiefe</item>
+        <item>Karussell</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive-Suchlauf</string>
@@ -617,12 +619,22 @@
         <item>Normal (gewählte Farbe)</item>
         <item>Entsättigt (sanfte Album-Farbe)</item>
         <item>Expressive (volle Album-Palette)</item>
+        <item>Komplementär (Album + Gegenfarbe)</item>
+        <item>Triadisch (drei Album-Farbtöne)</item>
+        <item>Analog (benachbarte Farbtöne)</item>
+        <item>Monochrom (ein Farbton, drei Stufen)</item>
+        <item>Duoton (zwei Album-Farben)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>Uhr-Behandlung folgen</item>
         <item>Normal (gewählte Farbe)</item>
         <item>Entsättigt (sanfte Album-Farbe)</item>
         <item>Expressive (volle Album-Palette)</item>
+        <item>Komplementär (Album + Gegenfarbe)</item>
+        <item>Triadisch (drei Album-Farbtöne)</item>
+        <item>Analog (benachbarte Farbtöne)</item>
+        <item>Monochrom (ein Farbton, drei Stufen)</item>
+        <item>Duoton (zwei Album-Farben)</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Rand-Bogen (links)</item>
@@ -694,6 +706,9 @@
         <item>Album-Verlauf</item>
         <item>Album-Duoton</item>
         <item>Prisma</item>
+        <item>Flüssiges Glas</item>
+        <item>Expressive-Unschärfe</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Glas</item>
@@ -833,6 +848,7 @@
     <string-array name="album_art_style_entries">
         <item>Vollcover</item>
         <item>Unscharfer Hintergrund</item>
+        <item>Mattierte Ränder</item>
         <item>Quadrat (scharfe Ecken)</item>
         <item>Quadrat (sanfte Ecken)</item>
         <item>Quadrat (abgerundete Ecken)</item>

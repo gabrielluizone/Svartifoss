@@ -171,4 +171,27 @@ class WatchTypographyTest {
                 WatchTypography.flexVariationSettings(tooHeavy, WatchTypography.IDENTITY_FLEX_AXES)
         assertTrue(settings.contains("'wght' ${WatchTypography.FLEX_WEIGHT_MAX}"))
     }
+
+    @Test
+    fun clockFontFollowsTheTrackFontUntilOneIsPicked() {
+        assertEquals("orbitron", WatchTypography.clockFontKey("follow", "orbitron"))
+        assertEquals("orbitron", WatchTypography.clockFontKey(null, "orbitron"))
+        assertEquals("orbitron", WatchTypography.clockFontKey("", "orbitron"))
+    }
+
+    @Test
+    fun anExplicitClockFontWinsOverTheTrackFont() {
+        assertEquals("google_sans", WatchTypography.clockFontKey("google_sans", "caveat"))
+    }
+
+    /**
+     * An unknown key resolves to itself rather than to a hardcoded family: the downstream catalogs
+     * already fall back to Google Sans for anything they do not recognise, and swallowing it here
+     * would hide a newer build's font behind a silent substitution.
+     */
+    @Test
+    fun anUnknownClockFontIsPassedThroughForTheCatalogToResolve() {
+        assertEquals("font_from_a_newer_build",
+                WatchTypography.clockFontKey("font_from_a_newer_build", "caveat"))
+    }
 }

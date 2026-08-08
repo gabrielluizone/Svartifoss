@@ -10,6 +10,9 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.CompositionLocalProvider
+import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
+import com.svartifoss.snfell.watch.theme.watchUiFontFamily
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.preference.PreferenceManager
 import androidx.wear.input.WearableButtons
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.LibraryEntry
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
@@ -116,6 +120,8 @@ class MenuActivity : ComponentActivity() {
                 ))
             } ?: QueueStyle.GLASS
 
+            CompositionLocalProvider(
+                    LocalWatchUiFontFamily provides watchUiFontFamily(preferences)) {
             MenuScreen(
                     content = content,
                     alwaysPickCenter = alwaysPickCenter,
@@ -127,6 +133,7 @@ class MenuActivity : ComponentActivity() {
                     onCenterConfirm = { confirmCenterItem() },
                     onDismiss = { safeFinish() }
             )
+            }
         }
     }
 
@@ -179,6 +186,20 @@ class MenuActivity : ComponentActivity() {
 
     private fun returnCustomEntry(listId: String, entryId: String) {
         buzz()
+
+        // Walking into a library folder must not close the menu: the phone answers with the next
+        // page as a fresh custom list, and MenuViewModel.customList swaps it in underneath the user
+        // (the same in-place update deleting a search-history row relies on). Finishing here would
+        // dismiss the menu and immediately relaunch it for every level, flashing the player screen
+        // between each tap.
+        // Search results carry the same encoding: picking an artist there walks into their albums
+        // rather than trying (and failing) to play a folder, so it must keep the menu open too.
+        val navigable = listId == CustomLists.LIBRARY || listId == CustomLists.SEARCH_RESULTS
+        if (navigable && LibraryEntry.isBrowsable(entryId)) {
+            viewModel.selectCustomListEntry(listId, entryId)
+            return
+        }
+
         setResult(
                 RESULT_OK,
                 Intent()

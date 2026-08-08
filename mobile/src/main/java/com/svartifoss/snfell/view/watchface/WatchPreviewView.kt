@@ -29,9 +29,11 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
 import timber.log.Timber
+import com.svartifoss.snfell.view.settings.WatchFontCatalog
 import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.FrostedEdges
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.OverlayBackdropResolver
@@ -47,6 +49,9 @@ import com.svartifoss.snfell.common.ScreenTheme as SharedScreenTheme
 import com.svartifoss.snfell.common.ScreenThemeTokens
 import android.os.Build
 import com.svartifoss.snfell.common.ColorHarmony
+import com.svartifoss.snfell.common.AdaptiveTextContrast
+import com.svartifoss.snfell.common.CarouselCardShape
+import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.SurfaceColorTreatment
@@ -55,6 +60,7 @@ import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.resolveAodArtwork
 import com.svartifoss.snfell.common.R as commonR
 import kotlin.math.asin
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
@@ -113,6 +119,19 @@ class WatchPreviewView @JvmOverloads constructor(
         const val SLAB_SURFACE = 0xFF1E1E20.toInt()
         const val SLAB_CORNER_DP = 10f
 
+        // Carousel rail geometry - the same fractions CarouselFace.kt derives its layout from.
+        // Duplicated because `mobile` cannot depend on `wear`; keep them in step by hand, the way
+        // the cookie/ring geometry below already has to be.
+        const val CAROUSEL_CARD_FRACTION = .52f
+        const val CAROUSEL_RAIL_CENTER = .475f
+        const val CAROUSEL_CARD_TOP = CAROUSEL_RAIL_CENTER - CAROUSEL_CARD_FRACTION / 2f
+        const val CAROUSEL_CARD_BOTTOM = CAROUSEL_RAIL_CENTER + CAROUSEL_CARD_FRACTION / 2f
+        const val CAROUSEL_ARTIST_ROW = .075f
+        const val CAROUSEL_ARTIST_TOP = CAROUSEL_CARD_TOP - CAROUSEL_ARTIST_ROW
+        const val CAROUSEL_TITLE_TOP = CAROUSEL_CARD_BOTTOM + .014f
+        const val CAROUSEL_NEAR_SHADE = .46f
+        const val CAROUSEL_FAR_SHADE = .68f
+
         const val COOKIE_LOBES = 10
         const val COOKIE_SOFTNESS = 0.55f
         const val COOKIE_MODULATION = 0.05f
@@ -149,6 +168,10 @@ class WatchPreviewView @JvmOverloads constructor(
     private var nowPlayingArtist: String? = null
     private var liveArt: Bitmap? = null
     private var liveArtBlurred: Bitmap? = null
+    /** Frosted-rim composition plus the source and radius it was built from - see [frostedPreviewArt]. */
+    private var frostedPreviewArt: Bitmap? = null
+    private var frostedPreviewSource: Bitmap? = null
+    private var frostedPreviewRadius: Int = -1
     private var liveOverlayArtBlurred: Bitmap? = null
     private var liveAccent: Int? = null
     private var liveSecondaryAccent: Int? = null
@@ -189,6 +212,7 @@ class WatchPreviewView @JvmOverloads constructor(
     private var edgeSeekEnabled = true
     private var screenTheme = "default"
     private var wearFontKey = "google_sans"
+    private var wearClockFontKey = WatchTypography.CLOCK_FONT_FOLLOW
     private var artStyle = "cover"
     private var dimArt = true
     private var dimStrength = 80
@@ -204,11 +228,19 @@ class WatchPreviewView @JvmOverloads constructor(
      *  deliberately no source-icon spec here: this preview has never drawn the playing-app glyph,
      *  so there is nothing for its size/opacity to affect. */
     private var titleTypographySpec = WatchTypography.IDENTITY_TEXT
+    private var clockTypographySpec = WatchTypography.IDENTITY_TEXT
     private var artistTypographySpec = WatchTypography.IDENTITY_TEXT
     private var flexAxesSpec = WatchTypography.IDENTITY_FLEX_AXES
+    private var titleColorMode = MiscPreferences.TITLE_COLOR_FACE_DEFAULT
+    private var titleCustomColor = ""
+    private var titleAdaptiveContrast = false
     private var artistMode = "follow"
     private var artistCustom = ""
     private var artistDesaturated = false
+    private var artistAdaptiveContrast = false
+    private var clockAdaptiveContrast = false
+    private var carouselCardShape = "rounded"
+    private var progressGradientEnabled = true
     private var progressMode = "follow"
     private var progressCustom = ""
     private var progressDesaturated = false
@@ -289,29 +321,9 @@ class WatchPreviewView @JvmOverloads constructor(
      *  preference, mirroring watchFontTypeface/NowPlayingFaceState.titleFont on the watch. */
     private fun titleFontBase(): Typeface? {
         if (previewLainTriggered()) return fontLoveLetter
-        return when (wearFontKey) {
-            "roboto" -> Typeface.DEFAULT
-            "typewriter" -> fontMomsTypewriter
-            "love_letter" -> fontLoveLetter
-            "poppins" -> fontPoppins
-            "montserrat" -> fontMontserrat
-            "marcellus" -> fontMarcellus
-            "rounded" -> Typeface.create("sans-serif-rounded", Typeface.NORMAL)
-            "sans_light" -> Typeface.create("sans-serif-light", Typeface.NORMAL)
-            "sans_thin" -> Typeface.create("sans-serif-thin", Typeface.NORMAL)
-            "sans_medium" -> Typeface.create("sans-serif-medium", Typeface.NORMAL)
-            "sans_black" -> Typeface.create("sans-serif-black", Typeface.NORMAL)
-            "small_caps" -> Typeface.create("sans-serif-smallcaps", Typeface.NORMAL)
-            "casual" -> Typeface.create("casual", Typeface.NORMAL)
-            "serif" -> Typeface.SERIF
-            "serif_monospace" -> Typeface.create("serif-monospace", Typeface.NORMAL)
-            "monospace" -> Typeface.MONOSPACE
-            "cursive" -> Typeface.create("cursive", Typeface.NORMAL)
-            "condensed" -> Typeface.create("sans-serif-condensed", Typeface.NORMAL)
-            "condensed_light" -> Typeface.create("sans-serif-condensed-light", Typeface.NORMAL)
-            "condensed_medium" -> Typeface.create("sans-serif-condensed-medium", Typeface.NORMAL)
-            else -> null
-        }
+        // Shared with the font picker's per-row rendering, so a font can never look one way in the
+        // list and another in the preview.
+        return WatchFontCatalog.typefaceFor(context, wearFontKey)
     }
 
     /**
@@ -404,10 +416,25 @@ class WatchPreviewView @JvmOverloads constructor(
             artistTypographySpec.applyAlpha(Color.alpha(color)),
             Color.red(color), Color.green(color), Color.blue(color))
 
-    /** [color] with the track title's configured opacity applied. */
-    private fun titleAlpha(color: Int): Int = Color.argb(
-            titleTypographySpec.applyAlpha(Color.alpha(color)),
-            Color.red(color), Color.green(color), Color.blue(color))
+    /**
+     * [color] with the track title's configured opacity applied, and its hue swapped for the user's
+     * chosen title colour when there is one.
+     *
+     * Every title draw in the preview already funnels through here, so this is the one place the
+     * substitution has to happen - and it keeps the *incoming* alpha, exactly as the watch's
+     * FaceChrome.titleTextColor does, so a face that draws its title at .88 stays at .88.
+     */
+    private fun titleAlpha(color: Int): Int {
+        val chosen = resolvedTitleColor()
+        val base = if (chosen == null) {
+            color
+        } else {
+            Color.argb(Color.alpha(color), Color.red(chosen), Color.green(chosen), Color.blue(chosen))
+        }
+        return Color.argb(
+                titleTypographySpec.applyAlpha(Color.alpha(base)),
+                Color.red(base), Color.green(base), Color.blue(base))
+    }
 
     init {
         refresh()
@@ -519,6 +546,7 @@ class WatchPreviewView @JvmOverloads constructor(
         edgeSeekEnabled = readBoolean("wear_edge_seek_enabled", true)
         screenTheme = readString("wear_screen_theme", "default")
         wearFontKey = readString("wear_font", "google_sans")
+        wearClockFontKey = readString("wear_clock_font", WatchTypography.CLOCK_FONT_FOLLOW)
         artStyle = readString("album_art_style", "cover")
         albumBlurRadius = readInt("album_art_blur_radius", 35).coerceIn(5, 120)
         dimArt = readBoolean("dim_album_art", true)
@@ -562,6 +590,14 @@ class WatchPreviewView @JvmOverloads constructor(
                 scale = WatchTypography.normalizeScale(readInt("wear_artist_font_scale", 100)),
                 alpha = WatchTypography.normalizeOpacity(readInt("wear_artist_font_opacity", 100)),
                 trackingEm = WatchTypography.normalizeTracking(readInt("wear_artist_font_tracking", 0)))
+        // Alpha stays at identity: the clock's opacity lives in wear_clock_opacity and is already
+        // baked into resolveClockColor, exactly as WatchTypography.clockSpec does on the watch.
+        clockTypographySpec = WatchTypography.TextSpec(
+                weight = WatchTypography.normalizeWeight(readInt("wear_clock_font_weight", 400)),
+                italic = readBoolean("wear_clock_font_italic", false),
+                scale = WatchTypography.normalizeScale(readInt("wear_clock_font_scale", 100)),
+                alpha = 1f,
+                trackingEm = WatchTypography.normalizeTracking(readInt("wear_clock_font_tracking", 0)))
         flexAxesSpec = WatchTypography.FlexAxes(
                 width = readInt("wear_font_flex_width", 100)
                         .toFloat().coerceIn(WatchTypography.FLEX_WIDTH_MIN, WatchTypography.FLEX_WIDTH_MAX),
@@ -573,9 +609,17 @@ class WatchPreviewView @JvmOverloads constructor(
                 roundness = readInt("wear_font_flex_roundness", 0)
                         .toFloat().coerceIn(
                                 WatchTypography.FLEX_ROUNDNESS_MIN, WatchTypography.FLEX_ROUNDNESS_MAX))
+        titleColorMode = readString(
+                "wear_title_color_mode", MiscPreferences.TITLE_COLOR_FACE_DEFAULT)
+        titleCustomColor = readString("wear_title_custom_color", "")
+        titleAdaptiveContrast = readBoolean("wear_title_adaptive_contrast", false)
         artistMode = readString("wear_artist_color_mode", "follow")
         artistCustom = readString("wear_artist_custom_color", "")
         artistDesaturated = readBoolean("wear_artist_desaturated", false)
+        artistAdaptiveContrast = readBoolean("wear_artist_adaptive_contrast", false)
+        clockAdaptiveContrast = readBoolean("wear_clock_adaptive_contrast", false)
+        carouselCardShape = readString("wear_carousel_card_shape", "rounded")
+        progressGradientEnabled = readBoolean("wear_progress_gradient", true)
         progressMode = readString("wear_progress_color_mode", "follow")
         progressCustom = readString("wear_progress_custom_color", "")
         progressDesaturated = readBoolean("wear_progress_desaturated", false)
@@ -714,6 +758,10 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun rebuildLiveArt() {
         recycleOwned(liveArt)
         recycleOwned(liveArtBlurred)
+        // The frosted copy is derived from liveArt, so it dies with it.
+        recycleOwned(frostedPreviewArt)
+        frostedPreviewArt = null
+        frostedPreviewSource = null
         recycleOwned(liveOverlayArtBlurred)
         liveArt = null
         liveArtBlurred = null
@@ -813,6 +861,25 @@ class WatchPreviewView @JvmOverloads constructor(
                 FaceScopedPreferences.perFaceDefault(face, baseKey) ?: default
             else default
 
+    /**
+     * [scopedDefault] for booleans and ints.
+     *
+     * These used to take the caller's literal default straight through, so a per-face default only
+     * reached the preview when it happened to be a String key - which is why Carousel's "edge ring
+     * and edge seek off" showed as ON here while the watch drew them off. Exactly the omission the
+     * watch's own Boolean resolver had, in the other renderer.
+     */
+    private fun scopedDefaultBoolean(baseKey: String, default: Boolean): Boolean =
+            if (FaceScopedPreferences.isScoped(baseKey))
+                FaceScopedPreferences.perFaceDefault(face, baseKey)?.toBooleanStrictOrNull()
+                        ?: default
+            else default
+
+    private fun scopedDefaultInt(baseKey: String, default: Int): Int =
+            if (FaceScopedPreferences.isScoped(baseKey))
+                FaceScopedPreferences.perFaceDefault(face, baseKey)?.toIntOrNull() ?: default
+            else default
+
     private fun readString(key: String, default: String): String {
         candidateFor(key)?.let { return it.toString() }
         val resolvedDefault = scopedDefault(key, default)
@@ -832,11 +899,12 @@ class WatchPreviewView @JvmOverloads constructor(
                 else -> candidate.toString().toBooleanStrictOrNull() ?: default
             }
         }
+        val resolvedDefault = scopedDefaultBoolean(key, default)
         val readKey = effectiveKey(key)
         return try {
-            prefs.getBoolean(readKey, default)
+            prefs.getBoolean(readKey, resolvedDefault)
         } catch (ignored: ClassCastException) {
-            prefs.all[readKey]?.toString()?.toBooleanStrictOrNull() ?: default
+            prefs.all[readKey]?.toString()?.toBooleanStrictOrNull() ?: resolvedDefault
         }
     }
 
@@ -848,11 +916,12 @@ class WatchPreviewView @JvmOverloads constructor(
                 else -> candidate.toString().toIntOrNull() ?: default
             }
         }
+        val resolvedDefault = scopedDefaultInt(key, default)
         val readKey = effectiveKey(key)
         return try {
-            prefs.getInt(readKey, default)
+            prefs.getInt(readKey, resolvedDefault)
         } catch (ignored: ClassCastException) {
-            prefs.getString(readKey, null)?.toIntOrNull() ?: default
+            prefs.getString(readKey, null)?.toIntOrNull() ?: resolvedDefault
         }
     }
 
@@ -931,6 +1000,28 @@ class WatchPreviewView @JvmOverloads constructor(
         sampleOverlayArtBlurred = sampleArt?.let { blurApproximation(it, overlayRadius) }
         liveArtBlurred = liveArt?.let { blurApproximation(it, albumBlurRadius) }
         liveOverlayArtBlurred = liveArt?.let { blurApproximation(it, overlayRadius) }
+    }
+
+    /**
+     * The frosted-rim composition for whichever artwork the preview is currently showing, built
+     * through the same [FrostedEdges] the watch uses so the two cannot drift.
+     *
+     * Cached against the bitmap it was built from *and* the blur radius, since the radius slider
+     * is live on this screen - unlike the watch, where a radius change arrives as a whole
+     * preference sync.
+     */
+    private fun frostedPreviewArt(): Bitmap? {
+        val base = liveArt ?: sampleArt ?: return null
+        if (frostedPreviewSource === base && frostedPreviewRadius == albumBlurRadius) {
+            frostedPreviewArt?.takeIf { !it.isRecycled }?.let { return it }
+        }
+        val frosted = FrostedEdges.compose(base, albumBlurRadius.toFloat())
+        // Not recycled, for the same reason the watch does not - see frostArtworkIfSelected. The
+        // previous composition may still be the one a queued draw pass is about to paint.
+        frostedPreviewSource = base
+        frostedPreviewRadius = albumBlurRadius
+        frostedPreviewArt = frosted
+        return frosted
     }
 
     private fun recycleOwned(bitmap: Bitmap?) {
@@ -1304,6 +1395,83 @@ class WatchPreviewView @JvmOverloads constructor(
         return ColorUtils.HSLToColor(hsl)
     }
 
+    /**
+     * The artist line's colour, mirroring the watch's `resolvedArtistTextColor`: the resolved tint
+     * through the shared lightness floor, then the adaptive correction when the user enabled it.
+     *
+     * A dedicated funnel rather than folding the correction into [accentForText], which the AOD
+     * tint and the queue accent also use - only the artist line has a measured background band.
+     */
+    private fun artistTextColor(): Int {
+        val base = accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
+        if (!artistAdaptiveContrast) return base
+        val background = artistBandLuminance() ?: return base
+        return AdaptiveTextContrast.adapt(base, background)
+    }
+
+    /**
+     * The user's chosen title colour, or null to leave every face its own - mirroring the watch's
+     * `resolvedTitleTextColor`.
+     *
+     * "face" resolves no tint at all, which is what keeps an untouched install pixel-identical:
+     * each miniature keeps drawing the literal its face was designed with.
+     */
+    private fun resolvedTitleColor(): Int? {
+        if (titleColorMode == MiscPreferences.TITLE_COLOR_FACE_DEFAULT) return null
+        val base = accentForText(resolveTint(titleColorMode, titleCustomColor, false))
+        if (!titleAdaptiveContrast) return base
+        val background = titleBandLuminance() ?: return base
+        return AdaptiveTextContrast.adapt(base, background)
+    }
+
+    /** The band the title sits on, matching the watch's `titleBandLuminance`. */
+    private fun titleBandLuminance(): Float? = sampleArtLuminance(0.10f, 0.90f, 0.54f, 0.70f)
+
+    /**
+     * Luminance of the artwork behind the artist line. Same band as the watch's
+     * `artistBandLuminance` (10%-90% wide, 68%-84% down) so the preview predicts the same
+     * correction the watch will apply.
+     */
+    private fun artistBandLuminance(): Float? = sampleArtLuminance(0.10f, 0.90f, 0.68f, 0.84f)
+
+    /** The strip the top-centre clock sits on, matching the watch's `clockBandLuminance`. */
+    private fun clockBandLuminance(): Float? = sampleArtLuminance(0.35f, 0.65f, 0.02f, 0.15f)
+
+    /**
+     * Average luminance of the shown artwork inside a rectangle given as fractions of the bitmap.
+     *
+     * One sampler for the artist band, the clock band and the clock's light/dark test, mirroring
+     * the watch's identically-named helper - these were three near-identical copies, which is
+     * exactly how the preview and the watch drift apart on where they measure.
+     */
+    private fun sampleArtLuminance(
+            leftFraction: Float,
+            rightFraction: Float,
+            topFraction: Float,
+            bottomFraction: Float
+    ): Float? {
+        val art = liveArt ?: sampleArt ?: return null
+        val w = art.width
+        val h = art.height
+        if (w <= 0 || h <= 0) return null
+        val left = (w * leftFraction).toInt().coerceIn(0, w - 1)
+        val right = (w * rightFraction).toInt().coerceIn(left + 1, w)
+        val top = (h * topFraction).toInt().coerceIn(0, h - 1)
+        val bottom = (h * bottomFraction).toInt().coerceIn(top + 1, h)
+        var sum = 0.0
+        var n = 0
+        for (cx in 0 until 5) {
+            for (cy in 0 until 3) {
+                val px = left + (right - left) * cx / 4
+                val py = top + (bottom - top) * cy / 2
+                sum += ColorUtils.calculateLuminance(
+                        art.getPixel(px.coerceIn(0, w - 1), py.coerceIn(0, h - 1)))
+                n++
+            }
+        }
+        return if (n > 0) (sum / n).toFloat() else null
+    }
+
     private fun tonal(accent: Int, lightness: Float, minSat: Float, maxSat: Float): Int =
             PaletteTransforms.tonalSurface(accent, lightness, minSat, maxSat)
 
@@ -1435,7 +1603,8 @@ class WatchPreviewView @JvmOverloads constructor(
         when (demonstratedFace) {
             "expressive" -> drawExpressive(
                     canvas, geometry.cx, geometry.cy, geometry.radius, geometry.bounds, dp)
-            "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive" ->
+            "carousel" -> drawCarouselPlayer(canvas, geometry, dp)
+            "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth" ->
                 drawCuratedPlayer(canvas, geometry, dp, demonstratedFace)
             else -> {
                 drawPlayerShading(canvas, geometry.bounds, geometry.cx, geometry.cy,
@@ -1488,10 +1657,10 @@ class WatchPreviewView @JvmOverloads constructor(
                         backgroundStyle.squareCornerRadiusFraction ?: 0.10f
                 )
             } else {
-                val art = if (blurred) {
-                    liveArtBlurred ?: sampleArtBlurred
-                } else {
-                    liveArt ?: sampleArt
+                val art = when {
+                    backgroundStyle.frostedEdges -> frostedPreviewArt()
+                    blurred -> liveArtBlurred ?: sampleArtBlurred
+                    else -> liveArt ?: sampleArt
                 }
                 drawArtwork(canvas, art, geometry.bounds, 255, grayscale)
             }
@@ -1537,6 +1706,8 @@ class WatchPreviewView @JvmOverloads constructor(
         when (style) {
             PlayerBackgroundStyle.COVER,
             PlayerBackgroundStyle.BLUR,
+            // Frosting is baked into the bitmap (FrostedEdges), so nothing is drawn on top.
+            PlayerBackgroundStyle.FROSTED,
             PlayerBackgroundStyle.BLACK_AND_WHITE,
             PlayerBackgroundStyle.BLURRED_BLACK_AND_WHITE,
             PlayerBackgroundStyle.SQUARE_SHARP,
@@ -1970,7 +2141,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
     private fun effectiveAodStyle(): String = when (aodStyle) {
         "follow" -> if (face in setOf(
-                "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive"
+                "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth", "carousel"
         )) face else "classic"
         // Removed style; a stored value falls back to classic (matches the watch).
         "minimal" -> "classic"
@@ -2021,7 +2192,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
         when (style) {
             "expressive" -> drawExpressiveAod(canvas, geometry, dp)
-            "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive" ->
+            "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth", "carousel" ->
                 drawCuratedAod(canvas, geometry, dp)
             "chrono" -> drawChronoAod(canvas, geometry, dp)
             else -> drawClassicAod(canvas, geometry, dp, minimal = false)
@@ -2425,7 +2596,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val style = effectiveAodStyle()
         // Matches CuratedAmbientFace on the watch: Poster/Studio and the AMOLED-identity
         // Eclipse/Immersive centre their AOD metadata AND skip the centre play/pause glyph.
-        val centeredMetadata = style in setOf("poster", "studio", "eclipse", "immersive")
+        val centeredMetadata = style in setOf("poster", "studio", "eclipse", "immersive", "depth")
 
         if (aodShowTrackInfo) {
             textPaint.typeface = fontBold
@@ -2768,6 +2939,11 @@ class WatchPreviewView @JvmOverloads constructor(
                     geometry.bounds,
                     255
             )
+        } else if (backdrop == OverlayBackdrop.EXPRESSIVE_NO_BLUR) {
+            // The one backdrop that composes over the *sharp* cover. On the watch this comes for
+            // free from the player's album-art View sitting under the overlay group; the preview
+            // has no layer stack, so it draws the same bitmap here explicitly.
+            drawArtwork(canvas, liveArt ?: sampleArt, geometry.bounds, 255)
         }
 
         fillPaint.shader = null
@@ -2832,16 +3008,64 @@ class WatchPreviewView @JvmOverloads constructor(
                     floatArrayOf(0f, .48f, 1f),
                     Shader.TileMode.CLAMP
             )
+            // Mirrors the watch's LIQUID_GLASS drawable: a low-alpha lifted album tint, a white
+            // sheen through the middle and a deeper tail, over the blurred cover this backdrop
+            // shares with Acrylic/Glass/Prism.
+            OverlayBackdrop.LIQUID_GLASS -> fillPaint.shader = LinearGradient(
+                    geometry.bounds.left,
+                    geometry.bounds.top,
+                    geometry.bounds.right,
+                    geometry.bounds.bottom,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .62f, .25f, .60f), 0x3D),
+                            ColorUtils.setAlphaComponent(Color.WHITE, 0x14),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .30f, .25f, .60f), 0x66)
+                    ),
+                    floatArrayOf(0f, .48f, 1f),
+                    Shader.TileMode.CLAMP
+            )
+            // Mirrors the watch's Expressive LayerDrawable: the album wash and the black
+            // knock-back collapse into one blended colour here (they are flat fills on the watch
+            // too), with the vignette drawn as its own pass below.
+            OverlayBackdrop.EXPRESSIVE, OverlayBackdrop.EXPRESSIVE_NO_BLUR ->
+                fillPaint.color = ColorUtils.compositeColors(
+                        ColorUtils.setAlphaComponent(Color.BLACK, 0x4D),
+                        ColorUtils.setAlphaComponent(
+                                tonal(accent, .30f, PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT),
+                                0x73))
             OverlayBackdrop.FOLLOW_STYLE -> fillPaint.color = Color.BLACK
         }
         canvas.drawRect(geometry.bounds, fillPaint)
 
-        if (backdrop == OverlayBackdrop.PRISM) {
+        if (backdrop == OverlayBackdrop.EXPRESSIVE ||
+                backdrop == OverlayBackdrop.EXPRESSIVE_NO_BLUR) {
+            fillPaint.shader = RadialGradient(
+                    geometry.cx,
+                    geometry.cy,
+                    maxOf(geometry.bounds.width(), geometry.bounds.height()) * .68f,
+                    intArrayOf(
+                            Color.TRANSPARENT,
+                            Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(Color.BLACK, 0xE0)),
+                    floatArrayOf(0f, .55f, 1f),
+                    Shader.TileMode.CLAMP
+            )
+            canvas.drawRect(geometry.bounds, fillPaint)
+            fillPaint.shader = null
+        }
+
+        if (backdrop == OverlayBackdrop.PRISM || backdrop == OverlayBackdrop.LIQUID_GLASS) {
             strokePaint.shader = null
             strokePaint.pathEffect = null
             strokePaint.style = Paint.Style.STROKE
-            strokePaint.strokeWidth = geometry.dpScale.coerceAtLeast(1f)
-            strokePaint.color = 0x66FFFFFF
+            val liquid = backdrop == OverlayBackdrop.LIQUID_GLASS
+            // Liquid glass's rim is thicker and brighter - it is the cue that sells the pane
+            // as a surface with an edge, where Prism's is only a delineation.
+            strokePaint.strokeWidth =
+                    (geometry.dpScale * if (liquid) 1.5f else 1f).coerceAtLeast(1f)
+            strokePaint.color = if (liquid) 0x8CFFFFFF.toInt() else 0x66FFFFFF
             val inset = strokePaint.strokeWidth / 2f
             if (geometry.round) {
                 canvas.drawCircle(geometry.cx, geometry.cy, geometry.radius - inset, strokePaint)
@@ -4358,13 +4582,30 @@ class WatchPreviewView @JvmOverloads constructor(
         strokePaint.strokeWidth = fillWidth
         strokePaint.strokeCap = fillCap
         strokePaint.color = progressColor
+        // Angular width of the round stroke cap, as a 0..1 shader position. Mirrors
+        // CircularProgressSeekBar.capAngleFraction: an unshifted sweep gradient paints that cap
+        // with its LAST stop (the shader wraps just below 1.0), which showed up as a mark of the
+        // wrong colour at the very start of the bar.
+        val ringRadius = ringRect.width() / 2f
+        val capFraction = if (ringRadius > 0f) {
+            (Math.toDegrees(atan2(fillWidth / 2f, ringRadius).toDouble()).toFloat() / 360f)
+                    .coerceIn(0f, 0.25f)
+        } else {
+            0f
+        }
         if (progressStyle == "comet") {
             if (sweep > 1f) {
                 val shader = SweepGradient(cx, cy,
-                        intArrayOf(progressColor and 0x00FFFFFF, progressColor),
-                        floatArrayOf(0f, (sweep / 360f).coerceAtMost(1f)))
+                        intArrayOf(
+                                progressColor and 0x00FFFFFF,
+                                progressColor and 0x00FFFFFF,
+                                progressColor),
+                        floatArrayOf(
+                                0f,
+                                capFraction,
+                                (capFraction + sweep / 360f).coerceAtMost(1f)))
                 val rotate = Matrix()
-                rotate.setRotate(-90f, cx, cy)
+                rotate.setRotate(-90f - capFraction * 360f, cx, cy)
                 shader.setLocalMatrix(rotate)
                 strokePaint.shader = shader
                 canvas.drawArc(ringRect, -90f, sweep, false, strokePaint)
@@ -4375,7 +4616,7 @@ class WatchPreviewView @JvmOverloads constructor(
             fillPaint.color = progressColor
             canvas.drawCircle(cx + r * cos(headRad).toFloat(),
                     cy + r * sin(headRad).toFloat(), baseStroke * 0.5f, fillPaint)
-        } else if (sweep > 1f &&
+        } else if (sweep > 1f && progressGradientEnabled &&
                 (ColorHarmony.hueDistance(progressColor, resolveSecondaryTint(progressMode, progressCustom, progressDesaturated)) >= ColorHarmony.MIN_DUOTONE_HUE_GAP ||
                         ColorHarmony.hueDistance(progressColor, resolveTertiaryTint(progressMode, progressCustom, progressDesaturated)) >= ColorHarmony.MIN_DUOTONE_HUE_GAP)) {
             // Mirrors CircularProgressSeekBar's RingStyle.SOLID gradient: a treatment whose
@@ -4383,11 +4624,16 @@ class WatchPreviewView @JvmOverloads constructor(
             // below), so this is additive rather than a restyle of Normal/Desaturated/Expressive.
             val shader = SweepGradient(cx, cy,
                     intArrayOf(progressColor,
+                            progressColor,
                             resolveSecondaryTint(progressMode, progressCustom, progressDesaturated),
                             resolveTertiaryTint(progressMode, progressCustom, progressDesaturated)),
-                    floatArrayOf(0f, (sweep / 360f * 0.5f), (sweep / 360f).coerceAtMost(1f)))
+                    floatArrayOf(
+                            0f,
+                            capFraction,
+                            (capFraction + sweep / 360f * 0.5f).coerceAtMost(1f),
+                            (capFraction + sweep / 360f).coerceAtMost(1f)))
             val rotate = Matrix()
-            rotate.setRotate(-90f, cx, cy)
+            rotate.setRotate(-90f - capFraction * 360f, cx, cy)
             shader.setLocalMatrix(rotate)
             strokePaint.shader = shader
             canvas.drawArc(ringRect, -90f, sweep, false, strokePaint)
@@ -4402,7 +4648,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val theme = screenThemeSpec()
         // The seek ring uses the raw resolved accent (like the watch's seekBar.progressColor);
         // only the artist text gets the accentForText lightness lift.
-        val artistColor = accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
+        val artistColor = artistTextColor()
 
         // Quadrant hints are visual affordances only; the four touch zones remain unchanged on
         // the watch. The visual style theme only changes how these icon glyphs are drawn -
@@ -4537,37 +4783,40 @@ class WatchPreviewView @JvmOverloads constructor(
      *  the mini buttons use. */
     private fun clockPreviewForced(): Boolean = focusedPreference?.startsWith("wear_clock_") == true
 
-    /** The clock font follows WEAR_FONT (like the watch's clockFont) but never the Lain override -
-     *  it is chrome, not track text. Falls back to the preloaded regular for Google Sans. */
-    private fun clockTypeface(): Typeface? = when (wearFontKey) {
-        "roboto" -> Typeface.DEFAULT
-        "typewriter" -> fontMomsTypewriter
-        "love_letter" -> fontLoveLetter
-        "poppins" -> fontPoppins
-        "montserrat" -> fontMontserrat
-        "marcellus" -> fontMarcellus
-        "rounded" -> Typeface.create("sans-serif-rounded", Typeface.NORMAL)
-        "sans_light" -> Typeface.create("sans-serif-light", Typeface.NORMAL)
-        "sans_thin" -> Typeface.create("sans-serif-thin", Typeface.NORMAL)
-        "sans_medium" -> Typeface.create("sans-serif-medium", Typeface.NORMAL)
-        "sans_black" -> Typeface.create("sans-serif-black", Typeface.NORMAL)
-        "small_caps" -> Typeface.create("sans-serif-smallcaps", Typeface.NORMAL)
-        "casual" -> Typeface.create("casual", Typeface.NORMAL)
-        "serif" -> Typeface.SERIF
-        "serif_monospace" -> Typeface.create("serif-monospace", Typeface.NORMAL)
-        "monospace" -> Typeface.MONOSPACE
-        "cursive" -> Typeface.create("cursive", Typeface.NORMAL)
-        "condensed" -> Typeface.create("sans-serif-condensed", Typeface.NORMAL)
-        "condensed_light" -> Typeface.create("sans-serif-condensed-light", Typeface.NORMAL)
-        "condensed_medium" -> Typeface.create("sans-serif-condensed-medium", Typeface.NORMAL)
-        else -> fontRegular
+    /**
+     * The clock's typeface: its own [MiscPreferences.WEAR_CLOCK_FONT] choice when set, otherwise
+     * WEAR_FONT, mirroring the watch's `NowPlayingFaceState.clockFont`. Never the Lain override -
+     * the clock is chrome, not track text.
+     *
+     * Goes through [WatchFontCatalog] rather than keeping its own copy of the key->typeface map:
+     * the copy that used to live here had already fallen behind by five fonts (Bebas Neue,
+     * Playfair, Space Grotesk, Orbitron, Caveat all rendered as plain Google Sans in the preview
+     * while the watch drew them correctly).
+     */
+    private fun clockTypeface(
+            spec: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT
+    ): Typeface? {
+        val key = WatchTypography.clockFontKey(wearClockFontKey, wearFontKey)
+        if (WatchTypography.isFlexFont(key)) return flexPreviewTypeface(spec)
+        val base = WatchFontCatalog.typefaceFor(context, key) ?: fontRegular
+        // bold = false: the clock's identity weight is normal, unlike the classic title's.
+        return styledPreviewTypeface(base, bold = false, spec = spec)
     }
 
     /** Mirrors MainActivity.resolveClockColor: opacity-baked ARGB from the color-mode pref, with
      *  dynamic sampling the top-centre strip of the shown art (not the whole cover). */
     private fun resolveClockColor(): Int {
         val base = when (clockColorMode) {
-            "album" -> albumAccent()
+            // Only the album colour is corrected - it is the one derived rather than chosen.
+            // Mirrors MainActivity.adaptedClockAlbumColor.
+            "album" -> albumAccent().let { base ->
+                val background = clockBandLuminance()
+                if (clockAdaptiveContrast && background != null) {
+                    AdaptiveTextContrast.adapt(base, background)
+                } else {
+                    base
+                }
+            }
             "custom" -> parseHexOrNull(clockCustomColor) ?: Color.WHITE
             "dynamic" -> if (clockAreaIsLight()) Color.BLACK else Color.WHITE
             else -> Color.WHITE
@@ -4578,28 +4827,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
     /** Whether the artwork region under the top-centre clock is light (→ black clock). Samples the
      *  same top strip the watch does; falls back to dark (→ white clock) with no artwork. */
-    private fun clockAreaIsLight(): Boolean {
-        val art = liveArt ?: sampleArt ?: return false
-        val w = art.width
-        val h = art.height
-        if (w <= 0 || h <= 0) return false
-        val left = (w * 0.35f).toInt().coerceIn(0, w - 1)
-        val right = (w * 0.65f).toInt().coerceIn(left + 1, w)
-        val top = (h * 0.02f).toInt().coerceIn(0, h - 1)
-        val bottom = (h * 0.15f).toInt().coerceIn(top + 1, h)
-        var sum = 0.0
-        var n = 0
-        for (cx in 0 until 5) {
-            for (cy in 0 until 3) {
-                val px = left + (right - left) * cx / 4
-                val py = top + (bottom - top) * cy / 2
-                sum += ColorUtils.calculateLuminance(
-                        art.getPixel(px.coerceIn(0, w - 1), py.coerceIn(0, h - 1)))
-                n++
-            }
-        }
-        return (if (n > 0) sum / n else 0.0) > 0.55
-    }
+    private fun clockAreaIsLight(): Boolean = clockBandLuminance()?.let { it > 0.55 } ?: false
 
     private fun drawSmallClock(
             canvas: Canvas,
@@ -4610,13 +4838,14 @@ class WatchPreviewView @JvmOverloads constructor(
     ) {
         textPaint.style = Paint.Style.FILL
         textPaint.textAlign = Paint.Align.CENTER
-        textPaint.typeface = clockTypeface()
+        textPaint.typeface = clockTypeface(clockTypographySpec)
+        textPaint.letterSpacing = clockTypographySpec.trackingEm
         val resolved = resolveClockColor()
         textPaint.color = ColorUtils.setAlphaComponent(
                 resolved,
                 (Color.alpha(resolved) * alpha).toInt().coerceIn(0, 255)
         )
-        textPaint.textSize = dp(13f)
+        textPaint.textSize = dp(clockTypographySpec.scaled(13f))
         // Real wall-clock time, like the watch (which follows the system 12/24h setting and
         // never appends AM/PM). Minute precision is enough - the preview redraws often enough
         // while playing, and a stale minute at rest is harmless.
@@ -4624,6 +4853,9 @@ class WatchPreviewView @JvmOverloads constructor(
         val time = java.text.SimpleDateFormat(pattern, java.util.Locale.getDefault())
                 .format(java.util.Date())
         canvas.drawText(time, x, y, textPaint)
+        // textPaint is shared across the whole preview; leaving the clock's tracking on it would
+        // silently space out whatever draws next.
+        textPaint.letterSpacing = 0f
     }
 
     private data class PreviewMiniGeometry(
@@ -5160,7 +5392,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val sideContainer = tonal(accent, .74f, .40f, .85f)
         val centerContainer = tonal(accent, .87f, .30f, .70f)
         val onContainer = tonal(accent, .16f, .25f, .60f)
-        val artistColor = accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
+        val artistColor = artistTextColor()
         val progressColor = resolveTint(progressMode, progressCustom, progressDesaturated)
 
         if (alwaysShowTime || clockPreviewForced()) drawSmallClock(canvas, cx, cy - radius + dp(24f), dp)
@@ -5291,6 +5523,144 @@ class WatchPreviewView @JvmOverloads constructor(
         drawBottomChrome(canvas, cx, cy, radius, dp)
     }
 
+    /**
+     * Carousel's own miniature: the cover rail with its darkened neighbours, the artist band above
+     * it and the chord-inset title below.
+     *
+     * Its own renderer rather than a branch inside [drawCuratedPlayer], because Carousel shares
+     * none of that composition - no transport row, no progress ring, and text anchored to the cover
+     * rather than to the screen. It used to fall through to the generic curated layout, so the
+     * picker showed a face that looked nothing like what the watch actually draws.
+     *
+     * The geometry constants are the ones CarouselFace.kt derives its layout from, duplicated here
+     * because `mobile` cannot depend on `wear` - keep the two in step, as with the cookie/ring
+     * geometry the other faces already duplicate. The *inset* math is shared for real, through
+     * [RoundScreenText], so the preview cannot disagree about where a title gets cut.
+     */
+    private fun drawCarouselPlayer(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        val cx = geometry.cx
+        val cy = geometry.cy
+        val radius = geometry.radius
+        val screen = radius * 2f
+        val screenTop = cy - radius
+
+        drawPlayerShading(canvas, geometry.bounds, cx, cy, radius)
+
+        val art = liveArt ?: sampleArt
+        val shape = CarouselCardShape.fromPreference(carouselCardShape)
+        val railCenterY = screenTop + screen * CAROUSEL_RAIL_CENTER
+
+        fun card(size: Float, dx: Float, shade: Float) {
+            val rect = RectF(
+                    cx + dx - size / 2f, railCenterY - size / 2f,
+                    cx + dx + size / 2f, railCenterY + size / 2f)
+            val corner = size * shape.cornerFraction
+            canvas.save()
+            canvas.clipPath(Path().apply { addRoundRect(rect, corner, corner, Path.Direction.CW) })
+            if (art != null) {
+                drawArtwork(canvas, art, rect, 255)
+            } else {
+                fillPaint.shader = null
+                fillPaint.color = ColorUtils.setAlphaComponent(albumAccent(), 0x2E)
+                canvas.drawRect(rect, fillPaint)
+            }
+            if (shade > 0f) {
+                fillPaint.shader = null
+                fillPaint.color =
+                        ColorUtils.setAlphaComponent(Color.BLACK, (shade * 255f).toInt())
+                canvas.drawRect(rect, fillPaint)
+            }
+            canvas.restore()
+        }
+
+        // Outermost first so each nearer card overlaps the one behind it - the face's own paint
+        // order. Every card shows the same cover because the preview has only one bitmap to work
+        // with; the miniature is about the composition, not the queue's real contents.
+        card(screen * .34f, -screen * .32f, CAROUSEL_FAR_SHADE)
+        card(screen * .34f, screen * .32f, CAROUSEL_FAR_SHADE)
+        card(screen * .46f, -screen * .17f, CAROUSEL_NEAR_SHADE)
+        card(screen * .46f, screen * .17f, CAROUSEL_NEAR_SHADE)
+        card(screen * CAROUSEL_CARD_FRACTION, 0f, 0f)
+
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.CENTER
+
+        val artistVisible = showTrackArtist || !isPlayingShown()
+        if (artistVisible) {
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = artistTypographySpec.scaled(dp(8f))
+            val inset = RoundScreenText.sideInsetFor(
+                    CAROUSEL_ARTIST_TOP, CAROUSEL_ARTIST_TOP + CAROUSEL_ARTIST_ROW)
+            val available = screen * (1f - 2f * inset)
+            val baseline =
+                    screenTop + screen * (CAROUSEL_ARTIST_TOP + CAROUSEL_ARTIST_ROW * .72f)
+            if (isPlayingShown()) {
+                textPaint.color = artistAlpha(artistTextColor())
+                canvas.drawText(
+                        ellipsize(displayArtist().uppercase(), available), cx, baseline, textPaint)
+            } else {
+                textPaint.color = Color.WHITE
+                canvas.drawText(
+                        context.getString(R.string.preview_playback_stopped), cx, baseline, textPaint)
+            }
+        }
+
+        if (showTrackTitle) {
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = titleTypographySpec.scaled(dp(11f))
+            val lineHeight = dp(12.5f) / screen
+            // One line unless it genuinely does not fit, mirroring the face's "smart" default and
+            // the widen-when-short/narrow-when-wrapped behaviour RoundScreenText exists for.
+            val singleInset =
+                    RoundScreenText.sideInsetForLines(CAROUSEL_TITLE_TOP, lineHeight, 1)
+            val title = displayTitle().uppercase()
+            val fitsOnOneLine =
+                    textPaint.measureText(title) <= screen * (1f - 2f * singleInset)
+            val inset = if (fitsOnOneLine) {
+                singleInset
+            } else {
+                RoundScreenText.sideInsetForLines(CAROUSEL_TITLE_TOP, lineHeight, 2)
+            }
+            val available = screen * (1f - 2f * inset)
+            val firstBaseline = screenTop + screen * CAROUSEL_TITLE_TOP + dp(9f)
+            if (fitsOnOneLine) {
+                canvas.drawText(title, cx, firstBaseline, textPaint)
+            } else {
+                val split = wrapIntoTwoLines(title, available)
+                canvas.drawText(ellipsize(split.first, available), cx, firstBaseline, textPaint)
+                canvas.drawText(
+                        ellipsize(split.second, available), cx, firstBaseline + dp(12.5f), textPaint)
+            }
+        }
+
+        if (alwaysShowTime || clockPreviewForced()) {
+            drawSmallClock(canvas, cx, cy - radius + dp(24f), dp)
+        }
+        drawBottomChrome(canvas, cx, cy, radius, dp)
+    }
+
+    /**
+     * Splits [text] at the last word break that still fits [maxWidth], so the preview wraps where
+     * Compose would rather than mid-word. Falls back to a single overflowing line when the text has
+     * no break to use - the caller ellipsizes either way.
+     */
+    private fun wrapIntoTwoLines(text: String, maxWidth: Float): Pair<String, String> {
+        val words = text.split(' ').filter { it.isNotEmpty() }
+        if (words.size < 2) return text to ""
+        var split = 1
+        for (index in 1 until words.size) {
+            val candidate = words.subList(0, index).joinToString(" ")
+            if (textPaint.measureText(candidate) > maxWidth) break
+            split = index
+        }
+        return words.subList(0, split).joinToString(" ") to
+                words.subList(split, words.size).joinToString(" ")
+    }
+
     /** Shared preview renderer for the curated watch-first layouts. They intentionally expose a
      * single play/pause focus and leave shortcuts to the configured mini-button row. */
     private fun drawCuratedPlayer(
@@ -5319,7 +5689,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val surfaceColor = tunedPreviewColor(secondary, .16f, .42f)
         val progressColor = resolveTint(progressMode, progressCustom, progressDesaturated)
         val artistColor = if (isPlayingShown()) {
-            accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
+            artistTextColor()
         } else {
             Color.WHITE
         }
@@ -5437,6 +5807,90 @@ class WatchPreviewView @JvmOverloads constructor(
         }
 
         when (kind) {
+            "depth" -> {
+                // Mirrors DepthComposition: two off-axis album hazes, the vignette that makes the
+                // rim recede, the floor gradient, grounded text and the hairline progress. Those
+                // layers are the whole difference from Immersive at a glance, so the preview has
+                // to draw all of them or the two faces look identical in the picker.
+                fillPaint.shader = RadialGradient(
+                        cx - radius * .40f, cy - radius * .44f, radius * 1.56f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(rawAlbumAccent(), 0x4D),
+                                ColorUtils.setAlphaComponent(rawSecondaryAccent(), 0x29),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, .55f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawCircle(cx, cy, radius, fillPaint)
+                fillPaint.shader = null
+
+                // Second haze, anchored to the opposite corner at a smaller radius.
+                fillPaint.shader = RadialGradient(
+                        cx + radius * .56f, cy + radius * .52f, radius * 1.16f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(rawTertiaryAccent(), 0x38),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawCircle(cx, cy, radius, fillPaint)
+                fillPaint.shader = null
+
+                // The vignette that replaced the parallax as the depth cue - only the outer
+                // third darkens, so the centre of the cover reads as sitting forward.
+                fillPaint.shader = RadialGradient(
+                        cx, cy, radius * 1.24f,
+                        intArrayOf(
+                                Color.TRANSPARENT,
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, 0x75)),
+                        floatArrayOf(0f, .62f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawCircle(cx, cy, radius, fillPaint)
+                fillPaint.shader = null
+
+                fillPaint.shader = LinearGradient(cx, cy - radius, cx, cy + radius,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(Color.BLACK, 0x4D),
+                                Color.TRANSPARENT,
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, 0xCC)),
+                        floatArrayOf(0f, .38f, .62f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawCircle(cx, cy, radius, fillPaint)
+                fillPaint.shader = null
+
+                var y = cy + radius - radius * 2f * .15f
+                if (artistVisible) {
+                    textPaint.textAlign = Paint.Align.CENTER
+                    textPaint.typeface = titleTypeface(bold = false)
+                    textPaint.textSize = dp(11f)
+                    textPaint.color = ColorUtils.setAlphaComponent(artistColor, 0xC7)
+                    canvas.drawText(ellipsize(
+                            if (isPlayingShown()) displayArtist()
+                            else context.getString(R.string.preview_playback_stopped),
+                            radius * 1.45f), cx, y, textPaint)
+                    y -= dp(16f)
+                }
+                if (titleVisible) {
+                    textPaint.textAlign = Paint.Align.CENTER
+                    textPaint.typeface = titleTypeface(bold = true)
+                    textPaint.textSize = dp(14f)
+                    textPaint.color = Color.WHITE
+                    val depthTitleWidth = radius * 1.45f
+                    val title = displayTitle()
+                    if (textPaint.measureText(title) <= depthTitleWidth) {
+                        canvas.drawText(title, cx, y, textPaint)
+                    } else {
+                        drawMarqueeText(canvas, title, cx, y, depthTitleWidth)
+                    }
+                }
+                if (internalProgressVisible) {
+                    val half = radius * .78f
+                    val lineY = cy + radius - dp(6f)
+                    fillPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x2E)
+                    canvas.drawRoundRect(cx - half, lineY - dp(1f), cx + half, lineY + dp(1f),
+                            dp(1f), dp(1f), fillPaint)
+                    fillPaint.color = ColorUtils.setAlphaComponent(liftedAccent(rawAlbumAccent()), 0xEB)
+                    canvas.drawRoundRect(cx - half, lineY - dp(1f),
+                            cx - half + half * 2f * progressFraction(), lineY + dp(1f),
+                            dp(1f), dp(1f), fillPaint)
+                }
+            }
             "immersive" -> {
                 // Mirrors the watch's ImmersiveComposition: the full-bleed cover is already drawn
                 // by the background treatment; the title/artist/time sit *grounded at the bottom*
@@ -5875,14 +6329,8 @@ class WatchPreviewView @JvmOverloads constructor(
                     if (!hasMiniButtons && artistVisible) {
                         textPaint.typeface = titleTypeface(bold = false)
                         textPaint.textSize = dp(9f)
-                        textPaint.color = ColorUtils.setAlphaComponent(
-                                accentForText(resolveTint(
-                                        artistMode,
-                                        artistCustom,
-                                        artistDesaturated
-                                )),
-                                199
-                        )
+                        textPaint.color =
+                                ColorUtils.setAlphaComponent(artistTextColor(), 199)
                         canvas.drawText(
                                 ellipsize(
                                         if (isPlayingShown()) displayArtist()

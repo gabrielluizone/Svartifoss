@@ -137,7 +137,8 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
         FaceClock(
                 visible = state.showClock,
                 color = Color(state.clockColor),
-                fontFamily = state.clockFont
+                fontFamily = state.clockFont,
+                typography = state.clockTypography
         )
 
         val sideContainer = Color(tonal(surfaceAccent, 0.74f, 0.40f, 0.92f))
@@ -175,7 +176,7 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                             text = state.title,
                             mode = state.titleTextMode,
                             typography = state.titleTypography,
-                            color = Color.White,
+                            color = titleTextColor(state, Color.White),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = state.titleFont,

@@ -4,6 +4,7 @@ import com.svartifoss.snfell.actions.ActionHandler
 import com.svartifoss.snfell.actions.NullAction
 import com.svartifoss.snfell.actions.OpenPlaylistAction
 import com.svartifoss.snfell.actions.OpenPlaylistShortcutsAction
+import com.svartifoss.snfell.actions.OpenLibraryAction
 import com.svartifoss.snfell.actions.OpenSearchHistoryAction
 import com.svartifoss.snfell.actions.PlayLikedSongsAction
 import com.svartifoss.snfell.actions.PlayLikedSongsShuffledAction
@@ -157,4 +158,9 @@ abstract class ActionHandlersModule {
     @IntoMap
     @ClassKey(OpenSearchHistoryAction::class)
     abstract fun bindOpenSearchHistoryActionsHandler(handler: OpenSearchHistoryAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(OpenLibraryAction::class)
+    abstract fun bindOpenLibraryActionsHandler(handler: OpenLibraryAction.Handler): ActionHandler<*>
 }

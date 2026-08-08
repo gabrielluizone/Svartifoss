@@ -103,8 +103,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     /** Values hidden from their normal pickers because they are archived. They come back when the
      *  developer-mode "Show archived options" switch is on. A value currently selected always
      *  stays listed so an existing configuration can be understood and changed without migration. */
-    private val archivedFaces = setOf("vinyl", "halo", "aurora", "eclipse", "spectrum")
+    private val archivedFaces = com.svartifoss.snfell.view.watchface.theme.ArchivedFaces.KEYS
     private val archivedFonts = setOf("typewriter")
+    /** "liquid_glass" shipped and did not work in practice - archived rather than removed. */
+    private val archivedOverlayBackdrops = setOf("liquid_glass")
     private val archivedMiniButtonBackgrounds = setOf("solid_theme")
     private val archivedMiniButtonShapes = setOf(
             "pill_wide_large", "pill_wide_xlarge", "rounded_rect_medium", "rounded_rect_large")
@@ -133,6 +135,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         initAodPercentageValidation()
         initTypographyValidation()
         initUnifiedColorTreatment()
+        initAccentColorTarget(
+                modeKey = "wear_title_color_mode",
+                customColorKey = "wear_title_custom_color",
+                desaturatedKey = null,
+                customColorDescription = R.string.setting_wear_title_custom_color
+        )
         initAccentColorTarget(
                 modeKey = "wear_artist_color_mode",
                 customColorKey = "wear_artist_custom_color",
@@ -249,21 +257,31 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             // as well as the section, so it is handled below instead of by plain set membership.
             SECTION_TYPOGRAPHY -> setOf(
                     "cat_wf_typography_font", "cat_wf_typography_title",
-                    "cat_wf_typography_artist", "cat_wf_typography_icon")
-            // Style (face) page also carries the awake clock and the layout reset / apply-to-all
+                    "cat_wf_typography_artist",
+                    // The clock is text like the title and the artist, so ALL of it - typeface,
+                    // letterforms, colour and opacity - is one group beside them. It used to be
+                    // split across two categories that both landed on this page with other groups
+                    // in between, so "Clock" appeared twice and neither half was complete.
+                    "cat_wf_typography_clock",
+                    "cat_wf_typography_icon")
+            // Style (face) page also carries the clock and the layout reset / apply-to-all
             // actions, which operate on the whole face's look.
-            else -> setOf("cat_wf_face", "cat_wf_clock", "cat_wf_layout_actions")
+            else -> setOf("cat_wf_face", "cat_wf_typography_clock", "cat_wf_layout_actions")
         }
 
+        // EVERY category in watch_face_settings.xml must be listed here, not just the ones the
+        // current section wants: this is the loop that *hides* the others. A category left out is
+        // never assigned a visibility at all, so it stays visible on every page - which is how the
+        // clock's type controls ended up showing on the Style page as well as on Text.
         listOf(
             "cat_wf_face",
-            "cat_wf_clock",
             "cat_wf_aod",
             "cat_wf_overlays",
             "cat_wf_background",
             "cat_wf_colors",
             "cat_wf_typography_font",
             "cat_wf_typography_title",
+            "cat_wf_typography_clock",
             "cat_wf_typography_artist",
             "cat_wf_typography_icon",
             "cat_wf_mini_buttons",
@@ -415,12 +433,71 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 defaultValue = "glass",
                 showArchived = showArchived)
         filterArchivedListPreference(
+                key = "wear_overlay_backdrop_style",
+                entriesRes = R.array.wear_overlay_backdrop_entries,
+                valuesRes = R.array.wear_overlay_backdrop_values,
+                archived = archivedOverlayBackdrops,
+                defaultValue = "follow",
+                showArchived = showArchived)
+        filterArchivedListPreference(
                 key = "screen_buttons_shape",
                 entriesRes = R.array.screen_buttons_shape_entries,
                 valuesRes = R.array.screen_buttons_shape_values,
                 archived = archivedMiniButtonShapes,
                 defaultValue = "pill",
                 showArchived = showArchived)
+        applyClockFontEntries(showArchived)
+        applyTitleColorEntries()
+    }
+
+    /**
+     * Builds the title-colour picker from the shared component-treatment arrays with the
+     * "keep this face's own colour" option on top.
+     *
+     * Derived rather than declared, for the reason [applyClockFontEntries] documents: a second copy
+     * of nine treatment names would need re-translating into 12 locales every time a treatment is
+     * added, and the moment it fell behind the picker would offer the wrong treatment for a value.
+     * The extra leading option is the title's identity default - see
+     * MiscPreferences.TITLE_COLOR_FACE_DEFAULT for why it cannot just reuse "follow".
+     */
+    private fun applyTitleColorEntries() {
+        val pref = findPreference<ListPreference>(MiscPreferences.WEAR_TITLE_COLOR_MODE.key) ?: return
+        val entries = resources.getStringArray(R.array.wear_component_color_treatment_entries)
+        val values = resources.getStringArray(R.array.wear_component_color_treatment_values)
+        pref.entries =
+                (listOf(getString(R.string.wear_title_color_face_default)) + entries.toList())
+                        .toTypedArray()
+        pref.entryValues =
+                (listOf(MiscPreferences.TITLE_COLOR_FACE_DEFAULT) + values.toList())
+                        .toTypedArray()
+    }
+
+    /**
+     * Builds the clock-font picker from the track-font catalog with a "Follow track font" row on
+     * top.
+     *
+     * Derived rather than declared as its own pair of arrays: a second 27-entry list would have to
+     * be extended *and* re-translated into 12 locales every time a font is added, and the moment it
+     * fell behind the picker would silently offer the wrong typeface for a value (the same
+     * entries/values drift that already bit the overlay backdrop list). The archived-font filter is
+     * applied here too, so Typewriter stays hidden in both pickers or neither.
+     */
+    private fun applyClockFontEntries(showArchived: Boolean) {
+        val pref = findPreference<ListPreference>(MiscPreferences.WEAR_CLOCK_FONT.key) ?: return
+        val entries = resources.getStringArray(R.array.wear_font_entries)
+        val values = resources.getStringArray(R.array.wear_font_values)
+        val current = pref.value ?: readStringPreference(
+                MiscPreferences.WEAR_CLOCK_FONT.key, WatchTypography.CLOCK_FONT_FOLLOW)
+        val keep = values.indices.filter { index ->
+            index < entries.size &&
+                    (showArchived || values[index] !in archivedFonts || values[index] == current)
+        }
+        pref.entries =
+                (listOf(getString(R.string.wear_clock_font_follow)) + keep.map { entries[it] })
+                        .toTypedArray()
+        pref.entryValues =
+                (listOf(WatchTypography.CLOCK_FONT_FOLLOW) + keep.map { values[it] })
+                        .toTypedArray()
     }
 
     private fun filterArchivedListPreference(
@@ -451,6 +528,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val aodStyle = readStringPreference("wear_aod_style", "follow")
         updateFaceDependencies(face, aodStyle)
         updateBlurRadiusEnabled(readStringPreference("album_art_style", "cover"))
+        updateProgressGradientVisibility()
         updateFlexAxesVisibility()
         updateUnifiedColorTreatmentVisibility(
                 readStringPreference("wear_color_treatment", "expressive"))
@@ -475,6 +553,16 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             updateAccentColorTargetDependencies(
                     modeKey, colorKey, null, readStringPreference(modeKey, "follow"))
         }
+        // The title defaults to its own identity value, not "follow", so it cannot join the loop
+        // above - reading the wrong default would show the custom-colour row on an untouched
+        // install.
+        updateAccentColorTargetDependencies(
+                "wear_title_color_mode",
+                "wear_title_custom_color",
+                null,
+                readStringPreference(
+                        "wear_title_color_mode", MiscPreferences.TITLE_COLOR_FACE_DEFAULT))
+        updateTitleAdaptiveContrastVisibility()
     }
 
     /** Reads through [store] so dependency/visibility logic sees the same face-scoped value the
@@ -842,7 +930,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val effectiveStyle = if (selectedStyle == "follow") face else selectedStyle
         val visualStyle = effectiveStyle in setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-            "spectrum", "material", "immersive"
+            "spectrum", "material", "immersive", "depth", "carousel"
         )
         findPreference<Preference>("wear_aod_show_transport")?.isVisible = visualStyle
         findPreference<Preference>("wear_aod_show_progress")?.isVisible = visualStyle
@@ -861,6 +949,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     // The listener fires before the new value persists, so pass it along
                     // instead of re-reading the (still old) preference.
                     updateBlurRadiusEnabled(newValue as? String)
+                    true
+                }
+        updateProgressGradientVisibility()
+        findPreference<ListPreference>("wear_progress_style")?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, newValue ->
+                    updateProgressGradientVisibility(newValue as? String)
                     true
                 }
     }
@@ -886,6 +980,23 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val value = overrideValue ?: readStringPreference("album_art_style", "cover")
         val blurStyle = PlayerBackgroundStyle.fromPreference(value).usesBlurRadius
         findPreference<Preference>("album_art_blur_radius")?.isVisible = blurStyle
+    }
+
+    /** The contrast correction measures the title against the artwork, which is meaningless while
+     *  the title keeps the face's own designed colour - that colour is not derived from the art. */
+    private fun updateTitleAdaptiveContrastVisibility(overrideValue: String? = null) {
+        val mode = overrideValue ?: readStringPreference(
+                "wear_title_color_mode", MiscPreferences.TITLE_COLOR_FACE_DEFAULT)
+        findPreference<Preference>(MiscPreferences.WEAR_TITLE_ADAPTIVE_CONTRAST.key)?.isVisible =
+                mode != MiscPreferences.TITLE_COLOR_FACE_DEFAULT
+    }
+
+    /** The palette blend only exists on the Solid ring; every other style draws a flat fill, so
+     *  offering the switch beside them would promise something they cannot do. */
+    private fun updateProgressGradientVisibility(overrideValue: String? = null) {
+        val style = overrideValue ?: readStringPreference("wear_progress_style", "solid")
+        findPreference<Preference>(MiscPreferences.WEAR_PROGRESS_GRADIENT.key)?.isVisible =
+                style == "solid"
     }
 
     /** Custom color picker wiring plus enabling/disabling the color-mode-dependent rows for one

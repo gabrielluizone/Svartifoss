@@ -14,6 +14,8 @@
 
     <string name="idle_nothing_playing">Nada em reprodução</string>
     <string name="idle_hint">Reproduz algo no telemóvel</string>
+    <string name="idle_hint_resume">Toque para retomar a última app</string>
+    <string name="idle_resume">Retomar reprodução</string>
 
     <string name="no_phone">Nenhum telemóvel ligado</string>
     <string name="playback_stopped">Reprodução parada</string>

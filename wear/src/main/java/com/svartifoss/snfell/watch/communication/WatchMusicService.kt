@@ -15,9 +15,13 @@ import androidx.media.app.NotificationCompat as MediaNotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import androidx.wear.ongoing.OngoingActivity
 import androidx.wear.ongoing.Status
+import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.PausedHoldPolicy
 import com.svartifoss.snfell.watch.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -32,6 +36,36 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import com.svartifoss.snfell.common.R as commonR
+
+/** Why [WatchMusicService] is currently staying alive - see [resolveServiceHold]. */
+internal enum class ServiceHold {
+    /** Something needs the connection right now: a screen is open, or music is playing. */
+    ACTIVE,
+
+    /** Nothing needs it this instant, but there is a real paused track to come back to. */
+    PAUSED_TRACK,
+
+    /** No track at all. */
+    IDLE
+}
+
+/**
+ * Decides how long the service may live for. Splitting "paused with a track" out of plain idle is
+ * what keeps an ordinary pause from evicting the app: with the screen off the UI unbinds
+ * ([UiOpenServiceConnection] only collects while STARTED) and `playing` is false, so the old
+ * `uiOpen || musicPlaying` test dropped straight to idle and killed the foreground notification -
+ * taking the watch-face OngoingActivity chip and the proxy [WatchMediaSession] with it - 30
+ * seconds after the user pressed pause.
+ */
+internal fun resolveServiceHold(
+        uiOpen: Boolean,
+        musicPlaying: Boolean,
+        hasTrack: Boolean
+): ServiceHold = when {
+    uiOpen || musicPlaying -> ServiceHold.ACTIVE
+    hasTrack -> ServiceHold.PAUSED_TRACK
+    else -> ServiceHold.IDLE
+}
 
 @AndroidEntryPoint
 class WatchMusicService : LifecycleService() {
@@ -90,19 +124,42 @@ class WatchMusicService : LifecycleService() {
             val musicPlayingFlow = phoneConnection.musicState.asFlow()
                     .map { it.data?.playing == true }
 
-            combine(uiOpenFlow, musicPlayingFlow) { uiOpen, musicPlaying ->
-                Timber.d("Service state UI open: %s Music playing: %s", uiOpen, musicPlaying)
-                uiOpen || musicPlaying
+            // A paused track still counts as "there is a session to come back to" - see
+            // [resolveServiceHold]. An error state carries its message in the title field, so it
+            // is deliberately not a track.
+            val hasTrackFlow = phoneConnection.musicState.asFlow()
+                    .map { resource ->
+                        resource.data?.let { !it.error && it.title.isNotBlank() } == true
+                    }
+
+            combine(uiOpenFlow, musicPlayingFlow, hasTrackFlow) { uiOpen, musicPlaying, hasTrack ->
+                Timber.d("Service state UI open: %s Music playing: %s Has track: %s",
+                        uiOpen, musicPlaying, hasTrack)
+                resolveServiceHold(uiOpen, musicPlaying, hasTrack)
             }
                     .distinctUntilChanged()
-                    .collect { isActive ->
+                    .collect { hold ->
                         serviceTimeoutJob?.cancel()
 
-                        if (isActive) {
-                            createWearNotification()
-                        } else {
-                            removeWearNotification()
-                            startTimeout()
+                        when (hold) {
+                            ServiceHold.ACTIVE -> createWearNotification()
+                            ServiceHold.PAUSED_TRACK -> {
+                                // Deliberately keeps the foreground notification up. The
+                                // OngoingActivity chip it carries and the proxy MediaSession are
+                                // the only two ways back into a paused session once the screen
+                                // has turned off, so tearing them down here is what made the app
+                                // disappear from the watch face during an ordinary pause.
+                                createWearNotification()
+                                when (val hold = pausedHoldMillis()) {
+                                    PausedHoldPolicy.FOREVER -> Unit
+                                    PausedHoldPolicy.NO_HOLD -> startTimeout(SERVICE_TIMEOUT)
+                                    else -> startTimeout(hold)
+                                }
+                            }
+                            ServiceHold.IDLE -> {
+                                removeWearNotification()
+                                startTimeout(SERVICE_TIMEOUT)
+                            }
                         }
                     }
         }
@@ -237,9 +294,19 @@ class WatchMusicService : LifecycleService() {
         stopForeground(true)
     }
 
-    private fun startTimeout() {
+    /**
+     * Read at each transition rather than cached: the preference arrives from the phone over the
+     * Data Layer at arbitrary times, and a service that latched the value at creation would keep
+     * honouring the old setting for its whole (possibly very long) lifetime.
+     */
+    private fun pausedHoldMillis(): Long = PausedHoldPolicy.holdMillis(
+            Preferences.getString(
+                    PreferenceManager.getDefaultSharedPreferences(this),
+                    MiscPreferences.WEAR_PAUSED_HOLD))
+
+    private fun startTimeout(delayMs: Long) {
         serviceTimeoutJob = lifecycleScope.launch {
-            delay(SERVICE_TIMEOUT)
+            delay(delayMs)
 
             stopSelf()
         }
@@ -289,3 +356,4 @@ private const val NOTIFICATION_ID_PERSISTENT = 1
 private const val KEY_NOTIFICATION_CHANNEL = "Service_Channel"
 
 private const val SERVICE_TIMEOUT = 30_000L
+

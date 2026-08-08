@@ -38,10 +38,19 @@ class DescribedListPreference @JvmOverloads constructor(
     /** Per-entry descriptions, parallel to [getEntries] / [getEntryValues]. May be shorter. */
     val descriptions: List<CharSequence>
 
+    /**
+     * Whether each dialog row renders its own label in the typeface its *value* names (see
+     * [WatchFontCatalog]). Only meaningful for the font picker, where a list of names set in one
+     * uniform UI font tells the user nothing about what they are choosing.
+     */
+    val previewTypeface: Boolean
+
     init {
         val typed = context.obtainStyledAttributes(attrs, R.styleable.DescribedListPreference)
         val descRes = typed.getResourceId(R.styleable.DescribedListPreference_descriptions, 0)
         descriptions = if (descRes != 0) context.resources.getTextArray(descRes).toList() else emptyList()
+        previewTypeface = typed.getBoolean(
+                R.styleable.DescribedListPreference_previewTypeface, false)
         typed.recycle()
 
         summaryProvider = SummaryProvider<DescribedListPreference> { pref ->
@@ -54,6 +63,17 @@ class DescribedListPreference @JvmOverloads constructor(
                 context.getString(R.string.described_list_selected_summary, name, description)
             }
         }
+    }
+
+    /**
+     * Renders the collapsed row's own summary in the selected font too, so the Typography screen
+     * shows what is currently in force without opening the dialog at all.
+     */
+    override fun onBindViewHolder(holder: androidx.preference.PreferenceViewHolder) {
+        super.onBindViewHolder(holder)
+        if (!previewTypeface) return
+        (holder.findViewById(android.R.id.summary) as? TextView)?.typeface =
+                WatchFontCatalog.previewTypefaceFor(context, value)
     }
 
     /** Commits a chosen value through the change listener so the preview hook runs before persist. */
@@ -94,6 +114,14 @@ class DescribedListPreference @JvmOverloads constructor(
                     val check = row.findViewById<ImageView>(R.id.choice_check)
 
                     title.text = entries[position]
+                    if (pref.previewTypeface) {
+                        // Each row shows its own font. Resolved per row rather than cached in a
+                        // list: the catalog is ~20 entries, all either bundled resources (which
+                        // ResourcesCompat caches itself) or Typeface.create calls off the platform
+                        // family cache, so there is nothing left to memoise here.
+                        title.typeface = WatchFontCatalog.previewTypefaceFor(
+                                parent.context, values.getOrNull(position)?.toString())
+                    }
 
                     val selected = position == selectedIndex
                     check.visibility = if (selected) View.VISIBLE else View.INVISIBLE

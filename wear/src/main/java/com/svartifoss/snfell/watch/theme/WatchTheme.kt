@@ -1,14 +1,20 @@
 package com.svartifoss.snfell.watch.theme
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Typeface
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
+import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.ThemeAppearance
 
 /**
  * Single source of truth for the watch UI's design constants, shared by all three UI stacks in
@@ -171,6 +177,42 @@ val MarcellusFamily = FontFamily(
         Font(R.font.marcellus_regular, FontWeight.Bold)
 )
 
+/* The second bundled wave, chosen to cover voices the catalog had no answer for at all rather
+ * than to add more neutral sans faces: a condensed all-caps display (Bebas Neue), a high-contrast
+ * editorial serif (Playfair Display), a technical/geometric sans (Space Grotesk), a squarish
+ * sci-fi display (Orbitron) and a handwritten script (Caveat). All OFL, licences under
+ * licenses/<font>/.
+ *
+ * Four of the five are variable masters carrying a `wght` axis, but they are declared here as
+ * plain single-instance families: only Google Sans Flex is wired into the axis editor, and a
+ * variable font loaded without variation settings renders at its default instance, which is
+ * exactly the regular weight wanted here. Bold reuses the same file for the same reason Marcellus
+ * does - a missing weight would fall back to the system font mid-screen. */
+val BebasNeueFamily = FontFamily(
+        Font(R.font.bebas_neue_regular, FontWeight.Normal),
+        Font(R.font.bebas_neue_regular, FontWeight.Bold)
+)
+
+val PlayfairDisplayFamily = FontFamily(
+        Font(R.font.playfair_display_regular, FontWeight.Normal),
+        Font(R.font.playfair_display_regular, FontWeight.Bold)
+)
+
+val SpaceGroteskFamily = FontFamily(
+        Font(R.font.space_grotesk_regular, FontWeight.Normal),
+        Font(R.font.space_grotesk_regular, FontWeight.Bold)
+)
+
+val OrbitronFamily = FontFamily(
+        Font(R.font.orbitron_regular, FontWeight.Normal),
+        Font(R.font.orbitron_regular, FontWeight.Bold)
+)
+
+val CaveatFamily = FontFamily(
+        Font(R.font.caveat_regular, FontWeight.Normal),
+        Font(R.font.caveat_regular, FontWeight.Bold)
+)
+
 /**
  * Keywords that trigger the [LoveLetterTypewriterFamily] override on title/artist text.
  * The match is case-insensitive and only requires the keyword to be a substring
@@ -240,6 +282,11 @@ fun watchFontFamily(key: String?): FontFamily = when (key) {
     "poppins" -> PoppinsFamily
     "montserrat" -> MontserratFamily
     "marcellus" -> MarcellusFamily
+    "bebas_neue" -> BebasNeueFamily
+    "playfair" -> PlayfairDisplayFamily
+    "space_grotesk" -> SpaceGroteskFamily
+    "orbitron" -> OrbitronFamily
+    "caveat" -> CaveatFamily
     "serif" -> FontFamily.Serif
     "monospace" -> FontFamily.Monospace
     "cursive" -> FontFamily.Cursive
@@ -248,6 +295,34 @@ fun watchFontFamily(key: String?): FontFamily = when (key) {
             ?.takeIf(modernSystemTypefaceNames::containsKey)
             ?.let { ModernSystemFamilies.getValue(it) }
             ?: GoogleSansFamily
+}
+
+/**
+ * The typeface every *non-player* watch surface draws with - the menu, the queue, the shared
+ * chrome. Defaults to Google Sans, which is what those screens hardcoded before
+ * [MiscPreferences.WEAR_FONT_ALL_SCREENS] existed.
+ *
+ * A CompositionLocal rather than a parameter threaded through each screen: the font is ambient
+ * styling that every text in those trees wants, and passing it explicitly would mean touching
+ * every intermediate composable for something none of them decide.
+ */
+val LocalWatchUiFontFamily = staticCompositionLocalOf { GoogleSansFamily }
+
+/**
+ * Resolves what [LocalWatchUiFontFamily] should provide: the user's chosen font when they asked
+ * for it app-wide, otherwise Google Sans.
+ *
+ * The choice is read through the face scope because [MiscPreferences.WEAR_FONT] is a per-face
+ * key - the menu and queue are not faces, so they follow whichever face is currently active,
+ * which is the same font the player they were opened from is using.
+ */
+fun watchUiFontFamily(preferences: SharedPreferences?): FontFamily {
+    if (preferences == null) return GoogleSansFamily
+    if (!Preferences.getBoolean(preferences, MiscPreferences.WEAR_FONT_ALL_SCREENS)) {
+        return GoogleSansFamily
+    }
+    return watchFontFamily(FaceScopedPreferences.getString(
+            preferences, MiscPreferences.WEAR_FONT, ThemeAppearance.resolve(preferences)))
 }
 
 /** [watchFontFamily]'s [Typeface] counterpart for the View-based classic face - keep the key set
@@ -263,6 +338,11 @@ fun watchFontTypeface(context: Context, key: String?): Typeface = when (key) {
     "poppins" -> ResourcesCompat.getFont(context, R.font.poppins_regular)
     "montserrat" -> ResourcesCompat.getFont(context, R.font.montserrat_regular)
     "marcellus" -> ResourcesCompat.getFont(context, R.font.marcellus_regular)
+    "bebas_neue" -> ResourcesCompat.getFont(context, R.font.bebas_neue_regular)
+    "playfair" -> ResourcesCompat.getFont(context, R.font.playfair_display_regular)
+    "space_grotesk" -> ResourcesCompat.getFont(context, R.font.space_grotesk_regular)
+    "orbitron" -> ResourcesCompat.getFont(context, R.font.orbitron_regular)
+    "caveat" -> ResourcesCompat.getFont(context, R.font.caveat_regular)
     "serif" -> Typeface.SERIF
     "monospace" -> Typeface.MONOSPACE
     "cursive" -> Typeface.create("cursive", Typeface.NORMAL)

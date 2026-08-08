@@ -94,7 +94,7 @@ import kotlin.math.sin
  * the queue. Previous/next/menu/volume are intentionally left to the three configurable mini
  * buttons and gestures, so the user owns that scarce space instead of each layout filling it.
  */
-private enum class CuratedLayout { VINYL, POSTER, STUDIO, HALO, AURORA, ECLIPSE, SPECTRUM, MATERIAL, IMMERSIVE }
+private enum class CuratedLayout { VINYL, POSTER, STUDIO, HALO, AURORA, ECLIPSE, SPECTRUM, MATERIAL, IMMERSIVE, DEPTH }
 
 @Composable fun VinylFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) =
         CuratedPlayerFace(state, listener, CuratedLayout.VINYL)
@@ -123,13 +123,18 @@ private enum class CuratedLayout { VINYL, POSTER, STUDIO, HALO, AURORA, ECLIPSE,
 @Composable fun ImmersiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) =
         CuratedPlayerFace(state, listener, CuratedLayout.IMMERSIVE)
 
+@Composable fun DepthFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) =
+        CuratedPlayerFace(state, listener, CuratedLayout.DEPTH)
+
 @Composable
 private fun CuratedPlayerFace(
         state: NowPlayingFaceState,
         listener: NowPlayingFaceListener,
         layout: CuratedLayout
 ) {
-    if (state.idle) return
+    // Deliberately no early return on idle: the face owns the "nothing playing" screen too, so
+    // choosing a face is visible even with no session. Every layout below already tolerates absent
+    // artwork and metadata, and artistOrStatus() turns the artist line into the stopped-state text.
     if (state.ambient) {
         CuratedAmbientFace(state, layout)
         return
@@ -172,12 +177,14 @@ private fun CuratedPlayerFace(
             CuratedLayout.SPECTRUM -> SpectrumComposition(state, listener, palette, progress, screen)
             CuratedLayout.MATERIAL -> MaterialComposition(state, listener, progress, screen)
             CuratedLayout.IMMERSIVE -> ImmersiveComposition(state, listener, screen)
+            CuratedLayout.DEPTH -> DepthComposition(state, listener, palette, progress, screen)
         }
 
         FaceClock(
                 visible = state.showClock,
                 color = Color(state.clockColor),
-                fontFamily = state.clockFont
+                fontFamily = state.clockFont,
+                typography = state.clockTypography
         )
 
         if (state.showUpNextPill) {
@@ -340,7 +347,7 @@ private fun BoxScope.ImmersiveComposition(
                             text = state.title,
                             mode = state.titleTextMode,
                             typography = state.titleTypography,
-                            color = Color.White,
+                            color = titleTextColor(state, Color.White),
                             fontSize = 17.sp,
                             lineHeight = 19.sp,
                             fontWeight = FontWeight.Bold,
@@ -385,6 +392,147 @@ private fun BoxScope.ImmersiveComposition(
                             maxLines = 1,
                             modifier = Modifier.padding(top = 5.dp)
                     )
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Depth: the cover is the whole screen, layered rather than framed.
+ *
+ * The face has no controls of its own - not even the transport row every other layout keeps -
+ * because the point is that nothing competes with the artwork. Depth comes from *static* optical
+ * cues stacked over the cover: two off-axis album-coloured hazes at different radii, a vignette
+ * that lets the edges recede, and a floor gradient the text sits on. Each layer is anchored to a
+ * different part of the frame, so they read as separate planes at different distances.
+ *
+ * An earlier revision produced that separation with a slow parallax drift instead. It was dropped
+ * deliberately: continuous motion on the one screen a user glances at all day is a distraction
+ * rather than a feature, and the rest of the collection is still except for Spectrum's per-track
+ * bars. Keeping the layers and losing the movement keeps the composition and the calm.
+ */
+@Composable
+private fun BoxScope.DepthComposition(
+        state: NowPlayingFaceState, listener: NowPlayingFaceListener, p: CuratedPalette,
+        progress: () -> Float, screen: Dp
+) {
+    InteractiveFocus(
+            state = state,
+            listener = listener,
+            shape = RoundedCornerShape(0.dp),
+            modifier = Modifier.fillMaxSize(),
+            // No press-squeeze: scaling the entire screen on every tap would fight the drift and
+            // announce a "button" where the design insists there is none.
+            animateHero = false,
+            showCoreInteraction = false
+    ) {
+        // The cover, plain and full-bleed. No over-scaling: with nothing moving there is no edge
+        // to hide, and cropping further would throw away artwork for no reason.
+        state.albumArt?.let { art ->
+            Image(
+                    painter = BitmapPainter(art),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.matchParentSize()
+            )
+        }
+
+        // The two album-coloured hazes, anchored to opposite corners at different radii. Being
+        // off-axis (rather than centred) is what stops them reading as one flat wash over the art.
+        Canvas(Modifier.matchParentSize()) {
+            drawRect(brush = Brush.radialGradient(
+                    0f to p.primary.copy(alpha = .30f),
+                    .55f to p.secondary.copy(alpha = .16f),
+                    1f to Color.Transparent,
+                    center = Offset(size.width * .30f, size.height * .28f),
+                    radius = size.maxDimension * .78f))
+            drawRect(brush = Brush.radialGradient(
+                    0f to p.tertiary.copy(alpha = .22f),
+                    1f to Color.Transparent,
+                    center = Offset(size.width * .78f, size.height * .76f),
+                    radius = size.maxDimension * .58f))
+
+            // Vignette: the depth-of-field cue that replaced the parallax. Darkening only the
+            // outer third lets the centre of the cover sit forward while the rim falls back,
+            // which is the same read the drifting layers used to produce - and it costs one
+            // gradient instead of a frame callback. Kept subtle; a heavy vignette looks like a
+            // filter applied to the art rather than like space around it.
+            drawRect(brush = Brush.radialGradient(
+                    0f to Color.Transparent,
+                    .62f to Color.Transparent,
+                    1f to Color.Black.copy(alpha = .46f),
+                    center = Offset(size.width / 2f, size.height / 2f),
+                    radius = size.maxDimension * .62f))
+        }
+
+        // Legibility floor for the text block below.
+        Canvas(Modifier.matchParentSize()) {
+            drawRect(brush = Brush.verticalGradient(
+                    0f to Color.Black.copy(alpha = .30f),
+                    .38f to Color.Transparent,
+                    .62f to Color.Transparent,
+                    1f to Color.Black.copy(alpha = .80f)))
+        }
+
+        if (state.showTitle || state.showArtist) {
+            Column(
+                    Modifier.align(Alignment.BottomCenter)
+                            .padding(bottom = screen * .15f, start = screen * .11f, end = screen * .11f)
+                            .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (state.showTitle) {
+                    AdaptiveTitleText(
+                            text = state.title,
+                            mode = state.titleTextMode,
+                            typography = state.titleTypography,
+                            color = titleTextColor(state, Color.White),
+                            fontSize = 16.sp,
+                            lineHeight = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = state.titleFont,
+                            textAlign = TextAlign.Center
+                    )
+                }
+                if (state.showArtist) {
+                    Row(
+                            modifier = Modifier.padding(top = 3.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                    ) {
+                        SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, .78f))
+                        Text(
+                                artistOrStatus(state),
+                                color = artistOrStatusColor(state, .78f),
+                                fontSize = 12.sp,
+                                lineHeight = 14.sp,
+                                fontFamily = state.artistFont,
+                                textAlign = TextAlign.Center,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+        }
+
+        // Progress as a hairline hugging the very bottom edge, not a ring around the art: an arc
+        // would frame the cover, and framing is the one thing this face refuses to do.
+        if (state.showInternalProgress) {
+            Canvas(
+                    Modifier.align(Alignment.BottomCenter)
+                            .fillMaxWidth()
+                            .height(2.dp)
+                            .padding(horizontal = screen * .22f)
+            ) {
+                val y = size.height / 2f
+                drawLine(Color.White.copy(alpha = .18f), Offset(0f, y), Offset(size.width, y),
+                        strokeWidth = size.height, cap = StrokeCap.Round)
+                val played = size.width * progress()
+                if (played > 0f) {
+                    drawLine(p.primary.copy(alpha = .92f), Offset(0f, y), Offset(played, y),
+                            strokeWidth = size.height, cap = StrokeCap.Round)
                 }
             }
         }
@@ -595,7 +743,7 @@ private fun BoxScope.AuroraComposition(
                         state.title,
                         mode = state.titleTextMode,
                         typography = state.titleTypography,
-                        color = Color.White,
+                        color = titleTextColor(state, Color.White),
                         fontSize = 19.sp,
                         lineHeight = 20.sp,
                         fontWeight = FontWeight.Medium,
@@ -799,7 +947,8 @@ private fun BoxScope.SpectrumHeader(
         if (state.showTitle) {
             AdaptiveTitleText(state.title.uppercase(), mode = state.titleTextMode,
                     typography = state.titleTypography,
-                    color = Color.White.copy(alpha = .92f), fontSize = 12.sp, lineHeight = 14.sp,
+                    color = titleTextColor(state, Color.White.copy(alpha = .92f)),
+                    fontSize = 12.sp, lineHeight = 14.sp,
                     letterSpacing = 1.1.sp, fontWeight = FontWeight.Bold,
                     fontFamily = state.titleFont, textAlign = TextAlign.Center)
         }
@@ -846,7 +995,7 @@ private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
                     state.title.uppercase(),
                     mode = state.titleTextMode,
                     typography = state.titleTypography,
-                    color = Color.White,
+                    color = titleTextColor(state, Color.White),
                     fontSize = 11.sp,
                     lineHeight = 13.sp,
                     letterSpacing = 1.15.sp,
@@ -876,7 +1025,7 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
                     text = state.title,
                     mode = state.titleTextMode,
                     typography = state.titleTypography,
-                    color = Color.White,
+                    color = titleTextColor(state, Color.White),
                     fontSize = 22.sp,
                     lineHeight = 24.sp,
                     fontWeight = FontWeight.Bold,
@@ -919,7 +1068,7 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
                     text = state.title,
                     mode = state.titleTextMode,
                     typography = state.titleTypography,
-                    color = Color.White,
+                    color = titleTextColor(state, Color.White),
                     fontSize = 15.sp,
                     lineHeight = 17.sp,
                     fontWeight = FontWeight.Medium,
@@ -961,7 +1110,7 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
                     state.title,
                     mode = state.titleTextMode,
                     typography = state.titleTypography,
-                    color = Color.White.copy(alpha = .94f),
+                    color = titleTextColor(state, Color.White.copy(alpha = .94f)),
                     fontSize = 14.sp,
                     lineHeight = 16.sp,
                     letterSpacing = .75.sp,
@@ -1009,7 +1158,7 @@ private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
                     state.title.uppercase(),
                     mode = state.titleTextMode,
                     typography = state.titleTypography,
-                    color = Color.White.copy(alpha = .88f),
+                    color = titleTextColor(state, Color.White.copy(alpha = .88f)),
                     fontSize = 14.sp,
                     lineHeight = 17.sp,
                     letterSpacing = 2.sp,
@@ -1288,7 +1437,7 @@ private fun PlayPauseGlyph(
 }
 
 @Composable
-private fun artistOrStatus(state: NowPlayingFaceState): String =
+internal fun artistOrStatus(state: NowPlayingFaceState): String =
         if (state.playing) state.artist else stringResource(R.string.playback_stopped)
 
 /** Album tint belongs to real metadata; operational stopped/status copy remains neutral white. */
@@ -1365,7 +1514,10 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
                                 CuratedLayout.ECLIPSE,
                                 CuratedLayout.POSTER,
                                 CuratedLayout.STUDIO,
-                                CuratedLayout.IMMERSIVE
+                                CuratedLayout.IMMERSIVE,
+                                // Depth's awake screen has no circular element at all; drawing one
+                                // only in ambient would introduce a control that does not exist.
+                                CuratedLayout.DEPTH
                         )) {
                     drawCircle(tint.copy(alpha = .42f * intensity), radius = size.minDimension * .12f,
                             style = Stroke(1.5.dp.toPx()))
@@ -1379,7 +1531,8 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
                     CuratedLayout.POSTER,
                     CuratedLayout.STUDIO,
                     CuratedLayout.ECLIPSE,
-                    CuratedLayout.IMMERSIVE
+                    CuratedLayout.IMMERSIVE,
+                    CuratedLayout.DEPTH
             )
             val metadataModifier = if (centredMetadata) {
                 Modifier.align(Alignment.Center).width(screen * .72f)
@@ -1549,7 +1702,7 @@ private fun BoxScope.MaterialComposition(
                     text = state.title,
                     mode = state.titleTextMode,
                     typography = state.titleTypography,
-                    color = Color.White,
+                    color = titleTextColor(state, Color.White),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = state.titleFont,

@@ -201,10 +201,15 @@ class OpenPlaylistAction : SelectableAction {
          *  larger artwork. Read from the phone's own copy of the synced preference. */
         private fun coverQueueStyleActive(): Boolean {
             val prefs = PreferenceManager.getDefaultSharedPreferences(service)
+            val appearance = ThemeAppearance.resolve(prefs)
+            // The Carousel face draws these same thumbnails as full-screen-width cards, so it needs
+            // the large size for the same reason the cover queue styles do - at the 96px list size
+            // a hero card is visibly pixelated.
+            if (appearance.baseFace == "carousel") return true
             return FaceScopedPreferences.getString(
                     prefs,
                     MiscPreferences.WEAR_QUEUE_STYLE,
-                    ThemeAppearance.resolve(prefs)
+                    appearance
             ) in MiscPreferences.COVER_LIST_STYLES
         }
 

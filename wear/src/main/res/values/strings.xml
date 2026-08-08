@@ -20,7 +20,21 @@
 
     <!-- Idle (nothing-playing) state on the now-playing screen -->
     <string name="idle_nothing_playing">Nothing playing</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
     <string name="idle_hint">Play something on your phone</string>
+    <string name="idle_hint_resume">Tap to resume last app</string>
+    <string name="idle_hint_shortcuts">Tap for your shortcuts</string>
+    <string name="idle_hint_menu">Tap to open the menu</string>
+    <string name="idle_hint_search">Tap to search</string>
+    <string name="idle_hint_queue">Tap for recently played</string>
+    <string name="idle_resume">Resume playback</string>
+    <string name="idle_action_shortcuts">Open shortcuts</string>
+    <string name="idle_action_menu">Open menu</string>
+    <string name="idle_action_search">Search</string>
+    <string name="idle_action_queue">Open recently played</string>
 
     <string name="no_phone">No phone connected</string>
     <string name="playback_stopped">Playback Stopped</string>

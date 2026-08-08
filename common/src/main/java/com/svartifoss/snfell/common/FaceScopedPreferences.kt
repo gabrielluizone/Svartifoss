@@ -45,6 +45,31 @@ object FaceScopedPreferences {
             "screen_buttons_curve_style",
             "screen_buttons_opacity",
             "screen_buttons_shape",
+            // The odd one out until now: the mini-button row's vertical offset was the only
+            // screen_buttons_* key left global, so a row nudged up to clear one face's transport
+            // controls moved on every other face too. It is layout, and layout differs per face -
+            // Carousel hides the row entirely, Classic and Expressive put different things under
+            // it. An existing global value still resolves as the legacy fallback, so nobody's
+            // current position moves until they set one for a face.
+            "screen_buttons_bottom_offset",
+            // The odd one out until now: the mini-button row's vertical offset was the only
+            // screen_buttons_* key left global, so a row nudged up to clear one face's transport
+            // controls moved on every other face too. It is layout, and layout differs per face -
+            // Carousel hides the row entirely, Classic and Expressive put different things under
+            // it. An existing global value still resolves as the legacy fallback, so nobody's
+            // current position moves until they set one for a face.
+            // The odd one out until now: the mini-button row's vertical offset was the only
+            // screen_buttons_* key left global, so a row nudged up to clear one face's transport
+            // controls moved on every other face too. It is layout, and layout differs per face -
+            // Carousel hides the row entirely, Classic and Expressive put different things under
+            // it. An existing global value still resolves as the legacy fallback, so nobody's
+            // current position moves until they set one for a face.
+            // The odd one out until now: the mini-button row's vertical offset was the only
+            // screen_buttons_* key left global, so a row nudged up to clear one face's transport
+            // controls moved on every other face too. It is layout, and layout differs per face -
+            // Carousel hides the row entirely, Classic and Expressive put different things under
+            // it. An existing global value still resolves as the legacy fallback, so nobody's
+            // current position moves until they set one for a face.
             "wear_album_art_fade",
             "wear_aod_style",
             "wear_aod_art_treatment",
@@ -60,6 +85,15 @@ object FaceScopedPreferences {
             "wear_clock_color_mode",
             "wear_clock_custom_color",
             "wear_clock_opacity",
+            // Scoped like every other clock control and like "wear_font" itself: a clock typeface
+            // is chosen against one face's composition, so carrying it onto another is the same
+            // mistake the per-face scoping exists to prevent.
+            "wear_clock_font",
+            "wear_clock_font_weight",
+            "wear_clock_font_italic",
+            "wear_clock_font_scale",
+            "wear_clock_font_tracking",
+            "wear_clock_adaptive_contrast",
             "wear_artist_color_mode",
             "wear_artist_custom_color",
             "wear_artist_desaturated",
@@ -77,6 +111,11 @@ object FaceScopedPreferences {
             "wear_artist_font_scale",
             "wear_artist_font_opacity",
             "wear_artist_font_tracking",
+            "wear_artist_adaptive_contrast",
+            "wear_title_color_mode",
+            "wear_title_custom_color",
+            "wear_title_adaptive_contrast",
+            "wear_progress_gradient",
             "wear_source_icon_scale",
             "wear_source_icon_opacity",
             "wear_font_flex_width",
@@ -89,6 +128,7 @@ object FaceScopedPreferences {
             "wear_edge_seek_enabled",
             "wear_expressive_seek_mode",
             "wear_font",
+            "wear_carousel_card_shape",
             "wear_internal_progress_visible",
             "wear_overlay_backdrop_style",
             "wear_progress_color_mode",

@@ -21,6 +21,20 @@
             android:entryValues="@array/wear_screen_face_values"
             android:layout="@layout/pref_item" />
 
+        <!-- Shape of the Carousel face's cover cards: part of that face's layout, so it belongs
+             beside the face picker. It was briefly filed under typography, which it has nothing
+             to do with. -->
+        <ListPreference
+            android:defaultValue="rounded"
+            android:key="wear_carousel_card_shape"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_wear_carousel_card_shape"
+            android:summary="%s"
+            android:entries="@array/wear_carousel_card_shape_entries"
+            android:entryValues="@array/wear_carousel_card_shape_values"
+            android:layout="@layout/pref_item" />
+
+
 
         <com.svartifoss.snfell.view.settings.DescribedListPreference
             android:key="wear_screen_theme"
@@ -116,9 +130,19 @@
             android:entries="@array/wear_font_entries"
             android:entryValues="@array/wear_font_values"
             app:descriptions="@array/wear_font_descriptions"
+            app:previewTypeface="true"
             android:layout="@layout/pref_item" />
 
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_font_all_screens"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_all_screens"
+            android:summary="@string/setting_wear_font_all_screens_description"
+            android:layout="@layout/pref_switch_item" />
+
     </PreferenceCategory>
+
 
     <PreferenceCategory
         android:key="cat_wf_typography_title"
@@ -188,6 +212,34 @@
             android:layout="@layout/pref_item"
             android:dependency="wear_show_track_title" />
 
+        <!-- Entries are built in WatchFacePrefsFragment.applyTitleColorEntries by prepending the
+             "keep this face's own colour" option to the shared component-treatment arrays, so the
+             treatment vocabulary has one source of truth. -->
+        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
+            android:defaultValue="face"
+            android:key="wear_title_color_mode"
+            android:icon="@drawable/ic_music_note"
+            android:title="@string/setting_wear_title_color"
+            android:summary="%s"
+            app:customColorKey="wear_title_custom_color"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_title" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_title_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_title_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_title_adaptive_contrast"
+            android:icon="@drawable/ic_contrast"
+            android:title="@string/setting_wear_title_adaptive_contrast"
+            android:summary="@string/setting_wear_title_adaptive_contrast_description"
+            android:layout="@layout/pref_switch_item" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -246,6 +298,127 @@
             android:summary="@string/setting_wear_typography_tracking_description"
             android:layout="@layout/pref_item"
             android:dependency="wear_show_track_artist" />
+
+
+        <!-- The artist line's colour lives with the artist's other type settings, not on
+             the Colors page: the palette page is about how each *surface* derives from the
+             album, and this is text. Same keys, so nothing about the stored value changes. -->
+
+        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
+            android:defaultValue="follow"
+            android:key="wear_artist_color_mode"
+            android:icon="@drawable/ic_person"
+            android:title="@string/setting_wear_artist_color"
+            android:summary="%s"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
+            app:customColorKey="wear_artist_custom_color"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_artist_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_artist_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_artist_adaptive_contrast"
+            android:icon="@drawable/ic_contrast"
+            android:title="@string/setting_wear_artist_adaptive_contrast"
+            android:summary="@string/setting_wear_artist_adaptive_contrast_description"
+            android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <!-- Everything about the clock, in one group: typeface and letterforms first, then colour and
+         opacity. These used to be two separate categories that both landed on the Text page with
+         other groups in between, so the page showed "Clock" twice and neither half was complete. -->
+    <PreferenceCategory
+        android:key="cat_wf_typography_clock"
+        android:title="@string/category_wf_clock"
+        android:layout="@layout/pref_category_header">
+
+        <!-- Entries/values are built in WatchFacePrefsFragment.applyClockFontEntries by prepending
+             "Follow track font" to the wear_font arrays, so the catalog has exactly one source of
+             truth and a new font never has to be added here as well. -->
+        <com.svartifoss.snfell.view.settings.DescribedListPreference
+            android:key="wear_clock_font"
+            android:icon="@drawable/ic_clock"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_clock_font"
+            app:previewTypeface="true"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="400"
+            android:key="wear_clock_font_weight"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_clock_font_weight"
+            android:summary="@string/setting_wear_typography_weight_description"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_clock_font_italic"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_clock_font_italic"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_clock_font_scale"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_clock_font_scale"
+            android:summary="@string/setting_wear_typography_scale_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_clock_font_tracking"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_clock_font_tracking"
+            android:summary="@string/setting_wear_typography_tracking_description"
+            android:layout="@layout/pref_item" />
+
+
+        <ListPreference
+            android:key="wear_clock_color_mode"
+            android:icon="@drawable/ic_clock"
+            android:defaultValue="white"
+            android:title="@string/setting_wear_clock_color"
+            android:summary="%s"
+            android:entries="@array/wear_clock_color_entries"
+            android:entryValues="@array/wear_clock_color_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_clock_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_clock_custom_color"
+            android:summary="@string/setting_wear_clock_custom_color_description"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="60"
+            android:key="wear_clock_opacity"
+            android:icon="@drawable/ic_opacity"
+            android:title="@string/setting_wear_clock_opacity"
+            android:summary="@string/setting_wear_clock_opacity_description"
+            android:layout="@layout/pref_item" />
+
+        <!-- Mirrors the artist line's switch, and only bites while the colour mode is Album: that
+             is the one clock colour derived from the artwork rather than chosen by the user. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_clock_adaptive_contrast"
+            android:icon="@drawable/ic_contrast"
+            android:title="@string/setting_wear_clock_adaptive_contrast"
+            android:summary="@string/setting_wear_clock_adaptive_contrast_description"
+            android:layout="@layout/pref_switch_item" />
+
 
     </PreferenceCategory>
 
@@ -443,38 +616,6 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="cat_wf_clock"
-        android:title="@string/category_wf_clock"
-        android:layout="@layout/pref_category_header">
-
-        <ListPreference
-            android:key="wear_clock_color_mode"
-            android:icon="@drawable/ic_clock"
-            android:defaultValue="white"
-            android:title="@string/setting_wear_clock_color"
-            android:summary="%s"
-            android:entries="@array/wear_clock_color_entries"
-            android:entryValues="@array/wear_clock_color_values"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.HexColorDotPreference
-            android:key="wear_clock_custom_color"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_wear_clock_custom_color"
-            android:summary="@string/setting_wear_clock_custom_color_description"
-            android:layout="@layout/pref_item"
-            android:widgetLayout="@layout/pref_widget_color_dot" />
-
-        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
-            android:defaultValue="60"
-            android:key="wear_clock_opacity"
-            android:icon="@drawable/ic_opacity"
-            android:title="@string/setting_wear_clock_opacity"
-            android:summary="@string/setting_wear_clock_opacity_description"
-            android:layout="@layout/pref_item" />
-
-    </PreferenceCategory>
 
     <PreferenceCategory
         android:key="cat_wf_overlays"
@@ -520,6 +661,16 @@
             android:entries="@array/wear_progress_style_entries"
             android:entryValues="@array/wear_progress_style_values"
             android:layout="@layout/pref_item" />
+
+        <!-- Only the Solid ring blends the companion colours, so this is shown/hidden with it by
+             WatchFacePrefsFragment.updateProgressGradientVisibility. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_progress_gradient"
+            android:icon="@drawable/ic_progress_ring"
+            android:title="@string/setting_wear_progress_gradient"
+            android:summary="@string/setting_wear_progress_gradient_description"
+            android:layout="@layout/pref_switch_item" />
 
         <ListPreference
             android:key="wear_seek_style"
@@ -777,23 +928,8 @@
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
 
-        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
-            android:defaultValue="follow"
-            android:key="wear_artist_color_mode"
-            android:icon="@drawable/ic_person"
-            android:title="@string/setting_wear_artist_color"
-            android:summary="%s"
-            android:entries="@array/wear_component_color_treatment_entries"
-            android:entryValues="@array/wear_component_color_treatment_values"
-            app:customColorKey="wear_artist_custom_color"
-            android:layout="@layout/pref_item" />
 
-        <com.svartifoss.snfell.view.settings.HexColorDotPreference
-            android:key="wear_artist_custom_color"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_wear_artist_custom_color"
-            android:layout="@layout/pref_item"
-            android:widgetLayout="@layout/pref_widget_color_dot" />
+
 
         <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
             android:defaultValue="follow"

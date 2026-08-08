@@ -1,3 +1,4 @@
+import org.gradle.api.tasks.PathSensitivity
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: "kotlin-kapt"
@@ -12,8 +13,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 35
         compileSdk 36
-        versionCode 57
-        versionName "3.1-beta1"
+        versionCode 58
+        versionName "3.1-beta2"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
         multiDexEnabled true
@@ -108,4 +109,14 @@ dependencies {
     implementation libs.google.firebase.messaging
 
     testImplementation libs.junit4
+}
+
+// TranslatedArrayAlignmentTest reads res/values*/strings.xml straight off disk, which Gradle does
+// not otherwise know is an input to the unit-test task - so editing a translation left the task
+// UP-TO-DATE and the check silently stale. Declaring the directory makes any resource edit
+// re-run it.
+tasks.withType(Test).configureEach {
+    inputs.dir("src/main/res")
+            .withPropertyName("resourcesForTranslationTests")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
 }

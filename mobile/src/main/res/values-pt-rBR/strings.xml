@@ -509,6 +509,8 @@
         <item>Espectro</item>
         <item>Material</item>
         <item>Imersivo</item>
+        <item>Profundidade</item>
+        <item>Carrossel</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Busca expressiva</string>
@@ -621,12 +623,22 @@
         <item>Normal (cor escolhida)</item>
         <item>Dessaturada (cor suave do álbum)</item>
         <item>Expressiva (paleta completa do álbum)</item>
+        <item>Complementar (álbum + oposta)</item>
+        <item>Tríade (três matizes do álbum)</item>
+        <item>Análoga (matizes vizinhos)</item>
+        <item>Monocromática (um matiz, três tons)</item>
+        <item>Duotone (duas cores do álbum)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>Seguir tratamento do relógio</item>
         <item>Normal (cor escolhida)</item>
         <item>Dessaturada (cor suave do álbum)</item>
         <item>Expressiva (paleta completa do álbum)</item>
+        <item>Complementar (álbum + oposta)</item>
+        <item>Tríade (três matizes do álbum)</item>
+        <item>Análoga (matizes vizinhos)</item>
+        <item>Monocromática (um matiz, três tons)</item>
+        <item>Duotone (duas cores do álbum)</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Arco na borda (esquerda)</item>
@@ -698,6 +710,9 @@
         <item>Gradiente do álbum</item>
         <item>Duotone do álbum</item>
         <item>Prisma</item>
+        <item>Vidro líquido</item>
+        <item>Desfoque Expressive</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Vidro</item>
@@ -863,6 +878,7 @@
     <string-array name="album_art_style_entries">
         <item>Capa completa</item>
         <item>Fundo desfocado</item>
+        <item>Bordas foscas</item>
         <item>Quadrada (cantos retos)</item>
         <item>Quadrada (cantos suaves)</item>
         <item>Quadrada (cantos arredondados)</item>

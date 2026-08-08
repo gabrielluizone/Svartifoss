@@ -262,6 +262,7 @@
     <string name="setting_overlay_blur_radius_description">Blur strength (px) of the frosted backdrop behind the volume/seek rings and the quick actions panel — independent from the album art background blur</string>
     <string name="category_action_list">Action List</string>
     <string name="category_automation">Automation</string>
+    <string name="category_idle">When nothing is playing</string>
     <string name="installed_version">Installed version</string>
     <string name="get_support">Get support</string>
     <string name="get_support_description">Send application logs to the developer for the support</string>
@@ -304,6 +305,10 @@
     <string name="setting_rotating_crown_off_period_description">Rotating inputs (for example rotating crowns) can be oversensitive on some devices. To prevent accidental volume changes, rotary input will be disabled for <![CDATA[<b>%1$s milliseconds</b>]]> after you turn the screen on.</string>
     <string name="setting_rotary_seek">Seek with rotary crown</string>
     <string name="setting_rotary_seek_description">When enabled, rotating the crown scrubs through the current track instead of changing volume. Volume can still be changed with on-screen or physical buttons.</string>
+    <string name="setting_wear_rotary_action">Rotary crown / bezel</string>
+    <string name="wear_rotary_action_volume">Change volume</string>
+    <string name="wear_rotary_action_seek">Seek through the track</string>
+    <string name="wear_rotary_action_off">Do nothing</string>
     <string name="setting_rotating_sensitivity">Rotary input sensitivity</string>
     <string name="setting_rotating_sensitivity_description">Sensitivity for rotary input. Higher number means moving the rotary crown the same way will increase volume for more. Currently set to <![CDATA[<b>%1$s%%</b>]]>.</string>
     <string name="setting_disable_ambient_physical_double_click">Disable physical button double click in ambient</string>
@@ -571,6 +576,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>Depth</item>
+        <item>Carousel</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -584,6 +591,8 @@
         <item>spectrum</item>
         <item>material</item>
         <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
@@ -732,6 +741,8 @@
     <string name="setting_wear_quick_panel_shortcut_cover_description">When Queue style above is a Cover variant, a quick-panel action row with a fetched shortcut cover (track, playlist, artist…) also fills its pill with that art, like Up Next does. Shortcuts without a fetched cover (a plain app icon) are unaffected.</string>
     <string name="setting_wear_list_row_size">List pill size</string>
     <string name="setting_wear_list_row_size_description">Height of the full-width rows in the queue, menus and quick panel.</string>
+    <string name="setting_wear_progress_gradient">Blend palette into the ring</string>
+    <string name="setting_wear_progress_gradient_description">With a multi-hue color treatment (Complementary, Triadic, Analogous, Duotone) the solid ring fades through all three colors. Turn this off for a single-color ring while keeping the album palette everywhere else.</string>
     <string name="setting_wear_progress_style">Progress ring style</string>
     <string name="setting_wear_seek_style">Seek &amp; volume readout style</string>
     <string name="setting_wear_seek_layout">Seek panel layout</string>
@@ -785,6 +796,13 @@
     <string name="setting_wear_title_font_scale">Title size</string>
     <string name="setting_wear_title_font_opacity">Title opacity</string>
     <string name="setting_wear_title_font_tracking">Title letter spacing</string>
+    <string name="setting_wear_title_color">Title text color</string>
+    <string name="setting_wear_title_custom_color">Title custom color</string>
+    <string name="wear_title_color_face_default">Face default (as designed)</string>
+    <string name="setting_wear_title_adaptive_contrast">Adapt title color for contrast</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Brightens or darkens the title when its color is too close to the artwork behind it, keeping the color\'s hue. Has no effect while the title keeps the face default.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Adapt artist color for contrast</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Brightens or darkens the artist line when the album color is too close to the artwork behind it, keeping the color\'s hue. Measures only the strip the line sits on, not the whole cover.</string>
     <string name="setting_wear_artist_font_weight">Artist weight</string>
     <string name="setting_wear_artist_font_italic">Italic artist</string>
     <string name="setting_wear_artist_font_scale">Artist size</string>
@@ -948,6 +966,9 @@
         <item>Album gradient</item>
         <item>Album duotone</item>
         <item>Prism</item>
+        <item>Liquid glass</item>
+        <item>Expressive blur</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_overlay_backdrop_values">
         <item>follow</item>
@@ -958,6 +979,9 @@
         <item>gradient</item>
         <item>duotone</item>
         <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Glass</item>
@@ -1102,6 +1126,56 @@
         <item>slab</item>
     </string-array>
 
+    <string name="setting_wear_paused_hold">Keep app active after pausing</string>
+    <string name="setting_wear_paused_hold_description">How long the watch app stays reachable from the watch face after you pause, so you can resume by raising your wrist instead of reopening it. Longer settings keep a background service running.</string>
+    <string name="wear_paused_hold_off">Don\'t keep it</string>
+    <string name="wear_paused_hold_5">5 minutes</string>
+    <string name="wear_paused_hold_15">15 minutes</string>
+    <string name="wear_paused_hold_30">30 minutes</string>
+    <string name="wear_paused_hold_60">1 hour</string>
+    <string name="wear_paused_hold_always">Until playback ends</string>
+
+    <string name="setting_wear_idle_button_action">Nothing playing button</string>
+    <string name="setting_wear_idle_auto_open">Open when nothing is playing</string>
+    <string name="setting_wear_idle_auto_open_description">Jumps straight to this screen when you open the watch app with no music playing.</string>
+    <string name="wear_idle_action_resume">Resume last app</string>
+    <string name="wear_idle_action_shortcuts">Playlist shortcuts</string>
+    <string name="wear_idle_action_menu">Action menu</string>
+    <string name="wear_idle_action_search">Search</string>
+    <string name="wear_idle_action_queue">Recently played</string>
+    <string name="wear_idle_action_none">No button</string>
+    <string name="wear_idle_auto_open_none">Stay on the player</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
     <string-array name="wear_screen_theme_entries">
         <item>@string/wear_screen_theme_default</item>
         <item>@string/wear_screen_theme_minimal</item>
@@ -1137,6 +1211,11 @@
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1161,7 +1240,49 @@
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
     </string-array>
+
+    <string name="action_open_library">Browse library</string>
+    <string name="library_up">Back</string>
+    <string name="error_library_unavailable">This app has no browsable library</string>
+    <string name="error_library_empty">Nothing here</string>
+    <string name="error_library_no_player">Start playing something first</string>
+
+    <string name="setting_wear_carousel_card_shape">Carousel card shape</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Rounded</item>
+        <item>Square</item>
+        <item>Squircle</item>
+        <item>Circle</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Use font everywhere</string>
+    <string name="setting_wear_font_all_screens_description">Applies the chosen font to the menu, the queue and the on-watch clock too, not just the track title and artist. Display and handwritten fonts can be harder to read in lists.</string>
+
+    <string name="setting_wear_clock_font">Clock typeface</string>
+    <string name="wear_clock_font_follow">Follow track font</string>
+    <string name="setting_wear_clock_font_weight">Clock weight</string>
+    <string name="setting_wear_clock_font_italic">Italic clock</string>
+    <string name="setting_wear_clock_font_scale">Clock size</string>
+    <string name="setting_wear_clock_font_tracking">Clock letter spacing</string>
+    <string name="setting_wear_clock_adaptive_contrast">Adapt clock color for contrast</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Brightens or darkens the clock when the album color is too close to the artwork behind it, keeping the color\'s hue. Only applies while the clock color is set to Album color.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Condensed all-caps display — poster-like, fits long titles</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">High-contrast editorial serif — magazine feel</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Technical geometric sans with quirky details</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Squarish sci-fi display — bold and futuristic</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Handwritten script — casual and personal</string>
     <string name="setting_wear_track_time_mode">Track time display</string>
     <string name="setting_wear_track_time_mode_description">When the track position (e.g. 1:23 / 3:45) is shown on the now-playing screen.</string>
     <string-array name="wear_track_time_mode_entries">
@@ -1281,6 +1402,7 @@
     <string-array name="album_art_style_entries">
         <item>Full cover</item>
         <item>Blurred background</item>
+        <item>Frosted edges</item>
         <item>Square (sharp corners)</item>
         <item>Square (soft corners)</item>
         <item>Square (rounded corners)</item>
@@ -1306,6 +1428,7 @@
     <string-array name="album_art_style_values">
         <item>cover</item>
         <item>blur</item>
+        <item>frosted</item>
         <item>square_sharp</item>
         <item>square_soft</item>
         <item>square</item>

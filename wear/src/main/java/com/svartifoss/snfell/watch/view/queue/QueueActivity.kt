@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
@@ -14,6 +15,8 @@ import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
+import com.svartifoss.snfell.watch.theme.watchUiFontFamily
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.util.WatchLanguage
@@ -92,6 +95,9 @@ class QueueActivity : ComponentActivity() {
             val tertiaryAccent by viewModel.tertiaryAccentColor.observeAsState(DEFAULT_QUEUE_ACCENT)
             val nowPlaying by viewModel.nowPlaying.observeAsState()
 
+            CompositionLocalProvider(
+                    LocalWatchUiFontFamily provides watchUiFontFamily(
+                            PreferenceManager.getDefaultSharedPreferences(this))) {
             QueueScreen(
                     items = items,
                     accentColor = Color(accent),
@@ -107,6 +113,7 @@ class QueueActivity : ComponentActivity() {
                     style = queueStyle,
                     rowSize = rowSize
             )
+            }
         }
     }
 }

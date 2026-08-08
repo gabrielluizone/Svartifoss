@@ -8,6 +8,42 @@
         <item>compact</item>
         <item>contrast</item>
     </string-array>
+    <string-array name="wear_paused_hold_values" translatable="false">
+        <item>0</item>
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_values" translatable="false">
+        <item>resume</item>
+        <item>shortcuts</item>
+        <item>menu</item>
+        <item>search</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <!-- Deliberately excludes "resume": auto-starting playback merely because the app was opened
+         would be a surprise. See IdleScreenAction.AUTO_OPEN_CHOICES. -->
+    <string-array name="wear_idle_auto_open_values" translatable="false">
+        <item>none</item>
+        <item>shortcuts</item>
+        <item>menu</item>
+        <item>search</item>
+        <item>queue</item>
+    </string-array>
+    <string-array name="wear_carousel_card_shape_values" translatable="false">
+        <item>rounded</item>
+        <item>square</item>
+        <item>squircle</item>
+        <item>circle</item>
+    </string-array>
+    <string-array name="wear_rotary_action_values" translatable="false">
+        <item>volume</item>
+        <item>seek</item>
+        <item>off</item>
+    </string-array>
     <string-array name="wear_font_values" translatable="false">
         <item>google_sans</item>
         <item>google_sans_flex</item>
@@ -31,6 +67,11 @@
         <item>poppins</item>
         <item>montserrat</item>
         <item>marcellus</item>
+        <item>bebas_neue</item>
+        <item>playfair</item>
+        <item>space_grotesk</item>
+        <item>orbitron</item>
+        <item>caveat</item>
     </string-array>
     <string-array name="streaming_open_mode_values" translatable="false">
         <item>app</item>

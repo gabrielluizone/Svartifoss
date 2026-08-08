@@ -69,19 +69,32 @@ class PlayerConfigurationTest {
     }
 
     @Test
-    fun miniButtonsAppearForPlayingOrPausedTracksButNotIdle() {
+    fun miniButtonsAppearWheneverConfigured() {
         assertTrue(hasActiveMiniButtons(configured = true, idle = false, enabledForFace = true))
-        assertFalse(hasActiveMiniButtons(configured = true, idle = true, enabledForFace = true))
         assertFalse(hasActiveMiniButtons(configured = false, idle = false, enabledForFace = true))
 
         assertTrue(shouldShowMiniButtons(configured = true, idle = false, ambient = false,
-                overlayActive = false, enabledForFace = true))
-        assertFalse(shouldShowMiniButtons(configured = true, idle = true, ambient = false,
                 overlayActive = false, enabledForFace = true))
         assertFalse(shouldShowMiniButtons(configured = true, idle = false, ambient = true,
                 overlayActive = false, enabledForFace = true))
         assertFalse(shouldShowMiniButtons(configured = true, idle = false, ambient = false,
                 overlayActive = true, enabledForFace = true))
+    }
+
+    /**
+     * The idle screen used to suppress the mini buttons, which left "Nothing playing" with no
+     * visible control at all - even though its slots come from the stopped config, i.e. exactly
+     * the actions meant to start playback.
+     */
+    @Test
+    fun miniButtonsStayVisibleOnTheIdleScreen() {
+        assertTrue(hasActiveMiniButtons(configured = true, idle = true, enabledForFace = true))
+        assertTrue(shouldShowMiniButtons(configured = true, idle = true, ambient = false,
+                overlayActive = false, enabledForFace = true))
+
+        // Ambient still wins: burn-in protection is not negotiable.
+        assertFalse(shouldShowMiniButtons(configured = true, idle = true, ambient = true,
+                overlayActive = false, enabledForFace = true))
     }
 
     @Test

@@ -8,6 +8,15 @@ import com.matejdro.wearutils.preferences.definition.Preferences
 import com.matejdro.wearutils.preferences.definition.SimplePreferenceDefinition
 
 object MiscPreferences {
+
+    /**
+     * [WEAR_TITLE_COLOR_MODE] value meaning "leave the title the colour this face designed".
+     *
+     * Deliberately not "follow", which in the component-treatment vocabulary already means "follow
+     * the watch-wide treatment" - two different things that would otherwise share one word.
+     */
+    const val TITLE_COLOR_FACE_DEFAULT: String = "face"
+
     val ALWAYS_SHOW_TIME: PreferenceDefinition<Boolean>
             = SimplePreferenceDefinition("always_show_time", false)
 
@@ -19,8 +28,22 @@ object MiscPreferences {
     // while taking a screenshot) changes volume by a full volumeStep, which is too noticeable.
     val ROTATING_CROWN_SENSITIVITY: PreferenceDefinition<Int> = SimplePreferenceDefinition("rotating_crown_sensitivity", 40)
 
-    // When enabled, the rotary crown scrubs the playback timeline instead of changing volume.
+    // Legacy boolean superseded by WEAR_ROTARY_ACTION. Kept readable so an install (or a restored
+    // backup) that predates the three-way preference resolves to the same behaviour - see
+    // RotaryAction.resolve. Still exported so that migration survives a backup round-trip.
     val ROTARY_SEEK: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("rotary_seek", false)
+
+    /**
+     * What rotary input does: change volume, scrub the timeline, or nothing at all. The "off" case
+     * exists for touch-bezel watches, where circling the rim to edge-seek is also delivered as
+     * rotary scroll - see [RotaryAction].
+     *
+     * The default is deliberately the empty "never chosen" sentinel rather than a real value, so
+     * [RotaryAction.resolve] can tell an untouched install (which must keep obeying the legacy
+     * [ROTARY_SEEK] boolean) apart from someone who actively picked "volume".
+     */
+    val WEAR_ROTARY_ACTION: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_rotary_action", "")
 
     val HAPTIC_FEEDBACK: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("haptic_feedback", true)
 
@@ -51,6 +74,25 @@ object MiscPreferences {
      *  (no track at all), so it never lingers there. Independent of [CLOSE_TIMEOUT], which governs
      *  the general non-playing (paused) case and stays off unless the user sets it. */
     val WEAR_CLOSE_ON_IDLE: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_close_on_idle", true)
+
+    /** Minutes to keep the watch app reachable after pausing, or "always" - see [PausedHoldPolicy]. */
+    val WEAR_PAUSED_HOLD: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_paused_hold", PausedHoldPolicy.DEFAULT_VALUE)
+
+    /**
+     * What the idle screen's main button does - see [IdleScreenAction].
+     *
+     * Defaults to [IdleScreenAction.NONE]: the idle screen then follows the applied face's own
+     * design instead of planting a button over it. The button is opt-in because "resume the last
+     * app" genuinely does nothing when nothing has played yet, which made the default presentation
+     * look broken rather than empty.
+     */
+    val WEAR_IDLE_BUTTON_ACTION: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_idle_button_action", IdleScreenAction.NONE.preferenceValue)
+
+    /** Screen to open immediately when the app is opened with nothing playing. */
+    val WEAR_IDLE_AUTO_OPEN: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_idle_auto_open", IdleScreenAction.NONE.preferenceValue)
 
     val ENABLE_NOTIFICATION_POPUP: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("enable_notification_popup", false)
 
@@ -176,6 +218,98 @@ object MiscPreferences {
     val WEAR_CLOCK_OPACITY: PreferenceDefinition<Int> =
             SimplePreferenceDefinition("wear_clock_opacity", 60)
 
+    /** Typeface for the awake clock: a [WEAR_FONT] catalog key, or [WatchTypography.CLOCK_FONT_FOLLOW]
+     *  (the default) to keep following the track font as the clock always used to. Resolved by
+     *  [WatchTypography.clockFontKey] on both sides. Lives in the Watch tab's Text section beside
+     *  the track font rather than in the Clock section, because it is a font choice and that is
+     *  where a user looks for one. */
+    val WEAR_CLOCK_FONT: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_clock_font", WatchTypography.CLOCK_FONT_FOLLOW)
+
+    // The clock's own weight/italic/size/tracking, mirroring the title and artist controls.
+    // Picking its typeface alone turned out to be half a control: a display face at the clock's
+    // designed 15sp is frequently the wrong size and weight for it, and there was no way to
+    // compensate. Opacity is deliberately absent here - [WEAR_CLOCK_OPACITY] already owns it and a
+    // second opacity control would be two settings fighting over one value.
+
+    /** Clock weight, 1-1000. See [WEAR_TITLE_FONT_WEIGHT]. */
+    val WEAR_CLOCK_FONT_WEIGHT: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_clock_font_weight", 400)
+
+    /** Renders the clock italic. See [WEAR_TITLE_FONT_ITALIC]. */
+    val WEAR_CLOCK_FONT_ITALIC: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_clock_font_italic", false)
+
+    /** Clock size percentage over the face's designed size. See [WEAR_TITLE_FONT_SCALE]. */
+    val WEAR_CLOCK_FONT_SCALE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_clock_font_scale", 100)
+
+    /** Clock letter spacing. See [WEAR_TITLE_FONT_TRACKING]. */
+    val WEAR_CLOCK_FONT_TRACKING: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_clock_font_tracking", 0)
+
+    /**
+     * Lifts or darkens the artist line's album-derived colour until it separates from the artwork
+     * *behind that line* - see [AdaptiveTextContrast].
+     *
+     * Off by default and deliberately a switch rather than another colour-treatment case: it is a
+     * legibility correction applied *after* whatever treatment produced the colour, so it composes
+     * with all of them (and with a hand-picked custom colour) instead of competing for the one
+     * treatment slot. A user who tuned a palette by hand keeps exactly what they chose.
+     */
+    val WEAR_ARTIST_ADAPTIVE_CONTRAST: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_artist_adaptive_contrast", false)
+
+    /**
+     * Colour treatment for the track title, or [TITLE_COLOR_FACE_DEFAULT] to leave each face's own
+     * choice alone.
+     *
+     * That extra value is why this cannot simply reuse the component-treatment vocabulary the
+     * artist, progress ring, volume and quick panel share. Those surfaces have always been tinted
+     * from the palette, so "follow" is a sensible floor for them. The title never was: all thirteen
+     * Compose faces draw it in their own white (several at deliberately different alphas), and the
+     * classic face has its own. Making "follow" the default here would repaint every one of them on
+     * update - so the default is instead "whatever this face designed", exactly like the identity
+     * defaults in [WatchTypography].
+     */
+    val WEAR_TITLE_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_title_color_mode", TITLE_COLOR_FACE_DEFAULT)
+
+    /** Hex colour (#RRGGBB) used when [WEAR_TITLE_COLOR_MODE] is "normal". */
+    val WEAR_TITLE_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_title_custom_color", "")
+
+    /** [WEAR_ARTIST_ADAPTIVE_CONTRAST] for the title. Meaningless while the title keeps the face's
+     *  own colour, which is not derived from the artwork - see [WEAR_TITLE_COLOR_MODE]. */
+    val WEAR_TITLE_ADAPTIVE_CONTRAST: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_title_adaptive_contrast", false)
+
+    /**
+     * [WEAR_ARTIST_ADAPTIVE_CONTRAST] for the clock, and deliberately the same shape: off by
+     * default, applied after the colour is resolved.
+     *
+     * Only meaningful while [WEAR_CLOCK_COLOR_MODE] is "album", which is the one mode whose colour
+     * is *derived* rather than chosen. Correcting "white", a hand-picked "custom" colour, or
+     * "dynamic" (which already flips black/white by the artwork beneath) would be overriding a
+     * decision the user made rather than rescuing one the album made for them.
+     */
+    val WEAR_CLOCK_ADAPTIVE_CONTRAST: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_clock_adaptive_contrast", false)
+
+    /**
+     * Whether the Solid progress ring blends the treatment's companion colours into a sweep, or
+     * fills with the primary alone.
+     *
+     * On by default because that is what the ring already did: a hue-rotating treatment (Triadic,
+     * Complementary, Analogous, Duotone) is otherwise invisible on the classic face, since the ring
+     * is its only always-on-screen coloured element. Turning it off is the one way to keep an
+     * album-derived palette everywhere else and still have a single-colour bar - previously the
+     * only route to a flat ring was setting the ring's own treatment to Normal, which also threw
+     * away the album colour.
+     */
+    val WEAR_PROGRESS_GRADIENT: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_progress_gradient", true)
+
     // --- Wear OS experience toggles (configured on phone, synced to watch) ---
 
     /** Long-press the center of the now-playing screen to open the playback queue. */
@@ -291,6 +425,23 @@ object MiscPreferences {
      *  "typewriter" choice remains readable but is hidden unless developer archived options are
      *  enabled. Decoded by watchFontFamily and mirrored by WatchPreviewView. */
     val WEAR_FONT: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_font", "google_sans")
+
+    /**
+     * Whether [WEAR_FONT] also styles the menu, the queue and the shared chrome, instead of only
+     * the now-playing title/artist.
+     *
+     * Off by default and deliberately global rather than face-scoped: those screens are not faces,
+     * and defaulting it on would restyle the whole watch for everyone who picked a decorative font
+     * for the player alone - several of the catalog's display and script faces are a poor fit for
+     * dense list rows.
+     */
+    /** Card outline for the Carousel face's cover rail - see [CarouselCardShape]. */
+    val WEAR_CAROUSEL_CARD_SHAPE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_carousel_card_shape",
+                    CarouselCardShape.ROUNDED.preferenceValue)
+
+    val WEAR_FONT_ALL_SCREENS: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_font_all_screens", false)
 
     // --- Per-element typography, layered on top of the single [WEAR_FONT] family choice ---
     //
@@ -681,9 +832,10 @@ object MiscPreferences {
      *  the config export/import feature - add new preferences here too when adding them above. */
     val EXPORTABLE: List<PreferenceDefinition<*>> = listOf(
             ALWAYS_SHOW_TIME, PAUSE_ON_SWIPE_EXIT, ROTATING_CROWN_OFF_PERIOD, ROTATING_CROWN_SENSITIVITY,
-            ROTARY_SEEK, HAPTIC_FEEDBACK, APP_LANGUAGE,
+            ROTARY_SEEK, WEAR_ROTARY_ACTION, HAPTIC_FEEDBACK, APP_LANGUAGE,
             DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT, AUTO_START_MODE,
             AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, WEAR_CLOSE_ON_IDLE,
+            WEAR_PAUSED_HOLD, WEAR_IDLE_BUTTON_ACTION, WEAR_IDLE_AUTO_OPEN,
             ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
             ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_BLUR_RADIUS,
             ALBUM_ART_DIM_STRENGTH, WEAR_PLAYER_SHADING_STYLE, WEAR_PLAYER_SHADING_INTENSITY,
@@ -693,7 +845,10 @@ object MiscPreferences {
             WEAR_AOD_SHOW_CLOCK, WEAR_AOD_SHOW_TRACK_INFO,
             WEAR_AOD_COLOR_MODE, WEAR_AOD_CUSTOM_COLOR, WEAR_AOD_SHOW_TRANSPORT, WEAR_AOD_SHOW_PROGRESS,
             WEAR_AOD_SHOW_PILLS, WEAR_AOD_INTENSITY,
-            WEAR_CLOCK_COLOR_MODE, WEAR_CLOCK_CUSTOM_COLOR, WEAR_CLOCK_OPACITY,
+            WEAR_CLOCK_COLOR_MODE, WEAR_CLOCK_CUSTOM_COLOR, WEAR_CLOCK_OPACITY, WEAR_CLOCK_FONT,
+            WEAR_CLOCK_FONT_WEIGHT, WEAR_CLOCK_FONT_ITALIC, WEAR_CLOCK_FONT_SCALE,
+            WEAR_CLOCK_FONT_TRACKING, WEAR_ARTIST_ADAPTIVE_CONTRAST, WEAR_CLOCK_ADAPTIVE_CONTRAST, WEAR_PROGRESS_GRADIENT,
+            WEAR_TITLE_COLOR_MODE, WEAR_TITLE_CUSTOM_COLOR, WEAR_TITLE_ADAPTIVE_CONTRAST,
             WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_FACE,
             WEAR_ACTIVE_CUSTOM_THEME_ID, WEAR_CUSTOM_THEME_SCHEMA,
             WEAR_CUSTOM_THEME_COMPLETE, WEAR_CUSTOM_THEME_REVISION,
@@ -701,6 +856,7 @@ object MiscPreferences {
             WEAR_PLAYER_CONTROLS_VISIBLE, WEAR_INTERNAL_PROGRESS_VISIBLE,
             WEAR_EDGE_PROGRESS_VISIBLE, WEAR_EDGE_SEEK_ENABLED,
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
+            WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE,
             WEAR_TRACK_TIME_MODE,
             WEAR_DYNAMIC_ACCENT, WEAR_COLOR_TREATMENT, WEAR_NORMAL_COLOR, WEAR_COLOR_MODIFIER,
             WEAR_COLOR_HUE_SHIFT,

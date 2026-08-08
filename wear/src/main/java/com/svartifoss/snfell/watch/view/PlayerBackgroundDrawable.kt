@@ -64,6 +64,9 @@ class PlayerBackgroundDrawable(
         when (style) {
             PlayerBackgroundStyle.COVER,
             PlayerBackgroundStyle.BLUR,
+            // Frosting lives in the bitmap itself (FrostedEdges), so like every other plain
+            // artwork treatment this layer draws nothing on top of it.
+            PlayerBackgroundStyle.FROSTED,
             PlayerBackgroundStyle.BLACK_AND_WHITE,
             PlayerBackgroundStyle.BLURRED_BLACK_AND_WHITE,
             PlayerBackgroundStyle.SQUARE_SHARP,

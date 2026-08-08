@@ -50,6 +50,39 @@ class OverlayBackdropTest {
     }
 
     @Test
+    fun expressiveBackdropsReuseTheAlbumArtStyleValues() {
+        assertEquals(OverlayBackdrop.EXPRESSIVE, OverlayBackdrop.fromPreference("expressive"))
+        assertEquals(
+                OverlayBackdrop.EXPRESSIVE_NO_BLUR,
+                OverlayBackdrop.fromPreference("expressive_no_blur"))
+        // The same two keys the player background uses, so the pair cannot drift apart.
+        assertEquals(
+                PlayerBackgroundStyle.EXPRESSIVE.preferenceValue,
+                "expressive")
+        assertEquals(
+                PlayerBackgroundStyle.EXPRESSIVE_NO_BLUR.preferenceValue,
+                "expressive_no_blur")
+    }
+
+    /** The blurred/sharp split is the whole difference between the two, so it has to be pinned. */
+    @Test
+    fun onlyTheBlurredExpressiveVariantAsksForTheBlurLayer() {
+        assertTrue(OverlayBackdrop.EXPRESSIVE.usesAlbumBlur)
+        assertFalse(OverlayBackdrop.EXPRESSIVE_NO_BLUR.usesAlbumBlur)
+    }
+
+    /**
+     * "expressive" is also a *content* style (the quick panel's own look). Resolving it there must
+     * keep mapping to a solid album surface, not jump to the new backdrop of the same name.
+     */
+    @Test
+    fun expressiveContentStyleStillFollowsToSolidAlbum() {
+        assertEquals(
+                OverlayBackdrop.SOLID_ALBUM,
+                OverlayBackdropResolver.resolve(preference = "follow", contentStyle = "expressive"))
+    }
+
+    @Test
     fun seekContentStyleMapsEachSeekStyleAndNeverDependsOnTheControlTheme() {
         assertEquals("tonal", OverlayBackdropResolver.seekContentStyle("expressive"))
         assertEquals("material", OverlayBackdropResolver.seekContentStyle("material"))

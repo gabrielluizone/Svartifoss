@@ -63,11 +63,15 @@ class FaceScopedPreferenceDataStore(
         val current = context
         val scope = FaceScopedPreferences.scopeFor(current)
         val scoped = FaceScopedPreferences.scopedKey(key, scope)
+        // perFaceDefault has to be consulted here exactly as the watch consults it, or the settings
+        // screen shows a switch in one position while the watch obeys the other. That is what
+        // happened to Carousel's edge arc: the watch had it off by face default while this screen
+        // reported the XML default of on, so it looked like the default had simply been ignored.
         return when {
             prefs.contains(scoped) -> prefs.getBoolean(scoped, defValue)
             scope == ThemeAppearance.CUSTOM_SCOPE -> defValue
-            prefs.contains(key) -> prefs.getBoolean(key, defValue)
-            else -> defValue
+            else -> FaceScopedPreferences.perFaceDefault(scope, key)?.toBooleanStrictOrNull()
+                    ?: if (prefs.contains(key)) prefs.getBoolean(key, defValue) else defValue
         }
     }
 

@@ -504,6 +504,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>عمق</item>
+        <item>چرخ‌فلک</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">جست‌وجوی Expressive</string>
@@ -616,12 +618,22 @@
         <item>عادی (رنگ انتخاب‌شده)</item>
         <item>کم‌رنگ‌شده (رنگ نرم آلبوم)</item>
         <item>Expressive (پالت کامل آلبوم)</item>
+        <item>مکمل (آلبوم + مقابل)</item>
+        <item>سه‌گانه (سه رنگ‌مایه آلبوم)</item>
+        <item>مشابه (رنگ‌مایه‌های مجاور)</item>
+        <item>تک‌رنگ (یک رنگ‌مایه، سه تن)</item>
+        <item>دورنگ (دو رنگ آلبوم)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>پیروی از پردازش ساعت</item>
         <item>عادی (رنگ انتخاب‌شده)</item>
         <item>کم‌رنگ‌شده (رنگ نرم آلبوم)</item>
         <item>Expressive (پالت کامل آلبوم)</item>
+        <item>مکمل (آلبوم + مقابل)</item>
+        <item>سه‌گانه (سه رنگ‌مایه آلبوم)</item>
+        <item>مشابه (رنگ‌مایه‌های مجاور)</item>
+        <item>تک‌رنگ (یک رنگ‌مایه، سه تن)</item>
+        <item>دورنگ (دو رنگ آلبوم)</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>قوس لبه (چپ)</item>
@@ -693,6 +705,9 @@
         <item>گرادیان آلبوم</item>
         <item>دورنگ آلبوم</item>
         <item>منشور</item>
+        <item>شیشه مایع</item>
+        <item>تاری Expressive</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>شیشه‌ای</item>
@@ -832,6 +847,7 @@
     <string-array name="album_art_style_entries">
         <item>جلد کامل</item>
         <item>پس‌زمینه تار</item>
+        <item>لبه‌های مات</item>
         <item>مربع (گوشه‌های تیز)</item>
         <item>مربع (گوشه‌های نرم)</item>
         <item>مربع (گوشه‌های گرد)</item>

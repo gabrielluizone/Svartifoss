@@ -75,7 +75,7 @@ import androidx.wear.compose.material3.SwipeToDismissBox
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.BitmapBlur
-import com.svartifoss.snfell.watch.theme.GoogleSansFamily
+import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
@@ -100,7 +100,7 @@ private const val SUBTITLE_ALPHA = 0.65f
 private const val QUEUE_LOAD_TIMEOUT_MS = 6000L
 
 /** The app-wide Google Sans typeface, so the queue matches the rest of the watch UI. */
-private val GoogleSans = GoogleSansFamily
+
 
 /** User-selectable visual style of the queue (see [MiscPreferences.WEAR_QUEUE_STYLE] on the
  *  phone). Shares the four-name vocabulary with the volume and quick-panel overlays. */
@@ -462,33 +462,84 @@ private fun queueRowSpacing(style: QueueStyle): Dp = when (style) {
 }
 
 /**
- * Corner treatment for the 30dp cover inside a queue row.
- *
- * The artwork is deliberately shaped independently from the row: copying a 28dp pill radius to
- * a 30dp image would clamp almost every style to the same circle again. These values preserve the
- * visual family of each row while leaving genuinely pill-like styles (Glass/Tonal) circular and
- * square styles (Material/Terminal/Contrast) visibly squarer.
+ * Air left between the cover and the pill's own edge. The cover used to be pinned at 30dp whatever
+ * the row height was, so every style's vertical padding read as a thick border around a small
+ * thumbnail - and picking a taller row size made the border grow instead of the artwork.
  */
-internal fun queueArtworkCorner(style: QueueStyle): Dp = when (style) {
-    QueueStyle.GLASS -> 15.dp
-    QueueStyle.MINIMAL -> 2.dp
-    QueueStyle.MATERIAL -> 6.dp
-    QueueStyle.TONAL -> 15.dp
-    QueueStyle.NEON -> 9.dp
-    QueueStyle.LIGHT -> 10.dp
-    QueueStyle.GRADIENT -> 11.dp
-    QueueStyle.MONO -> 7.dp
-    QueueStyle.OUTLINE -> 8.dp
-    QueueStyle.DUOTONE -> 11.dp
-    QueueStyle.CONTRAST -> 4.dp
-    QueueStyle.TERMINAL -> 0.dp
-    QueueStyle.PRISM -> 8.dp
-    QueueStyle.FROST -> 12.dp
+internal val QUEUE_ARTWORK_INSET = 5.dp
+
+/**
+ * Ceiling on the cover, so a tall row does not crowd the text column off a 192dp screen. Reached
+ * only by the two largest row sizes, where the artwork is already the row's dominant element.
+ */
+private val QUEUE_ARTWORK_MAX = 64.dp
+
+/**
+ * The cover's side length inside any list pill of [rowHeight]: the full height less
+ * [QUEUE_ARTWORK_INSET] at top and bottom, capped by [QUEUE_ARTWORK_MAX].
+ *
+ * Shared by the queue, the action menu and the quick panel's full-width rows, which all draw the
+ * same pill with the same 12dp padding rhythm. They each used to pin the cover at 30dp
+ * independently, so fixing one left the others showing a small thumbnail in a large pill.
+ */
+internal fun listRowArtworkSize(rowHeight: Dp): Dp =
+        minOf(rowHeight - QUEUE_ARTWORK_INSET * 2, QUEUE_ARTWORK_MAX)
+
+/**
+ * [listRowArtworkSize] for a queue row, whose height is the user's chosen content height plus the
+ * style's own padding rhythm.
+ *
+ * Derived from the row rather than fixed, so the list row size preference actually scales the
+ * artwork with everything else instead of leaving a bigger gap around a constant thumbnail.
+ */
+internal fun queueArtworkSize(rowSize: QueueRowSize, verticalPadding: Dp): Dp =
+        listRowArtworkSize(rowSize.contentHeight + verticalPadding * 2)
+
+/**
+ * Height of the action-menu and quick-panel pills: the default content height plus the 12dp
+ * padding rhythm every list pill shares. Those two surfaces are not resizable the way the queue
+ * is, but their covers still come from [listRowArtworkSize] so all three agree.
+ *
+ * Deliberately built from [QUEUE_ROW_CONTENT_HEIGHT] rather than from `QueueRowSize.NORMAL`, even
+ * though they are the same number: the enum reads that constant back out of this file, so touching
+ * the enum from a top-level initialiser here makes the two classes initialise each other. The JVM
+ * resolves that cycle by handing out a zeroed value - a silently 24dp-tall pill - rather than by
+ * failing loudly.
+ */
+internal val LIST_ROW_HEIGHT = QUEUE_ROW_CONTENT_HEIGHT + 12.dp * 2
+
+/**
+ * Corner treatment for the cover inside a queue row, as a fraction of the cover's own side.
+ *
+ * A fraction rather than a dp value because the cover is no longer a fixed 30dp: a 15dp radius made
+ * that size a circle, but the same 15dp on a tall row's 64dp cover is a rounded square, which would
+ * silently change each style's shape family as soon as the row size changed. The fractions preserve
+ * what those dp values meant at 30dp - genuinely pill-like styles (Glass/Tonal) stay circular,
+ * square styles (Material/Terminal/Contrast) stay visibly squarer.
+ *
+ * The artwork is still shaped independently from the row itself: copying the pill's own radius onto
+ * the image would clamp almost every style back to the same circle.
+ */
+internal fun queueArtworkCornerFraction(style: QueueStyle): Float = when (style) {
+    QueueStyle.GLASS -> 0.5f
+    QueueStyle.MINIMAL -> 0.067f
+    QueueStyle.MATERIAL -> 0.2f
+    QueueStyle.TONAL -> 0.5f
+    QueueStyle.NEON -> 0.3f
+    QueueStyle.LIGHT -> 0.333f
+    QueueStyle.GRADIENT -> 0.367f
+    QueueStyle.MONO -> 0.233f
+    QueueStyle.OUTLINE -> 0.267f
+    QueueStyle.DUOTONE -> 0.367f
+    QueueStyle.CONTRAST -> 0.133f
+    QueueStyle.TERMINAL -> 0f
+    QueueStyle.PRISM -> 0.267f
+    QueueStyle.FROST -> 0.4f
     // Reached by a cover-style row with no artwork (falls back to the Glass look), and by the
     // blur variation, which keeps its sharp thumbnail over the softened backdrop.
-    QueueStyle.COVER_SQUARE -> 6.dp
+    QueueStyle.COVER_SQUARE -> 0.2f
     QueueStyle.COVER, QueueStyle.COVER_BLUR, QueueStyle.COVER_TONAL,
-    QueueStyle.COVER_COMPACT, QueueStyle.COVER_TALL -> 15.dp
+    QueueStyle.COVER_COMPACT, QueueStyle.COVER_TALL -> 0.5f
 }
 
 /** A dark, accent-tinted surface for the tonal idle rows - keeps saturation in a readable band. */
@@ -630,7 +681,7 @@ private fun QueueHeader(title: String?, artist: String?, animate: Boolean) {
             Text(
                     text = title,
                     color = Color.White,
-                    fontFamily = GoogleSans,
+                    fontFamily = LocalWatchUiFontFamily.current,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,
@@ -646,7 +697,7 @@ private fun QueueHeader(title: String?, artist: String?, animate: Boolean) {
             Text(
                     text = artist,
                     color = Color.White.copy(alpha = 0.6f),
-                    fontFamily = GoogleSans,
+                    fontFamily = LocalWatchUiFontFamily.current,
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
@@ -690,6 +741,7 @@ private fun QueueRow(
         coverArt?.let { if (style == QueueStyle.COVER_BLUR) blurredCover(it) else it }
                 ?.asImageBitmap()
     }
+    val showsThumbnail = item.artwork != null && (coverImage == null || style.coverKeepsThumbnail)
     Row(
             modifier = Modifier
                     .fillMaxWidth()
@@ -733,22 +785,29 @@ private fun QueueRow(
                     // to one line, so content-driven heights made the list ragged next to the
                     // quick panel's pills; each style still keeps its own rhythm via its padding.
                     .height(rowSize.contentHeight + skin.verticalPadding * 2)
-                    .padding(horizontal = 16.dp),
+                    // A row leading with a cover insets it by the same amount top, bottom and
+                    // left, so the artwork sits in an even frame instead of being pushed inwards
+                    // by a text keyline it does not need. Text-only rows keep the wider inset.
+                    .padding(
+                            start = if (showsThumbnail) QUEUE_ARTWORK_INSET else 16.dp,
+                            end = 16.dp),
             verticalAlignment = Alignment.CenterVertically
     ) {
         // The cover style already shows the art full-bleed behind the text; a second thumbnail
         // of the same image would just crowd the row.
-        item.artwork?.takeIf { coverImage == null || style.coverKeepsThumbnail }?.let { bitmap ->
+        item.artwork?.takeIf { showsThumbnail }?.let { bitmap ->
             val image = remember(bitmap) { bitmap.asImageBitmap() }
-            val artworkCorner = queueArtworkCorner(style)
+            // The row still owns its height; the artwork now fills it rather than sitting at a
+            // constant 30dp inside it, which is what made every pill look like a thick border
+            // around a small cover.
+            val artworkSize = queueArtworkSize(rowSize, skin.verticalPadding)
+            val artworkCorner = artworkSize * queueArtworkCornerFraction(style)
             Image(
                     bitmap = image,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                            // The row owns its height; artwork fits inside the existing text
-                            // keyline instead of expanding every pill that has a cover.
-                            .size(30.dp)
+                            .size(artworkSize)
                             .then(
                                     if (artworkCorner > 0.dp) {
                                         Modifier.clip(RoundedCornerShape(artworkCorner))
@@ -763,7 +822,7 @@ private fun QueueRow(
             Text(
                     text = item.title,
                     color = onRow,
-                    fontFamily = GoogleSans,
+                    fontFamily = LocalWatchUiFontFamily.current,
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp,
                     maxLines = 1,
@@ -781,7 +840,7 @@ private fun QueueRow(
                 Text(
                         text = item.subtitle,
                         color = onRow.copy(alpha = SUBTITLE_ALPHA),
-                        fontFamily = GoogleSans,
+                        fontFamily = LocalWatchUiFontFamily.current,
                         fontSize = 12.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -822,7 +881,7 @@ private fun QueueEmptyMessage() {
         Text(
                 text = stringResource(R.string.queue_empty),
                 color = Color.White.copy(alpha = 0.65f),
-                fontFamily = GoogleSans,
+                fontFamily = LocalWatchUiFontFamily.current,
                 fontSize = 13.sp,
                 textAlign = TextAlign.Center
         )

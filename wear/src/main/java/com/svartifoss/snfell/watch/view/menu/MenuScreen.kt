@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -49,12 +50,15 @@ import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.config.ButtonAction
-import com.svartifoss.snfell.watch.theme.GoogleSansFamily
+import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
 import com.svartifoss.snfell.watch.view.compose.LoadingSpinner
+import com.svartifoss.snfell.watch.view.queue.LIST_ROW_HEIGHT
+import com.svartifoss.snfell.watch.view.queue.QUEUE_ARTWORK_INSET
 import com.svartifoss.snfell.watch.view.queue.QueueStyle
+import com.svartifoss.snfell.watch.view.queue.listRowArtworkSize
 import com.svartifoss.snfell.watch.view.queue.coverFill
 import com.svartifoss.snfell.watch.view.queue.blurredCover
 import com.svartifoss.snfell.watch.view.queue.coverScrimFor
@@ -182,6 +186,14 @@ fun MenuScreen(
     }
 }
 
+/**
+ * Whether this row leads with genuine cover art rather than a monochrome template glyph - the same
+ * rule the quick panel calls `isArtwork`. Only artwork is grown to fill the pill; a tintable glyph
+ * blown up to the same size reads as a rendering mistake, not as a bigger icon.
+ */
+private val ButtonAction.leadsWithArtwork: Boolean
+    get() = icon != null && !iconTintable
+
 @Composable
 private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
     Row(
@@ -190,7 +202,13 @@ private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
                     .clip(RoundedCornerShape(26.dp))
                     .background(PILL_COLOR)
                     .clickable(onClick = onClick)
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    // Artwork rows trade padding for cover: the pill keeps the same height either
+                    // way, the cover just uses more of it. Glyph rows keep the wider inset, since a
+                    // monochrome template icon blown up to fill the pill reads as a mistake.
+                    .height(LIST_ROW_HEIGHT)
+                    .padding(
+                            start = if (action.leadsWithArtwork) QUEUE_ARTWORK_INSET else 16.dp,
+                            end = 16.dp),
             verticalAlignment = Alignment.CenterVertically
     ) {
         val icon = remember(action.icon) { action.icon?.toImageBitmapOrNull() }
@@ -200,13 +218,13 @@ private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
             // or square thumbnail sits fully inside the circle instead of showing as a raw square.
             // Monochrome action glyphs (iconTintable=true) stay unclipped - circling a glyph looks
             // wrong. Mirrors CustomEntryRow's thumbnail and the quick panel's isArtwork rule.
-            val isArtwork = !action.iconTintable
+            val isArtwork = action.leadsWithArtwork
             Image(
                     bitmap = icon,
                     contentDescription = null,
                     contentScale = if (isArtwork) ContentScale.Crop else ContentScale.Fit,
                     modifier = if (isArtwork) {
-                        Modifier.size(30.dp).clip(CircleShape)
+                        Modifier.size(listRowArtworkSize(LIST_ROW_HEIGHT)).clip(CircleShape)
                     } else {
                         Modifier.size(30.dp)
                     }
@@ -218,7 +236,7 @@ private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
         Text(
                 text = action.title.orEmpty(),
                 color = Color.White,
-                fontFamily = GoogleSansFamily,
+                fontFamily = LocalWatchUiFontFamily.current,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp,
                 maxLines = 1,
@@ -244,6 +262,7 @@ private fun CustomEntryRow(
         cover?.let { if (coverStyle == QueueStyle.COVER_BLUR) blurredCover(it) else it }
                 ?.asImageBitmap()
     }
+    val showsThumbnail = icon != null && (coverImage == null || coverStyle.coverKeepsThumbnail)
     Row(
             modifier = Modifier
                     .fillMaxWidth()
@@ -263,10 +282,15 @@ private fun CustomEntryRow(
                             onClick = onClick,
                             onLongClick = onLongClick
                     )
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    // Custom-list rows always lead with real cover art, so they always trade the
+                    // wider inset for a larger thumbnail - see ActionRow for the glyph case.
+                    .height(LIST_ROW_HEIGHT)
+                    .padding(
+                            start = if (showsThumbnail) QUEUE_ARTWORK_INSET else 16.dp,
+                            end = 16.dp),
             verticalAlignment = Alignment.CenterVertically
     ) {
-        if (icon != null && (coverImage == null || coverStyle.coverKeepsThumbnail)) {
+        if (showsThumbnail && icon != null) {
             Image(
                     bitmap = icon.asImageBitmap(),
                     contentDescription = null,
@@ -274,7 +298,7 @@ private fun CustomEntryRow(
                     // circle, and a rectangular source fills it without letterbox bars.
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                            .size(30.dp)
+                            .size(listRowArtworkSize(LIST_ROW_HEIGHT))
                             .clip(CircleShape)
             )
             Spacer(Modifier.width(10.dp))
@@ -283,7 +307,7 @@ private fun CustomEntryRow(
             Text(
                     text = title,
                     color = Color.White,
-                    fontFamily = GoogleSansFamily,
+                    fontFamily = LocalWatchUiFontFamily.current,
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp,
                     maxLines = 1,
@@ -293,7 +317,7 @@ private fun CustomEntryRow(
                 Text(
                         text = subtitle,
                         color = Color.White.copy(alpha = SUBTITLE_ALPHA),
-                        fontFamily = GoogleSansFamily,
+                        fontFamily = LocalWatchUiFontFamily.current,
                         fontSize = 12.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis

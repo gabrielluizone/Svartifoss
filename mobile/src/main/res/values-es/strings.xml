@@ -504,6 +504,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>Profundidad</item>
+        <item>Carrusel</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Búsqueda Expressive</string>
@@ -616,12 +618,22 @@
         <item>Normal (color elegido)</item>
         <item>Desaturado (color suave de álbum)</item>
         <item>Expressive (paleta completa del álbum)</item>
+        <item>Complementario (álbum + opuesto)</item>
+        <item>Triádico (tres tonos del álbum)</item>
+        <item>Análogo (tonos vecinos)</item>
+        <item>Monocromo (un tono, tres matices)</item>
+        <item>Duotono (dos colores del álbum)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>Seguir tratamiento del reloj</item>
         <item>Normal (color elegido)</item>
         <item>Desaturado (color suave de álbum)</item>
         <item>Expressive (paleta completa del álbum)</item>
+        <item>Complementario (álbum + opuesto)</item>
+        <item>Triádico (tres tonos del álbum)</item>
+        <item>Análogo (tonos vecinos)</item>
+        <item>Monocromo (un tono, tres matices)</item>
+        <item>Duotono (dos colores del álbum)</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Arco de borde (izquierda)</item>
@@ -693,6 +705,9 @@
         <item>Degradado de álbum</item>
         <item>Duotono de álbum</item>
         <item>Prisma</item>
+        <item>Cristal líquido</item>
+        <item>Desenfoque Expressive</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Cristal</item>
@@ -832,6 +847,7 @@
     <string-array name="album_art_style_entries">
         <item>Carátula completa</item>
         <item>Fondo desenfocado</item>
+        <item>Bordes esmerilados</item>
         <item>Cuadrado (esquinas nítidas)</item>
         <item>Cuadrado (esquinas suaves)</item>
         <item>Cuadrado (esquinas redondeadas)</item>

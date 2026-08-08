@@ -34,6 +34,16 @@ import com.svartifoss.snfell.view.watchface.WatchPreviewView
 /** Full-screen catalog for built-in presets and phone-local user themes. Tapping a row is an
  * explicit apply action; the repository performs one atomic preference materialization and the
  * application-level sync coordinator delivers it independently of this Activity's lifecycle. */
+/**
+ * Faces hidden from every picker unless the developer "Show archived options" switch is on.
+ *
+ * A single object because the face picker and the Watch themes list each used to keep their own
+ * copy, and they drifted: a face archived in one kept showing in the other.
+ */
+object ArchivedFaces {
+    val KEYS = setOf("vinyl", "halo", "aurora", "eclipse", "spectrum", "depth")
+}
+
 class WatchThemesActivity : AppCompatActivity() {
 
     private lateinit var repository: WatchThemeRepository
@@ -107,7 +117,7 @@ class WatchThemesActivity : AppCompatActivity() {
             add(ThemeRow.Header(getString(R.string.watch_theme_built_in_section)))
             val showArchived = defaultPrefs.getBoolean("dev_show_archived", false)
             ThemeAppearance.ALLOWED_BASE_FACES.filter { face ->
-                showArchived || face !in ARCHIVED_FACES || appearance.baseFace == face
+                showArchived || face !in ArchivedFaces.KEYS || appearance.baseFace == face
             }.forEach { face ->
                 add(ThemeRow.BuiltIn(face))
             }
@@ -293,7 +303,7 @@ class WatchThemesActivity : AppCompatActivity() {
         // the user's base; developer archived options reveal the complete renderer catalog.
         val showArchived = defaultPrefs.getBoolean("dev_show_archived", false)
         val faces = ThemeAppearance.ALLOWED_BASE_FACES.filter { face ->
-            showArchived || face !in ARCHIVED_FACES || face == initialBaseFace
+            showArchived || face !in ArchivedFaces.KEYS || face == initialBaseFace
         }
         val labels = faces.map { WatchThemeRepository.displayNameForFace(this, it) }
         spinner.adapter = ArrayAdapter(this, R.layout.item_spinner_lyra, labels).apply {
@@ -466,6 +476,5 @@ class WatchThemesActivity : AppCompatActivity() {
         const val MENU_RENAME = 2
         const val MENU_DUPLICATE = 3
         const val MENU_DELETE = 4
-        val ARCHIVED_FACES = setOf("vinyl", "halo", "aurora", "eclipse", "spectrum")
     }
 }

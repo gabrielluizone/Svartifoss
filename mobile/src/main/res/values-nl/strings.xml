@@ -504,6 +504,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>Diepte</item>
+        <item>Carrousel</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive-zoeken</string>
@@ -616,12 +618,22 @@
         <item>Normaal (gekozen kleur)</item>
         <item>Ontsatureerd (zachte albumkleur)</item>
         <item>Expressive (volledig albumpalet)</item>
+        <item>Complementair (album + tegenkleur)</item>
+        <item>Triadisch (drie albumtinten)</item>
+        <item>Analoog (naburige tinten)</item>
+        <item>Monochroom (één tint, drie tonen)</item>
+        <item>Duotoon (twee albumkleuren)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>Horlogebehandeling volgen</item>
         <item>Normaal (gekozen kleur)</item>
         <item>Ontsatureerd (zachte albumkleur)</item>
         <item>Expressive (volledig albumpalet)</item>
+        <item>Complementair (album + tegenkleur)</item>
+        <item>Triadisch (drie albumtinten)</item>
+        <item>Analoog (naburige tinten)</item>
+        <item>Monochroom (één tint, drie tonen)</item>
+        <item>Duotoon (twee albumkleuren)</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Randboog (links)</item>
@@ -693,6 +705,9 @@
         <item>Albumverloop</item>
         <item>Album-tweekleur</item>
         <item>Prisma</item>
+        <item>Vloeibaar glas</item>
+        <item>Expressive-vervaging</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Glas</item>
@@ -832,6 +847,7 @@
     <string-array name="album_art_style_entries">
         <item>Volledige hoes</item>
         <item>Vervaagde achtergrond</item>
+        <item>Matte randen</item>
         <item>Vierkant (scherpe hoeken)</item>
         <item>Vierkant (zachte hoeken)</item>
         <item>Vierkant (afgeronde hoeken)</item>

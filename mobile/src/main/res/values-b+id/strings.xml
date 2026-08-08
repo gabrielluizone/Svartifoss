@@ -503,6 +503,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>Kedalaman</item>
+        <item>Korsel</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Pencarian Expressive</string>
@@ -615,12 +617,22 @@
         <item>Normal (warna pilihan)</item>
         <item>Desaturasi (warna album lembut)</item>
         <item>Expressive (palet album penuh)</item>
+        <item>Komplementer (album + kebalikan)</item>
+        <item>Triadik (tiga rona album)</item>
+        <item>Analog (rona bertetangga)</item>
+        <item>Monokrom (satu rona, tiga nada)</item>
+        <item>Duoton (dua warna album)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>Ikuti perlakuan jam tangan</item>
         <item>Normal (warna pilihan)</item>
         <item>Desaturasi (warna album lembut)</item>
         <item>Expressive (palet album penuh)</item>
+        <item>Komplementer (album + kebalikan)</item>
+        <item>Triadik (tiga rona album)</item>
+        <item>Analog (rona bertetangga)</item>
+        <item>Monokrom (satu rona, tiga nada)</item>
+        <item>Duoton (dua warna album)</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Busur tepi (kiri)</item>
@@ -692,6 +704,9 @@
         <item>Gradien album</item>
         <item>Duonada album</item>
         <item>Prisma</item>
+        <item>Kaca cair</item>
+        <item>Buram Expressive</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Kaca</item>
@@ -831,6 +846,7 @@
     <string-array name="album_art_style_entries">
         <item>Sampul penuh</item>
         <item>Latar belakang buram</item>
+        <item>Tepi buram</item>
         <item>Persegi (sudut tajam)</item>
         <item>Persegi (sudut lembut)</item>
         <item>Persegi (sudut bulat)</item>

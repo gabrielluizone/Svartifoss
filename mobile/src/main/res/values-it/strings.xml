@@ -504,6 +504,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>Profondità</item>
+        <item>Carosello</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Ricerca Expressive</string>
@@ -616,12 +618,22 @@
         <item>Normale (colore scelto)</item>
         <item>Desaturato (colore album morbido)</item>
         <item>Expressive (tavolozza album completa)</item>
+        <item>Complementare (album + opposto)</item>
+        <item>Triadico (tre tonalità dell\'album)</item>
+        <item>Analogo (tonalità vicine)</item>
+        <item>Monocromatico (una tonalità, tre toni)</item>
+        <item>Duotone (due colori dell\'album)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>Segui trattamento orologio</item>
         <item>Normale (colore scelto)</item>
         <item>Desaturato (colore album morbido)</item>
         <item>Expressive (tavolozza album completa)</item>
+        <item>Complementare (album + opposto)</item>
+        <item>Triadico (tre tonalità dell\'album)</item>
+        <item>Analogo (tonalità vicine)</item>
+        <item>Monocromatico (una tonalità, tre toni)</item>
+        <item>Duotone (due colori dell\'album)</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Arco ai bordi (sinistra)</item>
@@ -693,6 +705,9 @@
         <item>Gradiente album</item>
         <item>Duotono album</item>
         <item>Prisma</item>
+        <item>Vetro liquido</item>
+        <item>Sfocatura Expressive</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Vetro</item>
@@ -832,6 +847,7 @@
     <string-array name="album_art_style_entries">
         <item>Copertina intera</item>
         <item>Sfondo sfocato</item>
+        <item>Bordi smerigliati</item>
         <item>Quadrato (angoli netti)</item>
         <item>Quadrato (angoli morbidi)</item>
         <item>Quadrato (angoli arrotondati)</item>

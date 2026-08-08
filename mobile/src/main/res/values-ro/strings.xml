@@ -505,6 +505,8 @@
         <item>Spectrum</item>
         <item>Material</item>
         <item>Immersive</item>
+        <item>Profunzime</item>
+        <item>Carusel</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Căutare Expressive</string>
@@ -617,12 +619,22 @@
         <item>Normal (culoare aleasă)</item>
         <item>Desaturat (culoare album blândă)</item>
         <item>Expressive (paletă completă a albumului)</item>
+        <item>Complementar (album + opus)</item>
+        <item>Triadic (trei nuanțe din album)</item>
+        <item>Analog (nuanțe vecine)</item>
+        <item>Monocrom (o nuanță, trei tonuri)</item>
+        <item>Duoton (două culori din album)</item>
     </string-array>
     <string-array name="wear_component_color_treatment_entries">
         <item>Urmează tratamentul ceasului</item>
         <item>Normal (culoare aleasă)</item>
         <item>Desaturat (culoare album blândă)</item>
         <item>Expressive (paletă completă a albumului)</item>
+        <item>Complementar (album + opus)</item>
+        <item>Triadic (trei nuanțe din album)</item>
+        <item>Analog (nuanțe vecine)</item>
+        <item>Monocrom (o nuanță, trei tonuri)</item>
+        <item>Duoton (două culori din album)</item>
     </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Arc de margine (stânga)</item>
@@ -694,6 +706,9 @@
         <item>Gradient album</item>
         <item>Bicolor album</item>
         <item>Prismă</item>
+        <item>Sticlă lichidă</item>
+        <item>Estompare Expressive</item>
+        <item>Expressive</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Sticlă</item>
@@ -833,6 +848,7 @@
     <string-array name="album_art_style_entries">
         <item>Copertă completă</item>
         <item>Fundal neclar</item>
+        <item>Margini mate</item>
         <item>Pătrat (colțuri ascuțite)</item>
         <item>Pătrat (colțuri moi)</item>
         <item>Pătrat (colțuri rotunjite)</item>

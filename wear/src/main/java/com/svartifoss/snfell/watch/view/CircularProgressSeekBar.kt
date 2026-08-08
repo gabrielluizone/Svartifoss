@@ -98,6 +98,16 @@ class CircularProgressSeekBar : View {
     private val circleBounds = RectF()
 
     private var isDragging = false
+
+    /**
+     * Whether a touch drag on the ring is in progress. Read by MainActivity to mute rotary input
+     * for the duration: on watches with a touch bezel (every non-Classic Galaxy Watch) the very
+     * finger motion that seeks along this ring is *also* reported as rotary scroll, so without
+     * this an edge-seek drag popped the volume overlay open and stole the gesture.
+     */
+    val isSeekDragging: Boolean
+        get() = isDragging
+
     private var displayProgress = 0f
     private var progressAnimator: ValueAnimator? = null
     private val touchBand = resources.getDimension(R.dimen.seek_bar_touch_band)
@@ -177,6 +187,34 @@ class CircularProgressSeekBar : View {
         tertiaryColorInt = tertiary
         if (changed) invalidate()
     }
+
+    /**
+     * How much of the full circle the round stroke cap covers, as a 0..1 gradient position.
+     *
+     * The cap is a half-disc of radius `strokeWidth / 2` sitting on the arc's end, so the angle it
+     * spans is `atan(halfStroke / ringRadius)` - a couple of degrees on a real ring, which is
+     * exactly why the wrong-coloured tip read as a thin mark rather than as a coloured segment.
+     */
+    private fun capAngleFraction(): Float {
+        val radius = minOf(circleBounds.width(), circleBounds.height()) / 2f
+        if (radius <= 0f) return 0f
+        val halfStroke = foregroundPaint.strokeWidth / 2f
+        val degrees = Math.toDegrees(atan2(halfStroke, radius).toDouble()).toFloat()
+        return (degrees / 360f).coerceIn(0f, 0.25f)
+    }
+
+    /**
+     * User's "Gradient progress ring" choice (MiscPreferences.WEAR_PROGRESS_GRADIENT). Off forces
+     * the flat primary fill even under a hue-rotating treatment, which is the only way to keep an
+     * album-derived palette everywhere else while having a single-colour bar here.
+     */
+    var gradientEnabled: Boolean = true
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
 
     /** True when the companion colors carry a genuinely different hue from the primary - below
      *  this, a gradient would just be visual noise over what reads as a solid color anyway. */
@@ -362,14 +400,34 @@ class CircularProgressSeekBar : View {
                 // covers) falls under the threshold and draws exactly as before - only a treatment
                 // that deliberately rotates hue (Triadic, Complementary, Analogous, Duotone) gets
                 // the gradient, so this is additive rather than a restyle of the existing look.
-                if (sweep > 1f && hasVisibleHueSpread()) {
+                if (sweep > 1f && gradientEnabled && hasVisibleHueSpread()) {
+                    // The round cap at the arc's start extends BACKWARDS past the start angle by
+                    // half the stroke. In an unshifted sweep gradient those angles sit just below
+                    // position 1.0, where the shader clamps to its LAST color - so the tip of the
+                    // bar was painted in the gradient's end color, reading as a stray mark of the
+                    // wrong hue at 12 o'clock. Shifting the whole gradient forward by the cap's own
+                    // angle and holding the primary across that lead-in puts the cap back in the
+                    // color the bar actually starts with.
+                    val capFraction = capAngleFraction()
+                    val start = capFraction
                     val shader = SweepGradient(
                             circleBounds.centerX(), circleBounds.centerY(),
-                            intArrayOf(foregroundPaint.color, secondaryColorInt, tertiaryColorInt),
-                            floatArrayOf(0f, (sweep / 360f * 0.5f), (sweep / 360f).coerceAtMost(1f))
+                            intArrayOf(
+                                    foregroundPaint.color,
+                                    foregroundPaint.color,
+                                    secondaryColorInt,
+                                    tertiaryColorInt),
+                            floatArrayOf(
+                                    0f,
+                                    start,
+                                    (start + sweep / 360f * 0.5f).coerceAtMost(1f),
+                                    (start + sweep / 360f).coerceAtMost(1f))
                     )
                     val rotate = Matrix()
-                    rotate.setRotate(-90f, circleBounds.centerX(), circleBounds.centerY())
+                    rotate.setRotate(
+                            -90f - capFraction * 360f,
+                            circleBounds.centerX(),
+                            circleBounds.centerY())
                     shader.setLocalMatrix(rotate)
                     foregroundPaint.shader = shader
                     canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)
@@ -407,18 +465,29 @@ class CircularProgressSeekBar : View {
                 canvas.drawArc(circleBounds, 0f, 360f, false, backgroundPaint)
                 if (sweep > 1f) {
                     // Sweep gradient from transparent at 12 o'clock to the full accent at the
-                    // progress head - rotated so position 0 of the shader is the ring start.
+                    // progress head, shifted past the round cap for the same reason SOLID is: the
+                    // cap sits just below shader position 1.0, where an unshifted gradient clamps
+                    // to its last stop - here full opacity, so the tail that is meant to fade in
+                    // from nothing started with an opaque dot.
                     val accent = foregroundPaint.color
+                    val capFraction = capAngleFraction()
                     val shader = SweepGradient(
                             circleBounds.centerX(), circleBounds.centerY(),
                             intArrayOf(
                                     ColorUtils.setAlphaComponent(accent, 0x00),
+                                    ColorUtils.setAlphaComponent(accent, 0x00),
                                     ColorUtils.setAlphaComponent(accent, 0xFF)
                             ),
-                            floatArrayOf(0f, (sweep / 360f).coerceAtMost(1f))
+                            floatArrayOf(
+                                    0f,
+                                    capFraction,
+                                    (capFraction + sweep / 360f).coerceAtMost(1f))
                     )
                     val rotate = Matrix()
-                    rotate.setRotate(-90f, circleBounds.centerX(), circleBounds.centerY())
+                    rotate.setRotate(
+                            -90f - capFraction * 360f,
+                            circleBounds.centerX(),
+                            circleBounds.centerY())
                     shader.setLocalMatrix(rotate)
                     foregroundPaint.shader = shader
                     canvas.drawArc(circleBounds, -90f, sweep, false, foregroundPaint)

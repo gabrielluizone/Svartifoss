@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Filled accent circle for the idle screen's resume button. Solid rather than the glass fill
+     the quick-action buttons use: this is the only affordance on an otherwise empty black
+     screen, so it has to read as the thing to press, not as chrome. Tinted at runtime to the
+     resolved accent by MainActivity. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/theme_accent" />
+</shape>

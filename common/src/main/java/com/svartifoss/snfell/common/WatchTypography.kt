@@ -60,6 +60,29 @@ object WatchTypography {
 
     fun isFlexFont(fontKey: String?): Boolean = fontKey == FLEX_FONT_KEY
 
+    /** [MiscPreferences.WEAR_CLOCK_FONT] value meaning "use whatever the track text uses". */
+    const val CLOCK_FONT_FOLLOW: String = "follow"
+
+    /**
+     * The font key the on-screen clock should render in.
+     *
+     * The clock used to be locked to [MiscPreferences.WEAR_FONT] with no way to separate the two,
+     * which is the wrong coupling for a chrome element: a display face chosen to make a track title
+     * striking (Bebas Neue, Orbitron, Caveat) is frequently the wrong choice for a small time
+     * readout that has to stay glanceable. [CLOCK_FONT_FOLLOW] keeps the old coupling and is the
+     * default, so nothing changes for anyone who does not touch the new control.
+     *
+     * An empty or unknown value also resolves to following the track font rather than to a
+     * hardcoded family: the value can arrive from an imported backup or a newer build, and silently
+     * falling back to the user's chosen face is far less surprising than reverting to Google Sans.
+     */
+    fun clockFontKey(clockPreference: String?, trackFontKey: String?): String? =
+            if (clockPreference.isNullOrBlank() || clockPreference == CLOCK_FONT_FOLLOW) {
+                trackFontKey
+            } else {
+                clockPreference
+            }
+
     /**
      * The four Google Sans Flex axes that are *not* already covered by the per-element
      * weight/italic controls - width, optical size, grade and roundness. These are deliberately
@@ -162,6 +185,25 @@ object WatchTypography {
                     FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_ARTIST_FONT_OPACITY, context)),
             trackingEm = normalizeTracking(
                     FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_ARTIST_FONT_TRACKING, context))
+    )
+
+    /**
+     * The clock's own weight/italic/scale/tracking.
+     *
+     * [TextSpec.alpha] is fixed at 1 rather than reading a preference: the clock's opacity already
+     * lives in [MiscPreferences.WEAR_CLOCK_OPACITY], which is baked into the resolved colour, and a
+     * second multiplier here would silently square it.
+     */
+    fun clockSpec(prefs: SharedPreferences, context: AppearanceContext): TextSpec = TextSpec(
+            weight = normalizeWeight(
+                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_CLOCK_FONT_WEIGHT, context)),
+            italic = FaceScopedPreferences.getBoolean(
+                    prefs, MiscPreferences.WEAR_CLOCK_FONT_ITALIC, context),
+            scale = normalizeScale(
+                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_CLOCK_FONT_SCALE, context)),
+            alpha = 1f,
+            trackingEm = normalizeTracking(
+                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_CLOCK_FONT_TRACKING, context))
     )
 
     fun sourceIconSpec(prefs: SharedPreferences, context: AppearanceContext): IconSpec = IconSpec(

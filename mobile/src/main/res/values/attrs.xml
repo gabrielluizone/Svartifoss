@@ -5,6 +5,8 @@
     <declare-styleable name="DescribedListPreference">
         <!-- String-array of per-entry descriptions, parallel to android:entries/entryValues. -->
         <attr name="descriptions" format="reference" />
+        <!-- Renders each dialog row's label in the typeface its entryValue names. Font picker only. -->
+        <attr name="previewTypeface" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="ColorTreatmentPreference">

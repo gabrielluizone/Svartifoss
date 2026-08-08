@@ -14,7 +14,8 @@ class ThemeAppearanceTest {
         assertEquals(
                 setOf(
                         "classic", "expressive", "vinyl", "poster", "studio",
-                        "halo", "aurora", "eclipse", "spectrum", "material", "immersive"),
+                        "halo", "aurora", "eclipse", "spectrum", "material", "immersive",
+                        "depth", "carousel"),
                 ThemeAppearance.ALLOWED_BASE_FACES)
         assertFalse(ThemeAppearance.CUSTOM_SCOPE in ThemeAppearance.ALLOWED_BASE_FACES)
     }

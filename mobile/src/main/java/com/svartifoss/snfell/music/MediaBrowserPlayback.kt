@@ -56,6 +56,72 @@ object MediaBrowserPlayback {
                 controller.transportControls.playFromSearch(query, null)
             }
         }
+
+        /** A media id taken straight from the app's own browse tree - see [playMediaId]. */
+        data class PlayMediaId(val mediaId: String) : Strategy {
+            override fun issue(controller: MediaControllerCompat) {
+                controller.transportControls.playFromMediaId(mediaId, null)
+            }
+        }
+    }
+
+    /**
+     * Plays an item the user picked out of the app's own browsable library.
+     *
+     * Unlike [play], there is no ambiguity to resolve: the media id came from this very app's
+     * browse tree, so `playFromMediaId` is the contract it defined for it and no URI or search
+     * fallback would be more correct. Routing it through the browser connection rather than the
+     * tracked controller is still what matters - it wakes a player that has no live session, which
+     * is the usual state when someone starts browsing from the wrist.
+     */
+    suspend fun playMediaId(context: Context, packageName: String, mediaId: String): Boolean =
+            withBrowserController(context, packageName, "media id $mediaId") { controller ->
+                awaitActivePlayback(controller, Strategy.PlayMediaId(mediaId))
+            }
+
+    /**
+     * Asks the app to play the best match for [query] through its browser-side session.
+     *
+     * The distinction from firing `playFromSearch` at the tracked controller is the same one
+     * [playMediaId] rests on, and Retro Music is the proof: its capability lives on the browser
+     * service's session, not on the one that happens to be playing. This route also works with no
+     * live session at all, which is the normal state when a search starts from the wrist.
+     *
+     * Skipped when the session explicitly advertises an action set without search in it - see
+     * [MediaSessionCapabilities.advertises] for why "no state at all" is not such a refusal.
+     */
+    suspend fun playSearch(context: Context, packageName: String, query: String): Boolean =
+            withBrowserController(context, packageName, "search \"$query\"") { controller ->
+                if (!MediaSessionCapabilities.advertisesPlayFromSearch(
+                                controller.playbackState?.actions)) {
+                    Timber.d("%s does not advertise play-from-search; skipping", packageName)
+                    return@withBrowserController false
+                }
+                awaitActivePlayback(controller, Strategy.PlaySearch(query))
+            }
+
+    /** Binds the app's browser, hands its session controller to [block], and always disconnects. */
+    private suspend fun withBrowserController(
+            context: Context,
+            packageName: String,
+            description: String,
+            block: suspend (MediaControllerCompat) -> Boolean
+    ): Boolean {
+        val component = MediaBrowserSearch.findBrowserService(context, packageName) ?: return false
+        val browser = withTimeoutOrNull(CONNECT_TIMEOUT_MS) {
+            MediaBrowserSearch.connect(context, component)
+        } ?: return false
+
+        return try {
+            block(MediaControllerCompat(context, browser.sessionToken))
+        } catch (e: RuntimeException) {
+            // Dead token, remote crash mid-call, security rejection - all mean this route failed
+            // and the caller should fall through, not that the app is broken.
+            Timber.w(e, "Could not play %s on %s", description, packageName)
+            false
+        } finally {
+            browser.disconnect()
+        }
     }
 
     /**

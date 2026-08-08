@@ -157,13 +157,15 @@
             android:summary="@string/setting_rotary_deadzone_description"
             android:layout="@layout/pref_item" />
 
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
-            android:key="rotary_seek"
+        <ListPreference
+            android:defaultValue="volume"
+            android:key="wear_rotary_action"
             android:icon="@drawable/ic_progress_style"
-            android:title="@string/setting_rotary_seek"
-            android:summary="@string/setting_rotary_seek_description"
-            android:layout="@layout/pref_switch_item" />
+            android:title="@string/setting_wear_rotary_action"
+            android:summary="%s"
+            android:entries="@array/wear_rotary_action_entries"
+            android:entryValues="@array/wear_rotary_action_values"
+            android:layout="@layout/pref_item" />
 
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="1000"
@@ -344,6 +346,49 @@
             android:title="@string/setting_wear_close_on_idle"
             android:summary="@string/setting_wear_close_on_idle_description"
             android:layout="@layout/pref_switch_item" />
+
+        <ListPreference
+            android:defaultValue="30"
+            android:key="wear_paused_hold"
+            android:icon="@drawable/action_play_pause"
+            android:title="@string/setting_wear_paused_hold"
+            android:dialogMessage="@string/setting_wear_paused_hold_description"
+            android:summary="%s"
+            android:entries="@array/wear_paused_hold_entries"
+            android:entryValues="@array/wear_paused_hold_values"
+            android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <!-- What the watch offers when there is no session at all. Behaviour rather than looks, so it
+         belongs here and not in the Watch face tab: these pick which *screen* the idle state leads
+         to, using destinations (menu, shortcuts, search, queue) that already existed but that the
+         idle screen never exposed. -->
+    <PreferenceCategory
+        android:key="cat_idle"
+        android:title="@string/category_idle"
+        android:layout="@layout/pref_category_header">
+
+        <ListPreference
+            android:defaultValue="none"
+            android:key="wear_idle_button_action"
+            android:icon="@drawable/action_play"
+            android:title="@string/setting_wear_idle_button_action"
+            android:summary="%s"
+            android:entries="@array/wear_idle_button_action_entries"
+            android:entryValues="@array/wear_idle_button_action_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="none"
+            android:key="wear_idle_auto_open"
+            android:icon="@drawable/ic_playlist_play"
+            android:title="@string/setting_wear_idle_auto_open"
+            android:dialogMessage="@string/setting_wear_idle_auto_open_description"
+            android:summary="%s"
+            android:entries="@array/wear_idle_auto_open_entries"
+            android:entryValues="@array/wear_idle_auto_open_values"
+            android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 

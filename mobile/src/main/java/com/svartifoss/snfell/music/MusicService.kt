@@ -56,6 +56,7 @@ import com.svartifoss.snfell.actions.playback.RepeatAction
 import com.svartifoss.snfell.actions.playback.ShuffleAction
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.LibraryEntry
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
@@ -112,6 +113,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private const val SEEK_DETECTION_THRESHOLD_MS = 1500L
         private const val QUEUE_REFRESH_DEBOUNCE_MS = 600L
         private const val MAX_TRACK_HISTORY_SIZE = 20
+
+        /**
+         * Rows sent per library page. A browse node can legitimately hold thousands of items
+         * (an "All songs" folder), and the whole list travels as one DataItem - the same size
+         * pressure the queue transmission caps at 20. Deeper levels are how the user narrows down,
+         * so a generous-but-bounded page beats paginating a watch menu.
+         */
+        private const val LIBRARY_PAGE_LIMIT = 50
         private const val SESSION_ACTION_PREFIX = "session:"
         private const val MAX_SESSION_QUICK_ACTIONS = 3
 
@@ -308,6 +317,30 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         applyNotificationPopupObserver()
 
+        if (!promoteToForeground()) {
+            return
+        }
+
+        active = true
+        Timber.d("Service started")
+    }
+
+
+    /**
+     * Builds the persistent notification and promotes the service to the foreground.
+     *
+     * Must be called for **every** `startForegroundService()` aimed at this service, not only on
+     * creation. A start aimed at an already-created service does not run [onCreate], so nothing
+     * answered the promotion contract and the system killed the process with
+     * ForegroundServiceDidNotStartInTimeException - reported from both background callers
+     * (WatchListenerService on a watch command, NotificationService on listener rebind at boot).
+     * The wear-side service guards the identical pattern in its own onStartCommand.
+     *
+     * Idempotent: re-posting the same notification id is free, and the pending intents use
+     * FLAG_UPDATE_CURRENT. Returns false when the OS refused the promotion, in which case the
+     * service has already stopped itself.
+     */
+    private fun promoteToForeground(): Boolean {
         val stopSelfIntent = Intent(this, MusicService::class.java)
         stopSelfIntent.action = ACTION_STOP_SELF
 
@@ -371,16 +404,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         } catch (e: IllegalStateException) {
             Timber.w(e, "Could not promote MusicService to foreground from background; stopping")
             stopSelf()
-            return
+            return false
         }
-
-        active = true
-        Timber.d("Service started")
+        return true
     }
-
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val action = intent?.action
+
+        // Before any branch below, because several of them call stopSelf(). A start delivered by
+        // startForegroundService() must be answered with startForeground() even when the answer is
+        // "and now stop" - otherwise the process is killed for missing the deadline, which is
+        // exactly the crash this guards. onCreate only covers the run that created the service.
+        promoteToForeground()
 
         if (action == ACTION_FORCE_STOP) {
             // "Force stop" from the notification: actually end the whole app, not just this
@@ -1178,9 +1214,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 )
             }
             CustomLists.SEARCH_RESULTS -> {
-                currentMediaController?.transportControls?.playFromMediaId(
-                        customListItemAction.entryId, null
-                )
+                // Shares the library's selection path: browsable rows walk in, playable rows go
+                // through MediaBrowserPlayback. The old code issued playFromMediaId on the tracked
+                // controller, which does nothing at all when no session is live yet - the usual
+                // state when a search is started from the wrist - and is ignored by several apps
+                // even when one is.
+                lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+                    onLibraryEntrySelected(customListItemAction.entryId, startNewWalk = true)
+                }
             }
             CustomLists.PLAYLIST_SHORTCUTS -> {
                 // The entry id IS the playlist's deep link - see OpenPlaylistShortcutsAction.
@@ -1207,6 +1248,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             CustomLists.SEARCH_HISTORY -> {
                 // The entry id IS the original query text - see OpenSearchHistoryAction.
                 playFromSearch(customListItemAction.entryId)
+            }
+            CustomLists.LIBRARY -> {
+                lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+                    onLibraryEntrySelected(customListItemAction.entryId)
+                }
             }
         }
     }
@@ -1308,7 +1354,17 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // plays the best match directly. Session-level playFromSearch stays as the very
                 // last resort - many apps (YouTube Music included) silently ignore it.
                 if (!launchPlayFromSearchIntent(query, controller.packageName)) {
-                    controller.transportControls.playFromSearch(query, null)
+                    // Routed through the browser connection rather than fired at the tracked
+                    // controller. Retro Music is the case that forced this: its play capabilities
+                    // live on the browser service's session, so the old call went to a session that
+                    // never implemented the command. MediaBrowserPlayback also checks whether the
+                    // action is advertised at all before spending the connection on it.
+                    if (!MediaBrowserPlayback.playSearch(
+                                    this@MusicService, controller.packageName, query)) {
+                        // Last resort, unchanged: some apps honour this on the playing session even
+                        // though they expose no browser service to route it through.
+                        controller.transportControls.playFromSearch(query, null)
+                    }
                 }
                 return@launchWithPlayServicesErrorHandling
             }
@@ -1539,12 +1595,125 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         false
     }
 
+    /**
+     * Where the watch currently is in the browsable library, innermost last. Empty means the root.
+     *
+     * Process-local and deliberately not persisted: it is navigation state for a menu that is open
+     * right now, in the same spirit as [MediaNotificationActions]' registry. If this service is
+     * restarted mid-browse the watch simply reopens at the root, which is a far better failure than
+     * restoring a path into a library that may have changed underneath it.
+     */
+    private val libraryPath = mutableListOf<String>()
+
+    /**
+     * Loads one library page and pushes it to the watch as a [CustomLists.LIBRARY] custom list.
+     *
+     * [parentId] null browses the root. The watch decides per row whether selecting it navigates or
+     * plays, which is why every entry id goes through [LibraryEntry].
+     */
+    private suspend fun sendLibraryPageToWatch(parentId: String?) {
+        // currentMediaController is already the *reported* session (resolveReportedSession keeps
+        // the last live one across a pause), so there is no separate fallback to consult here.
+        val packageName = currentMediaController?.packageName
+        if (packageName == null) {
+            sendLibraryErrorToWatch(getString(R.string.error_library_no_player))
+            return
+        }
+
+        val page = MediaBrowserLibrary.browse(this, packageName, parentId)
+        if (page == null) {
+            // No MediaBrowserService, or it never answered. Both mean this app cannot be browsed,
+            // which is a real and common case (several popular players expose no library at all).
+            sendLibraryErrorToWatch(getString(R.string.error_library_unavailable))
+            return
+        }
+
+        val entries = mutableListOf<CustomList.ListEntry>()
+        if (libraryPath.isNotEmpty()) {
+            entries += CustomList.ListEntry.newBuilder()
+                    .setEntryId(LibraryEntry.UP)
+                    .setEntryTitle(getString(R.string.library_up))
+                    .build()
+        }
+        entries += page.children.take(LIBRARY_PAGE_LIMIT)
+                .filter { it.mediaId != null }
+                .map { item ->
+                    CustomList.ListEntry.newBuilder()
+                            .setEntryId(
+                                    if (item.isBrowsable) LibraryEntry.browsable(item.mediaId!!)
+                                    else LibraryEntry.playable(item.mediaId!!))
+                            .setEntryTitle(item.description.title?.toString() ?: "")
+                            .setEntrySubtitle(item.description.subtitle?.toString() ?: "")
+                            .build()
+                }
+
+        if (entries.none { it.entryId != LibraryEntry.UP }) {
+            entries += CustomList.ListEntry.newBuilder()
+                    .setEntryId(CustomLists.SPECIAL_ITEM_ERROR)
+                    .setEntryTitle(getString(R.string.error_library_empty))
+                    .build()
+        }
+
+        transmitCustomList(CustomLists.LIBRARY, entries)
+    }
+
+    private suspend fun sendLibraryErrorToWatch(message: String) {
+        transmitCustomList(CustomLists.LIBRARY, listOf(
+                CustomList.ListEntry.newBuilder()
+                        .setEntryId(CustomLists.SPECIAL_ITEM_ERROR)
+                        .setEntryTitle(message)
+                        .build()))
+    }
+
+    /** Opens the playing app's library at the root, resetting any previous walk. */
+    suspend fun openLibraryOnWatch() {
+        libraryPath.clear()
+        sendLibraryPageToWatch(null)
+    }
+
+    /**
+     * Handles a row picked from a library page: folders walk deeper (or back up), tracks play.
+     *
+     * Playback goes through [MediaBrowserPlayback] rather than `playFromMediaId` on the tracked
+     * controller, for the reason that class documents - it is the only route that works when the
+     * player has no live session yet, which is exactly the state a user browsing from the wrist is
+     * often in.
+     */
+    private suspend fun onLibraryEntrySelected(entryId: String, startNewWalk: Boolean = false) {
+        // A row picked out of search results starts its own walk: the previous path (if any) leads
+        // somewhere unrelated, so "Back" from an artist reached by searching should return to the
+        // library root, never to whatever folder was last browsed.
+        if (startNewWalk) {
+            libraryPath.clear()
+        }
+        if (!LibraryEntry.isBrowsable(entryId)) {
+            val mediaId = LibraryEntry.mediaId(entryId) ?: return
+            val packageName = currentMediaController?.packageName ?: return
+            MediaBrowserPlayback.playMediaId(this, packageName, mediaId)
+            return
+        }
+
+        if (entryId == LibraryEntry.UP) {
+            libraryPath.removeLastOrNull()
+        } else {
+            LibraryEntry.mediaId(entryId)?.let { libraryPath += it }
+        }
+        sendLibraryPageToWatch(libraryPath.lastOrNull())
+    }
+
     private suspend fun sendSearchResultsToWatch(results: List<android.support.v4.media.MediaBrowserCompat.MediaItem>) {
+        // Encoded exactly like a library page, and handled by the same selection path. A search
+        // result is frequently *browsable* rather than playable - an artist or an album row - and
+        // sending those as playable was why picking an artist from a watch search did nothing:
+        // playFromMediaId on a folder node has nothing to play. Marked browsable, the same row now
+        // walks into that artist's albums instead.
         val entries = results.take(20)
                 .filter { it.mediaId != null }
                 .map { item ->
                     CustomList.ListEntry.newBuilder()
-                            .setEntryId(item.mediaId!!)
+                            .setEntryId(
+                                    if (item.isBrowsable) LibraryEntry.browsable(item.mediaId!!)
+                                    else LibraryEntry.playable(item.mediaId!!))
                             .setEntryTitle(item.description.title?.toString() ?: "")
                             .setEntrySubtitle(item.description.subtitle?.toString() ?: "")
                             .build()
@@ -1559,9 +1728,20 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             )
         }
 
+        transmitCustomList(CustomLists.SEARCH_RESULTS, listEntries)
+    }
+
+    /**
+     * Publishes one custom list to the watch.
+     *
+     * The timestamp is what makes the watch treat this as a *new* list worth opening the menu for
+     * (see MainActivity.customListListener), so every page of a browse walk gets its own - an
+     * unchanged timestamp would leave an open menu showing the previous level.
+     */
+    private suspend fun transmitCustomList(listId: String, entries: List<CustomList.ListEntry>) {
         val protoData = CustomList.newBuilder()
-                .addAllActions(listEntries)
-                .setListId(CustomLists.SEARCH_RESULTS)
+                .addAllActions(entries)
+                .setListId(listId)
                 .setListTimestamp(System.currentTimeMillis())
                 .build()
 
