@@ -91,6 +91,8 @@
     <string name="tutorial_taps_title">Tap the screen zones</string>
     <string name="tutorial_taps_desc">The watch screen is split into four zones — top, bottom, left and right. Tapping a zone runs the action you assigned to it. By default the left zone plays or pauses, the right skips to the next track, and the top and bottom change the volume.</string>
 
+    <string name="tutorial_quick_panel_title">Quick actions panel</string>
+    <string name="tutorial_quick_panel_desc">Double-tap the centre of the now-playing screen to open a panel of four slots — three round buttons and one wide row beneath them. Left alone, the slots mirror the buttons the playing app puts in its own notification, so you get its real like, shuffle and repeat controls. Assign any action to a slot, or set it to \"None\" to hide it, under Actions on the phone.</string>
     <string name="tutorial_gestures_title">Single, double &amp; long press</string>
     <string name="tutorial_gestures_desc">Each zone holds three separate actions: one for a single tap, one for a double tap and one for a long press. For example, a single tap in the center can pause the music while a double tap opens the actions menu — you won\'t see this unless you set it up, so customize it to taste.</string>
 
@@ -102,6 +104,8 @@
 
     <string name="tutorial_swipe_up_title">Swipe up, down, left &amp; right</string>
     <string name="tutorial_swipe_up_desc">Swipe up, down or left on the now-playing screen can each be configured to open anything — the actions menu, the playback queue, skip tracks, your playlists, and more. Configure each one in Controls, choosing Music playing or No playback. By default, swiping up opens the actions menu and the others do nothing until you assign them. Swipe right is left alone — that\'s the universal Wear OS gesture to exit the app.</string>
+    <string name="tutorial_shortcuts_title">Streaming shortcuts</string>
+    <string name="tutorial_shortcuts_desc">Save a link to a track, album, mix or playlist from Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music or SoundCloud, then assign it to any button, gesture or panel slot. The quickest way in is to share the link straight to Svartifoss from the streaming app; you can also paste a copied link or type one in. No account or login is needed — the watch asks the phone to start playback, so a shortcut plays instead of just opening the app.</string>
     <string name="tutorial_yt_music_title">YouTube Music shortcuts</string>
     <string name="tutorial_yt_music_desc">Assign \"Play liked songs\", \"Play liked songs, shuffled\" or \"My playlists\" to any button, gesture or swipe to jump straight into your music without touching the phone. \"Search history\" remembers your recent searches on the watch — press and hold one to delete it.</string>
 
@@ -256,7 +260,8 @@
     <string name="preview_sample_title">Song title</string>
     <string name="preview_sample_artist">Artist name</string>
     <string name="preview_sample_next_title">Next song</string>
-    <string name="preview_playback_stopped">Playback Stopped</string>
+    <string name="preview_playback_stopped">Stopped</string>
+    <string name="preview_chat_today">Today</string>
     <string name="category_gestures">Gestures &amp; input</string>
     <string name="setting_overlay_blur_radius">Overlay blur</string>
     <string name="setting_overlay_blur_radius_description">Blur strength (px) of the frosted backdrop behind the volume/seek rings and the quick actions panel — independent from the album art background blur</string>
@@ -291,6 +296,14 @@
     <string name="error_service_not_enabled">Notification access needed</string>
     <string name="error_service_not_enabled_description">To control music from your watch, Svartifoss needs notification access — that\'s how Android lets it see which app is playing and send it play, pause and skip commands.\n\nSvartifoss never reads the contents of your notifications. It only uses this permission to find the active media session.\n\nTap \"Open Settings\", then turn on Svartifoss under notification access.</string>
     <string name="action_open_settings">Open Settings</string>
+    <string name="settings_search_title">Search settings</string>
+    <string name="settings_search_hint">Search settings</string>
+    <string name="settings_search_clear">Clear search</string>
+    <string name="settings_search_prompt">Search every setting across Settings and Watch appearance by name.</string>
+    <string name="settings_search_no_results">No setting matches that.</string>
+    <!-- Breadcrumb on a search result: %1$s is the tab, %2$s the category within it. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="notification_access_banner_summary">Tap to grant it — playback control stays inactive until you do</string>
 
     <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
@@ -413,6 +426,7 @@
     <string name="setting_screen_buttons_opacity">Mini buttons opacity</string>
     <string name="setting_screen_buttons_opacity_description">Opacity of the entire mini-button group (0–100%%). Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
     <string name="quick_panel_row_title">Quick actions panel</string>
+    <string name="quick_panel_link_summary">Double-tap the centre of the watch screen to open it. Tap here to set up its four slots in Actions.</string>
     <string name="quick_panel_config_hint">These are the buttons on the panel opened by double-tapping the center of the watch screen. Tap a row to choose its action (\"None\" hides it); long-press to restore the default.</string>
     <string name="quick_panel_slot_1">Button 1</string>
     <string name="quick_panel_slot_2">Button 2</string>
@@ -426,6 +440,17 @@
     <string name="quick_panel_default_up_next">Up Next</string>
     <string name="setting_wear_center_long_press_queue">Long-press center for queue</string>
     <string name="setting_wear_center_long_press_queue_description">Long-press the center of the now-playing screen to open the playback queue.</string>
+    <string name="setting_wear_center_long_press">Long-press center</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Change watch face</item>
+        <item>Open the queue</item>
+        <item>Nothing</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
     <string name="setting_wear_screen_face">Base layout</string>
     <string name="setting_wear_screen_face_description">Choose the structure used by this theme. Saved themes can combine this layout with their own font, colors, blur, shading, AOD and panels.</string>
     <string name="setting_wear_show_track_title">Show song title</string>
@@ -578,6 +603,9 @@
         <item>Immersive</item>
         <item>Depth</item>
         <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -593,6 +621,9 @@
         <item>immersive</item>
         <item>depth</item>
         <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
@@ -749,6 +780,8 @@
     <string name="setting_wear_color_treatment">Watch color treatment</string>
     <string name="setting_wear_normal_color">Normal color</string>
     <string name="setting_wear_normal_color_description">Choose the single color used by title accents, progress, volume, panels and mini-button chrome in Normal mode</string>
+    <string name="setting_wear_normal_color_multi">Use a colour palette</string>
+    <string name="setting_wear_normal_color_multi_description">On, the screen uses a main colour plus two supporting tones. Off, one single colour is used everywhere — the album\'s own colour, or the one you picked.</string>
     <string-array name="wear_color_treatment_entries">
         <item>Normal (chosen color)</item>
         <item>Desaturated (soft album color)</item>
@@ -1345,6 +1378,10 @@
         <item>Medium curve</item>
         <item>Curved</item>
         <item>Extreme curve</item>
+        <item>Spread to edges</item>
+        <item>Left edge</item>
+        <item>Right edge</item>
+        <item>Both edges</item>
     </string-array>
     <string-array name="screen_buttons_curve_values">
         <item>flat</item>
@@ -1354,6 +1391,10 @@
         <item>curved_medium</item>
         <item>curved</item>
         <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Background default</item>
@@ -1747,4 +1788,13 @@
     <string name="update_install_notification_title">Svartifoss update</string>
     <string name="update_install_notification_tap">Tap to install the new version</string>
     <string name="update_install_notification_failed">Install failed. Allow installs from Svartifoss in Settings and try again.</string>
+    <string name="setting_wear_album_accent_source">Album accent source</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Balanced</item>
+        <item>Most vibrant</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
 </resources>

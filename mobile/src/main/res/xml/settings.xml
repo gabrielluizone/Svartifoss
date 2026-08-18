@@ -125,13 +125,17 @@
             android:summary="@string/setting_swipe_gestures_hint_description"
             android:layout="@layout/pref_item" />
 
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
-            android:key="wear_center_long_press_queue"
+        <!-- Replaces the wear_center_long_press_queue switch, which is still read as the fallback
+             for anyone who had turned it on - see CenterLongPressAction.resolve. -->
+        <ListPreference
+            android:defaultValue="faces"
+            android:key="wear_center_long_press"
             android:icon="@drawable/ic_playlist_play"
-            android:title="@string/setting_wear_center_long_press_queue"
-            android:summary="@string/setting_wear_center_long_press_queue_description"
-            android:layout="@layout/pref_switch_item" />
+            android:title="@string/setting_wear_center_long_press"
+            android:summary="%s"
+            android:entries="@array/wear_center_long_press_entries"
+            android:entryValues="@array/wear_center_long_press_values"
+            android:layout="@layout/pref_item" />
 
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="300"

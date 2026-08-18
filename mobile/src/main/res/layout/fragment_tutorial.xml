@@ -49,6 +49,13 @@
             layout="@layout/item_tutorial_card"
             android:id="@+id/card_taps" />
 
+        <!-- Quick actions panel. Sits right after the tap zones because it is opened by a tap
+             gesture on the same zone the previous card describes - there is nothing on screen
+             advertising that the centre responds to a double tap. -->
+        <include
+            layout="@layout/item_tutorial_card"
+            android:id="@+id/card_quick_panel" />
+
         <!-- Single/double/long press -->
         <include
             layout="@layout/item_tutorial_card"
@@ -68,6 +75,12 @@
         <include
             layout="@layout/item_tutorial_card"
             android:id="@+id/card_swipe_up" />
+
+        <!-- Streaming shortcuts. Placed before the liked-songs card, which is the one-tap special
+             case of the same idea - this is the general mechanism behind it. -->
+        <include
+            layout="@layout/item_tutorial_card"
+            android:id="@+id/card_shortcuts" />
 
         <!-- YouTube Music shortcuts -->
         <include

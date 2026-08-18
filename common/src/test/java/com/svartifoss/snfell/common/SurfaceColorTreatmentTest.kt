@@ -87,6 +87,35 @@ class SurfaceColorTreatmentTest {
     }
 
     @Test
+    fun rotatingHarmoniesTurnTheirPrimaryByTheirOwnSignatureAngle() {
+        // The bug this pins: with the primary anchored to the album hue, every harmony rendered
+        // identically to Expressive on any surface that paints only the primary - which is most of
+        // them, and all of the Note face. Each rotating harmony must turn by the same angle that
+        // names it, or the accent stops matching the treatment the user picked.
+        assertEquals(ColorHarmony.COMPLEMENTARY_ROTATION,
+                SurfaceColorTreatment.COMPLEMENTARY.primaryRotationDegrees, 1e-4f)
+        assertEquals(ColorHarmony.TRIADIC_SECOND_ROTATION,
+                SurfaceColorTreatment.TRIADIC.primaryRotationDegrees, 1e-4f)
+        assertEquals(ColorHarmony.ANALOGOUS_ROTATION,
+                SurfaceColorTreatment.ANALOGOUS.primaryRotationDegrees, 1e-4f)
+    }
+
+    @Test
+    fun treatmentsThatMustNotInventAHueDoNotRotate() {
+        // Monochrome is every harmony's near-neutral fallback, and Duotone's slots are two colours
+        // that genuinely appear in the cover - rotating either substitutes a hue the artwork never
+        // had. Expressive/Desaturated report the album's own colours, and Normal/Follow are not
+        // album-derived at all, so none of them may drift either.
+        for (treatment in listOf(
+                SurfaceColorTreatment.MONOCHROME, SurfaceColorTreatment.DUOTONE,
+                SurfaceColorTreatment.EXPRESSIVE, SurfaceColorTreatment.DESATURATED,
+                SurfaceColorTreatment.NORMAL, SurfaceColorTreatment.FOLLOW)) {
+            assertEquals("$treatment must not rotate its primary",
+                    0f, treatment.primaryRotationDegrees, 1e-4f)
+        }
+    }
+
+    @Test
     fun componentCanFollowAHarmonyGlobal() {
         assertEquals(
                 SurfaceColorTreatment.TRIADIC,
@@ -132,5 +161,36 @@ class SurfaceColorTreatmentTest {
         // 350° biased toward amber (35°) must cross 0°, not travel backwards through 180°.
         val biased = ColorModifier.biasHue(350f, ColorModifier.WARM_ANCHOR)
         assertTrue("expected to move forward past 0, was $biased", biased >= 350f || biased < 35f)
+    }
+
+
+
+
+    @Test
+    fun turningThePaletteOffKeepsThePrimaryAndDropsTheCompanions() {
+        val triad = ColorHarmony.Triad(0x112233, 0x445566, 0x778899)
+        val single = SurfacePaletteResolver.flatten(triad, multiColor = false)
+        // The primary is the colour the treatment arrived at; collapsing must not substitute a
+        // companion, which would look like the theme changing rather than simplifying.
+        assertEquals(triad.primary, single.primary)
+        assertEquals(triad.primary, single.secondary)
+        assertEquals(triad.primary, single.tertiary)
+    }
+
+    @Test
+    fun aPaletteIsLeftExactlyAsDerived() {
+        val triad = ColorHarmony.Triad(0x112233, 0x445566, 0x778899)
+        assertEquals(triad, SurfacePaletteResolver.flatten(triad, multiColor = true))
+    }
+
+    @Test
+    fun colourPaletteSwitchIsExportableAndFaceScoped() {
+        // Missing from either registry and the control silently never reaches the watch, or
+        // changes every face at once.
+        assertTrue(MiscPreferences.EXPORTABLE.contains(MiscPreferences.WEAR_NORMAL_COLOR_MULTI))
+        assertTrue(FaceScopedPreferences.SCOPED_KEYS
+                .contains(MiscPreferences.WEAR_NORMAL_COLOR_MULTI.key))
+        // A palette is what every existing install already renders.
+        assertEquals(true, MiscPreferences.WEAR_NORMAL_COLOR_MULTI.defaultValue)
     }
 }

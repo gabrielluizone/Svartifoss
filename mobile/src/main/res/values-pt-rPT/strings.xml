@@ -235,7 +235,7 @@
     <string name="preview_sample_title">Título da música</string>
     <string name="preview_sample_artist">Nome do artista</string>
     <string name="preview_sample_next_title">Próxima música</string>
-    <string name="preview_playback_stopped">Reprodução parada</string>
+    <string name="preview_playback_stopped">Parado</string>
     <string name="category_gestures">Gestos e entrada</string>
     <string name="setting_overlay_blur_radius">Desfoque da sobreposição</string>
     <string name="setting_overlay_blur_radius_description">Intensidade do desfoque (px) do fundo fosco por trás dos anéis de volume/busca e do painel de ações rápidas — independente do desfoque do fundo da capa do álbum</string>
@@ -506,6 +506,9 @@
         <item>Immersive</item>
         <item>Profundidade</item>
         <item>Carrossel</item>
+        <item>Conversa</item>
+        <item>Dividido</item>
+        <item>Nota</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Busca Expressive</string>
@@ -820,6 +823,10 @@
         <item>Curva média</item>
         <item>Curvo</item>
         <item>Curva extrema</item>
+        <item>Espalhados nas margens</item>
+        <item>Margem esquerda</item>
+        <item>Margem direita</item>
+        <item>Ambas as margens</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Fundo predefinido</item>
@@ -1096,4 +1103,17 @@
     <string name="update_installing">A abrir o instalador…</string>
     <string name="update_install_permission_needed">Permite instalar aplicações a partir do Svartifoss e depois toca novamente em Atualizar telemóvel.</string>
     <string name="update_phone_failed">Falha ao transferir a atualização do telemóvel. Tenta novamente.</string>
+    <string name="setting_wear_center_long_press">Manter premido o centro</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Mudar o estilo do relógio</item>
+        <item>Abrir a fila</item>
+        <item>Nada</item>
+    </string-array>
+    <string name="setting_wear_album_accent_source">Origem da cor do álbum</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Equilibrado</item>
+        <item>Mais vibrante</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">Usar paleta de cores</string>
+    <string name="setting_wear_normal_color_multi_description">Ligado, o ecrã usa uma cor principal mais dois tons de apoio. Desligado, é usada uma única cor em tudo — a do próprio álbum, ou a que escolheu.</string>
 </resources>

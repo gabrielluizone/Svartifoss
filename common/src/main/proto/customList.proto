@@ -12,6 +12,11 @@ message CustomList {
   required int64 listTimestamp = 2;
   repeated ListEntry actions = 3;
   optional string activeEntryId = 4;
+  // How many entries exist in total on the phone, which is not actions.size when the list was
+  // truncated to keep one DataItem's worth of thumbnails crossing Bluetooth reasonable. The watch
+  // needs the difference to know whether offering "load more" would actually get it anything.
+  // Absent on older phone builds; the watch then assumes what it received is everything.
+  optional int32 totalEntryCount = 5;
 
   message ListEntry {
     required string entryId = 1;

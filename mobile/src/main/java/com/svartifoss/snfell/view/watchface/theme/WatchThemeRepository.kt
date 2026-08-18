@@ -2,6 +2,7 @@ package com.svartifoss.snfell.view.watchface.theme
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -61,7 +62,10 @@ class WatchThemeRepository(context: Context) {
                 "material" to R.string.watch_theme_face_material,
                 "immersive" to R.string.watch_theme_face_immersive,
                 "depth" to R.string.watch_theme_face_depth,
-                "carousel" to R.string.watch_theme_face_carousel
+                "carousel" to R.string.watch_theme_face_carousel,
+                "chat" to R.string.watch_theme_face_chat,
+                "split" to R.string.watch_theme_face_split,
+                "note" to R.string.watch_theme_face_note
         )
 
         fun displayNameForFace(context: Context, face: String): String =
@@ -417,6 +421,30 @@ class WatchThemeRepository(context: Context) {
 
     private fun saveState(state: LibraryState) {
         libraryPrefs.edit().putString(LIBRARY_JSON, stateToJson(state).toString()).commit()
+        publishAvailableThemes(state.profiles)
+    }
+
+    /**
+     * Republishes the on-watch picker's theme list from the stored library.
+     *
+     * Needed as its own entry point because the library lives in a separate, phone-local prefs file
+     * while the picker reads a *synced* key, and that key was only ever written by [saveState] - so
+     * a library built before the key existed (or on a phone whose watch was paired afterwards) had
+     * no route to the watch at all short of the user editing a theme to trigger a save. Called once
+     * per process start, alongside the preference snapshot re-publish that exists for the same
+     * class of staleness.
+     *
+     * Writing the identical value is free: `WatchPreferenceSyncCoordinator` only reacts to actual
+     * changes, so an unchanged library costs nothing on the wire.
+     */
+    fun publishAvailableThemes(profiles: List<WatchThemeProfile> = this.profiles) {
+        val defaultPrefs = PreferenceManager.getDefaultSharedPreferences(appContext)
+        val availableJson = JSONArray().apply {
+            profiles.take(MAX_PROFILES).forEach {
+                put(JSONObject().put("id", it.id).put("name", it.name).put("baseFace", it.baseFace))
+            }
+        }.toString()
+        defaultPrefs.edit().putString(MiscPreferences.WEAR_AVAILABLE_CUSTOM_THEMES.key, availableJson).apply()
     }
 
     private fun stateToJson(state: LibraryState): JSONObject = JSONObject()

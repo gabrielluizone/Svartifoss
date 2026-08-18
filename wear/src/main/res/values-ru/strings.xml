@@ -14,9 +14,19 @@
 
     <string name="idle_nothing_playing">Ничего не воспроизводится</string>
     <string name="idle_hint">Включите что-нибудь на телефоне</string>
+    <string name="idle_hint_resume">Нажмите, чтобы возобновить последнее приложение</string>
+    <string name="idle_hint_shortcuts">Нажмите для ваших ярлыков</string>
+    <string name="idle_hint_menu">Нажмите, чтобы открыть меню</string>
+    <string name="idle_hint_search">Нажмите для поиска</string>
+    <string name="idle_hint_queue">Нажмите для недавно воспроизведённого</string>
+    <string name="idle_resume">Возобновить воспроизведение</string>
+    <string name="idle_action_shortcuts">Открыть ярлыки</string>
+    <string name="idle_action_menu">Открыть меню</string>
+    <string name="idle_action_search">Поиск</string>
+    <string name="idle_action_queue">Открыть недавно воспроизведённое</string>
 
     <string name="no_phone">Телефон не подключён</string>
-    <string name="playback_stopped">Воспроизведение остановлено</string>
+    <string name="playback_stopped">Остановлено</string>
     <string name="error">ОШИБКА</string>
     <string name="error_play_services">Ошибка Play Services</string>
     <string name="button">Кнопка</string>
@@ -33,6 +43,11 @@
     <string name="voice_search_prompt">Поиск музыки</string>
     <string name="queue_empty">Очередь недоступна</string>
     <string name="queue_now_playing">Сейчас играет</string>
+    <string name="queue_load_more">Загрузить ещё</string>
+    <string name="chat_face_today">Сегодня</string>
+
+    <string name="face_picker_title">Циферблат часов</string>
+    <string name="face_picker_offline">Телефон не подключён — этот циферблат применится на часах, но настройка хранится на телефоне</string>
 
     <string name="hint_title">Как пользоваться</string>
     <string name="hint_edges">Края — нажмите для показанных действий</string>
@@ -64,4 +79,7 @@
     <string name="update_install_title">Обновление Svartifoss</string>
     <string name="update_install_tap">Нажмите, чтобы установить новую версию</string>
     <string name="update_install_failed">Не удалось установить. Разрешите установку из Svartifoss в настройках часов и повторите попытку с телефона.</string>
+    <string name="face_picker_section_builtin">Встроенные циферблаты</string>
+    <string name="face_picker_section_custom">Мои темы</string>
+    <string name="face_picker_custom_base">На основе %1$s</string>
 </resources>

@@ -234,7 +234,7 @@
     <string name="preview_sample_title">歌曲标题</string>
     <string name="preview_sample_artist">艺术家名称</string>
     <string name="preview_sample_next_title">下一首歌曲</string>
-    <string name="preview_playback_stopped">播放已停止</string>
+    <string name="preview_playback_stopped">已停止</string>
     <string name="category_gestures">手势和输入</string>
     <string name="setting_overlay_blur_radius">叠加层模糊</string>
     <string name="setting_overlay_blur_radius_description">音量/快进环和快捷操作面板背后磨砂背景的模糊强度（像素）——独立于专辑封面背景的模糊</string>
@@ -505,6 +505,9 @@
         <item>Immersive</item>
         <item>景深</item>
         <item>轮播</item>
+        <item>聊天</item>
+        <item>分屏</item>
+        <item>便签</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive 快进</string>
@@ -819,6 +822,10 @@
         <item>中度弯曲</item>
         <item>弯曲</item>
         <item>极度弯曲</item>
+        <item>分散到边缘</item>
+        <item>左边缘</item>
+        <item>右边缘</item>
+        <item>两侧边缘</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>默认背景</item>
@@ -1092,4 +1099,11 @@
     <string name="update_installing">正在打开安装程序…</string>
     <string name="update_install_permission_needed">请允许从 Svartifoss 安装应用，然后再次点按「更新手机」。</string>
     <string name="update_phone_failed">下载手机更新失败。请重试。</string>
+    <string name="setting_wear_album_accent_source">专辑强调色来源</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>平衡</item>
+        <item>最鲜艳</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">使用调色板</string>
+    <string name="setting_wear_normal_color_multi_description">开启时，屏幕使用一种主色加两种辅助色调。关闭时，全部只用一种颜色——专辑本身的颜色，或您选择的颜色。</string>
 </resources>

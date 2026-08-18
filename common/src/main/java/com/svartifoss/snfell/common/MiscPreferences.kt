@@ -312,9 +312,15 @@ object MiscPreferences {
 
     // --- Wear OS experience toggles (configured on phone, synced to watch) ---
 
-    /** Long-press the center of the now-playing screen to open the playback queue. */
+    /** Legacy boolean form of [WEAR_CENTER_LONG_PRESS]; kept only so an install that enabled it
+     *  keeps the queue on that gesture. See [CenterLongPressAction.resolve]. */
     val WEAR_CENTER_LONG_PRESS_QUEUE: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("wear_center_long_press_queue", false)
+
+    /** What a long press on the centre of the now-playing screen does - see
+     *  [CenterLongPressAction]. Empty default so the legacy boolean above can still be honoured. */
+    val WEAR_CENTER_LONG_PRESS: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_center_long_press", "")
 
     /** Developer-only diagnostic overlay: outline the bounds of visible player elements. This is
      * global (not face-scoped) and intentionally excluded from config backup/export. */
@@ -342,6 +348,10 @@ object MiscPreferences {
      *  snapshot metadata and the scoped appearance values are synchronized to the watch. */
     val WEAR_ACTIVE_CUSTOM_THEME_ID: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_active_custom_theme_id", "")
+
+    /** JSON array of available custom themes (id, name, baseFace) synced to the watch picker. */
+    val WEAR_AVAILABLE_CUSTOM_THEMES: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_available_custom_themes", "[]")
 
     /** Schema of the materialized custom-theme snapshot. Stored as a string, like every other
      *  wearutils integer preference. A custom snapshot is accepted only when it exactly matches
@@ -561,6 +571,24 @@ object MiscPreferences {
     /** Hex color (#RRGGBB) used by the unified "normal" color treatment. */
     val WEAR_NORMAL_COLOR: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_normal_color", "")
+
+    /** Whether the "normal" color treatment generates a palette of secondary and tertiary colors 
+     *  from the base color, or uses the base color for all three slots. */
+    val WEAR_NORMAL_COLOR_MULTI: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_normal_color_multi", true)
+
+    /**
+     * Which swatch of the cover becomes the album accent every treatment then works from:
+     * "balanced" (default) or "vibrant". Decoded by [AlbumAccentSource].
+     *
+     * Sits *before* [WEAR_COLOR_TREATMENT] in the pipeline rather than beside it - the treatments
+     * decide what to build from the accent, this decides what the accent is. Both sides resolve it
+     * through the same `selectPrimaryAccent`, which is what stopped the phone's miniature and the
+     * watch from reporting two different colours for one cover.
+     */
+    val WEAR_ALBUM_ACCENT_SOURCE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_album_accent_source", AlbumAccentSource.BALANCED_VALUE)
 
     /** Tone filter applied on top of whatever [WEAR_COLOR_TREATMENT] produced: "none" (identity),
      *  "vibrant", "pastel", "warm" or "cool". Orthogonal to the treatment on purpose, so e.g.
@@ -849,8 +877,8 @@ object MiscPreferences {
             WEAR_CLOCK_FONT_WEIGHT, WEAR_CLOCK_FONT_ITALIC, WEAR_CLOCK_FONT_SCALE,
             WEAR_CLOCK_FONT_TRACKING, WEAR_ARTIST_ADAPTIVE_CONTRAST, WEAR_CLOCK_ADAPTIVE_CONTRAST, WEAR_PROGRESS_GRADIENT,
             WEAR_TITLE_COLOR_MODE, WEAR_TITLE_CUSTOM_COLOR, WEAR_TITLE_ADAPTIVE_CONTRAST,
-            WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_SCREEN_FACE,
-            WEAR_ACTIVE_CUSTOM_THEME_ID, WEAR_CUSTOM_THEME_SCHEMA,
+            WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_CENTER_LONG_PRESS, WEAR_SCREEN_FACE,
+            WEAR_ACTIVE_CUSTOM_THEME_ID, WEAR_AVAILABLE_CUSTOM_THEMES, WEAR_CUSTOM_THEME_SCHEMA,
             WEAR_CUSTOM_THEME_COMPLETE, WEAR_CUSTOM_THEME_REVISION,
             WEAR_SHOW_TRACK_TITLE, WEAR_SHOW_TRACK_ARTIST,
             WEAR_PLAYER_CONTROLS_VISIBLE, WEAR_INTERNAL_PROGRESS_VISIBLE,
@@ -858,8 +886,8 @@ object MiscPreferences {
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
             WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE,
             WEAR_TRACK_TIME_MODE,
-            WEAR_DYNAMIC_ACCENT, WEAR_COLOR_TREATMENT, WEAR_NORMAL_COLOR, WEAR_COLOR_MODIFIER,
-            WEAR_COLOR_HUE_SHIFT,
+            WEAR_DYNAMIC_ACCENT, WEAR_COLOR_TREATMENT, WEAR_NORMAL_COLOR, WEAR_NORMAL_COLOR_MULTI, WEAR_COLOR_MODIFIER,
+            WEAR_COLOR_HUE_SHIFT, WEAR_ALBUM_ACCENT_SOURCE,
             WEAR_TITLE_FONT_WEIGHT, WEAR_TITLE_FONT_ITALIC, WEAR_TITLE_FONT_SCALE,
             WEAR_TITLE_FONT_OPACITY, WEAR_TITLE_FONT_TRACKING,
             WEAR_ARTIST_FONT_WEIGHT, WEAR_ARTIST_FONT_ITALIC, WEAR_ARTIST_FONT_SCALE,

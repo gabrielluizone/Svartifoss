@@ -14,9 +14,19 @@
 
     <string name="idle_nothing_playing">چیزی در حال پخش نیست</string>
     <string name="idle_hint">چیزی روی گوشی خود پخش کنید</string>
+    <string name="idle_hint_resume">برای ادامهٔ آخرین برنامه لمس کنید</string>
+    <string name="idle_hint_shortcuts">برای میان‌برهای خود لمس کنید</string>
+    <string name="idle_hint_menu">برای باز کردن منو لمس کنید</string>
+    <string name="idle_hint_search">برای جستجو لمس کنید</string>
+    <string name="idle_hint_queue">برای پخش‌شده‌های اخیر لمس کنید</string>
+    <string name="idle_resume">ادامهٔ پخش</string>
+    <string name="idle_action_shortcuts">باز کردن میان‌برها</string>
+    <string name="idle_action_menu">باز کردن منو</string>
+    <string name="idle_action_search">جستجو</string>
+    <string name="idle_action_queue">باز کردن پخش‌شده‌های اخیر</string>
 
     <string name="no_phone">هیچ گوشی‌ای متصل نیست</string>
-    <string name="playback_stopped">پخش متوقف شد</string>
+    <string name="playback_stopped">متوقف</string>
     <string name="error">خطا</string>
     <string name="error_play_services">خطای Play Services</string>
     <string name="button">دکمه</string>
@@ -33,6 +43,11 @@
     <string name="voice_search_prompt">جستجوی موسیقی</string>
     <string name="queue_empty">صف در دسترس نیست</string>
     <string name="queue_now_playing">در حال پخش</string>
+    <string name="queue_load_more">بارگذاری بیشتر</string>
+    <string name="chat_face_today">امروز</string>
+
+    <string name="face_picker_title">صفحهٔ ساعت</string>
+    <string name="face_picker_offline">گوشی متصل نیست — این صفحه روی ساعت اعمال می‌شود، اما گوشی این تنظیم را نگه می‌دارد</string>
 
     <string name="hint_title">نحوه استفاده</string>
     <string name="hint_edges">لبه‌ها — برای کنش‌های نمایش‌داده‌شده لمس کنید</string>
@@ -64,4 +79,7 @@
     <string name="update_install_title">به‌روزرسانی Svartifoss</string>
     <string name="update_install_tap">برای نصب نسخه جدید لمس کنید</string>
     <string name="update_install_failed">نصب ناموفق بود. در تنظیمات ساعت اجازه نصب از Svartifoss را بدهید و دوباره از گوشی تلاش کنید.</string>
+    <string name="face_picker_section_builtin">صفحه‌های داخلی</string>
+    <string name="face_picker_section_custom">طرح‌های من</string>
+    <string name="face_picker_custom_base">بر پایهٔ %1$s</string>
 </resources>

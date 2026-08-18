@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.util.Size
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import com.svartifoss.snfell.common.BitmapBorderTrim
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -107,6 +108,20 @@ object QueueArtworkResolver {
             description: MediaDescription,
             allowRemote: Boolean,
             targetPx: Int = DEFAULT_TARGET_PX
+    ): Bitmap? = resolveRaw(context, description, allowRemote, targetPx)?.let(BitmapBorderTrim::trim)
+
+    /**
+     * Same chain as [resolve], before the [BitmapBorderTrim] pass. Split out only so that pass
+     * applies once, in one place, regardless of which step below found the cover - a streaming
+     * client's "art track" thumbnail can arrive via the remote step here exactly as it does through
+     * [ShortcutArtworkFetcher], and every other step is left alone since a bordered cover from
+     * MediaStore or a local URI is possible in principle, not just the remote case.
+     */
+    private suspend fun resolveRaw(
+            context: Context,
+            description: MediaDescription,
+            allowRemote: Boolean,
+            targetPx: Int
     ): Bitmap? {
         description.iconBitmap?.let {
             Timber.v("Queue cover for '%s': iconBitmap", description.title)

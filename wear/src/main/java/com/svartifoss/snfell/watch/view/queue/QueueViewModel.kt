@@ -8,17 +8,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.QueuePaging
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /** Fallback accent used until the album art produces one - the app-wide default accent. */
 const val DEFAULT_QUEUE_ACCENT: Int = WatchTheme.ACCENT_DEFAULT
+
+/** How long a "load more" request may stay pending before the row becomes tappable again. Generous
+ *  because the reply carries a page of cover art across Bluetooth, which is genuinely slow. */
+private const val LOAD_MORE_TIMEOUT_MS = 12_000L
 
 /** Now-playing track shown in the queue header. */
 data class NowPlaying(val title: String, val artist: String)
@@ -131,14 +137,61 @@ class QueueViewModel @Inject constructor(
         return ColorUtils.HSLToColor(hsl)
     }
 
+    /**
+     * Whether the phone is holding queue entries it hasn't sent yet, so the list should offer to
+     * fetch another page. False for the history fallback and the error row, which are never paged.
+     */
+    val canLoadMore = MediatorLiveData<Boolean>().apply {
+        value = false
+        addSource(items) { value = hasMorePages() }
+    }
+
+    /** True while a "load more" request is in flight, so the row can show progress and not fire
+     *  twice. Cleared by the arriving list rather than by a timer - the phone answers by replacing
+     *  the whole DataItem, so a longer list *is* the completion signal. */
+    val loadingMore = MediatorLiveData<Boolean>().apply {
+        value = false
+        addSource(items) { value = false }
+    }
+
+    /** Entries asked for in the most recent request. Grows by a page each time the user loads more,
+     *  since the phone replaces the list rather than appending to it. */
+    private var requestedLimit = QueuePaging.PAGE_SIZE
+
+    private fun hasMorePages(): Boolean {
+        val list = latestList ?: return false
+        if (list.listId != CustomLists.PLAYLIST) return false
+        return list.items.size < list.totalEntryCount
+    }
+
     /** Asks the phone to send the current playback queue. */
     fun requestQueue() {
-        viewModelScope.launch { phoneConnection.openPlaybackQueue() }
+        requestedLimit = QueuePaging.PAGE_SIZE
+        viewModelScope.launch { phoneConnection.openPlaybackQueue(requestedLimit) }
+    }
+
+    /** Asks for one more page. No-op when everything is already on screen. */
+    fun loadMore() {
+        if (loadingMore.value == true || !hasMorePages()) return
+        val loaded = latestList?.items?.size ?: return
+        requestedLimit = QueuePaging.nextLimit(loaded)
+        loadingMore.value = true
+        viewModelScope.launch {
+            phoneConnection.openPlaybackQueue(requestedLimit)
+            // The arriving list is what normally clears this, but nothing arrives at all if the
+            // phone is out of range or the request is dropped. Without a floor the row would keep
+            // spinning forever and, because a request in flight suppresses taps, there would be no
+            // way to retry short of leaving the screen.
+            delay(LOAD_MORE_TIMEOUT_MS)
+            if (loadingMore.value == true) loadingMore.value = false
+        }
     }
 
     /** Tells the phone to play the tapped queue entry. */
     fun selectItem(entryId: String) {
         val listId = latestList?.listId ?: return
+        // executeCustomMenuAction is uncancellable inside, which is what lets the caller close this
+        // screen in the same gesture without dropping the selection - see PhoneConnection.
         viewModelScope.launch { phoneConnection.executeCustomMenuAction(listId, entryId) }
     }
 }

@@ -20,10 +20,18 @@
     <string name="idle_nothing_playing">Nada tocando</string>
     <string name="idle_hint">Toque algo no seu celular</string>
     <string name="idle_hint_resume">Toque para retomar o último app</string>
+    <string name="idle_hint_shortcuts">Toque para seus atalhos</string>
+    <string name="idle_hint_menu">Toque para abrir o menu</string>
+    <string name="idle_hint_search">Toque para buscar</string>
+    <string name="idle_hint_queue">Toque para os tocados recentemente</string>
     <string name="idle_resume">Retomar reprodução</string>
+    <string name="idle_action_shortcuts">Abrir atalhos</string>
+    <string name="idle_action_menu">Abrir menu</string>
+    <string name="idle_action_search">Buscar</string>
+    <string name="idle_action_queue">Abrir tocados recentemente</string>
 
     <string name="no_phone">Nenhum celular conectado</string>
-    <string name="playback_stopped">Reprodução parada</string>
+    <string name="playback_stopped">Parado</string>
     <string name="error">ERRO</string>
     <string name="error_play_services">Erro no Play Services</string>
     <string name="button">Botão</string>
@@ -40,6 +48,11 @@
     <string name="voice_search_prompt">Buscar música</string>
     <string name="queue_empty">Sem fila disponível</string>
     <string name="queue_now_playing">Tocando agora</string>
+    <string name="queue_load_more">Carregar mais</string>
+    <string name="chat_face_today">Hoje</string>
+
+    <string name="face_picker_title">Mostrador do relógio</string>
+    <string name="face_picker_offline">Celular não conectado — este mostrador será aplicado no relógio, mas o celular mantém a configuração</string>
 
     <string name="hint_title">Como usar</string>
     <string name="hint_edges">Bordas — toque para as ações dos ícones</string>
@@ -72,4 +85,7 @@
     <string name="update_install_title">Atualização do Svartifoss</string>
     <string name="update_install_tap">Toque para instalar a nova versão</string>
     <string name="update_install_failed">Falha na instalação. Permita instalações do Svartifoss nas configurações do relógio e tente de novo pelo telefone.</string>
+    <string name="face_picker_section_builtin">Faces integradas</string>
+    <string name="face_picker_section_custom">Meus temas</string>
+    <string name="face_picker_custom_base">Baseado em %1$s</string>
 </resources>

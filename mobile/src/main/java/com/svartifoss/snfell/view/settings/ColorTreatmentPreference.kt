@@ -66,6 +66,10 @@ class ColorTreatmentPreference @JvmOverloads constructor(
      *  the treatment alone produces. Set by the owning fragment; see the class doc. */
     var colorHueShiftValue: Int = 0
 
+    /** Whether to generate a triad for the normal treatment or just use a single solid color.
+     *  Set by the owning fragment. */
+    var normalColorMulti: Boolean = true
+
     init {
         val typed = context.obtainStyledAttributes(attrs, R.styleable.ColorTreatmentPreference)
         customColorKey = typed.getString(R.styleable.ColorTreatmentPreference_customColorKey)
@@ -114,7 +118,8 @@ class ColorTreatmentPreference @JvmOverloads constructor(
                         rawSecondary,
                         rawTertiary,
                         pref.normalPreviewColor,
-                        pref.colorHueShiftValue.toFloat())
+                        pref.colorHueShiftValue.toFloat(),
+                        pref.normalColorMulti)
                 return Triple(triad.primary, triad.secondary, triad.tertiary)
             }
 

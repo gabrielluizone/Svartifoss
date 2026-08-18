@@ -50,4 +50,9 @@
     <string name="watch_theme_face_spectrum">Espectro</string>
     <string name="watch_theme_face_material">Material</string>
     <string name="watch_theme_face_immersive">Imersivo</string>
+    <string name="watch_theme_face_depth">Profundidade</string>
+    <string name="watch_theme_face_carousel">Carrossel</string>
+    <string name="watch_theme_face_chat">Conversa</string>
+    <string name="watch_theme_face_split">Dividido</string>
+    <string name="watch_theme_face_note">Nota</string>
 </resources>

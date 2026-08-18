@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="watch_theme_manage">Διαχείριση θεμάτων</string>
+    <string name="watch_theme_builtin_subtitle">Ενσωματωμένο θέμα · Διάταξη %1$s</string>
+    <string name="watch_theme_custom_subtitle">Προσαρμοσμένο θέμα · Διάταξη %1$s</string>
+    <string name="watch_theme_unknown_name">Άγνωστο θέμα</string>
+
+    <string name="watch_themes_title">Θέματα ρολογιού</string>
+    <string name="watch_theme_active_label">ΕΦΑΡΜΟΣΜΕΝΟ ΘΕΜΑ</string>
+    <string name="watch_theme_active_layout">Διάταξη: %1$s</string>
+    <string name="watch_theme_preview_description">Προεπισκόπηση του θέματος που εφαρμόζεται αυτή τη στιγμή στο ρολόι</string>
+    <string name="watch_theme_create">Δημιουργία θέματος</string>
+    <string name="watch_theme_create_title">Δημιουργία νέου θέματος</string>
+    <string name="watch_theme_rename_title">Μετονομασία θέματος</string>
+    <string name="watch_theme_name">Όνομα θέματος</string>
+    <string name="watch_theme_base_layout">Βασική διάταξη</string>
+    <string name="watch_theme_default_name">Το θέμα %1$s μου</string>
+    <string name="watch_theme_generic_name">Θέμα</string>
+    <string name="watch_theme_copy_name">Αντίγραφο %1$s</string>
+    <string name="watch_theme_built_in_section">Ενσωματωμένα θέματα</string>
+    <string name="watch_theme_custom_section">Τα θέματά μου</string>
+    <string name="watch_theme_applied">ΕΦΑΡΜΟΣΜΕΝΟ</string>
+    <string name="watch_theme_apply_success">Το %1$s εφαρμόστηκε στο ρολόι σας</string>
+    <string name="watch_theme_apply_error">Δεν ήταν δυνατή η εφαρμογή αυτού του θέματος</string>
+    <string name="watch_theme_more_options">Περισσότερες επιλογές θέματος</string>
+    <string name="watch_theme_list_description">Ενσωματωμένα και προσαρμοσμένα θέματα ρολογιού</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Πατήστε για εφαρμογή.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Εφαρμοσμένο αυτή τη στιγμή.</string>
+    <string name="watch_theme_rename">Μετονομασία</string>
+    <string name="watch_theme_customize">Προσαρμογή</string>
+    <string name="watch_theme_duplicate">Αντιγραφή</string>
+    <string name="watch_theme_delete">Διαγραφή</string>
+    <string name="watch_theme_delete_title">Διαγραφή του «%1$s»;</string>
+    <string name="watch_theme_delete_message">Αυτό το αποθηκευμένο θέμα και οι ρυθμίσεις του θα διαγραφούν οριστικά.</string>
+    <string name="watch_theme_deleted">Το θέμα διαγράφηκε</string>
+    <string name="watch_theme_duplicated">Το «%1$s» δημιουργήθηκε</string>
+    <string name="watch_theme_limit_reached">Μπορείτε να αποθηκεύσετε έως 24 προσαρμοσμένα θέματα. Διαγράψτε ένα πριν δημιουργήσετε άλλο.</string>
+    <string name="watch_theme_name_required">Εισαγάγετε όνομα θέματος</string>
+    <string name="watch_theme_name_duplicate">Υπάρχει ήδη θέμα με αυτό το όνομα</string>
+
+    <string name="watch_theme_face_classic">Κλασικό</string>
+    <string name="watch_theme_face_expressive">Εκφραστικό</string>
+    <string name="watch_theme_face_vinyl">Βινύλιο</string>
+    <string name="watch_theme_face_poster">Αφίσα</string>
+    <string name="watch_theme_face_studio">Στούντιο</string>
+    <string name="watch_theme_face_halo">Φωτοστέφανο</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Έκλειψη AMOLED</string>
+    <string name="watch_theme_face_spectrum">Φάσμα</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Καθηλωτικό</string>
+    <string name="watch_theme_face_depth">Βάθος</string>
+    <string name="watch_theme_face_carousel">Καρουζέλ</string>
+    <string name="watch_theme_face_chat">Συνομιλία</string>
+    <string name="watch_theme_face_split">Διαχωρισμένο</string>
+    <string name="watch_theme_face_note">Σημείωση</string>
+</resources>

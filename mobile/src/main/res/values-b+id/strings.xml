@@ -234,7 +234,7 @@
     <string name="preview_sample_title">Judul lagu</string>
     <string name="preview_sample_artist">Nama artis</string>
     <string name="preview_sample_next_title">Lagu berikutnya</string>
-    <string name="preview_playback_stopped">Pemutaran dihentikan</string>
+    <string name="preview_playback_stopped">Dihentikan</string>
     <string name="category_gestures">Gestur &amp; input</string>
     <string name="setting_overlay_blur_radius">Buram overlay</string>
     <string name="setting_overlay_blur_radius_description">Kekuatan buram (px) dari latar belakang buram di belakang cincin volume/pencarian dan panel aksi cepat — terpisah dari buram latar belakang sampul album</string>
@@ -505,6 +505,9 @@
         <item>Immersive</item>
         <item>Kedalaman</item>
         <item>Korsel</item>
+        <item>Obrolan</item>
+        <item>Terbagi</item>
+        <item>Catatan</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Pencarian Expressive</string>
@@ -819,6 +822,10 @@
         <item>Kurva sedang</item>
         <item>Melengkung</item>
         <item>Kurva ekstrem</item>
+        <item>Sebar ke tepi</item>
+        <item>Tepi kiri</item>
+        <item>Tepi kanan</item>
+        <item>Kedua tepi</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Latar belakang default</item>
@@ -1092,4 +1099,11 @@
     <string name="update_installing">Membuka pemasang…</string>
     <string name="update_install_permission_needed">Izinkan menginstal aplikasi dari Svartifoss, lalu ketuk Perbarui ponsel lagi.</string>
     <string name="update_phone_failed">Mengunduh pembaruan ponsel gagal. Coba lagi.</string>
+    <string name="setting_wear_album_accent_source">Sumber warna album</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Seimbang</item>
+        <item>Paling cerah</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">Gunakan palet warna</string>
+    <string name="setting_wear_normal_color_multi_description">Aktif, layar memakai satu warna utama plus dua nada pendukung. Nonaktif, satu warna tunggal dipakai di mana-mana — warna albumnya sendiri, atau yang Anda pilih.</string>
 </resources>

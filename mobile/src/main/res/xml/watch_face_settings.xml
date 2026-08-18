@@ -21,6 +21,19 @@
             android:entryValues="@array/wear_screen_face_values"
             android:layout="@layout/pref_item" />
 
+        <!-- Whether the playing app's icon shows at all. It lived under Text next to its own
+             size/opacity controls, but this is a "does this element exist" switch like the rest of
+             the Player page, not a typographic one - the two numeric controls stay under Text and
+             still depend on it, which works because the section filter toggles visibility rather
+             than removing preferences from the hierarchy. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_show_source_icon"
+            android:icon="@drawable/ic_apps"
+            android:title="@string/setting_wear_show_source_icon"
+            android:summary="@string/setting_wear_show_source_icon_description"
+            android:layout="@layout/pref_switch_item" />
+
         <!-- Shape of the Carousel face's cover cards: part of that face's layout, so it belongs
              beside the face picker. It was briefly filed under typography, which it has nothing
              to do with. -->
@@ -426,14 +439,6 @@
         android:key="cat_wf_typography_icon"
         android:title="@string/category_wf_typography_icon"
         android:layout="@layout/pref_category_header">
-
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="true"
-            android:key="wear_show_source_icon"
-            android:icon="@drawable/ic_apps"
-            android:title="@string/setting_wear_show_source_icon"
-            android:summary="@string/setting_wear_show_source_icon_description"
-            android:layout="@layout/pref_switch_item" />
 
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="100"
@@ -893,6 +898,18 @@
         android:title="@string/category_music_colors"
         android:layout="@layout/pref_category_header">
 
+        <!-- Sits above the treatment on purpose: it decides which colour the cover *is*, and every
+             treatment below then works from whatever it picked. -->
+        <ListPreference
+            android:defaultValue="balanced"
+            android:key="wear_album_accent_source"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_album_accent_source"
+            android:summary="%s"
+            android:entries="@array/wear_album_accent_source_entries"
+            android:entryValues="@array/wear_album_accent_source_values"
+            android:layout="@layout/pref_item" />
+
         <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
             android:defaultValue="expressive"
             android:key="wear_color_treatment"
@@ -927,6 +944,14 @@
             android:title="@string/setting_wear_normal_color"
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_normal_color_multi"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_normal_color_multi"
+            android:summary="@string/setting_wear_normal_color_multi_description"
+            android:layout="@layout/pref_switch_item" />
 
 
 

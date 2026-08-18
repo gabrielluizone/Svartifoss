@@ -62,7 +62,23 @@ class MusicViewModel @Inject constructor(
     val actionsMenuConfig = WatchActionMenuProvider(application, viewModelScope, phoneConnection.rawActionMenuConfig)
     val preferences = PreferencesBus as LiveData<SharedPreferences>
 
-    val notification: LiveData<Notification> = phoneConnection.notification
+    /**
+     * Phone notifications to pop up, once each, for *this* Activity.
+     *
+     * Owned here rather than by [PhoneConnection] because the ViewModel dies with the screen while
+     * that connection does not - see the note on `PhoneConnection.notification`. Replays are
+     * dropped by [Notification.time], so an Activity recreated after one arrived does not show it
+     * a second time, which is the guarantee SingleLiveEvent used to provide.
+     */
+    val notification = SingleLiveEvent<Notification>()
+
+    private var lastForwardedNotificationTime: Long? = null
+    private val notificationRelay = Observer<Notification?> { incoming ->
+        if (incoming != null && incoming.time != lastForwardedNotificationTime) {
+            lastForwardedNotificationTime = incoming.time
+            notification.value = incoming
+        }
+    }
 
     val volume = MutableLiveData<Float>()
     val playbackPosition = MutableLiveData<PlaybackPosition>()
@@ -449,6 +465,10 @@ class MusicViewModel @Inject constructor(
             WatchInfoSender(application, true).sendWatchInfoToPhone()
         }
 
+        // observeForever, not addSource: the relay must feed the SingleLiveEvent above, and it is
+        // removed in onCleared so it dies with this ViewModel rather than with the connection.
+        phoneConnection.notification.observeForever(notificationRelay)
+
         musicState.addSource(phoneConnection.musicState, musicStateListener)
         musicState.addSource(phoneConnection.customList) { customList.value = it }
         swapConfig(stoppedConfig)
@@ -462,6 +482,7 @@ class MusicViewModel @Inject constructor(
     }
 
     override fun onCleared() {
+        phoneConnection.notification.removeObserver(notificationRelay)
         super.onCleared()
         handler.removeCallbacks(positionTickRunnable)
         // Detach the observeForever hooks these providers hold on PhoneConnection's (@Singleton)

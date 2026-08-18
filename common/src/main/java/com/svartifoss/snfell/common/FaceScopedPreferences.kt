@@ -99,8 +99,14 @@ object FaceScopedPreferences {
             "wear_artist_desaturated",
             "wear_color_treatment",
             "wear_normal_color",
+            // Pairs with wear_normal_color and has to be scoped with it: the Normal treatment is a
+            // per-face choice, so "one colour or a derived palette" is too. Left global it was also
+            // the one key on the Watch face screen that changed every face at once, which is
+            // exactly what AppearancePreferenceScopingTest exists to catch.
+            "wear_normal_color_multi",
             "wear_color_modifier",
             "wear_color_hue_shift",
+            "wear_album_accent_source",
             "wear_title_font_weight",
             "wear_title_font_italic",
             "wear_title_font_scale",
@@ -213,9 +219,50 @@ object FaceScopedPreferences {
             // to SOLID_ALBUM (see OverlayBackdropResolver), so the blur backdrop follows the album.
     )
 
+    /**
+     * Faces that compose the whole screen themselves, edge to edge, and so cannot share the band
+     * the standard chrome expects to own.
+     *
+     * Chat's thread runs to the bottom of the screen and carries its own two round actions; Split's
+     * lower half is a solid panel holding the track text. On both, the mini-button row lands on top
+     * of the composition rather than beside it. Neither wants the edge progress arc either - Chat's
+     * waveform already *is* the progress bar, and on Split an arc around a two-tone card reads as a
+     * stray ring.
+     */
+    private val SELF_COMPOSED_FACES = setOf("chat", "split")
+
+    /** Defaults only - both keys stay face-scoped and switchable like any other appearance key, so
+     *  a user who wants the mini buttons back on these faces simply turns them on. */
+    private val SELF_COMPOSED_DEFAULTS = mapOf(
+            MiscPreferences.WEAR_MINI_BUTTONS_MODE.key to ActivityVisibility.NEVER,
+            MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key to "false"
+    )
+
+    /**
+     * Split's own additions on top of [SELF_COMPOSED_DEFAULTS]. The source-app badge is not a
+     * decoration on this face - it is the notification card's app icon, the element that makes the
+     * composition read as a card at all - so it defaults on rather than following the global
+     * preference, which a user may well have turned off for the faces where it *is* decoration.
+     */
+    private val SPLIT_DEFAULTS = SELF_COMPOSED_DEFAULTS +
+            (MiscPreferences.WEAR_SHOW_SOURCE_ICON.key to "true")
+
+    /**
+     * Note's one override. It leaves the bottom band free, so unlike [SELF_COMPOSED_FACES] its
+     * mini-button row stays on - that row is how anything is reached on a face with no controls of
+     * its own. The edge arc still goes, because a ring around a deliberately empty screen is the
+     * one decoration this composition cannot absorb.
+     */
+    private val NOTE_DEFAULTS = mapOf(
+            MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key to "false"
+    )
+
     fun perFaceDefault(face: String, baseKey: String): String? = when {
         baseKey == MiscPreferences.ALBUM_ART_STYLE.key ->
             PlayerBackgroundStyle.defaultForFace(face).preferenceValue
+        face == "split" -> SPLIT_DEFAULTS[baseKey]
+        face == "note" -> NOTE_DEFAULTS[baseKey]
+        face in SELF_COMPOSED_FACES -> SELF_COMPOSED_DEFAULTS[baseKey]
         face in ALBUM_ACCENT_FACES -> ALBUM_ACCENT_SURFACE_DEFAULTS[baseKey]
         else -> null
     }
@@ -275,12 +322,27 @@ object FaceScopedPreferences {
         }
     }
 
+    /**
+     * The boolean twin of [getString], and it must walk the **same** four steps: explicit per-face
+     * value, then [perFaceDefault], then the legacy global, then the definition default.
+     *
+     * The `perFaceDefault` step was missing here for built-in faces while the Custom branch below
+     * had it, and the phone's `FaceScopedPreferenceDataStore` consulted it on both. The result was
+     * a face default that the settings screen honoured and the watch ignored: the switch read off
+     * while the watch drew the element anyway, and it only came right once the user toggled it -
+     * because *that* wrote an explicit `key@face` entry, which is the one branch that did work.
+     * It went unnoticed for as long as no boolean had a per-face default.
+     */
     fun getBoolean(prefs: SharedPreferences, def: PreferenceDefinition<Boolean>, face: String): Boolean {
         val scoped = scopedKey(def.key, face)
         return when {
             prefs.contains(scoped) -> prefs.getBoolean(scoped, def.defaultValue)
-            prefs.contains(def.key) -> prefs.getBoolean(def.key, def.defaultValue)
-            else -> def.defaultValue
+            else -> perFaceDefault(face, def.key)?.toBooleanStrictOrNull()
+                    ?: if (prefs.contains(def.key)) {
+                        prefs.getBoolean(def.key, def.defaultValue)
+                    } else {
+                        def.defaultValue
+                    }
         }
     }
 

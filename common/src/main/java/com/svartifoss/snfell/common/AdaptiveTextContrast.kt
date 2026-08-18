@@ -78,6 +78,36 @@ object AdaptiveTextContrast {
      * preview produce bit-for-bit identical results; the decision itself is [adaptedLightness],
      * which is where the tests live.
      */
+    /**
+     * sRGB relative luminance of [color] (0..1), gamma-corrected per WCAG.
+     *
+     * Deliberately hand-rolled rather than `ColorUtils.calculateLuminance`: this is the input to a
+     * decision the phone preview and the watch both make, and keeping it free of `android.*` means
+     * the decision below is pinned by a plain JVM test instead of only being exercised on a device.
+     */
+    fun relativeLuminance(color: Int): Float {
+        fun channel(shift: Int): Float {
+            val raw = ((color shr shift) and 0xFF) / 255f
+            return if (raw <= 0.03928f) raw / 12.92f else
+                Math.pow(((raw + 0.055f) / 1.055f).toDouble(), 2.4).toFloat()
+        }
+        return 0.2126f * channel(16) + 0.7152f * channel(8) + 0.0722f * channel(0)
+    }
+
+    /**
+     * Whether dark text reads better than light text on a solid [background].
+     *
+     * For a *known* flat fill this is the honest question, and it is a different one from [adapt]:
+     * that keeps the album's hue and only nudges lightness, which is right for text sitting over
+     * arbitrary artwork. A face that paints its own solid panel already controls the background
+     * exactly, so it wants the maximally legible answer, not a tinted approximation of one.
+     */
+    fun prefersDarkText(background: Int): Boolean =
+            relativeLuminance(background) > DARK_TEXT_LUMINANCE_PIVOT
+
+    /** Chosen at the luminance where black and white text are about equally legible. */
+    const val DARK_TEXT_LUMINANCE_PIVOT = 0.34f
+
     fun adapt(color: Int, backgroundLuminance: Float): Int {
         val hsl = FloatArray(3)
         ColorUtils.colorToHSL(color, hsl)

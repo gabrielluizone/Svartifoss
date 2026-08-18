@@ -21,8 +21,22 @@ import com.svartifoss.snfell.view.mainactivity.MainActivity
 class SettingsHomeFragment : Fragment() {
     companion object {
         private const val STATE_SELECTED_SECTION = "selectedSettingsSection"
+        private const val ARG_SECTION = "initialSettingsSection"
+        private const val ARG_HIGHLIGHT_KEY = "initialSettingsHighlightKey"
         private var lastSelectedSection = 0
+
+        /** Opens straight at [section], scrolled to [highlightKey]. Used by the settings search;
+         *  with both null this is the same as the plain constructor. */
+        fun newInstance(section: String?, highlightKey: String?) = SettingsHomeFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_SECTION, section)
+                putString(ARG_HIGHLIGHT_KEY, highlightKey)
+            }
+        }
     }
+
+    /** Cleared once handed to the page it belongs to, so only that page scrolls. */
+    private var pendingHighlightKey: String? = null
 
     private val sections = listOf(
         Section(MiscSettingsFragment.SECTION_GENERAL, R.string.settings_section_general, R.string.settings_section_general_description),
@@ -59,18 +73,31 @@ class SettingsHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val requestedSection = arguments?.getString(ARG_SECTION)
+        pendingHighlightKey = arguments?.getString(ARG_HIGHLIGHT_KEY)
+
         binding.settingsPager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = sections.size
 
-            override fun createFragment(position: Int): Fragment =
-                MiscSettingsFragment.newInstance(sections[position].key)
+            override fun createFragment(position: Int): Fragment {
+                val key = sections[position].key
+                // The pager builds neighbouring pages too, so the highlight has to be handed only
+                // to the page it was meant for - otherwise the setting next door scrolls instead.
+                val highlight = pendingHighlightKey?.takeIf { key == requestedSection }
+                if (highlight != null) pendingHighlightKey = null
+                return MiscSettingsFragment.newInstance(key, highlight)
+            }
         }
 
         tabsMediator = TabLayoutMediator(binding.settingsTabs, binding.settingsPager) { tab, position ->
             tab.setText(sections[position].title)
         }.also { it.attach() }
 
+        // A restored instance state wins over the requested section: on rotation the user's
+        // current page is the truth, not the one search originally opened.
         selectedSection = (savedInstanceState?.getInt(STATE_SELECTED_SECTION)
+            ?: requestedSection?.let { key -> sections.indexOfFirst { it.key == key } }
+                ?.takeIf { it >= 0 }
             ?: lastSelectedSection).coerceIn(sections.indices)
 
         pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {

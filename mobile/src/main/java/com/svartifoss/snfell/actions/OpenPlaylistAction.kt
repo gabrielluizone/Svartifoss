@@ -14,6 +14,8 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.QueueEntry
+import com.svartifoss.snfell.common.QueuePaging
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.QueueArtworkResolver
 import com.svartifoss.snfell.proto.CustomList
@@ -29,6 +31,9 @@ import javax.inject.Inject
  *  a 30dp thumbnail while keeping the 20-entry payload small. */
 private const val THUMBNAIL_JPEG_QUALITY = 85
 
+/** Page size and ceiling both ends agree on - see [QueuePaging]. */
+const val DEFAULT_QUEUE_PAGE_SIZE = QueuePaging.PAGE_SIZE
+
 /** Ceiling on resolving one entry's cover. Tighter than QueueArtworkResolver's own 8s connect +
  *  8s read, so a stalled request cannot come anywhere near doubling the time the queue takes to
  *  appear on the watch. Entries resolve concurrently, so this is roughly the whole step's budget. */
@@ -38,13 +43,22 @@ class OpenPlaylistAction : SelectableAction {
     constructor(context: Context) : super(context)
     constructor(context: Context, bundle: PersistableBundle) : super(context, bundle)
 
+    /**
+     * How many queue entries to send. Deliberately *not* persisted with the action: it is a
+     * property of one request from the watch ("give me another page"), not of the button the user
+     * assigned, so an action restored from a config bundle always starts at the first page again.
+     */
+    var entryLimit: Int = DEFAULT_QUEUE_PAGE_SIZE
+
     override fun retrieveTitle(): String = context.getString(R.string.open_playlist_menu)
     override val defaultIcon: Drawable
         get() = AppCompatResources.getDrawable(context, com.svartifoss.snfell.common.R.drawable.action_open_playlist)!!
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<OpenPlaylistAction> {
         override suspend fun handleAction(action: OpenPlaylistAction) {
-            val playlist = service.resolvePlaybackQueue()?.take(20)
+            val fullQueue = service.resolvePlaybackQueue()
+            val limit = action.entryLimit.coerceIn(1, QueuePaging.MAX_ENTRIES)
+            val playlist = fullQueue?.take(limit)
             val putDataRequest = PutDataRequest.create(CommPaths.DATA_CUSTOM_LIST)
 
             // Read once per queue rather than per entry: 20 items would otherwise hit the same
@@ -109,8 +123,9 @@ class OpenPlaylistAction : SelectableAction {
                 // per-entry lines: how many entries resolved, and whether the remote fetch that
                 // most streaming clients depend on was even permitted to run.
                 Timber.i(
-                        "Queue built: %d entries, %d covers resolved, remote fetch %s",
+                        "Queue built: %d of %d entries, %d covers resolved, remote fetch %s",
                         playlist.size,
+                        fullQueue?.size ?: 0,
                         artworks.count { it != null },
                         if (allowRemoteArtwork) "enabled" else "DISABLED")
 
@@ -123,7 +138,7 @@ class OpenPlaylistAction : SelectableAction {
                         }
                     }
                     CustomList.ListEntry.newBuilder()
-                            .setEntryId(queueItem.queueId.toString())
+                            .setEntryId(QueueEntry.encode(queueItem.queueId, queueItem.description.mediaId))
                             .setEntryTitle(queueItem.description.title?.toString() ?: "")
                             .setEntrySubtitle(queueItem.description.subtitle?.toString() ?: "")
                             .build()
@@ -154,12 +169,28 @@ class OpenPlaylistAction : SelectableAction {
                     .setListId(listId)
                     .setListTimestamp(System.currentTimeMillis())
 
+            // What the watch compares against the rows it received to decide whether "load more"
+            // has anything left to fetch. Only the live queue is paged - the history fallback and
+            // the single error row are sent whole, so for those the total IS what was sent.
+            protoDataBuilder.totalEntryCount = if (listId == CustomLists.PLAYLIST && fullQueue != null) {
+                minOf(fullQueue.size, QueuePaging.MAX_ENTRIES)
+            } else {
+                protoList.size
+            }
+
             val activeQueueItemId = service.currentMediaController?.playbackState?.activeQueueItemId
             if (listId == CustomLists.PLAYLIST &&
                     activeQueueItemId != null &&
                     activeQueueItemId != android.media.session.MediaSession.QueueItem.UNKNOWN_ID.toLong()
             ) {
-                protoDataBuilder.activeEntryId = activeQueueItemId.toString()
+                // Encoded the same way as the entries themselves (QueueEntry) so the watch's plain
+                // string-equality match against each row's entryId still finds the playing one.
+                // Looked up in the whole queue rather than in the page just sent: the playing track
+                // can sit past the page boundary, and encoding it without its media id there would
+                // produce an id that fails to match its own row once that page is loaded.
+                val activeMediaId = fullQueue?.firstOrNull { it.queueId == activeQueueItemId }
+                        ?.description?.mediaId
+                protoDataBuilder.activeEntryId = QueueEntry.encode(activeQueueItemId, activeMediaId)
             }
 
             val protoData = protoDataBuilder.build()

@@ -99,6 +99,18 @@ data class NowPlayingFaceState(
          * corresponding line visible in the host before it reaches this state. */
         val showTitle: Boolean = true,
         val showArtist: Boolean = true,
+        /**
+         * Whether [title] / [artist] currently hold operational status text ("ERROR", "Playback
+         * Stopped", "No phone connected") rather than real track metadata.
+         *
+         * Every face renders both the same way, so most never need this. It exists for faces that
+         * *accumulate* metadata instead of only displaying the current value - the Chat face's
+         * thread being the first - where a status string would otherwise be recorded as though it
+         * were a track that played, and then keep scrolling past forever. Matching on the strings
+         * themselves is not an option: they are localized into thirteen languages.
+         */
+        val titleIsStatus: Boolean = false,
+        val artistIsStatus: Boolean = false,
         /** Interactive player theme shared by Classic and every Compose face. Ambient rendering
          *  deliberately ignores it and continues to use the independent AOD preferences. */
         val screenTheme: ScreenTheme = ScreenTheme.DEFAULT,

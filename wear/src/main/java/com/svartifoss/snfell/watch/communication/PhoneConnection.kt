@@ -14,8 +14,10 @@ import com.google.android.gms.wearable.DataEventBuffer
 import com.google.android.gms.wearable.DataItem
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.BitmapBorderTrim
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.QueuePaging
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.proto.CustomList
@@ -66,7 +68,19 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     /** Persistent cache used only by Streaming shortcuts. Queue/search data cannot overwrite it. */
     val streamingShortcuts = ListenableLiveData<CustomListWithBitmaps>()
 
-    val notification = SingleLiveEvent<com.svartifoss.snfell.watch.model.Notification>()
+    /**
+     * Incoming phone notifications.
+     *
+     * A plain [MutableLiveData], **not** a `SingleLiveEvent`, even though each notification should
+     * pop up exactly once. That "once" belongs to the screen showing it, not to this bus:
+     * SingleLiveEvent throws `IllegalStateException("Multiple observers registered...")` the moment
+     * a second active observer appears, and this object is a `@Singleton` while its observer was an
+     * Activity - so any overlap of two MainActivity instances killed the app during onCreate with
+     * "Unable to start activity". [MusicViewModel] re-exposes this as its own per-Activity
+     * SingleLiveEvent and drops replays by timestamp, which keeps the popup showing once without
+     * making a process-lifetime bus single-listener.
+     */
+    val notification = MutableLiveData<com.svartifoss.snfell.watch.model.Notification>()
 
     val rawPlaybackConfig = MutableLiveData<DataItem>()
     val rawStoppedConfig = MutableLiveData<DataItem>()
@@ -311,16 +325,25 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         sendToPhone(CommPaths.MESSAGE_EXECUTE_MENU_ACTION, ByteBuffer.allocate(4).putInt(index).array())
     }
 
+    /**
+     * Tells the phone the user picked [entryId] out of [listId].
+     *
+     * Uncancellable for the same reason [closeManually] is: every caller closes its screen in the
+     * same gesture that selects, and the ViewModel scope the send was launched from dies with it.
+     * The send is not one call but a node lookup followed by a message, so a cancel landing between
+     * the two dropped the selection entirely - the queue tap that appeared to do nothing.
+     */
     suspend fun executeCustomMenuAction(listId: String, entryId: String) {
-        sendToPhone(
-                CommPaths.MESSAGE_CUSTOM_LIST_ITEM_SELECTED,
-                CustomListItemAction.newBuilder()
-                        .setListId(listId)
-                        .setEntryId(entryId)
-                        .build()
-                        .toByteArray()
-        )
-
+        withContext(NonCancellable) {
+            sendToPhone(
+                    CommPaths.MESSAGE_CUSTOM_LIST_ITEM_SELECTED,
+                    CustomListItemAction.newBuilder()
+                            .setListId(listId)
+                            .setEntryId(entryId)
+                            .build()
+                            .toByteArray()
+            )
+        }
     }
 
     /** Deletes one entry from a watch-managed deletable custom list (currently just search
@@ -392,7 +415,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                             sendAck()
 
                             deliverAlbumArt(dataItem, receivedMusicState)
-                            deliverSourceIcon(dataItem)
+                            deliverSourceIcon(dataItem, receivedMusicState)
                         }
 
                         if (receivedMusicState.seq > lastAppliedMusicSeq) {
@@ -499,9 +522,15 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
     /** Decodes the optional source-app icon asset. It only changes when the playing app changes
      *  (the phone dedupes it), so track by asset id and keep the cached bitmap otherwise. */
-    private suspend fun deliverSourceIcon(dataItem: DataItem) {
+    private suspend fun deliverSourceIcon(dataItem: DataItem, state: MusicState) {
         val asset = dataItem.assets[CommPaths.ASSET_SOURCE_ICON]
         if (asset == null) {
+            // An albumArtPending state is the interim put the phone ships on every track change so
+            // the title/artist do not wait behind the cover transfer - it carries *no* assets at
+            // all, this icon included. Clearing here made the source icon blink out on every track
+            // change until the second put landed. Only a settled state genuinely means "no icon".
+            // deliverAlbumArt guards on the same flag for the same reason.
+            if (state.albumArtPending) return
             lastSourceIconAssetId = null
             sourceIcon.postValue(null)
             return
@@ -603,8 +632,16 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             val pictureData = dataItem.assets[index.toString()]
                     ?.let { asset -> dataClient.getByteArrayAsset(asset) }
             // Album thumbnails, when present, are decoded away from the main dispatcher.
+            //
+            // Trimmed here rather than only on the phone because this is the one point every cover
+            // the watch draws passes through, whatever produced it - a resolver step, a reused
+            // now-playing bitmap, or an older phone build that never trimmed at all. Without it a
+            // YouTube Music "art track" thumbnail keeps its letterbox bars, and the row renders as
+            // a small cover inside a flat rectangle instead of filling its slot.
             val picture = pictureData?.let { bytes ->
-                withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
+                withContext(Dispatchers.Default) {
+                    BitmapUtils.deserialize(bytes)?.let(BitmapBorderTrim::trim)
+                }
             }
             CustomListItemWithIcon(rawEntry, picture)
         }
@@ -612,7 +649,9 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 received.listTimestamp,
                 received.listId,
                 listItems,
-                received.activeEntryId.takeIf { it.isNotEmpty() }
+                received.activeEntryId.takeIf { it.isNotEmpty() },
+                // A phone that predates paging reports no total; what arrived is then all there is.
+                if (received.hasTotalEntryCount()) received.totalEntryCount else listItems.size
         )
     }
 
@@ -628,8 +667,39 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         start()
     }
 
-    suspend fun openPlaybackQueue() {
-        messageClient.sendMessageToNearestClient(nodeClient, CommPaths.MESSAGE_OPEN_PLAYBACK_QUEUE)
+    /**
+     * Whether a phone node is currently known.
+     *
+     * Best-effort and deliberately not authoritative: it reflects the cached node from the last
+     * capability update, so it can be stale in either direction. Used only to warn in the face
+     * picker that a choice may not stick, never to decide whether to attempt a send.
+     */
+    fun isPhoneConnected(): Boolean = phoneNodeId != null
+
+    /**
+     * Tells the phone the user picked [face] in the on-watch picker.
+     *
+     * Uncancellable for the same reason [executeCustomMenuAction] is: the picker closes its own
+     * screen in the same gesture, and the send is a node lookup followed by a message.
+     */
+    suspend fun setScreenFace(face: String) {
+        withContext(NonCancellable) {
+            sendToPhone(CommPaths.MESSAGE_SET_SCREEN_FACE, face.toByteArray(Charsets.UTF_8))
+        }
+    }
+
+    /**
+     * Asks the phone to publish the playback queue, capped at [entryLimit] entries.
+     *
+     * The cap travels with the request because the phone replaces the queue DataItem wholesale
+     * rather than appending to it - "load more" is the same request asking for a bigger page. Play
+     * Services addresses assets by content hash, so the covers already on the watch are not
+     * re-transferred, only the newly-included ones.
+     */
+    suspend fun openPlaybackQueue(entryLimit: Int = QueuePaging.PAGE_SIZE) {
+        sendToPhone(
+                CommPaths.MESSAGE_OPEN_PLAYBACK_QUEUE,
+                ByteBuffer.allocate(4).putInt(entryLimit).array())
     }
 
     private class ConnectionCloseHandler(val phoneConnection: WeakReference<PhoneConnection>) : Handler(Looper.getMainLooper()) {

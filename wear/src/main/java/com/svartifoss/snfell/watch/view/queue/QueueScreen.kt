@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -81,6 +82,7 @@ import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
 import com.svartifoss.snfell.watch.view.compose.LoadingSpinner
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 
 /** View model for one queue row. [isPlaying] marks the entry the phone reports as currently active. */
 data class QueueItemUi(
@@ -98,6 +100,10 @@ private const val SUBTITLE_ALPHA = 0.65f
 // How long the loading spinner may wait for the phone's queue response before giving up and
 // showing the empty message instead (e.g. phone out of range never answers at all).
 private const val QUEUE_LOAD_TIMEOUT_MS = 6000L
+
+/** How still the list must be before the marquee titles start scrolling again. Long enough not to
+ *  restart them between two flicks of a continuing scroll, short enough that a stop feels immediate. */
+private const val SCROLL_SETTLE_MS = 220L
 
 /** The app-wide Google Sans typeface, so the queue matches the rest of the watch UI. */
 
@@ -570,7 +576,10 @@ fun QueueScreen(
         onItemClick: (entryId: String) -> Unit,
         onDismiss: () -> Unit,
         style: QueueStyle = QueueStyle.GLASS,
-        rowSize: QueueRowSize = QueueRowSize.NORMAL
+        rowSize: QueueRowSize = QueueRowSize.NORMAL,
+        canLoadMore: Boolean = false,
+        loadingMore: Boolean = false,
+        onLoadMore: () -> Unit = {}
 ) {
     // A legacy cover_compact / cover_tall selection still names its own size; the standalone
     // preference owns it for every other value.
@@ -594,7 +603,10 @@ fun QueueScreen(
                         nowPlayingArtist,
                         onItemClick,
                         style,
-                        effectiveRowSize
+                        effectiveRowSize,
+                        canLoadMore,
+                        loadingMore,
+                        onLoadMore
                 )
             }
         }
@@ -611,15 +623,36 @@ private fun QueueList(
         nowPlayingArtist: String?,
         onItemClick: (String) -> Unit,
         style: QueueStyle,
-        rowSize: QueueRowSize
+        rowSize: QueueRowSize,
+        canLoadMore: Boolean,
+        loadingMore: Boolean,
+        onLoadMore: () -> Unit
 ) {
     val listState = rememberScalingLazyListState()
 
-    // While the list is actively scrolling, freeze the continuous animations (the now-playing
-    // equalizer and the marquee titles). Those redraw/relayout every frame and were stealing the
-    // scroll's frame budget on watch hardware; the flag flips only twice per gesture (start/stop),
-    // so gating on it is far cheaper than letting them run through the scroll.
-    val isScrolling by remember { derivedStateOf { listState.isScrollInProgress } }
+    // Whether the marquee titles may scroll. Only the marquee is gated on this - it re-lays out the
+    // whole list every frame, which is what actually stuttered the scroll. The equalizer is not:
+    // it redraws one small node and nothing else (see NowPlayingBars), so it runs continuously.
+    //
+    // Driven by "the list has stopped moving" rather than by isScrollInProgress alone. That flag is
+    // not a reliable falling edge here: a rotary/bezel session and an interrupted fling can both
+    // leave it stuck true after the list has visibly come to rest, so anything relying on it alone
+    // stays switched off for as long as the screen is open. Position is the honest signal: any
+    // change restarts the wait (collectLatest), so the delay can only complete once nothing has
+    // moved for SCROLL_SETTLE_MS, whatever the flag says.
+    var listAtRest by remember { mutableStateOf(true) }
+    LaunchedEffect(listState) {
+        snapshotFlow {
+            Triple(
+                    listState.isScrollInProgress,
+                    listState.centerItemIndex,
+                    listState.centerItemScrollOffset)
+        }.collectLatest { (scrolling, _, _) ->
+            if (scrolling) listAtRest = false
+            delay(SCROLL_SETTLE_MS)
+            listAtRest = true
+        }
+    }
 
     // Restarts whenever the load state changes; only ever flips to true while items is still
     // null, so a late phone response after the timeout still replaces the empty message.
@@ -645,7 +678,7 @@ private fun QueueList(
                     // compatibility shim whose legacy touch path is why swipes weren't scrolling.
                     rotaryScrollableBehavior = RotaryScrollableDefaults.behavior(scrollableState = listState)
             ) {
-                item { QueueHeader(nowPlayingTitle, nowPlayingArtist, animate = !isScrolling) }
+                item { QueueHeader(nowPlayingTitle, nowPlayingArtist, marquee = listAtRest) }
                 items(items, key = { it.entryId }) { item ->
                     QueueRow(
                             item,
@@ -653,10 +686,21 @@ private fun QueueList(
                             secondaryAccentColor,
                             tertiaryAccentColor,
                             onItemClick,
-                            animate = !isScrolling,
+                            marquee = listAtRest,
                             style = style,
                             rowSize = rowSize
                     )
+                }
+                if (canLoadMore) {
+                    item(key = LOAD_MORE_KEY) {
+                        LoadMoreRow(
+                                accentColor = accentColor,
+                                loading = loadingMore,
+                                style = style,
+                                rowSize = rowSize,
+                                onClick = onLoadMore
+                        )
+                    }
                 }
             }
         }
@@ -672,7 +716,7 @@ private fun QueueList(
 }
 
 @Composable
-private fun QueueHeader(title: String?, artist: String?, animate: Boolean) {
+private fun QueueHeader(title: String?, artist: String?, marquee: Boolean) {
     Column(
             modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -688,7 +732,7 @@ private fun QueueHeader(title: String?, artist: String?, animate: Boolean) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.fillMaxWidth().then(
-                            if (animate) Modifier.basicMarquee(iterations = Int.MAX_VALUE)
+                            if (marquee) Modifier.basicMarquee(iterations = Int.MAX_VALUE)
                             else Modifier
                     )
             )
@@ -714,7 +758,7 @@ private fun QueueRow(
         secondaryAccentColor: Color,
         tertiaryAccentColor: Color,
         onItemClick: (String) -> Unit,
-        animate: Boolean,
+        marquee: Boolean,
         style: QueueStyle,
         rowSize: QueueRowSize
 ) {
@@ -828,9 +872,9 @@ private fun QueueRow(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     // Only the now-playing row scrolls its long title, and only while the list
-                    // itself is at rest ([animate]). Marquee on EVERY row (or during a scroll)
+                    // itself is at rest ([marquee]). Marquee on EVERY row (or during a scroll)
                     // re-lays the list out each frame and made scrolling visibly stutter.
-                    modifier = if (item.isPlaying && animate) {
+                    modifier = if (item.isPlaying && marquee) {
                         Modifier.basicMarquee(iterations = Int.MAX_VALUE)
                     } else {
                         Modifier
@@ -850,7 +894,7 @@ private fun QueueRow(
 
         if (item.isPlaying) {
             Spacer(Modifier.width(8.dp))
-            NowPlayingBars(color = onRow, animate = animate)
+            NowPlayingBars(color = onRow)
         }
     }
 }
@@ -860,6 +904,74 @@ private fun QueueRow(
 private fun QueueLoadingIndicator(accentColor: Color) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LoadingSpinner(accentColor)
+    }
+}
+
+/**
+ * Stable key for the trailing "load more" row.
+ *
+ * Distinct from any entry id (which is always `queueId|mediaId`) so the list never confuses the two
+ * when the row appears and disappears as pages arrive.
+ */
+private const val LOAD_MORE_KEY = "__load_more__"
+
+/**
+ * Trailing row that fetches the next page of a queue longer than what was sent.
+ *
+ * Wears the current style's own idle skin rather than a look of its own, so it reads as part of the
+ * list instead of as a system affordance dropped on top of it. It replaces its label with a spinner
+ * while the request is out because the phone answers by replacing the whole list - there is nothing
+ * incremental to watch, and without the spinner a slow Bluetooth round trip looks like a dead tap.
+ */
+@Composable
+private fun LoadMoreRow(
+        accentColor: Color,
+        loading: Boolean,
+        style: QueueStyle,
+        rowSize: QueueRowSize,
+        onClick: () -> Unit
+) {
+    // Never the cover treatment: this row has no artwork of its own, and the cover styles fall back
+    // to the Glass pill in exactly that case anyway.
+    val skin = queueRowSkin(
+            if (style.isCover) QueueStyle.GLASS else style,
+            isPlaying = false,
+            accent = accentColor,
+            secondaryAccent = accentColor,
+            tertiaryAccent = accentColor)
+    val shape = RoundedCornerShape(skin.corner)
+    Box(
+            modifier = Modifier
+                    .fillMaxWidth()
+                    .background(skin.background, shape)
+                    .then(
+                            if (skin.border != null) {
+                                Modifier.border(skin.border.first, skin.border.second, shape)
+                            } else {
+                                Modifier
+                            }
+                    )
+                    // Taps are swallowed while a request is already in flight, so an impatient
+                    // double tap cannot queue up two pages.
+                    .clickable(enabled = !loading) { onClick() }
+                    .height(rowSize.contentHeight + skin.verticalPadding * 2)
+                    .padding(horizontal = 16.dp),
+            contentAlignment = Alignment.Center
+    ) {
+        if (loading) {
+            LoadingSpinner(accentColor)
+        } else {
+            Text(
+                    text = stringResource(R.string.queue_load_more),
+                    color = skin.onColor,
+                    fontFamily = LocalWatchUiFontFamily.current,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+            )
+        }
     }
 }
 
@@ -888,38 +1000,32 @@ private fun QueueEmptyMessage() {
     }
 }
 
-/** Frozen bar heights shown while the list is scrolling - a readable mid-pose of the animation. */
-private val STATIC_BAR_HEIGHTS = listOf(0.5f, 0.85f, 0.65f)
-
 /**
- * Three-bar "now playing" equalizer. When [animate] is true it pulses via an infinite transition;
- * while the list is scrolling ([animate] false) the transition isn't composed at all, so it adds
- * zero per-frame work to the scroll. Drawn in a single Canvas so animation only invalidates the
- * *draw* phase - the previous Box-per-bar version animated `fillMaxHeight`, which re-ran layout for
- * the whole row on every animation frame and contributed to the queue stuttering while scrolling.
+ * Three-bar "now playing" equalizer, pulsing via an infinite transition.
+ *
+ * Runs unconditionally, including through a scroll. It used to be frozen to a static pose while the
+ * list moved, back when each bar was a Box animating `fillMaxHeight` - that re-ran *layout* for the
+ * whole row every animation frame and genuinely did cost the scroll its frame budget. Drawing all
+ * three in one Canvas and reading the animated values inside the draw lambda (not in composition)
+ * made each frame a redraw-only invalidation of one small node, which is cheap enough that freezing
+ * it bought nothing and only made the playing row look stopped exactly when the user was moving.
  */
 @Composable
-private fun NowPlayingBars(color: Color, animate: Boolean) {
-    if (animate) {
-        val transition = rememberInfiniteTransition(label = "equalizer")
-        val h1 by transition.animateFloat(
-                initialValue = 0.30f, targetValue = 1.0f,
-                animationSpec = infiniteRepeatable(tween(480), RepeatMode.Reverse), label = "bar1"
-        )
-        val h2 by transition.animateFloat(
-                initialValue = 1.0f, targetValue = 0.40f,
-                animationSpec = infiniteRepeatable(tween(360), RepeatMode.Reverse), label = "bar2"
-        )
-        val h3 by transition.animateFloat(
-                initialValue = 0.55f, targetValue = 0.90f,
-                animationSpec = infiniteRepeatable(tween(560), RepeatMode.Reverse), label = "bar3"
-        )
-        // Reading the animated values inside the draw lambda (not composition) keeps each frame a
-        // redraw-only invalidation.
-        EqualizerCanvas(color) { listOf(h1, h2, h3) }
-    } else {
-        EqualizerCanvas(color) { STATIC_BAR_HEIGHTS }
-    }
+private fun NowPlayingBars(color: Color) {
+    val transition = rememberInfiniteTransition(label = "equalizer")
+    val h1 by transition.animateFloat(
+            initialValue = 0.30f, targetValue = 1.0f,
+            animationSpec = infiniteRepeatable(tween(480), RepeatMode.Reverse), label = "bar1"
+    )
+    val h2 by transition.animateFloat(
+            initialValue = 1.0f, targetValue = 0.40f,
+            animationSpec = infiniteRepeatable(tween(360), RepeatMode.Reverse), label = "bar2"
+    )
+    val h3 by transition.animateFloat(
+            initialValue = 0.55f, targetValue = 0.90f,
+            animationSpec = infiniteRepeatable(tween(560), RepeatMode.Reverse), label = "bar3"
+    )
+    EqualizerCanvas(color) { listOf(h1, h2, h3) }
 }
 
 @Composable

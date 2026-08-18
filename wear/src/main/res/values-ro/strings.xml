@@ -14,9 +14,19 @@
 
     <string name="idle_nothing_playing">Nu se redă nimic</string>
     <string name="idle_hint">Redă ceva pe telefon</string>
+    <string name="idle_hint_resume">Atinge pentru a relua ultima aplicație</string>
+    <string name="idle_hint_shortcuts">Atinge pentru comenzile tale rapide</string>
+    <string name="idle_hint_menu">Atinge pentru a deschide meniul</string>
+    <string name="idle_hint_search">Atinge pentru a căuta</string>
+    <string name="idle_hint_queue">Atinge pentru redate recent</string>
+    <string name="idle_resume">Reia redarea</string>
+    <string name="idle_action_shortcuts">Deschide comenzile rapide</string>
+    <string name="idle_action_menu">Deschide meniul</string>
+    <string name="idle_action_search">Caută</string>
+    <string name="idle_action_queue">Deschide redate recent</string>
 
     <string name="no_phone">Niciun telefon conectat</string>
-    <string name="playback_stopped">Redare oprită</string>
+    <string name="playback_stopped">Oprit</string>
     <string name="error">EROARE</string>
     <string name="error_play_services">Eroare Play Services</string>
     <string name="button">Buton</string>
@@ -33,6 +43,11 @@
     <string name="voice_search_prompt">Caută muzică</string>
     <string name="queue_empty">Nicio coadă disponibilă</string>
     <string name="queue_now_playing">Se redă acum</string>
+    <string name="queue_load_more">Încarcă mai multe</string>
+    <string name="chat_face_today">Azi</string>
+
+    <string name="face_picker_title">Cadranul ceasului</string>
+    <string name="face_picker_offline">Telefon neconectat — acest cadran se va aplica pe ceas, dar telefonul păstrează setarea</string>
 
     <string name="hint_title">Cum se folosește</string>
     <string name="hint_edges">Margini — atinge pentru acțiunile afișate</string>
@@ -64,4 +79,7 @@
     <string name="update_install_title">Actualizare Svartifoss</string>
     <string name="update_install_tap">Atinge pentru a instala noua versiune</string>
     <string name="update_install_failed">Instalarea a eșuat. Permite instalările din Svartifoss în setările ceasului și încearcă din nou de pe telefon.</string>
+    <string name="face_picker_section_builtin">Cadrane încorporate</string>
+    <string name="face_picker_section_custom">Temele mele</string>
+    <string name="face_picker_custom_base">Bazat pe %1$s</string>
 </resources>

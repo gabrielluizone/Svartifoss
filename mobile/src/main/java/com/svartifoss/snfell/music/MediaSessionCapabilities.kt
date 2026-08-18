@@ -30,4 +30,11 @@ object MediaSessionCapabilities {
     /** Convenience for the search case, which is the one with a real alternative to fall back to. */
     fun advertisesPlayFromSearch(actions: Long?): Boolean =
             advertises(actions, PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH)
+
+    // Deliberately no advertisesSkipToQueueItem(). Gating the queue tap on
+    // ACTION_SKIP_TO_QUEUE_ITEM broke every player that implements the command without advertising
+    // it, which turns out to be common - the bitmask is a hint, not a contract. That path now
+    // issues the command unconditionally and checks whether playback actually moved, because an
+    // unsupported transport command is a harmless no-op while a wrong guess is a dead queue. See
+    // MusicService.onQueueEntrySelected.
 }

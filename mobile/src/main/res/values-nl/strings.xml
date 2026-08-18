@@ -235,7 +235,7 @@
     <string name="preview_sample_title">Nummertitel</string>
     <string name="preview_sample_artist">Naam artiest</string>
     <string name="preview_sample_next_title">Volgend nummer</string>
-    <string name="preview_playback_stopped">Afspelen gestopt</string>
+    <string name="preview_playback_stopped">Gestopt</string>
     <string name="category_gestures">Gebaren en invoer</string>
     <string name="setting_overlay_blur_radius">Overlay-vervaging</string>
     <string name="setting_overlay_blur_radius_description">Vervagingssterkte (px) van de matte achtergrond achter de volume-/zoekringen en het snelle-actiespaneel — onafhankelijk van de vervaging van de albumhoesachtergrond</string>
@@ -506,6 +506,9 @@
         <item>Immersive</item>
         <item>Diepte</item>
         <item>Carrousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Notitie</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive-zoeken</string>
@@ -820,6 +823,10 @@
         <item>Gemiddelde kromming</item>
         <item>Gebogen</item>
         <item>Extreme kromming</item>
+        <item>Naar de randen verspreid</item>
+        <item>Linkerrand</item>
+        <item>Rechterrand</item>
+        <item>Beide randen</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Standaardachtergrond</item>
@@ -1096,4 +1103,287 @@
     <string name="update_installing">Installatieprogramma openen…</string>
     <string name="update_install_permission_needed">Sta toe dat apps van Svartifoss worden geïnstalleerd en tik daarna opnieuw op Telefoon bijwerken.</string>
     <string name="update_phone_failed">Het downloaden van de telefoonupdate is mislukt. Probeer opnieuw.</string>
+    <string name="setting_wear_album_accent_source">Bron van albumkleur</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Gebalanceerd</item>
+        <item>Meest levendig</item>
+    </string-array>
+
+    <string name="watch_section_typography">Tekst</string>
+    <string name="watch_section_typography_description">Kies een lettertype en stel titel, artiest en app-icoon onafhankelijk van elkaar in.</string>
+    <string name="tutorial_quick_panel_title">Paneel met snelle acties</string>
+    <string name="tutorial_quick_panel_desc">Tik twee keer op het midden van het nu-speelt-scherm om een paneel met vier vakken te openen — drie ronde knoppen en een brede rij eronder. Zonder configuratie weerspiegelen de vakken de knoppen die de spelende app in zijn eigen melding plaatst, zodat je de echte like-, shuffle- en herhaalbediening krijgt. Wijs elke actie toe aan een vak, of stel \"Geen\" in om het te verbergen, bij Acties op de telefoon.</string>
+    <string name="tutorial_shortcuts_title">Streamingsnelkoppelingen</string>
+    <string name="tutorial_shortcuts_desc">Sla een link naar een nummer, album, mix of afspeellijst op van Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music of SoundCloud, en wijs die vervolgens toe aan een knop, gebaar of paneelvak. De snelste manier is de link rechtstreeks vanuit de streamingapp naar Svartifoss te delen; je kunt ook een gekopieerde link plakken of er zelf een intypen. Er is geen account of aanmelding nodig — het horloge vraagt de telefoon om af te spelen, dus een snelkoppeling speelt af in plaats van alleen de app te openen.</string>
+    <string name="category_wf_typography_font">Lettertype</string>
+    <string name="category_wf_typography_title">Titel</string>
+    <string name="category_wf_typography_artist">Artiest</string>
+    <string name="category_wf_typography_icon">App-icoon</string>
+    <string name="category_wf_typography_flex">Google Sans Flex-assen</string>
+    <string name="setting_wear_font_flex_hint_title">Over deze instellingen</string>
+    <string name="setting_wear_flex_axes_hint">Deze stellen specifiek Google Sans Flex nauwkeurig af — selecteer dat lettertype hierboven om ze te gebruiken. Gewicht en cursief van titel en artiest hierboven stellen al de eigen gewicht- (wght) en schuinte-as (slnt) van dit lettertype in; de vier instellingen hieronder gelden voor het hele scherm.</string>
+    <string name="setting_wear_font_flex_width">Breedte</string>
+    <string name="setting_wear_font_flex_width_description">Horizontale rek, van smal tot breed (25–151). 100 is de normale breedte van het lettertype.</string>
+    <string name="setting_wear_font_flex_optical_size">Optische grootte</string>
+    <string name="setting_wear_font_flex_optical_size_description">Past het detail van de letterlijnen aan op de werkelijke tekstgrootte (6–144). Lagere waarden passen bij kleine tekst; hogere bij grote schermtekst.</string>
+    <string name="setting_wear_font_flex_grade">Gradatie</string>
+    <string name="setting_wear_font_flex_grade_description">Verandert het gewicht licht zonder de opmaak te wijzigen (0–100) — een subtiele manier om het contrast op een donker scherm te verhogen.</string>
+    <string name="setting_wear_font_flex_roundness">Afronding</string>
+    <string name="setting_wear_font_flex_roundness_description">Mengt de uiteinden van letterlijnen van scherp (0) tot volledig afgerond (100) voor een vriendelijker gevoel.</string>
+    <string name="preview_chat_today">Vandaag</string>
+    <string name="category_idle">Wanneer er niets speelt</string>
+    <string name="settings_search_title">Instellingen zoeken</string>
+    <string name="settings_search_hint">Instellingen zoeken</string>
+    <string name="settings_search_clear">Zoekopdracht wissen</string>
+    <string name="settings_search_prompt">Zoek op naam in elke instelling onder Instellingen en Horloge-uiterlijk.</string>
+    <string name="settings_search_no_results">Geen instelling komt overeen.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="notification_access_banner_summary">Tik om toegang te verlenen — de afspeelbediening blijft inactief tot je dat doet</string>
+    <string name="setting_wear_rotary_action">Draaikroon / rand</string>
+    <string name="wear_rotary_action_volume">Volume wijzigen</string>
+    <string name="wear_rotary_action_seek">Door het nummer spoelen</string>
+    <string name="wear_rotary_action_off">Niets doen</string>
+    <string name="face_reset_migration_title">Werk het uiterlijk van je horloge bij</string>
+    <string name="face_reset_migration_message">Je hebt geüpdatet vanaf een oudere versie waarin alle horlogewijzerplaten dezelfde uiterlijkinstellingen deelden. Elke wijzerplaat onthoudt nu zijn eigen instellingen, dus je oude instellingen kunnen er niet meer bij passen op wijzerplaten die je nooit rechtstreeks hebt aangepast. We raden aan alle wijzerplaten naar hun nieuwe standaardwaarden te resetten, of de app-gegevens te wissen voor een volledig nieuwe start.</string>
+    <string name="face_reset_migration_reset_button">Alle wijzerplaten resetten</string>
+    <string name="face_reset_migration_clear_data_button">App-gegevens wissen</string>
+    <string name="quick_panel_link_summary">Tik twee keer op het midden van het horlogescherm om het te openen. Tik hier om de vier vakken ervan in te stellen bij Acties.</string>
+    <string name="setting_wear_center_long_press">Lang indrukken in het midden</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Een variabele versie van Google Sans met instelbare breedte, optische grootte, gradatie en afronding — ontgrendelt de asinstellingen hieronder.</string>
+    <string name="setting_wear_progress_gradient">Palet mengen in de ring</string>
+    <string name="setting_wear_progress_gradient_description">Bij een meerkleurige kleurbehandeling (Complementair, Triadisch, Analoog, Tweekleurig) vervaagt de vaste ring door alle drie de kleuren. Zet dit uit voor een ring in één kleur, terwijl het albumpalet overal elders behouden blijft.</string>
+    <string name="setting_wear_title_font_weight">Gewicht titel</string>
+    <string name="setting_wear_title_font_italic">Titel cursief</string>
+    <string name="setting_wear_title_font_scale">Grootte titel</string>
+    <string name="setting_wear_title_font_opacity">Dekking titel</string>
+    <string name="setting_wear_title_font_tracking">Letterafstand titel</string>
+    <string name="setting_wear_title_color">Tekstkleur titel</string>
+    <string name="setting_wear_title_custom_color">Aangepaste kleur titel</string>
+    <string name="wear_title_color_face_default">Standaard van wijzerplaat (zoals ontworpen)</string>
+    <string name="setting_wear_title_adaptive_contrast">Titelkleur aanpassen voor contrast</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Maakt de titel lichter of donkerder wanneer de kleur te dicht bij de hoes erachter ligt, met behoud van de tint. Heeft geen effect zolang de titel de standaardkleur van de wijzerplaat heeft.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Artiestkleur aanpassen voor contrast</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Maakt de artiestregel lichter of donkerder wanneer de albumkleur te dicht bij de hoes erachter ligt, met behoud van de tint. Meet alleen de strook waarop de regel staat, niet de hele hoes.</string>
+    <string name="setting_wear_artist_font_weight">Gewicht artiest</string>
+    <string name="setting_wear_artist_font_italic">Artiest cursief</string>
+    <string name="setting_wear_artist_font_scale">Grootte artiest</string>
+    <string name="setting_wear_artist_font_opacity">Dekking artiest</string>
+    <string name="setting_wear_artist_font_tracking">Letterafstand artiest</string>
+    <string name="setting_wear_source_icon_scale">Grootte app-icoon</string>
+    <string name="setting_wear_source_icon_opacity">Dekking app-icoon</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 is het normale gewicht van de wijzerplaat; hogere waarden zijn vetter. Voor Google Sans Flex is dit de eigen gewicht-as van dat lettertype</string>
+    <string name="setting_wear_typography_scale_description">Percentage van de eigen grootte van de wijzerplaat (70–140). 100 behoudt de ontworpen grootte van elke lay-out</string>
+    <string name="setting_wear_typography_opacity_description">Percentage (20–100). 100 behoudt de eigen dekking van de wijzerplaat</string>
+    <string name="setting_wear_typography_tracking_description">Extra ruimte tussen letters, in honderdsten van een em (−5 tot 20). 0 behoudt de eigen letterafstand van het lettertype</string>
+    <string name="setting_wear_color_modifier">Tint</string>
+    <string name="setting_wear_color_modifier_description">Past het hele palet aan zonder te veranderen hoe het wordt afgeleid — werkt met elke kleurbehandeling</string>
+    <string name="setting_wear_color_hue_shift">Kleurverschuiving</string>
+    <string name="setting_wear_color_hue_shift_description">Draait het albumpalet rond het kleurenwiel, in graden (0–359). Elke behandeling houdt de hoofdkleur op de eigen tint van het album, dus dit is wat varieert. 0 gebruikt de albumkleur zoals hij is; een vaste Normale kleur wordt nooit gedraaid.</string>
+    <string name="setting_wear_paused_hold">App actief houden na pauzeren</string>
+    <string name="setting_wear_paused_hold_description">Hoelang de horloge-app bereikbaar blijft vanaf de wijzerplaat nadat je pauzeert, zodat je kunt hervatten door je pols op te tillen in plaats van opnieuw te openen. Langere instellingen houden een achtergrondservice actief.</string>
+    <string name="wear_paused_hold_off">Niet vasthouden</string>
+    <string name="wear_paused_hold_5">5 minuten</string>
+    <string name="wear_paused_hold_15">15 minuten</string>
+    <string name="wear_paused_hold_30">30 minuten</string>
+    <string name="wear_paused_hold_60">1 uur</string>
+    <string name="wear_paused_hold_always">Tot het afspelen stopt</string>
+    <string name="setting_wear_idle_button_action">Knop bij niets spelen</string>
+    <string name="setting_wear_idle_auto_open">Openen wanneer er niets speelt</string>
+    <string name="setting_wear_idle_auto_open_description">Springt direct naar dit scherm wanneer je de horloge-app opent zonder afspelende muziek.</string>
+    <string name="wear_idle_action_resume">Laatste app hervatten</string>
+    <string name="wear_idle_action_shortcuts">Afspeellijstsnelkoppelingen</string>
+    <string name="wear_idle_action_menu">Actiemenu</string>
+    <string name="wear_idle_action_search">Zoeken</string>
+    <string name="wear_idle_action_queue">Onlangs afgespeeld</string>
+    <string name="wear_idle_action_none">Geen knop</string>
+    <string name="wear_idle_auto_open_none">Op de speler blijven</string>
+    <string name="action_open_library">Bibliotheek doorbladeren</string>
+    <string name="library_up">Terug</string>
+    <string name="error_library_unavailable">Deze app heeft geen doorbladerbare bibliotheek</string>
+    <string name="error_library_empty">Hier is niets</string>
+    <string name="error_library_no_player">Start eerst iets met afspelen</string>
+    <string name="setting_wear_carousel_card_shape">Vorm carrouselkaart</string>
+    <string name="setting_wear_font_all_screens">Lettertype overal gebruiken</string>
+    <string name="setting_wear_font_all_screens_description">Past het gekozen lettertype ook toe op het menu, de wachtrij en de klok op het scherm, niet alleen op de titel en artiest van het nummer. Decoratieve of handgeschreven lettertypen kunnen moeilijker leesbaar zijn in lijsten.</string>
+    <string name="setting_wear_clock_font">Lettertype klok</string>
+    <string name="wear_clock_font_follow">Lettertype van nummer volgen</string>
+    <string name="setting_wear_clock_font_weight">Gewicht klok</string>
+    <string name="setting_wear_clock_font_italic">Klok cursief</string>
+    <string name="setting_wear_clock_font_scale">Grootte klok</string>
+    <string name="setting_wear_clock_font_tracking">Letterafstand klok</string>
+    <string name="setting_wear_clock_adaptive_contrast">Klokkleur aanpassen voor contrast</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Maakt de klok lichter of donkerder wanneer de albumkleur te dicht bij de hoes erachter ligt, met behoud van de tint. Geldt alleen wanneer de klokkleur is ingesteld op Albumkleur.</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Smalle beeldschermletter, volledig hoofdletters — posterachtig, past bij lange titels</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Redactionele schreefletter met hoog contrast — tijdschriftgevoel</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Technische geometrische schreefloze letter met eigenzinnige details</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Vierkante sciencefiction-beeldschermletter — gedurfd en futuristisch</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Handgeschreven schrift — informeel en persoonlijk</string>
+    <string name="setting_queue_local_artwork">Wachtrijhoezen uit je bibliotheek</string>
+    <string name="setting_queue_local_artwork_description">Lokale muziekspelers publiceren wachtrijhoezen als bibliotheekverwijzingen. Verleen mediatoegang zodat ze op de wachtrij van het horloge kunnen worden getoond. Er is geen internettoegang bij betrokken.</string>
+    <string name="setting_queue_local_artwork_granted">Mediatoegang verleend — lokale wachtrijhoezen worden getoond</string>
+    <string name="setting_queue_local_artwork_denied">Mediatoegang geweigerd. Schakel dit in bij de Android-instellingen om lokale wachtrijhoezen te tonen.</string>
+    <string name="setting_queue_remote_artwork">Wachtrijhoezen online ophalen</string>
+    <string name="setting_queue_remote_artwork_short_description">Streamingapps (YouTube Music-clients, Echo Music…) publiceren wachtrijhoezen als links, geen afbeeldingen, dus dit downloadt en cachet ze. Zet uit om de wachtrij volledig offline te houden — die rijen tonen dan helemaal geen hoes.</string>
+    <string name="setting_queue_remote_artwork_description">Streamingspelers publiceren wachtrijhoezen als links in plaats van afbeeldingen. Elke wordt eenmalig gedownload en op deze telefoon gecachet, om ze op de wachtrij van het horloge te tonen. Alleen de hoes-URL die de speler al publiceerde wordt opgevraagd — geen account of persoonlijke gegevens. Standaard aan; zet uit om de wachtrij volledig offline te houden.</string>
+    <string name="setting_persistent_notification">De melding \"Svartifoss actief\" beheren</string>
+    <string name="setting_persistent_notification_description">Opent de Android-instellingen van deze melding — dempen, verbergen op het vergrendelscherm of anderszins aanpassen. Volledig uitschakelen kan niet: Android vereist een doorlopende melding zolang de achtergrondservice die met je horloge communiceert actief is.</string>
+    <string name="update_install_notification_title">Svartifoss-update</string>
+    <string name="update_install_notification_tap">Tik om de nieuwe versie te installeren</string>
+    <string name="update_install_notification_failed">Installatie mislukt. Sta installaties van Svartifoss toe in Instellingen en probeer het opnieuw.</string>
+
+    <string-array name="wear_center_long_press_entries">
+        <item>Horlogewijzerplaat wijzigen</item>
+        <item>Wachtrij openen</item>
+        <item>Niets</item>
+    </string-array>
+    <string-array name="wear_color_modifier_entries">
+        <item>Geen</item>
+        <item>Levendig</item>
+        <item>Pastel</item>
+        <item>Warm</item>
+        <item>Koel</item>
+    </string-array>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Afgerond</item>
+        <item>Vierkant</item>
+        <item>Squircle</item>
+        <item>Cirkel</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>Uitgeschakeld</item>
+        <item>Muziekwijzerplaat-icoon tonen (alleen voor Wear 3.0)</item>
+        <item>Svartifoss openen</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">Kleurenpalet gebruiken</string>
+    <string name="setting_wear_normal_color_multi_description">Aan: het scherm gebruikt één hoofdkleur plus twee ondersteunende tinten. Uit: overal één enkele kleur — die van het album, of de kleur die je koos.</string>
 </resources>

@@ -238,7 +238,7 @@
     <string name="preview_sample_title">Título da música</string>
     <string name="preview_sample_artist">Nome do artista</string>
     <string name="preview_sample_next_title">Próxima música</string>
-    <string name="preview_playback_stopped">Reprodução parada</string>
+    <string name="preview_playback_stopped">Parado</string>
     <string name="category_gestures">Gestos e entrada</string>
     <string name="setting_overlay_blur_radius">Desfoque do overlay</string>
     <string name="setting_overlay_blur_radius_description">Intensidade do desfoque (px) do fundo fosco atrás dos anéis de volume/busca e do painel de ações rápidas — independente do desfoque de fundo da capa do álbum</string>
@@ -511,6 +511,9 @@
         <item>Imersivo</item>
         <item>Profundidade</item>
         <item>Carrossel</item>
+        <item>Conversa</item>
+        <item>Dividido</item>
+        <item>Nota</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Busca expressiva</string>
@@ -841,15 +844,10 @@
         <item>Curva média</item>
         <item>Curvado</item>
         <item>Curva extrema</item>
-    </string-array>
-    <string-array name="screen_buttons_curve_values">
-        <item>flat</item>
-        <item>arc</item>
-        <item>curved_gentle</item>
-        <item>curved_soft</item>
-        <item>curved_medium</item>
-        <item>curved</item>
-        <item>curved_extreme</item>
+        <item>Espalhados nas bordas</item>
+        <item>Borda esquerda</item>
+        <item>Borda direita</item>
+        <item>Ambas as bordas</item>
     </string-array>
 
     <string-array name="screen_buttons_bg_entries">
@@ -1142,4 +1140,310 @@
     <string name="update_installing">Abrindo o instalador…</string>
     <string name="update_install_permission_needed">Permita a instalação de apps pelo Svartifoss e toque novamente em Atualizar celular.</string>
     <string name="update_phone_failed">Falha ao baixar a atualização do celular. Tente novamente.</string>
+    <string name="setting_wear_center_long_press">Manter pressionado o centro</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Trocar o estilo do relógio</item>
+        <item>Abrir a fila</item>
+        <item>Nada</item>
+    </string-array>
+    <string name="setting_wear_album_accent_source">Origem da cor do álbum</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Equilibrado</item>
+        <item>Mais vibrante</item>
+    </string-array>
+
+    <!-- Watch appearance: Typography section -->
+    <string name="watch_section_typography">Texto</string>
+    <string name="watch_section_typography_description">Escolha uma fonte e estilize título, artista e ícone do app de forma independente.</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_quick_panel_title">Painel de ações rápidas</string>
+    <string name="tutorial_quick_panel_desc">Toque duas vezes no centro da tela de reprodução para abrir um painel de quatro espaços — três botões redondos e uma linha larga abaixo deles. Se você não configurar nada, os espaços espelham os botões que o app em reprodução coloca na própria notificação, então você recebe os controles reais de curtir, aleatório e repetir dele. Atribua qualquer ação a um espaço, ou defina-o como \"Nenhuma\" para escondê-lo, em Ações no celular.</string>
+    <string name="tutorial_shortcuts_title">Atalhos de streaming</string>
+    <string name="tutorial_shortcuts_desc">Salve um link de uma faixa, álbum, mix ou playlist do Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music ou SoundCloud, e atribua-o a qualquer botão, gesto ou espaço do painel. O jeito mais rápido é compartilhar o link direto para o Svartifoss a partir do app de streaming; você também pode colar um link copiado ou digitar um. Nenhuma conta ou login é necessário — o relógio pede ao celular para iniciar a reprodução, então o atalho toca a música em vez de só abrir o app.</string>
+
+    <!-- Watch appearance: Typography subcategories -->
+    <string name="category_wf_typography_font">Fonte</string>
+    <string name="category_wf_typography_title">Título</string>
+    <string name="category_wf_typography_artist">Artista</string>
+    <string name="category_wf_typography_icon">Ícone do app</string>
+    <string name="category_wf_typography_flex">Eixos do Google Sans Flex</string>
+    <string name="setting_wear_font_flex_hint_title">Sobre esses controles</string>
+    <string name="setting_wear_flex_axes_hint">Esses ajustes são específicos do Google Sans Flex — escolha-o acima para usá-los. O peso/itálico do título e do artista acima já define os eixos de peso (wght) e inclinação (slnt) próprios dessa fonte; os quatro controles abaixo se aplicam ao layout inteiro.</string>
+    <string name="setting_wear_font_flex_width">Largura</string>
+    <string name="setting_wear_font_flex_width_description">Alongamento horizontal, de condensado a expandido (25–151). 100 é a largura normal da fonte.</string>
+    <string name="setting_wear_font_flex_optical_size">Tamanho óptico</string>
+    <string name="setting_wear_font_flex_optical_size_description">Ajusta o detalhe dos traços para o tamanho efetivo do texto (6–144). Valores mais baixos combinam com textos pequenos; valores mais altos combinam com textos grandes de destaque.</string>
+    <string name="setting_wear_font_flex_grade">Grade</string>
+    <string name="setting_wear_font_flex_grade_description">Ajusta o peso levemente sem mudar o layout do texto (0–100) — uma forma sutil de aumentar o contraste em uma tela escura.</string>
+    <string name="setting_wear_font_flex_roundness">Arredondamento</string>
+    <string name="setting_wear_font_flex_roundness_description">Mistura as terminações dos traços de pontiagudas (0) a totalmente arredondadas (100) para um visual mais amigável.</string>
+
+    <string name="preview_chat_today">Hoje</string>
+
+    <string name="category_idle">Quando nada está tocando</string>
+
+    <!-- Settings search -->
+    <string name="settings_search_title">Buscar configurações</string>
+    <string name="settings_search_hint">Buscar configurações</string>
+    <string name="settings_search_clear">Limpar busca</string>
+    <string name="settings_search_prompt">Busque qualquer configuração em Ajustes e Aparência no relógio pelo nome.</string>
+    <string name="settings_search_no_results">Nenhuma configuração corresponde a isso.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+
+    <string name="notification_access_banner_summary">Toque para conceder — o controle de reprodução fica inativo até você conceder</string>
+
+    <string name="setting_wear_rotary_action">Coroa giratória / bezel</string>
+    <string name="wear_rotary_action_volume">Alterar volume</string>
+    <string name="wear_rotary_action_seek">Buscar na faixa</string>
+    <string name="wear_rotary_action_off">Nada</string>
+
+    <string name="face_reset_migration_title">Atualize a aparência do relógio</string>
+    <string name="face_reset_migration_message">Você atualizou de uma versão mais antiga em que todos os layouts do relógio compartilhavam um único conjunto de configurações de aparência. Agora cada layout guarda as suas próprias, então suas configurações antigas podem parecer incompatíveis em layouts que você nunca personalizou diretamente. Recomendamos resetar todos os layouts para os novos padrões, ou limpar os dados do app para um começo totalmente novo.</string>
+    <string name="face_reset_migration_reset_button">Resetar todos os temas</string>
+    <string name="face_reset_migration_clear_data_button">Limpar dados do app</string>
+
+    <string name="quick_panel_link_summary">Toque duas vezes no centro da tela do relógio para abri-lo. Toque aqui para configurar os quatro espaços dele em Ações.</string>
+
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Versão variável do Google Sans com largura, tamanho óptico, grade e arredondamento ajustáveis — libera os controles de eixo abaixo.</string>
+
+    <string name="setting_wear_progress_gradient">Degradê da paleta no anel</string>
+    <string name="setting_wear_progress_gradient_description">Com um tratamento de cor multitom (Complementar, Tríade, Análoga, Duotone), o anel sólido passa gradualmente pelas três cores. Desative para um anel de cor única, mantendo a paleta do álbum em todo o resto.</string>
+
+    <!-- Title typography -->
+    <string name="setting_wear_title_font_weight">Peso do título</string>
+    <string name="setting_wear_title_font_italic">Título itálico</string>
+    <string name="setting_wear_title_font_scale">Tamanho do título</string>
+    <string name="setting_wear_title_font_opacity">Opacidade do título</string>
+    <string name="setting_wear_title_font_tracking">Espaçamento entre letras do título</string>
+    <string name="setting_wear_title_color">Cor do texto do título</string>
+    <string name="setting_wear_title_custom_color">Cor personalizada do título</string>
+    <string name="wear_title_color_face_default">Padrão do layout (como projetado)</string>
+    <string name="setting_wear_title_adaptive_contrast">Adaptar cor do título para contraste</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Clareia ou escurece o título quando sua cor fica próxima demais da capa atrás dele, mantendo o matiz da cor. Não tem efeito enquanto o título mantém o padrão do layout.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Adaptar cor do artista para contraste</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Clareia ou escurece a linha do artista quando a cor do álbum fica próxima demais da capa atrás dela, mantendo o matiz da cor. Mede apenas a região da capa onde a linha está, não a capa inteira.</string>
+    <string name="setting_wear_artist_font_weight">Peso do artista</string>
+    <string name="setting_wear_artist_font_italic">Artista itálico</string>
+    <string name="setting_wear_artist_font_scale">Tamanho do artista</string>
+    <string name="setting_wear_artist_font_opacity">Opacidade do artista</string>
+    <string name="setting_wear_artist_font_tracking">Espaçamento entre letras do artista</string>
+    <string name="setting_wear_source_icon_scale">Tamanho do ícone do app</string>
+    <string name="setting_wear_source_icon_opacity">Opacidade do ícone do app</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 é o peso normal do layout; quanto maior, mais negrito. No Google Sans Flex, este é o eixo de peso próprio da fonte</string>
+    <string name="setting_wear_typography_scale_description">Porcentagem do tamanho original do layout (70–140). 100 mantém o tamanho projetado de cada layout</string>
+    <string name="setting_wear_typography_opacity_description">Porcentagem (20–100). 100 mantém a opacidade original do layout</string>
+    <string name="setting_wear_typography_tracking_description">Espaço extra entre letras, em centésimos de em (−5 a 20). 0 mantém o espaçamento original da fonte</string>
+
+    <string name="setting_wear_color_modifier">Tom</string>
+    <string name="setting_wear_color_modifier_description">Ajusta toda a paleta sem mudar como ela é derivada — funciona com qualquer tratamento de cor</string>
+    <string name="setting_wear_color_hue_shift">Rotação de cor</string>
+    <string name="setting_wear_color_hue_shift_description">Gira a paleta do álbum ao redor do círculo cromático, em graus (0–359). Todo tratamento mantém sua cor principal no matiz original do álbum, então é isso que este ajuste varia. 0 usa a cor do álbum como está; uma cor Normal fixa nunca é alterada.</string>
+
+    <string name="setting_wear_paused_hold">Manter app ativo após pausar</string>
+    <string name="setting_wear_paused_hold_description">Por quanto tempo o app do relógio continua acessível pelo mostrador depois que você pausa, para retomar só levantando o pulso em vez de reabrir o app. Configurações mais longas mantêm um serviço em segundo plano em execução.</string>
+    <string name="wear_paused_hold_off">Não manter</string>
+    <string name="wear_paused_hold_5">5 minutos</string>
+    <string name="wear_paused_hold_15">15 minutos</string>
+    <string name="wear_paused_hold_30">30 minutos</string>
+    <string name="wear_paused_hold_60">1 hora</string>
+    <string name="wear_paused_hold_always">Até o fim da reprodução</string>
+
+    <string name="setting_wear_idle_button_action">Botão em \"Nada tocando\"</string>
+    <string name="setting_wear_idle_auto_open">Abrir quando nada estiver tocando</string>
+    <string name="setting_wear_idle_auto_open_description">Vai direto para esta tela quando você abre o app do relógio sem música tocando.</string>
+    <string name="wear_idle_action_resume">Retomar último app</string>
+    <string name="wear_idle_action_shortcuts">Atalhos de streaming</string>
+    <string name="wear_idle_action_menu">Menu de ações</string>
+    <string name="wear_idle_action_search">Buscar</string>
+    <string name="wear_idle_action_queue">Tocadas recentemente</string>
+    <string name="wear_idle_action_none">Nenhum botão</string>
+    <string name="wear_idle_auto_open_none">Permanecer no player</string>
+
+    <string name="action_open_library">Navegar na biblioteca</string>
+    <string name="library_up">Voltar</string>
+    <string name="error_library_unavailable">Este app não tem biblioteca navegável</string>
+    <string name="error_library_empty">Nada aqui</string>
+    <string name="error_library_no_player">Comece a tocar algo primeiro</string>
+    <string name="setting_wear_carousel_card_shape">Formato do card do carrossel</string>
+
+    <string name="setting_wear_font_all_screens">Usar fonte em todas as telas</string>
+    <string name="setting_wear_font_all_screens_description">Aplica a fonte escolhida também ao menu, à fila e ao relógio no visor, não só ao título e ao artista da faixa. Fontes decorativas e manuscritas podem ser mais difíceis de ler em listas.</string>
+    <string name="setting_wear_clock_font">Fonte do relógio</string>
+    <string name="wear_clock_font_follow">Seguir fonte da faixa</string>
+    <string name="setting_wear_clock_font_weight">Peso do relógio</string>
+    <string name="setting_wear_clock_font_italic">Relógio itálico</string>
+    <string name="setting_wear_clock_font_scale">Tamanho do relógio</string>
+    <string name="setting_wear_clock_font_tracking">Espaçamento entre letras do relógio</string>
+    <string name="setting_wear_clock_adaptive_contrast">Adaptar cor do relógio para contraste</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Clareia ou escurece o relógio quando a cor do álbum fica próxima demais da capa atrás dele, mantendo o matiz da cor. Só se aplica quando a cor do relógio está definida como Cor do álbum.</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Display condensada em caixa alta — estilo pôster, cabe títulos longos</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Serifada editorial de alto contraste — clima de revista</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Sans geométrica técnica com detalhes peculiares</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Display quadrada de ficção científica — arrojada e futurista</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Caligrafia manuscrita — casual e pessoal</string>
+
+    <string name="setting_queue_local_artwork">Capas da fila da sua biblioteca</string>
+    <string name="setting_queue_local_artwork_description">Players de música locais publicam as capas da fila como referências da biblioteca. Conceda acesso à mídia para que elas apareçam na fila do relógio. Nenhum acesso à internet é usado.</string>
+    <string name="setting_queue_local_artwork_granted">Acesso à mídia concedido — as capas locais da fila serão exibidas</string>
+    <string name="setting_queue_local_artwork_denied">Acesso à mídia negado. Ative-o nas configurações do Android para exibir as capas locais da fila.</string>
+    <string name="setting_queue_remote_artwork">Buscar capas da fila online</string>
+    <string name="setting_queue_remote_artwork_short_description">Apps de streaming (clientes do YouTube Music, Echo Music…) publicam as capas da fila como links, não como imagens, então isto baixa e armazena elas em cache. Desative para manter a fila totalmente offline — essas linhas passam a não mostrar capa nenhuma.</string>
+    <string name="setting_queue_remote_artwork_description">Players de streaming publicam as capas da fila como links em vez de imagens. Baixe cada uma delas uma vez, armazenada em cache neste celular, para mostrá-las na fila do relógio. Apenas a URL da capa que o player já publicou é solicitada — nenhuma conta ou dado pessoal é usado. Ativado por padrão; desative para manter a fila totalmente offline.</string>
+
+    <string name="update_install_notification_title">Atualização do Svartifoss</string>
+    <string name="update_install_notification_tap">Toque para instalar a nova versão</string>
+    <string name="update_install_notification_failed">Falha na instalação. Permita instalações do Svartifoss nas Configurações e tente de novo.</string>
+
+    <string-array name="wear_color_modifier_entries">
+        <item>Nenhum</item>
+        <item>Vibrante</item>
+        <item>Pastel</item>
+        <item>Quente</item>
+        <item>Frio</item>
+    </string-array>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Arredondado</item>
+        <item>Quadrado</item>
+        <item>Supercírculo (Squircle)</item>
+        <item>Círculo</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">Usar paleta de cores</string>
+    <string name="setting_wear_normal_color_multi_description">Ligado, a tela usa uma cor principal mais dois tons de apoio. Desligado, uma única cor é usada em tudo — a do próprio álbum, ou a que você escolheu.</string>
 </resources>

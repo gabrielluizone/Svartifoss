@@ -28,6 +28,15 @@ import timber.log.Timber
  * vanished from recents - until the phone-side service also died and playback restarted.
  */
 class MusicStateListenerService : WearableListenerService() {
+
+    private companion object {
+        /** Last state fingerprint a refresh was requested for. Held on the companion because the
+         *  system creates and tears this listener down around delivery, so an instance field would
+         *  reset between the very events it is meant to deduplicate. */
+        @Volatile
+        var lastGlanceableFingerprint: String? = null
+    }
+
     override fun onDataChanged(dataEvents: DataEventBuffer) {
         super.onDataChanged(dataEvents)
 
@@ -43,7 +52,19 @@ class MusicStateListenerService : WearableListenerService() {
                     }
                 }
 
-        GlanceableSurfaces.requestUpdate(this)
+        // Only when a field the Tile/complication actually renders changed - the same guard
+        // WatchMusicService already applies. The phone re-publishes music state on every position
+        // tick, so this ran roughly once a second, and each run makes the Tiles library bind and
+        // unbind a system service. That library (SysUiTileUpdateRequester) unbinds twice under
+        // load and throws "Service not registered" from its own background thread, where no
+        // try/catch of ours can reach it - so the only lever we have is asking far less often.
+        val fingerprint = latestState?.let {
+            "${it.title}|${it.artist}|${it.playing}|${it.error}"
+        }
+        if (fingerprint != lastGlanceableFingerprint) {
+            lastGlanceableFingerprint = fingerprint
+            GlanceableSurfaces.requestUpdate(this)
+        }
 
         if (latestState?.playing == true && !latestState.error && !WatchMusicService.active) {
             // Same contract as IdleMessageListener: the service promotes itself to foreground, so

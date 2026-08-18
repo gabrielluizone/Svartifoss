@@ -12,6 +12,15 @@
         android:visible="false"
         app:showAsAction="always" />
 
+    <!-- Shown only on the two preference tabs (see MainActivity.onPrepareOptionsMenu): it searches
+         settings, so offering it from Controls or Actions would promise more than it does. -->
+    <item
+        android:id="@+id/menu_search_settings"
+        android:icon="@drawable/ic_search"
+        android:title="@string/settings_search_title"
+        android:visible="false"
+        app:showAsAction="always" />
+
     <!-- The usage guide, formerly the "Guide" bottom-nav tab - its slot now hosts the watch
          face customization screen, so the guide moved up here as a help action. -->
     <item

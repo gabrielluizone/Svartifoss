@@ -82,4 +82,30 @@ class AdaptiveTextContrastTest {
     private companion object {
         const val PIVOT_LIMIT = AdaptiveTextContrast.PIVOT
     }
+
+    // --- prefersDarkText: the solid-panel decision, see relativeLuminance ---
+
+    @Test
+    fun `dark text is chosen on light fills and light text on dark ones`() {
+        assertTrue(AdaptiveTextContrast.prefersDarkText(0xFFFFFFFF.toInt()))
+        assertTrue(AdaptiveTextContrast.prefersDarkText(0xFFEDEDED.toInt()))
+        assertFalse(AdaptiveTextContrast.prefersDarkText(0xFF000000.toInt()))
+        assertFalse(AdaptiveTextContrast.prefersDarkText(0xFF202020.toInt()))
+    }
+
+    /**
+     * Green is far brighter than blue at the same 8-bit value. A naive average would call these two
+     * the same and put dark text on the blue one, where it is unreadable.
+     */
+    @Test
+    fun `luminance is weighted per channel, not averaged`() {
+        assertTrue(AdaptiveTextContrast.prefersDarkText(0xFF00FF00.toInt()))
+        assertFalse(AdaptiveTextContrast.prefersDarkText(0xFF0000FF.toInt()))
+    }
+
+    @Test
+    fun `luminance stays within range for the extremes`() {
+        assertEquals(0f, AdaptiveTextContrast.relativeLuminance(0xFF000000.toInt()), 1e-4f)
+        assertEquals(1f, AdaptiveTextContrast.relativeLuminance(0xFFFFFFFF.toInt()), 1e-4f)
+    }
 }

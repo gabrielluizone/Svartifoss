@@ -40,9 +40,10 @@ import com.svartifoss.snfell.view.watchface.WatchPreviewView
  * A single object because the face picker and the Watch themes list each used to keep their own
  * copy, and they drifted: a face archived in one kept showing in the other.
  */
-object ArchivedFaces {
-    val KEYS = setOf("vinyl", "halo", "aurora", "eclipse", "spectrum", "depth")
-}
+/** Moved to `common` so the on-watch picker shares one list - see
+ *  [com.svartifoss.snfell.common.ArchivedFaces]. Kept as an alias so the phone's call sites and
+ *  their history stay put. */
+typealias ArchivedFaces = com.svartifoss.snfell.common.ArchivedFaces
 
 class WatchThemesActivity : AppCompatActivity() {
 

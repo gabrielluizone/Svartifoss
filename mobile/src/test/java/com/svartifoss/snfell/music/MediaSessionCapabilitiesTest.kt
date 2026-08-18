@@ -14,7 +14,13 @@ class MediaSessionCapabilitiesTest {
 
     @Test
     fun `an action the session omits is not`() {
-        // Retro Music's real playback session: seven transport actions and nothing else.
+        // Retro Music's real playback session: seven transport actions and nothing else - neither
+        // play-from-search nor skip-to-queue-item is among them on either of its two sessions.
+        //
+        // Note what this does NOT justify: the queue tap deliberately ignores the bitmask for
+        // skip-to-queue-item and checks whether playback actually moved instead, because plenty of
+        // players implement that command without listing it here. This set is only evidence that
+        // the bitmask can be *missing* a real capability, never that it is authoritative.
         val retroMusic = PlaybackStateCompat.ACTION_PLAY or
                 PlaybackStateCompat.ACTION_PAUSE or
                 PlaybackStateCompat.ACTION_PLAY_PAUSE or

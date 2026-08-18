@@ -235,7 +235,7 @@
     <string name="preview_sample_title">عنوان آهنگ</string>
     <string name="preview_sample_artist">نام خواننده</string>
     <string name="preview_sample_next_title">آهنگ بعدی</string>
-    <string name="preview_playback_stopped">پخش متوقف شد</string>
+    <string name="preview_playback_stopped">متوقف</string>
     <string name="category_gestures">حرکات و ورودی</string>
     <string name="setting_overlay_blur_radius">تاری پوشش</string>
     <string name="setting_overlay_blur_radius_description">شدت تاری (پیکسل) پس‌زمینه مات پشت حلقه‌های صدا/جست‌وجو و پنل اقدامات سریع — مستقل از تاری پس‌زمینه جلد آلبوم</string>
@@ -506,6 +506,9 @@
         <item>Immersive</item>
         <item>عمق</item>
         <item>چرخ‌فلک</item>
+        <item>گفتگو</item>
+        <item>تقسیم</item>
+        <item>یادداشت</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">جست‌وجوی Expressive</string>
@@ -820,6 +823,10 @@
         <item>انحنای متوسط</item>
         <item>منحنی</item>
         <item>انحنای شدید</item>
+        <item>پخش تا لبه‌ها</item>
+        <item>لبهٔ چپ</item>
+        <item>لبهٔ راست</item>
+        <item>هر دو لبه</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>پس‌زمینه پیش‌فرض</item>
@@ -1096,4 +1103,287 @@
     <string name="update_installing">در حال باز کردن نصب‌کننده…</string>
     <string name="update_install_permission_needed">اجازه نصب برنامه‌ها از Svartifoss را بدهید، سپس دوباره روی به‌روزرسانی گوشی ضربه بزنید.</string>
     <string name="update_phone_failed">دانلود به‌روزرسانی گوشی ناموفق بود. دوباره امتحان کنید.</string>
+    <string name="setting_wear_album_accent_source">منبع رنگ آلبوم</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>متعادل</item>
+        <item>پررنگ‌ترین</item>
+    </string-array>
+
+    <string name="watch_section_typography">متن</string>
+    <string name="watch_section_typography_description">یک قلم انتخاب کنید و عنوان، هنرمند و نماد برنامه را جداگانه سبک‌دهی کنید.</string>
+    <string name="tutorial_quick_panel_title">پنل اقدامات سریع</string>
+    <string name="tutorial_quick_panel_desc">مرکز صفحهٔ درحال‌پخش را دو بار ضربه بزنید تا پنلی با چهار جایگاه باز شود — سه دکمهٔ گرد و یک ردیف پهن زیر آن‌ها. اگر پیکربندی نشوند، این جایگاه‌ها دکمه‌های اعلان خود برنامهٔ درحال‌پخش را بازتاب می‌دهند، بنابراین کنترل‌های واقعی پسندیدن، پخش تصادفی و تکرار آن را دریافت می‌کنید. هر اقدامی را به یک جایگاه اختصاص دهید، یا برای پنهان کردنش «هیچ‌کدام» را انتخاب کنید، در بخش اقدامات روی گوشی.</string>
+    <string name="tutorial_shortcuts_title">میان‌برهای استریم</string>
+    <string name="tutorial_shortcuts_desc">پیوند یک آهنگ، آلبوم، میکس یا پلی‌لیست را از Spotify، YouTube Music، Apple Music، TIDAL، Deezer، Amazon Music یا SoundCloud ذخیره کنید، سپس آن را به هر دکمه، حرکت یا جایگاه پنل اختصاص دهید. سریع‌ترین راه این است که پیوند را مستقیماً از برنامهٔ استریم با Svartifoss هم‌رسانی کنید؛ می‌توانید پیوند کپی‌شده را نیز جای‌گذاری یا آن را تایپ کنید. نیازی به حساب کاربری یا ورود نیست — ساعت از گوشی می‌خواهد پخش را آغاز کند، بنابراین یک میان‌بر پخش می‌کند نه اینکه فقط برنامه را باز کند.</string>
+    <string name="category_wf_typography_font">قلم</string>
+    <string name="category_wf_typography_title">عنوان</string>
+    <string name="category_wf_typography_artist">هنرمند</string>
+    <string name="category_wf_typography_icon">نماد برنامه</string>
+    <string name="category_wf_typography_flex">محورهای Google Sans Flex</string>
+    <string name="setting_wear_font_flex_hint_title">درباره این کنترل‌ها</string>
+    <string name="setting_wear_flex_axes_hint">این‌ها به‌طور خاص Google Sans Flex را دقیق تنظیم می‌کنند — برای استفاده از آن‌ها، این قلم را در بالا انتخاب کنید. ضخامت و کج بودن عنوان و هنرمند در بالا از پیش محورهای ضخامت (wght) و کجی (slnt) همین قلم را تنظیم می‌کنند؛ چهار کنترل زیر روی کل صفحه اعمال می‌شوند.</string>
+    <string name="setting_wear_font_flex_width">عرض</string>
+    <string name="setting_wear_font_flex_width_description">کشش افقی، از فشرده تا گسترده (۲۵ تا ۱۵۱). ۱۰۰ عرض معمولی قلم است.</string>
+    <string name="setting_wear_font_flex_optical_size">اندازه نوری</string>
+    <string name="setting_wear_font_flex_optical_size_description">جزئیات ضربه‌های قلم را متناسب با اندازهٔ واقعی متن تنظیم می‌کند (۶ تا ۱۴۴). مقادیر کمتر برای متن کوچک و مقادیر بیشتر برای متن نمایشی بزرگ مناسب‌اند.</string>
+    <string name="setting_wear_font_flex_grade">درجه</string>
+    <string name="setting_wear_font_flex_grade_description">ضخامت را کمی بدون تغییر چیدمان جابه‌جا می‌کند (۰ تا ۱۰۰) — روشی ظریف برای افزایش کنتراست روی صفحهٔ تیره.</string>
+    <string name="setting_wear_font_flex_roundness">گردی</string>
+    <string name="setting_wear_font_flex_roundness_description">انتهای ضربه‌های قلم را از تیز (۰) تا کاملاً گرد (۱۰۰) ترکیب می‌کند تا حسی دوستانه‌تر بدهد.</string>
+    <string name="preview_chat_today">امروز</string>
+    <string name="category_idle">وقتی چیزی پخش نمی‌شود</string>
+    <string name="settings_search_title">جستجوی تنظیمات</string>
+    <string name="settings_search_hint">جستجوی تنظیمات</string>
+    <string name="settings_search_clear">پاک کردن جستجو</string>
+    <string name="settings_search_prompt">هر تنظیمی را در تنظیمات و ظاهر ساعت با نام جستجو کنید.</string>
+    <string name="settings_search_no_results">هیچ تنظیمی مطابقت ندارد.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="notification_access_banner_summary">برای اعطای آن ضربه بزنید — تا زمانی که این کار را نکنید کنترل پخش غیرفعال می‌ماند</string>
+    <string name="setting_wear_rotary_action">تاج چرخان / لبه</string>
+    <string name="wear_rotary_action_volume">تغییر صدا</string>
+    <string name="wear_rotary_action_seek">پیمایش در آهنگ</string>
+    <string name="wear_rotary_action_off">کاری نکن</string>
+    <string name="face_reset_migration_title">ظاهر ساعت خود را به‌روزرسانی کنید</string>
+    <string name="face_reset_migration_message">شما از نسخه‌ای قدیمی‌تر به‌روزرسانی کردید که در آن همهٔ صفحه‌های ساعت یک مجموعه تنظیمات ظاهری مشترک داشتند. اکنون هر صفحه تنظیمات خودش را به خاطر می‌سپارد، بنابراین تنظیمات قدیمی شما ممکن است در صفحه‌هایی که هرگز مستقیماً شخصی‌سازی نکرده‌اید نامتناسب به نظر برسد. توصیه می‌کنیم همهٔ صفحه‌ها را به تنظیمات پیش‌فرض جدید بازنشانی کنید، یا برای شروعی کاملاً تازه داده‌های برنامه را پاک کنید.</string>
+    <string name="face_reset_migration_reset_button">بازنشانی همهٔ صفحه‌ها</string>
+    <string name="face_reset_migration_clear_data_button">پاک کردن داده‌های برنامه</string>
+    <string name="quick_panel_link_summary">مرکز صفحهٔ ساعت را دو بار ضربه بزنید تا باز شود. برای پیکربندی چهار جایگاه آن، اینجا را در بخش اقدامات ضربه بزنید.</string>
+    <string name="setting_wear_center_long_press">فشار طولانی روی مرکز</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">نسخه‌ای متغیر از Google Sans با عرض، اندازهٔ نوری، درجه و گردی قابل تنظیم — کنترل‌های محورهای زیر را باز می‌کند.</string>
+    <string name="setting_wear_progress_gradient">آمیختن پالت با حلقه</string>
+    <string name="setting_wear_progress_gradient_description">با یک روش رنگ چندرنگ (مکمل، سه‌تایی، مشابه، دورنگ)، حلقهٔ توپر از هر سه رنگ محو می‌شود. برای حلقه‌ای تک‌رنگ این را خاموش کنید و در بقیهٔ جاها پالت آلبوم را نگه دارید.</string>
+    <string name="setting_wear_title_font_weight">ضخامت عنوان</string>
+    <string name="setting_wear_title_font_italic">عنوان کج</string>
+    <string name="setting_wear_title_font_scale">اندازهٔ عنوان</string>
+    <string name="setting_wear_title_font_opacity">شفافیت عنوان</string>
+    <string name="setting_wear_title_font_tracking">فاصلهٔ حروف عنوان</string>
+    <string name="setting_wear_title_color">رنگ متن عنوان</string>
+    <string name="setting_wear_title_custom_color">رنگ سفارشی عنوان</string>
+    <string name="wear_title_color_face_default">پیش‌فرض صفحه (طراحی‌شده)</string>
+    <string name="setting_wear_title_adaptive_contrast">تطبیق رنگ عنوان برای کنتراست</string>
+    <string name="setting_wear_title_adaptive_contrast_description">وقتی رنگ عنوان به تصویر پشت آن خیلی نزدیک باشد، آن را روشن‌تر یا تیره‌تر می‌کند و رنگ‌مایه را حفظ می‌کند. تا زمانی که عنوان رنگ پیش‌فرض صفحه را دارد، اثری ندارد.</string>
+    <string name="setting_wear_artist_adaptive_contrast">تطبیق رنگ هنرمند برای کنتراست</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">وقتی رنگ آلبوم به تصویر پشت خط هنرمند خیلی نزدیک باشد، آن را روشن‌تر یا تیره‌تر می‌کند و رنگ‌مایه را حفظ می‌کند. فقط نواری را که این خط روی آن قرار دارد می‌سنجد، نه کل جلد را.</string>
+    <string name="setting_wear_artist_font_weight">ضخامت هنرمند</string>
+    <string name="setting_wear_artist_font_italic">هنرمند کج</string>
+    <string name="setting_wear_artist_font_scale">اندازهٔ هنرمند</string>
+    <string name="setting_wear_artist_font_opacity">شفافیت هنرمند</string>
+    <string name="setting_wear_artist_font_tracking">فاصلهٔ حروف هنرمند</string>
+    <string name="setting_wear_source_icon_scale">اندازهٔ نماد برنامه</string>
+    <string name="setting_wear_source_icon_opacity">شفافیت نماد برنامه</string>
+    <string name="setting_wear_typography_weight_description">۱ تا ۱۰۰۰. ۴۰۰ ضخامت معمولی صفحه است؛ مقادیر بالاتر ضخیم‌تر است. برای Google Sans Flex این همان محور ضخامت خود این قلم است</string>
+    <string name="setting_wear_typography_scale_description">درصدی از اندازهٔ خودِ صفحه (۷۰ تا ۱۴۰). ۱۰۰ اندازهٔ طراحی‌شدهٔ هر چیدمان را حفظ می‌کند</string>
+    <string name="setting_wear_typography_opacity_description">درصد (۲۰ تا ۱۰۰). ۱۰۰ شفافیت خودِ صفحه را حفظ می‌کند</string>
+    <string name="setting_wear_typography_tracking_description">فاصلهٔ اضافی بین حروف، برحسب صدم em (−۵ تا ۲۰). ۰ فاصله‌گذاری خودِ قلم را حفظ می‌کند</string>
+    <string name="setting_wear_color_modifier">تن رنگ</string>
+    <string name="setting_wear_color_modifier_description">کل پالت را بدون تغییر روش استخراج آن تنظیم می‌کند — با هر روش رنگی کار می‌کند</string>
+    <string name="setting_wear_color_hue_shift">چرخش رنگ</string>
+    <string name="setting_wear_color_hue_shift_description">پالت آلبوم را روی چرخهٔ رنگ، برحسب درجه (۰ تا ۳۵۹) می‌چرخاند. هر روش رنگی رنگ اصلی‌اش را روی رنگ‌مایهٔ خودِ آلبوم نگه می‌دارد، پس این همان چیزی است که تغییر می‌کند. ۰ از رنگ آلبوم همان‌طور که هست استفاده می‌کند؛ یک رنگ عادی ثابت هرگز چرخانده نمی‌شود.</string>
+    <string name="setting_wear_paused_hold">برنامه را پس از مکث فعال نگه دار</string>
+    <string name="setting_wear_paused_hold_description">مدتی که برنامهٔ ساعت پس از مکث از صفحهٔ ساعت در دسترس می‌ماند، تا با بالا آوردن مچ به‌جای باز کردن دوباره بتوانید ادامه دهید. تنظیمات طولانی‌تر یک سرویس پس‌زمینه را در حال اجرا نگه می‌دارند.</string>
+    <string name="wear_paused_hold_off">نگه نداشتن</string>
+    <string name="wear_paused_hold_5">۵ دقیقه</string>
+    <string name="wear_paused_hold_15">۱۵ دقیقه</string>
+    <string name="wear_paused_hold_30">۳۰ دقیقه</string>
+    <string name="wear_paused_hold_60">۱ ساعت</string>
+    <string name="wear_paused_hold_always">تا پایان پخش</string>
+    <string name="setting_wear_idle_button_action">دکمهٔ حالت بدون پخش</string>
+    <string name="setting_wear_idle_auto_open">باز کردن وقتی چیزی پخش نمی‌شود</string>
+    <string name="setting_wear_idle_auto_open_description">وقتی برنامهٔ ساعت را بدون پخش موسیقی باز می‌کنید، مستقیم به این صفحه می‌رود.</string>
+    <string name="wear_idle_action_resume">ادامهٔ آخرین برنامه</string>
+    <string name="wear_idle_action_shortcuts">میان‌برهای پلی‌لیست</string>
+    <string name="wear_idle_action_menu">منوی اقدامات</string>
+    <string name="wear_idle_action_search">جستجو</string>
+    <string name="wear_idle_action_queue">پخش‌شده‌های اخیر</string>
+    <string name="wear_idle_action_none">بدون دکمه</string>
+    <string name="wear_idle_auto_open_none">در پخش‌کننده بمان</string>
+    <string name="action_open_library">مرور کتابخانه</string>
+    <string name="library_up">بازگشت</string>
+    <string name="error_library_unavailable">این برنامه کتابخانهٔ قابل‌مرور ندارد</string>
+    <string name="error_library_empty">اینجا چیزی نیست</string>
+    <string name="error_library_no_player">ابتدا پخش چیزی را شروع کنید</string>
+    <string name="setting_wear_carousel_card_shape">شکل کارت چرخ‌فلک</string>
+    <string name="setting_wear_font_all_screens">استفاده از قلم در همه‌جا</string>
+    <string name="setting_wear_font_all_screens_description">قلم انتخاب‌شده را روی منو، صف و ساعت روی صفحه نیز اعمال می‌کند، نه فقط عنوان و هنرمند آهنگ. خواندن قلم‌های نمایشی یا دست‌نویس در فهرست‌ها می‌تواند سخت‌تر باشد.</string>
+    <string name="setting_wear_clock_font">قلم ساعت</string>
+    <string name="wear_clock_font_follow">پیروی از قلم آهنگ</string>
+    <string name="setting_wear_clock_font_weight">ضخامت ساعت</string>
+    <string name="setting_wear_clock_font_italic">ساعت کج</string>
+    <string name="setting_wear_clock_font_scale">اندازهٔ ساعت</string>
+    <string name="setting_wear_clock_font_tracking">فاصلهٔ حروف ساعت</string>
+    <string name="setting_wear_clock_adaptive_contrast">تطبیق رنگ ساعت برای کنتراست</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">وقتی رنگ آلبوم به تصویر پشت ساعت خیلی نزدیک باشد، آن را روشن‌تر یا تیره‌تر می‌کند و رنگ‌مایه را حفظ می‌کند. فقط زمانی اعمال می‌شود که رنگ ساعت روی رنگ آلبوم تنظیم شده باشد.</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">نمایشی فشرده و تمام‌بزرگ — شبیه پوستر، برای عنوان‌های بلند مناسب است</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">سریف نشریه‌ای با کنتراست بالا — حس مجله</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">سنس‌سریف هندسی و فنی با جزئیات خاص</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">نمایشی مربعی و علمی‌تخیلی — جسورانه و آینده‌نگر</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">دست‌نویس — غیررسمی و شخصی</string>
+    <string name="setting_queue_local_artwork">جلدهای صف از کتابخانهٔ شما</string>
+    <string name="setting_queue_local_artwork_description">پخش‌کننده‌های موسیقی محلی جلدهای صف را به‌صورت ارجاع به کتابخانه منتشر می‌کنند. برای نمایش آن‌ها در صف روی ساعت، دسترسی رسانه را اعطا کنید. هیچ دسترسی اینترنتی در این کار دخیل نیست.</string>
+    <string name="setting_queue_local_artwork_granted">دسترسی رسانه اعطا شد — جلدهای صف محلی نمایش داده خواهند شد</string>
+    <string name="setting_queue_local_artwork_denied">دسترسی رسانه رد شد. برای نمایش جلدهای صف محلی آن را در تنظیمات اندروید فعال کنید.</string>
+    <string name="setting_queue_remote_artwork">دریافت آنلاین جلدهای صف</string>
+    <string name="setting_queue_remote_artwork_short_description">برنامه‌های استریم (کلاینت‌های YouTube Music، Echo Music…) جلدهای صف را به‌صورت پیوند منتشر می‌کنند، نه تصویر، پس این گزینه آن‌ها را دانلود و ذخیره‌سازی موقت می‌کند. برای نگه داشتن صف کاملاً آفلاین آن را خاموش کنید — آن ردیف‌ها دیگر هیچ جلدی نشان نمی‌دهند.</string>
+    <string name="setting_queue_remote_artwork_description">پخش‌کننده‌های استریم جلدهای صف را به‌صورت پیوند منتشر می‌کنند، نه تصویر. هرکدام یک‌بار دانلود و روی این گوشی ذخیرهٔ موقت می‌شوند تا در صف روی ساعت نمایش داده شوند. فقط همان نشانی وب جلدی که پخش‌کننده از قبل منتشر کرده درخواست می‌شود — بدون حساب کاربری یا داده‌های شخصی. به‌طور پیش‌فرض فعال است؛ برای نگه داشتن صف کاملاً آفلاین آن را خاموش کنید.</string>
+    <string name="setting_persistent_notification">مدیریت اعلان «Svartifoss فعال است»</string>
+    <string name="setting_persistent_notification_description">تنظیمات اندروید این اعلان را باز می‌کند — آن را بی‌صدا کنید، از صفحهٔ قفل پنهانش کنید یا به‌گونه‌ای دیگر تنظیمش کنید. نمی‌توان آن را کاملاً خاموش کرد: تا زمانی که سرویس پس‌زمینه‌ای که با ساعت شما گفتگو می‌کند در حال اجراست، اندروید به یک اعلان دائمی نیاز دارد.</string>
+    <string name="update_install_notification_title">به‌روزرسانی Svartifoss</string>
+    <string name="update_install_notification_tap">برای نصب نسخهٔ جدید ضربه بزنید</string>
+    <string name="update_install_notification_failed">نصب ناموفق بود. نصب از Svartifoss را در تنظیمات مجاز کنید و دوباره تلاش کنید.</string>
+
+    <string-array name="wear_center_long_press_entries">
+        <item>تغییر صفحهٔ ساعت</item>
+        <item>باز کردن صف</item>
+        <item>هیچ‌کدام</item>
+    </string-array>
+    <string-array name="wear_color_modifier_entries">
+        <item>هیچ‌کدام</item>
+        <item>پررنگ</item>
+        <item>پاستلی</item>
+        <item>گرم</item>
+        <item>سرد</item>
+    </string-array>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>گرد</item>
+        <item>مربعی</item>
+        <item>مربع‌گرد</item>
+        <item>دایره‌ای</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>غیرفعال</item>
+        <item>نمایش نماد صفحهٔ موسیقی (فقط برای Wear 3.0)</item>
+        <item>باز کردن Svartifoss</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">استفاده از پالت رنگ</string>
+    <string name="setting_wear_normal_color_multi_description">روشن: صفحه یک رنگ اصلی به‌همراه دو تُن کمکی به کار می‌برد. خاموش: همه‌جا فقط یک رنگ — رنگ خودِ آلبوم یا رنگی که انتخاب کرده‌اید.</string>
 </resources>

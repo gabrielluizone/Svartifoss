@@ -18,7 +18,7 @@
     <string name="idle_resume">Retomar reprodução</string>
 
     <string name="no_phone">Nenhum telemóvel ligado</string>
-    <string name="playback_stopped">Reprodução parada</string>
+    <string name="playback_stopped">Parado</string>
     <string name="error">ERRO</string>
     <string name="error_play_services">Erro dos Play Services</string>
     <string name="button">Botão</string>
@@ -35,6 +35,7 @@
     <string name="voice_search_prompt">Procurar música</string>
     <string name="queue_empty">Nenhuma fila disponível</string>
     <string name="queue_now_playing">Em reprodução</string>
+    <string name="queue_load_more">Carregar mais</string>
 
     <string name="hint_title">Como usar</string>
     <string name="hint_edges">Extremidades — toca para as ações mostradas</string>
@@ -66,4 +67,7 @@
     <string name="update_install_title">Atualização do Svartifoss</string>
     <string name="update_install_tap">Toca para instalar a nova versão</string>
     <string name="update_install_failed">Falha na instalação. Permite instalações do Svartifoss nas definições do relógio e tenta novamente a partir do telemóvel.</string>
+    <string name="face_picker_section_builtin">Mostradores integrados</string>
+    <string name="face_picker_section_custom">Os meus temas</string>
+    <string name="face_picker_custom_base">Baseado em %1$s</string>
 </resources>

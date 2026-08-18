@@ -187,12 +187,36 @@ fun MenuScreen(
 }
 
 /**
- * Whether this row leads with genuine cover art rather than a monochrome template glyph - the same
- * rule the quick panel calls `isArtwork`. Only artwork is grown to fill the pill; a tintable glyph
- * blown up to the same size reads as a rendering mistake, not as a bigger icon.
+ * Whether this row leads with genuine cover art, which is the only thing grown to fill the pill.
+ *
+ * Reads [ButtonAction.isCoverArt] rather than `!iconTintable`, which is what it used to do and got
+ * wrong in one specific, very visible way: an app-launcher icon is full-colour and therefore
+ * untintable too, so "Play YT Music" was blown up to the same size as an album cover and became
+ * the largest thing on the row - a solid brand mark filling a 40dp circle, next to rows where that
+ * circle holds actual artwork. `isCoverArt` is the flag the phone already sets for exactly this
+ * distinction ("never a generic app-launcher icon"), and the quick panel has always used it.
+ *
+ * So there are three sizes here, not two: real cover art fills the pill, an app icon sits at
+ * [APP_ICON_SIZE] keeping its own colours, and a monochrome template glyph keeps the glyph size -
+ * a tintable glyph blown up to cover size reads as a rendering mistake, not as a bigger icon.
  */
 private val ButtonAction.leadsWithArtwork: Boolean
-    get() = icon != null && !iconTintable
+    get() = icon != null && isCoverArt
+
+/**
+ * Whether this row leads with an app-launcher icon: full-colour, so not a template glyph, but not
+ * cover art either. Drawn smaller than a cover the way a launcher list does - the row is read by
+ * its label, and the icon is there to confirm the choice rather than to be the choice.
+ */
+private val ButtonAction.leadsWithAppIcon: Boolean
+    get() = icon != null && !isCoverArt && !iconTintable
+
+/** Kept in step with `MainActivity.APP_ICON_DP`: the quick panel lists the same actions as this
+ *  menu, so an app icon that differed between them would read as a bug in one of them. */
+private val APP_ICON_SIZE = 26.dp
+
+/** Monochrome template glyphs, unchanged - they were never the thing that looked wrong. */
+private val GLYPH_SIZE = 30.dp
 
 @Composable
 private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
@@ -213,11 +237,10 @@ private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
     ) {
         val icon = remember(action.icon) { action.icon?.toImageBitmapOrNull() }
         if (icon != null) {
-            // A full-colour cover (e.g. a streaming shortcut's fetched artwork, iconTintable=false)
-            // gets the same circular clip + center-crop the custom-list rows use, so a rectangular
-            // or square thumbnail sits fully inside the circle instead of showing as a raw square.
-            // Monochrome action glyphs (iconTintable=true) stay unclipped - circling a glyph looks
-            // wrong. Mirrors CustomEntryRow's thumbnail and the quick panel's isArtwork rule.
+            // Genuine cover art (e.g. a streaming shortcut's fetched artwork) gets the circular
+            // clip + center-crop the custom-list rows use, so a rectangular or square thumbnail
+            // sits fully inside the circle instead of showing as a raw square. App icons and
+            // monochrome glyphs stay small and unclipped - see leadsWithArtwork.
             val isArtwork = action.leadsWithArtwork
             Image(
                     bitmap = icon,
@@ -226,7 +249,10 @@ private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
                     modifier = if (isArtwork) {
                         Modifier.size(listRowArtworkSize(LIST_ROW_HEIGHT)).clip(CircleShape)
                     } else {
-                        Modifier.size(30.dp)
+                        // No circular clip for either: an app icon already carries its own shape
+                        // (and its own background), so cropping it to a circle would cut the
+                        // corners off a squircle rather than tidy it up.
+                        Modifier.size(if (action.leadsWithAppIcon) APP_ICON_SIZE else GLYPH_SIZE)
                     }
             )
             Spacer(Modifier.width(10.dp))

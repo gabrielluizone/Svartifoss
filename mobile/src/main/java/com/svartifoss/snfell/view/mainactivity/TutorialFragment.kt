@@ -31,6 +31,8 @@ class TutorialFragment : Fragment() {
 
         bindCard(view, R.id.card_taps, R.drawable.ic_nav_actions,
             R.string.tutorial_taps_title, R.string.tutorial_taps_desc)
+        bindCard(view, R.id.card_quick_panel, R.drawable.ic_quick_actions,
+            R.string.tutorial_quick_panel_title, R.string.tutorial_quick_panel_desc)
         bindCard(view, R.id.card_gestures, R.drawable.ic_nav_tutorial,
             R.string.tutorial_gestures_title, R.string.tutorial_gestures_desc)
         bindCard(view, R.id.card_buttons, R.drawable.ic_settings,
@@ -39,6 +41,8 @@ class TutorialFragment : Fragment() {
             R.string.tutorial_rotary_title, R.string.tutorial_rotary_desc)
         bindCard(view, R.id.card_swipe_up, R.drawable.ic_playlist_play,
             R.string.tutorial_swipe_up_title, R.string.tutorial_swipe_up_desc)
+        bindCard(view, R.id.card_shortcuts, R.drawable.ic_playlist_add,
+            R.string.tutorial_shortcuts_title, R.string.tutorial_shortcuts_desc)
         bindCard(view, R.id.card_yt_music, commonR.drawable.action_liked_songs,
             R.string.tutorial_yt_music_title, R.string.tutorial_yt_music_desc)
         bindCard(view, R.id.card_exit, commonR.drawable.button_back,

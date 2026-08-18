@@ -24,6 +24,20 @@ sealed class AppearanceContext {
 }
 
 /** Shared validation contract for selecting a built-in face or an active custom snapshot. */
+/**
+ * Faces retired for known problems.
+ *
+ * Hidden from every face picker so nobody lands on one by accident, while still resolving normally
+ * for anyone already using one - retiring a face must never silently change what is on their wrist.
+ * Lives in `common` because both pickers need it: the phone's list (which can reveal them again
+ * behind the developer "Show archived options" switch) and the on-watch picker, which cannot -
+ * `dev_show_archived` is a phone-local key and is not in [MiscPreferences.EXPORTABLE], so the watch
+ * has no way to read it and simply always hides them.
+ */
+object ArchivedFaces {
+    val KEYS: Set<String> = setOf("vinyl", "halo", "aurora", "eclipse", "spectrum", "depth")
+}
+
 object ThemeAppearance {
     const val CURRENT_SCHEMA = 1
     const val CUSTOM_SCOPE = "custom_active"
@@ -43,7 +57,10 @@ object ThemeAppearance {
             "material",
             "immersive",
             "depth",
-            "carousel"
+            "carousel",
+            "chat",
+            "split",
+            "note"
     )
 
     fun normalizeBaseFace(face: String?): String =

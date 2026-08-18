@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="watch_theme_manage">مدیریت تم‌ها</string>
+    <string name="watch_theme_builtin_subtitle">تم داخلی · چیدمان %1$s</string>
+    <string name="watch_theme_custom_subtitle">تم سفارشی · چیدمان %1$s</string>
+    <string name="watch_theme_unknown_name">تم ناشناخته</string>
+
+    <string name="watch_themes_title">تم‌های ساعت</string>
+    <string name="watch_theme_active_label">تم اعمال‌شده</string>
+    <string name="watch_theme_active_layout">چیدمان: %1$s</string>
+    <string name="watch_theme_preview_description">پیش‌نمایش تمی که هم‌اکنون روی ساعت اعمال شده است</string>
+    <string name="watch_theme_create">ایجاد تم</string>
+    <string name="watch_theme_create_title">ایجاد یک تم جدید</string>
+    <string name="watch_theme_rename_title">تغییر نام تم</string>
+    <string name="watch_theme_name">نام تم</string>
+    <string name="watch_theme_base_layout">چیدمان پایه</string>
+    <string name="watch_theme_default_name">تم %1$s من</string>
+    <string name="watch_theme_generic_name">تم</string>
+    <string name="watch_theme_copy_name">کپی %1$s</string>
+    <string name="watch_theme_built_in_section">تم‌های داخلی</string>
+    <string name="watch_theme_custom_section">تم‌های من</string>
+    <string name="watch_theme_applied">اعمال‌شده</string>
+    <string name="watch_theme_apply_success">%1$s روی ساعت شما اعمال شد</string>
+    <string name="watch_theme_apply_error">این تم اعمال نشد</string>
+    <string name="watch_theme_more_options">گزینه‌های بیشتر تم</string>
+    <string name="watch_theme_list_description">تم‌های داخلی و سفارشی ساعت</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. برای اعمال ضربه بزنید.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. هم‌اکنون اعمال‌شده.</string>
+    <string name="watch_theme_rename">تغییر نام</string>
+    <string name="watch_theme_customize">شخصی‌سازی</string>
+    <string name="watch_theme_duplicate">تکثیر</string>
+    <string name="watch_theme_delete">حذف</string>
+    <string name="watch_theme_delete_title">«%1$s» حذف شود؟</string>
+    <string name="watch_theme_delete_message">این تم ذخیره‌شده و تنظیماتش برای همیشه حذف خواهند شد.</string>
+    <string name="watch_theme_deleted">تم حذف شد</string>
+    <string name="watch_theme_duplicated">«%1$s» ایجاد شد</string>
+    <string name="watch_theme_limit_reached">می‌توانید تا ۲۴ تم سفارشی ذخیره کنید. پیش از ایجاد تم دیگری، یکی را حذف کنید.</string>
+    <string name="watch_theme_name_required">نامی برای تم وارد کنید</string>
+    <string name="watch_theme_name_duplicate">تمی با این نام از قبل وجود دارد</string>
+
+    <string name="watch_theme_face_classic">کلاسیک</string>
+    <string name="watch_theme_face_expressive">اکسپرسیو</string>
+    <string name="watch_theme_face_vinyl">صفحهٔ گرام</string>
+    <string name="watch_theme_face_poster">پوستر</string>
+    <string name="watch_theme_face_studio">استودیو</string>
+    <string name="watch_theme_face_halo">هاله</string>
+    <string name="watch_theme_face_aurora">آرورا</string>
+    <string name="watch_theme_face_eclipse">خسوف آمولد</string>
+    <string name="watch_theme_face_spectrum">طیف</string>
+    <string name="watch_theme_face_material">متریال</string>
+    <string name="watch_theme_face_immersive">غوطه‌ور</string>
+    <string name="watch_theme_face_depth">عمق</string>
+    <string name="watch_theme_face_carousel">چرخ‌فلک</string>
+    <string name="watch_theme_face_chat">گفتگو</string>
+    <string name="watch_theme_face_split">دو‌تکه</string>
+    <string name="watch_theme_face_note">یادداشت</string>
+</resources>

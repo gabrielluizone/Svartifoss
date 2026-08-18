@@ -277,6 +277,15 @@
             android:theme="@style/QueueTheme"
             android:launchMode="singleTop"
             android:noHistory="true" />
+
+        <!-- On-watch face picker (long press the centre of the player). Same noHistory/singleTop
+             shape as the queue and menu: it is a transient chooser, not a place to come back to. -->
+        <activity
+            android:name=".watch.view.facepicker.FacePickerActivity"
+            android:exported="false"
+            android:theme="@style/QueueTheme"
+            android:launchMode="singleTop"
+            android:noHistory="true" />
     </application>
 
 </manifest>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="watch_theme_manage">Управление темами</string>
+    <string name="watch_theme_builtin_subtitle">Встроенная тема · Макет %1$s</string>
+    <string name="watch_theme_custom_subtitle">Своя тема · Макет %1$s</string>
+    <string name="watch_theme_unknown_name">Неизвестная тема</string>
+
+    <string name="watch_themes_title">Темы часов</string>
+    <string name="watch_theme_active_label">ПРИМЕНЁННАЯ ТЕМА</string>
+    <string name="watch_theme_active_layout">Макет: %1$s</string>
+    <string name="watch_theme_preview_description">Предпросмотр темы, применённой сейчас к часам</string>
+    <string name="watch_theme_create">Создать тему</string>
+    <string name="watch_theme_create_title">Создать новую тему</string>
+    <string name="watch_theme_rename_title">Переименовать тему</string>
+    <string name="watch_theme_name">Название темы</string>
+    <string name="watch_theme_base_layout">Базовый макет</string>
+    <string name="watch_theme_default_name">Моя тема %1$s</string>
+    <string name="watch_theme_generic_name">Тема</string>
+    <string name="watch_theme_copy_name">Копия %1$s</string>
+    <string name="watch_theme_built_in_section">Встроенные темы</string>
+    <string name="watch_theme_custom_section">Мои темы</string>
+    <string name="watch_theme_applied">ПРИМЕНЕНО</string>
+    <string name="watch_theme_apply_success">%1$s применена к вашим часам</string>
+    <string name="watch_theme_apply_error">Не удалось применить эту тему</string>
+    <string name="watch_theme_more_options">Другие параметры темы</string>
+    <string name="watch_theme_list_description">Встроенные и свои темы часов</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Нажмите, чтобы применить.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Применена сейчас.</string>
+    <string name="watch_theme_rename">Переименовать</string>
+    <string name="watch_theme_customize">Настроить</string>
+    <string name="watch_theme_duplicate">Дублировать</string>
+    <string name="watch_theme_delete">Удалить</string>
+    <string name="watch_theme_delete_title">Удалить «%1$s»?</string>
+    <string name="watch_theme_delete_message">Эта сохранённая тема и её настройки будут удалены без возможности восстановления.</string>
+    <string name="watch_theme_deleted">Тема удалена</string>
+    <string name="watch_theme_duplicated">«%1$s» создана</string>
+    <string name="watch_theme_limit_reached">Можно сохранить до 24 своих тем. Удалите одну, прежде чем создавать новую.</string>
+    <string name="watch_theme_name_required">Введите название темы</string>
+    <string name="watch_theme_name_duplicate">Тема с таким названием уже существует</string>
+
+    <string name="watch_theme_face_classic">Классический</string>
+    <string name="watch_theme_face_expressive">Экспрессивный</string>
+    <string name="watch_theme_face_vinyl">Винил</string>
+    <string name="watch_theme_face_poster">Постер</string>
+    <string name="watch_theme_face_studio">Студия</string>
+    <string name="watch_theme_face_halo">Ореол</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Затмение AMOLED</string>
+    <string name="watch_theme_face_spectrum">Спектр</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Погружение</string>
+    <string name="watch_theme_face_depth">Глубина</string>
+    <string name="watch_theme_face_carousel">Карусель</string>
+    <string name="watch_theme_face_chat">Чат</string>
+    <string name="watch_theme_face_split">Разделённый</string>
+    <string name="watch_theme_face_note">Заметка</string>
+</resources>

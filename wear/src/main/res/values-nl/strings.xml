@@ -16,7 +16,7 @@
     <string name="idle_hint">Speel iets af op je telefoon</string>
 
     <string name="no_phone">Geen telefoon verbonden</string>
-    <string name="playback_stopped">Afspelen gestopt</string>
+    <string name="playback_stopped">Gestopt</string>
     <string name="error">FOUT</string>
     <string name="error_play_services">Play Services-fout</string>
     <string name="button">Knop</string>
@@ -33,6 +33,7 @@
     <string name="voice_search_prompt">Muziek zoeken</string>
     <string name="queue_empty">Geen wachtrij beschikbaar</string>
     <string name="queue_now_playing">Speelt nu af</string>
+    <string name="queue_load_more">Meer laden</string>
 
     <string name="hint_title">Zo werkt het</string>
     <string name="hint_edges">Randen — tik voor de getoonde acties</string>
@@ -64,4 +65,7 @@
     <string name="update_install_title">Svartifoss-update</string>
     <string name="update_install_tap">Tik om de nieuwe versie te installeren</string>
     <string name="update_install_failed">Installatie mislukt. Sta installaties van Svartifoss toe in de horloge-instellingen en probeer het opnieuw vanaf de telefoon.</string>
+    <string name="face_picker_section_builtin">Ingebouwde wijzerplaten</string>
+    <string name="face_picker_section_custom">Mijn thema\'s</string>
+    <string name="face_picker_custom_base">Gebaseerd op %1$s</string>
 </resources>

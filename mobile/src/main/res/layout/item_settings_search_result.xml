@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:paddingStart="8dp"
+    android:paddingTop="14dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="14dp">
+
+    <TextView
+        android:id="@+id/result_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/google_sans"
+        android:textColor="@color/lyra_on_surface"
+        android:textSize="16sp"
+        tools:text="Album art style" />
+
+    <!-- The breadcrumb is the point of the row as much as the title is: with 190 preferences over
+         12 pages, "which page is this on" is usually what the user actually came to find out. -->
+    <TextView
+        android:id="@+id/result_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/google_sans"
+        android:textColor="@color/lyra_accent"
+        android:textSize="12sp"
+        tools:text="Watch face › Background" />
+
+    <TextView
+        android:id="@+id/result_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/google_sans"
+        android:maxLines="2"
+        android:textColor="@color/lyra_pref_summary"
+        android:textSize="13sp"
+        tools:text="How the album art is treated behind the player." />
+
+</LinearLayout>

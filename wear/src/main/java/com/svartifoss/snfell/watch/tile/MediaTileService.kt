@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import androidx.palette.graphics.Palette
+import androidx.preference.PreferenceManager
 import androidx.wear.protolayout.ActionBuilders
 import androidx.wear.protolayout.ColorBuilders.argb
 import androidx.wear.protolayout.DimensionBuilders.dp
@@ -29,11 +30,15 @@ import androidx.wear.tiles.TileService
 import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.Wearable
 import com.google.common.util.concurrent.ListenableFuture
+import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.SwatchInfo
+import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.proto.MusicState
-import com.svartifoss.snfell.watch.theme.SwatchInfo
 import com.svartifoss.snfell.watch.theme.WatchTheme
-import com.svartifoss.snfell.watch.theme.selectPrimaryAccent
 import com.svartifoss.snfell.watch.view.MainActivity
 import com.matejdro.wearutils.messages.getByteArrayAsset
 import com.matejdro.wearutils.messages.sendMessageToNearestClient
@@ -201,11 +206,30 @@ class MediaTileService : TileService() {
             val swatchInfos = palette.swatches.map { SwatchInfo(it.rgb, it.population) }
             selectPrimaryAccent(
                 palette.getVibrantSwatch()?.let { SwatchInfo(it.rgb, it.population) },
-                swatchInfos
+                swatchInfos,
+                accentSource()
             )
         } catch (e: Exception) {
             null
         }
+    }
+
+    /**
+     * The user's accent-source choice, resolved through the active face like the player does.
+     *
+     * The tile reads no other preference - it renders its own layout rather than a face - but this
+     * one decides which colour the cover *is*, so ignoring it would put the tile on a different
+     * accent from the watch face showing the same track.
+     */
+    private fun accentSource(): AlbumAccentSource {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        return AlbumAccentSource.fromPreference(
+            FaceScopedPreferences.getString(
+                prefs,
+                MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE,
+                ThemeAppearance.resolve(prefs)
+            )
+        )
     }
 
     private fun buildLayout(

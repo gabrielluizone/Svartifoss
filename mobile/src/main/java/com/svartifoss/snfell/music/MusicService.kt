@@ -49,6 +49,7 @@ import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.actions.ActionHandler
+import com.svartifoss.snfell.actions.DEFAULT_QUEUE_PAGE_SIZE
 import com.svartifoss.snfell.actions.OpenPlaylistAction
 import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.actions.playback.LikeAction
@@ -56,16 +57,19 @@ import com.svartifoss.snfell.actions.playback.RepeatAction
 import com.svartifoss.snfell.actions.playback.ShuffleAction
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.QueueEntry
 import com.svartifoss.snfell.common.LibraryEntry
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.config.ActionConfig
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
+import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.di.GlobalConfig
 import com.svartifoss.snfell.di.MusicServiceSubComponent
 import com.svartifoss.snfell.notifications.MediaNotificationActions
@@ -81,13 +85,18 @@ import com.svartifoss.snfell.proto.WatchActions
 import com.google.protobuf.ByteString
 import com.svartifoss.snfell.update.UpdateChecker
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
+import com.matejdro.wearutils.messages.sendMessageToNearestClient
 import com.matejdro.wearutils.lifecycle.EmptyObserver
 import com.matejdro.wearutils.lifecycle.Resource
 import com.matejdro.wearutils.miscutils.BitmapUtils
 import com.matejdro.wearutils.preferences.definition.Preferences
 import com.matejdro.wearvibrationcenter.notificationprovider.ReceivedNotification
 import dagger.android.AndroidInjection
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -112,6 +121,43 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private val ACK_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(3)
         private const val SEEK_DETECTION_THRESHOLD_MS = 1500L
         private const val QUEUE_REFRESH_DEBOUNCE_MS = 600L
+
+        /**
+         * Grace between cancelling the notification and killing the process on "Force stop".
+         *
+         * The cancel itself is a synchronous call into the system's notification service, so it has
+         * already landed by the time this starts - the delay is for the *user*: it lets the shade
+         * finish animating the entry away before the process disappears underneath it, which is the
+         * difference between "I tapped it and it closed" and "something vanished".
+         */
+        private const val FORCE_STOP_KILL_DELAY_MS = 500L
+
+        /**
+         * Hard ceiling on how long "Force stop" waits for the watch to be told before killing this
+         * process anyway.
+         *
+         * The send is best-effort by nature - there may be no watch paired, or it may be out of
+         * range - and a Force stop that visibly does nothing because Bluetooth hung is a worse
+         * failure than a watch that stays up until it next syncs.
+         */
+        private const val FORCE_STOP_KILL_MAX_DELAY_MS = 2_000L
+
+        /**
+         * Outlives the service, on purpose - see [notifyWatchOfShutdown].
+         *
+         * Never cancelled and never meant to be: the only work it carries is the last message this
+         * process sends before it stops or dies, so there is nothing left for a cancellation to
+         * protect.
+         */
+        private val SHUTDOWN_SCOPE = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+        /**
+         * How long a queue jump is given to take visible effect before the media-id route is tried
+         * instead - see [onQueueEntrySelected]. Long enough for a player that updates metadata a
+         * beat after the transport command (most of them), short enough not to feel like a stall.
+         * Overshooting only costs a re-play of the track the user asked for anyway.
+         */
+        private const val QUEUE_SKIP_VERIFY_MS = 1200L
         private const val MAX_TRACK_HISTORY_SIZE = 20
 
         /**
@@ -264,18 +310,34 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     val recentTrackHistory = ArrayDeque<TrackHistoryEntry>()
 
     /**
-     * The playing app's queue, or null when it genuinely publishes none (the caller then falls
-     * back to [recentTrackHistory]).
+     * A queue together with the session that published it.
+     *
+     * The pairing is the point: a `queueId` is an index into one specific session's queue and means
+     * nothing to any other session, so whoever acts on a queue entry has to send the command back
+     * to the same controller the entry came from.
+     */
+    data class QueueSource(
+            val controller: MediaController,
+            val items: List<android.media.session.MediaSession.QueueItem>
+    )
+
+    /**
+     * The playing app's queue and its owning session, or null when the app genuinely publishes none
+     * (the caller then falls back to [recentTrackHistory]).
      *
      * Prefers the tracked controller's own queue and only then looks at the app's other live
-     * sessions - see [ActiveMediaSessionProvider.siblingQueueForPackage] for why an app can have a
-     * queue on a session that is not the one playing.
+     * sessions - see [ActiveMediaSessionProvider.siblingQueueSourceForPackage] for why an app can
+     * have a queue on a session that is not the one playing.
      */
-    fun resolvePlaybackQueue(): List<android.media.session.MediaSession.QueueItem>? {
+    fun resolveQueueSource(): QueueSource? {
         val controller = currentMediaController ?: return null
-        controller.queue?.takeIf { it.isNotEmpty() }?.let { return it }
-        return mediaSessionProvider.siblingQueueForPackage(controller.packageName, controller)
+        controller.queue?.takeIf { it.isNotEmpty() }?.let { return QueueSource(controller, it) }
+        return mediaSessionProvider.siblingQueueSourceForPackage(controller.packageName, controller)
     }
+
+    /** [resolveQueueSource] for callers that only render the entries. */
+    fun resolvePlaybackQueue(): List<android.media.session.MediaSession.QueueItem>? =
+            resolveQueueSource()?.items
 
     private var currentVolume = 0
 
@@ -412,29 +474,80 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val action = intent?.action
 
+        // The two stop actions are handled before promoteToForeground(), and that order is the
+        // point: promoting re-posts the very notification the user just tapped Stop on, so the
+        // entry visibly blinks back into the shade and only leaves once the service finishes
+        // tearing down (or, for Force stop, once the process dies). Taking it down first makes the
+        // tap read the way it should - the notification goes, then the app does.
+        //
+        // Skipping the promotion is safe for exactly these two and nothing else: they arrive only
+        // from this notification's own PendingIntents, which are plain startService calls and only
+        // reachable while the notification - and therefore the foreground service - already exists.
+        // There is no outstanding startForegroundService() contract for them to answer, and
+        // stopSelf() below satisfies the start-timeout contract anyway.
+        if (action == ACTION_STOP_SELF || action == ACTION_FORCE_STOP) {
+            // The watch is a separate app on a separate device and nothing else would ever tell it.
+            // Both taps mean "stop the app", and until now they stopped only the phone half, which
+            // left the watch holding an ongoing-activity chip and a proxy media session pointing at
+            // a service that no longer existed. Sent before the teardown below because Force stop
+            // kills this process outright.
+            val watchNotified = notifyWatchOfShutdown(force = action == ACTION_FORCE_STOP)
+            removeServiceNotifications()
+            if (action == ACTION_FORCE_STOP) {
+                // "Force stop" ends the whole app, not just this service. Unbind the notification
+                // listener first so the system doesn't restart the process for it right away
+                // (it stays unbound until reboot or a listener-access toggle).
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    // Straight at the connected listener instance: it lives in this same process,
+                    // so this takes effect immediately. The startService route only reaches it if
+                    // our own onStartCommand runs before the kill, a race this path regularly
+                    // loses - and losing it means the system rebinds the listener, revives the
+                    // process and posts the persistent notification all over again.
+                    try {
+                        if (!NotificationService.requestUnbindNow()) {
+                            startService(Intent(this, NotificationService::class.java)
+                                    .setAction(NotificationService.ACTION_UNBIND_SERVICE))
+                        }
+                    } catch (e: RuntimeException) {
+                        Timber.w(e, "Listener unbind failed")
+                    }
+                }
+                stopSelf()
+                // Kill once the watch has actually been told, rather than on a fixed delay: a
+                // Bluetooth hand-off regularly takes longer than the 500 ms that used to be
+                // allowed, and this process dying is what cancels the send. The unconditional
+                // backstop is what keeps that from turning into "Force stop sometimes doesn't
+                // stop" when the watch is unreachable and the send never completes at all.
+                val kill = Runnable {
+                    android.os.Process.killProcess(android.os.Process.myPid())
+                }
+                val handler = Handler(Looper.getMainLooper())
+                SHUTDOWN_SCOPE.launch {
+                    watchNotified.join()
+                    handler.removeCallbacks(kill)
+                    handler.postDelayed(kill, FORCE_STOP_KILL_DELAY_MS)
+                }
+                handler.postDelayed(kill, FORCE_STOP_KILL_MAX_DELAY_MS)
+            } else {
+                // Ordinary "Stop". onDestroy would clear the notification too, but only whenever
+                // teardown actually runs; doing it here means the shade is clear on the tap.
+                stopSelf()
+            }
+            return Service.START_NOT_STICKY
+        }
+
         // Before any branch below, because several of them call stopSelf(). A start delivered by
         // startForegroundService() must be answered with startForeground() even when the answer is
         // "and now stop" - otherwise the process is killed for missing the deadline, which is
         // exactly the crash this guards. onCreate only covers the run that created the service.
         promoteToForeground()
 
-        if (action == ACTION_FORCE_STOP) {
-            // "Force stop" from the notification: actually end the whole app, not just this
-            // service. Unbind the notification listener first so the system doesn't restart
-            // the process for it right away (stays unbound until reboot or a listener-access
-            // toggle), then die for real once stopSelf has been processed.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                startService(Intent(this, NotificationService::class.java)
-                        .setAction(NotificationService.ACTION_UNBIND_SERVICE))
-            }
-            stopSelf()
-            Handler(Looper.getMainLooper()).postDelayed({
-                android.os.Process.killProcess(android.os.Process.myPid())
-            }, 300)
-            return Service.START_NOT_STICKY
-        } else if (action == ACTION_START_FROM_WATCH) {
+        if (action == ACTION_START_FROM_WATCH) {
             startedFromWatch = true
-        } else if (action == ACTION_STOP_SELF || !startedFromWatch) {
+        } else if (!startedFromWatch) {
+            // ACTION_STOP_SELF used to share this branch; it returns above now, so what is left is
+            // the real case here - a start that is not from the watch and has no business keeping
+            // a service alive that only exists to serve one.
             stopSelf()
             return Service.START_NOT_STICKY
         } else if (action == ACTION_NOTIFICATION_SERVICE_ACTIVATED) {
@@ -446,8 +559,65 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         return Service.START_STICKY
     }
 
+    /**
+     * Detaches this service from the foreground and clears its persistent notification.
+     *
+     * Explicit rather than implicit: teardown normally removes a foreground notification for free,
+     * but only when the service is actually destroyed in an orderly way. The force-stop path kills
+     * the process outright, and `stopForeground` alone is not enough either - it detaches the
+     * notification from the service without necessarily cancelling it, which is precisely how a
+     * "Music control active" entry outlives the app that posted it. Cancelling by id afterwards is
+     * unconditional and idempotent, so calling this when nothing is posted costs nothing.
+     *
+     * Deliberately leaves [NOTIFICATION_ID_SERVICE_ERROR] alone. That one is not a status readout
+     * but a standing prompt to grant notification access, and this service stopping is the *normal*
+     * consequence of not having it - clearing it here would delete the only route back to the
+     * setting at exactly the moment it is needed. It has its own lifecycle: it is cancelled when
+     * access is actually granted (see ACTION_NOTIFICATION_SERVICE_ACTIVATED).
+     */
+    /**
+     * Tells the watch to shut down too, returning the job so "Force stop" can wait for it.
+     *
+     * Deliberately **not** on [lifecycleScope]. Both callers call `stopSelf()` immediately after,
+     * and that scope is cancelled at `onDestroy` - which lands within milliseconds and would
+     * routinely cancel the very send this exists to make. [SHUTDOWN_SCOPE] is process-scoped, so
+     * the only thing that can cut it short is the process itself going away, which for Force stop
+     * is precisely the event being waited on.
+     */
+    private fun notifyWatchOfShutdown(force: Boolean): Job {
+        val path = if (force) {
+            CommPaths.MESSAGE_FORCE_STOP_WATCH_APP
+        } else {
+            CommPaths.MESSAGE_STOP_WATCH_APP
+        }
+        return SHUTDOWN_SCOPE.launch {
+            try {
+                Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
+                        Wearable.getNodeClient(applicationContext), path)
+            } catch (e: Exception) {
+                // No watch paired, out of range, or Play Services unavailable. Nothing to recover:
+                // the phone half stops regardless, which is what the user actually tapped.
+                Timber.w(e, "Could not tell the watch to stop")
+            }
+        }
+    }
+
+    private fun removeServiceNotifications() {
+        try {
+            ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+            NotificationManagerCompat.from(this).cancel(NOTIFICATION_ID_PERSISTENT)
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to remove service notifications")
+        }
+    }
+
     override fun onDestroy() {
         Timber.d("Service stopped")
+
+        // The ordinary stop path ("Stop", an idle timeout, the system reclaiming us) goes through
+        // here rather than through the force-stop branch, and gets the same guarantee: nothing this
+        // service posted is left in the shade once it is gone.
+        removeServiceNotifications()
 
         try {
             messageClient.removeListener(this)
@@ -883,7 +1053,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun scheduleQueueRefresh() {
         queueRefreshHandler.removeCallbacksAndMessages(null)
         queueRefreshHandler.postDelayed({
-            executeAction(OpenPlaylistAction(this))
+            // At the size the watch last asked for, not the default page. This refresh fires on
+            // every track change, so sending a default-sized list here would silently truncate a
+            // queue the user had just paged through - the rows would vanish under them mid-scroll.
+            openPlaybackQueueOnWatch(lastRequestedQueueLimit)
         }, QUEUE_REFRESH_DEBOUNCE_MS)
     }
 
@@ -966,7 +1139,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     private fun rasterizeSourceIcon(drawable: android.graphics.drawable.Drawable): ByteArray? {
-        val size = 48
+        // Matches MediaNotificationActions.SOURCE_ICON_SIZE_PX: the Split face draws this as its
+        // seam mark at up to 52dp, so a 48px source came out visibly pixelated on a high-density
+        // round watch. This is one icon per playing app, not per state, so the extra bytes are
+        // paid about as rarely as an icon can be.
+        val size = 144
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
         drawable.setBounds(0, 0, size, size)
         drawable.draw(android.graphics.Canvas(bitmap))
@@ -1208,11 +1385,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
 
         when (customListItemAction.listId) {
-            CustomLists.PLAYLIST -> {
-                currentMediaController?.transportControls?.skipToQueueItem(
-                        customListItemAction.entryId.toLong()
-                )
-            }
+            CustomLists.PLAYLIST -> onQueueEntrySelected(customListItemAction.entryId)
             CustomLists.SEARCH_RESULTS -> {
                 // Shares the library's selection path: browsable rows walk in, playable rows go
                 // through MediaBrowserPlayback. The old code issued playFromMediaId on the tracked
@@ -1256,6 +1429,77 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
         }
     }
+
+    /**
+     * Plays the queue row the user tapped on the watch.
+     *
+     * `skipToQueueItem` is issued **unconditionally**, which is deliberate and hard-won: gating it
+     * on `ACTION_SKIP_TO_QUEUE_ITEM` broke players that implement the command without advertising
+     * it, which is common - the advertised bitmask is a hint, not a contract, and taking it as one
+     * diverted a working call into a fallback that then did nothing. An unsupported transport
+     * command is a harmless no-op, so the cost of always trying is nothing and the cost of guessing
+     * wrong is a dead queue.
+     *
+     * It goes to the playing session *and*, when the entries came from a different one, to the
+     * session that published them (see [resolveQueueSource] - a `queueId` indexes the queue of
+     * whoever published it). Sending to both cannot land on the wrong track: the sibling is only
+     * consulted when the playing session has no queue at all, where the command is a no-op.
+     *
+     * Only once that demonstrably changed nothing does the media-id route run, which is the Retro
+     * Music case (neither of its sessions implements the command). Verified rather than predicted,
+     * for the same reason the gate had to go.
+     */
+    private fun onQueueEntrySelected(entryId: String) {
+        val queueId = QueueEntry.queueId(entryId)
+        val mediaId = QueueEntry.mediaId(entryId)
+        val playing = currentMediaController
+        val owner = resolveQueueSource()?.controller
+
+        val known = queueId != android.media.session.MediaSession.QueueItem.UNKNOWN_ID.toLong()
+
+        // Both read *before* anything is issued. A player that reacts to the skip synchronously
+        // would otherwise have already moved by the time these are sampled, making a jump that
+        // worked perfectly look like a no-op and earning the track a pointless second start.
+        val before = playbackIdentity(playing)
+        val alreadyOnThisRow = known && playing?.playbackState?.activeQueueItemId == queueId
+
+        if (known) {
+            Timber.d("Queue tap: skipToQueueItem(%d) on %s", queueId, playing?.packageName)
+            playing?.transportControls?.skipToQueueItem(queueId)
+            if (owner != null && owner.sessionToken != playing?.sessionToken) {
+                Timber.d("Queue tap: also on queue owner %s", owner.packageName)
+                owner.transportControls.skipToQueueItem(queueId)
+            }
+        }
+
+        if (mediaId == null) return
+        // Tapping the row that is already playing is the one case where "nothing changed" is the
+        // correct outcome rather than a failure, so it must not trigger the fallback.
+        if (alreadyOnThisRow) return
+
+        val packageName = playing?.packageName ?: owner?.packageName ?: return
+        lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+            delay(QUEUE_SKIP_VERIFY_MS)
+            if (playbackIdentity(currentMediaController) != before) return@launchWithPlayServicesErrorHandling
+            Timber.d("Queue tap: skip had no effect on %s; playing media id %s",
+                    packageName, mediaId)
+            MediaBrowserPlayback.playMediaId(this@MusicService, packageName, mediaId)
+        }
+    }
+
+    /**
+     * What is playing right now, reduced to the fields that must change if a queue jump worked.
+     *
+     * Title is in there because plenty of sessions never maintain `activeQueueItemId` at all, and a
+     * media id because plenty of others publish no title in metadata. Two adjacent queue rows with
+     * an identical identity are indistinguishable here - the fallback then replays the track the
+     * user asked for, which is the right track either way.
+     */
+    private fun playbackIdentity(controller: MediaController?): Triple<Long?, String?, String?> =
+            Triple(
+                    controller?.playbackState?.activeQueueItemId,
+                    controller?.metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID),
+                    controller?.metadata?.getString(MediaMetadata.METADATA_KEY_TITLE))
 
     /** Removes one entry from a watch-managed deletable custom list (currently just search
      *  history) and re-pushes the updated list so the watch's menu updates immediately. */
@@ -1320,8 +1564,64 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         lastTrackTitle = newTitle
     }
 
-    private fun openPlaybackQueueOnWatch() {
-        executeAction(OpenPlaylistAction(this))
+    /**
+     * How many queue entries the watch last asked for.
+     *
+     * Held here because the phone also pushes the queue on its own (see [scheduleQueueRefresh]) and
+     * those pushes have no request to take a size from - without remembering it, every track change
+     * would reset a paged-through queue to the first page. Reset to the default whenever the watch
+     * opens the queue afresh, which it does by asking for exactly one page.
+     */
+    private var lastRequestedQueueLimit = DEFAULT_QUEUE_PAGE_SIZE
+
+    private fun openPlaybackQueueOnWatch(entryLimit: Int = DEFAULT_QUEUE_PAGE_SIZE) {
+        lastRequestedQueueLimit = entryLimit
+        executeAction(OpenPlaylistAction(this).apply { this.entryLimit = entryLimit })
+    }
+
+    /**
+     * Persists a face the user picked from the on-watch picker.
+     *
+     * The phone is the owner of every synced preference, so this write - not the watch's own - is
+     * what makes the choice stick: `WatchPreferenceSyncCoordinator` sees the change and pushes it
+     * back, which also updates the phone's picker and live preview with no extra plumbing.
+     *
+     * Picking a built-in face additionally **deactivates any active custom theme**, for exactly the
+     * reason `ConfigBackup.import` does the same: a custom theme owns its own base layout, so
+     * letting a bare `wear_screen_face` write land underneath one would silently rewrite a saved
+     * profile rather than switch away from it (see ThemeAppearance.resolve). Switching faces is an
+     * unambiguous "show me this instead", so leaving the theme active is never the intent.
+     */
+    private fun applyScreenFaceFromWatch(rawFace: String) {
+        val face = rawFace.trim()
+        if (face.isEmpty()) return
+        
+        if (face.startsWith("custom:")) {
+            val themeId = face.removePrefix("custom:")
+            val repository = WatchThemeRepository(this)
+            val profile = repository.profiles.find { it.id == themeId }
+            if (profile != null) {
+                repository.applyProfile(preferences, profile)
+                Timber.i("Face set to custom theme '%s' from the watch", profile.name)
+            } else {
+                Timber.w("Watch asked for unknown custom theme ID '%s'; ignoring", themeId)
+            }
+            return
+        }
+
+        if (face !in ThemeAppearance.ALLOWED_BASE_FACES) {
+            Timber.w("Watch asked for unknown face '%s'; ignoring", rawFace)
+            return
+        }
+        val hadCustomTheme = ThemeAppearance.resolve(preferences) is AppearanceContext.Custom
+        preferences.edit().apply {
+            putString(MiscPreferences.WEAR_SCREEN_FACE.key, face)
+            if (hadCustomTheme) {
+                remove(MiscPreferences.WEAR_ACTIVE_CUSTOM_THEME_ID.key)
+                putBoolean(MiscPreferences.WEAR_CUSTOM_THEME_COMPLETE.key, false)
+            }
+        }.apply()
+        Timber.i("Face set to '%s' from the watch (custom theme cleared: %b)", face, hadCustomTheme)
     }
 
     private fun playFromSearch(query: String) {
@@ -1800,10 +2100,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 onCustomMenuItemPresed(CustomListItemAction.parseFrom(event.data))
             }
             CommPaths.MESSAGE_OPEN_PLAYBACK_QUEUE -> {
-                openPlaybackQueueOnWatch()
+                // Payload is the number of entries the watch wants, added for "load more". Older
+                // watch builds send none at all, which reads back as the default first page.
+                val requested = event.data
+                        ?.takeIf { it.size >= 4 }
+                        ?.let { ByteBuffer.wrap(it).int }
+                        ?: DEFAULT_QUEUE_PAGE_SIZE
+                openPlaybackQueueOnWatch(requested)
             }
             CommPaths.MESSAGE_PLAY_FROM_SEARCH -> {
                 playFromSearch(String(event.data, Charsets.UTF_8))
+            }
+            CommPaths.MESSAGE_SET_SCREEN_FACE -> {
+                applyScreenFaceFromWatch(String(event.data, Charsets.UTF_8))
             }
             CommPaths.MESSAGE_DELETE_CUSTOM_LIST_ITEM -> {
                 onCustomMenuItemDeleted(CustomListItemAction.parseFrom(event.data))

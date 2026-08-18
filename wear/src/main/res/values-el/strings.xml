@@ -14,9 +14,19 @@
 
     <string name="idle_nothing_playing">Δεν παίζει τίποτα</string>
     <string name="idle_hint">Παίξε κάτι στο τηλέφωνό σου</string>
+    <string name="idle_hint_resume">Άγγιξε για συνέχιση της τελευταίας εφαρμογής</string>
+    <string name="idle_hint_shortcuts">Άγγιξε για τις συντομεύσεις σου</string>
+    <string name="idle_hint_menu">Άγγιξε για άνοιγμα του μενού</string>
+    <string name="idle_hint_search">Άγγιξε για αναζήτηση</string>
+    <string name="idle_hint_queue">Άγγιξε για ό,τι έπαιξε πρόσφατα</string>
+    <string name="idle_resume">Συνέχιση αναπαραγωγής</string>
+    <string name="idle_action_shortcuts">Άνοιγμα συντομεύσεων</string>
+    <string name="idle_action_menu">Άνοιγμα μενού</string>
+    <string name="idle_action_search">Αναζήτηση</string>
+    <string name="idle_action_queue">Άνοιγμα πρόσφατης αναπαραγωγής</string>
 
     <string name="no_phone">Δεν έχει συνδεθεί τηλέφωνο</string>
-    <string name="playback_stopped">Η αναπαραγωγή σταμάτησε</string>
+    <string name="playback_stopped">Σταμάτησε</string>
     <string name="error">ΣΦΑΛΜΑ</string>
     <string name="error_play_services">Σφάλμα Play Services</string>
     <string name="button">Κουμπί</string>
@@ -33,6 +43,11 @@
     <string name="voice_search_prompt">Αναζήτηση μουσικής</string>
     <string name="queue_empty">Δεν υπάρχει διαθέσιμη ουρά</string>
     <string name="queue_now_playing">Παίζει τώρα</string>
+    <string name="queue_load_more">Φόρτωση περισσότερων</string>
+    <string name="chat_face_today">Σήμερα</string>
+
+    <string name="face_picker_title">Όψη ρολογιού</string>
+    <string name="face_picker_offline">Δεν έχει συνδεθεί τηλέφωνο — αυτή η όψη θα εφαρμοστεί στο ρολόι, αλλά το τηλέφωνο κρατά τη ρύθμιση</string>
 
     <string name="hint_title">Πώς χρησιμοποιείται</string>
     <string name="hint_edges">Άκρα — άγγιξε για τις εμφανιζόμενες ενέργειες</string>
@@ -64,4 +79,7 @@
     <string name="update_install_title">Ενημέρωση Svartifoss</string>
     <string name="update_install_tap">Άγγιξε για εγκατάσταση της νέας έκδοσης</string>
     <string name="update_install_failed">Η εγκατάσταση απέτυχε. Επίτρεψε εγκαταστάσεις από το Svartifoss στις ρυθμίσεις του ρολογιού και δοκίμασε ξανά από το τηλέφωνο.</string>
+    <string name="face_picker_section_builtin">Ενσωματωμένες όψεις</string>
+    <string name="face_picker_section_custom">Τα θέματά μου</string>
+    <string name="face_picker_custom_base">Βασισμένο σε %1$s</string>
 </resources>

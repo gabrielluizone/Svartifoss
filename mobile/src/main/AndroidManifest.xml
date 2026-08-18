@@ -168,6 +168,12 @@
         </activity>
 
         <activity
+            android:name=".view.settings.SettingsSearchActivity"
+            android:exported="false"
+            android:label="@string/settings_search_title"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+
+        <activity
             android:name=".update.UpdateActivity"
             android:exported="false"
             android:label="@string/update_screen_title" />

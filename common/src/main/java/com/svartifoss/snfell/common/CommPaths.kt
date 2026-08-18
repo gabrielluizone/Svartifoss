@@ -39,9 +39,44 @@ interface CommPaths {
         const val MESSAGE_DELETE_CUSTOM_LIST_ITEM = "/Messages/CustomListItemDeleted"
         const val MESSAGE_OPEN_PLAYBACK_QUEUE = "/Messages/OpenPlaybackQueue"
         const val MESSAGE_PLAY_FROM_SEARCH = "/Messages/PlayFromSearch"
+
+        /**
+         * Watch -> phone: the user picked a now-playing face from the on-watch picker. Payload is
+         * the face key as UTF-8 (see [ThemeAppearance.ALLOWED_BASE_FACES]).
+         *
+         * It has to travel to the phone rather than staying local because preferences are
+         * phone-owned and synced one way: `WatchPreferenceSyncCoordinator` re-publishes the whole
+         * snapshot once per process start, so a watch-local write would be silently reverted the
+         * next time the phone's process came up. The phone persists it and the normal sync brings
+         * it straight back, which is also what keeps the phone's own picker and preview honest.
+         */
+        const val MESSAGE_SET_SCREEN_FACE = "/Messages/SetScreenFace"
         // Phone -> watch. Must live under /IdleMessages so IdleMessageListener's manifest
         // path filter matches it even when the watch UI is not running.
         const val MESSAGE_OPEN_VOICE_SEARCH = "/IdleMessages/OpenVoiceSearch"
+
+        /**
+         * Phone -> watch: the user tapped "Stop" on the phone's persistent notification.
+         *
+         * Stopping "the app" has always meant only the phone half, which leaves the watch holding
+         * an ongoing-activity chip and a proxy media session for a phone service that no longer
+         * exists. The watch tears down [WatchMusicService] and closes any open screen.
+         *
+         * Same /IdleMessages prefix and the same reason as [MESSAGE_OPEN_VOICE_SEARCH]: this has to
+         * arrive when the watch UI is *not* running, which is the usual state when someone stops
+         * the app from their phone.
+         */
+        const val MESSAGE_STOP_WATCH_APP = "/IdleMessages/StopApp"
+
+        /**
+         * Phone -> watch: the user tapped "Force stop".
+         *
+         * As on the phone, this is deliberately not an orderly shutdown - the watch process is
+         * killed outright once the service is down, so nothing is left to be revived by a pending
+         * binding. Anything that must happen before the app dies has to happen on receipt, not in
+         * a teardown callback that may never run.
+         */
+        const val MESSAGE_FORCE_STOP_WATCH_APP = "/IdleMessages/ForceStopApp"
 
         /** Immediate MessageClient delivery of a preference snapshot (see WatchPreferenceMessage),
          *  complementing the durable /Settings DataItem. Own prefix so a dedicated manifest

@@ -98,6 +98,7 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.FrostedEdges
 import com.svartifoss.snfell.common.BitmapBlur
 import com.svartifoss.snfell.common.ActivityVisibility
+import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.OverlayBackdropResolver
@@ -114,6 +115,9 @@ import com.svartifoss.snfell.common.IdleScreenAction
 import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.common.RotaryAction
 import com.svartifoss.snfell.common.ScreenButtons
+import com.svartifoss.snfell.common.AlbumAccentSource
+import com.svartifoss.snfell.common.SwatchInfo
+import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.SurfaceColorTreatment
 import com.svartifoss.snfell.common.SurfacePaletteResolver
@@ -132,6 +136,7 @@ import com.svartifoss.snfell.common.view.TapPulseDrawable
 import com.svartifoss.snfell.databinding.ActivityMainBinding
 import com.svartifoss.snfell.proto.MediaAction
 import com.svartifoss.snfell.proto.MusicState
+import com.svartifoss.snfell.watch.communication.WatchAppShutdown
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchInfoSender
@@ -141,13 +146,11 @@ import com.svartifoss.snfell.watch.view.queue.QueueActivity
 import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.config.WatchActionConfigProvider
 import com.svartifoss.snfell.watch.model.Notification
-import com.svartifoss.snfell.watch.theme.SwatchInfo
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.theme.lainFont
 import com.svartifoss.snfell.watch.theme.watchFontTypeface
 import com.svartifoss.snfell.watch.theme.flexTypeface
 import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
-import com.svartifoss.snfell.watch.theme.selectPrimaryAccent
 import com.svartifoss.snfell.common.AppLocales
 import com.svartifoss.snfell.watch.util.StandardActionTitles
 import com.svartifoss.snfell.watch.util.WatchLanguage
@@ -161,7 +164,12 @@ import com.svartifoss.snfell.watch.view.face.StudioFace
 import com.svartifoss.snfell.watch.view.face.VinylFace
 import com.svartifoss.snfell.watch.view.face.MaterialFace
 import com.svartifoss.snfell.watch.view.face.ChronoAmbientFace
+import com.svartifoss.snfell.common.CenterLongPressAction
+import com.svartifoss.snfell.watch.view.facepicker.FacePickerActivity
 import com.svartifoss.snfell.watch.view.face.CarouselFace
+import com.svartifoss.snfell.watch.view.face.ChatFace
+import com.svartifoss.snfell.watch.view.face.NoteFace
+import com.svartifoss.snfell.watch.view.face.SplitFace
 import com.svartifoss.snfell.watch.view.face.QueueCard
 import com.svartifoss.snfell.watch.view.face.DepthFace
 import com.svartifoss.snfell.watch.view.face.ImmersiveFace
@@ -219,6 +227,15 @@ class MainActivity : WearCompanionWatchActivity(),
         const val EXTRA_OPEN_VOICE_SEARCH = "OpenVoiceSearch"
         private const val KEY_SEARCH_QUERY = "search_query"
 
+        /** Leading size for a full-colour app-launcher icon in a quick-panel row. Kept in step
+         *  with `MenuScreen`'s APP_ICON_SIZE - the two surfaces list the same actions, so an app
+         *  icon that differed between them would read as a bug in one of them. */
+        private const val APP_ICON_DP = 26f
+
+        /** What a rail reports as the top of the mini-button band: nothing, in practice. The
+         *  bottom-row value is clamped to .95 at most, so this is "the whole screen is yours". */
+        private const val RAIL_TOP_FRACTION = .95f
+
         /** The classic face's designed text sizes, which the user's size scale multiplies. Named
          *  so the initial setup and applyClassicTypography cannot drift out of step. */
         private const val CLASSIC_TITLE_MAX_SP = 46f
@@ -252,6 +269,12 @@ class MainActivity : WearCompanionWatchActivity(),
         private const val ALBUM_ART_CROSSFADE_MS = 300
         /** Consistent readable ink for every light pill surface. */
         private const val PILL_ON_LIGHT = 0xFF202124.toInt()
+
+        /** The Up Next pill's padding while it shows a glyph and text rather than a cover; see
+         *  [applyUpNextTextPadding]. Matches activity_main.xml's own start/end values. */
+        private const val UP_NEXT_TEXT_PADDING_START_DP = 18f
+        private const val UP_NEXT_TEXT_PADDING_END_DP = 20f
+        private const val UP_NEXT_TEXT_PADDING_VERTICAL_DP = 11f
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -279,14 +302,9 @@ class MainActivity : WearCompanionWatchActivity(),
     private var albumArtHidden: Boolean = false
     private var blurRadiusPx: Float = 35f
     private var overlayBlurRadiusPx: Float = 35f
-    /** Last blurred bitmap produced by [createBlurredBitmapLegacy] for the main album art view
-     *  (pre-API 31 path). Recycled before a new one is created to avoid accumulating bitmaps. */
-    private var cachedMainBlur: Bitmap? = null
     /** Frosted-rim composition and the exact bitmap it was built from - see [frostArtworkIfSelected]. */
     private var cachedFrostedArt: Bitmap? = null
     private var cachedFrostedSource: Bitmap? = null
-    /** Same as [cachedMainBlur] but for the overlay blur image (volume/seek backdrop). */
-    private var cachedOverlayBlur: Bitmap? = null
     private var overlayBackdropStyle: String = "follow"
     private var playerShadingStyle: PlayerShadingStyle = PlayerShadingStyle.FOLLOW
     private var playerShadingIntensity: Float = PlayerShadingIntensity.BALANCED.multiplier
@@ -338,6 +356,26 @@ class MainActivity : WearCompanionWatchActivity(),
             ActivityVisibility.isActive(gesturesMode, isMusicPlaying)
 
     private var centerLongPressQueueEnabled = false
+
+    /** Resolved from the three-way preference, falling back to the legacy boolean above - see
+     *  [CenterLongPressAction]. Re-read alongside it in the preference pass. */
+    private var centerLongPressAction = CenterLongPressAction.FACES
+
+    /**
+     * The one place the centre long-press is acted on, shared by the Compose faces' listener and
+     * the classic face's own GestureDetector. Both used to carry their own copy of the "is the
+     * queue option on" check, which is exactly the kind of duplication that leaves one of them
+     * behind when the behaviour grows a third case.
+     */
+    private fun performCenterLongPress() {
+        val target = when (centerLongPressAction) {
+            CenterLongPressAction.NONE -> return
+            CenterLongPressAction.QUEUE -> QueueActivity::class.java
+            CenterLongPressAction.FACES -> FacePickerActivity::class.java
+        }
+        buzz()
+        startActivity(Intent(this@MainActivity, target))
+    }
     private var wearDynamicAccentEnabled = true
     private var albumArtFadeEnabled = true
     private var screenTheme: ScreenTheme = ScreenTheme.DEFAULT
@@ -396,7 +434,7 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Face keys rendered by the Compose view (everything except the View-based classic). */
     private val composeFaces = setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum",
-            "material", "immersive", "depth", "carousel"
+            "material", "immersive", "depth", "carousel", "chat", "split", "note"
     )
 
     /** Mirrors [FourWayTouchLayout]'s own tap-feedback pulse at a higher z-order, drawn into
@@ -433,6 +471,19 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private var paletteGeneration = 0
     private var lastPaletteArt: Bitmap? = null
+
+    /**
+     * The accent source the cached [lastPaletteArt] extraction was run with.
+     *
+     * Without this the cache is keyed on the bitmap alone, and changing
+     * [MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE] does nothing until the track changes: the
+     * preference observer does re-run [updateDynamicAccentFromArt], but the artwork is the same
+     * object, so it returns early and the raw accent stays whatever the previous source picked.
+     * The treatment/modifier/hue-shift settings are unaffected by that cache because they are
+     * applied *after* extraction, over the stored raw accent - this one decides the raw accent
+     * itself, so it has to invalidate.
+     */
+    private var lastPaletteAccentSource: AlbumAccentSource? = null
     private var lastKnownDurationMs: Long = 0L
     private var lastKnownPositionMs: Long = 0L
     private var pendingRotarySeekFraction: Float? = null
@@ -450,14 +501,17 @@ class MainActivity : WearCompanionWatchActivity(),
     private var shuffleEnabled: Boolean = false
     private var repeatMode: Int = 0
     private var liked: Boolean = false
-
     /** One policy drives every interactive accent consumer. Legacy per-target fields are read
      * only by [resolveLegacyColorTreatment] when a phone has not migrated them yet. */
     private var colorTreatment = "expressive"
     private var normalColor = ""
+    private var normalColorMulti = true
     private var colorModifier = ColorModifier.NONE
     /** Degrees the whole album-derived palette is turned by - see [MiscPreferences.WEAR_COLOR_HUE_SHIFT]. */
     private var colorHueShift = 0f
+
+    /** Which cover swatch becomes the accent - see [MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE]. */
+    private var albumAccentSource = AlbumAccentSource.BALANCED
     private var titleColorMode = MiscPreferences.TITLE_COLOR_FACE_DEFAULT
     private var titleCustomColor = ""
     private var titleAdaptiveContrast = false
@@ -615,11 +669,7 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         override fun onCenterLongPress() {
-            if (!centerLongPressQueueEnabled) {
-                return
-            }
-            buzz()
-            startActivity(Intent(this@MainActivity, QueueActivity::class.java))
+            performCenterLongPress()
         }
 
         override fun onSkipPreviousTap() {
@@ -670,6 +720,10 @@ class MainActivity : WearCompanionWatchActivity(),
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // "Stop"/"Force stop" on the phone's notification now ends the watch app too; the player
+        // is the bottom of the task, so closing here takes the queue/menu/picker with it.
+        WatchAppShutdown.closeOn(this, this)
+
         binding.fourWayTouch.listener = this
         binding.composeTapPulse.setImageDrawable(composeTapPulse)
         binding.swipeTrailOverlay.setImageDrawable(swipeTrail)
@@ -707,6 +761,9 @@ class MainActivity : WearCompanionWatchActivity(),
                 "material" -> MaterialFace(state = faceState.value, listener = expressiveFaceListener)
                 "immersive" -> ImmersiveFace(state = faceState.value, listener = expressiveFaceListener)
                 "depth" -> DepthFace(state = faceState.value, listener = expressiveFaceListener)
+                "chat" -> ChatFace(state = faceState.value, listener = expressiveFaceListener)
+                "split" -> SplitFace(state = faceState.value, listener = expressiveFaceListener)
+                "note" -> NoteFace(state = faceState.value, listener = expressiveFaceListener)
                 "carousel" -> CarouselFace(
                         state = faceState.value,
                         listener = expressiveFaceListener,
@@ -746,11 +803,7 @@ class MainActivity : WearCompanionWatchActivity(),
             }
 
             override fun onLongPress(e: MotionEvent) {
-                if (!centerLongPressQueueEnabled) {
-                    return
-                }
-                buzz()
-                startActivity(Intent(this@MainActivity, QueueActivity::class.java))
+                performCenterLongPress()
             }
 
             // The zone consumes the whole touch stream from onDown() on, so a swipe that happens
@@ -1236,7 +1289,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     artistColor = binding.textArtist.currentTextColor,
                     titleColor = resolvedTitleTextColor(),
                     playing = isMusicPlaying,
-                    idle = idle
+                    idle = idle,
+                    titleIsStatus = titleLineIsStatus,
+                    artistIsStatus = artistLineIsStatus
             )
         }
         syncScreenButtonsVisibility()
@@ -1582,10 +1637,11 @@ class MainActivity : WearCompanionWatchActivity(),
             )
             return
         }
-        if (art === lastPaletteArt) {
+        if (art === lastPaletteArt && albumAccentSource == lastPaletteAccentSource) {
             return
         }
         lastPaletteArt = art
+        lastPaletteAccentSource = albumAccentSource
 
         val generation = ++paletteGeneration
         Palette.from(art).generate { palette ->
@@ -1610,7 +1666,8 @@ class MainActivity : WearCompanionWatchActivity(),
                     .map { SwatchInfo(it.rgb, it.population) }
             val primary = selectPrimaryAccent(
                     palette?.getVibrantSwatch()?.let { SwatchInfo(it.rgb, it.population) },
-                    swatchInfos
+                    swatchInfos,
+                    albumAccentSource
             ) ?: preferredColors.firstOrNull() ?: defaultSeekBarColor
             val realAlbumColors = swatchInfos
                     .sortedByDescending { it.population }
@@ -1677,7 +1734,7 @@ class MainActivity : WearCompanionWatchActivity(),
                 ?: defaultSeekBarColor
         val triad = SurfacePaletteResolver.derive(
                 treatment, colorModifier, rawPrimary, rawSecondary, rawTertiary, fixed,
-                colorHueShift)
+                colorHueShift, normalColorMulti)
         return SurfacePalette(
                 triad.primary,
                 triad.secondary,
@@ -1744,7 +1801,8 @@ class MainActivity : WearCompanionWatchActivity(),
                 sourceSecondary,
                 sourceTertiary,
                 parseHexColorOrNull(normalColor) ?: defaultSeekBarColor,
-                colorHueShift)
+                colorHueShift,
+                normalColorMulti)
         currentAccentColor = globalTriad.primary
         currentSecondaryAccentColor = globalTriad.secondary
         currentTertiaryAccentColor = globalTriad.tertiary
@@ -1851,6 +1909,14 @@ class MainActivity : WearCompanionWatchActivity(),
             // Keep all host-rendered AOD metadata (including the clock) following a newly
             // extracted album tint, rather than updating only the title line.
             applyAmbientViewColors()
+        } else {
+            // The awake clock is the one album-derived element resolved *outside* this function
+            // (resolveClockColor reads currentAccentColor, which is only assigned above), and the
+            // art-change path calls applyClockAppearance immediately - while Palette.generate is
+            // still running. So the clock was painted from the *previous* cover's accent and
+            // nothing brought it back: it stayed one track behind until some unrelated preference
+            // change happened to refresh it. AOD already had this covered by the branch above.
+            applyClockAppearance()
         }
     }
 
@@ -2013,10 +2079,14 @@ class MainActivity : WearCompanionWatchActivity(),
                     RenderEffect.createBlurEffect(blurRadiusPx, blurRadiusPx, Shader.TileMode.CLAMP)
             )
         } else {
-            val newBlur = createBlurredBitmapLegacy(source, blurRadiusPx)
-            binding.albumArt.setImageBitmap(newBlur)
-            cachedMainBlur?.let { if (!it.isRecycled) it.recycle() }
-            cachedMainBlur = newBlur
+            // Deliberately NOT recycled. fadeToAlbumArt captures the *current* drawable before
+            // calling in here and then puts it into a TransitionDrawable as the outgoing layer, so
+            // the previous blur is still being drawn for the length of the cross-fade. Recycling it
+            // the moment the new one was set is what produced "Canvas: trying to use a recycled
+            // bitmap" on every faded track change on pre-31 watches, which is exactly where this
+            // legacy path runs. Bitmap memory has been reclaimed by the GC since API 26, so
+            // dropping the reference is all that is needed - and all that is safe.
+            binding.albumArt.setImageBitmap(createBlurredBitmapLegacy(source, blurRadiusPx))
         }
     }
 
@@ -2047,10 +2117,8 @@ class MainActivity : WearCompanionWatchActivity(),
                     RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP)
             )
         } else {
-            val newBlur = createBlurredBitmapLegacy(source, radius)
-            binding.overlayBlurImage.setImageBitmap(newBlur)
-            cachedOverlayBlur?.let { if (!it.isRecycled) it.recycle() }
-            cachedOverlayBlur = newBlur
+            // Not recycled, for the same reason as the main blur above.
+            binding.overlayBlurImage.setImageBitmap(createBlurredBitmapLegacy(source, radius))
         }
     }
 
@@ -2767,6 +2835,27 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.quickActionUpNextArtwork.setImageDrawable(null)
         binding.quickActionUpNextArtwork.visibility = View.GONE
         binding.quickActionUpNextIcon.visibility = View.VISIBLE
+        // applyListRowArtworkSize replaces the pill's padding with the cover inset on every side;
+        // the glyph shown here wants the text keyline back, or it sits further left and tighter
+        // than every other row's icon on the next pass.
+        applyUpNextTextPadding()
+    }
+
+    /**
+     * The Up Next pill's padding when it is showing text and a glyph rather than a cover: a text
+     * keyline at the start and enough vertical room for the label/track pair.
+     *
+     * One function because two places set it - the panel layout pass and [clearQuickUpNextArtwork] -
+     * and because [applyListRowArtworkSize] deliberately overrides it when a cover is present. Two
+     * copies of these numbers would drift the moment one of them was tuned.
+     */
+    private fun applyUpNextTextPadding() {
+        val d = resources.displayMetrics.density
+        binding.quickActionUpNext.setPadding(
+                (UP_NEXT_TEXT_PADDING_START_DP * d).roundToInt(),
+                (UP_NEXT_TEXT_PADDING_VERTICAL_DP * d).roundToInt(),
+                (UP_NEXT_TEXT_PADDING_END_DP * d).roundToInt(),
+                (UP_NEXT_TEXT_PADDING_VERTICAL_DP * d).roundToInt())
     }
 
     private fun onQuickPanelButtonClicked(index: Int) {
@@ -2894,11 +2983,16 @@ class MainActivity : WearCompanionWatchActivity(),
         // possible while keeping the whole row inside a round screen, so it hugs the bottom of the
         // player's space instead of floating high. repositionScreenButtonsRow then slides it up
         // only as far as it must to clear the track text.
-        val isCurved = resources.configuration.isScreenRound && screenButtonsCurveStyle != "flat"
+        val placement = MiniButtonPlacement.fromPreference(screenButtonsCurveStyle)
+        val isCurved = resources.configuration.isScreenRound && placement.followsCurve
         val effectiveCount = if (isCurved) 1 else visibleButtons.size
         autoBottomMarginPx = autoRowBottomMarginPx(effectiveCount, buttonWidth, gap)
-        rowParams.bottomMargin = autoBottomMarginPx
-        binding.screenButtonsRow.layoutParams = rowParams
+        // A rail is centred on the screen and owns its own bounds - applying the bottom-row margin
+        // here would shove it off centre on the next size pass, undoing the placement.
+        if (!placement.isRail) {
+            rowParams.bottomMargin = autoBottomMarginPx
+            binding.screenButtonsRow.layoutParams = rowParams
+        }
     }
 
     /** Lowest round-safe resting margin for the mini-button row: the smallest gap from the bottom
@@ -3038,6 +3132,24 @@ class MainActivity : WearCompanionWatchActivity(),
             return
         }
 
+        if (MiniButtonPlacement.fromPreference(screenButtonsCurveStyle).isRail) {
+            // Nothing to dodge and nothing to lift: a rail is placed absolutely against the bezel
+            // and occupies no bottom band. Report the band as free so the faces underneath use the
+            // full height instead of reserving room for a row that is no longer there.
+            applyScreenButtonsCurvature()
+            if (row.alpha != screenButtonsOpacity) {
+                row.alpha = screenButtonsOpacity
+            }
+            updateFaceState { state ->
+                if (abs(state.miniButtonsTopFraction - RAIL_TOP_FRACTION) < .002f) {
+                    state
+                } else {
+                    state.copy(miniButtonsTopFraction = RAIL_TOP_FRACTION)
+                }
+            }
+            return
+        }
+
         val density = resources.displayMetrics.density
         val gapPx = 6 * density
 
@@ -3112,7 +3224,7 @@ class MainActivity : WearCompanionWatchActivity(),
             val requiredTop = textBottom?.plus(gapPx)
             if (requiredTop != null) {
                 val unscaledVisualExtent = buttonHeight + maxRise
-                val availableHeight = (bottom - requiredTop).coerceAtLeast(0f)
+                val availableHeight = (bottom - requiredTop).coerceIn(0f, Float.POSITIVE_INFINITY)
                 scale = minOf(scale, availableHeight / unscaledVisualExtent)
                         .coerceIn(minimumScale, 1f)
             }
@@ -3161,18 +3273,22 @@ class MainActivity : WearCompanionWatchActivity(),
         val buttons = screenButtonViews().map { it.second }
         val visibleButtons = buttons.filter { it.visibility == View.VISIBLE }
 
-        val tiltFraction = when (screenButtonsCurveStyle) {
-            "arc" -> 0f
-            "curved_gentle" -> 0.25f
-            "curved_soft" -> 0.5f
-            "curved_medium" -> 0.75f
-            "curved" -> 1f
-            "curved_extreme" -> 2.2f
-            else -> null
+        val requested = MiniButtonPlacement.fromPreference(screenButtonsCurveStyle)
+        applyScreenButtonsRowBounds(requested)
+        if (requested.isRail) {
+            return applyScreenButtonsRail(requested, visibleButtons)
+        }
+        // Leaving a rail: the pills carry horizontal offsets no bottom-row pass would clear.
+        for (button in buttons) {
+            button.translationX = 0f
         }
 
-        if (tiltFraction == null || !resources.configuration.isScreenRound) {
+        val placement = MiniButtonPlacement.fromPreference(screenButtonsCurveStyle)
+        val tiltFraction = placement.tiltFraction
+
+        if (!placement.followsCurve || !resources.configuration.isScreenRound) {
             for (button in buttons) {
+                button.translationX = 0f
                 button.translationY = 0f
                 button.rotation = 0f
             }
@@ -3223,16 +3339,8 @@ class MainActivity : WearCompanionWatchActivity(),
                 clampedDx
             }
 
-            val riseScale = when (screenButtonsCurveStyle) {
-                // Extreme changes the tangent angle, not the bezel clearance. Multiplying both by
-                // 2.2 lifted the outer buttons away from the glass instead of supporting them on it.
-                "curved_extreme" -> 1.0f
-                "curved" -> 1.2f
-                "curved_medium" -> 1.0f
-                "curved_soft" -> 0.8f
-                "curved_gentle" -> 0.6f
-                else -> 1.0f
-            }
+            // Extreme changes the tangent angle, not the bezel clearance - see the enum's note.
+            val riseScale = placement.riseScale
             val referenceDx = (buttonWidth / 2f).coerceIn(0f, radius - 1f)
             val referenceClearance = radius - kotlin.math.sqrt(
                     radius * radius - referenceDx * referenceDx)
@@ -3246,7 +3354,7 @@ class MainActivity : WearCompanionWatchActivity(),
             // back over the face controls. Keep just enough rise to read as an arc, but enough to avoid clipping.
             // Preserve the arc without floating the outer buttons back into the player. The old
             // 32/64dp caps visually detached a compact row from the lower bezel.
-            val maxCap = if (screenButtonsCurveStyle == "curved_extreme") 36f else 18f
+            val maxCap = placement.maxRiseDp
             val baseRise = minOf(naturalRise, maxCap * resources.displayMetrics.density)
             // With three configured buttons, non-Extreme curves lift the two outer pills a final
             // 4dp. Extreme already follows the exact bezel delta, so adding it there would make
@@ -3254,7 +3362,7 @@ class MainActivity : WearCompanionWatchActivity(),
             val isOuterOfThree = visibleButtons.size == 3 &&
                     (button === visibleButtons.first() || button === visibleButtons.last())
             val rise = baseRise + if (isOuterOfThree &&
-                    screenButtonsCurveStyle != "curved_extreme") {
+                    placement != MiniButtonPlacement.CURVED_EXTREME) {
                 4f * resources.displayMetrics.density
             } else {
                 0f
@@ -3262,7 +3370,7 @@ class MainActivity : WearCompanionWatchActivity(),
             // Tangent to the circle: the outer end of each side pill tips up along the bezel.
             val tangentRotation = tiltFraction *
                     -Math.toDegrees(kotlin.math.asin((clampedDx / radius).toDouble())).toFloat()
-            val maxRotation = if (screenButtonsCurveStyle == "curved_extreme") 35f else 15f
+            val maxRotation = placement.maxRotationDegrees
             val rotation = tangentRotation.coerceIn(-maxRotation, maxRotation)
 
             placements.add(Placement(button, rise, rotation))
@@ -3278,11 +3386,201 @@ class MainActivity : WearCompanionWatchActivity(),
             row.requestLayout()
         }
 
+        val spreadOffsets = if (placement.axis == MiniButtonPlacement.Axis.BOTTOM_ROW_SPREAD) {
+            spreadOffsetsFor(visibleButtons, row, content, radius, maxRise)
+        } else {
+            emptyMap()
+        }
+
         for ((button, rise, rotation) in placements) {
+            button.translationX = spreadOffsets[button] ?: 0f
             button.translationY = -rise
             button.rotation = rotation
         }
         return maxRise
+    }
+
+    /**
+     * Sizes the row itself to whatever the placement needs to stay tappable.
+     *
+     * A pill is only touchable where its *parent* also receives the event: a `ViewGroup` never
+     * dispatches a touch that lands outside its own bounds, however far a child has been
+     * translated. The default `wrap_content` row is therefore only correct while the pills stay
+     * inside it - the moment one is pushed out to a wall or an edge it would draw in the right
+     * place and do nothing when tapped, the least debuggable kind of broken.
+     *
+     * A full-frame row is safe to leave over the player: the row is not itself clickable, so when
+     * no pill is hit it declines the event and the parent carries on down to the gesture layers
+     * beneath it.
+     */
+    private fun applyScreenButtonsRowBounds(placement: MiniButtonPlacement) {
+        val row = binding.screenButtonsRow
+        val params = row.layoutParams as? FrameLayout.LayoutParams ?: return
+        val wantsFullWidth = placement.isRail ||
+                placement.axis == MiniButtonPlacement.Axis.BOTTOM_ROW_SPREAD
+        val targetWidth = if (wantsFullWidth) {
+            FrameLayout.LayoutParams.MATCH_PARENT
+        } else {
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        }
+        val targetHeight = if (placement.isRail) {
+            FrameLayout.LayoutParams.MATCH_PARENT
+        } else {
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        }
+        val targetGravity = if (placement.isRail) {
+            Gravity.CENTER
+        } else {
+            Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM
+        }
+        // A rail is centred on the screen, so the auto bottom margin that lifts a bottom row clear
+        // of the bezel would only push it off-centre.
+        val targetBottomMargin = if (placement.isRail) 0 else autoBottomMarginPx
+        if (params.width == targetWidth && params.height == targetHeight &&
+                params.gravity == targetGravity && params.bottomMargin == targetBottomMargin) {
+            return
+        }
+        params.width = targetWidth
+        params.height = targetHeight
+        params.gravity = targetGravity
+        params.bottomMargin = targetBottomMargin
+        row.layoutParams = params
+        if (placement.isRail) {
+            // The bottom-row pass owns these; a rail places every pill absolutely and must start
+            // from an untransformed row or the offsets compound.
+            row.translationY = 0f
+            row.scaleX = 1f
+            row.scaleY = 1f
+        }
+    }
+
+    /**
+     * Horizontal offsets that push a spread row's outer pills out to the screen's edges.
+     *
+     * The reach is the *chord* at the row's own depth, not the screen width: near the bottom of a
+     * round display the usable width has already collapsed well inside the diameter, and spreading
+     * to half the width would put the outer pills behind the bezel. Everything is measured from the
+     * pill's outer edge for the same reason.
+     *
+     * The row itself is widened to the full frame by [applyScreenButtonsRowBounds] before this
+     * runs - a `wrap_content` row would keep its original narrow touch bounds and the moved pills,
+     * drawn correctly, would simply not be tappable (a parent only dispatches touches that land
+     * inside a child).
+     */
+    private fun spreadOffsetsFor(
+            visibleButtons: List<ImageView>,
+            row: View,
+            content: View,
+            radius: Float,
+            maxRise: Float
+    ): Map<ImageView, Float> {
+        if (visibleButtons.size < 2) return emptyMap()
+        val centerX = content.width / 2f
+        // Depth of the highest point the row reaches, so the chord is measured where the pills
+        // actually are rather than at their resting line.
+        val rowCenterY = row.top + row.height / 2f - maxRise
+        val dy = abs(rowCenterY - content.height / 2f).coerceAtMost(radius - 1f)
+        val halfChord = kotlin.math.sqrt(radius * radius - dy * dy)
+        val inset = 6f * resources.displayMetrics.density
+
+        val offsets = HashMap<ImageView, Float>()
+        val first = visibleButtons.first()
+        val last = visibleButtons.last()
+        for (button in visibleButtons) {
+            if (button !== first && button !== last) continue
+            val sign = if (button === first) -1f else 1f
+            val currentCenterX = row.left + button.left + button.width / 2f
+            val targetCenterX = centerX + sign * (halfChord - inset - button.width / 2f)
+            // Never pull a pill inwards: on a narrow screen the chord can sit inside where the row
+            // already had it, and "spread" that squeezes is worse than one that does nothing.
+            val delta = targetCenterX - currentCenterX
+            offsets[button] = if (sign < 0f) minOf(delta, 0f) else maxOf(delta, 0f)
+        }
+        return offsets
+    }
+
+    /**
+     * Lays the pills out down a wall instead of along the bottom.
+     *
+     * Each pill is placed at its own depth and then pushed out to the chord at *that* depth, so the
+     * rail hugs the bezel rather than running down a straight line that only touches it once. The
+     * pills stay upright: a rail is read top-to-bottom and rotating each one to the tangent turned
+     * the labels into a fan.
+     *
+     * Returns 0 for the row's rise because a rail occupies no bottom band at all - which is also
+     * why [repositionScreenButtonsRow] reports the full height as free for the faces underneath.
+     */
+    private fun applyScreenButtonsRail(
+            placement: MiniButtonPlacement,
+            visibleButtons: List<ImageView>
+    ): Float {
+        val row = binding.screenButtonsRow
+        val content = binding.contentFrame
+        if (content.width == 0 || row.width == 0 || visibleButtons.isEmpty()) return 0f
+
+        row.clipChildren = false
+        row.clipToPadding = false
+        content.clipChildren = false
+        content.clipToPadding = false
+        if (row.paddingTop != 0) {
+            row.setPadding(0, 0, 0, 0)
+        }
+
+        val density = resources.displayMetrics.density
+        val radius = minOf(content.width, content.height) / 2f
+        val centerX = content.width / 2f
+        val centerY = content.height / 2f
+        val gap = 8f * density
+        val inset = 6f * density
+        val round = resources.configuration.isScreenRound
+
+        fun place(button: ImageView, targetCenterX: Float, targetCenterY: Float) {
+            val currentCenterX = row.left + button.left + button.width / 2f
+            val currentCenterY = row.top + button.top + button.height / 2f
+            button.translationX = targetCenterX - currentCenterX
+            button.translationY = targetCenterY - currentCenterY
+            button.rotation = 0f
+        }
+
+        /** Stacks [group] down one wall, centred vertically on the screen. */
+        fun rail(group: List<ImageView>, onLeft: Boolean) {
+            if (group.isEmpty()) return
+            val step = group.first().height + gap
+            val firstOffset = -(group.size - 1) / 2f
+            group.forEachIndexed { index, button ->
+                val targetCenterY = centerY + (firstOffset + index) * step
+                val dy = abs(targetCenterY - centerY).coerceAtMost(radius - 1f)
+                val halfExtent = if (round) {
+                    // Clear the bezel at the pill's own corners, not at its centre line, or a tall
+                    // pill's top and bottom edges cross the glass while its middle looks fine.
+                    val corner = (dy + button.height / 2f).coerceAtMost(radius - 1f)
+                    kotlin.math.sqrt(radius * radius - corner * corner)
+                } else {
+                    centerX
+                }
+                val sign = if (onLeft) -1f else 1f
+                place(button,
+                        centerX + sign * (halfExtent - inset - button.width / 2f),
+                        targetCenterY)
+            }
+        }
+
+        when (placement.axis) {
+            MiniButtonPlacement.Axis.LEFT_RAIL -> rail(visibleButtons, onLeft = true)
+            MiniButtonPlacement.Axis.RIGHT_RAIL -> rail(visibleButtons, onLeft = false)
+            MiniButtonPlacement.Axis.SPLIT_RAILS -> {
+                val left = visibleButtons.filterIndexed { i, _ ->
+                    MiniButtonPlacement.splitSideIsLeft(i)
+                }
+                val right = visibleButtons.filterIndexed { i, _ ->
+                    !MiniButtonPlacement.splitSideIsLeft(i)
+                }
+                rail(left, onLeft = true)
+                rail(right, onLeft = false)
+            }
+            else -> Unit
+        }
+        return 0f
     }
 
     /**
@@ -3739,10 +4037,18 @@ class MainActivity : WearCompanionWatchActivity(),
         centerLongPressQueueEnabled = Preferences.getBoolean(
                 preferences, MiscPreferences.WEAR_CENTER_LONG_PRESS_QUEUE
         )
+        centerLongPressAction = CenterLongPressAction.resolve(
+                Preferences.getString(preferences, MiscPreferences.WEAR_CENTER_LONG_PRESS))
         colorTreatment = resolveColorTreatmentPreference()
         normalColor = resolveNormalColorPreference()
+        // Plain faceBool now that the key is in SCOPED_KEYS: the four-step resolution ends at the
+        // definition default (true), which is what the hand-rolled presence check was standing in
+        // for while the key was unscoped and faceBool could not see it.
+        normalColorMulti = faceBool(MiscPreferences.WEAR_NORMAL_COLOR_MULTI)
         colorModifier = ColorModifier.fromPreference(faceString(MiscPreferences.WEAR_COLOR_MODIFIER))
         colorHueShift = faceInt(MiscPreferences.WEAR_COLOR_HUE_SHIFT).toFloat()
+        albumAccentSource = AlbumAccentSource.fromPreference(
+                faceString(MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE))
         titleColorMode = faceString(MiscPreferences.WEAR_TITLE_COLOR_MODE)
         titleCustomColor = faceString(MiscPreferences.WEAR_TITLE_CUSTOM_COLOR)
         titleAdaptiveContrast = faceBool(MiscPreferences.WEAR_TITLE_ADAPTIVE_CONTRAST)
@@ -5275,9 +5581,21 @@ class MainActivity : WearCompanionWatchActivity(),
             } else {
                 icon.setImageResource(com.svartifoss.snfell.common.R.drawable.action_custom)
             }
-            // Full-colour cover art (e.g. an online shortcut thumbnail) fills a circle and crops
-            // rectangles; monochrome template glyphs stay centered and follow the panel tint.
-            val isArtwork = action.icon != null && !action.iconTintable
+            // Genuine cover art (e.g. an online shortcut thumbnail) fills a circle and crops
+            // rectangles; everything else stays centered at icon size.
+            //
+            // Reads isCoverArt, not !iconTintable, which is what it used to do and got wrong the
+            // same way MenuScreen.leadsWithArtwork did: an app-launcher icon is full-colour and so
+            // untintable too, so an "open app" row grew its icon to album-cover size and had it
+            // cropped into a circle - a brand mark rendered larger than the actual album art
+            // beside it, with the corners of its squircle sliced off. Note the coverBitmap check
+            // below already used isCoverArt, so the pill background was right while the leading
+            // icon was not.
+            val isArtwork = action.icon != null && action.isCoverArt
+            // Full-colour but not artwork: an app icon. Kept smaller than a cover and smaller than
+            // the layout's glyph size, the way a launcher list draws them - the row is read by its
+            // label, and the icon is there to confirm the choice rather than to be it.
+            val isAppIcon = action.icon != null && !action.isCoverArt && !action.iconTintable
             // Cover style + the opt-in shortcut-cover toggle: only a row backed by genuine cover
             // art (action.isCoverArt - never a plain app-launcher icon) fills the whole pill with
             // it, the same treatment the Up Next row gets for the actual track artwork.
@@ -5300,6 +5618,16 @@ class MainActivity : WearCompanionWatchActivity(),
                 if (action.iconTintable) icon.setColorFilter(tint) else icon.clearColorFilter()
                 icon.scaleType = ImageView.ScaleType.FIT_CENTER
                 icon.clipToOutline = false
+                if (isAppIcon) {
+                    // No circular clip either: an app icon carries its own shape and its own
+                    // background, so cropping it to a circle cuts the corners off a squircle
+                    // rather than tidying it up.
+                    val sizePx = (APP_ICON_DP * resources.displayMetrics.density).roundToInt()
+                    icon.layoutParams = icon.layoutParams?.apply {
+                        width = sizePx
+                        height = sizePx
+                    }
+                }
             }
             title.text = action.title
                     ?: StandardActionTitles.get(this, action.key)
@@ -5415,9 +5743,15 @@ class MainActivity : WearCompanionWatchActivity(),
         upNextParams.gravity = Gravity.CENTER_HORIZONTAL
         upNext.layoutParams = upNextParams
         upNext.minimumHeight = (58f * density).roundToInt()
-        upNext.setPadding(
-                (18f * density).roundToInt(), (11f * density).roundToInt(),
-                (20f * density).roundToInt(), (11f * density).roundToInt())
+        // The text padding squeezes a cover out of round, and this runs every time the panel is
+        // rebuilt - after the artwork update as often as before it. Hand the row back to the
+        // artwork ruler whenever there is artwork, so whichever of the two ran last, the cover
+        // still ends up circular.
+        if (binding.quickActionUpNextArtwork.visibility == View.VISIBLE) {
+            applyListRowArtworkSize(upNext, binding.quickActionUpNextArtwork)
+        } else {
+            applyUpNextTextPadding()
+        }
 
         val visible = quickPanelViews().filter { it.visibility == View.VISIBLE }
         if (visible.isNotEmpty()) {
@@ -5650,17 +5984,27 @@ class MainActivity : WearCompanionWatchActivity(),
      */
     private fun applyListRowArtworkSize(row: View, icon: ImageView) {
         val density = resources.displayMetrics.density
-        val sizePx =
-                (listRowArtworkSize(listRowSize.contentHeight + 24.dp).value * density).roundToInt()
+        val inset = (QUEUE_ARTWORK_INSET.value * density).roundToInt()
+        row.layoutParams = row.layoutParams?.apply { height = listRowHeightPx() }
+        // The vertical inset is *set*, not preserved. [listRowArtworkSize] derives the cover from
+        // `rowHeight - QUEUE_ARTWORK_INSET * 2`, so the row has to actually use that inset for the
+        // result to fit. applyQuickPanelLayout gives the Up Next pill 11dp top and bottom for its
+        // two lines of text; carrying that forward left the cover 22dp less height than it had been
+        // sized for, and a LinearLayout clamps a child's height while honouring its width - so the
+        // circular outline came out an oval with centerCrop slicing the artwork's top and bottom
+        // off. The inflated extra rows never hit this because nothing gives them vertical padding.
+        row.setPaddingRelative(inset, inset, row.paddingEnd, inset)
+        // Belt and braces: never ask for more height than the row can actually give, so any future
+        // change to the row's padding or minimum height degrades to a smaller circle rather than
+        // back to an oval.
+        val available = (listRowHeightPx() - inset * 2).coerceAtLeast(1)
+        val sizePx = minOf(
+                (listRowArtworkSize(listRowSize.contentHeight + 24.dp).value * density).roundToInt(),
+                available)
         icon.layoutParams = icon.layoutParams?.apply {
             width = sizePx
             height = sizePx
         }
-        row.setPaddingRelative(
-                (QUEUE_ARTWORK_INSET.value * density).roundToInt(),
-                row.paddingTop,
-                row.paddingEnd,
-                row.paddingBottom)
     }
 
     /** Re-applies the pill height to the Up Next row. The inflated extra rows pick it up as they
@@ -6107,6 +6451,10 @@ class MainActivity : WearCompanionWatchActivity(),
                     ColorUtils.setAlphaComponent(Color.WHITE, 0xB3))
             binding.quickActionUpNextArtwork.visibility = View.GONE
             binding.quickActionUpNextIcon.visibility = View.GONE
+            // The art is the pill's background here, so the text wants its own keyline back - the
+            // cover inset applyListRowArtworkSize leaves behind is for a cover in the row, and
+            // switching styles would otherwise keep it until the panel was next rebuilt.
+            applyUpNextTextPadding()
         } else {
             // No cover to show (this entry has none, or the style is off): stay on the themed
             // pill and its own tint. Forcing the static glass drawable here made a light
@@ -6120,6 +6468,11 @@ class MainActivity : WearCompanionWatchActivity(),
                 binding.quickActionUpNextArtwork.setImageBitmap(artwork)
                 binding.quickActionUpNextArtwork.visibility = View.VISIBLE
                 binding.quickActionUpNextIcon.visibility = View.GONE
+                // Same growth the inflated extra rows get in renderQuickPanelExtraActions: this
+                // row is a sibling of theirs, so leaving it on the layout's fixed 30dp made the
+                // one row showing the *actual* next track carry the smallest cover in the panel.
+                applyListRowArtworkSize(
+                        binding.quickActionUpNext, binding.quickActionUpNextArtwork)
             } else {
                 clearQuickUpNextArtwork()
             }

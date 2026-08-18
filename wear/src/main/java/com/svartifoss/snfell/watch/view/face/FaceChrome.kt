@@ -63,6 +63,13 @@ import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.Animatable
 
 /**
  * Small building blocks shared by the Beta Compose faces ([VinylFace], [PosterFace]).
@@ -733,6 +740,10 @@ internal fun AdaptiveTitleText(
         fontStyle: FontStyle? = null,
         fontFamily: FontFamily? = null,
         letterSpacing: TextUnit = TextUnit.Unspecified,
+        /** Passed through untouched, including to the shrunk-down text. An absolute value therefore
+         *  does *not* scale with the size this settles on, and a title that shrinks two or three
+         *  steps ends up with lines spaced further apart than they are tall. Leave it unspecified
+         *  unless the face genuinely needs a fixed leading. */
         lineHeight: TextUnit = TextUnit.Unspecified,
         textAlign: TextAlign = TextAlign.Center,
         minFontSize: TextUnit = (fontSize.value * 0.62f).sp,
@@ -1012,4 +1023,76 @@ internal fun AmbientSourceIconGlyph(state: NowPlayingFaceState, size: Dp, tint: 
             modifier = Modifier.size(size).clip(RoundedCornerShape(size * .27f))
     )
     Spacer(Modifier.width(size * .3f))
+}
+
+/**
+ * Invisible centre region carrying the shared tap / double-tap / long-press contract.
+ *
+ * Most Compose faces hang those gestures off their own central play control, which works because
+ * they have one. A face whose composition puts something else in the middle - Chat's voice bubble,
+ * Split's cover/panel seam - has no such control, and wiring nothing leaves it with **no working
+ * centre at all**: the host's `center_tap_zone` View is `GONE` for every Compose face, so nothing
+ * underneath picks the gestures up. That is exactly how centre play/pause and the long-press face
+ * picker came to do nothing on the first version of Chat.
+ *
+ * Generous on purpose. A small hit area for "long press to change the face" is the difference
+ * between a gesture people find and one they never do.
+ *
+ * Place it *before* the face's own content so interactive controls layered above still take their
+ * own taps, and keep the content itself non-clickable unless it genuinely needs to be - anything
+ * clickable over this region swallows the centre gestures.
+ */
+@Composable
+internal fun CenterGestureRegion(
+        listener: NowPlayingFaceListener,
+        size: Dp,
+        /** Radius the confirmation ring expands to. Defaults to the region itself; pass a smaller
+         *  value when the region is much larger than the thing the user thinks they tapped. */
+        pulseSize: Dp = size
+) {
+    // The same expanding-ring flash the curated faces draw around their play control, and Classic
+    // draws in center_tap_pulse. Without it a centre tap on a face with no visible button gives no
+    // feedback at all: the artwork does not move, so a tap that worked and one that missed look
+    // identical until playback happens to change.
+    var pulseNonce by remember { mutableStateOf(0) }
+    val pulse = remember { Animatable(1f) }
+    LaunchedEffect(pulseNonce) {
+        if (pulseNonce > 0) {
+            pulse.snapTo(0f)
+            pulse.animateTo(1f, tween(300))
+        }
+    }
+    Box(
+            modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.Center)
+                    .size(size)
+                    .pointerInput(listener) {
+                        detectTapGestures(
+                                onTap = {
+                                    pulseNonce++
+                                    listener.onPlayPauseTap()
+                                },
+                                onDoubleTap = {
+                                    pulseNonce++
+                                    listener.onCenterDoubleTap()
+                                },
+                                onLongPress = {
+                                    pulseNonce++
+                                    listener.onCenterLongPress()
+                                }
+                        )
+                    }
+                    .drawBehind {
+                        val fraction = pulse.value
+                        if (fraction < 1f) {
+                            val target = pulseSize.toPx() / 2f
+                            drawCircle(
+                                    color = Color.White.copy(alpha = .55f * (1f - fraction)),
+                                    radius = target * (.45f + .55f * fraction),
+                                    style = Stroke(2.dp.toPx())
+                            )
+                        }
+                    }
+    )
 }

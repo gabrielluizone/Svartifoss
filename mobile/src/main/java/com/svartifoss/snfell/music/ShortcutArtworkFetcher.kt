@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.preference.PreferenceManager
+import com.svartifoss.snfell.common.BitmapBorderTrim
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -142,7 +143,7 @@ object ShortcutArtworkFetcher {
         // Trim solid letterbox/pillarbox borders first. YouTube Music "art track" thumbnails wrap
         // the real square cover in bars (black, or a flat album colour); without this the square
         // crop keeps those bars and the cover ends up as a small square inside the circle.
-        val trimmed = trimUniformBorders(decoded)
+        val trimmed = BitmapBorderTrim.trim(decoded)
         val side = minOf(trimmed.width, trimmed.height)
         if (side <= 0) return null
         val left = (trimmed.width - side) / 2
@@ -159,58 +160,4 @@ object ShortcutArtworkFetcher {
         }
     }
 
-    private const val BORDER_UNIFORMITY_THRESHOLD = 26
-    private const val BORDER_SAMPLE_STEP = 4
-
-    /** Crops away outer rows/columns whose pixels are all within a small colour range (a flat
-     *  border bar). A normal cover has varied edges, so nothing is trimmed there. */
-    private fun trimUniformBorders(source: Bitmap): Bitmap {
-        val width = source.width
-        val height = source.height
-        if (width < 16 || height < 16) return source
-        var top = 0
-        var bottom = height - 1
-        var left = 0
-        var right = width - 1
-        while (top < bottom && isUniformRow(source, top, left, right)) top++
-        while (bottom > top && isUniformRow(source, bottom, left, right)) bottom--
-        while (left < right && isUniformColumn(source, left, top, bottom)) left++
-        while (right > left && isUniformColumn(source, right, top, bottom)) right--
-        val cropWidth = right - left + 1
-        val cropHeight = bottom - top + 1
-        // Ignore a degenerate result (e.g. an almost entirely flat image) and require an actual trim.
-        return if ((cropWidth < width || cropHeight < height) && cropWidth >= 16 && cropHeight >= 16) {
-            Bitmap.createBitmap(source, left, top, cropWidth, cropHeight)
-        } else {
-            source
-        }
-    }
-
-    private fun isUniformRow(bitmap: Bitmap, y: Int, x0: Int, x1: Int): Boolean =
-            isUniformLine(x0, x1) { x -> bitmap.getPixel(x, y) }
-
-    private fun isUniformColumn(bitmap: Bitmap, x: Int, y0: Int, y1: Int): Boolean =
-            isUniformLine(y0, y1) { y -> bitmap.getPixel(x, y) }
-
-    private inline fun isUniformLine(from: Int, to: Int, pixelAt: (Int) -> Int): Boolean {
-        var minR = 255; var minG = 255; var minB = 255
-        var maxR = 0; var maxG = 0; var maxB = 0
-        var i = from
-        while (i <= to) {
-            val pixel = pixelAt(i)
-            val r = (pixel shr 16) and 0xFF
-            val g = (pixel shr 8) and 0xFF
-            val b = pixel and 0xFF
-            if (r < minR) minR = r; if (r > maxR) maxR = r
-            if (g < minG) minG = g; if (g > maxG) maxG = g
-            if (b < minB) minB = b; if (b > maxB) maxB = b
-            if (maxR - minR > BORDER_UNIFORMITY_THRESHOLD ||
-                    maxG - minG > BORDER_UNIFORMITY_THRESHOLD ||
-                    maxB - minB > BORDER_UNIFORMITY_THRESHOLD) {
-                return false
-            }
-            i += BORDER_SAMPLE_STEP
-        }
-        return true
-    }
 }

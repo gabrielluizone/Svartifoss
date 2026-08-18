@@ -14,9 +14,19 @@
 
     <string name="idle_nothing_playing">Niente in riproduzione</string>
     <string name="idle_hint">Riproduci qualcosa sul telefono</string>
+    <string name="idle_hint_resume">Tocca per riprendere l\'ultima app</string>
+    <string name="idle_hint_shortcuts">Tocca per le tue scorciatoie</string>
+    <string name="idle_hint_menu">Tocca per aprire il menu</string>
+    <string name="idle_hint_search">Tocca per cercare</string>
+    <string name="idle_hint_queue">Tocca per i riprodotti di recente</string>
+    <string name="idle_resume">Riprendi riproduzione</string>
+    <string name="idle_action_shortcuts">Apri scorciatoie</string>
+    <string name="idle_action_menu">Apri menu</string>
+    <string name="idle_action_search">Cerca</string>
+    <string name="idle_action_queue">Apri riprodotti di recente</string>
 
     <string name="no_phone">Nessun telefono connesso</string>
-    <string name="playback_stopped">Riproduzione interrotta</string>
+    <string name="playback_stopped">Interrotta</string>
     <string name="error">ERRORE</string>
     <string name="error_play_services">Errore di Play Services</string>
     <string name="button">Pulsante</string>
@@ -33,6 +43,11 @@
     <string name="voice_search_prompt">Cerca musica</string>
     <string name="queue_empty">Nessuna coda disponibile</string>
     <string name="queue_now_playing">In riproduzione</string>
+    <string name="queue_load_more">Carica altri</string>
+    <string name="chat_face_today">Oggi</string>
+
+    <string name="face_picker_title">Quadrante orologio</string>
+    <string name="face_picker_offline">Telefono non connesso — questo quadrante verrà applicato sull\'orologio, ma il telefono conserva l\'impostazione</string>
 
     <string name="hint_title">Come si usa</string>
     <string name="hint_edges">Bordi — tocca per le azioni mostrate</string>
@@ -64,4 +79,7 @@
     <string name="update_install_title">Aggiornamento di Svartifoss</string>
     <string name="update_install_tap">Tocca per installare la nuova versione</string>
     <string name="update_install_failed">Installazione non riuscita. Consenti le installazioni da Svartifoss nelle impostazioni dell\'orologio e riprova dal telefono.</string>
+    <string name="face_picker_section_builtin">Quadranti integrati</string>
+    <string name="face_picker_section_custom">I miei temi</string>
+    <string name="face_picker_custom_base">Basato su %1$s</string>
 </resources>

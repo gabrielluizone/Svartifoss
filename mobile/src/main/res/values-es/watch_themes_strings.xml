@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="watch_theme_manage">Gestionar temas</string>
+    <string name="watch_theme_builtin_subtitle">Tema integrado · Diseño %1$s</string>
+    <string name="watch_theme_custom_subtitle">Tema personalizado · Diseño %1$s</string>
+    <string name="watch_theme_unknown_name">Tema desconocido</string>
+
+    <string name="watch_themes_title">Temas del reloj</string>
+    <string name="watch_theme_active_label">TEMA APLICADO</string>
+    <string name="watch_theme_active_layout">Diseño: %1$s</string>
+    <string name="watch_theme_preview_description">Vista previa del tema actualmente aplicado al reloj</string>
+    <string name="watch_theme_create">Crear tema</string>
+    <string name="watch_theme_create_title">Crear un tema nuevo</string>
+    <string name="watch_theme_rename_title">Cambiar nombre del tema</string>
+    <string name="watch_theme_name">Nombre del tema</string>
+    <string name="watch_theme_base_layout">Diseño base</string>
+    <string name="watch_theme_default_name">Mi tema %1$s</string>
+    <string name="watch_theme_generic_name">Tema</string>
+    <string name="watch_theme_copy_name">Copia de %1$s</string>
+    <string name="watch_theme_built_in_section">Temas integrados</string>
+    <string name="watch_theme_custom_section">Mis temas</string>
+    <string name="watch_theme_applied">APLICADO</string>
+    <string name="watch_theme_apply_success">%1$s aplicado a tu reloj</string>
+    <string name="watch_theme_apply_error">No se pudo aplicar este tema</string>
+    <string name="watch_theme_more_options">Más opciones del tema</string>
+    <string name="watch_theme_list_description">Temas integrados y personalizados del reloj</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Toca para aplicar.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Aplicado actualmente.</string>
+    <string name="watch_theme_rename">Cambiar nombre</string>
+    <string name="watch_theme_customize">Personalizar</string>
+    <string name="watch_theme_duplicate">Duplicar</string>
+    <string name="watch_theme_delete">Eliminar</string>
+    <string name="watch_theme_delete_title">¿Eliminar \"%1$s\"?</string>
+    <string name="watch_theme_delete_message">Este tema guardado y sus ajustes se eliminarán de forma permanente.</string>
+    <string name="watch_theme_deleted">Tema eliminado</string>
+    <string name="watch_theme_duplicated">\"%1$s\" creado</string>
+    <string name="watch_theme_limit_reached">Puedes guardar hasta 24 temas personalizados. Elimina uno antes de crear otro.</string>
+    <string name="watch_theme_name_required">Escribe un nombre para el tema</string>
+    <string name="watch_theme_name_duplicate">Ya existe un tema con este nombre</string>
+
+    <string name="watch_theme_face_classic">Clásico</string>
+    <string name="watch_theme_face_expressive">Expresivo</string>
+    <string name="watch_theme_face_vinyl">Vinilo</string>
+    <string name="watch_theme_face_poster">Póster</string>
+    <string name="watch_theme_face_studio">Studio</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Espectro</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Inmersivo</string>
+    <string name="watch_theme_face_depth">Profundidad</string>
+    <string name="watch_theme_face_carousel">Carrusel</string>
+    <string name="watch_theme_face_chat">Chat</string>
+    <string name="watch_theme_face_split">Dividido</string>
+    <string name="watch_theme_face_note">Nota</string>
+</resources>

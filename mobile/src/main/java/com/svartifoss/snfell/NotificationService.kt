@@ -117,6 +117,7 @@ class NotificationService : NotificationListenerService() {
         }
 
         bound = true
+        connectedInstance = this
         updateConnectedConsumers()
     }
 
@@ -125,6 +126,7 @@ class NotificationService : NotificationListenerService() {
         stopObservingMedia()
         activeMediaProvider = null
         bound = false
+        connectedInstance = null
         MediaNotificationActions.clear()
 
         super.onListenerDisconnected()
@@ -137,6 +139,9 @@ class NotificationService : NotificationListenerService() {
         stopObservingMedia()
         activeMediaProvider = null
         bound = false
+        // Only if we are still the current one: a reconnect can construct the replacement before
+        // the outgoing instance is destroyed, and clearing unconditionally would drop the live one.
+        if (connectedInstance === this) connectedInstance = null
         MediaNotificationActions.clear()
         coroutineScope.cancel()
 
@@ -225,6 +230,34 @@ class NotificationService : NotificationListenerService() {
         }
 
         const val ACTION_UNBIND_SERVICE = "UNBIND"
+
+        /**
+         * The connected listener, while one exists. Weakly-held intent: cleared on disconnect and
+         * destroy, so this never keeps a dead service alive.
+         */
+        @Volatile
+        private var connectedInstance: NotificationService? = null
+
+        /**
+         * Unbinds the listener *synchronously*, if it is currently connected.
+         *
+         * Exists for the force-stop path, which kills the process moments later. The
+         * [ACTION_UNBIND_SERVICE] route goes through `startService`, so it only lands if our own
+         * process survives long enough to deliver a message to itself - a race that path regularly
+         * loses, and losing it means the system rebinds the listener, revives the process and posts
+         * the persistent notification all over again.
+         *
+         * Deliberately not `NotificationListenerService.requestUnbind(ComponentName)`: that static
+         * overload only exists from API 35, while the instance method has been there since 24. It
+         * is present in the compile SDK, so calling it compiles cleanly and then throws
+         * NoSuchMethodError at runtime on everything older.
+         */
+        fun requestUnbindNow(): Boolean {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return false
+            val instance = connectedInstance ?: return false
+            instance.requestUnbindSafe()
+            return true
+        }
 
         /**
          * Re-evaluates the notification listener whenever either of its consumers changes.

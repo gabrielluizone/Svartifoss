@@ -307,6 +307,67 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/screen_buttons_hint" />
 
+        <!-- Cross-link to the quick actions panel, which is the one input surface configured
+             outside this screen: its four slots live in the Actions tab, beside the watch menu,
+             because both are lists of actions rather than a physical input. Someone assigning
+             buttons here has no reason to guess that, so this row names the surface, says where
+             it lives and how it opens on the watch. Same pattern as the "Mini buttons" and
+             "Swipe gestures" rows that link the other way, into this screen. -->
+        <LinearLayout
+            android:id="@+id/quick_panel_link"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/update_card_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/screen_button_container">
+
+            <ImageView
+                android:id="@+id/quick_panel_link_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="14dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_quick_actions"
+                android:tint="@color/lyra_accent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans"
+                    android:text="@string/quick_panel_row_title"
+                    android:textColor="@color/lyra_on_surface"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/google_sans"
+                    android:text="@string/quick_panel_link_summary"
+                    android:textColor="@color/lyra_pref_summary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

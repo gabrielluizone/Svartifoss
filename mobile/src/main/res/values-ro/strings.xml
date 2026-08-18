@@ -236,7 +236,7 @@
     <string name="preview_sample_title">Titlul piesei</string>
     <string name="preview_sample_artist">Numele artistului</string>
     <string name="preview_sample_next_title">Piesa următoare</string>
-    <string name="preview_playback_stopped">Redare oprită</string>
+    <string name="preview_playback_stopped">Oprit</string>
     <string name="category_gestures">Gesturi și intrare</string>
     <string name="setting_overlay_blur_radius">Neclaritate suprapunere</string>
     <string name="setting_overlay_blur_radius_description">Intensitatea neclarității (px) a fundalului mat din spatele inelelor de volum/căutare și al panoului de acțiuni rapide — independentă de neclaritatea fundalului cu coperta albumului</string>
@@ -507,6 +507,9 @@
         <item>Immersive</item>
         <item>Profunzime</item>
         <item>Carusel</item>
+        <item>Chat</item>
+        <item>Divizat</item>
+        <item>Notă</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Căutare Expressive</string>
@@ -821,6 +824,10 @@
         <item>Curbură medie</item>
         <item>Curbat</item>
         <item>Curbură extremă</item>
+        <item>Răspândite spre margini</item>
+        <item>Marginea stângă</item>
+        <item>Marginea dreaptă</item>
+        <item>Ambele margini</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Fundal implicit</item>
@@ -1100,4 +1107,287 @@
     <string name="update_installing">Se deschide programul de instalare…</string>
     <string name="update_install_permission_needed">Permiteți instalarea aplicațiilor de la Svartifoss, apoi atingeți din nou Actualizează telefonul.</string>
     <string name="update_phone_failed">Descărcarea actualizării telefonului a eșuat. Încercați din nou.</string>
+    <string name="setting_wear_album_accent_source">Sursa culorii albumului</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Echilibrat</item>
+        <item>Cea mai vie</item>
+    </string-array>
+
+    <string name="watch_section_typography">Text</string>
+    <string name="watch_section_typography_description">Alegeți un font și stilizați independent titlul, artistul și pictograma aplicației.</string>
+    <string name="tutorial_quick_panel_title">Panoul de acțiuni rapide</string>
+    <string name="tutorial_quick_panel_desc">Atingeți de două ori centrul ecranului de redare pentru a deschide un panou cu patru sloturi — trei butoane rotunde și un rând lat sub ele. Dacă nu le configurați, sloturile reflectă butoanele pe care aplicația în redare le pune în propria notificare, deci obțineți controalele reale de like, redare aleatorie și repetare. Atribuiți orice acțiune unui slot sau setați „Niciuna” pentru a-l ascunde, în Acțiuni pe telefon.</string>
+    <string name="tutorial_shortcuts_title">Comenzi rapide de streaming</string>
+    <string name="tutorial_shortcuts_desc">Salvați un link către o piesă, un album, un mix sau o playlist de pe Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music sau SoundCloud, apoi atribuiți-l oricărui buton, gest sau slot din panou. Cel mai rapid mod este să distribuiți linkul direct către Svartifoss din aplicația de streaming; puteți și să lipiți un link copiat sau să îl introduceți manual. Nu este nevoie de niciun cont sau autentificare — ceasul cere telefonului să înceapă redarea, deci o comandă rapidă redă în loc să doar deschidă aplicația.</string>
+    <string name="category_wf_typography_font">Font</string>
+    <string name="category_wf_typography_title">Titlu</string>
+    <string name="category_wf_typography_artist">Artist</string>
+    <string name="category_wf_typography_icon">Pictograma aplicației</string>
+    <string name="category_wf_typography_flex">Axele Google Sans Flex</string>
+    <string name="setting_wear_font_flex_hint_title">Despre aceste controale</string>
+    <string name="setting_wear_flex_axes_hint">Acestea reglează fin Google Sans Flex în mod specific — selectați-l mai sus pentru a le folosi. Greutatea și cursivul titlului și artistului de mai sus setează deja axele proprii de greutate (wght) și înclinare (slnt) ale acestui font; cele patru controale de mai jos se aplică întregului ecran.</string>
+    <string name="setting_wear_font_flex_width">Lățime</string>
+    <string name="setting_wear_font_flex_width_description">Întindere orizontală, de la condensat la expandat (25–151). 100 este lățimea normală a fontului.</string>
+    <string name="setting_wear_font_flex_optical_size">Dimensiune optică</string>
+    <string name="setting_wear_font_flex_optical_size_description">Ajustează detaliul liniilor în funcție de dimensiunea efectivă a textului (6–144). Valorile mai mici sunt potrivite pentru text mic; cele mai mari pentru text afișaj mare.</string>
+    <string name="setting_wear_font_flex_grade">Grad</string>
+    <string name="setting_wear_font_flex_grade_description">Modifică ușor greutatea fără a schimba aspectul (0–100) — o modalitate subtilă de a crește contrastul pe un ecran întunecat.</string>
+    <string name="setting_wear_font_flex_roundness">Rotunjime</string>
+    <string name="setting_wear_font_flex_roundness_description">Îmbină terminațiile liniilor de la ascuțite (0) la complet rotunjite (100) pentru un aspect mai prietenos.</string>
+    <string name="preview_chat_today">Azi</string>
+    <string name="category_idle">Când nu se redă nimic</string>
+    <string name="settings_search_title">Căutare în setări</string>
+    <string name="settings_search_hint">Căutare în setări</string>
+    <string name="settings_search_clear">Șterge căutarea</string>
+    <string name="settings_search_prompt">Căutați după nume orice setare din Setări și Aspect ceas.</string>
+    <string name="settings_search_no_results">Nicio setare nu se potrivește.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="notification_access_banner_summary">Atingeți pentru a-l acorda — controlul redării rămâne inactiv până atunci</string>
+    <string name="setting_wear_rotary_action">Coroană rotativă / ramă</string>
+    <string name="wear_rotary_action_volume">Schimbă volumul</string>
+    <string name="wear_rotary_action_seek">Derulează prin piesă</string>
+    <string name="wear_rotary_action_off">Nu face nimic</string>
+    <string name="face_reset_migration_title">Actualizați aspectul ceasului</string>
+    <string name="face_reset_migration_message">Ați actualizat de la o versiune mai veche în care toate ecranele ceasului foloseau în comun un singur set de setări de aspect. Acum fiecare ecran le reține pe ale sale, deci setările vechi pot părea nepotrivite pe ecranele pe care nu le-ați personalizat direct. Vă recomandăm să resetați toate ecranele la noile valori implicite sau să ștergeți datele aplicației pentru un început complet nou.</string>
+    <string name="face_reset_migration_reset_button">Resetează toate ecranele</string>
+    <string name="face_reset_migration_clear_data_button">Șterge datele aplicației</string>
+    <string name="quick_panel_link_summary">Atingeți de două ori centrul ecranului ceasului pentru a-l deschide. Atingeți aici pentru a configura cele patru sloturi ale sale în Acțiuni.</string>
+    <string name="setting_wear_center_long_press">Apăsare lungă în centru</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">O versiune variabilă a Google Sans cu lățime, dimensiune optică, grad și rotunjime reglabile — deblochează controalele axelor de mai jos.</string>
+    <string name="setting_wear_progress_gradient">Amestecă paleta în inel</string>
+    <string name="setting_wear_progress_gradient_description">Cu un tratament de culoare cu mai multe nuanțe (Complementar, Triadic, Analog, Duoton), inelul plin trece printr-un degrade cu toate cele trei culori. Dezactivați pentru un inel cu o singură culoare, păstrând în rest paleta albumului.</string>
+    <string name="setting_wear_title_font_weight">Greutate titlu</string>
+    <string name="setting_wear_title_font_italic">Titlu cursiv</string>
+    <string name="setting_wear_title_font_scale">Dimensiune titlu</string>
+    <string name="setting_wear_title_font_opacity">Opacitate titlu</string>
+    <string name="setting_wear_title_font_tracking">Spațiere litere titlu</string>
+    <string name="setting_wear_title_color">Culoare text titlu</string>
+    <string name="setting_wear_title_custom_color">Culoare personalizată titlu</string>
+    <string name="wear_title_color_face_default">Implicit ecran (așa cum a fost proiectat)</string>
+    <string name="setting_wear_title_adaptive_contrast">Adaptează culoarea titlului pentru contrast</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Luminează sau întunecă titlul când culoarea sa este prea apropiată de coperta din spate, păstrând nuanța culorii. Nu are efect cât timp titlul păstrează culoarea implicită a ecranului.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Adaptează culoarea artistului pentru contrast</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Luminează sau întunecă rândul artistului când culoarea albumului este prea apropiată de coperta din spate, păstrând nuanța culorii. Măsoară doar banda pe care se află rândul, nu întreaga copertă.</string>
+    <string name="setting_wear_artist_font_weight">Greutate artist</string>
+    <string name="setting_wear_artist_font_italic">Artist cursiv</string>
+    <string name="setting_wear_artist_font_scale">Dimensiune artist</string>
+    <string name="setting_wear_artist_font_opacity">Opacitate artist</string>
+    <string name="setting_wear_artist_font_tracking">Spațiere litere artist</string>
+    <string name="setting_wear_source_icon_scale">Dimensiune pictogramă aplicație</string>
+    <string name="setting_wear_source_icon_opacity">Opacitate pictogramă aplicație</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 este greutatea normală a ecranului; valorile mai mari sunt mai îngroșate. Pentru Google Sans Flex, aceasta este chiar axa de greutate proprie a fontului</string>
+    <string name="setting_wear_typography_scale_description">Procent din dimensiunea proprie a ecranului (70–140). 100 păstrează dimensiunea proiectată a fiecărui aspect</string>
+    <string name="setting_wear_typography_opacity_description">Procent (20–100). 100 păstrează opacitatea proprie a ecranului</string>
+    <string name="setting_wear_typography_tracking_description">Spațiu suplimentar între litere, în sutimi de em (de la −5 la 20). 0 păstrează spațierea proprie a fontului</string>
+    <string name="setting_wear_color_modifier">Tonalitate</string>
+    <string name="setting_wear_color_modifier_description">Ajustează întreaga paletă fără a schimba modul în care este derivată — funcționează cu fiecare tratament de culoare</string>
+    <string name="setting_wear_color_hue_shift">Rotire culoare</string>
+    <string name="setting_wear_color_hue_shift_description">Rotește paleta albumului pe cercul cromatic, în grade (0–359). Fiecare tratament păstrează culoarea sa principală pe nuanța proprie a albumului, deci aceasta este cea care variază. 0 folosește culoarea albumului așa cum este; o culoare Normală fixă nu este niciodată rotită.</string>
+    <string name="setting_wear_paused_hold">Păstrează aplicația activă după pauză</string>
+    <string name="setting_wear_paused_hold_description">Cât timp rămâne aplicația ceasului accesibilă din cadranul ceasului după ce puneți pauză, ca să puteți relua ridicând încheietura în loc să o redeschideți. Setările mai lungi mențin un serviciu activ în fundal.</string>
+    <string name="wear_paused_hold_off">Nu o păstra</string>
+    <string name="wear_paused_hold_5">5 minute</string>
+    <string name="wear_paused_hold_15">15 minute</string>
+    <string name="wear_paused_hold_30">30 de minute</string>
+    <string name="wear_paused_hold_60">1 oră</string>
+    <string name="wear_paused_hold_always">Până se termină redarea</string>
+    <string name="setting_wear_idle_button_action">Buton când nu se redă nimic</string>
+    <string name="setting_wear_idle_auto_open">Deschide când nu se redă nimic</string>
+    <string name="setting_wear_idle_auto_open_description">Trece direct la acest ecran când deschideți aplicația ceasului fără muzică în redare.</string>
+    <string name="wear_idle_action_resume">Reia ultima aplicație</string>
+    <string name="wear_idle_action_shortcuts">Comenzi rapide playlist</string>
+    <string name="wear_idle_action_menu">Meniu acțiuni</string>
+    <string name="wear_idle_action_search">Căutare</string>
+    <string name="wear_idle_action_queue">Redate recent</string>
+    <string name="wear_idle_action_none">Niciun buton</string>
+    <string name="wear_idle_auto_open_none">Rămâi pe player</string>
+    <string name="action_open_library">Răsfoiește biblioteca</string>
+    <string name="library_up">Înapoi</string>
+    <string name="error_library_unavailable">Această aplicație nu are o bibliotecă răsfoibilă</string>
+    <string name="error_library_empty">Nimic aici</string>
+    <string name="error_library_no_player">Începeți mai întâi o redare</string>
+    <string name="setting_wear_carousel_card_shape">Forma cardului carusel</string>
+    <string name="setting_wear_font_all_screens">Folosește fontul peste tot</string>
+    <string name="setting_wear_font_all_screens_description">Aplică fontul ales și meniului, cozii și ceasului de pe ecran, nu doar titlului și artistului piesei. Fonturile decorative sau de mână pot fi mai greu de citit în liste.</string>
+    <string name="setting_wear_clock_font">Font ceas</string>
+    <string name="wear_clock_font_follow">Urmează fontul piesei</string>
+    <string name="setting_wear_clock_font_weight">Greutate ceas</string>
+    <string name="setting_wear_clock_font_italic">Ceas cursiv</string>
+    <string name="setting_wear_clock_font_scale">Dimensiune ceas</string>
+    <string name="setting_wear_clock_font_tracking">Spațiere litere ceas</string>
+    <string name="setting_wear_clock_adaptive_contrast">Adaptează culoarea ceasului pentru contrast</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Luminează sau întunecă ceasul când culoarea albumului este prea apropiată de coperta din spate, păstrând nuanța culorii. Se aplică doar când culoarea ceasului este setată pe Culoarea albumului.</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Afișaj condensat, toate literele mari — stil poster, se potrivește titlurilor lungi</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Serif editorial cu contrast ridicat — aspect de revistă</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Sans geometric tehnic cu detalii aparte</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Afișaj pătrățos SF — îndrăzneț și futurist</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Scris de mână — casual și personal</string>
+    <string name="setting_queue_local_artwork">Coperte coadă din biblioteca dvs.</string>
+    <string name="setting_queue_local_artwork_description">Playerele muzicale locale publică copertele cozii ca referințe către bibliotecă. Acordați acces media pentru ca acestea să poată fi afișate în coada de pe ceas. Nu este implicat niciun acces la internet.</string>
+    <string name="setting_queue_local_artwork_granted">Acces media acordat — copertele locale ale cozii vor fi afișate</string>
+    <string name="setting_queue_local_artwork_denied">Acces media refuzat. Activați-l în setările Android pentru a afișa copertele locale ale cozii.</string>
+    <string name="setting_queue_remote_artwork">Preia coperte coadă online</string>
+    <string name="setting_queue_remote_artwork_short_description">Aplicațiile de streaming (clienți YouTube Music, Echo Music…) publică copertele cozii ca linkuri, nu imagini, deci aceasta le descarcă și le stochează în cache. Dezactivați pentru a păstra coada complet offline — acele rânduri nu vor mai afișa nicio copertă.</string>
+    <string name="setting_queue_remote_artwork_description">Playerele de streaming publică copertele cozii ca linkuri, nu imagini. Fiecare este descărcată o singură dată și stocată în cache pe acest telefon, pentru a fi afișată în coada de pe ceas. Se solicită doar URL-ul copertei deja publicat de player — niciun cont sau date personale. Activat implicit; dezactivați-l pentru a păstra coada complet offline.</string>
+    <string name="setting_persistent_notification">Gestionați notificarea „Svartifoss activ”</string>
+    <string name="setting_persistent_notification_description">Deschide setările Android ale acestei notificări — dezactivați sunetul, ascundeți-o de pe ecranul de blocare sau ajustați-o altfel. Nu poate fi dezactivată complet: Android necesită o notificare permanentă cât timp rulează serviciul din fundal care comunică cu ceasul dvs.</string>
+    <string name="update_install_notification_title">Actualizare Svartifoss</string>
+    <string name="update_install_notification_tap">Atingeți pentru a instala noua versiune</string>
+    <string name="update_install_notification_failed">Instalarea a eșuat. Permiteți instalările din Svartifoss în Setări și încercați din nou.</string>
+
+    <string-array name="wear_center_long_press_entries">
+        <item>Schimbă cadranul ceasului</item>
+        <item>Deschide coada</item>
+        <item>Nimic</item>
+    </string-array>
+    <string-array name="wear_color_modifier_entries">
+        <item>Niciuna</item>
+        <item>Vie</item>
+        <item>Pastel</item>
+        <item>Caldă</item>
+        <item>Rece</item>
+    </string-array>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Rotunjit</item>
+        <item>Pătrat</item>
+        <item>Squircle</item>
+        <item>Cerc</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>Dezactivat</item>
+        <item>Afișează pictograma cadranului de muzică (doar pentru Wear 3.0)</item>
+        <item>Deschide Svartifoss</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">Folosește o paletă de culori</string>
+    <string name="setting_wear_normal_color_multi_description">Pornit: ecranul folosește o culoare principală plus două tonuri secundare. Oprit: se folosește o singură culoare peste tot — cea a albumului sau cea aleasă de tine.</string>
 </resources>

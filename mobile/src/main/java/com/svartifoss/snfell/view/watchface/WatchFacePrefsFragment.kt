@@ -3,6 +3,7 @@ package com.svartifoss.snfell.view.watchface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.EditTextPreference
@@ -25,6 +26,7 @@ import com.svartifoss.snfell.view.settings.HexColorDotPreference
 import com.svartifoss.snfell.view.settings.lyraRuntimeAccent
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity
+import com.svartifoss.snfell.view.settings.SettingsCatalog
 import com.svartifoss.snfell.view.settings.parseHexOrDefault
 import com.svartifoss.snfell.view.settings.showLyraColorPickerDialog
 import com.svartifoss.snfell.view.settings.tintOpenLyraPreferenceDialog
@@ -47,10 +49,17 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         const val SECTION_PANELS = "panels"
         const val SECTION_MINI_BUTTONS = "miniButtons"
         private const val ARG_SECTION = "watchAppearanceSection"
+        private const val ARG_HIGHLIGHT_KEY = "watchAppearanceHighlightKey"
         private const val DEFAULT_SWATCH_COLOR = 0xFF86A69D.toInt()
 
-        fun newInstance(section: String) = WatchFacePrefsFragment().apply {
-            arguments = Bundle().apply { putString(ARG_SECTION, section) }
+        /** [highlightKey] scrolls the page to that preference once laid out - set only by the
+         *  settings search, so a result lands on the row itself rather than at the top of a page
+         *  the user then has to scan. */
+        fun newInstance(section: String, highlightKey: String? = null) = WatchFacePrefsFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_SECTION, section)
+                putString(ARG_HIGHLIGHT_KEY, highlightKey)
+            }
         }
 
         /** Restores every built-in face to its factory look - the recovery action for "someone
@@ -234,6 +243,27 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        consumeHighlightKey()
+    }
+
+    /**
+     * Scrolls to the preference a search result pointed at, then clears the argument.
+     *
+     * Clearing matters: the argument would otherwise survive into every later recreation of this
+     * page, so rotating the phone after scrolling elsewhere would yank the list back to a row the
+     * user had already moved on from. Posted to the list because the categories are only made
+     * visible in onCreatePreferences, and scrolling to a row that is still GONE does nothing.
+     */
+    private fun consumeHighlightKey() {
+        val key = arguments?.getString(ARG_HIGHLIGHT_KEY) ?: return
+        arguments?.remove(ARG_HIGHLIGHT_KEY)
+        listView?.post {
+            if (isAdded && findPreference<Preference>(key) != null) scrollToPreference(key)
+        }
+    }
+
     fun showSection(newSection: String) {
         section = newSection
         applySectionVisibility()
@@ -243,51 +273,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private fun applySectionVisibility() {
         if (preferenceScreen == null) return
 
-        val visibleCategories = when (section) {
-            SECTION_BACKGROUND -> setOf("cat_wf_background")
-            SECTION_COLORS -> setOf("cat_wf_colors")
-            SECTION_AOD -> setOf("cat_wf_aod")
-            SECTION_PANELS -> setOf("cat_wf_overlays")
-            // Mini buttons and the screen-gestures toggles are both input controls, so they share
-            // the one section.
-            SECTION_MINI_BUTTONS -> setOf("cat_wf_mini_buttons", "cat_wf_gestures")
-            // Text (font/title/artist/icon) is its own page, split out of Player so that screen
-            // does not carry every typography control on top of the layout/behavior ones.
-            // cat_wf_typography_flex is deliberately excluded here: it needs the *font choice*
-            // as well as the section, so it is handled below instead of by plain set membership.
-            SECTION_TYPOGRAPHY -> setOf(
-                    "cat_wf_typography_font", "cat_wf_typography_title",
-                    "cat_wf_typography_artist",
-                    // The clock is text like the title and the artist, so ALL of it - typeface,
-                    // letterforms, colour and opacity - is one group beside them. It used to be
-                    // split across two categories that both landed on this page with other groups
-                    // in between, so "Clock" appeared twice and neither half was complete.
-                    "cat_wf_typography_clock",
-                    "cat_wf_typography_icon")
-            // Style (face) page also carries the clock and the layout reset / apply-to-all
-            // actions, which operate on the whole face's look.
-            else -> setOf("cat_wf_face", "cat_wf_typography_clock", "cat_wf_layout_actions")
-        }
+        // Section -> categories and the full category list both live in SettingsCatalog, shared
+        // with the settings search so a result can be navigated to the page it is actually on.
+        // That object's doc carries the two structural rules these lists have to satisfy, and
+        // SettingsCatalogTest pins them.
+        val visibleCategories = SettingsCatalog.WATCH_SECTIONS[section]
+            ?: SettingsCatalog.WATCH_SECTIONS.getValue(SECTION_STYLE)
 
-        // EVERY category in watch_face_settings.xml must be listed here, not just the ones the
-        // current section wants: this is the loop that *hides* the others. A category left out is
-        // never assigned a visibility at all, so it stays visible on every page - which is how the
-        // clock's type controls ended up showing on the Style page as well as on Text.
-        listOf(
-            "cat_wf_face",
-            "cat_wf_aod",
-            "cat_wf_overlays",
-            "cat_wf_background",
-            "cat_wf_colors",
-            "cat_wf_typography_font",
-            "cat_wf_typography_title",
-            "cat_wf_typography_clock",
-            "cat_wf_typography_artist",
-            "cat_wf_typography_icon",
-            "cat_wf_mini_buttons",
-            "cat_wf_gestures",
-            "cat_wf_layout_actions"
-        ).forEach { key ->
+        SettingsCatalog.WATCH_CATEGORIES.forEach { key ->
             findPreference<Preference>(key)?.isVisible = key in visibleCategories
         }
         // Visible only on the Text page, and only once Google Sans Flex is actually chosen -
@@ -322,6 +315,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 ?.takeUnless { it.isBlank() }
         val normalHex = targetCustomHex ?: store.getString("wear_normal_color", null)
         pref.normalPreviewColor = parseHexOrDefault(normalHex)
+        pref.normalColorMulti = store.getBoolean("wear_normal_color_multi", true)
     }
 
     override fun onResume() {
@@ -930,7 +924,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val effectiveStyle = if (selectedStyle == "follow") face else selectedStyle
         val visualStyle = effectiveStyle in setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-            "spectrum", "material", "immersive", "depth", "carousel"
+            "spectrum", "material", "immersive", "depth", "carousel", "chat", "split", "note"
         )
         findPreference<Preference>("wear_aod_show_transport")?.isVisible = visualStyle
         findPreference<Preference>("wear_aod_show_progress")?.isVisible = visualStyle
@@ -1145,7 +1139,15 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
     private fun updateUnifiedColorTreatmentVisibility(override: String? = null) {
         val treatment = override ?: readStringPreference("wear_color_treatment", "expressive")
-        findPreference<Preference>("wear_normal_color")?.isVisible = treatment == "normal"
+        val isNormal = treatment == "normal"
+        // The colour *picker* is Normal's own - every other treatment derives its colour from the
+        // artwork and has nothing for a picker to set.
+        findPreference<Preference>("wear_normal_color")?.isVisible = isNormal
+        // The palette switch is not: "use one colour instead of three" is a meaningful choice under
+        // every treatment, and under the album-derived ones it is the only way to get the cover's
+        // colour applied flat instead of as a light/dark ladder. It began life Normal-only, which
+        // is why its key still says so.
+        findPreference<Preference>("wear_normal_color_multi")?.isVisible = true
     }
 
 }

@@ -236,7 +236,7 @@
     <string name="preview_sample_title">Songtitel</string>
     <string name="preview_sample_artist">Interpretname</string>
     <string name="preview_sample_next_title">Nächster Song</string>
-    <string name="preview_playback_stopped">Wiedergabe gestoppt</string>
+    <string name="preview_playback_stopped">Gestoppt</string>
     <string name="category_gestures">Gesten &amp; Eingabe</string>
     <string name="setting_overlay_blur_radius">Overlay-Unschärfe</string>
     <string name="setting_overlay_blur_radius_description">Unschärfestärke (px) des mattierten Hintergrunds hinter den Lautstärke-/Suchlaufringen und dem Schnellaktionspanel — unabhängig von der Unschärfe des Albumcover-Hintergrunds</string>
@@ -507,6 +507,9 @@
         <item>Immersive</item>
         <item>Tiefe</item>
         <item>Karussell</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive-Suchlauf</string>
@@ -821,6 +824,10 @@
         <item>Mittlere Krümmung</item>
         <item>Gekrümmt</item>
         <item>Extreme Krümmung</item>
+        <item>Zu den Rändern verteilt</item>
+        <item>Linker Rand</item>
+        <item>Rechter Rand</item>
+        <item>Beide Ränder</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Hintergrund-Standard</item>
@@ -1097,4 +1104,11 @@
     <string name="update_installing">Öffne den Installer…</string>
     <string name="update_install_permission_needed">Erlaube das Installieren von Apps aus Svartifoss und tippe dann erneut auf „Telefon aktualisieren“.</string>
     <string name="update_phone_failed">Das Herunterladen des Telefon-Updates ist fehlgeschlagen. Versuche es erneut.</string>
+    <string name="setting_wear_album_accent_source">Quelle des Album-Akzents</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Ausgewogen</item>
+        <item>Kräftigste Farbe</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">Farbpalette verwenden</string>
+    <string name="setting_wear_normal_color_multi_description">An: Der Bildschirm nutzt eine Hauptfarbe und zwei ergänzende Töne. Aus: Überall wird eine einzige Farbe verwendet — die des Albums oder die von dir gewählte.</string>
 </resources>

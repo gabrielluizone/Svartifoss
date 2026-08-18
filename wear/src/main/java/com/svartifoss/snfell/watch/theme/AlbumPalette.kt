@@ -1,35 +1,18 @@
 package com.svartifoss.snfell.watch.theme
 
-/** A quantized artwork colour and how many pixels it covers. */
-internal data class SwatchInfo(
-        val rgb: Int,
-        val population: Int
-)
+/**
+ * `SwatchInfo` and `selectPrimaryAccent` used to live here, watch-only, while the phone preview
+ * carried its own inlined copy that picked a different swatch - which is how the same cover came
+ * out beige in the miniature and grey on the wrist. They now live in
+ * `common/.../AlbumAccentSelection.kt` so both sides run the identical selection, and so the choice
+ * between them can be a user preference (`MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE`).
+ */
 
 /** Real secondary/tertiary colours selected from album swatches ranked by pixel population. */
 internal data class AlbumCompanionColors(
         val secondary: Int?,
         val tertiary: Int?
 )
-
-/**
- * Chooses the accent colour. The most vibrant swatch usually reads best, but a tiny high-contrast
- * detail (a small logo, a bright reflection) can sit far from the cover's overall tone and used to
- * turn a mostly-blue cover's UI red. Trust the vibrant swatch only when it is not a negligible
- * sliver of the artwork - at least [minShare] of the most-populated swatch's pixels - otherwise use
- * the dominant (most-populated) colour, which is also what the blurred background shows. Returns
- * null only when there is no colour information at all.
- */
-internal fun selectPrimaryAccent(
-        vibrant: SwatchInfo?,
-        swatches: List<SwatchInfo>,
-        minShare: Float = 0.10f
-): Int? {
-    val dominant = swatches.maxByOrNull { it.population }
-    if (vibrant == null) return dominant?.rgb
-    if (dominant == null) return vibrant.rgb
-    return if (vibrant.population >= dominant.population * minShare) vibrant.rgb else dominant.rgb
-}
 
 /**
  * Selects additional colours without synthesizing a hue. [rankedColors] must contain quantized

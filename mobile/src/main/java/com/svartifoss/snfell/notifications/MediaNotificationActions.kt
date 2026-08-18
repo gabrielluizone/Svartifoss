@@ -58,6 +58,16 @@ internal fun <T> discardDislikeActions(actions: List<T>, semanticOf: (T) -> Stri
 object MediaNotificationActions {
     private const val ACTION_PREFIX = "notification:"
     private const val ICON_SIZE_PX = 48
+
+    /**
+     * Canvas for the playing-app's *source* icon, which is a different job from an action glyph.
+     *
+     * Action icons are drawn at pill size and 48px is plenty. The source icon is drawn as large as
+     * the Split face's seam mark - up to 52dp, which is ~130px on a high-density round watch - so
+     * at 48px it arrived visibly pixelated. Kept as its own constant rather than raising
+     * [ICON_SIZE_PX]: that one is paid up to five times per state change, this one once.
+     */
+    private const val SOURCE_ICON_SIZE_PX = 144
     private const val MAX_ACTIONS = 3
 
     private data class StoredAction(
@@ -334,7 +344,7 @@ object MediaNotificationActions {
             createThemedPackageContext(context, sbn.packageName)?.let(icon::loadDrawable)
                     ?: icon.loadDrawable(context)
         } ?: loadRemoteResourceDrawable(context, sbn.packageName, notification.icon)
-        drawable?.let(::rasterizePng)
+        drawable?.let { rasterizePng(it, SOURCE_ICON_SIZE_PX) }
     } catch (_: Exception) {
         null
     }
@@ -465,7 +475,10 @@ object MediaNotificationActions {
         return drawable
     }
 
-    private fun rasterizePng(sourceDrawable: Drawable): ByteArray? = try {
+    private fun rasterizePng(
+            sourceDrawable: Drawable,
+            sizePx: Int = ICON_SIZE_PX
+    ): ByteArray? = try {
         val drawable = unwrapAdaptiveIcon(sourceDrawable).mutate()
         // Media notification action icons are monochrome templates the system tints itself. Some
         // apps (e.g. YouTube Music) build them from vector paths whose fills reference theme
@@ -475,10 +488,10 @@ object MediaNotificationActions {
         // because the icon's own shape (e.g. filled vs outlined thumb) still carries it.
         drawable.setTint(Color.WHITE)
         drawable.setTintMode(android.graphics.PorterDuff.Mode.SRC_IN)
-        val bitmap = Bitmap.createBitmap(ICON_SIZE_PX, ICON_SIZE_PX, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        val inset = ICON_SIZE_PX / 10
-        val available = ICON_SIZE_PX - inset * 2
+        val inset = sizePx / 10
+        val available = sizePx - inset * 2
         val intrinsicWidth = drawable.intrinsicWidth.takeIf { it > 0 } ?: available
         val intrinsicHeight = drawable.intrinsicHeight.takeIf { it > 0 } ?: available
         val scale = minOf(
@@ -487,14 +500,14 @@ object MediaNotificationActions {
         )
         val width = (intrinsicWidth * scale).toInt().coerceAtLeast(1)
         val height = (intrinsicHeight * scale).toInt().coerceAtLeast(1)
-        val left = (ICON_SIZE_PX - width) / 2
-        val top = (ICON_SIZE_PX - height) / 2
+        val left = (sizePx - width) / 2
+        val top = (sizePx - height) / 2
         drawable.setBounds(left, top, left + width, top + height)
         drawable.draw(canvas)
         // A few apps publish an action drawable that resolves to a fully transparent vector in
         // another package's theme. Do not serialize that as a "valid" PNG: an absent image lets
         // the watch use the semantic fallback glyph instead of showing an empty pill.
-        val normalized = normalizeTemplateBitmap(bitmap) ?: return null
+        val normalized = normalizeTemplateBitmap(bitmap, sizePx) ?: return null
         ByteArrayOutputStream().use { output ->
             normalized.compress(Bitmap.CompressFormat.PNG, 100, output)
             output.toByteArray()
@@ -506,7 +519,7 @@ object MediaNotificationActions {
     /** Crops transparent/intrinsic padding and places the visible glyph on a common optical
      * canvas. Players ship wildly different vector viewBoxes: without this pass Spotify looked
      * tiny, while YouTube Music's asymmetric padding pushed glyphs off-centre. */
-    private fun normalizeTemplateBitmap(source: Bitmap): Bitmap? {
+    private fun normalizeTemplateBitmap(source: Bitmap, sizePx: Int): Bitmap? {
         var left = source.width
         var top = source.height
         var right = -1
@@ -525,16 +538,16 @@ object MediaNotificationActions {
 
         val visibleWidth = right - left + 1
         val visibleHeight = bottom - top + 1
-        val target = ICON_SIZE_PX * .77f
+        val target = sizePx * .77f
         val scale = minOf(target / visibleWidth, target / visibleHeight)
         val width = visibleWidth * scale
         val height = visibleHeight * scale
         val destination = RectF(
-                (ICON_SIZE_PX - width) / 2f,
-                (ICON_SIZE_PX - height) / 2f,
-                (ICON_SIZE_PX + width) / 2f,
-                (ICON_SIZE_PX + height) / 2f)
-        return Bitmap.createBitmap(ICON_SIZE_PX, ICON_SIZE_PX, Bitmap.Config.ARGB_8888).also {
+                (sizePx - width) / 2f,
+                (sizePx - height) / 2f,
+                (sizePx + width) / 2f,
+                (sizePx + height) / 2f)
+        return Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888).also {
             Canvas(it).drawBitmap(
                     source,
                     Rect(left, top, right + 1, bottom + 1),

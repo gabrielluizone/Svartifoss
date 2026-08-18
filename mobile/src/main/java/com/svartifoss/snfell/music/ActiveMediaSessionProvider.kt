@@ -102,11 +102,29 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
             packageName: String,
             excluding: MediaController?
     ): List<android.media.session.MediaSession.QueueItem>? =
+            siblingQueueSourceForPackage(packageName, excluding)?.items
+
+    /**
+     * [siblingQueueForPackage], keeping the controller that published the queue.
+     *
+     * Acting on a queue entry needs this rather than the bare list: `queueId`s index the publishing
+     * session's own queue, so a `skipToQueueItem` aimed at the tracked (playing) session while the
+     * entries came from a sibling addresses a queue that session has never heard of. It is accepted
+     * and silently does nothing, which reads as "tapping the queue is broken".
+     */
+    fun siblingQueueSourceForPackage(
+            packageName: String,
+            excluding: MediaController?
+    ): MusicService.QueueSource? =
             getActiveSessions()
                     .asSequence()
                     .filter { it.packageName == packageName }
                     .filter { it.sessionToken != excluding?.sessionToken }
-                    .mapNotNull { it.queue?.takeIf { queue -> queue.isNotEmpty() } }
+                    .mapNotNull { controller ->
+                        controller.queue
+                                ?.takeIf { queue -> queue.isNotEmpty() }
+                                ?.let { queue -> MusicService.QueueSource(controller, queue) }
+                    }
                     .firstOrNull()
 
     fun activate() {

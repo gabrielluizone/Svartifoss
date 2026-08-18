@@ -94,6 +94,8 @@ class QueueActivity : ComponentActivity() {
             val secondaryAccent by viewModel.secondaryAccentColor.observeAsState(DEFAULT_QUEUE_ACCENT)
             val tertiaryAccent by viewModel.tertiaryAccentColor.observeAsState(DEFAULT_QUEUE_ACCENT)
             val nowPlaying by viewModel.nowPlaying.observeAsState()
+            val canLoadMore by viewModel.canLoadMore.observeAsState(false)
+            val loadingMore by viewModel.loadingMore.observeAsState(false)
 
             CompositionLocalProvider(
                     LocalWatchUiFontFamily provides watchUiFontFamily(
@@ -111,7 +113,10 @@ class QueueActivity : ComponentActivity() {
                     },
                     onDismiss = { safeFinish() },
                     style = queueStyle,
-                    rowSize = rowSize
+                    rowSize = rowSize,
+                    canLoadMore = canLoadMore,
+                    loadingMore = loadingMore,
+                    onLoadMore = { viewModel.loadMore() }
             )
             }
         }

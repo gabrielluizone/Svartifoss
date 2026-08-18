@@ -16,7 +16,7 @@
     <string name="idle_hint">Spiele etwas auf deinem Telefon ab</string>
 
     <string name="no_phone">Kein Telefon verbunden</string>
-    <string name="playback_stopped">Wiedergabe gestoppt</string>
+    <string name="playback_stopped">Gestoppt</string>
     <string name="error">FEHLER</string>
     <string name="error_play_services">Play-Services-Fehler</string>
     <string name="button">Taste</string>
@@ -33,6 +33,7 @@
     <string name="voice_search_prompt">Musik suchen</string>
     <string name="queue_empty">Keine Warteschlange verfügbar</string>
     <string name="queue_now_playing">Wird abgespielt</string>
+    <string name="queue_load_more">Mehr laden</string>
 
     <string name="hint_title">Bedienung</string>
     <string name="hint_edges">Ränder — tippen für die angezeigten Aktionen</string>
@@ -64,4 +65,21 @@
     <string name="update_install_title">Svartifoss-Update</string>
     <string name="update_install_tap">Tippen, um die neue Version zu installieren</string>
     <string name="update_install_failed">Installation fehlgeschlagen. Erlaube Installationen von Svartifoss in den Uhreneinstellungen und versuche es erneut vom Telefon aus.</string>
+
+    <string name="idle_hint_resume">Tippen, um die letzte App fortzusetzen</string>
+    <string name="idle_hint_shortcuts">Tippen für deine Verknüpfungen</string>
+    <string name="idle_hint_menu">Tippen, um das Menü zu öffnen</string>
+    <string name="idle_hint_search">Tippen zum Suchen</string>
+    <string name="idle_hint_queue">Tippen für zuletzt gespielt</string>
+    <string name="idle_resume">Wiedergabe fortsetzen</string>
+    <string name="idle_action_shortcuts">Verknüpfungen öffnen</string>
+    <string name="idle_action_menu">Menü öffnen</string>
+    <string name="idle_action_search">Suchen</string>
+    <string name="idle_action_queue">Zuletzt gespielt öffnen</string>
+    <string name="chat_face_today">Heute</string>
+    <string name="face_picker_title">Face</string>
+    <string name="face_picker_offline">Kein Telefon verbunden — dieses Face wird auf der Uhr übernommen, aber die Einstellung bleibt beim Telefon gespeichert</string>
+    <string name="face_picker_section_builtin">Integrierte Designs</string>
+    <string name="face_picker_section_custom">Meine Themes</string>
+    <string name="face_picker_custom_base">Basiert auf %1$s</string>
 </resources>

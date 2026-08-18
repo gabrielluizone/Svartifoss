@@ -61,6 +61,7 @@ class FaceScopedPreferenceDataStore(
     override fun getBoolean(key: String, defValue: Boolean): Boolean {
         if (!FaceScopedPreferences.isScoped(key)) return prefs.getBoolean(key, defValue)
         val current = context
+        val currentFace = current.baseFace
         val scope = FaceScopedPreferences.scopeFor(current)
         val scoped = FaceScopedPreferences.scopedKey(key, scope)
         // perFaceDefault has to be consulted here exactly as the watch consults it, or the settings
@@ -70,7 +71,9 @@ class FaceScopedPreferenceDataStore(
         return when {
             prefs.contains(scoped) -> prefs.getBoolean(scoped, defValue)
             scope == ThemeAppearance.CUSTOM_SCOPE -> defValue
-            else -> FaceScopedPreferences.perFaceDefault(scope, key)?.toBooleanStrictOrNull()
+            // currentFace, not scope: for a built-in they are the same string, but passing the
+            // scope was only accidentally right and would look up "custom_active" as a face name.
+            else -> FaceScopedPreferences.perFaceDefault(currentFace, key)?.toBooleanStrictOrNull()
                     ?: if (prefs.contains(key)) prefs.getBoolean(key, defValue) else defValue
         }
     }

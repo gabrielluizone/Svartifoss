@@ -14,9 +14,19 @@
 
     <string name="idle_nothing_playing">No se reproduce nada</string>
     <string name="idle_hint">Reproduce algo en tu teléfono</string>
+    <string name="idle_hint_resume">Toca para reanudar la última app</string>
+    <string name="idle_hint_shortcuts">Toca para tus accesos directos</string>
+    <string name="idle_hint_menu">Toca para abrir el menú</string>
+    <string name="idle_hint_search">Toca para buscar</string>
+    <string name="idle_hint_queue">Toca para lo reproducido recientemente</string>
+    <string name="idle_resume">Reanudar reproducción</string>
+    <string name="idle_action_shortcuts">Abrir accesos directos</string>
+    <string name="idle_action_menu">Abrir menú</string>
+    <string name="idle_action_search">Buscar</string>
+    <string name="idle_action_queue">Abrir lo reproducido recientemente</string>
 
     <string name="no_phone">No hay teléfono conectado</string>
-    <string name="playback_stopped">Reproducción detenida</string>
+    <string name="playback_stopped">Detenido</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Error de Play Services</string>
     <string name="button">Botón</string>
@@ -33,6 +43,11 @@
     <string name="voice_search_prompt">Buscar música</string>
     <string name="queue_empty">No hay cola disponible</string>
     <string name="queue_now_playing">En reproducción</string>
+    <string name="queue_load_more">Cargar más</string>
+    <string name="chat_face_today">Hoy</string>
+
+    <string name="face_picker_title">Esfera del reloj</string>
+    <string name="face_picker_offline">Teléfono no conectado — esta esfera se aplicará en el reloj, pero el teléfono conserva el ajuste</string>
 
     <string name="hint_title">Cómo se usa</string>
     <string name="hint_edges">Bordes — toca para las acciones mostradas</string>
@@ -64,4 +79,7 @@
     <string name="update_install_title">Actualización de Svartifoss</string>
     <string name="update_install_tap">Toca para instalar la nueva versión</string>
     <string name="update_install_failed">Error de instalación. Permite instalaciones desde Svartifoss en los ajustes del reloj e inténtalo de nuevo desde el teléfono.</string>
+    <string name="face_picker_section_builtin">Esferas integradas</string>
+    <string name="face_picker_section_custom">Mis temas</string>
+    <string name="face_picker_custom_base">Basado en %1$s</string>
 </resources>

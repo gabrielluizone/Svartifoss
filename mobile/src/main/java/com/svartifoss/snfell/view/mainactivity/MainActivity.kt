@@ -33,6 +33,7 @@ import com.svartifoss.snfell.view.TitledActivity
 import com.svartifoss.snfell.view.actionlist.ActionListFragment
 import com.svartifoss.snfell.view.buttonconfig.ControlsFragment
 import com.svartifoss.snfell.view.settings.SettingsHomeFragment
+import com.svartifoss.snfell.view.settings.SettingsSearchActivity
 import com.svartifoss.snfell.view.watchface.WatchFaceFragment
 import android.graphics.Bitmap
 import android.widget.SeekBar
@@ -61,6 +62,12 @@ import javax.inject.Inject
 import timber.log.Timber
 
 private const val REQUEST_CODE_POST_NOTIFICATIONS = 1002
+private const val REQUEST_CODE_SETTINGS_SEARCH = 1003
+
+/** Phone-local UI state: whether the explaining notification-access dialog has been shown once.
+ *  Deliberately not in MiscPreferences.EXPORTABLE - it describes this phone's prompt history, so
+ *  it neither syncs to the watch nor survives into a config backup as a meaningful setting. */
+private const val NOTIFICATION_ACCESS_PROMPTED_PREF = "notification_access_prompted"
 
 private const val BUY_ME_A_COFFEE_URL = "https://buymeacoffee.com/gabrielsvafoss"
 private const val SVARTIFOSS_RELEASES_URL = "https://github.com/gabrielluizone/Svartifoss/releases"
@@ -71,6 +78,9 @@ class MainActivity : WearCompanionPhoneActivity(),
     private lateinit var binding: ActivityMainBinding
 
     private var currentFragment: Fragment? = null
+
+    /** (tab, section, preference key) a settings-search result is waiting to land on. */
+    private var pendingSearchTarget: Triple<String, String, String>? = null
     private var miniPlayerController: MediaController? = null
 
     private val progressHandler = Handler(Looper.getMainLooper())
@@ -225,7 +235,8 @@ class MainActivity : WearCompanionPhoneActivity(),
             when (item.itemId) {
                 R.id.watch_face -> {
                     updateActivityTitle(getString(R.string.watch_face_header))
-                    swapFragment(WatchFaceFragment())
+                    val target = consumeSearchTarget(SettingsSearchActivity.TAB_WATCH_FACE)
+                    swapFragment(WatchFaceFragment.newInstance(target?.first, target?.second))
                 }
                 R.id.controls -> {
                     updateActivityTitle(getString(R.string.controls_header))
@@ -237,7 +248,8 @@ class MainActivity : WearCompanionPhoneActivity(),
                 }
                 R.id.settings -> {
                     updateActivityTitle(getString(R.string.action_settings))
-                    swapFragment(SettingsHomeFragment())
+                    val target = consumeSearchTarget(SettingsSearchActivity.TAB_SETTINGS)
+                    swapFragment(SettingsHomeFragment.newInstance(target?.first, target?.second))
                 }
             }
             true
@@ -333,6 +345,8 @@ class MainActivity : WearCompanionPhoneActivity(),
             }
         }
 
+        binding.notificationAccessBanner.setOnClickListener { showNotificationAccessDialog() }
+
         maybeRequestNotificationPermission()
     }
 
@@ -367,6 +381,14 @@ class MainActivity : WearCompanionPhoneActivity(),
         binding.bottomNav.selectedItemId = R.id.controls
     }
 
+    /** The mirror of [openControls], used by the Controls screen's "Quick actions panel" row.
+     *  Lands on the Actions tab, whose Quick panel entry is the first thing on it - deliberately
+     *  the same shape as the links pointing the other way, rather than reaching across fragments
+     *  to open the slot dialog directly. */
+    fun openActionsMenu() {
+        binding.bottomNav.selectedItemId = R.id.actions_menu
+    }
+
     override fun onCreateOptionsMenu(menu: android.view.Menu): Boolean {
         menuInflater.inflate(R.menu.toolbar_main, menu)
         return true
@@ -379,11 +401,19 @@ class MainActivity : WearCompanionPhoneActivity(),
      *  [com.svartifoss.snfell.update.UpdateActivity]. */
     override fun onPrepareOptionsMenu(menu: android.view.Menu): Boolean {
         menu.findItem(R.id.menu_update_available)?.isVisible = UpdateChecker.hasPendingUpdate(this)
+        // Search covers the preference screens only, so it is offered where those screens are.
+        menu.findItem(R.id.menu_search_settings)?.isVisible =
+                currentFragment is SettingsHomeFragment || currentFragment is WatchFaceFragment
         return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         when (item.itemId) {
+            R.id.menu_search_settings -> {
+                startActivityForResult(
+                        SettingsSearchActivity.createIntent(this), REQUEST_CODE_SETTINGS_SEARCH)
+                return true
+            }
             R.id.menu_help -> {
                 startActivity(Intent(this, HelpActivity::class.java))
                 return true
@@ -536,6 +566,7 @@ class MainActivity : WearCompanionPhoneActivity(),
         binding.fabPlay.imageTintList = fabIconCsl
         binding.fab.backgroundTintList = csl
         binding.fab.imageTintList = fabIconCsl
+        binding.notificationAccessBannerIcon.imageTintList = csl
         detailSeekBar?.progressTintList = csl
         detailSeekBar?.thumbTintList = csl
         detailPlayPause?.imageTintList = csl
@@ -1231,9 +1262,36 @@ class MainActivity : WearCompanionPhoneActivity(),
         return color == staticAccent || color == previousAccent
     }
 
+    /**
+     * Surfaces the missing notification-access permission, which the app cannot read any media
+     * session without. The explaining dialog interrupts **once** per install - it is worth one
+     * interruption because nothing in the app works until it is granted - and from then on the
+     * state lives in the persistent banner instead. Re-showing the modal on every [onResume] (the
+     * previous behavior) taxed exactly the user who had already read it and chosen to grant it
+     * later, since the dialog is dismissible and the condition therefore stays true.
+     *
+     * Both paths open the same dialog, so the explanation of *why* the permission is needed is
+     * never more than one tap away.
+     */
     private fun showNotificationServiceWarning() {
+        refreshNotificationAccessBanner()
         if (NotificationService.isEnabled(this)) return
 
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        if (prefs.getBoolean(NOTIFICATION_ACCESS_PROMPTED_PREF, false)) return
+        prefs.edit().putBoolean(NOTIFICATION_ACCESS_PROMPTED_PREF, true).apply()
+
+        showNotificationAccessDialog()
+    }
+
+    /** Visible exactly while the permission is missing. Driven from [onResume], so returning from
+     *  the system settings screen with it granted clears the banner with no further interaction. */
+    private fun refreshNotificationAccessBanner() {
+        binding.notificationAccessBanner.visibility =
+                if (NotificationService.isEnabled(this)) View.GONE else View.VISIBLE
+    }
+
+    private fun showNotificationAccessDialog() {
         AlertDialog.Builder(this)
                 .setTitle(getString(R.string.error_service_not_enabled))
                 .setNegativeButton(android.R.string.cancel, null)
@@ -1258,7 +1316,51 @@ class MainActivity : WearCompanionPhoneActivity(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_SETTINGS_SEARCH) {
+            if (resultCode == RESULT_OK && data != null) openSearchResult(data)
+            return
+        }
         currentFragment?.onActivityResult(requestCode, resultCode, data)
+    }
+
+    /**
+     * Navigation half of the settings search: the search screen returns which tab, section and
+     * preference key was chosen, and this puts the user on it.
+     *
+     * The target is stashed rather than passed, because switching tabs goes through the bottom
+     * navigation listener, which is what constructs the fragment - so the listener picks it up on
+     * its way past. When the wanted tab is already selected, setting `selectedItemId` to it fires
+     * nothing at all, so that case swaps the fragment directly instead of silently doing nothing.
+     */
+    private fun openSearchResult(data: Intent) {
+        val tab = data.getStringExtra(SettingsSearchActivity.EXTRA_TARGET_TAB) ?: return
+        val section = data.getStringExtra(SettingsSearchActivity.EXTRA_TARGET_SECTION) ?: return
+        val key = data.getStringExtra(SettingsSearchActivity.EXTRA_TARGET_KEY) ?: return
+        pendingSearchTarget = Triple(tab, section, key)
+
+        val targetItem = when (tab) {
+            SettingsSearchActivity.TAB_WATCH_FACE -> R.id.watch_face
+            else -> R.id.settings
+        }
+        if (binding.bottomNav.selectedItemId == targetItem) {
+            val target = consumeSearchTarget(tab)
+            swapFragment(when (tab) {
+                SettingsSearchActivity.TAB_WATCH_FACE ->
+                    WatchFaceFragment.newInstance(target?.first, target?.second)
+                else -> SettingsHomeFragment.newInstance(target?.first, target?.second)
+            })
+        } else {
+            binding.bottomNav.selectedItemId = targetItem
+        }
+    }
+
+    /** Section + preference key a pending search result wants on [tab], consumed on read. Any
+     *  pending target is dropped on the first navigation regardless of tab, so a result the user
+     *  navigated away from cannot resurface later. */
+    private fun consumeSearchTarget(tab: String): Pair<String, String>? {
+        val target = pendingSearchTarget?.takeIf { it.first == tab }
+        pendingSearchTarget = null
+        return target?.let { it.second to it.third }
     }
 
     override fun updateActivityTitle(newTitle: String) {

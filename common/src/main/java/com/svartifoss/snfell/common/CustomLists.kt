@@ -1,6 +1,8 @@
 package com.svartifoss.snfell.common
 
 object CustomLists {
+    /** Entry ids are encoded by [QueueEntry] - see MusicService.onCustomMenuItemPresed for why a
+     *  queue tap needs more than the position id most players accept. */
     const val PLAYLIST = "Playlist"
 
     /**
@@ -68,4 +70,53 @@ object LibraryEntry {
         entryId.startsWith(PLAYABLE_PREFIX) -> entryId.removePrefix(PLAYABLE_PREFIX)
         else -> null
     }
+}
+
+/**
+ * Encoding for [CustomLists.PLAYLIST] entry ids: the queue position id every player accepts via
+ * `skipToQueueItem` *when it implements that action at all*, paired with the item's own media id
+ * for the one player known not to (Retro Music, on neither of its two sessions - see
+ * docs/player-integration-notes.md). Not implementing skip-to-queue-item is not the same as
+ * publishing no queue: Retro Music's browser session still hands out real, playable queue items,
+ * it just never answers that specific transport command, so the tap needs a second way to reach
+ * the same track.
+ *
+ * `<queueId>|<mediaId>`, split once on the first `|` since the media id itself may contain further
+ * `|` characters - the same shape and reasoning as [LibraryEntry]. [mediaId] is empty exactly when
+ * the queue item never had one, which some sessions omit.
+ */
+object QueueEntry {
+    fun encode(queueId: Long, mediaId: String?): String = "$queueId|${mediaId.orEmpty()}"
+
+    /** [CustomLists.SPECIAL_ITEM_ERROR]-shaped or otherwise malformed ids decode to
+     *  `android.media.session.MediaSession.QueueItem.UNKNOWN_ID`, never a real position - callers
+     *  must not act on that value as if it were one. */
+    fun queueId(entryId: String): Long = entryId.substringBefore('|').toLongOrNull() ?: -1L
+
+    fun mediaId(entryId: String): String? =
+            entryId.substringAfter('|', "").takeIf { it.isNotEmpty() }
+}
+
+/**
+ * How much of a long playback queue the watch asks for at a time.
+ *
+ * Shared rather than a phone-side detail because both ends need the same numbers: the watch sizes
+ * its "load more" step by them, the phone truncates by them, and a disagreement shows up as a
+ * "Load more" row that fetches nothing or one that never appears.
+ *
+ * The queue is paged at all because every entry carries its own thumbnail asset across Bluetooth -
+ * sending a 200-track queue eagerly is a long wait for a list most people never scroll to the end
+ * of. Requests are cumulative (each asks for a larger prefix, replacing the previous list) rather
+ * than incremental, because the phone publishes the queue as one DataItem it replaces wholesale.
+ */
+object QueuePaging {
+    /** Entries in the first page, and the step each "load more" adds. */
+    const val PAGE_SIZE = 20
+
+    /** Ceiling on one request, so a pathological queue cannot be paged into a payload large enough
+     *  to fail the transfer. Reached only by someone repeatedly asking for more. */
+    const val MAX_ENTRIES = 200
+
+    /** The size of the next request after [loaded] entries, clamped to [MAX_ENTRIES]. */
+    fun nextLimit(loaded: Int): Int = (loaded + PAGE_SIZE).coerceAtMost(MAX_ENTRIES)
 }

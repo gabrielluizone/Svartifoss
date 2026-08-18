@@ -113,7 +113,9 @@ enum class PlayerBackgroundStyle(
             "eclipse" -> ECLIPSE
             // A rail of sharp covers needs a quiet backdrop; the full-bleed sharp cover the
             // default would give competes with every card on screen.
-            "carousel" -> EXPRESSIVE
+            "carousel", "chat", "split" -> EXPRESSIVE
+            // Text on emptiness is the whole idea - see NoteFace.
+            "note" -> HIDDEN
             else -> COVER
         }
     }

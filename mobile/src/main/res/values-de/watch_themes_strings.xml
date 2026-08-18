@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="watch_theme_manage">Themes verwalten</string>
+    <string name="watch_theme_builtin_subtitle">Integriertes Theme · %1$s-Layout</string>
+    <string name="watch_theme_custom_subtitle">Benutzerdefiniertes Theme · %1$s-Layout</string>
+    <string name="watch_theme_unknown_name">Unbekanntes Theme</string>
+
+    <string name="watch_themes_title">Uhr-Themes</string>
+    <string name="watch_theme_active_label">ANGEWENDETES THEME</string>
+    <string name="watch_theme_active_layout">Layout: %1$s</string>
+    <string name="watch_theme_preview_description">Vorschau des aktuell auf die Uhr angewendeten Themes</string>
+    <string name="watch_theme_create">Theme erstellen</string>
+    <string name="watch_theme_create_title">Neues Theme erstellen</string>
+    <string name="watch_theme_rename_title">Theme umbenennen</string>
+    <string name="watch_theme_name">Theme-Name</string>
+    <string name="watch_theme_base_layout">Basis-Layout</string>
+    <string name="watch_theme_default_name">Mein %1$s-Theme</string>
+    <string name="watch_theme_generic_name">Theme</string>
+    <string name="watch_theme_copy_name">%1$s Kopie</string>
+    <string name="watch_theme_built_in_section">Integrierte Themes</string>
+    <string name="watch_theme_custom_section">Meine Themes</string>
+    <string name="watch_theme_applied">ANGEWENDET</string>
+    <string name="watch_theme_apply_success">%1$s auf deine Uhr angewendet</string>
+    <string name="watch_theme_apply_error">Dieses Theme konnte nicht angewendet werden</string>
+    <string name="watch_theme_more_options">Weitere Theme-Optionen</string>
+    <string name="watch_theme_list_description">Integrierte und benutzerdefinierte Uhr-Themes</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Zum Anwenden tippen.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Aktuell angewendet.</string>
+    <string name="watch_theme_rename">Umbenennen</string>
+    <string name="watch_theme_customize">Anpassen</string>
+    <string name="watch_theme_duplicate">Duplizieren</string>
+    <string name="watch_theme_delete">Löschen</string>
+    <string name="watch_theme_delete_title">„%1$s“ löschen?</string>
+    <string name="watch_theme_delete_message">Dieses gespeicherte Theme und seine Einstellungen werden dauerhaft entfernt.</string>
+    <string name="watch_theme_deleted">Theme gelöscht</string>
+    <string name="watch_theme_duplicated">„%1$s“ erstellt</string>
+    <string name="watch_theme_limit_reached">Du kannst bis zu 24 benutzerdefinierte Themes speichern. Lösche eines, bevor du ein weiteres erstellst.</string>
+    <string name="watch_theme_name_required">Gib einen Theme-Namen ein</string>
+    <string name="watch_theme_name_duplicate">Ein Theme mit diesem Namen existiert bereits</string>
+
+    <string name="watch_theme_face_classic">Classic</string>
+    <string name="watch_theme_face_expressive">Expressive</string>
+    <string name="watch_theme_face_vinyl">Vinyl</string>
+    <string name="watch_theme_face_poster">Poster</string>
+    <string name="watch_theme_face_studio">Studio</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Spectrum</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Immersive</string>
+    <string name="watch_theme_face_depth">Tiefe</string>
+    <string name="watch_theme_face_carousel">Karussell</string>
+    <string name="watch_theme_face_chat">Chat</string>
+    <string name="watch_theme_face_split">Split</string>
+    <string name="watch_theme_face_note">Note</string>
+</resources>

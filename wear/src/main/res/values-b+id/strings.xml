@@ -16,7 +16,7 @@
     <string name="idle_hint">Putar sesuatu di ponsel Anda</string>
 
     <string name="no_phone">Tidak ada ponsel terhubung</string>
-    <string name="playback_stopped">Pemutaran dihentikan</string>
+    <string name="playback_stopped">Dihentikan</string>
     <string name="error">KESALAHAN</string>
     <string name="error_play_services">Kesalahan Play Services</string>
     <string name="button">Tombol</string>
@@ -33,6 +33,7 @@
     <string name="voice_search_prompt">Cari musik</string>
     <string name="queue_empty">Tidak ada antrean tersedia</string>
     <string name="queue_now_playing">Sedang diputar</string>
+    <string name="queue_load_more">Muat lebih banyak</string>
 
     <string name="hint_title">Cara pakai</string>
     <string name="hint_edges">Tepi — ketuk untuk aksi yang ditampilkan</string>
@@ -64,4 +65,7 @@
     <string name="update_install_title">Pembaruan Svartifoss</string>
     <string name="update_install_tap">Ketuk untuk memasang versi baru</string>
     <string name="update_install_failed">Pemasangan gagal. Izinkan pemasangan dari Svartifoss di pengaturan jam tangan dan coba lagi dari ponsel.</string>
+    <string name="face_picker_section_builtin">Wajah bawaan</string>
+    <string name="face_picker_section_custom">Tema saya</string>
+    <string name="face_picker_custom_base">Berdasarkan %1$s</string>
 </resources>

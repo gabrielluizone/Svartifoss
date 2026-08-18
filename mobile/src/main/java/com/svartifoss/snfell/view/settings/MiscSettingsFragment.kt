@@ -67,11 +67,18 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         const val SECTION_APPS = "apps"
         const val SECTION_DATA = "data"
         private const val ARG_SECTION = "settingsSection"
+        private const val ARG_HIGHLIGHT_KEY = "settingsHighlightKey"
 
         private const val DEVELOPER_GITHUB_URL = "https://github.com/gabrielluizone"
 
-        fun newInstance(section: String) = MiscSettingsFragment().apply {
-            arguments = Bundle().apply { putString(ARG_SECTION, section) }
+        /** [highlightKey] scrolls the page to that preference once laid out - set only by the
+         *  settings search, so a result lands on the row itself rather than at the top of a page
+         *  the user then has to scan. */
+        fun newInstance(section: String, highlightKey: String? = null) = MiscSettingsFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_SECTION, section)
+                putString(ARG_HIGHLIGHT_KEY, highlightKey)
+            }
         }
     }
 
@@ -115,6 +122,23 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         watchInfoProvider.observe(viewLifecycleOwner, noWatchBannerObserver)
+        consumeHighlightKey()
+    }
+
+    /**
+     * Scrolls to the preference a search result pointed at, then clears the argument.
+     *
+     * Clearing matters: the argument would otherwise survive into every later recreation of this
+     * page, so rotating the phone after scrolling elsewhere would yank the list back to a row the
+     * user had already moved on from. Posted to the list because the categories are only made
+     * visible in onCreatePreferences, and scrolling to a row that is still GONE does nothing.
+     */
+    private fun consumeHighlightKey() {
+        val key = arguments?.getString(ARG_HIGHLIGHT_KEY) ?: return
+        arguments?.remove(ARG_HIGHLIGHT_KEY)
+        listView?.post {
+            if (isAdded && findPreference<Preference>(key) != null) scrollToPreference(key)
+        }
     }
 
     private var pendingNoWatchBannerJob: Job? = null
@@ -161,26 +185,12 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
     private fun applySectionVisibility() {
         if (preferenceScreen == null) return
 
-        val visibleCategories = when (section) {
-            SECTION_WATCH -> setOf("cat_gestures", "cat_action_list", "cat_notifications")
-            SECTION_AUTOMATION -> setOf("cat_automation", "cat_idle")
-            SECTION_APPS -> setOf("cat_apps")
-            SECTION_DATA -> setOf("cat_backup", "cat_privacy", "cat_about")
-            else -> setOf("cat_updates", "cat_appearance")
-        }
+        // Section -> categories and the full category list both live in SettingsCatalog, shared
+        // with the settings search so a result can be navigated to the page it is actually on.
+        val visibleCategories = SettingsCatalog.SETTINGS_SECTIONS[section]
+            ?: SettingsCatalog.SETTINGS_SECTIONS.getValue(SECTION_GENERAL)
 
-        listOf(
-            "cat_updates",
-            "cat_appearance",
-            "cat_gestures",
-            "cat_action_list",
-            "cat_notifications",
-            "cat_automation",
-            "cat_apps",
-            "cat_backup",
-            "cat_privacy",
-            "cat_about"
-        ).forEach { key ->
+        SettingsCatalog.SETTINGS_CATEGORIES.forEach { key ->
             findPreference<PreferenceCategory>(key)?.isVisible = key in visibleCategories
         }
         updateDevModeVisibility()

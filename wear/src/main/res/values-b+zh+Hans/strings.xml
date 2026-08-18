@@ -16,7 +16,7 @@
     <string name="idle_hint">在手机上播放一些内容</string>
 
     <string name="no_phone">未连接手机</string>
-    <string name="playback_stopped">已停止播放</string>
+    <string name="playback_stopped">已停止</string>
     <string name="error">错误</string>
     <string name="error_play_services">Play 服务错误</string>
     <string name="button">按钮</string>
@@ -33,6 +33,7 @@
     <string name="voice_search_prompt">搜索音乐</string>
     <string name="queue_empty">没有可用的队列</string>
     <string name="queue_now_playing">正在播放</string>
+    <string name="queue_load_more">加载更多</string>
 
     <string name="hint_title">使用方法</string>
     <string name="hint_edges">边缘 — 点按以执行显示的操作</string>
@@ -64,4 +65,7 @@
     <string name="update_install_title">Svartifoss 更新</string>
     <string name="update_install_tap">点按以安装新版本</string>
     <string name="update_install_failed">安装失败。请在手表设置中允许来自 Svartifoss 的安装，然后从手机重试。</string>
+    <string name="face_picker_section_builtin">内置表盘</string>
+    <string name="face_picker_section_custom">我的主题</string>
+    <string name="face_picker_custom_base">基于 %1$s</string>
 </resources>

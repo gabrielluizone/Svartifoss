@@ -52,4 +52,7 @@
     <string name="watch_theme_face_immersive">Immersive</string>
     <string name="watch_theme_face_depth">Depth</string>
     <string name="watch_theme_face_carousel">Carousel</string>
+    <string name="watch_theme_face_chat">Chat</string>
+    <string name="watch_theme_face_split">Split</string>
+    <string name="watch_theme_face_note">Note</string>
 </resources>

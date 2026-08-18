@@ -235,7 +235,7 @@
     <string name="preview_sample_title">Τίτλος τραγουδιού</string>
     <string name="preview_sample_artist">Όνομα καλλιτέχνη</string>
     <string name="preview_sample_next_title">Επόμενο τραγούδι</string>
-    <string name="preview_playback_stopped">Η αναπαραγωγή σταμάτησε</string>
+    <string name="preview_playback_stopped">Σταμάτησε</string>
     <string name="category_gestures">Χειρονομίες &amp; είσοδος</string>
     <string name="setting_overlay_blur_radius">Θόλωση επικάλυψης</string>
     <string name="setting_overlay_blur_radius_description">Ένταση θόλωσης (px) του θαμπού φόντου πίσω από τους δακτυλίους έντασης/αναζήτησης και το πάνελ γρήγορων ενεργειών — ανεξάρτητη από τη θόλωση φόντου εξωφύλλου άλμπουμ</string>
@@ -506,6 +506,9 @@
         <item>Immersive</item>
         <item>Βάθος</item>
         <item>Καρουζέλ</item>
+        <item>Συνομιλία</item>
+        <item>Διαίρεση</item>
+        <item>Σημείωση</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Αναζήτηση Expressive</string>
@@ -820,6 +823,10 @@
         <item>Μεσαία καμπύλη</item>
         <item>Καμπύλο</item>
         <item>Ακραία καμπύλη</item>
+        <item>Άπλωμα στις άκρες</item>
+        <item>Αριστερή άκρη</item>
+        <item>Δεξιά άκρη</item>
+        <item>Και οι δύο άκρες</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Προεπιλεγμένο φόντο</item>
@@ -1096,4 +1103,287 @@
     <string name="update_installing">Άνοιγμα του προγράμματος εγκατάστασης…</string>
     <string name="update_install_permission_needed">Επιτρέψτε την εγκατάσταση εφαρμογών από το Svartifoss, μετά πατήστε ξανά Ενημέρωση τηλεφώνου.</string>
     <string name="update_phone_failed">Η λήψη της ενημέρωσης τηλεφώνου απέτυχε. Δοκιμάστε ξανά.</string>
+    <string name="setting_wear_album_accent_source">Πηγή χρώματος άλμπουμ</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Ισορροπημένο</item>
+        <item>Πιο ζωντανό</item>
+    </string-array>
+
+    <string name="watch_section_typography">Κείμενο</string>
+    <string name="watch_section_typography_description">Επιλέξτε γραμματοσειρά και διαμορφώστε ξεχωριστά τον τίτλο, τον καλλιτέχνη και το εικονίδιο εφαρμογής.</string>
+    <string name="tutorial_quick_panel_title">Πίνακας γρήγορων ενεργειών</string>
+    <string name="tutorial_quick_panel_desc">Πατήστε δύο φορές στο κέντρο της οθόνης αναπαραγωγής για να ανοίξει ένας πίνακας με τέσσερις θέσεις — τρία στρογγυλά κουμπιά και μία πλατιά γραμμή από κάτω τους. Αν δεν τις διαμορφώσετε, οι θέσεις αντικατοπτρίζουν τα κουμπιά που βάζει η ίδια η εφαρμογή αναπαραγωγής στην ειδοποίησή της, οπότε παίρνετε τα πραγματικά της χειριστήρια για «μου αρέσει», τυχαία αναπαραγωγή και επανάληψη. Αναθέστε οποιαδήποτε ενέργεια σε μια θέση, ή ορίστε «Καμία» για απόκρυψη, στις Ενέργειες στο τηλέφωνο.</string>
+    <string name="tutorial_shortcuts_title">Συντομεύσεις ροής</string>
+    <string name="tutorial_shortcuts_desc">Αποθηκεύστε έναν σύνδεσμο για κομμάτι, άλμπουμ, μιξ ή λίστα αναπαραγωγής από Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music ή SoundCloud, και αναθέστε τον έπειτα σε οποιοδήποτε κουμπί, χειρονομία ή θέση πίνακα. Ο πιο γρήγορος τρόπος είναι να μοιραστείτε τον σύνδεσμο απευθείας στο Svartifoss από την εφαρμογή ροής· μπορείτε επίσης να επικολλήσετε έναν αντιγραμμένο σύνδεσμο ή να τον πληκτρολογήσετε. Δεν χρειάζεται λογαριασμός ή σύνδεση — το ρολόι ζητά από το τηλέφωνο να ξεκινήσει την αναπαραγωγή, οπότε μια συντόμευση παίζει αντί απλώς να ανοίγει την εφαρμογή.</string>
+    <string name="category_wf_typography_font">Γραμματοσειρά</string>
+    <string name="category_wf_typography_title">Τίτλος</string>
+    <string name="category_wf_typography_artist">Καλλιτέχνης</string>
+    <string name="category_wf_typography_icon">Εικονίδιο εφαρμογής</string>
+    <string name="category_wf_typography_flex">Άξονες Google Sans Flex</string>
+    <string name="setting_wear_font_flex_hint_title">Σχετικά με αυτά τα στοιχεία ελέγχου</string>
+    <string name="setting_wear_flex_axes_hint">Αυτά ρυθμίζουν με ακρίβεια συγκεκριμένα το Google Sans Flex — επιλέξτε το παραπάνω για να τα χρησιμοποιήσετε. Το βάρος και η πλάγια γραφή τίτλου/καλλιτέχνη παραπάνω ορίζουν ήδη τους δικούς της άξονες βάρους (wght) και κλίσης (slnt) αυτής της γραμματοσειράς· τα τέσσερα στοιχεία ελέγχου παρακάτω εφαρμόζονται σε ολόκληρη την οθόνη.</string>
+    <string name="setting_wear_font_flex_width">Πλάτος</string>
+    <string name="setting_wear_font_flex_width_description">Οριζόντια έκταση, από συμπυκνωμένο έως εκτεταμένο (25–151). Το 100 είναι το κανονικό πλάτος της γραμματοσειράς.</string>
+    <string name="setting_wear_font_flex_optical_size">Οπτικό μέγεθος</string>
+    <string name="setting_wear_font_flex_optical_size_description">Προσαρμόζει τη λεπτομέρεια των πινελιών ανάλογα με το πραγματικό μέγεθος του κειμένου (6–144). Χαμηλότερες τιμές ταιριάζουν σε μικρό κείμενο· υψηλότερες σε μεγάλο κείμενο οθόνης.</string>
+    <string name="setting_wear_font_flex_grade">Βαθμός</string>
+    <string name="setting_wear_font_flex_grade_description">Μεταβάλλει ελαφρώς το βάρος χωρίς να αλλάζει τη διάταξη (0–100) — ένας διακριτικός τρόπος να ενισχύσετε την αντίθεση σε σκούρα οθόνη.</string>
+    <string name="setting_wear_font_flex_roundness">Στρογγυλότητα</string>
+    <string name="setting_wear_font_flex_roundness_description">Αναμειγνύει τις απολήξεις των πινελιών από αιχμηρές (0) έως εντελώς στρογγυλεμένες (100) για πιο φιλική αίσθηση.</string>
+    <string name="preview_chat_today">Σήμερα</string>
+    <string name="category_idle">Όταν δεν παίζει τίποτα</string>
+    <string name="settings_search_title">Αναζήτηση ρυθμίσεων</string>
+    <string name="settings_search_hint">Αναζήτηση ρυθμίσεων</string>
+    <string name="settings_search_clear">Εκκαθάριση αναζήτησης</string>
+    <string name="settings_search_prompt">Αναζητήστε οποιαδήποτε ρύθμιση στις Ρυθμίσεις και στην Εμφάνιση ρολογιού με βάση το όνομα.</string>
+    <string name="settings_search_no_results">Καμία ρύθμιση δεν ταιριάζει.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="notification_access_banner_summary">Πατήστε για να τη χορηγήσετε — ο έλεγχος αναπαραγωγής παραμένει ανενεργός μέχρι τότε</string>
+    <string name="setting_wear_rotary_action">Περιστρεφόμενο στέμμα / στεφάνη</string>
+    <string name="wear_rotary_action_volume">Αλλαγή έντασης</string>
+    <string name="wear_rotary_action_seek">Μετακίνηση στο κομμάτι</string>
+    <string name="wear_rotary_action_off">Καμία ενέργεια</string>
+    <string name="face_reset_migration_title">Ενημερώστε την εμφάνιση του ρολογιού</string>
+    <string name="face_reset_migration_message">Κάνατε ενημέρωση από παλαιότερη έκδοση όπου όλες οι όψεις ρολογιού μοιράζονταν ένα κοινό σύνολο ρυθμίσεων εμφάνισης. Τώρα κάθε όψη θυμάται τις δικές της, οπότε οι παλιές σας ρυθμίσεις ίσως φαίνονται ασύμβατες σε όψεις που δεν προσαρμόσατε ποτέ απευθείας. Συνιστούμε να επαναφέρετε όλες τις όψεις στις νέες προεπιλογές τους, ή να διαγράψετε τα δεδομένα της εφαρμογής για εντελώς νέο ξεκίνημα.</string>
+    <string name="face_reset_migration_reset_button">Επαναφορά όλων των όψεων</string>
+    <string name="face_reset_migration_clear_data_button">Διαγραφή δεδομένων εφαρμογής</string>
+    <string name="quick_panel_link_summary">Πατήστε δύο φορές στο κέντρο της οθόνης του ρολογιού για να ανοίξει. Πατήστε εδώ για να διαμορφώσετε τις τέσσερις θέσεις του στις Ενέργειες.</string>
+    <string name="setting_wear_center_long_press">Παρατεταμένο πάτημα στο κέντρο</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Μια μεταβλητή έκδοση του Google Sans με ρυθμιζόμενο πλάτος, οπτικό μέγεθος, βαθμό και στρογγυλότητα — ξεκλειδώνει τα στοιχεία ελέγχου αξόνων παρακάτω.</string>
+    <string name="setting_wear_progress_gradient">Ανάμειξη παλέτας στον δακτύλιο</string>
+    <string name="setting_wear_progress_gradient_description">Με μια πολυχρωματική μεταχείριση χρώματος (Συμπληρωματικό, Τριαδικό, Ανάλογο, Δίχρωμο) ο συμπαγής δακτύλιος σβήνει και στα τρία χρώματα. Απενεργοποιήστε το για μονόχρωμο δακτύλιο, διατηρώντας την παλέτα του άλμπουμ παντού αλλού.</string>
+    <string name="setting_wear_title_font_weight">Βάρος τίτλου</string>
+    <string name="setting_wear_title_font_italic">Πλάγιος τίτλος</string>
+    <string name="setting_wear_title_font_scale">Μέγεθος τίτλου</string>
+    <string name="setting_wear_title_font_opacity">Αδιαφάνεια τίτλου</string>
+    <string name="setting_wear_title_font_tracking">Απόσταση γραμμάτων τίτλου</string>
+    <string name="setting_wear_title_color">Χρώμα κειμένου τίτλου</string>
+    <string name="setting_wear_title_custom_color">Προσαρμοσμένο χρώμα τίτλου</string>
+    <string name="wear_title_color_face_default">Προεπιλογή όψης (όπως σχεδιάστηκε)</string>
+    <string name="setting_wear_title_adaptive_contrast">Προσαρμογή χρώματος τίτλου για αντίθεση</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Φωτίζει ή σκουραίνει τον τίτλο όταν το χρώμα του είναι πολύ κοντά στο εξώφυλλο πίσω του, διατηρώντας την απόχρωση του χρώματος. Δεν έχει καμία επίδραση όσο ο τίτλος διατηρεί την προεπιλογή της όψης.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Προσαρμογή χρώματος καλλιτέχνη για αντίθεση</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Φωτίζει ή σκουραίνει τη γραμμή καλλιτέχνη όταν το χρώμα του άλμπουμ είναι πολύ κοντά στο εξώφυλλο πίσω της, διατηρώντας την απόχρωση του χρώματος. Μετρά μόνο τη λωρίδα πάνω στην οποία βρίσκεται η γραμμή, όχι ολόκληρο το εξώφυλλο.</string>
+    <string name="setting_wear_artist_font_weight">Βάρος καλλιτέχνη</string>
+    <string name="setting_wear_artist_font_italic">Πλάγιος καλλιτέχνης</string>
+    <string name="setting_wear_artist_font_scale">Μέγεθος καλλιτέχνη</string>
+    <string name="setting_wear_artist_font_opacity">Αδιαφάνεια καλλιτέχνη</string>
+    <string name="setting_wear_artist_font_tracking">Απόσταση γραμμάτων καλλιτέχνη</string>
+    <string name="setting_wear_source_icon_scale">Μέγεθος εικονιδίου εφαρμογής</string>
+    <string name="setting_wear_source_icon_opacity">Αδιαφάνεια εικονιδίου εφαρμογής</string>
+    <string name="setting_wear_typography_weight_description">1–1000. Το 400 είναι το κανονικό βάρος της όψης· υψηλότερες τιμές είναι πιο έντονες. Για το Google Sans Flex αυτός είναι ο δικός του άξονας βάρους</string>
+    <string name="setting_wear_typography_scale_description">Ποσοστό του δικού της μεγέθους της όψης (70–140). Το 100 διατηρεί το σχεδιασμένο μέγεθος κάθε διάταξης</string>
+    <string name="setting_wear_typography_opacity_description">Ποσοστό (20–100). Το 100 διατηρεί τη δική της αδιαφάνεια της όψης</string>
+    <string name="setting_wear_typography_tracking_description">Επιπλέον χώρος μεταξύ γραμμάτων, σε εκατοστά του em (−5 έως 20). Το 0 διατηρεί τη δική της απόσταση της γραμματοσειράς</string>
+    <string name="setting_wear_color_modifier">Απόχρωση</string>
+    <string name="setting_wear_color_modifier_description">Ρυθμίζει ολόκληρη την παλέτα χωρίς να αλλάζει τον τρόπο εξαγωγής της — λειτουργεί με κάθε μεταχείριση χρώματος</string>
+    <string name="setting_wear_color_hue_shift">Μετατόπιση χρώματος</string>
+    <string name="setting_wear_color_hue_shift_description">Περιστρέφει την παλέτα του άλμπουμ στον κύκλο χρωμάτων, σε μοίρες (0–359). Κάθε μεταχείριση διατηρεί το κύριο χρώμα της στην απόχρωση του ίδιου του άλμπουμ, οπότε αυτό είναι που μεταβάλλεται. Το 0 χρησιμοποιεί το χρώμα του άλμπουμ ως έχει· ένα σταθερό κανονικό χρώμα δεν περιστρέφεται ποτέ.</string>
+    <string name="setting_wear_paused_hold">Διατήρηση εφαρμογής ενεργής μετά την παύση</string>
+    <string name="setting_wear_paused_hold_description">Πόσο καιρό η εφαρμογή του ρολογιού παραμένει προσβάσιμη από την όψη ρολογιού αφού κάνετε παύση, ώστε να συνεχίσετε σηκώνοντας τον καρπό αντί να την ανοίξετε ξανά. Οι μεγαλύτερες ρυθμίσεις διατηρούν μια υπηρεσία παρασκηνίου σε λειτουργία.</string>
+    <string name="wear_paused_hold_off">Να μη διατηρείται</string>
+    <string name="wear_paused_hold_5">5 λεπτά</string>
+    <string name="wear_paused_hold_15">15 λεπτά</string>
+    <string name="wear_paused_hold_30">30 λεπτά</string>
+    <string name="wear_paused_hold_60">1 ώρα</string>
+    <string name="wear_paused_hold_always">Μέχρι να τελειώσει η αναπαραγωγή</string>
+    <string name="setting_wear_idle_button_action">Κουμπί όταν δεν παίζει τίποτα</string>
+    <string name="setting_wear_idle_auto_open">Άνοιγμα όταν δεν παίζει τίποτα</string>
+    <string name="setting_wear_idle_auto_open_description">Μεταβαίνει απευθείας σε αυτή την οθόνη όταν ανοίγετε την εφαρμογή ρολογιού χωρίς μουσική να παίζει.</string>
+    <string name="wear_idle_action_resume">Συνέχιση τελευταίας εφαρμογής</string>
+    <string name="wear_idle_action_shortcuts">Συντομεύσεις λιστών αναπαραγωγής</string>
+    <string name="wear_idle_action_menu">Μενού ενεργειών</string>
+    <string name="wear_idle_action_search">Αναζήτηση</string>
+    <string name="wear_idle_action_queue">Πρόσφατη αναπαραγωγή</string>
+    <string name="wear_idle_action_none">Κανένα κουμπί</string>
+    <string name="wear_idle_auto_open_none">Παραμονή στην αναπαραγωγή</string>
+    <string name="action_open_library">Περιήγηση βιβλιοθήκης</string>
+    <string name="library_up">Πίσω</string>
+    <string name="error_library_unavailable">Αυτή η εφαρμογή δεν διαθέτει βιβλιοθήκη με δυνατότητα περιήγησης</string>
+    <string name="error_library_empty">Δεν υπάρχει τίποτα εδώ</string>
+    <string name="error_library_no_player">Ξεκινήστε πρώτα μια αναπαραγωγή</string>
+    <string name="setting_wear_carousel_card_shape">Σχήμα κάρτας καρουζέλ</string>
+    <string name="setting_wear_font_all_screens">Χρήση γραμματοσειράς παντού</string>
+    <string name="setting_wear_font_all_screens_description">Εφαρμόζει την επιλεγμένη γραμματοσειρά και στο μενού, στην ουρά και στο ρολόι της οθόνης, όχι μόνο στον τίτλο και τον καλλιτέχνη του κομματιού. Οι διακοσμητικές ή χειρόγραφες γραμματοσειρές μπορεί να είναι πιο δύσκολο να διαβαστούν σε λίστες.</string>
+    <string name="setting_wear_clock_font">Γραμματοσειρά ρολογιού</string>
+    <string name="wear_clock_font_follow">Ακολούθηση γραμματοσειράς κομματιού</string>
+    <string name="setting_wear_clock_font_weight">Βάρος ρολογιού</string>
+    <string name="setting_wear_clock_font_italic">Πλάγιο ρολόι</string>
+    <string name="setting_wear_clock_font_scale">Μέγεθος ρολογιού</string>
+    <string name="setting_wear_clock_font_tracking">Απόσταση γραμμάτων ρολογιού</string>
+    <string name="setting_wear_clock_adaptive_contrast">Προσαρμογή χρώματος ρολογιού για αντίθεση</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Φωτίζει ή σκουραίνει το ρολόι όταν το χρώμα του άλμπουμ είναι πολύ κοντά στο εξώφυλλο πίσω του, διατηρώντας την απόχρωση του χρώματος. Ισχύει μόνο όταν το χρώμα του ρολογιού είναι ορισμένο σε Χρώμα άλμπουμ.</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Συμπυκνωμένη γραμματοσειρά προβολής με κεφαλαία — αφισοειδής, χωράει μεγάλους τίτλους</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Εκδοτική γραμματοσειρά serif υψηλής αντίθεσης — αίσθηση περιοδικού</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Τεχνική γεωμετρική sans με ιδιαίτερες λεπτομέρειες</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Τετράγωνη γραμματοσειρά sci-fi — τολμηρή και μελλοντολογική</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Χειρόγραφη γραφή — ανεπίσημη και προσωπική</string>
+    <string name="setting_queue_local_artwork">Εξώφυλλα ουράς από τη βιβλιοθήκη σας</string>
+    <string name="setting_queue_local_artwork_description">Οι τοπικές εφαρμογές μουσικής δημοσιεύουν εξώφυλλα ουράς ως αναφορές βιβλιοθήκης. Παραχωρήστε πρόσβαση πολυμέσων ώστε να εμφανίζονται στην ουρά του ρολογιού. Δεν εμπλέκεται καμία πρόσβαση στο διαδίκτυο.</string>
+    <string name="setting_queue_local_artwork_granted">Η πρόσβαση πολυμέσων παραχωρήθηκε — τα τοπικά εξώφυλλα ουράς θα εμφανίζονται</string>
+    <string name="setting_queue_local_artwork_denied">Η πρόσβαση πολυμέσων απορρίφθηκε. Ενεργοποιήστε τη στις ρυθμίσεις Android για να εμφανίζονται τα τοπικά εξώφυλλα ουράς.</string>
+    <string name="setting_queue_remote_artwork">Λήψη εξωφύλλων ουράς από το διαδίκτυο</string>
+    <string name="setting_queue_remote_artwork_short_description">Οι εφαρμογές ροής (πελάτες YouTube Music, Echo Music…) δημοσιεύουν εξώφυλλα ουράς ως συνδέσμους, όχι εικόνες, οπότε αυτό τα κατεβάζει και τα αποθηκεύει προσωρινά. Απενεργοποιήστε το για να διατηρήσετε την ουρά εντελώς εκτός σύνδεσης — τότε αυτές οι γραμμές δεν θα εμφανίζουν κανένα εξώφυλλο.</string>
+    <string name="setting_queue_remote_artwork_description">Οι εφαρμογές αναπαραγωγής ροής δημοσιεύουν εξώφυλλα ουράς ως συνδέσμους αντί για εικόνες. Κάθε ένα κατεβαίνει μία φορά και αποθηκεύεται προσωρινά σε αυτό το τηλέφωνο, για εμφάνιση στην ουρά του ρολογιού. Ζητείται μόνο η διεύθυνση URL του εξωφύλλου που έχει ήδη δημοσιεύσει η εφαρμογή — χωρίς λογαριασμό ή προσωπικά δεδομένα. Ενεργό από προεπιλογή· απενεργοποιήστε το για να διατηρήσετε την ουρά εντελώς εκτός σύνδεσης.</string>
+    <string name="setting_persistent_notification">Διαχείριση της ειδοποίησης «Το Svartifoss είναι ενεργό»</string>
+    <string name="setting_persistent_notification_description">Ανοίγει τις ρυθμίσεις Android αυτής της ειδοποίησης — σιγήστε την, αποκρύψτε την από την οθόνη κλειδώματος ή προσαρμόστε την διαφορετικά. Δεν μπορεί να απενεργοποιηθεί εντελώς: το Android απαιτεί μια συνεχή ειδοποίηση όσο εκτελείται η υπηρεσία παρασκηνίου που επικοινωνεί με το ρολόι σας.</string>
+    <string name="update_install_notification_title">Ενημέρωση Svartifoss</string>
+    <string name="update_install_notification_tap">Πατήστε για εγκατάσταση της νέας έκδοσης</string>
+    <string name="update_install_notification_failed">Η εγκατάσταση απέτυχε. Επιτρέψτε εγκαταστάσεις από το Svartifoss στις Ρυθμίσεις και δοκιμάστε ξανά.</string>
+
+    <string-array name="wear_center_long_press_entries">
+        <item>Αλλαγή όψης ρολογιού</item>
+        <item>Άνοιγμα ουράς</item>
+        <item>Τίποτα</item>
+    </string-array>
+    <string-array name="wear_color_modifier_entries">
+        <item>Καμία</item>
+        <item>Ζωντανό</item>
+        <item>Παστέλ</item>
+        <item>Θερμό</item>
+        <item>Ψυχρό</item>
+    </string-array>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Στρογγυλεμένο</item>
+        <item>Τετράγωνο</item>
+        <item>Squircle</item>
+        <item>Κύκλος</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>Απενεργοποιημένο</item>
+        <item>Εμφάνιση εικονιδίου όψης μουσικής (μόνο για Wear 3.0)</item>
+        <item>Άνοιγμα Svartifoss</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">Χρήση παλέτας χρωμάτων</string>
+    <string name="setting_wear_normal_color_multi_description">Ενεργό: η οθόνη χρησιμοποιεί ένα κύριο χρώμα και δύο συμπληρωματικούς τόνους. Ανενεργό: παντού ένα μόνο χρώμα — αυτό του άλμπουμ ή όποιο επιλέξατε.</string>
 </resources>

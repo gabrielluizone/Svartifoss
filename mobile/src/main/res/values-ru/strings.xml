@@ -237,7 +237,7 @@
     <string name="preview_sample_title">Название песни</string>
     <string name="preview_sample_artist">Имя исполнителя</string>
     <string name="preview_sample_next_title">Следующая песня</string>
-    <string name="preview_playback_stopped">Воспроизведение остановлено</string>
+    <string name="preview_playback_stopped">Остановлено</string>
     <string name="category_gestures">Жесты и ввод</string>
     <string name="setting_overlay_blur_radius">Размытие оверлея</string>
     <string name="setting_overlay_blur_radius_description">Сила размытия (px) матового фона за кольцами громкости/перемотки и панелью быстрых действий — не зависит от размытия фона обложки альбома</string>
@@ -508,6 +508,9 @@
         <item>Immersive</item>
         <item>Глубина</item>
         <item>Карусель</item>
+        <item>Чат</item>
+        <item>Раздельный</item>
+        <item>Заметка</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Перемотка Expressive</string>
@@ -822,6 +825,10 @@
         <item>Средний изгиб</item>
         <item>Изогнутый</item>
         <item>Экстремальный изгиб</item>
+        <item>Разнести по краям</item>
+        <item>Левый край</item>
+        <item>Правый край</item>
+        <item>Оба края</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Фон по умолчанию</item>
@@ -1104,4 +1111,287 @@
     <string name="update_installing">Открытие установщика…</string>
     <string name="update_install_permission_needed">Разрешите установку приложений от Svartifoss, затем снова нажмите «Обновить телефон».</string>
     <string name="update_phone_failed">Не удалось скачать обновление для телефона. Попробуйте снова.</string>
+    <string name="setting_wear_album_accent_source">Источник цвета альбома</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Сбалансированный</item>
+        <item>Самый насыщенный</item>
+    </string-array>
+
+    <string name="watch_section_typography">Текст</string>
+    <string name="watch_section_typography_description">Выберите шрифт и настройте оформление названия, исполнителя и значка приложения независимо друг от друга.</string>
+    <string name="tutorial_quick_panel_title">Панель быстрых действий</string>
+    <string name="tutorial_quick_panel_desc">Дважды коснитесь центра экрана воспроизведения, чтобы открыть панель с четырьмя слотами — тремя круглыми кнопками и одной широкой строкой под ними. Если их не настроить, слоты отражают кнопки, которые само воспроизводящее приложение помещает в своё уведомление, поэтому вы получаете его настоящие элементы «нравится», перемешивания и повтора. Назначьте любое действие на слот или выберите «Нет», чтобы скрыть его, в разделе «Действия» на телефоне.</string>
+    <string name="tutorial_shortcuts_title">Ярлыки стриминга</string>
+    <string name="tutorial_shortcuts_desc">Сохраните ссылку на трек, альбом, микс или плейлист из Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music или SoundCloud, а затем назначьте её на любую кнопку, жест или слот панели. Самый быстрый способ — поделиться ссылкой прямо в Svartifoss из приложения стриминга; также можно вставить скопированную ссылку или ввести её вручную. Учётная запись или вход не нужны — часы просят телефон начать воспроизведение, поэтому ярлык запускает воспроизведение, а не просто открывает приложение.</string>
+    <string name="category_wf_typography_font">Шрифт</string>
+    <string name="category_wf_typography_title">Название</string>
+    <string name="category_wf_typography_artist">Исполнитель</string>
+    <string name="category_wf_typography_icon">Значок приложения</string>
+    <string name="category_wf_typography_flex">Оси Google Sans Flex</string>
+    <string name="setting_wear_font_flex_hint_title">Об этих настройках</string>
+    <string name="setting_wear_flex_axes_hint">Они тонко настраивают именно Google Sans Flex — выберите его выше, чтобы использовать их. Насыщенность и курсив названия и исполнителя выше уже задают собственные оси насыщенности (wght) и наклона (slnt) этого шрифта; четыре настройки ниже применяются ко всему экрану.</string>
+    <string name="setting_wear_font_flex_width">Ширина</string>
+    <string name="setting_wear_font_flex_width_description">Растяжение по горизонтали, от узкого до широкого (25–151). 100 — обычная ширина шрифта.</string>
+    <string name="setting_wear_font_flex_optical_size">Оптический размер</string>
+    <string name="setting_wear_font_flex_optical_size_description">Настраивает детализацию штрихов в зависимости от фактического размера текста (6–144). Меньшие значения подходят для мелкого текста, большие — для крупного.</string>
+    <string name="setting_wear_font_flex_grade">Градация</string>
+    <string name="setting_wear_font_flex_grade_description">Слегка меняет насыщенность без изменения раскладки (0–100) — тонкий способ повысить контраст на тёмном экране.</string>
+    <string name="setting_wear_font_flex_roundness">Скруглённость</string>
+    <string name="setting_wear_font_flex_roundness_description">Смешивает окончания штрихов от острых (0) до полностью скруглённых (100) для более дружелюбного вида.</string>
+    <string name="preview_chat_today">Сегодня</string>
+    <string name="category_idle">Когда ничего не играет</string>
+    <string name="settings_search_title">Поиск по настройкам</string>
+    <string name="settings_search_hint">Поиск по настройкам</string>
+    <string name="settings_search_clear">Очистить поиск</string>
+    <string name="settings_search_prompt">Ищите любую настройку в разделах «Настройки» и «Оформление часов» по названию.</string>
+    <string name="settings_search_no_results">Ничего не найдено.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="notification_access_banner_summary">Нажмите, чтобы предоставить доступ — до этого управление воспроизведением не работает</string>
+    <string name="setting_wear_rotary_action">Поворотная головка / безель</string>
+    <string name="wear_rotary_action_volume">Менять громкость</string>
+    <string name="wear_rotary_action_seek">Перематывать трек</string>
+    <string name="wear_rotary_action_off">Ничего не делать</string>
+    <string name="face_reset_migration_title">Обновите оформление часов</string>
+    <string name="face_reset_migration_message">Вы обновились с более старой версии, где все циферблаты часов использовали общий набор настроек оформления. Теперь у каждого циферблата свои настройки, поэтому старые настройки могут выглядеть несогласованно на циферблатах, которые вы никогда не настраивали напрямую. Рекомендуем сбросить все циферблаты к новым значениям по умолчанию или очистить данные приложения для полностью нового старта.</string>
+    <string name="face_reset_migration_reset_button">Сбросить все циферблаты</string>
+    <string name="face_reset_migration_clear_data_button">Очистить данные приложения</string>
+    <string name="quick_panel_link_summary">Дважды коснитесь центра экрана часов, чтобы открыть её. Коснитесь здесь, чтобы настроить её четыре слота в разделе «Действия».</string>
+    <string name="setting_wear_center_long_press">Долгое нажатие по центру</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Вариативная версия Google Sans с регулируемой шириной, оптическим размером, градацией и скруглённостью — открывает настройки осей ниже.</string>
+    <string name="setting_wear_progress_gradient">Смешивать палитру в кольце</string>
+    <string name="setting_wear_progress_gradient_description">При многоцветной обработке (Дополнительная, Триадная, Аналоговая, Двухцветная) сплошное кольцо плавно переходит через все три цвета. Отключите, чтобы кольцо было одноцветным, сохранив палитру альбома везде остальном.</string>
+    <string name="setting_wear_title_font_weight">Насыщенность названия</string>
+    <string name="setting_wear_title_font_italic">Курсив названия</string>
+    <string name="setting_wear_title_font_scale">Размер названия</string>
+    <string name="setting_wear_title_font_opacity">Непрозрачность названия</string>
+    <string name="setting_wear_title_font_tracking">Межбуквенный интервал названия</string>
+    <string name="setting_wear_title_color">Цвет текста названия</string>
+    <string name="setting_wear_title_custom_color">Свой цвет названия</string>
+    <string name="wear_title_color_face_default">По умолчанию для циферблата (как задумано)</string>
+    <string name="setting_wear_title_adaptive_contrast">Адаптировать цвет названия для контраста</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Осветляет или затемняет название, когда его цвет слишком близок к фоновой обложке, сохраняя оттенок цвета. Не действует, пока у названия установлен цвет по умолчанию для циферблата.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Адаптировать цвет исполнителя для контраста</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Осветляет или затемняет строку исполнителя, когда цвет альбома слишком близок к фоновой обложке, сохраняя оттенок цвета. Измеряет только полосу, на которой расположена строка, а не всю обложку.</string>
+    <string name="setting_wear_artist_font_weight">Насыщенность исполнителя</string>
+    <string name="setting_wear_artist_font_italic">Курсив исполнителя</string>
+    <string name="setting_wear_artist_font_scale">Размер исполнителя</string>
+    <string name="setting_wear_artist_font_opacity">Непрозрачность исполнителя</string>
+    <string name="setting_wear_artist_font_tracking">Межбуквенный интервал исполнителя</string>
+    <string name="setting_wear_source_icon_scale">Размер значка приложения</string>
+    <string name="setting_wear_source_icon_opacity">Непрозрачность значка приложения</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 — обычная насыщенность циферблата; чем выше, тем жирнее. Для Google Sans Flex это собственная ось насыщенности этого шрифта</string>
+    <string name="setting_wear_typography_scale_description">Процент от собственного размера циферблата (70–140). 100 сохраняет исходный размер каждого макета</string>
+    <string name="setting_wear_typography_opacity_description">Процент (20–100). 100 сохраняет исходную непрозрачность циферблата</string>
+    <string name="setting_wear_typography_tracking_description">Дополнительный интервал между буквами, в сотых долях em (от −5 до 20). 0 сохраняет исходный интервал шрифта</string>
+    <string name="setting_wear_color_modifier">Оттенок</string>
+    <string name="setting_wear_color_modifier_description">Регулирует всю палитру, не меняя способ её получения — работает с любой обработкой цвета</string>
+    <string name="setting_wear_color_hue_shift">Сдвиг цвета</string>
+    <string name="setting_wear_color_hue_shift_description">Вращает палитру альбома по цветовому кругу, в градусах (0–359). Каждая обработка сохраняет основной цвет в тоне самого альбома, поэтому меняется именно это. 0 использует цвет альбома как есть; фиксированный обычный цвет никогда не вращается.</string>
+    <string name="setting_wear_paused_hold">Держать приложение активным после паузы</string>
+    <string name="setting_wear_paused_hold_description">Как долго приложение часов остаётся доступным с циферблата после паузы, чтобы можно было продолжить, подняв запястье, вместо повторного открытия. Более длительные значения удерживают фоновую службу запущенной.</string>
+    <string name="wear_paused_hold_off">Не держать</string>
+    <string name="wear_paused_hold_5">5 минут</string>
+    <string name="wear_paused_hold_15">15 минут</string>
+    <string name="wear_paused_hold_30">30 минут</string>
+    <string name="wear_paused_hold_60">1 час</string>
+    <string name="wear_paused_hold_always">До конца воспроизведения</string>
+    <string name="setting_wear_idle_button_action">Кнопка при отсутствии воспроизведения</string>
+    <string name="setting_wear_idle_auto_open">Открывать при отсутствии воспроизведения</string>
+    <string name="setting_wear_idle_auto_open_description">Сразу переходит на этот экран, когда вы открываете приложение часов без воспроизведения музыки.</string>
+    <string name="wear_idle_action_resume">Возобновить последнее приложение</string>
+    <string name="wear_idle_action_shortcuts">Ярлыки плейлистов</string>
+    <string name="wear_idle_action_menu">Меню действий</string>
+    <string name="wear_idle_action_search">Поиск</string>
+    <string name="wear_idle_action_queue">Недавно воспроизведённое</string>
+    <string name="wear_idle_action_none">Без кнопки</string>
+    <string name="wear_idle_auto_open_none">Оставаться в плеере</string>
+    <string name="action_open_library">Просмотр медиатеки</string>
+    <string name="library_up">Назад</string>
+    <string name="error_library_unavailable">В этом приложении нет доступной для просмотра медиатеки</string>
+    <string name="error_library_empty">Здесь ничего нет</string>
+    <string name="error_library_no_player">Сначала запустите воспроизведение</string>
+    <string name="setting_wear_carousel_card_shape">Форма карточки карусели</string>
+    <string name="setting_wear_font_all_screens">Использовать шрифт везде</string>
+    <string name="setting_wear_font_all_screens_description">Применяет выбранный шрифт также к меню, очереди и часам на экране, а не только к названию и исполнителю трека. Декоративные и рукописные шрифты могут хуже читаться в списках.</string>
+    <string name="setting_wear_clock_font">Шрифт часов</string>
+    <string name="wear_clock_font_follow">Как у шрифта трека</string>
+    <string name="setting_wear_clock_font_weight">Насыщенность часов</string>
+    <string name="setting_wear_clock_font_italic">Курсив часов</string>
+    <string name="setting_wear_clock_font_scale">Размер часов</string>
+    <string name="setting_wear_clock_font_tracking">Межбуквенный интервал часов</string>
+    <string name="setting_wear_clock_adaptive_contrast">Адаптировать цвет часов для контраста</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Осветляет или затемняет часы, когда цвет альбома слишком близок к фоновой обложке, сохраняя оттенок цвета. Действует только когда цвет часов установлен как «Цвет альбома».</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Узкий заглавный дисплейный шрифт — плакатный стиль, подходит для длинных названий</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Контрастная антиква в журнальном стиле</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Технический геометрический гротеск с необычными деталями</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Квадратный научно-фантастический дисплейный шрифт — смелый и футуристичный</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Рукописный шрифт — непринуждённый и личный</string>
+    <string name="setting_queue_local_artwork">Обложки очереди из вашей медиатеки</string>
+    <string name="setting_queue_local_artwork_description">Локальные музыкальные плееры публикуют обложки очереди как ссылки на медиатеку. Предоставьте доступ к медиафайлам, чтобы они отображались в очереди на часах. Доступ в интернет не требуется.</string>
+    <string name="setting_queue_local_artwork_granted">Доступ к медиафайлам предоставлен — локальные обложки очереди будут показаны</string>
+    <string name="setting_queue_local_artwork_denied">В доступе к медиафайлам отказано. Включите его в настройках Android, чтобы показывать локальные обложки очереди.</string>
+    <string name="setting_queue_remote_artwork">Загружать обложки очереди из интернета</string>
+    <string name="setting_queue_remote_artwork_short_description">Стриминговые приложения (клиенты YouTube Music, Echo Music…) публикуют обложки очереди как ссылки, а не изображения, поэтому здесь они скачиваются и кэшируются. Отключите, чтобы очередь оставалась полностью офлайн — тогда в этих строках не будет обложек вовсе.</string>
+    <string name="setting_queue_remote_artwork_description">Стриминговые плееры публикуют обложки очереди как ссылки, а не изображения. Каждая скачивается один раз и кэшируется на этом телефоне, чтобы показываться в очереди на часах. Запрашивается только URL обложки, уже опубликованный плеером — никаких учётных записей или личных данных. Включено по умолчанию; отключите, чтобы очередь оставалась полностью офлайн.</string>
+    <string name="setting_persistent_notification">Управление уведомлением «Svartifoss активен»</string>
+    <string name="setting_persistent_notification_description">Открывает настройки Android для этого уведомления — отключите звук, скройте его с экрана блокировки или измените иначе. Полностью отключить нельзя: Android требует постоянное уведомление, пока работает фоновая служба, взаимодействующая с вашими часами.</string>
+    <string name="update_install_notification_title">Обновление Svartifoss</string>
+    <string name="update_install_notification_tap">Нажмите, чтобы установить новую версию</string>
+    <string name="update_install_notification_failed">Не удалось установить. Разрешите установку из Svartifoss в настройках и попробуйте снова.</string>
+
+    <string-array name="wear_center_long_press_entries">
+        <item>Сменить циферблат часов</item>
+        <item>Открыть очередь</item>
+        <item>Ничего</item>
+    </string-array>
+    <string-array name="wear_color_modifier_entries">
+        <item>Нет</item>
+        <item>Насыщенный</item>
+        <item>Пастельный</item>
+        <item>Тёплый</item>
+        <item>Холодный</item>
+    </string-array>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Скруглённая</item>
+        <item>Квадратная</item>
+        <item>Сквиркл</item>
+        <item>Круглая</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>Отключено</item>
+        <item>Показывать значок музыкального циферблата (только для Wear 3.0)</item>
+        <item>Открыть Svartifoss</item>
+    </string-array>
+    <string name="setting_wear_normal_color_multi">Использовать палитру цветов</string>
+    <string name="setting_wear_normal_color_multi_description">Включено: экран использует основной цвет и два вспомогательных оттенка. Выключено: везде используется один цвет — цвет альбома или выбранный вами.</string>
 </resources>

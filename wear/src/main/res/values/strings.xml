@@ -37,7 +37,7 @@
     <string name="idle_action_queue">Open recently played</string>
 
     <string name="no_phone">No phone connected</string>
-    <string name="playback_stopped">Playback Stopped</string>
+    <string name="playback_stopped">Stopped</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Play Services error</string>
     <string name="button">Button</string>
@@ -56,6 +56,34 @@
     <string name="voice_search_prompt">Search music</string>
     <string name="queue_empty">No queue available</string>
     <string name="queue_now_playing">Now playing</string>
+    <string name="queue_load_more">Load more</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Today</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Watch face</string>
+    <string name="face_picker_offline">Phone not connected — this face will apply on the watch, but the phone keeps the setting</string>
+    <string name="face_picker_section_builtin">Built-in faces</string>
+    <string name="face_picker_section_custom">My themes</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Based on %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
 
     <!-- One-time gesture hints overlay shown on first launch -->
     <string name="hint_title">How to use</string>

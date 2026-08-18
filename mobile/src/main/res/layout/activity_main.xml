@@ -34,6 +34,65 @@
                 app:titleMarginBottom="0dp"
                 app:contentInsetStartWithNavigation="16dp" />
 
+        <!-- Notification-access banner. The app cannot see any media session without this
+             permission, so the gap has to stay visible - but it used to be a modal re-shown on
+             every onResume, which someone who chose to grant it later had to dismiss each time
+             they opened the app. The explaining dialog now shows once; after that this row
+             carries the state persistently and reopens the same dialog on tap. Toggled in
+             MainActivity.refreshNotificationAccessBanner(). -->
+        <LinearLayout
+            android:id="@+id/notification_access_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/update_card_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/notification_access_banner_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="14dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_bell" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans"
+                    android:text="@string/error_service_not_enabled"
+                    android:textColor="@color/lyra_on_surface"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/google_sans"
+                    android:text="@string/notification_access_banner_summary"
+                    android:textColor="@color/lyra_pref_summary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
