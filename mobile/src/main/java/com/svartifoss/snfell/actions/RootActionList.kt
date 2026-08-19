@@ -39,7 +39,8 @@ class RootActionList : PhoneAction {
                 OpenLibraryAction(context),
                 PlayLikedSongsAction(context),
                 PlayLikedSongsShuffledAction(context),
-                PlaySpotifyLikedSongsAction(context)
+                PlaySpotifyLikedSongsAction(context),
+                PlaySoundCloudLikesAction(context)
         ))
 
         if (isTaskerInstalled()) {

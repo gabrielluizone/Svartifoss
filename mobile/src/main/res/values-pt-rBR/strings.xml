@@ -248,7 +248,6 @@
     <string name="get_support">Obter suporte</string>
     <string name="get_support_description">Envia os logs do aplicativo para o desenvolvedor, para fins de suporte</string>
     <string name="contact_developer">Falar com o desenvolvedor</string>
-    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — contato</string>
     <string name="contact_developer_chooser">Enviar e-mail</string>
     <string name="contact_developer_no_client">Nenhum app de e-mail instalado. Endereço copiado para a área de transferência.</string>
@@ -972,6 +971,7 @@
 
     <string name="action_play_liked_songs">Tocar músicas curtidas (YT Music)</string>
     <string name="action_play_spotify_liked_songs">Tocar músicas curtidas (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Tocar músicas curtidas (SoundCloud)</string>
     <string name="action_my_playlists">Atalhos de streaming</string>
     <string name="action_play_specific_playlist">Abrir atalho de streaming</string>
     <string name="action_choose_or_add_streaming_shortcut">Escolher ou adicionar atalho de streaming</string>
@@ -1443,6 +1443,7 @@
         <item>Bahasa Indonesia</item>
         <item>فارسی</item>
         <item>简体中文</item>
+        <item>Íslenska</item>
     </string-array>
     <string name="setting_wear_normal_color_multi">Usar paleta de cores</string>
     <string name="setting_wear_normal_color_multi_description">Ligado, a tela usa uma cor principal mais dois tons de apoio. Desligado, uma única cor é usada em tudo — a do próprio álbum, ou a que você escolheu.</string>

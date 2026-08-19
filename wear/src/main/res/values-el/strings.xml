@@ -44,6 +44,8 @@
     <string name="queue_empty">Δεν υπάρχει διαθέσιμη ουρά</string>
     <string name="queue_now_playing">Παίζει τώρα</string>
     <string name="queue_load_more">Φόρτωση περισσότερων</string>
+    <string name="queue_history_fallback">Πρόσφατη αναπαραγωγή</string>
+    <string name="queue_history_fallback_reason">Αυτή η εφαρμογή δεν κοινοποιεί τη λίστα της</string>
     <string name="chat_face_today">Σήμερα</string>
 
     <string name="face_picker_title">Όψη ρολογιού</string>

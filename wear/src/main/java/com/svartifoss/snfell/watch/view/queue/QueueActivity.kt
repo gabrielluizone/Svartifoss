@@ -96,6 +96,7 @@ class QueueActivity : ComponentActivity() {
             val nowPlaying by viewModel.nowPlaying.observeAsState()
             val canLoadMore by viewModel.canLoadMore.observeAsState(false)
             val loadingMore by viewModel.loadingMore.observeAsState(false)
+            val isHistoryFallback by viewModel.isHistoryFallback.observeAsState(false)
 
             CompositionLocalProvider(
                     LocalWatchUiFontFamily provides watchUiFontFamily(
@@ -116,6 +117,7 @@ class QueueActivity : ComponentActivity() {
                     rowSize = rowSize,
                     canLoadMore = canLoadMore,
                     loadingMore = loadingMore,
+                    isHistoryFallback = isHistoryFallback,
                     onLoadMore = { viewModel.loadMore() }
             )
             }

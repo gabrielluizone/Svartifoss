@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">Wear OS nu este acceptat pe acest dispozitiv</string>
     <string name="setting_no_wearable_api_banner_description">Acest dispozitiv nu oferă componenta Wear OS din Google Play Services, de care Svartifoss are nevoie pentru a comunica cu un ceas. Împerecherea nu va ajuta — aplicația de pe telefon nu poate ajunge la un ceas aici. Tot ce urmează mai jos se salvează oricum și se va aplica dacă instalați Svartifoss pe un dispozitiv compatibil.</string>
     <string name="setting_no_watch_banner">Niciun ceas conectat</string>
@@ -938,6 +940,7 @@
 
     <string name="action_play_liked_songs">Redă melodiile apreciate (YT Music)</string>
     <string name="action_play_spotify_liked_songs">Redă melodiile apreciate (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Redă melodiile apreciate (SoundCloud)</string>
     <string name="action_my_playlists">Scurtături de streaming</string>
     <string name="action_play_specific_playlist">Deschide scurtătura de streaming</string>
     <string name="action_choose_or_add_streaming_shortcut">Alegeți sau adăugați o scurtătură de streaming</string>
@@ -1377,6 +1380,7 @@
         <item>Bahasa Indonesia</item>
         <item>فارسی</item>
         <item>简体中文</item>
+        <item>Íslenska</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>

@@ -11,6 +11,27 @@ import com.svartifoss.snfell.actions.SelectableAction
 import com.svartifoss.snfell.music.MusicService
 import javax.inject.Inject
 
+// "heart"/"save"/"collection"/"library" cover Spotify, whose save-to-Liked-Songs custom action
+// reads "Save to Your Library" / heart rather than the word "like".
+private val LIKE_NAME_HINTS = listOf(
+        "like", "thumb", "favorite", "favourite", "love",
+        "heart", "save", "collection", "library")
+private val ALREADY_LIKED_HINTS = listOf(
+        "unlike", "remove", "undo", "unfavorite", "unfavourite",
+        "unsave", "saved", "unheart", "in_library", "in library")
+
+/** Whether a like/save action's own label reads as "remove/undo" (already liked) rather than
+ *  "add" (not liked yet). A top-level pure predicate, not a class member, so a JVM test can
+ *  exercise it without touching any of the Android types the rest of this file needs. Also reused
+ *  by [com.svartifoss.snfell.notifications.MediaNotificationActions] for apps - SoundCloud among
+ *  them - that expose "like" only as a `Notification.Action`, never a MediaSession custom action,
+ *  which is the one case [LikeAction.isCurrentlyLiked] can't see at all: it only inspects
+ *  [PlaybackState.customActions]. Not all apps expose enough information to tell either way. */
+internal fun likeLabelIndicatesAlreadyLiked(vararg labels: CharSequence?): Boolean =
+        labels.any { label ->
+            label != null && ALREADY_LIKED_HINTS.any { hint -> label.contains(hint, ignoreCase = true) }
+        }
+
 /**
  * Toggles a "like"/"favorite" custom action exposed by the currently playing app's
  * MediaSession, e.g. YouTube Music's or Retro Music's thumbs-up/favorite button.
@@ -30,15 +51,6 @@ class LikeAction : SelectableAction {
         get() = AppCompatResources.getDrawable(context, com.svartifoss.snfell.common.R.drawable.action_like)!!
 
     companion object {
-        // "heart"/"save"/"collection"/"library" cover Spotify, whose save-to-Liked-Songs custom
-        // action reads "Save to Your Library" / heart rather than the word "like".
-        private val LIKE_NAME_HINTS = listOf(
-                "like", "thumb", "favorite", "favourite", "love",
-                "heart", "save", "collection", "library")
-        private val ALREADY_LIKED_HINTS = listOf(
-                "unlike", "remove", "undo", "unfavorite", "unfavourite",
-                "unsave", "saved", "unheart", "in_library", "in library")
-
         fun findLikeCustomAction(playbackState: PlaybackState): PlaybackState.CustomAction? {
             return playbackState.customActions.orEmpty().firstOrNull { customAction ->
                 LIKE_NAME_HINTS.any { hint ->
@@ -53,10 +65,7 @@ class LikeAction : SelectableAction {
          *  than "like" (not liked yet). Not all apps expose enough information to tell. */
         fun isCurrentlyLiked(playbackState: PlaybackState): Boolean {
             val action = findLikeCustomAction(playbackState) ?: return false
-            return ALREADY_LIKED_HINTS.any { hint ->
-                action.action.contains(hint, ignoreCase = true) ||
-                        action.name.toString().contains(hint, ignoreCase = true)
-            }
+            return likeLabelIndicatesAlreadyLiked(action.action, action.name)
         }
     }
 

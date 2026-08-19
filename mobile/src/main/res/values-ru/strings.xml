@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">Wear OS не поддерживается на этом устройстве</string>
     <string name="setting_no_wearable_api_banner_description">На этом устройстве нет компонента Wear OS от Google Play Services, необходимого Svartifoss для связи с часами. Сопряжение не поможет — приложение на телефоне не сможет достучаться до часов здесь. Всё ниже всё равно сохранится и применится, если вы установите Svartifoss на поддерживаемое устройство.</string>
     <string name="setting_no_watch_banner">Часы не подключены</string>
@@ -939,6 +941,7 @@
 
     <string name="action_play_liked_songs">Воспроизвести понравившиеся песни (YT Music)</string>
     <string name="action_play_spotify_liked_songs">Воспроизвести понравившиеся песни (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Воспроизвести понравившиеся песни (SoundCloud)</string>
     <string name="action_my_playlists">Ярлыки стриминга</string>
     <string name="action_play_specific_playlist">Открыть ярлык стриминга</string>
     <string name="action_choose_or_add_streaming_shortcut">Выбрать или добавить ярлык стриминга</string>
@@ -1381,6 +1384,7 @@
         <item>Bahasa Indonesia</item>
         <item>فارسی</item>
         <item>简体中文</item>
+        <item>Íslenska</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>

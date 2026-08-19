@@ -146,6 +146,22 @@ class QueueViewModel @Inject constructor(
         addSource(items) { value = hasMorePages() }
     }
 
+    /**
+     * True when what arrived is the recently-played fallback rather than the playing app's own
+     * queue - see `OpenPlaylistAction`, which sends [CustomLists.HISTORY] whenever the app exposes
+     * no queue at all (SoundCloud is one such app).
+     *
+     * This screen renders both lists identically, so without it the fallback is indistinguishable
+     * from a real queue: the rows are tracks the user *already played*, they carry no cover art
+     * (the history entries are artist/title text and nothing else), and tapping one searches for
+     * the track again rather than jumping the queue. All three read as "the queue is broken" when
+     * the list does not say what it is.
+     */
+    val isHistoryFallback = MediatorLiveData<Boolean>().apply {
+        value = false
+        addSource(items) { value = latestList?.listId == CustomLists.HISTORY }
+    }
+
     /** True while a "load more" request is in flight, so the row can show progress and not fire
      *  twice. Cleared by the arriving list rather than by a timer - the phone answers by replacing
      *  the whole DataItem, so a longer list *is* the completion signal. */

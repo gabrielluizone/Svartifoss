@@ -15,6 +15,7 @@ import android.os.Build
 import android.service.notification.StatusBarNotification
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.appcompat.content.res.AppCompatResources
+import com.svartifoss.snfell.actions.playback.likeLabelIndicatesAlreadyLiked
 import java.io.ByteArrayOutputStream
 import java.util.UUID
 import java.util.concurrent.CopyOnWriteArraySet
@@ -77,16 +78,25 @@ object MediaNotificationActions {
             val pendingIntent: PendingIntent
     )
 
+    /** The app's "like/save" notification action, found across ALL notification actions (not
+     *  only the compact set mirrored to the watch): Spotify's heart lives in the expanded
+     *  actions, so the dedicated Like button on the watch needs a way to reach it. [intent] is
+     *  phone-only; [liked] is a best-effort guess from the action's own label (see
+     *  [likeLabelIndicatesAlreadyLiked]) for apps - SoundCloud among them - whose "like" never
+     *  becomes a MediaSession custom action, so [com.svartifoss.snfell.actions.playback.LikeAction.isCurrentlyLiked]
+     *  never sees it. */
+    private data class LikeNotificationAction(
+            val intent: PendingIntent,
+            val liked: Boolean
+    )
+
     private data class StoredNotification(
             val packageName: String,
             val notificationKey: String,
             val sessionToken: MediaSession.Token?,
             val postedAt: Long,
             val actions: List<StoredAction>,
-            // The app's "like/save" action found across ALL notification actions (not only the
-            // compact set mirrored to the watch): Spotify's heart lives in the expanded actions,
-            // so the dedicated Like button on the watch needs a way to reach it. Phone-only.
-            val likeIntent: PendingIntent?,
+            val likeAction: LikeNotificationAction?,
             // The notification's own small icon (the branded glyph the status bar shows), used
             // as the watch's source-icon element. This is what users recognise as "the app icon
             // in the notification"; the launcher icon is different, chunkier artwork.
@@ -183,7 +193,7 @@ object MediaNotificationActions {
                                 sessionToken = sessionToken,
                                 postedAt = sbn.postTime,
                                 actions = actions,
-                                likeIntent = findLikeIntent(notificationActions),
+                                likeAction = findLikeAction(notificationActions),
                                 smallIconPng = loadSmallIconPng(context, sbn)
                         )
                     }
@@ -285,7 +295,7 @@ object MediaNotificationActions {
                                 (sessionToken == null || notification.sessionToken == null ||
                                         notification.sessionToken == sessionToken)
                     }
-                    .mapNotNull { it.likeIntent }
+                    .mapNotNull { it.likeAction?.intent }
                     .firstOrNull()
         } ?: return false
         return try {
@@ -296,13 +306,40 @@ object MediaNotificationActions {
         }
     }
 
+    /** Best-effort guess at whether the active package/session's track is already liked, read
+     *  from its like/save notification action's own label. This is the only signal available for
+     *  apps - SoundCloud among them - that expose "like" solely as a `Notification.Action` rather
+     *  than a MediaSession custom action, so [MusicService][com.svartifoss.snfell.music.MusicService]
+     *  falls back to it only when no custom action was found. False (not "unknown") when no like
+     *  action was found at all, matching
+     *  [LikeAction.isCurrentlyLiked][com.svartifoss.snfell.actions.playback.LikeAction.isCurrentlyLiked]'s
+     *  own default. */
+    fun likedStateForSession(packageName: String, sessionToken: MediaSession.Token?): Boolean {
+        val action = synchronized(this) {
+            notifications.values.asSequence()
+                    .filter { notification ->
+                        notification.packageName == packageName &&
+                                (sessionToken == null || notification.sessionToken == null ||
+                                        notification.sessionToken == sessionToken)
+                    }
+                    .mapNotNull { it.likeAction }
+                    .firstOrNull()
+        }
+        return action?.liked ?: false
+    }
+
     /** First notification action (across the full list, not just the compact set) classified as a
      *  like/save, so the Like button can reach a heart that lives in the expanded actions. */
-    private fun findLikeIntent(notificationActions: Array<out Notification.Action>): PendingIntent? {
+    private fun findLikeAction(
+            notificationActions: Array<out Notification.Action>
+    ): LikeNotificationAction? {
         for (action in notificationActions) {
             val intent = action.actionIntent ?: continue
-            val semantic = notificationActionSemantic(action, action.title?.toString().orEmpty())
-            if (semantic == MediaActionSemantics.LIKE) return intent
+            val label = action.title?.toString().orEmpty()
+            val semantic = notificationActionSemantic(action, label)
+            if (semantic == MediaActionSemantics.LIKE) {
+                return LikeNotificationAction(intent, likeLabelIndicatesAlreadyLiked(label))
+            }
         }
         return null
     }

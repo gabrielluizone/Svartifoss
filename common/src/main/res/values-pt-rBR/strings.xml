@@ -2,4 +2,8 @@
     <!-- "Svartifoss" (app_name, app_name_short, music_control) is a proper name and stays
          untranslated - only the ongoing-notification status text needs a translation. -->
     <string name="music_control_active">Svartifoss ativo</string>
+
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+    <string name="music_control">Svartifoss</string>
 </resources>

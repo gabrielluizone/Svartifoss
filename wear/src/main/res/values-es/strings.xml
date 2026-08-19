@@ -44,6 +44,8 @@
     <string name="queue_empty">No hay cola disponible</string>
     <string name="queue_now_playing">En reproducción</string>
     <string name="queue_load_more">Cargar más</string>
+    <string name="queue_history_fallback">Reproducido recientemente</string>
+    <string name="queue_history_fallback_reason">Esta app no comparte su cola</string>
     <string name="chat_face_today">Hoy</string>
 
     <string name="face_picker_title">Esfera del reloj</string>

@@ -1,0 +1,1404 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS er ekki stutt á þessu tæki</string>
+    <string name="setting_no_wearable_api_banner_description">Þetta tæki er ekki með Wear OS-hlutann úr Google Play-þjónustum, sem Svartifoss þarf til að tala við úr. Pörun hjálpar ekki — símaappið nær ekki til úrs hér. Allt hér fyrir neðan vistast samt og mun eiga við ef þú setur Svartifoss upp á tæki sem styður það.</string>
+    <string name="setting_no_watch_banner">Ekkert úr tengt</string>
+    <string name="setting_no_watch_banner_description">Þessar stillingar samstillast við Wear OS-úrið þitt, svo þær sjást ekki fyrr en úr er parað og tengt — en þú getur samt stillt allt hér fyrir neðan strax.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Útlit</string>
+    <string name="setting_theme">Þema</string>
+    <string name="theme_light">Skýrhvítt</string>
+    <string name="theme_dark">Alsvart</string>
+    <string name="theme_system">Fylgja kerfi</string>
+    <string name="setting_language">Tungumál</string>
+    <string name="language_system">Fylgja kerfi</string>
+    <string name="language_change_watch_notice">Úrið fylgir þessu tungumáli líka, um leið og það samstillist.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Forritari</string>
+    <string name="dev_mode_unlocked">Forritunarhamur virkjaður ✦</string>
+    <string name="dev_mode_clicks_remaining">%1$d ýtingar í viðbót til að opna forritunarham</string>
+    <string name="dev_disable_mode">Slökkva á forritunarham</string>
+    <string name="dev_disable_mode_description">Fela þennan hluta aftur - ýttu sjö sinnum á „Uppsett útgáfa“ til að fá hann til baka</string>
+    <string name="dev_mode_disabled">Slökkt á forritunarham</string>
+    <string name="dev_build_info">Upplýsingar um smíð</string>
+    <string name="dev_sync_watch">Þvinga samstillingu úrstillinga</string>
+    <string name="dev_sync_watch_description">Senda allar núverandi stillingar samstundis til parðaða úrsins</string>
+    <string name="dev_sync_watch_done">Stillingar samstilltar við úr</string>
+    <string name="dev_copy_debug_info">Afrita villuleitarupplýsingar</string>
+    <string name="dev_copy_debug_info_description">Afrita upplýsingar um smíð og tæki á klippiborðið</string>
+    <string name="dev_show_archived">Sýna geymda valkosti</string>
+    <string name="dev_show_archived_description">Sýna úrsniðmát og stillingar sem hafa verið geymd vegna þekktra vandamála</string>
+    <string name="dev_copy_debug_info_done">Villuleitarupplýsingar afritaðar</string>
+    <string name="dev_open_update_screen">Opna uppfærsluskjá</string>
+    <string name="dev_open_update_screen_description">Forskoða uppfærsluskjáinn (forsíðuborði, uppsetning útgáfuathugasemda) án þess að bíða eftir raunverulegri útgáfu</string>
+    <string name="dev_watch_layout_bounds">Sýna mörk útlits úrs</string>
+    <string name="dev_watch_layout_bounds_description">Útlína sýnileg spilaraeiningar og snertisvæði á úrinu. Aðeins greiningarlag.</string>
+    <string name="dev_watch_player_info">Sýna upplýsingar um spilara úrs</string>
+    <string name="dev_watch_player_info_description">Sýna virka skífu, spilunarstöðu, framvindu og teiknunarupplýsingar ofan á úrinu.</string>
+    <string name="pref_reset_default">Endurstilla á sjálfgefið</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Þú fannst falinn fossinn.\n\nSvartifoss — svartir stuðlabergsdrangar\nsem umgirða flúðir á Íslandi,\náminning um að tónlist flæðir\neins og vatn um stein.\n\n♪ Smíðað af natni. ♪</string>
+    <string name="easter_egg_ok">Loka</string>
+
+    <string name="nav_watch_face">Úr</string>
+    <string name="watch_face_header">Útlit úrs</string>
+    <string name="nav_controls">Stýringar</string>
+    <string name="nav_actions">Aðgerðir</string>
+    <string name="nav_settings">Stillingar</string>
+
+    <string name="controls_header">Stýringar</string>
+    <string name="controls_state_playing">Tónlist í spilun</string>
+    <string name="controls_state_stopped">Engin spilun</string>
+    <string name="controls_playing_description">Veldu hvað hvert inntak gerir á meðan tónlist er í spilun. Þessi uppsetning er óháð stöðunni þegar engin spilun er í gangi.</string>
+    <string name="controls_stopped_description">Veldu hvað hvert inntak gerir áður en spilun hefst eða eftir að henni lýkur. Þessi uppsetning er óháð stöðunni þegar tónlist er í spilun.</string>
+
+    <string name="watch_live_preview">Lifandi forskoðun úrs</string>
+    <string name="watch_preview_description">Lifandi forskoðun á völdu yfirborði úrsins. Breytingar birtast hér áður en þú prófar þær á úrinu.</string>
+    <string name="watch_section_style">Spilari</string>
+    <string name="watch_section_style_description">Veldu útlit spilarans og hvernig titill, tími og framvinda hegða sér.</string>
+    <string name="watch_section_background">Bakgrunnur</string>
+    <string name="watch_section_background_description">Stjórnaðu plötuumslagi, óskýrleika, dofnun og læsileika á bak við spilarann.</string>
+    <string name="watch_section_colors">Litir</string>
+    <string name="watch_section_colors_description">Stilltu áherslulitina fyrir flytjanda, framvinduhring og plötuumslag.</string>
+    <string name="watch_section_typography">Texti</string>
+    <string name="watch_section_typography_description">Veldu leturgerð og stílaðu titil, flytjanda og appatákn hvert í sínu lagi.</string>
+    <string name="watch_section_aod">Ávallt virkt</string>
+    <string name="watch_section_aod_description">Stilltu orkusparandi skjáinn og skoðaðu útlit hans í hvíldarham í forskoðuninni.</string>
+    <string name="watch_section_panels">Spjöld</string>
+    <string name="watch_section_panels_description">Stílaðu hljóðstyrk, spólun, flýtispjald og biðröð; með því að velja línu opnast það yfirborð í forskoðuninni.</string>
+    <string name="watch_section_mini_buttons">Smáhnappar</string>
+    <string name="watch_section_mini_buttons_description">Stílaðu valfrjálsu flýtileiðaröðina. Ýttu á „Smáhnappar“ hér fyrir neðan til að úthluta aðgerðum hennar í Stýringum.</string>
+
+    <string name="settings_section_general">Almennt</string>
+    <string name="settings_section_general_description">Þema appsins, áherslulitur og uppfærslustillingar.</string>
+    <string name="settings_section_watch">Hegðun</string>
+    <string name="settings_section_watch_description">Hegðun krónu, snertingar, titrings og aðgerðavalmyndar á úrinu þínu.</string>
+    <string name="settings_section_automation">Sjálfvirkni</string>
+    <string name="settings_section_automation_description">Veldu hvenær Svartifoss opnast og lokast sjálfkrafa.</string>
+    <string name="settings_section_apps">Öpp</string>
+    <string name="settings_section_apps_description">Stilltu tónlistarveitur og appsértækar tengingar á einum stað.</string>
+    <string name="settings_section_data">Gögn og aðstoð</string>
+    <string name="settings_section_data_description">Taktu öryggisafrit af uppsetningunni þinni, athugaðu útgáfu, keyrðu greiningu eða fáðu aðstoð.</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Svona notarðu Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss breytir úrinu þínu í fjarstýringu fyrir tónlistina sem er í spilun í símanum þínum. Hér er allt sem þú getur gert af úlnliðnum.</string>
+
+    <string name="tutorial_taps_title">Ýttu á skjásvæðin</string>
+    <string name="tutorial_taps_desc">Skjá úrsins er skipt í fjögur svæði — efst, neðst, vinstri og hægri. Að ýta á svæði keyrir aðgerðina sem þú úthlutaðir því. Sjálfgefið spilar eða pásar vinstra svæðið, hægra svæðið stekkur á næsta lag, og efsta og neðsta svæðið breyta hljóðstyrknum.</string>
+
+    <string name="tutorial_quick_panel_title">Flýtiaðgerðaspjald</string>
+    <string name="tutorial_quick_panel_desc">Tvísmelltu á miðju núspilunarskjásins til að opna spjald með fjórum reitum — þremur kringlóttum hnöppum og einni breiðri röð fyrir neðan þá. Ef ekkert er stillt spegla reitirnir hnappana sem spilandi appið setur í eigin tilkynningu, svo þú færð þess raunverulegu líkar-, stokka- og endurtaka-stýringar. Úthlutaðu hvaða aðgerð sem er á reit, eða stilltu hann á „Ekkert“ til að fela hann, undir Aðgerðum í símanum.</string>
+    <string name="tutorial_gestures_title">Einfalt, tvöfalt og langt ýti</string>
+    <string name="tutorial_gestures_desc">Hvert svæði hefur þrjár aðskildar aðgerðir: eina fyrir eitt ýti, eina fyrir tvöfalt ýti og eina fyrir langt ýti. Til dæmis getur eitt ýti í miðjunni pásað tónlistina á meðan tvöfalt ýti opnar aðgerðavalmyndina — þú sérð þetta ekki nema þú stillir það, svo sérsniðið það eftir smekk.</string>
+
+    <string name="tutorial_buttons_title">Áþreifanlegir hnappar</string>
+    <string name="tutorial_buttons_desc">Ef úrið þitt er með hliðarhnöppum geturðu úthlutað eins, tvöfalds og lengi-ýti aðgerðum á þá líka. Þeir halda áfram að virka jafnvel þegar slökkt er á skjánum.</string>
+
+    <string name="tutorial_rotary_title">Snúningskróna</string>
+    <string name="tutorial_rotary_desc">Snúðu snúningskrónunni eða umgjörðinni til að breyta hljóðstyrk. Viltu frekar spóla í gegnum lagið? Kveiktu á „Spóla með snúningskrónu“ í Stillingum.</string>
+
+    <string name="tutorial_swipe_up_title">Strjúktu upp, niður, til vinstri og hægri</string>
+    <string name="tutorial_swipe_up_desc">Að strjúka upp, niður eða til vinstri á núspilunarskjánum má hvert um sig stilla til að opna hvað sem er — aðgerðavalmyndina, spilunarbiðröðina, sleppa lögum, lagalistana þína og fleira. Stilltu hvert og eitt í Stýringum, með því að velja Tónlist í spilun eða Engin spilun. Sjálfgefið opnar það að strjúka upp aðgerðavalmyndina og hin gera ekkert fyrr en þú úthlutar þeim. Að strjúka til hægri er látið óáreitt — það er hin almenna Wear OS-hreyfing til að fara út úr appinu.</string>
+    <string name="tutorial_shortcuts_title">Streymisflýtileiðir</string>
+    <string name="tutorial_shortcuts_desc">Vistaðu tengil á lag, plötu, mix eða lagalista frá Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music eða SoundCloud, og úthlutaðu honum svo á hvaða hnapp, hreyfingu eða spjaldreit sem er. Fljótlegasta leiðin er að deila tenglinum beint til Svartifoss úr streymisappinu; þú getur líka límt afritaðan tengil eða skrifað einn inn. Ekki þarf reikning eða innskráningu — úrið biður símann um að hefja spilun, svo flýtileið spilar í stað þess að opna bara appið.</string>
+    <string name="tutorial_yt_music_title">YouTube Music flýtileiðir</string>
+    <string name="tutorial_yt_music_desc">Úthlutaðu „Spila lög sem mér líkar við“, „Spila lög sem mér líkar við, stokkað“ eða „Lagalistarnir mínir“ á hvaða hnapp, hreyfingu eða strok sem er til að stökkva beint í tónlistina þína án þess að snerta símann. „Leitarsaga“ man eftir nýlegum leitum þínum á úrinu — haltu inni einni til að eyða henni.</string>
+
+    <string name="tutorial_exit_title">Strjúktu til að fara út</string>
+    <string name="tutorial_exit_desc">Strjúktu frá vinstri jaðrinum til að fara úr spilaranum. Það getur pásað spilun sjálfkrafa þegar þú ferð út — kveiktu á því í Stillingum.</string>
+
+    <string name="tutorial_tile_title">Flýtistýringarflís</string>
+    <string name="tutorial_tile_desc">Strjúktu úraskífunni til hliðar að Svartifoss-flísinni fyrir samstundis spilun, pásu og að sleppa án þess að opna appið.</string>
+
+    <string name="tutorial_complication_title">Viðbót á úraskífu</string>
+    <string name="tutorial_complication_desc">Bættu Svartifoss plötuumslagsviðbótinni við úraskífuna þína til að sjá núverandi umslag í fljótu bragði. Ýttu á hana til að opna spilarann.</string>
+
+    <string name="tutorial_system_title">Miðlunarstýringar kerfisins</string>
+    <string name="tutorial_system_desc">Núverandi lag birtist líka í miðlunarstýringum úrsins og nýlegum öppum, svo þú getur stýrt spilun þaðan líka.</string>
+
+    <string name="tutorial_tip">Ábending: stilltu báðar stöðurnar í Stýringum, skipulegðu svo valmyndina í Aðgerðum.</string>
+
+    <string name="navigation_drawer_open">Opna leiðarskúffu</string>
+    <string name="navigation_drawer_close">Loka leiðarskúffu</string>
+
+    <string name="action_settings">Stillingar</string>
+    <string name="action_pause">Pása</string>
+    <string name="action_play">Spila</string>
+    <string name="action_skip_prev">Fyrra lag</string>
+    <string name="action_skip_next">Næsta lag</string>
+    <string name="action_play_pause">Spila / Pása</string>
+    <string name="action_stop">Stöðva</string>
+    <string name="action_restart">Byrja lag upp á nýtt</string>
+    <string name="action_mute">Þagga / Afþagga</string>
+    <string name="action_skip_seconds">Spóla áfram um %1$d sekúndur</string>
+    <string name="action_reverse_seconds">Spóla til baka um %1$d sekúndur</string>
+    <string name="action_like">Líka við</string>
+    <string name="action_shuffle">Stokka</string>
+    <string name="action_repeat">Endurtaka</string>
+    <string name="action_repeat_one">Endurtaka eitt</string>
+    <string name="action_search">Leita að tónlist</string>
+    <string name="group_playback_controls">Spilunarstýringar</string>
+    <string name="group_streaming_shortcuts">Lög, plötur og lagalistar</string>
+    <string name="pick_action">Veldu aðgerð</string>
+    <string name="action_opens_more">Margir valkostir</string>
+    <string name="action_volume_up">Hækka hljóðstyrk</string>
+    <string name="volume_down">Lækka hljóðstyrk</string>
+    <string name="group_volume_controls">Hljóðstyrksstýringar</string>
+    <string name="no_watch_detected">Ekkert úr fannst</string>
+    <string name="connection_instructions">Opnaðu Svartifoss á úrinu til að hefja tengingu</string>
+    <string name="playing_controls">Stýringar meðan á spilun stendur</string>
+    <string name="stopped_controls">Stýringar án spilunar</string>
+    <string name="actions_menu">Aðgerðavalmynd</string>
+    <string name="actions_intro">Stilltu bæði aðgerðayfirborðin á úrinu þínu með spilunarstýringum, öppum, eða vistuðum lögum, plötum og lagalistum. Flýtispjaldið er áfram samanþjappað; valmyndin hér fyrir neðan getur haldið lengri raðaðan lista.</string>
+    <string name="actions_quick_panel_section">Flýtispjald</string>
+    <string name="actions_watch_menu_section">Valmynd á úri</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d aðgerð · Ýttu til að breyta · Haltu inni og dragðu til að endurraða</item>
+        <item quantity="other">%1$d aðgerðir · Ýttu til að breyta · Haltu inni og dragðu til að endurraða</item>
+    </plurals>
+    <string name="actions_reorder_description">Röðuð aðgerðavalmynd. Snertu og haltu til að draga, notaðu aðgengisaðgerðirnar Færa upp eða Færa niður, eða ýttu á Ctrl+Upp/Niður á lyklaborði.</string>
+    <string name="actions_move_up">Færa upp</string>
+    <string name="actions_move_down">Færa niður</string>
+    <string name="actions_moved_to_position">%1$s fært í sæti %2$d af %3$d.</string>
+    <string name="actions_empty">Engar aðgerðir ennþá. Notaðu bæta við-hnappinn til að búa til þá fyrstu.</string>
+    <string name="actions_add">Bæta við aðgerð</string>
+    <string name="on_screen_buttons">SNERTISVÆÐI</string>
+    <string name="physical_buttons">ÁÞREIFANLEGIR HNAPPAR</string>
+    <string name="physical_buttons_disconnected">Tengdu og opnaðu Svartifoss á úrinu þínu til að stilla áþreifanlega hnappa þess. Snertisvæði, strok og smáhnappar eru tiltæk núna.</string>
+    <string name="physical_buttons_unavailable">Þetta úr tilkynnti enga stillanlega áþreifanlega hnappa.</string>
+    <string name="tap_a_zone_to_configure">Ýttu á svæði á úrinu til að úthluta aðgerð</string>
+    <string name="touch_zone_top">Efra svæði</string>
+    <string name="touch_zone_bottom">Neðra svæði</string>
+    <string name="touch_zone_left">Vinstra svæði</string>
+    <string name="touch_zone_right">Hægra svæði</string>
+    <string name="touch_zone_center">Miðjuýti</string>
+    <string name="touch_zone_action">%1$s: %2$s. Ýttu til að stilla.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">STROKHREYFINGAR</string>
+    <string name="tap_a_swipe_to_configure">Ýttu á átt til að velja hvað hún opnar</string>
+    <string name="swipe_gesture_up">Strjúka upp</string>
+    <string name="swipe_gesture_down">Strjúka niður</string>
+    <string name="swipe_gesture_left">Strjúka til vinstri</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Upp</string>
+    <string name="swipe_gesture_label_down">Niður</string>
+    <string name="swipe_gesture_label_left">Vinstri</string>
+
+    <string name="screen_buttons">SMÁHNAPPAR</string>
+    <string name="tap_a_screen_button_to_configure">Allt að þremur sýnilegum hnöppum nálægt neðri hluta úraskjásins — ýttu á reit til að úthluta aðgerð</string>
+    <string name="screen_button_1">Smáhnappur 1 (vinstri)</string>
+    <string name="screen_button_2">Smáhnappur 2 (miðja)</string>
+    <string name="screen_button_3">Smáhnappur 3 (hægri)</string>
+    <string name="screen_button_label_1">Hnappur 1</string>
+    <string name="screen_button_label_2">Hnappur 2</string>
+    <string name="screen_button_label_3">Hnappur 3</string>
+    <string name="no_action">Engin aðgerð</string>
+    <string name="gesture_single_press">Eitt ýti</string>
+    <string name="gesture_double_press">Tvöfalt ýti</string>
+    <string name="gesture_long_press">Langt ýti</string>
+    <string name="gesture_swipe_action">Aðgerð</string>
+    <string name="center_button_quick_panel_note">Að tvísmella á miðju núspilunarskjásins opnar alltaf flýtiaðgerðaspjaldið, sama hverju þú úthlutar hér.</string>
+    <string name="start_playback">Hefja spilun</string>
+    <string name="uninstalled_app">Fjarlægt app</string>
+
+    <string name="play_app">Spila %1$s</string>
+    <string name="tasker_task">Tasker verkefni</string>
+    <string name="icon_selection_title">Val á táknmynd</string>
+    <string name="icon_selection_gallery">Úr myndasafni</string>
+    <string name="icon_selection_no_icon_pack">Þessi eiginleiki gerir þér kleift að velja sérsniðna táknmynd fyrir aðgerðina þína úr
+        uppsettum táknmyndapakka.\n\nþví miður virðist sem þú sért ekki með neina táknmyndapakka uppsetta.</string>
+    <string name="icon_selection_no_storage_permission">Þessi eiginleiki gerir þér kleift að velja sérsniðna táknmynd fyrir aðgerðina þína úr
+        uppsettum táknmyndapakka.\n\nSumir táknmyndapakkar krefjast þess að öpp hafi geymsluheimild. Þú þarft að leyfa hana til að nota þennan eiginleika.</string>
+    <string name="delete">Eyða</string>
+    <string name="action_text">Texti aðgerðar</string>
+    <string name="swap_action">Skipta um aðgerð</string>
+    <string name="open_actions_menu">Opna aðgerðavalmynd</string>
+    <string name="open_playlist_menu">Sýna núverandi lagalista</string>
+    <string name="misc_settings">Ýmsar stillingar</string>
+
+    <string name="category_backup">Öryggisafrit</string>
+    <string name="export_config">Flytja út uppsetningu</string>
+    <string name="export_config_description">Vista hnappaúthlutanir, aðgerðalista og úrstillingar í skrá</string>
+    <string name="import_config">Flytja inn uppsetningu</string>
+    <string name="import_config_description">Endurheimta hnappaúthlutanir, aðgerðalista og úrstillingar úr skrá</string>
+    <string name="export_config_done">Uppsetning flutt út</string>
+    <string name="export_config_failed">Ekki tókst að flytja út uppsetningu</string>
+    <string name="import_config_done_title">Innflutningur tókst</string>
+    <string name="import_config_done_message">Svartifoss þarf að endurræsa til að virkja innfluttu uppsetninguna.</string>
+    <string name="import_config_failed">Ekki tókst að flytja inn uppsetningu — skráin gæti verið ógild eða úr ósamhæfri útgáfu</string>
+    <string name="action_restart_now">Endurræsa núna</string>
+
+    <string name="category_about">Um</string>
+    <string name="category_music_screen">Tónlistarskjár</string>
+    <string name="category_watch_screen">Úrskjár</string>
+    <string name="category_mini_buttons">Smáhnappar</string>
+    <string name="category_screen_face">Útlit spilara</string>
+    <string name="category_album_background">Plötubakgrunnur</string>
+    <string name="category_music_colors">Litir úr tónlistinni</string>
+    <string name="category_wf_typography_font">Leturgerð</string>
+    <string name="category_wf_typography_title">Titill</string>
+    <string name="category_wf_typography_artist">Flytjandi</string>
+    <string name="category_wf_typography_icon">Appatákn</string>
+    <string name="category_wf_typography_flex">Google Sans Flex-ásar</string>
+    <string name="setting_wear_font_flex_hint_title">Um þessar stýringar</string>
+    <string name="setting_wear_flex_axes_hint">Þessi fínstilla Google Sans Flex sérstaklega — veldu það hér að ofan til að nota þau. Leturþykkt og skáletrun titils og flytjanda hér að ofan stilla nú þegar eigin þykktar- (wght) og halla-ása (slnt) þessa leturs; stýringarnar fjórar hér fyrir neðan eiga við um alla skífuna.</string>
+    <string name="setting_wear_font_flex_width">Breidd</string>
+    <string name="setting_wear_font_flex_width_description">Lárétt teygja, frá þjöppuðu til útvíkkaðs (25–151). 100 er venjuleg breidd letursins.</string>
+    <string name="setting_wear_font_flex_optical_size">Sjónstærð</string>
+    <string name="setting_wear_font_flex_optical_size_description">Stillir smáatriði stroka eftir raunverulegri stærð textans (6–144). Lægri gildi henta smáum texta; hærri gildi henta stórum birtingartexta.</string>
+    <string name="setting_wear_font_flex_grade">Stigun</string>
+    <string name="setting_wear_font_flex_grade_description">Breytir þykkt lítillega án þess að breyta útliti (0–100) — lúmsk leið til að auka birtuskil á dökkum skjá.</string>
+    <string name="setting_wear_font_flex_roundness">Ávölun</string>
+    <string name="setting_wear_font_flex_roundness_description">Blandar endum stroka frá hvössum (0) til fullkomlega ávalra (100) fyrir vinalegri tilfinningu.</string>
+    <string name="preview_sample_title">Titill lags</string>
+    <string name="preview_sample_artist">Nafn flytjanda</string>
+    <string name="preview_sample_next_title">Næsta lag</string>
+    <string name="preview_playback_stopped">Stöðvað</string>
+    <string name="preview_chat_today">Í dag</string>
+    <string name="category_gestures">Hreyfingar og inntak</string>
+    <string name="setting_overlay_blur_radius">Óskýrleiki yfirlags</string>
+    <string name="setting_overlay_blur_radius_description">Styrkur óskýrleika (px) á móðuðum bakgrunni á bak við hljóðstyrks-/spólunarhringi og flýtiaðgerðaspjaldið — óháð óskýrleika plötuumslagsbakgrunns</string>
+    <string name="category_action_list">Aðgerðalisti</string>
+    <string name="category_automation">Sjálfvirkni</string>
+    <string name="category_idle">Þegar ekkert er í spilun</string>
+    <string name="installed_version">Uppsett útgáfa</string>
+    <string name="get_support">Fá aðstoð</string>
+    <string name="get_support_description">Senda annálaskrár appsins til forritarans vegna aðstoðar</string>
+    <string name="contact_developer">Hafa samband við forritarann</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — samband</string>
+    <string name="contact_developer_chooser">Senda tölvupóst</string>
+    <string name="contact_developer_no_client">Ekkert tölvupóstapp uppsett. Netfangið hefur verið afritað á klippiborðið.</string>
+    <string name="about_developer_title">Um forritarann</string>
+    <string name="about_developer_dialog_message">Svartifoss byrjaði sem persónulegt verkefni — ég vildi færa Music Center for Wear til nútímans miðað við það sem er mögulegt í dag, einfaldlega svo ég gæti sjálfur notað það á hverjum degi. Það heppnaðist nógu vel til að ég ákvað að deila því með öllum. Þetta er fyrsta appið mitt, og það er fátt sem toppar að sjá eitthvað sem maður byggði reynast öðrum líka gagnlegt.</string>
+    <string name="licenses">Leyfi fyrir opinn hugbúnað</string>
+    <string name="setting_always_show_time">Sýna tíma alltaf</string>
+    <string name="setting_always_show_time_off_description">Núverandi tími birtist aðeins í hvíldarham</string>
+    <string name="setting_always_show_time_on_description">Núverandi tími birtist alltaf. Táknmynd efstu aðgerðar sést ekki (henni er skipt út fyrir klukku), en aðgerðin virkar samt eðlilega.</string>
+    <string name="tap_to_force_stop">Ýttu til að stöðva stýringarnar</string>
+    <string name="notification_action_stop">Stöðva</string>
+    <string name="notification_action_force_stop">Þvinga stöðvun</string>
+    <string name="error_notification_access">Enginn aðgangur að tilkynningum. Athugaðu símann.</string>
+    <string name="error_notifications">Villutilkynningar</string>
+    <string name="notification_access_notification_title">Svartifoss þarf aðgang að tilkynningum</string>
+    <string name="notification_access_notification_title_description">Ýttu á þessa tilkynningu og athugaðu Svartifoss til að laga vandamálið</string>
+    <string name="error_service_not_enabled">Aðgang að tilkynningum vantar</string>
+    <string name="error_service_not_enabled_description">Til að stýra tónlist frá úrinu þínu þarf Svartifoss aðgang að tilkynningum — þannig getur Android leyft því að sjá hvaða app er í spilun og senda því spila-, pásu- og sleppa-skipanir.\n\nSvartifoss les aldrei innihald tilkynninganna þinna. Það notar þessa heimild eingöngu til að finna virka miðlunarlotu.\n\nÝttu á \"Opna stillingar\", og kveiktu svo á Svartifoss undir aðgangi að tilkynningum.</string>
+    <string name="action_open_settings">Opna stillingar</string>
+    <string name="settings_search_title">Leita í stillingum</string>
+    <string name="settings_search_hint">Leita í stillingum</string>
+    <string name="settings_search_clear">Hreinsa leit</string>
+    <string name="settings_search_prompt">Leitaðu að öllum stillingum í Stillingum og Útliti úrs eftir nafni.</string>
+    <string name="settings_search_no_results">Engin stilling passar við það.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="notification_access_banner_summary">Ýttu til að veita hana — spilunarstýring er óvirk þar til þú gerir það</string>
+
+    <string name="no_watch_app_title">Settu Svartifoss upp á úrið þitt</string>
+    <string name="no_watch_app_description">Svartifoss fann ekki úraforritið sitt á parðaða Wear OS-úrinu þínu. Síma- og úraöppin vinna saman — án úraforritsins mun stýring spilunar frá úlnliðnum ekki virka.\n\nSvartifoss er ekki á Play Store — úraforritið er sett upp sérstaklega utan verslunar (t.d. með Wear Installer). Ýttu á \"Skoða útgáfur\" til að opna GitHub útgáfusíðuna og sækja APK-skrá úrsins. Ef þú settir það rétt upp, gefðu því mínútu til að ljúka samstillingu.</string>
+    <string name="no_watch_app_button">Skoða útgáfur</string>
+    <string name="required_permission">Nauðsynleg heimild</string>
+    <string name="setting_pause_on_swipe_exit">Pása spilun þegar farið er út með stroki</string>
+    <string name="setting_pause_on_swipe_exit_description">Pása sjálfkrafa alla spilun þegar Svartifoss er lokað á úrinu með stroki-til-vinstri.\n\nAð fara út með aflhnappi hefur ekki áhrif og pásar aldrei sjálfkrafa.</string>
+    <string name="setting_rotating_crown_off_period">Töf snúningsinntaks við kveikingu skjás</string>
+    <string name="setting_rotating_crown_off_period_description">Snúningsinntök (t.d. snúningskrónur) geta verið of viðkvæm á sumum tækjum. Til að koma í veg fyrir óviljandi breytingar á hljóðstyrk verður slökkt á snúningsinntaki í <![CDATA[<b>%1$s millisekúndur</b>]]> eftir að þú kveikir á skjánum.</string>
+    <string name="setting_rotary_seek">Spóla með snúningskrónu</string>
+    <string name="setting_rotary_seek_description">Þegar þetta er virkt spólar snúningur krónunnar í gegnum núverandi lag í stað þess að breyta hljóðstyrk. Enn er hægt að breyta hljóðstyrk með skjá- eða áþreifanlegum hnöppum.</string>
+    <string name="setting_wear_rotary_action">Snúningskróna / umgjörð</string>
+    <string name="wear_rotary_action_volume">Breyta hljóðstyrk</string>
+    <string name="wear_rotary_action_seek">Spóla í gegnum lagið</string>
+    <string name="wear_rotary_action_off">Ekkert gera</string>
+    <string name="setting_rotating_sensitivity">Næmi snúningsinntaks</string>
+    <string name="setting_rotating_sensitivity_description">Næmi fyrir snúningsinntak. Hærri tala þýðir að sama hreyfing á snúningskrónunni eykur hljóðstyrk meira. Núna stillt á <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Slökkva á tvísmelli áþreifanlegs hnapps í hvíldarham</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Sum úr hafa gallaða hnappa þar sem eitt smell á áþreifanlega hnappinn í hvíldarham skráist stundum sem tvísmell.\n\nEf þú upplifir þetta geturðu virkjað þennan valkost til að slökkva alveg á tvísmellum í hvíldarham (t.d. mun tvísmella þá bara virkja eins-smells aðgerðina). Að smella tvisvar á hnapp þegar úrið er virkt hefur ekki áhrif.</string>
+    <string name="setting_haptic_feedback">Titringsviðbrögð</string>
+    <string name="setting_haptic_feedback_description">Láta úrið titra þegar ýtt er á hnappa.</string>
+    <string name="setting_auto_start">Opna Svartifoss sjálfkrafa</string>
+    <string name="setting_auto_start_description">Opna Svartifoss sjálfkrafa á úrinu þegar tónlistarspilun hefst í símanum.</string>
+    <string name="setting_auto_start_apps_blacklist">Sjálfvirknisöpp</string>
+    <string name="setting_auto_start_apps_blacklist_description">Listi yfir miðlunaröpp sem geta ræst Svartifoss sjálfkrafa</string>
+    <string name="setting_dim_album_art">Skygging spilara</string>
+    <string name="setting_dim_album_art_description">Bættu við notandavaldri skuggameðferð milli plötuumslagsins og stýringa spilarans.</string>
+    <string name="setting_album_art_style">Stíll plötuumslags</string>
+    <string name="setting_album_art_style_description">Veldu hvernig núspilunarbakgrunnurinn lítur út á úrinu.</string>
+    <string name="setting_album_art_blur_radius">Styrkur óskýrleika</string>
+    <string name="setting_album_art_blur_radius_description">Styrkur heilskjás-óskýrleika þegar valinn bakgrunnur notar óskýrleika. Núna <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Styrkur dofnunar</string>
+    <string name="setting_album_art_dim_strength_description">Hversu mikið plötuumslagið er dekkt til að auka læsileika texta. Núna <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Stíll skyggingar</string>
+    <string name="setting_player_shading_intensity">Styrkur skyggingar</string>
+    <string name="setting_player_shading_intensity_description">Hversu mikið skyggingin dekkir bakgrunninn. 100%% er fullur styrkur; farðu hærra fyrir aukin birtuskil (allt að 150%%). Núna <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Beita þessu útliti á allar skífur</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Afrita útlitsstillingar þessarar skífu á allar aðrar skífur</string>
+    <string name="apply_appearance_confirm_title">Beita á allar skífur?</string>
+    <string name="apply_appearance_confirm_message">Þetta yfirskrifar útlitsstillingar allra annarra skífna með þeirri núverandi. Það breytir ekki hegðunarstillingum þínum.</string>
+    <string name="apply_appearance_confirm_button">Beita</string>
+    <string name="apply_appearance_done">Beitt á allar skífur</string>
+    <string name="category_wf_layout_actions">Útlit</string>
+    <string name="setting_reset_appearance">Endurstilla þetta útlit</string>
+    <string name="setting_reset_appearance_description">Endurheimta upprunalegt sjálfgefið útlit þessarar skífu</string>
+    <string name="reset_appearance_confirm_title">Endurstilla þetta útlit?</string>
+    <string name="reset_appearance_confirm_message">Útlitsstillingar þessarar skífu fara aftur í sjálfgefin gildi. Hegðunarstillingar þínar og aðrar skífur verða ekki fyrir áhrifum.</string>
+    <string name="reset_appearance_confirm_button">Endurstilla</string>
+    <string name="reset_appearance_done">Útlit endurstillt á sjálfgefin gildi</string>
+    <string name="setting_reset_all_faces">Endurstilla allar skífur á sjálfgefið</string>
+    <string name="setting_reset_all_faces_description">Endurheimta upprunalegt sjálfgefið útlit allra innbyggðra skífna</string>
+    <string name="reset_all_faces_confirm_title">Endurstilla allar skífur?</string>
+    <string name="reset_all_faces_confirm_message">Útlit allra innbyggðra skífna fer aftur í upprunaleg sjálfgefin gildi, og virku sérsniðnu þema er slökkt á. Vistuðu sérsniðnu þemun þín, hegðunarstillingar og valin skífa haldast óbreytt.</string>
+    <string name="reset_all_faces_confirm_button">Endurstilla allt</string>
+    <string name="reset_all_faces_done">Allar skífur endurstilltar á sjálfgefið</string>
+    <string name="face_reset_migration_title">Uppfærðu útlit úrsins þíns</string>
+    <string name="face_reset_migration_message">Þú uppfærðir úr eldri útgáfu þar sem allar úraskífur deildu einu setti af útlitsstillingum. Hver skífa man nú eftir sínum eigin, svo gömlu stillingarnar þínar geta virst ósamræmar á skífum sem þú hefur aldrei sérsniðið beint. Við mælum með að endurstilla allar skífur á nýju sjálfgefnu gildin, eða hreinsa gögn appsins fyrir alveg nýja byrjun.</string>
+    <string name="face_reset_migration_reset_button">Endurstilla allar skífur</string>
+    <string name="face_reset_migration_clear_data_button">Hreinsa gögn appsins</string>
+    <string name="setting_player_shading_color">Litur skyggingar</string>
+    <string name="setting_wear_shading_custom_color">Sérsniðinn litur skyggingar</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Svart</item>
+        <item>Áherslulitur plötu</item>
+        <item>Afmettuð plata</item>
+        <item>Sérsniðinn litur</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Fylgja þema spilara</item>
+        <item>Jaðarskygging</item>
+        <item>Jaðarskygging (sterk)</item>
+        <item>Jaðarskygging (þung)</item>
+        <item>Neðra horn</item>
+        <item>Dofnun að neðan</item>
+        <item>Gólf og loft</item>
+        <item>Heilskjás sía</item>
+        <item>Litaskolun plötu</item>
+        <item>Tvílita stigull plötu</item>
+        <item>Hliðartjöld</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Ógegnsæi plötuumslags í hvíldarham</string>
+    <string name="setting_ambient_album_art_opacity_description">Hversu sýnilegt plötuumslagið er áfram í hvíldarham. Núna <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Tímamörk hljóðstyrks-/spólunaryfirlags</string>
+    <string name="setting_volume_overlay_timeout_description">Hversu lengi hljóðstyrks- og spólunaryfirlög haldast á skjánum eftir stillingu. Núna <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Dautt svæði snúnings</string>
+    <string name="setting_rotary_deadzone_description">Lágmarkshreyfing krónu áður en hljóðstyrks- eða spólunarbreytingar eiga sér stað. Hjálpar til við að koma í veg fyrir óviljandi breytingar. Núna <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Upplifun á úri</string>
+    <string name="setting_swipe_gestures_hint">Strokhreyfingar</string>
+    <string name="setting_swipe_gestures_hint_description">Að strjúka upp/niður/til vinstri getur hvert um sig opnað hvaða aðgerð sem er. Ýttu hér til að stilla þau fyrir Tónlist í spilun eða Enga spilun. Að strjúka til hægri er áfram frátekið til að fara út úr appinu.</string>
+    <string name="setting_screen_buttons_hint">Smáhnappar</string>
+    <string name="setting_screen_buttons_hint_description">Allt að þrír sýnilegir hnappar, hver með ýti- og lengi-ýti-aðgerðum. Ýttu hér til að stilla þá fyrir Tónlist í spilun eða Enga spilun.</string>
+    <string name="dev_screen_buttons_offset">Staðsetning smáhnappa</string>
+    <string name="dev_screen_buttons_offset_description">Æskileg fjarlægð í dp milli neðri brúnar úraskjásins og smáhnappanna (sjálfgefið 42). Röðin lagar sig samt sjálfkrafa frá löngum titlum.</string>
+    <string name="setting_screen_buttons_tilt">Halli hnappa</string>
+    <string name="setting_screen_buttons_tilt_description">Hversu mikið hliðarhnapparnir fylgja sveigju skjásins. 0 = bein röð; 100 = fullur bogi með halla táknmynda.</string>
+    <string name="setting_screen_buttons_bg">Bakgrunnur smáhnappa</string>
+    <string name="setting_screen_buttons_opacity">Ógegnsæi smáhnappa</string>
+    <string name="setting_screen_buttons_opacity_description">Ógegnsæi alls smáhnappahópsins (0–100%%). Núna <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Flýtiaðgerðaspjald</string>
+    <string name="quick_panel_link_summary">Tvísmelltu á miðju úraskjásins til að opna það. Ýttu hér til að setja upp fjóra reiti þess í Aðgerðum.</string>
+    <string name="quick_panel_config_hint">Þetta eru hnapparnir á spjaldinu sem opnast með tvísmelli á miðju úraskjásins. Ýttu á línu til að velja aðgerð hennar (\"Ekkert\" felur hana); haltu inni til að endurheimta sjálfgefið.</string>
+    <string name="quick_panel_slot_1">Hnappur 1</string>
+    <string name="quick_panel_slot_2">Hnappur 2</string>
+    <string name="quick_panel_slot_3">Hnappur 3</string>
+    <string name="quick_panel_slot_long">Breiður hnappur</string>
+    <string name="quick_panel_slot_default">%1$s (sjálfgefið)</string>
+    <string name="quick_panel_slot_hidden">Falið</string>
+    <string name="quick_panel_default_like">Líka við</string>
+    <string name="quick_panel_default_shuffle">Stokka</string>
+    <string name="quick_panel_default_repeat">Endurtaka</string>
+    <string name="quick_panel_default_up_next">Næst</string>
+    <string name="setting_wear_center_long_press_queue">Langt ýti á miðju fyrir biðröð</string>
+    <string name="setting_wear_center_long_press_queue_description">Haltu inni miðju núspilunarskjásins til að opna spilunarbiðröðina.</string>
+    <string name="setting_wear_center_long_press">Langt ýti á miðju</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Skipta um úraskífu</item>
+        <item>Opna biðröðina</item>
+        <item>Ekkert</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Grunnútlit</string>
+    <string name="setting_wear_screen_face_description">Veldu byggingu þessa þema. Vistuð þemu geta sameinað þetta útlit með eigin letri, litum, óskýrleika, skyggingu, alltaf-virkum skjá og spjöldum.</string>
+    <string name="setting_wear_show_track_title">Sýna titil lags</string>
+    <string name="setting_wear_show_track_title_description">Birta nafn núverandi lags í spilaranum</string>
+    <string name="setting_wear_show_track_artist">Sýna nafn flytjanda</string>
+    <string name="setting_wear_show_track_artist_description">Birta núverandi flytjanda í spilaranum</string>
+    <string name="setting_wear_show_source_icon">Sýna táknmynd spilandi apps</string>
+    <string name="setting_wear_show_source_icon_description">Sýna táknmynd appsins sem er í spilun við hlið flytjanda. Notar táknmyndina úr miðlunartilkynningu þess. Þegar slökkt er á þessu er táknmyndin aldrei send til úrsins.</string>
+    <string name="setting_wear_player_controls_visible">Sýna stýringar spilara</string>
+    <string name="setting_wear_player_controls_visible_description">Sýna eða fela innbyggða hnappa í Klassísku, Veggspjalds-, Hljóðvers- og öðrum stillanlegum útlitum án þess að slökkva á snertisvæðum þeirra</string>
+    <string name="setting_wear_quadrant_tap_flash">Blikka táknmynd við ýti</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Þegar aðgerð hornsvæðis keyrir, blikkar táknmynd þess stutt í fulla birtu - sérstaklega gagnlegt með Falda skjáþemanu, þar sem táknmyndin er annars ósýnileg og gefur enga staðfestingu á hvaða aðgerð var að keyra.</string>
+    <string name="setting_wear_internal_progress_visible">Framvindumælir útlits</string>
+    <string name="setting_wear_internal_progress_visible_description">Sýna aukalega framvindumælinn sem hannaður er inn í þetta útlit. Hringirnir í kringum spila-hnappinn í Expressive og Material eru hluti af stýringum þeirra og eru áfram til staðar.</string>
+    <string name="setting_wear_edge_progress_visible">Sýna framvindubog á jaðri</string>
+    <string name="setting_wear_edge_progress_visible_description">Fela aðeins sjónræna bogann í kringum skjáinn. Spólun á jaðri er áfram sjálfstæður valkostur.</string>
+    <string name="setting_wear_edge_seek_enabled">Spóla frá jaðri skjás</string>
+    <string name="setting_wear_edge_seek_enabled_description">Ýttu eða dragðu meðfram jaðri skjásins til að stökkva á nákvæman punkt, jafnvel þegar boginn er falinn</string>
+    <string name="setting_wear_screen_theme">Stíll stýringa</string>
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Jafnvægi</string>
+    <string name="wear_screen_theme_default_description">Venjuleg forgangsröðun og stærðir stýringa.</string>
+    <string name="wear_screen_theme_minimal">Naumhyggjulegt</string>
+    <string name="wear_screen_theme_minimal_description">Notar minni, hljóðlátari stýringar á meðan allar aðgerðir haldast sýnilegar og nothæfar.</string>
+    <string name="wear_screen_theme_compact">Þjappað</string>
+    <string name="wear_screen_theme_compact_description">Notar þéttari meðferð stýringa án þess að breyta aðgerðum þínum.</string>
+    <string name="wear_screen_theme_cinema">Bíó</string>
+    <string name="wear_screen_theme_cinema_description">Mýkir stýringarnar án þess að breyta myndverkinu.</string>
+    <string name="wear_screen_theme_vivid">Líflegt</string>
+    <string name="wear_screen_theme_vivid_description">Notar stærri, meira áberandi stýringar.</string>
+    <string name="wear_screen_theme_contrast">Mikil birtuskil</string>
+    <string name="wear_screen_theme_contrast_description">Notar stærri stýringar fyrir auðveldari lestur.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Notar þjappaðar, örlítið dekktar stýringar. Það dekkir ekki bakgrunninn sjálfan - notaðu bakgrunnsstillingarnar fyrir það.</string>
+    <string name="wear_screen_theme_hidden">Falið</string>
+    <string name="wear_screen_theme_hidden_description">Felur allar táknmyndir stýringa alveg. Snertisvæði haldast virk og fullkomlega nothæf.</string>
+    <string name="setting_wear_font">Leturgerð</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Sjálfgefin leturgerð appsins.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Breytileg útgáfa af Google Sans með stillanlegri breidd, sjónstærð, stigun og ávölun — opnar ása-stýringarnar hér fyrir neðan.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Klassíska kerfisleturgerð Android.</string>
+    <string name="wear_font_rounded">Ávalt</string>
+    <string name="wear_font_rounded_description">Vinaleg nútímaleg stafaform með mjúklega ávölum endum.</string>
+    <string name="wear_font_sans_light">Nútímalegt létt</string>
+    <string name="wear_font_sans_light_description">Hrein, létt sans-serif leturgerð með léttari sjónrænni þykkt.</string>
+    <string name="wear_font_sans_thin">Ofurmjótt</string>
+    <string name="wear_font_sans_thin_description">Sérlega létt birtingarleturgerð fyrir naumhyggjulegan spilara.</string>
+    <string name="wear_font_sans_medium">Nútímalegt miðlungs</string>
+    <string name="wear_font_sans_medium_description">Skörp sans-serif leturgerð með sterkari, þéttum strokum.</string>
+    <string name="wear_font_sans_black">Þungt</string>
+    <string name="wear_font_sans_black_description">Feitletruð birtingarletursfjölskylda með hámarks sjónrænum áhrifum.</string>
+    <string name="wear_font_small_caps">Smáhástafir</string>
+    <string name="wear_font_small_caps_description">Þétt hástafalöguð form með ritstjórnarlegri tilfinningu.</string>
+    <string name="wear_font_casual">Afslappað</string>
+    <string name="wear_font_casual_description">Leikandi handskrifuð kerfisletursfjölskylda.</string>
+    <string name="wear_font_typewriter">Ritvél (geymt)</string>
+    <string name="wear_font_typewriter_description">Sígilt ritvélarútlit (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Ávöl rúmfræðileg sans-serif leturgerð, frjáls (OFL) valkostur í anda Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Hrein rúmfræðileg sans-serif leturgerð, frjáls (OFL) valkostur í anda Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Glæsileg húmanísk rómversk leturgerð, frjáls (OFL) valkostur í anda Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Mýkri ritvélarstíll (Love Letter Typewriter) — venjulega frátekinn fyrir lög með „Lain“-þema.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Klassísk serif leturgerð.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">Jafnbreiðir serif stafir með áberandi ritstjórnar-/skjáhermis-útliti.</string>
+    <string name="wear_font_monospace">Jafnbreitt</string>
+    <string name="wear_font_monospace_description">Jafnbreitt, tæknilegt útlit.</string>
+    <string name="wear_font_condensed">Þjappað</string>
+    <string name="wear_font_condensed_description">Þrengri stafaform sem rúma meiri texta.</string>
+    <string name="wear_font_condensed_light">Þjappað létt</string>
+    <string name="wear_font_condensed_light_description">Þröng, léttari letursfjölskylda fyrir langa titla.</string>
+    <string name="wear_font_condensed_medium">Þjappað miðlungs</string>
+    <string name="wear_font_condensed_medium_description">Þröng letursfjölskylda með sterkari strokum og framúrskarandi læsileika.</string>
+    <string name="wear_font_cursive">Skrautskrift</string>
+    <string name="wear_font_cursive_description">Skrautleg skriftarleturgerð.</string>
+    <string name="setting_wear_dynamic_accent">Breytilegur áherslulitur á úri</string>
+    <string name="setting_wear_dynamic_accent_description">Aðlaga plötuháða úrliti að núverandi umslagsmynd. Þegar slökkt er á þessu nota Plötulitur-valkostir fasta áherslulit þemans.</string>
+    <string name="setting_wear_album_art_fade">Dofnunarumskipti plötuumslags</string>
+    <string name="setting_wear_album_art_fade_description">Láta plötuumslag dofna mjúklega þegar lagið breytist.</string>
+    <string name="setting_wear_title_text_mode">Hegðun titiltexta</string>
+    <string name="setting_wear_title_text_mode_description">Hvernig núspilunartitillinn hegðar sér þegar hann kemst ekki fyrir: Sjálfvirkt blandar saman minnkun, línuskiptingu og skrun; hinir valkostirnir gera eina hegðun einráða.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Sjálfvirkt (minnka, svo skipta í línur, svo skruna)</item>
+        <item>Skruna (færiband)</item>
+        <item>Skipta í tvær línur</item>
+        <item>Skipta í þrjár línur</item>
+        <item>Skipta í fimm línur</item>
+        <item>Fast (ein lína, hvorki skrun né minnkun)</item>
+        <item>Minnka til að passa</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Litur flytjandatexta</string>
+    <string name="setting_wear_artist_custom_color">Sérsniðinn litur flytjanda</string>
+    <string name="setting_wear_artist_custom_color_description">Veldu litinn á flytjanda sem notaður er með Venjulegri meðferð</string>
+    <string name="setting_wear_artist_desaturated">Afmettaður litur flytjanda</string>
+    <string name="setting_wear_artist_desaturated_description">Mýkja plötuháðan lit flytjandatexta — á aðeins við þegar „Litur flytjandatexta“ er stillt á Plötulit</string>
+
+    <string name="setting_wear_progress_color">Litur framvindustiku</string>
+    <string name="setting_wear_progress_custom_color">Sérsniðinn litur framvindustiku</string>
+    <string name="setting_wear_progress_custom_color_description">Veldu lit framvindu og spólunar sem notaður er með Venjulegri meðferð</string>
+    <string name="setting_wear_progress_desaturated">Afmettaður litur framvindustiku</string>
+    <string name="setting_wear_progress_desaturated_description">Mýkja plötuháðan lit framvindustiku — á aðeins við þegar „Litur framvindustiku“ er stillt á Plötulit</string>
+
+    <string name="setting_wear_volume_color">Litur hljóðstyrksstiku</string>
+    <string name="setting_wear_volume_custom_color">Sérsniðinn litur hljóðstyrks</string>
+    <string name="setting_wear_volume_custom_color_description">Veldu hljóðstyrkslitinn sem notaður er með Venjulegri meðferð</string>
+    <string name="setting_wear_quick_panel_color">Litur Flýtiaðgerða</string>
+    <string name="setting_wear_quick_panel_custom_color">Sérsniðinn litur Flýtiaðgerða</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Veldu Flýtiaðgerða-litinn sem notaður er með Venjulegri meðferð</string>
+    <string name="setting_wear_shading_custom_color_description">Veldu litinn sem litar skyggingarstigulinn</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Hlutlaust (fastur þemalitur)</item>
+        <item>Plötulitur</item>
+        <item>Sérsniðinn litur</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+        <item>Dýpt</item>
+        <item>Hringekja</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Expressive spólun</string>
+    <string name="setting_wear_expressive_seek_mode_description">Hvernig spólað er í laginu með snertingu á Expressive-skífunni. Miðjuhringur gerir hringinn í kringum spila-hnappinn dragfæran; Jaðarhringur sýnir líka Klassíska umgjarðarhringinn; Ekkert lætur spólun eingöngu vera á snúningskrónunni.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Miðjuhringur</item>
+        <item>Jaðarhringur</item>
+        <item>Ekkert</item>
+    </string-array>
+
+    <string name="category_wear_aod">Alltaf-virkur skjár</string>
+    <string name="setting_wear_aod_style">Stíll alltaf-virks skjás</string>
+    <string name="setting_wear_aod_style_description">Hvernig núspilunarskjárinn lítur út þegar úrið er í hvíldarham. Fylgja skífu passar við valda skífu; Naumhyggjulegt sýnir aðeins dofinn texta á hreinsvörtu fyrir lengstu rafhlöðuendingu.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Fylgja skífu</item>
+        <item>Klassískt</item>
+        <item>Expressive (útlína)</item>
+        <item>Material (útlína)</item>
+        <item>AMOLED-stýringar</item>
+        <item>Chrono (stór klukka)</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Litur alltaf-virks skjás</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Hvítt</item>
+        <item>Plötulitur</item>
+        <item>Sérsniðinn litur</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Hvítt</item>
+        <item>Breytilegt (eftir svæði undir klukku)</item>
+        <item>Plötulitur</item>
+        <item>Sérsniðinn litur</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Fylgja stíl spjalds</item>
+        <item>Gagnsætt (enginn bakgrunnur)</item>
+        <item>Áherslulitur plötu</item>
+        <item>Hálfgagnsætt</item>
+        <item>Hvítt</item>
+        <item>Móðuhvítt</item>
+        <item>Svart</item>
+        <item>Breytilegt (tónn plötu)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Bakgrunnur Næst-hylkis</string>
+    <string name="setting_wear_show_up_next_pill">Næst-hylki á spilara</string>
+    <string name="setting_wear_show_up_next_pill_description">Sýna Næst-hylki neðst á núspilunarskjánum. Það fyllir plássið sem smáhnapparöðin myndi taka, svo það birtist aðeins þegar sú röð er ekki sýnileg.</string>
+    <string name="category_wf_clock">Klukka</string>
+    <string name="setting_wear_clock_color">Litur klukku</string>
+    <string name="setting_wear_clock_custom_color">Sérsniðinn litur klukku</string>
+    <string name="setting_wear_clock_custom_color_description">Ýttu til að velja klukkulitinn sem notaður er þegar Litur klukku er stilltur á Sérsniðinn lit</string>
+    <string name="setting_wear_clock_opacity">Ógegnsæi klukku</string>
+    <string name="setting_wear_clock_opacity_description">Hversu ógegnsæ klukkan sem alltaf er sýnd er (10–100%%). Núna <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Sérsniðinn litur alltaf-virks skjás</string>
+    <string name="setting_wear_aod_custom_color_description">Ýttu til að velja litinn sem notaður er fyrir texta, stýringar og klukku á alltaf-virkum skjá þegar „Litur alltaf-virks skjás“ er stilltur á Sérsniðinn lit</string>
+    <string name="setting_wear_aod_intensity">Birta alltaf-virks skjás</string>
+    <string name="setting_wear_aod_intensity_description">Hversu björt myndbirting alltaf-virka skjásins er (20–100%%). Lægra er dekkra og notar minni rafhlöðu. Núna <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Stýrihnappar á alltaf-virkum skjá</string>
+    <string name="setting_wear_aod_show_transport_description">Sýna útlínuhnappana fyrra/spila/næsta í studdum sjónrænum stílum alltaf-virks skjás. Ekki er hægt að ýta á þá á meðan skjárinn er dofinn, en ýti vekur úrið með hnappinn nú þegar undir fingrinum.</string>
+    <string name="setting_wear_aod_show_progress">Framvinduhringur á alltaf-virkum skjá</string>
+    <string name="setting_wear_aod_show_progress_description">Sýna framvinduhringinn í kringum spila-hnappinn í hvíldarham — staðan uppfærist þar aðeins um það bil einu sinni á mínútu</string>
+    <string name="setting_wear_aod_show_pills">Næst á alltaf-virkum skjá</string>
+    <string name="setting_wear_aod_show_pills_description">Sýna fast útlínu-Næst-hylki neðst í sjónrænu stílum alltaf-virks skjás</string>
+    <string name="category_wf_gestures">Skjáhreyfingar</string>
+    <string name="setting_wear_mini_buttons_mode">Sýna smáhnappa</string>
+    <string name="setting_wear_gestures_mode">Skjáhreyfingar</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Alltaf</item>
+        <item>Aðeins í spilun</item>
+        <item>Aðeins í hléi</item>
+        <item>Aldrei</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Plötuumslag á alltaf-virkum skjá</string>
+    <string name="setting_wear_aod_show_art_description">Halda dofnu plötuumslagi sýnilegu í hvíldarham. Að slökkva á þessu sýnir hreinsvartan bakgrunn, sem sparar áberandi meiri rafhlöðu á AMOLED-skjáum.</string>
+    <string name="setting_wear_aod_art_treatment">Stíll plötuumslags á alltaf-virkum skjá</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Mjúk móða</item>
+        <item>Skýrt umslag</item>
+        <item>Einlit móða</item>
+        <item>Fylgja meðferð myndverks spilara</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Klukka á alltaf-virkum skjá</string>
+    <string name="setting_wear_aod_show_clock_description">Sýna klukkuna þegar úrið er í hvíldarham</string>
+    <string name="setting_wear_aod_show_track_info">Upplýsingar um lag á alltaf-virkum skjá</string>
+    <string name="setting_wear_aod_show_track_info_description">Sýna titil lags og flytjanda í hvíldarham</string>
+
+    <string name="category_overlays_queue">Yfirlög og biðröð</string>
+    <string name="setting_wear_overlay_backdrop_style">Bakgrunnur spjalds</string>
+    <string name="setting_wear_volume_style">Stíll hljóðstyrks</string>
+    <string name="setting_wear_volume_layout">Útlit hljóðstyrks</string>
+    <string name="setting_wear_quick_panel_style">Stíll flýtispjalds</string>
+    <string name="setting_wear_quick_panel_layout">Útlit flýtispjalds</string>
+    <string name="setting_wear_quick_panel_source">Flýtiaðgerðir</string>
+    <string name="setting_wear_quick_panel_source_description">Veldu stilltu hnappana þína, eða aðgerðir sem appið sem er í spilun býður upp á.</string>
+    <string name="quick_panel_open_note_title">Að opna spjaldið</string>
+    <string name="quick_panel_open_note_description">Tvísmelltu á miðju núspilunarskjásins til að opna flýtiaðgerðaspjaldið á úrinu.</string>
+    <string name="preview_current_app_action">Aðgerð núverandi apps</string>
+    <string name="preview_notification_controls">Táknmynd úr miðlunartilkynningu</string>
+    <string name="setting_wear_queue_style">Stíll biðraðar</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Nota flýtileiðaumslög sem bakgrunn</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Þegar Stíll biðraðar hér að ofan er Umslags-afbrigði, fyllir aðgerðarröð flýtispjalds með sóttu flýtileiðaumslagi (lag, lagalisti, flytjandi…) líka hylki sitt með þeirri mynd, líkt og Næst gerir. Flýtileiðir án sótts umslags (venjuleg appatáknmynd) verða ekki fyrir áhrifum.</string>
+    <string name="setting_wear_list_row_size">Stærð listahylkja</string>
+    <string name="setting_wear_list_row_size_description">Hæð fullbreiðra raða í biðröð, valmyndum og flýtispjaldi.</string>
+    <string name="setting_wear_progress_gradient">Blanda litatöflu inn í hringinn</string>
+    <string name="setting_wear_progress_gradient_description">Með fjöllitblæjameðferð (Kompliment, Þríhliða, Áþekkt, Tvílit) rennur samfelldi hringurinn í gegnum alla þrjá litina. Slökktu á þessu fyrir einlitan hring á meðan plötulitatafla helst alls staðar annars staðar.</string>
+    <string name="setting_wear_progress_style">Stíll framvinduhrings</string>
+    <string name="setting_wear_seek_style">Stíll spólunar og hljóðstyrksálestrar</string>
+    <string name="setting_wear_seek_layout">Útlit spólunarspjalds</string>
+    <string name="setting_wear_color_treatment">Litameðferð úrs</string>
+    <string name="setting_wear_normal_color">Venjulegur litur</string>
+    <string name="setting_wear_normal_color_description">Veldu staka litinn sem er notaður fyrir áherslur titils, framvindu, hljóðstyrk, spjöld og ramma smáhnappa í Venjulegum ham</string>
+    <string name="setting_wear_normal_color_multi">Nota litatöflu</string>
+    <string name="setting_wear_normal_color_multi_description">Á, skjárinn notar aðallit auk tveggja stuðningstóna. Af, einn stakur litur er notaður alls staðar — litur plötunnar sjálfrar, eða sá sem þú valdir.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Venjulegt (valinn litur)</item>
+        <item>Afmettað (mjúkur plötulitur)</item>
+        <item>Expressive (öll litatafla plötu)</item>
+        <item>Kompliment (plata + andstæða)</item>
+        <item>Þríhliða (þrír litblæir plötu)</item>
+        <item>Áþekkt (nálægir litblæir)</item>
+        <item>Einlitt (einn litblær, þrír tónar)</item>
+        <item>Tvílitt (tveir litir plötu)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Fylgja meðferð úrs</item>
+        <item>Venjulegt (valinn litur)</item>
+        <item>Afmettað (mjúkur plötulitur)</item>
+        <item>Expressive (öll litatafla plötu)</item>
+        <item>Kompliment (plata + andstæða)</item>
+        <item>Þríhliða (þrír litblæir plötu)</item>
+        <item>Áþekkt (nálægir litblæir)</item>
+        <item>Einlitt (einn litblær, þrír tónar)</item>
+        <item>Tvílitt (tveir litir plötu)</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Leturþykkt titils</string>
+    <string name="setting_wear_title_font_italic">Skáletraður titill</string>
+    <string name="setting_wear_title_font_scale">Stærð titils</string>
+    <string name="setting_wear_title_font_opacity">Ógegnsæi titils</string>
+    <string name="setting_wear_title_font_tracking">Stafabil titils</string>
+    <string name="setting_wear_title_color">Litur titiltexta</string>
+    <string name="setting_wear_title_custom_color">Sérsniðinn litur titils</string>
+    <string name="wear_title_color_face_default">Sjálfgefið skífu (eins og hannað)</string>
+    <string name="setting_wear_title_adaptive_contrast">Aðlaga lit titils fyrir birtuskil</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Lýsir eða dekkir titilinn þegar litur hans er of nálægt myndverkinu á bak við hann, en heldur litblæ hans óbreyttum. Hefur engin áhrif á meðan titillinn heldur sjálfgefnum lit skífunnar.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Aðlaga lit flytjanda fyrir birtuskil</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Lýsir eða dekkir flytjandalínuna þegar plötuliturinn er of nálægt myndverkinu á bak við hana, en heldur litblæ hans óbreyttum. Mælir aðeins ræmuna sem línan situr á, ekki allt umslagið.</string>
+    <string name="setting_wear_artist_font_weight">Leturþykkt flytjanda</string>
+    <string name="setting_wear_artist_font_italic">Skáletraður flytjandi</string>
+    <string name="setting_wear_artist_font_scale">Stærð flytjanda</string>
+    <string name="setting_wear_artist_font_opacity">Ógegnsæi flytjanda</string>
+    <string name="setting_wear_artist_font_tracking">Stafabil flytjanda</string>
+    <string name="setting_wear_source_icon_scale">Stærð appatáknmyndar</string>
+    <string name="setting_wear_source_icon_opacity">Ógegnsæi appatáknmyndar</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 er venjuleg þykkt skífunnar; hærra er feitletraðra. Fyrir Google Sans Flex er þetta eigin þykktarás þess leturs</string>
+    <string name="setting_wear_typography_scale_description">Hlutfall af eigin stærð skífunnar (70–140). 100 heldur hannaðri stærð hvers útlits</string>
+    <string name="setting_wear_typography_opacity_description">Hlutfall (20–100). 100 heldur eigin ógegnsæi skífunnar</string>
+    <string name="setting_wear_typography_tracking_description">Aukabil milli stafa, í hundraðshlutum úr em (−5 til 20). 0 heldur eigin stafabili letursins</string>
+    <string name="setting_wear_color_modifier">Tónn</string>
+    <string name="setting_wear_color_modifier_description">Stilltu alla litatöfluna án þess að breyta því hvernig hún er fengin — virkar með hverri litameðferð</string>
+    <string name="setting_wear_color_hue_shift">Litvíxlun</string>
+    <string name="setting_wear_color_hue_shift_description">Snýr litatöflu plötunnar í kringum litahjólið, í gráðum (0–359). Sérhver meðferð heldur aðallit sínum á eigin litblæ plötunnar, svo þetta er það sem breytist. 0 notar plötulitinn óbreyttan; fastur Venjulegur litur er aldrei víxlaður.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Ekkert</item>
+        <item>Kröftugt</item>
+        <item>Pastel</item>
+        <item>Hlýtt</item>
+        <item>Svalt</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Jaðarbogi (vinstri)</item>
+        <item>Jaðarbogi (hár)</item>
+        <item>Jaðarbogi (hægri)</item>
+        <item>Jaðarbogi (efst)</item>
+        <item>Jaðarbogi (neðst)</item>
+        <item>Fullur hringur</item>
+        <item>Miðjuljómi</item>
+        <item>Lárétt mælistika</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Jaðarhringur</item>
+        <item>Jaðarhringur (mjór)</item>
+        <item>Jaðarhringur (þykkur)</item>
+        <item>Tímalína</item>
+        <item>Skipt tímalína</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Lýsigögn fyrst</item>
+        <item>Bogi</item>
+        <item>Aðal</item>
+        <item>Rist</item>
+        <item>Merktar raðir</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Samfellt</item>
+        <item>Strikað</item>
+        <item>Punktar</item>
+        <item>Hárlína</item>
+        <item>Halastjarna</item>
+        <item>60 úrpunktar</item>
+        <item>60 úrstrik</item>
+        <item>12 klukkustunda hlutar</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Einfalt</item>
+        <item>Glerhylki</item>
+        <item>Expressive-hylki</item>
+        <item>Material-hylki</item>
+        <item>Hvítt hylki</item>
+        <item>Risastórt</item>
+        <item>Staða / heild</item>
+        <item>Hvítt gler</item>
+        <item>Hálfgagnsæ plata</item>
+        <item>Ljómandi plata</item>
+        <item>Útlína</item>
+        <item>Fast þema</item>
+        <item>Fastur plötulitur</item>
+        <item>Örsmátt</item>
+        <item>Skuggi (enginn rammi)</item>
+        <item>Undirstrikun</item>
+        <item>Hárfín útlína</item>
+        <item>Risastór plötulitur</item>
+        <item>Einlitt</item>
+        <item>Tónað dökkt</item>
+        <item>Skjáhermir</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Stilltir hnappar</item>
+        <item>Frá núverandi miðlunarappi</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Fylgja stíl spjalds</item>
+        <item>Plötuóskýrleiki (akrýl)</item>
+        <item>Fast svart</item>
+        <item>Fastur plötulitur</item>
+        <item>Gler</item>
+        <item>Stigull plötu</item>
+        <item>Tvílitur plötu</item>
+        <item>Prisma</item>
+        <item>Fljótandi gler</item>
+        <item>Expressive-óskýrleiki</item>
+        <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Gler</item>
+        <item>Naumhyggjulegt (AMOLED)</item>
+        <item>Material</item>
+        <item>Tónað</item>
+        <item>Neon</item>
+        <item>Létt</item>
+        <item>Stigull</item>
+        <item>Einlitt</item>
+        <item>Útlína</item>
+        <item>Tvílitt</item>
+        <item>Prisma</item>
+        <item>Mikil birtuskil</item>
+        <item>Skjáhermir</item>
+        <item>Hrím</item>
+        <item>Hlutar</item>
+        <item>Norðurljós</item>
+        <item>Blek</item>
+        <item>Rák</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Þjappað</item>
+        <item>Venjulegt</item>
+        <item>Hátt</item>
+        <item>Sérlega hátt</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Gler</item>
+        <item>Naumhyggjulegt (AMOLED)</item>
+        <item>Material</item>
+        <item>Tónað</item>
+        <item>Neon</item>
+        <item>Létt</item>
+        <item>Stigull</item>
+        <item>Einlitt</item>
+        <item>Útlína</item>
+        <item>Tvílitt</item>
+        <item>Prisma</item>
+        <item>Mikil birtuskil</item>
+        <item>Skjáhermir</item>
+        <item>Hrím</item>
+        <item>Umslag</item>
+        <item>Óskýrt umslag</item>
+        <item>Tónað umslag</item>
+        <item>Ferningslaga umslag</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Gler</item>
+        <item>Hvítt gler</item>
+        <item>Tónað gler</item>
+        <item>Naumhyggjulegt (AMOLED)</item>
+        <item>Material</item>
+        <item>Tónað</item>
+        <item>Neon</item>
+        <item>Létt</item>
+        <item>Stigull</item>
+        <item>Einlitt</item>
+        <item>Útlína</item>
+        <item>Útlína, hvítt gler</item>
+        <item>Tvílitt</item>
+        <item>Prisma</item>
+        <item>Mikil birtuskil</item>
+        <item>Skjáhermir</item>
+        <item>Hrím</item>
+        <item>Draugur (enginn rammi)</item>
+        <item>Þoka</item>
+        <item>Blek</item>
+        <item>Punktur</item>
+        <item>Hella</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Halda appi virku eftir pásun</string>
+    <string name="setting_wear_paused_hold_description">Hversu lengi úraforritið helst aðgengilegt frá úraskífunni eftir að þú pásar, svo þú getir haldið áfram með því að lyfta úlnliðnum í stað þess að opna það aftur. Lengri stillingar halda bakgrunnsþjónustu í gangi.</string>
+    <string name="wear_paused_hold_off">Ekki halda því</string>
+    <string name="wear_paused_hold_5">5 mínútur</string>
+    <string name="wear_paused_hold_15">15 mínútur</string>
+    <string name="wear_paused_hold_30">30 mínútur</string>
+    <string name="wear_paused_hold_60">1 klukkustund</string>
+    <string name="wear_paused_hold_always">Þar til spilun lýkur</string>
+
+    <string name="setting_wear_idle_button_action">Hnappur þegar ekkert er í spilun</string>
+    <string name="setting_wear_idle_auto_open">Opna þegar ekkert er í spilun</string>
+    <string name="setting_wear_idle_auto_open_description">Fer beint á þennan skjá þegar þú opnar úraforritið án þess að tónlist sé í spilun.</string>
+    <string name="wear_idle_action_resume">Halda áfram með síðasta app</string>
+    <string name="wear_idle_action_shortcuts">Flýtileiðir lagalista</string>
+    <string name="wear_idle_action_menu">Aðgerðavalmynd</string>
+    <string name="wear_idle_action_search">Leita</string>
+    <string name="wear_idle_action_queue">Nýlega spilað</string>
+    <string name="wear_idle_action_none">Enginn hnappur</string>
+    <string name="wear_idle_auto_open_none">Vera áfram í spilaranum</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Skoða safn</string>
+    <string name="library_up">Til baka</string>
+    <string name="error_library_unavailable">Þetta app er ekki með skoðanlegt safn</string>
+    <string name="error_library_empty">Ekkert hér</string>
+    <string name="error_library_no_player">Byrjaðu að spila eitthvað fyrst</string>
+
+    <string name="setting_wear_carousel_card_shape">Lögun hringekjuspjalda</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Ávalt</item>
+        <item>Ferningslaga</item>
+        <item>Squircle</item>
+        <item>Hringlaga</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Nota letur alls staðar</string>
+    <string name="setting_wear_font_all_screens_description">Notar valið letur líka á valmyndina, biðröðina og klukkuna á úrinu, ekki bara titil og flytjanda lagsins. Birtingar- og handskrifuð letur geta verið erfiðari aflestrar í listum.</string>
+
+    <string name="setting_wear_clock_font">Leturgerð klukku</string>
+    <string name="wear_clock_font_follow">Fylgja letri titils</string>
+    <string name="setting_wear_clock_font_weight">Leturþykkt klukku</string>
+    <string name="setting_wear_clock_font_italic">Skáletruð klukka</string>
+    <string name="setting_wear_clock_font_scale">Stærð klukku</string>
+    <string name="setting_wear_clock_font_tracking">Stafabil klukku</string>
+    <string name="setting_wear_clock_adaptive_contrast">Aðlaga lit klukku fyrir birtuskil</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Lýsir eða dekkir klukkuna þegar plötuliturinn er of nálægt myndverkinu á bak við hana, en heldur litblæ hans óbreyttum. Á aðeins við þegar litur klukku er stilltur á Plötulit.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Þjöppuð hástafabirtingarleturgerð — veggspjaldslegt, rúmar langa titla</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Serif leturgerð með mikilli birtuskil — tímaritstilfinning</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Tæknileg rúmfræðileg sans-serif leturgerð með sérkennilegum smáatriðum</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Ferningslaga vísindaskáldskaparbirtingarletur — djarft og framúrstefnulegt</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Handskrifuð skrautskrift — afslöppuð og persónuleg</string>
+    <string name="setting_wear_track_time_mode">Birting lagtíma</string>
+    <string name="setting_wear_track_time_mode_description">Hvenær lagstaða (t.d. 1:23 / 3:45) er sýnd á núspilunarskjánum.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Alltaf</item>
+        <item>Aðeins í spilun</item>
+        <item>Aðeins í hléi</item>
+        <item>Aldrei</item>
+    </string-array>
+
+    <string name="setting_screen_buttons_curve">Sveigja smáhnappa</string>
+    <string name="setting_screen_buttons_curve_description">Veldu sveigjustíl smáhnappa: flatt, bogadregið, mjúkt, sveigt.</string>
+    <string name="setting_screen_buttons_shape">Lögun smáhnappa</string>
+    <string name="setting_screen_buttons_shape_description">Veldu lögun og útlitssnið smáhnappa.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Hylki (sjálfgefið)</item>
+        <item>Hringur</item>
+        <item>Ferningur</item>
+        <item>Ávalur ferningur (mjúkur)</item>
+        <item>Ávalur ferningur (miðlungs)</item>
+        <item>Squircle</item>
+        <item>Blað</item>
+        <item>Dropi</item>
+        <item>Hylki (breitt lítið)</item>
+        <item>Hylki (breitt miðlungs)</item>
+        <item>Hylki (breitt stórt)</item>
+        <item>Hylki (breitt sérlega stórt)</item>
+        <item>Ávalur ferhyrningur (lítill)</item>
+        <item>Ávalur ferhyrningur (miðlungs)</item>
+        <item>Ávalur ferhyrningur (stór)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Flatt</item>
+        <item>Bogi</item>
+        <item>Væg sveigja</item>
+        <item>Mjúk sveigja</item>
+        <item>Miðlungs sveigja</item>
+        <item>Sveigt</item>
+        <item>Mikil sveigja</item>
+        <item>Dreift að jöðrum</item>
+        <item>Vinstri jaðar</item>
+        <item>Hægri jaðar</item>
+        <item>Báðir jaðrar</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Sjálfgefinn bakgrunnur</item>
+        <item>Gler (samræmt)</item>
+        <item>Gler (létt)</item>
+        <item>Hálfgagnsæ plata</item>
+        <item>Hálfgagnsæ plata Exp</item>
+        <item>Ljómandi plata</item>
+        <item>Ljómi Exp</item>
+        <item>Fast þema</item>
+        <item>Fastur plötulitur</item>
+        <item>Fastur plötulitur Exp</item>
+        <item>Útlína</item>
+        <item>Útlína, plötulitur Exp</item>
+        <item>Aðeins táknmynd (gagnsætt)</item>
+        <item>Táknmynd Exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Hlutlaust</item>
+        <item>Plötulitur</item>
+        <item>Sérsniðinn litur</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Fullt umslag</item>
+        <item>Óskýr bakgrunnur</item>
+        <item>Móðaðir jaðrar</item>
+        <item>Ferningur (hvöss horn)</item>
+        <item>Ferningur (mjúk horn)</item>
+        <item>Ferningur (ávöl horn)</item>
+        <item>Svarthvítt</item>
+        <item>Óskýrt svarthvítt</item>
+        <item>Expressive-óskýrleiki</item>
+        <item>Expressive</item>
+        <item>Tónaður Material-stigull</item>
+        <item>Veggspjaldsumslag</item>
+        <item>Hljóðversstigull</item>
+        <item>Vínylsgeisla-ljómi</item>
+        <item>Halóljómi</item>
+        <item>Norðurljósaborðar</item>
+        <item>Litrófsstigull</item>
+        <item>Kórónusveipur</item>
+        <item>Rökkurdofnun</item>
+        <item>Blómstur</item>
+        <item>Sjóndeildarhringsdofnun</item>
+        <item>Glóðarljómi</item>
+        <item>Eclipse AMOLED svart</item>
+        <item>Falið (fast svart)</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Óvirkt</item>
+        <item>Sýna tónlistarúraskífutáknmynd (aðeins fyrir Wear 3.0)</item>
+        <item>Opna Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Tímamörk lokunar</string>
+    <string name="setting_close_timeout_description">Svartifoss lokast sjálfkrafa þegar engin tónlist hefur verið í spilun í <![CDATA[<b>%1$s sekúndur</b>]]>. Eiginleikinn er óvirkur þegar tímamörk eru stillt á 0 sekúndur. Athugaðu að til að spara rafhlöðu getur þessi valkostur stundum verið ónákvæmur og lokun getur seinkað um allt að mínútu.</string>
+    <string name="setting_wear_close_on_idle">Loka við \"Ekkert í spilun\"</string>
+    <string name="setting_wear_close_on_idle_description">Lokar úraforritinu sjálfkrafa um það bil einni mínútu eftir að það kemst á aðgerðalausa „Ekkert í spilun“-skjáinn, svo það dvelji þar aldrei. Óháð tímamörkum lokunar hér að ofan, sem á við um pásað lag.</string>
+    <string name="category_notifications">Sprettigluggi tilkynningar</string>
+    <string name="setting_enable_notifications">Sýna sprettiglugga tilkynningar</string>
+    <string name="setting_enable_notifications_description">Þessi eiginleiki krefst annars apps til að stýra tilkynningum (Vibration Center for Wear).\n\nÍ hvert sinn sem Vibration Center lætur úrið titra, birtir Svartifoss sprettiglugga með tilkynningatextanum, svo þú getir litið snöggt á tilkynninguna án þess að fara úr Svartifoss.</string>
+    <string name="setting_notification_timeout">Tímamörk sprettiglugga tilkynningar</string>
+    <string name="setting_notification_timeout_description">Sprettiglugginn lokast sjálfkrafa eftir <![CDATA[<b>%1$s sekúndur</b>]]>. Settu 0 til að slökkva á sjálfvirkri lokun.</string>
+    <string name="app_required">App vantar</string>
+    <string name="vibration_center_required_description">Til að nota þennan eiginleika þarftu að setja upp annað (ókeypis) app: Vibration Center for Wear.</string>
+    <string name="open_play_store">Opna Play Store</string>
+    <string name="error_no_notification_service_support">Því miður virðist tækið þitt ekki styðja tilkynningaþjónustur</string>
+    <string name="setting_always_select_center_action">Velja alltaf miðjuaðgerð</string>
+    <string name="setting_always_select_center_action_description">Þegar þetta er virkt velur ýti á aðgerðalistann alltaf miðjuvalkostinn (upplýstan), óháð því á hvaða valkost var ýtt.</string>
+    <string name="change_icon">Breyta táknmynd</string>
+    <string name="please_wait">Bíddu aðeins</string>
+
+    <string name="error_playlist_not_supported">Ekki stutt af þessu miðlunarappi</string>
+    <string name="error_search_no_results">Engar niðurstöður fundust</string>
+    <string name="seconds_to_skip">Sekúndur til að sleppa:</string>
+    <string name="seconds_to_reverse">Sekúndur til að spóla til baka:</string>
+
+    <string name="setting_dynamic_accent_color">Breytilegur áherslulitur</string>
+    <string name="setting_dynamic_accent_color_description">Þegar þetta er virkt aðlagast áherslulitur (spólustika, virkt biðraðaratriði) sjálfkrafa að ríkjandi lit núverandi plötuumslags.</string>
+    <string name="setting_desaturated_color">Afmettaður litur</string>
+    <string name="setting_desaturated_color_description">Stillir mettun og birtu litarins sem dreginn er út til að tryggja mikinn læsileika og birtuskil eftir virku þema.</string>
+
+    <string name="queue_header">Spilunarbiðröð</string>
+    <string name="queue_unavailable">Biðröð ekki tiltæk</string>
+
+    <string name="setting_custom_accent_color">Áherslulitur</string>
+    <string name="setting_custom_accent_color_description">Veldu sérsniðinn áherslulit fyrir viðmót appsins</string>
+    <string name="setting_mini_player">Smáspilari</string>
+    <string name="setting_mini_player_description">Sýnir viðvarandi núspilunarstiku fyrir ofan neðstu leiðarstikuna hvenær sem miðill er virkur. Virkt sjálfgefið; slökktu á því til að endurheimta það pláss.</string>
+    <string name="color_picker_title">Veldu áherslulit</string>
+    <string name="color_picker_reset">Endurstilla</string>
+    <string name="color_picker_apply">Beita</string>
+    <string name="color_picker_default">Sjálfgefið</string>
+    <string name="color_picker_invalid">Ógildur litakóði</string>
+    <string name="color_picker_current">Núverandi: %s</string>
+
+    <string name="drawer_version_format">Útgáfa %1$s</string>
+    <string name="drawer_tagline">Fylgiforrit fyrir Wear OS</string>
+    <string name="drawer_about_heading">Um</string>
+    <string name="drawer_about_summary">Svartifoss gerir þér kleift að stýra tónlist í símanum þínum frá Wear OS-úrinu þínu — með fullkomlega sérsniðinni fjarstýringu löguð að tækinu þínu.</string>
+    <string name="drawer_name_heading">Nafnið</string>
+    <string name="drawer_name_meaning">Svartifoss þýðir bókstaflega „svarti fossinn“ á íslensku — nefndur eftir fossinum í Vatnajökulsþjóðgarði, þar sem dökkir stuðlabergsdrangar umgirða mjóa flúð. Líkt og vatn yfir stein flæðir tónlist í gegnum appið.</string>
+    <string name="drawer_sync_heading">Samstilling</string>
+    <string name="drawer_sync_summary">Úrstillingar eru stilltar hér í símanum og samstillast sjálfkrafa við parðaða úrið þitt.</string>
+    <string name="drawer_support_heading">Stuðningur</string>
+    <string name="drawer_support_summary">Svartifoss er ókeypis og með opnum grunnkóða - bjóddu mér upp á kaffibolla ef þér finnst appið gagnlegt :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Sækja umslagsmynd</string>
+    <string name="album_art_saved">Umslagsmynd vistuð í myndasafni</string>
+    <string name="album_art_save_error">Ekki tókst að vista umslagsmynd</string>
+
+    <string name="action_play_liked_songs">Spila lög sem mér líkar við (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Spila lög sem mér líkar við (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Spila lög sem mér líkar við (SoundCloud)</string>
+    <string name="action_my_playlists">Streymisflýtileiðir</string>
+    <string name="action_play_specific_playlist">Opna streymisflýtileið</string>
+    <string name="action_choose_or_add_streaming_shortcut">Veldu eða bættu við streymisflýtileið</string>
+    <string name="action_show_streaming_library">Sýna allar vistaðar flýtileiðir</string>
+    <string name="playlist_shortcut_pick_title">Veldu flýtileið</string>
+    <string name="playlist_shortcut_pick_empty">Engar streymisflýtileiðir vistaðar ennþá — bættu einni við hér fyrir neðan og ýttu svo á hana til að velja hana</string>
+    <string name="playlist_shortcuts_empty">Engar streymisflýtileiðir ennþá — bættu þeim við í stillingum símaappsins</string>
+    <string name="setting_playlist_shortcuts">Streymisflýtileiðir</string>
+    <string name="setting_playlist_shortcuts_description">Opna deilda tengla frá úrinu í YouTube Music, Spotify og öðrum streymisöppum</string>
+    <string name="setting_shortcut_artwork">Sækja myndverk flýtileiða á netinu</string>
+    <string name="setting_shortcut_artwork_description">Sækja smámynd fyrir hverja vistaða flýtileið frá þjónustunni, sýnd í símalistanum, úravalmyndinni og úthlutuðum hnöppum. Hver smámynd er sótt einu sinni; aðeins opinberi deilingartengillinn er sendur. Slökkt sjálfgefið.</string>
+    <string name="setting_queue_local_artwork">Biðraðarumslög úr safninu þínu</string>
+    <string name="setting_queue_local_artwork_description">Staðbundnir tónlistarspilarar birta biðraðarumslög sem tilvísanir í safn. Veittu aðgang að efni svo þau geti birst í biðröð úrsins. Enginn nettengingu þarf.</string>
+    <string name="setting_queue_local_artwork_granted">Aðgangur að efni veittur — staðbundin biðraðarumslög munu birtast</string>
+    <string name="setting_queue_local_artwork_denied">Aðgangi að efni hafnað. Virkjaðu hann í Android-stillingum til að sýna staðbundin biðraðarumslög.</string>
+    <string name="setting_queue_remote_artwork">Sækja biðraðarumslög á netinu</string>
+    <string name="setting_queue_remote_artwork_short_description">Streymisöpp (YouTube Music-forrit, Echo Music…) birta biðraðarumslög sem tengla, ekki myndir, svo þetta sækir þau og geymir í skyndiminni. Slökktu á þessu til að halda biðröðinni algjörlega ónettengdri — þær línur sýna þá ekkert umslag.</string>
+    <string name="setting_queue_remote_artwork_description">Streymisspilarar birta biðraðarumslög sem tengla frekar en myndir. Sæktu hvert og eitt einu sinni, geymt í skyndiminni í þessum síma, til að sýna þau í biðröð úrsins. Aðeins er beðið um umslagsslóðina sem spilarinn hefur þegar birt — engin reiknings- eða persónugögn. Virkt sjálfgefið; slökktu á því til að halda biðröðinni algjörlega ónettengdri.</string>
+    <string name="watch_streaming_shortcuts_empty">Bættu við lögum, plötum eða lagalistum fyrir Flýtiaðgerðir og úravalmyndina</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d vistuð flýtileið · Tiltæk í Flýtiaðgerðum og úravalmyndinni</item>
+        <item quantity="other">%1$d vistaðar flýtileiðir · Tiltækar í Flýtiaðgerðum og úravalmyndinni</item>
+    </plurals>
+    <string name="category_music_apps">Tónlistaröpp og -þjónustur</string>
+    <string name="setting_apps_integrations">Studdar tónlistarþjónustur</string>
+    <string name="setting_apps_integrations_description">Tenglar virka með YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music og SoundCloud. Enginn reikningsaðgangur er nauðsynlegur.</string>
+    <string name="setting_apps_integrations_none">Ekkert stutt app fannst. Flýtileiðir geta samt opnast í vafra eða öðru samhæfu appi.</string>
+    <string name="setting_apps_integrations_installed">%1$d af %2$d fundust: %3$s</string>
+    <string name="setting_streaming_open_mode">Opna streymistengla með</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Greint streymisapp</item>
+        <item>Sjálfgefið í Android</item>
+        <item>Spyrja í hvert sinn</item>
+    </string-array>
+    <string name="setting_persistent_notification">Stjórna „Svartifoss virkur“-tilkynningunni</string>
+    <string name="setting_persistent_notification_description">Opnar Android-stillingar þessarar tilkynningar — þaggaðu hana, faldu hana á lásskjánum, eða breyttu henni á annan hátt. Ekki er hægt að slökkva alveg á henni: Android krefst viðvarandi tilkynningar á meðan bakgrunnsþjónustan sem talar við úrið þitt er í gangi.</string>
+    <string name="setting_notification_access">Aðgangur að miðlunartilkynningum</string>
+    <string name="setting_notification_access_enabled">Leyft · Ýttu til að skoða Android-stillingar</string>
+    <string name="setting_notification_access_disabled">Ekki leyft · Nauðsynlegt fyrir miðlunaraðgerðir tilkynninga og sjálfvirkar ræsisíur</string>
+    <string name="setting_notification_access_unavailable">Stillingar fyrir aðgang að tilkynningum eru ekki tiltækar á þessu tæki</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d vistuð flýtileið · Ýttu til að stjórna eða flytja inn tengla</item>
+        <item quantity="other">%1$d vistaðar flýtileiðir · Ýttu til að stjórna eða flytja inn tengla</item>
+    </plurals>
+    <string name="category_privacy">Persónuvernd</string>
+    <string name="setting_crash_reporting">Senda hrunskýrslur</string>
+    <string name="setting_crash_reporting_description">Senda Firebase Crashlytics-greiningargögn til að hjálpa til við að laga villur. Virkt sjálfgefið; slökktu á því hvenær sem er.</string>
+    <string name="setting_announcements">Tilkynningar um fréttir</string>
+    <string name="setting_announcements_description">Stöku tilkynningar frá forritaranum — nýjar útgáfur, mikilvægar tilkynningar. Sendar með Firebase Cloud Messaging; enginn reikningur eða notendalisti kemur við sögu. Virkt sjálfgefið; slökktu á því hvenær sem er.</string>
+    <string name="announcement_notification_channel">Tilkynningar</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Deildu lagalista, plötu eða lagi beint til Svartifoss, límdu afritaðan tengil, eða bættu einum við handvirkt. Úrið biður símann um að opna hann; engin innskráning hjá þjónustu er nauðsynleg.</string>
+    <string name="back">Til baka</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Tónlistin þín, eitt ýti í burtu</string>
+    <string name="playlist_shortcuts_yours">Flýtileiðirnar þínar</string>
+    <string name="playlist_shortcuts_empty_hint">Bættu við deildum tengli á lag, plötu eða lagalista til að gera hann tiltækan á úrinu þínu.</string>
+    <string name="playlist_shortcuts_add">Bæta við flýtileið</string>
+    <string name="playlist_shortcuts_paste">Líma tengil</string>
+    <string name="playlist_shortcuts_reload_covers">Endurhlaða umslögum</string>
+    <string name="playlist_shortcuts_reloading_covers">Endurhleð umslögum…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Umslög endurhlaðin</string>
+    <string name="playlist_shortcuts_edit">Breyta flýtileið</string>
+    <string name="playlist_shortcut_save">Vista flýtileið</string>
+    <string name="playlist_shortcut_editor_hint">Límdu einn tengil. Svartifoss auðkennir appið og efnistegundina sjálfkrafa.</string>
+    <string name="playlist_shortcut_detection_waiting">Bíður eftir streymistengli</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer og fleira er stutt.</string>
+    <string name="playlist_shortcut_detected_format">Greint: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Nafn</string>
+    <string name="playlist_shortcut_link_hint">Deilingartengill eða app-vistfang</string>
+    <string name="playlist_shortcut_shuffle">Spila stokkað (aðeins YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Tengill</string>
+    <string name="playlist_type_track">Lag</string>
+    <string name="playlist_type_playlist">Lagalisti</string>
+    <string name="playlist_type_album">Plata</string>
+    <string name="playlist_type_artist">Flytjandi</string>
+    <string name="playlist_type_show">Þáttaröð</string>
+    <string name="playlist_type_episode">Þáttur</string>
+    <string name="playlist_type_mix">Blanda</string>
+    <string name="playlist_badge_shuffle">Stokkað</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Engar streymisflýtileiðir bættar við ennþá</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d vistuð</item>
+        <item quantity="other">%1$d vistaðar</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Raðaðar streymisflýtileiðir. Snertu og haltu til að draga, notaðu aðgengisaðgerðirnar Færa upp eða Færa niður, eða ýttu á Ctrl+Upp/Niður á lyklaborði.</string>
+    <string name="playlist_shortcut_more_options">Fleiri valkostir fyrir %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Breyta</string>
+    <string name="playlist_shortcut_menu_open">Opna núna</string>
+    <string name="playlist_shortcut_menu_copy">Afrita tengil</string>
+    <string name="playlist_shortcut_menu_duplicate">Tvöfalda</string>
+    <string name="playlist_shortcut_menu_share">Deila</string>
+    <string name="playlist_shortcut_menu_delete">Eyða</string>
+    <string name="playlist_shortcut_open_failed">Ekkert app getur opnað þennan tengil</string>
+    <string name="streaming_shortcut_choose_app">Opna streymistengil með</string>
+    <string name="playlist_shortcut_link_copied">Tengill afritaður</string>
+    <string name="playlist_shortcut_import_invalid">Deildi textinn inniheldur ekki gildan streymistengil</string>
+    <string name="playlist_shortcut_clipboard_invalid">Klippiborðið inniheldur ekki gildan streymistengil</string>
+    <string name="playlist_shortcut_name_required">Sláðu inn nafn flýtileiðar</string>
+    <string name="playlist_shortcut_link_invalid">Sláðu inn gildan vefslóð eða app-vistfang</string>
+    <string name="playlist_shortcut_service_invalid">Límdu gildan tengil til að greina þjónustu hans</string>
+    <string name="playlist_shortcut_service_generic">Samhæfur tengill · Android velur app</string>
+    <string name="playlist_shortcut_service_installed">%1$s uppsett · Tilbúið til að opna í sínu appi</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s ekki uppsett · Hægt er að nota vafra eða samhæft app</string>
+    <string name="playlist_shortcut_copy_name">%1$s afrit</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s afrit %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s búið til</string>
+    <string name="playlist_shortcut_share_title">Deila streymisflýtileið</string>
+    <string name="playlist_shortcut_share_failed">Ekkert app er tiltækt til að deila þessari flýtileið</string>
+    <string name="playlist_shortcut_deleted">%1$s eytt</string>
+    <string name="playlist_shortcut_undo">Afturkalla</string>
+
+    <string name="action_play_liked_songs_shuffled">Spila lög sem mér líkar við, stokkað (YT Music)</string>
+    <string name="action_search_history">Leitarsaga</string>
+    <string name="search_history_empty">Engar nýlegar leitir ennþá</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Uppfærslur</string>
+    <string name="setting_update_check">Tilkynna um nýjar útgáfur</string>
+    <string name="setting_update_check_description">Athugar GitHub fyrir nýjar útgáfur um það bil einu sinni á dag og sýnir tilkynningu</string>
+    <string name="setting_update_prereleases">Taka með forútgáfur</string>
+    <string name="setting_update_prereleases_description">Fá líka tilkynningar um beta-útgáfur</string>
+    <string name="setting_update_check_now">Athuga hvort uppfærslur séu til núna</string>
+    <string name="setting_update_check_now_description">Sýnir nýjustu útgáfuna og gerir þér kleift að uppfæra úrið um Bluetooth</string>
+    <string name="update_screen_title">Uppfærslur</string>
+    <string name="update_cover_content_description">Svartifoss, fossinn sem appið er nefnt eftir</string>
+    <string name="update_notification_channel">Uppfærslur appsins</string>
+    <string name="update_available_title">Svartifoss %1$s er tiltækt</string>
+    <string name="update_notification_text">Ýttu til að uppfæra</string>
+    <string name="update_available_action">Uppfærsla tiltæk</string>
+    <string name="update_installed_phone">Sími: %1$s</string>
+    <string name="update_installed_versions">Sími: %1$s · Úr: %2$s</string>
+    <string name="update_watch_version_unknown">óþekkt</string>
+    <string name="update_checking">Athuga hvort uppfærslur séu til…</string>
+    <string name="update_check_failed">Ekki tókst að athuga hvort uppfærslur væru til. Athugaðu tenginguna þína og reyndu aftur.</string>
+    <string name="update_available_line">Ný útgáfa: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(forútgáfa)</string>
+    <string name="update_up_to_date">Þú ert með nýjustu útgáfuna (%1$s)</string>
+    <string name="update_no_wear_asset">Þessi útgáfa er ekki með APK-skrá fyrir úr til að senda.</string>
+    <string name="update_watch_hint">“Uppfæra úr” sækir nýja úraforritið og sendir það um Bluetooth — þú staðfestir uppsetninguna á úrinu sjálfu, engin snúra eða Wear Installer er nauðsynleg.</string>
+    <string name="update_downloading">Sæki… %1$d%%</string>
+    <string name="update_connecting_watch">Tengist úrinu…</string>
+    <string name="update_transferring">Sendi á úrið… %1$d%%</string>
+    <string name="update_confirm_on_watch">Sent! Tilkynning birtist á úrinu — ýttu á hana þar til að setja upp.</string>
+    <string name="update_no_watch">Ekkert úr tengt.</string>
+    <string name="update_push_failed">Ekki tókst að senda uppfærsluna á úrið. Reyndu aftur.</string>
+    <string name="update_watch_button">Uppfæra úr</string>
+    <string name="update_open_release_button">Opna útgáfusíðu</string>
+    <string name="update_watch_behind">Úrið þitt er enn á %1$s — sendu því uppfærsluna hér fyrir neðan.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Haltu síma- og úraforritunum samstilltum</string>
+    <string name="update_state_checking">Athuga hvort uppfærslur séu til…</string>
+    <string name="update_state_current">Þú ert með nýjustu útgáfuna</string>
+    <string name="update_state_current_sub">Keyrir nýjustu útgáfuna, %1$s</string>
+    <string name="update_state_available">Uppfærsla tiltæk</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Ekki tókst að athuga hvort uppfærslur væru til</string>
+    <string name="update_state_failed_sub">Athugaðu tenginguna þína og reyndu aftur</string>
+    <string name="update_device_phone">Sími</string>
+    <string name="update_device_watch">Úr</string>
+    <string name="update_versions_header">Uppsett</string>
+    <string name="update_whats_new">Nýjungar</string>
+    <string name="update_phone_button">Uppfæra síma</string>
+    <string name="update_installing">Opna uppsetningarforritið…</string>
+    <string name="update_install_permission_needed">Leyfðu uppsetningu appa frá Svartifoss, ýttu svo aftur á Uppfæra síma.</string>
+    <string name="update_phone_failed">Ekki tókst að sækja símauppfærsluna. Reyndu aftur.</string>
+    <string name="update_install_notification_title">Svartifoss-uppfærsla</string>
+    <string name="update_install_notification_tap">Ýttu til að setja upp nýju útgáfuna</string>
+    <string name="update_install_notification_failed">Uppsetning mistókst. Leyfðu uppsetningar frá Svartifoss í Stillingum og reyndu aftur.</string>
+    <string name="setting_wear_album_accent_source">Uppruni áherslulitar plötu</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Jafnvægi</item>
+        <item>Kröftugastur</item>
+    </string-array>
+</resources>

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <!-- Android 13+ replacement for READ_EXTERNAL_STORAGE, which stopped being grantable at
          targetSdk 33. Used only to decode MediaStore album art for playback-queue entries whose
          player publishes covers as content:// library URIs (see QueueArtworkResolver); the queue
@@ -49,6 +50,17 @@
              assistants for the same purpose. -->
         <intent>
             <action android:name="android.media.browse.MediaBrowserService" />
+        </intent>
+        <!-- The same discovery for apps built on Media3, which are under no obligation to publish
+             the legacy action above and increasingly do not (see MediaBrowserSearch.kt's
+             BROWSER_SERVICE_ACTIONS). These resolve today only because the MAIN/LAUNCHER entry
+             below happens to make every app with an icon visible; declaring them keeps the lookup
+             working on its own terms rather than on that side effect. -->
+        <intent>
+            <action android:name="androidx.media3.session.MediaLibraryService" />
+        </intent>
+        <intent>
+            <action android:name="androidx.media3.session.MediaSessionService" />
         </intent>
         <!-- Lets the "which apps count as music" list (MusicAppListPreference) enumerate installed
              apps that have a launcher icon on Android 11+ (API 30+), where getInstalledPackages()

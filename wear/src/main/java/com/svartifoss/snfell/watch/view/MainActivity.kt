@@ -82,7 +82,6 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import androidx.wear.ambient.AmbientLifecycleObserver
 import androidx.wear.input.RemoteInputIntentHelper
-import androidx.wear.remote.interactions.RemoteActivityHelper
 import androidx.wear.widget.SwipeDismissFrameLayout
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesRepairableException
@@ -185,11 +184,9 @@ import com.matejdro.wearutils.miscutils.VibratorCompat
 import com.matejdro.wearutils.preferences.definition.Preferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.ref.WeakReference
-import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -972,7 +969,6 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.openActionsMenu.observe(this, openActionsMenuListener)
         viewModel.openPlaybackQueueScreen.observe(this, openPlaybackQueueScreenListener)
         viewModel.openStreamingShortcutsMenu.observe(this, openStreamingShortcutsMenuListener)
-        viewModel.openUriOnPhone.observe(this, openUriOnPhoneListener)
         viewModel.openVoiceSearch.observe(this, openVoiceSearchListener)
         viewModel.closeApp.observe(this, closeAppListener)
         viewModel.notification.observe(this, notificationObserver)
@@ -4464,47 +4460,6 @@ class MainActivity : WearCompanionWatchActivity(),
                 showCustomList = true,
                 customListId = CustomLists.PLAYLIST_SHORTCUTS
         )
-    }
-
-    private val openUriOnPhoneListener = Observer<String?> { rawUri ->
-        rawUri?.let(::openUriOnPhone)
-    }
-
-    /** Opens a streaming shortcut through the Wear OS phone bridge. Launching ACTION_VIEW from
-     * the phone-side playback service is blocked by modern Android background-start rules. */
-    private fun openUriOnPhone(rawUri: String) {
-        val parts = rawUri.split('|', limit = 2)
-        val (targetPackage, uriString) = if (parts.size == 2) {
-            parts[0] to parts[1]
-        } else {
-            null to rawUri
-        }
-        val uri = runCatching { Uri.parse(uriString.trim()) }.getOrNull() ?: return
-        val scheme = uri.scheme?.lowercase(Locale.US).orEmpty()
-        if (scheme.isBlank() || scheme in setOf("content", "data", "file", "intent", "javascript")) {
-            Timber.e("Refusing unsafe streaming shortcut URI scheme: %s", scheme)
-            return
-        }
-        if ((scheme == "http" || scheme == "https") && uri.host.isNullOrBlank()) {
-            Timber.e("Refusing malformed streaming shortcut web URI")
-            return
-        }
-
-        val phoneIntent = Intent(Intent.ACTION_VIEW, uri).addCategory(Intent.CATEGORY_BROWSABLE)
-        if (!targetPackage.isNullOrBlank()) {
-            phoneIntent.setPackage(targetPackage)
-        }
-        val remoteActivityHelper = RemoteActivityHelper(
-                this,
-                ContextCompat.getMainExecutor(this)
-        )
-        lifecycleScope.launch {
-            runCatching {
-                remoteActivityHelper.startRemoteActivity(phoneIntent).await()
-            }.onFailure { error ->
-                Timber.e(error, "Could not request streaming shortcut on paired phone")
-            }
-        }
     }
 
     private val closeAppListener = Observer<Unit?> {

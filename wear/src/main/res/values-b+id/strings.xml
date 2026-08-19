@@ -14,6 +14,16 @@
 
     <string name="idle_nothing_playing">Tidak ada yang diputar</string>
     <string name="idle_hint">Putar sesuatu di ponsel Anda</string>
+    <string name="idle_hint_resume">Ketuk untuk melanjutkan aplikasi terakhir</string>
+    <string name="idle_hint_shortcuts">Ketuk untuk pintasan Anda</string>
+    <string name="idle_hint_menu">Ketuk untuk membuka menu</string>
+    <string name="idle_hint_search">Ketuk untuk mencari</string>
+    <string name="idle_hint_queue">Ketuk untuk yang baru diputar</string>
+    <string name="idle_resume">Lanjutkan pemutaran</string>
+    <string name="idle_action_shortcuts">Buka pintasan</string>
+    <string name="idle_action_menu">Buka menu</string>
+    <string name="idle_action_search">Cari</string>
+    <string name="idle_action_queue">Buka yang baru diputar</string>
 
     <string name="no_phone">Tidak ada ponsel terhubung</string>
     <string name="playback_stopped">Dihentikan</string>
@@ -34,6 +44,9 @@
     <string name="queue_empty">Tidak ada antrean tersedia</string>
     <string name="queue_now_playing">Sedang diputar</string>
     <string name="queue_load_more">Muat lebih banyak</string>
+    <string name="queue_history_fallback">Baru diputar</string>
+    <string name="queue_history_fallback_reason">Aplikasi ini tidak membagikan antreannya</string>
+    <string name="chat_face_today">Hari ini</string>
 
     <string name="hint_title">Cara pakai</string>
     <string name="hint_edges">Tepi — ketuk untuk aksi yang ditampilkan</string>
@@ -65,6 +78,8 @@
     <string name="update_install_title">Pembaruan Svartifoss</string>
     <string name="update_install_tap">Ketuk untuk memasang versi baru</string>
     <string name="update_install_failed">Pemasangan gagal. Izinkan pemasangan dari Svartifoss di pengaturan jam tangan dan coba lagi dari ponsel.</string>
+    <string name="face_picker_title">Wajah jam</string>
+    <string name="face_picker_offline">Ponsel tidak terhubung — wajah ini akan diterapkan pada jam tangan, tetapi pengaturannya tetap disimpan di ponsel</string>
     <string name="face_picker_section_builtin">Wajah bawaan</string>
     <string name="face_picker_section_custom">Tema saya</string>
     <string name="face_picker_custom_base">Berdasarkan %1$s</string>

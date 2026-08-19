@@ -171,6 +171,18 @@ degraded one. Turning it off is a single switch, and with it off remote
 covers are skipped entirely and those entries show blank thumbnails — the
 queue itself, and everything else in the app, keeps working offline.
 
+The same switch also governs one request outside the queue. Some streaming
+apps hand out a small thumbnail for the track *currently playing* — sized for
+their own phone notification, sometimes only 100 pixels square — while the
+same track information carries the address of the full-size cover. Because
+the watch scales that image up to fill its screen, the small one arrives
+visibly blurry. When this setting is on, and only when the supplied image is
+smaller than the watch actually needs, the larger copy is fetched from that
+same address and cached alongside the queue covers. It is the identical kind
+of request, to the address the music app itself published, with nothing
+attached and no server of ours involved. With the setting off, the small
+image is used as-is.
+
 ## Usage diagnostics
 
 The phone app also includes **Google Analytics for Firebase**. It collects

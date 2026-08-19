@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">Το Wear OS δεν υποστηρίζεται σε αυτή τη συσκευή</string>
     <string name="setting_no_wearable_api_banner_description">Αυτή η συσκευή δεν διαθέτει το στοιχείο Wear OS των Υπηρεσιών Google Play, που χρειάζεται το Svartifoss για να επικοινωνήσει με ένα ρολόι. Η σύζευξη δεν θα βοηθήσει — η εφαρμογή του τηλεφώνου δεν μπορεί να προσεγγίσει ρολόι εδώ. Όλα παρακάτω αποθηκεύονται ούτως ή άλλως και θα εφαρμοστούν αν εγκαταστήσετε το Svartifoss σε συσκευή που το υποστηρίζει.</string>
     <string name="setting_no_watch_banner">Δεν υπάρχει συνδεδεμένο ρολόι</string>
@@ -937,6 +939,7 @@
 
     <string name="action_play_liked_songs">Αναπαραγωγή αγαπημένων τραγουδιών (YT Music)</string>
     <string name="action_play_spotify_liked_songs">Αναπαραγωγή αγαπημένων τραγουδιών (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Αναπαραγωγή αγαπημένων τραγουδιών (SoundCloud)</string>
     <string name="action_my_playlists">Συντομεύσεις streaming</string>
     <string name="action_play_specific_playlist">Άνοιγμα συντόμευσης streaming</string>
     <string name="action_choose_or_add_streaming_shortcut">Επιλογή ή προσθήκη συντόμευσης streaming</string>
@@ -1373,6 +1376,7 @@
         <item>Bahasa Indonesia</item>
         <item>فارسی</item>
         <item>简体中文</item>
+        <item>Íslenska</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>

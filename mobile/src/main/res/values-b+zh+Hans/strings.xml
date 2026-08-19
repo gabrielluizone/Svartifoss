@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">此设备不支持 Wear OS</string>
     <string name="setting_no_wearable_api_banner_description">此设备缺少 Google Play 服务中的 Wear OS 组件，Svartifoss 需要它才能与手表通信。配对无济于事——手机应用在这里无法连接到手表。以下所有设置仍会保存，并会在你将 Svartifoss 安装到支持该组件的设备上时生效。</string>
     <string name="setting_no_watch_banner">未连接手表</string>
@@ -936,6 +938,7 @@
 
     <string name="action_play_liked_songs">播放喜欢的歌曲（YT Music）</string>
     <string name="action_play_spotify_liked_songs">播放喜欢的歌曲（Spotify）</string>
+    <string name="action_play_soundcloud_likes">播放喜欢的歌曲（SoundCloud）</string>
     <string name="action_my_playlists">流媒体快捷方式</string>
     <string name="action_play_specific_playlist">打开流媒体快捷方式</string>
     <string name="action_choose_or_add_streaming_shortcut">选择或添加流媒体快捷方式</string>
@@ -1106,4 +1109,281 @@
     </string-array>
     <string name="setting_wear_normal_color_multi">使用调色板</string>
     <string name="setting_wear_normal_color_multi_description">开启时，屏幕使用一种主色加两种辅助色调。关闭时，全部只用一种颜色——专辑本身的颜色，或您选择的颜色。</string>
+
+    <string name="action_open_library">浏览资料库</string>
+    <string name="category_idle">无播放时</string>
+    <string name="category_wf_typography_artist">艺术家</string>
+    <string name="category_wf_typography_flex">Google Sans Flex 轴</string>
+    <string name="category_wf_typography_font">字体</string>
+    <string name="category_wf_typography_icon">应用图标</string>
+    <string name="category_wf_typography_title">标题</string>
+    <string name="error_library_empty">这里没有内容</string>
+    <string name="error_library_no_player">请先播放一些内容</string>
+    <string name="error_library_unavailable">此应用没有可浏览的资料库</string>
+    <string name="face_reset_migration_clear_data_button">清除应用数据</string>
+    <string name="face_reset_migration_message">你从旧版本更新而来，那时所有表盘共用一套外观设置。现在每个表盘都会记住自己的设置，因此你从未直接自定义过的表盘可能会显得不搭配。我们建议将所有表盘重置为新的默认设置，或清除应用数据以完全重新开始。</string>
+    <string name="face_reset_migration_reset_button">重置所有表盘</string>
+    <string name="face_reset_migration_title">更新你的手表外观</string>
+    <string name="library_up">返回</string>
+    <string name="notification_access_banner_summary">点按以授予权限——在此之前播放控制将保持不可用</string>
+    <string name="preview_chat_today">今天</string>
+    <string name="quick_panel_link_summary">双击手表屏幕中央即可打开。点按此处可在「操作」中设置它的四个位置。</string>
+    <string name="setting_persistent_notification">管理「Svartifoss 运行中」通知</string>
+    <string name="setting_persistent_notification_description">打开此通知的 Android 设置——静音、从锁屏隐藏或进行其他调整。它无法完全关闭：只要与你的手表通信的后台服务在运行，Android 就要求有一条常驻通知。</string>
+    <string name="setting_queue_local_artwork">从你的资料库获取队列封面</string>
+    <string name="setting_queue_local_artwork_denied">媒体访问权限被拒绝。请在 Android 设置中启用它以显示本地队列封面。</string>
+    <string name="setting_queue_local_artwork_description">本地音乐播放器会以资料库引用的方式发布队列封面。请授予媒体访问权限，以便在手表队列中显示它们。此过程不涉及互联网访问。</string>
+    <string name="setting_queue_local_artwork_granted">已授予媒体访问权限——将显示本地队列封面</string>
+    <string name="setting_queue_remote_artwork">在线获取队列封面</string>
+    <string name="setting_queue_remote_artwork_description">流媒体播放器发布的队列封面是链接而非图片。将每张封面下载一次并缓存在此手机上，以便在手表队列中显示。仅会请求播放器已发布的封面网址——不涉及账号或个人数据。默认开启；关闭后可让队列完全保持离线。</string>
+    <string name="setting_queue_remote_artwork_short_description">流媒体应用（YouTube Music 客户端、Echo Music 等）发布的队列封面是链接而非图片，因此这会下载并缓存它们。关闭它可让队列完全保持离线——这些行将不再显示任何封面。</string>
+    <string name="setting_wear_artist_adaptive_contrast">调整艺术家颜色以提升对比度</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">当专辑颜色与其后方的封面过于接近时，提亮或加深艺术家这一行的颜色，同时保留其色相。只测量该行所在的条带，而非整张封面。</string>
+    <string name="setting_wear_artist_font_italic">艺术家斜体</string>
+    <string name="setting_wear_artist_font_opacity">艺术家不透明度</string>
+    <string name="setting_wear_artist_font_scale">艺术家大小</string>
+    <string name="setting_wear_artist_font_tracking">艺术家字间距</string>
+    <string name="setting_wear_artist_font_weight">艺术家字重</string>
+    <string name="setting_wear_carousel_card_shape">轮播卡片形状</string>
+    <string name="setting_wear_center_long_press">长按中央</string>
+    <string name="setting_wear_clock_adaptive_contrast">调整时钟颜色以提升对比度</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">当专辑颜色与其后方的封面过于接近时，提亮或加深时钟颜色，同时保留其色相。仅在时钟颜色设置为专辑颜色时生效。</string>
+    <string name="setting_wear_clock_font">时钟字体</string>
+    <string name="setting_wear_clock_font_italic">时钟斜体</string>
+    <string name="setting_wear_clock_font_scale">时钟大小</string>
+    <string name="setting_wear_clock_font_tracking">时钟字间距</string>
+    <string name="setting_wear_clock_font_weight">时钟字重</string>
+    <string name="setting_wear_color_hue_shift">色相偏移</string>
+    <string name="setting_wear_color_hue_shift_description">让专辑调色板绕色轮旋转，以度为单位（0–359）。每种处理方式都会将其主色保持在专辑本身的色相上，而这个设置改变的正是这一点。0 表示按原样使用专辑颜色；固定的「正常」颜色永远不会被偏移。</string>
+    <string name="setting_wear_color_modifier">色调</string>
+    <string name="setting_wear_color_modifier_description">调整整个调色板而不改变其推导方式——适用于每种颜色处理方式</string>
+    <string name="setting_wear_flex_axes_hint">这些选项专门用于微调 Google Sans Flex——请先在上方选择它才能使用。上方的标题与艺术家字重/斜体已经设置了该字体自身的字重（wght）与倾斜（slnt）轴；下方四个控件则作用于整个表盘。</string>
+    <string name="setting_wear_font_all_screens">到处使用此字体</string>
+    <string name="setting_wear_font_all_screens_description">将所选字体同时应用于菜单、队列和表盘上的时钟，而不仅是曲目标题和艺术家。展示体和手写字体在列表中可能更难阅读。</string>
+    <string name="setting_wear_font_flex_grade">深浅度</string>
+    <string name="setting_wear_font_flex_grade_description">在不改变版面的情况下略微调整字重（0–100）——是在深色屏幕上提升对比度的细微方式。</string>
+    <string name="setting_wear_font_flex_hint_title">关于这些控件</string>
+    <string name="setting_wear_font_flex_optical_size">光学尺寸</string>
+    <string name="setting_wear_font_flex_optical_size_description">根据文字的有效大小调整笔画细节（6–144）。数值越低越适合小号文字；数值越高越适合大号展示文字。</string>
+    <string name="setting_wear_font_flex_roundness">圆润度</string>
+    <string name="setting_wear_font_flex_roundness_description">将笔画末端从尖锐（0）过渡到完全圆润（100），带来更亲和的观感。</string>
+    <string name="setting_wear_font_flex_width">宽度</string>
+    <string name="setting_wear_font_flex_width_description">水平伸缩，从窄体到宽体（25–151）。100 为该字体的正常宽度。</string>
+    <string name="setting_wear_idle_auto_open">无播放时自动打开</string>
+    <string name="setting_wear_idle_auto_open_description">在你于没有音乐播放的情况下打开手表应用时，直接跳转到此屏幕。</string>
+    <string name="setting_wear_idle_button_action">无播放时的按钮</string>
+    <string name="setting_wear_paused_hold">暂停后保持应用活跃</string>
+    <string name="setting_wear_paused_hold_description">暂停后手表应用在表盘上保持可访问的时长，以便你通过抬腕而非重新打开来继续播放。设置的时间越长，后台服务运行的时间也越长。</string>
+    <string name="setting_wear_progress_gradient">在圆环中渐变显示调色板</string>
+    <string name="setting_wear_progress_gradient_description">使用多色相的颜色处理方式（互补色、三色、邻近色、双色调）时，实心圆环会依次渐变过三种颜色。关闭此项可得到单色圆环，同时在其他地方仍保留专辑调色板。</string>
+    <string name="setting_wear_rotary_action">旋转表冠 / 表圈</string>
+    <string name="setting_wear_source_icon_opacity">应用图标不透明度</string>
+    <string name="setting_wear_source_icon_scale">应用图标大小</string>
+    <string name="setting_wear_title_adaptive_contrast">调整标题颜色以提升对比度</string>
+    <string name="setting_wear_title_adaptive_contrast_description">当标题颜色与其后方的封面过于接近时，提亮或加深该颜色，同时保留其色相。只要标题保持表盘默认颜色，此设置就不起作用。</string>
+    <string name="setting_wear_title_color">标题文字颜色</string>
+    <string name="setting_wear_title_custom_color">标题自定义颜色</string>
+    <string name="setting_wear_title_font_italic">标题斜体</string>
+    <string name="setting_wear_title_font_opacity">标题不透明度</string>
+    <string name="setting_wear_title_font_scale">标题大小</string>
+    <string name="setting_wear_title_font_tracking">标题字间距</string>
+    <string name="setting_wear_title_font_weight">标题字重</string>
+    <string name="setting_wear_typography_opacity_description">百分比（20–100）。100 保留表盘自身的不透明度</string>
+    <string name="setting_wear_typography_scale_description">表盘自身大小的百分比（70–140）。100 保留每种版面设计的大小</string>
+    <string name="setting_wear_typography_tracking_description">字母之间的额外间距，以百分之一 em 为单位（−5 至 20）。0 保留字体自身的间距</string>
+    <string name="setting_wear_typography_weight_description">1–1000。400 为表盘的正常字重；数值越高越粗。对于 Google Sans Flex，这是该字体自身的字重轴</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="settings_search_clear">清除搜索</string>
+    <string name="settings_search_hint">搜索设置</string>
+    <string name="settings_search_no_results">没有匹配的设置。</string>
+    <string name="settings_search_prompt">按名称搜索「设置」与「手表外观」中的所有设置。</string>
+    <string name="settings_search_title">搜索设置</string>
+    <string name="tutorial_quick_panel_desc">双击正在播放屏幕中央可打开一个有四个位置的面板——三个圆形按钮和下方一整行。默认情况下，这些位置会镜像播放中应用在其自身通知中显示的按钮，因此你能获得它真正的喜欢、随机播放和重复控制。可在手机的「操作」中为每个位置分配任意操作，或将其设为「无」以隐藏它。</string>
+    <string name="tutorial_quick_panel_title">快捷操作面板</string>
+    <string name="tutorial_shortcuts_desc">保存来自 Spotify、YouTube Music、Apple Music、TIDAL、Deezer、Amazon Music 或 SoundCloud 的曲目、专辑、混音或播放列表链接，然后将其分配给任意按键、手势或面板位置。最快的方式是直接从流媒体应用将链接分享给 Svartifoss；你也可以粘贴已复制的链接或手动输入。无需账号或登录——手表会请求手机开始播放，因此快捷方式会直接播放，而不只是打开应用。</string>
+    <string name="tutorial_shortcuts_title">流媒体快捷方式</string>
+    <string name="update_install_notification_failed">安装失败。请在设置中允许来自 Svartifoss 的安装，然后重试。</string>
+    <string name="update_install_notification_tap">点按以安装新版本</string>
+    <string name="update_install_notification_title">Svartifoss 更新</string>
+    <string name="watch_section_typography">文字</string>
+    <string name="watch_section_typography_description">选择字体，并独立设置标题、艺术家和应用图标的样式。</string>
+    <string name="wear_clock_font_follow">跟随标题字体</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">窄体全大写展示字体——海报风格，适合长标题</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">手写连笔字体——随性且个性化</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Google Sans 的可变版本，可调整宽度、光学尺寸、深浅度和圆润度——解锁下方的轴控件。</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">方正科幻展示字体——粗犷而未来感十足</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">高对比度编辑体衬线字体——杂志质感</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">带有独特细节的技术几何无衬线字体</string>
+    <string name="wear_idle_action_menu">操作菜单</string>
+    <string name="wear_idle_action_none">无按钮</string>
+    <string name="wear_idle_action_queue">最近播放</string>
+    <string name="wear_idle_action_resume">恢复上次的应用</string>
+    <string name="wear_idle_action_search">搜索</string>
+    <string name="wear_idle_action_shortcuts">播放列表快捷方式</string>
+    <string name="wear_idle_auto_open_none">停留在播放器</string>
+    <string name="wear_paused_hold_15">15 分钟</string>
+    <string name="wear_paused_hold_30">30 分钟</string>
+    <string name="wear_paused_hold_5">5 分钟</string>
+    <string name="wear_paused_hold_60">1 小时</string>
+    <string name="wear_paused_hold_always">直到播放结束</string>
+    <string name="wear_paused_hold_off">不保持</string>
+    <string name="wear_rotary_action_off">不执行任何操作</string>
+    <string name="wear_rotary_action_seek">拖动曲目进度</string>
+    <string name="wear_rotary_action_volume">更改音量</string>
+    <string name="wear_title_color_face_default">表盘默认（按设计）</string>
+
+    <string-array name="wear_center_long_press_entries">
+        <item>更换表盘</item>
+        <item>打开队列</item>
+        <item>无</item>
+    </string-array>
+    <string-array name="wear_color_modifier_entries">
+        <item>无</item>
+        <item>鲜艳</item>
+        <item>柔和</item>
+        <item>暖色</item>
+        <item>冷色</item>
+    </string-array>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>圆角</item>
+        <item>方形</item>
+        <item>Squircle</item>
+        <item>圆形</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>已禁用</item>
+        <item>显示音乐表盘图标（仅限 Wear 3.0）</item>
+        <item>打开 Svartifoss</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
 </resources>

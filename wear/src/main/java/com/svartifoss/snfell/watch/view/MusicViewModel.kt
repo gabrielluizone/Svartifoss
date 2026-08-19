@@ -18,6 +18,7 @@ import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
+import com.svartifoss.snfell.watch.communication.PhoneUriOpener
 import com.svartifoss.snfell.watch.communication.WatchInfoSender
 import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.config.PreferencesBus
@@ -105,7 +106,6 @@ class MusicViewModel @Inject constructor(
     val openActionsMenu = SingleLiveEvent<Unit>()
     val openPlaybackQueueScreen = SingleLiveEvent<Unit>()
     val openStreamingShortcutsMenu = SingleLiveEvent<Unit>()
-    val openUriOnPhone = SingleLiveEvent<String>()
     val openVoiceSearch = SingleLiveEvent<Unit>()
     val closeApp = SingleLiveEvent<Unit>()
 
@@ -127,7 +127,9 @@ class MusicViewModel @Inject constructor(
         closeActionsMenu.postValue(Unit)
 
         action.remoteUri?.takeIf(String::isNotBlank)?.let {
-            openUriOnPhone.value = it
+            // Registered, not opened. The phone reports back once its silent routes have
+            // had their turn; opening here would foreground the app before they even ran.
+            PhoneUriOpener.requestOpenAfterPhoneTries(application, it)
             viewModelScope.launchWithErrorHandling(application, musicState) {
                 phoneConnection.executeMenuAction(index)
             }
@@ -158,7 +160,9 @@ class MusicViewModel @Inject constructor(
         closeActionsMenu.postValue(Unit)
 
         if (listId == CustomLists.PLAYLIST_SHORTCUTS) {
-            openUriOnPhone.value = itemId
+            // Registered, not opened. The phone reports back once its silent routes have
+            // had their turn; opening here would foreground the app before they even ran.
+            PhoneUriOpener.requestOpenAfterPhoneTries(application, itemId)
             viewModelScope.launchWithErrorHandling(application, musicState) {
                 phoneConnection.executeCustomMenuAction(listId, itemId)
             }
@@ -174,7 +178,9 @@ class MusicViewModel @Inject constructor(
         val action = currentButtonConfig.value?.getAction(buttonInfo) ?: return false
 
         action.remoteUri?.takeIf(String::isNotBlank)?.let {
-            openUriOnPhone.value = it
+            // Registered, not opened. The phone reports back once its silent routes have
+            // had their turn; opening here would foreground the app before they even ran.
+            PhoneUriOpener.requestOpenAfterPhoneTries(application, it)
             viewModelScope.launchWithErrorHandling(application, musicState) {
                 phoneConnection.executeButtonAction(buttonInfo)
             }

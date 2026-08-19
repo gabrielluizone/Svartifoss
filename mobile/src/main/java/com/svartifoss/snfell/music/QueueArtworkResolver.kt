@@ -21,6 +21,7 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.Locale
 
 /**
  * Finds the cover for one playback-queue entry.
@@ -186,6 +187,25 @@ object QueueArtworkResolver {
                     uri.scheme.equals("https", ignoreCase = true)
 
     /**
+     * The *now-playing* cover fetched from a remote URL, for players that publish the player's own
+     * artwork only as an address.
+     *
+     * Same download, disk cache, size rewrite and border trim a queue row gets - deliberately the
+     * same code rather than a second copy, since it is the same problem: `MusicService` hands the
+     * watch a bitmap that gets scaled up to the watch's display size, so a source smaller than that
+     * is visibly soft, and SoundCloud's default `large` rendition is 100px square. See
+     * [sizedArtworkUrl] for how the size is raised before the request goes out.
+     *
+     * Returns null for anything that is not an http(s) address, so a caller can pass whatever the
+     * metadata held without pre-checking. Honouring the same preference as the queue is the
+     * caller's job - [remoteArtworkEnabled].
+     */
+    suspend fun remoteArtworkForUri(context: Context, uri: Uri, targetPx: Int): Bitmap? {
+        if (!isRemote(uri)) return null
+        return remoteArtwork(context, uri, targetPx)?.let(BitmapBorderTrim::trim)
+    }
+
+    /**
      * [url] rewritten to ask its image host for something close to [targetPx], or [url] unchanged
      * when it is not a host whose URL encodes the size.
      *
@@ -226,6 +246,32 @@ object QueueArtworkResolver {
             }
         }
 
+        // SoundCloud encodes the size as a trailing token on the filename. Its default is `large`,
+        // which is only 100x100 - the reason its covers look soft everywhere outside its own app.
+        // `original` is deliberately never requested: it is the one token that keeps the source
+        // extension (.png), so swapping it in blind produces a 404 on a .jpg cover, and it is
+        // unbounded in size, which is the wrong trade for a Bluetooth hop to a watch.
+        if (path.contains("sndcdn.com", ignoreCase = true)) {
+            val dot = path.lastIndexOf('.')
+            val dash = if (dot > 0) path.lastIndexOf('-', dot) else -1
+            if (dash > 0) {
+                val current = path.substring(dash + 1, dot)
+                val currentPx = SOUNDCLOUD_SIZES[current.lowercase(Locale.US)]
+                // Rewrite only when what the URL already asks for is too small. Anything that
+                // clears the target is left exactly as the app wrote it - both because a larger
+                // download would buy nothing visible, and because that rule is what keeps this
+                // from ever downgrading (the ytimg branch below states the same reasoning).
+                if (currentPx != null && currentPx < targetPx) {
+                    val wanted = SOUNDCLOUD_UPGRADE_TARGETS
+                            .firstOrNull { (SOUNDCLOUD_SIZES[it] ?: 0) >= targetPx }
+                            ?: SOUNDCLOUD_LARGEST
+                    if ((SOUNDCLOUD_SIZES[wanted] ?: 0) > currentPx) {
+                        return path.substring(0, dash + 1) + wanted + ".jpg" + query
+                    }
+                }
+            }
+        }
+
         // YouTube's static thumbnail host encodes the size in the filename instead. Only ever
         // upgraded, never downgraded: a caller asking for a small thumbnail can shrink a large
         // source, but nothing can recover detail from a 120px one.
@@ -243,6 +289,37 @@ object QueueArtworkResolver {
         }
         return url
     }
+
+    /**
+     * Every SoundCloud artwork size token and the square pixel size it serves, smallest first.
+     *
+     * Used to read what a URL *currently* asks for, so an already-large cover is never downgraded.
+     * `original` is absent on purpose - see the rewrite site. Every token here resolves to a
+     * `.jpg`, which is what makes substituting one for another safe regardless of the source
+     * extension.
+     */
+    private val SOUNDCLOUD_SIZES = linkedMapOf(
+            "mini" to 16,
+            "tiny" to 20,
+            "small" to 32,
+            "badge" to 47,
+            "t67x67" to 67,
+            "large" to 100,
+            "t300x300" to 300,
+            "crop" to 400,
+            "t500x500" to 500)
+
+    /**
+     * The subset worth *asking* for, smallest first.
+     *
+     * `crop` is deliberately not here even though it is larger than `t300x300`: it is a cropped
+     * 400x400 rendition, not a plain resize, so choosing it to satisfy a size request would change
+     * how the cover is framed. The `tNxN` renditions keep the artwork's own framing, which is the
+     * only thing that makes one token a safe substitute for another.
+     */
+    private val SOUNDCLOUD_UPGRADE_TARGETS = listOf("large", "t300x300", "t500x500")
+
+    private const val SOUNDCLOUD_LARGEST = "t500x500"
 
     /** Hosts whose URLs carry the requested size as `=w<N>-h<N>` options. */
     private val GOOGLE_IMAGE_HOSTS = listOf("googleusercontent.com", "ggpht.com")

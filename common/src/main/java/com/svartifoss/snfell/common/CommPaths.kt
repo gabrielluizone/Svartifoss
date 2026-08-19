@@ -78,6 +78,30 @@ interface CommPaths {
          */
         const val MESSAGE_FORCE_STOP_WATCH_APP = "/IdleMessages/ForceStopApp"
 
+        /**
+         * Phone -> watch: the verdict on a streaming shortcut the watch just asked the phone to
+         * play. Payload is UTF-8: **empty** means "playback started, do not open anything";
+         * anything else is the `targetPackage|uri` the watch should open on the phone.
+         *
+         * This exists because the visible open is the *last* resort, and only the watch can
+         * perform it - `RemoteActivityHelper` is the sanctioned bridge, while the phone's own
+         * playback service is barred from starting an Activity by background-start rules. The
+         * watch used to fire that open unconditionally, in parallel with sending the action, so
+         * `MusicService.playDeepLink`'s whole silent ladder (direct command, then the
+         * MediaBrowser route) ran while the app was already being brought to the foreground
+         * anyway. With the screen locked that is exactly the wrong outcome: the point of the
+         * browser route is that nothing visible happens at all.
+         *
+         * Same /IdleMessages prefix and reason as [MESSAGE_OPEN_VOICE_SEARCH] - the verdict has to
+         * arrive whether or not the watch UI is still up, since the menu closes on selection.
+         *
+         * A verdict is sent at every terminal point of `playDeepLink`, success included, so the
+         * watch can stop waiting rather than sit on a timeout. It is still only advisory: a watch
+         * that never hears one falls back to opening on its own (see `PhoneUriOpener`), which is
+         * what keeps a new watch working against a phone build from before this path existed.
+         */
+        const val MESSAGE_DEEP_LINK_VERDICT = "/IdleMessages/DeepLinkVerdict"
+
         /** Immediate MessageClient delivery of a preference snapshot (see WatchPreferenceMessage),
          *  complementing the durable /Settings DataItem. Own prefix so a dedicated manifest
          *  listener wakes the watch for it without entangling the idle-message handler. */

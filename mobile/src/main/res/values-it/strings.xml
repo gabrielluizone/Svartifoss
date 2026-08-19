@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">Wear OS non è supportato su questo dispositivo</string>
     <string name="setting_no_wearable_api_banner_description">Questo dispositivo non fornisce il componente Wear OS dei Servizi Google Play, di cui Svartifoss ha bisogno per comunicare con un orologio. L\'associazione non aiuterà — l\'app del telefono non può raggiungere un orologio qui. Tutto quanto segue viene comunque salvato e verrà applicato se installi Svartifoss su un dispositivo che lo supporta.</string>
     <string name="setting_no_watch_banner">Nessun orologio connesso</string>
@@ -937,6 +939,7 @@
 
     <string name="action_play_liked_songs">Riproduci canzoni piaciute (YT Music)</string>
     <string name="action_play_spotify_liked_songs">Riproduci canzoni piaciute (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Riproduci canzoni piaciute (SoundCloud)</string>
     <string name="action_my_playlists">Scorciatoie streaming</string>
     <string name="action_play_specific_playlist">Apri scorciatoia streaming</string>
     <string name="action_choose_or_add_streaming_shortcut">Scegli o aggiungi una scorciatoia streaming</string>
@@ -1373,6 +1376,7 @@
         <item>Bahasa Indonesia</item>
         <item>فارسی</item>
         <item>简体中文</item>
+        <item>Íslenska</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>

@@ -78,6 +78,66 @@ class SizedArtworkUrlTest {
     }
 
     @Test
+    fun soundcloudDefaultSizeIsUpgradedFromItsHundredPixelDefault() {
+        // `large` is only 100x100 and is what SoundCloud publishes by default - the reason its
+        // covers look soft everywhere outside its own app.
+        assertEquals(
+                "https://i1.sndcdn.com/artworks-000217808044-gmxt8y-t500x500.jpg",
+                QueueArtworkResolver.sizedArtworkUrl(
+                        "https://i1.sndcdn.com/artworks-000217808044-gmxt8y-large.jpg", 320))
+    }
+
+    @Test
+    fun soundcloudPicksTheCheapestTokenThatClearsTheTarget() {
+        assertEquals(
+                "https://i1.sndcdn.com/artworks-abc-t300x300.jpg",
+                QueueArtworkResolver.sizedArtworkUrl(
+                        "https://i1.sndcdn.com/artworks-abc-small.jpg", 300))
+    }
+
+    @Test
+    fun soundcloudSmallRequestIsAlreadySatisfiedByTheDefaultToken() {
+        // The 30dp circular thumbnail the normal queue styles draw asks for 96px, which `large`
+        // (100) already clears - so there is nothing to upgrade and no reason to spend a bigger
+        // download on it. Only the Cover styles, which ask for 320, move off the default.
+        val large = "https://i1.sndcdn.com/artworks-abc-large.jpg"
+        assertEquals(large, QueueArtworkResolver.sizedArtworkUrl(large, 96))
+    }
+
+    @Test
+    fun soundcloudCropIsNeverChosenBecauseItReframesTheCover() {
+        // `crop` is a cropped 400x400 rendition, not a resize. It clears a 320px target, but
+        // choosing it would change the artwork's framing, so t500x500 is taken instead.
+        assertEquals(
+                "https://i1.sndcdn.com/artworks-abc-t500x500.jpg",
+                QueueArtworkResolver.sizedArtworkUrl(
+                        "https://i1.sndcdn.com/artworks-abc-large.jpg", 320))
+        // ...and a cover already served as `crop` is left alone rather than downgraded.
+        val crop = "https://i1.sndcdn.com/artworks-abc-crop.jpg"
+        assertEquals(crop, QueueArtworkResolver.sizedArtworkUrl(crop, 320))
+    }
+
+    @Test
+    fun soundcloudNeverDowngradesAnAlreadyLargerCover() {
+        val big = "https://i1.sndcdn.com/artworks-abc-t500x500.jpg"
+        assertEquals(big, QueueArtworkResolver.sizedArtworkUrl(big, 96))
+    }
+
+    @Test
+    fun soundcloudOriginalIsLeftAloneBecauseItOwnsItsExtension() {
+        // `original` is the one token that keeps the source extension, so rewriting to or from it
+        // by assuming .jpg is how a working cover turns into a 404.
+        val original = "https://i1.sndcdn.com/artworks-abc-original.png"
+        assertEquals(original, QueueArtworkResolver.sizedArtworkUrl(original, 320))
+    }
+
+    @Test
+    fun anUnknownSoundcloudFilenameIsLeftUntouched() {
+        val other = "https://i1.sndcdn.com/artworks-abc-somethingelse.jpg"
+        assertEquals(other, QueueArtworkResolver.sizedArtworkUrl(other, 320))
+    }
+
+    @Test
     fun theDefaultTargetCoversTheLargestThumbnailTheQueueSends() {
         // 320 is what a Cover queue style asks for; a smaller default would silently under-fetch.
         assertEquals(320, QueueArtworkResolver.DEFAULT_TARGET_PX)
