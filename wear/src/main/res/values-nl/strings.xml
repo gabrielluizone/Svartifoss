@@ -14,6 +14,16 @@
 
     <string name="idle_nothing_playing">Niets speelt af</string>
     <string name="idle_hint">Speel iets af op je telefoon</string>
+    <string name="idle_hint_resume">Tik om de laatste app te hervatten</string>
+    <string name="idle_hint_shortcuts">Tik voor je snelkoppelingen</string>
+    <string name="idle_hint_menu">Tik om het menu te openen</string>
+    <string name="idle_hint_search">Tik om te zoeken</string>
+    <string name="idle_hint_queue">Tik voor recent afgespeeld</string>
+    <string name="idle_resume">Afspelen hervatten</string>
+    <string name="idle_action_shortcuts">Snelkoppelingen openen</string>
+    <string name="idle_action_menu">Menu openen</string>
+    <string name="idle_action_search">Zoeken</string>
+    <string name="idle_action_queue">Recent afgespeeld openen</string>
 
     <string name="no_phone">Geen telefoon verbonden</string>
     <string name="playback_stopped">Gestopt</string>
@@ -34,6 +44,9 @@
     <string name="queue_empty">Geen wachtrij beschikbaar</string>
     <string name="queue_now_playing">Speelt nu af</string>
     <string name="queue_load_more">Meer laden</string>
+    <string name="queue_history_fallback">Onlangs afgespeeld</string>
+    <string name="queue_history_fallback_reason">Deze app deelt zijn wachtrij niet</string>
+    <string name="chat_face_today">Vandaag</string>
 
     <string name="hint_title">Zo werkt het</string>
     <string name="hint_edges">Randen — tik voor de getoonde acties</string>
@@ -65,6 +78,8 @@
     <string name="update_install_title">Svartifoss-update</string>
     <string name="update_install_tap">Tik om de nieuwe versie te installeren</string>
     <string name="update_install_failed">Installatie mislukt. Sta installaties van Svartifoss toe in de horloge-instellingen en probeer het opnieuw vanaf de telefoon.</string>
+    <string name="face_picker_title">Wijzerplaat</string>
+    <string name="face_picker_offline">Telefoon niet verbonden — deze wijzerplaat wordt op het horloge toegepast, maar de instelling blijft op de telefoon staan</string>
     <string name="face_picker_section_builtin">Ingebouwde wijzerplaten</string>
     <string name="face_picker_section_custom">Mijn thema\'s</string>
     <string name="face_picker_custom_base">Gebaseerd op %1$s</string>

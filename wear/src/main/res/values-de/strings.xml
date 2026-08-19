@@ -34,6 +34,8 @@
     <string name="queue_empty">Keine Warteschlange verfügbar</string>
     <string name="queue_now_playing">Wird abgespielt</string>
     <string name="queue_load_more">Mehr laden</string>
+    <string name="queue_history_fallback">Zuletzt gespielt</string>
+    <string name="queue_history_fallback_reason">Diese App teilt ihre Warteschlange nicht</string>
 
     <string name="hint_title">Bedienung</string>
     <string name="hint_edges">Ränder — tippen für die angezeigten Aktionen</string>

@@ -39,6 +39,11 @@ class IdleMessageListener : WearableListenerService() {
             CommPaths.MESSAGE_FORCE_STOP_WATCH_APP -> {
                 WatchAppShutdown.shutdown(this, force = true)
             }
+            CommPaths.MESSAGE_DEEP_LINK_VERDICT -> {
+                // Handled here rather than in MusicViewModel because the menu closes the moment a
+                // shortcut is picked, so the verdict routinely lands with no UI left to receive it.
+                PhoneUriOpener.onVerdict(this, messageEvent.data)
+            }
         }
     }
 

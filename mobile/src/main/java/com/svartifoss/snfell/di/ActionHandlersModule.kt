@@ -8,6 +8,7 @@ import com.svartifoss.snfell.actions.OpenLibraryAction
 import com.svartifoss.snfell.actions.OpenSearchHistoryAction
 import com.svartifoss.snfell.actions.PlayLikedSongsAction
 import com.svartifoss.snfell.actions.PlayLikedSongsShuffledAction
+import com.svartifoss.snfell.actions.PlaySoundCloudLikesAction
 import com.svartifoss.snfell.actions.PlaySpotifyLikedSongsAction
 import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.actions.SearchAction
@@ -153,6 +154,11 @@ abstract class ActionHandlersModule {
     @IntoMap
     @ClassKey(PlaySpotifyLikedSongsAction::class)
     abstract fun bindPlaySpotifyLikedSongsActionsHandler(handler: PlaySpotifyLikedSongsAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(PlaySoundCloudLikesAction::class)
+    abstract fun bindPlaySoundCloudLikesActionsHandler(handler: PlaySoundCloudLikesAction.Handler): ActionHandler<*>
 
     @Binds
     @IntoMap

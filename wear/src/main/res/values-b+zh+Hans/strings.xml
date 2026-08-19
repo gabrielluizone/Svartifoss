@@ -14,6 +14,16 @@
 
     <string name="idle_nothing_playing">没有正在播放</string>
     <string name="idle_hint">在手机上播放一些内容</string>
+    <string name="idle_hint_resume">点按以继续上次的应用</string>
+    <string name="idle_hint_shortcuts">点按查看你的快捷方式</string>
+    <string name="idle_hint_menu">点按打开菜单</string>
+    <string name="idle_hint_search">点按搜索</string>
+    <string name="idle_hint_queue">点按查看最近播放</string>
+    <string name="idle_resume">继续播放</string>
+    <string name="idle_action_shortcuts">打开快捷方式</string>
+    <string name="idle_action_menu">打开菜单</string>
+    <string name="idle_action_search">搜索</string>
+    <string name="idle_action_queue">打开最近播放</string>
 
     <string name="no_phone">未连接手机</string>
     <string name="playback_stopped">已停止</string>
@@ -34,6 +44,9 @@
     <string name="queue_empty">没有可用的队列</string>
     <string name="queue_now_playing">正在播放</string>
     <string name="queue_load_more">加载更多</string>
+    <string name="queue_history_fallback">最近播放</string>
+    <string name="queue_history_fallback_reason">此应用不共享播放队列</string>
+    <string name="chat_face_today">今天</string>
 
     <string name="hint_title">使用方法</string>
     <string name="hint_edges">边缘 — 点按以执行显示的操作</string>
@@ -65,6 +78,8 @@
     <string name="update_install_title">Svartifoss 更新</string>
     <string name="update_install_tap">点按以安装新版本</string>
     <string name="update_install_failed">安装失败。请在手表设置中允许来自 Svartifoss 的安装，然后从手机重试。</string>
+    <string name="face_picker_title">表盘</string>
+    <string name="face_picker_offline">未连接手机——此表盘将应用到手表上，但设置仍会保存在手机中</string>
     <string name="face_picker_section_builtin">内置表盘</string>
     <string name="face_picker_section_custom">我的主题</string>
     <string name="face_picker_custom_base">基于 %1$s</string>

@@ -1521,6 +1521,7 @@
         <item>Bahasa Indonesia</item>
         <item>فارسی</item>
         <item>简体中文</item>
+        <item>Íslenska</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1537,6 +1538,7 @@
         <item>id</item>
         <item>fa</item>
         <item>zh-Hans</item>
+        <item>is</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -1610,6 +1612,7 @@
 
     <string name="action_play_liked_songs">Play liked songs (YT Music)</string>
     <string name="action_play_spotify_liked_songs">Play liked songs (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Play liked tracks (SoundCloud)</string>
     <string name="action_my_playlists">Streaming shortcuts</string>
     <string name="action_play_specific_playlist">Open streaming shortcut</string>
     <string name="action_choose_or_add_streaming_shortcut">Choose or add a streaming shortcut</string>

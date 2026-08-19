@@ -15,7 +15,15 @@
     <string name="idle_nothing_playing">Nada em reprodução</string>
     <string name="idle_hint">Reproduz algo no telemóvel</string>
     <string name="idle_hint_resume">Toque para retomar a última app</string>
+    <string name="idle_hint_shortcuts">Toque para os teus atalhos</string>
+    <string name="idle_hint_menu">Toque para abrir o menu</string>
+    <string name="idle_hint_search">Toque para pesquisar</string>
+    <string name="idle_hint_queue">Toque para reproduzidas recentemente</string>
     <string name="idle_resume">Retomar reprodução</string>
+    <string name="idle_action_shortcuts">Abrir atalhos</string>
+    <string name="idle_action_menu">Abrir menu</string>
+    <string name="idle_action_search">Pesquisar</string>
+    <string name="idle_action_queue">Abrir reproduzidas recentemente</string>
 
     <string name="no_phone">Nenhum telemóvel ligado</string>
     <string name="playback_stopped">Parado</string>
@@ -36,6 +44,9 @@
     <string name="queue_empty">Nenhuma fila disponível</string>
     <string name="queue_now_playing">Em reprodução</string>
     <string name="queue_load_more">Carregar mais</string>
+    <string name="queue_history_fallback">Reproduzidas recentemente</string>
+    <string name="queue_history_fallback_reason">Esta aplicação não partilha a fila</string>
+    <string name="chat_face_today">Hoje</string>
 
     <string name="hint_title">Como usar</string>
     <string name="hint_edges">Extremidades — toca para as ações mostradas</string>
@@ -67,6 +78,8 @@
     <string name="update_install_title">Atualização do Svartifoss</string>
     <string name="update_install_tap">Toca para instalar a nova versão</string>
     <string name="update_install_failed">Falha na instalação. Permite instalações do Svartifoss nas definições do relógio e tenta novamente a partir do telemóvel.</string>
+    <string name="face_picker_title">Mostrador</string>
+    <string name="face_picker_offline">Telemóvel não ligado — este mostrador vai ser aplicado no relógio, mas a definição fica guardada no telemóvel</string>
     <string name="face_picker_section_builtin">Mostradores integrados</string>
     <string name="face_picker_section_custom">Os meus temas</string>
     <string name="face_picker_custom_base">Baseado em %1$s</string>

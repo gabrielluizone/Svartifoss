@@ -145,8 +145,17 @@ class OpenPlaylistAction : SelectableAction {
                 }
             } else if (service.recentTrackHistory.isNotEmpty()) {
                 // The playing app doesn't expose a live queue (common on Android 10+) - fall
-                // back to a locally tracked list of recently played tracks instead.
+                // back to a locally tracked list of recently played tracks instead. The watch
+                // labels this as "Recently played" rather than rendering it as a queue: these are
+                // tracks that already played, they carry no artwork (a history entry is only
+                // artist/title text), and tapping one re-searches for it instead of jumping.
                 listId = CustomLists.HISTORY
+                // The live-queue branch logs why covers are missing; this branch answers the
+                // question before it, "why are these not the tracks I'm about to hear".
+                Timber.i(
+                        "Queue unavailable from %s - sending %d recently played tracks instead",
+                        service.currentMediaController?.packageName,
+                        service.recentTrackHistory.size)
                 service.recentTrackHistory.mapIndexed { index, entry ->
                     CustomList.ListEntry.newBuilder()
                             .setEntryId(index.toString())

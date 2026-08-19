@@ -57,6 +57,11 @@
     <string name="queue_empty">No queue available</string>
     <string name="queue_now_playing">Now playing</string>
     <string name="queue_load_more">Load more</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Recently played</string>
+    <string name="queue_history_fallback_reason">This app doesn\'t share its queue</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Today</string>
 

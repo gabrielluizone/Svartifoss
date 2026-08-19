@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">Wear OS tidak didukung di perangkat ini</string>
     <string name="setting_no_wearable_api_banner_description">Perangkat ini tidak menyediakan komponen Wear OS dari Google Play Services, yang dibutuhkan Svartifoss untuk berkomunikasi dengan jam tangan. Memasangkan tidak akan membantu — aplikasi ponsel tidak dapat menjangkau jam tangan di sini. Semua di bawah tetap tersimpan, dan akan berlaku jika Anda menginstal Svartifoss di perangkat yang mendukungnya.</string>
     <string name="setting_no_watch_banner">Tidak ada jam tangan terhubung</string>
@@ -936,6 +938,7 @@
 
     <string name="action_play_liked_songs">Putar lagu yang disukai (YT Music)</string>
     <string name="action_play_spotify_liked_songs">Putar lagu yang disukai (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Putar lagu yang disukai (SoundCloud)</string>
     <string name="action_my_playlists">Pintasan streaming</string>
     <string name="action_play_specific_playlist">Buka pintasan streaming</string>
     <string name="action_choose_or_add_streaming_shortcut">Pilih atau tambahkan pintasan streaming</string>
@@ -1106,4 +1109,281 @@
     </string-array>
     <string name="setting_wear_normal_color_multi">Gunakan palet warna</string>
     <string name="setting_wear_normal_color_multi_description">Aktif, layar memakai satu warna utama plus dua nada pendukung. Nonaktif, satu warna tunggal dipakai di mana-mana — warna albumnya sendiri, atau yang Anda pilih.</string>
+
+    <string name="action_open_library">Jelajahi pustaka</string>
+    <string name="category_idle">Saat tidak ada yang diputar</string>
+    <string name="category_wf_typography_artist">Artis</string>
+    <string name="category_wf_typography_flex">Sumbu Google Sans Flex</string>
+    <string name="category_wf_typography_font">Tipografi</string>
+    <string name="category_wf_typography_icon">Ikon aplikasi</string>
+    <string name="category_wf_typography_title">Judul</string>
+    <string name="error_library_empty">Tidak ada apa-apa di sini</string>
+    <string name="error_library_no_player">Putar sesuatu terlebih dahulu</string>
+    <string name="error_library_unavailable">Aplikasi ini tidak memiliki pustaka yang dapat dijelajahi</string>
+    <string name="face_reset_migration_clear_data_button">Hapus data aplikasi</string>
+    <string name="face_reset_migration_message">Anda memperbarui dari versi lama yang membuat semua wajah jam berbagi satu set pengaturan tampilan. Setiap wajah kini mengingat pengaturannya sendiri, jadi pengaturan lama Anda mungkin terlihat tidak cocok pada wajah yang belum pernah Anda sesuaikan langsung. Kami menyarankan untuk mengatur ulang semua wajah ke default barunya, atau menghapus data aplikasi untuk memulai sepenuhnya dari awal.</string>
+    <string name="face_reset_migration_reset_button">Atur ulang semua wajah</string>
+    <string name="face_reset_migration_title">Perbarui tampilan jam tangan Anda</string>
+    <string name="library_up">Kembali</string>
+    <string name="notification_access_banner_summary">Ketuk untuk memberikannya — kontrol pemutaran tetap tidak aktif hingga Anda melakukannya</string>
+    <string name="preview_chat_today">Hari ini</string>
+    <string name="quick_panel_link_summary">Ketuk dua kali di tengah layar jam tangan untuk membukanya. Ketuk di sini untuk mengatur empat slotnya di Aksi.</string>
+    <string name="setting_persistent_notification">Kelola notifikasi \"Svartifoss aktif\"</string>
+    <string name="setting_persistent_notification_description">Membuka pengaturan Android untuk notifikasi ini — bisukan, sembunyikan dari layar kunci, atau sesuaikan lainnya. Tidak dapat dinonaktifkan sepenuhnya: Android mewajibkan notifikasi yang berjalan selama layanan latar belakang yang berkomunikasi dengan jam tangan Anda masih aktif.</string>
+    <string name="setting_queue_local_artwork">Sampul antrean dari pustaka Anda</string>
+    <string name="setting_queue_local_artwork_denied">Akses media ditolak. Aktifkan di pengaturan Android untuk menampilkan sampul antrean lokal.</string>
+    <string name="setting_queue_local_artwork_description">Pemutar musik lokal menerbitkan sampul antrean sebagai referensi pustaka. Berikan akses media agar dapat ditampilkan di antrean jam tangan. Ini tidak melibatkan akses internet.</string>
+    <string name="setting_queue_local_artwork_granted">Akses media diberikan — sampul antrean lokal akan ditampilkan</string>
+    <string name="setting_queue_remote_artwork">Ambil sampul antrean secara online</string>
+    <string name="setting_queue_remote_artwork_description">Pemutar streaming menerbitkan sampul antrean sebagai tautan, bukan gambar. Unduh masing-masing sekali, disimpan di ponsel ini, untuk ditampilkan di antrean jam tangan. Hanya URL sampul yang sudah diterbitkan pemutar yang diminta — tidak ada data akun atau pribadi. Aktif secara default; nonaktifkan untuk menjaga antrean tetap sepenuhnya offline.</string>
+    <string name="setting_queue_remote_artwork_short_description">Aplikasi streaming (klien YouTube Music, Echo Music…) menerbitkan sampul antrean sebagai tautan, bukan gambar, jadi ini mengunduh dan menyimpannya dalam cache. Nonaktifkan untuk menjaga antrean tetap sepenuhnya offline — baris tersebut kemudian tidak menampilkan sampul sama sekali.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Sesuaikan warna artis untuk kontras</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Mencerahkan atau menggelapkan baris artis saat warna album terlalu dekat dengan sampul di belakangnya, sambil mempertahankan rona warnanya. Hanya mengukur strip tempat baris itu berada, bukan seluruh sampul.</string>
+    <string name="setting_wear_artist_font_italic">Artis miring</string>
+    <string name="setting_wear_artist_font_opacity">Opasitas artis</string>
+    <string name="setting_wear_artist_font_scale">Ukuran artis</string>
+    <string name="setting_wear_artist_font_tracking">Jarak antarhuruf artis</string>
+    <string name="setting_wear_artist_font_weight">Ketebalan artis</string>
+    <string name="setting_wear_carousel_card_shape">Bentuk kartu korsel</string>
+    <string name="setting_wear_center_long_press">Tekan lama di tengah</string>
+    <string name="setting_wear_clock_adaptive_contrast">Sesuaikan warna jam untuk kontras</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Mencerahkan atau menggelapkan jam saat warna album terlalu dekat dengan sampul di belakangnya, sambil mempertahankan rona warnanya. Hanya berlaku saat warna jam diatur ke Warna album.</string>
+    <string name="setting_wear_clock_font">Tipografi jam</string>
+    <string name="setting_wear_clock_font_italic">Jam miring</string>
+    <string name="setting_wear_clock_font_scale">Ukuran jam</string>
+    <string name="setting_wear_clock_font_tracking">Jarak antarhuruf jam</string>
+    <string name="setting_wear_clock_font_weight">Ketebalan jam</string>
+    <string name="setting_wear_color_hue_shift">Pergeseran warna</string>
+    <string name="setting_wear_color_hue_shift_description">Memutar palet album di sekitar roda warna, dalam derajat (0–359). Setiap perlakuan mempertahankan warna utamanya pada rona asli album, jadi inilah yang bervariasi. 0 menggunakan warna album apa adanya; warna Normal tetap tidak pernah digeser.</string>
+    <string name="setting_wear_color_modifier">Corak</string>
+    <string name="setting_wear_color_modifier_description">Menyesuaikan seluruh palet tanpa mengubah cara penurunannya — berfungsi dengan setiap perlakuan warna</string>
+    <string name="setting_wear_flex_axes_hint">Pengaturan ini secara khusus menyempurnakan Google Sans Flex — pilih di atas untuk menggunakannya. Ketebalan dan kemiringan judul serta artis di atas sudah mengatur sumbu ketebalan (wght) dan kemiringan (slnt) miliknya sendiri; empat kontrol di bawah berlaku untuk seluruh wajah.</string>
+    <string name="setting_wear_font_all_screens">Gunakan tipografi di mana saja</string>
+    <string name="setting_wear_font_all_screens_description">Menerapkan tipografi yang dipilih ke menu, antrean, dan jam pada wajah jam juga, tidak hanya judul dan artis lagu. Tipografi tampilan dan tulisan tangan bisa lebih sulit dibaca dalam daftar.</string>
+    <string name="setting_wear_font_flex_grade">Gradasi</string>
+    <string name="setting_wear_font_flex_grade_description">Menggeser ketebalan sedikit tanpa mengubah tata letak (0–100) — cara halus untuk meningkatkan kontras pada layar gelap.</string>
+    <string name="setting_wear_font_flex_hint_title">Tentang kontrol ini</string>
+    <string name="setting_wear_font_flex_optical_size">Ukuran optis</string>
+    <string name="setting_wear_font_flex_optical_size_description">Menyesuaikan detail guratan untuk ukuran efektif teks (6–144). Nilai lebih rendah cocok untuk teks kecil; nilai lebih tinggi cocok untuk teks tampilan besar.</string>
+    <string name="setting_wear_font_flex_roundness">Kebulatan</string>
+    <string name="setting_wear_font_flex_roundness_description">Memadukan ujung guratan dari tajam (0) hingga bulat sepenuhnya (100) untuk kesan yang lebih ramah.</string>
+    <string name="setting_wear_font_flex_width">Lebar</string>
+    <string name="setting_wear_font_flex_width_description">Peregangan horizontal, dari sempit hingga lebar (25–151). 100 adalah lebar normal tipografi ini.</string>
+    <string name="setting_wear_idle_auto_open">Buka saat tidak ada yang diputar</string>
+    <string name="setting_wear_idle_auto_open_description">Langsung menuju layar ini saat Anda membuka aplikasi jam tangan tanpa musik yang diputar.</string>
+    <string name="setting_wear_idle_button_action">Tombol saat tidak ada pemutaran</string>
+    <string name="setting_wear_paused_hold">Tetap aktifkan aplikasi setelah dijeda</string>
+    <string name="setting_wear_paused_hold_description">Berapa lama aplikasi jam tangan tetap dapat dijangkau dari wajah jam setelah Anda menjeda, sehingga Anda dapat melanjutkan dengan mengangkat pergelangan tangan alih-alih membukanya lagi. Pengaturan yang lebih lama membuat layanan latar belakang tetap berjalan.</string>
+    <string name="setting_wear_progress_gradient">Padukan palet ke dalam cincin</string>
+    <string name="setting_wear_progress_gradient_description">Dengan perlakuan warna multi-rona (Komplementer, Triadik, Analog, Duoton), cincin solid akan memudar melalui ketiga warna. Nonaktifkan ini untuk cincin satu warna sambil tetap mempertahankan palet album di tempat lain.</string>
+    <string name="setting_wear_rotary_action">Mahkota putar / bezel</string>
+    <string name="setting_wear_source_icon_opacity">Opasitas ikon aplikasi</string>
+    <string name="setting_wear_source_icon_scale">Ukuran ikon aplikasi</string>
+    <string name="setting_wear_title_adaptive_contrast">Sesuaikan warna judul untuk kontras</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Mencerahkan atau menggelapkan judul saat warnanya terlalu dekat dengan sampul di belakangnya, sambil mempertahankan rona warnanya. Tidak berpengaruh selama judul tetap menggunakan warna default wajah jam.</string>
+    <string name="setting_wear_title_color">Warna teks judul</string>
+    <string name="setting_wear_title_custom_color">Warna kustom judul</string>
+    <string name="setting_wear_title_font_italic">Judul miring</string>
+    <string name="setting_wear_title_font_opacity">Opasitas judul</string>
+    <string name="setting_wear_title_font_scale">Ukuran judul</string>
+    <string name="setting_wear_title_font_tracking">Jarak antarhuruf judul</string>
+    <string name="setting_wear_title_font_weight">Ketebalan judul</string>
+    <string name="setting_wear_typography_opacity_description">Persentase (20–100). 100 mempertahankan opasitas asli wajah jam</string>
+    <string name="setting_wear_typography_scale_description">Persentase dari ukuran asli wajah jam (70–140). 100 mempertahankan ukuran yang dirancang untuk setiap tata letak</string>
+    <string name="setting_wear_typography_tracking_description">Jarak tambahan antarhuruf, dalam perseratus em (−5 hingga 20). 0 mempertahankan jarak asli tipografi</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 adalah ketebalan normal wajah jam; lebih tinggi berarti lebih tebal. Untuk Google Sans Flex, ini adalah sumbu ketebalan tipografi itu sendiri</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="settings_search_clear">Hapus pencarian</string>
+    <string name="settings_search_hint">Cari pengaturan</string>
+    <string name="settings_search_no_results">Tidak ada pengaturan yang cocok.</string>
+    <string name="settings_search_prompt">Cari semua pengaturan di Pengaturan dan Tampilan jam tangan berdasarkan nama.</string>
+    <string name="settings_search_title">Cari pengaturan</string>
+    <string name="tutorial_quick_panel_desc">Ketuk dua kali di tengah layar sedang diputar untuk membuka panel dengan empat slot — tiga tombol bundar dan satu baris lebar di bawahnya. Jika dibiarkan, slot-slot ini mencerminkan tombol yang ditampilkan aplikasi yang sedang diputar di notifikasinya sendiri, sehingga Anda mendapatkan kontrol suka, acak, dan ulang yang sebenarnya. Tetapkan aksi apa pun ke slot, atau atur ke \"Tidak ada\" untuk menyembunyikannya, di Aksi pada ponsel.</string>
+    <string name="tutorial_quick_panel_title">Panel aksi cepat</string>
+    <string name="tutorial_shortcuts_desc">Simpan tautan ke trek, album, mix, atau daftar putar dari Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music, atau SoundCloud, lalu tetapkan ke tombol, gestur, atau slot panel apa pun. Cara tercepat adalah membagikan tautan langsung ke Svartifoss dari aplikasi streaming; Anda juga dapat menempelkan tautan yang disalin atau mengetiknya. Tidak perlu akun atau login — jam tangan meminta ponsel untuk memulai pemutaran, sehingga pintasan langsung diputar alih-alih hanya membuka aplikasi.</string>
+    <string name="tutorial_shortcuts_title">Pintasan streaming</string>
+    <string name="update_install_notification_failed">Instalasi gagal. Izinkan instalasi dari Svartifoss di Pengaturan lalu coba lagi.</string>
+    <string name="update_install_notification_tap">Ketuk untuk memasang versi baru</string>
+    <string name="update_install_notification_title">Pembaruan Svartifoss</string>
+    <string name="watch_section_typography">Teks</string>
+    <string name="watch_section_typography_description">Pilih tipografi dan gaya judul, artis, dan ikon aplikasi secara independen.</string>
+    <string name="wear_clock_font_follow">Ikuti tipografi judul</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Tampilan huruf kapital sempit — seperti poster, cocok untuk judul panjang</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Tulisan tangan bersambung — santai dan personal</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Versi variabel dari Google Sans dengan lebar, ukuran optis, gradasi, dan kebulatan yang dapat disesuaikan — membuka kontrol sumbu di bawah.</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Tampilan fiksi ilmiah bersudut — tebal dan futuristik</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Serif editorial berkontras tinggi — nuansa majalah</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Sans geometris teknis dengan detail unik</string>
+    <string name="wear_idle_action_menu">Menu aksi</string>
+    <string name="wear_idle_action_none">Tanpa tombol</string>
+    <string name="wear_idle_action_queue">Baru diputar</string>
+    <string name="wear_idle_action_resume">Lanjutkan aplikasi terakhir</string>
+    <string name="wear_idle_action_search">Cari</string>
+    <string name="wear_idle_action_shortcuts">Pintasan daftar putar</string>
+    <string name="wear_idle_auto_open_none">Tetap di pemutar</string>
+    <string name="wear_paused_hold_15">15 menit</string>
+    <string name="wear_paused_hold_30">30 menit</string>
+    <string name="wear_paused_hold_5">5 menit</string>
+    <string name="wear_paused_hold_60">1 jam</string>
+    <string name="wear_paused_hold_always">Hingga pemutaran berakhir</string>
+    <string name="wear_paused_hold_off">Jangan pertahankan</string>
+    <string name="wear_rotary_action_off">Jangan lakukan apa-apa</string>
+    <string name="wear_rotary_action_seek">Geser maju/mundur trek</string>
+    <string name="wear_rotary_action_volume">Ubah volume</string>
+    <string name="wear_title_color_face_default">Default wajah jam (sesuai rancangan)</string>
+
+    <string-array name="wear_center_long_press_entries">
+        <item>Ganti wajah jam</item>
+        <item>Buka antrean</item>
+        <item>Tidak ada</item>
+    </string-array>
+    <string-array name="wear_color_modifier_entries">
+        <item>Tidak ada</item>
+        <item>Cerah</item>
+        <item>Pastel</item>
+        <item>Hangat</item>
+        <item>Sejuk</item>
+    </string-array>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Membulat</item>
+        <item>Kotak</item>
+        <item>Squircle</item>
+        <item>Lingkaran</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>Dinonaktifkan</item>
+        <item>Tampilkan ikon wajah jam musik (hanya untuk Wear 3.0)</item>
+        <item>Buka Svartifoss</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
 </resources>

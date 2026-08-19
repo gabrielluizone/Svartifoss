@@ -3,7 +3,6 @@ package com.svartifoss.snfell.music
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.util.Log
 import androidx.preference.PreferenceManager
 import com.google.android.gms.wearable.Asset
 import com.google.android.gms.wearable.PutDataRequest
@@ -15,6 +14,7 @@ import com.svartifoss.snfell.proto.CustomList
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import timber.log.Timber
 
 /** One user-defined playlist shortcut shown on the watch: display name + deep link to open. */
 data class PlaylistShortcut(val name: String, val link: String)
@@ -27,7 +27,6 @@ data class PlaylistShortcut(val name: String, val link: String)
  */
 object PlaylistShortcutStorage {
     private const val PREF_KEY = "playlist_shortcuts"
-    private const val TAG = "StreamingShortcuts"
 
     fun load(context: Context): List<PlaylistShortcut> {
         val raw = PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_KEY, null)
@@ -184,7 +183,7 @@ object PlaylistShortcutStorage {
         Wearable.getDataClient(appContext)
                 .putDataItem(createDataRequest(appContext, shortcuts))
                 .addOnFailureListener { error ->
-                    Log.w(TAG, "Could not cache streaming shortcuts on watch", error)
+                    Timber.w(error, "Could not cache streaming shortcuts on watch")
                 }
     }
 

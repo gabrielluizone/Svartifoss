@@ -44,6 +44,8 @@
     <string name="queue_empty">صف در دسترس نیست</string>
     <string name="queue_now_playing">در حال پخش</string>
     <string name="queue_load_more">بارگذاری بیشتر</string>
+    <string name="queue_history_fallback">اخیراً پخش‌شده</string>
+    <string name="queue_history_fallback_reason">این برنامه صف پخش خود را به اشتراک نمی‌گذارد</string>
     <string name="chat_face_today">امروز</string>
 
     <string name="face_picker_title">صفحهٔ ساعت</string>

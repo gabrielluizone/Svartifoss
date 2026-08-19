@@ -49,6 +49,8 @@
     <string name="queue_empty">Sem fila disponível</string>
     <string name="queue_now_playing">Tocando agora</string>
     <string name="queue_load_more">Carregar mais</string>
+    <string name="queue_history_fallback">Tocadas recentemente</string>
+    <string name="queue_history_fallback_reason">Este app não compartilha a fila</string>
     <string name="chat_face_today">Hoje</string>
 
     <string name="face_picker_title">Mostrador do relógio</string>

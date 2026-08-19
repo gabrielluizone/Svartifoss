@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">Wear OS در این دستگاه پشتیبانی نمی‌شود</string>
     <string name="setting_no_wearable_api_banner_description">این دستگاه فاقد مؤلفه Wear OS خدمات گوگل پلی است که Svartifoss برای ارتباط با ساعت به آن نیاز دارد. جفت‌سازی کمکی نمی‌کند — برنامه گوشی در اینجا نمی‌تواند به ساعتی دسترسی پیدا کند. همه موارد زیر همچنان ذخیره می‌شوند و در صورت نصب Svartifoss روی دستگاهی که از آن پشتیبانی می‌کند، اعمال خواهند شد.</string>
     <string name="setting_no_watch_banner">هیچ ساعتی متصل نیست</string>
@@ -937,6 +939,7 @@
 
     <string name="action_play_liked_songs">پخش آهنگ‌های پسندیده‌شده (YT Music)</string>
     <string name="action_play_spotify_liked_songs">پخش آهنگ‌های پسندیده‌شده (Spotify)</string>
+    <string name="action_play_soundcloud_likes">پخش آهنگ‌های پسندیده‌شده (SoundCloud)</string>
     <string name="action_my_playlists">میان‌برهای پخش</string>
     <string name="action_play_specific_playlist">باز کردن میان‌بر پخش</string>
     <string name="action_choose_or_add_streaming_shortcut">انتخاب یا افزودن یک میان‌بر پخش</string>
@@ -1373,6 +1376,7 @@
         <item>Bahasa Indonesia</item>
         <item>فارسی</item>
         <item>简体中文</item>
+        <item>Íslenska</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>

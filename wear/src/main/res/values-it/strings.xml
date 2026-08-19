@@ -44,6 +44,8 @@
     <string name="queue_empty">Nessuna coda disponibile</string>
     <string name="queue_now_playing">In riproduzione</string>
     <string name="queue_load_more">Carica altri</string>
+    <string name="queue_history_fallback">Riprodotti di recente</string>
+    <string name="queue_history_fallback_reason">Questa app non condivide la sua coda</string>
     <string name="chat_face_today">Oggi</string>
 
     <string name="face_picker_title">Quadrante orologio</string>

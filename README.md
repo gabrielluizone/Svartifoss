@@ -108,10 +108,10 @@ the fork.
   deletion, and recognized links across seven services. An optional,
   off-by-default toggle fetches each shortcut's real cover art once from the
   service's public preview data.
-- **13 languages**: English, Brazilian Portuguese, European Portuguese,
+- **14 languages**: English, Brazilian Portuguese, European Portuguese,
   German, Spanish, Italian, Dutch, Russian, Greek, Romanian, Indonesian,
-  Persian, and Simplified Chinese — covering both apps and their shared
-  strings.
+  Persian, Simplified Chinese, and Icelandic — covering both apps and their
+  shared strings.
 - A short in-app guide covering how to use Svartifoss on the watch.
 - **Built-in updates**: a notification when a new release is out (with an
   optional pre-release channel), and one-tap watch updates — the phone

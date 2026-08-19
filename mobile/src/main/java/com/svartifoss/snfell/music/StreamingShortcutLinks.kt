@@ -351,6 +351,11 @@ object StreamingShortcutLinks {
                 "sets" in pathParts -> StreamingContentType.PLAYLIST
                 uri.host?.equals("on.soundcloud.com", ignoreCase = true) == true ->
                     StreamingContentType.UNKNOWN
+                // The signed-in user's own collections (/you/likes, /you/library, ...). Without
+                // this they fall into the two-segment TRACK case below - a "track" whose URI names
+                // no track, which then gets offered to playFromUri as if it were one.
+                pathParts.firstOrNull()?.equals("you", ignoreCase = true) == true ->
+                    StreamingContentType.PLAYLIST
                 pathParts.size >= 2 -> StreamingContentType.TRACK
                 pathParts.size == 1 -> StreamingContentType.ARTIST
                 else -> StreamingContentType.UNKNOWN

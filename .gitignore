@@ -50,3 +50,7 @@ redesign/
 retromusic/
 echo/
 
+
+# Drafted release announcement and exported changelog kept at the repo root as scratch.
+RELEASE_*.md
+CHANGELOG.pdf

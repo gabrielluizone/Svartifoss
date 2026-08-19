@@ -564,6 +564,10 @@ private fun tonalColor(accent: Color, lightness: Float): Color {
  *
  * [items] is null while the queue request is still in flight (loading spinner); an empty list
  * means the phone answered but has no queue to show (empty message).
+ *
+ * [isHistoryFallback] says these rows are the recently-played list the phone substitutes when the
+ * playing app publishes no queue - see [QueueViewModel.isHistoryFallback] for why the screen must
+ * label that rather than render it as a queue.
  */
 @Composable
 fun QueueScreen(
@@ -579,6 +583,7 @@ fun QueueScreen(
         rowSize: QueueRowSize = QueueRowSize.NORMAL,
         canLoadMore: Boolean = false,
         loadingMore: Boolean = false,
+        isHistoryFallback: Boolean = false,
         onLoadMore: () -> Unit = {}
 ) {
     // A legacy cover_compact / cover_tall selection still names its own size; the standalone
@@ -606,6 +611,7 @@ fun QueueScreen(
                         effectiveRowSize,
                         canLoadMore,
                         loadingMore,
+                        isHistoryFallback,
                         onLoadMore
                 )
             }
@@ -626,6 +632,7 @@ private fun QueueList(
         rowSize: QueueRowSize,
         canLoadMore: Boolean,
         loadingMore: Boolean,
+        isHistoryFallback: Boolean,
         onLoadMore: () -> Unit
 ) {
     val listState = rememberScalingLazyListState()
@@ -679,6 +686,12 @@ private fun QueueList(
                     rotaryScrollableBehavior = RotaryScrollableDefaults.behavior(scrollableState = listState)
             ) {
                 item { QueueHeader(nowPlayingTitle, nowPlayingArtist, marquee = listAtRest) }
+                // Sits between the now-playing header and the rows, which is where a section
+                // caption belongs and, more to the point, is unmissable before the first row is
+                // read as "what plays next".
+                if (isHistoryFallback) {
+                    item(key = HISTORY_CAPTION_KEY) { QueueHistoryCaption(accentColor) }
+                }
                 items(items, key = { it.entryId }) { item ->
                     QueueRow(
                             item,
@@ -914,6 +927,44 @@ private fun QueueLoadingIndicator(accentColor: Color) {
  * when the row appears and disappears as pages arrive.
  */
 private const val LOAD_MORE_KEY = "__load_more__"
+
+/** Stable key for the recently-played caption, for the same reason [LOAD_MORE_KEY] has one. */
+private const val HISTORY_CAPTION_KEY = "__history_caption__"
+
+/**
+ * Caption marking the rows below as the recently-played fallback rather than the playing queue.
+ *
+ * Deliberately not a pill: it is not tappable and must not read as another entry in the list. The
+ * second line names the cause, because "Recently played" alone still leaves the user wondering why
+ * their queue is missing - the answer is the playing app, not this app failing to fetch it.
+ */
+@Composable
+private fun QueueHistoryCaption(accentColor: Color) {
+    Column(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 2.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+                text = stringResource(R.string.queue_history_fallback),
+                color = accentColor,
+                fontFamily = LocalWatchUiFontFamily.current,
+                fontWeight = FontWeight.Bold,
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+        )
+        Text(
+                text = stringResource(R.string.queue_history_fallback_reason),
+                color = Color.White.copy(alpha = 0.55f),
+                fontFamily = LocalWatchUiFontFamily.current,
+                fontSize = 11.sp,
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+        )
+    }
+}
 
 /**
  * Trailing row that fetches the next page of a queue longer than what was sent.

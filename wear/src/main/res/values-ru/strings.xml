@@ -44,6 +44,8 @@
     <string name="queue_empty">Очередь недоступна</string>
     <string name="queue_now_playing">Сейчас играет</string>
     <string name="queue_load_more">Загрузить ещё</string>
+    <string name="queue_history_fallback">Недавно прослушано</string>
+    <string name="queue_history_fallback_reason">Это приложение не передаёт свою очередь</string>
     <string name="chat_face_today">Сегодня</string>
 
     <string name="face_picker_title">Циферблат часов</string>

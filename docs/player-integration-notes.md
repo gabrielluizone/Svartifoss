@@ -93,6 +93,44 @@ than playing a single track. Good behaviour to expect from Media3 clients genera
    Applied so far to the play-from-search fallback; the natural next users are playback speed and
    anything else that would silently do nothing on a player that never implemented it.
 
+### SoundCloud
+
+Closed source, so this is read from the shipped manifest and dex rather than from code: the Wear OS
+build `2026.01.14-wear-beta` (versionCode 338064, package `com.soundcloud.android`, a `wear_standalone`
+APK from APKMirror). Read 2026-08-18.
+
+`com.soundcloud.android.wear.app.service.WearPlaybackService` is `exported="true"` and declares two
+intent filters — `androidx.media3.session.MediaLibraryService` and
+`androidx.media3.session.MediaSessionService` — **and no legacy
+`android.media.browse.MediaBrowserService` filter at all.** The dex references `onGetLibraryRoot`,
+`onGetChildren`, `onGetItem` and `onSearch`, so the library callback is genuinely implemented, not a
+stub, and there are `Likes` / `stream` / `history` strings consistent with a real browse tree.
+
+That missing legacy filter is the whole finding, and it cost four features at once. Service
+*discovery* goes through `queryIntentServices`, which matches on intent filters, so querying only
+the legacy action returned nothing for SoundCloud and `findBrowserService` reported "no browsable
+library" — taking search, library browsing and both `MediaBrowserPlayback` routes down with it, in
+an app that implements all of them. `MediaBrowserSearch.BROWSER_SERVICE_ACTIONS` now queries the two
+Media3 actions as well, legacy first so nothing that already resolved changes.
+
+Binding deliberately still goes through `MediaBrowserCompat`: it binds the *explicit* component with
+the legacy action, explicit binds ignore intent filters, and Media3's `MediaSessionService.onBind`
+answers that action with its legacy browser binder. So the old client talks to the modern service
+unchanged — no Media3 dependency is needed on our side.
+
+Two cautions. This was read from the **watch** APK while `MusicService` talks to the **phone** app;
+the phone build is very likely the same Media3 stack but that is inference, and
+`adb shell dumpsys package com.soundcloud.android | grep -iE "media3|MediaBrowserService"` settles it
+on a real device. And the generalisation matters more than SoundCloud: Media3 is the current
+standard and a Media3 app is under no obligation to advertise the legacy action, so any app of this
+generation was invisible to all four features for the same reason.
+
+Deep links seen in the same dex (watch app): `soundcloud://soundcloud//player`, `//collections`,
+`//collection?id={id}&name={name}`, `//mediaItem?id={id}&collectionId={collectionId}`, `//settings`,
+`//volume`. `users/me/likes/tracks` also appears, but that is their OAuth HTTP API, not something a
+remote can call. None of these are a substitute for a browsed id — the rule at the top of this file
+still holds, so "play my likes" should come from walking the library, not from a constructed id.
+
 ## Not investigated
 
 Spotify, Apple Music and Amazon Music are closed source, so none of the above can be established for

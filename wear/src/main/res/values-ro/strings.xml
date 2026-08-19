@@ -44,6 +44,8 @@
     <string name="queue_empty">Nicio coadă disponibilă</string>
     <string name="queue_now_playing">Se redă acum</string>
     <string name="queue_load_more">Încarcă mai multe</string>
+    <string name="queue_history_fallback">Redate recent</string>
+    <string name="queue_history_fallback_reason">Această aplicație nu își partajează coada</string>
     <string name="chat_face_today">Azi</string>
 
     <string name="face_picker_title">Cadranul ceasului</string>

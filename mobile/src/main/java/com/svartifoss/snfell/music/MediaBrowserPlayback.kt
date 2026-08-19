@@ -170,10 +170,19 @@ object MediaBrowserPlayback {
         // Artists: the URI only navigates, so a named search is the only thing that plays.
         listOf(Strategy.PlaySearch(query))
     } else {
-        // Precise entities: the URI is authoritative. A named search is deliberately NOT used as a
-        // fallback here - it could match a different item; the visible deep-link open covers the
-        // precise retry instead.
-        listOf(Strategy.PlayUri(uri))
+        // Precise entities: the URI is authoritative and always goes first, so an app that honours
+        // it plays exactly what was asked for and the search below never runs.
+        //
+        // The search *is* now a fallback, which it deliberately was not before. The old reasoning
+        // was that a name could match a different item while "the visible deep-link open covers
+        // the precise retry instead" - but that open is not the free fallback it was assumed to
+        // be: it foregrounds the target app on the phone, which is the one thing this route
+        // exists to avoid, and for a collection it does not even start playback. SoundCloud is
+        // the case that settled it - it accepts a track URI and silently ignores a playlist or
+        // /you/likes one, leaving `playFromUri` as the only command ever issued for a saved
+        // playlist and nothing playing at the end of it. A close match that plays beats a precise
+        // request that does nothing; an exact match still wins whenever the app supports one.
+        listOfNotNull(Strategy.PlayUri(uri), query?.let { Strategy.PlaySearch(it) })
     }
 
     private suspend fun awaitActivePlayback(

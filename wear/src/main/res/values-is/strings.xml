@@ -1,0 +1,87 @@
+<resources>
+    <string name="tile_description">Það sem er í spilun og spilunarstýringar</string>
+    <string name="complication_album_art_label">Plötuumslag í spilun</string>
+    <string name="complication_no_music">Ekkert í spilun</string>
+    <string name="tile_nothing_playing">Ekkert í spilun</string>
+    <string name="tile_open_app">Opna Svartifoss</string>
+    <string name="tile_rewind_10">Spóla til baka um 10 sekúndur</string>
+    <string name="tile_forward_10">Spóla áfram um 10 sekúndur</string>
+
+    <string name="shortcuts_tile_description">Streymisflýtileiðirnar þínar, einn smell í burtu</string>
+    <string name="shortcuts_tile_title">Flýtileiðir</string>
+    <string name="shortcuts_tile_empty">Engar flýtileiðir ennþá</string>
+    <string name="shortcuts_tile_more">Meira í appinu</string>
+
+    <string name="idle_nothing_playing">Ekkert í spilun</string>
+    <string name="idle_hint">Spilaðu eitthvað í símanum þínum</string>
+    <string name="idle_hint_resume">Ýttu til að halda áfram með síðasta app</string>
+    <string name="idle_hint_shortcuts">Ýttu fyrir flýtileiðirnar þínar</string>
+    <string name="idle_hint_menu">Ýttu til að opna valmyndina</string>
+    <string name="idle_hint_search">Ýttu til að leita</string>
+    <string name="idle_hint_queue">Ýttu fyrir nýlega spilað</string>
+    <string name="idle_resume">Halda áfram spilun</string>
+    <string name="idle_action_shortcuts">Opna flýtileiðir</string>
+    <string name="idle_action_menu">Opna valmynd</string>
+    <string name="idle_action_search">Leita</string>
+    <string name="idle_action_queue">Opna nýlega spilað</string>
+
+    <string name="no_phone">Enginn sími tengdur</string>
+    <string name="playback_stopped">Stöðvað</string>
+    <string name="error">VILLA</string>
+    <string name="error_play_services">Villa í Play Services</string>
+    <string name="button">Hnappur</string>
+    <string name="back_button">Til baka</string>
+    <string name="turn_bezel_cw">Snúa umgjörð réttsælis</string>
+    <string name="turn_bezel_ccw">Snúa umgjörð rangsælis</string>
+    <string name="quick_action_like">Líka við</string>
+    <string name="quick_action_shuffle">Stokka</string>
+    <string name="quick_action_repeat">Endurtaka</string>
+    <string name="quick_action_repeat_all">Endurtaka allt</string>
+    <string name="quick_action_repeat_one">Endurtaka eitt</string>
+    <string name="quick_action_up_next">Næst</string>
+    <string name="quick_actions_unavailable">Núverandi app er ekki með flýtiaðgerðir</string>
+    <string name="voice_search_prompt">Leita að tónlist</string>
+    <string name="queue_empty">Engin biðröð tiltæk</string>
+    <string name="queue_now_playing">Í spilun núna</string>
+    <string name="queue_load_more">Hlaða meira</string>
+    <string name="queue_history_fallback">Nýlega spilað</string>
+    <string name="queue_history_fallback_reason">Þetta app deilir ekki biðröðinni sinni</string>
+    <string name="chat_face_today">Í dag</string>
+
+    <string name="face_picker_title">Úraskífa</string>
+    <string name="face_picker_offline">Síminn er ekki tengdur — þessi skífa mun virkjast á úrinu, en stillingin er geymd í símanum</string>
+    <string name="face_picker_section_builtin">Innbyggðar skífur</string>
+    <string name="face_picker_section_custom">Þemun mín</string>
+    <string name="face_picker_custom_base">Byggt á %1$s</string>
+
+    <string name="hint_title">Svona notarðu þetta</string>
+    <string name="hint_edges">Jaðrar — ýttu fyrir sýndar aðgerðir</string>
+    <string name="hint_center">Miðja — spila/pása\nTvísmella — flýtiaðgerðir</string>
+    <string name="hint_swipe_up">Strjúka upp — aðgerðavalmynd</string>
+    <string name="hint_crown">Kóróna — hljóðstyrkur</string>
+    <string name="hint_dismiss">Ég skil</string>
+
+    <string name="action_name_play">Spila</string>
+    <string name="action_name_pause">Pása</string>
+    <string name="action_name_skip_prev">Fyrra lag</string>
+    <string name="action_name_skip_next">Næsta lag</string>
+    <string name="action_name_volume_up">Hækka hljóðstyrk</string>
+    <string name="action_name_volume_down">Lækka hljóðstyrk</string>
+    <string name="action_name_open_menu">Opna valmynd</string>
+    <string name="action_name_skip_30">Spóla áfram um 30 sekúndur</string>
+    <string name="action_name_reverse_30">Spóla til baka um 30 sekúndur</string>
+    <string name="action_name_play_pause">Spila/Pása</string>
+    <string name="action_name_stop">Stöðva</string>
+    <string name="action_name_restart">Byrja lag upp á nýtt</string>
+    <string name="action_name_seek">Spóla í gegnum lag</string>
+    <string name="action_name_mute">Þagga</string>
+    <string name="action_name_search">Leita</string>
+    <string name="action_name_custom">Sérsniðin aðgerð</string>
+    <string name="state_on">Kveikt</string>
+    <string name="state_off">Slökkt</string>
+
+    <string name="update_notification_channel">Uppfærslur appsins</string>
+    <string name="update_install_title">Svartifoss uppfærsla</string>
+    <string name="update_install_tap">Ýttu til að setja upp nýju útgáfuna</string>
+    <string name="update_install_failed">Uppsetning mistókst. Leyfðu uppsetningar frá Svartifoss í stillingum úrsins og reyndu aftur í símanum.</string>
+</resources>

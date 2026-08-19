@@ -937,6 +937,7 @@
 
     <string name="action_play_liked_songs">Reproducir canciones que me gustan (YT Music)</string>
     <string name="action_play_spotify_liked_songs">Reproducir canciones que me gustan (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Reproducir canciones que me gustan (SoundCloud)</string>
     <string name="action_my_playlists">Accesos directos de streaming</string>
     <string name="action_play_specific_playlist">Abrir acceso directo de streaming</string>
     <string name="action_choose_or_add_streaming_shortcut">Elegir o añadir un acceso directo de streaming</string>
@@ -1362,6 +1363,7 @@
         <item>Bahasa Indonesia</item>
         <item>فارسی</item>
         <item>简体中文</item>
+        <item>Íslenska</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
