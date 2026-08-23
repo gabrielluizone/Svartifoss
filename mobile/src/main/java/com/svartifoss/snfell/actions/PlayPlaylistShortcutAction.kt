@@ -9,6 +9,7 @@ import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.StreamingShortcutLinks
+import com.svartifoss.snfell.notifications.AppGlyphStore
 import javax.inject.Inject
 
 /**
@@ -54,11 +55,12 @@ class PlayPlaylistShortcutAction : SelectableAction {
      * destination in Pick action (and on the watch after it is assigned), rather than making
      * every playlist/track look like the same generic playlist command.
      *
-     * Supported services use their installed launcher icon. For a custom scheme/provider, use
-     * Android's default handler when one exists. The monochrome playlist glyph remains the safe
-     * fallback for an app that is not installed or a link without a default handler.
+     * Supported services use their notification glyph where this phone has learned one and their
+     * launcher icon otherwise (see [AppGlyphStore]). For a custom scheme/provider, use Android's
+     * default handler when one exists. The monochrome playlist glyph remains the safe fallback for
+     * an app that is not installed or a link without a default handler.
      */
-    private val destinationAppIcon: Drawable? by lazy {
+    private val destinationAppIcon: AppMark? by lazy {
         val service = StreamingShortcutLinks.detect(link)
         val knownPackage = service.packageName
         if (knownPackage != null) {
@@ -67,6 +69,16 @@ class PlayPlaylistShortcutAction : SelectableAction {
             resolveCustomLinkHandlerIcon()
         }
     }
+
+    /**
+     * An app's mark and whether it may be tinted, carried together.
+     *
+     * They were two independent conditions before, which was survivable while the answer was
+     * always "a launcher icon, never tint it". It stops being survivable the moment the same slot
+     * can hold a flat-white notification template: tint decided separately from image is how a
+     * glyph ends up drawn white-on-white.
+     */
+    private data class AppMark(val drawable: Drawable, val tintable: Boolean)
 
     /** Online thumbnail fetched for this shortcut (opt-in), if one was cached. Full-colour art,
      *  so it must never be tinted. */
@@ -79,7 +91,7 @@ class PlayPlaylistShortcutAction : SelectableAction {
     }
 
     override val defaultIconTintable: Boolean
-        get() = cachedThumbnail == null && destinationAppIcon == null
+        get() = cachedThumbnail == null && (destinationAppIcon?.tintable ?: true)
 
     /** Only the fetched online thumbnail is genuine cover art - the destination app's launcher
      * icon is still a real, non-tintable image, but stretching it across a whole pill just looks
@@ -88,7 +100,7 @@ class PlayPlaylistShortcutAction : SelectableAction {
         get() = cachedThumbnail != null
 
     override val defaultIcon: Drawable
-        get() = cachedThumbnail ?: destinationAppIcon ?: AppCompatResources.getDrawable(
+        get() = cachedThumbnail ?: destinationAppIcon?.drawable ?: AppCompatResources.getDrawable(
                 context,
                 com.svartifoss.snfell.common.R.drawable.action_open_playlist
         )!!
@@ -130,15 +142,26 @@ class PlayPlaylistShortcutAction : SelectableAction {
         false
     }
 
-    private fun applicationIcon(packageName: String): Drawable? = try {
-        context.packageManager.getApplicationIcon(packageName)
-    } catch (_: PackageManager.NameNotFoundException) {
-        null
-    } catch (_: SecurityException) {
-        null
+    /**
+     * The target app's mark: its notification glyph where this phone has learned one, its launcher
+     * icon otherwise - see [AppGlyphStore].
+     *
+     * Only ever reached when the shortcut has no fetched cover of its own. A real thumbnail stays
+     * a real thumbnail; this is the fallback that used to be the one place a full-colour launcher
+     * icon appeared beside monochrome rows.
+     */
+    private fun applicationIcon(packageName: String): AppMark? {
+        AppGlyphStore.drawable(context, packageName)?.let { return AppMark(it, tintable = true) }
+        return try {
+            AppMark(context.packageManager.getApplicationIcon(packageName), tintable = false)
+        } catch (_: PackageManager.NameNotFoundException) {
+            null
+        } catch (_: SecurityException) {
+            null
+        }
     }
 
-    private fun resolveCustomLinkHandlerIcon(): Drawable? {
+    private fun resolveCustomLinkHandlerIcon(): AppMark? {
         val canonicalLink = StreamingShortcutLinks.canonicalize(link)
         if (!StreamingShortcutLinks.isSafeLink(canonicalLink)) return null
 

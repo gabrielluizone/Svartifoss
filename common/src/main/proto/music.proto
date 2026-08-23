@@ -39,6 +39,21 @@ message MusicState {
   // watch that was unreachable reconnects (skip-skip-skip / theme-hopping used to replay one by
   // one) instead of applying every stale state in turn. 0 = unset (pre-3.x phone), never gated.
   optional int64 seq = 18 [default = 0];
+
+  // How stale positionMs already was when the phone built this payload, in milliseconds, measured
+  // entirely with the phone's own monotonic clock.
+  //
+  // This is what positionUpdateTime should have been all along. That field is a phone epoch
+  // timestamp, and the watch subtracted it from *its* wall clock - correct only if the two devices'
+  // clocks agree, which Wear OS does not guarantee. Whatever they differed by became a fixed offset
+  // on every predicted position for the whole track: lyrics a few seconds out, and a visible step
+  // on every pause/resume (a paused state predicts nothing, so only the playing one carried the
+  // skew). A duration has no clock basis to disagree about. See PlaybackPositionEstimate.
+  //
+  // -1 means "not reported" - a phone build from before this existed - and makes the watch fall
+  // back to the old subtraction. positionUpdateTime is still sent for exactly the same reason in
+  // reverse: watch builds from before this change read only that.
+  optional int64 positionAgeMs = 19 [default = -1];
 }
 
 message MediaAction {
@@ -48,4 +63,43 @@ message MediaAction {
   // Stable, locale-independent meaning used only for state/fallback presentation. The opaque id
   // remains the sole execution token, so a semantic guess can never redirect a button.
   optional string semantic = 4 [default = "unknown"];
+}
+
+// Phone -> watch, in answer to CommPaths.MESSAGE_REQUEST_PLAYBACK_SYNC.
+//
+// The periodic correction for the watch's predicted playback position. MusicState carries a
+// position too, but only when something *else* changed - the phone suppresses position-only
+// retransmissions on purpose (see MusicService.equalsIgnoringTime), so during steady playback the
+// watch can go a whole track without a single fresh sample and any error it started with lasts the
+// whole song. This is the sample it can ask for.
+//
+// What makes it more accurate than a MusicState is the round trip. positionAgeMs measures staleness
+// at the *sender*, which leaves the transport time between the two devices unaccounted for; a reply
+// that echoes the requester's own token lets the watch measure that leg itself and add half of it
+// back. See PlaybackSyncPolicy.
+message PlaybackSync {
+  // Echo of the token the watch sent, opaque to the phone: it is the watch's own monotonic clock
+  // reading at send time, and only the watch can interpret it. Echoing rather than timestamping
+  // here is what keeps this free of any cross-device clock comparison - the same rule
+  // PlaybackPositionEstimate exists to enforce.
+  required int64 token = 1;
+
+  // False when nothing is playing at all, in which case no other field is meaningful. Distinct
+  // from "playing = false", which is a real paused track with a real position.
+  optional bool hasSession = 2 [default = false];
+
+  optional int64 positionMs = 3;
+  optional int64 durationMs = 4;
+  optional bool playing = 5 [default = false];
+  optional float playbackSpeed = 6 [default = 1.0];
+
+  // How stale positionMs already was when this reply was built, measured entirely with the phone's
+  // own monotonic clock - the same quantity, and for the same reason, as MusicState.positionAgeMs.
+  optional int64 positionAgeMs = 7 [default = -1];
+
+  // The track the position belongs to. A reply that crossed a skip in flight describes a song the
+  // watch has already left, and correcting to it would drag the lyric backwards - so the watch
+  // discards a reply whose track is not the one it is showing.
+  optional string title = 8;
+  optional string artist = 9;
 }

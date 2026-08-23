@@ -21,7 +21,11 @@ off-by-default setting (`streaming_shortcut_artwork`, see
 `ShortcutArtworkFetcher.kt`) sends a saved shortcut's public share link
 directly to that streaming service's own oEmbed endpoint (Spotify, YouTube,
 SoundCloud, Deezer) to fetch a cover thumbnail - no Firebase/Google
-involvement in that request.
+involvement in that request. An on-by-default setting (`lyrics_enabled`, see
+`LyricsFetcher.kt`) sends the playing track's name, artist and length to
+LRCLIB when - and only when - the user opens the watch's lyrics screen or
+selects the lyric-following Verse watch face; again
+no Firebase/Google involvement, no account and no identifier.
 
 ---
 
@@ -29,8 +33,10 @@ involvement in that request.
 
 **Yes** — because of Firebase Crashlytics (crash reporting), the standard
 automatic collection performed by Firebase Analytics, the queue-cover fetch
-(on by default, one switch to disable) and (only if the user opts in) the
-shortcut-artwork fetch to the streaming service's own oEmbed endpoint. Everything else the app touches (media metadata, button configs,
+(on by default, one switch to disable), the lyrics lookup (on by default, one
+switch, and never fired unless the user opens the lyrics screen) and (only if
+the user opts in) the shortcut-artwork fetch to the streaming service's own
+oEmbed endpoint. Everything else the app touches (media metadata, button configs,
 search history, playlist shortcuts) stays on-device or goes only to the
 user's own paired watch over the local Wearable Data Layer connection —
 never to a server you operate.
@@ -48,6 +54,8 @@ never to a server you operate.
 | Device or other IDs | Device or other IDs | Yes | With Google (Firebase Cloud Messaging) | Push notification delivery | The install's FCM registration token, held by Google's messaging infrastructure to route messages to a shared topic. Svartifoss never receives, stores, or sees this token itself - there is no server of ours to receive it. |
 | App activity | Other user-generated content | Only if the user enables it | With the streaming service (Spotify/YouTube/SoundCloud/Deezer) | Fetching a cover thumbnail for a saved shortcut | Off by default ("Fetch shortcut artwork online"). Only the already-public share link the user saved is sent, directly to that service's own oEmbed endpoint - no account, API key, or Svartifoss/Google identifier is attached. |
 | App activity | Other user-generated content | Yes, unless the user turns it off | With whatever host the playing music app published | Downloading a cover for a playback-queue entry | **On by default** ("Fetch queue covers online", see `QueueArtworkResolver.kt`) - a streaming app's queue exposes no other cover source, so off meant permanently blank rows. Only the cover URL the music app itself put on the queue entry is requested, and only for entries currently being shown on the watch - no account, API key, or Svartifoss/Google identifier is attached. A single switch (Settings → Apps, or Watch face → Panels) disables it. |
+| App activity | Other user-generated content | Yes, unless the user turns it off | With LRCLIB (lrclib.net) | Looking up the lyrics for the playing track | **On by default** ("Look up lyrics online", see `LyricsFetcher.kt`), but nothing is ever sent unless the user opens the watch's lyrics screen or selects the Verse watch face - no background lookups on any other face. Only the track name, artist name and track length are sent; LRCLIB matches on exactly those and needs no account or API key, so no account, API key, or Svartifoss/Google identifier is attached. Results are held in memory only and never written to disk. |
+| App activity | Other user-generated content | Yes, only if the user turns it on | With MusicBrainz (musicbrainz.org) | Filling in track details the playing app did not publish (ISRC, label, release date) | **Off by default** ("Look up track details online", see `MusicBrainzMetadata.kt`). Nothing is sent unless the user both enables it and selects the Metadata watch face. Only the track name and artist name are sent; MusicBrainz needs no account or API key, so no account, API key or Svartifoss/Google identifier is attached. Results are held in memory only and never written to disk. |
 
 **Everything else in Play's standard list — Personal info,
 Financial info, Health and fitness, Messages, Photos/videos, Audio files,

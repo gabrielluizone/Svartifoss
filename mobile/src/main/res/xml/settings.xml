@@ -257,6 +257,26 @@
             android:selectable="false"
             android:layout="@layout/pref_item" />
 
+        <!-- One of the app's few network paths - kept beside the other two so they are read
+             together. On by default, unlike the shortcut-artwork fetch: a lyric has no second
+             source, so off does not degrade the screen, it empties it. Nothing is requested until
+             the watch's lyrics screen is opened. Keep docs/privacy-policy.md in step. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="lyrics_enabled"
+            android:icon="@drawable/action_lyrics"
+            android:title="@string/setting_lyrics_enabled"
+            android:summary="@string/setting_lyrics_enabled_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="metadata_lookup_enabled"
+            android:icon="@drawable/ic_newsmode"
+            android:title="@string/setting_metadata_lookup"
+            android:summary="@string/setting_metadata_lookup_description"
+            android:layout="@layout/pref_switch_item" />
+
         <com.matejdro.wearutils.preferences.compat.AutoSummaryListPreference
             android:key="streaming_open_mode"
             android:icon="@drawable/ic_apps"

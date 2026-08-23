@@ -25,6 +25,14 @@ class GlobalActionList @Inject constructor(actionListTransmitterFactory: ActionL
         transmitter = actionListTransmitterFactory.create(this)
     }
 
+    override fun retransmit() {
+        GlobalScope.launchWithPlayServicesErrorHandling(context, Dispatchers.Main) {
+            withContext(Dispatchers.Default) {
+                transmitter.sendConfigToWatch(actions)
+            }
+        }
+    }
+
     override fun commit() {
         if (committing) {
             commitAgain = true

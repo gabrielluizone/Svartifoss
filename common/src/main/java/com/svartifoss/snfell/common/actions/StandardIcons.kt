@@ -26,6 +26,11 @@ object StandardIcons {
             StandardActions.ACTION_REPEAT_ONE to com.svartifoss.snfell.common.R.drawable.action_repeat_one,
             StandardActions.ACTION_OPEN_PLAYLIST_MENU to
                     com.svartifoss.snfell.common.R.drawable.action_open_playlist,
+            // The watch ships this drawable too (it lives in common), so listing it here is what
+            // stops ButtonConfigTransmitter rasterizing and sending the bitmap on every config
+            // push - see its icon-skipping logic.
+            StandardActions.ACTION_OPEN_LYRICS to
+                    com.svartifoss.snfell.common.R.drawable.action_lyrics,
 
             getButtonKey(KeyEvent.KEYCODE_BACK) to R.drawable.button_back,
             getButtonKey(SpecialButtonCodes.TURN_ROTARY_CW) to R.drawable.button_turn_cw,

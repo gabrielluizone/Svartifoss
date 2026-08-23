@@ -13,15 +13,23 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,7 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.common.AdaptiveTextContrast
+import com.svartifoss.snfell.common.BitmapBlur
 import com.svartifoss.snfell.common.RoundScreenText
+import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.watch.view.compose.FaceClock
 
 /**
@@ -43,10 +53,11 @@ import com.svartifoss.snfell.watch.view.compose.FaceClock
  * **This face paints its own opaque backdrop**, which is unusual here: every other Compose face
  * leaves the background to the host's artwork View underneath and the shared
  * [PlayerBackgroundTreatment]. It cannot, because the whole composition *is* a specific treatment -
- * artwork confined to the top half, flat colour below. Letting the shared full-screen artwork show
+ * artwork above the seam, the album's own colour below. Letting the shared full-screen artwork show
  * through would simply erase the design. The consequence to know: the Album background styles have
- * no effect on this face, by construction. It still honours [NowPlayingFaceState.albumArtHidden],
- * falling back to a tonal panel rather than a blank band.
+ * no effect on this face, by construction - which is precisely why the panel has a control of its
+ * own, [SplitPanelStyle], instead of being left with no way to change it at all. It still honours
+ * [NowPlayingFaceState.albumArtHidden], falling back to a tonal panel rather than a blank band.
  *
  * Text colour is decided against the panel it sits on rather than assumed, via
  * [AdaptiveTextContrast.prefersDarkText] - the panel is the album's colour and can arrive anywhere
@@ -75,16 +86,24 @@ fun SplitFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
         val screen = maxWidth
         val seam = screen * SEAM_FRACTION
 
-        Column(Modifier.fillMaxSize()) {
-            CoverBand(state = state, height = seam, panel = panel)
-            // weight, not fillMaxHeight: inside a Column the latter fills the *incoming* max height
-            // rather than what is left after the band above, so the panel would run off the bottom.
-            Box(
-                    modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .background(panel)
-            )
+        // Blur needs artwork to blur. Hidden or not yet arrived falls back to the flat panel,
+        // which is the same fallback the solid path already makes for its cover band.
+        val art = state.albumArt?.takeUnless { state.albumArtHidden }
+        if (state.splitPanelStyle == SplitPanelStyle.BLUR && art != null) {
+            ContinuousBackdrop(art = art, panel = panel, seam = seam, state = state)
+        } else {
+            Column(Modifier.fillMaxSize()) {
+                CoverBand(state = state, height = seam, panel = panel)
+                // weight, not fillMaxHeight: inside a Column the latter fills the *incoming* max
+                // height rather than what is left after the band above, so the panel would run off
+                // the bottom.
+                Box(
+                        modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .background(panel)
+                )
+            }
         }
 
         // Under the badge, over the panel: the badge is a real control-free ornament, so the centre
@@ -116,8 +135,100 @@ fun SplitFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
  *  the artwork is the subject and the panel only has to hold two lines of text. */
 private const val SEAM_FRACTION = .66f
 
+/**
+ * How much of the blurred artwork shows through the panel colour.
+ *
+ * Composited as artwork *over* an opaque panel rather than as a colour wash over artwork. The two
+ * are the same blend arithmetically, but this way round the panel is guaranteed to be the base, so
+ * a cover with transparency cannot let the window's black through and the effective luminance of
+ * the panel stays anchored to `panelArgb` - which matters, because the text colour is decided from
+ * that value alone via [AdaptiveTextContrast.prefersDarkText]. Let the artwork dominate and that
+ * decision stops being reliable: black text chosen for a pale accent would sit on whatever the
+ * blurred cover happened to be.
+ */
+private const val PANEL_ART_ALPHA = .34f
+
+/**
+ * Floor for the panel blur, in px.
+ *
+ * The radius follows the user's own Album-art blur setting so the face does not invent a second
+ * one, but that setting belongs to a treatment this face does not use and can legitimately be
+ * anything - including small enough to leave the panel a legible photograph, which is a different
+ * design from the one this is. Below this, the seam stops reading as sharp-to-soft.
+ */
+private const val MIN_PANEL_BLUR_PX = 26f
+
 /** Lightness the album accent is taken to for the lower panel. */
 private const val PANEL_LIGHTNESS = .40f
+
+/**
+ * One image across the whole screen: sharp above the seam, blurred and tinted below it.
+ *
+ * The layout is what makes this work. Both copies are laid out **full screen** with the same
+ * [ContentScale.Crop], and the lower one is then *clipped* to the panel rather than being scaled
+ * into it. Scaling a second copy into the lower box would crop it differently, and the seam would
+ * read as two unrelated pictures butted together instead of one photograph going soft.
+ *
+ * The seam itself stays hard, deliberately. Blending it would make this a gradient backdrop like
+ * any other; the abrupt edge is what keeps the notification-card identity the face is built on.
+ */
+@Composable
+private fun ContinuousBackdrop(
+        art: ImageBitmap,
+        panel: Color,
+        seam: Dp,
+        state: NowPlayingFaceState
+) {
+    val seamPx = with(LocalDensity.current) { seam.toPx() }
+    val blurred = rememberPanelBlur(art, state.albumArtBlurRadiusPx)
+
+    Box(Modifier.fillMaxSize()) {
+        Image(
+                bitmap = art,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize())
+
+        Box(
+                modifier = Modifier
+                        .fillMaxSize()
+                        .drawWithContent {
+                            clipRect(top = seamPx) { this@drawWithContent.drawContent() }
+                        }
+        ) {
+            Canvas(Modifier.fillMaxSize()) { drawRect(panel) }
+            Image(
+                    bitmap = blurred,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    alpha = PANEL_ART_ALPHA,
+                    modifier = Modifier.fillMaxSize())
+        }
+    }
+}
+
+/**
+ * The blurred copy, made once per cover.
+ *
+ * [BitmapBlur] rather than Compose's `Modifier.blur`: that modifier is a no-op below Android 12,
+ * and this module supports API 26 - the panel would simply be a sharp photograph on older watches,
+ * which is not a degraded version of this design but a different and much worse one. The shared
+ * bitmap blur runs everywhere and is the same one the phone's preview uses, so the two agree.
+ *
+ * Keyed on the bitmap, so a track change pays for it and nothing else does. Falls back to the sharp
+ * cover if the blur throws (a recycled bitmap on a fast skip), which is wrong-looking for one frame
+ * rather than a crash.
+ */
+@Composable
+private fun rememberPanelBlur(art: ImageBitmap, radiusPx: Float): ImageBitmap =
+        remember(art, radiusPx) {
+            runCatching {
+                BitmapBlur.blur(
+                        art.asAndroidBitmap(),
+                        radiusPx.coerceAtLeast(MIN_PANEL_BLUR_PX)
+                ).asImageBitmap()
+            }.getOrDefault(art)
+        }
 
 /** The artwork band. Falls back to a tonal wash when the artwork is hidden or has not arrived. */
 @Composable

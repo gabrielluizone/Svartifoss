@@ -513,6 +513,8 @@
         <item>Чат</item>
         <item>Раздельный</item>
         <item>Заметка</item>
+        <item>Куплет</item>
+        <item>Метаданные</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Перемотка Expressive</string>
@@ -533,6 +535,14 @@
         <item>Material (контурный)</item>
         <item>Управление AMOLED</item>
         <item>Chrono (большие часы)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Карусель</item>
+        <item>Чат</item>
+        <item>Раздельный</item>
+        <item>Заметка</item>
+        <item>Куплет</item>
     </string-array>
     <string name="setting_wear_aod_color">Цвет всегда-включён</string>
     <string-array name="wear_aod_color_entries">
@@ -1398,4 +1408,10 @@
     </string-array>
     <string name="setting_wear_normal_color_multi">Использовать палитру цветов</string>
     <string name="setting_wear_normal_color_multi_description">Включено: экран использует основной цвет и два вспомогательных оттенка. Выключено: везде используется один цвет — цвет альбома или выбранный вами.</string>
+    <string-array name="wear_accent_floor_entries">
+        <item>Выкл.</item>
+        <item>Мягкое</item>
+        <item>Обычное</item>
+        <item>Насыщенное</item>
+    </string-array>
 </resources>

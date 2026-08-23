@@ -65,7 +65,9 @@ class WatchThemeRepository(context: Context) {
                 "carousel" to R.string.watch_theme_face_carousel,
                 "chat" to R.string.watch_theme_face_chat,
                 "split" to R.string.watch_theme_face_split,
-                "note" to R.string.watch_theme_face_note
+                "note" to R.string.watch_theme_face_note,
+                "verse" to R.string.watch_theme_face_verse,
+                "metadata" to R.string.watch_theme_face_metadata
         )
 
         fun displayNameForFace(context: Context, face: String): String =

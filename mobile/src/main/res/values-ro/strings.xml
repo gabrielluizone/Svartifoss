@@ -512,6 +512,8 @@
         <item>Chat</item>
         <item>Divizat</item>
         <item>Notă</item>
+        <item>Vers</item>
+        <item>Metadata</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Căutare Expressive</string>
@@ -532,6 +534,14 @@
         <item>Material (conturat)</item>
         <item>Comenzi AMOLED</item>
         <item>Chrono (ceas mare)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carusel</item>
+        <item>Chat</item>
+        <item>Divizat</item>
+        <item>Notă</item>
+        <item>Vers</item>
     </string-array>
     <string name="setting_wear_aod_color">Culoare mereu activ</string>
     <string-array name="wear_aod_color_entries">
@@ -1394,4 +1404,10 @@
     </string-array>
     <string name="setting_wear_normal_color_multi">Folosește o paletă de culori</string>
     <string name="setting_wear_normal_color_multi_description">Pornit: ecranul folosește o culoare principală plus două tonuri secundare. Oprit: se folosește o singură culoare peste tot — cea a albumului sau cea aleasă de tine.</string>
+    <string-array name="wear_accent_floor_entries">
+        <item>Oprit</item>
+        <item>Subtil</item>
+        <item>Standard</item>
+        <item>Intens</item>
+    </string-array>
 </resources>

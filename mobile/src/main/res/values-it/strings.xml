@@ -511,6 +511,8 @@
         <item>Chat</item>
         <item>Diviso</item>
         <item>Nota</item>
+        <item>Verso</item>
+        <item>Metadata</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Ricerca Expressive</string>
@@ -531,6 +533,14 @@
         <item>Material (contornato)</item>
         <item>Controlli AMOLED</item>
         <item>Chrono (orologio grande)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carosello</item>
+        <item>Chat</item>
+        <item>Diviso</item>
+        <item>Nota</item>
+        <item>Verso</item>
     </string-array>
     <string name="setting_wear_aod_color">Colore sempre attivo</string>
     <string-array name="wear_aod_color_entries">
@@ -1390,4 +1400,10 @@
     </string-array>
     <string name="setting_wear_normal_color_multi">Usa una palette di colori</string>
     <string name="setting_wear_normal_color_multi_description">Attivo: lo schermo usa un colore principale più due toni di supporto. Disattivo: viene usato un solo colore ovunque, quello dell\'album o quello scelto da te.</string>
+    <string-array name="wear_accent_floor_entries">
+        <item>Disattivato</item>
+        <item>Tenue</item>
+        <item>Standard</item>
+        <item>Intenso</item>
+    </string-array>
 </resources>

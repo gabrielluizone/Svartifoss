@@ -33,6 +33,11 @@ class IdleMessageListener : WearableListenerService() {
                     it.putExtra(MainActivity.EXTRA_OPEN_VOICE_SEARCH, true)
                 }
             }
+            CommPaths.MESSAGE_OPEN_LYRICS -> {
+                launchMainActivity {
+                    it.putExtra(MainActivity.EXTRA_OPEN_LYRICS, true)
+                }
+            }
             CommPaths.MESSAGE_STOP_WATCH_APP -> {
                 WatchAppShutdown.shutdown(this, force = false)
             }

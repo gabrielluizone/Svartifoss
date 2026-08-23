@@ -16,6 +16,21 @@ import com.matejdro.wearutils.preferences.compat.NumericEditTextPreference;
 
 /**
  * Numeric preference whose edit dialog includes a reset-to-default action.
+ *
+ * <p>The reset <em>applies</em> and closes the dialog, rather than filling the field in and waiting
+ * for OK. Two reasons, and the first is that the other design did not work: the neutral button used
+ * to call {@code setText} directly, which persists the value but never runs
+ * {@link androidx.preference.Preference#callChangeListener}, so nothing that reacts to the setting
+ * - the watch-face preview, the fragment's own dependency wiring - was ever told. It also tried to
+ * fill in the field through {@code getView()}, which is always {@code null} on a
+ * {@link PreferenceDialogFragmentCompat}: that class builds its content view for the AlertDialog in
+ * {@code onCreateDialog} and never sets it as the fragment's view. So the box kept showing the old
+ * number, and pressing OK immediately after Reset wrote that old number straight back over the
+ * default - the user had to reset, dismiss, reopen and press OK to make it stick.
+ *
+ * <p>The second reason is that one tap is what a "Reset to default" button should cost. Cancel no
+ * longer undoes a reset, which is the accepted trade: it is an explicit action on a single number
+ * the user can simply retype.
  */
 public class ResettableNumericEditTextPreference extends NumericEditTextPreference {
 
@@ -86,15 +101,24 @@ public class ResettableNumericEditTextPreference extends NumericEditTextPreferen
                     return;
                 }
                 String defaultValue = pref.getDefaultValueAsString();
-                pref.setText(defaultValue);
-                View dialogView = getView();
-                if (dialogView != null) {
-                    EditText editBox = dialogView.findViewById(android.R.id.edit);
-                    if (editBox != null) {
-                        editBox.setText(defaultValue);
-                        editBox.setSelection(defaultValue.length());
-                    }
+
+                // The field is on the *dialog*, not on the fragment - getView() is null here. Set
+                // it before persisting so that whatever reads the dialog back sees the value that
+                // is about to be applied, rather than the one being replaced.
+                EditText editBox = dialog.findViewById(android.R.id.edit);
+                if (editBox != null) {
+                    editBox.setText(defaultValue);
+                    editBox.setSelection(defaultValue.length());
                 }
+
+                // Exactly what pressing OK does: ask first, then persist. Going through
+                // callChangeListener is the whole point - it is what tells the preview, the
+                // dependency wiring and anything else watching that this value moved. setText
+                // alone persists in silence.
+                if (pref.callChangeListener(defaultValue)) {
+                    pref.setText(defaultValue);
+                }
+                dialog.dismiss();
             });
         }
     }

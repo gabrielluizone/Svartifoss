@@ -30,7 +30,7 @@ the fork.
   <img src="docs/images/watch-expressive-blue.jpg" width="215" alt="Expressive face, album-derived palette" />
   <img src="docs/images/watch-poster.jpg" width="215" alt="Poster face, full-bleed album art" />
 </p>
-<p align="center"><em>Same watch, three of the sixteen built-in faces &mdash; each one built from whatever's playing</em></p>
+<p align="center"><em>Same watch, three of the eighteen built-in faces &mdash; each one built from whatever's playing</em></p>
 
 ## Contents
 
@@ -46,7 +46,7 @@ the fork.
 
 | | |
 |---|---|
-| **Sixteen now-playing faces** | Classic, Expressive, and a curated collection (Poster, Studio, Vinyl, Halo, Aurora, Eclipse, Spectrum, Material, Depth, Carousel, Chat, Split, Note and the Spotify-style Immersive layout) — each one builds its gradients, accents and progress treatment from the album art actually playing. An optional edge progress ring can be made draggable on every layout, with optional rotary-crown seek. Title and artist can each be hidden independently, with configurable sizing/marquee behavior. |
+| **Eighteen now-playing faces** | Classic, Expressive, and a curated collection (Poster, Studio, Vinyl, Halo, Aurora, Eclipse, Spectrum, Material, Depth, Carousel, Chat, Split, Note, the lyric-following Verse, the detail-listing Metadata and the Spotify-style Immersive layout) — each one builds its gradients, accents and progress treatment from the album art actually playing. An optional edge progress ring can be made draggable on every layout, with optional rotary-crown seek. Title and artist can each be hidden independently, with configurable sizing/marquee behavior. |
 | **Configurable input** | Assign any supported action — play/pause, skip, volume, shuffle, repeat (including repeat-one), like/favorite, search, playlist shortcuts, Tasker tasks, opening another app — to physical buttons, screen quadrants (tap zones), swipe gestures (up/down/left), or the now-configurable center tap. |
 | **Quick actions panel** | Four distinct layouts — Arc, Hero, Grid, and Labelled rows — each in a choice of styles, from full glass containers down to a bare accent marker. Slots can be manually assigned or mirror the current media notification's real actions and icons. |
 | **Queue and play history** | Browse the app's real playback queue when one is exposed, or fall back to a locally tracked play-history list when it isn't. A dozen+ visual styles, including cover-art rows that mirror each entry's own artwork. |

@@ -140,7 +140,18 @@ class WatchMediaSession(
                         .setState(
                                 if (state.playing) PlaybackStateCompat.STATE_PLAYING
                                 else PlaybackStateCompat.STATE_PAUSED,
-                                state.positionMs,
+                                // Corrected for how stale the sample is, not passed through raw.
+                                // This overload stamps the position as current *now*, so handing
+                                // it the phone's untouched reading tells the system surfaces the
+                                // track is a little behind where it really is.
+                                //
+                                // From the shared clock rather than re-derived here: this used to
+                                // repeat the anchoring arithmetic by hand, which agreed with the
+                                // player and the lyrics screen only by doing the same sums, and
+                                // could not benefit from the periodic correction at all. Reading it
+                                // means the Wear OS media controls, the Tile and the player all
+                                // report one position.
+                                phoneConnection.playbackClock.positionNowMs(),
                                 state.playbackSpeed
                         )
                         .build()

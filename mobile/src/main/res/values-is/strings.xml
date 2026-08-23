@@ -558,6 +558,8 @@
         <item>Chat</item>
         <item>Split</item>
         <item>Note</item>
+        <item>Vers</item>
+        <item>Metadata</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive spólun</string>
@@ -578,6 +580,14 @@
         <item>Material (útlína)</item>
         <item>AMOLED-stýringar</item>
         <item>Chrono (stór klukka)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Hringekja</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Vers</item>
     </string-array>
     <string name="setting_wear_aod_color">Litur alltaf-virks skjás</string>
     <string-array name="wear_aod_color_entries">
@@ -1400,5 +1410,11 @@
     <string-array name="wear_album_accent_source_entries">
         <item>Jafnvægi</item>
         <item>Kröftugastur</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Af</item>
+        <item>Mjúkt</item>
+        <item>Staðlað</item>
+        <item>Sterkt</item>
     </string-array>
 </resources>

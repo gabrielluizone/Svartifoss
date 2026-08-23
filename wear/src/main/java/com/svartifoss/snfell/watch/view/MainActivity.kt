@@ -17,6 +17,7 @@ import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Matrix
+import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.RenderEffect
 import android.graphics.Shader
@@ -35,6 +36,7 @@ import com.svartifoss.snfell.watch.view.queue.QueueStyle
 import com.svartifoss.snfell.watch.view.queue.blurredCover
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.TransitionDrawable
@@ -98,6 +100,7 @@ import com.svartifoss.snfell.common.FrostedEdges
 import com.svartifoss.snfell.common.BitmapBlur
 import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.MiniButtonPlacement
+import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.OverlayBackdropResolver
@@ -114,6 +117,8 @@ import com.svartifoss.snfell.common.IdleScreenAction
 import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.common.RotaryAction
 import com.svartifoss.snfell.common.ScreenButtons
+import com.svartifoss.snfell.common.AccentFloorStyle
+import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.SwatchInfo
 import com.svartifoss.snfell.common.selectPrimaryAccent
@@ -121,6 +126,7 @@ import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.SurfaceColorTreatment
 import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.common.SwipeGesture
+import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.resolveAodArtwork
@@ -142,6 +148,7 @@ import com.svartifoss.snfell.watch.communication.WatchInfoSender
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.view.menu.MenuActivity
 import com.svartifoss.snfell.watch.view.queue.QueueActivity
+import com.svartifoss.snfell.watch.view.lyrics.LyricsActivity
 import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.config.WatchActionConfigProvider
 import com.svartifoss.snfell.watch.model.Notification
@@ -152,6 +159,7 @@ import com.svartifoss.snfell.watch.theme.flexTypeface
 import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
 import com.svartifoss.snfell.common.AppLocales
 import com.svartifoss.snfell.watch.util.StandardActionTitles
+import com.svartifoss.snfell.watch.util.applyKeepScreenOnPreference
 import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.svartifoss.snfell.watch.view.face.AuroraFace
 import com.svartifoss.snfell.watch.view.face.EclipseFace
@@ -168,11 +176,15 @@ import com.svartifoss.snfell.watch.view.facepicker.FacePickerActivity
 import com.svartifoss.snfell.watch.view.face.CarouselFace
 import com.svartifoss.snfell.watch.view.face.ChatFace
 import com.svartifoss.snfell.watch.view.face.NoteFace
+import com.svartifoss.snfell.watch.view.face.VerseFace
+import com.svartifoss.snfell.watch.view.lyrics.LyricsUiState
 import com.svartifoss.snfell.watch.view.face.SplitFace
 import com.svartifoss.snfell.watch.view.face.QueueCard
 import com.svartifoss.snfell.watch.view.face.DepthFace
 import com.svartifoss.snfell.watch.view.face.ImmersiveFace
+import com.svartifoss.snfell.watch.view.face.FaceMiniButton
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceListener
+import com.svartifoss.snfell.watch.view.face.MetadataFace
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceState
 import com.svartifoss.snfell.watch.view.face.ScreenTheme
 import com.svartifoss.snfell.watch.view.face.resolveMetadataVisibility
@@ -188,6 +200,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import kotlin.math.abs
+import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 import kotlin.random.Random
@@ -208,6 +221,7 @@ import kotlin.random.Random
 internal fun hasActiveMiniButtons(configured: Boolean, idle: Boolean, enabledForFace: Boolean): Boolean =
         configured && enabledForFace
 
+
 internal fun shouldShowMiniButtons(
         configured: Boolean,
         idle: Boolean,
@@ -222,6 +236,13 @@ class MainActivity : WearCompanionWatchActivity(),
 
     companion object {
         const val EXTRA_OPEN_VOICE_SEARCH = "OpenVoiceSearch"
+        const val EXTRA_OPEN_LYRICS = "OpenLyrics"
+
+        /** The one face that renders lyrics; see applyScreenFaceNow. */
+        private const val FACE_VERSE = "verse"
+
+        /** The one face that renders the track's full metadata; see applyScreenFaceNow. */
+        private const val FACE_METADATA = "metadata"
         private const val KEY_SEARCH_QUERY = "search_query"
 
         /** Leading size for a full-colour app-launcher icon in a quick-panel row. Kept in step
@@ -264,6 +285,11 @@ class MainActivity : WearCompanionWatchActivity(),
         private const val OVERLAY_FADE_OUT_MS = 150L
         private const val OVERLAY_FADE_IN_MS = 90L
         private const val ALBUM_ART_CROSSFADE_MS = 300
+
+        /** How far two covers' aspect ratios may differ and still cross-fade directly - see
+         *  [sameAspectRatio]. Wide enough to absorb a rounding difference of a pixel or two, far
+         *  narrower than any real shape mismatch. */
+        private const val ALBUM_ART_ASPECT_TOLERANCE = 0.01f
         /** Consistent readable ink for every light pill surface. */
         private const val PILL_ON_LIGHT = 0xFF202124.toInt()
 
@@ -419,6 +445,12 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Raw MiscPreferences.WEAR_CLOCK_FONT value - "follow" until the user picks a clock typeface.
      *  Resolved against [wearFontKey] through WatchTypography.clockFontKey at the point of use. */
     private var wearClockFontKey: String = WatchTypography.CLOCK_FONT_FOLLOW
+    /** Raw MiscPreferences.WEAR_LYRICS_FONT value - "follow" until the user picks a typeface for
+     *  song lyrics, which keeps the serif the Verse face was designed around. Resolved by
+     *  NowPlayingFaceState.lyricFont at the point of use. */
+    private var wearLyricsFontKey: String = WatchTypography.LYRICS_FONT_FOLLOW
+    /** Which blocks of the Metadata face are switched on - see TrackMetadataFields.Group. */
+    private var metadataGroups: Set<TrackMetadataFields.Group> = emptySet()
 
     /** Single state snapshot driving the Compose face. Kept up to date by the same observers
      *  that update the classic views, so switching faces is purely a visibility change. */
@@ -431,7 +463,8 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Face keys rendered by the Compose view (everything except the View-based classic). */
     private val composeFaces = setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum",
-            "material", "immersive", "depth", "carousel", "chat", "split", "note"
+            "material", "immersive", "depth", "carousel", "chat", "split", "note", "verse",
+            "metadata"
     )
 
     /** Mirrors [FourWayTouchLayout]'s own tap-feedback pulse at a higher z-order, drawn into
@@ -487,6 +520,10 @@ class MainActivity : WearCompanionWatchActivity(),
     private var latestAlbumArt: Bitmap? = null
     private var latestSourceIcon: Bitmap? = null
     private var latestSourceIconTemplate = false
+
+    /** Last playback rate pushed into the face state, so an unchanged one costs no state copy -
+     *  this observer runs on every playback change and the rate almost never moves. */
+    private var latestPlaybackSpeed = 1f
     private var rawAccentColor: Int = 0
     private var rawSecondaryAccentColor: Int = 0
     private var rawTertiaryAccentColor: Int = 0
@@ -581,6 +618,10 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Tint policy received with each visible mini-button icon. Gallery/app artwork remains
      * full-colour; shared vectors and picker glyphs adapt to the selected pill surface. */
     private val screenButtonIconTintable = HashMap<Int, Boolean>(ScreenButtons.ALL_SLOTS.size)
+    /** The configured mini buttons in on-screen order, ready for a face that hosts the row (see
+     *  [MiniButtonPlacement.isHostedByFace]). Rebuilt whenever the button config changes; whether
+     *  it actually reaches the face is decided by [syncScreenButtonsVisibility], the one gate. */
+    private var configuredMiniButtons: List<FaceMiniButton> = emptyList()
     /** Automatic round-safe resting margin (px) for the mini-button row, recomputed in
      *  [configureScreenButtonsGeometry]. There is no user position preference. */
     private var autoBottomMarginPx = 0
@@ -596,6 +637,14 @@ class MainActivity : WearCompanionWatchActivity(),
      *  notification bitmap or a user-picked custom action icon) rather than one of this app's own
      *  single-color glyphs. Real icons must never be re-tinted - see [setQuickActionButtonActive]. */
     private val quickSlotUsesRealIcon = BooleanArray(quickSlotModes.size)
+    /** Whether each round slot is currently showing the *playing app's own* rasterized icon, as
+     *  opposed to one of this app's semantic fallback glyphs. Deliberately separate from
+     *  [quickSlotUsesRealIcon]: these icons are white templates and do want the panel's tint, but
+     *  they must not be painted over. The repeat slot used to be overwritten with this app's own
+     *  repeat glyph unconditionally, purely so repeat-one could be shown - which replaced the
+     *  player's own artwork on the one surface whose whole promise is that it mirrors the player.
+     *  A player publishes its repeat button per state anyway, so its icon already says which. */
+    private val sessionSlotShowsAppIcon = BooleanArray(quickSlotModes.size)
     /** Same distinction as [quickSlotUsesRealIcon], for the full-width row's icon. */
     private var quickActionUpNextUsesRealIcon = false
     /** Selected quick-actions panel style (see [MiscPreferences.WEAR_QUICK_PANEL_STYLE]):
@@ -685,6 +734,20 @@ class MainActivity : WearCompanionWatchActivity(),
             }
         }
 
+        override fun onMiniButtonTap(slotCode: Int) {
+            // Identical to the View row's own click listener: the face resolved nothing, it only
+            // said which slot was pressed.
+            if (viewModel.executeAction(ButtonInfo(false, slotCode, GESTURE_SINGLE_TAP))) {
+                buzz()
+            }
+        }
+
+        override fun onMiniButtonLongPress(slotCode: Int) {
+            if (viewModel.executeAction(ButtonInfo(false, slotCode, GESTURE_LONG_TAP))) {
+                buzz()
+            }
+        }
+
         override fun onQueueTap() {
             buzz()
             startActivity(Intent(this@MainActivity, QueueActivity::class.java))
@@ -761,6 +824,9 @@ class MainActivity : WearCompanionWatchActivity(),
                 "chat" -> ChatFace(state = faceState.value, listener = expressiveFaceListener)
                 "split" -> SplitFace(state = faceState.value, listener = expressiveFaceListener)
                 "note" -> NoteFace(state = faceState.value, listener = expressiveFaceListener)
+                "verse" -> VerseFace(state = faceState.value, listener = expressiveFaceListener)
+                "metadata" ->
+                        MetadataFace(state = faceState.value, listener = expressiveFaceListener)
                 "carousel" -> CarouselFace(
                         state = faceState.value,
                         listener = expressiveFaceListener,
@@ -968,6 +1034,9 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.popupVolumeBar.observe(this, volumeBarPopupListener)
         viewModel.openActionsMenu.observe(this, openActionsMenuListener)
         viewModel.openPlaybackQueueScreen.observe(this, openPlaybackQueueScreenListener)
+        viewModel.openLyricsScreen.observe(this, openLyricsScreenListener)
+        viewModel.lyricsState.observe(this, lyricsStateObserver)
+        viewModel.trackMetadata.observe(this, trackMetadataObserver)
         viewModel.openStreamingShortcutsMenu.observe(this, openStreamingShortcutsMenuListener)
         viewModel.openVoiceSearch.observe(this, openVoiceSearchListener)
         viewModel.closeApp.observe(this, closeAppListener)
@@ -999,6 +1068,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // out of the destination returns here, sees idle, and would open it straight back up.
         idleAutoOpenConsumed = false
         handleVoiceSearchIntent(intent)
+        handleOpenLyricsIntent(intent)
     }
 
     /** Set by IdleMessageListener when the phone asks to open search (e.g. Search picked from
@@ -1007,6 +1077,15 @@ class MainActivity : WearCompanionWatchActivity(),
         if (intent?.getBooleanExtra(EXTRA_OPEN_VOICE_SEARCH, false) == true) {
             intent.removeExtra(EXTRA_OPEN_VOICE_SEARCH)
             openVoiceSearchInput()
+        }
+    }
+
+    /** Set by IdleMessageListener when the phone asks to open lyrics - the same phone-side paths
+     *  that reach [handleVoiceSearchIntent]. */
+    private fun handleOpenLyricsIntent(intent: Intent?) {
+        if (intent?.getBooleanExtra(EXTRA_OPEN_LYRICS, false) == true) {
+            intent.removeExtra(EXTRA_OPEN_LYRICS)
+            openLyricsScreen()
         }
     }
 
@@ -1053,6 +1132,8 @@ class MainActivity : WearCompanionWatchActivity(),
 
     override fun onStart() {
         super.onStart()
+
+        applyKeepScreenOnPreference()
 
         if (faceBool(MiscPreferences.ALWAYS_SHOW_TIME)) {
             handler.sendEmptyMessage(MESSAGE_UPDATE_CLOCK)
@@ -1195,6 +1276,10 @@ class MainActivity : WearCompanionWatchActivity(),
             if (state.sourceIconTemplate != latestSourceIconTemplate) {
                 latestSourceIconTemplate = state.sourceIconTemplate
                 updateFaceState { face -> face.copy(sourceIconTemplate = state.sourceIconTemplate) }
+            }
+            if (state.playbackSpeed != latestPlaybackSpeed) {
+                latestPlaybackSpeed = state.playbackSpeed
+                updateFaceState { face -> face.copy(playbackSpeed = state.playbackSpeed) }
             }
         }
 
@@ -1967,10 +2052,17 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.textArtist.text = message
     }
 
+    /** Pending "settle back to the plain cover drawable" callback from the last [fadeToAlbumArt]
+     *  cross-fade, so a rapid follow-up (quick track skips) cancels it instead of letting it
+     *  restore a drawable that is no longer the current one. */
+    private var albumArtSettleRunnable: Runnable? = null
+
     private fun fadeToAlbumArt(bitmap: Bitmap?) {
         // Cross-fade instead of fade-out-then-in: the old art stays visible underneath while
         // the new one fades in over it, so the artwork never blinks away mid-transition.
         binding.albumArt.animate().cancel()
+        albumArtSettleRunnable?.let { binding.albumArt.removeCallbacks(it) }
+        albumArtSettleRunnable = null
 
         // Unwrap a still-running transition so rapid track skips don't nest layers endlessly.
         val oldDrawable = when (val current = binding.albumArt.drawable) {
@@ -1984,9 +2076,114 @@ class MainActivity : WearCompanionWatchActivity(),
             return
         }
 
-        val transition = TransitionDrawable(arrayOf(oldDrawable, newDrawable))
+        // Covers of matching shape can be handed to a TransitionDrawable directly; covers of
+        // differing shape cannot, and the failure is the stretched artwork this guards against -
+        // see [sameAspectRatio].
+        if (sameAspectRatio(oldDrawable, newDrawable)) {
+            val transition = TransitionDrawable(arrayOf(oldDrawable, newDrawable))
+            binding.albumArt.setImageDrawable(transition)
+            transition.startTransition(ALBUM_ART_CROSSFADE_MS)
+            return
+        }
+
+        val oldFrame = composeCoverFrame(binding.albumArt, oldDrawable)
+        val newFrame = composeCoverFrame(binding.albumArt, newDrawable)
+        if (oldFrame == null || newFrame == null) {
+            // Not laid out yet, or a drawable with no intrinsic size. The new cover is already
+            // applied above; skipping the cross-fade is the honest outcome.
+            return
+        }
+
+        val transition = TransitionDrawable(
+                arrayOf(BitmapDrawable(resources, oldFrame), BitmapDrawable(resources, newFrame)))
         binding.albumArt.setImageDrawable(transition)
         transition.startTransition(ALBUM_ART_CROSSFADE_MS)
+
+        // Back to the real drawable once the fade is over, so the view returns to its own
+        // centerCrop of the true cover rather than staying on a baked, view-resolution frame.
+        //
+        // Guarded on the transition still being what is on screen: several paths re-render the
+        // artwork outside a track change (a preference edit, an ambient exit, a face swap), and one
+        // landing inside the fade's 300 ms would otherwise be reverted here to a drawable composed
+        // before it.
+        val settle = Runnable {
+            if (binding.albumArt.drawable === transition) {
+                binding.albumArt.setImageDrawable(newDrawable)
+            }
+            albumArtSettleRunnable = null
+        }
+        albumArtSettleRunnable = settle
+        binding.albumArt.postDelayed(settle, ALBUM_ART_CROSSFADE_MS.toLong())
+    }
+
+    /**
+     * Whether two cover drawables can share one [TransitionDrawable] without being distorted.
+     *
+     * They can only when their aspect ratios agree, and the reason is not obvious.
+     * `TransitionDrawable` is a `LayerDrawable`, whose intrinsic size is the maximum of its layers'
+     * **per axis, computed independently** - so a 640x360 cover fading into a 450x450 one yields an
+     * intrinsic size of 640x450, a shape belonging to neither. `BitmapDrawable`'s default gravity is
+     * `FILL`, so each layer is then stretched into that composite box, and the host ImageView's
+     * `centerCrop` cannot undo it: it scales the composite, uniformly, against the wrong shape.
+     *
+     * Covers of differing shape do reach the watch. `BitmapUtils.resizeAndCrop` (wearutils, called
+     * from `MusicService.transmitToWear`) returns the source *uncropped* when it is smaller than the
+     * aspect-adjusted target, so a 640x360 "art track" thumbnail arrives in 16:9 while an ordinary
+     * cover arrives square - which is why the stretch was real but rare, and why it corrected itself
+     * on the next track.
+     *
+     * Sizes may differ freely as long as the ratio holds: that is a uniform scale, which is exactly
+     * what the ImageView is for.
+     */
+    private fun sameAspectRatio(first: Drawable, second: Drawable): Boolean {
+        val fw = first.intrinsicWidth
+        val fh = first.intrinsicHeight
+        val sw = second.intrinsicWidth
+        val sh = second.intrinsicHeight
+        if (fw <= 0 || fh <= 0 || sw <= 0 || sh <= 0) {
+            return false
+        }
+        return abs(fw.toFloat() / fh - sw.toFloat() / sh) <= ALBUM_ART_ASPECT_TOLERANCE
+    }
+
+    /**
+     * Renders [drawable] into a [view]-sized frame with the view's own centerCrop fit already
+     * baked in.
+     *
+     * The same trick [composeSquareInsetFrame] uses, for the same reason: two frames of identical
+     * dimensions can be cross-faded by a `TransitionDrawable` without its per-axis intrinsic
+     * arithmetic having anything left to get wrong, because each frame is already exactly the size
+     * the layer will be drawn at.
+     *
+     * Only used on the shape-mismatch path - it allocates a screen-sized bitmap per layer, which is
+     * not worth spending on every track change when the shapes agree and a plain cross-fade is
+     * already correct.
+     */
+    private fun composeCoverFrame(view: ImageView, drawable: Drawable): Bitmap? {
+        val viewWidth = view.width
+        val viewHeight = view.height
+        val intrinsicWidth = drawable.intrinsicWidth
+        val intrinsicHeight = drawable.intrinsicHeight
+        if (viewWidth <= 0 || viewHeight <= 0 || intrinsicWidth <= 0 || intrinsicHeight <= 0) {
+            return null
+        }
+
+        val scale = max(
+                viewWidth / intrinsicWidth.toFloat(),
+                viewHeight / intrinsicHeight.toFloat())
+        val width = (intrinsicWidth * scale).roundToInt()
+        val height = (intrinsicHeight * scale).roundToInt()
+        val left = (viewWidth - width) / 2
+        val top = (viewHeight - height) / 2
+
+        val frame = Bitmap.createBitmap(viewWidth, viewHeight, Bitmap.Config.ARGB_8888)
+        // The drawable is live - it is (or was) the ImageView's own - so its bounds are borrowed
+        // and put back. setImageDrawable reconfigures them anyway, but not before this returns.
+        val previousBounds = Rect(drawable.bounds)
+        drawable.setBounds(left, top, left + width, top + height)
+        drawable.draw(Canvas(frame))
+        drawable.bounds = previousBounds
+        return frame
     }
 
     /** Grayscale for the "Black & white" album art styles - a plain saturation-0 color filter
@@ -2471,8 +2668,10 @@ class MainActivity : WearCompanionWatchActivity(),
                 QuickSlotMode.SESSION -> {
                     panelButton.visibility = View.VISIBLE
                     quickSlotUsesRealIcon[index] = false
+                    sessionSlotShowsAppIcon[index] = false
                     displayedSessionQuickActions.getOrNull(index)?.let {
                         quickSlotUsesRealIcon[index] = applySessionQuickIcon(panelButton, it)
+                        sessionSlotShowsAppIcon[index] = quickSlotUsesRealIcon[index]
                         panelButton.contentDescription = sessionActionDescription(it)
                     }
                 }
@@ -2566,11 +2765,12 @@ class MainActivity : WearCompanionWatchActivity(),
                 panelButton.setImageDrawable(null)
                 panelButton.visibility = View.GONE
                 quickSlotUsesRealIcon[index] = false
+                sessionSlotShowsAppIcon[index] = false
                 panelButton.contentDescription = null
             } else {
                 quickSlotModes[index] = QuickSlotMode.SESSION
                 panelButton.visibility = View.VISIBLE
-                applySessionQuickIcon(panelButton, action)
+                sessionSlotShowsAppIcon[index] = applySessionQuickIcon(panelButton, action)
                 // Session icons are white templates now (see MediaNotificationActions), so let the
                 // panel tint them to its chrome colour (dark on the light tonal panel) like the
                 // rest of the glyphs, instead of leaving them raw white on a light surface.
@@ -2678,6 +2878,7 @@ class MainActivity : WearCompanionWatchActivity(),
             panelButton.setImageDrawable(null)
             panelButton.visibility = View.GONE
             quickSlotUsesRealIcon[index] = false
+            sessionSlotShowsAppIcon[index] = false
         }
         (binding.quickActionUpNextIcon.drawable as? Animatable)?.stop()
         quickPanelLongMode = QuickLongMode.HIDDEN
@@ -2704,8 +2905,11 @@ class MainActivity : WearCompanionWatchActivity(),
         val bitmap = if (action.hasIconPng() && !action.iconPng.isEmpty) {
             val bytes = action.iconPng.toByteArray()
             val cached = sessionQuickIconBitmaps[action.id]
-            if (cached != null && cached.png.contentEquals(bytes) &&
-                    hasVisiblePixels(cached.bitmap)) {
+            // A cached entry was already checked for visible pixels when it was decoded, and its
+            // bytes are compared here, so it cannot have become blank. Re-scanning it was cheap
+            // at 48px and is not at 128 - this runs for every session slot on every state change
+            // while the panel is open.
+            if (cached != null && cached.png.contentEquals(bytes)) {
                 cached.bitmap
             } else {
                 val decoded = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -2735,20 +2939,36 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     /** Defensive counterpart of the phone-side raster check for cached payloads produced by an
-     * older app version. Transparent PNG bytes are valid data but not a visible action icon. */
+     * older app version. Transparent PNG bytes are valid data but not a visible action icon.
+     * One getPixels pass rather than per-pixel reads: the icons grew from 48px to 128px, and this
+     * runs for every session action whenever the panel is rebuilt. */
     private fun hasVisiblePixels(bitmap: Bitmap): Boolean {
-        for (y in 0 until bitmap.height) {
-            for (x in 0 until bitmap.width) {
-                if (Color.alpha(bitmap.getPixel(x, y)) > 12) return true
-            }
-        }
-        return false
+        val width = bitmap.width
+        val height = bitmap.height
+        if (width <= 0 || height <= 0) return false
+        val pixels = IntArray(width * height)
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+        return pixels.any { Color.alpha(it) > 12 }
     }
 
+    /**
+     * A rasterized player icon is a bitmap and this app's own glyphs are vectors, so they need
+     * different fitting to come out the same size.
+     *
+     * CENTER_INSIDE never scales a bitmap *up*: the phone's raster was drawn at whatever pixel
+     * size it arrived at, which put the player's own icons a quarter smaller than the system's
+     * media controls show them, and smaller on a denser watch. FIT_CENTER fills the padded box in
+     * both directions, which is also why the bitmap branch can afford more padding than the
+     * vectors: 10dp of a 52dp button leaves the glyph at the 24dp the system draws.
+     */
     private fun setQuickActionIconPadding(view: ImageView, remoteTemplate: Boolean) {
-        val paddingDp = if (remoteTemplate) 8f else 13f
+        val paddingDp = if (remoteTemplate) 10f else 13f
         val padding = (paddingDp * resources.displayMetrics.density).roundToInt()
-        view.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        view.scaleType = if (remoteTemplate) {
+            ImageView.ScaleType.FIT_CENTER
+        } else {
+            ImageView.ScaleType.CENTER_INSIDE
+        }
         view.setPadding(padding, padding, padding, padding)
     }
 
@@ -3040,6 +3260,7 @@ class MainActivity : WearCompanionWatchActivity(),
      *  this feature existed. A slot with only a long-press action still shows that icon. */
     private fun updateScreenButtons(config: WatchActionConfigProvider) {
         val visibleButtons = ArrayList<ImageView>(3)
+        val faceButtons = ArrayList<FaceMiniButton>(ScreenButtons.ALL_SLOTS.size)
 
         for ((slotCode, slotView) in screenButtonViews()) {
             val tapAction = config.getAction(ButtonInfo(false, slotCode, GESTURE_SINGLE_TAP))
@@ -3050,15 +3271,24 @@ class MainActivity : WearCompanionWatchActivity(),
                 slotView.visibility = View.GONE
                 screenButtonIconTintable.remove(slotCode)
             } else {
+                val description = displayedAction.title
+                        ?: StandardActionTitles.get(this, displayedAction.key)
                 slotView.visibility = View.VISIBLE
                 slotView.setImageDrawable(displayedAction.icon)
                 screenButtonIconTintable[slotCode] = displayedAction.iconTintable
-                slotView.contentDescription = displayedAction.title
-                        ?: StandardActionTitles.get(this, displayedAction.key)
+                slotView.contentDescription = description
                 visibleButtons.add(slotView)
+                // The same slot, its same icon and its same description, in a form a Compose face
+                // can draw. Built here rather than in the face so both paths read one config.
+                faceButtons += FaceMiniButton(
+                        slotCode = slotCode,
+                        icon = displayedAction.icon?.toFaceIcon(),
+                        iconTintable = displayedAction.iconTintable,
+                        description = description)
             }
         }
 
+        configuredMiniButtons = faceButtons
         screenButtonsConfigured = visibleButtons.isNotEmpty()
         configureScreenButtonsGeometry()
         styleScreenButtons()
@@ -3083,6 +3313,12 @@ class MainActivity : WearCompanionWatchActivity(),
                     overlayActive = overlayActive,
                     enabledForFace = miniButtonsEnabled)
         }
+        // A face that hosts the row draws these buttons itself, so the shared View row must not
+        // also draw them - that double render is the overlap this exists to fix. Everything else
+        // about the row's activation is untouched: the Up Next pill and the faces' lower-chrome
+        // reservation still read `active`, because the buttons are on screen either way.
+        val hostedByFace = MiniButtonPlacement.isHostedByFace(screenFace)
+        publishHostedMiniButtons(active && !ambientObserver.isAmbient && hostedByFace)
         val wasVisible = binding.screenButtonsRow.visibility == View.VISIBLE
         // Newly shown: keep it transparent until repositionScreenButtonsRow has placed it. The row
         // is laid out at its default XML position first and only nudged into place in a later post,
@@ -3091,7 +3327,8 @@ class MainActivity : WearCompanionWatchActivity(),
         if (visible && !wasVisible) {
             binding.screenButtonsRow.alpha = 0f
         }
-        binding.screenButtonsRow.visibility = if (visible) View.VISIBLE else View.GONE
+        binding.screenButtonsRow.visibility =
+                if (visible && !hostedByFace) View.VISIBLE else View.GONE
 
         // Curated/Expressive faces reserve their lower chrome only for a row that can actually
         // appear. Only the empty idle state restores their default lower composition.
@@ -3590,6 +3827,33 @@ class MainActivity : WearCompanionWatchActivity(),
         for ((slotCode, button) in screenButtonViews()) {
             styleScreenButton(button, screenButtonIconTintable[slotCode] ?: true)
         }
+        publishMiniButtonAppearance()
+    }
+
+    /** Hands a hosting face the same surface the row above just painted itself with. Called from
+     *  [styleScreenButtons], which [applyAccentColor] already runs, so an album-derived style
+     *  follows the artwork instead of lagging a track behind it. */
+    private fun publishMiniButtonAppearance() {
+        val surface = MiniButtonSurfaces.resolve(screenButtonsBgStyle, miniButtonPalette())
+        updateFaceState { state ->
+            if (state.miniButtonSurface == surface &&
+                    state.miniButtonsAlpha == screenButtonsOpacity) {
+                state
+            } else {
+                state.copy(
+                        miniButtonSurface = surface,
+                        miniButtonsAlpha = screenButtonsOpacity)
+            }
+        }
+    }
+
+    /** The one gate on whether a face draws the mini buttons, so the row and the face can never
+     *  both be showing them (or neither). */
+    private fun publishHostedMiniButtons(show: Boolean) {
+        val buttons = if (show) configuredMiniButtons else emptyList()
+        updateFaceState { state ->
+            if (state.miniButtons == buttons) state else state.copy(miniButtons = buttons)
+        }
     }
 
     private fun styleScreenButton(
@@ -3621,114 +3885,31 @@ class MainActivity : WearCompanionWatchActivity(),
         button.imageAlpha = (miniButtonIconAlpha * 255).roundToInt().coerceIn(0, 255)
         button.clearColorFilter()
 
-        val albumAccent = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
-        val expressiveAlbumAccent = PaletteTransforms.tonalSurface(
-                albumAccent, 0.74f, 0.40f, 0.92f)
-        val forceMonochromeIcon = screenButtonsBgStyle in setOf(
-                "glow_album", "glow_exp", "outline_exp", "outline_exp_album", "icon_exp",
-                "solid_exp_album")
-
-        fun tintIcon(color: Int, force: Boolean = forceMonochromeIcon) {
-            if (force || iconTintable) button.setColorFilter(color)
+        // The colour of a mini button is decided in common, not here: the Chat face draws these
+        // same buttons inside its own composition with Compose, and the phone previews them with
+        // Canvas. Three surfaces answering "what does screen_buttons_bg_style look like?" from
+        // three copies of one `when` is what let the preview and the wrist disagree.
+        val surface = MiniButtonSurfaces.resolve(screenButtonsBgStyle, miniButtonPalette())
+        button.background = when {
+            surface.followsFaceNeutral -> neutralMiniButtonBackground()
+            // Neither a fill nor a stroke: an icon on its own, with no shape to paint at all.
+            // Distinct from a transparent fill, which still carries the button's outline.
+            surface.fillArgb == 0 && surface.strokeArgb == 0 -> null
+            else -> GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                setColor(surface.fillArgb)
+                if (surface.strokeArgb != 0 && surface.strokeWidthDp > 0f) {
+                    setStroke(
+                            (surface.strokeWidthDp * density).roundToInt(),
+                            surface.strokeArgb)
+                }
+            }
         }
-
-        fun glowColor(baseColor: Int): Int {
-            val hsl = FloatArray(3)
-            ColorUtils.colorToHSL(baseColor, hsl)
-            return if (hsl[2] < 0.4f) {
-                hsl[2] = 0.45f
-                ColorUtils.HSLToColor(hsl)
-            } else {
-                baseColor
-            }
-        }
-
-        // Styles that render identically on every face, so the mini-button appearance is the
-        // user's own choice instead of being dictated by the selected layout. The "glass"
-        // (Follow layout) value keeps the per-face treatment in neutralMiniButtonBackground().
-        when (screenButtonsBgStyle) {
-            "transparent" -> {
-                button.background = null
-            }
-            "uniform_glass" -> {
-                button.background = capsule(getColor(R.color.glass_surface_fill))
-            }
-            "uniform_glass_light" -> {
-                button.background = GradientDrawable().apply {
-                    shape = GradientDrawable.RECTANGLE
-                    setColor(Color.argb(0x1A, 0xFF, 0xFF, 0xFF))
-                }
-                tintIcon(Color.WHITE, force = false)
-            }
-            "translucent_album", "translucent_album_exp" -> {
-                val tintColor = if (screenButtonsBgStyle == "translucent_album_exp") {
-                    expressiveAlbumAccent
-                } else {
-                    albumAccent
-                }
-                button.background = GradientDrawable().apply {
-                    shape = GradientDrawable.RECTANGLE
-                    setColor(ColorUtils.setAlphaComponent(tintColor, 0x4D))
-                }
-                tintIcon(Color.WHITE, force = false)
-            }
-            "glow_album", "glow_exp" -> {
-                val tintColor = if (screenButtonsBgStyle == "glow_exp") {
-                    expressiveAlbumAccent
-                } else {
-                    albumAccent
-                }
-                val glow = glowColor(tintColor)
-                button.background = GradientDrawable().apply {
-                    shape = GradientDrawable.RECTANGLE
-                    setColor(Color.TRANSPARENT)
-                    setStroke((2f * density).roundToInt(), ColorUtils.setAlphaComponent(glow, 0xE0))
-                }
-                tintIcon(glow)
-            }
-            "outline" -> {
-                button.background = capsule(
-                        Color.TRANSPARENT,
-                        (1.5f * density).roundToInt(),
-                        ColorUtils.setAlphaComponent(albumAccent, 0xE0))
-            }
-            "outline_exp", "outline_exp_album" -> {
-                button.background = capsule(
-                        Color.TRANSPARENT,
-                        (1.5f * density).roundToInt(),
-                        ColorUtils.setAlphaComponent(expressiveAlbumAccent, 0xE0))
-                tintIcon(expressiveAlbumAccent)
-            }
-            "icon_exp" -> {
-                button.background = null
-                tintIcon(expressiveAlbumAccent)
-            }
-            else -> {
-                val tintColor = when (screenButtonsBgStyle) {
-                    "solid_theme" -> if (screenFace == "expressive") {
-                        PaletteTransforms.tonalSurface(
-                                defaultSeekBarColor, 0.74f, 0.40f, 0.92f)
-                    } else {
-                        defaultSeekBarColor
-                    }
-                    "solid_album" -> albumAccent
-                    "solid_exp_album" -> expressiveAlbumAccent
-                    else -> null
-                }
-
-                if (tintColor == null) {
-                    button.background = neutralMiniButtonBackground()
-                } else {
-                    val alpha = if (screenButtonsBgStyle == "solid_exp_album") 0xD0 else 230
-                    button.background = GradientDrawable().apply {
-                        shape = GradientDrawable.RECTANGLE
-                        setColor(ColorUtils.setAlphaComponent(tintColor, alpha))
-                    }
-                    tintIcon(
-                            contrastingIconColor(tintColor),
-                            force = screenButtonsBgStyle == "solid_exp_album")
-                }
-            }
+        surface.iconTintArgb?.let { tint ->
+            // A style that forces its tint means it: the treatment is a single flat colour, so it
+            // applies even to an app icon or fetched cover. Everything else leaves a full-colour
+            // icon alone, since flattening a cover to one hue destroys what it was chosen for.
+            if (surface.forceIconTint || iconTintable) button.setColorFilter(tint)
         }
 
         val background = button.background
@@ -3776,6 +3957,20 @@ class MainActivity : WearCompanionWatchActivity(),
                 drawable.cornerRadius = 999f
             }
         }
+    }
+
+    /** The colours [MiniButtonSurfaces] draws its styles from. "solid_theme" is the one that is
+     *  face-dependent - Expressive paints it as a tonal surface of the theme colour where every
+     *  other face uses it raw - so that choice is made here and handed over resolved. */
+    private fun miniButtonPalette(): MiniButtonSurfaces.Palette {
+        val albumAccent = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
+        val themeAccent = if (screenFace == "expressive") {
+            PaletteTransforms.tonalSurface(defaultSeekBarColor, 0.74f, 0.40f, 0.92f)
+        } else {
+            defaultSeekBarColor
+        }
+        return MiniButtonSurfaces.paletteFor(albumAccent, themeAccent)
+                .copy(uniformGlassFill = getColor(R.color.glass_surface_fill))
     }
 
     /** The "glass" (Follow layout) mini-button pill. Deliberately independent of the selected
@@ -3871,6 +4066,11 @@ class MainActivity : WearCompanionWatchActivity(),
                 MiscPreferences.DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT
         )
 
+        // Re-applied here as well as in onStart: this preference is phone-owned, so it can flip
+        // while the player is already on screen and would otherwise only take effect on the next
+        // open.
+        applyKeepScreenOnPreference()
+
         // Only restyles a screen that is already up; deliberately does not run the auto-open side
         // of the idle config, which would yank the user into another screen just because a
         // preference landed from the phone while they were looking at this one.
@@ -3911,6 +4111,15 @@ class MainActivity : WearCompanionWatchActivity(),
         updateFaceState {
             it.copy(
                     backgroundStyle = playerBackgroundStyle,
+                    // A shared piece rendered by the background layer, so it is resolved here with
+                    // the rest of the backdrop rather than by whichever face happens to want it.
+                    accentFloor = AccentFloorStyle.fromPreference(
+                            faceString(MiscPreferences.WEAR_ACCENT_FLOOR)),
+                    // Resolved here with the rest of the backdrop for the same reason: Split's
+                    // panel *is* its background, it just happens to be the one the shared layer
+                    // cannot draw.
+                    splitPanelStyle = SplitPanelStyle.fromPref(
+                            faceString(MiscPreferences.WEAR_SPLIT_PANEL)),
                     albumArtHidden = albumArtHidden,
                     albumArtGrayscale = albumArtGrayscale,
                     albumArtBlurred = blurAlbumArtBackground,
@@ -4090,6 +4299,11 @@ class MainActivity : WearCompanionWatchActivity(),
         expressiveSeekMode = faceString(MiscPreferences.WEAR_EXPRESSIVE_SEEK_MODE)
         wearFontKey = faceString(MiscPreferences.WEAR_FONT)
         wearClockFontKey = faceString(MiscPreferences.WEAR_CLOCK_FONT)
+        wearLyricsFontKey = faceString(MiscPreferences.WEAR_LYRICS_FONT)
+        metadataGroups = TrackMetadataFields.Group.entries
+                .filterTo(mutableSetOf()) { group ->
+                    faceBool(MiscPreferences.metadataGroupPreference(group))
+                }
         val keepsEssentialTransport = screenFace == "expressive" || screenFace == "material"
         // Expressive and Material use their center transport as the composition's only obvious
         // playback affordance. Hidden/Show controls off therefore become a deliberate no-op for
@@ -4109,7 +4323,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     centralSeekEnabled = shouldEnableCentralSeek(expressiveSeekMode),
                     showClock = alwaysDisplayClock,
                     fontKey = wearFontKey,
-                    clockFontKey = wearClockFontKey
+                    clockFontKey = wearClockFontKey,
+                    lyricsFontKey = wearLyricsFontKey,
+                    metadataGroups = metadataGroups
             )
         }
         // Now that wearFontKey and the state's fontKey are current, resolve the awake clock colour
@@ -4291,6 +4507,14 @@ class MainActivity : WearCompanionWatchActivity(),
         if (composeFace) {
             composeFaceKind.value = screenFace
         }
+        // Verse is the only face that shows the song's words, and looking them up costs a network
+        // request on the phone per track - so the feed follows the face rather than running for
+        // everyone. Driven from here because this is the one place the applied face is settled,
+        // including when the phone pushes a new choice while the screen is already up.
+        viewModel.setLyricsEnabled(screenFace == FACE_VERSE)
+        // Same rule, same reason: the phone reads a file (and, if the user switched it on,
+        // queries a service) to answer this, so nobody who has not selected the face pays.
+        viewModel.setMetadataEnabled(screenFace == FACE_METADATA)
         binding.expressiveFace.visibility = if (composeFace) View.VISIBLE else View.GONE
         binding.playerBackground.visibility = if (
             composeFace || binding.idleStateGroup.visibility == View.VISIBLE
@@ -4453,6 +4677,48 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val openPlaybackQueueScreenListener = Observer<Unit?> {
         startActivity(Intent(this, QueueActivity::class.java))
+    }
+
+    private val openLyricsScreenListener = Observer<Unit?> {
+        openLyricsScreen()
+    }
+
+    /**
+     * Feeds the Verse face its words.
+     *
+     * Only the synced case produces lines. Unsynced lyrics are deliberately dropped rather than
+     * shown as a block: this face's whole composition is "the line being sung", and a wall of
+     * untimed text has no line being sung - the face's title card is the honest rendering of that
+     * and looks like a design rather than a failure.
+     *
+     * `pending` is kept distinct from "no lines" so the face can hold its title card back at full
+     * strength while an answer is still on its way, instead of asserting a track has no lyrics a
+     * moment before its lyrics arrive.
+     */
+    /** The Metadata face's table. Null until the phone answers - which is that face's own empty
+     *  state, not a spinner: the point of the screen is that it draws from what is already here. */
+    private val trackMetadataObserver = Observer<com.svartifoss.snfell.proto.TrackMetadata?> { meta ->
+        updateFaceState { face -> face.copy(metadata = meta) }
+    }
+
+    private val lyricsStateObserver = Observer<LyricsUiState?> { state ->
+        val lines = (state as? LyricsUiState.Synced)?.lines.orEmpty()
+        updateFaceState { face ->
+            face.copy(lyricLines = lines, lyricsPending = state is LyricsUiState.Loading)
+        }
+    }
+
+    /**
+     * Opens the lyrics screen, handing it the accent already resolved here.
+     *
+     * Passing the colour rather than letting that screen work it out is what stops it opening on
+     * the default accent and correcting itself a moment later: album colour is extracted
+     * asynchronously (see applyAccentColor), so a screen starting from scratch has nothing to draw
+     * with for the first frames. It re-derives its own once the artwork changes under it.
+     */
+    private fun openLyricsScreen() {
+        startActivity(Intent(this, LyricsActivity::class.java)
+                .putExtra(LyricsActivity.EXTRA_ACCENT_COLOR, currentAccentColor))
     }
 
     private val openStreamingShortcutsMenuListener = Observer<Unit?> {
@@ -4857,6 +5123,10 @@ class MainActivity : WearCompanionWatchActivity(),
                     // centred artist because it rides as a start compound drawable on a
                     // match_parent view) - applyClassicSourceIcon now reads this instead.
                     inAmbient = true
+                    // Order matters: disable first so the refresh below is a true one-shot rather
+                    // than restarting the 500ms loop we are trying to stop.
+                    viewModel.setContinuousPositionTicking(false)
+                    viewModel.refreshPositionOnce()
                     stemButtonsManager.onEnterAmbient()
                     overlayActive = false
                     activeOverlayKind = null
@@ -4873,7 +5143,11 @@ class MainActivity : WearCompanionWatchActivity(),
 
                     applyAmbientPresentation()
 
-                    if (effectiveAodStyle() in setOf("expressive", "material")) {
+                    // Every Compose AOD can show the Up Next pill, not just those two - the pill
+                    // was generalised but this refresh was not, so the rest were left drawing
+                    // whatever queue data happened to be lying around, or none. Now that any face
+                    // can be chosen as the AOD, that gap would be visible on nine more of them.
+                    if (effectiveAodStyle() in composeFaces || effectiveAodStyle() == "chrono") {
                         // Keep the cached row visible while refreshing. Clearing it here made AOD
                         // look empty until Quick Actions happened to request the queue later.
                         viewModel.customList.value?.let(::updateUpNextPreview)
@@ -4925,6 +5199,11 @@ class MainActivity : WearCompanionWatchActivity(),
 
                 override fun onUpdateAmbient() {
                     updateClock()
+                    // Once per ambient update - the cadence the platform already wakes us at, so
+                    // it costs nothing extra. Anything reading the position (ambient progress, the
+                    // ambient track time, Verse's lyric line) is then correct exactly when the
+                    // panel redraws, and untouched in between.
+                    viewModel.refreshPositionOnce()
                     viewModel.updateTimers()
                     hideNotificationIfOverdue()
 
@@ -4935,6 +5214,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
                 override fun onExitAmbient() {
                     inAmbient = false
+                    viewModel.setContinuousPositionTicking(true)
                     stemButtonsManager.onExitAmbient()
 
                     updateFaceState { it.copy(ambient = false) }
@@ -6234,7 +6514,12 @@ class MainActivity : WearCompanionWatchActivity(),
                 }
                 QuickSlotMode.SESSION -> {
                     val semantic = displayedSessionQuickActions.getOrNull(index)?.semantic
-                    if (semantic == "repeat") {
+                    // Repeat is the one session slot whose glyph carries three states rather than
+                    // two, so the fallback has to be swapped for the repeat-one variant. Only the
+                    // fallback: while the player's own icon is on screen it already says which
+                    // state it is in - that is what it is drawn per state for - and painting over
+                    // it replaced the player's artwork on a panel that promises to mirror it.
+                    if (semantic == "repeat" && !sessionSlotShowsAppIcon[index]) {
                         panelButton.setImageResource(
                                 if (repeatMode == 2) {
                                     com.svartifoss.snfell.common.R.drawable.action_repeat_one

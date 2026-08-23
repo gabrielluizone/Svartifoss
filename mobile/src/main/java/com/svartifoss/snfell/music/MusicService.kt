@@ -61,6 +61,8 @@ import com.svartifoss.snfell.common.QueueEntry
 import com.svartifoss.snfell.common.LibraryEntry
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.LyricsStatus
+import com.svartifoss.snfell.common.PlaybackPositionEstimate
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.ThemeAppearance
@@ -72,15 +74,20 @@ import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.di.GlobalConfig
 import com.svartifoss.snfell.di.MusicServiceSubComponent
+import com.svartifoss.snfell.notifications.AppGlyphStore
 import com.svartifoss.snfell.notifications.MediaNotificationActions
 import com.svartifoss.snfell.notifications.NotificationProvider
 import com.svartifoss.snfell.notifications.customActionSnapshotId
 import com.svartifoss.snfell.notifications.inferMediaActionSemantic
 import com.svartifoss.snfell.notifications.isCustomActionSnapshotId
+import com.svartifoss.snfell.proto.LyricsRequest
+import com.svartifoss.snfell.proto.LyricsResponse
 import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.proto.CustomListItemAction
 import com.svartifoss.snfell.proto.MediaAction
 import com.svartifoss.snfell.proto.MusicState
+import com.svartifoss.snfell.proto.PlaybackSync
+import com.svartifoss.snfell.proto.TrackMetadata
 import com.svartifoss.snfell.proto.WatchActions
 import com.google.protobuf.ByteString
 import com.svartifoss.snfell.update.UpdateChecker
@@ -151,6 +158,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
          */
         private val SHUTDOWN_SCOPE = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+        /** MessageClient rejects payloads over 100 KB; stay well under it. */
+        private const val MUSIC_STATE_MESSAGE_MAX_BYTES = 60 * 1024
+
         /**
          * How long a queue jump is given to take visible effect before the media-id route is tried
          * instead - see [onQueueEntrySelected]. Long enough for a player that updates metadata a
@@ -213,6 +223,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
     private lateinit var preferences: SharedPreferences
 
+    /** Identity of the track last read from metadata, and when it was first seen on this device's
+     *  monotonic clock. Together they let a stale position sample be spotted - see
+     *  [PlaybackPositionEstimate.sampleBelongsToTrack]. */
+    private var lastSeenTrackKey: String? = null
+    private var trackFirstSeenRealtimeMs: Long = 0L
+
     @Inject
     lateinit var mediaSessionProvider: ActiveMediaSessionProvider
 
@@ -243,6 +259,41 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
         }
     }
+    /**
+     * A music app's notification glyph was learned for the first time - see [AppGlyphStore].
+     *
+     * Action icons are rasterized at *transmit* time, so an assignment made before this phone had
+     * ever seen that app's notification carries its launcher icon on the watch and keeps carrying
+     * it: nothing else would resend the config, which is why the only way to pick up the new glyph
+     * used to be re-picking the action by hand. Re-transmit rather than commit - nothing about the
+     * configuration changed, only how it draws.
+     *
+     * Fired at most once per package per process (the store enforces that), so this is a handful of
+     * pushes over the life of an install rather than anything periodic.
+     */
+    private val appGlyphLearned: (String) -> Unit = {
+        queueRefreshHandler.post { retransmitConfigsForGlyphs() }
+    }
+
+    /**
+     * Re-send the action list and both button configs so their icons are rasterized again.
+     *
+     * Called both when a glyph is learned live and once at startup when [AppGlyphStore] reports
+     * that something was learned while this service was not running - which is the ordinary case,
+     * since a service that is stopped is exactly when the user is most likely to have a music app
+     * post its first notification.
+     */
+    private fun retransmitConfigsForGlyphs() {
+        try {
+            config.getActionList().retransmit()
+            config.getPlayingConfig().retransmit()
+            config.getStoppedConfig().retransmit()
+            AppGlyphStore.markRetransmitted(this)
+        } catch (e: Exception) {
+            Timber.w(e, "Could not re-transmit configs after learning an app glyph")
+        }
+    }
+
     private val quickActionsPreferenceChanged =
             SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == MiscPreferences.WEAR_QUICK_PANEL_SOURCE.key) {
@@ -376,6 +427,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         preferences.registerOnSharedPreferenceChangeListener(quickActionsPreferenceChanged)
 
         MediaNotificationActions.addListener(notificationActionsChanged)
+        AppGlyphStore.addListener(appGlyphLearned)
+        // Catches up on glyphs learned while this service was down - see needsRetransmit.
+        if (AppGlyphStore.needsRetransmit(this)) {
+            queueRefreshHandler.post { retransmitConfigsForGlyphs() }
+        }
         NotificationService.updateQuickActionsBinding(this)
 
         try {
@@ -640,6 +696,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         ackTimeoutHandler.removeCallbacksAndMessages(null)
         queueRefreshHandler.removeCallbacksAndMessages(null)
         MediaNotificationActions.removeListener(notificationActionsChanged)
+        AppGlyphStore.removeListener(appGlyphLearned)
         preferences.unregisterOnSharedPreferenceChangeListener(quickActionsPreferenceChanged)
         contentResolver.unregisterContentObserver(volumeContentObserver)
 
@@ -908,6 +965,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
                 recordTrackHistoryIfChanged(newArtist, newTitle)
 
+                // When this track was first read, so a position sample that predates it can be
+                // recognised as belonging to the previous one - see the playback-state block
+                // below and PlaybackPositionEstimate.sampleBelongsToTrack.
+                // Artist and title only, deliberately not the duration: streaming players
+                // routinely publish metadata with a duration of 0 and fill it in a moment later,
+                // which would read as a second track change and reset the marker below a second
+                // time - rejecting a position sample that was perfectly valid.
+                val trackKey = "$newArtist|$newTitle"
+                if (trackKey != lastSeenTrackKey) {
+                    lastSeenTrackKey = trackKey
+                    trackFirstSeenRealtimeMs = android.os.SystemClock.elapsedRealtime()
+                }
+
                 val artUriString = meta.getString(MediaMetadata.METADATA_KEY_ALBUM_ART_URI)
                     ?: meta.getString(MediaMetadata.METADATA_KEY_ART_URI)
                     ?: meta.getString(MediaMetadata.METADATA_KEY_DISPLAY_ICON_URI)
@@ -933,15 +1003,48 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
 
             if (playbackState != null) {
-                musicStateBuilder.positionMs = playbackState.position
+                val elapsedRealtimeNow = android.os.SystemClock.elapsedRealtime()
+
+                // Metadata and playback state arrive through separate MediaSession callbacks with
+                // no guaranteed order, so right after a track change the new track's title and
+                // duration are readable while the position still describes the one that just
+                // ended. Attaching them to each other is what made a 2:30 track ending into a 4:00
+                // one leave the watch counting 2:31 upwards to 4:00.
+                val sampleIsThisTrack = PlaybackPositionEstimate.sampleBelongsToTrack(
+                        playbackState.lastPositionUpdateTime, trackFirstSeenRealtimeMs)
+
+                musicStateBuilder.positionMs =
+                        if (sampleIsThisTrack) playbackState.position else 0L
 
                 // PlaybackState.lastPositionUpdateTime is in SystemClock.elapsedRealtime() time,
                 // not wall-clock time, and the watch has no way to relate its own elapsedRealtime
-                // (different device, different boot time) to ours. Convert it to an epoch
-                // timestamp here so the watch can extrapolate using its own currentTimeMillis().
-                val elapsedRealtimeNow = android.os.SystemClock.elapsedRealtime()
-                musicStateBuilder.positionUpdateTime =
-                        System.currentTimeMillis() - (elapsedRealtimeNow - playbackState.lastPositionUpdateTime)
+                // (different device, different boot time) to ours.
+                //
+                // positionUpdateTime converts it to an epoch timestamp, which only pre-3.2 watch
+                // builds still read: having the watch subtract that from its own wall clock is the
+                // skew bug positionAgeMs exists to end (see music.proto and
+                // PlaybackPositionEstimate). It is still sent so an older watch keeps behaving as
+                // it always has rather than losing its progress display entirely.
+                musicStateBuilder.positionUpdateTime = if (sampleIsThisTrack) {
+                    System.currentTimeMillis() - (elapsedRealtimeNow - playbackState.lastPositionUpdateTime)
+                } else {
+                    System.currentTimeMillis()
+                }
+
+                // The same figure as a plain duration, which is what a current watch uses. Both
+                // ends of the subtraction come from this device's monotonic clock, so no foreign
+                // clock enters the calculation at any point.
+                //
+                // A session that has never published a position update time reports 0, which would
+                // otherwise be read as "sampled at boot" and hand the watch an age of hours - the
+                // guard reports it as current instead, which is the only useful reading available.
+                // A rejected sample is reported as "position zero, measured just now" rather than
+                // as a very old zero, which the watch would otherwise extrapolate forward again.
+                musicStateBuilder.positionAgeMs = if (sampleIsThisTrack) {
+                    (elapsedRealtimeNow - playbackState.lastPositionUpdateTime).coerceAtLeast(0L)
+                } else {
+                    0L
+                }
 
                 musicStateBuilder.playbackSpeed = playbackState.playbackSpeed
                 musicStateBuilder.seekable = (playbackState.actions and PlaybackState.ACTION_SEEK_TO) != 0L
@@ -1153,6 +1256,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             return lastSourceIconBytes
         }
 
+        // The glyph this app posted the last time it played, before giving up and using its
+        // launcher icon. A player that is running but whose notification this process has not seen
+        // yet - a cold start, a listener rebind - would otherwise show a full-colour launcher icon
+        // on the seam for the first track and the monochrome glyph from the second on, which reads
+        // as the face changing its mind. See AppGlyphStore.
+        if (lastSourceIconBytes == null) {
+            AppGlyphStore.glyph(this, packageName)?.let { remembered ->
+                lastSourceIconBytes = remembered
+                lastSourceIconIsTemplate = true
+                return remembered
+            }
+        }
+
         if (lastSourceIconBytes == null) {
             lastSourceIconBytes = try {
                 rasterizeSourceIcon(packageManager.getApplicationIcon(packageName))
@@ -1187,6 +1303,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val mySequence = ++transmitSequence
 
         lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+            // Before any art work: this is the copy that decides how quickly a track change shows
+            // up on the wrist, and everything below it can suspend for hundreds of milliseconds
+            // encoding a cover.
+            sendMusicStateMessage(musicState)
+
             val previousArtSource = lastSerializedArtSource
             val artChanged = when {
                 originalAlbumArt === previousArtSource -> false
@@ -1308,12 +1429,45 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         previousMusicState = musicState
         previousAlbumArt = null
 
+        sendMusicStateMessage(musicState)
+
         val putDataRequest = PutDataRequest.create(CommPaths.DATA_MUSIC_STATE)
 
         putDataRequest.data = musicState.toBuilder().setSeq(nextMusicSeq()).build().toByteArray()
         putDataRequest.setUrgent()
 
         dataClient.putDataItem(putDataRequest).await()
+    }
+
+    /**
+     * Sends [musicState] to the watch over MessageClient, alongside the DataItem put that follows.
+     *
+     * See [CommPaths.MESSAGE_MUSIC_STATE]. The seq is taken here so it orders correctly against the
+     * puts below - the watch keeps whichever arrives first and drops the rest by content, so the
+     * duplicate costs one comparison rather than a second pass over every observer.
+     *
+     * Skipped when the payload is too large. A MusicState is normally a few hundred bytes, but it
+     * carries the media notification's rasterized action icons inline, and a player with many
+     * actions could in principle push it past what a message may hold. Falling back to the DataItem
+     * alone is exactly the behaviour that shipped before this existed, so the failure mode is
+     * "as slow as it used to be" rather than "no state at all".
+     */
+    private suspend fun sendMusicStateMessage(musicState: MusicState) {
+        val bytes = musicState.toBuilder().setSeq(nextMusicSeq()).build().toByteArray()
+        if (bytes.size > MUSIC_STATE_MESSAGE_MAX_BYTES) {
+            Timber.d("Music state too large for a message (%d bytes) - DataItem only", bytes.size)
+            return
+        }
+        try {
+            Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
+                    Wearable.getNodeClient(applicationContext),
+                    CommPaths.MESSAGE_MUSIC_STATE,
+                    bytes)
+        } catch (e: Exception) {
+            // No watch in range, or Play Services unavailable. The DataItem below is the durable
+            // path and still carries this state whenever the watch comes back.
+            Timber.d(e, "Could not send the music state as a message")
+        }
     }
 
     private fun showNotificationServiceErrorNotification() {
@@ -1883,6 +2037,204 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
+    /**
+     * Answers the watch's lyrics request for the track it names.
+     *
+     * The request carries the track rather than the phone reading its own session, because the two
+     * sides drift by a track whenever a skip is in flight and lyrics for the wrong song are worse
+     * than none - see [CommPaths.MESSAGE_REQUEST_LYRICS]. The request's fields are echoed back so
+     * the watch can drop an answer it has already moved past.
+     *
+     * A reply is sent on **every** path, including the disabled and failed ones. The watch shows a
+     * spinner until it hears something, so a silently dropped lookup is a screen that spins
+     * forever - the same reason [sendDeepLinkVerdict] answers at every terminal point.
+     */
+    private fun sendLyricsToWatch(request: LyricsRequest) {
+        lifecycleScope.launch {
+            val answer = if (!Preferences.getBoolean(preferences, MiscPreferences.LYRICS_ENABLED)) {
+                LyricsAnswer(LyricsStatus.DISABLED)
+            } else {
+                try {
+                    LyricsRepository.lyricsFor(
+                            request.title, request.artist, request.durationMs)
+                } catch (e: Exception) {
+                    // The repository already maps the lookup failures it knows about; this catches
+                    // whatever it did not, so the watch is never left waiting on a crashed
+                    // coroutine.
+                    Timber.w(e, "Lyrics lookup failed unexpectedly")
+                    LyricsAnswer(LyricsStatus.FAILED)
+                }
+            }
+
+            val response = LyricsResponse.newBuilder()
+                    .setTitle(request.title.orEmpty())
+                    .setArtist(request.artist.orEmpty())
+                    .setDurationMs(request.durationMs)
+                    .setStatus(answer.status)
+                    .apply {
+                        answer.lrc?.let { setLrc(it) }
+                        answer.plain?.let { setPlain(it) }
+                    }
+                    .build()
+
+            try {
+                Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
+                        Wearable.getNodeClient(applicationContext),
+                        CommPaths.MESSAGE_LYRICS_RESULT,
+                        response.toByteArray())
+            } catch (e: Exception) {
+                // Watch went out of range while we were fetching. Its own screen times out.
+                Timber.w(e, "Could not send lyrics to the watch")
+            }
+        }
+    }
+
+    /**
+     * Answers the watch's "where is playback actually at?" with a live reading.
+     *
+     * Read from the session here and now, deliberately not from [previousMusicState]: that is the
+     * last state *transmitted*, and the whole reason this path exists is that the phone suppresses
+     * position-only retransmissions, so it can be a whole track old. Reusing it would answer the
+     * question with the very number the watch is already extrapolating from.
+     *
+     * [token] is the watch's own monotonic clock reading, echoed back untouched. It is opaque here
+     * and must stay that way - it is what lets the watch measure the round trip without either side
+     * reading the other's clock, the same rule [PlaybackPositionEstimate] enforces for the sample
+     * itself.
+     *
+     * An answer goes out on every path, including "nothing is playing", for the reason
+     * [sendLyricsToWatch] and [sendDeepLinkVerdict] both document: the requester is waiting, and a
+     * silently dropped reply is indistinguishable from a lost one.
+     */
+    private fun sendPlaybackSyncToWatch(token: Long) {
+        val builder = PlaybackSync.newBuilder().setToken(token)
+
+        val controller = currentMediaController
+        val playbackState = controller?.playbackState
+        if (controller != null && playbackState != null) {
+            val elapsedRealtimeNow = android.os.SystemClock.elapsedRealtime()
+            // The same guard buildMusicStateAndTransmit applies: metadata and playback state arrive
+            // through separate callbacks, so right after a track change the position can still
+            // describe the track that just ended. Reporting zero is the honest answer; reporting
+            // the stale sample would have the watch correct itself to the previous song.
+            val sampleIsThisTrack = PlaybackPositionEstimate.sampleBelongsToTrack(
+                    playbackState.lastPositionUpdateTime, trackFirstSeenRealtimeMs)
+            val meta = controller.metadata
+
+            builder.hasSession = true
+            builder.positionMs = if (sampleIsThisTrack) playbackState.position else 0L
+            builder.positionAgeMs = if (sampleIsThisTrack) {
+                (elapsedRealtimeNow - playbackState.lastPositionUpdateTime).coerceAtLeast(0L)
+            } else {
+                0L
+            }
+            builder.playing = playbackState.isPlaying()
+            builder.playbackSpeed = playbackState.playbackSpeed
+            meta?.getLong(MediaMetadata.METADATA_KEY_DURATION)
+                    ?.takeIf { it > 0 }
+                    ?.let { builder.durationMs = it }
+            builder.title = meta?.getString(MediaMetadata.METADATA_KEY_TITLE).orEmpty()
+            builder.artist = meta?.getString(MediaMetadata.METADATA_KEY_ARTIST).orEmpty()
+        } else {
+            builder.hasSession = false
+        }
+
+        val reply = builder.build()
+        lifecycleScope.launch {
+            try {
+                Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
+                        Wearable.getNodeClient(applicationContext),
+                        CommPaths.MESSAGE_PLAYBACK_SYNC,
+                        reply.toByteArray())
+            } catch (e: Exception) {
+                // Watch went out of range. Its own request simply goes unanswered, which its next
+                // check retries - nothing here needs to recover.
+                Timber.v(e, "Could not send the playback sync reply")
+            }
+        }
+    }
+
+    /**
+     * Answers the watch's request for everything known about the playing track.
+     *
+     * Answers **twice** when the optional online lookup is switched on, and the order is the whole
+     * design: the local reply goes out first with everything the phone already had, and the
+     * enriched one follows if and when MusicBrainz returns. The watch therefore draws its table
+     * from the player's own tags immediately and never waits on a network call - the rule this
+     * screen was specified around.
+     *
+     * The request carries the track it is for and the reply echoes it back, for the reason
+     * [sendLyricsToWatch] documents: the two sides are a track apart whenever a skip is in flight,
+     * and a confident table describing the previous song is worse than none.
+     */
+    private fun sendTrackMetadataToWatch(request: TrackMetadata) {
+        lifecycleScope.launch {
+            val probeFile = QueueArtworkResolver.hasMediaPermission(this@MusicService)
+            val local = TrackMetadataReader.read(
+                    this@MusicService, currentMediaController, probeFile)
+
+            // Only answer for the track that was asked about. Reading the session directly means
+            // this can already have moved on, and the watch would have no way to tell.
+            if (!local.describesSameTrackAs(request)) {
+                Timber.v("Ignoring a metadata request for a track that is no longer playing")
+                return@launch
+            }
+            sendTrackMetadata(local)
+
+            if (!Preferences.getBoolean(preferences, MiscPreferences.METADATA_LOOKUP_ENABLED)) {
+                return@launch
+            }
+            val facts = MusicBrainzMetadata.lookup(local.title, local.artist) ?: return@launch
+            // The track can have changed while the lookup was out - the same discard the first
+            // reply makes, applied again at the point the second one would be sent.
+            if (!TrackMetadataReader.read(this@MusicService, currentMediaController, probeFile = false)
+                            .describesSameTrackAs(request)) {
+                return@launch
+            }
+            sendTrackMetadata(local.toBuilder()
+                    .apply {
+                        enriched = true
+                        // Catalogue facts no player publishes: always taken.
+                        facts.isrc?.let { isrc = it }
+                        facts.label?.let { label = it }
+                        facts.releaseDate?.let { releaseDate = it }
+                        facts.releaseCountry?.let { releaseCountry = it }
+                        facts.recordingMbid?.let { recordingMbid = it }
+                        facts.releaseMbid?.let { releaseMbid = it }
+
+                        // The rest fill a *gap* and never overwrite. What the playing app published
+                        // describes the thing actually coming out of the speaker; MusicBrainz
+                        // describes a recording it matched by name, and on a disagreement the
+                        // player is right by definition - it is the one playing the file. This is
+                        // also what makes the enrichment worth having for a service like SoundCloud
+                        // that publishes almost no tags: every row it adds is a row that was blank.
+                        if (!hasAlbum()) facts.album?.let { album = it }
+                        if (!hasGenre()) facts.genre?.let { genre = it }
+                        if (!hasTrackCount()) facts.trackCount?.let { trackCount = it }
+                        if (!hasDurationMs()) facts.durationMs?.let { durationMs = it }
+                    }
+                    .build())
+        }
+    }
+
+    /** Title and artist only, trimmed and case-insensitive: the two fields both sides are certain
+     *  to express the same way, and the same key `LyricsFeed` matches its answers on. */
+    private fun TrackMetadata.describesSameTrackAs(other: TrackMetadata): Boolean =
+            title.orEmpty().trim().equals(other.title.orEmpty().trim(), ignoreCase = true) &&
+                    artist.orEmpty().trim().equals(other.artist.orEmpty().trim(), ignoreCase = true)
+
+    private suspend fun sendTrackMetadata(metadata: TrackMetadata) {
+        try {
+            Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
+                    Wearable.getNodeClient(applicationContext),
+                    CommPaths.MESSAGE_TRACK_METADATA,
+                    metadata.toByteArray())
+        } catch (e: Exception) {
+            // Watch out of range. Its own screen keeps whatever it already had.
+            Timber.v(e, "Could not send track metadata to the watch")
+        }
+    }
+
     fun playDeepLink(link: String, searchQuery: String? = null) {
         if (!StreamingShortcutLinks.isSafeLink(link)) {
             Timber.e("Refusing unsafe or invalid streaming link")
@@ -2410,6 +2762,15 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
             CommPaths.MESSAGE_DELETE_CUSTOM_LIST_ITEM -> {
                 onCustomMenuItemDeleted(CustomListItemAction.parseFrom(event.data))
+            }
+            CommPaths.MESSAGE_REQUEST_LYRICS -> {
+                sendLyricsToWatch(LyricsRequest.parseFrom(event.data))
+            }
+            CommPaths.MESSAGE_REQUEST_PLAYBACK_SYNC -> {
+                sendPlaybackSyncToWatch(ByteBuffer.wrap(event.data).long)
+            }
+            CommPaths.MESSAGE_REQUEST_TRACK_METADATA -> {
+                sendTrackMetadataToWatch(TrackMetadata.parseFrom(event.data))
             }
         }
     }

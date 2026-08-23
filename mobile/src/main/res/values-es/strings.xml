@@ -509,6 +509,8 @@
         <item>Chat</item>
         <item>Dividido</item>
         <item>Nota</item>
+        <item>Verso</item>
+        <item>Metadata</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Búsqueda Expressive</string>
@@ -529,6 +531,14 @@
         <item>Material (delineado)</item>
         <item>Controles AMOLED</item>
         <item>Chrono (reloj grande)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carrusel</item>
+        <item>Chat</item>
+        <item>Dividido</item>
+        <item>Nota</item>
+        <item>Verso</item>
     </string-array>
     <string name="setting_wear_aod_color">Color siempre activo</string>
     <string-array name="wear_aod_color_entries">
@@ -1389,4 +1399,10 @@
     <string name="update_install_notification_failed">Error de instalación. Permite instalar apps desde Svartifoss en los ajustes e inténtalo de nuevo.</string>
     <string name="setting_wear_normal_color_multi">Usar paleta de colores</string>
     <string name="setting_wear_normal_color_multi_description">Activado, la pantalla usa un color principal más dos tonos de apoyo. Desactivado, se usa un solo color en todo: el del álbum o el que hayas elegido.</string>
+    <string-array name="wear_accent_floor_entries">
+        <item>Desactivado</item>
+        <item>Suave</item>
+        <item>Estándar</item>
+        <item>Intenso</item>
+    </string-array>
 </resources>

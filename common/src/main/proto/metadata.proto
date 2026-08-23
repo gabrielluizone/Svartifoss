@@ -1,0 +1,118 @@
+syntax = "proto2";
+
+package com.svartifoss.snfell.proto;
+
+option java_package = "com.svartifoss.snfell.proto";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME;
+
+// Everything known about the playing track beyond what the now-playing screen needs.
+//
+// Deliberately *not* folded into MusicState. That message is sent on every state change and rides a
+// size-capped MessageClient payload; twenty mostly-empty string fields would be paid for on every
+// pause, volume nudge and seek by every face, for a screen almost nobody has open. This is asked
+// for instead - see CommPaths.MESSAGE_REQUEST_TRACK_METADATA - so a watch showing any other face
+// costs nothing at all.
+//
+// Every field is optional and absent means *unknown*, never empty: the renderer draws a row only
+// for what it actually has. A streaming app that publishes three tags produces three rows, not
+// twenty blanks.
+message TrackMetadata {
+  // Echo of the request. The two sides drift by a track whenever a skip is in flight, and a table
+  // of the previous song's details is worse than none because nothing about it looks wrong - the
+  // same rule LyricsResponse follows.
+  optional string title = 1;
+  optional string artist = 2;
+
+  // --- From the playing app's own MediaMetadata. Free, instant, no permission. ---
+  optional string album = 3;
+  optional string albumArtist = 4;
+  optional string composer = 5;
+  optional string writer = 6;
+  optional string author = 7;
+  optional string genre = 8;
+  // METADATA_KEY_DATE is free-form text, so it travels as written rather than being parsed into
+  // something this app would have to guess the format of.
+  optional string date = 9;
+  optional int64 year = 10;
+  optional int64 trackNumber = 11;
+  optional int64 trackCount = 12;
+  optional int64 discNumber = 13;
+  optional int64 durationMs = 14;
+  optional bool compilation = 15;
+
+  // The app the track is playing in. Always knowable, and the one piece of provenance that tells a
+  // user why the rest of the table is thin.
+  optional string sourceLabel = 16;
+
+  // METADATA_KEY_DISPLAY_DESCRIPTION - the free line a player may attach for its own UI.
+  //
+  // Read because the players that publish the *fewest* real tags are often the ones that put
+  // something here: a SoundCloud upload has no album or year but frequently does have this. The
+  // phone drops it when it merely repeats the title, artist or album, which is the common case and
+  // the reason it is not simply shown for everyone.
+  optional string description = 17;
+
+  // --- Read from the file itself. Local tracks only, and only with the media-read grant. ---
+  //
+  // A streaming track has no file to open, so these are simply absent there. So are they when the
+  // permission has not been given, which is a silent degradation on purpose: the metadata screen is
+  // not a good place to start asking for permissions the user did not come here to grant.
+  optional string mimeType = 20;
+  optional int64 bitrate = 21;
+  optional int64 sampleRateHz = 22;
+  optional int32 channels = 23;
+  optional int64 fileSizeBytes = 24;
+
+  // --- Enrichment from MusicBrainz. Only ever present when the user switched it on. ---
+  optional string isrc = 30;
+  optional string label = 31;
+  optional string releaseDate = 32;
+  optional string recordingMbid = 33;
+  optional string releaseMbid = 34;
+  optional string releaseCountry = 35;
+
+  // --- How it is being played, as opposed to what it is. ---
+  //
+  // Read at answer time from the session rather than from the track, so these describe *this*
+  // playback of it. Everything here is a snapshot: the answer is asked for once per track, so a
+  // value that changes mid-track (the output device, a download completing) is right when it is
+  // drawn and can go stale until the next track. That is the honest trade for costing nothing -
+  // the alternative is a subscription that pushes on every change, which is exactly what MusicState
+  // already refuses to do for the position.
+
+  // The URI the player published for this item, verbatim.
+  //
+  // For a local track this is a content:// or file:// URI; for a streaming one it is usually an
+  // https URL, frequently a signed CDN one. Sent whole rather than pre-shortened because the watch
+  // is the side that knows how much room it has - it renders the host on its own row and the full
+  // string underneath. Never fetched, only shown: TrackMetadataReader refuses to open anything that
+  // is not content:// or file://, so a URL here has cost no network call.
+  optional string mediaUri = 50;
+
+  // The local file's own name, where there is one. The URI's last path segment is a numeric
+  // MediaStore id far more often than it is a name, so this is queried for properly.
+  optional string fileName = 51;
+
+  // Where the audio is actually coming out - see TrackMetadataFields.Output. Sent as a code rather
+  // than a label because the watch owns the localisation: a phone service's getString does not
+  // reliably follow the in-app language on pre-33 Android, and a Portuguese watch showing an
+  // English row would be the one visible symptom.
+  optional int32 outputKind = 52 [default = 0];
+
+  // MediaDescription.STATUS_* - 0 not downloaded, 1 downloading, 2 downloaded. -1 means the player
+  // did not publish it, which is the common case; 0 is a real answer and so cannot be the default.
+  optional int32 downloadStatus = 53 [default = -1];
+
+  // Whether the session is playing to this phone or to something it is casting at
+  // (MediaController.PlaybackInfo.PLAYBACK_TYPE_*). 0 = not reported.
+  optional int32 playbackType = 54 [default = 0];
+
+  // Whether the external lookup has run for this payload.
+  //
+  // The phone answers **twice** on purpose: once immediately with everything it already knows, and
+  // again once the lookup returns. That is what keeps the screen off the network's critical path -
+  // the table is on the wrist before the first packet leaves - and it is why the watch needs to
+  // tell the two apart rather than assuming a second answer is a newer track.
+  optional bool enriched = 40 [default = false];
+}

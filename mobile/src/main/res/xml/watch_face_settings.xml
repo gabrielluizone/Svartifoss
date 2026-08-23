@@ -11,6 +11,18 @@
         android:title="@string/category_screen_face"
         android:layout="@layout/pref_category_header">
 
+        <!-- Face-scoped, unlike the behaviour switches on the Settings tab: whether a screen should
+             be held awake depends on the composition you are looking at, not on the watch. The
+             lyrics screen ignores it and always stays on; the queue and menu belong to no face and
+             ignore it too. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_keep_screen_on"
+            android:icon="@drawable/ic_watch_screentime"
+            android:title="@string/setting_wear_keep_screen_on"
+            android:summary="@string/setting_wear_keep_screen_on_description"
+            android:layout="@layout/pref_switch_item" />
+
         <ListPreference
             android:key="wear_screen_face"
             android:icon="@drawable/ic_player_theme"
@@ -153,6 +165,68 @@
             android:title="@string/setting_wear_font_all_screens"
             android:summary="@string/setting_wear_font_all_screens_description"
             android:layout="@layout/pref_switch_item" />
+
+        <!-- Entries/values are built in WatchFacePrefsFragment.applyLyricsFontEntries by prepending
+             "Follow the design" to the wear_font arrays, exactly as the clock font does, so the
+             catalog has one source of truth and a new font never has to be added here as well. -->
+        <!-- The Metadata face's blocks. Keys and defaults come from TrackMetadataFields.Group, so
+             this screen and the renderer cannot disagree about what exists. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_metadata_show_core"
+            android:icon="@drawable/action_open_playlist"
+            android:title="@string/setting_wear_metadata_core"
+            android:summary="@string/setting_wear_metadata_core_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_metadata_show_release"
+            android:icon="@drawable/action_open_playlist"
+            android:title="@string/setting_wear_metadata_release"
+            android:summary="@string/setting_wear_metadata_release_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_metadata_show_credits"
+            android:icon="@drawable/action_open_playlist"
+            android:title="@string/setting_wear_metadata_credits"
+            android:summary="@string/setting_wear_metadata_credits_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_metadata_show_technical"
+            android:icon="@drawable/action_open_playlist"
+            android:title="@string/setting_wear_metadata_technical"
+            android:summary="@string/setting_wear_metadata_technical_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_metadata_show_playback"
+            android:icon="@drawable/action_open_playlist"
+            android:title="@string/setting_wear_metadata_playback"
+            android:summary="@string/setting_wear_metadata_playback_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_metadata_show_identifiers"
+            android:icon="@drawable/action_open_playlist"
+            android:title="@string/setting_wear_metadata_identifiers"
+            android:summary="@string/setting_wear_metadata_identifiers_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.DescribedListPreference
+            android:key="wear_lyrics_font"
+            android:icon="@drawable/action_lyrics"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_lyrics_font"
+            android:summary="@string/setting_wear_lyrics_font_description"
+            app:previewTypeface="true"
+            android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 
@@ -810,6 +884,17 @@
         android:title="@string/category_album_background"
         android:layout="@layout/pref_category_header">
 
+        <!-- A shared piece any face can wear, not one face's fixture - see AccentFloorStyle. -->
+        <com.matejdro.wearutils.preferences.compat.AutoSummaryListPreference
+            android:defaultValue="off"
+            android:key="wear_accent_floor"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_accent_floor"
+            android:summary="%s"
+            android:entries="@array/wear_accent_floor_entries"
+            android:entryValues="@array/wear_accent_floor_values"
+            android:layout="@layout/pref_item" />
+
         <ListPreference
             android:key="album_art_style"
             android:icon="@drawable/ic_album"
@@ -854,6 +939,18 @@
             android:dependency="dim_album_art"
             android:title="@string/setting_player_shading_intensity"
             android:summary="@string/setting_player_shading_intensity_description"
+            android:layout="@layout/pref_item" />
+
+        <!-- Split paints its own backdrop, so the Album background styles above cannot reach its
+             lower panel. This is that face's own control - see SplitPanelStyle. -->
+        <ListPreference
+            android:defaultValue="blur"
+            android:key="wear_split_panel"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_split_panel"
+            android:summary="%s"
+            android:entries="@array/wear_split_panel_entries"
+            android:entryValues="@array/wear_split_panel_values"
             android:layout="@layout/pref_item" />
 
         <ListPreference

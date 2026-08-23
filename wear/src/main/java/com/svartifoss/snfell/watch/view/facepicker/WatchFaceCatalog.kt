@@ -60,7 +60,9 @@ object WatchFaceCatalog {
             "carousel" to R.string.face_name_carousel,
             "chat" to R.string.face_name_chat,
             "split" to R.string.face_name_split,
-            "note" to R.string.face_name_note
+            "note" to R.string.face_name_note,
+            "verse" to R.string.face_name_verse,
+            "metadata" to R.string.face_name_metadata
     )
 
     /**

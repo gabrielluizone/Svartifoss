@@ -510,6 +510,8 @@
         <item>聊天</item>
         <item>分屏</item>
         <item>便签</item>
+        <item>歌词</item>
+        <item>元数据</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive 快进</string>
@@ -530,6 +532,14 @@
         <item>Material（轮廓线）</item>
         <item>AMOLED 控件</item>
         <item>Chrono（大时钟）</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>轮播</item>
+        <item>聊天</item>
+        <item>分屏</item>
+        <item>便签</item>
+        <item>歌词</item>
     </string-array>
     <string name="setting_wear_aod_color">常亮显示颜色</string>
     <string-array name="wear_aod_color_entries">
@@ -1385,5 +1395,11 @@
         <item>@string/wear_screen_theme_minimal_description</item>
         <item>@string/wear_screen_theme_compact_description</item>
         <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>关闭</item>
+        <item>柔和</item>
+        <item>标准</item>
+        <item>浓烈</item>
     </string-array>
 </resources>

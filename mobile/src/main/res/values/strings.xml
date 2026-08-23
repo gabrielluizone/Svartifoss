@@ -142,6 +142,7 @@
     <string name="action_repeat">Repeat</string>
     <string name="action_repeat_one">Repeat one</string>
     <string name="action_search">Search music</string>
+    <string name="action_open_lyrics">Lyrics</string>
     <string name="group_playback_controls">Playback controls</string>
     <string name="group_streaming_shortcuts">Tracks, albums &amp; playlists</string>
     <string name="pick_action">Pick action</string>
@@ -261,8 +262,19 @@
     <string name="preview_sample_artist">Artist name</string>
     <string name="preview_sample_next_title">Next song</string>
     <string name="preview_playback_stopped">Stopped</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">the line before</string>
+    <string name="preview_verse_current">the line playing now</string>
+    <string name="preview_verse_next">and the one after</string>
     <string name="preview_chat_today">Today</string>
     <string name="category_gestures">Gestures &amp; input</string>
+    <string name="category_watch_display">Watch screen</string>
+    <string name="setting_wear_keep_screen_on">Keep the screen on</string>
+    <string name="setting_wear_keep_screen_on_description">Stop the watch screen blanking on its inactivity timeout while a Svartifoss screen is open. Lowering your wrist still dims the watch \u2014 that gesture belongs to the system. Uses more battery. The lyrics screen always stays on regardless of this setting.</string>
+    <string name="setting_lyrics_enabled">Look up lyrics online</string>
+    <string name="setting_lyrics_enabled_description">Let the phone fetch synced lyrics from LRCLIB when you open the lyrics screen on the watch. The track name, artist and length are sent; nothing else, and nothing is stored on disk. Turn this off and the lyrics screen reports that lookups are disabled.</string>
     <string name="setting_overlay_blur_radius">Overlay blur</string>
     <string name="setting_overlay_blur_radius_description">Blur strength (px) of the frosted backdrop behind the volume/seek rings and the quick actions panel — independent from the album art background blur</string>
     <string name="category_action_list">Action List</string>
@@ -606,6 +618,8 @@
         <item>Chat</item>
         <item>Split</item>
         <item>Note</item>
+        <item>Verse</item>
+        <item>Metadata</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -624,6 +638,8 @@
         <item>chat</item>
         <item>split</item>
         <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
@@ -649,6 +665,14 @@
         <item>Material (outlined)</item>
         <item>AMOLED controls</item>
         <item>Chrono (big clock)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
     </string-array>
     <string-array name="wear_aod_style_values">
         <item>follow</item>
@@ -657,6 +681,14 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
     </string-array>
     <string name="setting_wear_aod_color">Always-on color</string>
     <string-array name="wear_aod_color_entries">
@@ -1299,6 +1331,9 @@
 
     <string name="setting_wear_clock_font">Clock typeface</string>
     <string name="wear_clock_font_follow">Follow track font</string>
+    <string name="setting_wear_lyrics_font">Lyrics typeface</string>
+    <string name="setting_wear_lyrics_font_description">The typeface for song words, on the lyrics screen and the Verse face. Follows the track typeface unless you pick one here.</string>
+    <string name="wear_lyrics_font_follow">Follow track typeface</string>
     <string name="setting_wear_clock_font_weight">Clock weight</string>
     <string name="setting_wear_clock_font_italic">Italic clock</string>
     <string name="setting_wear_clock_font_scale">Clock size</string>
@@ -1800,4 +1835,52 @@
         <item>balanced</item>
         <item>vibrant</item>
     </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Off</item>
+        <item>Soft</item>
+        <item>Standard</item>
+        <item>Bold</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Accent floor</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Track</string>
+    <string name="preview_metadata_genre">Genre</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Year</string>
+    <string name="preview_metadata_format">Format</string>
+    <string name="preview_metadata_bitrate">Bitrate</string>
+    <string name="preview_metadata_position">Position</string>
+    <string name="preview_metadata_output">Output</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Album details</string>
+    <string name="setting_wear_metadata_core_description">Album, album artist, position on the record and length.</string>
+    <string name="setting_wear_metadata_release">Release details</string>
+    <string name="setting_wear_metadata_release_description">Genre, year, release date and label.</string>
+    <string name="setting_wear_metadata_credits">Credits</string>
+    <string name="setting_wear_metadata_credits_description">Composer, writer and author, where the player publishes them.</string>
+    <string name="setting_wear_metadata_technical">File details</string>
+    <string name="setting_wear_metadata_technical_description">Format, bitrate, sample rate, channels and size. Local tracks only.</string>
+    <string name="setting_split_panel">Split panel</string>
+    <string name="setting_split_panel_description">What fills the lower half of the Split face. Blurred artwork continues the same cover behind the text; solid colour is the notification-card look.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Blurred artwork</item>
+        <item>Solid colour</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Playback details</string>
+    <string name="setting_wear_metadata_playback_description">Position to the millisecond, speed, audio output, and where the sound is streaming or playing from — including the track\'s address. The one block a streaming track can fill when there is no file to describe.</string>
+    <string name="setting_wear_metadata_identifiers">Identifiers</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC and catalogue ids. Off by default — useful when you want one, noise when you do not.</string>
+    <string name="setting_metadata_lookup">Look up track details online</string>
+    <string name="setting_metadata_lookup_description">Fills in what the playing app did not publish — ISRC, label, release date — from MusicBrainz, a free public database. Off by default. The Metadata watch face works without it; this only adds rows. Nothing is sent unless you turn this on and select that face, and only the track name and artist are sent.</string>
 </resources>

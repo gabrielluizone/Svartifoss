@@ -80,7 +80,8 @@ import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
-import com.svartifoss.snfell.watch.view.compose.LoadingSpinner
+import com.svartifoss.snfell.watch.view.compose.EqualizerBars
+import com.svartifoss.snfell.watch.view.compose.LoadingBars
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
@@ -639,7 +640,7 @@ private fun QueueList(
 
     // Whether the marquee titles may scroll. Only the marquee is gated on this - it re-lays out the
     // whole list every frame, which is what actually stuttered the scroll. The equalizer is not:
-    // it redraws one small node and nothing else (see NowPlayingBars), so it runs continuously.
+    // it redraws one small node and nothing else (see EqualizerBars), so it runs continuously.
     //
     // Driven by "the list has stopped moving" rather than by isScrollInProgress alone. That flag is
     // not a reliable falling edge here: a rotary/bezel session and an interrupted fling can both
@@ -658,6 +659,33 @@ private fun QueueList(
             if (scrolling) listAtRest = false
             delay(SCROLL_SETTLE_MS)
             listAtRest = true
+        }
+    }
+
+    // How many rows sit above the queue itself, so the scroll target below is a list index rather
+    // than a queue index. Derived here, right beside the `item {}` calls that produce them, because
+    // the two drifting apart would centre the list one row off and there is nothing to catch that.
+    val leadingRows = 1 + if (isHistoryFallback) 1 else 0
+
+    val targetRow = remember(items, nowPlayingTitle) {
+        QueueScrollPolicy.activeRowIndex(
+                playing = items.orEmpty().map { it.isPlaying },
+                titles = items.orEmpty().map { it.title },
+                nowPlayingTitle = nowPlayingTitle)
+    }
+
+    // Keyed on the *entry* rather than on the row index or the list: the phone republishes the
+    // queue on every track change and "Load more" appends to it, so keying on either would re-run
+    // this over a list already in the right place - and, in the paging case, yank the user back to
+    // the playing track the moment they asked to see further down it.
+    val targetEntryId = items?.getOrNull(targetRow)?.entryId
+    LaunchedEffect(targetEntryId, leadingRows) {
+        if (targetEntryId == null) return@LaunchedEffect
+        val targetIndex = leadingRows + targetRow
+        when (QueueScrollPolicy.resolve(listState.centerItemIndex, targetIndex)) {
+            QueueScrollPolicy.Move.NONE -> Unit
+            QueueScrollPolicy.Move.ANIMATE -> listState.animateScrollToItem(targetIndex)
+            QueueScrollPolicy.Move.JUMP -> listState.scrollToItem(targetIndex)
         }
     }
 
@@ -907,16 +935,16 @@ private fun QueueRow(
 
         if (item.isPlaying) {
             Spacer(Modifier.width(8.dp))
-            NowPlayingBars(color = onRow)
+            EqualizerBars(color = onRow)
         }
     }
 }
 
-/** Small indeterminate arc spinner shown while the queue request is still in flight. */
+/** The house pulsing bars, shown while the queue request is still in flight. */
 @Composable
 private fun QueueLoadingIndicator(accentColor: Color) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        LoadingSpinner(accentColor)
+        LoadingBars(accentColor)
     }
 }
 
@@ -1010,7 +1038,10 @@ private fun LoadMoreRow(
             contentAlignment = Alignment.Center
     ) {
         if (loading) {
-            LoadingSpinner(accentColor)
+            // The same pulsing bars the playing row draws - see EqualizerBars. At row height
+            // *inside* the list, where a circular indicator is the one shape in the column that is
+            // not part of the queue's own vocabulary.
+            EqualizerBars(skin.onColor)
         } else {
             Text(
                     text = stringResource(R.string.queue_load_more),
@@ -1048,54 +1079,6 @@ private fun QueueEmptyMessage() {
                 fontSize = 13.sp,
                 textAlign = TextAlign.Center
         )
-    }
-}
-
-/**
- * Three-bar "now playing" equalizer, pulsing via an infinite transition.
- *
- * Runs unconditionally, including through a scroll. It used to be frozen to a static pose while the
- * list moved, back when each bar was a Box animating `fillMaxHeight` - that re-ran *layout* for the
- * whole row every animation frame and genuinely did cost the scroll its frame budget. Drawing all
- * three in one Canvas and reading the animated values inside the draw lambda (not in composition)
- * made each frame a redraw-only invalidation of one small node, which is cheap enough that freezing
- * it bought nothing and only made the playing row look stopped exactly when the user was moving.
- */
-@Composable
-private fun NowPlayingBars(color: Color) {
-    val transition = rememberInfiniteTransition(label = "equalizer")
-    val h1 by transition.animateFloat(
-            initialValue = 0.30f, targetValue = 1.0f,
-            animationSpec = infiniteRepeatable(tween(480), RepeatMode.Reverse), label = "bar1"
-    )
-    val h2 by transition.animateFloat(
-            initialValue = 1.0f, targetValue = 0.40f,
-            animationSpec = infiniteRepeatable(tween(360), RepeatMode.Reverse), label = "bar2"
-    )
-    val h3 by transition.animateFloat(
-            initialValue = 0.55f, targetValue = 0.90f,
-            animationSpec = infiniteRepeatable(tween(560), RepeatMode.Reverse), label = "bar3"
-    )
-    EqualizerCanvas(color) { listOf(h1, h2, h3) }
-}
-
-@Composable
-private fun EqualizerCanvas(color: Color, fractions: () -> List<Float>) {
-    val barWidth = 3.dp
-    val barGap = 2.dp
-    Canvas(Modifier.size(width = barWidth * 3 + barGap * 2, height = 16.dp)) {
-        val widthPx = barWidth.toPx()
-        val gapPx = barGap.toPx()
-        val corner = CornerRadius(2.dp.toPx())
-        fractions().forEachIndexed { index, fraction ->
-            val barHeight = size.height * fraction
-            drawRoundRect(
-                    color = color,
-                    topLeft = Offset(index * (widthPx + gapPx), size.height - barHeight),
-                    size = Size(widthPx, barHeight),
-                    cornerRadius = corner
-            )
-        }
     }
 }
 

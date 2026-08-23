@@ -55,7 +55,7 @@ all.
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
 | Music and audio (Android 13+) / Storage (older versions)     | Only used to read album covers for entries in the playback queue, when the music app publishes them as references into your music library rather than as images. Requested from Settings → Apps, never at startup, and only ever read locally — nothing is uploaded. Decline it and the queue simply shows blank thumbnails. On very old Android versions the same legacy Storage permission also covers saving the current album art to your gallery, which only happens if you tap that option. |
-| Internet                                                     | Used for optional update checks, the Firebase diagnostics described below, and — only if you turn them on — fetching shortcut artwork from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.                         |
+| Internet                                                     | Used for optional update checks, the Firebase diagnostics described below, looking up song lyrics when you open the lyrics screen on the watch, and — only if you turn them on — fetching shortcut artwork from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.                         |
 
 ## What's stored locally on your phone
 
@@ -182,6 +182,66 @@ same address and cached alongside the queue covers. It is the identical kind
 of request, to the address the music app itself published, with nothing
 attached and no server of ours involved. With the setting off, the small
 image is used as-is.
+
+## Track details
+
+The **Metadata** watch face shows what the playing track actually is: album,
+position on the record, credits, year, and for a track stored on your phone the
+format, bitrate, sample rate, channels and file size.
+
+Almost all of that needs no network at all. The album, artist, credits, genre,
+year and track position come from the tags the playing app already publishes
+about the current song, and the file details are read from the file on your
+phone — which is why they appear only for local tracks, and only when the media
+access described above has been granted. Nothing about either leaves your
+devices.
+
+One optional part does use the internet. **Look up track details online**
+(Settings → Apps → Music apps & services) sends the **track name and the artist
+name** to [MusicBrainz](https://musicbrainz.org), a free public music database,
+to fill in details the playing app did not publish — the ISRC, the record label,
+the release date and MusicBrainz's own catalogue ids. Nothing else is attached:
+no identifier, no account, no listening history, and no record of which app was
+playing. The request goes directly to MusicBrainz, not through any server of
+ours, and is governed by that service's own terms rather than this policy.
+
+This is **off by default**, unlike the lyrics lookup, and the difference is
+deliberate: a lyric has no second source, while this one only ever *adds* rows
+to a table that already stands on your player's own tags. Leaving it off costs a
+few lines rather than the feature. Nothing is sent unless you both switch it on
+**and** select the Metadata face — no other face requests it. Results are held
+in memory only for as long as the phone app is running and are never written to
+disk.
+
+## Song lyrics
+
+The watch has two lyrics surfaces: a screen you can put on any button, gesture
+or menu slot, and the **Verse** watch face, which shows the line being sung on
+the main player screen. Either one asks the **phone** to look the words up —
+the watch never makes the request itself, since a watch paired over Bluetooth
+has no internet connection of its own.
+
+The phone sends the **track name, the artist name and the track's length** to
+[LRCLIB](https://lrclib.net), a free public lyrics database, which matches on
+exactly those three things and needs no account or API key. Nothing else is
+attached: no identifier, no account, no listening history, and no record of
+which app was playing. The request goes directly to LRCLIB, not through any
+server of ours, and is governed by that service's own terms rather than this
+policy.
+
+Nothing is requested unless one of those two surfaces is in use. Opening the
+lyrics screen looks up the current track; selecting the Verse face looks up each
+track while that face stays selected, since its whole purpose is to follow the
+words. Choose any other face and never open the lyrics screen, and no lookup
+ever happens. Lyrics that come back are held **in memory only** for as long as
+the phone app is running and are never written to disk; closing the app forgets
+them.
+
+This is **on by default**, for the same reason the queue covers above are: a
+lyric has no second source, so switching it off does not degrade the screen, it
+empties it. **Look up lyrics online** (Settings → Apps → Music apps & services)
+turns it off, and both surfaces then simply report that lookups are
+disabled. Everything else in the app keeps working offline.
 
 ## Usage diagnostics
 

@@ -35,6 +35,7 @@ import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.FrostedEdges
 import com.svartifoss.snfell.common.MiniButtonPlacement
+import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.OverlayBackdropResolver
@@ -53,6 +54,8 @@ import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.common.SwatchInfo
 import com.svartifoss.snfell.common.selectPrimaryAccent
+import com.svartifoss.snfell.common.AccentFloorStyle
+import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.CarouselCardShape
 import com.svartifoss.snfell.common.RoundScreenText
@@ -61,6 +64,7 @@ import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.SurfaceColorTreatment
 import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.resolveAodArtwork
 import com.svartifoss.snfell.common.R as commonR
 import kotlin.math.asin
@@ -140,11 +144,27 @@ class WatchPreviewView @JvmOverloads constructor(
         const val CHAT_OUTGOING_LIGHTNESS = .32f
         // Split geometry, mirroring SplitFace.kt (mobile cannot depend on wear).
         const val SPLIT_SEAM_FRACTION = .66f
+
+        /** Kept in step with `SplitFace.PANEL_ART_ALPHA` (.34f), as an 8-bit alpha. */
+        const val SPLIT_PANEL_ART_ALPHA = 0x57
         const val SPLIT_PANEL_LIGHTNESS = .40f
         const val SPLIT_BADGE_FRACTION = .21f
 
         /** Note geometry, mirroring NoteFace.kt. */
         const val NOTE_COVER_FRACTION = .21f
+
+        /** Verse geometry, mirroring VerseFace.kt. The four glow values mirror the watch's
+         *  accentFloorGlow; the progress figure is a fixed sample, since the preview has no lyric
+         *  to be part-way through. */
+        const val VERSE_BAND_TOP = 0.28f
+        const val VERSE_BAND_BOTTOM = 0.80f
+
+        /** Where the block's centre sits, mirroring VerseFace.VERSE_BAND_CENTER. The band reaches
+         *  into the strip the composition was leaving empty below the words, so the block is
+         *  centred within the band rather than on the screen. */
+        const val VERSE_BAND_CENTER = (VERSE_BAND_TOP + VERSE_BAND_BOTTOM) / 2f
+        const val VERSE_PREVIEW_LINE_PROGRESS = 0.55f
+
 
         val CHAT_WAVE_PATTERN = listOf(
                 .30f, .55f, .80f, .45f, 1f, .65f, .35f, .75f, .50f, .90f,
@@ -233,7 +253,10 @@ class WatchPreviewView @JvmOverloads constructor(
     private var screenTheme = "default"
     private var wearFontKey = "google_sans"
     private var wearClockFontKey = WatchTypography.CLOCK_FONT_FOLLOW
+    private var wearLyricsFontKey = WatchTypography.LYRICS_FONT_FOLLOW
     private var artStyle = "cover"
+    private var accentFloor = AccentFloorStyle.DEFAULT
+    private var splitPanel = SplitPanelStyle.DEFAULT
     private var dimArt = true
     private var dimStrength = 80
     private var playerShadingStyle = PlayerShadingStyle.FOLLOW
@@ -574,7 +597,12 @@ class WatchPreviewView @JvmOverloads constructor(
         screenTheme = readString("wear_screen_theme", "default")
         wearFontKey = readString("wear_font", "google_sans")
         wearClockFontKey = readString("wear_clock_font", WatchTypography.CLOCK_FONT_FOLLOW)
+        wearLyricsFontKey = readString("wear_lyrics_font", WatchTypography.LYRICS_FONT_FOLLOW)
         artStyle = readString("album_art_style", "cover")
+        accentFloor = AccentFloorStyle.fromPreference(
+                readString("wear_accent_floor", AccentFloorStyle.DEFAULT.preferenceValue))
+        splitPanel = SplitPanelStyle.fromPref(
+                readString("wear_split_panel", SplitPanelStyle.DEFAULT.preferenceValue))
         albumBlurRadius = readInt("album_art_blur_radius", 35).coerceIn(5, 120)
         dimArt = readBoolean("dim_album_art", true)
         dimStrength = readInt("album_art_dim_strength", 80).coerceIn(0, SHADING_MAX_PERCENT)
@@ -1642,6 +1670,13 @@ class WatchPreviewView @JvmOverloads constructor(
     ) {
         drawPlayerBackdrop(canvas, geometry, dp)
 
+        // Immediately after the backdrop and before any face draws, exactly where the watch renders
+        // it (inside PlayerBackgroundTreatment). Any face can wear this piece, so the preview must
+        // not tie it to one either.
+        if (accentFloor.isVisible) {
+            drawAccentFloor(canvas, geometry, AdaptiveTextContrast.adapt(albumAccent(), 0f))
+        }
+
         // Some controls are intentionally face-specific on the watch. While that preference is
         // focused, use the face that can actually demonstrate it; the normal player remains the
         // user's selected face everywhere else.
@@ -1658,6 +1693,8 @@ class WatchPreviewView @JvmOverloads constructor(
             "chat" -> drawChatPlayer(canvas, geometry, dp)
             "split" -> drawSplitPlayer(canvas, geometry, dp)
             "note" -> drawNotePlayer(canvas, geometry, dp)
+            "verse" -> drawVersePlayer(canvas, geometry, dp)
+            "metadata" -> drawMetadataPlayer(canvas, geometry, dp)
             "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth" ->
                 drawCuratedPlayer(canvas, geometry, dp, demonstratedFace)
             else -> {
@@ -2195,7 +2232,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
     private fun effectiveAodStyle(): String = when (aodStyle) {
         "follow" -> if (face in setOf(
-                "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth", "carousel", "chat", "split", "note"
+                "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth", "carousel", "chat", "split", "note", "verse", "metadata"
         )) face else "classic"
         // Removed style; a stored value falls back to classic (matches the watch).
         "minimal" -> "classic"
@@ -2246,7 +2283,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
         when (style) {
             "expressive" -> drawExpressiveAod(canvas, geometry, dp)
-            "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth", "carousel", "chat", "split", "note" ->
+            "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth", "carousel", "chat", "split", "note", "verse", "metadata" ->
                 drawCuratedAod(canvas, geometry, dp)
             "chrono" -> drawChronoAod(canvas, geometry, dp)
             else -> drawClassicAod(canvas, geometry, dp, minimal = false)
@@ -4890,6 +4927,21 @@ class WatchPreviewView @JvmOverloads constructor(
         return styledPreviewTypeface(base, bold = false, spec = spec)
     }
 
+    /**
+     * The typeface for song lyrics, mirroring the watch's `NowPlayingFaceState.lyricFont`.
+     *
+     * Both sides resolve through [WatchTypography.lyricsFontKey], so the preview cannot disagree
+     * with the wrist about a choice the user just made - the same class of drift the note on
+     * [clockTypeface] records.
+     *
+     * Never the Lain override: these are the song's words, not the track's title.
+     */
+    private fun lyricTypeface(): Typeface? {
+        val key = WatchTypography.lyricsFontKey(wearLyricsFontKey, wearFontKey)
+        if (WatchTypography.isFlexFont(key)) return flexPreviewTypeface(titleTypographySpec)
+        return WatchFontCatalog.typefaceFor(context, key) ?: fontRegular
+    }
+
     /** Mirrors MainActivity.resolveClockColor: opacity-baked ARGB from the color-mode pref, with
      *  dynamic sampling the top-centre strip of the shown art (not the whole cover). */
     private fun resolveClockColor(): Int {
@@ -5154,27 +5206,47 @@ class WatchPreviewView @JvmOverloads constructor(
         canvas.drawText(text, textLeft, centerY + dp(12f), textPaint)
     }
 
-    private fun drawMiniButtons(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float): Boolean {
-        // Mirrors hasActiveMiniButtons on the watch: a face with mini buttons off for the current
-        // playback state never shows the row, regardless of what's configured - checked first so
-        // every caller that reflows layout based on this return value reclaims the space exactly
-        // like the watch does. The preview's shown state (playing vs paused) picks which toggle.
-        if (!ActivityVisibility.isActive(miniButtonsMode, isPlayingShown())) {
-            return false
-        }
-        // The configured stopped-action map remains useful to the preview's other controls, but
-        // mini buttons themselves are playback-only. Paused is intentionally not treated as idle.
-        if (!isPlayingShown()) {
-            return false
-        }
-        val icons = if (miniButtonIcons.isNotEmpty()) {
-            miniButtonIcons
-        } else if (surface == PreviewSurface.MINI_BUTTONS) {
-            demoMiniButtonIcons
+    /** The colours the mini-button styles draw from, matching wear's `miniButtonPalette`: the
+     *  theme colour is resolved for the selected face here, since Expressive paints "solid_theme"
+     *  as a tonal surface of it and every other face uses it raw. */
+    private fun miniButtonPalette(): MiniButtonSurfaces.Palette {
+        val themeAccent = if (face == "expressive") {
+            PaletteTransforms.tonalSurface(ACCENT_NEUTRAL, 0.74f, 0.40f, 0.92f)
         } else {
-            emptyList()
+            ACCENT_NEUTRAL
         }
+        return MiniButtonSurfaces.paletteFor(albumAccent(), themeAccent)
+    }
+
+    /**
+     * The mini buttons the preview should be showing, or empty when the row is not active for the
+     * playback state being previewed.
+     *
+     * Shared by the bottom row and by a face that hosts the buttons itself, so the two can never
+     * disagree about whether there are any. Mirrors hasActiveMiniButtons on the watch: a face with
+     * mini buttons off for the current playback state never shows them regardless of what is
+     * configured, and the preview's shown state (playing vs paused) picks which toggle. Mini
+     * buttons themselves are playback-only; paused is deliberately not treated as idle.
+     */
+    private fun activeMiniButtonIcons(): List<PreviewActionIcon> {
+        if (!ActivityVisibility.isActive(miniButtonsMode, isPlayingShown())) return emptyList()
+        if (!isPlayingShown()) return emptyList()
+        return when {
+            miniButtonIcons.isNotEmpty() -> miniButtonIcons
+            surface == PreviewSurface.MINI_BUTTONS -> demoMiniButtonIcons
+            else -> emptyList()
+        }
+    }
+
+    private fun drawMiniButtons(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float): Boolean {
+        val icons = activeMiniButtonIcons()
         if (icons.isEmpty()) {
+            return false
+        }
+        // A face that hosts the row draws these buttons inside its own composition instead (Chat's
+        // circles), so the shared row must not draw them too - the same single-render rule the
+        // watch applies. Reported as "no row", which is what reclaims the band.
+        if (MiniButtonPlacement.isHostedByFace(face)) {
             return false
         }
 
@@ -5187,86 +5259,25 @@ class WatchPreviewView @JvmOverloads constructor(
         val totalWidth = geometry.totalWidth
         val rowBottom = geometry.rowBottom
 
-        val albumBaseColor = albumAccent()
-        val expressiveAlbumColor = PaletteTransforms.tonalSurface(
-                albumBaseColor, 0.74f, 0.40f, 0.92f)
-        val glowAlbumColor = FloatArray(3).let { hsl ->
-            ColorUtils.colorToHSL(albumBaseColor, hsl)
-            hsl[2] = hsl[2].coerceAtLeast(0.45f)
-            ColorUtils.HSLToColor(hsl)
-        }
-        val tintColor = when (buttonsBgStyle) {
-            "solid_theme" -> {
-                val baseColor = ACCENT_NEUTRAL
-                if (face == "expressive") {
-                    PaletteTransforms.tonalSurface(baseColor, 0.74f, 0.40f, 0.92f)
-                } else {
-                    baseColor
-                }
-            }
-            "solid_album" -> albumBaseColor
-            "solid_exp_album" -> expressiveAlbumColor
-            else -> null
-        }
         val neutralSkin = neutralMiniButtonSkin(dp)
-        // Universal styles render identically on every face (the user's own choice); "glass"
-        // (Follow layout) keeps the per-face neutralSkin.
-        val uniformGlassFill = 0xB3161619.toInt()
-        val outlineStroke = ColorUtils.setAlphaComponent(albumBaseColor, 0xE0)
-
-        val pillColor = when {
-            buttonsBgStyle in setOf(
-                    "transparent", "outline", "outline_exp_album", "icon_exp",
-                    "glow_album", "glow_exp"
-            ) -> Color.TRANSPARENT
-            buttonsBgStyle == "uniform_glass" -> uniformGlassFill
-            buttonsBgStyle == "uniform_glass_light" -> Color.argb(0x1A, 0xFF, 0xFF, 0xFF)
-            buttonsBgStyle == "translucent_album" ->
-                ColorUtils.setAlphaComponent(albumBaseColor, 0x4D)
-            buttonsBgStyle == "translucent_album_exp" ->
-                ColorUtils.setAlphaComponent(expressiveAlbumColor, 0x4D)
-            tintColor != null -> ColorUtils.setAlphaComponent(
-                    tintColor,
-                    if (buttonsBgStyle == "solid_exp_album") 0xD0 else 230
-            )
-            else -> neutralSkin.fill
-        }
-        val pillStroke = when {
-            buttonsBgStyle == "outline" -> outlineStroke
-            buttonsBgStyle == "outline_exp_album" ->
-                ColorUtils.setAlphaComponent(expressiveAlbumColor, 0xE0)
-            buttonsBgStyle == "glow_album" -> ColorUtils.setAlphaComponent(glowAlbumColor, 0xE0)
-            buttonsBgStyle == "glow_exp" ->
-                ColorUtils.setAlphaComponent(expressiveAlbumColor, 0xE0)
-            tintColor == null && buttonsBgStyle == "glass" -> neutralSkin.stroke
-            else -> Color.TRANSPARENT
-        }
+        // The style's colours are decided by the shared resolver, not by a copy of the watch's
+        // `when` kept in step by hand - which is how this preview came to stroke glow_exp with the
+        // un-lifted tone and pick its icon colour on a naive luminance split where the watch used
+        // the WCAG crossover. "Follow layout" is the one value with no colour of its own, and is
+        // where the per-face neutralSkin still applies.
+        val buttonSurface = MiniButtonSurfaces.resolve(buttonsBgStyle, miniButtonPalette())
+        val pillColor =
+                if (buttonSurface.followsFaceNeutral) neutralSkin.fill else buttonSurface.fillArgb
+        val pillStroke =
+                if (buttonSurface.followsFaceNeutral) neutralSkin.stroke else buttonSurface.strokeArgb
         val pillStrokeWidth = when {
-            buttonsBgStyle == "outline" || buttonsBgStyle == "outline_exp_album" -> dp(1.5f)
-            buttonsBgStyle == "glow_album" || buttonsBgStyle == "glow_exp" -> dp(2f)
-            pillStroke == Color.TRANSPARENT -> 0f
-            else -> neutralSkin.strokeWidth
+            buttonSurface.followsFaceNeutral -> neutralSkin.strokeWidth
+            buttonSurface.strokeArgb == Color.TRANSPARENT -> 0f
+            else -> dp(buttonSurface.strokeWidthDp)
         }
-        val pillCorner = if (tintColor == null && buttonsBgStyle == "glass") {
-            neutralSkin.corner
-        } else {
-            pillH
-        }
-        val solidIconTint = when (buttonsBgStyle) {
-            "uniform_glass_light" -> Color.WHITE
-            "translucent_album" -> Color.WHITE
-            "translucent_album_exp" -> Color.WHITE
-            "glow_album" -> glowAlbumColor
-            "outline_exp_album", "icon_exp", "glow_exp" -> expressiveAlbumColor
-            else -> if (tintColor != null) {
-                if (ColorUtils.calculateLuminance(tintColor) > .50) Color.BLACK else Color.WHITE
-            } else {
-                null
-            }
-        }
-        val forceGroupIconTint = buttonsBgStyle in setOf(
-                "glow_album", "outline_exp_album", "icon_exp", "glow_exp", "solid_exp_album"
-        )
+        val pillCorner = if (buttonSurface.followsFaceNeutral) neutralSkin.corner else pillH
+        val solidIconTint = buttonSurface.iconTintArgb
+        val forceGroupIconTint = buttonSurface.forceIconTint
 
         val placement = MiniButtonPlacement.fromPreference(buttonsCurveStyle)
         val curveFraction = if (deviceRound == false || !placement.followsCurve) {
@@ -5446,6 +5457,74 @@ class WatchPreviewView @JvmOverloads constructor(
         bitmapPaint.colorFilter = null
         bitmapPaint.alpha = 255
         return true
+    }
+
+    /**
+     * The Chat face's circles, drawn as the configured mini buttons.
+     *
+     * The colours come from the same [MiniButtonSurfaces] resolution the shared row uses, so a
+     * button previewed inside this face and one previewed in the row cannot look like two
+     * different features. "Follow layout" - the default - has no colour of its own, which is what
+     * leaves this face's designed accent circle in place until a style is picked. The circle stays
+     * a circle whatever the shape preference says, exactly as on the watch: the shape and curve
+     * pickers are hidden for this face rather than silently ignored.
+     */
+    private fun drawChatMiniButtons(
+            canvas: Canvas,
+            buttons: List<PreviewActionIcon>,
+            centerX: (Int) -> Float,
+            centerY: Float,
+            diameter: Float,
+            faceAccent: Int,
+            dp: (Float) -> Float
+    ) {
+        val surface = MiniButtonSurfaces.resolve(buttonsBgStyle, miniButtonPalette())
+        val onAccent = if (AdaptiveTextContrast.prefersDarkText(faceAccent)) {
+            ColorUtils.setAlphaComponent(Color.BLACK, 0xD1)
+        } else {
+            Color.WHITE
+        }
+        val opacityLayer = if (buttonsOpacity < 100) {
+            canvas.saveLayerAlpha(
+                    RectF(centerX(0) - diameter, centerY - diameter,
+                            centerX(buttons.lastIndex) + diameter, centerY + diameter),
+                    (buttonsOpacity * 255 / 100).coerceIn(0, 255))
+        } else {
+            null
+        }
+        val iconSize = diameter * .48f
+        fillPaint.shader = null
+        strokePaint.shader = null
+        strokePaint.pathEffect = null
+        buttons.forEachIndexed { index, button ->
+            val bx = centerX(index)
+            val fill = if (surface.followsFaceNeutral) faceAccent else surface.fillArgb
+            if (Color.alpha(fill) > 0) {
+                fillPaint.color = fill
+                canvas.drawCircle(bx, centerY, diameter / 2f, fillPaint)
+            }
+            if (!surface.followsFaceNeutral && Color.alpha(surface.strokeArgb) > 0 &&
+                    surface.strokeWidthDp > 0f) {
+                strokePaint.style = Paint.Style.STROKE
+                strokePaint.strokeWidth = dp(surface.strokeWidthDp)
+                strokePaint.color = surface.strokeArgb
+                canvas.drawCircle(bx, centerY, diameter / 2f - strokePaint.strokeWidth / 2f,
+                        strokePaint)
+            }
+            val tint = if (surface.followsFaceNeutral) {
+                onAccent.takeIf { button.tintable }
+            } else {
+                surface.iconTintArgb?.takeIf { surface.forceIconTint || button.tintable }
+            }
+            iconDst.set(bx - iconSize / 2f, centerY - iconSize / 2f,
+                    bx + iconSize / 2f, centerY + iconSize / 2f)
+            bitmapPaint.colorFilter = tint?.let {
+                android.graphics.PorterDuffColorFilter(it, android.graphics.PorterDuff.Mode.SRC_IN)
+            }
+            canvas.drawBitmap(button.bitmap, null, iconDst, bitmapPaint)
+        }
+        opacityLayer?.let(canvas::restoreToCount)
+        bitmapPaint.colorFilter = null
     }
 
     private data class MiniButtonSkin(
@@ -5800,7 +5879,19 @@ class WatchPreviewView @JvmOverloads constructor(
 
         // Bottom-anchored, exactly as the face lays out: the action row sits at the bottom, the
         // voice bubble above it, and history drifts up above that.
-        val actionDiameter = (screen * .215f).coerceIn(dp(38f), dp(50f))
+        // One circle per configured mini button - this face hosts the row inside its own
+        // composition rather than letting the shared row float over the thread - and its own
+        // queue + skip pair when nothing is configured. Mirrors ChatActionRow, including the
+        // fitting: the designed diameter is kept while it fits and only shrinks for a third
+        // circle. It has to be resolved here, before the bubbles, because the thread is laid out
+        // against the space the row leaves.
+        val chatButtons = activeMiniButtonIcons()
+        val chatActionCount = if (chatButtons.isEmpty()) 2 else chatButtons.size
+        val actionGap = screen * .05f
+        val actionDiameter = minOf(
+                (screen * .215f).coerceIn(dp(38f), dp(50f)),
+                (screen * (1f - .09f * 2f) - actionGap * (chatActionCount - 1)) / chatActionCount
+        ).coerceAtLeast(dp(32f))
         val actionCy = cy + radius - screen * .05f - actionDiameter / 2f
         val bubbleHeight = dp(58f)
         val bubbleBottom = actionCy - actionDiameter / 2f - dp(5f)
@@ -5957,10 +6048,23 @@ class WatchPreviewView @JvmOverloads constructor(
             canvas.drawText(timeText(), right - dp(4f), bubbleBottom + dp(11f), textPaint)
         }
 
-        // --- the two round actions (queue, skip next) that replace this face's mini-button row ---
-        val actionGap = screen * .05f
-        val leftActionCx = cx - actionGap / 2f - actionDiameter / 2f
-        val rightActionCx = cx + actionGap / 2f + actionDiameter / 2f
+        // --- the round actions ---
+        val chatRowWidth = actionDiameter * chatActionCount + actionGap * (chatActionCount - 1)
+        val chatRowLeft = cx - chatRowWidth / 2f
+        fun chatActionCx(index: Int) =
+                chatRowLeft + actionDiameter / 2f + index * (actionDiameter + actionGap)
+
+        if (chatButtons.isNotEmpty()) {
+            drawChatMiniButtons(canvas, chatButtons, ::chatActionCx, actionCy, actionDiameter,
+                    accent, dp)
+            if (alwaysShowTime || clockPreviewForced()) {
+                drawSmallClock(canvas, cx, cy - radius + dp(24f), dp)
+            }
+            return
+        }
+
+        val leftActionCx = chatActionCx(0)
+        val rightActionCx = chatActionCx(1)
         fillPaint.color = accent
         canvas.drawCircle(leftActionCx, actionCy, actionDiameter / 2f, fillPaint)
         canvas.drawCircle(rightActionCx, actionCy, actionDiameter / 2f, fillPaint)
@@ -5996,9 +6100,10 @@ class WatchPreviewView @JvmOverloads constructor(
         if (alwaysShowTime || clockPreviewForced()) {
             drawSmallClock(canvas, cx, cy - radius + dp(24f), dp)
         }
-        // Deliberately no drawBottomChrome: this face defaults its mini-button row off (see
-        // FaceScopedPreferences) and draws its own two actions in that band instead. Drawing the
-        // shared row here would show a preview of something the watch will not render.
+        // Deliberately no drawBottomChrome: this face hosts the mini-button row inside its own
+        // composition (see MiniButtonPlacement.isHostedByFace) and falls back to its own two
+        // actions when none are configured. Drawing the shared row here would preview something
+        // the watch will not render.
     }
 
     /**
@@ -6009,6 +6114,267 @@ class WatchPreviewView @JvmOverloads constructor(
      * decision - both sides ask [AdaptiveTextContrast.prefersDarkText] about the same proxy, so the
      * preview cannot promise white text where the watch draws black.
      */
+    /**
+     * Verse: three lyric lines over the same black-and-accent floor the lyrics screen uses.
+     *
+     * The preview has no lyrics to show - they are fetched by the phone for whatever is playing on
+     * it, which is not necessarily anything - so the three rows name themselves instead of faking a
+     * song. That reads better than placeholder verse anyway: the whole point a user needs to
+     * understand before choosing this face is which of the three lines is the one being sung.
+     *
+     * The floor wash and the accent lift are duplicated from the watch rather than shared, for the
+     * usual reason the miniatures are: `mobile` cannot depend on `wear`, and Canvas has no Compose
+     * Brush. Keep the four glow constants in step with `accentFloorGlow`.
+     */
+    private fun drawVersePlayer(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        val cx = geometry.cx
+        val cy = geometry.cy
+        val radius = geometry.radius
+        val screen = radius * 2f
+
+        drawPlayerShading(canvas, geometry.bounds, cx, cy, radius)
+
+        // Lifted exactly as VerseFace does: a near-black cover would otherwise render the current
+        // line - the only thing marking where the song is - invisible on this face's own backdrop.
+        val accent = AdaptiveTextContrast.adapt(albumAccent(), 0f)
+
+        fillPaint.shader = null
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.CENTER
+
+        // Running head: artist letterspaced above the title, both small.
+        var y = cy - radius * .58f
+        if (showTrackArtist || !isPlayingShown()) {
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = dp(8f)
+            textPaint.color = artistAlpha(artistTextColor())
+            val artistText = if (isPlayingShown()) {
+                displayArtist()
+            } else {
+                context.getString(R.string.preview_playback_stopped)
+            }
+            canvas.drawText(
+                    ellipsize(artistText.uppercase(), screen * .74f), cx, y, textPaint)
+        }
+        if (showTrackTitle) {
+            y += dp(13f)
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = titleTypographySpec.scaled(dp(11f))
+            textPaint.color = titleAlpha(Color.WHITE)
+            canvas.drawText(ellipsize(displayTitle(), screen * .74f), cx, y, textPaint)
+        }
+
+        // The three rows. The middle one carries the accent, a larger size and the hairline; the
+        // outer two are the same type dimmed, so the reel reads as one continuous thing.
+        val inset = RoundScreenText.sideInsetFor(VERSE_BAND_TOP, VERSE_BAND_BOTTOM)
+        val available = screen * (1f - 2f * inset)
+
+        // The words themselves, in the lyrics typeface rather than the track one - see
+        // lyricTypeface. letterSpacing is reset because titleTypeface above set the title's.
+        // The block sits at the band's centre, not the screen's - see VERSE_BAND_CENTER. Applied as
+        // one offset to every row and to the hairline so the miniature keeps showing where the
+        // words actually land on the wrist.
+        val bandShift = screen * (VERSE_BAND_CENTER - 0.5f)
+
+        textPaint.typeface = lyricTypeface()
+        textPaint.letterSpacing = 0f
+        textPaint.textSize = dp(8.5f)
+        textPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x61)
+        canvas.drawText(
+                ellipsize(context.getString(R.string.preview_verse_previous), available),
+                cx, cy - dp(11f) + bandShift, textPaint)
+
+        textPaint.textSize = dp(12f)
+        textPaint.color = accent
+        canvas.drawText(
+                ellipsize(context.getString(R.string.preview_verse_current), available),
+                cx, cy + dp(5f) + bandShift, textPaint)
+
+        // Hairline: how far through the *current line* playback is, not through the track. The
+        // face's own progress indicator, which is why the edge arc defaults off here.
+        val ruleWidth = screen * .42f
+        val ruleY = cy + dp(11f) + bandShift
+        val ruleHeight = dp(1f)
+        fillPaint.shader = null
+        fillPaint.color = ColorUtils.setAlphaComponent(accent, 0x29)
+        canvas.drawRect(cx - ruleWidth / 2f, ruleY, cx + ruleWidth / 2f, ruleY + ruleHeight, fillPaint)
+        fillPaint.color = ColorUtils.setAlphaComponent(accent, 0xD9)
+        canvas.drawRect(
+                cx - ruleWidth / 2f, ruleY,
+                cx - ruleWidth / 2f + ruleWidth * VERSE_PREVIEW_LINE_PROGRESS, ruleY + ruleHeight,
+                fillPaint)
+
+        textPaint.textSize = dp(8.5f)
+        textPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x61)
+        canvas.drawText(
+                ellipsize(context.getString(R.string.preview_verse_next), available),
+                cx, cy + dp(26f) + bandShift, textPaint)
+
+        if (trackTimeVisible()) {
+            // Back to the track font: the elapsed time is chrome, and the watch draws it through
+            // ArtistLineText rather than with the lyric lines. Set explicitly rather than left to
+            // inherit, since the three rows above have just changed the shared paint's typeface.
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = dp(9f)
+            textPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x9E)
+            canvas.drawText(timeText(), cx, cy + radius * .70f, textPaint)
+        }
+    }
+
+    /**
+     * Canvas twin of the watch's `accentFloorGlow`.
+     *
+     * The shape comes from [AccentFloorStyle], the one place the watch reads it from too, so the
+     * two cannot drift. Only the drawing is duplicated, because `mobile` cannot depend on `wear`
+     * and Canvas has no Compose Brush.
+     */
+    private fun drawAccentFloor(canvas: Canvas, geometry: PreviewGeometry, accent: Int) {
+        val cx = geometry.cx
+        val cy = geometry.cy
+        val radius = geometry.radius
+
+        val saved = canvas.saveLayer(geometry.bounds, null)
+
+        fillPaint.xfermode = null
+        fillPaint.shader = RadialGradient(
+                cx, cy, radius,
+                intArrayOf(Color.TRANSPARENT,
+                        ColorUtils.setAlphaComponent(accent, (accentFloor.maxAlpha * 255).toInt())),
+                floatArrayOf(accentFloor.innerStop, 1f),
+                Shader.TileMode.CLAMP)
+        canvas.drawCircle(cx, cy, radius, fillPaint)
+
+        // The mask fractions are of screen height; the screen spans cy-radius..cy+radius.
+        fillPaint.shader = LinearGradient(
+                0f, cy - radius + radius * 2f * accentFloor.maskStart,
+                0f, cy - radius + radius * 2f * AccentFloorStyle.MASK_END,
+                Color.TRANSPARENT, Color.BLACK, Shader.TileMode.CLAMP)
+        fillPaint.xfermode = android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.DST_IN)
+        canvas.drawRect(geometry.bounds, fillPaint)
+
+        fillPaint.xfermode = null
+        fillPaint.shader = null
+        canvas.restoreToCount(saved)
+    }
+
+    /**
+     * Metadata: a small cover and identity over a table of the track's own details.
+     *
+     * Drawn with the *live* track's real values where the preview has them and stand-ins where it
+     * does not, which is the same compromise drawVersePlayer makes: the phone has no way to run the
+     * watch's request/answer round trip from inside a Canvas, and an empty table would tell the user
+     * nothing about what the face looks like. The point of the miniature is the arrangement - how
+     * many rows fit, how the labels sit against the values - and that is exactly what it shows.
+     */
+    private fun drawMetadataPlayer(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        val cx = geometry.cx
+        val cy = geometry.cy
+        val radius = geometry.radius
+        val screen = radius * 2f
+
+        drawPlayerShading(canvas, geometry.bounds, cx, cy, radius)
+
+        fillPaint.shader = null
+        textPaint.style = Paint.Style.FILL
+
+        var y = cy - radius * .52f
+
+        // Cover, small on purpose: this is the one face where the artwork is the caption and the
+        // table is the subject.
+        val art = liveArt ?: sampleArt
+        if (art != null) {
+            val side = screen * .17f
+            val rect = RectF(cx - side / 2f, y, cx + side / 2f, y + side)
+            canvas.save()
+            canvas.clipPath(Path().apply {
+                addRoundRect(rect, side * .22f, side * .22f, Path.Direction.CW)
+            })
+            drawArtwork(canvas, art, rect, 255)
+            canvas.restore()
+            y += side + dp(4f)
+        }
+
+        textPaint.textAlign = Paint.Align.CENTER
+        if (showTrackTitle) {
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = titleTypographySpec.scaled(dp(10f))
+            textPaint.color = titleAlpha(Color.WHITE)
+            y += dp(9f)
+            canvas.drawText(ellipsize(displayTitle(), screen * .70f), cx, y, textPaint)
+        }
+        if (showTrackArtist) {
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = dp(8f)
+            textPaint.color = artistAlpha(artistTextColor())
+            y += dp(9f)
+            canvas.drawText(ellipsize(displayArtist(), screen * .70f), cx, y, textPaint)
+        }
+
+        // The table. Label right-aligned against a fixed column, value left of it - the same split
+        // MetadataFace draws, so the miniature shows where a long value will be cut.
+        val labelRight = cx - dp(3f)
+        val valueLeft = cx + dp(3f)
+        val rows = previewMetadataRows()
+        y += dp(9f)
+        rows.take(5).forEach { (label, value) ->
+            textPaint.textSize = dp(6.5f)
+            textPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x85)
+            textPaint.textAlign = Paint.Align.RIGHT
+            canvas.drawText(label, labelRight, y, textPaint)
+
+            textPaint.textSize = dp(8f)
+            textPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0xEB)
+            textPaint.textAlign = Paint.Align.LEFT
+            canvas.drawText(ellipsize(value, screen * .34f), valueLeft, y, textPaint)
+            y += dp(9.5f)
+        }
+        textPaint.textAlign = Paint.Align.CENTER
+    }
+
+    /**
+     * The rows the miniature stands in with, honouring the group switches so turning a block off is
+     * visible here rather than only on the wrist.
+     */
+    private fun previewMetadataRows(): List<Pair<String, String>> {
+        val rows = mutableListOf<Pair<String, String>>()
+        val appearance = ThemeAppearance.resolve(prefs)
+        fun group(group: TrackMetadataFields.Group): Boolean =
+                FaceScopedPreferences.getBoolean(
+                        prefs, MiscPreferences.metadataGroupPreference(group), appearance)
+        if (group(TrackMetadataFields.Group.CORE)) {
+            rows.add(resources.getString(R.string.preview_metadata_album) to
+                    resources.getString(R.string.preview_metadata_album_value))
+            rows.add(resources.getString(R.string.preview_metadata_track) to "7 / 12")
+        }
+        if (group(TrackMetadataFields.Group.RELEASE)) {
+            rows.add(resources.getString(R.string.preview_metadata_genre) to
+                    resources.getString(R.string.preview_metadata_genre_value))
+            rows.add(resources.getString(R.string.preview_metadata_year) to "2019")
+        }
+        if (group(TrackMetadataFields.Group.PLAYBACK)) {
+            // A frozen sample rather than a running counter: the miniature redraws on preference
+            // changes, not on a ticker, and animating it here would be a second clock to keep in
+            // step with the wrist's for no gain. The point of the row in a preview is that it is
+            // there and how much width it wants.
+            rows.add(resources.getString(R.string.preview_metadata_position) to "1:23.456 / 3:45.678")
+            rows.add(resources.getString(R.string.preview_metadata_output) to
+                    resources.getString(R.string.preview_metadata_output_value))
+        }
+        if (group(TrackMetadataFields.Group.TECHNICAL)) {
+            rows.add(resources.getString(R.string.preview_metadata_format) to "FLAC")
+            rows.add(resources.getString(R.string.preview_metadata_bitrate) to "1041 kbps")
+        }
+        return rows
+    }
+
     private fun drawNotePlayer(
             canvas: Canvas,
             geometry: PreviewGeometry,
@@ -6147,22 +6513,51 @@ class WatchPreviewView @JvmOverloads constructor(
 
         fillPaint.shader = null
 
-        // Cover band. Painted over a panel-tinted base so a transparent or absent cover still
-        // reads as the two-tone composition rather than showing the window through.
+        val screenRect = RectF(cx - radius, screenTop, cx + radius, cy + radius)
         val coverRect = RectF(cx - radius, screenTop, cx + radius, seamY)
-        fillPaint.color = ColorUtils.setAlphaComponent(panelColor, 0xB3)
-        canvas.drawRect(coverRect, fillPaint)
+        val panelRect = RectF(cx - radius, seamY, cx + radius, cy + radius)
         val art = liveArt ?: sampleArt
-        if (art != null && !PlayerBackgroundStyle.fromPreference(artStyle).hidesArtwork) {
+        val artVisible = art != null && !PlayerBackgroundStyle.fromPreference(artStyle).hidesArtwork
+
+        if (splitPanel == SplitPanelStyle.BLUR && artVisible) {
+            // One image across the whole screen, sharp above the seam and blurred below it -
+            // mirroring SplitFace.ContinuousBackdrop. Both copies are mapped to the *screen*
+            // rectangle and then clipped, never fitted into their own band: fitting the lower one
+            // to the panel would crop it differently and the seam would stop being one picture.
             canvas.save()
             canvas.clipRect(coverRect)
-            drawArtwork(canvas, art, RectF(cx - radius, screenTop, cx + radius, seamY), 255)
+            drawArtwork(canvas, art, screenRect, 255)
             canvas.restore()
-        }
 
-        // Solid panel.
-        fillPaint.color = panelColor
-        canvas.drawRect(RectF(cx - radius, seamY, cx + radius, cy + radius), fillPaint)
+            canvas.save()
+            canvas.clipRect(panelRect)
+            // Panel first, artwork over it at a fixed alpha - the same order the face composites
+            // in, and for the same reason: the panel colour is what the text contrast was decided
+            // against, so it has to be the base rather than a wash.
+            fillPaint.color = panelColor
+            canvas.drawRect(panelRect, fillPaint)
+            drawArtwork(
+                    canvas,
+                    liveArtBlurred ?: sampleArtBlurred ?: art,
+                    screenRect,
+                    SPLIT_PANEL_ART_ALPHA)
+            canvas.restore()
+        } else {
+            // Cover band. Painted over a panel-tinted base so a transparent or absent cover still
+            // reads as the two-tone composition rather than showing the window through.
+            fillPaint.color = ColorUtils.setAlphaComponent(panelColor, 0xB3)
+            canvas.drawRect(coverRect, fillPaint)
+            if (artVisible) {
+                canvas.save()
+                canvas.clipRect(coverRect)
+                drawArtwork(canvas, art, coverRect, 255)
+                canvas.restore()
+            }
+
+            // Solid panel.
+            fillPaint.color = panelColor
+            canvas.drawRect(panelRect, fillPaint)
+        }
 
         // Artist over title, left-aligned, inset for the narrowing round chord.
         val inset = RoundScreenText.sideInsetFor(

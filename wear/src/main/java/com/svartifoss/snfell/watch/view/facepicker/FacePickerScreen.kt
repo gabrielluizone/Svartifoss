@@ -113,18 +113,20 @@ private fun FaceList(
 ) {
     val listState = rememberScalingLazyListState()
 
-    // Item indices, so the opening scroll lands on the right row: header, built-in section label,
-    // built-in rows, then (if any) the custom section label and its rows.
-    val builtInStart = 2
-    val customStart = builtInStart + builtIn.size + 1
-    val selectedIndex = builtIn.indexOfFirst { it.key == selectedFace }
-            .takeIf { it >= 0 }?.let { builtInStart + it }
-            ?: custom.indexOfFirst { it.key == selectedFace }
-                    .takeIf { it >= 0 }?.let { customStart + it }
+    // Item indices, so the opening scroll lands on the right row. The order below is: header,
+    // then (if any) the custom section label and its rows, then the built-in label and its rows.
+    // Must be kept in step with the list itself - the two disagreeing sends the opening scroll to
+    // a neighbouring row, which reads as the picker having lost track of the current face.
+    val customStart = 2
+    val builtInStart = if (custom.isEmpty()) 2 else customStart + custom.size + 1
+    val selectedIndex = custom.indexOfFirst { it.key == selectedFace }
+            .takeIf { it >= 0 }?.let { customStart + it }
+            ?: builtIn.indexOfFirst { it.key == selectedFace }
+                    .takeIf { it >= 0 }?.let { builtInStart + it }
 
-    // Open on the face already in use rather than at the top. With sixteen entries plus the user's
-    // own themes the current one is usually off-screen, and a picker that cannot show you what you
-    // have now makes you scroll just to get your bearings.
+    // Open on the face already in use rather than at the top. With seventeen built-in entries plus
+    // the user's own themes the current one is usually off-screen, and a picker that cannot show
+    // you what you have now makes you scroll just to get your bearings.
     LaunchedEffect(selectedIndex) {
         selectedIndex?.let { listState.scrollToItem(it) }
     }
@@ -142,15 +144,11 @@ private fun FaceList(
         ) {
             item { PickerHeader(phoneConnected) }
 
-            item {
-                SectionLabel(stringResource(R.string.face_picker_section_builtin), accentColor)
-            }
-            items(builtIn) { option ->
-                FaceRow(option, selectedFace, accentColor, onSelect)
-            }
-
-            // Omitted entirely when the user has no themes: an empty titled section is a promise of
-            // content that never arrives, and the phone app is the only place themes can be made.
+            // The user's own themes come first, ahead of the built-in list. Someone who has made
+            // themes is almost always switching between *those*, and behind seventeen built-in
+            // rows they were a scroll away every time. Omitted entirely when there are none: an
+            // empty titled section is a promise of content that never arrives, and the phone app
+            // is the only place themes can be made.
             if (custom.isNotEmpty()) {
                 item {
                     SectionLabel(stringResource(R.string.face_picker_section_custom), accentColor)
@@ -158,6 +156,13 @@ private fun FaceList(
                 items(custom) { option ->
                     FaceRow(option, selectedFace, accentColor, onSelect)
                 }
+            }
+
+            item {
+                SectionLabel(stringResource(R.string.face_picker_section_builtin), accentColor)
+            }
+            items(builtIn) { option ->
+                FaceRow(option, selectedFace, accentColor, onSelect)
             }
         }
 

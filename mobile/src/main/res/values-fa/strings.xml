@@ -511,6 +511,8 @@
         <item>گفتگو</item>
         <item>تقسیم</item>
         <item>یادداشت</item>
+        <item>بند</item>
+        <item>فراداده</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">جست‌وجوی Expressive</string>
@@ -531,6 +533,14 @@
         <item>Material (خط‌دار)</item>
         <item>کنترل‌های AMOLED</item>
         <item>Chrono (ساعت بزرگ)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>چرخ‌فلک</item>
+        <item>گفتگو</item>
+        <item>تقسیم</item>
+        <item>یادداشت</item>
+        <item>بند</item>
     </string-array>
     <string name="setting_wear_aod_color">رنگ همیشه روشن</string>
     <string-array name="wear_aod_color_entries">
@@ -1390,4 +1400,10 @@
     </string-array>
     <string name="setting_wear_normal_color_multi">استفاده از پالت رنگ</string>
     <string name="setting_wear_normal_color_multi_description">روشن: صفحه یک رنگ اصلی به‌همراه دو تُن کمکی به کار می‌برد. خاموش: همه‌جا فقط یک رنگ — رنگ خودِ آلبوم یا رنگی که انتخاب کرده‌اید.</string>
+    <string-array name="wear_accent_floor_entries">
+        <item>خاموش</item>
+        <item>ملایم</item>
+        <item>استاندارد</item>
+        <item>پررنگ</item>
+    </string-array>
 </resources>

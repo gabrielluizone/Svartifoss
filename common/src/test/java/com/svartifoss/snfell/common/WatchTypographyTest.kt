@@ -194,4 +194,45 @@ class WatchTypographyTest {
         assertEquals("font_from_a_newer_build",
                 WatchTypography.clockFontKey("font_from_a_newer_build", "caveat"))
     }
+
+    // ---- lyricsFontKey ----------------------------------------------------
+
+    /**
+     * The regression this pins, which shipped once and was reported as "the control does nothing":
+     * "follow" used to mean *the font this surface was designed with* - Marcellus on Verse, the UI
+     * family on the lyrics screen. That preserved every existing theme perfectly and, in doing so,
+     * preserved the complaint, because changing the theme's typeface left the words of the song as
+     * the one element that did not follow.
+     */
+    @Test
+    fun `follow means the theme's own typeface`() {
+        assertEquals("orbitron", WatchTypography.lyricsFontKey(
+                WatchTypography.LYRICS_FONT_FOLLOW, trackFontKey = "orbitron"))
+    }
+
+    @Test
+    fun `an explicit choice overrides the track typeface`() {
+        assertEquals("marcellus", WatchTypography.lyricsFontKey(
+                "marcellus", trackFontKey = "orbitron"))
+    }
+
+    /** A value can arrive from an imported backup or a newer build; falling back to the user's own
+     *  chosen face beats reverting to something they never picked. */
+    @Test
+    fun `a blank or missing choice falls back to the track typeface`() {
+        assertEquals("orbitron", WatchTypography.lyricsFontKey(null, "orbitron"))
+        assertEquals("orbitron", WatchTypography.lyricsFontKey("", "orbitron"))
+        assertEquals("orbitron", WatchTypography.lyricsFontKey("   ", "orbitron"))
+    }
+
+    /** The clock and the lyrics resolve "follow" the same way, deliberately: one word, one meaning
+     *  across the app. */
+    @Test
+    fun `lyrics and clock follow resolve identically`() {
+        listOf("google_sans", "orbitron", null).forEach { track ->
+            assertEquals(
+                    WatchTypography.clockFontKey(WatchTypography.CLOCK_FONT_FOLLOW, track),
+                    WatchTypography.lyricsFontKey(WatchTypography.LYRICS_FONT_FOLLOW, track))
+        }
+    }
 }

@@ -1,0 +1,40 @@
+syntax = "proto2";
+
+package com.svartifoss.snfell.proto;
+
+option java_package = "com.svartifoss.snfell.proto";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME;
+
+// Watch -> phone. The watch states which track it wants lyrics for rather than letting the phone
+// read its own session, so the answer can be matched against what the screen is actually showing:
+// the two sides drift by a track whenever a skip is in flight, and an answer for the wrong song is
+// worse than none at all. The phone echoes these three fields back in LyricsResponse.
+message LyricsRequest {
+  optional string title = 1;
+  optional string artist = 2;
+  // Milliseconds, as MusicState reports it. LRCLIB matches on duration in SECONDS - the phone
+  // converts, so the units mismatch lives in one place instead of at every call site.
+  optional int64 durationMs = 3;
+}
+
+// Phone -> watch.
+message LyricsResponse {
+  // Echo of the request. The watch discards a response whose track is not the one on screen.
+  optional string title = 1;
+  optional string artist = 2;
+  optional int64 durationMs = 3;
+
+  // 0 = SYNCED (lrc is set), 1 = PLAIN (plain is set, no timing available anywhere),
+  // 2 = NONE (the lookup succeeded and this track simply has no lyrics),
+  // 3 = FAILED (could not complete - offline, rate limited, service down),
+  // 4 = DISABLED (the user turned the lyrics lookup off in settings).
+  // NONE and FAILED are deliberately distinct: one is an answer, the other is a missing answer,
+  // and only the second is worth a retry or an "check your connection" message.
+  required int32 status = 4;
+
+  // Raw LRC, parsed on the watch by LyricsParser. Sent as text rather than as pre-parsed lines
+  // because it is more compact than a repeated message and the parser already lives in common.
+  optional string lrc = 5;
+  optional string plain = 6;
+}

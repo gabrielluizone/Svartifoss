@@ -60,7 +60,10 @@ import androidx.annotation.DrawableRes
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.toArgb
 import androidx.wear.compose.material3.Icon
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.ColorFilter
 import com.svartifoss.snfell.common.AdaptiveTextContrast
+import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.R
 import androidx.compose.ui.res.stringResource
 import com.svartifoss.snfell.watch.view.compose.FaceClock
@@ -87,11 +90,12 @@ import com.svartifoss.snfell.watch.view.compose.FaceClock
  * opens the face picker. The voice bubble deliberately is not clickable - it sits over that centre,
  * and making it a tap target is what swallowed the play/pause taps in the first version.
  *
- * It does carry two round actions (queue, skip next), which the rest of the curated collection
- * deliberately does not. The reason is this face's own defaults: the thread occupies the band the
- * mini-button row lives in, so Chat turns that row off (see [FaceScopedPreferences]) and would
- * otherwise ship with no shortcuts at all. Play/pause is still not among them - it stays on the
- * centre tap, as everywhere else.
+ * It does carry a row of round actions, which the rest of the curated collection deliberately does
+ * not, and that row is where this face *hosts* the configured mini buttons rather than letting the
+ * shared row float over the thread - one circle per configured slot. With none configured it keeps
+ * the queue and skip-next pair it has always had, since the thread occupies the band any other
+ * shortcut would live in. Play/pause is not among them either way - it stays on the centre tap, as
+ * everywhere else. See [ChatActionRow].
  */
 @Composable
 fun ChatFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
@@ -123,7 +127,7 @@ fun ChatFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
                         .fillMaxSize()
                         // Wide side padding: bubbles are rectangles on a round screen, so their
                         // corners are the first thing the bezel eats.
-                        .padding(horizontal = screen * .09f)
+                        .padding(horizontal = screen * SIDE_PADDING_FRACTION)
                         .padding(top = screen * .085f, bottom = screen * .05f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 // Bottom-anchored, so the newest message is always the one at a fixed place and
@@ -150,7 +154,7 @@ fun ChatFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
                     screen = screen)
 
             Spacer(Modifier.height(5.dp))
-            ChatActionRow(listener = listener, accent = accent, screen = screen)
+            ChatActionRow(state = state, listener = listener, accent = accent, screen = screen)
         }
 
         FaceClock(
@@ -172,6 +176,13 @@ private val BUBBLE_CORNER = 18.dp
 private val BUBBLE_TAIL_CORNER = 6.dp
 private const val ACTION_DIAMETER_FRACTION = .215f
 private const val GLYPH_FRACTION = .48f
+private const val SIDE_PADDING_FRACTION = .09f
+private const val ACTION_GAP_FRACTION = .05f
+
+/** Floor on a circle's diameter once three of them have to share the row. Below this the target
+ *  stops being reliably hittable on a wrist, which is the point at which shrinking to fit stops
+ *  being the right answer. */
+private val MIN_ACTION_DIAMETER = 32.dp
 
 private const val INCOMING_LIGHTNESS = .17f
 private const val OUTGOING_LIGHTNESS = .32f
@@ -216,7 +227,11 @@ private fun CurrentMessageBubble(state: NowPlayingFaceState, color: Color) {
                 if (showTitle) {
                     Text(
                             text = state.title,
-                            color = Color.White,
+                            // Was a hardcoded white, which made the title colour treatment, the
+                            // custom colour and the adaptive-contrast option all inert on this
+                            // face. titleTextColor keeps the face's designed colour when the user
+                            // has not chosen one.
+                            color = titleTextColor(state, Color.White),
                             fontFamily = state.titleFont,
                             fontWeight = FontWeight.Bold,
                             fontStyle = state.titleFontStyle,
@@ -229,7 +244,9 @@ private fun CurrentMessageBubble(state: NowPlayingFaceState, color: Color) {
                 if (showArtist) {
                     Text(
                             text = state.artist,
-                            color = Color.White.copy(alpha = .70f),
+                            // Same: the artist colour mode reaches every other face and was
+                            // dropped here. The face's own .70f alpha is preserved.
+                            color = Color(state.artistColor).copy(alpha = .70f),
                             fontFamily = state.artistFont,
                             fontStyle = state.artistFontStyle,
                             fontSize = state.artistTypography.scaled(12f).sp,
@@ -321,10 +338,16 @@ private fun VoiceBubble(
                         modifier = Modifier.weight(1f).fillMaxHeight(),
                         contentAlignment = Alignment.Center
                 ) {
+                    // The waveform *is* this face's progress indicator, so it takes the resolved
+                    // progress colour rather than the raw accent - the progress colour treatment
+                    // reached every other face and was dropped here. It stays drawn regardless of
+                    // showInternalProgress for the reason Expressive's cookie ring does: it is
+                    // structural, not an optional overlay. Without it the voice bubble is a blank
+                    // capsule and the composition stops reading as a message at all.
                     Waveform(
                             progress = state.progress,
                             playing = state.playing,
-                            played = accent,
+                            played = Color(state.progressColor),
                             remaining = Color.White.copy(alpha = .35f))
                 }
                 Spacer(Modifier.width(7.dp))
@@ -479,21 +502,46 @@ private fun DoubleTick(color: Color) {
 }
 
 /**
- * The two round actions the reference chat puts under the thread.
+ * The round actions under the thread, where the reference chat puts its microphone and keyboard.
  *
- * A deliberate departure from the curated collection's "no fixed action row" rule, and the reason
- * is the layout itself: Chat defaults its mini-button row off (see FaceScopedPreferences) because
- * the conversation occupies that band, so without these the face would ship with no shortcuts at
- * all. Queue takes the microphone's place and skip-next the keyboard's; play/pause is deliberately
- * *not* here - it stays on the centre tap, as on every other face.
+ * With mini buttons configured this row *is* the mini-button row: one circle per configured slot,
+ * so the count follows the configuration rather than the face, and each circle runs that slot's own
+ * tap and long-press actions. The shared View row that would otherwise float over the thread is
+ * switched off for this face by the host - see
+ * [MiniButtonPlacement.isHostedByFace][com.svartifoss.snfell.common.MiniButtonPlacement.Companion.isHostedByFace].
+ * The two used to land in the same band and draw on top of one another, which is the whole reason
+ * this face used to default the row off.
+ *
+ * Their position is fixed by this composition, so the curve/rail preference cannot reach them and
+ * the phone hides that picker here rather than offering one that changes nothing. Their appearance
+ * is still the user's: [NowPlayingFaceState.miniButtonSurface] is the same surface the View row
+ * paints itself with, and its default - "Follow layout" - is what keeps this face's own accent
+ * circle until a style is picked.
+ *
+ * With nothing configured it falls back to the pair this face has always carried: queue takes the
+ * microphone's place and skip-next the keyboard's, because the conversation occupies the band any
+ * other shortcut would live in and the face would otherwise ship with no way to reach anything.
+ * Play/pause is deliberately not here either way - it stays on the centre tap, as on every face.
  */
 @Composable
 private fun ChatActionRow(
+        state: NowPlayingFaceState,
         listener: NowPlayingFaceListener,
         accent: Color,
         screen: Dp
 ) {
-    val diameter = (screen * ACTION_DIAMETER_FRACTION).coerceIn(38.dp, 50.dp)
+    val buttons = state.miniButtons
+    // One circle per configured mini button; the face's own pair only when there are none.
+    val count = if (buttons.isEmpty()) 2 else buttons.size
+    val gap = screen * ACTION_GAP_FRACTION
+    // The designed diameter is kept whenever the count leaves room for it and only shrinks when a
+    // third circle needs the space, so adding a button re-fits the row instead of overflowing it
+    // into the bezel.
+    val available = screen * (1f - SIDE_PADDING_FRACTION * 2f)
+    val diameter = minOf(
+            (screen * ACTION_DIAMETER_FRACTION).coerceIn(38.dp, 50.dp),
+            (available - gap * (count - 1)) / count
+    ).coerceAtLeast(MIN_ACTION_DIAMETER)
     // Worked out against the button's own fill rather than assumed dark. The buttons are painted in
     // the album accent, which arrives anywhere from near-black to near-white, so a fixed dark glyph
     // disappeared entirely on dark covers - which is exactly what happened.
@@ -503,30 +551,104 @@ private fun ChatActionRow(
         Color.White
     }
     Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                    .fillMaxWidth()
+                    .then(
+                            if (buttons.isEmpty()) Modifier
+                            // The group opacity preference belongs to the mini buttons, not to
+                            // this face's own controls.
+                            else Modifier.alpha(state.miniButtonsAlpha.coerceIn(0f, 1f))
+                    ),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
     ) {
-        FaceTapTarget(
-                width = diameter,
-                height = diameter,
-                shape = CircleShape,
-                background = accent,
-                label = stringResource(R.string.quick_action_up_next),
-                onClick = listener::onQueueTap
-        ) {
-            ActionGlyph(R.drawable.ic_face_queue_music, onAccent, diameter * GLYPH_FRACTION)
+        if (buttons.isEmpty()) {
+            FaceTapTarget(
+                    width = diameter,
+                    height = diameter,
+                    shape = CircleShape,
+                    background = accent,
+                    label = stringResource(R.string.quick_action_up_next),
+                    onClick = listener::onQueueTap
+            ) {
+                ActionGlyph(R.drawable.ic_face_queue_music, onAccent, diameter * GLYPH_FRACTION)
+            }
+            Spacer(Modifier.width(gap))
+            FaceTapTarget(
+                    width = diameter,
+                    height = diameter,
+                    shape = CircleShape,
+                    background = accent,
+                    label = stringResource(R.string.action_name_skip_next),
+                    onClick = listener::onSkipNextTap
+            ) {
+                ActionGlyph(R.drawable.ic_face_skip_next, onAccent, diameter * GLYPH_FRACTION)
+            }
+        } else {
+            buttons.forEachIndexed { index, button ->
+                if (index > 0) Spacer(Modifier.width(gap))
+                MiniButtonCircle(
+                        button = button,
+                        surface = state.miniButtonSurface,
+                        faceAccent = accent,
+                        onFaceAccent = onAccent,
+                        diameter = diameter,
+                        listener = listener)
+            }
         }
-        Spacer(Modifier.width(screen * .05f))
-        FaceTapTarget(
-                width = diameter,
-                height = diameter,
-                shape = CircleShape,
-                background = accent,
-                label = stringResource(R.string.action_name_skip_next),
-                onClick = listener::onSkipNextTap
-        ) {
-            ActionGlyph(R.drawable.ic_face_skip_next, onAccent, diameter * GLYPH_FRACTION)
+    }
+}
+
+/**
+ * One configured mini button drawn as one of this face's circles.
+ *
+ * The surface comes from the host, already resolved from the user's own `screen_buttons_bg_style`
+ * by [MiniButtonSurfaces] - the same object the shared View row paints itself with, so a button
+ * hosted here and one in the row cannot end up looking like two different features. Its default,
+ * "Follow layout", is what keeps this face's designed accent circle: that value has no colour of
+ * its own precisely so the layout can supply one.
+ *
+ * The shape stays a circle whatever the mini-button shape preference says. It is not a control
+ * borrowed into the composition, it is the composition's own control with the user's action in it,
+ * and a square in this row would break the rhythm the bubbles above it set.
+ */
+@Composable
+private fun MiniButtonCircle(
+        button: FaceMiniButton,
+        surface: MiniButtonSurfaces.Surface,
+        faceAccent: Color,
+        onFaceAccent: Color,
+        diameter: Dp,
+        listener: NowPlayingFaceListener
+) {
+    val followsFace = surface.followsFaceNeutral
+    val styleTint = surface.iconTintArgb
+    val tint = when {
+        followsFace -> onFaceAccent.takeIf { button.iconTintable }
+        styleTint == null -> null
+        // A style that forces its tint flattens even a full-colour icon; anything else leaves an
+        // app icon or fetched cover its own colours.
+        surface.forceIconTint || button.iconTintable -> Color(styleTint)
+        else -> null
+    }
+    FaceTapTarget(
+            width = diameter,
+            height = diameter,
+            shape = CircleShape,
+            background = if (followsFace) faceAccent else Color(surface.fillArgb),
+            borderColor = if (followsFace) Color.Transparent else Color(surface.strokeArgb),
+            borderWidth = if (followsFace) 0.dp else surface.strokeWidthDp.dp,
+            label = button.description.orEmpty(),
+            onClick = { listener.onMiniButtonTap(button.slotCode) },
+            onLongClick = { listener.onMiniButtonLongPress(button.slotCode) }
+    ) {
+        button.icon?.let { icon ->
+            Image(
+                    bitmap = icon,
+                    contentDescription = null,
+                    colorFilter = tint?.let { ColorFilter.tint(it) },
+                    modifier = Modifier.size(diameter * GLYPH_FRACTION)
+            )
         }
     }
 }

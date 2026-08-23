@@ -83,6 +83,39 @@ object WatchTypography {
                 clockPreference
             }
 
+    /** [MiscPreferences.WEAR_LYRICS_FONT] value meaning "use whatever the track text uses". */
+    const val LYRICS_FONT_FOLLOW: String = "follow"
+
+    /**
+     * The font key song lyrics should render in, on whichever surface is asking.
+     *
+     * Lyrics were the one body of text in the app with no font control at all, and they were
+     * coupled two different ways at once: the lyrics screen followed
+     * [MiscPreferences.WEAR_FONT_ALL_SCREENS], a switch meant for menu and queue chrome, while the
+     * Verse face had a serif welded into its composition.
+     *
+     * [LYRICS_FONT_FOLLOW] therefore resolves to [trackFontKey] - the theme's own typeface - and
+     * **not** to whatever each surface used to hardcode. That distinction is the whole point rather
+     * than a detail: a first pass at this kept each surface's designed font as the default, which
+     * preserved every existing theme exactly and in doing so preserved the actual complaint. Change
+     * the theme's typeface and the words of the song were the one thing that did not follow, which
+     * is indistinguishable from the control not working at all.
+     *
+     * The serif the Verse face shipped with is still one tap away; it is simply a choice now
+     * (Marcellus) rather than a fixture. Same shape, same reasoning, and the same wording in the
+     * picker as [clockFontKey] - so "follow" means one thing across the app instead of two.
+     *
+     * An empty or unknown value also resolves to the track font rather than to a fixed family: the
+     * value can arrive from an imported backup or a newer build, and falling back to the user's own
+     * chosen face is far less surprising than reverting to something they never picked.
+     */
+    fun lyricsFontKey(lyricsPreference: String?, trackFontKey: String?): String? =
+            if (lyricsPreference.isNullOrBlank() || lyricsPreference == LYRICS_FONT_FOLLOW) {
+                trackFontKey
+            } else {
+                lyricsPreference
+            }
+
     /**
      * The four Google Sans Flex axes that are *not* already covered by the per-element
      * weight/italic controls - width, optical size, grade and roundness. These are deliberately

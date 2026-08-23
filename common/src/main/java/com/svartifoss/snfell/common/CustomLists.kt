@@ -119,4 +119,37 @@ object QueuePaging {
 
     /** The size of the next request after [loaded] entries, clamped to [MAX_ENTRIES]. */
     fun nextLimit(loaded: Int): Int = (loaded + PAGE_SIZE).coerceAtMost(MAX_ENTRIES)
+
+    /**
+     * [requestedLimit], stretched far enough to reach the entry at [activeIndex] **and a page of
+     * what follows it**.
+     *
+     * A page is a prefix of the queue, which is right for reading forwards and wrong for the one
+     * row the watch most needs: the track playing right now. Ask for twenty entries while listening
+     * to the eightieth and the playing track is simply not in the payload, so the watch cannot
+     * centre on it and the user pages down by hand until it appears.
+     *
+     * The trailing [PAGE_SIZE] is the part that took a correction and is the whole point of the
+     * screen. Stretching to exactly `activeIndex + 1` does put the playing track in the list - as
+     * its **last row**, with nothing after it. A queue whose entire subject is what comes next then
+     * shows what came before and stops, and the user is back to tapping "load more" for the one
+     * thing they opened it to see.
+     *
+     * Stretching costs a larger first payload when you are deep in a playlist, and that is the
+     * trade being made deliberately: every entry carries its own thumbnail across Bluetooth, but
+     * reaching the same row through repeated "load more" requests sends *more* than this does, and
+     * makes the user drive it.
+     *
+     * [MAX_ENTRIES] still caps it, so this can only spend the budget that already existed. A
+     * negative [activeIndex] means the playing row could not be located and the request is left
+     * exactly as asked.
+     */
+    fun limitCoveringUpcoming(requestedLimit: Int, activeIndex: Int): Int {
+        val requested = requestedLimit.coerceIn(1, MAX_ENTRIES)
+        if (activeIndex < 0) {
+            return requested
+        }
+        val throughUpcoming = (activeIndex + 1 + PAGE_SIZE).coerceAtMost(MAX_ENTRIES)
+        return maxOf(requested, throughUpcoming)
+    }
 }

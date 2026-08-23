@@ -510,6 +510,8 @@
         <item>Obrolan</item>
         <item>Terbagi</item>
         <item>Catatan</item>
+        <item>Bait</item>
+        <item>Metadata</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Pencarian Expressive</string>
@@ -530,6 +532,14 @@
         <item>Material (garis luar)</item>
         <item>Kontrol AMOLED</item>
         <item>Chrono (jam besar)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Korsel</item>
+        <item>Obrolan</item>
+        <item>Terbagi</item>
+        <item>Catatan</item>
+        <item>Bait</item>
     </string-array>
     <string name="setting_wear_aod_color">Warna selalu aktif</string>
     <string-array name="wear_aod_color_entries">
@@ -1385,5 +1395,11 @@
         <item>@string/wear_screen_theme_minimal_description</item>
         <item>@string/wear_screen_theme_compact_description</item>
         <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Mati</item>
+        <item>Lembut</item>
+        <item>Standar</item>
+        <item>Tegas</item>
     </string-array>
 </resources>

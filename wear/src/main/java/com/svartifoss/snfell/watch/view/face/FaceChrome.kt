@@ -5,7 +5,9 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -63,6 +65,7 @@ import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
+import com.svartifoss.snfell.watch.view.compose.accentFloorGlow
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.wrapContentSize
@@ -331,6 +334,17 @@ internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
             PlayerBackgroundStyle.HIDDEN -> drawRect(Color.Black)
         }
     }
+
+    // Drawn here rather than by each face, and here rather than over the whole face: it belongs to
+    // the background stack, so it must sit above whatever backdrop was chosen and below the face's
+    // own content. Over the top it would tint the text; under the backdrop an opaque one would
+    // hide it. Every face that goes through this shared pipeline therefore gets the piece for
+    // free - which is the whole point of it being a piece.
+    if (state.accentFloor.isVisible && !state.ambient) {
+        Box(Modifier
+                .fillMaxSize()
+                .accentFloorGlow(Color(state.accentColor), state.accentFloor))
+    }
 }
 
 /**
@@ -449,6 +463,7 @@ internal fun centeredTransportTrackTimeOffset(
 /** A press-scaling tap target of any [shape] - the shared skeleton for the Beta faces' buttons,
  *  pills and chips. Theme visuals may inset the painted fill/outline, but this outer box retains
  *  its original hit geometry; everything around it falls through to the host gesture layers. */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun FaceTapTarget(
         width: Dp,
@@ -461,6 +476,10 @@ internal fun FaceTapTarget(
         visualInset: Dp = 0.dp,
         borderColor: Color = Color.Transparent,
         borderWidth: Dp = 0.dp,
+        /** Optional long press. Exists for the mini buttons a face hosts: every slot carries a
+         *  separate long-press action, and a face-drawn button that ran only the tap would be the
+         *  same control doing less than the shared row's version of it. */
+        onLongClick: (() -> Unit)? = null,
         content: @Composable () -> Unit
 ) {
     val interaction = remember { MutableInteractionSource() }
@@ -478,7 +497,20 @@ internal fun FaceTapTarget(
                         scaleY = scale
                     }
                     .clip(shape)
-                    .clickable(interactionSource = interaction, indication = null, onClick = onClick)
+                    .then(
+                            if (onLongClick == null) {
+                                Modifier.clickable(
+                                        interactionSource = interaction,
+                                        indication = null,
+                                        onClick = onClick)
+                            } else {
+                                Modifier.combinedClickable(
+                                        interactionSource = interaction,
+                                        indication = null,
+                                        onClick = onClick,
+                                        onLongClick = onLongClick)
+                            }
+                    )
                     .semantics { contentDescription = label },
             contentAlignment = Alignment.Center
     ) {

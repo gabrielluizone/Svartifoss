@@ -116,6 +116,12 @@ enum class PlayerBackgroundStyle(
             "carousel", "chat", "split" -> EXPRESSIVE
             // Text on emptiness is the whole idea - see NoteFace.
             "note" -> HIDDEN
+            // Verse paints its own black-and-accent floor and reads three lines of type across the
+            // middle; artwork behind that is the one thing guaranteed to make it unreadable.
+            "verse" -> HIDDEN
+            // Small text over a full-bleed cover is unreadable, and this face is nothing but
+            // small text. A default only - the background picker still reaches it like any other.
+            "metadata" -> HIDDEN
             else -> COVER
         }
     }

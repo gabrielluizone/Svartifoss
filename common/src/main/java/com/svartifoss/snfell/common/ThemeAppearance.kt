@@ -60,7 +60,9 @@ object ThemeAppearance {
             "carousel",
             "chat",
             "split",
-            "note"
+            "note",
+            "verse",
+            "metadata"
     )
 
     fun normalizeBaseFace(face: String?): String =

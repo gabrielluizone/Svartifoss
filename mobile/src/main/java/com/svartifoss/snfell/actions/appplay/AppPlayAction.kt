@@ -14,6 +14,7 @@ import com.svartifoss.snfell.actions.ActionHandler
 import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.actions.SelectableAction
 import com.svartifoss.snfell.music.MusicService
+import com.svartifoss.snfell.notifications.AppGlyphStore
 import com.svartifoss.snfell.music.isPlaying
 import kotlinx.coroutines.delay
 import timber.log.Timber
@@ -58,14 +59,33 @@ class AppPlayAction : SelectableAction {
     }
 
     override fun retrieveTitle(): String = lazyName
+
+    /**
+     * Tintable exactly when the icon below is the app's notification glyph.
+     *
+     * The two getters have to agree or the icon is wrong in both directions: a flat-white template
+     * drawn untinted is invisible on a light surface, and a full-colour launcher icon run through a
+     * tint is a solid blob. They are resolved from the same store rather than from two independent
+     * conditions for that reason.
+     */
     override val defaultIconTintable: Boolean
-        get() = false
+        get() = AppGlyphStore.glyph(context, receiverComponent.packageName) != null
+
+    /**
+     * The app's own notification glyph, falling back to its launcher icon.
+     *
+     * Preferring the glyph is what keeps this row speaking the same visual language as the rest of
+     * the watch UI - the seam mark on Split and the badge beside the artist line are this same
+     * image. The launcher icon remains for an app this phone has never seen post a media
+     * notification, which is the only honest answer before it has played once.
+     */
     override val defaultIcon: Drawable
-        get() = try {
-            context.packageManager.getApplicationIcon(receiverComponent.packageName)
-        } catch (ignored: PackageManager.NameNotFoundException) {
-            AppCompatResources.getDrawable(context, android.R.drawable.sym_def_app_icon)!!
-        }
+        get() = AppGlyphStore.drawable(context, receiverComponent.packageName)
+                ?: try {
+                    context.packageManager.getApplicationIcon(receiverComponent.packageName)
+                } catch (ignored: PackageManager.NameNotFoundException) {
+                    AppCompatResources.getDrawable(context, android.R.drawable.sym_def_app_icon)!!
+                }
 
     override fun isEqualToAction(other: PhoneAction): Boolean {
         other as AppPlayAction

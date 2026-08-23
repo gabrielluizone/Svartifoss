@@ -28,4 +28,14 @@ object StandardActions {
     /** Opens the persistent Streaming shortcuts cache locally, then refreshes it from the phone. */
     const val ACTION_OPEN_STREAMING_SHORTCUTS =
             "com.svartifoss.snfell.actions.OpenPlaylistShortcutsAction"
+
+    /**
+     * Opens the watch's synced-lyrics screen.
+     *
+     * Watch-local in the same sense as [ACTION_OPEN_PLAYLIST_MENU]: the watch launches its own
+     * LyricsActivity directly instead of round-tripping, and that screen then asks the phone for
+     * the lyric text. The phone-side handler only runs for paths that always execute on the phone
+     * (the actions menu), where it bounces an "open lyrics" message back.
+     */
+    const val ACTION_OPEN_LYRICS = "com.svartifoss.snfell.actions.OpenLyricsAction"
 }

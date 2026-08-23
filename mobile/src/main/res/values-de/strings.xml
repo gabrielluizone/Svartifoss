@@ -512,6 +512,8 @@
         <item>Chat</item>
         <item>Split</item>
         <item>Note</item>
+        <item>Vers</item>
+        <item>Metadata</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive-Suchlauf</string>
@@ -532,6 +534,14 @@
         <item>Material (umrissen)</item>
         <item>AMOLED-Steuerung</item>
         <item>Chrono (große Uhr)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Karussell</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Vers</item>
     </string-array>
     <string name="setting_wear_aod_color">Always-on-Farbe</string>
     <string-array name="wear_aod_color_entries">
@@ -1390,5 +1400,11 @@
         <item>@string/wear_screen_theme_minimal_description</item>
         <item>@string/wear_screen_theme_compact_description</item>
         <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Aus</item>
+        <item>Sanft</item>
+        <item>Standard</item>
+        <item>Kräftig</item>
     </string-array>
 </resources>

@@ -49,6 +49,7 @@ class QueueActivity : ComponentActivity() {
         bindService(Intent(this, WatchMusicService::class.java), serviceConnection, BIND_AUTO_CREATE)
     }
 
+
     override fun onStop() {
         super.onStop()
         unbindService(serviceConnection)

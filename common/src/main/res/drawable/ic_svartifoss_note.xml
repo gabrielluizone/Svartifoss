@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The Svartifoss mark: a musical note whose stem splits into the basalt columns the waterfall it
+    is named after is known for.
+
+    Traced from the brand asset (mipmap/ic_launcher_foreground) rather than redrawn, because a
+    hand-approximated logo is a different logo. The trace is a straight-line contour of the source
+    alpha at half-pixel tolerance - 0.1% of the ink differs from the original, on a mark that is
+    then drawn at roughly a fifth of the traced size, so the polygons read as the curves they came
+    from.
+
+    A vector rather than a cropped bitmap so it can be tinted to whatever colour the text around it
+    is using - see MusicGlyphs, which substitutes it for the note characters that turn up in lyric
+    lines.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="154"
+    android:viewportHeight="154">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M62,2L71,2L72,3L74,3L74,4L70,5L62,13L61,17L60,18L60,20L59,21L59,124L58,125L58,129L53,139L44,147L40,149L38,149L37,150L33,150L32,151L26,151L25,150L21,150L11,145L3,136L2,132L1,131L1,129L0,128L0,115L1,114L2,109L4,107L6,103L10,99L17,95L19,95L20,94L33,94L34,95L39,96L41,98L43,97L43,89L44,88L44,20L49,10L55,5L59,3L61,3Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M91,2L99,2L100,3L102,3L102,4L100,4L96,6L91,11L91,12L88,16L87,22L86,23L86,124L84,126L84,127L80,128L79,129L78,128L74,127L72,124L72,20L73,19L73,17L75,13L80,7L87,3L90,3Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M117,2L153,2L153,6L151,7L147,7L146,8L136,9L134,10L130,14L130,17L128,19L117,21L113,26L113,122L112,123L112,125L109,128L105,129L104,128L102,128L98,123L98,23L99,22L99,18L102,12L108,6L109,6L111,4L113,4Z" />
+</vector>

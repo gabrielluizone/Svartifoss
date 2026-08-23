@@ -30,6 +30,13 @@ object FaceScopedPreferences {
      *  ...) stays global. Mirrors the appearance keys declared in `res/xml/watch_face_settings.xml`
      *  minus `wear_screen_face`. */
     val SCOPED_KEYS: Set<String> = setOf(
+            // A shared piece rather than one face's fixture - see AccentFloorStyle.
+            "wear_accent_floor",
+            // Per face, not per app: "keep the screen on" is a property of the composition you are
+            // looking at, not of the watch. A face you read (Verse, Chat) wants it; the one you
+            // glance at does not, and paying its battery cost on every face to have it on one is
+            // not a trade anyone would choose.
+            "wear_keep_screen_on",
             "album_art_style",
             "album_art_blur_radius",
             "album_art_dim_strength",
@@ -89,6 +96,20 @@ object FaceScopedPreferences {
             // is chosen against one face's composition, so carrying it onto another is the same
             // mistake the per-face scoping exists to prevent.
             "wear_clock_font",
+            // The lyrics typeface, for the lyrics screen and the Verse face alike. Scoped like
+            // every other appearance key so a saved theme carries it - see WEAR_LYRICS_FONT.
+            "wear_lyrics_font",
+            // The metadata face's blocks - see TrackMetadataFields.Group. Scoped, so a theme built
+            // around that face can show everything while another theme keeps only the essentials.
+            "wear_metadata_show_core",
+            "wear_metadata_show_release",
+            "wear_metadata_show_credits",
+            "wear_metadata_show_identifiers",
+            "wear_metadata_show_technical",
+            "wear_metadata_show_playback",
+            // Split's own backdrop control. Scoped like every other appearance key, so a saved
+            // theme built on Split carries the panel treatment it was designed with.
+            "wear_split_panel",
             "wear_clock_font_weight",
             "wear_clock_font_italic",
             "wear_clock_font_scale",
@@ -229,13 +250,25 @@ object FaceScopedPreferences {
      * waveform already *is* the progress bar, and on Split an arc around a two-tone card reads as a
      * stray ring.
      */
-    private val SELF_COMPOSED_FACES = setOf("chat", "split")
+    private val SELF_COMPOSED_FACES = setOf("split", "verse")
 
     /** Defaults only - both keys stay face-scoped and switchable like any other appearance key, so
      *  a user who wants the mini buttons back on these faces simply turns them on. */
     private val SELF_COMPOSED_DEFAULTS = mapOf(
             MiscPreferences.WEAR_MINI_BUTTONS_MODE.key to ActivityVisibility.NEVER,
             MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key to "false"
+    )
+
+    /**
+     * Verse's own additions on top of [SELF_COMPOSED_DEFAULTS].
+     *
+     * The accent floor is a *default* here, not a fixture: the treatment is a shared piece any face
+     * can wear (see [AccentFloorStyle]), and this face simply ships wearing it because its
+     * composition was designed around one. Turning it off on Verse is as ordinary as turning it on
+     * anywhere else.
+     */
+    private val VERSE_DEFAULTS = SELF_COMPOSED_DEFAULTS + mapOf(
+            MiscPreferences.WEAR_ACCENT_FLOOR.key to AccentFloorStyle.STANDARD.preferenceValue
     )
 
     /**
@@ -257,11 +290,28 @@ object FaceScopedPreferences {
             MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key to "false"
     )
 
+    /**
+     * Chat used to sit in [SELF_COMPOSED_FACES] for the same reason the others do - its thread runs
+     * to the bottom of the screen, and the shared mini-button row landed on top of the round
+     * actions already there.
+     *
+     * It no longer needs that. The face *hosts* the row now (see
+     * [MiniButtonPlacement.isHostedByFace]): its own circles are the configured mini buttons, one
+     * per slot, so there is nothing left to collide with, and defaulting them off would only hide
+     * the buttons a user configured from the one face built to show them. The edge arc still goes,
+     * because that is a full-screen decoration and the composition does run edge to edge.
+     */
+    private val CHAT_DEFAULTS = mapOf(
+            MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key to "false"
+    )
+
     fun perFaceDefault(face: String, baseKey: String): String? = when {
         baseKey == MiscPreferences.ALBUM_ART_STYLE.key ->
             PlayerBackgroundStyle.defaultForFace(face).preferenceValue
+        face == "chat" -> CHAT_DEFAULTS[baseKey]
         face == "split" -> SPLIT_DEFAULTS[baseKey]
         face == "note" -> NOTE_DEFAULTS[baseKey]
+        face == "verse" -> VERSE_DEFAULTS[baseKey]
         face in SELF_COMPOSED_FACES -> SELF_COMPOSED_DEFAULTS[baseKey]
         face in ALBUM_ACCENT_FACES -> ALBUM_ACCENT_SURFACE_DEFAULTS[baseKey]
         else -> null

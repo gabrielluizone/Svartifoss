@@ -14,6 +14,7 @@ import androidx.preference.PreferenceManager
 import androidx.preference.TwoStatePreference
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.ThemeAppearance
@@ -441,6 +442,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 defaultValue = "pill",
                 showArchived = showArchived)
         applyClockFontEntries(showArchived)
+        applyLyricsFontEntries(showArchived)
         applyTitleColorEntries()
     }
 
@@ -491,6 +493,34 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                         .toTypedArray()
         pref.entryValues =
                 (listOf(WatchTypography.CLOCK_FONT_FOLLOW) + keep.map { values[it] })
+                        .toTypedArray()
+    }
+
+    /**
+     * Builds the lyrics-font picker from the track-font catalog with a "Follow the design" row on
+     * top - the same derivation, and for the same reasons, as [applyClockFontEntries].
+     *
+     * The leading option cannot be shared with the clock's: "follow" means a different thing here.
+     * The clock follows the *track* font, while lyrics follow whatever the surface drawing them was
+     * designed with - the UI font on the lyrics screen, a serif on the Verse face - which is what
+     * makes this control additive rather than a silent restyle of every theme that already exists.
+     * See WatchTypography.lyricsFontKey.
+     */
+    private fun applyLyricsFontEntries(showArchived: Boolean) {
+        val pref = findPreference<ListPreference>(MiscPreferences.WEAR_LYRICS_FONT.key) ?: return
+        val entries = resources.getStringArray(R.array.wear_font_entries)
+        val values = resources.getStringArray(R.array.wear_font_values)
+        val current = pref.value ?: readStringPreference(
+                MiscPreferences.WEAR_LYRICS_FONT.key, WatchTypography.LYRICS_FONT_FOLLOW)
+        val keep = values.indices.filter { index ->
+            index < entries.size &&
+                    (showArchived || values[index] !in archivedFonts || values[index] == current)
+        }
+        pref.entries =
+                (listOf(getString(R.string.wear_lyrics_font_follow)) + keep.map { entries[it] })
+                        .toTypedArray()
+        pref.entryValues =
+                (listOf(WatchTypography.LYRICS_FONT_FOLLOW) + keep.map { values[it] })
                         .toTypedArray()
     }
 
@@ -881,6 +911,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         findPreference<Preference>("wear_title_text_mode")?.isVisible = true
         // Only the Expressive face reads this; every other face ignores the value entirely.
         findPreference<Preference>("wear_expressive_seek_mode")?.isVisible = face == "expressive"
+        // Same rule, same reason: the card silhouette is Carousel's own cover rail. It sat in the
+        // Player category unconditioned, so every other layout offered a picker that changed
+        // nothing - which reads as a broken setting rather than an inapplicable one.
+        findPreference<Preference>(MiscPreferences.WEAR_CAROUSEL_CARD_SHAPE.key)?.isVisible =
+                face == "carousel"
         // Expressive and Material must keep their central transport visible. Other faces,
         // including Poster and Studio, can still be reduced to a clean metadata/artwork layout.
         findPreference<Preference>(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key)?.isVisible =
@@ -893,6 +928,16 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // active drag regardless of that setting, so hiding the picker whenever dragging can
         // still show the ring would leave no way to choose what that temporary reveal looks like.
         findPreference<Preference>("wear_progress_style")?.isVisible = edgeVisible || edgeSeekEnabled
+        // A face that hosts the mini-button row inside its own composition places and shapes those
+        // buttons itself (Chat's circles are the configured slots), so neither the curve/rail
+        // arrangement nor the pill shape reaches them. Same rule as Carousel's card shape above:
+        // a picker that changes nothing reads as broken rather than as inapplicable. Background
+        // and opacity are *not* hidden - those do apply, through the shared MiniButtonSurfaces.
+        val hostedMiniButtons = MiniButtonPlacement.isHostedByFace(face)
+        findPreference<Preference>(MiscPreferences.WEAR_SCREEN_BUTTONS_CURVE_STYLE.key)
+                ?.isVisible = !hostedMiniButtons
+        findPreference<Preference>(MiscPreferences.WEAR_SCREEN_BUTTONS_SHAPE.key)
+                ?.isVisible = !hostedMiniButtons
         // Quadrant hint icons only exist on Classic - every Compose face hides them entirely.
         findPreference<Preference>("wear_quadrant_tap_flash")?.isVisible = face == "classic"
     }
@@ -924,7 +969,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val effectiveStyle = if (selectedStyle == "follow") face else selectedStyle
         val visualStyle = effectiveStyle in setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-            "spectrum", "material", "immersive", "depth", "carousel", "chat", "split", "note"
+            "spectrum", "material", "immersive", "depth", "carousel", "chat", "split", "note",
+            "verse",
+            "metadata"
         )
         findPreference<Preference>("wear_aod_show_transport")?.isVisible = visualStyle
         findPreference<Preference>("wear_aod_show_progress")?.isVisible = visualStyle

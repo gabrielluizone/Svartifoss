@@ -11,6 +11,10 @@ interface ButtonConfig {
     fun getAllActions() : Collection<Map.Entry<ButtonInfo, PhoneAction>>
 
     fun commit()
+
+    /** Re-send the current assignments to the watch without writing them to disk - see
+     *  [com.svartifoss.snfell.config.actionlist.ActionList.retransmit]. */
+    fun retransmit()
 }
 
 fun ButtonConfig.getScreenActionFallback(context: Context, buttonInfo: ButtonInfo): PhoneAction {

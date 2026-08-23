@@ -89,6 +89,8 @@
     <string name="face_name_chat" translatable="false">Chat</string>
     <string name="face_name_split" translatable="false">Split</string>
     <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 
     <!-- One-time gesture hints overlay shown on first launch -->
     <string name="hint_title">How to use</string>
@@ -124,4 +126,60 @@
     <string name="update_install_title">Svartifoss update</string>
     <string name="update_install_tap">Tap to install the new version</string>
     <string name="update_install_failed">Install failed. Allow installs from Svartifoss in the watch settings and try again from the phone.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Play from here</string>
+    <string name="lyrics_none">No lyrics found for this track</string>
+    <string name="lyrics_failed">Could not fetch the lyrics. Check your phone\'s connection.</string>
+    <string name="lyrics_disabled">Lyrics lookup is turned off in the phone settings</string>
+    <string name="lyrics_no_track">Nothing is playing</string>
+    <string name="metadata_none">No details for this track</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Album artist</string>
+    <string name="metadata_track">Track</string>
+    <string name="metadata_duration">Length</string>
+    <string name="metadata_genre">Genre</string>
+    <string name="metadata_year">Year</string>
+    <string name="metadata_released">Released</string>
+    <string name="metadata_label">Label</string>
+    <string name="metadata_country">Country</string>
+    <string name="metadata_composer">Composer</string>
+    <string name="metadata_writer">Writer</string>
+    <string name="metadata_author">Author</string>
+    <string name="metadata_codec">Format</string>
+    <string name="metadata_bitrate">Bitrate</string>
+    <string name="metadata_sample_rate">Sample rate</string>
+    <string name="metadata_channels">Channels</string>
+    <string name="metadata_file_size">Size</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Release ID</string>
+    <string name="metadata_compilation">Compilation</string>
+    <string name="metadata_value_yes">Yes</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Position</string>
+    <string name="metadata_speed">Speed</string>
+    <string name="metadata_output">Output</string>
+    <string name="metadata_output_speaker">Phone speaker</string>
+    <string name="metadata_output_wired">Headphones</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB audio</string>
+    <string name="metadata_output_remote">Casting</string>
+    <string name="metadata_origin">Source</string>
+    <string name="metadata_origin_stream">Stream</string>
+    <string name="metadata_origin_local">File on phone</string>
+    <string name="metadata_host">Host</string>
+    <string name="metadata_file">File</string>
+    <string name="metadata_download">Download</string>
+    <string name="metadata_download_no">Not downloaded</string>
+    <string name="metadata_download_running">Downloading</string>
+    <string name="metadata_download_yes">Downloaded</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">About</string>
+    <string name="metadata_source">Playing in</string>
 </resources>

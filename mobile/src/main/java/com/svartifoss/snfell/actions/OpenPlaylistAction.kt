@@ -1,5 +1,7 @@
 package com.svartifoss.snfell.actions
 
+import android.media.MediaMetadata
+import android.media.session.MediaSession
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
@@ -57,7 +59,43 @@ class OpenPlaylistAction : SelectableAction {
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<OpenPlaylistAction> {
         override suspend fun handleAction(action: OpenPlaylistAction) {
             val fullQueue = service.resolvePlaybackQueue()
-            val limit = action.entryLimit.coerceIn(1, QueuePaging.MAX_ENTRIES)
+
+            // The row that is actually playing can reuse the cover already decoded for the player,
+            // with no network call and no media permission - see MusicService.currentAlbumArt for
+            // why streaming clients leave that entry's own description empty.
+            val playingQueueId = service.currentMediaController?.playbackState?.activeQueueItemId
+
+            // Where the playing track sits in the *whole* queue, so the page can be stretched to
+            // reach past it - see QueuePaging.limitCoveringUpcoming. Without this, listening to
+            // track 80 of a long playlist means the watch is sent tracks 1-20 and cannot show you
+            // the one you are on at all.
+            //
+            // Queue id first, title second, and in that order for the reason
+            // QueueScrollPolicy.activeRowIndex documents: the id is exact where it exists, and the
+            // title is the only thing left for the many players that never publish one.
+            val activeIndex = fullQueue?.let { queue ->
+                val byId = playingQueueId
+                        ?.takeIf { it != MediaSession.QueueItem.UNKNOWN_ID.toLong() }
+                        ?.let { id -> queue.indexOfFirst { it.queueId == id } }
+                        ?: -1
+                if (byId >= 0) {
+                    byId
+                } else {
+                    service.currentMediaController?.metadata
+                            ?.getString(MediaMetadata.METADATA_KEY_TITLE)
+                            ?.trim()
+                            ?.takeIf { it.isNotEmpty() }
+                            ?.let { title ->
+                                queue.indexOfFirst { entry ->
+                                    entry.description.title?.toString()?.trim()
+                                            .equals(title, ignoreCase = true)
+                                }
+                            }
+                            ?: -1
+                }
+            } ?: -1
+
+            val limit = QueuePaging.limitCoveringUpcoming(action.entryLimit, activeIndex)
             val playlist = fullQueue?.take(limit)
             val putDataRequest = PutDataRequest.create(CommPaths.DATA_CUSTOM_LIST)
 
@@ -70,11 +108,6 @@ class OpenPlaylistAction : SelectableAction {
             // Sent larger only for that style so the other styles keep the smaller payload - a
             // queue is up to 20 entries and each one crosses Bluetooth.
             val thumbnailSize = if (coverQueueStyleActive()) 320 else 96
-
-            // The row that is actually playing can reuse the cover already decoded for the player,
-            // with no network call and no media permission - see MusicService.currentAlbumArt for
-            // why streaming clients leave that entry's own description empty.
-            val playingQueueId = service.currentMediaController?.playbackState?.activeQueueItemId
 
             val listId: String
             val protoList = if (playlist != null && playlist.isNotEmpty()) {

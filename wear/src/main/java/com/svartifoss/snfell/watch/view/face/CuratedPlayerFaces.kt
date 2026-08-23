@@ -725,10 +725,10 @@ private fun BoxScope.AuroraComposition(
         ) {
             if (state.showArtist) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    SourceIconGlyph(state, 10.dp, Color.White.copy(alpha = .70f))
+                    SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .70f))
                     Text(
                             artistOrStatus(state).uppercase(),
-                            color = Color.White.copy(alpha = .70f),
+                            color = artistOrStatusColor(state, .70f),
                             fontSize = 8.sp,
                             lineHeight = 9.sp,
                             letterSpacing = 1.8.sp,
@@ -976,10 +976,10 @@ private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center) {
-                SourceIconGlyph(state, 10.dp, Color.White.copy(alpha = .58f))
+                SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .58f))
                 Text(
                         artistOrStatus(state).uppercase(),
-                        color = Color.White.copy(alpha = .58f),
+                        color = artistOrStatusColor(state, .58f),
                         fontSize = 8.sp,
                         lineHeight = 9.sp,
                         letterSpacing = 2.sp,
@@ -1128,10 +1128,10 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color.White.copy(alpha = .09f))
                             .padding(horizontal = 8.dp, vertical = 2.dp)) {
-                SourceIconGlyph(state, 10.dp, Color.White.copy(alpha = .70f))
+                SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .70f))
                 Text(
                         artistOrStatus(state),
-                        color = Color.White.copy(alpha = .70f),
+                        color = artistOrStatusColor(state, .70f),
                         fontSize = 8.sp,
                         lineHeight = 10.sp,
                         letterSpacing = .55.sp,
@@ -1171,10 +1171,10 @@ private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(top = if (state.showTitle) 3.dp else 0.dp)) {
-                SourceIconGlyph(state, 10.dp, Color.White.copy(alpha = .48f))
+                SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .48f))
                 Text(
                         artistOrStatus(state).uppercase(),
-                        color = Color.White.copy(alpha = .48f),
+                        color = artistOrStatusColor(state, .48f),
                         fontSize = 8.sp,
                         lineHeight = 9.sp,
                         letterSpacing = 2.4.sp,

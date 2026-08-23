@@ -194,6 +194,36 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         override fun onAudioInfoChanged(info: MediaController.PlaybackInfo) {
             updateControllerIfNeeded()
         }
+
+        /**
+         * The blind spot this closes: [mediaCallback] is the only callback that observed metadata,
+         * and it is registered solely while a session is *playing*. Plenty of players drop out of
+         * the playing state for a moment at a track boundary, which unregisters it - so the new
+         * track's metadata was published into nothing, and the phone learned about it only when
+         * playback resumed and re-registered the callback. Any unrelated `onPlaybackStateChanged`
+         * would also let it catch up, which is precisely why *pausing* appeared to fix a watch
+         * still showing the previous track.
+         *
+         * Re-reports rather than re-resolving: [findPlayingMediaController] unregisters and
+         * rebuilds this very callback list, and doing that from inside one of its own callbacks is
+         * not worth the re-entrancy. Nothing is playing here by construction, so the resolved
+         * session cannot have changed - only its metadata has.
+         */
+        override fun onMetadataChanged(metadata: android.media.MediaMetadata?) {
+            reportResolvedSession()
+        }
+    }
+
+    /**
+     * Re-publishes whichever session is currently the reported one, so observers re-read it.
+     *
+     * Deliberately not `currentController`: that field is null whenever nothing is playing, so a
+     * metadata change on a *paused* track published null and dropped the watch to its idle screen
+     * instead of showing the track that had just been loaded. [lastReportedController] is the
+     * session the watch is actually being shown, which is what a metadata change is about.
+     */
+    private fun reportResolvedSession() {
+        setReportedController(currentController ?: lastReportedController)
     }
 
     private fun setReportedController(mediaController: MediaController?) {
@@ -212,7 +242,7 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
             }
 
             override fun onMetadataChanged(metadata: android.media.MediaMetadata?) {
-                setReportedController(currentController)
+                reportResolvedSession()
             }
         }
     }

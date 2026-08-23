@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.common
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -55,6 +56,32 @@ class FaceScopedBooleanDefaultTest {
                     FaceScopedPreferences.perFaceDefault(
                             face, MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key))
         }
+    }
+
+    /**
+     * Chat hosts the mini-button row inside its own composition - its round actions *are* the
+     * configured buttons - so it must not also declare the row off, which is what it did while it
+     * counted as a self-composed face. Getting this wrong is silent: the buttons simply never
+     * appear on the one face built to show them, and the user has no way to tell whether they
+     * configured them wrongly or the face ignores them.
+     */
+    @Test
+    fun `chat does not default the mini-button row off`() {
+        assertNull(
+                "Chat draws the mini buttons itself; defaulting them off hides them entirely",
+                FaceScopedPreferences.perFaceDefault(
+                        "chat", MiscPreferences.WEAR_MINI_BUTTONS_MODE.key))
+        // The faces that really do let the shared row float over them still turn it off.
+        assertEquals(
+                ActivityVisibility.NEVER,
+                FaceScopedPreferences.perFaceDefault(
+                        "split", MiscPreferences.WEAR_MINI_BUTTONS_MODE.key))
+        // ...and Chat keeps its other override, so this is a targeted change rather than the face
+        // falling out of the per-face table altogether.
+        assertEquals(
+                "false",
+                FaceScopedPreferences.perFaceDefault(
+                        "chat", MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key))
     }
 
     /**

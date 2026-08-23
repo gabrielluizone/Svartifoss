@@ -106,9 +106,18 @@ class FacePickerActivity : ComponentActivity() {
 
             CompositionLocalProvider(
                     LocalWatchUiFontFamily provides watchUiFontFamily(prefs)) {
+                // Ordered per section, never across them: a saved theme sitting between two
+                // built-in faces on the strength of a timestamp is exactly what the two sections
+                // exist to prevent. See FaceRecency.
+                val builtInOptions = WatchFaceCatalog.builtInOptions(initialFace)
+                val customOptions = WatchFaceCatalog.customOptions(customThemesJson)
                 FacePickerScreen(
-                        builtIn = WatchFaceCatalog.builtInOptions(initialFace),
-                        custom = WatchFaceCatalog.customOptions(customThemesJson),
+                        builtIn = FaceRecency.ordered(
+                                builtInOptions,
+                                FaceRecency.timestamps(prefs, builtInOptions.map { it.key })),
+                        custom = FaceRecency.ordered(
+                                customOptions,
+                                FaceRecency.timestamps(prefs, customOptions.map { it.key })),
                         selectedFace = selected,
                         accentColor = accent,
                         phoneConnected = phoneConnected,
@@ -168,6 +177,9 @@ class FacePickerActivity : ComponentActivity() {
      * render on its own, and lets the phone deliver the rest.
      */
     private fun applyFace(prefs: android.content.SharedPreferences, option: WatchFaceOption) {
+        // Recorded against the option's own key, so a saved theme and the built-in face it is based
+        // on are remembered separately - they are different picks and appear in different sections.
+        FaceRecency.recordUse(prefs, option.key)
         prefs.edit().apply {
             putString(MiscPreferences.WEAR_SCREEN_FACE.key, option.baseFace)
             if (!option.isCustomTheme) {

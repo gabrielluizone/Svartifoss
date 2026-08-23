@@ -54,7 +54,7 @@ import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
-import com.svartifoss.snfell.watch.view.compose.LoadingSpinner
+import com.svartifoss.snfell.watch.view.compose.LoadingBars
 import com.svartifoss.snfell.watch.view.queue.LIST_ROW_HEIGHT
 import com.svartifoss.snfell.watch.view.queue.QUEUE_ARTWORK_INSET
 import com.svartifoss.snfell.watch.view.queue.QueueStyle
@@ -120,7 +120,7 @@ fun MenuScreen(
                 }
 
                 when (content) {
-                    null -> LoadingSpinner(
+                    null -> LoadingBars(
                             Color(WatchTheme.ACCENT_DEFAULT),
                             Modifier.align(Alignment.Center)
                     )

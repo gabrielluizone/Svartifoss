@@ -511,6 +511,8 @@
         <item>Συνομιλία</item>
         <item>Διαίρεση</item>
         <item>Σημείωση</item>
+        <item>Στίχος</item>
+        <item>Μεταδεδομένα</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Αναζήτηση Expressive</string>
@@ -531,6 +533,14 @@
         <item>Material (με περίγραμμα)</item>
         <item>Χειριστήρια AMOLED</item>
         <item>Chrono (μεγάλο ρολόι)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Καρουζέλ</item>
+        <item>Συνομιλία</item>
+        <item>Διαίρεση</item>
+        <item>Σημείωση</item>
+        <item>Στίχος</item>
     </string-array>
     <string name="setting_wear_aod_color">Χρώμα πάντα ενεργό</string>
     <string-array name="wear_aod_color_entries">
@@ -1390,4 +1400,10 @@
     </string-array>
     <string name="setting_wear_normal_color_multi">Χρήση παλέτας χρωμάτων</string>
     <string name="setting_wear_normal_color_multi_description">Ενεργό: η οθόνη χρησιμοποιεί ένα κύριο χρώμα και δύο συμπληρωματικούς τόνους. Ανενεργό: παντού ένα μόνο χρώμα — αυτό του άλμπουμ ή όποιο επιλέξατε.</string>
+    <string-array name="wear_accent_floor_entries">
+        <item>Ανενεργό</item>
+        <item>Απαλό</item>
+        <item>Τυπικό</item>
+        <item>Έντονο</item>
+    </string-array>
 </resources>

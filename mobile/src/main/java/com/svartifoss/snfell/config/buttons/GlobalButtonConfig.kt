@@ -71,6 +71,18 @@ constructor(private val playbackConfig: Boolean,
     }
 
 
+    override fun retransmit() {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                withContext(Dispatchers.Default) {
+                    buttonTransmitter.sendConfigToWatch(configMap.entries)
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Could not re-transmit button configuration")
+            }
+        }
+    }
+
     override fun commit() {
         if (commiting) {
             commitAgain = true

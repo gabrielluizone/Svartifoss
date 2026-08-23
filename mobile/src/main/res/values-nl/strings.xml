@@ -511,6 +511,8 @@
         <item>Chat</item>
         <item>Split</item>
         <item>Notitie</item>
+        <item>Vers</item>
+        <item>Metadata</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive-zoeken</string>
@@ -531,6 +533,14 @@
         <item>Material (omlijnd)</item>
         <item>AMOLED-bediening</item>
         <item>Chrono (grote klok)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carrousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Notitie</item>
+        <item>Vers</item>
     </string-array>
     <string name="setting_wear_aod_color">Altijd-aan-kleur</string>
     <string-array name="wear_aod_color_entries">
@@ -1390,4 +1400,10 @@
     </string-array>
     <string name="setting_wear_normal_color_multi">Kleurenpalet gebruiken</string>
     <string name="setting_wear_normal_color_multi_description">Aan: het scherm gebruikt één hoofdkleur plus twee ondersteunende tinten. Uit: overal één enkele kleur — die van het album, of de kleur die je koos.</string>
+    <string-array name="wear_accent_floor_entries">
+        <item>Uit</item>
+        <item>Zacht</item>
+        <item>Standaard</item>
+        <item>Sterk</item>
+    </string-array>
 </resources>

@@ -5,7 +5,12 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.em
+import com.svartifoss.snfell.common.AccentFloorStyle
+import com.svartifoss.snfell.common.MiniButtonSurfaces
+import com.svartifoss.snfell.common.SplitPanelStyle
+import com.svartifoss.snfell.common.LyricLine
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
@@ -85,6 +90,24 @@ internal fun shouldEnableCentralSeek(expressiveSeekMode: String): Boolean =
  * and shipped as a queue thumbnail (see `QueueArtworkResolver`). [art] is null whenever that
  * resolution found nothing, which is common for streaming players.
  */
+/**
+ * One configured mini button, ready for a face that hosts the row inside its own composition
+ * instead of letting the host's View row float over it.
+ *
+ * [slotCode] is the [ScreenButtons][com.svartifoss.snfell.common.ScreenButtons] slot, and it is
+ * what goes back to the host on a tap: the face never resolves the action itself, exactly as it
+ * never resolves a quadrant's. Only slots the user actually configured appear here, so the list's
+ * *size* is the number of buttons to draw.
+ */
+data class FaceMiniButton(
+        val slotCode: Int,
+        val icon: androidx.compose.ui.graphics.ImageBitmap?,
+        /** False for a full-colour icon (an app icon, fetched cover art) that must not be
+         *  flattened to the surface's single tint. */
+        val iconTintable: Boolean = true,
+        val description: String? = null
+)
+
 data class QueueCard(
         val entryId: String,
         val title: String,
@@ -135,6 +158,15 @@ data class NowPlayingFaceState(
         val centralSeekEnabled: Boolean = false,
         val positionMs: Long = 0L,
         val durationMs: Long = 0L,
+        /**
+         * The session's playback rate, as the phone reports it.
+         *
+         * Only the Metadata face reads it, and only to show a row when it is *not* 1x. It is kept
+         * on the state rather than fetched, because the position readout beside it is already
+         * extrapolated at this rate by `PlaybackClock` - a face showing one and not the other would
+         * be showing a counter running visibly faster than the number that explains it.
+         */
+        val playbackSpeed: Float = 1f,
         /** Whether the "1:23 / 3:45" line should show - already combines the phone-synced
          *  track-time mode with whether a usable position exists. */
         val showTrackTime: Boolean = false,
@@ -189,6 +221,33 @@ data class NowPlayingFaceState(
          * "no queue at all" is a common and legitimate state (see the queue notes in CLAUDE.md).
          */
         val queueCards: List<QueueCard> = emptyList(),
+
+        /**
+         * Timed lyric lines for the current track, for a face that follows the words.
+         *
+         * Empty for every face but Verse, and empty there too whenever the track has no synced
+         * lyric - which is common, so a face consuming this must have a composition for "no words"
+         * that looks deliberate rather than broken.
+         *
+         * The host only fills this while such a face is selected: the lookup is a network call on
+         * the phone, and nobody who has not asked for lyrics should be paying for one.
+         */
+        /** The accent wash along the bottom edge - a shared piece, not one face's fixture.
+         *  Rendered by [PlayerBackgroundTreatment] so it lands above the backdrop and below the
+         *  face's own content, which is the only stacking that works for it. */
+        val accentFloor: AccentFloorStyle = AccentFloorStyle.OFF,
+        /** How the Split face fills its lower panel. Ignored by every other face - Split is the
+         *  only one that paints its own backdrop, which is why it needs its own control. */
+        val splitPanelStyle: SplitPanelStyle = SplitPanelStyle.DEFAULT,
+        val lyricLines: List<LyricLine> = emptyList(),
+        /**
+         * True while the lookup for the current track is still outstanding.
+         *
+         * Distinguishes "not yet" from "this track has none", which look identical in
+         * [lyricLines] and want opposite treatments - one is worth waiting through, the other is
+         * final.
+         */
+        val lyricsPending: Boolean = false,
         /** Resolved progress accent (already accounts for the progress color mode). */
         val progressColor: Int = WatchTheme.ACCENT_DEFAULT,
         /** Raw universal progress-ring style (solid/dashed/dots/hairline/comet). Interactive
@@ -202,6 +261,27 @@ data class NowPlayingFaceState(
          *  Curated layouts use this instead of assuming the default offset, so a user can move
          *  the shortcuts without making the player overlap them. */
         val miniButtonsTopFraction: Float = .58f,
+        /**
+         * The configured mini buttons, for a face that draws them itself.
+         *
+         * Non-empty only while the host has handed the row over (see
+         * [MiniButtonPlacement.isHostedByFace][com.svartifoss.snfell.common.MiniButtonPlacement.Companion.isHostedByFace]):
+         * every other face leaves them to the shared View row above the artwork, and reading this
+         * would draw them a second time.
+         */
+        val miniButtons: List<FaceMiniButton> = emptyList(),
+        /**
+         * How those buttons are painted, resolved from the user's own `screen_buttons_bg_style`
+         * by the host so a face-drawn button and the View row cannot look different.
+         * [MiniButtonSurfaces.Surface.followsFaceNeutral] is the default and means "this face's
+         * own button", which is how a face keeps its designed control until the user picks a
+         * style.
+         */
+        val miniButtonSurface: MiniButtonSurfaces.Surface = MiniButtonSurfaces.Surface(
+                followsFaceNeutral = true),
+        /** The mini-button group's opacity preference, applied by the face as the View row
+         *  applies it to itself. */
+        val miniButtonsAlpha: Float = 1f,
         /** Whether the interactive curved clock is visible. This is the Compose equivalent of
          *  the Classic face's ALWAYS_SHOW_TIME clock and is independent from the AOD clock. */
         val showClock: Boolean = false,
@@ -251,6 +331,20 @@ data class NowPlayingFaceState(
         /** The clock's own font choice (MiscPreferences.WEAR_CLOCK_FONT), or "follow"/null to keep
          *  tracking [fontKey] as the clock always did. Resolved by [WatchTypography.clockFontKey]. */
         val clockFontKey: String? = null,
+        /** The lyrics' own font choice (MiscPreferences.WEAR_LYRICS_FONT), or "follow"/null to keep
+         *  the serif the Verse face was designed around. Resolved by [lyricFont]. */
+        val lyricsFontKey: String? = null,
+        /**
+         * Everything the phone knows about the playing track, for the Metadata face.
+         *
+         * Null until the phone answers, which is the face's own empty state rather than a loading
+         * one worth blocking on - see MetadataFeed. Only requested while that face is selected, so
+         * every other face carries a null here and pays nothing for it.
+         */
+        val metadata: com.svartifoss.snfell.proto.TrackMetadata? = null,
+        /** Which blocks of the Metadata face the user left switched on - see
+         *  [TrackMetadataFields.Group]. */
+        val metadataGroups: Set<TrackMetadataFields.Group> = emptySet(),
         /** The clock's weight/italic/size/tracking. Its opacity is *not* here - that is baked into
          *  [clockColor] from WEAR_CLOCK_OPACITY, so [WatchTypography.clockSpec] pins alpha at 1. */
         val clockTypography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
@@ -379,6 +473,34 @@ data class NowPlayingFaceState(
                 watchFontFamily(resolved)
             }
         }
+
+    /**
+     * The [FontFamily] for song lyrics on a face that renders them.
+     *
+     * The Verse face had `MarcellusFamily` written into every one of its text calls, which made the
+     * one thing that face is *about* the one thing about it a user could not change. A face owns
+     * its composition - what goes where, at what size - and never its settings; a typeface is a
+     * setting.
+     *
+     * "follow" therefore resolves to [fontKey], the theme's own typeface, exactly as [clockFont]
+     * does. It deliberately does **not** resolve back to the serif: keeping that as the default
+     * preserved every existing theme byte-for-byte and, in doing so, preserved the complaint - the
+     * words of the song stayed put while everything around them followed the font you picked.
+     * Marcellus is still in the catalog for anyone who wants the original look.
+     *
+     * Flex gets the title's axes rather than its own set. Lyrics have no weight or slant control of
+     * their own, so there is nothing else to resolve them from, and inventing a second identity for
+     * them would only be a third opinion about the same font.
+     */
+    val lyricFont: FontFamily
+        get() {
+            val resolved = WatchTypography.lyricsFontKey(lyricsFontKey, fontKey)
+            return if (WatchTypography.isFlexFont(resolved)) {
+                flexFontFamily(titleTypography, flexAxes)
+            } else {
+                watchFontFamily(resolved)
+            }
+        }
 }
 
 /** Events a face raises back to the host. Implemented by MainActivity, which routes them into
@@ -398,6 +520,13 @@ interface NowPlayingFaceListener {
     fun onSkipPreviousTap()
 
     fun onSkipNextTap()
+
+    /** Tap / long press on a mini button the face is hosting, by its
+     *  [ScreenButtons][com.svartifoss.snfell.common.ScreenButtons] slot code. The face resolves no
+     *  action of its own: this goes back through the same ButtonInfo pipeline the host's own row
+     *  uses, so a face-drawn button and a row-drawn one run the identical configured action. */
+    fun onMiniButtonTap(slotCode: Int)
+    fun onMiniButtonLongPress(slotCode: Int)
 
     /** Default bottom-trio pill: open the playback queue. */
     fun onQueueTap()

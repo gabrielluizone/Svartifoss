@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.watch.view.compose
 
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -33,6 +35,7 @@ import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -234,25 +237,83 @@ internal fun BoxScope.CurvedScrollIndicator(listState: ScalingLazyListState) {
     }
 }
 
-/** Small indeterminate arc spinner. Callers position/center it themselves. */
+/**
+ * Three pulsing bars - the app's one "something is happening" animation.
+ *
+ * It began as the queue's now-playing marker and is shared from here because it is now also what
+ * *waiting* looks like everywhere in the watch app: the queue loading, a page of it loading, the
+ * action menu populating, a lyric being fetched. An arc spinner did that job before, and the reason
+ * to drop it is not that it looked bad on its own but that it was a second vocabulary - a generic
+ * platform shape sitting inside a screen that already had a house animation for exactly this, and
+ * one the user had learned to read as "audio". Three bars pulsing say "your music app is working"
+ * in a way a rotating arc never does.
+ *
+ * Runs unconditionally, including through a scroll. It was frozen to a static pose while the list
+ * moved back when each bar was a Box animating `fillMaxHeight` - that re-ran *layout* for the whole
+ * row every animation frame and genuinely did cost the scroll its frame budget. Drawing all three
+ * in one Canvas and reading the animated values inside the draw lambda (not in composition) makes
+ * each frame a redraw-only invalidation of one small node, cheap enough that freezing it bought
+ * nothing and only made the playing row look stopped exactly when the user was moving.
+ *
+ * The three bars carry deliberately mismatched, non-harmonic periods (480/360/560 ms). Equal ones
+ * would beat in step and read as a single block breathing rather than as three independent bars.
+ */
 @Composable
-internal fun LoadingSpinner(color: Color, modifier: Modifier = Modifier) {
-    val transition = rememberInfiniteTransition(label = "loadingSpinner")
-    val startAngle by transition.animateFloat(
-            initialValue = 0f,
-            targetValue = 360f,
-            animationSpec = infiniteRepeatable(tween(900, easing = LinearEasing)),
-            label = "spinnerAngle"
+internal fun EqualizerBars(
+        color: Color,
+        modifier: Modifier = Modifier,
+        barWidth: Dp = 3.dp,
+        barGap: Dp = 2.dp,
+        height: Dp = 16.dp
+) {
+    val transition = rememberInfiniteTransition(label = "equalizer")
+    val h1 by transition.animateFloat(
+            initialValue = 0.30f, targetValue = 1.0f,
+            animationSpec = infiniteRepeatable(tween(480), RepeatMode.Reverse), label = "bar1"
     )
-    Canvas(modifier.size(36.dp)) {
-        inset(2.dp.toPx()) {
-            drawArc(
+    val h2 by transition.animateFloat(
+            initialValue = 1.0f, targetValue = 0.40f,
+            animationSpec = infiniteRepeatable(tween(360), RepeatMode.Reverse), label = "bar2"
+    )
+    val h3 by transition.animateFloat(
+            initialValue = 0.55f, targetValue = 0.90f,
+            animationSpec = infiniteRepeatable(tween(560), RepeatMode.Reverse), label = "bar3"
+    )
+    Canvas(modifier.size(width = barWidth * 3 + barGap * 2, height = height)) {
+        val widthPx = barWidth.toPx()
+        val gapPx = barGap.toPx()
+        // Half the bar width, so a bar reads as a rounded column rather than as a lozenge - and it
+        // scales with the bar, which a fixed radius would not: the loading size is nearly twice the
+        // row size and a 2dp corner on it looks square.
+        val corner = CornerRadius(widthPx / 2f)
+        listOf(h1, h2, h3).forEachIndexed { index, fraction ->
+            // Floored at the bar width so a bar at its lowest is still a visible dot rather than a
+            // sliver: the animation reads as three bars dancing, not as bars vanishing.
+            val barHeight = (size.height * fraction).coerceAtLeast(widthPx)
+            drawRoundRect(
                     color = color,
-                    startAngle = startAngle,
-                    sweepAngle = 270f,
-                    useCenter = false,
-                    style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
+                    topLeft = Offset(index * (widthPx + gapPx), size.height - barHeight),
+                    size = Size(widthPx, barHeight),
+                    cornerRadius = corner
             )
         }
     }
+}
+
+/**
+ * [EqualizerBars] at the size a standalone "loading" state wants.
+ *
+ * A separate entry point rather than a default, because these are two different things that happen
+ * to share a drawing: the row marker is an ornament beside text and must not out-weigh it, while
+ * this one is alone in the middle of an empty screen and has to be findable there. It replaced a
+ * 36dp arc spinner, so it is sized to hold that much of the eye.
+ */
+@Composable
+internal fun LoadingBars(color: Color, modifier: Modifier = Modifier) {
+    EqualizerBars(
+            color = color,
+            modifier = modifier,
+            barWidth = 5.dp,
+            barGap = 4.dp,
+            height = 26.dp)
 }

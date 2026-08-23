@@ -513,6 +513,8 @@
         <item>Conversa</item>
         <item>Dividido</item>
         <item>Nota</item>
+        <item>Verso</item>
+        <item>Metadata</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Busca expressiva</string>
@@ -533,6 +535,14 @@
         <item>Material (contornos)</item>
         <item>Controles AMOLED</item>
         <item>Chrono (relógio grande)</item>
+        <item>Pôster</item>
+        <item>Studio</item>
+        <item>Imersivo</item>
+        <item>Carrossel</item>
+        <item>Conversa</item>
+        <item>Dividido</item>
+        <item>Nota</item>
+        <item>Verso</item>
     </string-array>
     <string name="setting_wear_aod_color">Cor da tela sempre ativa</string>
     <string-array name="wear_aod_color_entries">
@@ -1447,4 +1457,13 @@
     </string-array>
     <string name="setting_wear_normal_color_multi">Usar paleta de cores</string>
     <string name="setting_wear_normal_color_multi_description">Ligado, a tela usa uma cor principal mais dois tons de apoio. Desligado, uma única cor é usada em tudo — a do próprio álbum, ou a que você escolheu.</string>
+    <string-array name="wear_accent_floor_entries">
+        <item>Desligado</item>
+        <item>Suave</item>
+        <item>Padrão</item>
+        <item>Forte</item>
+    </string-array>
+    <string name="setting_wear_lyrics_font">Tipografia da letra</string>
+    <string name="setting_wear_lyrics_font_description">A tipografia das palavras da música, na tela de letras e na face Verse. Segue a tipografia da faixa, a menos que você escolha uma aqui.</string>
+    <string name="wear_lyrics_font_follow">Seguir tipografia da faixa</string>
 </resources>

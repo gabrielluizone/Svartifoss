@@ -34,6 +34,7 @@ class RootActionList : PhoneAction {
                 StreamingShortcutActionList(context),
                 OpenMenuAction(context),
                 OpenPlaylistAction(context),
+                OpenLyricsAction(context),
                 SearchAction(context),
                 OpenSearchHistoryAction(context),
                 OpenLibraryAction(context),

@@ -80,6 +80,45 @@ object MiscPreferences {
             SimplePreferenceDefinition("wear_paused_hold", PausedHoldPolicy.DEFAULT_VALUE)
 
     /**
+     * Hold the watch's screen on while a Svartifoss screen is in the foreground, instead of letting
+     * it blank on the system's inactivity timeout.
+     *
+     * **Face-scoped**, and that is the point: whether you want this is a property of the
+     * composition in front of you, not of the watch. A face you read - Verse's lyrics, Chat's
+     * thread - wants the screen held; the one you glance at on the way past does not, and paying
+     * the battery cost on every face in order to have it on one is not a trade anyone would pick.
+     *
+     * Off by default everywhere because it is a real battery cost, and because the timeout is the
+     * right behaviour for a screen you glance at.
+     *
+     * What this can and cannot do is worth stating, because the difference is invisible until you
+     * try it: it defeats the **inactivity timeout** only. Lowering your wrist is a system gesture
+     * and no application flag overrides it, so the watch still goes ambient then - what keeps the
+     * content visible at that point is the screen having an ambient variant, not this preference.
+     *
+     * The lyrics screen deliberately ignores this and always holds the screen: reading a lyric is
+     * the one case where the timeout is guaranteed wrong, since following along involves no touching
+     * at all and the screen would blank every few seconds mid-verse. The queue and the menu ignore
+     * it too - they are choosers you pass through, and they belong to no face, so there is no
+     * per-face value for them to read.
+     */
+    val WEAR_KEEP_SCREEN_ON: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_keep_screen_on", false)
+
+    /**
+     * Whether the phone may look track lyrics up online (LRCLIB) for the watch's lyrics screen.
+     *
+     * On by default, and the reasoning is the same as [QueueArtworkResolver]'s remote-artwork
+     * switch rather than the opt-in stance the shortcut-artwork fetch takes: there is no second
+     * source for a lyric, so off does not degrade the screen, it empties it. The lookup is also
+     * user-initiated in a way the others are not - nothing is fetched until someone opens the
+     * lyrics screen - so opening that screen is itself the consent. The switch is here for anyone
+     * who would rather the phone never made the call at all.
+     */
+    val LYRICS_ENABLED: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("lyrics_enabled", true)
+
+    /**
      * What the idle screen's main button does - see [IdleScreenAction].
      *
      * Defaults to [IdleScreenAction.NONE]: the idle screen then follows the applied face's own
@@ -225,6 +264,73 @@ object MiscPreferences {
      *  where a user looks for one. */
     val WEAR_CLOCK_FONT: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_clock_font", WatchTypography.CLOCK_FONT_FOLLOW)
+
+    /**
+     * Typeface for song lyrics - the lyrics screen and the Verse face's lines alike.
+     *
+     * A [WEAR_FONT] catalog key, or [WatchTypography.LYRICS_FONT_FOLLOW] (the default) to keep
+     * whatever each surface was designed with: the UI font on the lyrics screen, Marcellus on the
+     * Verse face. Resolved by [WatchTypography.lyricsFontKey] on both sides, so old themes and
+     * backups render exactly as they did.
+     *
+     * Face-scoped like the rest of the appearance keys, which is what lets a saved theme carry it
+     * and lets Verse wear a serif while another face wearing the lyrics screen does not.
+     */
+    val WEAR_LYRICS_FONT: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_lyrics_font", WatchTypography.LYRICS_FONT_FOLLOW)
+
+    // Which blocks of the metadata face are drawn. One switch per block rather than per field,
+    // because a row only exists when the playing app published that tag - see
+    // TrackMetadataFields.Group, which owns the keys and the defaults so the registry and the
+    // renderer cannot disagree about what exists.
+    val WEAR_METADATA_SHOW_CORE: PreferenceDefinition<Boolean> = newMetadataGroupPreference(
+            TrackMetadataFields.Group.CORE)
+    val WEAR_METADATA_SHOW_RELEASE: PreferenceDefinition<Boolean> = newMetadataGroupPreference(
+            TrackMetadataFields.Group.RELEASE)
+    val WEAR_METADATA_SHOW_CREDITS: PreferenceDefinition<Boolean> = newMetadataGroupPreference(
+            TrackMetadataFields.Group.CREDITS)
+    val WEAR_METADATA_SHOW_IDENTIFIERS: PreferenceDefinition<Boolean> = newMetadataGroupPreference(
+            TrackMetadataFields.Group.IDENTIFIERS)
+    val WEAR_METADATA_SHOW_TECHNICAL: PreferenceDefinition<Boolean> = newMetadataGroupPreference(
+            TrackMetadataFields.Group.TECHNICAL)
+    val WEAR_METADATA_SHOW_PLAYBACK: PreferenceDefinition<Boolean> = newMetadataGroupPreference(
+            TrackMetadataFields.Group.PLAYBACK)
+
+    /**
+     * The definition behind one metadata block.
+     *
+     * Public so the watch and the phone preview can resolve a group without hunting it out of
+     * [EXPORTABLE] and casting the result - which is what both of them did first, and which throws
+     * rather than failing a compile the day a group is added and the registration is forgotten.
+     */
+    fun metadataGroupPreference(
+            group: TrackMetadataFields.Group
+    ): PreferenceDefinition<Boolean> = when (group) {
+        TrackMetadataFields.Group.CORE -> WEAR_METADATA_SHOW_CORE
+        TrackMetadataFields.Group.RELEASE -> WEAR_METADATA_SHOW_RELEASE
+        TrackMetadataFields.Group.CREDITS -> WEAR_METADATA_SHOW_CREDITS
+        TrackMetadataFields.Group.IDENTIFIERS -> WEAR_METADATA_SHOW_IDENTIFIERS
+        TrackMetadataFields.Group.TECHNICAL -> WEAR_METADATA_SHOW_TECHNICAL
+        TrackMetadataFields.Group.PLAYBACK -> WEAR_METADATA_SHOW_PLAYBACK
+    }
+
+    private fun newMetadataGroupPreference(
+            group: TrackMetadataFields.Group
+    ): PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition(group.preferenceKey, group.defaultVisible)
+
+    /**
+     * Whether the phone may look a track up online (MusicBrainz) to fill in what the playing app
+     * did not publish - ISRC, label, release date, catalogue ids.
+     *
+     * **Off by default**, unlike the lyrics lookup, and the difference is the point. A lyric has no
+     * second source, so switching that off empties the screen; this one only ever *adds* rows to a
+     * table that already stands on the player's own tags, so leaving it off costs a few lines
+     * rather than the feature. Nothing is sent until someone both turns this on and selects the
+     * metadata face.
+     */
+    val METADATA_LOOKUP_ENABLED: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("metadata_lookup_enabled", false)
 
     // The clock's own weight/italic/size/tracking, mirroring the title and artist controls.
     // Picking its typeface alone turned out to be half a control: a display face at the clock's
@@ -396,6 +502,24 @@ object MiscPreferences {
      *  [WEAR_EDGE_PROGRESS_VISIBLE]. */
     val WEAR_INTERNAL_PROGRESS_VISIBLE: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("wear_internal_progress_visible", true)
+
+    /**
+     * How the Split face fills the panel below its seam - see [SplitPanelStyle].
+     *
+     * Split paints its own opaque backdrop, so the Album background styles cannot reach it. This is
+     * the control that replaces them for the one surface that face owns.
+     */
+    val WEAR_SPLIT_PANEL: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_split_panel", SplitPanelStyle.DEFAULT.preferenceValue)
+
+    /**
+     * The accent wash pooled along the bottom of the screen - see [AccentFloorStyle].
+     *
+     * A piece any face can wear, rather than something welded into the one it was designed for.
+     * Off everywhere by default except Verse, whose composition was built around it.
+     */
+    val WEAR_ACCENT_FLOOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_accent_floor", AccentFloorStyle.DEFAULT.preferenceValue)
 
     /** Draw the universal playback-progress ring at the screen edge, regardless of the selected
      *  player layout. */
@@ -864,6 +988,7 @@ object MiscPreferences {
             DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT, AUTO_START_MODE,
             AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, WEAR_CLOSE_ON_IDLE,
             WEAR_PAUSED_HOLD, WEAR_IDLE_BUTTON_ACTION, WEAR_IDLE_AUTO_OPEN,
+            WEAR_KEEP_SCREEN_ON, LYRICS_ENABLED,
             ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
             ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_BLUR_RADIUS,
             ALBUM_ART_DIM_STRENGTH, WEAR_PLAYER_SHADING_STYLE, WEAR_PLAYER_SHADING_INTENSITY,
@@ -875,14 +1000,19 @@ object MiscPreferences {
             WEAR_AOD_SHOW_PILLS, WEAR_AOD_INTENSITY,
             WEAR_CLOCK_COLOR_MODE, WEAR_CLOCK_CUSTOM_COLOR, WEAR_CLOCK_OPACITY, WEAR_CLOCK_FONT,
             WEAR_CLOCK_FONT_WEIGHT, WEAR_CLOCK_FONT_ITALIC, WEAR_CLOCK_FONT_SCALE,
-            WEAR_CLOCK_FONT_TRACKING, WEAR_ARTIST_ADAPTIVE_CONTRAST, WEAR_CLOCK_ADAPTIVE_CONTRAST, WEAR_PROGRESS_GRADIENT,
+            WEAR_CLOCK_FONT_TRACKING, WEAR_LYRICS_FONT,
+            WEAR_METADATA_SHOW_CORE, WEAR_METADATA_SHOW_RELEASE, WEAR_METADATA_SHOW_CREDITS,
+            WEAR_METADATA_SHOW_IDENTIFIERS, WEAR_METADATA_SHOW_TECHNICAL,
+            WEAR_METADATA_SHOW_PLAYBACK, WEAR_SPLIT_PANEL,
+            METADATA_LOOKUP_ENABLED,
+            WEAR_ARTIST_ADAPTIVE_CONTRAST, WEAR_CLOCK_ADAPTIVE_CONTRAST, WEAR_PROGRESS_GRADIENT,
             WEAR_TITLE_COLOR_MODE, WEAR_TITLE_CUSTOM_COLOR, WEAR_TITLE_ADAPTIVE_CONTRAST,
             WEAR_CENTER_LONG_PRESS_QUEUE, WEAR_CENTER_LONG_PRESS, WEAR_SCREEN_FACE,
             WEAR_ACTIVE_CUSTOM_THEME_ID, WEAR_AVAILABLE_CUSTOM_THEMES, WEAR_CUSTOM_THEME_SCHEMA,
             WEAR_CUSTOM_THEME_COMPLETE, WEAR_CUSTOM_THEME_REVISION,
             WEAR_SHOW_TRACK_TITLE, WEAR_SHOW_TRACK_ARTIST,
             WEAR_PLAYER_CONTROLS_VISIBLE, WEAR_INTERNAL_PROGRESS_VISIBLE,
-            WEAR_EDGE_PROGRESS_VISIBLE, WEAR_EDGE_SEEK_ENABLED,
+            WEAR_EDGE_PROGRESS_VISIBLE, WEAR_EDGE_SEEK_ENABLED, WEAR_ACCENT_FLOOR,
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
             WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE,
             WEAR_TRACK_TIME_MODE,

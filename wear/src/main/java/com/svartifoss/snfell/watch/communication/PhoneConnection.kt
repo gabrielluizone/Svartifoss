@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.CapabilityInfo
@@ -12,17 +13,24 @@ import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.DataEvent
 import com.google.android.gms.wearable.DataEventBuffer
 import com.google.android.gms.wearable.DataItem
+import com.google.android.gms.wearable.MessageClient
+import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.BitmapBorderTrim
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.PlaybackSyncPolicy
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.QueuePaging
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.proto.CustomListItemAction
+import com.svartifoss.snfell.proto.LyricsRequest
+import com.svartifoss.snfell.proto.LyricsResponse
 import com.svartifoss.snfell.proto.MusicState
+import com.svartifoss.snfell.proto.PlaybackSync
+import com.svartifoss.snfell.proto.TrackMetadata
 import com.svartifoss.snfell.proto.Notification
 import com.svartifoss.snfell.watch.util.launchWithErrorHandling
 import com.matejdro.wearutils.lifecycle.ListenableLiveData
@@ -39,9 +47,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.nio.ByteBuffer
 import java.util.concurrent.atomic.AtomicBoolean
@@ -51,6 +64,7 @@ import javax.inject.Singleton
 @Singleton
 class PhoneConnection @Inject constructor(@ApplicationContext private val context: Context) : DataClient.OnDataChangedListener,
         CapabilityClient.OnCapabilityChangedListener,
+        MessageClient.OnMessageReceivedListener,
         LiveDataLifecycleListener {
 
     private var scope: CoroutineScope? = null
@@ -82,6 +96,27 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      */
     val notification = MutableLiveData<com.svartifoss.snfell.watch.model.Notification>()
 
+    /**
+     * The phone's most recent answer to a lyrics request.
+     *
+     * A plain [MutableLiveData], so the last answer *is* replayed to a screen that opens later -
+     * which is wanted here rather than tolerated: re-opening lyrics for the track still playing
+     * should paint instantly instead of spinning through another round trip. The response carries
+     * the track it is for, so the consumer discards one belonging to a song already skipped past
+     * (see LyricsViewModel) - the replay can never show the wrong words.
+     */
+    val lyrics = MutableLiveData<LyricsResponse>()
+
+    /**
+     * The phone's most recent metadata answer.
+     *
+     * A plain [MutableLiveData] for the same reason [lyrics] is one: the last answer *is* replayed
+     * to a screen that opens later, which is wanted rather than tolerated. The payload carries the
+     * track it describes, so the consumer discards one belonging to a song already skipped past
+     * (see MetadataFeed) - the replay can never show the wrong table.
+     */
+    val trackMetadata = MutableLiveData<TrackMetadata>()
+
     val rawPlaybackConfig = MutableLiveData<DataItem>()
     val rawStoppedConfig = MutableLiveData<DataItem>()
     val rawActionMenuConfig = MutableLiveData<DataItem>()
@@ -106,6 +141,46 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     // update pass (now-playing UI, media session, notification, recents label) twice per track
     // change. See deliverMusicState.
     private var lastDeliveredMusicState: MusicState? = null
+
+    /**
+     * This device's monotonic clock reading when the current [musicState] actually arrived.
+     *
+     * The anchor every position prediction on the watch counts from. It has to live here rather
+     * than be stamped by each consumer, because LiveData hands a late observer the value that
+     * arrived *before* it subscribed - a consumer stamping "now" as it stores that replayed state
+     * would restart the clock on a sample that is already old, and the lyric would sit behind by
+     * however long the screen took to open.
+     *
+     * Read it in the same callback that stores the state; it then refers to that state.
+     *
+     * elapsedRealtime, not currentTimeMillis: this measures a duration, and a wall clock can be
+     * stepped by an NTP correction mid-track. See [PlaybackPositionEstimate].
+     */
+    // Seeded rather than left at zero: a consumer reading it before any state has been delivered
+    // would otherwise measure its "time held" from the epoch and pin every track to its end.
+    @Volatile
+    var musicStateArrivalRealtimeMs: Long = SystemClock.elapsedRealtime()
+        private set
+
+    /**
+     * Where the song is, for everything on this device that needs to know.
+     *
+     * Owned here rather than by a screen because the correction it runs has to outlive any one of
+     * them: the lyrics screen used to appear to synchronise only when it was opened, and that was
+     * literally true - opening it created a fresh observer, which replayed the last state and
+     * re-anchored on it. Nothing else ever did. Living on the connection means the estimate is kept
+     * honest for as long as the watch app is talking to the phone at all, so a screen that opens
+     * finds it already correct instead of starting the process over.
+     */
+    val playbackClock = PlaybackClock()
+
+    /** The resync loop, cancelled and relaunched rather than left to notice a new cadence on its
+     *  own iteration - see [scheduleNextPlaybackSync]. */
+    private var playbackSyncJob: Job? = null
+
+    /** This device's monotonic reading when the outstanding sync request went out, or null when
+     *  none is in flight. Doubles as the token echoed back by the phone. */
+    private var playbackSyncSentAtMs: Long? = null
 
     // Highest MusicState.seq applied so far. The phone stamps a wall-clock-monotonic seq on every
     // DATA_MUSIC_STATE put, so when Play Services replays the buffered revisions of a watch that
@@ -168,6 +243,11 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
             dataClient.addListener(this)
             capabilityClient.addListener(this, CommPaths.PHONE_APP_CAPABILITY)
+            // The only phone -> watch *message* this object consumes. Everything else it receives
+            // arrives as a DataItem, and the manifest listeners cover the paths that must land
+            // while no UI is running - see CommPaths.MESSAGE_LYRICS_RESULT for why lyrics are
+            // deliberately not one of those.
+            messageClient.addListener(this)
 
             loadCurrentActionConfig(CommPaths.DATA_PLAYING_ACTION_CONFIG, rawPlaybackConfig)
             loadCurrentActionConfig(CommPaths.DATA_STOPPING_ACTION_CONFIG, rawStoppedConfig)
@@ -182,6 +262,10 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             if (capabilities.nodes.any { it.isNearby }) {
                 loadCurrentMusicState()
             }
+
+            // Independent of any screen: the correction has to be running before a lyrics surface
+            // opens, or opening one is once again the only thing that ever synchronises it.
+            scheduleNextPlaybackSync()
         }
     }
 
@@ -190,12 +274,17 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             return
         }
 
+        playbackSyncJob?.cancel()
+        playbackSyncJob = null
+        playbackSyncSentAtMs = null
+
         scope?.launchWithErrorHandling(context, musicState) {
             try {
                 dataClient.removeListener(this)
                 // start() registers both listeners; stop() only ever removed the data one, so the
                 // capability listener leaked (and kept firing onCapabilityChanged after close).
                 capabilityClient.removeListener(this)
+                messageClient.removeListener(this)
 
                 val phoneNode = nodeClient.getNearestNodeId()
                 if (phoneNode != null) {
@@ -220,6 +309,10 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 // phone never learned the watch opened and never started transmitting state.
                 messageClient.sendMessage(firstNode.id, CommPaths.MESSAGE_WATCH_OPENED, null).await()
             }
+            // The connection just came (back) up. Whatever the estimate has been doing while the
+            // phone was unreachable, it has had nothing to check itself against - so verify now
+            // rather than waiting out a backoff that grew while nobody was listening.
+            requestPlaybackResync()
         } else {
             musicState.postValue(Resource.error(context.getString(R.string.no_phone), null))
         }
@@ -399,27 +492,13 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
                         val receivedMusicState = MusicState.parseFrom(dataItem.data)
 
-                        // Drop a stale revision replayed after a newer one already applied. seq is
-                        // wall-clock monotonic per put; 0 = a pre-seq phone build, never gated.
-                        if (receivedMusicState.seq != 0L &&
-                                receivedMusicState.seq < lastAppliedMusicSeq) {
-                            return@forEach
-                        }
-
-                        if (receivedMusicState.error) {
-                            lastDeliveredMusicState = null
-                            musicState.postValue(Resource.error(receivedMusicState.title, null))
-                        } else {
-                            deliverMusicState(receivedMusicState)
-
+                        // Assets are only worth decoding for a state that was actually applied -
+                        // a revision the seq gate dropped, or an error, has nothing to attach.
+                        if (applyMusicState(receivedMusicState)) {
                             sendAck()
 
                             deliverAlbumArt(dataItem, receivedMusicState)
                             deliverSourceIcon(dataItem, receivedMusicState)
-                        }
-
-                        if (receivedMusicState.seq > lastAppliedMusicSeq) {
-                            lastAppliedMusicSeq = receivedMusicState.seq
                         }
                     }
                     CommPaths.DATA_NOTIFICATION -> {
@@ -465,6 +544,41 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * Must be called without suspending after parsing, so the tracker is updated before the
      * next queued put's coroutine gets a chance to run.
      */
+    /**
+     * Applies a music state arriving over either transport - the [CommPaths.DATA_MUSIC_STATE]
+     * DataItem or the [CommPaths.MESSAGE_MUSIC_STATE] message that races it.
+     *
+     * Synchronized because those two arrive on different threads and both touch the seq guard and
+     * the delivery dedupe. They also carry the *same* state by design, so whichever loses the race
+     * must be dropped rather than re-run: without the dedupe every observer would do its full
+     * update pass twice per change.
+     *
+     * @return whether this state was applied, i.e. whether any assets attached to it are worth
+     *   decoding. False for a stale revision and for an error state.
+     */
+    @Synchronized
+    private fun applyMusicState(state: MusicState): Boolean {
+        // Drop a stale revision replayed after a newer one already applied. seq is wall-clock
+        // monotonic per put; 0 = a pre-seq phone build, never gated.
+        if (state.seq != 0L && state.seq < lastAppliedMusicSeq) {
+            return false
+        }
+
+        if (state.seq > lastAppliedMusicSeq) {
+            lastAppliedMusicSeq = state.seq
+        }
+
+        if (state.error) {
+            lastDeliveredMusicState = null
+            musicState.postValue(Resource.error(state.title, null))
+            return false
+        }
+
+        deliverMusicState(state)
+        return true
+    }
+
+    @Synchronized
     private fun deliverMusicState(state: MusicState) {
         // Clear seq too: the two puts of one track change differ only in albumArtPending and seq,
         // and comparing seq would defeat the dedupe and re-run every observer twice per change.
@@ -473,7 +587,93 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             return
         }
         lastDeliveredMusicState = comparable
+        // Stamped here, at real arrival, and only when the state is actually delivered - a
+        // duplicate that the check above drops carries the same position sample, so restarting
+        // the anchor for it would silently rewind the prediction.
+        musicStateArrivalRealtimeMs = SystemClock.elapsedRealtime()
+        // Recorded before the state is posted, so every observer that wakes on it reads a clock
+        // that already describes this sample rather than the previous one.
+        val trackChanged = playbackClock.onMusicState(state, musicStateArrivalRealtimeMs)
         musicState.postValue(Resource.success(state))
+        if (trackChanged) {
+            // A new track is the moment the estimate is least trustworthy - the player is still
+            // settling, and the sample that came with the change may predate it. Verify soon.
+            requestPlaybackResync()
+        }
+    }
+
+    /**
+     * Asks the phone where playback actually is, and corrects the local estimate by the answer.
+     *
+     * The request carries this device's monotonic reading as an opaque token; the phone echoes it
+     * back untouched, so the return leg can be measured here without either side reading the
+     * other's clock. See [CommPaths.MESSAGE_REQUEST_PLAYBACK_SYNC] and [PlaybackSyncPolicy].
+     */
+    private suspend fun sendPlaybackSyncRequest() {
+        val token = SystemClock.elapsedRealtime()
+        playbackSyncSentAtMs = token
+        sendToPhone(
+                CommPaths.MESSAGE_REQUEST_PLAYBACK_SYNC,
+                ByteBuffer.allocate(8).putLong(token).array())
+    }
+
+    /**
+     * Runs the periodic verification for as long as the connection is up.
+     *
+     * Relaunched rather than signalled, because `delay` fixes its duration when the wait *begins*:
+     * a loop that had already backed off to a minute would sit out that minute no matter what
+     * happened next, which is precisely wrong for the events - a seek, a skip, a reconnect - that
+     * most need checking. Cancelling makes the new cadence take effect now. The same reasoning is
+     * written up on `LyricsViewModel.restartTicker`.
+     *
+     * Nothing is sent while playback is paused: a stopped position cannot drift, so a check would
+     * spend Bluetooth to confirm a number that cannot have changed.
+     */
+    private fun scheduleNextPlaybackSync(initialDelayMs: Long? = null) {
+        playbackSyncJob?.cancel()
+        val scope = scope ?: return
+        // A plain launch, deliberately not launchWithErrorHandling: that helper posts
+        // Resource.error to musicState, so a sync ping failing because the phone stepped out of
+        // range for a moment would replace a perfectly good now-playing screen with an error. This
+        // is background upkeep - it fails quietly and the next check retries, the same stance
+        // MusicViewModel.refreshPlaybackQueueSilently takes.
+        playbackSyncJob = scope.launch {
+            var wait = initialDelayMs ?: playbackClock.syncIntervalMs
+            while (isActive) {
+                delay(wait)
+                if (playbackClock.isPlaying()) {
+                    if (playbackSyncSentAtMs != null) {
+                        // The previous request was never answered - the phone is out of range, or
+                        // its MusicService was not up to hear it. Treat that exactly as a quiet
+                        // check, or an unreachable phone would be polled at the floor cadence for
+                        // as long as the clock still believed something was playing.
+                        playbackClock.backOffUnanswered()
+                    }
+                    try {
+                        sendPlaybackSyncRequest()
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Timber.v(e, "Could not ask the phone for a playback sync")
+                    }
+                }
+                wait = playbackClock.syncIntervalMs
+            }
+        }
+    }
+
+    /**
+     * Forces a verification shortly from now and puts the cadence back at its floor.
+     *
+     * Called for everything that invalidates the estimate without replacing it: play, pause, skip,
+     * seek, a predicted track advance, a reconnect, a lyrics surface opening. Deliberately *not*
+     * immediate - [PlaybackSyncPolicy.COMMAND_SETTLE_MS] gives the phone time to receive the
+     * command, hand it to the player and let the player act, since sampling before the command took
+     * effect would correct the estimate to the state it was trying to leave.
+     */
+    fun requestPlaybackResync() {
+        playbackClock.resetBackoff()
+        scheduleNextPlaybackSync(PlaybackSyncPolicy.COMMAND_SETTLE_MS)
     }
 
     /**
@@ -566,7 +766,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             return
         }
 
-        deliverMusicState(storedState)
+        applyMusicState(storedState)
         deliverAlbumArt(dataItem, storedState)
     }
 
@@ -700,6 +900,88 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         sendToPhone(
                 CommPaths.MESSAGE_OPEN_PLAYBACK_QUEUE,
                 ByteBuffer.allocate(4).putInt(entryLimit).array())
+    }
+
+    /**
+     * Asks the phone to look the lyrics for this track up and send them back.
+     *
+     * The track travels with the request rather than the phone reading its own session: the two
+     * sides are a track apart whenever a skip is in flight, and lyrics for the previous song are
+     * worse than none at all because nothing about them looks wrong. The phone echoes these fields
+     * into its answer so [lyrics] can be matched against what is actually on screen.
+     */
+    suspend fun requestLyrics(title: String?, artist: String?, durationMs: Long) {
+        val request = LyricsRequest.newBuilder()
+                .setTitle(title.orEmpty())
+                .setArtist(artist.orEmpty())
+                .setDurationMs(durationMs)
+                .build()
+        sendToPhone(CommPaths.MESSAGE_REQUEST_LYRICS, request.toByteArray())
+    }
+
+    /**
+     * Asks the phone for everything it knows about this track.
+     *
+     * The track travels with the request rather than the phone reading its own session, for the
+     * reason [requestLyrics] documents: the two sides are a track apart whenever a skip is in
+     * flight. The phone echoes these fields into its answer so [trackMetadata] can be matched
+     * against what is actually on screen.
+     */
+    suspend fun requestTrackMetadata(title: String?, artist: String?) {
+        val request = TrackMetadata.newBuilder()
+                .setTitle(title.orEmpty())
+                .setArtist(artist.orEmpty())
+                .build()
+        sendToPhone(CommPaths.MESSAGE_REQUEST_TRACK_METADATA, request.toByteArray())
+    }
+
+    override fun onMessageReceived(event: MessageEvent) {
+        when (event.path) {
+            CommPaths.MESSAGE_LYRICS_RESULT -> try {
+                lyrics.postValue(LyricsResponse.parseFrom(event.data))
+            } catch (e: Exception) {
+                // A malformed payload can only come from a phone build that disagrees with this
+                // one about the schema. Dropping it leaves the screen on its "still loading"
+                // state, which its own timeout resolves - far better than taking the process down
+                // over a lyric.
+                Timber.w(e, "Could not parse the lyrics response")
+            }
+
+            CommPaths.MESSAGE_TRACK_METADATA -> try {
+                trackMetadata.postValue(TrackMetadata.parseFrom(event.data))
+            } catch (e: Exception) {
+                // A payload from a phone build that disagrees about the schema. Dropping it leaves
+                // the face on its empty state rather than taking the process down over a table.
+                Timber.w(e, "Could not parse the track metadata")
+            }
+
+            CommPaths.MESSAGE_PLAYBACK_SYNC -> try {
+                // Ignored when nothing is outstanding: a duplicate reply, or one arriving after the
+                // request it answers was superseded, has no round trip to be measured against.
+                val sentAt = playbackSyncSentAtMs
+                val sync = PlaybackSync.parseFrom(event.data)
+                if (sentAt != null && sync.token == sentAt) {
+                    playbackSyncSentAtMs = null
+                    if (playbackClock.onSyncReply(sync, sentAt)) {
+                        // The backoff has already been reset by the correction; relaunch so the
+                        // loop picks the new cadence up now rather than after its current wait.
+                        scheduleNextPlaybackSync()
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.w(e, "Could not parse the playback sync reply")
+            }
+
+            CommPaths.MESSAGE_MUSIC_STATE -> try {
+                // The low-latency copy of the DataItem below. It carries no assets, so the cover
+                // keeps arriving on the slower path and crossfades in behind this - which is the
+                // same two-phase behaviour a track change already had, just with the text half no
+                // longer waiting on the replication layer.
+                applyMusicState(MusicState.parseFrom(event.data))
+            } catch (e: Exception) {
+                Timber.w(e, "Could not parse the music state message")
+            }
+        }
     }
 
     private class ConnectionCloseHandler(val phoneConnection: WeakReference<PhoneConnection>) : Handler(Looper.getMainLooper()) {

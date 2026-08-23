@@ -109,4 +109,23 @@ class MiniButtonPlacementTest {
         assertTrue(FaceScopedPreferences.SCOPED_KEYS
                 .contains(MiscPreferences.WEAR_SCREEN_BUTTONS_CURVE_STYLE.key))
     }
+
+    /**
+     * A face that hosts the row places it itself, so nothing in this file reaches those buttons.
+     * That is what the phone hides the curve and shape pickers on, and what the watch keys the
+     * shared row's suppression on - three consumers of one answer, so the set must not be
+     * something each of them keeps its own copy of.
+     */
+    @Test
+    fun `only the faces that compose the row themselves are hosts`() {
+        assertTrue(MiniButtonPlacement.isHostedByFace("chat"))
+        // Split and Verse also run edge to edge, but they leave the shared row to the host - they
+        // simply default it off. Hosting is about drawing the buttons, not about turning them off.
+        listOf("classic", "expressive", "split", "verse", "note", "carousel", "metadata")
+                .forEach { face ->
+                    assertFalse("$face does not host the mini-button row",
+                            MiniButtonPlacement.isHostedByFace(face))
+                }
+        assertFalse(MiniButtonPlacement.isHostedByFace(null))
+    }
 }

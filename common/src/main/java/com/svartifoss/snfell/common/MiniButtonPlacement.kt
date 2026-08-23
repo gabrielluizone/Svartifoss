@@ -89,6 +89,28 @@ enum class MiniButtonPlacement(
         get() = if (this == CURVED_EXTREME) 36f else 18f
 
     companion object {
+        /**
+         * Faces that draw the configured mini buttons *inside* their own composition instead of
+         * letting the shared row float over them.
+         *
+         * Chat is the first: its thread runs to the bottom of the screen and it already carries a
+         * row of round actions there, so the shared row landed on top of that row - two sets of
+         * controls in one band. Hosting them turns the face's own circles into the user's buttons,
+         * one per configured slot.
+         *
+         * It lives beside the placement enum because of what it does to it: a hosted row is placed
+         * by the composition, so nothing in this file reaches it. That is a real consequence for
+         * the user, which is why the phone hides the curve picker (and the shape picker, since a
+         * hosted button keeps the face's own silhouette) for these faces rather than offering
+         * controls that change nothing - the same rule Carousel's card shape follows. The
+         * *appearance* choices that are not placement - the background style and the group
+         * opacity - do still apply, resolved through [MiniButtonSurfaces] exactly as the row
+         * resolves them.
+         */
+        fun isHostedByFace(face: String?): Boolean = face?.trim() in HOSTING_FACES
+
+        private val HOSTING_FACES = setOf("chat")
+
         fun fromPreference(value: String?): MiniButtonPlacement =
                 values().firstOrNull { it.value == value?.trim() } ?: FLAT
 

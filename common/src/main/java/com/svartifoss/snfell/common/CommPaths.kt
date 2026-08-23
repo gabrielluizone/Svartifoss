@@ -6,6 +6,29 @@ interface CommPaths {
         const val WATCH_APP_CAPABILITY = "MusicCenterWatch"
 
         const val DATA_MUSIC_STATE = "/Music/State"
+
+        /**
+         * Phone -> watch: the same `MusicState` as [DATA_MUSIC_STATE], sent as a message so it
+         * arrives *now*.
+         *
+         * Two transports for one payload, the shape [MESSAGE_APPLY_PREFERENCES] already uses and
+         * for the same reason. The DataItem stays the durable source of truth - it survives the
+         * watch sleeping, it carries the album-art and source-icon assets, and it is what a
+         * freshly started watch seeds itself from. What it is not is prompt: it goes through Play
+         * Services' replication layer, and even flagged urgent that costs enough that a track
+         * changed on the phone visibly lagged on the wrist.
+         *
+         * That lag was not only cosmetic. The watch predicts the playback position from the last
+         * sample it was sent (see PlaybackPositionEstimate), and the transport time between the
+         * phone taking that sample and the watch receiving it is the one part of the delay the
+         * prediction cannot account for - so a slow DataItem put a lasting offset on the position
+         * itself, which is what made synced lyrics run behind the song.
+         *
+         * Carries no assets: a message cannot hold them, and the cover legitimately takes longer
+         * than the text. The watch applies whichever arrives first and discards the other by
+         * content, so the two never fight.
+         */
+        const val MESSAGE_MUSIC_STATE = "/Messages/MusicState"
         const val DATA_WATCH_INFO = "/WatchInfo"
         const val ASSET_WATCH_INFO_BUTTON_PREFIX = "/WatchInfo/Button"
 
@@ -41,6 +64,88 @@ interface CommPaths {
         const val MESSAGE_PLAY_FROM_SEARCH = "/Messages/PlayFromSearch"
 
         /**
+         * Watch -> phone: fetch the lyrics for the track named in the `LyricsRequest` payload.
+         *
+         * The **phone** does the network call, not the watch, and that is not an implementation
+         * detail: a Bluetooth-only watch has no route to the internet of its own, so a watch-side
+         * fetch would work on LTE models and silently fail on every other one. It also keeps this
+         * app's whole network surface on the phone, where the privacy docs describe it.
+         */
+        const val MESSAGE_REQUEST_LYRICS = "/Messages/RequestLyrics"
+
+        /**
+         * Watch -> phone: everything known about the track named in the `TrackMetadata` payload.
+         *
+         * Asked for rather than pushed, and that is the whole cost model of the metadata face: a
+         * watch showing any other face never sends this, so the phone never reads a file, never
+         * queries anything, and the twenty-odd fields never cross Bluetooth. Same shape as
+         * [MESSAGE_REQUEST_LYRICS], and for the same reason - a surface nobody has open should not
+         * be paid for.
+         */
+        const val MESSAGE_REQUEST_TRACK_METADATA = "/Messages/RequestTrackMetadata"
+
+        /**
+         * Phone -> watch: the answer, as a serialized `TrackMetadata`.
+         *
+         * Sent **twice** for one request when the optional online lookup is on: once immediately
+         * with what the phone already knows, and again with `enriched` set once the lookup returns.
+         * The screen is therefore never waiting on a network call to draw - which is the rule this
+         * whole path is built around.
+         *
+         * `/Messages`, not `/IdleMessages`, for the reason [MESSAGE_LYRICS_RESULT] documents: this
+         * is useless to a watch whose UI is not running, so it reaches `PhoneConnection`'s runtime
+         * listener and nothing else.
+         */
+        const val MESSAGE_TRACK_METADATA = "/Messages/TrackMetadata"
+
+        /**
+         * Watch -> phone: "where is playback actually at?". Payload is an 8-byte token, the
+         * watch's own monotonic clock reading at send time.
+         *
+         * The correction half of the watch's position prediction. The phone deliberately does not
+         * retransmit a `MusicState` for a position that only moved on its own (see
+         * `MusicService.equalsIgnoringTime`), which is right - it would be constant Bluetooth
+         * traffic to say nothing - but it leaves the watch extrapolating unattended for a whole
+         * track. Whatever error the first sample carried then lasts the whole song, and on the
+         * lyrics screen a second of error is the difference between the right line and the wrong
+         * one.
+         *
+         * Asked for rather than pushed, because only the watch knows when it needs one: it is the
+         * side that holds the estimate, and the round trip it starts here is what lets it measure
+         * the transport delay instead of assuming it away.
+         */
+        const val MESSAGE_REQUEST_PLAYBACK_SYNC = "/Messages/RequestPlaybackSync"
+
+        /**
+         * Phone -> watch: the answer, as a serialized `PlaybackSync`.
+         *
+         * `/Messages`, not `/IdleMessages`, for the same reason [MESSAGE_LYRICS_RESULT] is: this
+         * payload corrects a running estimate, so it is worthless to a watch whose UI is not up,
+         * and routing it through the manifest listener would wake the process to discard it. It
+         * reaches `PhoneConnection`'s runtime listener, which is alive exactly while something is
+         * predicting a position.
+         */
+        const val MESSAGE_PLAYBACK_SYNC = "/Messages/PlaybackSync"
+
+        /**
+         * Phone -> watch: the answer, as a serialized `LyricsResponse`.
+         *
+         * A message rather than a DataItem, for once. Lyrics are transient - fetched when a screen
+         * opens and worthless afterwards - so the durability that makes DataItems right for
+         * settings and the queue is exactly wrong here: the payload would sit in the Data Layer
+         * store being replayed on every reconnect. It also has to arrive *now*, while the user is
+         * looking at the screen, which is the same reason MESSAGE_APPLY_PREFERENCES exists beside
+         * the /Settings DataItem.
+         *
+         * Deliberately **not** under /IdleMessages, unlike the other phone -> watch messages here.
+         * That prefix exists to wake a watch whose UI is not running, and this payload is useless
+         * to a watch with no lyrics screen open - routing it there would spin up the process to
+         * throw the answer away. /Messages has no manifest listener on the watch, so it reaches
+         * only PhoneConnection's runtime listener, which is alive exactly when the screen is.
+         */
+        const val MESSAGE_LYRICS_RESULT = "/Messages/LyricsResult"
+
+        /**
          * Watch -> phone: the user picked a now-playing face from the on-watch picker. Payload is
          * the face key as UTF-8 (see [ThemeAppearance.ALLOWED_BASE_FACES]).
          *
@@ -54,6 +159,16 @@ interface CommPaths {
         // Phone -> watch. Must live under /IdleMessages so IdleMessageListener's manifest
         // path filter matches it even when the watch UI is not running.
         const val MESSAGE_OPEN_VOICE_SEARCH = "/IdleMessages/OpenVoiceSearch"
+
+        /**
+         * Phone -> watch: open the lyrics screen.
+         *
+         * The counterpart of [MESSAGE_OPEN_VOICE_SEARCH], and for the same reason: the watch
+         * normally intercepts the "open lyrics" action locally and never sends it anywhere, so this
+         * only carries the paths that do execute on the phone. Same /IdleMessages prefix, since
+         * those paths are exactly the ones where the watch UI may not be up.
+         */
+        const val MESSAGE_OPEN_LYRICS = "/IdleMessages/OpenLyrics"
 
         /**
          * Phone -> watch: the user tapped "Stop" on the phone's persistent notification.

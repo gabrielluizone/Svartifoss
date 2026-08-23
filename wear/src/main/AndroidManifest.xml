@@ -278,6 +278,15 @@
             android:launchMode="singleTop"
             android:noHistory="true" />
 
+        <!-- Synced lyrics. Deliberately NOT noHistory, unlike its three siblings below: it
+             supports ambient, and noHistory would destroy it the moment the wrist drops - which
+             is the exact case the ambient variant exists for. -->
+        <activity
+            android:name=".watch.view.lyrics.LyricsActivity"
+            android:exported="false"
+            android:theme="@style/QueueTheme"
+            android:launchMode="singleTop" />
+
         <!-- On-watch face picker (long press the centre of the player). Same noHistory/singleTop
              shape as the queue and menu: it is a transient chooser, not a place to come back to. -->
         <activity
