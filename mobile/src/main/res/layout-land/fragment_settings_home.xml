@@ -1,126 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lyra_background">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/settings_overview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/google_sans"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="6dp"
-            android:text="@string/settings_overview_description"
-            android:textColor="@color/lyra_text_secondary"
-            android:textSize="13sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/settings_sections"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clipToPadding="false"
-            android:paddingTop="2dp"
-            android:paddingBottom="12dp"
-            tools:listitem="@layout/item_settings_section" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/settings_detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:minHeight="62dp"
-            android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingTop="5dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="5dp">
-
-            <ImageButton
-                android:id="@+id/settings_section_back"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:contentDescription="@string/settings_back_to_overview"
-                android:padding="12dp"
-                android:src="@drawable/ic_arrow_back"
-                app:tint="@color/lyra_on_surface" />
-
-            <ImageView
-                android:id="@+id/settings_section_icon"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="2dp"
-                android:background="@drawable/circle_icon_bg"
-                android:contentDescription="@null"
-                android:padding="9dp"
-                app:tint="@color/lyra_accent"
-                tools:src="@drawable/ic_settings" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/settings_section_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/google_sans"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/lyra_on_surface"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    tools:text="General" />
-
-                <TextView
-                    android:id="@+id/settings_section_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/google_sans"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:textColor="@color/lyra_text_secondary"
-                    android:textSize="12sp"
-                    tools:text="Theme, accent color and update preferences." />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/settings_tabs"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.3"
+            android:background="@color/lyra_background"
+            app:tabGravity="start"
+            app:tabIndicatorColor="@color/lyra_accent"
+            app:tabIndicatorFullWidth="false"
+            app:tabMode="scrollable"
+            app:tabRippleColor="@color/lyra_ripple"
+            app:tabSelectedTextColor="@color/lyra_accent"
+            app:tabSelectedTextAppearance="@style/LyraTabText"
+            app:tabTextAppearance="@style/LyraTabText"
+            app:tabTextColor="@color/lyra_text_secondary" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
             android:background="@color/lyra_divider" />
 
-        <FrameLayout
-            android:id="@+id/settings_detail_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/settings_section_description"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:paddingStart="14dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="6dp"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
-</FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lyra_divider" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/settings_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

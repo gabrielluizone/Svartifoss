@@ -111,130 +111,30 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <FrameLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/watch_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/lyra_background"
+        app:tabGravity="start"
+        app:tabIndicatorColor="@color/lyra_accent"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable"
+        app:tabRippleColor="@color/lyra_ripple"
+        app:tabSelectedTextColor="@color/lyra_accent"
+        app:tabSelectedTextAppearance="@style/LyraTabText"
+        app:tabTextAppearance="@style/LyraTabText"
+        app:tabTextColor="@color/lyra_text_secondary" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lyra_divider" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/watch_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:id="@+id/watch_overview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/google_sans"
-                android:paddingStart="20dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="8dp"
-                android:text="@string/watch_overview_description"
-                android:textColor="@color/lyra_text_secondary"
-                android:textSize="13sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/watch_sections"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:paddingTop="2dp"
-                android:paddingBottom="16dp"
-                tools:listitem="@layout/item_settings_section" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/watch_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:minHeight="72dp"
-                android:orientation="horizontal"
-                android:paddingStart="8dp"
-                android:paddingTop="6dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="6dp">
-
-                <ImageButton
-                    android:id="@+id/watch_section_back"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/watch_back_to_overview"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_arrow_back"
-                    android:tint="@color/lyra_on_surface"
-                    tools:ignore="UseAppTint" />
-
-                <ImageView
-                    android:id="@+id/watch_section_icon"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_marginStart="2dp"
-                    android:background="@drawable/circle_icon_bg"
-                    android:contentDescription="@null"
-                    android:padding="9dp"
-                    android:tint="@color/lyra_accent"
-                    tools:ignore="UseAppTint"
-                    tools:src="@drawable/ic_player_theme" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/watch_section_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/google_sans"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/lyra_on_surface"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        tools:text="Player" />
-
-                    <TextView
-                        android:id="@+id/watch_section_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/google_sans"
-                        android:includeFontPadding="false"
-                        android:maxLines="2"
-                        android:textColor="@color/lyra_text_secondary"
-                        android:textSize="12sp"
-                        tools:text="Layout, content and playback indicators." />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lyra_divider" />
-
-            <FrameLayout
-                android:id="@+id/watch_detail_container"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-    </FrameLayout>
+        android:layout_weight="1" />
 
 </LinearLayout>

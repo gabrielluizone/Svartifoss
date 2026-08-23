@@ -17,7 +17,7 @@ On the watch, the now-playing screen is the hub. A center double-tap opens Quick
 
 ## Target Information Architecture
 
-Keep the four primary phone destinations and expose an overview before dense preference lists. Selecting an overview card opens one focused section; Back returns to the overview. The live watch preview and saved-theme affordance remain visible context for Watch appearance.
+Keep the four primary phone destinations. Within Settings and Watch appearance, use clearly named, horizontally swipeable tabs so each page remains focused without sacrificing the familiar side-to-side gesture. The live watch preview and saved-theme affordance remain visible context for Watch appearance.
 
 Settings sections own these concepts:
 
@@ -53,13 +53,13 @@ A visual move is not a data migration. Preserve all existing preference keys, va
 
 ## Navigation and Search Contract
 
-A searchable route is the tuple `(tab, section, preferenceKey)`. The tab selects Settings or Watch, the section opens the owning detail page, and the preference key scrolls to and highlights the row.
+A searchable route is the tuple `(tab, section, preferenceKey)`. The tab selects Settings or Watch, the section selects the owning pager page, and the preference key scrolls to and highlights the row.
 
 `SettingsCatalog` is the single source of truth for category-to-section ownership. Every XML category shown by a fragment must be registered and reachable; dynamically managed categories must also have an explicit searchable owner. When a preference moves, update the XML and catalog together rather than teaching search a second hierarchy.
 
 Search text comes from localized XML titles and summaries. Matching should include the section and category vocabulary so users can search concepts such as “automation” or “clock,” not only exact setting names. Results show the breadcrumb **tab › section › category**. If a result can be conditionally hidden, route to the prerequisite preference or make the destination reveal it safely.
 
-Rotation restores the open section and highlight state. A normal entry from bottom navigation starts at the overview; a search route may open a detail page directly. Back from a detail page returns to that destination's overview before leaving it.
+Rotation restores the selected section and highlight state. Normal entry from bottom navigation remembers the most recently selected page; a search route opens the matching page directly.
 
 ## Validation Checklist
 
