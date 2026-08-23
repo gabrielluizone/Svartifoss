@@ -38,11 +38,12 @@
     <string name="queue_history_fallback_reason">Diese App teilt ihre Warteschlange nicht</string>
 
     <string name="hint_title">Bedienung</string>
-    <string name="hint_edges">Ränder — tippen für die angezeigten Aktionen</string>
+    <string name="hint_edges">Oben, unten, links oder rechts tippen — jede Zone führt ihre Aktion aus</string>
     <string name="hint_center">Mitte — Wiedergabe/Pause\nDoppeltippen — Schnellaktionen\nLang drücken — Zifferblattauswahl (konfigurierbar)</string>
-    <string name="hint_swipe_up">Nach oben wischen — Aktionsmenü</string>
-    <string name="hint_crown">Krone — Lautstärke (konfigurierbar)</string>
-    <string name="hint_dismiss">Verstanden</string>
+    <string name="hint_swipe_up">Nach oben — Aktionsmenü\nNach unten oder links — zugewiesene Aktionen\nVom Rand nach rechts — beenden</string>
+    <string name="hint_crown">Krone — Lautstärke oder Spulen\nSeitentasten — zugewiesene Aktionen\nAlles am Telefon unter Steuerung und Watch anpassen</string>
+    <string name="hint_next">Weiter</string>
+    <string name="hint_dismiss">Fertig</string>
 
     <string name="action_name_play">Wiedergabe</string>
     <string name="action_name_pause">Pause</string>

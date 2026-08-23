@@ -36,25 +36,40 @@
             android:textColor="@color/lyra_pref_summary"
             android:textSize="14sp" />
 
-        <View
+        <!-- Put the first useful decision before the full reference. This is also a compact map
+             of the two configuration surfaces a new user needs most often. -->
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="20dp"
-            android:background="@color/lyra_divider" />
+            android:background="@drawable/dialog_bg_lyra"
+            android:fontFamily="@font/google_sans"
+            android:lineSpacingMultiplier="1.15"
+            android:padding="16dp"
+            android:text="@string/tutorial_tip"
+            android:textColor="@color/lyra_accent"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="20dp"
+            android:accessibilityHeading="true"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/controls_header"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <!-- Tap zones -->
         <include
             layout="@layout/item_tutorial_card"
             android:id="@+id/card_taps" />
-
-        <!-- Quick actions panel. Sits right after the tap zones because it is opened by a tap
-             gesture on the same zone the previous card describes - there is nothing on screen
-             advertising that the centre responds to a double tap. -->
-        <include
-            layout="@layout/item_tutorial_card"
-            android:id="@+id/card_quick_panel" />
 
         <!-- Single/double/long press -->
         <include
@@ -76,6 +91,24 @@
             layout="@layout/item_tutorial_card"
             android:id="@+id/card_swipe_up" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="20dp"
+            android:accessibilityHeading="true"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/actions_menu"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Quick actions are configured separately from screen inputs, under Actions. -->
+        <include
+            layout="@layout/item_tutorial_card"
+            android:id="@+id/card_quick_panel" />
+
         <!-- Streaming shortcuts. Placed before the liked-songs card, which is the one-tap special
              case of the same idea - this is the general mechanism behind it. -->
         <include
@@ -86,6 +119,19 @@
         <include
             layout="@layout/item_tutorial_card"
             android:id="@+id/card_yt_music" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="20dp"
+            android:accessibilityHeading="true"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/category_watch_navigation"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <!-- Swipe to exit -->
         <include
@@ -106,21 +152,6 @@
         <include
             layout="@layout/item_tutorial_card"
             android:id="@+id/card_system" />
-
-        <!-- Footer tip -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/dialog_bg_lyra"
-            android:fontFamily="@font/google_sans"
-            android:lineSpacingMultiplier="1.15"
-            android:padding="16dp"
-            android:text="@string/tutorial_tip"
-            android:textColor="@color/lyra_accent"
-            android:textSize="13sp" />
 
     </LinearLayout>
 

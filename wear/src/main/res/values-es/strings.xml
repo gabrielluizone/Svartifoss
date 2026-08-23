@@ -52,11 +52,12 @@
     <string name="face_picker_offline">Teléfono no conectado — esta esfera se aplicará en el reloj, pero el teléfono conserva el ajuste</string>
 
     <string name="hint_title">Cómo se usa</string>
-    <string name="hint_edges">Bordes — toca para las acciones mostradas</string>
+    <string name="hint_edges">Toca arriba, abajo, a la izquierda o a la derecha — cada zona ejecuta su acción asignada</string>
     <string name="hint_center">Centro — reproducir/pausar\nToca dos veces — acciones rápidas\nMantén pulsado — selector de esfera (configurable)</string>
-    <string name="hint_swipe_up">Desliza hacia arriba — menú de acciones</string>
-    <string name="hint_crown">Corona — volumen (configurable)</string>
-    <string name="hint_dismiss">Entendido</string>
+    <string name="hint_swipe_up">Arriba — menú de acciones\nAbajo o izquierda — acciones asignadas\nDesde el borde a la derecha — salir</string>
+    <string name="hint_crown">Corona — volumen o posición\nBotones laterales — acciones asignadas\nPersonaliza todo en Controles y Watch en el teléfono</string>
+    <string name="hint_next">Siguiente</string>
+    <string name="hint_dismiss">Finalizar</string>
 
     <string name="action_name_play">Reproducir</string>
     <string name="action_name_pause">Pausar</string>

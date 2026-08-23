@@ -49,11 +49,12 @@
     <string name="chat_face_today">Hoje</string>
 
     <string name="hint_title">Como usar</string>
-    <string name="hint_edges">Extremidades — toca para as ações mostradas</string>
+    <string name="hint_edges">Toca em cima, baixo, à esquerda ou à direita — cada zona executa a ação atribuída</string>
     <string name="hint_center">Centro — reproduzir/pausar\nToca duas vezes — ações rápidas\nToque longo — seletor de mostrador (configurável)</string>
-    <string name="hint_swipe_up">Desliza para cima — menu de ações</string>
-    <string name="hint_crown">Coroa — volume (configurável)</string>
-    <string name="hint_dismiss">Entendido</string>
+    <string name="hint_swipe_up">Para cima — menu de ações\nPara baixo ou esquerda — ações atribuídas\nDa margem para a direita — sair</string>
+    <string name="hint_crown">Coroa — volume ou posição\nBotões laterais — ações atribuídas\nPersonaliza tudo em Controlos e Watch no telemóvel</string>
+    <string name="hint_next">Seguinte</string>
+    <string name="hint_dismiss">Concluir</string>
 
     <string name="action_name_play">Reproduzir</string>
     <string name="action_name_pause">Pausar</string>

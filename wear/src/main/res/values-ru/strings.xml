@@ -52,11 +52,12 @@
     <string name="face_picker_offline">Телефон не подключён — этот циферблат применится на часах, но настройка хранится на телефоне</string>
 
     <string name="hint_title">Как пользоваться</string>
-    <string name="hint_edges">Края — нажмите для показанных действий</string>
+    <string name="hint_edges">Нажмите сверху, снизу, слева или справа — каждая зона выполняет назначенное действие</string>
     <string name="hint_center">Центр — воспроизведение/пауза\nДвойное нажатие — быстрые действия\nДолгое нажатие — выбор циферблата (настраивается)</string>
-    <string name="hint_swipe_up">Смахните вверх — меню действий</string>
-    <string name="hint_crown">Колёсико — громкость (настраивается)</string>
-    <string name="hint_dismiss">Понятно</string>
+    <string name="hint_swipe_up">Вверх — меню действий\nВниз или влево — назначенные действия\nОт края вправо — выход</string>
+    <string name="hint_crown">Колёсико — громкость или позиция\nБоковые кнопки — назначенные действия\nНастройте всё в разделах «Управление» и Watch на телефоне</string>
+    <string name="hint_next">Далее</string>
+    <string name="hint_dismiss">Готово</string>
 
     <string name="action_name_play">Воспроизвести</string>
     <string name="action_name_pause">Пауза</string>

@@ -49,11 +49,12 @@
     <string name="chat_face_today">今天</string>
 
     <string name="hint_title">使用方法</string>
-    <string name="hint_edges">边缘 — 点按以执行显示的操作</string>
+    <string name="hint_edges">点按上、下、左或右侧 — 每个区域执行所分配的操作</string>
     <string name="hint_center">中心 — 播放/暂停\n双击 — 快捷操作\n长按 — 表盘选择器（可配置）</string>
-    <string name="hint_swipe_up">向上滑动 — 操作菜单</string>
-    <string name="hint_crown">表冠 — 音量（可配置）</string>
-    <string name="hint_dismiss">知道了</string>
+    <string name="hint_swipe_up">向上 — 操作菜单\n向下或向左 — 已分配的操作\n从边缘向右 — 退出</string>
+    <string name="hint_crown">表冠 — 音量或进度\n侧键 — 已分配的操作\n在手机的“控制”和“Watch”中自定义所有内容</string>
+    <string name="hint_next">下一步</string>
+    <string name="hint_dismiss">完成</string>
 
     <string name="action_name_play">播放</string>
     <string name="action_name_pause">暂停</string>

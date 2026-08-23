@@ -274,7 +274,10 @@ class MainActivity : WearCompanionWatchActivity(),
         // state: viewModel.preferences swaps it for the phone-synced copy, which would wipe
         // anything written locally on the next sync.
         private const val PREFS_LOCAL_UI = "local_ui_state"
-        private const val KEY_GESTURE_HINTS_SHOWN = "gesture_hints_shown"
+        // Versioned so an expanded guide can be presented once to people who completed the old
+        // one-screen hint. A version is persisted only after the final page is completed.
+        private const val KEY_GESTURE_GUIDE_VERSION = "gesture_guide_version"
+        private const val GESTURE_GUIDE_VERSION = 2
 
         /** Top edge of the awake Up Next pill as a fraction of screen height: it sits at
          *  BottomCenter with ~.07 bottom padding and ~.25 height, so its top is ~1 - .07 - .25.
@@ -312,9 +315,9 @@ class MainActivity : WearCompanionWatchActivity(),
     private val handler = TimeoutsHandler(WeakReference(this))
 
     private var notificationDismissDeadline: Long = Long.MAX_VALUE
-    // True from first launch until the user explicitly dismisses the gesture hints overlay -
-    // also used to bring the overlay back after an ambient round-trip hides it.
+    // True while the lesson is open; also brings it back after ambient temporarily hides it.
     private var firstRunHintsPending = false
+    private var firstRunHintsPage = 0
     private var dimAlbumArt: Boolean = false
     private var albumArtStyle: String = "cover"
     /** Carousel's card outline, re-read with the other face-scoped appearance values. */
@@ -1052,7 +1055,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // Registered after backButtonOverrideCallback so it takes priority while enabled - the
         // back gesture should close the quick-actions panel instead of exiting the app.
         onBackPressedDispatcher.addCallback(this, quickActionsPanelBackCallback)
-        // Last registered = highest priority: while the hints overlay is up, back dismisses it.
+        // Last registered = highest priority: Back moves through the lesson before it can exit.
         onBackPressedDispatcher.addCallback(this, firstRunHintsBackCallback)
 
         setupFirstRunHints()
@@ -1067,6 +1070,9 @@ class MainActivity : WearCompanionWatchActivity(),
         // moment WEAR_IDLE_AUTO_OPEN is about. Resetting in onStart instead would loop: backing
         // out of the destination returns here, sees idle, and would open it straight back up.
         idleAutoOpenConsumed = false
+        // Back from the first page closes without completing. Reopening the app should offer the
+        // lesson again rather than silently treating that close as completion.
+        setupFirstRunHints()
         handleVoiceSearchIntent(intent)
         handleOpenLyricsIntent(intent)
     }
@@ -4834,23 +4840,41 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val firstRunHintsBackCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
-            dismissFirstRunHints()
+            if (firstRunHintsPage > 0) {
+                showFirstRunHintsPage(firstRunHintsPage - 1)
+            } else {
+                closeFirstRunHints(completed = false)
+            }
         }
     }
 
-    /** Shows the one-time gesture cheat sheet on the very first launch. Dismissing it (tap
-     *  anywhere, the pill button, or back) writes the flag so it never comes back. */
+    /** Shows the current short, paged player lesson once per guide version. */
     private fun setupFirstRunHints() {
-        if (localUiPrefs().getBoolean(KEY_GESTURE_HINTS_SHOWN, false)) {
+        if (firstRunHintsPending ||
+                localUiPrefs().getInt(KEY_GESTURE_GUIDE_VERSION, 0) >= GESTURE_GUIDE_VERSION) {
             return
         }
 
         firstRunHintsPending = true
+        firstRunHintsPage = 0
         firstRunHintsBackCallback.isEnabled = true
 
         val hints = binding.firstRunHints.root
-        hints.setOnClickListener { dismissFirstRunHints() }
-        binding.firstRunHints.firstRunHintsDismiss.setOnClickListener { dismissFirstRunHints() }
+        // The root remains clickable to consume touches, but deliberately has no dismiss action:
+        // an exploratory tap must not permanently skip the lesson.
+        hints.setOnClickListener(null)
+        binding.firstRunHints.firstRunHintsBack.setOnClickListener {
+            if (firstRunHintsPage > 0) showFirstRunHintsPage(firstRunHintsPage - 1)
+        }
+        binding.firstRunHints.firstRunHintsNext.setOnClickListener {
+            val lastPage = binding.firstRunHints.firstRunHintsPages.childCount - 1
+            if (firstRunHintsPage == lastPage) {
+                closeFirstRunHints(completed = true)
+            } else {
+                showFirstRunHintsPage(firstRunHintsPage + 1)
+            }
+        }
+        showFirstRunHintsPage(0)
 
         // Slight delay so the sheet fades in over a settled screen instead of fighting the
         // activity's own entrance transition. It blocks input from the moment it turns VISIBLE.
@@ -4859,13 +4883,32 @@ class MainActivity : WearCompanionWatchActivity(),
         hints.animate().alpha(1f).setStartDelay(400).setDuration(300).start()
     }
 
-    private fun dismissFirstRunHints() {
+    private fun showFirstRunHintsPage(page: Int) {
+        val pages = binding.firstRunHints.firstRunHintsPages
+        firstRunHintsPage = page.coerceIn(0, pages.childCount - 1)
+        pages.displayedChild = firstRunHintsPage
+        binding.firstRunHints.firstRunHintsProgress.text =
+                "${firstRunHintsPage + 1} / ${pages.childCount}"
+        binding.firstRunHints.firstRunHintsBack.visibility =
+                if (firstRunHintsPage == 0) View.INVISIBLE else View.VISIBLE
+        binding.firstRunHints.firstRunHintsNext.setText(
+                if (firstRunHintsPage == pages.childCount - 1) R.string.hint_dismiss
+                else R.string.hint_next
+        )
+    }
+
+    /** Closes the lesson. Only reaching the explicit final action persists completion. */
+    private fun closeFirstRunHints(completed: Boolean) {
         if (!firstRunHintsPending) {
             return
         }
         firstRunHintsPending = false
         firstRunHintsBackCallback.isEnabled = false
-        localUiPrefs().edit().putBoolean(KEY_GESTURE_HINTS_SHOWN, true).apply()
+        if (completed) {
+            localUiPrefs().edit()
+                    .putInt(KEY_GESTURE_GUIDE_VERSION, GESTURE_GUIDE_VERSION)
+                    .apply()
+        }
 
         val hints = binding.firstRunHints.root
         hints.animate().cancel()
@@ -4873,7 +4916,11 @@ class MainActivity : WearCompanionWatchActivity(),
                 .alpha(0f)
                 .setStartDelay(0)
                 .setDuration(200)
-                .withEndAction { hints.visibility = View.GONE }
+                .withEndAction {
+                    // A singleTask relaunch can reopen the lesson while this close animation is
+                    // finishing; never let the stale callback hide the newly opened lesson.
+                    if (!firstRunHintsPending) hints.visibility = View.GONE
+                }
                 .start()
     }
 

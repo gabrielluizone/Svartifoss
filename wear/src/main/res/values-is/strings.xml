@@ -55,11 +55,12 @@
     <string name="face_picker_custom_base">Byggt á %1$s</string>
 
     <string name="hint_title">Svona notarðu þetta</string>
-    <string name="hint_edges">Jaðrar — ýttu fyrir sýndar aðgerðir</string>
+    <string name="hint_edges">Ýttu efst, neðst, til vinstri eða hægri — hvert svæði framkvæmir úthlutaða aðgerð</string>
     <string name="hint_center">Miðja — spila/pása\nTvísmella — flýtiaðgerðir\nHalda inni — úrskífuval (stillanlegt)</string>
-    <string name="hint_swipe_up">Strjúka upp — aðgerðavalmynd</string>
-    <string name="hint_crown">Kóróna — hljóðstyrkur (stillanlegt)</string>
-    <string name="hint_dismiss">Ég skil</string>
+    <string name="hint_swipe_up">Upp — aðgerðavalmynd\nNiður eða til vinstri — úthlutaðar aðgerðir\nFrá jaðri til hægri — hætta</string>
+    <string name="hint_crown">Kóróna — hljóðstyrkur eða staða\nHliðarhnappar — úthlutaðar aðgerðir\nStilltu allt í Stýringum og Watch í símanum</string>
+    <string name="hint_next">Næsta</string>
+    <string name="hint_dismiss">Ljúka</string>
 
     <string name="action_name_play">Spila</string>
     <string name="action_name_pause">Pása</string>

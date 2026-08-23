@@ -94,11 +94,12 @@
 
     <!-- One-time gesture hints overlay shown on first launch -->
     <string name="hint_title">How to use</string>
-    <string name="hint_edges">Edges — tap for the shown actions</string>
+    <string name="hint_edges">Tap top, bottom, left, or right — each zone runs its assigned action</string>
     <string name="hint_center">Center — play/pause\nDouble-tap — quick actions\nLong-press — face picker (configurable)</string>
-    <string name="hint_swipe_up">Swipe up — actions menu</string>
-    <string name="hint_crown">Crown — volume (configurable)</string>
-    <string name="hint_dismiss">Got it</string>
+    <string name="hint_swipe_up">Swipe up — actions menu\nDown or left — assigned actions\nRight from the edge — exit</string>
+    <string name="hint_crown">Crown — volume or seek\nSide buttons — assigned actions\nCustomize everything in Controls and Watch on your phone</string>
+    <string name="hint_next">Next</string>
+    <string name="hint_dismiss">Done</string>
 
     <!-- Accessibility names for the standard actions (the button config protobuf only carries
          the action's key, never a display title - see StandardActionTitles). -->

@@ -57,11 +57,12 @@
     <string name="face_picker_offline">Celular não conectado — este mostrador será aplicado no relógio, mas o celular mantém a configuração</string>
 
     <string name="hint_title">Como usar</string>
-    <string name="hint_edges">Bordas — toque para as ações dos ícones</string>
+    <string name="hint_edges">Toque em cima, baixo, esquerda ou direita — cada zona executa sua ação atribuída</string>
     <string name="hint_center">Centro — play/pause\n2 toques — ações rápidas\nToque longo — seletor de mostrador (configurável)</string>
-    <string name="hint_swipe_up">Deslize para cima — menu de ações</string>
-    <string name="hint_crown">Coroa — volume (configurável)</string>
-    <string name="hint_dismiss">Entendi</string>
+    <string name="hint_swipe_up">Para cima — menu de ações\nPara baixo ou esquerda — ações atribuídas\nDa borda para a direita — sair</string>
+    <string name="hint_crown">Coroa — volume ou posição\nBotões laterais — ações atribuídas\nPersonalize tudo em Controles e Watch no celular</string>
+    <string name="hint_next">Próximo</string>
+    <string name="hint_dismiss">Concluir</string>
 
     <string name="action_name_play">Reproduzir</string>
     <string name="action_name_pause">Pausar</string>

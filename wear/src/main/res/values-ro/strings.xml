@@ -52,11 +52,12 @@
     <string name="face_picker_offline">Telefon neconectat — acest cadran se va aplica pe ceas, dar telefonul păstrează setarea</string>
 
     <string name="hint_title">Cum se folosește</string>
-    <string name="hint_edges">Margini — atinge pentru acțiunile afișate</string>
+    <string name="hint_edges">Atinge sus, jos, stânga sau dreapta — fiecare zonă execută acțiunea atribuită</string>
     <string name="hint_center">Centru — redare/pauză\nAtinge de două ori — acțiuni rapide\nApasă lung — selector de cadran (configurabil)</string>
-    <string name="hint_swipe_up">Glisează în sus — meniul de acțiuni</string>
-    <string name="hint_crown">Coroană — volum (configurabil)</string>
-    <string name="hint_dismiss">Am înțeles</string>
+    <string name="hint_swipe_up">În sus — meniul de acțiuni\nÎn jos sau stânga — acțiuni atribuite\nDin margine spre dreapta — ieșire</string>
+    <string name="hint_crown">Coroană — volum sau poziție\nButoane laterale — acțiuni atribuite\nPersonalizează totul în Comenzi și Watch pe telefon</string>
+    <string name="hint_next">Înainte</string>
+    <string name="hint_dismiss">Finalizare</string>
 
     <string name="action_name_play">Redare</string>
     <string name="action_name_pause">Pauză</string>

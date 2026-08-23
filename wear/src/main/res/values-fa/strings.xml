@@ -52,11 +52,12 @@
     <string name="face_picker_offline">گوشی متصل نیست — این صفحه روی ساعت اعمال می‌شود، اما گوشی این تنظیم را نگه می‌دارد</string>
 
     <string name="hint_title">نحوه استفاده</string>
-    <string name="hint_edges">لبه‌ها — برای کنش‌های نمایش‌داده‌شده لمس کنید</string>
+    <string name="hint_edges">بالا، پایین، چپ یا راست را لمس کنید — هر بخش کنش تعیین‌شده را اجرا می‌کند</string>
     <string name="hint_center">مرکز — پخش/مکث\nدو بار لمس — کنش‌های سریع\nنگه‌داشتن — انتخاب‌گر واچ‌فیس (قابل تنظیم)</string>
-    <string name="hint_swipe_up">به بالا بکشید — منوی کنش‌ها</string>
-    <string name="hint_crown">تاج — صدا (قابل تنظیم)</string>
-    <string name="hint_dismiss">متوجه شدم</string>
+    <string name="hint_swipe_up">بالا — منوی کنش‌ها\nپایین یا چپ — کنش‌های تعیین‌شده\nاز لبه به راست — خروج</string>
+    <string name="hint_crown">تاج — صدا یا موقعیت\nدکمه‌های کناری — کنش‌های تعیین‌شده\nهمه‌چیز را در «کنترل‌ها» و Watch روی گوشی تنظیم کنید</string>
+    <string name="hint_next">بعدی</string>
+    <string name="hint_dismiss">پایان</string>
 
     <string name="action_name_play">پخش</string>
     <string name="action_name_pause">مکث</string>

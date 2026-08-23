@@ -52,11 +52,12 @@
     <string name="face_picker_offline">Telefono non connesso — questo quadrante verrà applicato sull\'orologio, ma il telefono conserva l\'impostazione</string>
 
     <string name="hint_title">Come si usa</string>
-    <string name="hint_edges">Bordi — tocca per le azioni mostrate</string>
+    <string name="hint_edges">Tocca in alto, in basso, a sinistra o a destra — ogni zona esegue l’azione assegnata</string>
     <string name="hint_center">Centro — riproduci/pausa\nDoppio tocco — azioni rapide\nPressione prolungata — selettore quadrante (configurabile)</string>
-    <string name="hint_swipe_up">Scorri verso l\'alto — menu azioni</string>
-    <string name="hint_crown">Corona — volume (configurabile)</string>
-    <string name="hint_dismiss">Ho capito</string>
+    <string name="hint_swipe_up">Verso l’alto — menu azioni\nIn basso o a sinistra — azioni assegnate\nDal bordo verso destra — esci</string>
+    <string name="hint_crown">Corona — volume o posizione\nPulsanti laterali — azioni assegnate\nPersonalizza tutto in Controlli e Watch sul telefono</string>
+    <string name="hint_next">Avanti</string>
+    <string name="hint_dismiss">Fine</string>
 
     <string name="action_name_play">Riproduci</string>
     <string name="action_name_pause">Pausa</string>

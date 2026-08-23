@@ -52,11 +52,12 @@
     <string name="face_picker_offline">Δεν έχει συνδεθεί τηλέφωνο — αυτή η όψη θα εφαρμοστεί στο ρολόι, αλλά το τηλέφωνο κρατά τη ρύθμιση</string>
 
     <string name="hint_title">Πώς χρησιμοποιείται</string>
-    <string name="hint_edges">Άκρα — άγγιξε για τις εμφανιζόμενες ενέργειες</string>
+    <string name="hint_edges">Άγγιξε πάνω, κάτω, αριστερά ή δεξιά — κάθε ζώνη εκτελεί την ενέργειά της</string>
     <string name="hint_center">Κέντρο — αναπαραγωγή/παύση\nΔιπλό άγγιγμα — γρήγορες ενέργειες\nΠαρατεταμένο πάτημα — επιλογή πρόσοψης (διαμορφώνεται)</string>
-    <string name="hint_swipe_up">Σύρε προς τα πάνω — μενού ενεργειών</string>
-    <string name="hint_crown">Κορώνα — ένταση (διαμορφώνεται)</string>
-    <string name="hint_dismiss">Το κατάλαβα</string>
+    <string name="hint_swipe_up">Πάνω — μενού ενεργειών\nΚάτω ή αριστερά — αντιστοιχισμένες ενέργειες\nΑπό την άκρη δεξιά — έξοδος</string>
+    <string name="hint_crown">Κορώνα — ένταση ή θέση\nΠλευρικά κουμπιά — αντιστοιχισμένες ενέργειες\nΡύθμισε τα πάντα στα Στοιχεία ελέγχου και Watch στο τηλέφωνο</string>
+    <string name="hint_next">Επόμενο</string>
+    <string name="hint_dismiss">Τέλος</string>
 
     <string name="action_name_play">Αναπαραγωγή</string>
     <string name="action_name_pause">Παύση</string>

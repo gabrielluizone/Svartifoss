@@ -49,11 +49,12 @@
     <string name="chat_face_today">Hari ini</string>
 
     <string name="hint_title">Cara pakai</string>
-    <string name="hint_edges">Tepi — ketuk untuk aksi yang ditampilkan</string>
+    <string name="hint_edges">Ketuk atas, bawah, kiri, atau kanan — setiap zona menjalankan aksi yang ditetapkan</string>
     <string name="hint_center">Tengah — putar/jeda\nKetuk dua kali — aksi cepat\nTekan lama — pemilih tampilan jam (dapat diatur)</string>
-    <string name="hint_swipe_up">Geser ke atas — menu aksi</string>
-    <string name="hint_crown">Mahkota — volume (dapat diatur)</string>
-    <string name="hint_dismiss">Mengerti</string>
+    <string name="hint_swipe_up">Ke atas — menu aksi\nKe bawah atau kiri — aksi yang ditetapkan\nDari tepi ke kanan — keluar</string>
+    <string name="hint_crown">Mahkota — volume atau posisi\nTombol samping — aksi yang ditetapkan\nAtur semuanya di Kontrol dan Watch pada ponsel</string>
+    <string name="hint_next">Berikutnya</string>
+    <string name="hint_dismiss">Selesai</string>
 
     <string name="action_name_play">Putar</string>
     <string name="action_name_pause">Jeda</string>
