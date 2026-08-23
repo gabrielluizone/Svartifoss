@@ -135,6 +135,7 @@
     <string name="action_repeat">Herhalen</string>
     <string name="action_repeat_one">Eén herhalen</string>
     <string name="action_search">Muziek zoeken</string>
+    <string name="action_open_lyrics">Songtekst</string>
     <string name="group_playback_controls">Afspeelbediening</string>
     <string name="group_streaming_shortcuts">Nummers, albums en afspeellijsten</string>
     <string name="pick_action">Actie kiezen</string>
@@ -238,7 +239,18 @@
     <string name="preview_sample_artist">Naam artiest</string>
     <string name="preview_sample_next_title">Volgend nummer</string>
     <string name="preview_playback_stopped">Gestopt</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">de vorige regel</string>
+    <string name="preview_verse_current">de regel die nu wordt gezongen</string>
+    <string name="preview_verse_next">en de regel erna</string>
     <string name="category_gestures">Gebaren en invoer</string>
+    <string name="category_watch_display">Horlogescherm</string>
+    <string name="setting_wear_keep_screen_on">Scherm aan houden</string>
+    <string name="setting_wear_keep_screen_on_description">Voorkomt dat het horlogescherm dooft door de inactiviteitstimer terwijl een Svartifoss-scherm open is. Je pols laten zakken dimt het horloge nog steeds — dat gebaar hoort bij het systeem. Verbruikt meer batterij. Het songtekstscherm blijft altijd aan, ongeacht deze instelling.</string>
+    <string name="setting_lyrics_enabled">Songtekst online opzoeken</string>
+    <string name="setting_lyrics_enabled_description">Laat de telefoon gesynchroniseerde songtekst ophalen bij LRCLIB wanneer je het songtekstscherm op het horloge opent. De nummernaam, artiest en lengte worden verzonden; verder niets, en er wordt niets op schijf opgeslagen. Zet dit uit en het songtekstscherm meldt dat opzoeken is uitgeschakeld.</string>
     <string name="setting_overlay_blur_radius">Overlay-vervaging</string>
     <string name="setting_overlay_blur_radius_description">Vervagingssterkte (px) van de matte achtergrond achter de volume-/zoekringen en het snelle-actiespaneel — onafhankelijk van de vervaging van de albumhoesachtergrond</string>
     <string name="category_action_list">Actielijst</string>
@@ -247,11 +259,16 @@
     <string name="get_support">Ondersteuning krijgen</string>
     <string name="get_support_description">Applicatielogboeken naar de ontwikkelaar sturen voor ondersteuning</string>
     <string name="contact_developer">Contact opnemen met de ontwikkelaar</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — contact</string>
     <string name="contact_developer_chooser">E-mail versturen</string>
     <string name="contact_developer_no_client">Geen e-mailapp geïnstalleerd. Adres gekopieerd naar het klembord.</string>
     <string name="about_developer_title">Over de ontwikkelaar</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
     <string name="about_developer_dialog_message">Svartifoss begon als persoonlijk project — ik wilde Music Center for Wear bijwerken naar wat vandaag mogelijk is, gewoon om het zelf elke dag te kunnen gebruiken. Het werd goed genoeg om te besluiten het met iedereen te delen. Dit is mijn eerste app, en er gaat niets boven zien dat iets wat je hebt gebouwd ook voor anderen nuttig blijkt te zijn.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">Open source-licenties</string>
     <string name="setting_always_show_time">Tijd altijd tonen</string>
     <string name="setting_always_show_time_off_description">De huidige tijd wordt alleen getoond in ambient-modus</string>

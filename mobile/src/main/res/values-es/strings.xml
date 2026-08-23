@@ -133,6 +133,7 @@
     <string name="action_repeat">Repetir</string>
     <string name="action_repeat_one">Repetir una</string>
     <string name="action_search">Buscar música</string>
+    <string name="action_open_lyrics">Letra</string>
     <string name="group_playback_controls">Controles de reproducción</string>
     <string name="group_streaming_shortcuts">Pistas, álbumes y listas</string>
     <string name="pick_action">Elegir acción</string>
@@ -1425,6 +1426,11 @@
     <string name="category_watch_navigation">Navegación y accesos directos</string>
     <string name="category_rotary_input">Entrada giratoria y ajuste</string>
     <string name="category_watch_feedback">Respuesta y comportamiento al salir</string>
+    <string name="category_watch_display">Pantalla del reloj</string>
+    <string name="setting_wear_keep_screen_on">Mantener la pantalla encendida</string>
+    <string name="setting_wear_keep_screen_on_description">Evita que la pantalla del reloj se apague por su tiempo de espera de inactividad mientras hay una pantalla de Svartifoss abierta. Bajar la muñeca sigue atenuando el reloj — ese gesto pertenece al sistema. Consume más batería. La pantalla de letras siempre permanece encendida sin importar este ajuste.</string>
+    <string name="setting_lyrics_enabled">Buscar letras en línea</string>
+    <string name="setting_lyrics_enabled_description">Permite que el teléfono obtenga letras sincronizadas de LRCLIB cuando abres la pantalla de letras en el reloj. Se envían el nombre de la pista, el artista y la duración; nada más, y nada se guarda en el dispositivo. Desactiva esto y la pantalla de letras indicará que la búsqueda está desactivada.</string>
     <string name="settings_search_prerequisite">Esta opción depende de otra elección. Cambia el ajuste que se muestra aquí para hacerla visible.</string>
     <string name="setting_numeric_range_error">Introduce un valor entre %1$d y %2$d.</string>
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
