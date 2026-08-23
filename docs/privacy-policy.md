@@ -284,4 +284,4 @@ location with a new "Last updated" date.
 ## Contact
 
 Questions about this policy or your data can be sent to:
-**gabrielluizone@gmail.com**
+**gabrielsvafoss@gmail.com**

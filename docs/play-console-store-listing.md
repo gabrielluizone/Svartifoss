@@ -81,7 +81,7 @@ screenshots/feature graphic exist and you know what to highlight visually)
 | Field | Suggested value |
 |---|---|
 | App category | Music & Audio |
-| Contact email | gabrielluizone@gmail.com |
+| Contact email | gabrielsvafoss@gmail.com |
 | Privacy policy URL | https://gabrielluizone.github.io/Svartifoss/privacy-policy.html |
 | Website (optional) | https://github.com/gabrielluizone/Svartifoss |
 

@@ -61,7 +61,7 @@ Ready-to-paste text for the **second** Play Console app (package
 | Field | Suggested value |
 |---|---|
 | App category | Music & Audio |
-| Contact email | gabrielluizone@gmail.com |
+| Contact email | gabrielsvafoss@gmail.com |
 | Privacy policy URL | https://gabrielluizone.github.io/Svartifoss/privacy-policy.html (same as the phone app - covers both) |
 | Website | https://github.com/gabrielluizone/Svartifoss |
 | Pricing | Paid (one-time) - set the price in **Monetize with Play → Products → set up a payments profile first**, then the price becomes available on this listing |
