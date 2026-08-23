@@ -15,6 +15,7 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
 import com.svartifoss.snfell.proto.WatchInfo
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.matejdro.wearutils.miscutils.BitmapUtils
 import kotlinx.coroutines.tasks.await
 
@@ -38,6 +39,11 @@ class WatchInfoSender(private val context: Context, private val urgent: Boolean)
         builder.appVersionName = BuildConfig.VERSION_NAME
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // These labels are rendered by the *phone*, in the Controls screen, so they have to be
+            // captured in the shared app language rather than in the watch's own system locale -
+            // otherwise a Portuguese phone lists its watch buttons in English. Kept separate from
+            // `context` above, which is read for display metrics rather than for resources.
+            val strings = WatchLanguage.localized(context)
             // Button count includes non-customizable primary button. Subtract one.
             val buttons = getAvailableButtonsOnWatch(context)
                     .map { buttonCode ->
@@ -47,22 +53,22 @@ class WatchInfoSender(private val context: Context, private val urgent: Boolean)
 
                         when (buttonCode) {
                             in KeyEvent.KEYCODE_STEM_1..KeyEvent.KEYCODE_STEM_3 -> {
-                                buttonLabel = WearableButtons.getButtonLabel(context, buttonCode)
+                                buttonLabel = WearableButtons.getButtonLabel(strings, buttonCode)
                                 val buttonImage = WearableButtons.getButtonIcon(context, buttonCode)
                                 imageBytes = BitmapUtils.serialize(BitmapUtils.getBitmap(buttonImage))
                             }
                             KeyEvent.KEYCODE_BACK -> {
-                                buttonLabel = context.getString(R.string.back_button)
+                                buttonLabel = strings.getString(R.string.back_button)
                                 imageBytes = null
                                 supportsLongPress = false
                             }
                             SpecialButtonCodes.TURN_ROTARY_CW -> {
-                                buttonLabel = context.getString(R.string.turn_bezel_cw)
+                                buttonLabel = strings.getString(R.string.turn_bezel_cw)
                                 imageBytes = null
                                 supportsLongPress = false
                             }
                             SpecialButtonCodes.TURN_ROTARY_CCW -> {
-                                buttonLabel = context.getString(R.string.turn_bezel_ccw)
+                                buttonLabel = strings.getString(R.string.turn_bezel_ccw)
                                 imageBytes = null
                                 supportsLongPress = false
                             }
@@ -81,7 +87,7 @@ class WatchInfoSender(private val context: Context, private val urgent: Boolean)
 
                         WatchInfo.WatchButton
                                 .newBuilder()
-                                .setLabel(buttonLabel?.toString() ?: context.getString(R.string.button))
+                                .setLabel(buttonLabel?.toString() ?: strings.getString(R.string.button))
                                 .setCode(buttonCode)
                                 .setSupportsLongPress(supportsLongPress)
                                 .build()

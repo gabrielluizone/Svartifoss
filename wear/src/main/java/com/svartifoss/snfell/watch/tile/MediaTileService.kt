@@ -40,6 +40,7 @@ import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.MainActivity
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.matejdro.wearutils.messages.getByteArrayAsset
 import com.matejdro.wearutils.messages.sendMessageToNearestClient
 import com.matejdro.wearutils.miscutils.BitmapUtils
@@ -98,7 +99,15 @@ class MediaTileService : TileService() {
         // next refresh, which would make the button feel like it did nothing.
         val flipPlaying = clickWasSent && clickedId == ID_PLAY_PAUSE
 
-        val layout = buildLayout(this@MediaTileService, state, flipPlaying, snapshot.accent)
+        // Localized once here so every label and content description below resolves in the
+        // app language rather than the watch's own system locale - a TileService gets no
+        // attachBaseContext. The wrapper shares this package's files, so the preference
+        // reads further down are unaffected.
+        val layout = buildLayout(
+                WatchLanguage.localized(this@MediaTileService),
+                state,
+                flipPlaying,
+                snapshot.accent)
 
         TileBuilders.Tile.Builder()
             .setResourcesVersion(RESOURCES_VERSION)

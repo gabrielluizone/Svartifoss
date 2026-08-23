@@ -23,6 +23,7 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PausedHoldPolicy
 import com.svartifoss.snfell.watch.view.MainActivity
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -229,7 +230,8 @@ class WatchMusicService : LifecycleService() {
 
         createNotificationChannel()
         val notificationBuilder = NotificationCompat.Builder(this, KEY_NOTIFICATION_CHANNEL)
-                .setContentTitle(getString(commonR.string.music_control_active))
+                .setContentTitle(WatchLanguage.localized(this)
+                        .getString(commonR.string.music_control_active))
                 .setContentIntent(openAppPendingIntent)
                 .setSmallIcon(R.drawable.ic_notification_bars)
                 .setOngoing(true)
@@ -330,7 +332,7 @@ class WatchMusicService : LifecycleService() {
 
 
         val persistentChannel = NotificationChannel(KEY_NOTIFICATION_CHANNEL,
-                getString(commonR.string.music_control),
+                WatchLanguage.localized(this).getString(commonR.string.music_control),
                 NotificationManager.IMPORTANCE_MIN)
         notificationManager.createNotificationChannel(persistentChannel)
     }

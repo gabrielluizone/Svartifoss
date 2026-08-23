@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.IntentCompat
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import timber.log.Timber
 import java.io.File
 
@@ -68,9 +69,10 @@ class InstallResultReceiver : BroadcastReceiver() {
     }
 
     private fun showConfirmNotification(context: Context, confirmIntent: Intent) {
+        val strings = WatchLanguage.localized(context)
         val notification = baseNotification(context)
-                .setContentTitle(context.getString(R.string.update_install_title))
-                .setContentText(context.getString(R.string.update_install_tap))
+                .setContentTitle(strings.getString(R.string.update_install_title))
+                .setContentText(strings.getString(R.string.update_install_tap))
                 .setContentIntent(PendingIntent.getActivity(
                         context,
                         0,
@@ -84,9 +86,10 @@ class InstallResultReceiver : BroadcastReceiver() {
     }
 
     private fun showFailureNotification(context: Context) {
+        val strings = WatchLanguage.localized(context)
         val notification = baseNotification(context)
-                .setContentTitle(context.getString(R.string.update_install_title))
-                .setContentText(context.getString(R.string.update_install_failed))
+                .setContentTitle(strings.getString(R.string.update_install_title))
+                .setContentText(strings.getString(R.string.update_install_failed))
                 .setAutoCancel(true)
                 .build()
         notificationManager(context).notify(NOTIFICATION_ID, notification)
@@ -101,7 +104,10 @@ class InstallResultReceiver : BroadcastReceiver() {
         File(context.cacheDir, ApkReceiverService.UPDATE_APK_NAME).delete()
     }
 
-    private fun baseNotification(context: Context): NotificationCompat.Builder {
+    /** A BroadcastReceiver gets no attachBaseContext, so its notification text used to resolve
+     *  against the watch's own system locale instead of the language chosen on the phone. */
+    private fun baseNotification(rawContext: Context): NotificationCompat.Builder {
+        val context = WatchLanguage.localized(rawContext)
         val manager = notificationManager(context)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             manager.createNotificationChannel(NotificationChannel(

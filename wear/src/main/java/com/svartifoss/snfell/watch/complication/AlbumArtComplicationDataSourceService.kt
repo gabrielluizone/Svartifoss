@@ -23,6 +23,7 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.view.MainActivity
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.matejdro.wearutils.messages.getByteArrayAsset
 import com.matejdro.wearutils.miscutils.BitmapUtils
 import kotlinx.coroutines.Dispatchers
@@ -133,11 +134,14 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
         albumArt: Bitmap?
     ): ComplicationData? {
         val hasMusic = state != null && !state.error
+        // A ComplicationDataSourceService gets no attachBaseContext, so its strings resolved
+        // against the watch's own system locale while the app rendered in the chosen language.
+        val strings = WatchLanguage.localized(this)
         val description = when {
             hasMusic && state!!.title.isNotBlank() && state.artist.isNotBlank() ->
                 "${state.title} • ${state.artist}"
             hasMusic && state!!.title.isNotBlank() -> state.title
-            else -> getString(R.string.complication_no_music)
+            else -> strings.getString(R.string.complication_no_music)
         }
         val contentDescription = PlainComplicationText.Builder(description).build()
         val tapAction = openAppPendingIntent()
@@ -169,7 +173,7 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
                 // secondary one (faces render title/text stacked next to the small image).
                 val mainText = when {
                     hasMusic && state!!.title.isNotBlank() -> state.title
-                    else -> getString(R.string.complication_no_music)
+                    else -> strings.getString(R.string.complication_no_music)
                 }
                 LongTextComplicationData.Builder(
                     text = PlainComplicationText.Builder(mainText).build(),

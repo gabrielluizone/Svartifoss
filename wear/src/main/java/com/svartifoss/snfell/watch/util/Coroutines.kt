@@ -23,7 +23,8 @@ fun <T> CoroutineScope.launchWithErrorHandling(
         try {
             block()
         } catch (e: GooglePlayServicesRepairableException) {
-            val errorText = androidContext.getString(R.string.error_play_services)
+            val errorText = WatchLanguage.localized(androidContext)
+                    .getString(R.string.error_play_services)
             targetResource.postValue(Resource.error(errorText, null, e))
 
             Timber.e(e, "Play Services error: %d", e.connectionStatusCode)
@@ -31,7 +32,7 @@ fun <T> CoroutineScope.launchWithErrorHandling(
             // Just pass cancellation through
             throw e
         } catch (e: Exception) {
-            val errorText = androidContext.getString(R.string.error)
+            val errorText = WatchLanguage.localized(androidContext).getString(R.string.error)
             targetResource.postValue(Resource.error(errorText, null, null))
 
             Timber.e(e, "Unknown error")

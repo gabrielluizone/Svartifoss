@@ -29,6 +29,7 @@ import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.MainActivity
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -63,7 +64,12 @@ class ShortcutsTileService : TileService() {
         requestParams: RequestBuilders.TileRequest
     ): ListenableFuture<TileBuilders.Tile> = scope.future {
         val shortcuts = readShortcuts()
-        val layout = buildLayout(this@ShortcutsTileService, shortcuts, requestParams.deviceConfiguration)
+        // Localized once here so every label built below resolves in the app language rather
+        // than the watch's own system locale - a TileService gets no attachBaseContext.
+        val layout = buildLayout(
+                WatchLanguage.localized(this@ShortcutsTileService),
+                shortcuts,
+                requestParams.deviceConfiguration)
 
         TileBuilders.Tile.Builder()
             .setResourcesVersion(RESOURCES_VERSION)

@@ -32,6 +32,7 @@ import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.proto.PlaybackSync
 import com.svartifoss.snfell.proto.TrackMetadata
 import com.svartifoss.snfell.proto.Notification
+import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.svartifoss.snfell.watch.util.launchWithErrorHandling
 import com.matejdro.wearutils.lifecycle.ListenableLiveData
 import com.matejdro.wearutils.lifecycle.LiveDataLifecycleCombiner
@@ -314,7 +315,9 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             // rather than waiting out a backoff that grew while nobody was listening.
             requestPlaybackResync()
         } else {
-            musicState.postValue(Resource.error(context.getString(R.string.no_phone), null))
+            musicState.postValue(
+                    Resource.error(
+                            WatchLanguage.localized(context).getString(R.string.no_phone), null))
         }
     }
 

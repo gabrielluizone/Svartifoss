@@ -24,6 +24,20 @@ object WatchLanguage {
     /** Call from `Activity.attachBaseContext`. */
     fun attach(base: Context): Context = AppLocales.wrap(base, storedTag(base))
 
+    /**
+     * [base] re-based on the chosen language, for user-visible strings resolved *outside* an
+     * Activity - the foreground-service notification, both Tiles, the complication, and the status
+     * lines `PhoneConnection` publishes onto the player.
+     *
+     * Those all read from a service or application context, which no `attachBaseContext` ever
+     * touches, so they kept resolving against the watch's own system locale: with the phone set to
+     * Portuguese the player rendered in Portuguese while "Nothing playing", the ongoing
+     * notification and the Tiles stayed in whatever language the watch itself was set to. Resolved
+     * per call rather than cached, since the language is phone-owned and can change under a
+     * running process.
+     */
+    fun localized(base: Context): Context = attach(base)
+
     /** The normalised language tag currently stored, for change detection. */
     fun storedTag(context: Context): String =
             tagFrom(PreferenceManager.getDefaultSharedPreferences(context))

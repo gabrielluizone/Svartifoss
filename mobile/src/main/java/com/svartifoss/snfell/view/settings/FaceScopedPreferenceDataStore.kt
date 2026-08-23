@@ -70,7 +70,14 @@ class FaceScopedPreferenceDataStore(
         // reported the XML default of on, so it looked like the default had simply been ignored.
         return when {
             prefs.contains(scoped) -> prefs.getBoolean(scoped, defValue)
-            scope == ThemeAppearance.CUSTOM_SCOPE -> defValue
+            // The custom scope consults perFaceDefault for the same reason the built-in branch
+            // below does, and against the same face: FaceScopedPreferences.getBoolean's Custom
+            // branch falls back to the base face's default, so skipping it here showed the switch
+            // in one position while the watch obeyed the other - the getString twin above has
+            // always had this step.
+            scope == ThemeAppearance.CUSTOM_SCOPE ->
+                FaceScopedPreferences.perFaceDefault(currentFace, key)?.toBooleanStrictOrNull()
+                        ?: defValue
             // currentFace, not scope: for a built-in they are the same string, but passing the
             // scope was only accidentally right and would look up "custom_active" as a face name.
             else -> FaceScopedPreferences.perFaceDefault(currentFace, key)?.toBooleanStrictOrNull()

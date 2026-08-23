@@ -20,7 +20,19 @@ class WatchPreferenceSyncCoordinatorTest {
     fun `ignores phone local and transient preferences`() {
         assertFalse(shouldSyncWatchPreference(null))
         assertFalse(shouldSyncWatchPreference("app_theme"))
-        assertFalse(shouldSyncWatchPreference("track_history"))
         assertFalse(shouldSyncWatchPreference("last_update_check"))
+    }
+
+    /**
+     * The three personal-data storages live in the phone's *default* preference file, which the
+     * DataItem push used to ship to the watch wholesale - the watch reads none of them, and they
+     * spent the same 100 KB item budget the watch-facing keys need. Both transports now filter on
+     * this predicate, so these must stay out of it.
+     */
+    @Test
+    fun `ignores the phone's own history and shortcut storages`() {
+        assertFalse(shouldSyncWatchPreference("track_history"))
+        assertFalse(shouldSyncWatchPreference("search_history"))
+        assertFalse(shouldSyncWatchPreference("playlist_shortcuts"))
     }
 }

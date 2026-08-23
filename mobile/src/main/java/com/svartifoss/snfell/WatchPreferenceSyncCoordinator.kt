@@ -29,6 +29,13 @@ private const val CHANGE_DEBOUNCE_MS = 120L
 private const val INITIAL_RETRY_MS = 1_000L
 private const val MAX_RETRY_MS = 60_000L
 
+/** Play Services' hard cap on one DataItem and on one message payload. */
+private const val DATA_ITEM_LIMIT_BYTES = 100 * 1024
+/** Reported well before the cap: the estimate is rough and a warning after the fact is useless. */
+private const val SNAPSHOT_WARN_BYTES = 70 * 1024
+/** Type tag plus length prefix plus DataMap bookkeeping, per entry. */
+private const val VALUE_OVERHEAD_BYTES = 12
+
 /** Base keys whose values affect watch behavior or appearance. Scoped appearance writes append
  * `@face`, so [shouldSyncWatchPreference] normalizes them before checking this registry. */
 private val WATCH_SYNC_BASE_KEYS: Set<String> by lazy {
@@ -73,6 +80,8 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
     private var retryJob: Job? = null
     private var retryDelayMs = INITIAL_RETRY_MS
     private var started = false
+    /** Latched so a snapshot that stays large logs once, not on every edit that follows. */
+    private var oversizedSnapshotReported = false
 
     /** Set once the device is known to have no Data Layer at all; [start] then becomes a no-op. */
     private var disabled = false
@@ -135,17 +144,26 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
     }
 
     private suspend fun pushLatestSnapshot() {
+        // Read the phone's preferences exactly once and drive both transports from that one map,
+        // so the DataItem and the message can never describe two different moments.
+        val snapshot = preferences.all.filterKeys { shouldSyncWatchPreference(it) }
+        warnIfSnapshotIsOversized(snapshot)
+
+        // The accelerant runs first and unconditionally. It used to run *after* the DataItem put
+        // and inside its try block, which made one failing put take the whole channel down: the
+        // put is retried with the identical payload, so a payload the Data Layer rejects (a
+        // snapshot over its 100 KB item limit is the realistic way to get there) fails forever and
+        // the message that would still have worked was never reached. The watch then keeps
+        // whatever it last received - the previous theme, the previous language - with nothing on
+        // either device saying why.
+        sendImmediatePreferenceMessage(snapshot)
+
         try {
             PreferencePusher.pushPreferences(
                     appContext,
-                    preferences,
+                    SnapshotPreferences(snapshot),
                     CommPaths.PREFERENCES_PREFIX,
                     urgent = true)
-            // Also deliver the snapshot over the low-latency MessageClient so a connected watch
-            // applies it immediately instead of waiting for the DataItem to sync out of doze. The
-            // DataItem above stays the durable source of truth; this is a best-effort accelerant,
-            // so its failure is swallowed and never affects the DataItem's retry state.
-            sendImmediatePreferenceMessage()
             retryDelayMs = INITIAL_RETRY_MS
             retryJob?.cancel()
             retryJob = null
@@ -171,22 +189,93 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
     }
 
     /**
-     * Sends the watch-synced preference values over MessageClient for immediate application. Only
-     * the keys the watch actually consumes ([shouldSyncWatchPreference]) are included, keeping the
-     * message small. A monotonic sequence lets the watch reject a delayed older message.
+     * Sends the watch-synced preference values over MessageClient for immediate application. A
+     * monotonic sequence lets the watch reject a delayed older message.
      */
-    private suspend fun sendImmediatePreferenceMessage() {
+    private suspend fun sendImmediatePreferenceMessage(snapshot: Map<String, Any?>) {
         try {
-            val synced = preferences.all.filterKeys { shouldSyncWatchPreference(it) }
-            if (synced.isEmpty()) return
-            val bytes = WatchPreferenceMessage.encode(nextPreferenceSequence(), synced)
+            if (snapshot.isEmpty()) return
+            val bytes = WatchPreferenceMessage.encode(nextPreferenceSequence(), snapshot)
             messageClient.sendMessageToNearestClient(nodeClient, CommPaths.MESSAGE_APPLY_PREFERENCES, bytes)
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            // The DataItem already carried the change durably; a failed accelerant is harmless.
+            // The DataItem carries the same change durably; a failed accelerant is not fatal.
             Timber.d(e, "Immediate preference message not delivered (DataItem still applies)")
         }
+    }
+
+    /**
+     * Logs once when the snapshot approaches the Data Layer's per-item limit.
+     *
+     * Both transports cap at 100 KB and neither says so in a way a user could ever see: the put
+     * simply throws and the watch silently keeps the values it already had. The snapshot grows
+     * with the number of *explicitly set* face-scoped keys - "Apply this look to all faces" writes
+     * every one of them onto all eighteen faces in a single tap - so it is reachable by ordinary
+     * use, and the symptom (a setting that will not cross to the watch) points nowhere near the
+     * cause. Advisory only; the push is still attempted, since the estimate is approximate and the
+     * real encoder is the authority.
+     */
+    private fun warnIfSnapshotIsOversized(snapshot: Map<String, Any?>) {
+        // Key names are carried twice - once as DataMap keys, once in PreferencePusher's synced-key
+        // inventory - so they are counted twice here.
+        val estimatedBytes = snapshot.entries.sumOf { (key, value) ->
+            2 * key.length + (value as? String)?.length.let { it ?: 0 } + VALUE_OVERHEAD_BYTES
+        }
+        if (estimatedBytes < SNAPSHOT_WARN_BYTES) {
+            oversizedSnapshotReported = false
+            return
+        }
+        if (oversizedSnapshotReported) return
+        oversizedSnapshotReported = true
+        Timber.w("Watch preference snapshot is %d entries / ~%d bytes, close to the Data Layer's " +
+                "%d byte item limit. Resetting unused faces shrinks it.",
+                snapshot.size, estimatedBytes, DATA_ITEM_LIMIT_BYTES)
+    }
+
+    /**
+     * Read-only [SharedPreferences] view over one already-filtered snapshot.
+     *
+     * [PreferencePusher] takes a `SharedPreferences` and reads `all` from it, which meant the push
+     * carried the phone's *entire* default preference file to the watch: the saved streaming
+     * shortcuts, the search history and the track history all live in that file as JSON blobs, as
+     * does every phone-only setting. None of it is read on the watch, and all of it was spending
+     * the same 100 KB budget the watch-facing keys need. This hands the pusher exactly the keys
+     * [shouldSyncWatchPreference] accepts and nothing else.
+     */
+    private class SnapshotPreferences(
+            private val values: Map<String, Any?>
+    ) : SharedPreferences {
+        override fun getAll(): MutableMap<String, *> = values.toMutableMap()
+
+        override fun getString(key: String?, defValue: String?): String? =
+                values[key] as? String ?: defValue
+
+        @Suppress("UNCHECKED_CAST")
+        override fun getStringSet(key: String?, defValues: MutableSet<String>?): MutableSet<String>? =
+                (values[key] as? Set<String>)?.toMutableSet() ?: defValues
+
+        override fun getInt(key: String?, defValue: Int): Int = values[key] as? Int ?: defValue
+
+        override fun getLong(key: String?, defValue: Long): Long = values[key] as? Long ?: defValue
+
+        override fun getFloat(key: String?, defValue: Float): Float =
+                values[key] as? Float ?: defValue
+
+        override fun getBoolean(key: String?, defValue: Boolean): Boolean =
+                values[key] as? Boolean ?: defValue
+
+        override fun contains(key: String?): Boolean = values.containsKey(key)
+
+        /** Nothing may write through a snapshot; failing loudly beats silently dropping an edit. */
+        override fun edit(): SharedPreferences.Editor =
+                throw UnsupportedOperationException("Watch preference snapshot is read-only")
+
+        override fun registerOnSharedPreferenceChangeListener(
+                listener: SharedPreferences.OnSharedPreferenceChangeListener?) = Unit
+
+        override fun unregisterOnSharedPreferenceChangeListener(
+                listener: SharedPreferences.OnSharedPreferenceChangeListener?) = Unit
     }
 
     private fun scheduleRetry() {

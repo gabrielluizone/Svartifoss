@@ -115,6 +115,15 @@ class WatchThemesActivity : AppCompatActivity() {
         preview.refresh()
 
         val rows = buildList<ThemeRow> {
+            // The user's own themes lead, ahead of the eighteen built-in faces, matching the
+            // on-watch picker. Someone who has saved themes is almost always switching between
+            // *those*, and behind the whole built-in list they were a scroll away every time.
+            // The header is omitted when there are none: an empty titled section promises content
+            // that never arrives, and the Create button above already offers the way in.
+            if (profiles.isNotEmpty()) {
+                add(ThemeRow.Header(getString(R.string.watch_theme_custom_section)))
+                profiles.forEach { add(ThemeRow.Custom(it)) }
+            }
             add(ThemeRow.Header(getString(R.string.watch_theme_built_in_section)))
             val showArchived = defaultPrefs.getBoolean("dev_show_archived", false)
             ThemeAppearance.ALLOWED_BASE_FACES.filter { face ->
@@ -122,8 +131,6 @@ class WatchThemesActivity : AppCompatActivity() {
             }.forEach { face ->
                 add(ThemeRow.BuiltIn(face))
             }
-            add(ThemeRow.Header(getString(R.string.watch_theme_custom_section)))
-            profiles.forEach { add(ThemeRow.Custom(it)) }
         }
         adapter.submit(rows, appearance)
     }
