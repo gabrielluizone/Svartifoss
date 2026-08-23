@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 23-07-2026**
+**Last updated: 23-08-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
