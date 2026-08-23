@@ -62,7 +62,7 @@
     <string name="watch_section_background">Fundal</string>
     <string name="watch_section_background_description">Controlați coperta albumului, neclaritatea, estomparea și lizibilitatea din spatele playerului.</string>
     <string name="watch_section_colors">Culori</string>
-    <string name="watch_section_colors_description">Reglați culorile artistului, inelului de progres și accentului bazat pe album.</string>
+    <string name="watch_section_colors_description">Setați culorile de bază, de progres și de accent ale albumului, apoi reglați culorile titlului, artistului, ceasului, volumului și panourilor.</string>
     <string name="watch_section_aod">Mereu activ</string>
     <string name="watch_section_aod_description">Configurați ecranul cu consum redus și vedeți aspectul său ambiental în previzualizare.</string>
     <string name="watch_section_panels">Panouri</string>
@@ -77,7 +77,7 @@
     <string name="settings_section_automation">Automatizare</string>
     <string name="settings_section_automation_description">Alegeți când Svartifoss se deschide și se închide automat.</string>
     <string name="settings_section_apps">Aplicații</string>
-    <string name="settings_section_apps_description">Configurați serviciile de muzică și integrările specifice aplicațiilor într-un singur loc.</string>
+    <string name="settings_section_apps_description">Găsiți versuri și metadate, scurtături de streaming, coperți în coadă și acces Android.</string>
     <string name="settings_section_data">Date și asistență</string>
     <string name="settings_section_data_description">Faceți backup configurației, verificați versiunea, diagnosticarea sau obțineți ajutor.</string>
 
@@ -89,13 +89,13 @@
     <string name="tutorial_taps_desc">Ecranul ceasului este împărțit în patru zone — sus, jos, stânga și dreapta. Atingerea unei zone execută acțiunea pe care i-ați asignat-o. Implicit, zona din stânga redă sau pune pauză, cea din dreapta sare la piesa următoare, iar sus și jos modifică volumul.</string>
 
     <string name="tutorial_gestures_title">Apăsare simplă, dublă și lungă</string>
-    <string name="tutorial_gestures_desc">Fiecare zonă conține trei acțiuni separate: una pentru o atingere simplă, una pentru o atingere dublă și una pentru o apăsare lungă. De exemplu, o atingere simplă în centru poate pune muzica pe pauză, în timp ce o atingere dublă deschide meniul de acțiuni — nu veți vedea acest lucru decât dacă îl configurați, așa că personalizați-l după gust.</string>
+    <string name="tutorial_gestures_desc">Fiecare dintre cele patru zone de pe margini acceptă acțiuni separate pentru o atingere, o atingere dublă și o apăsare lungă. Atingerea centrului este și ea configurabilă; atingerea dublă deschide întotdeauna Acțiuni rapide, iar apăsarea lungă deschide selectorul cadranului, coada sau nimic, conform Setări → Comportament.</string>
 
     <string name="tutorial_buttons_title">Butoane fizice</string>
     <string name="tutorial_buttons_desc">Dacă ceasul dvs. are butoane laterale, le puteți asigna și acestora acțiuni de apăsare simplă, dublă și lungă. Continuă să funcționeze chiar și cu ecranul stins.</string>
 
     <string name="tutorial_rotary_title">Coroană rotativă</string>
-    <string name="tutorial_rotary_desc">Rotiți coroana sau lunetă pentru a schimba volumul. Preferați să derulați prin melodie? Activați „Căutare cu coroana rotativă” din Setări.</string>
+    <string name="tutorial_rotary_desc">Alegeți dacă rotița sau luneta reglează volumul, derulează piesa sau nu face nimic în Setări → Comportament → Intrare rotativă și reglaj. Pe ceasurile care raportează rotirile coroanei ca butoane, atribuiți-le în Comenzi.</string>
 
     <string name="tutorial_swipe_up_title">Glisați sus, jos, stânga și dreapta</string>
     <string name="tutorial_swipe_up_desc">Glisarea în sus, în jos sau la stânga pe ecranul de redare poate fi configurată să deschidă orice — meniul de acțiuni, coada de redare, sărirea peste piese, listele dvs. de redare și multe altele. Configurați fiecare în Comenzi, alegând Muzică în redare sau Fără redare. Implicit, glisarea în sus deschide meniul de acțiuni, iar celelalte nu fac nimic până nu le asignați. Glisarea la dreapta este lăsată neatinsă — este gestul universal Wear OS pentru a ieși din aplicație.</string>
@@ -197,7 +197,7 @@
     <string name="gesture_double_press">Apăsare dublă</string>
     <string name="gesture_long_press">Apăsare lungă</string>
     <string name="gesture_swipe_action">Acțiune</string>
-    <string name="center_button_quick_panel_note">Atingerea dublă a centrului ecranului de redare deschide întotdeauna panoul de acțiuni rapide, indiferent de ce asignați aici.</string>
+    <string name="center_button_quick_panel_note">Atingerea dublă a centrului deschide întotdeauna Acțiuni rapide. Apăsarea lungă execută opțiunea din Setări → Comportament. Niciunul dintre gesturi nu se schimbă când atribuiți aici atingerea centrului.</string>
     <string name="start_playback">Începe redarea</string>
     <string name="uninstalled_app">Aplicație dezinstalată</string>
 
@@ -621,7 +621,7 @@
     <string name="preview_notification_controls">Pictogramă din notificarea media</string>
     <string name="setting_wear_queue_style">Stil coadă</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Folosește copertele scurtăturilor ca fundal</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Când Stilul cozii de mai sus este o variantă Copertă, un rând de acțiune al panoului rapid cu o copertă de scurtătură preluată (piesă, listă de redare, artist…) umple și el pastila sa cu acea imagine, așa cum face Urmează. Scurtăturile fără copertă preluată (doar o pictogramă de aplicație) nu sunt afectate.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Când Stilul cozii este o variantă Copertă, un rând de acțiune al panoului rapid cu o copertă de scurtătură preluată (piesă, listă de redare, artist…) umple și el pastila sa cu acea imagine, așa cum face Urmează. Scurtăturile fără copertă preluată (doar o pictogramă de aplicație) nu sunt afectate.</string>
     <string name="setting_wear_list_row_size">Dimensiune pastilă listă</string>
     <string name="setting_wear_list_row_size_description">Înălțimea rândurilor pe toată lățimea în coadă, meniuri și panoul rapid.</string>
     <string name="setting_wear_progress_style">Stil inel de progres</string>
@@ -1127,7 +1127,7 @@
     </string-array>
 
     <string name="watch_section_typography">Text</string>
-    <string name="watch_section_typography_description">Alegeți un font și stilizați independent titlul, artistul și pictograma aplicației.</string>
+    <string name="watch_section_typography_description">Alegeți fonturile și reglați textul titlului, artistului, ceasului, pictogramei aplicației, ecranelor secundare și Flex.</string>
     <string name="tutorial_quick_panel_title">Panoul de acțiuni rapide</string>
     <string name="tutorial_quick_panel_desc">Atingeți de două ori centrul ecranului de redare pentru a deschide un panou cu patru sloturi — trei butoane rotunde și un rând lat sub ele. Dacă nu le configurați, sloturile reflectă butoanele pe care aplicația în redare le pune în propria notificare, deci obțineți controalele reale de like, redare aleatorie și repetare. Atribuiți orice acțiune unui slot sau setați „Niciuna” pentru a-l ascunde, în Acțiuni pe telefon.</string>
     <string name="tutorial_shortcuts_title">Comenzi rapide de streaming</string>
@@ -1222,7 +1222,7 @@
     <string name="error_library_no_player">Începeți mai întâi o redare</string>
     <string name="setting_wear_carousel_card_shape">Forma cardului carusel</string>
     <string name="setting_wear_font_all_screens">Folosește fontul peste tot</string>
-    <string name="setting_wear_font_all_screens_description">Aplică fontul ales și meniului, cozii și ceasului de pe ecran, nu doar titlului și artistului piesei. Fonturile decorative sau de mână pot fi mai greu de citit în liste.</string>
+    <string name="setting_wear_font_all_screens_description">Aplică fontul ales meniurilor, cozii și Acțiunilor rapide, nu doar playerului. Fonturile decorative sau de mână pot fi mai greu de citit în liste.</string>
     <string name="setting_wear_clock_font">Font ceas</string>
     <string name="wear_clock_font_follow">Urmează fontul piesei</string>
     <string name="setting_wear_clock_font_weight">Greutate ceas</string>
@@ -1410,4 +1410,39 @@
         <item>Standard</item>
         <item>Intens</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">Alegeți ce doriți să personalizați. Previzualizarea și tema salvată rămân active în fiecare zonă.</string>
+    <string name="watch_back_to_overview">Înapoi la zonele Ceasului</string>
+    <string name="settings_overview_description">Alegeți o zonă. Opțiunile asociate rămân împreună, iar căutarea vă poate duce în continuare direct la orice setare.</string>
+    <string name="settings_back_to_overview">Înapoi la zonele de setări</string>
+    <string name="action_search_hint">Căutați în această listă</string>
+    <string name="action_search_empty">Nicio acțiune nu corespunde acestei căutări.</string>
+    <string name="control_assignment_tap">Atingere: %1$s</string>
+    <string name="control_assignment_hold">Menținere: %1$s</string>
+    <string name="control_assignment_both">Atingere: %1$s · Menținere: %2$s</string>
+    <string name="category_wf_screen_behavior">Comportamentul ecranului</string>
+    <string name="category_wf_player_progress">Progres, derulare și timp</string>
+    <string name="category_wf_metadata">Conținutul cadranului Metadate</string>
+    <string name="category_wf_typography_secondary">Text pe alte ecrane</string>
+    <string name="category_wf_colors_title">Culorile titlului</string>
+    <string name="category_wf_colors_artist">Culorile artistului</string>
+    <string name="category_wf_colors_clock">Culorile ceasului</string>
+    <string name="category_watch_navigation">Navigare și scurtături</string>
+    <string name="category_rotary_input">Intrare rotativă și reglaj</string>
+    <string name="category_watch_feedback">Feedback și comportament la ieșire</string>
+    <string name="settings_search_prerequisite">Această opțiune depinde de altă alegere. Modificați setarea afișată aici pentru a o face vizibilă.</string>
+    <string name="setting_numeric_range_error">Introduceți o valoare de la %1$d la %2$d.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">Aspect comun al panourilor</string>
+    <string name="category_wf_panel_volume">Panoul de volum</string>
+    <string name="category_wf_panel_seek">Panoul de progres și derulare</string>
+    <string name="category_wf_panel_quick">Panoul Acțiuni rapide</string>
+    <string name="category_wf_panel_queue">Coadă și liste</string>
+    <string name="category_wf_panel_effects">Efecte de panou</string>
+    <string name="category_apps_content">Versuri și metadate</string>
+    <string name="category_streaming_services">Scurtături de streaming</string>
+    <string name="category_queue_artwork">Coperți în coadă</string>
+    <string name="category_system_access">Acces Android și notificări</string>
+    <string name="setting_privacy_policy">Politica de confidențialitate</string>
+    <string name="setting_privacy_policy_description">Vedeți ce date folosește Svartifoss și ce servicii online sunt opționale.</string>
 </resources>

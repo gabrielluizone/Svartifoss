@@ -401,9 +401,10 @@ class MainActivity : WearCompanionPhoneActivity(),
      *  [com.svartifoss.snfell.update.UpdateActivity]. */
     override fun onPrepareOptionsMenu(menu: android.view.Menu): Boolean {
         menu.findItem(R.id.menu_update_available)?.isVisible = UpdateChecker.hasPendingUpdate(this)
-        // Search covers the preference screens only, so it is offered where those screens are.
-        menu.findItem(R.id.menu_search_settings)?.isVisible =
-                currentFragment is SettingsHomeFragment || currentFragment is WatchFaceFragment
+        // A setting should be discoverable before the user knows whether it lives under Watch or
+        // Settings. Keep search available from every primary tab; choosing a result performs the
+        // cross-tab navigation and opens its owning section.
+        menu.findItem(R.id.menu_search_settings)?.isVisible = true
         return super.onPrepareOptionsMenu(menu)
     }
 

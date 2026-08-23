@@ -30,6 +30,7 @@ import com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity
 import com.svartifoss.snfell.view.settings.SettingsCatalog
 import com.svartifoss.snfell.view.settings.parseHexOrDefault
 import com.svartifoss.snfell.view.settings.showLyraColorPickerDialog
+import com.svartifoss.snfell.view.settings.scrollToAndPulsePreference
 import com.svartifoss.snfell.view.settings.tintOpenLyraPreferenceDialog
 import com.matejdro.wearutils.preferences.compat.PreferenceFragmentCompatEx
 
@@ -261,7 +262,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val key = arguments?.getString(ARG_HIGHLIGHT_KEY) ?: return
         arguments?.remove(ARG_HIGHLIGHT_KEY)
         listView?.post {
-            if (isAdded && findPreference<Preference>(key) != null) scrollToPreference(key)
+            if (!isAdded) return@post
+            findPreference<Preference>(key)?.let(::scrollToAndPulsePreference)
         }
     }
 
@@ -288,6 +290,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // ANDed explicitly rather than folded into visibleCategories above, since this category's
         // visibility depends on a preference *value*, not just which section is showing.
         updateFlexAxesVisibility()
+        // These categories/rows have a second prerequisite beyond their owning section. Apply the
+        // value-dependent half after the catalog assignment so section visibility cannot reveal a
+        // control that the selected renderer ignores.
+        updatePlayerCapabilityVisibility()
+        updateBackgroundCapabilityVisibility()
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -626,10 +633,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     /** The numeric preference stores strings to match wearutils; reject malformed/out-of-range
      *  input here so every persisted opacity is a valid percentage before it reaches the watch. */
     private fun initMiniButtonOpacityValidation() {
-        findPreference<EditTextPreference>("screen_buttons_opacity")?.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { _, candidate ->
-                    candidate.toString().toIntOrNull()?.let { it in 0..100 } == true
-                }
+        validateNumericPercentage("screen_buttons_opacity", 0..100)
     }
 
     /** Reject invalid percentages before runtime clamps could disagree with the shown value. */
@@ -644,12 +648,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * persisted as one number and rendered as another.
      */
     private fun initTypographyValidation() {
-        for (key in listOf("wear_title_font_weight", "wear_artist_font_weight")) {
+        for (key in listOf(
+                "wear_title_font_weight", "wear_artist_font_weight", "wear_clock_font_weight")) {
             validateNumericPercentage(
                     key, WatchTypography.FLEX_WEIGHT_MIN..WatchTypography.FLEX_WEIGHT_MAX)
         }
         for (key in listOf(
-                "wear_title_font_scale", "wear_artist_font_scale", "wear_source_icon_scale")) {
+                "wear_title_font_scale", "wear_artist_font_scale", "wear_clock_font_scale",
+                "wear_source_icon_scale")) {
             validateNumericPercentage(
                     key, MiscPreferences.TYPOGRAPHY_MIN_SCALE..MiscPreferences.TYPOGRAPHY_MAX_SCALE)
         }
@@ -657,11 +663,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 "wear_title_font_opacity", "wear_artist_font_opacity", "wear_source_icon_opacity")) {
             validateNumericPercentage(key, MiscPreferences.TYPOGRAPHY_MIN_OPACITY..100)
         }
-        for (key in listOf("wear_title_font_tracking", "wear_artist_font_tracking")) {
+        for (key in listOf(
+                "wear_title_font_tracking", "wear_artist_font_tracking", "wear_clock_font_tracking")) {
             validateNumericPercentage(
                     key,
                     MiscPreferences.TYPOGRAPHY_MIN_TRACKING..MiscPreferences.TYPOGRAPHY_MAX_TRACKING)
         }
+        validateNumericPercentage("wear_clock_opacity", 10..100)
         validateNumericPercentage(
                 "wear_font_flex_width",
                 WatchTypography.FLEX_WIDTH_MIN.toInt()..WatchTypography.FLEX_WIDTH_MAX.toInt())
@@ -684,7 +692,17 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private fun validateNumericPercentage(key: String, range: IntRange) {
         findPreference<EditTextPreference>(key)?.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _, candidate ->
-                    candidate.toString().toIntOrNull() in range
+                    val valid = candidate.toString().toIntOrNull() in range
+                    if (!valid) {
+                        Toast.makeText(
+                                requireContext(),
+                                getString(
+                                        R.string.setting_numeric_range_error,
+                                        range.first,
+                                        range.last),
+                                Toast.LENGTH_SHORT).show()
+                    }
+                    valid
                 }
     }
 
@@ -887,7 +905,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             overrideAodStyle: String? = null
     ) {
         updatePlayerCapabilityVisibility(overrideFace = overrideFace)
-        updateBackgroundCapabilityVisibility()
+        updateBackgroundCapabilityVisibility(overrideFace)
         updateAodDetailVisibility(
                 overrideFace = overrideFace,
                 overrideStyle = overrideAodStyle
@@ -916,12 +934,17 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // nothing - which reads as a broken setting rather than an inapplicable one.
         findPreference<Preference>(MiscPreferences.WEAR_CAROUSEL_CARD_SHAPE.key)?.isVisible =
                 face == "carousel"
+        // Metadata groups describe blocks rendered only by the Metadata face. Values remain
+        // stored/scoped while hidden and reappear unchanged when that face is selected again.
+        findPreference<Preference>("cat_wf_metadata")?.isVisible =
+                section == SECTION_STYLE && face == "metadata"
         // Expressive and Material must keep their central transport visible. Other faces,
         // including Poster and Studio, can still be reduced to a clean metadata/artwork layout.
         findPreference<Preference>(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key)?.isVisible =
                 face !in setOf("expressive", "material")
         findPreference<Preference>("wear_internal_progress_visible")?.isVisible = face in setOf(
-                "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum"
+                "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum",
+                "depth", "verse"
         )
         // The ring's own style still matters even with the always-visible resting ring turned
         // off: CircularProgressSeekBar.shouldDrawEdgeProgress reveals it for the lifetime of an
@@ -942,10 +965,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         findPreference<Preference>("wear_quadrant_tap_flash")?.isVisible = face == "classic"
     }
 
-    private fun updateBackgroundCapabilityVisibility() {
+    private fun updateBackgroundCapabilityVisibility(overrideFace: String? = null) {
         // Background and layout are independent now, including Eclipse: selecting Poster,
         // Material or Expressive here must work without replacing the structural renderer.
         findPreference<Preference>("album_art_style")?.isVisible = true
+        findPreference<Preference>("wear_split_panel")?.isVisible =
+                (overrideFace ?: readStringPreference("wear_screen_face", "classic")) == "split"
         updateBlurRadiusEnabled()
 
         listOf(
@@ -1076,7 +1101,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         updateAccentColorTargetDependencies(modeKey, customColorKey, desaturatedKey)
         findPreference<ListPreference>(modeKey)?.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _, newValue ->
-                    updateAccentColorTargetDependencies(modeKey, customColorKey, desaturatedKey, newValue as? String)
+                    val candidate = newValue as? String
+                    updateAccentColorTargetDependencies(
+                            modeKey, customColorKey, desaturatedKey, candidate)
+                    if (modeKey == "wear_title_color_mode") {
+                        updateTitleAdaptiveContrastVisibility(candidate)
+                    }
                     true
                 }
     }

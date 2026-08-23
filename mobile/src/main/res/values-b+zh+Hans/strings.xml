@@ -62,7 +62,7 @@
     <string name="watch_section_background">背景</string>
     <string name="watch_section_background_description">控制播放器背后的专辑封面、模糊、渐隐和可读性。</string>
     <string name="watch_section_colors">颜色</string>
-    <string name="watch_section_colors_description">调整艺术家文字、进度环和基于专辑的强调色。</string>
+    <string name="watch_section_colors_description">设置基础色、进度色和专辑强调色，然后调整标题、艺人、时钟、音量及面板颜色。</string>
     <string name="watch_section_aod">常亮显示</string>
     <string name="watch_section_aod_description">配置低功耗屏幕，并在预览中查看其环境模式外观。</string>
     <string name="watch_section_panels">面板</string>
@@ -77,7 +77,7 @@
     <string name="settings_section_automation">自动化</string>
     <string name="settings_section_automation_description">选择 Svartifoss 自动打开和关闭的时机。</string>
     <string name="settings_section_apps">应用</string>
-    <string name="settings_section_apps_description">在一处集中配置音乐服务和特定应用的集成。</string>
+    <string name="settings_section_apps_description">查找歌词与元数据、流媒体快捷方式、队列封面和 Android 权限。</string>
     <string name="settings_section_data">数据和支持</string>
     <string name="settings_section_data_description">备份你的设置，检查版本、诊断信息或获取帮助。</string>
 
@@ -89,13 +89,13 @@
     <string name="tutorial_taps_desc">手表屏幕被分为四个区域——上、下、左、右。点按某个区域会执行你为其分配的操作。默认情况下，左侧区域用于播放或暂停，右侧跳到下一曲，上下则调节音量。</string>
 
     <string name="tutorial_gestures_title">单击、双击和长按</string>
-    <string name="tutorial_gestures_desc">每个区域都有三个独立操作：单击、双击和长按各一个。例如，在中央单击可以暂停音乐，双击则打开操作菜单——除非你自行设置，否则不会看到这一点，所以请按喜好自定义。</string>
+    <string name="tutorial_gestures_desc">四个边缘区域均支持单击、双击和长按操作。中心单击也可配置；双击始终打开快捷操作，长按则根据“设置 → 行为”中的选择打开表盘选择器、队列或不执行操作。</string>
 
     <string name="tutorial_buttons_title">物理按键</string>
     <string name="tutorial_buttons_desc">如果你的手表有侧边按键，你也可以为它们分配单击、双击和长按操作。即使屏幕熄灭，它们也能继续工作。</string>
 
     <string name="tutorial_rotary_title">旋转表冠</string>
-    <string name="tutorial_rotary_desc">转动表冠或表圈可调节音量。想要拖动歌曲进度？在设置中打开「用旋转表冠快进」。</string>
+    <string name="tutorial_rotary_desc">在“设置 → 行为 → 旋转输入与调节”中选择让旋转表冠或表圈调节音量、定位曲目或不执行操作。对于将表冠旋转识别为按键的手表，请改在“控制”中分配操作。</string>
 
     <string name="tutorial_swipe_up_title">向上、向下、向左和向右滑动</string>
     <string name="tutorial_swipe_up_desc">在正在播放屏幕上向上、向下或向左滑动，都可以配置为打开任意内容——操作菜单、播放队列、跳过曲目、你的播放列表等。在「控制」中分别为「正在播放音乐」或「无播放」配置每一项。默认情况下，向上滑动会打开操作菜单，其他方向在你分配之前不做任何事。向右滑动被保留不变——这是 Wear OS 用于退出应用的通用手势。</string>
@@ -195,7 +195,7 @@
     <string name="gesture_double_press">双击</string>
     <string name="gesture_long_press">长按</string>
     <string name="gesture_swipe_action">操作</string>
-    <string name="center_button_quick_panel_note">双击正在播放屏幕的中央始终会打开快捷操作面板，无论你在此处分配了什么。</string>
+    <string name="center_button_quick_panel_note">双击中心始终打开快捷操作。长按会执行“设置 → 行为”中的选择。在此分配中心单击操作不会改变这两个手势。</string>
     <string name="start_playback">开始播放</string>
     <string name="uninstalled_app">已卸载的应用</string>
 
@@ -619,7 +619,7 @@
     <string name="preview_notification_controls">来自媒体通知的图标</string>
     <string name="setting_wear_queue_style">队列样式</string>
     <string name="setting_wear_quick_panel_shortcut_cover">使用快捷方式封面作为背景</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">当上方的「队列样式」为封面变体时，带有已获取快捷方式封面（曲目、播放列表、艺术家……）的快捷面板操作行也会用该图像填充其胶囊，就像「即将播放」一样。没有获取到封面的快捷方式（仅显示普通应用图标）不受影响。</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">当「队列样式」为封面变体时，带有已获取快捷方式封面（曲目、播放列表、艺术家……）的快捷面板操作行也会用该图像填充其胶囊，就像「即将播放」一样。没有获取到封面的快捷方式（仅显示普通应用图标）不受影响。</string>
     <string name="setting_wear_list_row_size">列表胶囊大小</string>
     <string name="setting_wear_list_row_size_description">队列、菜单和快捷面板中全宽行的高度。</string>
     <string name="setting_wear_progress_style">进度环样式</string>
@@ -1169,7 +1169,7 @@
     <string name="setting_wear_color_modifier_description">调整整个调色板而不改变其推导方式——适用于每种颜色处理方式</string>
     <string name="setting_wear_flex_axes_hint">这些选项专门用于微调 Google Sans Flex——请先在上方选择它才能使用。上方的标题与艺术家字重/斜体已经设置了该字体自身的字重（wght）与倾斜（slnt）轴；下方四个控件则作用于整个表盘。</string>
     <string name="setting_wear_font_all_screens">到处使用此字体</string>
-    <string name="setting_wear_font_all_screens_description">将所选字体同时应用于菜单、队列和表盘上的时钟，而不仅是曲目标题和艺术家。展示体和手写字体在列表中可能更难阅读。</string>
+    <string name="setting_wear_font_all_screens_description">将所选字体应用于菜单、队列和快捷操作，而不仅是播放器。展示体和手写字体在列表中可能更难阅读。</string>
     <string name="setting_wear_font_flex_grade">深浅度</string>
     <string name="setting_wear_font_flex_grade_description">在不改变版面的情况下略微调整字重（0–100）——是在深色屏幕上提升对比度的细微方式。</string>
     <string name="setting_wear_font_flex_hint_title">关于这些控件</string>
@@ -1216,7 +1216,7 @@
     <string name="update_install_notification_tap">点按以安装新版本</string>
     <string name="update_install_notification_title">Svartifoss 更新</string>
     <string name="watch_section_typography">文字</string>
-    <string name="watch_section_typography_description">选择字体，并独立设置标题、艺术家和应用图标的样式。</string>
+    <string name="watch_section_typography_description">选择字体，并调整标题、艺人、时钟、应用图标、其他屏幕及 Flex 文本。</string>
     <string name="wear_clock_font_follow">跟随标题字体</string>
     <string name="wear_font_bebas_neue">Bebas Neue</string>
     <string name="wear_font_bebas_neue_description">窄体全大写展示字体——海报风格，适合长标题</string>
@@ -1402,4 +1402,39 @@
         <item>标准</item>
         <item>浓烈</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">选择要自定义的内容。预览和已保存的主题在每个区域中都会保持启用。</string>
+    <string name="watch_back_to_overview">返回手表区域</string>
+    <string name="settings_overview_description">选择一个区域。相关选项会集中显示，搜索仍可将你直接带到任意设置。</string>
+    <string name="settings_back_to_overview">返回设置区域</string>
+    <string name="action_search_hint">搜索此列表</string>
+    <string name="action_search_empty">没有与此搜索匹配的操作。</string>
+    <string name="control_assignment_tap">轻触：%1$s</string>
+    <string name="control_assignment_hold">长按：%1$s</string>
+    <string name="control_assignment_both">轻触：%1$s · 长按：%2$s</string>
+    <string name="category_wf_screen_behavior">屏幕行为</string>
+    <string name="category_wf_player_progress">进度、定位与时间</string>
+    <string name="category_wf_metadata">元数据表盘内容</string>
+    <string name="category_wf_typography_secondary">其他屏幕上的文字</string>
+    <string name="category_wf_colors_title">标题颜色</string>
+    <string name="category_wf_colors_artist">艺人颜色</string>
+    <string name="category_wf_colors_clock">时钟颜色</string>
+    <string name="category_watch_navigation">导航与快捷方式</string>
+    <string name="category_rotary_input">旋转输入与调节</string>
+    <string name="category_watch_feedback">反馈与退出行为</string>
+    <string name="settings_search_prerequisite">此选项依赖另一项选择。请调整此处显示的设置以将其显示出来。</string>
+    <string name="setting_numeric_range_error">请输入 %1$d 到 %2$d 之间的值。</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">共用面板外观</string>
+    <string name="category_wf_panel_volume">音量面板</string>
+    <string name="category_wf_panel_seek">进度与定位面板</string>
+    <string name="category_wf_panel_quick">快捷操作面板</string>
+    <string name="category_wf_panel_queue">队列与列表</string>
+    <string name="category_wf_panel_effects">面板效果</string>
+    <string name="category_apps_content">歌词与元数据</string>
+    <string name="category_streaming_services">流媒体快捷方式</string>
+    <string name="category_queue_artwork">队列封面</string>
+    <string name="category_system_access">Android 权限与通知</string>
+    <string name="setting_privacy_policy">隐私政策</string>
+    <string name="setting_privacy_policy_description">查看 Svartifoss 使用哪些数据，以及哪些在线服务为可选服务。</string>
 </resources>

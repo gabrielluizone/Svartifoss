@@ -50,9 +50,9 @@
 
     <string name="hint_title">Como usar</string>
     <string name="hint_edges">Extremidades — toca para as ações mostradas</string>
-    <string name="hint_center">Centro — reproduzir/pausar\nToca duas vezes — ações rápidas</string>
+    <string name="hint_center">Centro — reproduzir/pausar\nToca duas vezes — ações rápidas\nToque longo — seletor de mostrador (configurável)</string>
     <string name="hint_swipe_up">Desliza para cima — menu de ações</string>
-    <string name="hint_crown">Coroa — volume</string>
+    <string name="hint_crown">Coroa — volume (configurável)</string>
     <string name="hint_dismiss">Entendido</string>
 
     <string name="action_name_play">Reproduzir</string>

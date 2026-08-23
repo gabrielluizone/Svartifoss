@@ -63,9 +63,9 @@
     <string name="watch_section_background">Bakgrunnur</string>
     <string name="watch_section_background_description">Stjórnaðu plötuumslagi, óskýrleika, dofnun og læsileika á bak við spilarann.</string>
     <string name="watch_section_colors">Litir</string>
-    <string name="watch_section_colors_description">Stilltu áherslulitina fyrir flytjanda, framvinduhring og plötuumslag.</string>
+    <string name="watch_section_colors_description">Stilltu grunn-, framvindu- og plötuáhersluliti og fínstilltu síðan liti titils, flytjanda, klukku, hljóðstyrks og spjalda.</string>
     <string name="watch_section_typography">Texti</string>
-    <string name="watch_section_typography_description">Veldu leturgerð og stílaðu titil, flytjanda og appatákn hvert í sínu lagi.</string>
+    <string name="watch_section_typography_description">Veldu leturgerðir og fínstilltu texta titils, flytjanda, klukku, appatákns, aukaskjáa og Flex.</string>
     <string name="watch_section_aod">Ávallt virkt</string>
     <string name="watch_section_aod_description">Stilltu orkusparandi skjáinn og skoðaðu útlit hans í hvíldarham í forskoðuninni.</string>
     <string name="watch_section_panels">Spjöld</string>
@@ -80,7 +80,7 @@
     <string name="settings_section_automation">Sjálfvirkni</string>
     <string name="settings_section_automation_description">Veldu hvenær Svartifoss opnast og lokast sjálfkrafa.</string>
     <string name="settings_section_apps">Öpp</string>
-    <string name="settings_section_apps_description">Stilltu tónlistarveitur og appsértækar tengingar á einum stað.</string>
+    <string name="settings_section_apps_description">Finndu lagatexta og lýsigögn, streymisflýtileiðir, umslög biðraðar og Android-aðgang.</string>
     <string name="settings_section_data">Gögn og aðstoð</string>
     <string name="settings_section_data_description">Taktu öryggisafrit af uppsetningunni þinni, athugaðu útgáfu, keyrðu greiningu eða fáðu aðstoð.</string>
 
@@ -94,13 +94,13 @@
     <string name="tutorial_quick_panel_title">Flýtiaðgerðaspjald</string>
     <string name="tutorial_quick_panel_desc">Tvísmelltu á miðju núspilunarskjásins til að opna spjald með fjórum reitum — þremur kringlóttum hnöppum og einni breiðri röð fyrir neðan þá. Ef ekkert er stillt spegla reitirnir hnappana sem spilandi appið setur í eigin tilkynningu, svo þú færð þess raunverulegu líkar-, stokka- og endurtaka-stýringar. Úthlutaðu hvaða aðgerð sem er á reit, eða stilltu hann á „Ekkert“ til að fela hann, undir Aðgerðum í símanum.</string>
     <string name="tutorial_gestures_title">Einfalt, tvöfalt og langt ýti</string>
-    <string name="tutorial_gestures_desc">Hvert svæði hefur þrjár aðskildar aðgerðir: eina fyrir eitt ýti, eina fyrir tvöfalt ýti og eina fyrir langt ýti. Til dæmis getur eitt ýti í miðjunni pásað tónlistina á meðan tvöfalt ýti opnar aðgerðavalmyndina — þú sérð þetta ekki nema þú stillir það, svo sérsniðið það eftir smekk.</string>
+    <string name="tutorial_gestures_desc">Hvert af fjórum jaðarsvæðunum styður aðskildar aðgerðir fyrir eitt ýti, tvöfalt ýti og langt ýti. Eitt ýti í miðju er einnig stillanlegt; tvöfalt ýti opnar alltaf flýtiaðgerðir en langt ýti opnar úrskífuval, biðröð eða ekkert samkvæmt Stillingar → Hegðun.</string>
 
     <string name="tutorial_buttons_title">Áþreifanlegir hnappar</string>
     <string name="tutorial_buttons_desc">Ef úrið þitt er með hliðarhnöppum geturðu úthlutað eins, tvöfalds og lengi-ýti aðgerðum á þá líka. Þeir halda áfram að virka jafnvel þegar slökkt er á skjánum.</string>
 
     <string name="tutorial_rotary_title">Snúningskróna</string>
-    <string name="tutorial_rotary_desc">Snúðu snúningskrónunni eða umgjörðinni til að breyta hljóðstyrk. Viltu frekar spóla í gegnum lagið? Kveiktu á „Spóla með snúningskrónu“ í Stillingum.</string>
+    <string name="tutorial_rotary_desc">Veldu undir Stillingar → Hegðun → Snúningsinntak &amp; fínstilling hvort snúningskróna eða umgjörð breyti hljóðstyrk, leiti í laginu eða geri ekkert. Á úrum sem skrá snúning sem hnappa skaltu úthluta þeim í Stýringar.</string>
 
     <string name="tutorial_swipe_up_title">Strjúktu upp, niður, til vinstri og hægri</string>
     <string name="tutorial_swipe_up_desc">Að strjúka upp, niður eða til vinstri á núspilunarskjánum má hvert um sig stilla til að opna hvað sem er — aðgerðavalmyndina, spilunarbiðröðina, sleppa lögum, lagalistana þína og fleira. Stilltu hvert og eitt í Stýringum, með því að velja Tónlist í spilun eða Engin spilun. Sjálfgefið opnar það að strjúka upp aðgerðavalmyndina og hin gera ekkert fyrr en þú úthlutar þeim. Að strjúka til hægri er látið óáreitt — það er hin almenna Wear OS-hreyfing til að fara út úr appinu.</string>
@@ -204,7 +204,7 @@
     <string name="gesture_double_press">Tvöfalt ýti</string>
     <string name="gesture_long_press">Langt ýti</string>
     <string name="gesture_swipe_action">Aðgerð</string>
-    <string name="center_button_quick_panel_note">Að tvísmella á miðju núspilunarskjásins opnar alltaf flýtiaðgerðaspjaldið, sama hverju þú úthlutar hér.</string>
+    <string name="center_button_quick_panel_note">Tvöfalt ýti í miðju opnar alltaf flýtiaðgerðir. Langt ýti framkvæmir valið undir Stillingar → Hegðun. Hvorug bendingin breytist þegar þú úthlutar miðjuýtinu hér.</string>
     <string name="start_playback">Hefja spilun</string>
     <string name="uninstalled_app">Fjarlægt app</string>
 
@@ -667,7 +667,7 @@
     <string name="preview_notification_controls">Táknmynd úr miðlunartilkynningu</string>
     <string name="setting_wear_queue_style">Stíll biðraðar</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Nota flýtileiðaumslög sem bakgrunn</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Þegar Stíll biðraðar hér að ofan er Umslags-afbrigði, fyllir aðgerðarröð flýtispjalds með sóttu flýtileiðaumslagi (lag, lagalisti, flytjandi…) líka hylki sitt með þeirri mynd, líkt og Næst gerir. Flýtileiðir án sótts umslags (venjuleg appatáknmynd) verða ekki fyrir áhrifum.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Þegar Stíll biðraðar er Umslags-afbrigði, fyllir aðgerðarröð flýtispjalds með sóttu flýtileiðaumslagi (lag, lagalisti, flytjandi…) líka hylki sitt með þeirri mynd, líkt og Næst gerir. Flýtileiðir án sótts umslags (venjuleg appatáknmynd) verða ekki fyrir áhrifum.</string>
     <string name="setting_wear_list_row_size">Stærð listahylkja</string>
     <string name="setting_wear_list_row_size_description">Hæð fullbreiðra raða í biðröð, valmyndum og flýtispjaldi.</string>
     <string name="setting_wear_progress_gradient">Blanda litatöflu inn í hringinn</string>
@@ -1018,7 +1018,7 @@
     </string-array>
 
     <string name="setting_wear_font_all_screens">Nota letur alls staðar</string>
-    <string name="setting_wear_font_all_screens_description">Notar valið letur líka á valmyndina, biðröðina og klukkuna á úrinu, ekki bara titil og flytjanda lagsins. Birtingar- og handskrifuð letur geta verið erfiðari aflestrar í listum.</string>
+    <string name="setting_wear_font_all_screens_description">Notar valið letur á valmyndir, biðröð og flýtiaðgerðir, ekki bara spilarann. Birtingar- og handskrifuð letur geta verið erfiðari aflestrar í listum.</string>
 
     <string name="setting_wear_clock_font">Leturgerð klukku</string>
     <string name="wear_clock_font_follow">Fylgja letri titils</string>
@@ -1417,4 +1417,39 @@
         <item>Staðlað</item>
         <item>Sterkt</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">Veldu hvað þú vilt sérsníða. Forskoðunin og vistaða þemað haldast virk á öllum svæðum.</string>
+    <string name="watch_back_to_overview">Til baka í úrsvæði</string>
+    <string name="settings_overview_description">Veldu svæði. Tengdir valkostir haldast saman og leitin getur enn farið beint í hvaða stillingu sem er.</string>
+    <string name="settings_back_to_overview">Til baka í stillingasvæði</string>
+    <string name="action_search_hint">Leita í þessum lista</string>
+    <string name="action_search_empty">Engin aðgerð samsvarar leitinni.</string>
+    <string name="control_assignment_tap">Ýta: %1$s</string>
+    <string name="control_assignment_hold">Halda: %1$s</string>
+    <string name="control_assignment_both">Ýta: %1$s · Halda: %2$s</string>
+    <string name="category_wf_screen_behavior">Hegðun skjás</string>
+    <string name="category_wf_player_progress">Framvinda, leit &amp; tími</string>
+    <string name="category_wf_metadata">Innihald Metadata-úrskífu</string>
+    <string name="category_wf_typography_secondary">Texti á öðrum skjám</string>
+    <string name="category_wf_colors_title">Titillitir</string>
+    <string name="category_wf_colors_artist">Flytjandalitir</string>
+    <string name="category_wf_colors_clock">Klukkulitir</string>
+    <string name="category_watch_navigation">Flakk &amp; flýtileiðir</string>
+    <string name="category_rotary_input">Snúningsinntak &amp; fínstilling</string>
+    <string name="category_watch_feedback">Viðbrögð &amp; lokunarhegðun</string>
+    <string name="settings_search_prerequisite">Þessi valkostur er háður öðru vali. Breyttu stillingunni sem birtist hér til að sýna hann.</string>
+    <string name="setting_numeric_range_error">Sláðu inn gildi frá %1$d til %2$d.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">Sameiginlegt útlit spjalda</string>
+    <string name="category_wf_panel_volume">Hljóðstyrksspjald</string>
+    <string name="category_wf_panel_seek">Framvindu- &amp; leitarspjald</string>
+    <string name="category_wf_panel_quick">Flýtiaðgerðaspjald</string>
+    <string name="category_wf_panel_queue">Biðröð &amp; listar</string>
+    <string name="category_wf_panel_effects">Spjaldaáhrif</string>
+    <string name="category_apps_content">Lagatextar &amp; lýsigögn</string>
+    <string name="category_streaming_services">Streymisflýtileiðir</string>
+    <string name="category_queue_artwork">Umslög í biðröð</string>
+    <string name="category_system_access">Android-aðgangur &amp; tilkynningar</string>
+    <string name="setting_privacy_policy">Persónuverndarstefna</string>
+    <string name="setting_privacy_policy_description">Sjáðu hvaða gögn Svartifoss notar og hvaða netþjónustur eru valfrjálsar.</string>
 </resources>

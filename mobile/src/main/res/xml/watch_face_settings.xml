@@ -7,8 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:key="cat_wf_face"
-        android:title="@string/category_screen_face"
+        android:key="cat_wf_screen_behavior"
+        android:title="@string/category_wf_screen_behavior"
         android:layout="@layout/pref_category_header">
 
         <!-- Face-scoped, unlike the behaviour switches on the Settings tab: whether a screen should
@@ -22,6 +22,13 @@
             android:title="@string/setting_wear_keep_screen_on"
             android:summary="@string/setting_wear_keep_screen_on_description"
             android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_player_layout"
+        android:title="@string/category_screen_face"
+        android:layout="@layout/pref_category_header">
 
         <ListPreference
             android:key="wear_screen_face"
@@ -59,6 +66,18 @@
             android:entryValues="@array/wear_carousel_card_shape_values"
             android:layout="@layout/pref_item" />
 
+        <!-- Split paints its own lower panel. Keep this layout-specific control beside the face
+             picker; it is hidden for every renderer that cannot consume it. -->
+        <ListPreference
+            android:defaultValue="blur"
+            android:key="wear_split_panel"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_split_panel"
+            android:summary="%s"
+            android:entries="@array/wear_split_panel_entries"
+            android:entryValues="@array/wear_split_panel_values"
+            android:layout="@layout/pref_item" />
+
 
 
         <com.svartifoss.snfell.view.settings.DescribedListPreference
@@ -86,6 +105,13 @@
             android:title="@string/setting_wear_quadrant_tap_flash"
             android:summary="@string/setting_wear_quadrant_tap_flash_description"
             android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_player_progress"
+        android:title="@string/category_wf_player_progress"
+        android:layout="@layout/pref_category_header">
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
@@ -166,6 +192,13 @@
             android:summary="@string/setting_wear_font_all_screens_description"
             android:layout="@layout/pref_switch_item" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_metadata"
+        android:title="@string/category_wf_metadata"
+        android:layout="@layout/pref_category_header">
+
         <!-- Entries/values are built in WatchFacePrefsFragment.applyLyricsFontEntries by prepending
              "Follow the design" to the wear_font arrays, exactly as the clock font does, so the
              catalog has one source of truth and a new font never has to be added here as well. -->
@@ -218,6 +251,13 @@
             android:title="@string/setting_wear_metadata_identifiers"
             android:summary="@string/setting_wear_metadata_identifiers_description"
             android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_typography_secondary"
+        android:title="@string/category_wf_typography_secondary"
+        android:layout="@layout/pref_category_header">
 
         <com.svartifoss.snfell.view.settings.DescribedListPreference
             android:key="wear_lyrics_font"
@@ -299,6 +339,13 @@
             android:layout="@layout/pref_item"
             android:dependency="wear_show_track_title" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_colors_title"
+        android:title="@string/category_wf_colors_title"
+        android:layout="@layout/pref_category_header">
+
         <!-- Entries are built in WatchFacePrefsFragment.applyTitleColorEntries by prepending the
              "keep this face's own colour" option to the shared component-treatment arrays, so the
              treatment vocabulary has one source of truth. -->
@@ -316,6 +363,7 @@
             android:key="wear_title_custom_color"
             android:icon="@drawable/ic_palette"
             android:title="@string/setting_wear_title_custom_color"
+            android:dependency="wear_show_track_title"
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
 
@@ -325,6 +373,7 @@
             android:icon="@drawable/ic_contrast"
             android:title="@string/setting_wear_title_adaptive_contrast"
             android:summary="@string/setting_wear_title_adaptive_contrast_description"
+            android:dependency="wear_show_track_title"
             android:layout="@layout/pref_switch_item" />
 
     </PreferenceCategory>
@@ -386,10 +435,12 @@
             android:layout="@layout/pref_item"
             android:dependency="wear_show_track_artist" />
 
+    </PreferenceCategory>
 
-        <!-- The artist line's colour lives with the artist's other type settings, not on
-             the Colors page: the palette page is about how each *surface* derives from the
-             album, and this is text. Same keys, so nothing about the stored value changes. -->
+    <PreferenceCategory
+        android:key="cat_wf_colors_artist"
+        android:title="@string/category_wf_colors_artist"
+        android:layout="@layout/pref_category_header">
 
         <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
             android:defaultValue="follow"
@@ -400,12 +451,14 @@
             android:entries="@array/wear_component_color_treatment_entries"
             android:entryValues="@array/wear_component_color_treatment_values"
             app:customColorKey="wear_artist_custom_color"
+            android:dependency="wear_show_track_artist"
             android:layout="@layout/pref_item" />
 
         <com.svartifoss.snfell.view.settings.HexColorDotPreference
             android:key="wear_artist_custom_color"
             android:icon="@drawable/ic_palette"
             android:title="@string/setting_wear_artist_custom_color"
+            android:dependency="wear_show_track_artist"
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
 
@@ -415,13 +468,13 @@
             android:icon="@drawable/ic_contrast"
             android:title="@string/setting_wear_artist_adaptive_contrast"
             android:summary="@string/setting_wear_artist_adaptive_contrast_description"
+            android:dependency="wear_show_track_artist"
             android:layout="@layout/pref_switch_item" />
 
     </PreferenceCategory>
 
-    <!-- Everything about the clock, in one group: typeface and letterforms first, then colour and
-         opacity. These used to be two separate categories that both landed on the Text page with
-         other groups in between, so the page showed "Clock" twice and neither half was complete. -->
+    <!-- The clock's typeface and letterform controls live together on Text. Its color and opacity
+         have a distinct Clock colors group on Colors, so neither concept is mixed into the other. -->
     <PreferenceCategory
         android:key="cat_wf_typography_clock"
         android:title="@string/category_wf_clock"
@@ -469,6 +522,12 @@
             android:summary="@string/setting_wear_typography_tracking_description"
             android:layout="@layout/pref_item" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_colors_clock"
+        android:title="@string/category_wf_colors_clock"
+        android:layout="@layout/pref_category_header">
 
         <ListPreference
             android:key="wear_clock_color_mode"
@@ -697,8 +756,8 @@
 
 
     <PreferenceCategory
-        android:key="cat_wf_overlays"
-        android:title="@string/category_overlays_queue"
+        android:key="cat_wf_panel_shared"
+        android:title="@string/category_wf_panel_shared"
         android:layout="@layout/pref_category_header">
 
         <ListPreference
@@ -710,6 +769,13 @@
             android:entries="@array/wear_overlay_backdrop_entries"
             android:entryValues="@array/wear_overlay_backdrop_values"
             android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_panel_volume"
+        android:title="@string/category_wf_panel_volume"
+        android:layout="@layout/pref_category_header">
 
         <ListPreference
             android:key="wear_volume_style"
@@ -730,6 +796,13 @@
             android:entries="@array/wear_volume_layout_entries"
             android:entryValues="@array/wear_volume_layout_values"
             android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_panel_seek"
+        android:title="@string/category_wf_panel_seek"
+        android:layout="@layout/pref_category_header">
 
         <ListPreference
             android:defaultValue="solid"
@@ -770,6 +843,13 @@
             android:entries="@array/wear_seek_layout_entries"
             android:entryValues="@array/wear_seek_layout_values"
             android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_panel_quick"
+        android:title="@string/category_wf_panel_quick"
+        android:layout="@layout/pref_category_header">
 
         <ListPreference
             android:key="wear_quick_panel_style"
@@ -834,7 +914,23 @@
             android:icon="@drawable/ic_playlist_add"
             android:title="@string/setting_playlist_shortcuts"
             android:summary="@string/watch_streaming_shortcuts_empty"
-            android:layout="@layout/pref_item" />
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_chevron" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_quick_panel_shortcut_cover"
+            android:icon="@drawable/ic_quick_actions"
+            android:title="@string/setting_wear_quick_panel_shortcut_cover"
+            android:summary="@string/setting_wear_quick_panel_shortcut_cover_description"
+            android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_panel_queue"
+        android:title="@string/category_wf_panel_queue"
+        android:layout="@layout/pref_category_header">
 
         <ListPreference
             android:key="wear_queue_style"
@@ -845,14 +941,6 @@
             android:entries="@array/wear_overlay_style_entries"
             android:entryValues="@array/wear_overlay_style_values"
             android:layout="@layout/pref_item" />
-
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
-            android:key="wear_quick_panel_shortcut_cover"
-            android:icon="@drawable/ic_quick_actions"
-            android:title="@string/setting_wear_quick_panel_shortcut_cover"
-            android:summary="@string/setting_wear_quick_panel_shortcut_cover_description"
-            android:layout="@layout/pref_switch_item" />
 
         <ListPreference
             android:key="wear_list_row_size"
@@ -941,18 +1029,6 @@
             android:summary="@string/setting_player_shading_intensity_description"
             android:layout="@layout/pref_item" />
 
-        <!-- Split paints its own backdrop, so the Album background styles above cannot reach its
-             lower panel. This is that face's own control - see SplitPanelStyle. -->
-        <ListPreference
-            android:defaultValue="blur"
-            android:key="wear_split_panel"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_split_panel"
-            android:summary="%s"
-            android:entries="@array/wear_split_panel_entries"
-            android:entryValues="@array/wear_split_panel_values"
-            android:layout="@layout/pref_item" />
-
         <ListPreference
             android:defaultValue="black"
             android:key="wear_shading_color_mode"
@@ -979,6 +1055,13 @@
             android:title="@string/setting_wear_album_art_fade"
             android:summary="@string/setting_wear_album_art_fade_description"
             android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="cat_wf_panel_effects"
+        android:title="@string/category_wf_panel_effects"
+        android:layout="@layout/pref_category_header">
 
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="35"
@@ -1119,7 +1202,8 @@
             android:icon="@drawable/ic_mini_buttons"
             android:title="@string/setting_screen_buttons_hint"
             android:summary="@string/setting_screen_buttons_hint_description"
-            android:layout="@layout/pref_item" />
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_chevron" />
 
         <!-- When the row appears, mirroring the Track-time display option (Always / Only while
              playing / Only while paused / Never). "Only while paused" also covers the idle screen.

@@ -63,15 +63,17 @@
     <string name="watch_section_background">Background</string>
     <string name="watch_section_background_description">Control album art, blur, fading and readability behind the player.</string>
     <string name="watch_section_colors">Colors</string>
-    <string name="watch_section_colors_description">Tune the artist, progress ring and album-based accent colors.</string>
+    <string name="watch_section_colors_description">Set base, progress and album accents, then tune title, artist, clock, volume and panel colors.</string>
     <string name="watch_section_typography">Text</string>
-    <string name="watch_section_typography_description">Choose a typeface and style the title, artist and app icon independently.</string>
+    <string name="watch_section_typography_description">Choose fonts and tune title, artist, clock, app icon, secondary screens and Flex text.</string>
     <string name="watch_section_aod">Always-on</string>
     <string name="watch_section_aod_description">Configure the low-power screen and see its ambient appearance in the preview.</string>
     <string name="watch_section_panels">Panels</string>
     <string name="watch_section_panels_description">Style volume, seek, quick panel and queue; focusing a row opens that surface in the preview.</string>
     <string name="watch_section_mini_buttons">Mini buttons</string>
     <string name="watch_section_mini_buttons_description">Style the optional shortcut row. Tap “Mini buttons” below to assign its actions in Controls.</string>
+    <string name="watch_overview_description">Choose what you want to customize. The preview and saved theme stay active across every area.</string>
+    <string name="watch_back_to_overview">Back to Watch areas</string>
 
     <string name="settings_section_general">General</string>
     <string name="settings_section_general_description">App theme, accent color and update preferences.</string>
@@ -80,9 +82,11 @@
     <string name="settings_section_automation">Automation</string>
     <string name="settings_section_automation_description">Choose when Svartifoss opens and closes automatically.</string>
     <string name="settings_section_apps">Apps</string>
-    <string name="settings_section_apps_description">Configure music services and app-specific integrations in one place.</string>
+    <string name="settings_section_apps_description">Find lyrics and metadata, streaming shortcuts, queue artwork and Android access.</string>
     <string name="settings_section_data">Data &amp; support</string>
     <string name="settings_section_data_description">Back up your setup, check the version, diagnostics or get help.</string>
+    <string name="settings_overview_description">Choose an area. Related options stay together, while search can still take you directly to any setting.</string>
+    <string name="settings_back_to_overview">Back to settings areas</string>
 
     <!-- Guide / tutorial tab -->
     <string name="tutorial_header">How to use Svartifoss</string>
@@ -94,13 +98,13 @@
     <string name="tutorial_quick_panel_title">Quick actions panel</string>
     <string name="tutorial_quick_panel_desc">Double-tap the centre of the now-playing screen to open a panel of four slots — three round buttons and one wide row beneath them. Left alone, the slots mirror the buttons the playing app puts in its own notification, so you get its real like, shuffle and repeat controls. Assign any action to a slot, or set it to \"None\" to hide it, under Actions on the phone.</string>
     <string name="tutorial_gestures_title">Single, double &amp; long press</string>
-    <string name="tutorial_gestures_desc">Each zone holds three separate actions: one for a single tap, one for a double tap and one for a long press. For example, a single tap in the center can pause the music while a double tap opens the actions menu — you won\'t see this unless you set it up, so customize it to taste.</string>
+    <string name="tutorial_gestures_desc">The four edge zones each support separate single, double and long-press actions. The center\'s single tap is also configurable; its double-tap always opens Quick actions, while its long-press opens the face picker, queue, or nothing according to Settings → Behavior.</string>
 
     <string name="tutorial_buttons_title">Physical buttons</string>
     <string name="tutorial_buttons_desc">If your watch has side buttons, you can assign single, double and long-press actions to them too. They keep working even when the screen is off.</string>
 
     <string name="tutorial_rotary_title">Rotating crown</string>
-    <string name="tutorial_rotary_desc">Turn the rotating crown or bezel to change the volume. Prefer to scrub through the song instead? Turn on “Seek with rotary crown” in Settings.</string>
+    <string name="tutorial_rotary_desc">Choose whether the rotating crown or bezel changes volume, seeks through the track, or does nothing under Settings → Behavior → Rotary crown / bezel. On watches that expose crown turns as buttons, assign them in Controls instead.</string>
 
     <string name="tutorial_swipe_up_title">Swipe up, down, left &amp; right</string>
     <string name="tutorial_swipe_up_desc">Swipe up, down or left on the now-playing screen can each be configured to open anything — the actions menu, the playback queue, skip tracks, your playlists, and more. Configure each one in Controls, choosing Music playing or No playback. By default, swiping up opens the actions menu and the others do nothing until you assign them. Swipe right is left alone — that\'s the universal Wear OS gesture to exit the app.</string>
@@ -146,6 +150,8 @@
     <string name="group_playback_controls">Playback controls</string>
     <string name="group_streaming_shortcuts">Tracks, albums &amp; playlists</string>
     <string name="pick_action">Pick action</string>
+    <string name="action_search_hint">Search this list</string>
+    <string name="action_search_empty">No actions match this search.</string>
     <string name="action_opens_more">Multiple options</string>
     <string name="action_volume_up">Increase volume</string>
     <string name="volume_down">Decrease volume</string>
@@ -172,6 +178,9 @@
     <string name="physical_buttons">PHYSICAL BUTTONS</string>
     <string name="physical_buttons_disconnected">Connect and open Svartifoss on your watch to configure its physical buttons. Touch zones, swipes and mini buttons are available now.</string>
     <string name="physical_buttons_unavailable">No configurable physical buttons were reported by this watch.</string>
+    <string name="control_assignment_tap">Tap: %1$s</string>
+    <string name="control_assignment_hold">Hold: %1$s</string>
+    <string name="control_assignment_both">Tap: %1$s · Hold: %2$s</string>
     <string name="tap_a_zone_to_configure">Tap a zone on the watch to assign an action</string>
     <string name="touch_zone_top">Top zone</string>
     <string name="touch_zone_bottom">Bottom zone</string>
@@ -205,7 +214,7 @@
     <string name="gesture_double_press">Double press</string>
     <string name="gesture_long_press">Long press</string>
     <string name="gesture_swipe_action">Action</string>
-    <string name="center_button_quick_panel_note">Double-tapping the center of the now-playing screen always opens the quick actions panel, no matter what you assign here.</string>
+    <string name="center_button_quick_panel_note">Double-tapping the center always opens Quick actions. Long-pressing it runs the choice under Settings → Behavior. Neither gesture changes when you assign the center tap here.</string>
     <string name="start_playback">Start playback</string>
     <string name="uninstalled_app">Uninstalled app</string>
 
@@ -241,6 +250,8 @@
     <string name="category_watch_screen">Watch screen</string>
     <string name="category_mini_buttons">Mini buttons</string>
     <string name="category_screen_face">Player appearance</string>
+    <string name="category_wf_screen_behavior">Screen behavior</string>
+    <string name="category_wf_player_progress">Progress, seeking &amp; time</string>
     <string name="category_album_background">Album background</string>
     <string name="category_music_colors">Colors from the music</string>
     <string name="category_wf_typography_font">Typeface</string>
@@ -248,6 +259,11 @@
     <string name="category_wf_typography_artist">Artist</string>
     <string name="category_wf_typography_icon">App icon</string>
     <string name="category_wf_typography_flex">Google Sans Flex axes</string>
+    <string name="category_wf_metadata">Metadata face content</string>
+    <string name="category_wf_typography_secondary">Text on other screens</string>
+    <string name="category_wf_colors_title">Title colors</string>
+    <string name="category_wf_colors_artist">Artist colors</string>
+    <string name="category_wf_colors_clock">Clock colors</string>
     <string name="setting_wear_font_flex_hint_title">About these controls</string>
     <string name="setting_wear_flex_axes_hint">These fine-tune Google Sans Flex specifically — pick it above to use them. Title and artist weight/italic above already set this font\'s own weight (wght) and slant (slnt) axes; the four controls below apply to the whole face.</string>
     <string name="setting_wear_font_flex_width">Width</string>
@@ -270,6 +286,9 @@
     <string name="preview_verse_next">and the one after</string>
     <string name="preview_chat_today">Today</string>
     <string name="category_gestures">Gestures &amp; input</string>
+    <string name="category_watch_navigation">Navigation &amp; shortcuts</string>
+    <string name="category_rotary_input">Rotary input &amp; tuning</string>
+    <string name="category_watch_feedback">Feedback &amp; exit behavior</string>
     <string name="category_watch_display">Watch screen</string>
     <string name="setting_wear_keep_screen_on">Keep the screen on</string>
     <string name="setting_wear_keep_screen_on_description">Stop the watch screen blanking on its inactivity timeout while a Svartifoss screen is open. Lowering your wrist still dims the watch \u2014 that gesture belongs to the system. Uses more battery. The lyrics screen always stays on regardless of this setting.</string>
@@ -313,8 +332,12 @@
     <string name="settings_search_clear">Clear search</string>
     <string name="settings_search_prompt">Search every setting across Settings and Watch appearance by name.</string>
     <string name="settings_search_no_results">No setting matches that.</string>
-    <!-- Breadcrumb on a search result: %1$s is the tab, %2$s the category within it. -->
+    <string name="settings_search_prerequisite">This option depends on another choice. Adjust the setting shown here to reveal it.</string>
+    <string name="setting_numeric_range_error">Enter a value from %1$d to %2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
     <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
     <string name="notification_access_banner_summary">Tap to grant it — playback control stays inactive until you do</string>
 
     <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
@@ -788,6 +811,12 @@
     <string name="setting_wear_aod_show_track_info_description">Show the track title and artist in ambient mode</string>
 
     <string name="category_overlays_queue">Overlays &amp; queue</string>
+    <string name="category_wf_panel_shared">Shared panel appearance</string>
+    <string name="category_wf_panel_volume">Volume panel</string>
+    <string name="category_wf_panel_seek">Progress &amp; seek panel</string>
+    <string name="category_wf_panel_quick">Quick actions panel</string>
+    <string name="category_wf_panel_queue">Queue &amp; lists</string>
+    <string name="category_wf_panel_effects">Panel effects</string>
     <string name="setting_wear_overlay_backdrop_style">Panel background</string>
     <string name="setting_wear_volume_style">Volume style</string>
     <string name="setting_wear_volume_layout">Volume layout</string>
@@ -801,7 +830,7 @@
     <string name="preview_notification_controls">Icon from media notification</string>
     <string name="setting_wear_queue_style">Queue style</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Use shortcut covers as background</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">When Queue style above is a Cover variant, a quick-panel action row with a fetched shortcut cover (track, playlist, artist…) also fills its pill with that art, like Up Next does. Shortcuts without a fetched cover (a plain app icon) are unaffected.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">When Queue style is a Cover variant, a quick-panel action row with a fetched shortcut cover (track, playlist, artist…) also fills its pill with that art, like Up Next does. Shortcuts without a fetched cover (a plain app icon) are unaffected.</string>
     <string name="setting_wear_list_row_size">List pill size</string>
     <string name="setting_wear_list_row_size_description">Height of the full-width rows in the queue, menus and quick panel.</string>
     <string name="setting_wear_progress_gradient">Blend palette into the ring</string>
@@ -1327,7 +1356,7 @@
     </string-array>
 
     <string name="setting_wear_font_all_screens">Use font everywhere</string>
-    <string name="setting_wear_font_all_screens_description">Applies the chosen font to the menu, the queue and the on-watch clock too, not just the track title and artist. Display and handwritten fonts can be harder to read in lists.</string>
+    <string name="setting_wear_font_all_screens_description">Applies the chosen font to menus, the queue and Quick actions, not just the player. Display and handwritten fonts can be harder to read in lists.</string>
 
     <string name="setting_wear_clock_font">Clock typeface</string>
     <string name="wear_clock_font_follow">Follow track font</string>
@@ -1672,6 +1701,10 @@
         <item quantity="other">%1$d saved shortcuts · Available in Quick Actions and the watch menu</item>
     </plurals>
     <string name="category_music_apps">Music apps &amp; services</string>
+    <string name="category_apps_content">Lyrics &amp; metadata</string>
+    <string name="category_streaming_services">Streaming shortcuts</string>
+    <string name="category_queue_artwork">Queue artwork</string>
+    <string name="category_system_access">Android access &amp; notifications</string>
     <string name="setting_apps_integrations">Supported music services</string>
     <string name="setting_apps_integrations_description">Links work with YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music and SoundCloud. No account access is required.</string>
     <string name="setting_apps_integrations_none">No supported app detected. Shortcuts can still open in a browser or another compatible app.</string>
@@ -1693,6 +1726,8 @@
         <item quantity="other">%1$d saved shortcuts · Tap to manage or import links</item>
     </plurals>
     <string name="category_privacy">Privacy</string>
+    <string name="setting_privacy_policy">Privacy policy</string>
+    <string name="setting_privacy_policy_description">See what data Svartifoss uses and which online services are optional.</string>
     <string name="setting_crash_reporting">Send crash reports</string>
     <string name="setting_crash_reporting_description">Send Firebase Crashlytics diagnostics to help fix failures. Enabled by default; turn it off at any time.</string>
     <string name="setting_announcements">Announcement notifications</string>

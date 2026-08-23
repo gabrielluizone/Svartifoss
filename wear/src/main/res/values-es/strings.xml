@@ -53,9 +53,9 @@
 
     <string name="hint_title">Cómo se usa</string>
     <string name="hint_edges">Bordes — toca para las acciones mostradas</string>
-    <string name="hint_center">Centro — reproducir/pausar\nToca dos veces — acciones rápidas</string>
+    <string name="hint_center">Centro — reproducir/pausar\nToca dos veces — acciones rápidas\nMantén pulsado — selector de esfera (configurable)</string>
     <string name="hint_swipe_up">Desliza hacia arriba — menú de acciones</string>
-    <string name="hint_crown">Corona — volumen</string>
+    <string name="hint_crown">Corona — volumen (configurable)</string>
     <string name="hint_dismiss">Entendido</string>
 
     <string name="action_name_play">Reproducir</string>

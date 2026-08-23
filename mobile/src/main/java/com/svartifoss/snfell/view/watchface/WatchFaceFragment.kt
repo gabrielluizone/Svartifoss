@@ -1,6 +1,5 @@
 package com.svartifoss.snfell.view.watchface
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -14,17 +13,18 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.ViewConfiguration
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityEvent
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
+import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -34,88 +34,32 @@ import com.svartifoss.snfell.config.buttons.GlobalButtonConfig
 import com.svartifoss.snfell.music.isPlaying
 import com.svartifoss.snfell.view.TitledActivity
 import com.svartifoss.snfell.view.mainactivity.MainActivity
+import com.svartifoss.snfell.view.settings.FaceScopedPreferenceDataStore
+import com.svartifoss.snfell.view.settings.SectionNavigationAdapter
+import com.svartifoss.snfell.view.settings.SectionNavigationItem
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.view.watchface.theme.WatchThemesActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
 
 private const val PLAYBACK_TICK_INTERVAL_MS = 500L
 
-/** Only these default-preference writes affect the Watch appearance preview. Media history,
- *  dynamic app accent and unrelated Settings values share the same preferences file and must
- *  not pull a contextual AOD/panel preview back to the player or trigger a full watch push. */
-private val WATCH_APPEARANCE_PREF_KEYS = setOf(
+/** Every face-scoped appearance value can affect the preview. Deriving this listener inventory
+ *  from the same registry used by themes/backups prevents a newly added editor from rendering only
+ *  after the fragment is reopened. The small suffix contains deliberate global appearance keys. */
+private val WATCH_APPEARANCE_PREF_KEYS = FaceScopedPreferences.SCOPED_KEYS + setOf(
     "wear_screen_face",
     "wear_active_custom_theme_id",
     "wear_custom_theme_schema",
     "wear_custom_theme_complete",
     "wear_custom_theme_revision",
-    "wear_show_track_title",
-    "wear_show_track_artist",
-    "wear_classic_icons_visible",
-    "wear_internal_progress_visible",
-    "wear_edge_progress_visible",
-    "wear_edge_seek_enabled",
-    "wear_expressive_seek_mode",
-    "wear_screen_theme",
-    "wear_font",
-    "wear_title_text_mode",
-    "wear_track_time_mode",
-    "always_show_time",
-    "wear_aod_style",
-    "wear_aod_art_treatment",
-    "wear_aod_color_mode",
-    "wear_aod_custom_color",
-    "wear_aod_intensity",
-    "wear_aod_show_transport",
-    "wear_aod_show_progress",
-    "wear_aod_show_pills",
-    "wear_aod_show_art",
-    "ambient_album_art_opacity",
-    "wear_aod_show_clock",
-    "wear_aod_show_track_info",
-    "wear_overlay_backdrop_style",
-    "wear_volume_style",
-    "wear_volume_layout",
-    "wear_seek_style",
-    "wear_seek_layout",
-    "wear_quick_panel_style",
-    "wear_quick_panel_layout",
     "wear_quick_panel_source",
-    "wear_queue_style",
-    "album_art_style",
-    "album_art_blur_radius",
-    "dim_album_art",
-    "album_art_dim_strength",
-    "wear_player_shading_style",
-    "wear_player_shading_intensity",
-    "wear_shading_color_mode",
-    "wear_shading_custom_color",
-    "wear_album_art_fade",
-    "overlay_blur_radius",
-    "wear_dynamic_accent",
-    "wear_color_treatment",
-    "wear_normal_color",
-    "wear_artist_color_mode",
-    "wear_artist_custom_color",
-    "wear_artist_desaturated",
-    "wear_progress_style",
-    "wear_progress_color_mode",
-    "wear_progress_custom_color",
-    "wear_progress_desaturated",
-    "wear_volume_color_mode",
-    "wear_volume_custom_color",
-    "wear_quick_panel_color_mode",
-    "wear_quick_panel_custom_color",
-    "screen_buttons_curve_style",
-    "screen_buttons_bg_style",
-    "screen_buttons_opacity",
-    "screen_buttons_shape"
+    "queue_remote_artwork",
+    "wear_font_all_screens"
 )
 
 /**
@@ -139,7 +83,6 @@ class WatchFaceFragment : Fragment() {
         private const val STATE_PREVIEW_PREFERENCE = "selectedWatchPreviewPreference"
         private const val ARG_SECTION = "initialWatchSection"
         private const val ARG_HIGHLIGHT_KEY = "initialWatchHighlightKey"
-        private var lastSelectedSection = 0
         private const val NEUTRAL_ACCENT = 0xFF86A69D.toInt()
 
         /** Opens straight at [section], scrolled to [highlightKey]. Used by the settings search;
@@ -152,17 +95,49 @@ class WatchFaceFragment : Fragment() {
         }
     }
 
-    /** Cleared once handed to the page it belongs to, so only that page scrolls. */
-    private var pendingHighlightKey: String? = null
-
     private val sections = listOf(
-        Section(WatchFacePrefsFragment.SECTION_STYLE, R.string.watch_section_style),
-        Section(WatchFacePrefsFragment.SECTION_BACKGROUND, R.string.watch_section_background),
-        Section(WatchFacePrefsFragment.SECTION_COLORS, R.string.watch_section_colors),
-        Section(WatchFacePrefsFragment.SECTION_TYPOGRAPHY, R.string.watch_section_typography),
-        Section(WatchFacePrefsFragment.SECTION_AOD, R.string.watch_section_aod),
-        Section(WatchFacePrefsFragment.SECTION_PANELS, R.string.watch_section_panels),
-        Section(WatchFacePrefsFragment.SECTION_MINI_BUTTONS, R.string.watch_section_mini_buttons)
+        SectionNavigationItem(
+            WatchFacePrefsFragment.SECTION_STYLE,
+            R.string.watch_section_style,
+            R.string.watch_section_style_description,
+            R.drawable.ic_player_theme
+        ),
+        SectionNavigationItem(
+            WatchFacePrefsFragment.SECTION_BACKGROUND,
+            R.string.watch_section_background,
+            R.string.watch_section_background_description,
+            R.drawable.ic_album
+        ),
+        SectionNavigationItem(
+            WatchFacePrefsFragment.SECTION_COLORS,
+            R.string.watch_section_colors,
+            R.string.watch_section_colors_description,
+            R.drawable.ic_colors
+        ),
+        SectionNavigationItem(
+            WatchFacePrefsFragment.SECTION_TYPOGRAPHY,
+            R.string.watch_section_typography,
+            R.string.watch_section_typography_description,
+            R.drawable.ic_text_fields
+        ),
+        SectionNavigationItem(
+            WatchFacePrefsFragment.SECTION_AOD,
+            R.string.watch_section_aod,
+            R.string.watch_section_aod_description,
+            R.drawable.ic_always_on
+        ),
+        SectionNavigationItem(
+            WatchFacePrefsFragment.SECTION_PANELS,
+            R.string.watch_section_panels,
+            R.string.watch_section_panels_description,
+            R.drawable.ic_quick_actions
+        ),
+        SectionNavigationItem(
+            WatchFacePrefsFragment.SECTION_MINI_BUTTONS,
+            R.string.watch_section_mini_buttons,
+            R.string.watch_section_mini_buttons_description,
+            R.drawable.ic_mini_buttons
+        )
     )
 
     private var _binding: FragmentWatchFaceBinding? = null
@@ -171,10 +146,10 @@ class WatchFaceFragment : Fragment() {
     private var mediaController: MediaController? = null
     private var mediaCallbackRegistered = false
     private var previewPlayingConfig = true
-    private var selectedSection = 0
+    private var selectedSection: String? = null
     private var selectedPreviewPreference: String? = null
     private var miniButtonsLoadJob: Job? = null
-    private var tabMediator: TabLayoutMediator? = null
+    private var backCallback: OnBackPressedCallback? = null
     private val themeRepository by lazy(LazyThreadSafetyMode.NONE) {
         WatchThemeRepository(requireContext())
     }
@@ -183,19 +158,6 @@ class WatchFaceFragment : Fragment() {
         if (result.resultCode == Activity.RESULT_OK && _binding != null) {
             updateThemeCard()
             preview?.refresh()
-        }
-    }
-
-    private val pageCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            val sectionChanged = selectedSection != position
-            selectedSection = position
-            lastSelectedSection = position
-            if (sectionChanged) selectedPreviewPreference = null
-            preview?.showSection(sections[position].key)
-            if (!sectionChanged) {
-                selectedPreviewPreference?.let { preview?.showPreference(it) }
-            }
         }
     }
 
@@ -272,40 +234,53 @@ class WatchFaceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         preview = binding.watchPreview
 
-        val requestedSection = arguments?.getString(ARG_SECTION)
-        pendingHighlightKey = arguments?.getString(ARG_HIGHLIGHT_KEY)
+        binding.watchSections.layoutManager = LinearLayoutManager(requireContext())
+        binding.watchSections.adapter = SectionNavigationAdapter(sections, ::openSection)
+        binding.watchSectionBack.setOnClickListener { showOverview() }
+        ViewCompat.setAccessibilityHeading(binding.watchSectionTitle, true)
+        backCallback = object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() = showOverview()
+        }.also { requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, it) }
 
-        binding.watchPager.adapter = object : FragmentStateAdapter(this) {
-            override fun getItemCount(): Int = sections.size
-
-            override fun createFragment(position: Int): Fragment {
-                val key = sections[position].key
-                // The pager builds neighbouring pages too, so the highlight has to be handed only
-                // to the page it was meant for - otherwise the setting next door scrolls instead.
-                val highlight = pendingHighlightKey?.takeIf { key == requestedSection }
-                if (highlight != null) pendingHighlightKey = null
-                return WatchFacePrefsFragment.newInstance(key, highlight)
+        val rawRequestedSection = arguments?.getString(ARG_SECTION)
+            ?.takeIf { requested -> sections.any { it.key == requested } }
+        val rawHighlightKey = arguments?.getString(ARG_HIGHLIGHT_KEY)
+        val searchTarget = if (savedInstanceState == null &&
+                rawRequestedSection != null && rawHighlightKey != null) {
+            resolveSearchTarget(rawRequestedSection, rawHighlightKey)
+        } else {
+            SearchTarget(rawRequestedSection, rawHighlightKey, redirected = false)
+        }
+        val requestedSection = searchTarget.section
+        selectedSection = if (savedInstanceState?.containsKey(STATE_SELECTED_SECTION) == true) {
+            savedInstanceState.getString(STATE_SELECTED_SECTION)
+        } else {
+            requestedSection
+        }
+        selectedPreviewPreference = savedInstanceState?.getString(STATE_PREVIEW_PREFERENCE)
+        val selected = selectedSection
+        if (selected == null) {
+            showOverview(removeChild = false)
+        } else {
+            val highlight = searchTarget.key
+                ?.takeIf { requestedSection == selected && savedInstanceState == null }
+            showSection(
+                sections.first { it.key == selected },
+                highlight,
+                replaceChild = childFragmentManager.findFragmentById(
+                    R.id.watch_detail_container
+                ) == null
+            )
+            if (searchTarget.redirected) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.settings_search_prerequisite,
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
-        // A restored instance state wins over the requested section: on rotation the user's
-        // current page is the truth, not the one search originally opened.
-        selectedSection = (savedInstanceState?.getInt(STATE_SELECTED_SECTION)
-            ?: requestedSection?.let { key -> sections.indexOfFirst { it.key == key } }
-                ?.takeIf { it >= 0 }
-            ?: lastSelectedSection).coerceIn(sections.indices)
-        selectedPreviewPreference = savedInstanceState?.getString(STATE_PREVIEW_PREFERENCE)
-        // Position the pager before callbacks/TabLayout attach so their initial selection cannot
-        // overwrite the restored contextual surface (for example Queue inside Panels).
-        binding.watchPager.setCurrentItem(selectedSection, false)
-        binding.watchPager.registerOnPageChangeCallback(pageCallback)
-        tabMediator = TabLayoutMediator(binding.watchTabs, binding.watchPager) { tab, position ->
-            tab.setText(sections[position].title)
-        }.also { it.attach() }
-        preview?.showSection(sections[selectedSection].key)
-        selectedPreviewPreference?.let { preview?.showPreference(it) }
         binding.root.addOnLayoutChangeListener(previewLayoutListener)
-        bindPreviewSwipe()
-        tintTabs()
+        tintNavigation()
         binding.watchThemeCard.setOnClickListener {
             val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
             // Persist any edits made in the shared Watch editor before the manager reads its
@@ -335,6 +310,91 @@ class WatchFaceFragment : Fragment() {
         }
     }
 
+    private fun openSection(item: SectionNavigationItem) {
+        showSection(item, highlightKey = null, replaceChild = true)
+        binding.watchSectionBack.post {
+            binding.watchSectionBack.requestFocus()
+            binding.watchDetail.announceForAccessibility(getString(item.title))
+        }
+    }
+
+    private fun showSection(
+        item: SectionNavigationItem,
+        highlightKey: String?,
+        replaceChild: Boolean
+    ) {
+        if (selectedSection != item.key) selectedPreviewPreference = null
+        selectedSection = item.key
+        binding.watchOverview.isVisible = false
+        binding.watchDetail.isVisible = true
+        binding.watchSectionTitle.setText(item.title)
+        binding.watchSectionDescription.setText(item.description)
+        binding.watchSectionIcon.setImageResource(item.icon)
+        backCallback?.isEnabled = true
+        preview?.showSection(item.key)
+        selectedPreviewPreference?.let { preview?.showPreference(it) }
+
+        if (replaceChild) {
+            childFragmentManager.beginTransaction()
+                .replace(
+                    R.id.watch_detail_container,
+                    WatchFacePrefsFragment.newInstance(item.key, highlightKey)
+                )
+                .commitNow()
+        }
+        (activity as? MainActivity)?.applyAccentToView(binding.watchDetail)
+        binding.root.post { resizePreview(binding.root.width, binding.root.height) }
+    }
+
+    private fun showOverview(removeChild: Boolean = true) {
+        val previousSection = selectedSection
+        selectedSection = null
+        selectedPreviewPreference = null
+        binding.watchOverview.isVisible = true
+        binding.watchDetail.isVisible = false
+        backCallback?.isEnabled = false
+        preview?.showSection(WatchFacePrefsFragment.SECTION_STYLE)
+        binding.root.post { resizePreview(binding.root.width, binding.root.height) }
+        if (removeChild) {
+            childFragmentManager.findFragmentById(R.id.watch_detail_container)?.let { child ->
+                childFragmentManager.beginTransaction().remove(child).commitNow()
+            }
+        }
+        focusOverviewSection(previousSection)
+    }
+
+    private fun focusOverviewSection(section: String?) {
+        val position = sections.indexOfFirst { it.key == section }
+        if (position < 0) return
+        binding.watchSections.scrollToPosition(position)
+        binding.watchSections.post {
+            binding.watchSections.findViewHolderForAdapterPosition(position)?.itemView?.let {
+                it.requestFocus()
+                it.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+            }
+        }
+    }
+
+    /**
+     * Conditional rows remain searchable, but opening an invisible result would look broken.
+     * Redirect to the choice that reveals it without changing any saved value on the user's behalf.
+     */
+    private fun resolveSearchTarget(section: String, key: String): SearchTarget {
+        val rawPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val store = FaceScopedPreferenceDataStore(rawPrefs)
+        val target = WatchSearchTargetResolver.resolve(
+            section = section,
+            key = key,
+            readString = { preferenceKey, default ->
+                store.getString(preferenceKey, default) ?: default
+            },
+            readBoolean = { preferenceKey, default ->
+                store.getBoolean(preferenceKey, default)
+            }
+        )
+        return SearchTarget(target.section, target.key, target.redirected)
+    }
+
     /** Called only by the currently visible preference page. Candidate values let List/Switch
      *  choices paint before Android persists them; the shared-preference callback then replaces
      *  that transient state with the committed value. */
@@ -343,7 +403,7 @@ class WatchFaceFragment : Fragment() {
         key: String,
         candidateValue: Any?
     ) {
-        if (_binding == null || sections[binding.watchPager.currentItem].key != section) return
+        if (_binding == null || selectedSection != section) return
         selectedPreviewPreference = key
         preview?.showPreference(key, candidateValue)
     }
@@ -356,15 +416,16 @@ class WatchFaceFragment : Fragment() {
     internal fun currentAlbumAccents(): Triple<Int, Int, Int> =
             preview?.currentAlbumAccents() ?: Triple(NEUTRAL_ACCENT, NEUTRAL_ACCENT, NEUTRAL_ACCENT)
 
-    private fun tintTabs() {
+    private fun tintNavigation() {
         val activity = activity as? MainActivity ?: return
-        activity.applyAccentToView(binding.watchTabs)
+        activity.applyAccentToView(binding.watchOverview)
+        activity.applyAccentToView(binding.watchDetail)
         val accent = activity.currentAccentTextColor()
         binding.watchThemeIcon.imageTintList = ColorStateList.valueOf(accent)
         binding.watchThemeCard.strokeWidth = 0
     }
 
-    /** The compact identity row makes it explicit whether the six editors below currently mutate
+    /** The compact identity row makes it explicit whether the editors below currently mutate
      * a built-in layout or an isolated saved theme. */
     private fun updateThemeCard() {
         if (_binding == null || !isAdded) return
@@ -391,47 +452,6 @@ class WatchFaceFragment : Fragment() {
         }
     }
 
-    /** The preview deliberately stays fixed while the preference pages move, so it is outside
-     *  ViewPager2's touch area. Treat a horizontal drag over that prominent surface as the same
-     *  previous/next-page gesture; otherwise swiping appears broken depending on where the user
-     *  starts the gesture. */
-    @SuppressLint("ClickableViewAccessibility")
-    private fun bindPreviewSwipe() {
-        val touchSlop = ViewConfiguration.get(requireContext()).scaledTouchSlop
-        var startX = 0f
-        var startY = 0f
-        var gestureResolved = false
-
-        binding.watchPreviewPanel.setOnTouchListener { _, event ->
-            when (event.actionMasked) {
-                MotionEvent.ACTION_DOWN -> {
-                    startX = event.x
-                    startY = event.y
-                    gestureResolved = false
-                }
-
-                MotionEvent.ACTION_MOVE -> if (!gestureResolved) {
-                    val deltaX = event.x - startX
-                    val deltaY = event.y - startY
-                    if (abs(deltaX) > touchSlop && abs(deltaX) > abs(deltaY)) {
-                        val direction = if (deltaX < 0f) 1 else -1
-                        val target = (binding.watchPager.currentItem + direction)
-                            .coerceIn(sections.indices)
-                        if (target != binding.watchPager.currentItem) {
-                            binding.watchPager.setCurrentItem(target, true)
-                        }
-                        gestureResolved = true
-                    } else if (abs(deltaY) > touchSlop && abs(deltaY) > abs(deltaX)) {
-                        gestureResolved = true
-                    }
-                }
-
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> gestureResolved = true
-            }
-            true
-        }
-    }
-
     private fun resizePreview(rootWidth: Int, rootHeight: Int) {
         if (rootWidth <= 0 || rootHeight <= 0 || _binding == null) return
         val density = resources.displayMetrics.density
@@ -441,9 +461,11 @@ class WatchFaceFragment : Fragment() {
         val size = if (landscape) {
             min(min(rootWidth * 0.30f, rootHeight - dp(16).toFloat()), dp(240).toFloat())
         } else {
+            val editing = selectedSection != null
             min(
-                min(rootWidth - dp(32).toFloat(), rootWidth * 0.60f),
-                min(rootHeight * 0.40f, dp(240).toFloat())
+                min(rootWidth - dp(32).toFloat(), rootWidth * (if (editing) 0.48f else 0.60f)),
+                min(rootHeight * (if (editing) 0.30f else 0.40f),
+                    dp(if (editing) 200 else 240).toFloat())
             )
         }.roundToInt().coerceAtLeast(dp(80))
 
@@ -543,7 +565,7 @@ class WatchFaceFragment : Fragment() {
         registerMediaCallback()
         preview?.refresh()
         updateThemeCard()
-        tintTabs()
+        tintNavigation()
         loadMiniButtons()
         restartPlaybackTicker()
     }
@@ -560,11 +582,8 @@ class WatchFaceFragment : Fragment() {
     override fun onDestroyView() {
         tickHandler.removeCallbacks(playbackTick)
         binding.root.removeOnLayoutChangeListener(previewLayoutListener)
-        binding.watchPreviewPanel.setOnTouchListener(null)
-        binding.watchPager.unregisterOnPageChangeCallback(pageCallback)
-        tabMediator?.detach()
-        tabMediator = null
-        binding.watchPager.adapter = null
+        binding.watchSections.adapter = null
+        backCallback = null
         miniButtonsLoadJob?.cancel()
         miniButtonsLoadJob = null
         unregisterMediaCallback()
@@ -575,13 +594,14 @@ class WatchFaceFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(STATE_SELECTED_SECTION, selectedSection)
+        outState.putString(STATE_SELECTED_SECTION, selectedSection)
         outState.putString(STATE_PREVIEW_PREFERENCE, selectedPreviewPreference)
         super.onSaveInstanceState(outState)
     }
 
-    private data class Section(
-        val key: String,
-        val title: Int
+    private data class SearchTarget(
+        val section: String?,
+        val key: String?,
+        val redirected: Boolean
     )
 }

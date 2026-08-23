@@ -13,12 +13,14 @@ class SettingsSearchRankingTest {
     private fun entry(
             title: String,
             summary: String = "",
+            section: String = "General",
             category: String = "Appearance",
             key: String = title.lowercase().replace(' ', '_')
     ) = SettingsSearchEntry(
             key = key,
             title = title,
             summary = summary,
+            sectionTitle = section,
             categoryTitle = category,
             destination = SettingsSearchDestination.Settings("general"))
 
@@ -34,11 +36,13 @@ class SettingsSearchRankingTest {
     fun `title matches outrank category and summary matches`() {
         val titleHit = entry("Volume step")
         val categoryHit = entry("Something else", category = "Volume")
+        val sectionHit = entry("Unrelated row", section = "Volume")
         val summaryHit = entry("Another thing", summary = "Controls the volume on the watch")
 
-        val results = SettingsSearchIndex.rank(listOf(summaryHit, categoryHit, titleHit), "volume")
+        val results = SettingsSearchIndex.rank(
+                listOf(summaryHit, sectionHit, categoryHit, titleHit), "volume")
 
-        assertEquals(listOf(titleHit, categoryHit, summaryHit), results)
+        assertEquals(listOf(titleHit, categoryHit, sectionHit, summaryHit), results)
     }
 
     @Test
@@ -83,6 +87,32 @@ class SettingsSearchRankingTest {
         val entries = listOf(entry("Album art style"), entry("Accent colour"))
 
         assertTrue(SettingsSearchIndex.rank(entries, "bluetooth").isEmpty())
+    }
+
+    @Test
+    fun `section title is searchable for discoverability`() {
+        val automation = entry("Open on playback", section = "Automation")
+        val general = entry("App theme", section = "General")
+
+        assertEquals(
+                listOf(automation),
+                SettingsSearchIndex.rank(listOf(general, automation), "automation"))
+    }
+
+    @Test
+    fun `bare formatting summaries are ignored`() {
+        val placeholder = entry("Typeface", summary = "%s")
+
+        assertEquals("", SettingsSearchIndex.cleanSummary("%s"))
+        assertEquals("", SettingsSearchIndex.cleanSummary(" %1\$s "))
+        assertTrue(SettingsSearchIndex.rank(listOf(placeholder), "s").isEmpty())
+    }
+
+    @Test
+    fun `summary prose containing a formatting token is retained`() {
+        assertEquals(
+                "Current value: %1\$s",
+                SettingsSearchIndex.cleanSummary("Current value: %1\$s"))
     }
 
     /** Equal scores sort by title, so results do not reshuffle when a preference is moved in the

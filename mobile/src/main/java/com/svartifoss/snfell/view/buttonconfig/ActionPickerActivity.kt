@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,7 @@ class ActionPickerActivity : AppCompatActivity() {
     private val viewModel : ActionPickerViewModel by viewModels { viewModelFactory }
     private lateinit var recycler : RecyclerView
     private lateinit var adapter : ActionsAdapter
+    private lateinit var binding: PopupActionPickerBinding
 
     private var displayNone = false
 
@@ -43,19 +45,21 @@ class ActionPickerActivity : AppCompatActivity() {
     @Inject
     lateinit var customIconStorage: CustomIconStorage
 
-    private var oldRecyclerSize = 0
-
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         displayNone = intent.getBooleanExtra(EXTRA_DISPLAY_NONE, true)
 
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        val binding = PopupActionPickerBinding.inflate(layoutInflater)
+        binding = PopupActionPickerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
         viewModel.displayedActions.observe(this, listObserver)
+        viewModel.pageTitle.observe(this) { title ->
+            binding.pickerTitle.text = title ?: getString(R.string.pick_action)
+            binding.actionSearchInput.setText("")
+        }
         viewModel.selectedAction.observe(this, pickObserver)
         viewModel.activityStarter.observe(this, activityOpenObserver)
 
@@ -74,6 +78,10 @@ class ActionPickerActivity : AppCompatActivity() {
         binding.pickerTitle.setTextColor(LyraAccent.resolve(this))
 
         binding.cancelButton.setOnClickListener { finish() }
+        binding.pickerBack.setOnClickListener { navigateBackOrFinish() }
+        binding.actionSearchInput.doAfterTextChanged {
+            applyFilter(it?.toString().orEmpty())
+        }
 
         setFinishOnTouchOutside(true)
     }
@@ -83,9 +91,19 @@ class ActionPickerActivity : AppCompatActivity() {
             return@Observer
         }
 
-        adapter.notifyItemRangeRemoved(0, oldRecyclerSize)
-        adapter.notifyItemRangeInserted(0, adapter.itemCount)
-        oldRecyclerSize = adapter.itemCount
+        applyFilter(binding.actionSearchInput.text?.toString().orEmpty())
+    }
+
+    private fun applyFilter(query: String) {
+        adapter.submit(viewModel.displayedActions.value.orEmpty(), query)
+        val isEmpty = adapter.itemCount == 0
+        if (isEmpty) {
+            binding.actionSearchEmpty.setText(
+                    if (query.isBlank()) R.string.error_library_empty
+                    else R.string.action_search_empty
+            )
+        }
+        binding.actionSearchEmpty.isVisible = isEmpty
     }
 
     private val pickObserver = Observer<PhoneAction?> {
@@ -105,9 +123,11 @@ class ActionPickerActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (!viewModel.tryGoBack()) {
-            super.onBackPressed()
-        }
+        if (!viewModel.tryGoBack()) super.onBackPressed()
+    }
+
+    private fun navigateBackOrFinish() {
+        if (!viewModel.tryGoBack()) finish()
     }
 
     @Deprecated("Deprecated in Java")
@@ -120,8 +140,19 @@ class ActionPickerActivity : AppCompatActivity() {
     }
 
     private inner class ActionsAdapter : RecyclerView.Adapter<ActionsHolder>() {
+        private var items: List<IndexedValue<PhoneAction>> = emptyList()
+
+        fun submit(actions: List<PhoneAction>, query: String) {
+            val needle = query.trim()
+            items = actions.withIndex()
+                    .filter { needle.isEmpty() || it.value.title.contains(needle, ignoreCase = true) }
+            notifyDataSetChanged()
+        }
+
+        fun originalIndexAt(position: Int): Int? = items.getOrNull(position)?.index
+
         override fun getItemCount(): Int {
-            return viewModel.displayedActions.value?.size ?: 0
+            return items.size
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActionsHolder {
@@ -130,7 +161,7 @@ class ActionPickerActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: ActionsHolder, position: Int) {
-            val action = viewModel.displayedActions.value?.get(position) ?: return
+            val action = items.getOrNull(position)?.value ?: return
 
             val icon = customIconStorage[action]
             if (action.iconTintable) {
@@ -159,11 +190,14 @@ class ActionPickerActivity : AppCompatActivity() {
 
         init {
             itemView.setOnClickListener {
-                if (adapterPosition == RecyclerView.NO_POSITION) {
+                val position = bindingAdapterPosition
+                if (position == RecyclerView.NO_POSITION) {
                     return@setOnClickListener
                 }
 
-                viewModel.onActionTapped(adapterPosition)
+                val originalIndex = adapter.originalIndexAt(position)
+                    ?: return@setOnClickListener
+                viewModel.onActionTapped(originalIndex)
             }
         }
     }

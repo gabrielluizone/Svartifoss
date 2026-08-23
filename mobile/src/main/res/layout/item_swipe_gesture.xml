@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One swipe-direction/mini-button tile. The caption stays intentionally short (Up, Down,
-     Left or Button 1/2/3): it preserves spatial orientation after an action icon replaces the
-     directional placeholder, without reintroducing explanatory paragraphs in Controls. -->
+<!-- One swipe-direction/mini-button tile. Position and assigned action remain visible together,
+     so recognition does not depend on decoding an icon or accessibility-only text. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -15,9 +17,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"
         android:padding="10dp"
         tools:ignore="ContentDescription" />
 
@@ -31,9 +32,26 @@
         android:ellipsize="end"
         android:importantForAccessibility="no"
         android:maxLines="2"
-        android:textColor="@color/lyra_pref_summary"
+        android:textColor="@color/lyra_on_surface"
         android:textSize="11sp"
+        android:textStyle="bold"
         android:visibility="visible"
         tools:text="Up" />
+
+    <TextView
+        android:id="@+id/action_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="3dp"
+        android:fontFamily="@font/google_sans"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:maxLines="4"
+        android:minHeight="24dp"
+        android:textColor="@color/lyra_pref_summary"
+        android:textSize="10sp"
+        tools:text="Volume up" />
 
 </LinearLayout>

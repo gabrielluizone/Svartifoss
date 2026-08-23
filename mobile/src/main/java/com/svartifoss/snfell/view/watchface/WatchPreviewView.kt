@@ -247,11 +247,13 @@ class WatchPreviewView @JvmOverloads constructor(
     private var playerControlsVisible = true
     private var showTrackTitle = true
     private var showTrackArtist = true
+    private var showSourceIcon = true
     private var internalProgressVisible = true
     private var edgeProgressVisible = true
     private var edgeSeekEnabled = true
     private var screenTheme = "default"
     private var wearFontKey = "google_sans"
+    private var fontAllScreens = false
     private var wearClockFontKey = WatchTypography.CLOCK_FONT_FOLLOW
     private var wearLyricsFontKey = WatchTypography.LYRICS_FONT_FOLLOW
     private var artStyle = "cover"
@@ -274,12 +276,11 @@ class WatchPreviewView @JvmOverloads constructor(
     /** The accent source [extractLiveAccent] last ran with, so a changed source invalidates the
      *  per-bitmap cache the same way the watch's `lastPaletteAccentSource` does. */
     private var liveAccentSource: String? = null
-    /** Per-element typography, mirroring what the watch resolves through WatchTypography. There is
-     *  deliberately no source-icon spec here: this preview has never drawn the playing-app glyph,
-     *  so there is nothing for its size/opacity to affect. */
+    /** Per-element typography, mirroring what the watch resolves through WatchTypography. */
     private var titleTypographySpec = WatchTypography.IDENTITY_TEXT
     private var clockTypographySpec = WatchTypography.IDENTITY_TEXT
     private var artistTypographySpec = WatchTypography.IDENTITY_TEXT
+    private var sourceIconTypographySpec = WatchTypography.IDENTITY_ICON
     private var flexAxesSpec = WatchTypography.IDENTITY_FLEX_AXES
     private var titleColorMode = MiscPreferences.TITLE_COLOR_FACE_DEFAULT
     private var titleCustomColor = ""
@@ -398,6 +399,18 @@ class WatchPreviewView @JvmOverloads constructor(
         val base = titleFontBase() ?: return styledPreviewTypeface(
                 if (bold) fontBold else fontRegular, bold, spec)
         return styledPreviewTypeface(base, bold, spec)
+    }
+
+    /**
+     * Typeface for non-player watch surfaces. The real Wear UI supplies the selected family to
+     * menus and Queue (and applies it to the View-based Quick actions panel) only when
+     * `wear_font_all_screens` is enabled. Keeping this separate from [titleTypeface] avoids
+     * leaking title/artist weight, slant and tracking into list chrome.
+     */
+    private fun watchUiTypeface(bold: Boolean): Typeface? {
+        if (!fontAllScreens) return if (bold) fontBold else fontRegular
+        val base = WatchFontCatalog.previewTypefaceFor(context, wearFontKey)
+        return Typeface.create(base, if (bold) Typeface.BOLD else Typeface.NORMAL)
     }
 
     /** Cached copy of the bundled Flex font, extracted once per process - mirrors the watch's
@@ -564,6 +577,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 key == "wear_quick_panel_custom_color" || key == "wear_up_next_pill_style" ->
             PreviewSurface.QUICK_PANEL
         key == "wear_queue_style" || key == "wear_list_row_size" -> PreviewSurface.QUEUE
+        key == "wear_font_all_screens" -> PreviewSurface.QUEUE
         key == "wear_overlay_backdrop_style" -> PreviewSurface.VOLUME
         key == "overlay_blur_radius" -> PreviewSurface.VOLUME
         key.startsWith("screen_buttons_") || key == "wear_mini_buttons_mode" ->
@@ -591,11 +605,13 @@ class WatchPreviewView @JvmOverloads constructor(
         playerControlsVisible = readBoolean("wear_classic_icons_visible", true)
         showTrackTitle = readBoolean("wear_show_track_title", true)
         showTrackArtist = readBoolean("wear_show_track_artist", true)
+        showSourceIcon = readBoolean("wear_show_source_icon", true)
         internalProgressVisible = readBoolean("wear_internal_progress_visible", true)
         edgeProgressVisible = readBoolean("wear_edge_progress_visible", true)
         edgeSeekEnabled = readBoolean("wear_edge_seek_enabled", true)
         screenTheme = readString("wear_screen_theme", "default")
         wearFontKey = readString("wear_font", "google_sans")
+        fontAllScreens = readBoolean("wear_font_all_screens", false)
         wearClockFontKey = readString("wear_clock_font", WatchTypography.CLOCK_FONT_FOLLOW)
         wearLyricsFontKey = readString("wear_lyrics_font", WatchTypography.LYRICS_FONT_FOLLOW)
         artStyle = readString("album_art_style", "cover")
@@ -627,7 +643,7 @@ class WatchPreviewView @JvmOverloads constructor(
         overlayBackdropStyle = readString("wear_overlay_backdrop_style", "follow")
         colorTreatment = readString("wear_color_treatment", "expressive")
         normalColor = readString("wear_normal_color", "")
-        normalColorMulti = prefs.getBoolean("wear_normal_color_multi", true)
+        normalColorMulti = readBoolean("wear_normal_color_multi", true)
         colorModifier = readString("wear_color_modifier", "none")
         colorHueShift = readInt("wear_color_hue_shift", 0).toFloat()
         albumAccentSource = readString(
@@ -648,6 +664,9 @@ class WatchPreviewView @JvmOverloads constructor(
                 scale = WatchTypography.normalizeScale(readInt("wear_artist_font_scale", 100)),
                 alpha = WatchTypography.normalizeOpacity(readInt("wear_artist_font_opacity", 100)),
                 trackingEm = WatchTypography.normalizeTracking(readInt("wear_artist_font_tracking", 0)))
+        sourceIconTypographySpec = WatchTypography.IconSpec(
+                scale = WatchTypography.normalizeScale(readInt("wear_source_icon_scale", 100)),
+                alpha = WatchTypography.normalizeOpacity(readInt("wear_source_icon_opacity", 100)))
         // Alpha stays at identity: the clock's opacity lives in wear_clock_opacity and is already
         // baked into resolveClockColor, exactly as WatchTypography.clockSpec does on the watch.
         clockTypographySpec = WatchTypography.TextSpec(
@@ -3787,7 +3806,7 @@ class WatchPreviewView @JvmOverloads constructor(
         textPaint.style = Paint.Style.FILL
         textPaint.textAlign = Paint.Align.CENTER
         if (showTrackTitle) {
-            textPaint.typeface = fontBold
+            textPaint.typeface = watchUiTypeface(bold = true)
             textPaint.textSize = dp(18f)
             textPaint.color = metadataColor
             canvas.drawText(
@@ -3798,7 +3817,7 @@ class WatchPreviewView @JvmOverloads constructor(
             )
         }
         if (renderArtist) {
-            textPaint.typeface = fontBold
+            textPaint.typeface = watchUiTypeface(bold = true)
             textPaint.textSize = dp(13f)
             textPaint.color = ColorUtils.setAlphaComponent(metadataColor, 0xB3)
             canvas.drawText(
@@ -3891,7 +3910,7 @@ class WatchPreviewView @JvmOverloads constructor(
                     rowSkin.onColor
             )
             textPaint.textAlign = Paint.Align.LEFT
-            textPaint.typeface = fontBold
+            textPaint.typeface = watchUiTypeface(bold = true)
             textPaint.textSize = dp(12f)
             textPaint.color = rowSkin.onColor
             val rowTitle = when {
@@ -3902,7 +3921,7 @@ class WatchPreviewView @JvmOverloads constructor(
             }
             canvas.drawText(ellipsize(rowTitle,
                     rowWidth - dp(56f)), rowRect.left + dp(37f), rowY - dp(2f), textPaint)
-            textPaint.typeface = fontRegular
+            textPaint.typeface = watchUiTypeface(bold = false)
             textPaint.textSize = dp(9f)
             textPaint.color = ColorUtils.setAlphaComponent(rowSkin.onColor, 0xB3)
             val rowSubtitle = displayTitle()
@@ -4093,12 +4112,12 @@ class WatchPreviewView @JvmOverloads constructor(
 
         textPaint.style = Paint.Style.FILL
         textPaint.textAlign = Paint.Align.CENTER
-        textPaint.typeface = fontBold
+        textPaint.typeface = watchUiTypeface(bold = true)
         textPaint.textSize = dp(13f)
         textPaint.color = Color.WHITE
         canvas.drawText(ellipsize(displayTitle(), geometry.radius * 1.45f),
                 geometry.cx, geometry.bounds.top + dp(39f), textPaint)
-        textPaint.typeface = fontRegular
+        textPaint.typeface = watchUiTypeface(bold = false)
         textPaint.textSize = dp(9.5f)
         textPaint.color = accentForText(queueAccent())
         canvas.drawText(ellipsize(displayArtist(), geometry.radius * 1.45f),
@@ -4156,12 +4175,12 @@ class WatchPreviewView @JvmOverloads constructor(
             }
             textPaint.style = Paint.Style.FILL
             textPaint.textAlign = Paint.Align.LEFT
-            textPaint.typeface = fontBold
+            textPaint.typeface = watchUiTypeface(bold = true)
             textPaint.textSize = dp(10.5f)
             textPaint.color = skin.onColor
             canvas.drawText(ellipsize(titles[index], rect.right - left - dp(8f)),
                     left, y - dp(1f), textPaint)
-            textPaint.typeface = fontRegular
+            textPaint.typeface = watchUiTypeface(bold = false)
             textPaint.textSize = dp(8f)
             textPaint.color = ColorUtils.setAlphaComponent(skin.onColor, 0xA6)
             canvas.drawText(ellipsize(subtitles[index], rect.right - left - dp(8f)),
@@ -6196,17 +6215,22 @@ class WatchPreviewView @JvmOverloads constructor(
 
         // Hairline: how far through the *current line* playback is, not through the track. The
         // face's own progress indicator, which is why the edge arc defaults off here.
-        val ruleWidth = screen * .42f
-        val ruleY = cy + dp(11f) + bandShift
-        val ruleHeight = dp(1f)
-        fillPaint.shader = null
-        fillPaint.color = ColorUtils.setAlphaComponent(accent, 0x29)
-        canvas.drawRect(cx - ruleWidth / 2f, ruleY, cx + ruleWidth / 2f, ruleY + ruleHeight, fillPaint)
-        fillPaint.color = ColorUtils.setAlphaComponent(accent, 0xD9)
-        canvas.drawRect(
-                cx - ruleWidth / 2f, ruleY,
-                cx - ruleWidth / 2f + ruleWidth * VERSE_PREVIEW_LINE_PROGRESS, ruleY + ruleHeight,
-                fillPaint)
+        if (internalProgressVisible) {
+            val ruleWidth = screen * .42f
+            val ruleY = cy + dp(11f) + bandShift
+            val ruleHeight = dp(1f)
+            fillPaint.shader = null
+            fillPaint.color = ColorUtils.setAlphaComponent(accent, 0x29)
+            canvas.drawRect(
+                    cx - ruleWidth / 2f, ruleY,
+                    cx + ruleWidth / 2f, ruleY + ruleHeight, fillPaint)
+            fillPaint.color = ColorUtils.setAlphaComponent(accent, 0xD9)
+            canvas.drawRect(
+                    cx - ruleWidth / 2f, ruleY,
+                    cx - ruleWidth / 2f + ruleWidth * VERSE_PREVIEW_LINE_PROGRESS,
+                    ruleY + ruleHeight,
+                    fillPaint)
+        }
 
         textPaint.textSize = dp(8.5f)
         textPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x61)
@@ -6588,9 +6612,19 @@ class WatchPreviewView @JvmOverloads constructor(
 
         // Source icon on the seam, right of centre. Drawn bare - no disc, no ring - matching
         // SplitFace.SourceBadge, which dropped both so the glyph is the only mark on the seam.
-        val badgeDiameter = (screen * SPLIT_BADGE_FRACTION).coerceIn(dp(26f), dp(52f))
+        // SplitFace scales the glyph before applying its 26–52dp safety bounds, then anchors its
+        // right edge. Keeping that order makes the preview honest at the 50%/200% extremes.
+        val badgeDiameter = (screen * SPLIT_BADGE_FRACTION * sourceIconTypographySpec.scale)
+                .coerceIn(dp(26f), dp(52f))
         val badgeCx = cx + radius - screen * .10f - badgeDiameter / 2f
-        drawSourceIconStandIn(canvas, badgeCx, seamY, badgeDiameter)
+        if (showSourceIcon) {
+            drawSourceIconStandIn(
+                    canvas,
+                    badgeCx,
+                    seamY,
+                    badgeDiameter,
+                    (255 * sourceIconTypographySpec.alpha).roundToInt().coerceIn(0, 255))
+        }
 
         if (alwaysShowTime || clockPreviewForced()) {
             drawSmallClock(canvas, cx, cy - radius + dp(24f), dp)

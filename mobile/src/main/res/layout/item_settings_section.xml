@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="5dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground"
     app:cardBackgroundColor="@color/lyra_surface"
-    app:cardCornerRadius="14dp"
+    app:cardCornerRadius="18dp"
     app:cardElevation="0dp"
     app:strokeColor="@color/lyra_divider"
     app:strokeWidth="1dp">
@@ -19,60 +21,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:minHeight="64dp"
+        android:minHeight="82dp"
         android:orientation="horizontal"
         android:paddingStart="14dp"
-        android:paddingTop="9dp"
+        android:paddingTop="12dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="9dp">
+        android:paddingBottom="12dp">
 
         <ImageView
-            android:id="@+id/button_icon"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:id="@+id/section_icon"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:background="@drawable/circle_icon_bg"
             android:contentDescription="@null"
-            android:padding="8dp"
+            android:padding="10dp"
+            android:tint="@color/lyra_accent"
             tools:ignore="UseAppTint"
-            tools:src="@drawable/ic_watch" />
+            tools:src="@drawable/ic_palette" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="14dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/button_title"
+                android:id="@+id/section_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/google_sans"
                 android:includeFontPadding="false"
                 android:textColor="@color/lyra_on_surface"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="Top button" />
+                tools:text="Appearance" />
 
             <TextView
-                android:id="@+id/button_actions"
+                android:id="@+id/section_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/google_sans"
                 android:includeFontPadding="false"
-                android:textColor="@color/lyra_pref_summary"
-                android:textSize="12sp"
-                tools:text="Tap: Play/pause · Hold: Queue" />
+                android:lineSpacingExtra="1dp"
+                android:textColor="@color/lyra_text_secondary"
+                android:textSize="13sp"
+                tools:text="Theme, accent color and display preferences." />
 
         </LinearLayout>
 
         <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:contentDescription="@null"
             android:importantForAccessibility="no"
-            android:padding="8dp"
+            android:padding="9dp"
             android:src="@drawable/ic_chevron_right"
             android:tint="@color/lyra_text_secondary"
             tools:ignore="UseAppTint" />

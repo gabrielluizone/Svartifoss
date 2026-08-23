@@ -30,16 +30,11 @@ class SettingsCatalogTest {
          * Categories whose visibility is decided by something other than the section, so they are
          * deliberately absent from the section maps and the hide-lists.
          *
-         * Both depend on a *value* as well as a page, which plain set membership cannot express.
-         * Adding to this set means claiming the same, so it is the moment to check that a separate
-         * rule really does own the category.
+         * Adding to this set means claiming a separate rule owns the category completely.
          */
         val EXTERNALLY_MANAGED = setOf(
                 // Shown only once developer mode is unlocked - MiscSettingsFragment.updateDevModeVisibility.
-                "cat_developer",
-                // Shown only on Text, and only when Google Sans Flex is the chosen font -
-                // WatchFacePrefsFragment.updateFlexAxesVisibility.
-                "cat_wf_typography_flex"
+                "cat_developer"
         )
     }
 

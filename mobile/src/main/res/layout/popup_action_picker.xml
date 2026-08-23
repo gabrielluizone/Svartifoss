@@ -6,12 +6,27 @@
     android:layout_height="wrap_content"
     tools:context="com.svartifoss.snfell.view.buttonconfig.ActionPickerActivity">
 
+    <ImageButton
+        android:id="@+id/picker_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="6dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back"
+        android:padding="12dp"
+        android:src="@drawable/ic_arrow_back"
+        android:tint="@color/lyra_on_surface"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseAppTint" />
+
     <TextView
         android:id="@+id/picker_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/google_sans"
         android:letterSpacing="0.08"
@@ -21,8 +36,39 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/picker_back"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/picker_header_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="picker_back,picker_title" />
+
+    <EditText
+        android:id="@+id/action_search_input"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/lyra_text_secondary"
+        android:fontFamily="@font/google_sans"
+        android:hint="@string/action_search_hint"
+        android:imeOptions="actionSearch"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textColor="@color/lyra_on_surface"
+        android:textColorHint="@color/lyra_pref_summary"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/picker_header_bottom"
+        tools:ignore="UseAppTint" />
 
     <!-- constrainedHeight lets the list shrink-wrap short sub-lists (e.g. volume) while long
          lists scroll instead of pushing the cancel bar off-screen. -->
@@ -36,7 +82,23 @@
         app:layout_constraintBottom_toTopOf="@id/footer_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/picker_title" />
+        app:layout_constraintTop_toBottomOf="@id/action_search_input" />
+
+    <TextView
+        android:id="@+id/action_search_empty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/google_sans"
+        android:gravity="center"
+        android:padding="24dp"
+        android:text="@string/action_search_empty"
+        android:textColor="@color/lyra_pref_summary"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/footer_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_search_input" />
 
     <View
         android:id="@+id/footer_divider"

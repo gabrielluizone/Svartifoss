@@ -62,7 +62,7 @@
     <string name="watch_section_background">Фон</string>
     <string name="watch_section_background_description">Управляйте обложкой альбома, размытием, затуханием и читаемостью за плеером.</string>
     <string name="watch_section_colors">Цвета</string>
-    <string name="watch_section_colors_description">Настройте цвета исполнителя, кольца прогресса и акцента на основе альбома.</string>
+    <string name="watch_section_colors_description">Задайте основные цвета, цвета прогресса и акценты альбома, затем настройте цвета названия, исполнителя, часов, громкости и панелей.</string>
     <string name="watch_section_aod">Всегда включён</string>
     <string name="watch_section_aod_description">Настройте энергосберегающий экран и посмотрите его вид в спящем режиме в предпросмотре.</string>
     <string name="watch_section_panels">Панели</string>
@@ -77,7 +77,7 @@
     <string name="settings_section_automation">Автоматизация</string>
     <string name="settings_section_automation_description">Выберите, когда Svartifoss открывается и закрывается автоматически.</string>
     <string name="settings_section_apps">Приложения</string>
-    <string name="settings_section_apps_description">Настройте музыкальные сервисы и интеграции приложений в одном месте.</string>
+    <string name="settings_section_apps_description">Находите тексты песен и метаданные, ярлыки стриминга, обложки в очереди и доступ Android.</string>
     <string name="settings_section_data">Данные и поддержка</string>
     <string name="settings_section_data_description">Резервное копирование настроек, проверка версии, диагностика или получение помощи.</string>
 
@@ -89,13 +89,13 @@
     <string name="tutorial_taps_desc">Экран часов разделён на четыре зоны — верх, низ, слева и справа. Касание зоны запускает назначенное ей действие. По умолчанию левая зона воспроизводит или ставит на паузу, правая переключает на следующий трек, а верх и низ меняют громкость.</string>
 
     <string name="tutorial_gestures_title">Одиночное, двойное и долгое нажатие</string>
-    <string name="tutorial_gestures_desc">У каждой зоны три отдельных действия: для одиночного касания, для двойного касания и для долгого нажатия. Например, одиночное касание в центре может ставить музыку на паузу, а двойное касание — открывать меню действий. Вы не увидите этого, пока не настроите, так что настраивайте по своему вкусу.</string>
+    <string name="tutorial_gestures_desc">Для каждой из четырёх краевых зон можно отдельно назначить одиночное, двойное и долгое нажатие. Одиночное нажатие в центре тоже настраивается; двойное всегда открывает быстрые действия, а долгое — выбор циферблата, очередь или ничего в соответствии с пунктом «Настройки → Поведение».</string>
 
     <string name="tutorial_buttons_title">Физические кнопки</string>
     <string name="tutorial_buttons_desc">Если на ваших часах есть боковые кнопки, им тоже можно назначить действия для одиночного, двойного и долгого нажатия. Они продолжают работать даже при выключенном экране.</string>
 
     <string name="tutorial_rotary_title">Вращающаяся заводная головка</string>
-    <string name="tutorial_rotary_desc">Вращайте заводную головку или безель, чтобы изменить громкость. Предпочитаете перематывать песню? Включите «Перемотка заводной головкой» в Настройках.</string>
+    <string name="tutorial_rotary_desc">Выберите, будет ли вращение головки или безеля изменять громкость, перематывать трек или ничего не делать, в разделе «Настройки → Поведение → Вращение и точная настройка». На часах, где вращения распознаются как кнопки, назначьте их в разделе «Управление».</string>
 
     <string name="tutorial_swipe_up_title">Свайп вверх, вниз, влево и вправо</string>
     <string name="tutorial_swipe_up_desc">Свайп вверх, вниз или влево на экране воспроизведения можно настроить на открытие чего угодно — меню действий, очереди воспроизведения, пропуск треков, ваши плейлисты и многое другое. Настройте каждый в разделе Управление, выбрав «Музыка играет» или «Нет воспроизведения». По умолчанию свайп вверх открывает меню действий, остальные ничего не делают, пока вы их не назначите. Свайп вправо не тронут — это универсальный жест Wear OS для выхода из приложения.</string>
@@ -198,7 +198,7 @@
     <string name="gesture_double_press">Двойное нажатие</string>
     <string name="gesture_long_press">Долгое нажатие</string>
     <string name="gesture_swipe_action">Действие</string>
-    <string name="center_button_quick_panel_note">Двойное касание центра экрана воспроизведения всегда открывает панель быстрых действий, независимо от того, что вы назначите здесь.</string>
+    <string name="center_button_quick_panel_note">Двойное нажатие в центре всегда открывает быстрые действия. Долгое нажатие выполняет выбор из раздела «Настройки → Поведение». Эти жесты не меняются при назначении здесь одиночного нажатия в центре.</string>
     <string name="start_playback">Начать воспроизведение</string>
     <string name="uninstalled_app">Удалённое приложение</string>
 
@@ -622,7 +622,7 @@
     <string name="preview_notification_controls">Значок из медиауведомления</string>
     <string name="setting_wear_queue_style">Стиль очереди</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Использовать обложки ярлыков как фон</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Когда стиль очереди выше — вариант с обложкой, строка действия быстрой панели с полученной обложкой ярлыка (трек, плейлист, исполнитель…) также заполняет свою плашку этим изображением, как это делает «Далее». Ярлыки без полученной обложки (только значок приложения) не затрагиваются.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Когда стиль очереди — вариант с обложкой, строка действия быстрой панели с полученной обложкой ярлыка (трек, плейлист, исполнитель…) также заполняет свою плашку этим изображением, как это делает «Далее». Ярлыки без полученной обложки (только значок приложения) не затрагиваются.</string>
     <string name="setting_wear_list_row_size">Размер плашки списка</string>
     <string name="setting_wear_list_row_size_description">Высота строк на всю ширину в очереди, меню и быстрой панели.</string>
     <string name="setting_wear_progress_style">Стиль кольца прогресса</string>
@@ -1131,7 +1131,7 @@
     </string-array>
 
     <string name="watch_section_typography">Текст</string>
-    <string name="watch_section_typography_description">Выберите шрифт и настройте оформление названия, исполнителя и значка приложения независимо друг от друга.</string>
+    <string name="watch_section_typography_description">Выберите шрифты и настройте текст названия, исполнителя, часов, значка приложения, дополнительных экранов и Flex.</string>
     <string name="tutorial_quick_panel_title">Панель быстрых действий</string>
     <string name="tutorial_quick_panel_desc">Дважды коснитесь центра экрана воспроизведения, чтобы открыть панель с четырьмя слотами — тремя круглыми кнопками и одной широкой строкой под ними. Если их не настроить, слоты отражают кнопки, которые само воспроизводящее приложение помещает в своё уведомление, поэтому вы получаете его настоящие элементы «нравится», перемешивания и повтора. Назначьте любое действие на слот или выберите «Нет», чтобы скрыть его, в разделе «Действия» на телефоне.</string>
     <string name="tutorial_shortcuts_title">Ярлыки стриминга</string>
@@ -1226,7 +1226,7 @@
     <string name="error_library_no_player">Сначала запустите воспроизведение</string>
     <string name="setting_wear_carousel_card_shape">Форма карточки карусели</string>
     <string name="setting_wear_font_all_screens">Использовать шрифт везде</string>
-    <string name="setting_wear_font_all_screens_description">Применяет выбранный шрифт также к меню, очереди и часам на экране, а не только к названию и исполнителю трека. Декоративные и рукописные шрифты могут хуже читаться в списках.</string>
+    <string name="setting_wear_font_all_screens_description">Применяет выбранный шрифт к меню, очереди и быстрым действиям, а не только к проигрывателю. Декоративные и рукописные шрифты могут хуже читаться в списках.</string>
     <string name="setting_wear_clock_font">Шрифт часов</string>
     <string name="wear_clock_font_follow">Как у шрифта трека</string>
     <string name="setting_wear_clock_font_weight">Насыщенность часов</string>
@@ -1414,4 +1414,39 @@
         <item>Обычное</item>
         <item>Насыщенное</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">Выберите, что хотите настроить. Предпросмотр и сохранённая тема остаются активными во всех разделах.</string>
+    <string name="watch_back_to_overview">Назад к разделам часов</string>
+    <string name="settings_overview_description">Выберите раздел. Связанные параметры сгруппированы, а поиск по-прежнему может открыть любую настройку напрямую.</string>
+    <string name="settings_back_to_overview">Назад к разделам настроек</string>
+    <string name="action_search_hint">Поиск в этом списке</string>
+    <string name="action_search_empty">Нет действий, соответствующих поиску.</string>
+    <string name="control_assignment_tap">Нажатие: %1$s</string>
+    <string name="control_assignment_hold">Удержание: %1$s</string>
+    <string name="control_assignment_both">Нажатие: %1$s · Удержание: %2$s</string>
+    <string name="category_wf_screen_behavior">Поведение экрана</string>
+    <string name="category_wf_player_progress">Прогресс, перемотка и время</string>
+    <string name="category_wf_metadata">Содержимое циферблата «Метаданные»</string>
+    <string name="category_wf_typography_secondary">Текст на других экранах</string>
+    <string name="category_wf_colors_title">Цвета названия</string>
+    <string name="category_wf_colors_artist">Цвета исполнителя</string>
+    <string name="category_wf_colors_clock">Цвета часов</string>
+    <string name="category_watch_navigation">Навигация и ярлыки</string>
+    <string name="category_rotary_input">Вращение и точная настройка</string>
+    <string name="category_watch_feedback">Отклик и поведение при выходе</string>
+    <string name="settings_search_prerequisite">Этот параметр зависит от другого выбора. Измените показанную здесь настройку, чтобы отобразить его.</string>
+    <string name="setting_numeric_range_error">Введите значение от %1$d до %2$d.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">Общий вид панелей</string>
+    <string name="category_wf_panel_volume">Панель громкости</string>
+    <string name="category_wf_panel_seek">Панель прогресса и перемотки</string>
+    <string name="category_wf_panel_quick">Панель быстрых действий</string>
+    <string name="category_wf_panel_queue">Очередь и списки</string>
+    <string name="category_wf_panel_effects">Эффекты панелей</string>
+    <string name="category_apps_content">Тексты песен и метаданные</string>
+    <string name="category_streaming_services">Ярлыки стриминга</string>
+    <string name="category_queue_artwork">Обложки в очереди</string>
+    <string name="category_system_access">Доступ Android и уведомления</string>
+    <string name="setting_privacy_policy">Политика конфиденциальности</string>
+    <string name="setting_privacy_policy_description">Узнайте, какие данные использует Svartifoss и какие интернет-службы являются необязательными.</string>
 </resources>

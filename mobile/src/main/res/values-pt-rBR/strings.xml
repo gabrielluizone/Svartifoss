@@ -64,7 +64,7 @@
     <string name="watch_section_background">Fundo</string>
     <string name="watch_section_background_description">Controle capa, desfoque, transição e legibilidade atrás do player.</string>
     <string name="watch_section_colors">Cores</string>
-    <string name="watch_section_colors_description">Ajuste as cores do artista, do progresso e as cores baseadas no álbum.</string>
+    <string name="watch_section_colors_description">Defina as cores básicas, de progresso e de destaque do álbum; depois ajuste as cores de título, artista, relógio, volume e painéis.</string>
     <string name="watch_section_aod">Sempre ativa</string>
     <string name="watch_section_aod_description">Configure a tela de baixo consumo e veja sua aparência ambiente na prévia.</string>
     <string name="watch_section_panels">Painéis</string>
@@ -79,7 +79,7 @@
     <string name="settings_section_automation">Automação</string>
     <string name="settings_section_automation_description">Escolha quando o Svartifoss abre e fecha automaticamente.</string>
     <string name="settings_section_apps">Apps</string>
-    <string name="settings_section_apps_description">Configure serviços de música e integrações específicas de apps em um só lugar.</string>
+    <string name="settings_section_apps_description">Encontre letras e metadados, atalhos de streaming, capas na fila e acesso do Android.</string>
     <string name="settings_section_data">Dados e suporte</string>
     <string name="settings_section_data_description">Faça backup, consulte a versão, diagnósticos ou obtenha ajuda.</string>
 
@@ -91,13 +91,13 @@
     <string name="tutorial_taps_desc">A tela do relógio é dividida em quatro zonas — cima, baixo, esquerda e direita. Tocar em uma zona executa a ação atribuída a ela. Por padrão, a zona da esquerda reproduz ou pausa, a da direita pula para a próxima faixa, e as de cima e baixo alteram o volume.</string>
 
     <string name="tutorial_gestures_title">Toque simples, duplo e longo</string>
-    <string name="tutorial_gestures_desc">Cada zona guarda três ações separadas: uma para toque simples, uma para toque duplo e uma para toque longo. Por exemplo, um toque simples no centro pode pausar a música enquanto um toque duplo abre o menu de ações — você só vai ver isso se configurar, então personalize do seu jeito.</string>
+    <string name="tutorial_gestures_desc">Cada uma das quatro zonas nas bordas aceita ações diferentes para toque simples, toque duplo e toque longo. O toque simples no centro também é configurável; o toque duplo sempre abre as Ações rápidas, enquanto o toque longo abre o seletor de mostrador, a fila ou nada, conforme Configurações → Comportamento.</string>
 
     <string name="tutorial_buttons_title">Botões físicos</string>
     <string name="tutorial_buttons_desc">Se o seu relógio tem botões laterais, você também pode atribuir ações de toque simples, duplo e longo a eles. Eles continuam funcionando mesmo com a tela desligada.</string>
 
     <string name="tutorial_rotary_title">Coroa giratória</string>
-    <string name="tutorial_rotary_desc">Gire a coroa ou o bezel para ajustar o volume. Prefere avançar/retroceder a faixa? Ative \"Buscar com a coroa giratória\" nas Configurações.</string>
+    <string name="tutorial_rotary_desc">Escolha se a coroa ou o aro giratório ajusta o volume, avança pela faixa ou não faz nada em Configurações → Comportamento → Entrada giratória e ajuste. Em relógios que detectam giros da coroa como botões, faça a atribuição em Controles.</string>
 
     <string name="tutorial_swipe_up_title">Deslize para cima, baixo, esquerda e direita</string>
     <string name="tutorial_swipe_up_desc">Deslizar para cima, baixo ou esquerda na tela de reprodução pode abrir qualquer coisa — o menu de ações, a fila, faixas, playlists e muito mais. Configure cada gesto em Controles, escolhendo Música tocando ou Sem reprodução. Por padrão, deslizar para cima abre o menu de ações e os outros não fazem nada até você atribuí-los. Deslizar para a direita é reservado — esse é o gesto universal do Wear OS para sair do app.</string>
@@ -199,7 +199,7 @@
     <string name="gesture_double_press">Toque duplo</string>
     <string name="gesture_long_press">Toque longo</string>
     <string name="gesture_swipe_action">Ação</string>
-    <string name="center_button_quick_panel_note">Tocar duas vezes no centro da tela de reprodução sempre abre o painel de ações rápidas, não importa o que você atribuir aqui.</string>
+    <string name="center_button_quick_panel_note">Tocar duas vezes no centro sempre abre as Ações rápidas. O toque longo executa a opção escolhida em Configurações → Comportamento. Nenhum dos dois gestos muda quando você atribui o toque central aqui.</string>
     <string name="start_playback">Iniciar reprodução</string>
     <string name="uninstalled_app">App desinstalado</string>
 
@@ -622,7 +622,7 @@
     <string name="preview_notification_controls">Ícone da notificação de mídia</string>
     <string name="setting_wear_queue_style">Estilo da fila</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Usar capa do atalho como fundo</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando o Estilo da fila acima for uma variação de Capa, uma linha de ação do painel rápido com uma capa de atalho já buscada (faixa, playlist, artista…) também preenche seu pill com essa imagem, como já acontece no Próxima na fila. Atalhos sem capa buscada (só o ícone do app) não são afetados.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando o Estilo da fila for uma variação de Capa, uma linha de ação do painel rápido com uma capa de atalho já buscada (faixa, playlist, artista…) também preenche seu pill com essa imagem, como já acontece no Próxima na fila. Atalhos sem capa buscada (só o ícone do app) não são afetados.</string>
     <string name="setting_wear_list_row_size">Tamanho das pills</string>
     <string name="setting_wear_list_row_size_description">Altura das linhas de largura total na fila, nos menus e no painel rápido.</string>
     <string name="setting_wear_progress_style">Estilo do anel de progresso</string>
@@ -1164,7 +1164,7 @@
 
     <!-- Watch appearance: Typography section -->
     <string name="watch_section_typography">Texto</string>
-    <string name="watch_section_typography_description">Escolha uma fonte e estilize título, artista e ícone do app de forma independente.</string>
+    <string name="watch_section_typography_description">Escolha as fontes e ajuste os textos de título, artista, relógio, ícone do app, telas secundárias e Flex.</string>
 
     <!-- Tutorial -->
     <string name="tutorial_quick_panel_title">Painel de ações rápidas</string>
@@ -1279,7 +1279,7 @@
     <string name="setting_wear_carousel_card_shape">Formato do card do carrossel</string>
 
     <string name="setting_wear_font_all_screens">Usar fonte em todas as telas</string>
-    <string name="setting_wear_font_all_screens_description">Aplica a fonte escolhida também ao menu, à fila e ao relógio no visor, não só ao título e ao artista da faixa. Fontes decorativas e manuscritas podem ser mais difíceis de ler em listas.</string>
+    <string name="setting_wear_font_all_screens_description">Aplica a fonte escolhida aos menus, à fila e às Ações rápidas, não apenas ao player. Fontes decorativas e manuscritas podem ser mais difíceis de ler em listas.</string>
     <string name="setting_wear_clock_font">Fonte do relógio</string>
     <string name="wear_clock_font_follow">Seguir fonte da faixa</string>
     <string name="setting_wear_clock_font_weight">Peso do relógio</string>
@@ -1466,4 +1466,39 @@
     <string name="setting_wear_lyrics_font">Tipografia da letra</string>
     <string name="setting_wear_lyrics_font_description">A tipografia das palavras da música, na tela de letras e na face Verse. Segue a tipografia da faixa, a menos que você escolha uma aqui.</string>
     <string name="wear_lyrics_font_follow">Seguir tipografia da faixa</string>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">Escolha o que você quer personalizar. A prévia e o tema salvo continuam ativos em todas as áreas.</string>
+    <string name="watch_back_to_overview">Voltar às áreas do Relógio</string>
+    <string name="settings_overview_description">Escolha uma área. As opções relacionadas ficam juntas, e a busca ainda pode levar você diretamente a qualquer configuração.</string>
+    <string name="settings_back_to_overview">Voltar às áreas de configurações</string>
+    <string name="action_search_hint">Buscar nesta lista</string>
+    <string name="action_search_empty">Nenhuma ação corresponde a esta busca.</string>
+    <string name="control_assignment_tap">Toque: %1$s</string>
+    <string name="control_assignment_hold">Segurar: %1$s</string>
+    <string name="control_assignment_both">Toque: %1$s · Segurar: %2$s</string>
+    <string name="category_wf_screen_behavior">Comportamento da tela</string>
+    <string name="category_wf_player_progress">Progresso, avanço e tempo</string>
+    <string name="category_wf_metadata">Conteúdo do mostrador Metadados</string>
+    <string name="category_wf_typography_secondary">Texto em outras telas</string>
+    <string name="category_wf_colors_title">Cores do título</string>
+    <string name="category_wf_colors_artist">Cores do artista</string>
+    <string name="category_wf_colors_clock">Cores do relógio</string>
+    <string name="category_watch_navigation">Navegação e atalhos</string>
+    <string name="category_rotary_input">Entrada giratória e ajuste</string>
+    <string name="category_watch_feedback">Feedback e comportamento ao sair</string>
+    <string name="settings_search_prerequisite">Esta opção depende de outra escolha. Ajuste a configuração mostrada aqui para exibi-la.</string>
+    <string name="setting_numeric_range_error">Insira um valor de %1$d a %2$d.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">Aparência compartilhada dos painéis</string>
+    <string name="category_wf_panel_volume">Painel de volume</string>
+    <string name="category_wf_panel_seek">Painel de progresso e avanço</string>
+    <string name="category_wf_panel_quick">Painel de Ações rápidas</string>
+    <string name="category_wf_panel_queue">Fila e listas</string>
+    <string name="category_wf_panel_effects">Efeitos dos painéis</string>
+    <string name="category_apps_content">Letras e metadados</string>
+    <string name="category_streaming_services">Atalhos de streaming</string>
+    <string name="category_queue_artwork">Capas na fila</string>
+    <string name="category_system_access">Acesso do Android e notificações</string>
+    <string name="setting_privacy_policy">Política de privacidade</string>
+    <string name="setting_privacy_policy_description">Veja quais dados o Svartifoss usa e quais serviços on-line são opcionais.</string>
 </resources>

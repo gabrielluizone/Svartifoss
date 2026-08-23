@@ -62,7 +62,7 @@
     <string name="watch_section_background">پس‌زمینه</string>
     <string name="watch_section_background_description">جلد آلبوم، تاری، محو شدن و خوانایی پشت پخش‌کننده را کنترل کنید.</string>
     <string name="watch_section_colors">رنگ‌ها</string>
-    <string name="watch_section_colors_description">رنگ‌های خواننده، حلقه پیشرفت و تأکید مبتنی بر آلبوم را تنظیم کنید.</string>
+    <string name="watch_section_colors_description">رنگ‌های پایه، پیشرفت و تأکید آلبوم را تنظیم کنید، سپس رنگ عنوان، هنرمند، ساعت، صدا و پنل‌ها را به‌دلخواه تغییر دهید.</string>
     <string name="watch_section_aod">همیشه روشن</string>
     <string name="watch_section_aod_description">صفحه کم‌مصرف را پیکربندی کنید و ظاهر محیطی آن را در پیش‌نمایش ببینید.</string>
     <string name="watch_section_panels">پنل‌ها</string>
@@ -77,7 +77,7 @@
     <string name="settings_section_automation">خودکارسازی</string>
     <string name="settings_section_automation_description">انتخاب کنید Svartifoss چه زمانی به‌طور خودکار باز و بسته شود.</string>
     <string name="settings_section_apps">برنامه‌ها</string>
-    <string name="settings_section_apps_description">خدمات موسیقی و یکپارچه‌سازی‌های خاص برنامه را در یک مکان پیکربندی کنید.</string>
+    <string name="settings_section_apps_description">متن ترانه و فراداده، میان‌برهای پخش آنلاین، تصویر صف و دسترسی Android را پیدا کنید.</string>
     <string name="settings_section_data">داده و پشتیبانی</string>
     <string name="settings_section_data_description">از تنظیمات خود پشتیبان بگیرید، نسخه، عیب‌یابی را بررسی کنید یا کمک بگیرید.</string>
 
@@ -89,13 +89,13 @@
     <string name="tutorial_taps_desc">صفحه ساعت به چهار ناحیه تقسیم می‌شود — بالا، پایین، چپ و راست. ضربه زدن روی یک ناحیه اقدامی را که به آن اختصاص داده‌اید اجرا می‌کند. به‌طور پیش‌فرض، ناحیه چپ پخش یا مکث می‌کند، ناحیه راست به آهنگ بعدی می‌پرد و بالا و پایین صدا را تغییر می‌دهند.</string>
 
     <string name="tutorial_gestures_title">فشار تک، دوتایی و طولانی</string>
-    <string name="tutorial_gestures_desc">هر ناحیه سه اقدام جداگانه دارد: یکی برای ضربه تک، یکی برای ضربه دوتایی و یکی برای فشار طولانی. برای مثال، یک ضربه تک در مرکز می‌تواند موسیقی را مکث کند، در حالی که ضربه دوتایی منوی اقدامات را باز می‌کند — این را نمی‌بینید مگر آن را تنظیم کنید، پس آن را طبق سلیقه خود شخصی‌سازی کنید.</string>
+    <string name="tutorial_gestures_desc">هر یک از چهار ناحیهٔ کناری از کنش‌های جداگانه برای یک ضربه، دو ضربه و نگه‌داشتن پشتیبانی می‌کند. یک ضربه روی مرکز نیز قابل تنظیم است؛ دو ضربه همیشه «کنش‌های سریع» را باز می‌کند و نگه‌داشتن، بر اساس «تنظیمات ← رفتار»، انتخاب‌گر واچ‌فیس، صف یا هیچ‌چیز را باز می‌کند.</string>
 
     <string name="tutorial_buttons_title">دکمه‌های فیزیکی</string>
     <string name="tutorial_buttons_desc">اگر ساعت شما دکمه‌های کناری دارد، می‌توانید به آن‌ها هم اقدامات فشار تک، دوتایی و طولانی اختصاص دهید. حتی هنگام خاموش بودن صفحه هم کار می‌کنند.</string>
 
     <string name="tutorial_rotary_title">تاج چرخشی</string>
-    <string name="tutorial_rotary_desc">برای تغییر صدا، تاج چرخشی یا لبه را بچرخانید. ترجیح می‌دهید در آهنگ پیمایش کنید؟ «جست‌وجو با تاج چرخشی» را در تنظیمات فعال کنید.</string>
+    <string name="tutorial_rotary_desc">در «تنظیمات ← رفتار ← ورودی چرخشی و تنظیم دقیق» انتخاب کنید که تاج یا قاب چرخشی صدا را تغییر دهد، در قطعه جابه‌جا شود یا کاری نکند. در ساعت‌هایی که چرخش تاج را به‌صورت دکمه گزارش می‌کنند، آن را در «کنترل‌ها» اختصاص دهید.</string>
 
     <string name="tutorial_swipe_up_title">کشیدن به بالا، پایین، چپ و راست</string>
     <string name="tutorial_swipe_up_desc">کشیدن به بالا، پایین یا چپ روی صفحه در حال پخش را می‌توان طوری تنظیم کرد که هر چیزی را باز کند — منوی اقدامات، صف پخش، رد کردن آهنگ‌ها، لیست‌های پخش شما و موارد دیگر. هر کدام را در بخش کنترل‌ها، با انتخاب موسیقی در حال پخش یا بدون پخش، پیکربندی کنید. به‌طور پیش‌فرض، کشیدن به بالا منوی اقدامات را باز می‌کند و بقیه تا زمانی که اختصاص ندهید کاری انجام نمی‌دهند. کشیدن به راست دست‌نخورده باقی می‌ماند — این حرکت جهانی Wear OS برای خروج از برنامه است.</string>
@@ -196,7 +196,7 @@
     <string name="gesture_double_press">فشار دوتایی</string>
     <string name="gesture_long_press">فشار طولانی</string>
     <string name="gesture_swipe_action">اقدام</string>
-    <string name="center_button_quick_panel_note">دو بار ضربه زدن به مرکز صفحه در حال پخش همیشه پنل اقدامات سریع را باز می‌کند، صرف‌نظر از اینکه اینجا چه چیزی اختصاص دهید.</string>
+    <string name="center_button_quick_panel_note">دو ضربه روی مرکز همیشه «کنش‌های سریع» را باز می‌کند. نگه‌داشتن، انتخابِ «تنظیمات ← رفتار» را اجرا می‌کند. با اختصاص دادن ضربهٔ مرکز در اینجا، هیچ‌یک از این دو حرکت تغییر نمی‌کند.</string>
     <string name="start_playback">شروع پخش</string>
     <string name="uninstalled_app">برنامه حذف‌شده</string>
 
@@ -620,7 +620,7 @@
     <string name="preview_notification_controls">نماد از اعلان رسانه</string>
     <string name="setting_wear_queue_style">سبک صف</string>
     <string name="setting_wear_quick_panel_shortcut_cover">استفاده از جلد میان‌برها به‌عنوان پس‌زمینه</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">وقتی سبک صف بالا یک نوع جلد باشد، یک ردیف اقدام پنل سریع با جلد میان‌بر بازیابی‌شده (آهنگ، لیست پخش، خواننده…) قرص خود را نیز با آن تصویر پر می‌کند، همان‌طور که بعدی این کار را انجام می‌دهد. میان‌برهای بدون جلد بازیابی‌شده (فقط نماد برنامه) تحت‌تأثیر قرار نمی‌گیرند.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">وقتی سبک صف یک نوع جلد باشد، یک ردیف اقدام پنل سریع با جلد میان‌بر بازیابی‌شده (آهنگ، لیست پخش، خواننده…) قرص خود را نیز با آن تصویر پر می‌کند، همان‌طور که بعدی این کار را انجام می‌دهد. میان‌برهای بدون جلد بازیابی‌شده (فقط نماد برنامه) تحت‌تأثیر قرار نمی‌گیرند.</string>
     <string name="setting_wear_list_row_size">اندازه قرص فهرست</string>
     <string name="setting_wear_list_row_size_description">ارتفاع ردیف‌های تمام‌عرض در صف، منوها و پنل سریع.</string>
     <string name="setting_wear_progress_style">سبک حلقه پیشرفت</string>
@@ -1123,7 +1123,7 @@
     </string-array>
 
     <string name="watch_section_typography">متن</string>
-    <string name="watch_section_typography_description">یک قلم انتخاب کنید و عنوان، هنرمند و نماد برنامه را جداگانه سبک‌دهی کنید.</string>
+    <string name="watch_section_typography_description">قلم‌ها را انتخاب کنید و متن عنوان، هنرمند، ساعت، نماد برنامه، صفحه‌های ثانویه و Flex را تنظیم کنید.</string>
     <string name="tutorial_quick_panel_title">پنل اقدامات سریع</string>
     <string name="tutorial_quick_panel_desc">مرکز صفحهٔ درحال‌پخش را دو بار ضربه بزنید تا پنلی با چهار جایگاه باز شود — سه دکمهٔ گرد و یک ردیف پهن زیر آن‌ها. اگر پیکربندی نشوند، این جایگاه‌ها دکمه‌های اعلان خود برنامهٔ درحال‌پخش را بازتاب می‌دهند، بنابراین کنترل‌های واقعی پسندیدن، پخش تصادفی و تکرار آن را دریافت می‌کنید. هر اقدامی را به یک جایگاه اختصاص دهید، یا برای پنهان کردنش «هیچ‌کدام» را انتخاب کنید، در بخش اقدامات روی گوشی.</string>
     <string name="tutorial_shortcuts_title">میان‌برهای استریم</string>
@@ -1218,7 +1218,7 @@
     <string name="error_library_no_player">ابتدا پخش چیزی را شروع کنید</string>
     <string name="setting_wear_carousel_card_shape">شکل کارت چرخ‌فلک</string>
     <string name="setting_wear_font_all_screens">استفاده از قلم در همه‌جا</string>
-    <string name="setting_wear_font_all_screens_description">قلم انتخاب‌شده را روی منو، صف و ساعت روی صفحه نیز اعمال می‌کند، نه فقط عنوان و هنرمند آهنگ. خواندن قلم‌های نمایشی یا دست‌نویس در فهرست‌ها می‌تواند سخت‌تر باشد.</string>
+    <string name="setting_wear_font_all_screens_description">قلم انتخاب‌شده را روی منوها، صف و کنش‌های سریع اعمال می‌کند، نه فقط پخش‌کننده. خواندن قلم‌های نمایشی یا دست‌نویس در فهرست‌ها می‌تواند سخت‌تر باشد.</string>
     <string name="setting_wear_clock_font">قلم ساعت</string>
     <string name="wear_clock_font_follow">پیروی از قلم آهنگ</string>
     <string name="setting_wear_clock_font_weight">ضخامت ساعت</string>
@@ -1406,4 +1406,39 @@
         <item>استاندارد</item>
         <item>پررنگ</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">آنچه را می‌خواهید شخصی‌سازی کنید انتخاب کنید. پیش‌نمایش و طرح ذخیره‌شده در همهٔ بخش‌ها فعال می‌مانند.</string>
+    <string name="watch_back_to_overview">بازگشت به بخش‌های ساعت</string>
+    <string name="settings_overview_description">یک بخش را انتخاب کنید. گزینه‌های مرتبط کنار هم می‌مانند و جست‌وجو همچنان شما را مستقیماً به هر تنظیم می‌برد.</string>
+    <string name="settings_back_to_overview">بازگشت به بخش‌های تنظیمات</string>
+    <string name="action_search_hint">جست‌وجو در این فهرست</string>
+    <string name="action_search_empty">هیچ کنشی با این جست‌وجو مطابقت ندارد.</string>
+    <string name="control_assignment_tap">ضربه: %1$s</string>
+    <string name="control_assignment_hold">نگه‌داشتن: %1$s</string>
+    <string name="control_assignment_both">ضربه: %1$s · نگه‌داشتن: %2$s</string>
+    <string name="category_wf_screen_behavior">رفتار صفحه</string>
+    <string name="category_wf_player_progress">پیشرفت، جابه‌جایی و زمان</string>
+    <string name="category_wf_metadata">محتوای واچ‌فیس فراداده</string>
+    <string name="category_wf_typography_secondary">متن در صفحه‌های دیگر</string>
+    <string name="category_wf_colors_title">رنگ‌های عنوان</string>
+    <string name="category_wf_colors_artist">رنگ‌های هنرمند</string>
+    <string name="category_wf_colors_clock">رنگ‌های ساعت</string>
+    <string name="category_watch_navigation">پیمایش و میان‌برها</string>
+    <string name="category_rotary_input">ورودی چرخشی و تنظیم دقیق</string>
+    <string name="category_watch_feedback">بازخورد و رفتار خروج</string>
+    <string name="settings_search_prerequisite">این گزینه به انتخاب دیگری وابسته است. برای نمایان شدن آن، تنظیمی را که اینجا نشان داده شده تغییر دهید.</string>
+    <string name="setting_numeric_range_error">مقداری از %1$d تا %2$d وارد کنید.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">ظاهر مشترک پنل‌ها</string>
+    <string name="category_wf_panel_volume">پنل صدا</string>
+    <string name="category_wf_panel_seek">پنل پیشرفت و جابه‌جایی</string>
+    <string name="category_wf_panel_quick">پنل کنش‌های سریع</string>
+    <string name="category_wf_panel_queue">صف و فهرست‌ها</string>
+    <string name="category_wf_panel_effects">جلوه‌های پنل</string>
+    <string name="category_apps_content">متن ترانه و فراداده</string>
+    <string name="category_streaming_services">میان‌برهای پخش آنلاین</string>
+    <string name="category_queue_artwork">تصویر صف</string>
+    <string name="category_system_access">دسترسی Android و اعلان‌ها</string>
+    <string name="setting_privacy_policy">سیاست حفظ حریم خصوصی</string>
+    <string name="setting_privacy_policy_description">ببینید Svartifoss از چه داده‌هایی استفاده می‌کند و کدام سرویس‌های آنلاین اختیاری هستند.</string>
 </resources>

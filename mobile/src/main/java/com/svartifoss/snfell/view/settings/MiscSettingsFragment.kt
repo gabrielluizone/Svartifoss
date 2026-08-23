@@ -70,6 +70,8 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         private const val ARG_HIGHLIGHT_KEY = "settingsHighlightKey"
 
         private const val DEVELOPER_GITHUB_URL = "https://github.com/gabrielluizone"
+        private const val PRIVACY_POLICY_URL =
+                "https://gabrielluizone.github.io/Svartifoss/privacy-policy.html"
 
         /** [highlightKey] scrolls the page to that preference once laid out - set only by the
          *  settings search, so a result lands on the row itself rather than at the top of a page
@@ -137,7 +139,8 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         val key = arguments?.getString(ARG_HIGHLIGHT_KEY) ?: return
         arguments?.remove(ARG_HIGHLIGHT_KEY)
         listView?.post {
-            if (isAdded && findPreference<Preference>(key) != null) scrollToPreference(key)
+            if (!isAdded) return@post
+            findPreference<Preference>(key)?.let(::scrollToAndPulsePreference)
         }
     }
 
@@ -626,6 +629,12 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         findPreference<Preference>("update_check_now")?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 startActivity(Intent(requireContext(), UpdateActivity::class.java))
+                true
+            }
+
+        findPreference<Preference>("privacy_policy")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)))
                 true
             }
 

@@ -123,7 +123,10 @@ class SettingsSearchActivity : AppCompatActivity() {
                 is SettingsSearchDestination.WatchFace -> R.string.watch_face_header
             })
             holder.path.text = context.getString(
-                    R.string.settings_search_breadcrumb, tabName, entry.categoryTitle)
+                    R.string.settings_search_breadcrumb_detailed,
+                    tabName,
+                    entry.sectionTitle,
+                    entry.categoryTitle)
             holder.path.setTextColor(accent)
 
             holder.summary.text = entry.summary

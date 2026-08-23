@@ -62,7 +62,7 @@
     <string name="watch_section_background">Φόντο</string>
     <string name="watch_section_background_description">Ελέγξτε το εξώφυλλο άλμπουμ, τη θόλωση, το ξεθώριασμα και την αναγνωσιμότητα πίσω από τον player.</string>
     <string name="watch_section_colors">Χρώματα</string>
-    <string name="watch_section_colors_description">Ρυθμίστε τα χρώματα καλλιτέχνη, δακτυλίου προόδου και τόνου βάσει άλμπουμ.</string>
+    <string name="watch_section_colors_description">Ορίστε βασικά χρώματα, χρώματα προόδου και τόνους άλμπουμ και έπειτα ρυθμίστε τα χρώματα τίτλου, καλλιτέχνη, ρολογιού, έντασης και πάνελ.</string>
     <string name="watch_section_aod">Πάντα ενεργό</string>
     <string name="watch_section_aod_description">Διαμορφώστε την οθόνη χαμηλής κατανάλωσης και δείτε την εμφάνισή της σε αδράνεια στην προεπισκόπηση.</string>
     <string name="watch_section_panels">Πάνελ</string>
@@ -77,7 +77,7 @@
     <string name="settings_section_automation">Αυτοματοποίηση</string>
     <string name="settings_section_automation_description">Επιλέξτε πότε ανοίγει και κλείνει αυτόματα το Svartifoss.</string>
     <string name="settings_section_apps">Εφαρμογές</string>
-    <string name="settings_section_apps_description">Διαμορφώστε υπηρεσίες μουσικής και ενσωματώσεις ανά εφαρμογή σε ένα μέρος.</string>
+    <string name="settings_section_apps_description">Βρείτε στίχους και μεταδεδομένα, συντομεύσεις ροής, εξώφυλλα ουράς και πρόσβαση Android.</string>
     <string name="settings_section_data">Δεδομένα &amp; υποστήριξη</string>
     <string name="settings_section_data_description">Δημιουργήστε αντίγραφο ασφαλείας της ρύθμισής σας, ελέγξτε την έκδοση, τα διαγνωστικά ή λάβετε βοήθεια.</string>
 
@@ -89,13 +89,13 @@
     <string name="tutorial_taps_desc">Η οθόνη του ρολογιού χωρίζεται σε τέσσερις ζώνες — πάνω, κάτω, αριστερά και δεξιά. Το πάτημα μιας ζώνης εκτελεί την ενέργεια που της αναθέσατε. Από προεπιλογή, η αριστερή ζώνη αναπαράγει ή θέτει σε παύση, η δεξιά μεταβαίνει στο επόμενο κομμάτι, και η πάνω και κάτω αλλάζουν την ένταση.</string>
 
     <string name="tutorial_gestures_title">Απλό, διπλό &amp; παρατεταμένο πάτημα</string>
-    <string name="tutorial_gestures_desc">Κάθε ζώνη περιέχει τρεις ξεχωριστές ενέργειες: μία για απλό πάτημα, μία για διπλό πάτημα και μία για παρατεταμένο πάτημα. Για παράδειγμα, ένα απλό πάτημα στο κέντρο μπορεί να θέσει τη μουσική σε παύση, ενώ ένα διπλό πάτημα ανοίγει το μενού ενεργειών — δεν θα το δείτε αυτό εκτός αν το ρυθμίσετε, οπότε προσαρμόστε το κατά βούληση.</string>
+    <string name="tutorial_gestures_desc">Καθεμία από τις τέσσερις ζώνες στις άκρες υποστηρίζει ξεχωριστές ενέργειες για απλό, διπλό και παρατεταμένο πάτημα. Το απλό πάτημα στο κέντρο διαμορφώνεται επίσης· το διπλό πάτημα ανοίγει πάντα τις Γρήγορες ενέργειες, ενώ το παρατεταμένο πάτημα ανοίγει την επιλογή πρόσοψης, την ουρά ή τίποτα, σύμφωνα με τις Ρυθμίσεις → Συμπεριφορά.</string>
 
     <string name="tutorial_buttons_title">Φυσικά κουμπιά</string>
     <string name="tutorial_buttons_desc">Αν το ρολόι σας έχει πλαϊνά κουμπιά, μπορείτε να αναθέσετε ενέργειες απλού, διπλού και παρατεταμένου πατήματος και σε αυτά. Συνεχίζουν να λειτουργούν ακόμη και όταν η οθόνη είναι σβηστή.</string>
 
     <string name="tutorial_rotary_title">Περιστρεφόμενη κορώνα</string>
-    <string name="tutorial_rotary_desc">Περιστρέψτε την κορώνα ή το πλαίσιο για να αλλάξετε την ένταση. Προτιμάτε να προωθείτε το τραγούδι; Ενεργοποιήστε την \"Αναζήτηση με περιστροφική κορώνα\" στις Ρυθμίσεις.</string>
+    <string name="tutorial_rotary_desc">Επιλέξτε αν η περιστρεφόμενη κορώνα ή στεφάνη αλλάζει την ένταση, μετακινεί τη θέση του κομματιού ή δεν κάνει τίποτα στις Ρυθμίσεις → Συμπεριφορά → Περιστροφική είσοδος &amp; ρύθμιση. Σε ρολόγια που αναφέρουν τις περιστροφές ως κουμπιά, αντιστοιχίστε τες στα Στοιχεία ελέγχου.</string>
 
     <string name="tutorial_swipe_up_title">Σύρσιμο πάνω, κάτω, αριστερά &amp; δεξιά</string>
     <string name="tutorial_swipe_up_desc">Το σύρσιμο πάνω, κάτω ή αριστερά στην οθόνη αναπαραγωγής μπορεί να ρυθμιστεί ώστε να ανοίγει οτιδήποτε — το μενού ενεργειών, την ουρά αναπαραγωγής, παράλειψη κομματιών, τις λίστες αναπαραγωγής σας και άλλα. Ρυθμίστε καθένα στα Χειριστήρια, επιλέγοντας Μουσική παίζει ή Καμία αναπαραγωγή. Από προεπιλογή, το σύρσιμο προς τα πάνω ανοίγει το μενού ενεργειών και τα υπόλοιπα δεν κάνουν τίποτα μέχρι να τα αναθέσετε. Το σύρσιμο προς τα δεξιά παραμένει ανέγγιχτο — είναι η καθολική χειρονομία του Wear OS για έξοδο από την εφαρμογή.</string>
@@ -196,7 +196,7 @@
     <string name="gesture_double_press">Διπλό πάτημα</string>
     <string name="gesture_long_press">Παρατεταμένο πάτημα</string>
     <string name="gesture_swipe_action">Ενέργεια</string>
-    <string name="center_button_quick_panel_note">Το διπλό πάτημα στο κέντρο της οθόνης αναπαραγωγής ανοίγει πάντα το πάνελ γρήγορων ενεργειών, ανεξάρτητα από το τι αναθέτετε εδώ.</string>
+    <string name="center_button_quick_panel_note">Το διπλό πάτημα στο κέντρο ανοίγει πάντα τις Γρήγορες ενέργειες. Το παρατεταμένο πάτημα εκτελεί την επιλογή στις Ρυθμίσεις → Συμπεριφορά. Καμία από τις δύο χειρονομίες δεν αλλάζει όταν αντιστοιχίζετε εδώ το απλό πάτημα στο κέντρο.</string>
     <string name="start_playback">Έναρξη αναπαραγωγής</string>
     <string name="uninstalled_app">Απεγκατεστημένη εφαρμογή</string>
 
@@ -620,7 +620,7 @@
     <string name="preview_notification_controls">Εικονίδιο από ειδοποίηση πολυμέσων</string>
     <string name="setting_wear_queue_style">Στυλ ουράς</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Χρήση εξωφύλλων συντόμευσης ως φόντο</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Όταν το Στυλ ουράς παραπάνω είναι μια παραλλαγή Εξωφύλλου, μια γραμμή ενέργειας του γρήγορου πάνελ με ένα ανακτημένο εξώφυλλο συντόμευσης (κομμάτι, λίστα αναπαραγωγής, καλλιτέχνης…) γεμίζει επίσης το χάπι της με αυτό το εξώφυλλο, όπως κάνει το Ακολουθεί. Συντομεύσεις χωρίς ανακτημένο εξώφυλλο (απλό εικονίδιο εφαρμογής) δεν επηρεάζονται.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Όταν το Στυλ ουράς είναι μια παραλλαγή Εξωφύλλου, μια γραμμή ενέργειας του γρήγορου πάνελ με ένα ανακτημένο εξώφυλλο συντόμευσης (κομμάτι, λίστα αναπαραγωγής, καλλιτέχνης…) γεμίζει επίσης το χάπι της με αυτό το εξώφυλλο, όπως κάνει το Ακολουθεί. Συντομεύσεις χωρίς ανακτημένο εξώφυλλο (απλό εικονίδιο εφαρμογής) δεν επηρεάζονται.</string>
     <string name="setting_wear_list_row_size">Μέγεθος χαπιού λίστας</string>
     <string name="setting_wear_list_row_size_description">Ύψος των γραμμών πλήρους πλάτους στην ουρά, τα μενού και το γρήγορο πάνελ.</string>
     <string name="setting_wear_progress_style">Στυλ δακτυλίου προόδου</string>
@@ -1123,7 +1123,7 @@
     </string-array>
 
     <string name="watch_section_typography">Κείμενο</string>
-    <string name="watch_section_typography_description">Επιλέξτε γραμματοσειρά και διαμορφώστε ξεχωριστά τον τίτλο, τον καλλιτέχνη και το εικονίδιο εφαρμογής.</string>
+    <string name="watch_section_typography_description">Επιλέξτε γραμματοσειρές και ρυθμίστε το κείμενο τίτλου, καλλιτέχνη, ρολογιού, εικονιδίου εφαρμογής, δευτερευουσών οθονών και Flex.</string>
     <string name="tutorial_quick_panel_title">Πίνακας γρήγορων ενεργειών</string>
     <string name="tutorial_quick_panel_desc">Πατήστε δύο φορές στο κέντρο της οθόνης αναπαραγωγής για να ανοίξει ένας πίνακας με τέσσερις θέσεις — τρία στρογγυλά κουμπιά και μία πλατιά γραμμή από κάτω τους. Αν δεν τις διαμορφώσετε, οι θέσεις αντικατοπτρίζουν τα κουμπιά που βάζει η ίδια η εφαρμογή αναπαραγωγής στην ειδοποίησή της, οπότε παίρνετε τα πραγματικά της χειριστήρια για «μου αρέσει», τυχαία αναπαραγωγή και επανάληψη. Αναθέστε οποιαδήποτε ενέργεια σε μια θέση, ή ορίστε «Καμία» για απόκρυψη, στις Ενέργειες στο τηλέφωνο.</string>
     <string name="tutorial_shortcuts_title">Συντομεύσεις ροής</string>
@@ -1218,7 +1218,7 @@
     <string name="error_library_no_player">Ξεκινήστε πρώτα μια αναπαραγωγή</string>
     <string name="setting_wear_carousel_card_shape">Σχήμα κάρτας καρουζέλ</string>
     <string name="setting_wear_font_all_screens">Χρήση γραμματοσειράς παντού</string>
-    <string name="setting_wear_font_all_screens_description">Εφαρμόζει την επιλεγμένη γραμματοσειρά και στο μενού, στην ουρά και στο ρολόι της οθόνης, όχι μόνο στον τίτλο και τον καλλιτέχνη του κομματιού. Οι διακοσμητικές ή χειρόγραφες γραμματοσειρές μπορεί να είναι πιο δύσκολο να διαβαστούν σε λίστες.</string>
+    <string name="setting_wear_font_all_screens_description">Εφαρμόζει την επιλεγμένη γραμματοσειρά στα μενού, στην ουρά και στις Γρήγορες ενέργειες, όχι μόνο στο πρόγραμμα αναπαραγωγής. Οι διακοσμητικές ή χειρόγραφες γραμματοσειρές μπορεί να είναι πιο δύσκολο να διαβαστούν σε λίστες.</string>
     <string name="setting_wear_clock_font">Γραμματοσειρά ρολογιού</string>
     <string name="wear_clock_font_follow">Ακολούθηση γραμματοσειράς κομματιού</string>
     <string name="setting_wear_clock_font_weight">Βάρος ρολογιού</string>
@@ -1406,4 +1406,39 @@
         <item>Τυπικό</item>
         <item>Έντονο</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">Επιλέξτε τι θέλετε να προσαρμόσετε. Η προεπισκόπηση και το αποθηκευμένο θέμα παραμένουν ενεργά σε κάθε περιοχή.</string>
+    <string name="watch_back_to_overview">Πίσω στις περιοχές Ρολογιού</string>
+    <string name="settings_overview_description">Επιλέξτε μια περιοχή. Οι σχετικές επιλογές παραμένουν μαζί, ενώ η αναζήτηση εξακολουθεί να σας οδηγεί απευθείας σε οποιαδήποτε ρύθμιση.</string>
+    <string name="settings_back_to_overview">Πίσω στις περιοχές ρυθμίσεων</string>
+    <string name="action_search_hint">Αναζήτηση σε αυτή τη λίστα</string>
+    <string name="action_search_empty">Καμία ενέργεια δεν ταιριάζει με αυτή την αναζήτηση.</string>
+    <string name="control_assignment_tap">Πάτημα: %1$s</string>
+    <string name="control_assignment_hold">Παρατεταμένο πάτημα: %1$s</string>
+    <string name="control_assignment_both">Πάτημα: %1$s · Παρατεταμένο: %2$s</string>
+    <string name="category_wf_screen_behavior">Συμπεριφορά οθόνης</string>
+    <string name="category_wf_player_progress">Πρόοδος, μετακίνηση &amp; χρόνος</string>
+    <string name="category_wf_metadata">Περιεχόμενο πρόσοψης Μεταδεδομένων</string>
+    <string name="category_wf_typography_secondary">Κείμενο σε άλλες οθόνες</string>
+    <string name="category_wf_colors_title">Χρώματα τίτλου</string>
+    <string name="category_wf_colors_artist">Χρώματα καλλιτέχνη</string>
+    <string name="category_wf_colors_clock">Χρώματα ρολογιού</string>
+    <string name="category_watch_navigation">Πλοήγηση &amp; συντομεύσεις</string>
+    <string name="category_rotary_input">Περιστροφική είσοδος &amp; ρύθμιση</string>
+    <string name="category_watch_feedback">Ανάδραση &amp; συμπεριφορά εξόδου</string>
+    <string name="settings_search_prerequisite">Αυτή η επιλογή εξαρτάται από άλλη επιλογή. Προσαρμόστε τη ρύθμιση που εμφανίζεται εδώ για να την αποκαλύψετε.</string>
+    <string name="setting_numeric_range_error">Εισαγάγετε μια τιμή από %1$d έως %2$d.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">Κοινή εμφάνιση πάνελ</string>
+    <string name="category_wf_panel_volume">Πάνελ έντασης</string>
+    <string name="category_wf_panel_seek">Πάνελ προόδου &amp; μετακίνησης</string>
+    <string name="category_wf_panel_quick">Πάνελ Γρήγορων ενεργειών</string>
+    <string name="category_wf_panel_queue">Ουρά &amp; λίστες</string>
+    <string name="category_wf_panel_effects">Εφέ πάνελ</string>
+    <string name="category_apps_content">Στίχοι &amp; μεταδεδομένα</string>
+    <string name="category_streaming_services">Συντομεύσεις ροής</string>
+    <string name="category_queue_artwork">Εξώφυλλα ουράς</string>
+    <string name="category_system_access">Πρόσβαση Android &amp; ειδοποιήσεις</string>
+    <string name="setting_privacy_policy">Πολιτική απορρήτου</string>
+    <string name="setting_privacy_policy_description">Δείτε ποια δεδομένα χρησιμοποιεί το Svartifoss και ποιες διαδικτυακές υπηρεσίες είναι προαιρετικές.</string>
 </resources>

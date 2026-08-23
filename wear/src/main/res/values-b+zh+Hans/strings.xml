@@ -50,9 +50,9 @@
 
     <string name="hint_title">使用方法</string>
     <string name="hint_edges">边缘 — 点按以执行显示的操作</string>
-    <string name="hint_center">中心 — 播放/暂停\n双击 — 快捷操作</string>
+    <string name="hint_center">中心 — 播放/暂停\n双击 — 快捷操作\n长按 — 表盘选择器（可配置）</string>
     <string name="hint_swipe_up">向上滑动 — 操作菜单</string>
-    <string name="hint_crown">表冠 — 音量</string>
+    <string name="hint_crown">表冠 — 音量（可配置）</string>
     <string name="hint_dismiss">知道了</string>
 
     <string name="action_name_play">播放</string>

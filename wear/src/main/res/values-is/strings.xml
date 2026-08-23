@@ -56,9 +56,9 @@
 
     <string name="hint_title">Svona notarðu þetta</string>
     <string name="hint_edges">Jaðrar — ýttu fyrir sýndar aðgerðir</string>
-    <string name="hint_center">Miðja — spila/pása\nTvísmella — flýtiaðgerðir</string>
+    <string name="hint_center">Miðja — spila/pása\nTvísmella — flýtiaðgerðir\nHalda inni — úrskífuval (stillanlegt)</string>
     <string name="hint_swipe_up">Strjúka upp — aðgerðavalmynd</string>
-    <string name="hint_crown">Kóróna — hljóðstyrkur</string>
+    <string name="hint_crown">Kóróna — hljóðstyrkur (stillanlegt)</string>
     <string name="hint_dismiss">Ég skil</string>
 
     <string name="action_name_play">Spila</string>

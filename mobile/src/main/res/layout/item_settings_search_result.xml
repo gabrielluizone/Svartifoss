@@ -29,7 +29,7 @@
         android:fontFamily="@font/google_sans"
         android:textColor="@color/lyra_accent"
         android:textSize="12sp"
-        tools:text="Watch face › Background" />
+        tools:text="Watch appearance › Background › Album art" />
 
     <TextView
         android:id="@+id/result_summary"

@@ -14,21 +14,24 @@ import javax.inject.Named
 
 class ActionPickerViewModel @Inject constructor(@Named(ARG_SHOW_NONE) showNone: Boolean, context: Context) : ViewModel() {
     val displayedActions = MutableLiveData<List<PhoneAction>>()
+    val pageTitle = MutableLiveData<String?>()
     val selectedAction = SingleLiveEvent<PhoneAction>()
     val activityStarter = SingleLiveEvent<Intent?>()
 
-    private val backStack = Stack<List<PhoneAction>>()
+    private data class Page(val title: String?, val actions: List<PhoneAction>)
+    private val backStack = Stack<Page>()
     private var activityResultReceiver: ActivityResultReceiver? = null
 
     init {
         RootActionList(context, showNone).onActionPicked(this)
     }
 
-    fun updateDisplayedActionsWithBackStack(actions : List<PhoneAction>) {
+    fun updateDisplayedActionsWithBackStack(title: String, actions: List<PhoneAction>) {
         if (displayedActions.value != null) {
-            backStack.push(displayedActions.value)
+            backStack.push(Page(pageTitle.value, displayedActions.value!!))
         }
 
+        pageTitle.value = title
         displayedActions.value = actions
     }
 
@@ -37,7 +40,9 @@ class ActionPickerViewModel @Inject constructor(@Named(ARG_SHOW_NONE) showNone: 
             return false
         }
 
-        displayedActions.value = backStack.pop()
+        val page = backStack.pop()
+        pageTitle.value = page.title
+        displayedActions.value = page.actions
 
         return true
     }

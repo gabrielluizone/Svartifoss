@@ -1,48 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/lyra_background">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/settings_tabs"
+    <LinearLayout
+        android:id="@+id/settings_overview"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/lyra_background"
-        app:tabGravity="start"
-        app:tabIndicatorColor="@color/lyra_accent"
-        app:tabIndicatorFullWidth="false"
-        app:tabMode="scrollable"
-        app:tabRippleColor="@color/lyra_ripple"
-        app:tabSelectedTextColor="@color/lyra_accent"
-        app:tabSelectedTextAppearance="@style/LyraTabText"
-        app:tabTextAppearance="@style/LyraTabText"
-        app:tabTextColor="@color/lyra_text_secondary" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/settings_section_description"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans"
+            android:paddingStart="20dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:text="@string/settings_overview_description"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="14sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_sections"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingTop="2dp"
+            android:paddingBottom="16dp"
+            tools:listitem="@layout/item_settings_section" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settings_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="6dp"
-        android:fontFamily="@font/google_sans"
-        android:textColor="@color/lyra_pref_summary"
-        android:textSize="13sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lyra_divider" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="76dp"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/settings_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+            <ImageButton
+                android:id="@+id/settings_section_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/settings_back_to_overview"
+                android:padding="12dp"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/lyra_on_surface" />
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/settings_section_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/circle_icon_bg"
+                android:contentDescription="@null"
+                android:padding="9dp"
+                app:tint="@color/lyra_accent"
+                tools:src="@drawable/ic_settings" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/settings_section_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/lyra_on_surface"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    tools:text="General" />
+
+                <TextView
+                    android:id="@+id/settings_section_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/google_sans"
+                    android:includeFontPadding="false"
+                    android:maxLines="2"
+                    android:textColor="@color/lyra_text_secondary"
+                    android:textSize="12sp"
+                    tools:text="Theme, accent color and update preferences." />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lyra_divider" />
+
+        <FrameLayout
+            android:id="@+id/settings_detail_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -62,7 +62,7 @@
     <string name="watch_section_background">Hintergrund</string>
     <string name="watch_section_background_description">Steuere Albumcover, Unschärfe, Ausblenden und Lesbarkeit hinter dem Player.</string>
     <string name="watch_section_colors">Farben</string>
-    <string name="watch_section_colors_description">Feinabstimmung von Interpret, Fortschrittsring und albumbasierter Akzentfarbe.</string>
+    <string name="watch_section_colors_description">Lege Grund-, Fortschritts- und Albumakzentfarben fest und passe dann Titel-, Interpreten-, Uhr-, Lautstärke- und Panel-Farben an.</string>
     <string name="watch_section_aod">Always-on</string>
     <string name="watch_section_aod_description">Konfiguriere den Stromsparbildschirm und sieh sein Ambient-Aussehen in der Vorschau.</string>
     <string name="watch_section_panels">Panels</string>
@@ -77,7 +77,7 @@
     <string name="settings_section_automation">Automatisierung</string>
     <string name="settings_section_automation_description">Lege fest, wann sich Svartifoss automatisch öffnet und schließt.</string>
     <string name="settings_section_apps">Apps</string>
-    <string name="settings_section_apps_description">Konfiguriere Musikdienste und app-spezifische Integrationen an einem Ort.</string>
+    <string name="settings_section_apps_description">Finde Liedtexte und Metadaten, Streaming-Verknüpfungen, Cover in der Warteschlange und Android-Zugriffe.</string>
     <string name="settings_section_data">Daten &amp; Support</string>
     <string name="settings_section_data_description">Sichere deine Einrichtung, prüfe die Version, Diagnose oder hole dir Hilfe.</string>
 
@@ -89,13 +89,13 @@
     <string name="tutorial_taps_desc">Der Uhrenbildschirm ist in vier Zonen unterteilt — oben, unten, links und rechts. Beim Tippen auf eine Zone wird die zugewiesene Aktion ausgeführt. Standardmäßig spielt die linke Zone ab oder pausiert, die rechte springt zum nächsten Titel, und oben und unten ändern die Lautstärke.</string>
 
     <string name="tutorial_gestures_title">Einfach, doppelt &amp; lang drücken</string>
-    <string name="tutorial_gestures_desc">Jede Zone hat drei separate Aktionen: eine für einfaches Tippen, eine für doppeltes Tippen und eine für langes Drücken. Ein einfaches Tippen in der Mitte kann etwa die Musik pausieren, während ein Doppeltippen das Aktionsmenü öffnet — das siehst du nur, wenn du es einrichtest, also passe es nach Geschmack an.</string>
+    <string name="tutorial_gestures_desc">Die vier Randzonen unterstützen jeweils eigene Aktionen für einfaches Tippen, Doppeltippen und langes Drücken. Auch das einfache Tippen in der Mitte ist konfigurierbar; ein Doppeltippen öffnet immer die Schnellaktionen, während langes Drücken je nach Auswahl unter Einstellungen → Verhalten die Zifferblattauswahl, die Warteschlange oder nichts öffnet.</string>
 
     <string name="tutorial_buttons_title">Physische Tasten</string>
     <string name="tutorial_buttons_desc">Wenn deine Uhr Seitentasten hat, kannst du auch ihnen Aktionen für einfaches, doppeltes und langes Drücken zuweisen. Sie funktionieren sogar bei ausgeschaltetem Bildschirm.</string>
 
     <string name="tutorial_rotary_title">Drehkrone</string>
-    <string name="tutorial_rotary_desc">Drehe die Krone oder Lünette, um die Lautstärke zu ändern. Lieber durch den Song spulen? Aktiviere „Mit der Drehkrone suchen“ in den Einstellungen.</string>
+    <string name="tutorial_rotary_desc">Lege unter Einstellungen → Verhalten → Dreheingabe &amp; Feinabstimmung fest, ob die drehbare Krone oder Lünette die Lautstärke ändert, im Titel spult oder nichts tut. Bei Uhren, die Drehungen als Tasten melden, weist du sie stattdessen unter Steuerung zu.</string>
 
     <string name="tutorial_swipe_up_title">Nach oben, unten, links &amp; rechts wischen</string>
     <string name="tutorial_swipe_up_desc">Wischen nach oben, unten oder links auf dem Wiedergabebildschirm kann jeweils so konfiguriert werden, dass es etwas öffnet — das Aktionsmenü, die Wiedergabe-Warteschlange, Titel überspringen, deine Playlists und mehr. Konfiguriere jede Richtung in der Steuerung, für „Musik läuft“ oder „Keine Wiedergabe“. Standardmäßig öffnet Wischen nach oben das Aktionsmenü, die anderen tun nichts, bis du sie zuweist. Wischen nach rechts bleibt unberührt — das ist die universelle Wear-OS-Geste, um die App zu verlassen.</string>
@@ -197,7 +197,7 @@
     <string name="gesture_double_press">Doppelt drücken</string>
     <string name="gesture_long_press">Lang drücken</string>
     <string name="gesture_swipe_action">Aktion</string>
-    <string name="center_button_quick_panel_note">Ein Doppeltippen in der Mitte des Wiedergabebildschirms öffnet immer das Schnellaktionspanel, egal was du hier zuweist.</string>
+    <string name="center_button_quick_panel_note">Ein Doppeltippen in der Mitte öffnet immer die Schnellaktionen. Langes Drücken führt die Auswahl unter Einstellungen → Verhalten aus. Beide Gesten bleiben unverändert, wenn du hier das Tippen in der Mitte zuweist.</string>
     <string name="start_playback">Wiedergabe starten</string>
     <string name="uninstalled_app">Deinstallierte App</string>
 
@@ -621,7 +621,7 @@
     <string name="preview_notification_controls">Symbol aus der Medienbenachrichtigung</string>
     <string name="setting_wear_queue_style">Warteschlangen-Stil</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Verknüpfungscover als Hintergrund nutzen</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Wenn der Warteschlangen-Stil oben eine Cover-Variante ist, füllt eine Schnellpanel-Aktionszeile mit geholtem Verknüpfungscover (Titel, Playlist, Interpret…) ihre Pille ebenfalls mit diesem Artwork, wie bei Als Nächstes. Verknüpfungen ohne geholtes Cover (nur ein App-Symbol) sind nicht betroffen.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Wenn der Warteschlangen-Stil eine Cover-Variante ist, füllt eine Schnellpanel-Aktionszeile mit geholtem Verknüpfungscover (Titel, Playlist, Interpret…) ihre Pille ebenfalls mit diesem Artwork, wie bei Als Nächstes. Verknüpfungen ohne geholtes Cover (nur ein App-Symbol) sind nicht betroffen.</string>
     <string name="setting_wear_list_row_size">Größe der Listenpille</string>
     <string name="setting_wear_list_row_size_description">Höhe der Zeilen über die volle Breite in Warteschlange, Menüs und Schnellpanel.</string>
     <string name="setting_wear_progress_style">Stil des Fortschrittsrings</string>
@@ -1174,7 +1174,7 @@
     <string name="setting_wear_color_modifier_description">Passt die gesamte Palette an, ohne ihre Herleitung zu ändern — funktioniert mit jeder Farbbehandlung</string>
     <string name="setting_wear_flex_axes_hint">Diese feinjustieren speziell Google Sans Flex — wähle sie oben, um sie zu nutzen. Titel- und Interpret-Schriftstärke/Kursiv oben legen bereits die eigenen Achsen dieser Schrift für Stärke (wght) und Neigung (slnt) fest; die vier Regler unten gelten für das gesamte Zifferblatt.</string>
     <string name="setting_wear_font_all_screens">Schrift überall verwenden</string>
-    <string name="setting_wear_font_all_screens_description">Wendet die gewählte Schrift auch auf Menü, Warteschlange und die Uhrzeit auf dem Zifferblatt an, nicht nur auf Titel und Interpret. Display- und Handschrift-Schriften können in Listen schwerer lesbar sein.</string>
+    <string name="setting_wear_font_all_screens_description">Wendet die gewählte Schrift auf Menüs, Warteschlange und Schnellaktionen an, nicht nur auf den Player. Display- und Handschrift-Schriften können in Listen schwerer lesbar sein.</string>
     <string name="setting_wear_font_flex_grade">Grad</string>
     <string name="setting_wear_font_flex_grade_description">Verschiebt die Schriftstärke leicht, ohne das Layout zu ändern (0–100) — eine feine Möglichkeit, den Kontrast auf einem dunklen Bildschirm zu verstärken.</string>
     <string name="setting_wear_font_flex_hint_title">Über diese Regler</string>
@@ -1221,7 +1221,7 @@
     <string name="update_install_notification_tap">Tippen, um die neue Version zu installieren</string>
     <string name="update_install_notification_title">Svartifoss-Update</string>
     <string name="watch_section_typography">Text</string>
-    <string name="watch_section_typography_description">Wähle eine Schriftart und gestalte Titel, Interpret und App-Symbol unabhängig voneinander.</string>
+    <string name="watch_section_typography_description">Wähle Schriftarten und passe Titel, Interpret, Uhr, App-Symbol, weitere Bildschirme und Flex-Text an.</string>
     <string name="wear_clock_font_follow">Titel-Schriftart übernehmen</string>
     <string name="wear_font_bebas_neue">Bebas Neue</string>
     <string name="wear_font_bebas_neue_description">Schmale Versalien-Display-Schrift — plakativ, passt lange Titel</string>
@@ -1407,4 +1407,39 @@
         <item>Standard</item>
         <item>Kräftig</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">Wähle aus, was du anpassen möchtest. Die Vorschau und das gespeicherte Theme bleiben in jedem Bereich aktiv.</string>
+    <string name="watch_back_to_overview">Zurück zu den Uhrbereichen</string>
+    <string name="settings_overview_description">Wähle einen Bereich. Zusammengehörige Optionen bleiben beieinander, während die Suche dich weiterhin direkt zu jeder Einstellung bringt.</string>
+    <string name="settings_back_to_overview">Zurück zu den Einstellungsbereichen</string>
+    <string name="action_search_hint">Diese Liste durchsuchen</string>
+    <string name="action_search_empty">Keine Aktion entspricht dieser Suche.</string>
+    <string name="control_assignment_tap">Tippen: %1$s</string>
+    <string name="control_assignment_hold">Halten: %1$s</string>
+    <string name="control_assignment_both">Tippen: %1$s · Halten: %2$s</string>
+    <string name="category_wf_screen_behavior">Bildschirmverhalten</string>
+    <string name="category_wf_player_progress">Fortschritt, Spulen &amp; Zeit</string>
+    <string name="category_wf_metadata">Inhalt des Metadaten-Zifferblatts</string>
+    <string name="category_wf_typography_secondary">Text auf anderen Bildschirmen</string>
+    <string name="category_wf_colors_title">Titelfarben</string>
+    <string name="category_wf_colors_artist">Interpretenfarben</string>
+    <string name="category_wf_colors_clock">Uhrfarben</string>
+    <string name="category_watch_navigation">Navigation &amp; Verknüpfungen</string>
+    <string name="category_rotary_input">Dreheingabe &amp; Feinabstimmung</string>
+    <string name="category_watch_feedback">Feedback &amp; Beenden</string>
+    <string name="settings_search_prerequisite">Diese Option hängt von einer anderen Auswahl ab. Passe die hier angezeigte Einstellung an, um sie einzublenden.</string>
+    <string name="setting_numeric_range_error">Gib einen Wert von %1$d bis %2$d ein.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">Gemeinsames Panel-Design</string>
+    <string name="category_wf_panel_volume">Lautstärkepanel</string>
+    <string name="category_wf_panel_seek">Fortschritts- &amp; Spulpanel</string>
+    <string name="category_wf_panel_quick">Schnellaktionspanel</string>
+    <string name="category_wf_panel_queue">Warteschlange &amp; Listen</string>
+    <string name="category_wf_panel_effects">Panel-Effekte</string>
+    <string name="category_apps_content">Liedtexte &amp; Metadaten</string>
+    <string name="category_streaming_services">Streaming-Verknüpfungen</string>
+    <string name="category_queue_artwork">Cover in der Warteschlange</string>
+    <string name="category_system_access">Android-Zugriff &amp; Benachrichtigungen</string>
+    <string name="setting_privacy_policy">Datenschutzerklärung</string>
+    <string name="setting_privacy_policy_description">Sieh nach, welche Daten Svartifoss verwendet und welche Onlinedienste optional sind.</string>
 </resources>

@@ -50,9 +50,9 @@
 
     <string name="hint_title">Zo werkt het</string>
     <string name="hint_edges">Randen — tik voor de getoonde acties</string>
-    <string name="hint_center">Midden — afspelen/pauzeren\nDubbeltik — snelle acties</string>
+    <string name="hint_center">Midden — afspelen/pauzeren\nDubbeltik — snelle acties\nLang indrukken — wijzerplaatkiezer (instelbaar)</string>
     <string name="hint_swipe_up">Veeg omhoog — actiemenu</string>
-    <string name="hint_crown">Kroon — volume</string>
+    <string name="hint_crown">Kroon — volume (instelbaar)</string>
     <string name="hint_dismiss">Begrepen</string>
 
     <string name="action_name_play">Afspelen</string>

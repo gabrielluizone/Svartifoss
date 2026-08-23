@@ -54,7 +54,7 @@ class StreamingShortcutActionList : PhoneAction {
             })
         }
 
-        actionPicker.updateDisplayedActionsWithBackStack(actions)
+        actionPicker.updateDisplayedActionsWithBackStack(title, actions)
     }
 
     override fun retrieveTitle(): String =

@@ -22,6 +22,7 @@ import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.SwipeGesture
 import com.svartifoss.snfell.common.actions.StandardIcons
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
+import com.svartifoss.snfell.common.buttonconfig.GESTURE_DOUBLE_TAP
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_LONG_TAP
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_SINGLE_TAP
 import com.svartifoss.snfell.common.view.FourWayTouchLayout
@@ -151,6 +152,8 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
     // directions and the three on-screen mini-button slots.
     private val swipeGestureRows = mutableMapOf<Int, IconTile>()
     private val screenButtonRows = mutableMapOf<Int, IconTile>()
+    private val physicalButtonRows = mutableMapOf<Int, PhysicalButtonRow>()
+    private var currentButtonConfig: ButtonConfig? = null
 
     /** Populates the "Swipe gestures" section: 3 fixed tiles in one row (unlike the
      *  physical-buttons list, not driven by any live watch-info data), one per configurable
@@ -175,7 +178,7 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
             val (code, label, defaultIconRes) = info
             val tileBinding = ItemSwipeGestureBinding.inflate(inflater, container, true)
             tileBinding.label.text = shortLabel
-            tileBinding.icon.setOnClickListener {
+            tileBinding.root.setOnClickListener {
                 configureButton(false, code, label, supportsLongPress = false, singleActionOnly = true)
             }
             swipeGestureRows[code] = IconTile(tileBinding, defaultIconRes, shortLabel, label)
@@ -200,7 +203,7 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
             val (code, label) = codeAndLabel
             val tileBinding = ItemSwipeGestureBinding.inflate(inflater, container, true)
             tileBinding.label.text = shortLabel
-            tileBinding.icon.setOnClickListener {
+            tileBinding.root.setOnClickListener {
                 configureButton(false, code, label, supportsLongPress = true, singleActionOnly = true)
             }
             screenButtonRows[code] = IconTile(tileBinding, R.drawable.ic_plus, shortLabel, label)
@@ -216,12 +219,19 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         val accessibilityLabel: String
     )
 
+    private class PhysicalButtonRow(
+        val binding: ItemWatchButtonBinding,
+        val title: String,
+        val supportsLongPress: Boolean
+    )
+
     private val watchInfoObserver = Observer<WatchInfoWithIcons?> {
         this.watchInfo = it
 
         while (binding.watchButtonContainer.childCount > 0) {
             binding.watchButtonContainer.removeViewAt(0)
         }
+        physicalButtonRows.clear()
 
         val buttonsCount = it?.watchInfo?.buttonsCount ?: 0
 
@@ -261,22 +271,23 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
 
             val buttonBinding = ItemWatchButtonBinding.inflate(inflater, binding.watchButtonContainer, true)
 
-            buttonBinding.button.text = buttonTitle
-            buttonBinding.button.icon = icon
-            // See the matching comment in GesturePickerFragment.updateButton: forces MaterialButton
-            // to recompute the icon's centered position against the text that was just set.
-            buttonBinding.button.requestLayout()
-            buttonBinding.button.setOnClickListener {
+            buttonBinding.buttonTitle.text = buttonTitle
+            buttonBinding.buttonIcon.setImageDrawable(icon)
+            buttonBinding.root.setOnClickListener {
                 val buttonName = "$buttonTitle button"
                 configureButton(true, buttonCode, buttonName, buttonInfo.supportsLongPress)
             }
+            physicalButtonRows[buttonCode] = PhysicalButtonRow(
+                    buttonBinding, buttonTitle, buttonInfo.supportsLongPress)
         }
+        currentButtonConfig?.let(::updatePhysicalButtonRows)
     }
 
     private val buttonsConfigObserver = Observer<ButtonConfig?> {
         if (it == null) {
             return@Observer
         }
+        currentButtonConfig = it
 
         val topAction = it.getScreenAction(ButtonInfo(false, ScreenQuadrant.TOP, GESTURE_SINGLE_TAP))
         setTouchZoneIcon(binding.iconTop, R.string.touch_zone_top, topAction)
@@ -299,13 +310,49 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         }
 
         for ((code, tile) in screenButtonRows) {
-            // A slot configured only with a long press still shows that action's icon, matching
-            // what the watch itself renders on the mini button.
-            val action = it.getScreenAction(ButtonInfo(false, code, GESTURE_SINGLE_TAP))
-                    ?: it.getScreenAction(ButtonInfo(false, code, GESTURE_LONG_TAP))
-            setTileIcon(tile, action)
+            val tap = it.getScreenAction(ButtonInfo(false, code, GESTURE_SINGLE_TAP))
+            val hold = it.getScreenAction(ButtonInfo(false, code, GESTURE_LONG_TAP))
+            // The watch renders the primary action's icon, but the phone overview must expose
+            // both assignments so a configured long press does not disappear behind the tap.
+            val summary = listOfNotNull(
+                    tap?.let { action -> getString(R.string.control_assignment_tap, action.title) },
+                    hold?.let { action -> getString(R.string.control_assignment_hold, action.title) }
+            ).ifEmpty { listOf(getString(R.string.no_action)) }
+                    .joinToString("\n")
+            setTileIcon(tile, tap ?: hold, summary)
+        }
+        updatePhysicalButtonRows(it)
+    }
+
+    private fun updatePhysicalButtonRows(config: ButtonConfig) {
+        for ((code, row) in physicalButtonRows) {
+            val single = config.getScreenAction(ButtonInfo(true, code, GESTURE_SINGLE_TAP))
+            val double = config.getScreenAction(ButtonInfo(true, code, GESTURE_DOUBLE_TAP))
+            val hold = if (row.supportsLongPress) {
+                config.getScreenAction(ButtonInfo(true, code, GESTURE_LONG_TAP))
+            } else {
+                null
+            }
+
+            val assignments = mutableListOf(
+                    formatAssignment(R.string.gesture_single_press, single),
+                    formatAssignment(R.string.gesture_double_press, double)
+            ).apply {
+                if (row.supportsLongPress) {
+                    add(formatAssignment(R.string.gesture_long_press, hold))
+                }
+            }
+            row.binding.buttonActions.text = assignments.joinToString("\n")
+            row.binding.root.contentDescription = buildString {
+                append(row.title)
+                append(". ")
+                append(row.binding.buttonActions.text)
+            }
         }
     }
+
+    private fun formatAssignment(label: Int, action: PhoneAction?): String =
+            "${getString(label)}: ${action?.title ?: getString(R.string.no_action)}"
 
     private fun setIcon(imageView: ImageView, phoneAction: PhoneAction?) {
         if (phoneAction == null) {
@@ -361,7 +408,11 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
      *  (light or dark) theme background, so its icon follows the theme's on-surface color
      *  instead of being forced white. Falls back to the tile's placeholder icon when
      *  unconfigured. */
-    private fun setTileIcon(tile: IconTile, phoneAction: PhoneAction?) {
+    private fun setTileIcon(
+        tile: IconTile,
+        phoneAction: PhoneAction?,
+        actionSummary: String = phoneAction?.title ?: getString(R.string.no_action)
+    ) {
         val isNotSet = phoneAction == null
         val primaryColor = ContextCompat.getColor(requireContext(), R.color.lyra_on_surface)
         val mutedColor = ContextCompat.getColor(requireContext(), R.color.lyra_text_secondary)
@@ -378,14 +429,12 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         if (isTemplate) {
             tile.binding.icon.setColorFilter(if (isNotSet) mutedColor else primaryColor)
         }
-        // The caption identifies the physical position, not the currently assigned action.
-        // Icons and the accessibility description already communicate the action; repeating a
-        // title such as "Play liked songs" turns a compact control grid into noisy prose.
         tile.binding.label.text = tile.defaultLabel
-        tile.binding.icon.contentDescription = getString(
+        tile.binding.actionLabel.text = actionSummary
+        tile.binding.root.contentDescription = getString(
                 R.string.touch_zone_action,
                 tile.accessibilityLabel,
-                phoneAction?.title ?: getString(R.string.no_action)
+                actionSummary
         )
     }
 

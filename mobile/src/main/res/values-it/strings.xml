@@ -62,7 +62,7 @@
     <string name="watch_section_background">Sfondo</string>
     <string name="watch_section_background_description">Controlla copertina, sfocatura, dissolvenza e leggibilità dietro il lettore.</string>
     <string name="watch_section_colors">Colori</string>
-    <string name="watch_section_colors_description">Regola i colori dell\'artista, dell\'anello di progresso e dell\'accento basato sull\'album.</string>
+    <string name="watch_section_colors_description">Imposta i colori base, di avanzamento e di accento dell’album, poi regola quelli di titolo, artista, orologio, volume e pannelli.</string>
     <string name="watch_section_aod">Sempre attivo</string>
     <string name="watch_section_aod_description">Configura lo schermo a basso consumo e vedi il suo aspetto ambient nell\'anteprima.</string>
     <string name="watch_section_panels">Pannelli</string>
@@ -77,7 +77,7 @@
     <string name="settings_section_automation">Automazione</string>
     <string name="settings_section_automation_description">Scegli quando Svartifoss si apre e si chiude automaticamente.</string>
     <string name="settings_section_apps">App</string>
-    <string name="settings_section_apps_description">Configura servizi musicali e integrazioni specifiche per app in un unico posto.</string>
+    <string name="settings_section_apps_description">Trova testi e metadati, scorciatoie di streaming, copertine nella coda e accesso Android.</string>
     <string name="settings_section_data">Dati e supporto</string>
     <string name="settings_section_data_description">Esegui il backup della tua configurazione, controlla la versione, la diagnostica o ottieni aiuto.</string>
 
@@ -89,13 +89,13 @@
     <string name="tutorial_taps_desc">Lo schermo dell\'orologio è diviso in quattro zone — alto, basso, sinistra e destra. Toccare una zona esegue l\'azione che le hai assegnato. Per impostazione predefinita, la zona sinistra riproduce o mette in pausa, la destra passa alla traccia successiva, e alto e basso cambiano il volume.</string>
 
     <string name="tutorial_gestures_title">Tocco singolo, doppio e prolungato</string>
-    <string name="tutorial_gestures_desc">Ogni zona contiene tre azioni distinte: una per un tocco singolo, una per un doppio tocco e una per una pressione prolungata. Ad esempio, un tocco singolo al centro può mettere in pausa la musica mentre un doppio tocco apre il menu azioni — non lo vedrai a meno che tu non lo configuri, quindi personalizzalo a piacere.</string>
+    <string name="tutorial_gestures_desc">Ognuna delle quattro zone ai bordi supporta azioni distinte per tocco singolo, doppio tocco e pressione prolungata. Anche il tocco singolo al centro è configurabile; il doppio tocco apre sempre le Azioni rapide, mentre la pressione prolungata apre il selettore del quadrante, la coda o non esegue alcuna azione, in base a Impostazioni → Comportamento.</string>
 
     <string name="tutorial_buttons_title">Pulsanti fisici</string>
     <string name="tutorial_buttons_desc">Se il tuo orologio ha pulsanti laterali, puoi assegnare anche a loro azioni di tocco singolo, doppio e pressione prolungata. Continuano a funzionare anche a schermo spento.</string>
 
     <string name="tutorial_rotary_title">Corona rotante</string>
-    <string name="tutorial_rotary_desc">Ruota la corona o la ghiera per cambiare il volume. Preferisci scorrere la canzone? Attiva \"Ricerca con corona rotante\" nelle Impostazioni.</string>
+    <string name="tutorial_rotary_desc">Scegli se la corona o la ghiera girevole regola il volume, scorre la traccia o non esegue alcuna azione in Impostazioni → Comportamento → Input rotante e regolazione. Sugli orologi che rilevano le rotazioni come pulsanti, assegnale invece in Controlli.</string>
 
     <string name="tutorial_swipe_up_title">Scorri su, giù, sinistra e destra</string>
     <string name="tutorial_swipe_up_desc">Scorrere su, giù o a sinistra sulla schermata di riproduzione può essere configurato per aprire qualsiasi cosa — il menu azioni, la coda di riproduzione, saltare le tracce, le tue playlist e altro. Configura ciascuno in Controlli, scegliendo Musica in riproduzione o Nessuna riproduzione. Per impostazione predefinita, scorrere verso l\'alto apre il menu azioni e gli altri non fanno nulla finché non li assegni. Scorrere a destra è lasciato invariato — è il gesto universale di Wear OS per uscire dall\'app.</string>
@@ -196,7 +196,7 @@
     <string name="gesture_double_press">Pressione doppia</string>
     <string name="gesture_long_press">Pressione prolungata</string>
     <string name="gesture_swipe_action">Azione</string>
-    <string name="center_button_quick_panel_note">Toccare due volte il centro della schermata di riproduzione apre sempre il pannello delle azioni rapide, indipendentemente da ciò che assegni qui.</string>
+    <string name="center_button_quick_panel_note">Un doppio tocco al centro apre sempre le Azioni rapide. Una pressione prolungata esegue la scelta in Impostazioni → Comportamento. Nessuno dei due gesti cambia quando assegni qui il tocco centrale.</string>
     <string name="start_playback">Avvia riproduzione</string>
     <string name="uninstalled_app">App disinstallata</string>
 
@@ -620,7 +620,7 @@
     <string name="preview_notification_controls">Icona dalla notifica multimediale</string>
     <string name="setting_wear_queue_style">Stile coda</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Usa copertine scorciatoie come sfondo</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando lo Stile coda sopra è una variante Copertina, una riga di azione del pannello rapido con una copertina scorciatoia recuperata (traccia, playlist, artista…) riempie anche la sua pillola con quell\'immagine, come fa In coda. Le scorciatoie senza copertina recuperata (solo icona app) non sono interessate.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando lo Stile coda è una variante Copertina, una riga di azione del pannello rapido con una copertina scorciatoia recuperata (traccia, playlist, artista…) riempie anche la sua pillola con quell\'immagine, come fa In coda. Le scorciatoie senza copertina recuperata (solo icona app) non sono interessate.</string>
     <string name="setting_wear_list_row_size">Dimensione pillola elenco</string>
     <string name="setting_wear_list_row_size_description">Altezza delle righe a larghezza intera nella coda, nei menu e nel pannello rapido.</string>
     <string name="setting_wear_progress_style">Stile anello di progresso</string>
@@ -1123,7 +1123,7 @@
     </string-array>
 
     <string name="watch_section_typography">Testo</string>
-    <string name="watch_section_typography_description">Scegli un carattere e personalizza titolo, artista e icona dell\'app in modo indipendente.</string>
+    <string name="watch_section_typography_description">Scegli i caratteri e regola il testo di titolo, artista, orologio, icona dell’app, schermate secondarie e Flex.</string>
     <string name="tutorial_quick_panel_title">Pannello azioni rapide</string>
     <string name="tutorial_quick_panel_desc">Tocca due volte al centro della schermata di riproduzione per aprire un pannello di quattro slot — tre pulsanti rotondi e una riga larga sotto di essi. Se non li configuri, gli slot rispecchiano i pulsanti che l\'app in riproduzione mette nella propria notifica, quindi ottieni i suoi controlli reali di mi piace, casuale e ripeti. Assegna qualsiasi azione a uno slot, oppure imposta \"Nessuna\" per nasconderlo, in Azioni sul telefono.</string>
     <string name="tutorial_shortcuts_title">Scorciatoie streaming</string>
@@ -1218,7 +1218,7 @@
     <string name="error_library_no_player">Avvia prima una riproduzione</string>
     <string name="setting_wear_carousel_card_shape">Forma carta carosello</string>
     <string name="setting_wear_font_all_screens">Usa il carattere ovunque</string>
-    <string name="setting_wear_font_all_screens_description">Applica il carattere scelto anche al menu, alla coda e all\'orologio sul quadrante, non solo a titolo e artista del brano. I caratteri decorativi o manoscritti possono essere più difficili da leggere negli elenchi.</string>
+    <string name="setting_wear_font_all_screens_description">Applica il carattere scelto a menu, coda e Azioni rapide, non solo al lettore. I caratteri decorativi o manoscritti possono essere più difficili da leggere negli elenchi.</string>
     <string name="setting_wear_clock_font">Carattere orologio</string>
     <string name="wear_clock_font_follow">Segui carattere del brano</string>
     <string name="setting_wear_clock_font_weight">Peso orologio</string>
@@ -1406,4 +1406,39 @@
         <item>Standard</item>
         <item>Intenso</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">Scegli cosa personalizzare. L’anteprima e il tema salvato restano attivi in ogni area.</string>
+    <string name="watch_back_to_overview">Torna alle aree Orologio</string>
+    <string name="settings_overview_description">Scegli un’area. Le opzioni correlate restano insieme e la ricerca può ancora portarti direttamente a qualsiasi impostazione.</string>
+    <string name="settings_back_to_overview">Torna alle aree delle impostazioni</string>
+    <string name="action_search_hint">Cerca in questo elenco</string>
+    <string name="action_search_empty">Nessuna azione corrisponde alla ricerca.</string>
+    <string name="control_assignment_tap">Tocco: %1$s</string>
+    <string name="control_assignment_hold">Pressione: %1$s</string>
+    <string name="control_assignment_both">Tocco: %1$s · Pressione: %2$s</string>
+    <string name="category_wf_screen_behavior">Comportamento dello schermo</string>
+    <string name="category_wf_player_progress">Avanzamento, ricerca e tempo</string>
+    <string name="category_wf_metadata">Contenuti del quadrante Metadati</string>
+    <string name="category_wf_typography_secondary">Testo nelle altre schermate</string>
+    <string name="category_wf_colors_title">Colori del titolo</string>
+    <string name="category_wf_colors_artist">Colori dell’artista</string>
+    <string name="category_wf_colors_clock">Colori dell’orologio</string>
+    <string name="category_watch_navigation">Navigazione e scorciatoie</string>
+    <string name="category_rotary_input">Input rotante e regolazione</string>
+    <string name="category_watch_feedback">Feedback e comportamento all’uscita</string>
+    <string name="settings_search_prerequisite">Questa opzione dipende da un’altra scelta. Modifica l’impostazione mostrata qui per renderla visibile.</string>
+    <string name="setting_numeric_range_error">Inserisci un valore da %1$d a %2$d.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">Aspetto condiviso dei pannelli</string>
+    <string name="category_wf_panel_volume">Pannello volume</string>
+    <string name="category_wf_panel_seek">Pannello avanzamento e ricerca</string>
+    <string name="category_wf_panel_quick">Pannello Azioni rapide</string>
+    <string name="category_wf_panel_queue">Coda ed elenchi</string>
+    <string name="category_wf_panel_effects">Effetti dei pannelli</string>
+    <string name="category_apps_content">Testi e metadati</string>
+    <string name="category_streaming_services">Scorciatoie di streaming</string>
+    <string name="category_queue_artwork">Copertine nella coda</string>
+    <string name="category_system_access">Accesso Android e notifiche</string>
+    <string name="setting_privacy_policy">Informativa sulla privacy</string>
+    <string name="setting_privacy_policy_description">Scopri quali dati usa Svartifoss e quali servizi online sono facoltativi.</string>
 </resources>

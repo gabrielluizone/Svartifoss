@@ -16,7 +16,7 @@ class PlaybackActionList : PhoneAction {
         get() = true
 
     override fun onActionPicked(actionPicker: ActionPickerViewModel) {
-        actionPicker.updateDisplayedActionsWithBackStack(listOf(
+        actionPicker.updateDisplayedActionsWithBackStack(title, listOf(
                 PlayAction(context),
                 PauseAction(context),
                 PlayPauseToggleAction(context),

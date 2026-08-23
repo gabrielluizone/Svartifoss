@@ -62,7 +62,7 @@
     <string name="watch_section_background">Achtergrond</string>
     <string name="watch_section_background_description">Bepaal albumhoes, vervaging, uitdoving en leesbaarheid achter de speler.</string>
     <string name="watch_section_colors">Kleuren</string>
-    <string name="watch_section_colors_description">Stem de kleuren van artiest, voortgangsring en op het album gebaseerd accent af.</string>
+    <string name="watch_section_colors_description">Stel basis-, voortgangs- en albumaccentkleuren in en pas daarna titel-, artiest-, klok-, volume- en paneelkleuren aan.</string>
     <string name="watch_section_aod">Altijd aan</string>
     <string name="watch_section_aod_description">Configureer het energiezuinige scherm en bekijk het ambient-uiterlijk in het voorbeeld.</string>
     <string name="watch_section_panels">Panelen</string>
@@ -77,7 +77,7 @@
     <string name="settings_section_automation">Automatisering</string>
     <string name="settings_section_automation_description">Kies wanneer Svartifoss automatisch opent en sluit.</string>
     <string name="settings_section_apps">Apps</string>
-    <string name="settings_section_apps_description">Configureer muziekdiensten en app-specifieke integraties op één plek.</string>
+    <string name="settings_section_apps_description">Vind songteksten en metadata, streamingsnelkoppelingen, hoesafbeeldingen in de wachtrij en Android-toegang.</string>
     <string name="settings_section_data">Gegevens en ondersteuning</string>
     <string name="settings_section_data_description">Maak een back-up van je instellingen, controleer de versie, diagnostiek of vraag hulp.</string>
 
@@ -89,13 +89,13 @@
     <string name="tutorial_taps_desc">Het horlogescherm is verdeeld in vier zones — boven, onder, links en rechts. Tikken op een zone voert de actie uit die je eraan hebt toegewezen. Standaard speelt de linkerzone af of pauzeert, springt de rechterzone naar het volgende nummer, en veranderen boven en onder het volume.</string>
 
     <string name="tutorial_gestures_title">Enkele, dubbele en lange druk</string>
-    <string name="tutorial_gestures_desc">Elke zone heeft drie afzonderlijke acties: één voor een enkele tik, één voor een dubbele tik en één voor een lange druk. Bijvoorbeeld, een enkele tik in het midden kan de muziek pauzeren terwijl een dubbele tik het actiemenu opent — je ziet dit pas als je het instelt, dus pas het naar smaak aan.</string>
+    <string name="tutorial_gestures_desc">Elk van de vier randzones ondersteunt afzonderlijke acties voor een enkele tik, dubbeltik en lang indrukken. De enkele tik in het midden is ook instelbaar; een dubbeltik opent altijd Snelle acties, terwijl lang indrukken de wijzerplaatkiezer, wachtrij of niets opent volgens Instellingen → Gedrag.</string>
 
     <string name="tutorial_buttons_title">Fysieke knoppen</string>
     <string name="tutorial_buttons_desc">Als je horloge zijknoppen heeft, kun je ook daaraan acties voor enkele, dubbele en lange druk toewijzen. Ze blijven werken, zelfs als het scherm uit is.</string>
 
     <string name="tutorial_rotary_title">Draaikroon</string>
-    <string name="tutorial_rotary_desc">Draai de kroon of lunette om het volume te veranderen. Liever door het nummer spoelen? Zet \"Zoeken met draaikroon\" aan in Instellingen.</string>
+    <string name="tutorial_rotary_desc">Kies onder Instellingen → Gedrag → Draai-invoer en afstelling of de draaikroon of lunette het volume wijzigt, door het nummer spoelt of niets doet. Op horloges die kroonrotaties als knoppen melden, wijs je ze toe onder Bediening.</string>
 
     <string name="tutorial_swipe_up_title">Vegen omhoog, omlaag, links en rechts</string>
     <string name="tutorial_swipe_up_desc">Vegen omhoog, omlaag of naar links op het nu-afspelend-scherm kan elk zo worden ingesteld dat het iets opent — het actiemenu, de afspeelwachtrij, nummers overslaan, je afspeellijsten en meer. Configureer elk in Bediening, met Muziek speelt af of Geen afspelen. Standaard opent vegen omhoog het actiemenu en doen de anderen niets totdat je ze toewijst. Vegen naar rechts blijft ongewijzigd — dat is het universele Wear OS-gebaar om de app te verlaten.</string>
@@ -196,7 +196,7 @@
     <string name="gesture_double_press">Dubbele druk</string>
     <string name="gesture_long_press">Lange druk</string>
     <string name="gesture_swipe_action">Actie</string>
-    <string name="center_button_quick_panel_note">Dubbeltikken op het midden van het nu-afspelend-scherm opent altijd het snelle-actiespaneel, ongeacht wat je hier toewijst.</string>
+    <string name="center_button_quick_panel_note">Dubbeltikken in het midden opent altijd Snelle acties. Lang indrukken voert de keuze onder Instellingen → Gedrag uit. Geen van beide gebaren verandert wanneer je hier de middelste tik toewijst.</string>
     <string name="start_playback">Afspelen starten</string>
     <string name="uninstalled_app">Verwijderde app</string>
 
@@ -620,7 +620,7 @@
     <string name="preview_notification_controls">Pictogram uit mediamelding</string>
     <string name="setting_wear_queue_style">Wachtrijstijl</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Snelkoppelingshoezen gebruiken als achtergrond</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Wanneer de Wachtrijstijl hierboven een Hoes-variant is, vult een actierij van het snelpaneel met een opgehaalde snelkoppelingshoes (nummer, afspeellijst, artiest…) ook zijn pil met die afbeelding, zoals Volgende doet. Snelkoppelingen zonder opgehaalde hoes (alleen een app-pictogram) worden niet beïnvloed.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Wanneer de Wachtrijstijl een Hoes-variant is, vult een actierij van het snelpaneel met een opgehaalde snelkoppelingshoes (nummer, afspeellijst, artiest…) ook zijn pil met die afbeelding, zoals Volgende doet. Snelkoppelingen zonder opgehaalde hoes (alleen een app-pictogram) worden niet beïnvloed.</string>
     <string name="setting_wear_list_row_size">Formaat lijstpil</string>
     <string name="setting_wear_list_row_size_description">Hoogte van de rijen over de volledige breedte in de wachtrij, menu\'s en snelpaneel.</string>
     <string name="setting_wear_progress_style">Stijl voortgangsring</string>
@@ -1123,7 +1123,7 @@
     </string-array>
 
     <string name="watch_section_typography">Tekst</string>
-    <string name="watch_section_typography_description">Kies een lettertype en stel titel, artiest en app-icoon onafhankelijk van elkaar in.</string>
+    <string name="watch_section_typography_description">Kies lettertypen en pas tekst voor titel, artiest, klok, app-icoon, andere schermen en Flex aan.</string>
     <string name="tutorial_quick_panel_title">Paneel met snelle acties</string>
     <string name="tutorial_quick_panel_desc">Tik twee keer op het midden van het nu-speelt-scherm om een paneel met vier vakken te openen — drie ronde knoppen en een brede rij eronder. Zonder configuratie weerspiegelen de vakken de knoppen die de spelende app in zijn eigen melding plaatst, zodat je de echte like-, shuffle- en herhaalbediening krijgt. Wijs elke actie toe aan een vak, of stel \"Geen\" in om het te verbergen, bij Acties op de telefoon.</string>
     <string name="tutorial_shortcuts_title">Streamingsnelkoppelingen</string>
@@ -1218,7 +1218,7 @@
     <string name="error_library_no_player">Start eerst iets met afspelen</string>
     <string name="setting_wear_carousel_card_shape">Vorm carrouselkaart</string>
     <string name="setting_wear_font_all_screens">Lettertype overal gebruiken</string>
-    <string name="setting_wear_font_all_screens_description">Past het gekozen lettertype ook toe op het menu, de wachtrij en de klok op het scherm, niet alleen op de titel en artiest van het nummer. Decoratieve of handgeschreven lettertypen kunnen moeilijker leesbaar zijn in lijsten.</string>
+    <string name="setting_wear_font_all_screens_description">Past het gekozen lettertype toe op menu’s, de wachtrij en Snelle acties, niet alleen op de speler. Decoratieve of handgeschreven lettertypen kunnen moeilijker leesbaar zijn in lijsten.</string>
     <string name="setting_wear_clock_font">Lettertype klok</string>
     <string name="wear_clock_font_follow">Lettertype van nummer volgen</string>
     <string name="setting_wear_clock_font_weight">Gewicht klok</string>
@@ -1406,4 +1406,39 @@
         <item>Standaard</item>
         <item>Sterk</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">Kies wat je wilt aanpassen. Het voorbeeld en het opgeslagen thema blijven in elk gebied actief.</string>
+    <string name="watch_back_to_overview">Terug naar Horloge-gebieden</string>
+    <string name="settings_overview_description">Kies een gebied. Verwante opties blijven bij elkaar en zoeken brengt je nog steeds rechtstreeks naar elke instelling.</string>
+    <string name="settings_back_to_overview">Terug naar instellingsgebieden</string>
+    <string name="action_search_hint">Deze lijst doorzoeken</string>
+    <string name="action_search_empty">Geen acties komen overeen met deze zoekopdracht.</string>
+    <string name="control_assignment_tap">Tikken: %1$s</string>
+    <string name="control_assignment_hold">Ingedrukt houden: %1$s</string>
+    <string name="control_assignment_both">Tikken: %1$s · Vasthouden: %2$s</string>
+    <string name="category_wf_screen_behavior">Schermgedrag</string>
+    <string name="category_wf_player_progress">Voortgang, zoeken en tijd</string>
+    <string name="category_wf_metadata">Inhoud van Metadata-wijzerplaat</string>
+    <string name="category_wf_typography_secondary">Tekst op andere schermen</string>
+    <string name="category_wf_colors_title">Titelkleuren</string>
+    <string name="category_wf_colors_artist">Artiestkleuren</string>
+    <string name="category_wf_colors_clock">Klokkleuren</string>
+    <string name="category_watch_navigation">Navigatie en snelkoppelingen</string>
+    <string name="category_rotary_input">Draai-invoer en afstelling</string>
+    <string name="category_watch_feedback">Feedback en afsluitgedrag</string>
+    <string name="settings_search_prerequisite">Deze optie is afhankelijk van een andere keuze. Pas de hier getoonde instelling aan om de optie zichtbaar te maken.</string>
+    <string name="setting_numeric_range_error">Voer een waarde van %1$d tot %2$d in.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">Gedeeld paneeluiterlijk</string>
+    <string name="category_wf_panel_volume">Volumepaneel</string>
+    <string name="category_wf_panel_seek">Voortgangs- en zoekpaneel</string>
+    <string name="category_wf_panel_quick">Paneel Snelle acties</string>
+    <string name="category_wf_panel_queue">Wachtrij en lijsten</string>
+    <string name="category_wf_panel_effects">Paneeleffecten</string>
+    <string name="category_apps_content">Songteksten en metadata</string>
+    <string name="category_streaming_services">Streamingsnelkoppelingen</string>
+    <string name="category_queue_artwork">Hoesafbeeldingen in wachtrij</string>
+    <string name="category_system_access">Android-toegang en meldingen</string>
+    <string name="setting_privacy_policy">Privacybeleid</string>
+    <string name="setting_privacy_policy_description">Bekijk welke gegevens Svartifoss gebruikt en welke onlinediensten optioneel zijn.</string>
 </resources>

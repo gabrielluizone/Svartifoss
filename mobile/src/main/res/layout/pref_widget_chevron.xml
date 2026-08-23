@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="28dp"
+    android:layout_height="28dp"
+    android:contentDescription="@null"
+    android:importantForAccessibility="no"
+    android:padding="5dp"
+    android:src="@drawable/ic_chevron_right"
+    android:tint="@color/lyra_text_secondary"
+    tools:ignore="UseAppTint" />

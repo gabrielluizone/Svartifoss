@@ -62,7 +62,7 @@
     <string name="watch_section_background">Latar belakang</string>
     <string name="watch_section_background_description">Atur sampul album, buram, memudar, dan keterbacaan di belakang pemutar.</string>
     <string name="watch_section_colors">Warna</string>
-    <string name="watch_section_colors_description">Sesuaikan warna artis, cincin kemajuan, dan aksen berbasis album.</string>
+    <string name="watch_section_colors_description">Atur warna dasar, progres, dan aksen album, lalu sesuaikan warna judul, artis, jam, volume, dan panel.</string>
     <string name="watch_section_aod">Selalu aktif</string>
     <string name="watch_section_aod_description">Konfigurasikan layar hemat daya dan lihat tampilan ambient-nya di pratinjau.</string>
     <string name="watch_section_panels">Panel</string>
@@ -77,7 +77,7 @@
     <string name="settings_section_automation">Otomatisasi</string>
     <string name="settings_section_automation_description">Pilih kapan Svartifoss terbuka dan tertutup secara otomatis.</string>
     <string name="settings_section_apps">Aplikasi</string>
-    <string name="settings_section_apps_description">Konfigurasikan layanan musik dan integrasi khusus aplikasi di satu tempat.</string>
+    <string name="settings_section_apps_description">Temukan lirik dan metadata, pintasan streaming, sampul antrean, serta akses Android.</string>
     <string name="settings_section_data">Data &amp; dukungan</string>
     <string name="settings_section_data_description">Cadangkan pengaturan Anda, periksa versi, diagnostik, atau dapatkan bantuan.</string>
 
@@ -89,13 +89,13 @@
     <string name="tutorial_taps_desc">Layar jam tangan dibagi menjadi empat zona — atas, bawah, kiri, dan kanan. Mengetuk zona menjalankan aksi yang Anda tetapkan padanya. Secara default, zona kiri memutar atau menjeda, kanan melompat ke trek berikutnya, dan atas serta bawah mengubah volume.</string>
 
     <string name="tutorial_gestures_title">Tekan satu, dua &amp; lama</string>
-    <string name="tutorial_gestures_desc">Setiap zona memiliki tiga aksi terpisah: satu untuk ketukan tunggal, satu untuk ketukan ganda, dan satu untuk tekan lama. Misalnya, ketukan tunggal di tengah dapat menjeda musik sementara ketukan ganda membuka menu aksi — Anda tidak akan melihat ini kecuali Anda mengaturnya, jadi sesuaikan sesuai selera.</string>
+    <string name="tutorial_gestures_desc">Keempat zona tepi masing-masing mendukung aksi ketuk sekali, ketuk dua kali, dan tekan lama. Ketuk sekali di tengah juga dapat diatur; ketuk dua kali selalu membuka Aksi cepat, sedangkan tekan lama membuka pemilih tampilan jam, antrean, atau tidak melakukan apa pun sesuai Pengaturan → Perilaku.</string>
 
     <string name="tutorial_buttons_title">Tombol fisik</string>
     <string name="tutorial_buttons_desc">Jika jam tangan Anda memiliki tombol samping, Anda juga dapat menetapkan aksi tekan satu, dua, dan lama padanya. Tombol tetap berfungsi bahkan saat layar mati.</string>
 
     <string name="tutorial_rotary_title">Mahkota putar</string>
-    <string name="tutorial_rotary_desc">Putar mahkota atau bezel untuk mengubah volume. Lebih suka menggeser lagu? Aktifkan \"Cari dengan mahkota putar\" di Pengaturan.</string>
+    <string name="tutorial_rotary_desc">Pilih apakah mahkota atau bezel putar mengubah volume, menggeser posisi lagu, atau tidak melakukan apa pun di Pengaturan → Perilaku → Input putar &amp; penyetelan. Pada jam yang melaporkan putaran mahkota sebagai tombol, tetapkan aksinya di Kontrol.</string>
 
     <string name="tutorial_swipe_up_title">Geser atas, bawah, kiri &amp; kanan</string>
     <string name="tutorial_swipe_up_desc">Geser atas, bawah, atau kiri pada layar sedang diputar masing-masing dapat dikonfigurasi untuk membuka apa saja — menu aksi, antrean pemutaran, lewati trek, daftar putar Anda, dan lainnya. Konfigurasikan masing-masing di Kontrol, pilih Musik sedang diputar atau Tidak ada pemutaran. Secara default, geser atas membuka menu aksi dan lainnya tidak melakukan apa-apa hingga Anda menetapkannya. Geser kanan dibiarkan apa adanya — itu adalah gestur universal Wear OS untuk keluar dari aplikasi.</string>
@@ -195,7 +195,7 @@
     <string name="gesture_double_press">Tekan dua kali</string>
     <string name="gesture_long_press">Tekan lama</string>
     <string name="gesture_swipe_action">Aksi</string>
-    <string name="center_button_quick_panel_note">Mengetuk dua kali di tengah layar sedang diputar selalu membuka panel aksi cepat, apa pun yang Anda tetapkan di sini.</string>
+    <string name="center_button_quick_panel_note">Ketuk dua kali di tengah selalu membuka Aksi cepat. Tekan lama menjalankan pilihan di Pengaturan → Perilaku. Kedua gestur tersebut tidak berubah saat Anda menetapkan ketukan tengah di sini.</string>
     <string name="start_playback">Mulai pemutaran</string>
     <string name="uninstalled_app">Aplikasi tidak terpasang</string>
 
@@ -619,7 +619,7 @@
     <string name="preview_notification_controls">Ikon dari notifikasi media</string>
     <string name="setting_wear_queue_style">Gaya antrean</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Gunakan sampul pintasan sebagai latar belakang</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Ketika Gaya antrean di atas adalah varian Sampul, baris aksi panel cepat dengan sampul pintasan yang diambil (trek, daftar putar, artis…) juga mengisi pilnya dengan sampul tersebut, seperti yang dilakukan Berikutnya. Pintasan tanpa sampul yang diambil (hanya ikon aplikasi) tidak terpengaruh.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Ketika Gaya antrean adalah varian Sampul, baris aksi panel cepat dengan sampul pintasan yang diambil (trek, daftar putar, artis…) juga mengisi pilnya dengan sampul tersebut, seperti yang dilakukan Berikutnya. Pintasan tanpa sampul yang diambil (hanya ikon aplikasi) tidak terpengaruh.</string>
     <string name="setting_wear_list_row_size">Ukuran pil daftar</string>
     <string name="setting_wear_list_row_size_description">Tinggi baris lebar penuh di antrean, menu, dan panel cepat.</string>
     <string name="setting_wear_progress_style">Gaya cincin kemajuan</string>
@@ -1169,7 +1169,7 @@
     <string name="setting_wear_color_modifier_description">Menyesuaikan seluruh palet tanpa mengubah cara penurunannya — berfungsi dengan setiap perlakuan warna</string>
     <string name="setting_wear_flex_axes_hint">Pengaturan ini secara khusus menyempurnakan Google Sans Flex — pilih di atas untuk menggunakannya. Ketebalan dan kemiringan judul serta artis di atas sudah mengatur sumbu ketebalan (wght) dan kemiringan (slnt) miliknya sendiri; empat kontrol di bawah berlaku untuk seluruh wajah.</string>
     <string name="setting_wear_font_all_screens">Gunakan tipografi di mana saja</string>
-    <string name="setting_wear_font_all_screens_description">Menerapkan tipografi yang dipilih ke menu, antrean, dan jam pada wajah jam juga, tidak hanya judul dan artis lagu. Tipografi tampilan dan tulisan tangan bisa lebih sulit dibaca dalam daftar.</string>
+    <string name="setting_wear_font_all_screens_description">Menerapkan font yang dipilih ke menu, antrean, dan Aksi cepat, bukan hanya pemutar. Font tampilan dan tulisan tangan bisa lebih sulit dibaca dalam daftar.</string>
     <string name="setting_wear_font_flex_grade">Gradasi</string>
     <string name="setting_wear_font_flex_grade_description">Menggeser ketebalan sedikit tanpa mengubah tata letak (0–100) — cara halus untuk meningkatkan kontras pada layar gelap.</string>
     <string name="setting_wear_font_flex_hint_title">Tentang kontrol ini</string>
@@ -1216,7 +1216,7 @@
     <string name="update_install_notification_tap">Ketuk untuk memasang versi baru</string>
     <string name="update_install_notification_title">Pembaruan Svartifoss</string>
     <string name="watch_section_typography">Teks</string>
-    <string name="watch_section_typography_description">Pilih tipografi dan gaya judul, artis, dan ikon aplikasi secara independen.</string>
+    <string name="watch_section_typography_description">Pilih font dan sesuaikan teks judul, artis, jam, ikon aplikasi, layar sekunder, serta Flex.</string>
     <string name="wear_clock_font_follow">Ikuti tipografi judul</string>
     <string name="wear_font_bebas_neue">Bebas Neue</string>
     <string name="wear_font_bebas_neue_description">Tampilan huruf kapital sempit — seperti poster, cocok untuk judul panjang</string>
@@ -1402,4 +1402,39 @@
         <item>Standar</item>
         <item>Tegas</item>
     </string-array>
+    <!-- Information architecture and navigation -->
+    <string name="watch_overview_description">Pilih bagian yang ingin disesuaikan. Pratinjau dan tema tersimpan tetap aktif di setiap area.</string>
+    <string name="watch_back_to_overview">Kembali ke area Jam</string>
+    <string name="settings_overview_description">Pilih satu area. Opsi terkait tetap dikelompokkan, sementara pencarian dapat membawa Anda langsung ke pengaturan apa pun.</string>
+    <string name="settings_back_to_overview">Kembali ke area pengaturan</string>
+    <string name="action_search_hint">Cari dalam daftar ini</string>
+    <string name="action_search_empty">Tidak ada aksi yang cocok dengan pencarian ini.</string>
+    <string name="control_assignment_tap">Ketuk: %1$s</string>
+    <string name="control_assignment_hold">Tahan: %1$s</string>
+    <string name="control_assignment_both">Ketuk: %1$s · Tahan: %2$s</string>
+    <string name="category_wf_screen_behavior">Perilaku layar</string>
+    <string name="category_wf_player_progress">Progres, penggeseran &amp; waktu</string>
+    <string name="category_wf_metadata">Konten tampilan jam Metadata</string>
+    <string name="category_wf_typography_secondary">Teks di layar lain</string>
+    <string name="category_wf_colors_title">Warna judul</string>
+    <string name="category_wf_colors_artist">Warna artis</string>
+    <string name="category_wf_colors_clock">Warna jam</string>
+    <string name="category_watch_navigation">Navigasi &amp; pintasan</string>
+    <string name="category_rotary_input">Input putar &amp; penyetelan</string>
+    <string name="category_watch_feedback">Umpan balik &amp; perilaku keluar</string>
+    <string name="settings_search_prerequisite">Opsi ini bergantung pada pilihan lain. Sesuaikan pengaturan yang ditampilkan di sini untuk memunculkannya.</string>
+    <string name="setting_numeric_range_error">Masukkan nilai dari %1$d hingga %2$d.</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="category_wf_panel_shared">Tampilan panel bersama</string>
+    <string name="category_wf_panel_volume">Panel volume</string>
+    <string name="category_wf_panel_seek">Panel progres &amp; penggeseran</string>
+    <string name="category_wf_panel_quick">Panel Aksi cepat</string>
+    <string name="category_wf_panel_queue">Antrean &amp; daftar</string>
+    <string name="category_wf_panel_effects">Efek panel</string>
+    <string name="category_apps_content">Lirik &amp; metadata</string>
+    <string name="category_streaming_services">Pintasan streaming</string>
+    <string name="category_queue_artwork">Sampul antrean</string>
+    <string name="category_system_access">Akses Android &amp; notifikasi</string>
+    <string name="setting_privacy_policy">Kebijakan privasi</string>
+    <string name="setting_privacy_policy_description">Lihat data yang digunakan Svartifoss dan layanan daring mana yang bersifat opsional.</string>
 </resources>

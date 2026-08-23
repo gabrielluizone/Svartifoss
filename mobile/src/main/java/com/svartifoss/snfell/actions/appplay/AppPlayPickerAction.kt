@@ -26,7 +26,7 @@ class AppPlayPickerAction : PhoneAction {
                 .map { AppPlayAction(context, it) }
                 .sortedBy { it.title }
 
-        actionPicker.updateDisplayedActionsWithBackStack(actions)
+        actionPicker.updateDisplayedActionsWithBackStack(title, actions)
     }
 
     companion object {
