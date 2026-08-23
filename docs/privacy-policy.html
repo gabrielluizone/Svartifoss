@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Svartifoss</title>
+<meta name="description" content="How Svartifoss handles your data: no accounts, no ads, no servers of ours. What the app accesses, what stays on-device, and which optional features talk to the internet.">
+<link rel="canonical" href="https://gabrielluizone.github.io/Svartifoss/privacy-policy.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Privacy Policy — Svartifoss">
+<meta property="og:description" content="No accounts, no servers of ours, no ads. What Svartifoss accesses, what stays on-device, and which optional features talk to the internet.">
+<meta property="og:image" content="https://gabrielluizone.github.io/Svartifoss/images/banner.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="images/favicon-light.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" href="images/favicon-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="images/app-icon-512.png">
+
+<style>
+  @font-face {
+    font-family: "Google Sans";
+    src: url("fonts/google_sans_regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Google Sans";
+    src: url("fonts/google_sans_bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --void: #0a0a0a;
+    --shadow: #141414;
+    --carbon: #1e1e1e;
+    --carbon-soft: #272727;
+    --snow: #f0f0f0;
+    --ash: #9a9a9a;
+    --ash-dim: #6f6f6f;
+    --sage: #87a89f;
+    --sage-dark: #6b9088;
+
+    --face: "Google Sans", "Product Sans", Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --r-lg: 16px;
+    --r-md: 12px;
+    --r-sm: 10px;
+
+    --edge: min(6vw, 72px);
+    --col-w: 1180px;
+    --doc-w: 760px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--void);
+    color: var(--snow);
+    font-family: var(--face);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { color: var(--sage); }
+  ::selection { background: var(--sage); color: var(--void); }
+  :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
+
+  svg.icon { width: 1em; height: 1em; fill: currentColor; flex: none; }
+
+  .wrap {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    padding-left: var(--edge);
+    padding-right: var(--edge);
+  }
+  .doc-wrap {
+    max-width: var(--doc-w);
+    margin: 0 auto;
+    padding-left: var(--edge);
+    padding-right: var(--edge);
+  }
+
+  .columns-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .columns-bg span {
+    position: absolute;
+    top: -10%;
+    bottom: -10%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, var(--carbon) 15%, var(--carbon) 85%, transparent 100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .columns-bg span { animation: cascade 9s ease-in-out infinite; }
+  }
+  @keyframes cascade {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .eyebrow {
+    font-family: var(--face);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sage);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow .dot { color: var(--sage); font-size: 8px; }
+
+  h1, h2, h3 {
+    font-family: var(--face);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--snow);
+  }
+
+  /* ================= NAV ================= */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(10, 10, 10, 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--carbon);
+  }
+  .nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--face);
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--snow);
+    text-decoration: none;
+  }
+  .nav-brand img { width: 26px; height: 26px; border-radius: 7px; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a { color: var(--ash); text-decoration: none; }
+  .nav-links a:hover { color: var(--snow); }
+
+  /* ================= DOC HERO ================= */
+  .doc-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 64px 0 40px;
+    border-bottom: 1px solid var(--carbon);
+  }
+  .doc-hero .doc-wrap { position: relative; z-index: 1; }
+  .doc-hero h1 {
+    font-size: clamp(36px, 6vw, 56px);
+    margin: 16px 0 10px;
+  }
+  .doc-updated {
+    color: var(--ash-dim);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 26px;
+  }
+  .doc-lede {
+    color: var(--ash);
+    font-size: 15.5px;
+    margin: 0 0 22px;
+  }
+  .callout {
+    background: var(--shadow);
+    border: 1px solid var(--carbon-soft);
+    border-left: 3px solid var(--sage);
+    border-radius: var(--r-md);
+    padding: 20px 24px;
+    color: var(--ash);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout strong { color: var(--snow); }
+
+  /* ================= TOC ================= */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    padding: 28px 0 36px;
+    border-bottom: 1px solid var(--carbon);
+  }
+  .toc-label {
+    width: 100%;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ash-dim);
+    margin-bottom: 2px;
+  }
+  .toc a {
+    color: var(--ash);
+    font-size: 13.5px;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--carbon-soft);
+    padding-bottom: 1px;
+  }
+  .toc a:hover { color: var(--sage); border-color: var(--sage); }
+
+  /* ================= DOC BODY ================= */
+  .doc-body { padding: 8px 0 20px; }
+  .doc-body section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--carbon);
+  }
+  .doc-body section:last-of-type { border-bottom: none; padding-bottom: 8px; }
+  .doc-body h2 {
+    font-size: clamp(21px, 2.8vw, 26px);
+    margin: 0 0 18px;
+    scroll-margin-top: 84px;
+  }
+  .doc-body h3 {
+    font-size: 16.5px;
+    margin: 30px 0 10px;
+    scroll-margin-top: 84px;
+  }
+  .doc-body h3:first-of-type { margin-top: 4px; }
+  .doc-body p {
+    color: var(--ash);
+    margin: 0 0 16px;
+    font-size: 15px;
+  }
+  .doc-body p:last-child { margin-bottom: 0; }
+  .doc-body strong { color: var(--snow); font-weight: 700; }
+  .doc-body ul {
+    color: var(--ash);
+    font-size: 15px;
+    padding-left: 20px;
+    margin: 0 0 16px;
+  }
+  .doc-body li { margin-bottom: 8px; }
+  .doc-body li:last-child { margin-bottom: 0; }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 4px 0 8px;
+    border: 1px solid var(--carbon);
+    border-radius: var(--r-md);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 520px; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--carbon); vertical-align: top; }
+  th {
+    color: var(--snow);
+    background: var(--shadow);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+  }
+  td { color: var(--ash); line-height: 1.6; }
+  td:first-child { color: var(--snow); font-weight: 600; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+
+  /* ================= FOOTER ================= */
+  footer { padding: 56px 0 64px; }
+  .footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--carbon);
+    margin-bottom: 20px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--snow); text-decoration: none; }
+  .footer-brand img { width: 22px; height: 22px; border-radius: 6px; }
+  .footer-links { display: flex; gap: 26px; flex-wrap: wrap; align-items: center; }
+  .footer-links a { color: var(--ash); text-decoration: none; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+  .footer-links a:hover { color: var(--sage); }
+  .footer-links a svg.icon { width: 14px; height: 14px; opacity: 0.7; }
+  .footer-meta {
+    font-size: 12.5px;
+    color: var(--ash-dim);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-open-new" viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></symbol>
+  </defs>
+</svg>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="nav-brand" href="index.html">
+      <img src="images/app-icon-512.png" alt="">
+      Svartifoss
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="https://github.com/gabrielluizone/Svartifoss">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="doc-hero">
+  <div class="columns-bg" aria-hidden="true">
+    <span style="left:6%; animation-delay:.2s;"></span>
+    <span style="left:18%; animation-delay:1.4s;"></span>
+    <span style="left:32%; animation-delay:.6s;"></span>
+    <span style="left:48%; animation-delay:2s;"></span>
+    <span style="left:64%; animation-delay:1s;"></span>
+    <span style="left:80%; animation-delay:1.8s;"></span>
+    <span style="left:94%; animation-delay:.4s;"></span>
+  </div>
+  <div class="doc-wrap">
+    <div class="eyebrow"><span class="dot">●</span> Legal</div>
+    <h1>Privacy Policy</h1>
+    <p class="doc-updated">Last updated: 23-08-2026</p>
+    <p class="doc-lede">Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a paired watch control music playback on your phone. This policy explains what information the app accesses, what it stores, and what — if anything — leaves your device.</p>
+    <div class="callout">
+      <p><strong>The short version:</strong> Svartifoss does not have user accounts, does not run its own servers, and does not sell or share your data with advertisers. The phone and watch talk to each other directly over your local Bluetooth/Wi-Fi connection. Optional update checks contact GitHub, and the phone app includes Google Firebase Crashlytics and Analytics for diagnostics, plus Firebase Cloud Messaging for occasional developer announcements. Crash reporting and announcement notifications are both enabled by default and can each be disabled at any time — see <a href="#crash-reports">Crash reports</a> and <a href="#announcement-notifications">Announcement notifications</a> below. A separate, off-by-default setting can also fetch cover art for your saved playlist shortcuts directly from the streaming service — see <a href="#streaming-shortcut-artwork-optional">Streaming shortcut artwork</a> below.</p>
+    </div>
+  </div>
+</header>
+
+<div class="doc-wrap">
+  <nav class="toc" aria-label="Table of contents">
+    <span class="toc-label">On this page</span>
+    <a href="#access">Access &amp; permissions</a>
+    <a href="#local-storage">Local storage</a>
+    <a href="#crash-reports">Crash reports</a>
+    <a href="#announcement-notifications">Announcements</a>
+    <a href="#streaming-shortcut-artwork-optional">Shortcut artwork</a>
+    <a href="#queue-covers">Queue covers</a>
+    <a href="#track-details">Track details</a>
+    <a href="#lyrics">Song lyrics</a>
+    <a href="#usage-diagnostics">Usage diagnostics</a>
+    <a href="#what-we-dont-do">What we don't do</a>
+    <a href="#children">Children's privacy</a>
+    <a href="#open-source">Open source</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main class="doc-body">
+
+    <section id="access">
+      <h2>What the app needs access to, and why</h2>
+
+      <h3>Notification access <em>(Android's "Notification access" permission)</em></h3>
+      <p>Svartifoss requests <strong>notification access</strong> so it can read which app is currently playing music and its media-session metadata (track title, artist, album art, playback position, shuffle/repeat state). If you select <strong>From current media app</strong> for the quick-actions panel, it also reads up to four action labels, icons and local button intents from that app's active media notification. The labels/icons are mirrored only to your paired watch; the button intents stay on the phone and are invoked only when you tap the matching watch button.</p>
+      <p>This permission is <strong>not</strong> used to read the content of your messages, emails, or unrelated notifications. Svartifoss does not store, transmit to a server or log such content.</p>
+
+      <h3>Phone ⟷ watch communication</h3>
+      <p>All communication between the phone app and the watch app happens over the Wearable Data Layer API — a local, direct connection between your own two paired devices (via Bluetooth or local Wi-Fi). This does not go through any server we operate, and does not require an internet connection or a Google account beyond what your device already needs to have its watch paired at all.</p>
+
+      <h3>Other permissions</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Permission</th><th>What it's for</th></tr></thead>
+          <tbody>
+            <tr><td>Foreground service / "Post notifications"</td><td>Keeps the phone↔watch connection alive while music plays, shown as a persistent notification (required by Android for background media apps). Also required to show the optional developer announcement notifications described below.</td></tr>
+            <tr><td>Photos</td><td>Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option.</td></tr>
+            <tr><td>Vibrate</td><td>Haptic feedback on the watch when you press a button, if you enable that setting.</td></tr>
+            <tr><td>Run Tasker tasks</td><td>Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured.</td></tr>
+            <tr><td>Music and audio (Android 13+) / Storage (older versions)</td><td>Only used to read album covers for entries in the playback queue, when the music app publishes them as references into your music library rather than as images. Requested from Settings → Apps, never at startup, and only ever read locally — nothing is uploaded. Decline it and the queue simply shows blank thumbnails. On very old Android versions the same legacy Storage permission also covers saving the current album art to your gallery, which only happens if you tap that option.</td></tr>
+            <tr><td>Internet</td><td>Used for optional update checks, the Firebase diagnostics described below, looking up song lyrics when you open the lyrics screen on the watch, and — only if you turn them on — fetching shortcut artwork from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="local-storage">
+      <h2>What's stored locally on your phone</h2>
+      <p>The following stays only in the app's private storage on your phone. It is never uploaded anywhere by us:</p>
+      <ul>
+        <li>Your button/gesture configuration (what each button, tap zone, or gesture does).</li>
+        <li>Your search history and playlist shortcuts, if you use those features.</li>
+        <li>A short local history of recently played tracks, used as a fallback when an app doesn't expose a real playback queue.</li>
+        <li>Your app preferences (theme, colors, timeouts, etc.).</li>
+      </ul>
+      <p>Uninstalling the app removes all of this data. If you use the app's Export Config feature, that file is saved wherever you choose to save it (e.g. your own device storage or cloud drive) — that's your copy, under your control, and we never see it.</p>
+    </section>
+
+    <section id="crash-reports">
+      <h2>Crash reports</h2>
+      <p>Svartifoss uses <strong>Firebase Crashlytics</strong> (a Google service) to receive crash reports when the app misbehaves, so we can find and fix bugs. A crash report can include: a stack trace, the Android version and device model, and short diagnostic log lines the app already writes internally while running — these log lines occasionally include the name of the track or app that was playing at the time, since that's part of normal app operation, but never your personal messages, contacts, or notification content from other apps.</p>
+      <p>Crash reporting is <strong>enabled by default</strong>. You can disable it under <strong>Settings → Data &amp; support → Privacy → Send crash reports</strong>. Disabling the setting stops Svartifoss from adding custom Crashlytics logs or non-fatal reports and deletes reports still queued on the device without sending them. Automatic Crashlytics upload remains disabled at all times; when this setting is enabled, Svartifoss explicitly sends finalized reports only after reading your choice at startup. It cannot recall a report that had already been uploaded before you opted out.</p>
+      <p>This sends data to Google's Firebase infrastructure, governed by <a href="https://policies.google.com/privacy">Google's Privacy Policy</a> and <a href="https://firebase.google.com/support/privacy">Firebase's data processing terms</a>. We do not have access to unrelated data Google may hold through its other services.</p>
+    </section>
+
+    <section id="announcement-notifications">
+      <h2>Announcement notifications</h2>
+      <p>Svartifoss uses <strong>Firebase Cloud Messaging</strong> (a Google service) to let the developer send occasional push notifications — for example, about a new release or an important notice. There is no Svartifoss account and no server of ours involved: every installation subscribes to a single shared FCM topic, and a notification sent to that topic reaches every subscribed device. We do not receive or hold a list of users, devices, or install identifiers through this feature — Google's Firebase infrastructure routes the message to subscribed devices without exposing that list to us.</p>
+      <p>A notification may include a title, a short message, and an optional link that opens when you tap it (for example, to a release page). Svartifoss does not use this channel for advertising, and does not send anything through it based on your listening activity, location, or any other on-device data — whatever gets sent is written by the developer at the time it's sent.</p>
+      <p>Announcement notifications are <strong>enabled by default</strong>. You can disable them under <strong>Settings → Data &amp; support → Privacy → Announcement notifications</strong>. Disabling unsubscribes this installation from the topic; a message sent while you're unsubscribed will not reach this device. Android's own notification permission still applies on top of this setting.</p>
+      <p>This uses Google's Firebase infrastructure, governed by <a href="https://policies.google.com/privacy">Google's Privacy Policy</a> and <a href="https://firebase.google.com/support/privacy">Firebase's data processing terms</a>.</p>
+    </section>
+
+    <section id="streaming-shortcut-artwork-optional">
+      <h2>Streaming shortcut artwork (optional)</h2>
+      <p>If you save a playlist/track shortcut and turn on <strong>Fetch shortcut artwork online</strong> (Settings → Apps → Music apps &amp; services — <strong>off by default</strong>), Svartifoss sends that shortcut's public share link to the corresponding streaming service's own public <strong>oEmbed</strong> endpoint (Spotify, YouTube, SoundCloud, or Deezer) to download a cover thumbnail, shown on the phone, the watch menu, and any button you assign it to. Each thumbnail is fetched once and cached on-device.</p>
+      <p>Only the link itself — already a public share URL you chose to save — is sent; no account, API key, or other personal data is attached. This request goes directly to the streaming service, not through any server of ours, and is governed by that service's own privacy policy, not this one. Apple Music, Amazon Music, and Tidal have no public oEmbed endpoint, so shortcuts to those services always fall back to a generic app icon instead.</p>
+    </section>
+
+    <section id="queue-covers">
+      <h2>Playback queue covers (optional)</h2>
+      <p>Music apps publish the cover for each queue entry in one of two ways, and neither is read unless you opt in.</p>
+      <p><strong>From your library.</strong> Local players (Retro Music and similar) reference a cover already stored on your device. Reading those needs Android's music and audio permission, requested from the "Queue covers from your library" row in Settings → Apps. This is a purely local read — no network access is involved and nothing about your library is uploaded, transmitted to the watch beyond the covers for the up-to-20 queue entries being displayed, or shared with anyone. Declining leaves the queue working with blank thumbnails.</p>
+      <p><strong>From the internet.</strong> Streaming clients publish a cover URL instead of an image. <strong>Fetch queue covers online</strong> (Settings → Apps, and the Watch face tab's Panels section) downloads each such cover once and caches it on the phone. Only the cover URL the music app itself published is requested; no account, API key, or other personal data is attached, and the request goes directly to whatever host that app pointed at, not through any server of ours.</p>
+      <p>This one is <strong>on by default</strong>, unlike the optional shortcut artwork above. The reason is that a streaming app's queue has no other cover source at all, so leaving it off produced a queue of permanently blank rows rather than a degraded one. Turning it off is a single switch, and with it off remote covers are skipped entirely and those entries show blank thumbnails — the queue itself, and everything else in the app, keeps working offline.</p>
+      <p>The same switch also governs one request outside the queue. Some streaming apps hand out a small thumbnail for the track <em>currently playing</em> — sized for their own phone notification, sometimes only 100 pixels square — while the same track information carries the address of the full-size cover. Because the watch scales that image up to fill its screen, the small one arrives visibly blurry. When this setting is on, and only when the supplied image is smaller than the watch actually needs, the larger copy is fetched from that same address and cached alongside the queue covers. It is the identical kind of request, to the address the music app itself published, with nothing attached and no server of ours involved. With the setting off, the small image is used as-is.</p>
+    </section>
+
+    <section id="track-details">
+      <h2>Track details</h2>
+      <p>The <strong>Metadata</strong> watch face shows what the playing track actually is: album, position on the record, credits, year, and for a track stored on your phone the format, bitrate, sample rate, channels and file size.</p>
+      <p>Almost all of that needs no network at all. The album, artist, credits, genre, year and track position come from the tags the playing app already publishes about the current song, and the file details are read from the file on your phone — which is why they appear only for local tracks, and only when the media access described above has been granted. Nothing about either leaves your devices.</p>
+      <p>One optional part does use the internet. <strong>Look up track details online</strong> (Settings → Apps → Music apps &amp; services) sends the <strong>track name and the artist name</strong> to <a href="https://musicbrainz.org">MusicBrainz</a>, a free public music database, to fill in details the playing app did not publish — the ISRC, the record label, the release date and MusicBrainz's own catalogue ids. Nothing else is attached: no identifier, no account, no listening history, and no record of which app was playing. The request goes directly to MusicBrainz, not through any server of ours, and is governed by that service's own terms rather than this policy.</p>
+      <p>This is <strong>off by default</strong>, unlike the lyrics lookup, and the difference is deliberate: a lyric has no second source, while this one only ever <em>adds</em> rows to a table that already stands on your player's own tags. Leaving it off costs a few lines rather than the feature. Nothing is sent unless you both switch it on <strong>and</strong> select the Metadata face — no other face requests it. Results are held in memory only for as long as the phone app is running and are never written to disk.</p>
+    </section>
+
+    <section id="lyrics">
+      <h2>Song lyrics</h2>
+      <p>The watch has two lyrics surfaces: a screen you can put on any button, gesture or menu slot, and the <strong>Verse</strong> watch face, which shows the line being sung on the main player screen. Either one asks the <strong>phone</strong> to look the words up — the watch never makes the request itself, since a watch paired over Bluetooth has no internet connection of its own.</p>
+      <p>The phone sends the <strong>track name, the artist name and the track's length</strong> to <a href="https://lrclib.net">LRCLIB</a>, a free public lyrics database, which matches on exactly those three things and needs no account or API key. Nothing else is attached: no identifier, no account, no listening history, and no record of which app was playing. The request goes directly to LRCLIB, not through any server of ours, and is governed by that service's own terms rather than this policy.</p>
+      <p>Nothing is requested unless one of those two surfaces is in use. Opening the lyrics screen looks up the current track; selecting the Verse face looks up each track while that face stays selected, since its whole purpose is to follow the words. Choose any other face and never open the lyrics screen, and no lookup ever happens. Lyrics that come back are held <strong>in memory only</strong> for as long as the phone app is running and are never written to disk; closing the app forgets them.</p>
+      <p>This is <strong>on by default</strong>, for the same reason the queue covers above are: a lyric has no second source, so switching it off does not degrade the screen, it empties it. <strong>Look up lyrics online</strong> (Settings → Apps → Music apps &amp; services) turns it off, and both surfaces then simply report that lookups are disabled. Everything else in the app keeps working offline.</p>
+    </section>
+
+    <section id="usage-diagnostics">
+      <h2>Usage diagnostics</h2>
+      <p>The phone app also includes <strong>Google Analytics for Firebase</strong>. It collects Firebase's standard automatic app/session events and technical context such as app version, device/OS class and an installation-scoped identifier. Svartifoss does not attach an account, name, email, media metadata or message content to these events and does not log custom Analytics events. This service is governed by <a href="https://policies.google.com/privacy">Google's Privacy Policy</a> and <a href="https://firebase.google.com/support/privacy">Firebase's privacy information</a>. The crash-reporting switch described above controls Crashlytics reports; it does not control these separate automatic Analytics events.</p>
+    </section>
+
+    <section id="what-we-dont-do">
+      <h2>What we don't do</h2>
+      <ul>
+        <li>We don't require or offer any account/login.</li>
+        <li>We don't run our own backend server that your data passes through.</li>
+        <li>We don't sell, rent, or share your data with advertisers or data brokers.</li>
+        <li>We don't show ads.</li>
+        <li>We don't read the content of unrelated notifications. For the current media app, only playback metadata and — when explicitly selected — its media action labels/icons are used.</li>
+      </ul>
+    </section>
+
+    <section id="children">
+      <h2>Children's privacy</h2>
+      <p>Svartifoss is not directed at children and does not knowingly collect information from children.</p>
+    </section>
+
+    <section id="open-source">
+      <h2>Open source</h2>
+      <p>Svartifoss is free/open-source software (GPLv3). Anyone can inspect the full source code — including everything described in this policy — at: <a href="https://github.com/gabrielluizone/Svartifoss">github.com/gabrielluizone/Svartifoss</a></p>
+    </section>
+
+    <section id="changes">
+      <h2>Changes to this policy</h2>
+      <p>If this policy changes, the updated version will be posted at this same location with a new "Last updated" date.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Questions about this policy or your data can be sent to: <strong>gabrielluizone@gmail.com</strong></p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <a class="footer-brand" href="index.html">
+        <img src="images/app-icon-512.png" alt="">
+        Svartifoss
+      </a>
+      <div class="footer-links">
+        <a href="https://github.com/gabrielluizone/Svartifoss">GitHub <svg class="icon"><use href="#i-open-new"/></svg></a>
+        <a href="https://github.com/gabrielluizone/Svartifoss/releases">Releases <svg class="icon"><use href="#i-open-new"/></svg></a>
+        <a href="https://buymeacoffee.com/gabrielsvafoss">Buy Me a Coffee <svg class="icon"><use href="#i-open-new"/></svg></a>
+        <a href="https://ko-fi.com/gabrielsvafoss">Ko-fi <svg class="icon"><use href="#i-open-new"/></svg></a>
+        <a href="https://github.com/gabrielluizone/Svartifoss/blob/master/COPYING">License</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>com.svartifoss.snfell · GPL-3.0</span>
+      <span>A continuation of <a href="https://github.com/matejdro/WearMusicCenter">Music Center for Wear</a> by matejdro</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
