@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/images/banner.png" alt="Svartifoss — control your music from your wrist" width="100%" />
+<img src="docs/images/svartifoss-cover-md.png" alt="Svartifoss — control your music from your wrist" width="100%" />
 
 <br><br>
 
