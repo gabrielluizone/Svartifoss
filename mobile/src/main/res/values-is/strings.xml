@@ -142,6 +142,7 @@
     <string name="action_repeat">Endurtaka</string>
     <string name="action_repeat_one">Endurtaka eitt</string>
     <string name="action_search">Leita að tónlist</string>
+    <string name="action_open_lyrics">Textar</string>
     <string name="group_playback_controls">Spilunarstýringar</string>
     <string name="group_streaming_shortcuts">Lög, plötur og lagalistar</string>
     <string name="pick_action">Veldu aðgerð</string>
@@ -261,6 +262,12 @@
     <string name="preview_sample_artist">Nafn flytjanda</string>
     <string name="preview_sample_next_title">Næsta lag</string>
     <string name="preview_playback_stopped">Stöðvað</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">línan á undan</string>
+    <string name="preview_verse_current">línan sem er að spila núna</string>
+    <string name="preview_verse_next">og sú næsta</string>
     <string name="preview_chat_today">Í dag</string>
     <string name="category_gestures">Hreyfingar og inntak</string>
     <string name="setting_overlay_blur_radius">Óskýrleiki yfirlags</string>
@@ -272,11 +279,16 @@
     <string name="get_support">Fá aðstoð</string>
     <string name="get_support_description">Senda annálaskrár appsins til forritarans vegna aðstoðar</string>
     <string name="contact_developer">Hafa samband við forritarann</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — samband</string>
     <string name="contact_developer_chooser">Senda tölvupóst</string>
     <string name="contact_developer_no_client">Ekkert tölvupóstapp uppsett. Netfangið hefur verið afritað á klippiborðið.</string>
     <string name="about_developer_title">Um forritarann</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
     <string name="about_developer_dialog_message">Svartifoss byrjaði sem persónulegt verkefni — ég vildi færa Music Center for Wear til nútímans miðað við það sem er mögulegt í dag, einfaldlega svo ég gæti sjálfur notað það á hverjum degi. Það heppnaðist nógu vel til að ég ákvað að deila því með öllum. Þetta er fyrsta appið mitt, og það er fátt sem toppar að sjá eitthvað sem maður byggði reynast öðrum líka gagnlegt.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">Leyfi fyrir opinn hugbúnað</string>
     <string name="setting_always_show_time">Sýna tíma alltaf</string>
     <string name="setting_always_show_time_off_description">Núverandi tími birtist aðeins í hvíldarham</string>
@@ -365,6 +377,12 @@
         <item>Afmettuð plata</item>
         <item>Sérsniðinn litur</item>
     </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="player_shading_style_entries">
         <item>Fylgja þema spilara</item>
         <item>Jaðarskygging</item>
@@ -377,6 +395,19 @@
         <item>Litaskolun plötu</item>
         <item>Tvílita stigull plötu</item>
         <item>Hliðartjöld</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
     </string-array>
     <string name="setting_ambient_album_art_opacity">Ógegnsæi plötuumslags í hvíldarham</string>
     <string name="setting_ambient_album_art_opacity_description">Hversu sýnilegt plötuumslagið er áfram í hvíldarham. Núna <![CDATA[<b>%1$s%%</b>]]>.</string>
@@ -417,6 +448,11 @@
         <item>Skipta um úraskífu</item>
         <item>Opna biðröðina</item>
         <item>Ekkert</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
     </string-array>
     <string name="setting_wear_screen_face">Grunnútlit</string>
     <string name="setting_wear_screen_face_description">Veldu byggingu þessa þema. Vistuð þemu geta sameinað þetta útlit með eigin letri, litum, óskýrleika, skyggingu, alltaf-virkum skjá og spjöldum.</string>
@@ -514,6 +550,15 @@
         <item>Fast (ein lína, hvorki skrun né minnkun)</item>
         <item>Minnka til að passa</item>
     </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
 
     <string name="setting_wear_artist_color">Litur flytjandatexta</string>
     <string name="setting_wear_artist_custom_color">Sérsniðinn litur flytjanda</string>
@@ -540,6 +585,11 @@
         <item>Plötulitur</item>
         <item>Sérsniðinn litur</item>
     </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
 
     <string-array name="wear_screen_face_entries">
         <item>Classic</item>
@@ -561,6 +611,26 @@
         <item>Vers</item>
         <item>Metadata</item>
     </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive spólun</string>
     <string name="setting_wear_expressive_seek_mode_description">Hvernig spólað er í laginu með snertingu á Expressive-skífunni. Miðjuhringur gerir hringinn í kringum spila-hnappinn dragfæran; Jaðarhringur sýnir líka Klassíska umgjarðarhringinn; Ekkert lætur spólun eingöngu vera á snúningskrónunni.</string>
@@ -568,6 +638,11 @@
         <item>Miðjuhringur</item>
         <item>Jaðarhringur</item>
         <item>Ekkert</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
     </string-array>
 
     <string name="category_wear_aod">Alltaf-virkur skjár</string>
@@ -589,17 +664,44 @@
         <item>Note</item>
         <item>Vers</item>
     </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
     <string name="setting_wear_aod_color">Litur alltaf-virks skjás</string>
     <string-array name="wear_aod_color_entries">
         <item>Hvítt</item>
         <item>Plötulitur</item>
         <item>Sérsniðinn litur</item>
     </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="wear_clock_color_entries">
         <item>Hvítt</item>
         <item>Breytilegt (eftir svæði undir klukku)</item>
         <item>Plötulitur</item>
         <item>Sérsniðinn litur</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
     <string-array name="wear_up_next_pill_entries">
         <item>Fylgja stíl spjalds</item>
@@ -610,6 +712,16 @@
         <item>Móðuhvítt</item>
         <item>Svart</item>
         <item>Breytilegt (tónn plötu)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
     </string-array>
     <string name="setting_wear_up_next_pill">Bakgrunnur Næst-hylkis</string>
     <string name="setting_wear_show_up_next_pill">Næst-hylki á spilara</string>
@@ -639,6 +751,12 @@
         <item>Aðeins í hléi</item>
         <item>Aldrei</item>
     </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
     <string name="setting_wear_aod_show_art">Plötuumslag á alltaf-virkum skjá</string>
     <string name="setting_wear_aod_show_art_description">Halda dofnu plötuumslagi sýnilegu í hvíldarham. Að slökkva á þessu sýnir hreinsvartan bakgrunn, sem sparar áberandi meiri rafhlöðu á AMOLED-skjáum.</string>
     <string name="setting_wear_aod_art_treatment">Stíll plötuumslags á alltaf-virkum skjá</string>
@@ -647,6 +765,12 @@
         <item>Skýrt umslag</item>
         <item>Einlit móða</item>
         <item>Fylgja meðferð myndverks spilara</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
     </string-array>
     <string name="setting_wear_aod_show_clock">Klukka á alltaf-virkum skjá</string>
     <string name="setting_wear_aod_show_clock_description">Sýna klukkuna þegar úrið er í hvíldarham</string>
@@ -701,6 +825,27 @@
         <item>Einlitt (einn litblær, þrír tónar)</item>
         <item>Tvílitt (tveir litir plötu)</item>
     </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
     <string name="setting_wear_title_font_weight">Leturþykkt titils</string>
     <string name="setting_wear_title_font_italic">Skáletraður titill</string>
     <string name="setting_wear_title_font_scale">Stærð titils</string>
@@ -735,6 +880,13 @@
         <item>Hlýtt</item>
         <item>Svalt</item>
     </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Jaðarbogi (vinstri)</item>
         <item>Jaðarbogi (hár)</item>
@@ -745,6 +897,16 @@
         <item>Miðjuljómi</item>
         <item>Lárétt mælistika</item>
     </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
     <string-array name="wear_seek_layout_entries">
         <item>Jaðarhringur</item>
         <item>Jaðarhringur (mjór)</item>
@@ -752,12 +914,29 @@
         <item>Tímalína</item>
         <item>Skipt tímalína</item>
     </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
     <string-array name="wear_quick_panel_layout_entries">
         <item>Lýsigögn fyrst</item>
         <item>Bogi</item>
         <item>Aðal</item>
         <item>Rist</item>
         <item>Merktar raðir</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
     </string-array>
     <string-array name="wear_progress_style_entries">
         <item>Samfellt</item>
@@ -768,6 +947,16 @@
         <item>60 úrpunktar</item>
         <item>60 úrstrik</item>
         <item>12 klukkustunda hlutar</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
     </string-array>
     <string-array name="wear_seek_style_entries">
         <item>Einfalt</item>
@@ -796,6 +985,33 @@
         <item>Stilltir hnappar</item>
         <item>Frá núverandi miðlunarappi</item>
     </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
     <string-array name="wear_overlay_backdrop_entries">
         <item>Fylgja stíl spjalds</item>
         <item>Plötuóskýrleiki (akrýl)</item>
@@ -808,6 +1024,19 @@
         <item>Fljótandi gler</item>
         <item>Expressive-óskýrleiki</item>
         <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Gler</item>
@@ -829,11 +1058,37 @@
         <item>Blek</item>
         <item>Rák</item>
     </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
     <string-array name="wear_list_row_size_entries">
         <item>Þjappað</item>
         <item>Venjulegt</item>
         <item>Hátt</item>
         <item>Sérlega hátt</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
     </string-array>
 
     <string-array name="wear_overlay_style_entries">
@@ -855,6 +1110,26 @@
         <item>Óskýrt umslag</item>
         <item>Tónað umslag</item>
         <item>Ferningslaga umslag</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_entries">
@@ -880,6 +1155,30 @@
         <item>Blek</item>
         <item>Punktur</item>
         <item>Hella</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
     </string-array>
 
     <string name="setting_wear_paused_hold">Halda appi virku eftir pásun</string>
@@ -1022,6 +1321,9 @@
 
     <string name="setting_wear_clock_font">Leturgerð klukku</string>
     <string name="wear_clock_font_follow">Fylgja letri titils</string>
+    <string name="setting_wear_lyrics_font">Leturgerð texta</string>
+    <string name="setting_wear_lyrics_font_description">Leturgerðin fyrir sönglagatexta, á textaskjánum og Vers-útlitinu. Fylgir leturgerð lagsins nema þú veljir aðra hér.</string>
+    <string name="wear_lyrics_font_follow">Fylgja letri titils</string>
     <string name="setting_wear_clock_font_weight">Leturþykkt klukku</string>
     <string name="setting_wear_clock_font_italic">Skáletruð klukka</string>
     <string name="setting_wear_clock_font_scale">Stærð klukku</string>
@@ -1047,6 +1349,12 @@
         <item>Aðeins í hléi</item>
         <item>Aldrei</item>
     </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
 
     <string name="setting_screen_buttons_curve">Sveigja smáhnappa</string>
     <string name="setting_screen_buttons_curve_description">Veldu sveigjustíl smáhnappa: flatt, bogadregið, mjúkt, sveigt.</string>
@@ -1069,6 +1377,23 @@
         <item>Ávalur ferhyrningur (miðlungs)</item>
         <item>Ávalur ferhyrningur (stór)</item>
     </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
     <string-array name="screen_buttons_curve_entries">
         <item>Flatt</item>
         <item>Bogi</item>
@@ -1081,6 +1406,19 @@
         <item>Vinstri jaðar</item>
         <item>Hægri jaðar</item>
         <item>Báðir jaðrar</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Sjálfgefinn bakgrunnur</item>
@@ -1098,11 +1436,32 @@
         <item>Aðeins táknmynd (gagnsætt)</item>
         <item>Táknmynd Exp</item>
     </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
 
     <string-array name="screen_buttons_color_entries">
         <item>Hlutlaust</item>
         <item>Plötulitur</item>
         <item>Sérsniðinn litur</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
 
     <string-array name="album_art_style_entries">
@@ -1131,11 +1490,42 @@
         <item>Eclipse AMOLED svart</item>
         <item>Falið (fast svart)</item>
     </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
 
     <string-array name="theme_entries">
         <item>@string/theme_light</item>
         <item>@string/theme_dark</item>
         <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
     </string-array>
 
     <string-array name="app_language_entries">
@@ -1154,6 +1544,23 @@
         <item>فارسی</item>
         <item>简体中文</item>
         <item>Íslenska</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -1411,12 +1818,58 @@
         <item>Jafnvægi</item>
         <item>Kröftugastur</item>
     </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
     <string-array name="wear_accent_floor_entries">
         <item>Af</item>
         <item>Mjúkt</item>
         <item>Staðlað</item>
         <item>Sterkt</item>
     </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Áherslugrunnur</string>
+    <string name="preview_metadata_album">Plata</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Lag</string>
+    <string name="preview_metadata_genre">Tegund</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Ár</string>
+    <string name="preview_metadata_format">Snið</string>
+    <string name="preview_metadata_bitrate">Bitahraði</string>
+    <string name="preview_metadata_position">Staða</string>
+    <string name="preview_metadata_output">Úttak</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Plötuupplýsingar</string>
+    <string name="setting_wear_metadata_core_description">Plata, flytjandi plötu, staðsetning á plötunni og lengd.</string>
+    <string name="setting_wear_metadata_release">Útgáfuupplýsingar</string>
+    <string name="setting_wear_metadata_release_description">Tegund, ár, útgáfudagur og útgáfufyrirtæki.</string>
+    <string name="setting_wear_metadata_credits">Aðstandendur</string>
+    <string name="setting_wear_metadata_credits_description">Tónskáld, textahöfundur og höfundur, ef spilarinn birtir þau.</string>
+    <string name="setting_wear_metadata_technical">Skráarupplýsingar</string>
+    <string name="setting_wear_metadata_technical_description">Snið, bitahraði, safntíðni, rásir og stærð. Aðeins fyrir lög á tækinu.</string>
+    <string name="setting_split_panel">Split-spjald</string>
+    <string name="setting_split_panel_description">Hvað fyllir neðri helming Split-útlitsins. Móskjár heldur sömu plötuumslagi áfram á bak við textann; heill litur er með útliti tilkynningarspjalds.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Móskjár</item>
+        <item>Heill litur</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Afspilunarupplýsingar</string>
+    <string name="setting_wear_metadata_playback_description">Staða upp á millisekúndu, hraði, hljóðúttak og hvaðan hljóðið er streymt eða spilað — þar á meðal vistfang lagsins. Eini hlutinn sem streymt lag getur fyllt þegar engin skrá er til að lýsa.</string>
+    <string name="setting_wear_metadata_identifiers">Auðkenni</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC og skráningarnúmer. Óvirkt sjálfgefið — gagnlegt þegar þú þarft á því að halda, truflandi þegar ekki.</string>
+    <string name="setting_metadata_lookup">Fletta upp lagaupplýsingum á netinu</string>
+    <string name="setting_metadata_lookup_description">Fyllir inn það sem spilunarforritið birti ekki — ISRC, útgáfufyrirtæki, útgáfudag — frá MusicBrainz, frjálsum opinberum gagnagrunni. Óvirkt sjálfgefið. Metadata-útlitið virkar án þess; þetta bætir aðeins við línum. Ekkert er sent nema þú kveikir á þessu og velur það útlit, og þá aðeins lagatitill og flytjandi.</string>
     <!-- Information architecture and navigation -->
     <string name="watch_overview_description">Veldu hvað þú vilt sérsníða. Forskoðunin og vistaða þemað haldast virk á öllum svæðum.</string>
     <string name="watch_back_to_overview">Til baka í úrsvæði</string>
@@ -1437,6 +1890,11 @@
     <string name="category_watch_navigation">Flakk &amp; flýtileiðir</string>
     <string name="category_rotary_input">Snúningsinntak &amp; fínstilling</string>
     <string name="category_watch_feedback">Viðbrögð &amp; lokunarhegðun</string>
+    <string name="category_watch_display">Skjár úrsins</string>
+    <string name="setting_wear_keep_screen_on">Hafa skjáinn kveiktan</string>
+    <string name="setting_wear_keep_screen_on_description">Kemur í veg fyrir að skjár úrsins slokkni vegna aðgerðaleysis á meðan Svartifoss-skjár er opinn. Að lækka úlnliðinn dimmir úrið samt sem áður — sú hreyfing tilheyrir kerfinu. Eyðir meiri rafhlöðu. Textaskjárinn er alltaf kveiktur, óháð þessari stillingu.</string>
+    <string name="setting_lyrics_enabled">Fletta upp textum á netinu</string>
+    <string name="setting_lyrics_enabled_description">Leyfir símanum að sækja samstillta texta frá LRCLIB þegar þú opnar textaskjáinn á úrinu. Aðeins lagatitill, flytjandi og lengd eru send; ekkert annað, og ekkert er vistað á tækinu. Slökktu á þessu og textaskjárinn tilkynnir að uppfletting sé óvirk.</string>
     <string name="settings_search_prerequisite">Þessi valkostur er háður öðru vali. Breyttu stillingunni sem birtist hér til að sýna hann.</string>
     <string name="setting_numeric_range_error">Sláðu inn gildi frá %1$d til %2$d.</string>
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
