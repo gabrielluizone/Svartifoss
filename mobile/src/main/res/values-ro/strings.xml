@@ -135,6 +135,7 @@
     <string name="action_repeat">Repetă</string>
     <string name="action_repeat_one">Repetă una</string>
     <string name="action_search">Caută muzică</string>
+    <string name="action_open_lyrics">Versuri</string>
     <string name="group_playback_controls">Comenzi de redare</string>
     <string name="group_streaming_shortcuts">Piese, albume și liste de redare</string>
     <string name="pick_action">Alege acțiunea</string>
@@ -239,6 +240,12 @@
     <string name="preview_sample_artist">Numele artistului</string>
     <string name="preview_sample_next_title">Piesa următoare</string>
     <string name="preview_playback_stopped">Oprit</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">versul anterior</string>
+    <string name="preview_verse_current">versul care rulează acum</string>
+    <string name="preview_verse_next">și cel următor</string>
     <string name="category_gestures">Gesturi și intrare</string>
     <string name="setting_overlay_blur_radius">Neclaritate suprapunere</string>
     <string name="setting_overlay_blur_radius_description">Intensitatea neclarității (px) a fundalului mat din spatele inelelor de volum/căutare și al panoului de acțiuni rapide — independentă de neclaritatea fundalului cu coperta albumului</string>
@@ -248,11 +255,16 @@
     <string name="get_support">Obține asistență</string>
     <string name="get_support_description">Trimite jurnalele aplicației către dezvoltator pentru asistență</string>
     <string name="contact_developer">Contactează dezvoltatorul</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — contact</string>
     <string name="contact_developer_chooser">Trimite email</string>
     <string name="contact_developer_no_client">Nicio aplicație de email instalată. Adresa a fost copiată în clipboard.</string>
     <string name="about_developer_title">Despre dezvoltator</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
     <string name="about_developer_dialog_message">Svartifoss a început ca un proiect personal — am vrut să aduc Music Center for Wear la nivelul posibilităților de astăzi, doar pentru a-l putea folosi eu însumi zilnic. A ieșit suficient de bine încât am decis să-l împărtășesc cu toată lumea. Aceasta este prima mea aplicație, și nu există nimic asemănător cu a vedea ceva ce ai construit dovedindu-se util și pentru alți oameni.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">Licențe open source</string>
     <string name="setting_always_show_time">Afișează întotdeauna ora</string>
     <string name="setting_always_show_time_off_description">Ora curentă va fi afișată doar în modul ambiental</string>
@@ -327,6 +339,12 @@
         <item>Album desaturat</item>
         <item>Culoare personalizată</item>
     </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="player_shading_style_entries">
         <item>Urmează tema playerului</item>
         <item>Vinietă la margine</item>
@@ -339,6 +357,19 @@
         <item>Spălare de culoare album</item>
         <item>Gradient bicolor album</item>
         <item>Perdele laterale</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
     </string-array>
     <string name="setting_ambient_album_art_opacity">Opacitatea copertei în modul ambiental</string>
     <string name="setting_ambient_album_art_opacity_description">Cât de vizibilă rămâne coperta albumului în modul ambiental. Setat momentan la <![CDATA[<b>%1$s%%</b>]]>.</string>
@@ -468,6 +499,15 @@
         <item>Static (o linie, fără derulare sau micșorare)</item>
         <item>Micșorare pentru a se încadra</item>
     </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
 
     <string name="setting_wear_artist_color">Culoare text artist</string>
     <string name="setting_wear_artist_custom_color">Culoare artist personalizată</string>
@@ -494,6 +534,11 @@
         <item>Culoare album</item>
         <item>Culoare personalizată</item>
     </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
 
     <string-array name="wear_screen_face_entries">
         <item>Classic</item>
@@ -515,6 +560,26 @@
         <item>Vers</item>
         <item>Metadata</item>
     </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Căutare Expressive</string>
     <string name="setting_wear_expressive_seek_mode_description">Cum să derulați prin piesă prin atingere pe fața Expressive. Inelul central face inelul din jurul butonului de redare tras; Inelul de margine afișează și inelul de lunetă Classic; Niciunul lasă căutarea doar coroanei rotative.</string>
@@ -522,6 +587,11 @@
         <item>Inel central</item>
         <item>Inel de margine</item>
         <item>Niciunul</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
     </string-array>
 
     <string name="category_wear_aod">Ecran mereu activ</string>
@@ -543,17 +613,44 @@
         <item>Notă</item>
         <item>Vers</item>
     </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
     <string name="setting_wear_aod_color">Culoare mereu activ</string>
     <string-array name="wear_aod_color_entries">
         <item>Alb</item>
         <item>Culoare album</item>
         <item>Culoare personalizată</item>
     </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="wear_clock_color_entries">
         <item>Alb</item>
         <item>Dinamic (după zona de sub ceas)</item>
         <item>Culoare album</item>
         <item>Culoare personalizată</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
     <string-array name="wear_up_next_pill_entries">
         <item>Urmează stilul panoului</item>
@@ -564,6 +661,16 @@
         <item>Alb mat</item>
         <item>Negru</item>
         <item>Dinamic (ton album)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
     </string-array>
     <string name="setting_wear_up_next_pill">Fundal pastilă Urmează</string>
     <string name="setting_wear_show_up_next_pill">Pastilă Urmează pe player</string>
@@ -593,6 +700,12 @@
         <item>Doar în pauză</item>
         <item>Niciodată</item>
     </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
     <string name="setting_wear_aod_show_art">Coperta albumului pe ecranul mereu activ</string>
     <string name="setting_wear_aod_show_art_description">Păstrează coperta albumului estompată vizibilă în modul ambiental. Dezactivarea afișează un fundal complet negru, care economisește semnificativ mai multă baterie pe ecranele AMOLED.</string>
     <string name="setting_wear_aod_art_treatment">Stil copertă mereu activ</string>
@@ -601,6 +714,12 @@
         <item>Copertă clară</item>
         <item>Neclaritate monocromă</item>
         <item>Urmează tratamentul copertei playerului</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
     </string-array>
     <string name="setting_wear_aod_show_clock">Ceas pe ecranul mereu activ</string>
     <string name="setting_wear_aod_show_clock_description">Afișează ceasul când ceasul este în modul ambiental</string>
@@ -651,6 +770,27 @@
         <item>Monocrom (o nuanță, trei tonuri)</item>
         <item>Duoton (două culori din album)</item>
     </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Arc de margine (stânga)</item>
         <item>Arc de margine (înalt)</item>
@@ -661,6 +801,16 @@
         <item>Halou central</item>
         <item>Metru orizontal</item>
     </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
     <string-array name="wear_seek_layout_entries">
         <item>Inel de margine</item>
         <item>Inel de margine (subțire)</item>
@@ -668,12 +818,29 @@
         <item>Cronologie</item>
         <item>Cronologie segmentată</item>
     </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
     <string-array name="wear_quick_panel_layout_entries">
         <item>Metadate mai întâi</item>
         <item>Arc</item>
         <item>Hero</item>
         <item>Grilă</item>
         <item>Rânduri etichetate</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
     </string-array>
     <string-array name="wear_progress_style_entries">
         <item>Solid</item>
@@ -684,6 +851,16 @@
         <item>60 de puncte de ceas</item>
         <item>60 de repere de ceas</item>
         <item>Segmente de 12 ore</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
     </string-array>
     <string-array name="wear_seek_style_entries">
         <item>Simplu</item>
@@ -712,6 +889,33 @@
         <item>Butoane configurate</item>
         <item>Din aplicația media curentă</item>
     </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
     <string-array name="wear_overlay_backdrop_entries">
         <item>Urmează stilul panoului</item>
         <item>Neclaritate album (acril)</item>
@@ -724,6 +928,19 @@
         <item>Sticlă lichidă</item>
         <item>Estompare Expressive</item>
         <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Sticlă</item>
@@ -745,11 +962,37 @@
         <item>Cerneală</item>
         <item>Canelură</item>
     </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
     <string-array name="wear_list_row_size_entries">
         <item>Compact</item>
         <item>Normal</item>
         <item>Înalt</item>
         <item>Foarte înalt</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
     </string-array>
 
     <string-array name="wear_overlay_style_entries">
@@ -771,6 +1014,26 @@
         <item>Copertă neclară</item>
         <item>Copertă Tonală</item>
         <item>Copertă pătrată</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_entries">
@@ -797,6 +1060,30 @@
         <item>Punct</item>
         <item>Placă</item>
     </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
 
     <string name="setting_wear_track_time_mode">Afișare timp piesă</string>
     <string name="setting_wear_track_time_mode_description">Când este afișată poziția piesei (de exemplu 1:23 / 3:45) pe ecranul de redare.</string>
@@ -805,6 +1092,12 @@
         <item>Doar în timpul redării</item>
         <item>Doar în pauză</item>
         <item>Niciodată</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
     </string-array>
 
     <string name="setting_screen_buttons_curve">Curbura mini butoanelor</string>
@@ -828,6 +1121,23 @@
         <item>Dreptunghi rotunjit (Mediu)</item>
         <item>Dreptunghi rotunjit (Mare)</item>
     </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
     <string-array name="screen_buttons_curve_entries">
         <item>Plat</item>
         <item>Arc</item>
@@ -840,6 +1150,19 @@
         <item>Marginea stângă</item>
         <item>Marginea dreaptă</item>
         <item>Ambele margini</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Fundal implicit</item>
@@ -857,11 +1180,32 @@
         <item>Doar pictogramă (transparent)</item>
         <item>Pictogramă Exp</item>
     </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
 
     <string-array name="screen_buttons_color_entries">
         <item>Neutru</item>
         <item>Culoare album</item>
         <item>Culoare personalizată</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
 
     <string-array name="album_art_style_entries">
@@ -889,6 +1233,32 @@
         <item>Strălucire jar</item>
         <item>Eclipse AMOLED negru</item>
         <item>Ascuns (negru solid)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
     </string-array>
 
     <string name="setting_close_timeout">Timp de expirare la închidere</string>
@@ -1125,6 +1495,10 @@
         <item>Echilibrat</item>
         <item>Cea mai vie</item>
     </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
 
     <string name="watch_section_typography">Text</string>
     <string name="watch_section_typography_description">Alegeți fonturile și reglați textul titlului, artistului, ceasului, pictogramei aplicației, ecranelor secundare și Flex.</string>
@@ -1225,6 +1599,9 @@
     <string name="setting_wear_font_all_screens_description">Aplică fontul ales meniurilor, cozii și Acțiunilor rapide, nu doar playerului. Fonturile decorative sau de mână pot fi mai greu de citit în liste.</string>
     <string name="setting_wear_clock_font">Font ceas</string>
     <string name="wear_clock_font_follow">Urmează fontul piesei</string>
+    <string name="setting_wear_lyrics_font">Fontul versurilor</string>
+    <string name="setting_wear_lyrics_font_description">Fontul pentru versurile melodiilor, pe ecranul cu versuri și pe fața Vers. Urmează fontul piesei, dacă nu alegi unul aici.</string>
+    <string name="wear_lyrics_font_follow">Urmează fontul piesei</string>
     <string name="setting_wear_clock_font_weight">Greutate ceas</string>
     <string name="setting_wear_clock_font_italic">Ceas cursiv</string>
     <string name="setting_wear_clock_font_scale">Dimensiune ceas</string>
@@ -1259,12 +1636,24 @@
         <item>Deschide coada</item>
         <item>Nimic</item>
     </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
     <string-array name="wear_color_modifier_entries">
         <item>Niciuna</item>
         <item>Vie</item>
         <item>Pastel</item>
         <item>Caldă</item>
         <item>Rece</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
     </string-array>
     <string-array name="wear_paused_hold_entries">
         <item>@string/wear_paused_hold_off</item>
@@ -1375,6 +1764,11 @@
         <item>@string/theme_dark</item>
         <item>@string/theme_system</item>
     </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
     <string-array name="app_language_entries">
         <item>@string/language_system</item>
         <item>English</item>
@@ -1391,6 +1785,23 @@
         <item>فارسی</item>
         <item>简体中文</item>
         <item>Íslenska</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -1410,6 +1821,48 @@
         <item>Standard</item>
         <item>Intens</item>
     </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Bază de accent</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Piesă</string>
+    <string name="preview_metadata_genre">Gen</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">An</string>
+    <string name="preview_metadata_format">Format</string>
+    <string name="preview_metadata_bitrate">Rată de biți</string>
+    <string name="preview_metadata_position">Poziție</string>
+    <string name="preview_metadata_output">Ieșire</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Detalii album</string>
+    <string name="setting_wear_metadata_core_description">Album, artistul albumului, poziția pe album și durata.</string>
+    <string name="setting_wear_metadata_release">Detalii lansare</string>
+    <string name="setting_wear_metadata_release_description">Gen, an, data lansării și casa de discuri.</string>
+    <string name="setting_wear_metadata_credits">Mențiuni</string>
+    <string name="setting_wear_metadata_credits_description">Compozitor, textier și autor, acolo unde playerul le publică.</string>
+    <string name="setting_wear_metadata_technical">Detalii fișier</string>
+    <string name="setting_wear_metadata_technical_description">Format, rată de biți, rată de eșantionare, canale și dimensiune. Doar pentru piesele locale.</string>
+    <string name="setting_split_panel">Panou Split</string>
+    <string name="setting_split_panel_description">Ce umple jumătatea inferioară a feței Split. Coperta neclară continuă aceeași copertă în spatele textului; culoarea uniformă are aspectul unui card de notificare.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Copertă neclară</item>
+        <item>Culoare uniformă</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Detalii redare</string>
+    <string name="setting_wear_metadata_playback_description">Poziția cu precizie de milisecundă, viteza, ieșirea audio și de unde este transmisă sau redată piesa — inclusiv adresa piesei. Singurul bloc pe care o piesă în streaming îl poate completa atunci când nu există niciun fișier de descris.</string>
+    <string name="setting_wear_metadata_identifiers">Identificatori</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC și coduri de catalog. Dezactivat implicit — util când ai nevoie de el, deranjant când nu.</string>
+    <string name="setting_metadata_lookup">Caută detalii despre piesă online</string>
+    <string name="setting_metadata_lookup_description">Completează ce nu a publicat aplicația de redare — ISRC, casa de discuri, data lansării — de la MusicBrainz, o bază de date publică și gratuită. Dezactivat implicit. Fața Metadata funcționează și fără el; acesta doar adaugă rânduri. Nu se trimite nimic decât dacă activezi asta și selectezi acea față, iar atunci doar numele piesei și artistul.</string>
     <!-- Information architecture and navigation -->
     <string name="watch_overview_description">Alegeți ce doriți să personalizați. Previzualizarea și tema salvată rămân active în fiecare zonă.</string>
     <string name="watch_back_to_overview">Înapoi la zonele Ceasului</string>
@@ -1430,6 +1883,11 @@
     <string name="category_watch_navigation">Navigare și scurtături</string>
     <string name="category_rotary_input">Intrare rotativă și reglaj</string>
     <string name="category_watch_feedback">Feedback și comportament la ieșire</string>
+    <string name="category_watch_display">Ecranul ceasului</string>
+    <string name="setting_wear_keep_screen_on">Menține ecranul pornit</string>
+    <string name="setting_wear_keep_screen_on_description">Oprește stingerea ecranului ceasului din cauza inactivității cât timp un ecran Svartifoss este deschis. Coborârea încheieturii tot mai estompează ceasul — acel gest aparține sistemului. Consumă mai multă baterie. Ecranul cu versuri rămâne mereu pornit, indiferent de această setare.</string>
+    <string name="setting_lyrics_enabled">Caută versuri online</string>
+    <string name="setting_lyrics_enabled_description">Permite telefonului să obțină versuri sincronizate de la LRCLIB atunci când deschizi ecranul cu versuri pe ceas. Sunt trimise doar numele piesei, artistul și durata; nimic altceva, iar nimic nu este stocat pe dispozitiv. Dezactivează acest lucru, iar ecranul cu versuri va afișa că interogările sunt dezactivate.</string>
     <string name="settings_search_prerequisite">Această opțiune depinde de altă alegere. Modificați setarea afișată aici pentru a o face vizibilă.</string>
     <string name="setting_numeric_range_error">Introduceți o valoare de la %1$d la %2$d.</string>
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
