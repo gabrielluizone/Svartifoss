@@ -135,6 +135,7 @@
     <string name="action_repeat">Ulangi</string>
     <string name="action_repeat_one">Ulangi satu</string>
     <string name="action_search">Cari musik</string>
+    <string name="action_open_lyrics">Lirik</string>
     <string name="group_playback_controls">Kontrol pemutaran</string>
     <string name="group_streaming_shortcuts">Trek, album &amp; daftar putar</string>
     <string name="pick_action">Pilih aksi</string>
@@ -237,6 +238,12 @@
     <string name="preview_sample_artist">Nama artis</string>
     <string name="preview_sample_next_title">Lagu berikutnya</string>
     <string name="preview_playback_stopped">Dihentikan</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">baris sebelumnya</string>
+    <string name="preview_verse_current">baris yang sedang diputar</string>
+    <string name="preview_verse_next">dan baris berikutnya</string>
     <string name="category_gestures">Gestur &amp; input</string>
     <string name="setting_overlay_blur_radius">Buram overlay</string>
     <string name="setting_overlay_blur_radius_description">Kekuatan buram (px) dari latar belakang buram di belakang cincin volume/pencarian dan panel aksi cepat — terpisah dari buram latar belakang sampul album</string>
@@ -246,11 +253,16 @@
     <string name="get_support">Dapatkan dukungan</string>
     <string name="get_support_description">Kirim log aplikasi ke pengembang untuk dukungan</string>
     <string name="contact_developer">Hubungi pengembang</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — kontak</string>
     <string name="contact_developer_chooser">Kirim email</string>
     <string name="contact_developer_no_client">Tidak ada aplikasi email terpasang. Alamat disalin ke clipboard.</string>
     <string name="about_developer_title">Tentang pengembang</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
     <string name="about_developer_dialog_message">Svartifoss dimulai sebagai proyek pribadi — saya ingin membawa Music Center for Wear ke tingkat yang memungkinkan saat ini, hanya agar saya dapat menggunakannya sendiri setiap hari. Hasilnya cukup baik sehingga saya memutuskan untuk membagikannya kepada semua orang. Ini adalah aplikasi pertama saya, dan tidak ada yang seperti melihat sesuatu yang Anda bangun ternyata juga bermanfaat bagi orang lain.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">Lisensi sumber terbuka</string>
     <string name="setting_always_show_time">Selalu tampilkan waktu</string>
     <string name="setting_always_show_time_off_description">Waktu saat ini hanya akan ditampilkan dalam mode ambient</string>
@@ -325,6 +337,12 @@
         <item>Album desaturasi</item>
         <item>Warna kustom</item>
     </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="player_shading_style_entries">
         <item>Ikuti tema pemutar</item>
         <item>Vinyet tepi</item>
@@ -337,6 +355,19 @@
         <item>Cuci warna album</item>
         <item>Gradien dua warna album</item>
         <item>Tirai samping</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
     </string-array>
     <string name="setting_ambient_album_art_opacity">Opasitas sampul album di ambient</string>
     <string name="setting_ambient_album_art_opacity_description">Seberapa terlihat sampul album tetap dalam mode ambient. Saat ini <![CDATA[<b>%1$s%%</b>]]>.</string>
@@ -466,6 +497,15 @@
         <item>Statis (satu baris, tanpa gulir atau kecilkan)</item>
         <item>Kecilkan agar muat</item>
     </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
 
     <string name="setting_wear_artist_color">Warna teks artis</string>
     <string name="setting_wear_artist_custom_color">Warna artis kustom</string>
@@ -492,6 +532,11 @@
         <item>Warna album</item>
         <item>Warna kustom</item>
     </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
 
     <string-array name="wear_screen_face_entries">
         <item>Classic</item>
@@ -513,6 +558,26 @@
         <item>Bait</item>
         <item>Metadata</item>
     </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Pencarian Expressive</string>
     <string name="setting_wear_expressive_seek_mode_description">Bagaimana menggeser trek dengan sentuhan pada wajah Expressive. Cincin tengah membuat cincin di sekitar tombol putar dapat diseret; Cincin tepi juga menampilkan cincin bezel Classic; Tidak ada meninggalkan pencarian hanya untuk mahkota putar.</string>
@@ -520,6 +585,11 @@
         <item>Cincin tengah</item>
         <item>Cincin tepi</item>
         <item>Tidak ada</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
     </string-array>
 
     <string name="category_wear_aod">Layar selalu aktif</string>
@@ -541,17 +611,44 @@
         <item>Catatan</item>
         <item>Bait</item>
     </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
     <string name="setting_wear_aod_color">Warna selalu aktif</string>
     <string-array name="wear_aod_color_entries">
         <item>Putih</item>
         <item>Warna album</item>
         <item>Warna kustom</item>
     </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="wear_clock_color_entries">
         <item>Putih</item>
         <item>Dinamis (menurut area di bawah jam)</item>
         <item>Warna album</item>
         <item>Warna kustom</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
     <string-array name="wear_up_next_pill_entries">
         <item>Ikuti gaya panel</item>
@@ -562,6 +659,16 @@
         <item>Putih buram</item>
         <item>Hitam</item>
         <item>Dinamis (nada album)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
     </string-array>
     <string name="setting_wear_up_next_pill">Latar belakang pil Berikutnya</string>
     <string name="setting_wear_show_up_next_pill">Pil Berikutnya di pemutar</string>
@@ -591,6 +698,12 @@
         <item>Hanya saat dijeda</item>
         <item>Tidak pernah</item>
     </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
     <string name="setting_wear_aod_show_art">Sampul album pada layar selalu aktif</string>
     <string name="setting_wear_aod_show_art_description">Jaga sampul album redup tetap terlihat dalam mode ambient. Mematikannya menampilkan latar belakang hitam pekat, yang menghemat baterai lebih banyak secara nyata pada layar AMOLED.</string>
     <string name="setting_wear_aod_art_treatment">Gaya sampul album selalu aktif</string>
@@ -599,6 +712,12 @@
         <item>Sampul jernih</item>
         <item>Buram monokrom</item>
         <item>Ikuti perlakuan sampul pemutar</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
     </string-array>
     <string name="setting_wear_aod_show_clock">Jam pada layar selalu aktif</string>
     <string name="setting_wear_aod_show_clock_description">Tampilkan jam saat jam tangan dalam mode ambient</string>
@@ -649,6 +768,27 @@
         <item>Monokrom (satu rona, tiga nada)</item>
         <item>Duoton (dua warna album)</item>
     </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Busur tepi (kiri)</item>
         <item>Busur tepi (tinggi)</item>
@@ -659,6 +799,16 @@
         <item>Halo tengah</item>
         <item>Meter horizontal</item>
     </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
     <string-array name="wear_seek_layout_entries">
         <item>Cincin tepi</item>
         <item>Cincin tepi (tipis)</item>
@@ -666,12 +816,29 @@
         <item>Garis waktu</item>
         <item>Garis waktu tersegmentasi</item>
     </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
     <string-array name="wear_quick_panel_layout_entries">
         <item>Metadata dulu</item>
         <item>Busur</item>
         <item>Hero</item>
         <item>Grid</item>
         <item>Baris berlabel</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
     </string-array>
     <string-array name="wear_progress_style_entries">
         <item>Solid</item>
@@ -682,6 +849,16 @@
         <item>60 titik jam</item>
         <item>60 tanda jam</item>
         <item>Segmen 12 jam</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
     </string-array>
     <string-array name="wear_seek_style_entries">
         <item>Polos</item>
@@ -710,6 +887,33 @@
         <item>Tombol yang dikonfigurasi</item>
         <item>Dari aplikasi media saat ini</item>
     </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
     <string-array name="wear_overlay_backdrop_entries">
         <item>Ikuti gaya panel</item>
         <item>Buram album (akrilik)</item>
@@ -722,6 +926,19 @@
         <item>Kaca cair</item>
         <item>Buram Expressive</item>
         <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Kaca</item>
@@ -743,11 +960,37 @@
         <item>Tinta</item>
         <item>Alur</item>
     </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
     <string-array name="wear_list_row_size_entries">
         <item>Kompak</item>
         <item>Normal</item>
         <item>Tinggi</item>
         <item>Ekstra tinggi</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
     </string-array>
 
     <string-array name="wear_overlay_style_entries">
@@ -769,6 +1012,26 @@
         <item>Sampul Buram</item>
         <item>Sampul Tonal</item>
         <item>Sampul Persegi</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_entries">
@@ -795,6 +1058,30 @@
         <item>Titik</item>
         <item>Lempeng</item>
     </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
 
     <string name="setting_wear_track_time_mode">Tampilan waktu trek</string>
     <string name="setting_wear_track_time_mode_description">Kapan posisi trek (misalnya 1:23 / 3:45) ditampilkan pada layar sedang diputar.</string>
@@ -803,6 +1090,12 @@
         <item>Hanya saat memutar</item>
         <item>Hanya saat dijeda</item>
         <item>Tidak pernah</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
     </string-array>
 
     <string name="setting_screen_buttons_curve">Kurva tombol mini</string>
@@ -826,6 +1119,23 @@
         <item>Persegi Panjang Bulat (Sedang)</item>
         <item>Persegi Panjang Bulat (Besar)</item>
     </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
     <string-array name="screen_buttons_curve_entries">
         <item>Datar</item>
         <item>Busur</item>
@@ -838,6 +1148,19 @@
         <item>Tepi kiri</item>
         <item>Tepi kanan</item>
         <item>Kedua tepi</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Latar belakang default</item>
@@ -855,11 +1178,32 @@
         <item>Hanya ikon (transparan)</item>
         <item>Ikon Exp</item>
     </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
 
     <string-array name="screen_buttons_color_entries">
         <item>Netral</item>
         <item>Warna album</item>
         <item>Warna kustom</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
 
     <string-array name="album_art_style_entries">
@@ -887,6 +1231,32 @@
         <item>Cahaya bara</item>
         <item>Eclipse AMOLED hitam</item>
         <item>Tersembunyi (hitam solid)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
     </string-array>
 
     <string name="setting_close_timeout">Batas waktu tutup</string>
@@ -1117,6 +1487,10 @@
         <item>Seimbang</item>
         <item>Paling cerah</item>
     </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
     <string name="setting_wear_normal_color_multi">Gunakan palet warna</string>
     <string name="setting_wear_normal_color_multi_description">Aktif, layar memakai satu warna utama plus dua nada pendukung. Nonaktif, satu warna tunggal dipakai di mana-mana — warna albumnya sendiri, atau yang Anda pilih.</string>
 
@@ -1218,6 +1592,9 @@
     <string name="watch_section_typography">Teks</string>
     <string name="watch_section_typography_description">Pilih font dan sesuaikan teks judul, artis, jam, ikon aplikasi, layar sekunder, serta Flex.</string>
     <string name="wear_clock_font_follow">Ikuti tipografi judul</string>
+    <string name="setting_wear_lyrics_font">Tipografi lirik</string>
+    <string name="setting_wear_lyrics_font_description">Tipografi untuk lirik lagu, pada layar lirik dan tampilan Bait. Mengikuti tipografi lagu kecuali kamu memilih salah satu di sini.</string>
+    <string name="wear_lyrics_font_follow">Ikuti tipografi judul</string>
     <string name="wear_font_bebas_neue">Bebas Neue</string>
     <string name="wear_font_bebas_neue_description">Tampilan huruf kapital sempit — seperti poster, cocok untuk judul panjang</string>
     <string name="wear_font_caveat">Caveat</string>
@@ -1253,12 +1630,24 @@
         <item>Buka antrean</item>
         <item>Tidak ada</item>
     </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
     <string-array name="wear_color_modifier_entries">
         <item>Tidak ada</item>
         <item>Cerah</item>
         <item>Pastel</item>
         <item>Hangat</item>
         <item>Sejuk</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
     </string-array>
     <string-array name="wear_carousel_card_shape_entries">
         <item>Membulat</item>
@@ -1288,6 +1677,23 @@
         <item>简体中文</item>
         <item>Íslenska</item>
     </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+    </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
         <item>SHOW_ICON</item>
@@ -1297,6 +1703,11 @@
         <item>@string/theme_light</item>
         <item>@string/theme_dark</item>
         <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
     </string-array>
     <string-array name="wear_font_entries">
         <item>@string/wear_font_google_sans</item>
@@ -1402,6 +1813,48 @@
         <item>Standar</item>
         <item>Tegas</item>
     </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Dasar aksen</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Trek</string>
+    <string name="preview_metadata_genre">Genre</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Tahun</string>
+    <string name="preview_metadata_format">Format</string>
+    <string name="preview_metadata_bitrate">Bitrate</string>
+    <string name="preview_metadata_position">Posisi</string>
+    <string name="preview_metadata_output">Keluaran</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Detail album</string>
+    <string name="setting_wear_metadata_core_description">Album, artis album, posisi di album, dan durasi.</string>
+    <string name="setting_wear_metadata_release">Detail rilis</string>
+    <string name="setting_wear_metadata_release_description">Genre, tahun, tanggal rilis, dan label.</string>
+    <string name="setting_wear_metadata_credits">Kredit</string>
+    <string name="setting_wear_metadata_credits_description">Komposer, penulis lirik, dan penulis, jika dipublikasikan oleh pemutar.</string>
+    <string name="setting_wear_metadata_technical">Detail berkas</string>
+    <string name="setting_wear_metadata_technical_description">Format, bitrate, sample rate, saluran, dan ukuran. Hanya untuk trek lokal.</string>
+    <string name="setting_split_panel">Panel Split</string>
+    <string name="setting_split_panel_description">Apa yang mengisi separuh bawah tampilan Split. Sampul buram melanjutkan sampul yang sama di belakang teks; warna solid adalah tampilan kartu notifikasi.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Sampul buram</item>
+        <item>Warna solid</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Detail pemutaran</string>
+    <string name="setting_wear_metadata_playback_description">Posisi hingga milidetik, kecepatan, keluaran audio, dan dari mana suara sedang di-streaming atau diputar — termasuk alamat trek. Satu-satunya blok yang bisa diisi trek streaming saat tidak ada berkas untuk dideskripsikan.</string>
+    <string name="setting_wear_metadata_identifiers">Pengidentifikasi</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC dan kode katalog. Nonaktif secara default — berguna saat kamu membutuhkannya, mengganggu saat tidak.</string>
+    <string name="setting_metadata_lookup">Cari detail trek secara online</string>
+    <string name="setting_metadata_lookup_description">Melengkapi apa yang tidak dipublikasikan aplikasi pemutar — ISRC, label, tanggal rilis — dari MusicBrainz, basis data publik gratis. Nonaktif secara default. Tampilan Metadata tetap berfungsi tanpanya; ini hanya menambahkan baris. Tidak ada yang dikirim kecuali kamu mengaktifkan ini dan memilih tampilan itu, dan saat itu hanya nama trek dan artis.</string>
     <!-- Information architecture and navigation -->
     <string name="watch_overview_description">Pilih bagian yang ingin disesuaikan. Pratinjau dan tema tersimpan tetap aktif di setiap area.</string>
     <string name="watch_back_to_overview">Kembali ke area Jam</string>
@@ -1422,6 +1875,11 @@
     <string name="category_watch_navigation">Navigasi &amp; pintasan</string>
     <string name="category_rotary_input">Input putar &amp; penyetelan</string>
     <string name="category_watch_feedback">Umpan balik &amp; perilaku keluar</string>
+    <string name="category_watch_display">Layar jam tangan</string>
+    <string name="setting_wear_keep_screen_on">Jaga layar tetap menyala</string>
+    <string name="setting_wear_keep_screen_on_description">Mencegah layar jam tangan padam karena tidak aktif selama layar Svartifoss terbuka. Menurunkan pergelangan tangan tetap meredupkan jam tangan — gestur itu milik sistem. Menggunakan lebih banyak baterai. Layar lirik selalu tetap menyala, terlepas dari pengaturan ini.</string>
+    <string name="setting_lyrics_enabled">Cari lirik secara online</string>
+    <string name="setting_lyrics_enabled_description">Memungkinkan ponsel mengambil lirik yang disinkronkan dari LRCLIB saat kamu membuka layar lirik di jam tangan. Hanya nama lagu, artis, dan durasi yang dikirim; tidak ada yang lain, dan tidak ada yang disimpan di perangkat. Matikan ini dan layar lirik akan melaporkan bahwa pencarian dinonaktifkan.</string>
     <string name="settings_search_prerequisite">Opsi ini bergantung pada pilihan lain. Sesuaikan pengaturan yang ditampilkan di sini untuk memunculkannya.</string>
     <string name="setting_numeric_range_error">Masukkan nilai dari %1$d hingga %2$d.</string>
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
