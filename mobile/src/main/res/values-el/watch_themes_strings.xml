@@ -54,4 +54,6 @@
     <string name="watch_theme_face_chat">Συνομιλία</string>
     <string name="watch_theme_face_split">Διαχωρισμένο</string>
     <string name="watch_theme_face_note">Σημείωση</string>
+    <string name="watch_theme_face_verse">Στίχος</string>
+    <string name="watch_theme_face_metadata">Μεταδεδομένα</string>
 </resources>
