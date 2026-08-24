@@ -1,4 +1,8 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <string name="tile_description">Reproducción y controles multimedia</string>
     <string name="complication_album_art_label">Carátula en reproducción</string>
     <string name="complication_no_music">No se reproduce nada</string>
@@ -7,6 +11,8 @@
     <string name="tile_rewind_10">Retroceder 10 segundos</string>
     <string name="tile_forward_10">Avanzar 10 segundos</string>
 
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
     <string name="shortcuts_tile_description">Tus accesos directos de streaming, a un toque</string>
     <string name="shortcuts_tile_title">Accesos directos</string>
     <string name="shortcuts_tile_empty">Aún no hay accesos directos</string>
@@ -33,6 +39,8 @@
     <string name="back_button">Atrás</string>
     <string name="turn_bezel_cw">Gira el bisel en sentido horario</string>
     <string name="turn_bezel_ccw">Gira el bisel en sentido antihorario</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">Me gusta</string>
     <string name="quick_action_shuffle">Aleatorio</string>
     <string name="quick_action_repeat">Repetir</string>
@@ -50,6 +58,24 @@
 
     <string name="face_picker_title">Esfera del reloj</string>
     <string name="face_picker_offline">Teléfono no conectado — esta esfera se aplicará en el reloj, pero el teléfono conserva el ajuste</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 
     <string name="hint_title">Cómo se usa</string>
     <string name="hint_edges">Toca arriba, abajo, a la izquierda o a la derecha — cada zona ejecuta su acción asignada</string>
@@ -82,6 +108,60 @@
     <string name="update_install_title">Actualización de Svartifoss</string>
     <string name="update_install_tap">Toca para instalar la nueva versión</string>
     <string name="update_install_failed">Error de instalación. Permite instalaciones desde Svartifoss en los ajustes del reloj e inténtalo de nuevo desde el teléfono.</string>
+
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Reproducir desde aquí</string>
+    <string name="lyrics_none">No se encontró letra para esta pista</string>
+    <string name="lyrics_failed">No se pudo obtener la letra. Comprueba la conexión de tu teléfono.</string>
+    <string name="lyrics_disabled">La búsqueda de letras está desactivada en los ajustes del teléfono</string>
+    <string name="lyrics_no_track">No se está reproduciendo nada</string>
+    <string name="metadata_none">No hay detalles para esta pista</string>
+    <string name="metadata_album">Álbum</string>
+    <string name="metadata_album_artist">Artista del álbum</string>
+    <string name="metadata_track">Pista</string>
+    <string name="metadata_duration">Duración</string>
+    <string name="metadata_genre">Género</string>
+    <string name="metadata_year">Año</string>
+    <string name="metadata_released">Publicado</string>
+    <string name="metadata_label">Sello</string>
+    <string name="metadata_country">País</string>
+    <string name="metadata_composer">Compositor</string>
+    <string name="metadata_writer">Autor</string>
+    <string name="metadata_author">Autor de la letra</string>
+    <string name="metadata_codec">Formato</string>
+    <string name="metadata_bitrate">Bitrate</string>
+    <string name="metadata_sample_rate">Frecuencia de muestreo</string>
+    <string name="metadata_channels">Canales</string>
+    <string name="metadata_file_size">Tamaño</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID de lanzamiento</string>
+    <string name="metadata_compilation">Recopilatorio</string>
+    <string name="metadata_value_yes">Sí</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Posición</string>
+    <string name="metadata_speed">Velocidad</string>
+    <string name="metadata_output">Salida</string>
+    <string name="metadata_output_speaker">Altavoz del teléfono</string>
+    <string name="metadata_output_wired">Auriculares</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">Audio USB</string>
+    <string name="metadata_output_remote">Transmisión</string>
+    <string name="metadata_origin">Origen</string>
+    <string name="metadata_origin_stream">Streaming</string>
+    <string name="metadata_origin_local">Archivo en el teléfono</string>
+    <string name="metadata_host">Host</string>
+    <string name="metadata_file">Archivo</string>
+    <string name="metadata_download">Descarga</string>
+    <string name="metadata_download_no">No descargado</string>
+    <string name="metadata_download_running">Descargando</string>
+    <string name="metadata_download_yes">Descargado</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Acerca de</string>
+    <string name="metadata_source">Reproduciendo en</string>
+
     <string name="face_picker_section_builtin">Esferas integradas</string>
     <string name="face_picker_section_custom">Mis temas</string>
     <string name="face_picker_custom_base">Basado en %1$s</string>

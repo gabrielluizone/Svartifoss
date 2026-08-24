@@ -1,4 +1,8 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <string name="tile_description">Αναπαραγωγή και στοιχεία ελέγχου πολυμέσων</string>
     <string name="complication_album_art_label">Εξώφυλλο τρέχοντος κομματιού</string>
     <string name="complication_no_music">Δεν παίζει τίποτα</string>
@@ -7,12 +11,19 @@
     <string name="tile_rewind_10">Πίσω 10 δευτερόλεπτα</string>
     <string name="tile_forward_10">Μπροστά 10 δευτερόλεπτα</string>
 
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
     <string name="shortcuts_tile_description">Οι συντομεύσεις streaming σου, με ένα άγγιγμα</string>
     <string name="shortcuts_tile_title">Συντομεύσεις</string>
     <string name="shortcuts_tile_empty">Δεν υπάρχουν συντομεύσεις ακόμη</string>
     <string name="shortcuts_tile_more">Περισσότερα στην εφαρμογή</string>
 
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
     <string name="idle_nothing_playing">Δεν παίζει τίποτα</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
     <string name="idle_hint">Παίξε κάτι στο τηλέφωνό σου</string>
     <string name="idle_hint_resume">Άγγιξε για συνέχιση της τελευταίας εφαρμογής</string>
     <string name="idle_hint_shortcuts">Άγγιξε για τις συντομεύσεις σου</string>
@@ -33,6 +44,8 @@
     <string name="back_button">Πίσω</string>
     <string name="turn_bezel_cw">Γύρισε τη στεφάνη δεξιόστροφα</string>
     <string name="turn_bezel_ccw">Γύρισε τη στεφάνη αριστερόστροφα</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">Μου αρέσει</string>
     <string name="quick_action_shuffle">Τυχαία σειρά</string>
     <string name="quick_action_repeat">Επανάληψη</string>
@@ -44,13 +57,42 @@
     <string name="queue_empty">Δεν υπάρχει διαθέσιμη ουρά</string>
     <string name="queue_now_playing">Παίζει τώρα</string>
     <string name="queue_load_more">Φόρτωση περισσότερων</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Πρόσφατη αναπαραγωγή</string>
     <string name="queue_history_fallback_reason">Αυτή η εφαρμογή δεν κοινοποιεί τη λίστα της</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Σήμερα</string>
 
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
     <string name="face_picker_title">Όψη ρολογιού</string>
     <string name="face_picker_offline">Δεν έχει συνδεθεί τηλέφωνο — αυτή η όψη θα εφαρμοστεί στο ρολόι, αλλά το τηλέφωνο κρατά τη ρύθμιση</string>
+    <string name="face_picker_section_builtin">Ενσωματωμένες όψεις</string>
+    <string name="face_picker_section_custom">Τα θέματά μου</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Βασισμένο σε %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 
+    <!-- One-time gesture hints overlay shown on first launch -->
     <string name="hint_title">Πώς χρησιμοποιείται</string>
     <string name="hint_edges">Άγγιξε πάνω, κάτω, αριστερά ή δεξιά — κάθε ζώνη εκτελεί την ενέργειά της</string>
     <string name="hint_center">Κέντρο — αναπαραγωγή/παύση\nΔιπλό άγγιγμα — γρήγορες ενέργειες\nΠαρατεταμένο πάτημα — επιλογή πρόσοψης (διαμορφώνεται)</string>
@@ -59,6 +101,8 @@
     <string name="hint_next">Επόμενο</string>
     <string name="hint_dismiss">Τέλος</string>
 
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
     <string name="action_name_play">Αναπαραγωγή</string>
     <string name="action_name_pause">Παύση</string>
     <string name="action_name_skip_prev">Προηγούμενο κομμάτι</string>
@@ -78,11 +122,65 @@
     <string name="state_on">Ενεργό</string>
     <string name="state_off">Ανενεργό</string>
 
+    <!-- Watch self-update (APK pushed from the phone) -->
     <string name="update_notification_channel">Ενημερώσεις εφαρμογής</string>
     <string name="update_install_title">Ενημέρωση Svartifoss</string>
     <string name="update_install_tap">Άγγιξε για εγκατάσταση της νέας έκδοσης</string>
     <string name="update_install_failed">Η εγκατάσταση απέτυχε. Επίτρεψε εγκαταστάσεις από το Svartifoss στις ρυθμίσεις του ρολογιού και δοκίμασε ξανά από το τηλέφωνο.</string>
-    <string name="face_picker_section_builtin">Ενσωματωμένες όψεις</string>
-    <string name="face_picker_section_custom">Τα θέματά μου</string>
-    <string name="face_picker_custom_base">Βασισμένο σε %1$s</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Αναπαραγωγή από εδώ</string>
+    <string name="lyrics_none">Δεν βρέθηκαν στίχοι για αυτό το κομμάτι</string>
+    <string name="lyrics_failed">Δεν ήταν δυνατή η λήψη των στίχων. Έλεγξε τη σύνδεση του τηλεφώνου σου.</string>
+    <string name="lyrics_disabled">Η αναζήτηση στίχων είναι απενεργοποιημένη στις ρυθμίσεις του τηλεφώνου</string>
+    <string name="lyrics_no_track">Δεν παίζει τίποτα</string>
+    <string name="metadata_none">Δεν υπάρχουν λεπτομέρειες για αυτό το κομμάτι</string>
+    <string name="metadata_album">Άλμπουμ</string>
+    <string name="metadata_album_artist">Καλλιτέχνης άλμπουμ</string>
+    <string name="metadata_track">Κομμάτι</string>
+    <string name="metadata_duration">Διάρκεια</string>
+    <string name="metadata_genre">Είδος</string>
+    <string name="metadata_year">Έτος</string>
+    <string name="metadata_released">Κυκλοφόρησε</string>
+    <string name="metadata_label">Δισκογραφική</string>
+    <string name="metadata_country">Χώρα</string>
+    <string name="metadata_composer">Συνθέτης</string>
+    <string name="metadata_writer">Στιχουργός</string>
+    <string name="metadata_author">Δημιουργός</string>
+    <string name="metadata_codec">Μορφή</string>
+    <string name="metadata_bitrate">Ρυθμός bit</string>
+    <string name="metadata_sample_rate">Ρυθμός δειγματοληψίας</string>
+    <string name="metadata_channels">Κανάλια</string>
+    <string name="metadata_file_size">Μέγεθος</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Αναγνωριστικό κυκλοφορίας</string>
+    <string name="metadata_compilation">Συλλογή</string>
+    <string name="metadata_value_yes">Ναι</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Θέση</string>
+    <string name="metadata_speed">Ταχύτητα</string>
+    <string name="metadata_output">Έξοδος</string>
+    <string name="metadata_output_speaker">Ηχείο τηλεφώνου</string>
+    <string name="metadata_output_wired">Ακουστικά</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">Ήχος USB</string>
+    <string name="metadata_output_remote">Μετάδοση</string>
+    <string name="metadata_origin">Πηγή</string>
+    <string name="metadata_origin_stream">Ροή</string>
+    <string name="metadata_origin_local">Αρχείο στο τηλέφωνο</string>
+    <string name="metadata_host">Συσκευή</string>
+    <string name="metadata_file">Αρχείο</string>
+    <string name="metadata_download">Λήψη</string>
+    <string name="metadata_download_no">Δεν έχει ληφθεί</string>
+    <string name="metadata_download_running">Γίνεται λήψη</string>
+    <string name="metadata_download_yes">Έχει ληφθεί</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Σχετικά</string>
+    <string name="metadata_source">Αναπαράγεται σε</string>
 </resources>

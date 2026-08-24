@@ -135,6 +135,7 @@
     <string name="action_repeat">重复</string>
     <string name="action_repeat_one">单曲重复</string>
     <string name="action_search">搜索音乐</string>
+    <string name="action_open_lyrics">歌词</string>
     <string name="group_playback_controls">播放控制</string>
     <string name="group_streaming_shortcuts">曲目、专辑和播放列表</string>
     <string name="pick_action">选择操作</string>
@@ -237,6 +238,12 @@
     <string name="preview_sample_artist">艺术家名称</string>
     <string name="preview_sample_next_title">下一首歌曲</string>
     <string name="preview_playback_stopped">已停止</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">上一句</string>
+    <string name="preview_verse_current">正在播放的这句</string>
+    <string name="preview_verse_next">以及下一句</string>
     <string name="category_gestures">手势和输入</string>
     <string name="setting_overlay_blur_radius">叠加层模糊</string>
     <string name="setting_overlay_blur_radius_description">音量/快进环和快捷操作面板背后磨砂背景的模糊强度（像素）——独立于专辑封面背景的模糊</string>
@@ -246,11 +253,16 @@
     <string name="get_support">获取支持</string>
     <string name="get_support_description">将应用日志发送给开发者以获取支持</string>
     <string name="contact_developer">联系开发者</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — 联系</string>
     <string name="contact_developer_chooser">发送电子邮件</string>
     <string name="contact_developer_no_client">未安装电子邮件应用。地址已复制到剪贴板。</string>
     <string name="about_developer_title">关于开发者</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
     <string name="about_developer_dialog_message">Svartifoss 最初是一个个人项目——我想让 Music Center for Wear 跟上如今的技术水平，只是为了能自己每天使用它。结果做得足够好，于是我决定与大家分享。这是我的第一个应用，看到自己打造的东西对别人也有用，那种感觉无可比拟。</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">开源许可证</string>
     <string name="setting_always_show_time">始终显示时间</string>
     <string name="setting_always_show_time_off_description">当前时间仅在环境模式下显示</string>
@@ -325,6 +337,12 @@
         <item>去饱和专辑色</item>
         <item>自定义颜色</item>
     </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="player_shading_style_entries">
         <item>跟随播放器主题</item>
         <item>边缘暗角</item>
@@ -337,6 +355,19 @@
         <item>专辑色晕染</item>
         <item>专辑双色渐变</item>
         <item>侧边幕帘</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
     </string-array>
     <string name="setting_ambient_album_art_opacity">环境模式下专辑封面不透明度</string>
     <string name="setting_ambient_album_art_opacity_description">专辑封面在环境模式下的可见程度。当前为 <![CDATA[<b>%1$s%%</b>]]>。</string>
@@ -466,6 +497,15 @@
         <item>静态（单行，不滚动或缩小）</item>
         <item>缩小以适应</item>
     </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
 
     <string name="setting_wear_artist_color">艺术家文字颜色</string>
     <string name="setting_wear_artist_custom_color">艺术家自定义颜色</string>
@@ -492,6 +532,11 @@
         <item>专辑颜色</item>
         <item>自定义颜色</item>
     </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
 
     <string-array name="wear_screen_face_entries">
         <item>Classic</item>
@@ -513,6 +558,26 @@
         <item>歌词</item>
         <item>元数据</item>
     </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive 快进</string>
     <string name="setting_wear_expressive_seek_mode_description">在 Expressive 表盘上如何通过触摸拖动曲目进度。「中心环」使播放按钮周围的环可拖动；「边缘环」还会显示 Classic 表圈环；「无」则将快进操作留给旋转表冠。</string>
@@ -520,6 +585,11 @@
         <item>中心环</item>
         <item>边缘环</item>
         <item>无</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
     </string-array>
 
     <string name="category_wear_aod">常亮显示屏</string>
@@ -541,17 +611,44 @@
         <item>便签</item>
         <item>歌词</item>
     </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
     <string name="setting_wear_aod_color">常亮显示颜色</string>
     <string-array name="wear_aod_color_entries">
         <item>白色</item>
         <item>专辑颜色</item>
         <item>自定义颜色</item>
     </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="wear_clock_color_entries">
         <item>白色</item>
         <item>动态（根据时钟下方区域）</item>
         <item>专辑颜色</item>
         <item>自定义颜色</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
     <string-array name="wear_up_next_pill_entries">
         <item>跟随面板样式</item>
@@ -562,6 +659,16 @@
         <item>磨砂白色</item>
         <item>黑色</item>
         <item>动态（专辑色调）</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
     </string-array>
     <string name="setting_wear_up_next_pill">「即将播放」胶囊背景</string>
     <string name="setting_wear_show_up_next_pill">播放器上显示「即将播放」胶囊</string>
@@ -591,6 +698,12 @@
         <item>仅暂停时</item>
         <item>从不</item>
     </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
     <string name="setting_wear_aod_show_art">常亮显示屏上的专辑封面</string>
     <string name="setting_wear_aod_show_art_description">在环境模式下保持调暗的专辑封面可见。关闭此项会显示纯黑背景，在 AMOLED 屏幕上能明显节省更多电量。</string>
     <string name="setting_wear_aod_art_treatment">常亮显示专辑封面样式</string>
@@ -599,6 +712,12 @@
         <item>清晰封面</item>
         <item>单色模糊</item>
         <item>跟随播放器封面处理方式</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
     </string-array>
     <string name="setting_wear_aod_show_clock">常亮显示屏上的时钟</string>
     <string name="setting_wear_aod_show_clock_description">手表处于环境模式时显示时钟</string>
@@ -649,6 +768,27 @@
         <item>单色（一种色相，三个色调）</item>
         <item>双色调（专辑两种颜色）</item>
     </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>边缘弧（左）</item>
         <item>边缘弧（高）</item>
@@ -659,6 +799,16 @@
         <item>中心光晕</item>
         <item>水平仪表</item>
     </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
     <string-array name="wear_seek_layout_entries">
         <item>边缘环</item>
         <item>边缘环（细）</item>
@@ -666,12 +816,29 @@
         <item>时间轴</item>
         <item>分段时间轴</item>
     </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
     <string-array name="wear_quick_panel_layout_entries">
         <item>元数据优先</item>
         <item>弧形</item>
         <item>Hero</item>
         <item>网格</item>
         <item>带标签行</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
     </string-array>
     <string-array name="wear_progress_style_entries">
         <item>实线</item>
@@ -682,6 +849,16 @@
         <item>60 表盘圆点</item>
         <item>60 表盘刻度</item>
         <item>12 小时分段</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
     </string-array>
     <string-array name="wear_seek_style_entries">
         <item>朴素</item>
@@ -710,6 +887,33 @@
         <item>已配置按钮</item>
         <item>来自当前媒体应用</item>
     </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
     <string-array name="wear_overlay_backdrop_entries">
         <item>跟随面板样式</item>
         <item>专辑模糊（亚克力）</item>
@@ -722,6 +926,19 @@
         <item>液态玻璃</item>
         <item>Expressive 模糊</item>
         <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>玻璃</item>
@@ -743,11 +960,37 @@
         <item>墨水</item>
         <item>凹槽</item>
     </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
     <string-array name="wear_list_row_size_entries">
         <item>紧凑</item>
         <item>普通</item>
         <item>高</item>
         <item>特高</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
     </string-array>
 
     <string-array name="wear_overlay_style_entries">
@@ -769,6 +1012,26 @@
         <item>模糊封面</item>
         <item>色调封面</item>
         <item>方形封面</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_entries">
@@ -795,6 +1058,30 @@
         <item>圆点</item>
         <item>厚板</item>
     </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
 
     <string name="setting_wear_track_time_mode">曲目时间显示</string>
     <string name="setting_wear_track_time_mode_description">正在播放屏幕上何时显示曲目位置（例如 1:23 / 3:45）。</string>
@@ -803,6 +1090,12 @@
         <item>仅播放时</item>
         <item>仅暂停时</item>
         <item>从不</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
     </string-array>
 
     <string name="setting_screen_buttons_curve">迷你按钮弧度</string>
@@ -826,6 +1119,23 @@
         <item>圆角矩形（中）</item>
         <item>圆角矩形（大）</item>
     </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
     <string-array name="screen_buttons_curve_entries">
         <item>平直</item>
         <item>弧形</item>
@@ -838,6 +1148,19 @@
         <item>左边缘</item>
         <item>右边缘</item>
         <item>两侧边缘</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>默认背景</item>
@@ -855,11 +1178,32 @@
         <item>仅图标（透明）</item>
         <item>图标 Exp</item>
     </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
 
     <string-array name="screen_buttons_color_entries">
         <item>中性</item>
         <item>专辑颜色</item>
         <item>自定义颜色</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
 
     <string-array name="album_art_style_entries">
@@ -887,6 +1231,32 @@
         <item>余烬光晕</item>
         <item>Eclipse AMOLED 黑</item>
         <item>隐藏（纯黑色）</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
     </string-array>
 
     <string name="setting_close_timeout">关闭超时</string>
@@ -1117,6 +1487,10 @@
         <item>平衡</item>
         <item>最鲜艳</item>
     </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
     <string name="setting_wear_normal_color_multi">使用调色板</string>
     <string name="setting_wear_normal_color_multi_description">开启时，屏幕使用一种主色加两种辅助色调。关闭时，全部只用一种颜色——专辑本身的颜色，或您选择的颜色。</string>
 
@@ -1218,6 +1592,9 @@
     <string name="watch_section_typography">文字</string>
     <string name="watch_section_typography_description">选择字体，并调整标题、艺人、时钟、应用图标、其他屏幕及 Flex 文本。</string>
     <string name="wear_clock_font_follow">跟随标题字体</string>
+    <string name="setting_wear_lyrics_font">歌词字体</string>
+    <string name="setting_wear_lyrics_font_description">歌词屏幕和「歌词」表盘上歌曲文字使用的字体。除非在此选择字体，否则会跟随曲目字体。</string>
+    <string name="wear_lyrics_font_follow">跟随标题字体</string>
     <string name="wear_font_bebas_neue">Bebas Neue</string>
     <string name="wear_font_bebas_neue_description">窄体全大写展示字体——海报风格，适合长标题</string>
     <string name="wear_font_caveat">Caveat</string>
@@ -1253,12 +1630,24 @@
         <item>打开队列</item>
         <item>无</item>
     </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
     <string-array name="wear_color_modifier_entries">
         <item>无</item>
         <item>鲜艳</item>
         <item>柔和</item>
         <item>暖色</item>
         <item>冷色</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
     </string-array>
     <string-array name="wear_carousel_card_shape_entries">
         <item>圆角</item>
@@ -1288,6 +1677,23 @@
         <item>简体中文</item>
         <item>Íslenska</item>
     </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+    </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
         <item>SHOW_ICON</item>
@@ -1297,6 +1703,11 @@
         <item>@string/theme_light</item>
         <item>@string/theme_dark</item>
         <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
     </string-array>
     <string-array name="wear_font_entries">
         <item>@string/wear_font_google_sans</item>
@@ -1402,6 +1813,48 @@
         <item>标准</item>
         <item>浓烈</item>
     </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">强调色底纹</string>
+    <string name="preview_metadata_album">专辑</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">曲目</string>
+    <string name="preview_metadata_genre">风格</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">年份</string>
+    <string name="preview_metadata_format">格式</string>
+    <string name="preview_metadata_bitrate">比特率</string>
+    <string name="preview_metadata_position">进度</string>
+    <string name="preview_metadata_output">输出</string>
+    <string name="preview_metadata_output_value">蓝牙</string>
+    <string name="setting_wear_metadata_core">专辑详情</string>
+    <string name="setting_wear_metadata_core_description">专辑、专辑艺术家、在专辑中的位置以及时长。</string>
+    <string name="setting_wear_metadata_release">发行详情</string>
+    <string name="setting_wear_metadata_release_description">风格、年份、发行日期和唱片公司。</string>
+    <string name="setting_wear_metadata_credits">制作名单</string>
+    <string name="setting_wear_metadata_credits_description">作曲、作词和作者，前提是播放器发布了这些信息。</string>
+    <string name="setting_wear_metadata_technical">文件详情</string>
+    <string name="setting_wear_metadata_technical_description">格式、比特率、采样率、声道和大小。仅适用于本地曲目。</string>
+    <string name="setting_split_panel">分栏面板</string>
+    <string name="setting_split_panel_description">决定「分栏」表盘下半部分显示的内容。模糊封面会让同一张封面延续到文字背后；纯色则呈现通知卡片的效果。</string>
+    <string-array name="wear_split_panel_entries">
+        <item>模糊封面</item>
+        <item>纯色</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">播放详情</string>
+    <string name="setting_wear_metadata_playback_description">精确到毫秒的进度、速度、音频输出，以及声音正在从何处流式传输或播放——包括曲目地址。当没有文件可供描述时，这是流媒体曲目唯一能填充的信息块。</string>
+    <string name="setting_wear_metadata_identifiers">标识符</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC 和目录编号。默认关闭——需要时很有用，不需要时则是噪音。</string>
+    <string name="setting_metadata_lookup">在线查找曲目详情</string>
+    <string name="setting_metadata_lookup_description">从 MusicBrainz（一个免费的公共数据库）补充播放应用未发布的信息——ISRC、唱片公司、发行日期。默认关闭。「元数据」表盘即使不开启也能正常使用；这只是增加更多行。除非你开启此项并选择该表盘，否则不会发送任何内容，届时也只会发送曲目名称和艺术家。</string>
     <!-- Information architecture and navigation -->
     <string name="watch_overview_description">选择要自定义的内容。预览和已保存的主题在每个区域中都会保持启用。</string>
     <string name="watch_back_to_overview">返回手表区域</string>
@@ -1422,6 +1875,11 @@
     <string name="category_watch_navigation">导航与快捷方式</string>
     <string name="category_rotary_input">旋转输入与调节</string>
     <string name="category_watch_feedback">反馈与退出行为</string>
+    <string name="category_watch_display">手表屏幕</string>
+    <string name="setting_wear_keep_screen_on">保持屏幕常亮</string>
+    <string name="setting_wear_keep_screen_on_description">在打开 Svartifoss 屏幕期间，阻止手表屏幕因无操作而熄灭。放下手腕仍会使手表变暗——那是系统的手势。会消耗更多电量。无论此设置如何，歌词屏幕始终保持常亮。</string>
+    <string name="setting_lyrics_enabled">在线查找歌词</string>
+    <string name="setting_lyrics_enabled_description">当你在手表上打开歌词屏幕时，允许手机从 LRCLIB 获取同步歌词。仅发送曲目名称、艺术家和时长；不发送其他任何内容，也不会在设备上存储任何内容。关闭此项后，歌词屏幕会提示查找功能已停用。</string>
     <string name="settings_search_prerequisite">此选项依赖另一项选择。请调整此处显示的设置以将其显示出来。</string>
     <string name="setting_numeric_range_error">请输入 %1$d 到 %2$d 之间的值。</string>
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>

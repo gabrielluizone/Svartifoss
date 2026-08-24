@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <string name="tile_description">Воспроизведение и управление медиа</string>
     <string name="complication_album_art_label">Обложка текущего трека</string>
     <string name="complication_no_music">Ничего не воспроизводится</string>
@@ -6,6 +8,9 @@
     <string name="tile_open_app">Открыть Svartifoss</string>
     <string name="tile_rewind_10">Назад на 10 секунд</string>
     <string name="tile_forward_10">Вперёд на 10 секунд</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
 
     <string name="shortcuts_tile_description">Ваши ярлыки стриминга в одно касание</string>
     <string name="shortcuts_tile_title">Ярлыки</string>
@@ -33,6 +38,8 @@
     <string name="back_button">Назад</string>
     <string name="turn_bezel_cw">Поверните безель по часовой стрелке</string>
     <string name="turn_bezel_ccw">Поверните безель против часовой стрелки</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">Нравится</string>
     <string name="quick_action_shuffle">Перемешать</string>
     <string name="quick_action_repeat">Повтор</string>
@@ -82,7 +89,78 @@
     <string name="update_install_title">Обновление Svartifoss</string>
     <string name="update_install_tap">Нажмите, чтобы установить новую версию</string>
     <string name="update_install_failed">Не удалось установить. Разрешите установку из Svartifoss в настройках часов и повторите попытку с телефона.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Воспроизвести отсюда</string>
+    <string name="lyrics_none">Текст для этого трека не найден</string>
+    <string name="lyrics_failed">Не удалось получить текст песни. Проверьте подключение вашего телефона.</string>
+    <string name="lyrics_disabled">Поиск текста песен отключён в настройках телефона</string>
+    <string name="lyrics_no_track">Ничего не воспроизводится</string>
+    <string name="metadata_none">Нет сведений об этом треке</string>
+    <string name="metadata_album">Альбом</string>
+    <string name="metadata_album_artist">Исполнитель альбома</string>
+    <string name="metadata_track">Трек</string>
+    <string name="metadata_duration">Длительность</string>
+    <string name="metadata_genre">Жанр</string>
+    <string name="metadata_year">Год</string>
+    <string name="metadata_released">Выпущено</string>
+    <string name="metadata_label">Лейбл</string>
+    <string name="metadata_country">Страна</string>
+    <string name="metadata_composer">Композитор</string>
+    <string name="metadata_writer">Автор текста</string>
+    <string name="metadata_author">Автор</string>
+    <string name="metadata_codec">Формат</string>
+    <string name="metadata_bitrate">Битрейт</string>
+    <string name="metadata_sample_rate">Частота дискретизации</string>
+    <string name="metadata_channels">Каналы</string>
+    <string name="metadata_file_size">Размер</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID релиза</string>
+    <string name="metadata_compilation">Сборник</string>
+    <string name="metadata_value_yes">Да</string>
+    <string name="metadata_position">Позиция</string>
+    <string name="metadata_speed">Скорость</string>
+    <string name="metadata_output">Вывод звука</string>
+    <string name="metadata_output_speaker">Динамик телефона</string>
+    <string name="metadata_output_wired">Наушники</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB-аудио</string>
+    <string name="metadata_output_remote">Трансляция</string>
+    <string name="metadata_origin">Источник</string>
+    <string name="metadata_origin_stream">Поток</string>
+    <string name="metadata_origin_local">Файл на телефоне</string>
+    <string name="metadata_host">Хост</string>
+    <string name="metadata_file">Файл</string>
+    <string name="metadata_download">Загрузка</string>
+    <string name="metadata_download_no">Не загружено</string>
+    <string name="metadata_download_running">Загружается</string>
+    <string name="metadata_download_yes">Загружено</string>
+    <string name="metadata_url">URL</string>
+    <string name="metadata_about">О треке</string>
+    <string name="metadata_source">Воспроизводится в</string>
     <string name="face_picker_section_builtin">Встроенные циферблаты</string>
     <string name="face_picker_section_custom">Мои темы</string>
     <string name="face_picker_custom_base">На основе %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 </resources>

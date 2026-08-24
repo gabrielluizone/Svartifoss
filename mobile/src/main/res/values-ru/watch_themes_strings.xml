@@ -54,4 +54,6 @@
     <string name="watch_theme_face_chat">Чат</string>
     <string name="watch_theme_face_split">Разделённый</string>
     <string name="watch_theme_face_note">Заметка</string>
+    <string name="watch_theme_face_verse">Куплет</string>
+    <string name="watch_theme_face_metadata">Метаданные</string>
 </resources>

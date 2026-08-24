@@ -54,4 +54,6 @@
     <string name="watch_theme_face_chat">Chat</string>
     <string name="watch_theme_face_split">Split</string>
     <string name="watch_theme_face_note">Note</string>
+    <string name="watch_theme_face_verse">Vers</string>
+    <string name="watch_theme_face_metadata">Metadata</string>
 </resources>

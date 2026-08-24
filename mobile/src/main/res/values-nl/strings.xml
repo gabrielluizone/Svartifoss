@@ -135,6 +135,7 @@
     <string name="action_repeat">Herhalen</string>
     <string name="action_repeat_one">Eén herhalen</string>
     <string name="action_search">Muziek zoeken</string>
+    <string name="action_open_lyrics">Songtekst</string>
     <string name="group_playback_controls">Afspeelbediening</string>
     <string name="group_streaming_shortcuts">Nummers, albums en afspeellijsten</string>
     <string name="pick_action">Actie kiezen</string>
@@ -238,7 +239,18 @@
     <string name="preview_sample_artist">Naam artiest</string>
     <string name="preview_sample_next_title">Volgend nummer</string>
     <string name="preview_playback_stopped">Gestopt</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">de vorige regel</string>
+    <string name="preview_verse_current">de regel die nu wordt gezongen</string>
+    <string name="preview_verse_next">en de regel erna</string>
     <string name="category_gestures">Gebaren en invoer</string>
+    <string name="category_watch_display">Horlogescherm</string>
+    <string name="setting_wear_keep_screen_on">Scherm aan houden</string>
+    <string name="setting_wear_keep_screen_on_description">Voorkomt dat het horlogescherm dooft door de inactiviteitstimer terwijl een Svartifoss-scherm open is. Je pols laten zakken dimt het horloge nog steeds — dat gebaar hoort bij het systeem. Verbruikt meer batterij. Het songtekstscherm blijft altijd aan, ongeacht deze instelling.</string>
+    <string name="setting_lyrics_enabled">Songtekst online opzoeken</string>
+    <string name="setting_lyrics_enabled_description">Laat de telefoon gesynchroniseerde songtekst ophalen bij LRCLIB wanneer je het songtekstscherm op het horloge opent. De nummernaam, artiest en lengte worden verzonden; verder niets, en er wordt niets op schijf opgeslagen. Zet dit uit en het songtekstscherm meldt dat opzoeken is uitgeschakeld.</string>
     <string name="setting_overlay_blur_radius">Overlay-vervaging</string>
     <string name="setting_overlay_blur_radius_description">Vervagingssterkte (px) van de matte achtergrond achter de volume-/zoekringen en het snelle-actiespaneel — onafhankelijk van de vervaging van de albumhoesachtergrond</string>
     <string name="category_action_list">Actielijst</string>
@@ -247,11 +259,16 @@
     <string name="get_support">Ondersteuning krijgen</string>
     <string name="get_support_description">Applicatielogboeken naar de ontwikkelaar sturen voor ondersteuning</string>
     <string name="contact_developer">Contact opnemen met de ontwikkelaar</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — contact</string>
     <string name="contact_developer_chooser">E-mail versturen</string>
     <string name="contact_developer_no_client">Geen e-mailapp geïnstalleerd. Adres gekopieerd naar het klembord.</string>
     <string name="about_developer_title">Over de ontwikkelaar</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
     <string name="about_developer_dialog_message">Svartifoss begon als persoonlijk project — ik wilde Music Center for Wear bijwerken naar wat vandaag mogelijk is, gewoon om het zelf elke dag te kunnen gebruiken. Het werd goed genoeg om te besluiten het met iedereen te delen. Dit is mijn eerste app, en er gaat niets boven zien dat iets wat je hebt gebouwd ook voor anderen nuttig blijkt te zijn.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">Open source-licenties</string>
     <string name="setting_always_show_time">Tijd altijd tonen</string>
     <string name="setting_always_show_time_off_description">De huidige tijd wordt alleen getoond in ambient-modus</string>
@@ -326,6 +343,12 @@
         <item>Ontsatureerd album</item>
         <item>Aangepaste kleur</item>
     </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="player_shading_style_entries">
         <item>Spelerthema volgen</item>
         <item>Randvignet</item>
@@ -338,6 +361,19 @@
         <item>Albumkleurwas</item>
         <item>Tweekleurig albumverloop</item>
         <item>Zijgordijnen</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
     </string-array>
     <string name="setting_ambient_album_art_opacity">Albumhoesdekking in ambient</string>
     <string name="setting_ambient_album_art_opacity_description">Hoe zichtbaar de albumhoes blijft in ambient-modus. Momenteel <![CDATA[<b>%1$s%%</b>]]>.</string>
@@ -467,6 +503,15 @@
         <item>Statisch (één regel, geen scrollen of verkleinen)</item>
         <item>Verkleinen om te passen</item>
     </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
 
     <string name="setting_wear_artist_color">Tekstkleur artiest</string>
     <string name="setting_wear_artist_custom_color">Aangepaste kleur artiest</string>
@@ -493,6 +538,11 @@
         <item>Albumkleur</item>
         <item>Aangepaste kleur</item>
     </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
 
     <string-array name="wear_screen_face_entries">
         <item>Classic</item>
@@ -514,6 +564,26 @@
         <item>Vers</item>
         <item>Metadata</item>
     </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive-zoeken</string>
     <string name="setting_wear_expressive_seek_mode_description">Hoe je met aanraking door het nummer scrolt op het Expressive-gezicht. Centrale ring maakt de ring rond de afspeelknop versleepbaar; Randring toont ook de Classic-lunetring; Geen laat zoeken alleen over aan de draaikroon.</string>
@@ -521,6 +591,11 @@
         <item>Centrale ring</item>
         <item>Randring</item>
         <item>Geen</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
     </string-array>
 
     <string name="category_wear_aod">Altijd-aan-scherm</string>
@@ -542,17 +617,44 @@
         <item>Notitie</item>
         <item>Vers</item>
     </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
     <string name="setting_wear_aod_color">Altijd-aan-kleur</string>
     <string-array name="wear_aod_color_entries">
         <item>Wit</item>
         <item>Albumkleur</item>
         <item>Aangepaste kleur</item>
     </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="wear_clock_color_entries">
         <item>Wit</item>
         <item>Dynamisch (op gebied onder de klok)</item>
         <item>Albumkleur</item>
         <item>Aangepaste kleur</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
     <string-array name="wear_up_next_pill_entries">
         <item>Paneelstijl volgen</item>
@@ -563,6 +665,16 @@
         <item>Mat wit</item>
         <item>Zwart</item>
         <item>Dynamisch (albumtoon)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
     </string-array>
     <string name="setting_wear_up_next_pill">Achtergrond Volgende-pil</string>
     <string name="setting_wear_show_up_next_pill">Volgende-pil op speler</string>
@@ -592,6 +704,12 @@
         <item>Alleen bij pauze</item>
         <item>Nooit</item>
     </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
     <string name="setting_wear_aod_show_art">Albumhoes op altijd-aan-scherm</string>
     <string name="setting_wear_aod_show_art_description">Houd de gedimde albumhoes zichtbaar in ambient-modus. Uitschakelen toont een puur zwarte achtergrond, wat merkbaar meer batterij bespaart op AMOLED-schermen.</string>
     <string name="setting_wear_aod_art_treatment">Stijl altijd-aan-albumhoes</string>
@@ -600,6 +718,12 @@
         <item>Heldere hoes</item>
         <item>Monochrome vervaging</item>
         <item>Albumhoesbehandeling van speler volgen</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
     </string-array>
     <string name="setting_wear_aod_show_clock">Klok op altijd-aan-scherm</string>
     <string name="setting_wear_aod_show_clock_description">Toon de klok wanneer het horloge in ambient-modus is</string>
@@ -650,6 +774,27 @@
         <item>Monochroom (één tint, drie tonen)</item>
         <item>Duotoon (twee albumkleuren)</item>
     </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Randboog (links)</item>
         <item>Randboog (hoog)</item>
@@ -660,6 +805,16 @@
         <item>Centrale halo</item>
         <item>Horizontale meter</item>
     </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
     <string-array name="wear_seek_layout_entries">
         <item>Randring</item>
         <item>Randring (dun)</item>
@@ -667,12 +822,29 @@
         <item>Tijdlijn</item>
         <item>Gesegmenteerde tijdlijn</item>
     </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
     <string-array name="wear_quick_panel_layout_entries">
         <item>Metadata eerst</item>
         <item>Boog</item>
         <item>Hero</item>
         <item>Raster</item>
         <item>Gelabelde rijen</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
     </string-array>
     <string-array name="wear_progress_style_entries">
         <item>Effen</item>
@@ -683,6 +855,16 @@
         <item>60 klokstippen</item>
         <item>60 klokstreepjes</item>
         <item>12-uurs segmenten</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
     </string-array>
     <string-array name="wear_seek_style_entries">
         <item>Eenvoudig</item>
@@ -711,6 +893,33 @@
         <item>Geconfigureerde knoppen</item>
         <item>Van huidige media-app</item>
     </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
     <string-array name="wear_overlay_backdrop_entries">
         <item>Paneelstijl volgen</item>
         <item>Albumvervaging (acryl)</item>
@@ -723,6 +932,19 @@
         <item>Vloeibaar glas</item>
         <item>Expressive-vervaging</item>
         <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Glas</item>
@@ -744,11 +966,37 @@
         <item>Inkt</item>
         <item>Groef</item>
     </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
     <string-array name="wear_list_row_size_entries">
         <item>Compact</item>
         <item>Normaal</item>
         <item>Hoog</item>
         <item>Extra hoog</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
     </string-array>
 
     <string-array name="wear_overlay_style_entries">
@@ -770,6 +1018,26 @@
         <item>Hoes vervaagd</item>
         <item>Hoes Tonaal</item>
         <item>Hoes Vierkant</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_entries">
@@ -796,6 +1064,30 @@
         <item>Stip</item>
         <item>Plaat</item>
     </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
 
     <string name="setting_wear_track_time_mode">Weergave nummertijd</string>
     <string name="setting_wear_track_time_mode_description">Wanneer de nummerpositie (bijv. 1:23 / 3:45) wordt getoond op het nu-afspelend-scherm.</string>
@@ -804,6 +1096,12 @@
         <item>Alleen tijdens afspelen</item>
         <item>Alleen bij pauze</item>
         <item>Nooit</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
     </string-array>
 
     <string name="setting_screen_buttons_curve">Kromming miniknoppen</string>
@@ -827,6 +1125,23 @@
         <item>Afgerond rechthoek (medium)</item>
         <item>Afgerond rechthoek (groot)</item>
     </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
     <string-array name="screen_buttons_curve_entries">
         <item>Plat</item>
         <item>Boog</item>
@@ -839,6 +1154,19 @@
         <item>Linkerrand</item>
         <item>Rechterrand</item>
         <item>Beide randen</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Standaardachtergrond</item>
@@ -856,11 +1184,32 @@
         <item>Alleen pictogram (transparant)</item>
         <item>Pictogram Exp</item>
     </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
 
     <string-array name="screen_buttons_color_entries">
         <item>Neutraal</item>
         <item>Albumkleur</item>
         <item>Aangepaste kleur</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
 
     <string-array name="album_art_style_entries">
@@ -888,6 +1237,32 @@
         <item>Sintelgloed</item>
         <item>Eclipse AMOLED zwart</item>
         <item>Verborgen (effen zwart)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
     </string-array>
 
     <string name="setting_close_timeout">Time-out sluiten</string>
@@ -1121,6 +1496,10 @@
         <item>Gebalanceerd</item>
         <item>Meest levendig</item>
     </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
 
     <string name="watch_section_typography">Tekst</string>
     <string name="watch_section_typography_description">Kies lettertypen en pas tekst voor titel, artiest, klok, app-icoon, andere schermen en Flex aan.</string>
@@ -1221,6 +1600,9 @@
     <string name="setting_wear_font_all_screens_description">Past het gekozen lettertype toe op menu’s, de wachtrij en Snelle acties, niet alleen op de speler. Decoratieve of handgeschreven lettertypen kunnen moeilijker leesbaar zijn in lijsten.</string>
     <string name="setting_wear_clock_font">Lettertype klok</string>
     <string name="wear_clock_font_follow">Lettertype van nummer volgen</string>
+    <string name="setting_wear_lyrics_font">Lettertype songtekst</string>
+    <string name="setting_wear_lyrics_font_description">Het lettertype voor songtekst, op het songtekstscherm en het Vers-gezicht. Volgt het lettertype van het nummer, tenzij je hier een lettertype kiest.</string>
+    <string name="wear_lyrics_font_follow">Lettertype van nummer volgen</string>
     <string name="setting_wear_clock_font_weight">Gewicht klok</string>
     <string name="setting_wear_clock_font_italic">Klok cursief</string>
     <string name="setting_wear_clock_font_scale">Grootte klok</string>
@@ -1255,12 +1637,24 @@
         <item>Wachtrij openen</item>
         <item>Niets</item>
     </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
     <string-array name="wear_color_modifier_entries">
         <item>Geen</item>
         <item>Levendig</item>
         <item>Pastel</item>
         <item>Warm</item>
         <item>Koel</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
     </string-array>
     <string-array name="wear_paused_hold_entries">
         <item>@string/wear_paused_hold_off</item>
@@ -1371,6 +1765,11 @@
         <item>@string/theme_dark</item>
         <item>@string/theme_system</item>
     </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
     <string-array name="app_language_entries">
         <item>@string/language_system</item>
         <item>English</item>
@@ -1387,6 +1786,23 @@
         <item>فارسی</item>
         <item>简体中文</item>
         <item>Íslenska</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -1406,6 +1822,48 @@
         <item>Standaard</item>
         <item>Sterk</item>
     </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Accentbasis</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Track</string>
+    <string name="preview_metadata_genre">Genre</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Jaar</string>
+    <string name="preview_metadata_format">Formaat</string>
+    <string name="preview_metadata_bitrate">Bitrate</string>
+    <string name="preview_metadata_position">Positie</string>
+    <string name="preview_metadata_output">Uitvoer</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Albumgegevens</string>
+    <string name="setting_wear_metadata_core_description">Album, albumartiest, positie op de plaat en lengte.</string>
+    <string name="setting_wear_metadata_release">Releasegegevens</string>
+    <string name="setting_wear_metadata_release_description">Genre, jaar, releasedatum en platenlabel.</string>
+    <string name="setting_wear_metadata_credits">Credits</string>
+    <string name="setting_wear_metadata_credits_description">Componist, tekstschrijver en auteur, als de speler die publiceert.</string>
+    <string name="setting_wear_metadata_technical">Bestandsgegevens</string>
+    <string name="setting_wear_metadata_technical_description">Formaat, bitrate, samplerate, kanalen en grootte. Alleen voor lokale nummers.</string>
+    <string name="setting_split_panel">Split-paneel</string>
+    <string name="setting_split_panel_description">Wat de onderste helft van het Split-gezicht vult. Vervaagde hoes zet dezelfde cover voort achter de tekst; effen kleur is de look van een meldingskaart.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Vervaagde hoes</item>
+        <item>Effen kleur</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Afspeelgegevens</string>
+    <string name="setting_wear_metadata_playback_description">Positie tot op de milliseconde, snelheid, audio-uitvoer en waar het geluid vandaan wordt gestreamd of afgespeeld — inclusief het adres van het nummer. Het enige blok dat een streamend nummer kan vullen als er geen bestand is om te beschrijven.</string>
+    <string name="setting_wear_metadata_identifiers">Identificatiecodes</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC en catalogusnummers. Standaard uit — handig als je er een nodig hebt, ruis als dat niet zo is.</string>
+    <string name="setting_metadata_lookup">Nummergegevens online opzoeken</string>
+    <string name="setting_metadata_lookup_description">Vult aan wat de afspeel-app niet publiceerde — ISRC, platenlabel, releasedatum — via MusicBrainz, een gratis openbare database. Standaard uit. Het Metadata-gezicht werkt ook zonder; dit voegt alleen regels toe. Er wordt niets verzonden tenzij je dit inschakelt en dat gezicht selecteert, en dan alleen de tracknaam en artiest.</string>
     <!-- Information architecture and navigation -->
     <string name="watch_overview_description">Kies wat je wilt aanpassen. Het voorbeeld en het opgeslagen thema blijven in elk gebied actief.</string>
     <string name="watch_back_to_overview">Terug naar Horloge-gebieden</string>

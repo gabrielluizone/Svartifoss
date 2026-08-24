@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <string name="tile_description">Það sem er í spilun og spilunarstýringar</string>
     <string name="complication_album_art_label">Plötuumslag í spilun</string>
     <string name="complication_no_music">Ekkert í spilun</string>
@@ -6,6 +8,9 @@
     <string name="tile_open_app">Opna Svartifoss</string>
     <string name="tile_rewind_10">Spóla til baka um 10 sekúndur</string>
     <string name="tile_forward_10">Spóla áfram um 10 sekúndur</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
 
     <string name="shortcuts_tile_description">Streymisflýtileiðirnar þínar, einn smell í burtu</string>
     <string name="shortcuts_tile_title">Flýtileiðir</string>
@@ -33,6 +38,8 @@
     <string name="back_button">Til baka</string>
     <string name="turn_bezel_cw">Snúa umgjörð réttsælis</string>
     <string name="turn_bezel_ccw">Snúa umgjörð rangsælis</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">Líka við</string>
     <string name="quick_action_shuffle">Stokka</string>
     <string name="quick_action_repeat">Endurtaka</string>
@@ -53,6 +60,24 @@
     <string name="face_picker_section_builtin">Innbyggðar skífur</string>
     <string name="face_picker_section_custom">Þemun mín</string>
     <string name="face_picker_custom_base">Byggt á %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 
     <string name="hint_title">Svona notarðu þetta</string>
     <string name="hint_edges">Ýttu efst, neðst, til vinstri eða hægri — hvert svæði framkvæmir úthlutaða aðgerð</string>
@@ -85,4 +110,57 @@
     <string name="update_install_title">Svartifoss uppfærsla</string>
     <string name="update_install_tap">Ýttu til að setja upp nýju útgáfuna</string>
     <string name="update_install_failed">Uppsetning mistókst. Leyfðu uppsetningar frá Svartifoss í stillingum úrsins og reyndu aftur í símanum.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Spila héðan</string>
+    <string name="lyrics_none">Engir textar fundust fyrir þetta lag</string>
+    <string name="lyrics_failed">Ekki tókst að sækja textana. Athugaðu nettengingu símans þíns.</string>
+    <string name="lyrics_disabled">Textauppfletting er óvirk í símastillingum</string>
+    <string name="lyrics_no_track">Ekkert er að spila</string>
+    <string name="metadata_none">Engar upplýsingar fyrir þetta lag</string>
+    <string name="metadata_album">Plata</string>
+    <string name="metadata_album_artist">Flytjandi plötu</string>
+    <string name="metadata_track">Lag</string>
+    <string name="metadata_duration">Lengd</string>
+    <string name="metadata_genre">Tegund</string>
+    <string name="metadata_year">Ár</string>
+    <string name="metadata_released">Útgefið</string>
+    <string name="metadata_label">Útgáfufyrirtæki</string>
+    <string name="metadata_country">Land</string>
+    <string name="metadata_composer">Tónskáld</string>
+    <string name="metadata_writer">Textahöfundur</string>
+    <string name="metadata_author">Höfundur</string>
+    <string name="metadata_codec">Snið</string>
+    <string name="metadata_bitrate">Bitahraði</string>
+    <string name="metadata_sample_rate">Safntíðni</string>
+    <string name="metadata_channels">Rásir</string>
+    <string name="metadata_file_size">Stærð</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Útgáfunúmer</string>
+    <string name="metadata_compilation">Safnplata</string>
+    <string name="metadata_value_yes">Já</string>
+    <string name="metadata_position">Staða</string>
+    <string name="metadata_speed">Hraði</string>
+    <string name="metadata_output">Úttak</string>
+    <string name="metadata_output_speaker">Hátalari símans</string>
+    <string name="metadata_output_wired">Heyrnartól</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB-hljóð</string>
+    <string name="metadata_output_remote">Varpað</string>
+    <string name="metadata_origin">Uppruni</string>
+    <string name="metadata_origin_stream">Streymi</string>
+    <string name="metadata_origin_local">Skrá á símanum</string>
+    <string name="metadata_host">Hýsill</string>
+    <string name="metadata_file">Skrá</string>
+    <string name="metadata_download">Niðurhal</string>
+    <string name="metadata_download_no">Ekki niðurhalað</string>
+    <string name="metadata_download_running">Í niðurhali</string>
+    <string name="metadata_download_yes">Niðurhalað</string>
+    <string name="metadata_url">Vefslóð</string>
+    <string name="metadata_about">Um</string>
+    <string name="metadata_source">Er spilað í</string>
 </resources>

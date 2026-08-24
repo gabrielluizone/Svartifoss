@@ -135,6 +135,7 @@
     <string name="action_repeat">تکرار</string>
     <string name="action_repeat_one">تکرار یکی</string>
     <string name="action_search">جست‌وجوی موسیقی</string>
+    <string name="action_open_lyrics">متن ترانه</string>
     <string name="group_playback_controls">کنترل‌های پخش</string>
     <string name="group_streaming_shortcuts">آهنگ‌ها، آلبوم‌ها و لیست‌های پخش</string>
     <string name="pick_action">انتخاب اقدام</string>
@@ -238,6 +239,12 @@
     <string name="preview_sample_artist">نام خواننده</string>
     <string name="preview_sample_next_title">آهنگ بعدی</string>
     <string name="preview_playback_stopped">متوقف</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">خط قبلی</string>
+    <string name="preview_verse_current">خطی که اکنون پخش می‌شود</string>
+    <string name="preview_verse_next">و خط بعدی</string>
     <string name="category_gestures">حرکات و ورودی</string>
     <string name="setting_overlay_blur_radius">تاری پوشش</string>
     <string name="setting_overlay_blur_radius_description">شدت تاری (پیکسل) پس‌زمینه مات پشت حلقه‌های صدا/جست‌وجو و پنل اقدامات سریع — مستقل از تاری پس‌زمینه جلد آلبوم</string>
@@ -247,11 +254,16 @@
     <string name="get_support">دریافت پشتیبانی</string>
     <string name="get_support_description">ارسال گزارش‌های برنامه به توسعه‌دهنده برای پشتیبانی</string>
     <string name="contact_developer">تماس با توسعه‌دهنده</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — تماس</string>
     <string name="contact_developer_chooser">ارسال ایمیل</string>
     <string name="contact_developer_no_client">هیچ برنامه ایمیلی نصب نشده است. آدرس در کلیپ‌بورد کپی شد.</string>
     <string name="about_developer_title">درباره توسعه‌دهنده</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
     <string name="about_developer_dialog_message">Svartifoss به‌عنوان یک پروژه شخصی شروع شد — می‌خواستم Music Center for Wear را با امکانات امروزی به‌روز کنم، فقط برای اینکه بتوانم خودم هر روز از آن استفاده کنم. نتیجه به اندازه کافی خوب شد که تصمیم گرفتم آن را با همه به اشتراک بگذارم. این اولین برنامه من است و هیچ چیز شبیه دیدن چیزی که ساخته‌اید نیست که برای دیگران هم مفید باشد.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">مجوزهای متن‌باز</string>
     <string name="setting_always_show_time">همیشه زمان را نمایش بده</string>
     <string name="setting_always_show_time_off_description">زمان فعلی فقط در حالت محیطی نمایش داده می‌شود</string>
@@ -326,6 +338,12 @@
         <item>آلبوم کم‌رنگ‌شده</item>
         <item>رنگ سفارشی</item>
     </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="player_shading_style_entries">
         <item>پیروی از پوسته پخش‌کننده</item>
         <item>وینیت لبه</item>
@@ -338,6 +356,19 @@
         <item>شست‌وشوی رنگ آلبوم</item>
         <item>گرادیان دورنگ آلبوم</item>
         <item>پرده‌های کناری</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
     </string-array>
     <string name="setting_ambient_album_art_opacity">شفافیت جلد آلبوم در حالت محیطی</string>
     <string name="setting_ambient_album_art_opacity_description">جلد آلبوم در حالت محیطی چقدر قابل‌مشاهده باقی می‌ماند. اکنون <![CDATA[<b>%1$s٪</b>]]>.</string>
@@ -467,6 +498,15 @@
         <item>ثابت (یک خط، بدون پیمایش یا کوچک شدن)</item>
         <item>کوچک شدن برای جا شدن</item>
     </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
 
     <string name="setting_wear_artist_color">رنگ متن خواننده</string>
     <string name="setting_wear_artist_custom_color">رنگ سفارشی خواننده</string>
@@ -493,6 +533,11 @@
         <item>رنگ آلبوم</item>
         <item>رنگ سفارشی</item>
     </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
 
     <string-array name="wear_screen_face_entries">
         <item>Classic</item>
@@ -514,6 +559,26 @@
         <item>بند</item>
         <item>فراداده</item>
     </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
 
     <string name="setting_wear_expressive_seek_mode">جست‌وجوی Expressive</string>
     <string name="setting_wear_expressive_seek_mode_description">نحوه پیمایش آهنگ با لمس در رویه Expressive. حلقه مرکزی حلقه اطراف دکمه پخش را قابل‌کشیدن می‌کند؛ حلقه لبه همچنین حلقه لبه Classic را نشان می‌دهد؛ هیچ‌کدام جست‌وجو را فقط برای تاج چرخشی باقی می‌گذارد.</string>
@@ -521,6 +586,11 @@
         <item>حلقه مرکزی</item>
         <item>حلقه لبه</item>
         <item>هیچ‌کدام</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
     </string-array>
 
     <string name="category_wear_aod">صفحه همیشه روشن</string>
@@ -542,17 +612,44 @@
         <item>یادداشت</item>
         <item>بند</item>
     </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
     <string name="setting_wear_aod_color">رنگ همیشه روشن</string>
     <string-array name="wear_aod_color_entries">
         <item>سفید</item>
         <item>رنگ آلبوم</item>
         <item>رنگ سفارشی</item>
     </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="wear_clock_color_entries">
         <item>سفید</item>
         <item>پویا (بر اساس ناحیه زیر ساعت)</item>
         <item>رنگ آلبوم</item>
         <item>رنگ سفارشی</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
     <string-array name="wear_up_next_pill_entries">
         <item>پیروی از سبک پنل</item>
@@ -563,6 +660,16 @@
         <item>سفید مات</item>
         <item>سیاه</item>
         <item>پویا (رنگ آلبوم)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
     </string-array>
     <string name="setting_wear_up_next_pill">پس‌زمینه قرص بعدی</string>
     <string name="setting_wear_show_up_next_pill">قرص بعدی روی پخش‌کننده</string>
@@ -592,6 +699,12 @@
         <item>فقط هنگام مکث</item>
         <item>هرگز</item>
     </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
     <string name="setting_wear_aod_show_art">جلد آلبوم روی صفحه همیشه روشن</string>
     <string name="setting_wear_aod_show_art_description">جلد آلبوم تیره‌شده را در حالت محیطی قابل‌مشاهده نگه دار. خاموش کردن آن پس‌زمینه‌ای کاملاً سیاه نشان می‌دهد که باتری قابل‌توجهی بیشتر روی صفحه‌های AMOLED صرفه‌جویی می‌کند.</string>
     <string name="setting_wear_aod_art_treatment">سبک جلد آلبوم همیشه روشن</string>
@@ -600,6 +713,12 @@
         <item>جلد شفاف</item>
         <item>تاری تک‌رنگ</item>
         <item>پیروی از پردازش جلد پخش‌کننده</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
     </string-array>
     <string name="setting_wear_aod_show_clock">ساعت روی صفحه همیشه روشن</string>
     <string name="setting_wear_aod_show_clock_description">وقتی ساعت در حالت محیطی است، ساعت را نمایش بده</string>
@@ -650,6 +769,27 @@
         <item>تک‌رنگ (یک رنگ‌مایه، سه تن)</item>
         <item>دورنگ (دو رنگ آلبوم)</item>
     </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>قوس لبه (چپ)</item>
         <item>قوس لبه (بلند)</item>
@@ -660,6 +800,16 @@
         <item>هاله مرکزی</item>
         <item>متر افقی</item>
     </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
     <string-array name="wear_seek_layout_entries">
         <item>حلقه لبه</item>
         <item>حلقه لبه (نازک)</item>
@@ -667,12 +817,29 @@
         <item>خط زمانی</item>
         <item>خط زمانی تقسیم‌شده</item>
     </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
     <string-array name="wear_quick_panel_layout_entries">
         <item>ابتدا فراداده</item>
         <item>قوس</item>
         <item>Hero</item>
         <item>شبکه</item>
         <item>ردیف‌های برچسب‌دار</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
     </string-array>
     <string-array name="wear_progress_style_entries">
         <item>یکپارچه</item>
@@ -683,6 +850,16 @@
         <item>۶۰ نقطه ساعت</item>
         <item>۶۰ علامت ساعت</item>
         <item>بخش‌های ۱۲ ساعته</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
     </string-array>
     <string-array name="wear_seek_style_entries">
         <item>ساده</item>
@@ -711,6 +888,33 @@
         <item>دکمه‌های پیکربندی‌شده</item>
         <item>از برنامه رسانه فعلی</item>
     </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
     <string-array name="wear_overlay_backdrop_entries">
         <item>پیروی از سبک پنل</item>
         <item>تاری آلبوم (اکریلیک)</item>
@@ -723,6 +927,19 @@
         <item>شیشه مایع</item>
         <item>تاری Expressive</item>
         <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>شیشه‌ای</item>
@@ -744,11 +961,37 @@
         <item>جوهر</item>
         <item>شیار</item>
     </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
     <string-array name="wear_list_row_size_entries">
         <item>فشرده</item>
         <item>عادی</item>
         <item>بلند</item>
         <item>خیلی بلند</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
     </string-array>
 
     <string-array name="wear_overlay_style_entries">
@@ -770,6 +1013,26 @@
         <item>جلد تار</item>
         <item>جلد تونال</item>
         <item>جلد مربعی</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_entries">
@@ -796,6 +1059,30 @@
         <item>نقطه</item>
         <item>لوح</item>
     </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
 
     <string name="setting_wear_track_time_mode">نمایش زمان آهنگ</string>
     <string name="setting_wear_track_time_mode_description">چه زمانی موقعیت آهنگ (مثلاً ۱:۲۳ / ۳:۴۵) در صفحه در حال پخش نمایش داده می‌شود.</string>
@@ -804,6 +1091,12 @@
         <item>فقط هنگام پخش</item>
         <item>فقط هنگام مکث</item>
         <item>هرگز</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
     </string-array>
 
     <string name="setting_screen_buttons_curve">انحنای دکمه‌های کوچک</string>
@@ -827,6 +1120,23 @@
         <item>مستطیل گرد (متوسط)</item>
         <item>مستطیل گرد (بزرگ)</item>
     </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
     <string-array name="screen_buttons_curve_entries">
         <item>صاف</item>
         <item>قوس</item>
@@ -839,6 +1149,19 @@
         <item>لبهٔ چپ</item>
         <item>لبهٔ راست</item>
         <item>هر دو لبه</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>پس‌زمینه پیش‌فرض</item>
@@ -856,11 +1179,32 @@
         <item>فقط نماد (شفاف)</item>
         <item>نماد Exp</item>
     </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
 
     <string-array name="screen_buttons_color_entries">
         <item>خنثی</item>
         <item>رنگ آلبوم</item>
         <item>رنگ سفارشی</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
 
     <string-array name="album_art_style_entries">
@@ -888,6 +1232,32 @@
         <item>درخشش اخگر</item>
         <item>Eclipse AMOLED سیاه</item>
         <item>پنهان (سیاه یکپارچه)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
     </string-array>
 
     <string name="setting_close_timeout">زمان انقضای بستن</string>
@@ -1121,6 +1491,10 @@
         <item>متعادل</item>
         <item>پررنگ‌ترین</item>
     </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
 
     <string name="watch_section_typography">متن</string>
     <string name="watch_section_typography_description">قلم‌ها را انتخاب کنید و متن عنوان، هنرمند، ساعت، نماد برنامه، صفحه‌های ثانویه و Flex را تنظیم کنید.</string>
@@ -1221,6 +1595,9 @@
     <string name="setting_wear_font_all_screens_description">قلم انتخاب‌شده را روی منوها، صف و کنش‌های سریع اعمال می‌کند، نه فقط پخش‌کننده. خواندن قلم‌های نمایشی یا دست‌نویس در فهرست‌ها می‌تواند سخت‌تر باشد.</string>
     <string name="setting_wear_clock_font">قلم ساعت</string>
     <string name="wear_clock_font_follow">پیروی از قلم آهنگ</string>
+    <string name="setting_wear_lyrics_font">قلم متن ترانه</string>
+    <string name="setting_wear_lyrics_font_description">قلم برای متن ترانه، در صفحه متن ترانه و نمای بند. مگر اینکه اینجا قلمی انتخاب کنی، از قلم آهنگ پیروی می‌کند.</string>
+    <string name="wear_lyrics_font_follow">پیروی از قلم آهنگ</string>
     <string name="setting_wear_clock_font_weight">ضخامت ساعت</string>
     <string name="setting_wear_clock_font_italic">ساعت کج</string>
     <string name="setting_wear_clock_font_scale">اندازهٔ ساعت</string>
@@ -1255,12 +1632,24 @@
         <item>باز کردن صف</item>
         <item>هیچ‌کدام</item>
     </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
     <string-array name="wear_color_modifier_entries">
         <item>هیچ‌کدام</item>
         <item>پررنگ</item>
         <item>پاستلی</item>
         <item>گرم</item>
         <item>سرد</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
     </string-array>
     <string-array name="wear_paused_hold_entries">
         <item>@string/wear_paused_hold_off</item>
@@ -1371,6 +1760,11 @@
         <item>@string/theme_dark</item>
         <item>@string/theme_system</item>
     </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
     <string-array name="app_language_entries">
         <item>@string/language_system</item>
         <item>English</item>
@@ -1387,6 +1781,23 @@
         <item>فارسی</item>
         <item>简体中文</item>
         <item>Íslenska</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -1406,6 +1817,48 @@
         <item>استاندارد</item>
         <item>پررنگ</item>
     </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">زمینه رنگ تأکیدی</string>
+    <string name="preview_metadata_album">آلبوم</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">قطعه</string>
+    <string name="preview_metadata_genre">ژانر</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">سال</string>
+    <string name="preview_metadata_format">قالب</string>
+    <string name="preview_metadata_bitrate">بیت‌ریت</string>
+    <string name="preview_metadata_position">موقعیت</string>
+    <string name="preview_metadata_output">خروجی</string>
+    <string name="preview_metadata_output_value">بلوتوث</string>
+    <string name="setting_wear_metadata_core">جزئیات آلبوم</string>
+    <string name="setting_wear_metadata_core_description">آلبوم، هنرمند آلبوم، موقعیت در آلبوم و مدت‌زمان.</string>
+    <string name="setting_wear_metadata_release">جزئیات انتشار</string>
+    <string name="setting_wear_metadata_release_description">ژانر، سال، تاریخ انتشار و لیبل.</string>
+    <string name="setting_wear_metadata_credits">دست‌اندرکاران</string>
+    <string name="setting_wear_metadata_credits_description">آهنگ‌ساز، ترانه‌سرا و نویسنده، در صورتی که پخش‌کننده آن‌ها را منتشر کند.</string>
+    <string name="setting_wear_metadata_technical">جزئیات فایل</string>
+    <string name="setting_wear_metadata_technical_description">قالب، بیت‌ریت، نرخ نمونه‌برداری، کانال‌ها و حجم. فقط برای قطعات محلی.</string>
+    <string name="setting_split_panel">پنل Split</string>
+    <string name="setting_split_panel_description">چه چیزی نیمه پایینی نمای Split را پر می‌کند. جلد تار همان تصویر جلد را پشت متن ادامه می‌دهد؛ رنگ یکدست ظاهر یک کارت اعلان را دارد.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>جلد تار</item>
+        <item>رنگ یکدست</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">جزئیات پخش</string>
+    <string name="setting_wear_metadata_playback_description">موقعیت با دقت میلی‌ثانیه، سرعت، خروجی صدا و اینکه صدا از کجا استریم یا پخش می‌شود — از جمله نشانی قطعه. تنها بخشی که یک قطعه استریم‌شده، در نبود فایلی برای توصیف، می‌تواند پر کند.</string>
+    <string name="setting_wear_metadata_identifiers">شناسه‌ها</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC و شناسه‌های کاتالوگ. به‌طور پیش‌فرض خاموش — وقتی لازمش داری مفید است، وقتی نه، فقط شلوغی است.</string>
+    <string name="setting_metadata_lookup">جست‌وجوی جزئیات قطعه به‌صورت آنلاین</string>
+    <string name="setting_metadata_lookup_description">آنچه را برنامه پخش‌کننده منتشر نکرده — ISRC، لیبل، تاریخ انتشار — از MusicBrainz، یک پایگاه‌داده عمومی و رایگان، تکمیل می‌کند. به‌طور پیش‌فرض خاموش. نمای Metadata بدون آن هم کار می‌کند؛ این فقط ردیف‌هایی اضافه می‌کند. هیچ‌چیز ارسال نمی‌شود مگر اینکه آن را فعال کرده و آن نما را انتخاب کنی، و در آن صورت فقط نام قطعه و هنرمند.</string>
     <!-- Information architecture and navigation -->
     <string name="watch_overview_description">آنچه را می‌خواهید شخصی‌سازی کنید انتخاب کنید. پیش‌نمایش و طرح ذخیره‌شده در همهٔ بخش‌ها فعال می‌مانند.</string>
     <string name="watch_back_to_overview">بازگشت به بخش‌های ساعت</string>
@@ -1426,6 +1879,11 @@
     <string name="category_watch_navigation">پیمایش و میان‌برها</string>
     <string name="category_rotary_input">ورودی چرخشی و تنظیم دقیق</string>
     <string name="category_watch_feedback">بازخورد و رفتار خروج</string>
+    <string name="category_watch_display">نمایشگر ساعت</string>
+    <string name="setting_wear_keep_screen_on">روشن نگه‌داشتن صفحه</string>
+    <string name="setting_wear_keep_screen_on_description">از خاموش شدن صفحه ساعت بر اثر عدم فعالیت جلوگیری می‌کند، تا زمانی که صفحه‌ای از Svartifoss باز باشد. پایین آوردن مچ دست همچنان ساعت را کم‌نور می‌کند — این حرکت متعلق به سیستم است. مصرف باتری را افزایش می‌دهد. صفحه متن ترانه صرف‌نظر از این تنظیم همیشه روشن می‌ماند.</string>
+    <string name="setting_lyrics_enabled">جست‌وجوی متن ترانه به‌صورت آنلاین</string>
+    <string name="setting_lyrics_enabled_description">به گوشی اجازه می‌دهد هنگام باز کردن صفحه متن ترانه در ساعت، متن هماهنگ‌شده را از LRCLIB دریافت کند. فقط نام آهنگ، هنرمند و مدت‌زمان ارسال می‌شود؛ چیز دیگری نه، و هیچ‌چیز روی دستگاه ذخیره نمی‌شود. این را خاموش کن تا صفحه متن ترانه اعلام کند که جست‌وجو غیرفعال است.</string>
     <string name="settings_search_prerequisite">این گزینه به انتخاب دیگری وابسته است. برای نمایان شدن آن، تنظیمی را که اینجا نشان داده شده تغییر دهید.</string>
     <string name="setting_numeric_range_error">مقداری از %1$d تا %2$d وارد کنید.</string>
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>

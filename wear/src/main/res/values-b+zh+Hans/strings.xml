@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <string name="tile_description">正在播放和媒体控制</string>
     <string name="complication_album_art_label">正在播放的封面</string>
     <string name="complication_no_music">没有正在播放</string>
@@ -6,6 +8,9 @@
     <string name="tile_open_app">打开 Svartifoss</string>
     <string name="tile_rewind_10">后退 10 秒</string>
     <string name="tile_forward_10">快进 10 秒</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
 
     <string name="shortcuts_tile_description">你的流媒体快捷方式，一触即达</string>
     <string name="shortcuts_tile_title">快捷方式</string>
@@ -33,6 +38,8 @@
     <string name="back_button">返回</string>
     <string name="turn_bezel_cw">顺时针转动表圈</string>
     <string name="turn_bezel_ccw">逆时针转动表圈</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">喜欢</string>
     <string name="quick_action_shuffle">随机播放</string>
     <string name="quick_action_repeat">重复</string>
@@ -79,9 +86,80 @@
     <string name="update_install_title">Svartifoss 更新</string>
     <string name="update_install_tap">点按以安装新版本</string>
     <string name="update_install_failed">安装失败。请在手表设置中允许来自 Svartifoss 的安装，然后从手机重试。</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">从此处播放</string>
+    <string name="lyrics_none">未找到此曲目的歌词</string>
+    <string name="lyrics_failed">无法获取歌词。请检查手机的网络连接。</string>
+    <string name="lyrics_disabled">歌词查找功能已在手机设置中停用</string>
+    <string name="lyrics_no_track">当前没有播放内容</string>
+    <string name="metadata_none">此曲目没有详情</string>
+    <string name="metadata_album">专辑</string>
+    <string name="metadata_album_artist">专辑艺术家</string>
+    <string name="metadata_track">曲目</string>
+    <string name="metadata_duration">时长</string>
+    <string name="metadata_genre">风格</string>
+    <string name="metadata_year">年份</string>
+    <string name="metadata_released">发行时间</string>
+    <string name="metadata_label">唱片公司</string>
+    <string name="metadata_country">国家/地区</string>
+    <string name="metadata_composer">作曲</string>
+    <string name="metadata_writer">作词</string>
+    <string name="metadata_author">作者</string>
+    <string name="metadata_codec">格式</string>
+    <string name="metadata_bitrate">比特率</string>
+    <string name="metadata_sample_rate">采样率</string>
+    <string name="metadata_channels">声道</string>
+    <string name="metadata_file_size">大小</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">发行 ID</string>
+    <string name="metadata_compilation">合辑</string>
+    <string name="metadata_value_yes">是</string>
+    <string name="metadata_position">进度</string>
+    <string name="metadata_speed">速度</string>
+    <string name="metadata_output">输出</string>
+    <string name="metadata_output_speaker">手机扬声器</string>
+    <string name="metadata_output_wired">耳机</string>
+    <string name="metadata_output_bluetooth">蓝牙</string>
+    <string name="metadata_output_usb">USB 音频</string>
+    <string name="metadata_output_remote">投放</string>
+    <string name="metadata_origin">来源</string>
+    <string name="metadata_origin_stream">流媒体</string>
+    <string name="metadata_origin_local">手机上的文件</string>
+    <string name="metadata_host">主机</string>
+    <string name="metadata_file">文件</string>
+    <string name="metadata_download">下载</string>
+    <string name="metadata_download_no">未下载</string>
+    <string name="metadata_download_running">正在下载</string>
+    <string name="metadata_download_yes">已下载</string>
+    <string name="metadata_url">URL</string>
+    <string name="metadata_about">关于</string>
+    <string name="metadata_source">正在播放于</string>
     <string name="face_picker_title">表盘</string>
     <string name="face_picker_offline">未连接手机——此表盘将应用到手表上，但设置仍会保存在手机中</string>
     <string name="face_picker_section_builtin">内置表盘</string>
     <string name="face_picker_section_custom">我的主题</string>
     <string name="face_picker_custom_base">基于 %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 </resources>

@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <string name="tile_description">Afspelen en mediabediening</string>
     <string name="complication_album_art_label">Hoes van huidig nummer</string>
     <string name="complication_no_music">Niets speelt af</string>
@@ -6,6 +8,9 @@
     <string name="tile_open_app">Svartifoss openen</string>
     <string name="tile_rewind_10">10 seconden terug</string>
     <string name="tile_forward_10">10 seconden vooruit</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
 
     <string name="shortcuts_tile_description">Je streaming-snelkoppelingen, met één tik</string>
     <string name="shortcuts_tile_title">Snelkoppelingen</string>
@@ -33,6 +38,8 @@
     <string name="back_button">Terug</string>
     <string name="turn_bezel_cw">Draai de ring met de klok mee</string>
     <string name="turn_bezel_ccw">Draai de ring tegen de klok in</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">Vind ik leuk</string>
     <string name="quick_action_shuffle">Shuffle</string>
     <string name="quick_action_repeat">Herhalen</string>
@@ -79,9 +86,80 @@
     <string name="update_install_title">Svartifoss-update</string>
     <string name="update_install_tap">Tik om de nieuwe versie te installeren</string>
     <string name="update_install_failed">Installatie mislukt. Sta installaties van Svartifoss toe in de horloge-instellingen en probeer het opnieuw vanaf de telefoon.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Vanaf hier afspelen</string>
+    <string name="lyrics_none">Geen songtekst gevonden voor dit nummer</string>
+    <string name="lyrics_failed">De songtekst kon niet worden opgehaald. Controleer de verbinding van je telefoon.</string>
+    <string name="lyrics_disabled">Songtekst opzoeken staat uit in de telefooninstellingen</string>
+    <string name="lyrics_no_track">Er speelt niets</string>
+    <string name="metadata_none">Geen gegevens voor dit nummer</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Albumartiest</string>
+    <string name="metadata_track">Track</string>
+    <string name="metadata_duration">Lengte</string>
+    <string name="metadata_genre">Genre</string>
+    <string name="metadata_year">Jaar</string>
+    <string name="metadata_released">Uitgebracht</string>
+    <string name="metadata_label">Label</string>
+    <string name="metadata_country">Land</string>
+    <string name="metadata_composer">Componist</string>
+    <string name="metadata_writer">Tekstschrijver</string>
+    <string name="metadata_author">Auteur</string>
+    <string name="metadata_codec">Formaat</string>
+    <string name="metadata_bitrate">Bitrate</string>
+    <string name="metadata_sample_rate">Samplerate</string>
+    <string name="metadata_channels">Kanalen</string>
+    <string name="metadata_file_size">Grootte</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Release-ID</string>
+    <string name="metadata_compilation">Compilatie</string>
+    <string name="metadata_value_yes">Ja</string>
+    <string name="metadata_position">Positie</string>
+    <string name="metadata_speed">Snelheid</string>
+    <string name="metadata_output">Uitvoer</string>
+    <string name="metadata_output_speaker">Telefoonluidspreker</string>
+    <string name="metadata_output_wired">Koptelefoon</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB-audio</string>
+    <string name="metadata_output_remote">Casten</string>
+    <string name="metadata_origin">Bron</string>
+    <string name="metadata_origin_stream">Stream</string>
+    <string name="metadata_origin_local">Bestand op telefoon</string>
+    <string name="metadata_host">Host</string>
+    <string name="metadata_file">Bestand</string>
+    <string name="metadata_download">Download</string>
+    <string name="metadata_download_no">Niet gedownload</string>
+    <string name="metadata_download_running">Wordt gedownload</string>
+    <string name="metadata_download_yes">Gedownload</string>
+    <string name="metadata_url">URL</string>
+    <string name="metadata_about">Over</string>
+    <string name="metadata_source">Wordt afgespeeld in</string>
     <string name="face_picker_title">Wijzerplaat</string>
     <string name="face_picker_offline">Telefoon niet verbonden — deze wijzerplaat wordt op het horloge toegepast, maar de instelling blijft op de telefoon staan</string>
     <string name="face_picker_section_builtin">Ingebouwde wijzerplaten</string>
     <string name="face_picker_section_custom">Mijn thema\'s</string>
     <string name="face_picker_custom_base">Gebaseerd op %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 </resources>

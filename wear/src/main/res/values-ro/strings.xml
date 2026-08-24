@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <string name="tile_description">Redare și comenzi media</string>
     <string name="complication_album_art_label">Coperta piesei curente</string>
     <string name="complication_no_music">Nu se redă nimic</string>
@@ -6,6 +8,9 @@
     <string name="tile_open_app">Deschide Svartifoss</string>
     <string name="tile_rewind_10">Înapoi 10 secunde</string>
     <string name="tile_forward_10">Înainte 10 secunde</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
 
     <string name="shortcuts_tile_description">Comenzile tale rapide de streaming, la o atingere</string>
     <string name="shortcuts_tile_title">Comenzi rapide</string>
@@ -33,6 +38,8 @@
     <string name="back_button">Înapoi</string>
     <string name="turn_bezel_cw">Rotește ramela în sensul acelor de ceasornic</string>
     <string name="turn_bezel_ccw">Rotește ramela în sens invers acelor de ceasornic</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">Îmi place</string>
     <string name="quick_action_shuffle">Redare aleatorie</string>
     <string name="quick_action_repeat">Repetă</string>
@@ -82,7 +89,78 @@
     <string name="update_install_title">Actualizare Svartifoss</string>
     <string name="update_install_tap">Atinge pentru a instala noua versiune</string>
     <string name="update_install_failed">Instalarea a eșuat. Permite instalările din Svartifoss în setările ceasului și încearcă din nou de pe telefon.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Redă de aici</string>
+    <string name="lyrics_none">Nu s-au găsit versuri pentru această piesă</string>
+    <string name="lyrics_failed">Versurile nu au putut fi obținute. Verifică conexiunea telefonului tău.</string>
+    <string name="lyrics_disabled">Căutarea versurilor este dezactivată în setările telefonului</string>
+    <string name="lyrics_no_track">Nu se redă nimic</string>
+    <string name="metadata_none">Niciun detaliu pentru această piesă</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Artistul albumului</string>
+    <string name="metadata_track">Piesă</string>
+    <string name="metadata_duration">Durată</string>
+    <string name="metadata_genre">Gen</string>
+    <string name="metadata_year">An</string>
+    <string name="metadata_released">Lansare</string>
+    <string name="metadata_label">Casă de discuri</string>
+    <string name="metadata_country">Țară</string>
+    <string name="metadata_composer">Compozitor</string>
+    <string name="metadata_writer">Textier</string>
+    <string name="metadata_author">Autor</string>
+    <string name="metadata_codec">Format</string>
+    <string name="metadata_bitrate">Rată de biți</string>
+    <string name="metadata_sample_rate">Rată de eșantionare</string>
+    <string name="metadata_channels">Canale</string>
+    <string name="metadata_file_size">Dimensiune</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID lansare</string>
+    <string name="metadata_compilation">Compilație</string>
+    <string name="metadata_value_yes">Da</string>
+    <string name="metadata_position">Poziție</string>
+    <string name="metadata_speed">Viteză</string>
+    <string name="metadata_output">Ieșire</string>
+    <string name="metadata_output_speaker">Difuzorul telefonului</string>
+    <string name="metadata_output_wired">Căști</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">Audio USB</string>
+    <string name="metadata_output_remote">Transmitere</string>
+    <string name="metadata_origin">Sursă</string>
+    <string name="metadata_origin_stream">Streaming</string>
+    <string name="metadata_origin_local">Fișier pe telefon</string>
+    <string name="metadata_host">Gazdă</string>
+    <string name="metadata_file">Fișier</string>
+    <string name="metadata_download">Descărcare</string>
+    <string name="metadata_download_no">Nedescărcat</string>
+    <string name="metadata_download_running">Se descarcă</string>
+    <string name="metadata_download_yes">Descărcat</string>
+    <string name="metadata_url">URL</string>
+    <string name="metadata_about">Despre</string>
+    <string name="metadata_source">Se redă în</string>
     <string name="face_picker_section_builtin">Cadrane încorporate</string>
     <string name="face_picker_section_custom">Temele mele</string>
     <string name="face_picker_custom_base">Bazat pe %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 </resources>

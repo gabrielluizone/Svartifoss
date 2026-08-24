@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <string name="tile_description">پخش و کنترل‌های رسانه</string>
     <string name="complication_album_art_label">کاور در حال پخش</string>
     <string name="complication_no_music">چیزی در حال پخش نیست</string>
@@ -6,6 +8,9 @@
     <string name="tile_open_app">باز کردن Svartifoss</string>
     <string name="tile_rewind_10">۱۰ ثانیه به عقب</string>
     <string name="tile_forward_10">۱۰ ثانیه به جلو</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
 
     <string name="shortcuts_tile_description">میان‌برهای پخش شما، تنها با یک لمس</string>
     <string name="shortcuts_tile_title">میان‌برها</string>
@@ -33,6 +38,8 @@
     <string name="back_button">بازگشت</string>
     <string name="turn_bezel_cw">قاب را در جهت عقربه‌های ساعت بچرخانید</string>
     <string name="turn_bezel_ccw">قاب را خلاف جهت عقربه‌های ساعت بچرخانید</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">پسندیدن</string>
     <string name="quick_action_shuffle">پخش تصادفی</string>
     <string name="quick_action_repeat">تکرار</string>
@@ -82,7 +89,78 @@
     <string name="update_install_title">به‌روزرسانی Svartifoss</string>
     <string name="update_install_tap">برای نصب نسخه جدید لمس کنید</string>
     <string name="update_install_failed">نصب ناموفق بود. در تنظیمات ساعت اجازه نصب از Svartifoss را بدهید و دوباره از گوشی تلاش کنید.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">پخش از اینجا</string>
+    <string name="lyrics_none">متنی برای این قطعه پیدا نشد</string>
+    <string name="lyrics_failed">دریافت متن ترانه ممکن نشد. اتصال گوشی خود را بررسی کن.</string>
+    <string name="lyrics_disabled">جست‌وجوی متن ترانه در تنظیمات گوشی غیرفعال است</string>
+    <string name="lyrics_no_track">چیزی در حال پخش نیست</string>
+    <string name="metadata_none">جزئیاتی برای این قطعه موجود نیست</string>
+    <string name="metadata_album">آلبوم</string>
+    <string name="metadata_album_artist">هنرمند آلبوم</string>
+    <string name="metadata_track">قطعه</string>
+    <string name="metadata_duration">مدت‌زمان</string>
+    <string name="metadata_genre">ژانر</string>
+    <string name="metadata_year">سال</string>
+    <string name="metadata_released">تاریخ انتشار</string>
+    <string name="metadata_label">لیبل</string>
+    <string name="metadata_country">کشور</string>
+    <string name="metadata_composer">آهنگ‌ساز</string>
+    <string name="metadata_writer">ترانه‌سرا</string>
+    <string name="metadata_author">نویسنده</string>
+    <string name="metadata_codec">قالب</string>
+    <string name="metadata_bitrate">بیت‌ریت</string>
+    <string name="metadata_sample_rate">نرخ نمونه‌برداری</string>
+    <string name="metadata_channels">کانال‌ها</string>
+    <string name="metadata_file_size">حجم</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">شناسه انتشار</string>
+    <string name="metadata_compilation">گلچین</string>
+    <string name="metadata_value_yes">بله</string>
+    <string name="metadata_position">موقعیت</string>
+    <string name="metadata_speed">سرعت</string>
+    <string name="metadata_output">خروجی</string>
+    <string name="metadata_output_speaker">بلندگوی گوشی</string>
+    <string name="metadata_output_wired">هدفون</string>
+    <string name="metadata_output_bluetooth">بلوتوث</string>
+    <string name="metadata_output_usb">صدای USB</string>
+    <string name="metadata_output_remote">پخش بی‌سیم</string>
+    <string name="metadata_origin">منبع</string>
+    <string name="metadata_origin_stream">استریم</string>
+    <string name="metadata_origin_local">فایل روی گوشی</string>
+    <string name="metadata_host">میزبان</string>
+    <string name="metadata_file">فایل</string>
+    <string name="metadata_download">دانلود</string>
+    <string name="metadata_download_no">دانلود نشده</string>
+    <string name="metadata_download_running">در حال دانلود</string>
+    <string name="metadata_download_yes">دانلودشده</string>
+    <string name="metadata_url">URL</string>
+    <string name="metadata_about">درباره</string>
+    <string name="metadata_source">در حال پخش در</string>
     <string name="face_picker_section_builtin">صفحه‌های داخلی</string>
     <string name="face_picker_section_custom">طرح‌های من</string>
     <string name="face_picker_custom_base">بر پایهٔ %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 </resources>

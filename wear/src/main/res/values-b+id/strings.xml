@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <string name="tile_description">Pemutaran dan kontrol media</string>
     <string name="complication_album_art_label">Sampul yang sedang diputar</string>
     <string name="complication_no_music">Tidak ada yang diputar</string>
@@ -6,6 +8,9 @@
     <string name="tile_open_app">Buka Svartifoss</string>
     <string name="tile_rewind_10">Mundur 10 detik</string>
     <string name="tile_forward_10">Maju 10 detik</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
 
     <string name="shortcuts_tile_description">Pintasan streaming Anda, cukup satu ketukan</string>
     <string name="shortcuts_tile_title">Pintasan</string>
@@ -33,6 +38,8 @@
     <string name="back_button">Kembali</string>
     <string name="turn_bezel_cw">Putar bezel searah jarum jam</string>
     <string name="turn_bezel_ccw">Putar bezel berlawanan arah jarum jam</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">Suka</string>
     <string name="quick_action_shuffle">Acak</string>
     <string name="quick_action_repeat">Ulangi</string>
@@ -79,9 +86,80 @@
     <string name="update_install_title">Pembaruan Svartifoss</string>
     <string name="update_install_tap">Ketuk untuk memasang versi baru</string>
     <string name="update_install_failed">Pemasangan gagal. Izinkan pemasangan dari Svartifoss di pengaturan jam tangan dan coba lagi dari ponsel.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Putar dari sini</string>
+    <string name="lyrics_none">Tidak ada lirik yang ditemukan untuk trek ini</string>
+    <string name="lyrics_failed">Tidak dapat mengambil lirik. Periksa koneksi ponselmu.</string>
+    <string name="lyrics_disabled">Pencarian lirik dinonaktifkan di pengaturan ponsel</string>
+    <string name="lyrics_no_track">Tidak ada yang diputar</string>
+    <string name="metadata_none">Tidak ada detail untuk trek ini</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Artis album</string>
+    <string name="metadata_track">Trek</string>
+    <string name="metadata_duration">Durasi</string>
+    <string name="metadata_genre">Genre</string>
+    <string name="metadata_year">Tahun</string>
+    <string name="metadata_released">Dirilis</string>
+    <string name="metadata_label">Label</string>
+    <string name="metadata_country">Negara</string>
+    <string name="metadata_composer">Komposer</string>
+    <string name="metadata_writer">Penulis lirik</string>
+    <string name="metadata_author">Penulis</string>
+    <string name="metadata_codec">Format</string>
+    <string name="metadata_bitrate">Bitrate</string>
+    <string name="metadata_sample_rate">Sample rate</string>
+    <string name="metadata_channels">Saluran</string>
+    <string name="metadata_file_size">Ukuran</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID rilis</string>
+    <string name="metadata_compilation">Kompilasi</string>
+    <string name="metadata_value_yes">Ya</string>
+    <string name="metadata_position">Posisi</string>
+    <string name="metadata_speed">Kecepatan</string>
+    <string name="metadata_output">Keluaran</string>
+    <string name="metadata_output_speaker">Speaker ponsel</string>
+    <string name="metadata_output_wired">Headphone</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">Audio USB</string>
+    <string name="metadata_output_remote">Casting</string>
+    <string name="metadata_origin">Sumber</string>
+    <string name="metadata_origin_stream">Streaming</string>
+    <string name="metadata_origin_local">Berkas di ponsel</string>
+    <string name="metadata_host">Host</string>
+    <string name="metadata_file">Berkas</string>
+    <string name="metadata_download">Unduhan</string>
+    <string name="metadata_download_no">Belum diunduh</string>
+    <string name="metadata_download_running">Sedang mengunduh</string>
+    <string name="metadata_download_yes">Sudah diunduh</string>
+    <string name="metadata_url">URL</string>
+    <string name="metadata_about">Tentang</string>
+    <string name="metadata_source">Diputar di</string>
     <string name="face_picker_title">Wajah jam</string>
     <string name="face_picker_offline">Ponsel tidak terhubung — wajah ini akan diterapkan pada jam tangan, tetapi pengaturannya tetap disimpan di ponsel</string>
     <string name="face_picker_section_builtin">Wajah bawaan</string>
     <string name="face_picker_section_custom">Tema saya</string>
     <string name="face_picker_custom_base">Berdasarkan %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 </resources>
