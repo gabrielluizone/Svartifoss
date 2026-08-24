@@ -137,6 +137,7 @@
     <string name="action_repeat">Repetir</string>
     <string name="action_repeat_one">Repetir uma</string>
     <string name="action_search">Buscar música</string>
+    <string name="action_open_lyrics">Letras</string>
     <string name="group_playback_controls">Controles de reprodução</string>
     <string name="group_streaming_shortcuts">Faixas, álbuns e playlists</string>
     <string name="pick_action">Escolher ação</string>
@@ -239,6 +240,12 @@
     <string name="preview_sample_artist">Nome do artista</string>
     <string name="preview_sample_next_title">Próxima música</string>
     <string name="preview_playback_stopped">Parado</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">a linha anterior</string>
+    <string name="preview_verse_current">a linha tocando agora</string>
+    <string name="preview_verse_next">e a próxima</string>
     <string name="category_gestures">Gestos e entrada</string>
     <string name="setting_overlay_blur_radius">Desfoque do overlay</string>
     <string name="setting_overlay_blur_radius_description">Intensidade do desfoque (px) do fundo fosco atrás dos anéis de volume/busca e do painel de ações rápidas — independente do desfoque de fundo da capa do álbum</string>
@@ -248,11 +255,16 @@
     <string name="get_support">Obter suporte</string>
     <string name="get_support_description">Envia os logs do aplicativo para o desenvolvedor, para fins de suporte</string>
     <string name="contact_developer">Falar com o desenvolvedor</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — contato</string>
     <string name="contact_developer_chooser">Enviar e-mail</string>
     <string name="contact_developer_no_client">Nenhum app de e-mail instalado. Endereço copiado para a área de transferência.</string>
     <string name="about_developer_title">Sobre o desenvolvedor</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
     <string name="about_developer_dialog_message">O Svartifoss começou como um projeto pessoal — eu queria trazer o Music Center for Wear pra atualidade com o que é possível fazer hoje, só pra usar no meu dia a dia. Ficou tão bom que resolvi compartilhar com todo mundo. Este é o meu primeiro aplicativo, e não há nada como ver que algo que você fez também é útil pra outras pessoas.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">Licenças de código aberto</string>
     <string name="setting_always_show_time">Sempre mostrar a hora</string>
     <string name="setting_always_show_time_off_description">A hora atual só será exibida no modo ambiente</string>
@@ -329,6 +341,12 @@
         <item>Álbum dessaturado</item>
         <item>Cor personalizada</item>
     </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="player_shading_style_entries">
         <item>Seguir o tema do player</item>
         <item>Vinheta nas bordas</item>
@@ -341,6 +359,19 @@
         <item>Sombra com a cor do álbum</item>
         <item>Gradiente de duas cores do álbum</item>
         <item>Cortinas laterais</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
     </string-array>
     <string name="setting_ambient_album_art_opacity">Opacidade da capa no modo ambiente</string>
     <string name="setting_ambient_album_art_opacity_description">O quão visível a capa do álbum permanece no modo ambiente. Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
@@ -469,6 +500,15 @@
         <item>Estático (uma linha, sem rolagem ou encolhimento)</item>
         <item>Encolher para caber</item>
     </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
 
     <string name="setting_wear_artist_color">Cor do texto do artista</string>
     <string name="setting_wear_artist_custom_color">Cor personalizada do artista</string>
@@ -495,6 +535,11 @@
         <item>Cor do álbum</item>
         <item>Cor personalizada</item>
     </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
 
     <string-array name="wear_screen_face_entries">
         <item>Clássico</item>
@@ -516,6 +561,26 @@
         <item>Verso</item>
         <item>Metadata</item>
     </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Busca expressiva</string>
     <string name="setting_wear_expressive_seek_mode_description">Como buscar na faixa por toque na tela Expressiva. Anel central torna o anel ao redor do botão de reprodução arrastável; Anel na borda também mostra o anel clássico do bezel; Nenhum deixa a busca só para a coroa giratória.</string>
@@ -523,6 +588,11 @@
         <item>Anel central</item>
         <item>Anel na borda</item>
         <item>Nenhum</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
     </string-array>
 
     <string name="category_wear_aod">Tela sempre ativa (AOD)</string>
@@ -544,17 +614,44 @@
         <item>Nota</item>
         <item>Verso</item>
     </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
     <string name="setting_wear_aod_color">Cor da tela sempre ativa</string>
     <string-array name="wear_aod_color_entries">
         <item>Branco</item>
         <item>Cor do álbum</item>
         <item>Cor personalizada</item>
     </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="wear_clock_color_entries">
         <item>Branco</item>
         <item>Dinâmico (pela área sob o relógio)</item>
         <item>Cor do álbum</item>
         <item>Cor personalizada</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
     <string-array name="wear_up_next_pill_entries">
         <item>Seguir estilo do painel</item>
@@ -565,6 +662,16 @@
         <item>Branco fosco</item>
         <item>Preto</item>
         <item>Dinâmico (tom do álbum)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
     </string-array>
     <string name="setting_wear_up_next_pill">Fundo da pill Up Next</string>
     <string name="setting_wear_show_up_next_pill">Pill Up Next no player</string>
@@ -594,6 +701,12 @@
         <item>Só ao pausar</item>
         <item>Nunca</item>
     </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
     <string name="setting_wear_aod_show_art">Capa do álbum na tela sempre ativa</string>
     <string name="setting_wear_aod_show_art_description">Mantém a capa do álbum esmaecida visível no modo ambiente. Desativar mostra um fundo preto puro, que economiza bem mais bateria em telas AMOLED.</string>
     <string name="setting_wear_aod_art_treatment">Estilo da capa na tela sempre ativa</string>
@@ -602,6 +715,12 @@
         <item>Capa nítida</item>
         <item>Desfoque monocromático</item>
         <item>Seguir tratamento da capa do player</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
     </string-array>
     <string name="setting_wear_aod_show_clock">Relógio na tela sempre ativa</string>
     <string name="setting_wear_aod_show_clock_description">Exibir o relógio quando o relógio estiver no modo ambiente</string>
@@ -652,6 +771,27 @@
         <item>Monocromática (um matiz, três tons)</item>
         <item>Duotone (duas cores do álbum)</item>
     </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Arco na borda (esquerda)</item>
         <item>Arco na borda (alongado)</item>
@@ -662,6 +802,16 @@
         <item>Halo central</item>
         <item>Medidor horizontal</item>
     </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
     <string-array name="wear_seek_layout_entries">
         <item>Anel na borda</item>
         <item>Anel na borda (fino)</item>
@@ -669,12 +819,29 @@
         <item>Linha do tempo</item>
         <item>Linha do tempo segmentada</item>
     </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
     <string-array name="wear_quick_panel_layout_entries">
         <item>Metadados primeiro</item>
         <item>Arco</item>
         <item>Herói</item>
         <item>Grade</item>
         <item>Linhas com rótulo</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
     </string-array>
     <string-array name="wear_progress_style_entries">
         <item>Sólido</item>
@@ -685,6 +852,16 @@
         <item>60 pontos de relógio</item>
         <item>60 marcas de relógio</item>
         <item>12 segmentos de hora</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
     </string-array>
     <string-array name="wear_seek_style_entries">
         <item>Simples</item>
@@ -713,6 +890,33 @@
         <item>Botões configurados</item>
         <item>Do app de mídia atual</item>
     </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
     <string-array name="wear_overlay_backdrop_entries">
         <item>Seguir o estilo do painel</item>
         <item>Desfoque do álbum (acrílico)</item>
@@ -725,6 +929,19 @@
         <item>Vidro líquido</item>
         <item>Desfoque Expressive</item>
         <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Vidro</item>
@@ -746,11 +963,37 @@
         <item>Tinta</item>
         <item>Sulco</item>
     </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
     <string-array name="wear_list_row_size_entries">
         <item>Compacto</item>
         <item>Normal</item>
         <item>Alto</item>
         <item>Extra alto</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
     </string-array>
 
     <string-array name="wear_overlay_style_entries">
@@ -772,6 +1015,26 @@
             <item>Capa desfocada</item>
         <item>Capa tonal</item>
         <item>Capa quadrada</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_entries">
@@ -798,6 +1061,30 @@
         <item>Ponto</item>
         <item>Bloco</item>
     </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
 
     <string name="setting_wear_track_time_mode">Exibição do tempo da faixa</string>
     <string name="setting_wear_track_time_mode_description">Quando a posição da faixa (ex: 1:23 / 3:45) é exibida na tela de reprodução.</string>
@@ -806,6 +1093,12 @@
         <item>Só enquanto toca</item>
         <item>Só enquanto pausado</item>
         <item>Nunca</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
     </string-array>
     <string name="setting_screen_buttons_curve">Curvatura dos mini botões</string>
     <string name="setting_screen_buttons_curve_description">Selecione o estilo de curvatura para os mini botões: plano, arco, leve, suave, média, curvado, extremo.</string>
@@ -858,6 +1151,19 @@
         <item>Borda direita</item>
         <item>Ambas as bordas</item>
     </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
 
     <string-array name="screen_buttons_bg_entries">
         <item>Padrão do fundo</item>
@@ -875,11 +1181,32 @@
         <item>Apenas ícone (transparente)</item>
         <item>Ícone Exp</item>
     </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
 
     <string-array name="screen_buttons_color_entries">
         <item>Neutro</item>
         <item>Cor do álbum</item>
         <item>Cor personalizada</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
 
     <string-array name="album_art_style_entries">
@@ -907,6 +1234,32 @@
         <item>Brilho Ember</item>
         <item>Preto AMOLED Eclipse</item>
         <item>Escondida (preto sólido)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
     </string-array>
 
 
@@ -1156,10 +1509,19 @@
         <item>Abrir a fila</item>
         <item>Nada</item>
     </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
     <string name="setting_wear_album_accent_source">Origem da cor do álbum</string>
     <string-array name="wear_album_accent_source_entries">
         <item>Equilibrado</item>
         <item>Mais vibrante</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
     </string-array>
 
     <!-- Watch appearance: Typography section -->
@@ -1318,6 +1680,13 @@
         <item>Quente</item>
         <item>Frio</item>
     </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
 
     <string-array name="wear_paused_hold_entries">
         <item>@string/wear_paused_hold_off</item>
@@ -1437,6 +1806,11 @@
         <item>@string/theme_dark</item>
         <item>@string/theme_system</item>
     </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
 
     <string-array name="app_language_entries">
         <item>@string/language_system</item>
@@ -1455,6 +1829,23 @@
         <item>简体中文</item>
         <item>Íslenska</item>
     </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+    </string-array>
     <string name="setting_wear_normal_color_multi">Usar paleta de cores</string>
     <string name="setting_wear_normal_color_multi_description">Ligado, a tela usa uma cor principal mais dois tons de apoio. Desligado, uma única cor é usada em tudo — a do próprio álbum, ou a que você escolheu.</string>
     <string-array name="wear_accent_floor_entries">
@@ -1463,6 +1854,48 @@
         <item>Padrão</item>
         <item>Forte</item>
     </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Base do destaque</string>
+    <string name="preview_metadata_album">Álbum</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Faixa</string>
+    <string name="preview_metadata_genre">Gênero</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Ano</string>
+    <string name="preview_metadata_format">Formato</string>
+    <string name="preview_metadata_bitrate">Taxa de bits</string>
+    <string name="preview_metadata_position">Posição</string>
+    <string name="preview_metadata_output">Saída</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Detalhes do álbum</string>
+    <string name="setting_wear_metadata_core_description">Álbum, artista do álbum, posição no álbum e duração.</string>
+    <string name="setting_wear_metadata_release">Detalhes do lançamento</string>
+    <string name="setting_wear_metadata_release_description">Gênero, ano, data de lançamento e gravadora.</string>
+    <string name="setting_wear_metadata_credits">Créditos</string>
+    <string name="setting_wear_metadata_credits_description">Compositor, letrista e autor, quando o player os publica.</string>
+    <string name="setting_wear_metadata_technical">Detalhes do arquivo</string>
+    <string name="setting_wear_metadata_technical_description">Formato, taxa de bits, taxa de amostragem, canais e tamanho. Apenas para faixas locais.</string>
+    <string name="setting_split_panel">Painel Split</string>
+    <string name="setting_split_panel_description">O que preenche a metade inferior da face Split. A capa desfocada continua a mesma capa atrás do texto; a cor sólida é o visual de um cartão de notificação.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Capa desfocada</item>
+        <item>Cor sólida</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Detalhes de reprodução</string>
+    <string name="setting_wear_metadata_playback_description">Posição com precisão de milissegundos, velocidade, saída de áudio e de onde o som está sendo transmitido ou reproduzido — incluindo o endereço da faixa. O único bloco que uma faixa em streaming pode preencher quando não há arquivo para descrever.</string>
+    <string name="setting_wear_metadata_identifiers">Identificadores</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC e códigos de catálogo. Desativado por padrão — útil quando você precisa, ruído quando não precisa.</string>
+    <string name="setting_metadata_lookup">Buscar detalhes da faixa online</string>
+    <string name="setting_metadata_lookup_description">Preenche o que o app de reprodução não publicou — ISRC, gravadora, data de lançamento — a partir do MusicBrainz, um banco de dados público e gratuito. Desativado por padrão. A face Metadata funciona sem ele; isso só adiciona linhas. Nada é enviado a menos que você ative isso e selecione essa face, e mesmo assim, apenas o nome da faixa e o artista.</string>
     <string name="setting_wear_lyrics_font">Tipografia da letra</string>
     <string name="setting_wear_lyrics_font_description">A tipografia das palavras da música, na tela de letras e na face Verse. Segue a tipografia da faixa, a menos que você escolha uma aqui.</string>
     <string name="wear_lyrics_font_follow">Seguir tipografia da faixa</string>
@@ -1486,6 +1919,11 @@
     <string name="category_watch_navigation">Navegação e atalhos</string>
     <string name="category_rotary_input">Entrada giratória e ajuste</string>
     <string name="category_watch_feedback">Feedback e comportamento ao sair</string>
+    <string name="category_watch_display">Tela do relógio</string>
+    <string name="setting_wear_keep_screen_on">Manter a tela ligada</string>
+    <string name="setting_wear_keep_screen_on_description">Impede que a tela do relógio se apague por inatividade enquanto uma tela do Svartifoss estiver aberta. Abaixar o pulso continua a escurecer o relógio — esse gesto pertence ao sistema. Consome mais bateria. A tela de letras permanece sempre ligada, independentemente desta configuração.</string>
+    <string name="setting_lyrics_enabled">Buscar letras online</string>
+    <string name="setting_lyrics_enabled_description">Permite que o telefone busque letras sincronizadas do LRCLIB quando você abre a tela de letras no relógio. Apenas o nome da faixa, o artista e a duração são enviados; nada mais, e nada é armazenado no dispositivo. Desative isso e a tela de letras informará que a busca está desativada.</string>
     <string name="settings_search_prerequisite">Esta opção depende de outra escolha. Ajuste a configuração mostrada aqui para exibi-la.</string>
     <string name="setting_numeric_range_error">Insira um valor de %1$d a %2$d.</string>
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>

@@ -55,4 +55,6 @@
     <string name="watch_theme_face_chat">Conversa</string>
     <string name="watch_theme_face_split">Dividido</string>
     <string name="watch_theme_face_note">Nota</string>
+    <string name="watch_theme_face_verse">Verso</string>
+    <string name="watch_theme_face_metadata">Metadata</string>
 </resources>

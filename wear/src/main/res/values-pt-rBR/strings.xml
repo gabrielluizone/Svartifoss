@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+    <string name="tile_label" translatable="false">Svartifoss</string>
     <!-- "Svartifoss" (app_name_short, tile_label) is a proper name and stays untranslated;
          playback_time_format / volume_percent_format are locale-neutral. Both fall back to the
          default values/strings.xml. -->
@@ -9,6 +11,9 @@
     <string name="tile_open_app">Abrir o Svartifoss</string>
     <string name="tile_rewind_10">Voltar 10 segundos</string>
     <string name="tile_forward_10">Avançar 10 segundos</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
 
     <!-- Streaming-shortcuts Tile -->
     <string name="shortcuts_tile_description">Seus atalhos de streaming a um toque</string>
@@ -38,6 +43,8 @@
     <string name="back_button">Voltar</string>
     <string name="turn_bezel_cw">Girar bezel (horário)</string>
     <string name="turn_bezel_ccw">Girar bezel (anti-horário)</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
     <string name="quick_action_like">Curtir</string>
     <string name="quick_action_shuffle">Aleatório</string>
     <string name="quick_action_repeat">Repetir</string>
@@ -88,7 +95,78 @@
     <string name="update_install_title">Atualização do Svartifoss</string>
     <string name="update_install_tap">Toque para instalar a nova versão</string>
     <string name="update_install_failed">Falha na instalação. Permita instalações do Svartifoss nas configurações do relógio e tente de novo pelo telefone.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Tocar a partir daqui</string>
+    <string name="lyrics_none">Nenhuma letra encontrada para esta faixa</string>
+    <string name="lyrics_failed">Não foi possível buscar as letras. Verifique a conexão do seu telefone.</string>
+    <string name="lyrics_disabled">A busca de letras está desativada nas configurações do telefone</string>
+    <string name="lyrics_no_track">Nada está tocando</string>
+    <string name="metadata_none">Nenhum detalhe para esta faixa</string>
+    <string name="metadata_album">Álbum</string>
+    <string name="metadata_album_artist">Artista do álbum</string>
+    <string name="metadata_track">Faixa</string>
+    <string name="metadata_duration">Duração</string>
+    <string name="metadata_genre">Gênero</string>
+    <string name="metadata_year">Ano</string>
+    <string name="metadata_released">Lançamento</string>
+    <string name="metadata_label">Gravadora</string>
+    <string name="metadata_country">País</string>
+    <string name="metadata_composer">Compositor</string>
+    <string name="metadata_writer">Letrista</string>
+    <string name="metadata_author">Autor</string>
+    <string name="metadata_codec">Formato</string>
+    <string name="metadata_bitrate">Taxa de bits</string>
+    <string name="metadata_sample_rate">Taxa de amostragem</string>
+    <string name="metadata_channels">Canais</string>
+    <string name="metadata_file_size">Tamanho</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID de lançamento</string>
+    <string name="metadata_compilation">Coletânea</string>
+    <string name="metadata_value_yes">Sim</string>
+    <string name="metadata_position">Posição</string>
+    <string name="metadata_speed">Velocidade</string>
+    <string name="metadata_output">Saída</string>
+    <string name="metadata_output_speaker">Alto-falante do telefone</string>
+    <string name="metadata_output_wired">Fones de ouvido</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">Áudio USB</string>
+    <string name="metadata_output_remote">Transmissão</string>
+    <string name="metadata_origin">Origem</string>
+    <string name="metadata_origin_stream">Streaming</string>
+    <string name="metadata_origin_local">Arquivo no telefone</string>
+    <string name="metadata_host">Host</string>
+    <string name="metadata_file">Arquivo</string>
+    <string name="metadata_download">Download</string>
+    <string name="metadata_download_no">Não baixado</string>
+    <string name="metadata_download_running">Baixando</string>
+    <string name="metadata_download_yes">Baixado</string>
+    <string name="metadata_url">URL</string>
+    <string name="metadata_about">Sobre</string>
+    <string name="metadata_source">Reproduzindo em</string>
     <string name="face_picker_section_builtin">Faces integradas</string>
     <string name="face_picker_section_custom">Meus temas</string>
     <string name="face_picker_custom_base">Baseado em %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
 </resources>
