@@ -1,0 +1,1967 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">此裝置不支援 Wear OS</string>
+    <string name="setting_no_wearable_api_banner_description">此裝置未提供 Svartifoss 與手錶通訊所需的 Google Play 服務 Wear OS 元件。配對也無法解決——手機應用程式在此無法連上手錶。下方所有設定仍會儲存，若你在支援此功能的裝置上安裝 Svartifoss，便會套用這些設定。</string>
+    <string name="setting_no_watch_banner">未連接手錶</string>
+    <string name="setting_no_watch_banner_description">這些設定會同步到你的 Wear OS 手錶，因此在完成配對並連線前不會明顯生效——但你仍可立即設定下方所有項目。</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">外觀</string>
+    <string name="setting_theme">主題</string>
+    <string name="theme_light">純淨白</string>
+    <string name="theme_dark">純黑</string>
+    <string name="theme_system">跟隨系統</string>
+    <string name="setting_language">語言</string>
+    <string name="language_system">跟隨系統</string>
+    <string name="language_change_watch_notice">同步後，手錶也會使用此語言。</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">開發人員</string>
+    <string name="dev_mode_unlocked">已啟用開發人員模式 ✦</string>
+    <string name="dev_mode_clicks_remaining">再輕觸 %1$d 次即可解鎖開發人員模式</string>
+    <string name="dev_disable_mode">停用開發人員模式</string>
+    <string name="dev_disable_mode_description">再次隱藏此區段——輕觸「已安裝版本」七次即可重新顯示</string>
+    <string name="dev_mode_disabled">已停用開發人員模式</string>
+    <string name="dev_build_info">版本資訊</string>
+    <string name="dev_sync_watch">強制同步手錶設定</string>
+    <string name="dev_sync_watch_description">立即將目前所有設定推送到已配對的手錶</string>
+    <string name="dev_sync_watch_done">設定已同步至手錶</string>
+    <string name="dev_copy_debug_info">複製偵錯資訊</string>
+    <string name="dev_copy_debug_info_description">將版本與裝置詳細資訊複製到剪貼簿</string>
+    <string name="dev_show_archived">顯示已封存選項</string>
+    <string name="dev_show_archived_description">顯示因已知問題而封存的手錶版面配置與設定</string>
+    <string name="dev_copy_debug_info_done">已複製偵錯資訊</string>
+    <string name="dev_open_update_screen">開啟更新畫面</string>
+    <string name="dev_open_update_screen_description">無需等待實際版本發布即可預覽「更新」畫面（封面橫幅、版本資訊版面）</string>
+    <string name="dev_watch_layout_bounds">顯示手錶版面配置邊界</string>
+    <string name="dev_watch_layout_bounds_description">在手錶上框出可見的播放器元素與觸控區域。僅供診斷覆疊使用。</string>
+    <string name="dev_watch_player_info">顯示手錶播放器資訊</string>
+    <string name="dev_watch_player_info_description">在手錶上覆疊顯示目前錶面、播放狀態、進度與算繪資訊。</string>
+    <string name="pref_reset_default">重設為預設值</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">你找到了隱藏的瀑布。\n\nSvartifoss——黑色玄武岩柱\n環繞著冰島的瀑布，\n提醒我們音樂流動，\n如水穿行於石間。\n\n♪ 用心打造。 ♪</string>
+    <string name="easter_egg_ok">關閉</string>
+
+    <string name="nav_watch_face">手錶</string>
+    <string name="watch_face_header">手錶外觀</string>
+    <string name="nav_controls">控制項</string>
+    <string name="nav_actions">動作</string>
+    <string name="nav_settings">設定</string>
+
+    <string name="controls_header">控制項</string>
+    <string name="controls_state_playing">正在播放音樂</string>
+    <string name="controls_state_stopped">未播放</string>
+    <string name="controls_playing_description">選擇播放音樂時各項輸入要執行的動作。此設定與未播放狀態互相獨立。</string>
+    <string name="controls_stopped_description">選擇播放開始前或停止後各項輸入要執行的動作。此設定與播放中狀態互相獨立。</string>
+
+    <string name="watch_live_preview">手錶即時預覽</string>
+    <string name="watch_preview_description">即時預覽所選的手錶畫面。在手錶上試用前，變更會先顯示在這裡。</string>
+    <string name="watch_section_style">播放器</string>
+    <string name="watch_section_style_description">選擇播放器版面配置，以及標題、時間與進度的顯示方式。</string>
+    <string name="watch_section_background">背景</string>
+    <string name="watch_section_background_description">控制播放器後方的專輯封面、模糊、淡化與可讀性。</string>
+    <string name="watch_section_colors">色彩</string>
+    <string name="watch_section_colors_description">設定基礎色、進度與專輯強調色，再調整標題、演出者、時鐘、音量與面板色彩。</string>
+    <string name="watch_section_typography">文字</string>
+    <string name="watch_section_typography_description">選擇字型並調整標題、演出者、時鐘、應用程式圖示、次要畫面與 Flex 文字。</string>
+    <string name="watch_section_aod">螢幕恆亮</string>
+    <string name="watch_section_aod_description">設定低功耗畫面，並在預覽中查看環境模式外觀。</string>
+    <string name="watch_section_panels">面板</string>
+    <string name="watch_section_panels_description">設定音量、快轉搜尋、快速面板與佇列的樣式；聚焦某一列時，預覽會開啟該畫面。</string>
+    <string name="watch_section_mini_buttons">迷你按鈕</string>
+    <string name="watch_section_mini_buttons_description">設定可選的捷徑列樣式。輕觸下方「迷你按鈕」，即可在「控制項」中指派動作。</string>
+    <string name="watch_overview_description">選擇要自訂的項目。預覽與已儲存的主題會在所有區域持續生效。</string>
+    <string name="watch_back_to_overview">返回手錶區域</string>
+
+    <string name="settings_section_general">一般</string>
+    <string name="settings_section_general_description">應用程式主題、強調色與更新偏好設定。</string>
+    <string name="settings_section_watch">行為</string>
+    <string name="settings_section_watch_description">手錶上的錶冠、觸控、觸覺回饋與動作選單行為。</string>
+    <string name="settings_section_automation">自動化</string>
+    <string name="settings_section_automation_description">選擇 Svartifoss 自動開啟與關閉的時機。</string>
+    <string name="settings_section_apps">應用程式</string>
+    <string name="settings_section_apps_description">尋找歌詞與中繼資料、串流捷徑、佇列封面與 Android 存取權限。</string>
+    <string name="settings_section_data">資料與支援</string>
+    <string name="settings_section_data_description">備份你的設定、檢查版本與診斷資訊，或取得協助。</string>
+    <string name="settings_overview_description">選擇一個區域。相關選項會集中在一起，同時仍可透過搜尋直接前往任何設定。</string>
+    <string name="settings_back_to_overview">返回設定區域</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">如何使用 Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss 能將手錶變成控制手機音樂播放的遙控器。以下是在手腕上可完成的所有操作。</string>
+
+    <string name="tutorial_taps_title">輕觸畫面區域</string>
+    <string name="tutorial_taps_desc">手錶畫面分為四個區域——上、下、左、右。輕觸區域會執行你指派的動作。預設左側區域為播放或暫停，右側跳至下一首，上下區域則調整音量。</string>
+
+    <string name="tutorial_quick_panel_title">快速動作面板</string>
+    <string name="tutorial_quick_panel_desc">在「正在播放」畫面中央點兩下，可開啟包含四個欄位的面板——三個圓形按鈕與下方一個寬列。若保持預設，這些欄位會鏡像播放應用程式通知中的按鈕，因此可使用它真正的按讚、隨機播放與重複播放控制。你可在手機的「動作」中為任何欄位指派動作，或設為「無」以隱藏。</string>
+    <string name="tutorial_gestures_title">單按、雙按與長按</string>
+    <string name="tutorial_gestures_desc">四個邊緣區域各自支援獨立的單按、雙按與長按動作。中央單按也可設定；雙按一律開啟「快速動作」，長按則依「設定 → 行為」開啟錶面選擇器、佇列或不執行任何操作。</string>
+
+    <string name="tutorial_buttons_title">實體按鈕</string>
+    <string name="tutorial_buttons_desc">如果手錶有側邊按鈕，也能為單按、雙按與長按指派動作。即使螢幕關閉，這些動作仍可使用。</string>
+
+    <string name="tutorial_rotary_title">旋轉錶冠</string>
+    <string name="tutorial_rotary_desc">在「設定 → 行為 → 旋轉錶冠 / 錶圈」中選擇旋轉錶冠或錶圈要調整音量、在曲目中搜尋，或不執行任何操作。若手錶將錶冠旋轉公開為按鈕，請改在「控制項」中指派。</string>
+
+    <string name="tutorial_swipe_up_title">向上、下、左與右滑動</string>
+    <string name="tutorial_swipe_up_desc">在「正在播放」畫面向上、下或左滑，都可分別設定為開啟任何功能——動作選單、播放佇列、跳過曲目、你的播放清單等等。在「控制項」中選擇「正在播放音樂」或「未播放」來設定各項動作。預設向上滑會開啟動作選單，其餘方向在指派前不執行任何操作。向右滑則保持不變——這是 Wear OS 通用的離開應用程式手勢。</string>
+    <string name="tutorial_shortcuts_title">串流捷徑</string>
+    <string name="tutorial_shortcuts_desc">儲存 Spotify、YouTube Music、Apple Music、TIDAL、Deezer、Amazon Music 或 SoundCloud 的曲目、專輯、混音或播放清單連結，再將它指派給任何按鈕、手勢或面板欄位。最快的方法是直接從串流應用程式把連結分享至 Svartifoss；也能貼上已複製的連結或手動輸入。不需要帳號或登入——手錶會要求手機開始播放，因此捷徑會直接播放內容，而不只是開啟應用程式。</string>
+    <string name="tutorial_yt_music_title">YouTube Music 捷徑</string>
+    <string name="tutorial_yt_music_desc">將「播放已按讚歌曲」、「隨機播放已按讚歌曲」或「我的播放清單」指派給任何按鈕、手勢或滑動操作，不碰手機也能立即進入你的音樂。「搜尋記錄」會保留手錶上最近的搜尋——長按項目即可刪除。</string>
+
+    <string name="tutorial_exit_title">滑動以離開</string>
+    <string name="tutorial_exit_desc">從左側邊緣滑動即可離開播放器。離開時也能自動暫停播放——請在「設定」中啟用。</string>
+
+    <string name="tutorial_tile_title">快速控制 Tile</string>
+    <string name="tutorial_tile_desc">在錶面上向側邊滑動至 Svartifoss Tile，不需開啟應用程式即可立即播放、暫停與跳過。</string>
+
+    <string name="tutorial_complication_title">錶面 Complication</string>
+    <string name="tutorial_complication_desc">將 Svartifoss 專輯封面 Complication 加到錶面，即可一眼看到目前封面。輕觸它即可開啟播放器。</string>
+
+    <string name="tutorial_system_title">系統媒體控制項</string>
+    <string name="tutorial_system_desc">目前曲目也會顯示在手錶內建的媒體控制項與最近使用的應用程式中，因此也能從那裡控制播放。</string>
+
+    <string name="tutorial_tip">提示：先在「控制項」中設定兩種狀態，再到「動作」中整理選單。</string>
+
+    <string name="navigation_drawer_open">開啟導覽抽屜</string>
+    <string name="navigation_drawer_close">關閉導覽抽屜</string>
+
+    <string name="action_settings">設定</string>
+    <string name="action_pause">暫停</string>
+    <string name="action_play">播放</string>
+    <string name="action_skip_prev">上一首</string>
+    <string name="action_skip_next">下一首</string>
+    <string name="action_play_pause">播放 / 暫停</string>
+    <string name="action_stop">停止</string>
+    <string name="action_restart">重新播放曲目</string>
+    <string name="action_mute">靜音 / 取消靜音</string>
+    <string name="action_skip_seconds">快轉 %1$d 秒</string>
+    <string name="action_reverse_seconds">倒退 %1$d 秒</string>
+    <string name="action_like">喜歡</string>
+    <string name="action_shuffle">隨機播放</string>
+    <string name="action_repeat">重複播放</string>
+    <string name="action_repeat_one">單曲循環</string>
+    <string name="action_search">搜尋音樂</string>
+    <string name="action_open_lyrics">歌詞</string>
+    <string name="group_playback_controls">播放控制項</string>
+    <string name="group_streaming_shortcuts">曲目、專輯與播放清單</string>
+    <string name="pick_action">選擇動作</string>
+    <string name="action_search_hint">搜尋此清單</string>
+    <string name="action_search_empty">沒有符合此搜尋的動作。</string>
+    <string name="action_opens_more">多個選項</string>
+    <string name="action_volume_up">提高音量</string>
+    <string name="volume_down">降低音量</string>
+    <string name="group_volume_controls">音量控制項</string>
+    <string name="no_watch_detected">未偵測到手錶</string>
+    <string name="connection_instructions">在手錶上開啟 Svartifoss 以開始連線</string>
+    <string name="playing_controls">播放時控制項</string>
+    <string name="stopped_controls">未播放時控制項</string>
+    <string name="actions_menu">動作選單</string>
+    <string name="actions_intro">在手錶的兩個動作介面中設定播放控制、應用程式，或已儲存的曲目、專輯與播放清單。快速面板保持精簡；下方選單則可容納較長的排序清單。</string>
+    <string name="actions_quick_panel_section">快速面板</string>
+    <string name="actions_watch_menu_section">手錶選單</string>
+    <plurals name="actions_list_summary">
+        <item quantity="other">%1$d 個動作 · 輕觸以編輯 · 長按並拖曳以重新排序</item>
+    </plurals>
+    <string name="actions_reorder_description">排序的動作選單。觸碰並按住後拖曳、使用無障礙功能的「上移」或「下移」動作，或在鍵盤上按 Ctrl+Up/Down。</string>
+    <string name="actions_move_up">上移</string>
+    <string name="actions_move_down">下移</string>
+    <string name="actions_moved_to_position">已將 %1$s 移至第 %2$d 個位置，共 %3$d 個。</string>
+    <string name="actions_empty">尚無動作。使用新增按鈕建立第一個動作。</string>
+    <string name="actions_add">新增動作</string>
+    <string name="on_screen_buttons">觸控區域</string>
+    <string name="physical_buttons">實體按鈕</string>
+    <string name="physical_buttons_disconnected">請連線並在手錶上開啟 Svartifoss，以設定實體按鈕。觸控區域、滑動與迷你按鈕現在即可使用。</string>
+    <string name="physical_buttons_unavailable">此手錶未回報任何可設定的實體按鈕。</string>
+    <string name="control_assignment_tap">輕觸：%1$s</string>
+    <string name="control_assignment_hold">長按：%1$s</string>
+    <string name="control_assignment_both">輕觸：%1$s · 長按：%2$s</string>
+    <string name="tap_a_zone_to_configure">輕觸手錶上的區域以指派動作</string>
+    <string name="touch_zone_top">上方區域</string>
+    <string name="touch_zone_bottom">下方區域</string>
+    <string name="touch_zone_left">左側區域</string>
+    <string name="touch_zone_right">右側區域</string>
+    <string name="touch_zone_center">中央輕觸</string>
+    <string name="touch_zone_action">%1$s：%2$s。輕觸以設定。</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">滑動手勢</string>
+    <string name="tap_a_swipe_to_configure">輕觸方向以選擇要開啟的內容</string>
+    <string name="swipe_gesture_up">向上滑動</string>
+    <string name="swipe_gesture_down">向下滑動</string>
+    <string name="swipe_gesture_left">向左滑動</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">上</string>
+    <string name="swipe_gesture_label_down">下</string>
+    <string name="swipe_gesture_label_left">左</string>
+
+    <string name="screen_buttons">迷你按鈕</string>
+    <string name="tap_a_screen_button_to_configure">手錶畫面底部附近最多可顯示三個按鈕——輕觸欄位以指派動作</string>
+    <string name="screen_button_1">迷你按鈕 1（左）</string>
+    <string name="screen_button_2">迷你按鈕 2（中）</string>
+    <string name="screen_button_3">迷你按鈕 3（右）</string>
+    <string name="screen_button_label_1">按鈕 1</string>
+    <string name="screen_button_label_2">按鈕 2</string>
+    <string name="screen_button_label_3">按鈕 3</string>
+    <string name="no_action">無動作</string>
+    <string name="gesture_single_press">單按</string>
+    <string name="gesture_double_press">雙按</string>
+    <string name="gesture_long_press">長按</string>
+    <string name="gesture_swipe_action">動作</string>
+    <string name="center_button_quick_panel_note">雙擊中央一律開啟「快速動作」。長按會執行「設定 → 行為」中選擇的項目。在此指派中央輕觸不會改變這兩種手勢。</string>
+    <string name="start_playback">開始播放</string>
+    <string name="uninstalled_app">已解除安裝的應用程式</string>
+
+    <string name="play_app">播放 %1$s</string>
+    <string name="tasker_task">Tasker 工作</string>
+    <string name="icon_selection_title">選擇圖示</string>
+    <string name="icon_selection_gallery">從圖庫</string>
+    <string name="icon_selection_no_icon_pack">此功能可讓你從已安裝的圖示套件中為動作選擇自訂圖示。\n\n很遺憾，你似乎尚未安裝任何圖示套件。</string>
+    <string name="icon_selection_no_storage_permission">此功能可讓你從已安裝的圖示套件中為動作選擇自訂圖示。\n\n部分圖示套件需要應用程式取得儲存空間權限。你必須允許此權限才能使用此功能。</string>
+    <string name="delete">刪除</string>
+    <string name="action_text">動作文字</string>
+    <string name="swap_action">替換動作</string>
+    <string name="open_actions_menu">開啟動作選單</string>
+    <string name="open_playlist_menu">顯示目前播放清單</string>
+    <string name="misc_settings">其他設定</string>
+
+    <string name="category_backup">備份</string>
+    <string name="export_config">匯出設定</string>
+    <string name="export_config_description">將按鈕對應、動作清單與手錶設定儲存至檔案</string>
+    <string name="import_config">匯入設定</string>
+    <string name="import_config_description">從檔案還原按鈕對應、動作清單與手錶設定</string>
+    <string name="export_config_done">已匯出設定</string>
+    <string name="export_config_failed">無法匯出設定</string>
+    <string name="import_config_done_title">匯入成功</string>
+    <string name="import_config_done_message">Svartifoss 需要重新啟動才能套用匯入的設定。</string>
+    <string name="import_config_failed">無法匯入設定——檔案可能無效或來自不相容的版本</string>
+    <string name="action_restart_now">立即重新啟動</string>
+
+    <string name="category_about">關於</string>
+    <string name="category_music_screen">音樂畫面</string>
+    <string name="category_watch_screen">手錶畫面</string>
+    <string name="category_mini_buttons">迷你按鈕</string>
+    <string name="category_screen_face">播放器外觀</string>
+    <string name="category_wf_screen_behavior">畫面行為</string>
+    <string name="category_wf_player_progress">進度、搜尋與時間</string>
+    <string name="category_album_background">專輯背景</string>
+    <string name="category_music_colors">來自音樂的色彩</string>
+    <string name="category_wf_typography_font">字型</string>
+    <string name="category_wf_typography_title">標題</string>
+    <string name="category_wf_typography_artist">演出者</string>
+    <string name="category_wf_typography_icon">應用程式圖示</string>
+    <string name="category_wf_typography_flex">Google Sans Flex 軸向</string>
+    <string name="category_wf_metadata">Metadata 錶面內容</string>
+    <string name="category_wf_typography_secondary">其他畫面的文字</string>
+    <string name="category_wf_colors_title">標題色彩</string>
+    <string name="category_wf_colors_artist">演出者色彩</string>
+    <string name="category_wf_colors_clock">時鐘色彩</string>
+    <string name="setting_wear_font_flex_hint_title">關於這些控制項</string>
+    <string name="setting_wear_flex_axes_hint">這些項目專門微調 Google Sans Flex——請先在上方選擇此字型。上方標題與演出者的粗細/斜體已設定此字型本身的粗細（wght）與傾斜（slnt）軸；下方四個控制項則套用到整個錶面。</string>
+    <string name="setting_wear_font_flex_width">寬度</string>
+    <string name="setting_wear_font_flex_width_description">水平伸縮，從壓縮到展開（25–151）。100 是字型的正常寬度。</string>
+    <string name="setting_wear_font_flex_optical_size">視覺尺寸</string>
+    <string name="setting_wear_font_flex_optical_size_description">依文字的實際尺寸調整筆畫細節（6–144）。較低值適合小字，較高值適合大型顯示文字。</string>
+    <string name="setting_wear_font_flex_grade">字級粗細</string>
+    <string name="setting_wear_font_flex_grade_description">在不改變版面的情況下略微調整粗細（0–100）——可細微提升深色畫面的對比。</string>
+    <string name="setting_wear_font_flex_roundness">圓潤度</string>
+    <string name="setting_wear_font_flex_roundness_description">將筆畫端點從銳利（0）調至完全圓潤（100），營造更親切的感覺。</string>
+    <string name="preview_sample_title">歌曲標題</string>
+    <string name="preview_sample_artist">演出者名稱</string>
+    <string name="preview_sample_next_title">下一首歌</string>
+    <string name="preview_playback_stopped">已停止</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">前一行</string>
+    <string name="preview_verse_current">目前播放的行</string>
+    <string name="preview_verse_next">以及下一行</string>
+    <string name="preview_chat_today">今天</string>
+    <string name="category_gestures">手勢與輸入</string>
+    <string name="category_watch_navigation">導覽與捷徑</string>
+    <string name="category_rotary_input">旋轉輸入與調整</string>
+    <string name="category_watch_feedback">回饋與離開行為</string>
+    <string name="category_watch_display">手錶畫面</string>
+    <string name="setting_wear_keep_screen_on">保持螢幕開啟</string>
+    <string name="setting_wear_keep_screen_on_description">當 Svartifoss 畫面開啟時，避免手錶因閒置逾時而熄屏。放下手腕仍會讓手錶變暗——此手勢由系統控制。會消耗更多電量。歌詞畫面無論此設定如何都會保持開啟。</string>
+    <string name="setting_lyrics_enabled">線上查找歌詞</string>
+    <string name="setting_lyrics_enabled_description">在手錶上開啟歌詞畫面時，允許手機從 LRCLIB 取得同步歌詞。只會傳送曲目名稱、演出者與長度；不會傳送其他內容，也不會儲存到磁碟。關閉後，歌詞畫面會顯示查找功能已停用。</string>
+    <string name="setting_overlay_blur_radius">覆疊模糊</string>
+    <string name="setting_overlay_blur_radius_description">音量/搜尋環與快速動作面板後方磨砂背景的模糊強度（px）——與專輯封面背景模糊互相獨立</string>
+    <string name="category_action_list">動作清單</string>
+    <string name="category_automation">自動化</string>
+    <string name="category_idle">未播放任何內容時</string>
+    <string name="installed_version">已安裝版本</string>
+    <string name="get_support">取得支援</string>
+    <string name="get_support_description">將應用程式記錄傳送給開發者以取得支援</string>
+    <string name="contact_developer">聯絡開發者</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — 聯絡</string>
+    <string name="contact_developer_chooser">傳送電子郵件</string>
+    <string name="contact_developer_no_client">未安裝電子郵件應用程式。地址已複製到剪貼簿。</string>
+    <string name="about_developer_title">關於開發者</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss 起初是我的個人專案——我只是想讓 Music Center for Wear 跟上現今技術的可能性，好讓自己每天都能使用。成果夠不錯，所以我決定分享給所有人。這是我的第一個應用程式，看見自己做出的東西也能幫上其他人，真的沒有什麼能與之相比。</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">開放原始碼授權</string>
+    <string name="setting_always_show_time">一律顯示時間</string>
+    <string name="setting_always_show_time_off_description">目前時間只會在環境模式中顯示</string>
+    <string name="setting_always_show_time_on_description">目前時間會一律顯示。頂部動作圖示將不再可見（會由時鐘取代），但動作本身仍會正常運作。</string>
+    <string name="tap_to_force_stop">輕觸以停止控制</string>
+    <string name="notification_action_stop">停止</string>
+    <string name="notification_action_force_stop">強制停止</string>
+    <string name="error_notification_access">沒有通知存取權限。請檢查手機。</string>
+    <string name="error_notifications">錯誤通知</string>
+    <string name="notification_access_notification_title">Svartifoss 需要通知存取權限</string>
+    <string name="notification_access_notification_title_description">輕觸此通知並檢查 Svartifoss 以修正問題</string>
+    <string name="error_service_not_enabled">需要通知存取權限</string>
+    <string name="error_service_not_enabled_description">若要從手錶控制音樂，Svartifoss 需要通知存取權限——Android 透過此權限讓它知道哪個應用程式正在播放，並傳送播放、暫停與跳過指令。\n\nSvartifoss 絕不會讀取通知內容。此權限僅用於尋找目前的媒體工作階段。\n\n輕觸「開啟設定」，再於通知存取權限中開啟 Svartifoss。</string>
+    <string name="action_open_settings">開啟設定</string>
+    <string name="settings_search_title">搜尋設定</string>
+    <string name="settings_search_hint">搜尋設定</string>
+    <string name="settings_search_clear">清除搜尋</string>
+    <string name="settings_search_prompt">依名稱搜尋「設定」與「手錶外觀」中的所有設定。</string>
+    <string name="settings_search_no_results">沒有相符的設定。</string>
+    <string name="settings_search_prerequisite">此選項取決於另一項選擇。調整此處顯示的設定即可顯示它。</string>
+    <string name="setting_numeric_range_error">請輸入 %1$d 到 %2$d 之間的值。</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">輕觸以授予權限——授予前播放控制會保持停用</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">在手錶上安裝 Svartifoss</string>
+    <string name="no_watch_app_description">Svartifoss 在已配對的 Wear OS 手錶上找不到手錶應用程式。手機與手錶應用程式需搭配運作——沒有手錶應用程式，就無法從手腕控制播放。\n\nSvartifoss 不在 Play 商店上架——手錶應用程式需另行側載（例如使用 Wear Installer）。輕觸「查看版本」開啟 GitHub Releases 頁面並取得手錶 APK。若剛完成安裝，請等待約一分鐘讓同步完成。</string>
+    <string name="no_watch_app_button">查看版本</string>
+    <string name="required_permission">必要權限</string>
+    <string name="setting_pause_on_swipe_exit">滑動離開時暫停播放</string>
+    <string name="setting_pause_on_swipe_exit_description">在手錶上以向左滑動手勢離開 Svartifoss 時，自動暫停任何正在播放的內容。\n\n使用電源按鈕離開不受影響，也絕不會自動暫停。</string>
+    <string name="setting_rotating_crown_off_period">旋轉輸入的螢幕開啟延遲</string>
+    <string name="setting_rotating_crown_off_period_description">旋轉輸入（例如旋轉錶冠）在某些裝置上可能過於靈敏。為避免意外變更音量，開啟螢幕後 <![CDATA[<b>%1$s 毫秒</b>]]> 內會停用旋轉輸入。</string>
+    <string name="setting_rotary_seek">使用旋轉錶冠搜尋</string>
+    <string name="setting_rotary_seek_description">啟用後，旋轉錶冠會在目前曲目中拖曳，而不是調整音量。仍可透過螢幕或實體按鈕變更音量。</string>
+    <string name="setting_wear_rotary_action">旋轉錶冠 / 錶圈</string>
+    <string name="wear_rotary_action_volume">調整音量</string>
+    <string name="wear_rotary_action_seek">在曲目中搜尋</string>
+    <string name="wear_rotary_action_off">不執行任何操作</string>
+    <string name="setting_rotating_sensitivity">旋轉輸入靈敏度</string>
+    <string name="setting_rotating_sensitivity_description">旋轉輸入的靈敏度。數值越高，以相同方式轉動錶冠時音量增加得越多。目前設為 <![CDATA[<b>%1$s%%</b>]]>。</string>
+    <string name="setting_disable_ambient_physical_double_click">在環境模式停用實體按鈕雙擊</string>
+    <string name="setting_disable_ambient_physical_double_click_description">某些手錶的按鈕有問題，在環境模式中單擊實體按鈕有時會被登記成雙擊。\n\n若遇到此情況，可啟用此選項以完全停用環境模式的雙擊（例如按兩次只會觸發單擊動作）。手錶處於活動狀態時的雙擊不受影響。</string>
+    <string name="setting_haptic_feedback">觸覺回饋</string>
+    <string name="setting_haptic_feedback_description">按下按鈕時讓手錶震動。</string>
+    <string name="setting_auto_start">自動開啟 Svartifoss</string>
+    <string name="setting_auto_start_description">手機開始播放音樂時，自動在手錶上開啟 Svartifoss。</string>
+    <string name="setting_auto_start_apps_blacklist">自動啟動應用程式</string>
+    <string name="setting_auto_start_apps_blacklist_description">可自動啟動 Svartifoss 的媒體應用程式清單</string>
+    <string name="setting_dim_album_art">播放器陰影</string>
+    <string name="setting_dim_album_art_description">在封面圖與播放器控制項之間加入使用者選擇的陰影效果。</string>
+    <string name="setting_album_art_style">專輯封面樣式</string>
+    <string name="setting_album_art_style_description">選擇手錶「正在播放」背景的顯示方式。</string>
+    <string name="setting_album_art_blur_radius">模糊強度</string>
+    <string name="setting_album_art_blur_radius_description">所選背景使用模糊效果時的全螢幕模糊強度。目前為 <![CDATA[<b>%1$s px</b>]]>。</string>
+    <string name="setting_album_art_dim_strength">變暗強度</string>
+    <string name="setting_album_art_dim_strength_description">為提升文字可讀性而將專輯封面調暗的程度。目前為 <![CDATA[<b>%1$s%%</b>]]>。</string>
+    <string name="setting_player_shading_style">陰影樣式</string>
+    <string name="setting_player_shading_intensity">陰影強度</string>
+    <string name="setting_player_shading_intensity_description">陰影使背景變暗的程度。100%% 為完整強度；提高數值可增加額外對比（最高 150%%）。目前為 <![CDATA[<b>%1$s%%</b>]]>。</string>
+    <string name="setting_apply_appearance_to_all_faces">將此外觀套用至所有錶面</string>
+    <string name="setting_apply_appearance_to_all_faces_description">將此錶面的外觀設定複製到所有其他錶面</string>
+    <string name="apply_appearance_confirm_title">套用到所有錶面？</string>
+    <string name="apply_appearance_confirm_message">這會以目前錶面的外觀設定覆寫所有其他錶面，不會變更行為設定。</string>
+    <string name="apply_appearance_confirm_button">套用</string>
+    <string name="apply_appearance_done">已套用至所有錶面</string>
+    <string name="category_wf_layout_actions">版面配置</string>
+    <string name="setting_reset_appearance">重設此版面配置</string>
+    <string name="setting_reset_appearance_description">將此錶面的外觀還原為原始預設值</string>
+    <string name="reset_appearance_confirm_title">重設此版面配置？</string>
+    <string name="reset_appearance_confirm_message">此錶面的外觀設定將恢復預設值，不影響行為設定與其他錶面。</string>
+    <string name="reset_appearance_confirm_button">重設</string>
+    <string name="reset_appearance_done">版面配置已重設為預設值</string>
+    <string name="setting_reset_all_faces">將所有錶面重設為預設值</string>
+    <string name="setting_reset_all_faces_description">將每個內建錶面的外觀還原為原始預設值</string>
+    <string name="reset_all_faces_confirm_title">重設所有錶面？</string>
+    <string name="reset_all_faces_confirm_message">每個內建錶面的外觀都會恢復原始預設值，並停用任何作用中的自訂主題。已儲存的自訂主題、行為設定與目前選擇的錶面都會保留。</string>
+    <string name="reset_all_faces_confirm_button">全部重設</string>
+    <string name="reset_all_faces_done">所有錶面已重設為預設值</string>
+    <string name="face_reset_migration_title">更新手錶外觀</string>
+    <string name="face_reset_migration_message">你是從舊版更新而來，該版本所有錶面共用同一組外觀設定。現在每個錶面都會記住自己的設定，因此舊設定在你未直接自訂過的錶面上可能看起來不協調。建議將所有錶面重設為新的預設值，或清除應用程式資料以完全重新開始。</string>
+    <string name="face_reset_migration_reset_button">重設所有錶面</string>
+    <string name="face_reset_migration_clear_data_button">清除應用程式資料</string>
+    <string name="setting_player_shading_color">陰影色彩</string>
+    <string name="setting_wear_shading_custom_color">自訂陰影色彩</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>黑色</item>
+        <item>專輯強調色</item>
+        <item>低彩度專輯色</item>
+        <item>自訂色彩</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>跟隨播放器主題</item>
+        <item>邊緣暈影</item>
+        <item>邊緣暈影（強）</item>
+        <item>邊緣暈影（重）</item>
+        <item>底部角落</item>
+        <item>底部淡出</item>
+        <item>下限與上限</item>
+        <item>全螢幕濾鏡</item>
+        <item>專輯色彩覆染</item>
+        <item>雙色專輯漸層</item>
+        <item>側邊簾幕</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">環境模式專輯封面不透明度</string>
+    <string name="setting_ambient_album_art_opacity_description">設定專輯封面在環境模式中的可見程度。目前為 <![CDATA[<b>%1$s%%</b>]]>。</string>
+    <string name="setting_volume_overlay_timeout">音量/搜尋覆蓋層逾時</string>
+    <string name="setting_volume_overlay_timeout_description">調整音量或播放位置後，覆蓋層在螢幕上保留的時間。目前為 <![CDATA[<b>%1$s ms</b>]]>。</string>
+    <string name="setting_rotary_deadzone">旋轉輸入死區</string>
+    <string name="setting_rotary_deadzone_description">套用音量或播放位置變更前所需的最小錶冠移動量，有助於防止意外調整。目前為 <![CDATA[<b>%1$s</b>]]>。</string>
+
+    <string name="category_wear_experience">體驗設定</string>
+    <string name="setting_swipe_gestures_hint">滑動手勢</string>
+    <string name="setting_swipe_gestures_hint_description">向上、向下、向左滑動都可各自開啟任意動作。點此設定「音樂播放中」或「未播放」狀態下的動作。向右滑動仍保留用於退出應用程式。</string>
+    <string name="setting_screen_buttons_hint">迷你按鈕</string>
+    <string name="setting_screen_buttons_hint_description">最多顯示三個按鈕，每個按鈕都有點按與長按動作。點此設定「音樂播放中」或「未播放」狀態下的動作。</string>
+    <string name="dev_screen_buttons_offset">迷你按鈕位置</string>
+    <string name="dev_screen_buttons_offset_description">手錶螢幕底部與迷你按鈕之間的偏好距離（dp，預設 42）。按鈕列仍會自行調整以避開較長的標題。</string>
+    <string name="setting_screen_buttons_tilt">按鈕傾斜</string>
+    <string name="setting_screen_buttons_tilt_description">側邊按鈕跟隨螢幕曲線的程度。0 = 直線排列；100 = 完整弧形並傾斜圖示。</string>
+    <string name="setting_screen_buttons_bg">迷你按鈕背景</string>
+    <string name="setting_screen_buttons_opacity">迷你按鈕不透明度</string>
+    <string name="setting_screen_buttons_opacity_description">整個迷你按鈕群組的不透明度（0–100%%）。目前為 <![CDATA[<b>%1$s%%</b>]]>。</string>
+    <string name="quick_panel_row_title">快速動作面板</string>
+    <string name="quick_panel_link_summary">雙擊手錶螢幕中央即可開啟。點此在「動作」中設定四個欄位。</string>
+    <string name="quick_panel_config_hint">這些是雙擊手錶螢幕中央後開啟之面板上的按鈕。點按一列以選擇動作（「無」會隱藏）；長按可還原預設值。</string>
+    <string name="quick_panel_slot_1">按鈕 1</string>
+    <string name="quick_panel_slot_2">按鈕 2</string>
+    <string name="quick_panel_slot_3">按鈕 3</string>
+    <string name="quick_panel_slot_long">長按鈕</string>
+    <string name="quick_panel_slot_default">%1$s（預設）</string>
+    <string name="quick_panel_slot_hidden">隱藏</string>
+    <string name="quick_panel_default_like">喜歡</string>
+    <string name="quick_panel_default_shuffle">隨機播放</string>
+    <string name="quick_panel_default_repeat">重複播放</string>
+    <string name="quick_panel_default_up_next">接下來播放</string>
+    <string name="setting_wear_center_long_press_queue">長按中央開啟播放佇列</string>
+    <string name="setting_wear_center_long_press_queue_description">長按「正在播放」畫面中央以開啟播放佇列。</string>
+    <string name="setting_wear_center_long_press">長按中央</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>變更錶面</item>
+        <item>開啟佇列</item>
+        <item>無</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">基礎版面配置</string>
+    <string name="setting_wear_screen_face_description">選擇此主題使用的結構。已儲存的主題可將此版面配置與自己的字型、色彩、模糊、陰影、AOD 和面板組合。</string>
+    <string name="setting_wear_show_track_title">顯示歌曲名稱</string>
+    <string name="setting_wear_show_track_title_description">在播放器上顯示目前歌曲名稱</string>
+    <string name="setting_wear_show_track_artist">顯示演出者名稱</string>
+    <string name="setting_wear_show_track_artist_description">在播放器上顯示目前演出者</string>
+    <string name="setting_wear_show_source_icon">顯示播放應用程式圖示</string>
+    <string name="setting_wear_show_source_icon_description">在演出者旁顯示目前正在播放之應用程式的圖示。使用媒體通知中的圖示。關閉時，圖示永遠不會傳送到手錶。</string>
+    <string name="setting_wear_player_controls_visible">顯示播放器控制項</string>
+    <string name="setting_wear_player_controls_visible_description">在 Classic、Poster、Studio 與其他可設定版面中顯示或隱藏內建按鈕，而不停用其觸控區域</string>
+    <string name="setting_wear_quadrant_tap_flash">點按時閃爍圖示</string>
+    <string name="setting_wear_quadrant_tap_flash_description">角落區域的動作觸發時，短暫將其圖示以最高亮度閃爍。對 Hidden 螢幕主題特別有用，因為圖示平時不可見，否則無法確認剛執行了哪個動作。</string>
+    <string name="setting_wear_internal_progress_visible">版面進度指示器</string>
+    <string name="setting_wear_internal_progress_visible_description">顯示此版面設計的額外進度指示器。Expressive 與 Material 的播放按鈕圓環屬於控制項的一部分，因此仍可使用。</string>
+    <string name="setting_wear_edge_progress_visible">顯示邊緣進度弧</string>
+    <string name="setting_wear_edge_progress_visible_description">只隱藏螢幕周圍的視覺弧線。邊緣搜尋仍是獨立選項。</string>
+    <string name="setting_wear_edge_seek_enabled">從螢幕邊緣搜尋</string>
+    <string name="setting_wear_edge_seek_enabled_description">點按或沿螢幕邊緣拖曳即可跳到精確位置，即使弧線已隱藏也可使用</string>
+    <string name="setting_wear_screen_theme">控制項樣式</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">平衡</string>
+    <string name="wear_screen_theme_default_description">標準層級與控制項大小。</string>
+    <string name="wear_screen_theme_minimal">極簡</string>
+    <string name="wear_screen_theme_minimal_description">使用更小、更低調的控制項，同時保留所有動作的可見性與可用性。</string>
+    <string name="wear_screen_theme_compact">緊湊</string>
+    <string name="wear_screen_theme_compact_description">使用更緊湊的控制項呈現方式，不改變你的動作。</string>
+    <string name="wear_screen_theme_cinema">劇院</string>
+    <string name="wear_screen_theme_cinema_description">柔化控制項，而不改變封面圖。</string>
+    <string name="wear_screen_theme_vivid">鮮明</string>
+    <string name="wear_screen_theme_vivid_description">使用更大、更醒目的控制項。</string>
+    <string name="wear_screen_theme_contrast">高對比</string>
+    <string name="wear_screen_theme_contrast_description">使用較大的控制項以便更容易閱讀。</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">使用緊湊、稍微調暗的控制項。本身不會讓背景變暗；如需調整請使用背景設定。</string>
+    <string name="wear_screen_theme_hidden">隱藏</string>
+    <string name="wear_screen_theme_hidden_description">完全隱藏所有控制項圖示。觸控區域仍保持啟用且可完整操作。</string>
+    <string name="setting_wear_font">字型</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">應用程式的預設字體。</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Google Sans 的可變字型版本，可調整寬度、光學尺寸、字級粗細與圓潤度，並可使用下方的字軸控制項。</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Android 的經典系統字體。</string>
+    <string name="wear_font_rounded">圓潤</string>
+    <string name="wear_font_rounded_description">親切現代的字形，筆畫末端柔和圓潤。</string>
+    <string name="wear_font_sans_light">現代細體</string>
+    <string name="wear_font_sans_light_description">乾淨通透的無襯線字體，視覺重量較輕。</string>
+    <string name="wear_font_sans_thin">極細</string>
+    <string name="wear_font_sans_thin_description">適合極簡播放器的超細顯示樣式。</string>
+    <string name="wear_font_sans_medium">現代中等</string>
+    <string name="wear_font_sans_medium_description">筆畫更有力且緊湊的俐落無襯線字體。</string>
+    <string name="wear_font_sans_black">粗重</string>
+    <string name="wear_font_sans_black_description">具有最大視覺衝擊力的粗體顯示字族。</string>
+    <string name="wear_font_small_caps">小型大寫</string>
+    <string name="wear_font_small_caps_description">緊湊的大寫字母造型，帶有編輯排版風格。</string>
+    <string name="wear_font_casual">休閒</string>
+    <string name="wear_font_casual_description">活潑俏皮的手寫系統字族。</string>
+    <string name="wear_font_typewriter">打字機（封存）</string>
+    <string name="wear_font_typewriter_description">復古打字機風格（Mom\'s Typewriter）。</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">圓潤的幾何無襯線字體，是具有 Circular 風格的免費（OFL）替代方案。</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">乾淨的幾何無襯線字體，是具有 Proxima Nova 風格的免費（OFL）替代方案。</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">優雅的人文羅馬體，是具有 Optima 風格的免費（OFL）替代方案。</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">較柔和的打字機風格（Love Letter Typewriter）— 通常僅用於「Lain」主題曲目。</string>
+    <string name="wear_font_serif">襯線</string>
+    <string name="wear_font_serif_description">經典襯線字體。</string>
+    <string name="wear_font_serif_monospace">等寬襯線</string>
+    <string name="wear_font_serif_monospace_description">固定寬度的襯線字母，呈現獨特的編輯／終端機風格。</string>
+    <string name="wear_font_monospace">等寬</string>
+    <string name="wear_font_monospace_description">固定寬度、具技術感的外觀。</string>
+    <string name="wear_font_condensed">窄體</string>
+    <string name="wear_font_condensed_description">較窄的字形，可容納更多文字。</string>
+    <string name="wear_font_condensed_light">窄體細字</string>
+    <string name="wear_font_condensed_light_description">適合長標題的窄版輕量字族。</string>
+    <string name="wear_font_condensed_medium">窄體中等</string>
+    <string name="wear_font_condensed_medium_description">窄版字族，筆畫更有力且可讀性極佳。</string>
+    <string name="wear_font_cursive">草寫</string>
+    <string name="wear_font_cursive_description">裝飾性手寫字體。</string>
+    <string name="setting_wear_dynamic_accent">手錶動態強調色</string>
+    <string name="setting_wear_dynamic_accent_description">讓以專輯為基礎的手錶色彩配合目前封面圖片。關閉時，「專輯色彩」選項會使用靜態主題強調色。</string>
+    <string name="setting_wear_album_art_fade">專輯封面淡入淡出轉場</string>
+    <string name="setting_wear_album_art_fade_description">曲目變更時平滑淡入淡出專輯封面。</string>
+    <string name="setting_wear_title_text_mode">標題文字行為</string>
+    <string name="setting_wear_title_text_mode_description">設定播放中標題放不下時的行為：「自動」會混合縮小、換行與捲動；其他選項則固定使用單一行為。</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>自動（縮小、再換行、再捲動）</item>
+        <item>捲動（跑馬燈）</item>
+        <item>換行為兩行</item>
+        <item>換行為三行</item>
+        <item>換行為五行</item>
+        <item>靜態（單行，不捲動也不縮小）</item>
+        <item>縮小以適合</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">演出者文字顏色</string>
+    <string name="setting_wear_artist_custom_color">演出者自訂顏色</string>
+    <string name="setting_wear_artist_custom_color_description">選擇「一般」處理時使用的演出者顏色</string>
+    <string name="setting_wear_artist_desaturated">低飽和演出者顏色</string>
+    <string name="setting_wear_artist_desaturated_description">柔化以專輯為基礎的演出者文字顏色 — 僅在「演出者文字顏色」設為「專輯色彩」時套用</string>
+
+    <string name="setting_wear_progress_color">進度列顏色</string>
+    <string name="setting_wear_progress_custom_color">進度列自訂顏色</string>
+    <string name="setting_wear_progress_custom_color_description">選擇「一般」處理時使用的進度與搜尋顏色</string>
+    <string name="setting_wear_progress_desaturated">低飽和進度列顏色</string>
+    <string name="setting_wear_progress_desaturated_description">柔化以專輯為基礎的進度列顏色 — 僅在「進度列顏色」設為「專輯色彩」時套用</string>
+
+    <string name="setting_wear_volume_color">音量列顏色</string>
+    <string name="setting_wear_volume_custom_color">音量自訂顏色</string>
+    <string name="setting_wear_volume_custom_color_description">選擇「一般」處理時使用的音量顏色</string>
+    <string name="setting_wear_quick_panel_color">快速動作顏色</string>
+    <string name="setting_wear_quick_panel_custom_color">快速動作自訂顏色</string>
+    <string name="setting_wear_quick_panel_custom_color_description">選擇「一般」處理時使用的快速動作顏色</string>
+    <string name="setting_wear_shading_custom_color_description">選擇為陰影漸層著色的顏色</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>中性（固定主題色）</item>
+        <item>專輯色彩</item>
+        <item>自訂色彩</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>經典</item>
+        <item>表現式</item>
+        <item>黑膠</item>
+        <item>海報</item>
+        <item>錄音室</item>
+        <item>光環</item>
+        <item>極光</item>
+        <item>Eclipse AMOLED</item>
+        <item>光譜</item>
+        <item>Material</item>
+        <item>沉浸式</item>
+        <item>景深</item>
+        <item>輪播</item>
+        <item>聊天</item>
+        <item>分割</item>
+        <item>音符</item>
+        <item>歌詞</item>
+        <item>中繼資料</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">表現式搜尋</string>
+    <string name="setting_wear_expressive_seek_mode_description">設定在 Expressive 錶面上以觸控拖曳曲目的方式。「中央圓環」可拖曳播放按鈕周圍的圓環；「邊緣圓環」另外顯示 Classic 邊框圓環；「無」則僅能使用旋轉錶冠搜尋。</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>中央環</item>
+        <item>邊緣環</item>
+        <item>無</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">隨時顯示</string>
+    <string name="setting_wear_aod_style">隨時顯示樣式</string>
+    <string name="setting_wear_aod_style_description">設定手錶進入環境模式時播放中畫面的外觀。「跟隨錶面」與所選錶面一致；「極簡」只在純黑背景上顯示暗淡文字，以獲得最長電池續航。</string>
+    <string-array name="wear_aod_style_entries">
+        <item>跟隨錶面</item>
+        <item>經典</item>
+        <item>表現式（外框）</item>
+        <item>Material（外框）</item>
+        <item>AMOLED 控制項</item>
+        <item>Chrono（大型時鐘）</item>
+        <item>海報</item>
+        <item>錄音室</item>
+        <item>沉浸式</item>
+        <item>輪播</item>
+        <item>聊天</item>
+        <item>分割</item>
+        <item>音符</item>
+        <item>歌詞</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">隨時顯示顏色</string>
+    <string-array name="wear_aod_color_entries">
+        <item>白色</item>
+        <item>專輯色彩</item>
+        <item>自訂色彩</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>白色</item>
+        <item>動態（依時鐘下方區域）</item>
+        <item>專輯色彩</item>
+        <item>自訂色彩</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>跟隨面板樣式</item>
+        <item>透明（無背景）</item>
+        <item>專輯強調色</item>
+        <item>半透明</item>
+        <item>白色</item>
+        <item>霧面白</item>
+        <item>黑色</item>
+        <item>動態（專輯色調）</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">「接下來」膠囊背景</string>
+    <string name="setting_wear_show_up_next_pill">播放器上的「接下來」膠囊</string>
+    <string name="setting_wear_show_up_next_pill_description">在播放中畫面底部顯示「接下來」膠囊。它會佔用迷你按鈕列的空間，因此僅在該列未顯示時出現。</string>
+    <string name="category_wf_clock">時鐘</string>
+    <string name="setting_wear_clock_color">時鐘顏色</string>
+    <string name="setting_wear_clock_custom_color">時鐘自訂顏色</string>
+    <string name="setting_wear_clock_custom_color_description">點按以選擇「時鐘顏色」設為「自訂顏色」時使用的時鐘顏色</string>
+    <string name="setting_wear_clock_opacity">時鐘不透明度</string>
+    <string name="setting_wear_clock_opacity_description">設定持續顯示時鐘的不透明度（10–100%%）。目前為 <![CDATA[<b>%1$s%%</b>]]>。</string>
+    <string name="setting_wear_aod_custom_color">隨時顯示自訂顏色</string>
+    <string name="setting_wear_aod_custom_color_description">點按以選擇「隨時顯示顏色」設為「自訂顏色」時，用於隨時顯示文字、控制項與時鐘的顏色</string>
+    <string name="setting_wear_aod_intensity">隨時顯示亮度</string>
+    <string name="setting_wear_aod_intensity_description">設定隨時顯示的亮度（20–100%%）。數值越低越暗，也越省電。目前為 <![CDATA[<b>%1$s%%</b>]]>。</string>
+    <string name="setting_wear_aod_show_transport">隨時顯示上的播放控制按鈕</string>
+    <string name="setting_wear_aod_show_transport_description">在支援的視覺隨時顯示樣式中顯示外框的上一首／播放／下一首按鈕。螢幕變暗時無法直接點按，但點一下會喚醒手錶，且按鈕仍位於手指下方。</string>
+    <string name="setting_wear_aod_show_progress">隨時顯示上的進度環</string>
+    <string name="setting_wear_aod_show_progress_description">在環境模式中於播放按鈕周圍顯示進度環 — 此模式下進度位置約每分鐘才更新一次</string>
+    <string name="setting_wear_aod_show_pills">隨時顯示上的「接下來」</string>
+    <string name="setting_wear_aod_show_pills_description">在視覺隨時顯示樣式底部顯示靜態外框的「接下來」膠囊</string>
+    <string name="category_wf_gestures">螢幕手勢</string>
+    <string name="setting_wear_mini_buttons_mode">顯示迷你按鈕</string>
+    <string name="setting_wear_gestures_mode">螢幕手勢</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>一律</item>
+        <item>僅播放時</item>
+        <item>僅暫停時</item>
+        <item>永不</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">隨時顯示上的專輯封面</string>
+    <string name="setting_wear_aod_show_art_description">在環境模式中持續顯示變暗的專輯封面。關閉後會顯示純黑背景，在 AMOLED 螢幕上可明顯節省更多電量。</string>
+    <string name="setting_wear_aod_art_treatment">隨時顯示專輯封面樣式</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>柔和模糊</item>
+        <item>清晰封面</item>
+        <item>單色模糊</item>
+        <item>跟隨播放器封面處理</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">隨時顯示上的時鐘</string>
+    <string name="setting_wear_aod_show_clock_description">手錶處於環境模式時顯示時鐘</string>
+    <string name="setting_wear_aod_show_track_info">隨時顯示上的曲目資訊</string>
+    <string name="setting_wear_aod_show_track_info_description">在環境模式中顯示曲名與演出者</string>
+
+    <string name="category_overlays_queue">覆蓋層與佇列</string>
+    <string name="category_wf_panel_shared">共用面板外觀</string>
+    <string name="category_wf_panel_volume">音量面板</string>
+    <string name="category_wf_panel_seek">進度與搜尋面板</string>
+    <string name="category_wf_panel_quick">快速動作面板</string>
+    <string name="category_wf_panel_queue">佇列與清單</string>
+    <string name="category_wf_panel_effects">面板效果</string>
+    <string name="setting_wear_overlay_backdrop_style">面板背景</string>
+    <string name="setting_wear_volume_style">音量樣式</string>
+    <string name="setting_wear_volume_layout">音量版面</string>
+    <string name="setting_wear_quick_panel_style">快速面板樣式</string>
+    <string name="setting_wear_quick_panel_layout">快速面板版面</string>
+    <string name="setting_wear_quick_panel_source">快速動作</string>
+    <string name="setting_wear_quick_panel_source_description">選擇你設定的按鈕，或目前播放應用程式提供的動作。</string>
+    <string name="quick_panel_open_note_title">開啟面板</string>
+    <string name="quick_panel_open_note_description">連點兩下播放中畫面中央，可在手錶上開啟快速動作面板。</string>
+    <string name="preview_current_app_action">目前應用程式動作</string>
+    <string name="preview_notification_controls">媒體通知圖示</string>
+    <string name="setting_wear_queue_style">佇列樣式</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">使用捷徑封面作為背景</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">當「佇列樣式」為封面變體時，具有已擷取捷徑封面（曲目、播放清單、演出者等）的快速面板動作列，也會像「接下來」一樣用該圖片填滿膠囊。沒有已擷取封面的捷徑（一般應用程式圖示）不受影響。</string>
+    <string name="setting_wear_list_row_size">清單膠囊大小</string>
+    <string name="setting_wear_list_row_size_description">佇列、選單與快速面板中滿寬列的高度。</string>
+    <string name="setting_wear_progress_gradient">將調色盤混入圓環</string>
+    <string name="setting_wear_progress_gradient_description">使用多色調色彩處理（互補、三角色、類似色、雙色調）時，實心圓環會在三種顏色之間漸變。若要讓圓環維持單色，同時其他位置仍使用專輯調色盤，請關閉此選項。</string>
+    <string name="setting_wear_progress_style">進度環樣式</string>
+    <string name="setting_wear_seek_style">搜尋與音量讀數樣式</string>
+    <string name="setting_wear_seek_layout">搜尋面板版面</string>
+    <string name="setting_wear_color_treatment">手錶色彩處理</string>
+    <string name="setting_wear_normal_color">一般顏色</string>
+    <string name="setting_wear_normal_color_description">選擇一般模式中用於標題強調、進度、音量、面板與迷你按鈕裝飾的單一顏色</string>
+    <string name="setting_wear_normal_color_multi">使用調色盤</string>
+    <string name="setting_wear_normal_color_multi_description">開啟時，畫面使用一個主色加兩個輔助色調。關閉時，所有位置只使用單一顏色 — 專輯本身的顏色或你所選的顏色。</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>一般（所選色彩）</item>
+        <item>低彩度（柔和專輯色）</item>
+        <item>表現式（完整專輯色盤）</item>
+        <item>互補色（專輯色＋相反色）</item>
+        <item>三角色（專輯三種色相）</item>
+        <item>類似色（相鄰色相）</item>
+        <item>單色（一種色相、三種色調）</item>
+        <item>雙色調（兩種專輯色）</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>跟隨手錶處理</item>
+        <item>一般（所選色彩）</item>
+        <item>低彩度（柔和專輯色）</item>
+        <item>表現式（完整專輯色盤）</item>
+        <item>互補色（專輯色＋相反色）</item>
+        <item>三角色（專輯三種色相）</item>
+        <item>類似色（相鄰色相）</item>
+        <item>單色（一種色相、三種色調）</item>
+        <item>雙色調（兩種專輯色）</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">標題字重</string>
+    <string name="setting_wear_title_font_italic">標題斜體</string>
+    <string name="setting_wear_title_font_scale">標題大小</string>
+    <string name="setting_wear_title_font_opacity">標題不透明度</string>
+    <string name="setting_wear_title_font_tracking">標題字距</string>
+    <string name="setting_wear_title_color">標題文字顏色</string>
+    <string name="setting_wear_title_custom_color">標題自訂顏色</string>
+    <string name="wear_title_color_face_default">錶面預設（依原設計）</string>
+    <string name="setting_wear_title_adaptive_contrast">依對比調整標題顏色</string>
+    <string name="setting_wear_title_adaptive_contrast_description">當標題顏色與背後圖片太接近時，在保留色相的前提下將其變亮或變暗。標題使用錶面預設色時不生效。</string>
+    <string name="setting_wear_artist_adaptive_contrast">依對比調整演出者顏色</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">當專輯顏色與背後圖片太接近時，在保留色相的前提下將演出者列變亮或變暗。只測量該列所在的條帶，而非整張封面。</string>
+    <string name="setting_wear_artist_font_weight">演出者字重</string>
+    <string name="setting_wear_artist_font_italic">演出者斜體</string>
+    <string name="setting_wear_artist_font_scale">演出者大小</string>
+    <string name="setting_wear_artist_font_opacity">演出者不透明度</string>
+    <string name="setting_wear_artist_font_tracking">演出者字距</string>
+    <string name="setting_wear_source_icon_scale">應用程式圖示大小</string>
+    <string name="setting_wear_source_icon_opacity">應用程式圖示不透明度</string>
+    <string name="setting_wear_typography_weight_description">1–1000。400 是錶面的正常字重；數值越高越粗。對 Google Sans Flex 而言，這就是該字型自身的字重軸</string>
+    <string name="setting_wear_typography_scale_description">相對於錶面原始大小的百分比（70–140）。100 會保留各版面的設計大小</string>
+    <string name="setting_wear_typography_opacity_description">百分比（20–100）。100 會保留錶面原始不透明度</string>
+    <string name="setting_wear_typography_tracking_description">字母間額外空間，以 em 的百分之一為單位（−5 到 20）。0 保留字型原始字距</string>
+    <string name="setting_wear_color_modifier">色調</string>
+    <string name="setting_wear_color_modifier_description">在不改變調色盤生成方式的情況下調整整體 — 適用於所有色彩處理</string>
+    <string name="setting_wear_color_hue_shift">色彩偏移</string>
+    <string name="setting_wear_color_hue_shift_description">以角度（0–359）在色環上旋轉專輯調色盤。每種處理都會讓主色保持在專輯本身的色相，因此可用此設定改變它。0 直接使用專輯色；固定的「一般」顏色不會偏移。</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>無</item>
+        <item>鮮豔</item>
+        <item>粉彩</item>
+        <item>暖色</item>
+        <item>冷色</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>邊緣弧（左）</item>
+        <item>邊緣弧（高）</item>
+        <item>邊緣弧（右）</item>
+        <item>邊緣弧（上）</item>
+        <item>邊緣弧（下）</item>
+        <item>完整圓環</item>
+        <item>中央光暈</item>
+        <item>水平儀表</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>邊緣環</item>
+        <item>邊緣圓環（細）</item>
+        <item>邊緣圓環（粗）</item>
+        <item>時間軸</item>
+        <item>分段時間軸</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>中繼資料優先</item>
+        <item>弧形</item>
+        <item>主視覺</item>
+        <item>網格</item>
+        <item>標示列</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>純色</item>
+        <item>虛線</item>
+        <item>圓點</item>
+        <item>極細線</item>
+        <item>彗星</item>
+        <item>60 個鐘面圓點</item>
+        <item>60 個鐘面刻度</item>
+        <item>12 小時分段</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>樸素</item>
+        <item>玻璃膠囊</item>
+        <item>表現式膠囊</item>
+        <item>Material 膠囊</item>
+        <item>白色膠囊</item>
+        <item>巨大</item>
+        <item>位置 / 總數</item>
+        <item>白色玻璃</item>
+        <item>半透明專輯</item>
+        <item>專輯光暈</item>
+        <item>外框</item>
+        <item>純色主題</item>
+        <item>純色專輯</item>
+        <item>微型</item>
+        <item>陰影（無裝飾）</item>
+        <item>底線</item>
+        <item>極細外框</item>
+        <item>巨大專輯色彩</item>
+        <item>單色</item>
+        <item>深色調</item>
+        <item>終端機</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>已設定按鈕</item>
+        <item>來自目前的媒體應用程式</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>跟隨面板樣式</item>
+        <item>專輯模糊（壓克力）</item>
+        <item>純黑</item>
+        <item>純色專輯色彩</item>
+        <item>玻璃</item>
+        <item>專輯漸層</item>
+        <item>專輯雙色調</item>
+        <item>稜鏡</item>
+        <item>液態玻璃</item>
+        <item>表現式模糊</item>
+        <item>表現式</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>玻璃</item>
+        <item>極簡（AMOLED）</item>
+        <item>Material</item>
+        <item>色調</item>
+        <item>霓虹</item>
+        <item>淺色</item>
+        <item>漸層</item>
+        <item>單色</item>
+        <item>外框</item>
+        <item>雙色調</item>
+        <item>稜鏡</item>
+        <item>高對比</item>
+        <item>終端機</item>
+        <item>霜面</item>
+        <item>分段</item>
+        <item>極光</item>
+        <item>墨水</item>
+        <item>溝槽</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>緊湊</item>
+        <item>一般</item>
+        <item>高</item>
+        <item>超高</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>玻璃</item>
+        <item>極簡（AMOLED）</item>
+        <item>Material</item>
+        <item>色調</item>
+        <item>霓虹</item>
+        <item>淺色</item>
+        <item>漸層</item>
+        <item>單色</item>
+        <item>外框</item>
+        <item>雙色調</item>
+        <item>稜鏡</item>
+        <item>高對比</item>
+        <item>終端機</item>
+        <item>霜面</item>
+        <item>封面</item>
+            <item>封面模糊</item>
+        <item>封面色調</item>
+        <item>方形封面</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>玻璃</item>
+        <item>白色玻璃</item>
+        <item>色調玻璃</item>
+        <item>極簡（AMOLED）</item>
+        <item>Material</item>
+        <item>色調</item>
+        <item>霓虹</item>
+        <item>淺色</item>
+        <item>漸層</item>
+        <item>單色</item>
+        <item>外框</item>
+        <item>外框白色玻璃</item>
+        <item>雙色調</item>
+        <item>稜鏡</item>
+        <item>高對比</item>
+        <item>終端機</item>
+        <item>霜面</item>
+        <item>幽靈（無裝飾）</item>
+        <item>薄霧</item>
+        <item>墨水</item>
+        <item>圓點</item>
+        <item>厚板</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">暫停後保持應用程式啟用</string>
+    <string name="setting_wear_paused_hold_description">設定暫停後手錶應用程式仍可從錶面返回的時間，讓你只需抬腕即可繼續，而不必重新開啟。較長的設定會讓背景服務持續運作。</string>
+    <string name="wear_paused_hold_off">不保持</string>
+    <string name="wear_paused_hold_5">5 分鐘</string>
+    <string name="wear_paused_hold_15">15 分鐘</string>
+    <string name="wear_paused_hold_30">30 分鐘</string>
+    <string name="wear_paused_hold_60">1 小時</string>
+    <string name="wear_paused_hold_always">直到播放結束</string>
+
+    <string name="setting_wear_idle_button_action">沒有播放內容時的按鈕</string>
+    <string name="setting_wear_idle_auto_open">沒有播放內容時開啟</string>
+    <string name="setting_wear_idle_auto_open_description">沒有播放音樂時開啟手錶應用程式，會直接跳到此畫面。</string>
+    <string name="wear_idle_action_resume">繼續上一個應用程式</string>
+    <string name="wear_idle_action_shortcuts">播放清單捷徑</string>
+    <string name="wear_idle_action_menu">動作選單</string>
+    <string name="wear_idle_action_search">搜尋</string>
+    <string name="wear_idle_action_queue">最近播放</string>
+    <string name="wear_idle_action_none">無按鈕</string>
+    <string name="wear_idle_auto_open_none">留在播放器</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">瀏覽媒體庫</string>
+    <string name="library_up">返回</string>
+    <string name="error_library_unavailable">此應用程式沒有可瀏覽的媒體庫</string>
+    <string name="error_library_empty">這裡沒有內容</string>
+    <string name="error_library_no_player">請先開始播放內容</string>
+
+    <string name="setting_wear_carousel_card_shape">輪播卡片形狀</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>圓潤</item>
+        <item>正方形</item>
+        <item>圓角方形</item>
+        <item>圓形</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">所有位置使用字型</string>
+    <string name="setting_wear_font_all_screens_description">將所選字型套用到選單、佇列與快速動作，而不只是在播放器中。顯示型與手寫型字體在清單中可能較難閱讀。</string>
+
+    <string name="setting_wear_clock_font">時鐘字體</string>
+    <string name="wear_clock_font_follow">跟隨曲目字型</string>
+    <string name="setting_wear_lyrics_font">歌詞字體</string>
+    <string name="setting_wear_lyrics_font_description">用於歌詞畫面與 Verse 錶面中歌詞文字的字體。除非在此另行選擇，否則會跟隨曲目字體。</string>
+    <string name="wear_lyrics_font_follow">跟隨曲目字體</string>
+    <string name="setting_wear_clock_font_weight">時鐘字重</string>
+    <string name="setting_wear_clock_font_italic">時鐘斜體</string>
+    <string name="setting_wear_clock_font_scale">時鐘大小</string>
+    <string name="setting_wear_clock_font_tracking">時鐘字距</string>
+    <string name="setting_wear_clock_adaptive_contrast">依對比調整時鐘顏色</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">當專輯顏色與背後圖片太接近時，在保留色相的前提下將時鐘變亮或變暗。僅在「時鐘顏色」設為「專輯色彩」時套用。</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">窄版全大寫顯示字體 — 海報風格，可容納長標題</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">高對比編輯襯線字體 — 雜誌風格</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">具有獨特細節的技術感幾何無襯線字體</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">方正科幻顯示字體 — 粗獷而未來感</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">手寫字體 — 休閒且個人化</string>
+    <string name="setting_wear_track_time_mode">曲目時間顯示</string>
+    <string name="setting_wear_track_time_mode_description">設定何時在播放中畫面顯示曲目位置（例如 1:23 / 3:45）。</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>一律</item>
+        <item>僅播放時</item>
+        <item>僅暫停時</item>
+        <item>永不</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">迷你按鈕曲率</string>
+    <string name="setting_screen_buttons_curve_description">選擇迷你按鈕的曲率樣式：平面、圓弧、柔和、彎曲。</string>
+    <string name="setting_screen_buttons_shape">迷你按鈕形狀</string>
+    <string name="setting_screen_buttons_shape_description">選擇迷你按鈕的形狀與版面格式。</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>膠囊（預設）</item>
+        <item>圓形</item>
+        <item>正方形</item>
+        <item>圓角方形（柔和）</item>
+        <item>圓角方形（中等）</item>
+        <item>圓角方形</item>
+        <item>葉片</item>
+        <item>水滴</item>
+        <item>膠囊（寬・小）</item>
+        <item>膠囊（寬・中）</item>
+        <item>膠囊（寬・大）</item>
+        <item>膠囊（寬・特大）</item>
+        <item>圓角長方形（小）</item>
+        <item>圓角長方形（中等）</item>
+        <item>圓角長方形（大）</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>平面</item>
+        <item>弧形</item>
+        <item>柔和曲線</item>
+        <item>柔順曲線</item>
+        <item>中等曲線</item>
+        <item>彎曲</item>
+        <item>極度彎曲</item>
+        <item>延伸至邊緣</item>
+        <item>左側邊緣</item>
+        <item>右側邊緣</item>
+        <item>兩側邊緣</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>背景預設</item>
+        <item>玻璃（均勻）</item>
+        <item>玻璃（淺色）</item>
+        <item>半透明專輯</item>
+        <item>半透明專輯 Exp</item>
+        <item>專輯光暈</item>
+        <item>光暈 Exp</item>
+        <item>純色主題</item>
+        <item>純色專輯</item>
+        <item>純色 Exp 專輯</item>
+        <item>外框</item>
+        <item>外框 Exp 專輯</item>
+        <item>僅圖示（透明）</item>
+        <item>圖示 Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>中性</item>
+        <item>專輯色彩</item>
+        <item>自訂色彩</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>完整封面</item>
+        <item>模糊背景</item>
+        <item>霧面邊緣</item>
+        <item>方形（銳角）</item>
+        <item>方形（柔和角）</item>
+        <item>方形（圓角）</item>
+        <item>黑白</item>
+        <item>模糊黑白</item>
+        <item>表現式模糊</item>
+        <item>表現式</item>
+        <item>Material 色調漸層</item>
+        <item>海報封面</item>
+        <item>工作室漸層</item>
+        <item>黑膠放射光暈</item>
+        <item>光暈發光</item>
+        <item>極光彩帶</item>
+        <item>光譜漸層</item>
+        <item>日冕掃掠</item>
+        <item>暮色淡出</item>
+        <item>綻放</item>
+        <item>地平線淡出</item>
+        <item>餘燼光暈</item>
+        <item>Eclipse AMOLED 黑色</item>
+        <item>隱藏（純黑）</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>已停用</item>
+        <item>顯示音樂錶面圖示（僅限 Wear 3.0）</item>
+        <item>開啟 Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">關閉逾時</string>
+    <string name="setting_close_timeout_description">若 <![CDATA[<b>%1$s 秒</b>]]> 沒有播放音樂，Svartifoss 會自動關閉。將逾時設為 0 秒可停用此功能。為節省電量，此選項有時可能不夠精確，關閉動作最多可能延遲約一分鐘。</string>
+    <string name="setting_wear_close_on_idle">在「沒有播放內容」時關閉</string>
+    <string name="setting_wear_close_on_idle_description">到達閒置的「沒有播放內容」畫面約一分鐘後自動關閉手錶應用程式，避免一直停留在該畫面。此功能獨立於上方的關閉逾時；後者適用於暫停的曲目。</string>
+    <string name="category_notifications">通知彈出視窗</string>
+    <string name="setting_enable_notifications">顯示通知彈出視窗</string>
+    <string name="setting_enable_notifications_description">此功能需要另一個應用程式來管理通知（Vibration Center for Wear）。\n\n每當 Vibration Center 讓手錶震動時，Svartifoss 都會顯示通知文字彈出視窗，讓你無需離開 Svartifoss 即可快速查看通知。</string>
+    <string name="setting_notification_timeout">通知彈出視窗逾時</string>
+    <string name="setting_notification_timeout_description">通知彈出視窗會在 <![CDATA[<b>%1$s 秒</b>]]> 後自動關閉。輸入 0 可停用自動關閉。</string>
+    <string name="app_required">需要應用程式</string>
+    <string name="vibration_center_required_description">要使用此功能，你需要安裝另一個免費應用程式：Vibration Center for Wear。</string>
+    <string name="open_play_store">開啟 Play 商店</string>
+    <string name="error_no_notification_service_support">抱歉，你的裝置似乎不支援通知服務</string>
+    <string name="setting_always_select_center_action">一律選取中央動作</string>
+    <string name="setting_always_select_center_action_description">啟用後，點按動作清單時一律選取中央（反白）的選項，不論你實際點了哪一項。</string>
+    <string name="change_icon">變更圖示</string>
+    <string name="please_wait">請稍候</string>
+
+    <string name="error_playlist_not_supported">此媒體應用程式不支援</string>
+    <string name="error_search_no_results">找不到結果</string>
+    <string name="seconds_to_skip">快轉秒數：</string>
+    <string name="seconds_to_reverse">倒退秒數：</string>
+
+    <string name="setting_dynamic_accent_color">動態強調色</string>
+    <string name="setting_dynamic_accent_color_description">啟用後，強調色（搜尋列、作用中的佇列項目）會自動配合目前專輯封面的主要顏色。</string>
+    <string name="setting_desaturated_color">低飽和顏色</string>
+    <string name="setting_desaturated_color_description">調整擷取顏色的飽和度與亮度，以依目前主題確保高可讀性與對比。</string>
+
+    <string name="queue_header">播放佇列</string>
+    <string name="queue_unavailable">佇列無法使用</string>
+
+    <string name="setting_custom_accent_color">強調色</string>
+    <string name="setting_custom_accent_color_description">選擇應用程式介面的自訂強調色</string>
+    <string name="setting_mini_player">迷你播放器</string>
+    <string name="setting_mini_player_description">媒體啟用時，在底部導覽上方顯示持續存在的播放中列。預設開啟；如需騰出空間可將其關閉。</string>
+    <string name="color_picker_title">選擇強調色</string>
+    <string name="color_picker_reset">重設</string>
+    <string name="color_picker_apply">套用</string>
+    <string name="color_picker_default">預設</string>
+    <string name="color_picker_invalid">無效的色碼</string>
+    <string name="color_picker_current">目前：%s</string>
+
+    <string name="drawer_version_format">版本 %1$s</string>
+    <string name="drawer_tagline">Wear OS 伴隨應用程式</string>
+    <string name="drawer_about_heading">關於</string>
+    <string name="drawer_about_summary">Svartifoss 讓你從 Wear OS 手錶控制手機上的音樂 — 提供可完全自訂、配合你裝置的遙控介面。</string>
+    <string name="drawer_name_heading">名稱由來</string>
+    <string name="drawer_name_meaning">Svartifoss 在冰島語中意為「黑色瀑布」— 名稱取自瓦特納冰川國家公園的瀑布，深色玄武岩柱環繞著狹窄水瀑。就像水流過岩石，音樂也流過這個應用程式。</string>
+    <string name="drawer_sync_heading">同步</string>
+    <string name="drawer_sync_summary">手錶設定會在手機上進行，並自動同步到已配對的手錶。</string>
+    <string name="drawer_support_heading">支援</string>
+    <string name="drawer_support_summary">Svartifoss 免費且開放原始碼 — 如果對你有幫助，請請我喝杯咖啡 :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">下載封面圖片</string>
+    <string name="album_art_saved">封面圖片已儲存到圖庫</string>
+    <string name="album_art_save_error">無法儲存封面圖片</string>
+
+    <string name="action_play_liked_songs">播放喜歡的歌曲（YT Music）</string>
+    <string name="action_play_spotify_liked_songs">播放喜歡的歌曲（Spotify）</string>
+    <string name="action_play_soundcloud_likes">播放喜歡的曲目（SoundCloud）</string>
+    <string name="action_my_playlists">串流捷徑</string>
+    <string name="action_play_specific_playlist">開啟串流捷徑</string>
+    <string name="action_choose_or_add_streaming_shortcut">選擇或新增串流捷徑</string>
+    <string name="action_show_streaming_library">顯示所有已儲存捷徑</string>
+    <string name="playlist_shortcut_pick_title">選擇捷徑</string>
+    <string name="playlist_shortcut_pick_empty">尚未儲存串流捷徑 — 請在下方新增一個，然後點按以選取</string>
+    <string name="playlist_shortcuts_empty">尚無串流捷徑 — 請在手機應用程式設定中新增</string>
+    <string name="setting_playlist_shortcuts">串流捷徑</string>
+    <string name="setting_playlist_shortcuts_description">將手錶上的分享連結開啟於 YouTube Music、Spotify 與其他串流應用程式</string>
+    <string name="setting_shortcut_artwork">在線取得捷徑圖片</string>
+    <string name="setting_shortcut_artwork_description">為每個已儲存捷徑從服務下載縮圖，顯示於手機清單、手錶選單與已指派按鈕。每張縮圖只擷取一次；只會傳送公開分享連結。預設關閉。</string>
+    <string name="setting_queue_local_artwork">來自媒體庫的佇列封面</string>
+    <string name="setting_queue_local_artwork_description">本機音樂播放器會以媒體庫參照的方式提供佇列封面。授予媒體存取權後即可顯示於手錶佇列。此功能不使用網際網路。</string>
+    <string name="setting_queue_local_artwork_granted">已授予媒體存取權 — 將顯示本機佇列封面</string>
+    <string name="setting_queue_local_artwork_denied">媒體存取遭拒。請在 Android 設定中啟用，以顯示本機佇列封面。</string>
+    <string name="setting_queue_remote_artwork">在線取得佇列封面</string>
+    <string name="setting_queue_remote_artwork_short_description">串流應用程式（YouTube Music 用戶端、Echo Music 等）會將佇列封面以連結而非圖片提供，因此此功能會下載並快取它們。若要讓佇列完全離線，請關閉；關閉後這些列將完全不顯示封面。</string>
+    <string name="setting_queue_remote_artwork_description">串流播放器會將佇列封面以連結而非圖片提供。每張封面只下載一次並快取於此手機，以顯示在手錶佇列中。只會請求播放器已經公開的封面 URL，不涉及帳號或個人資料。預設開啟；若要讓佇列完全離線，請關閉。</string>
+    <string name="watch_streaming_shortcuts_empty">新增曲目、專輯或播放清單供快速動作與手錶選單使用</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="other">已儲存 %1$d 個捷徑 · 可在快速動作與手錶選單使用</item>
+    </plurals>
+    <string name="category_music_apps">音樂應用程式與服務</string>
+    <string name="category_apps_content">歌詞與中繼資料</string>
+    <string name="category_streaming_services">串流捷徑</string>
+    <string name="category_queue_artwork">佇列圖片</string>
+    <string name="category_system_access">Android 存取權與通知</string>
+    <string name="setting_apps_integrations">支援的音樂服務</string>
+    <string name="setting_apps_integrations_description">連結可搭配 YouTube Music、Spotify、Deezer、TIDAL、Apple Music、Amazon Music 與 SoundCloud 使用。不需要帳號存取權。</string>
+    <string name="setting_apps_integrations_none">未偵測到支援的應用程式。捷徑仍可在瀏覽器或其他相容應用程式中開啟。</string>
+    <string name="setting_apps_integrations_installed">已偵測 %2$d 個中的 %1$d 個：%3$s</string>
+    <string name="setting_streaming_open_mode">開啟串流連結的應用程式</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>偵測到的串流應用程式</item>
+        <item>Android 預設</item>
+        <item>每次詢問</item>
+    </string-array>
+    <string name="setting_persistent_notification">管理「Svartifoss 使用中」通知</string>
+    <string name="setting_persistent_notification_description">開啟此通知的 Android 設定 — 可將其靜音、從鎖定畫面隱藏或進行其他調整。無法完全關閉：與手錶通訊的背景服務運作時，Android 要求顯示持續通知。</string>
+    <string name="setting_notification_access">媒體通知存取權</string>
+    <string name="setting_notification_access_enabled">已允許 · 點按以檢視 Android 設定</string>
+    <string name="setting_notification_access_disabled">未允許 · 通知媒體動作與自動啟動篩選器需要此權限</string>
+    <string name="setting_notification_access_unavailable">此裝置無法使用通知存取設定</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="other">已儲存 %1$d 個捷徑 · 輕觸以管理或匯入連結</item>
+    </plurals>
+    <string name="category_privacy">隱私</string>
+    <string name="setting_privacy_policy">隱私權政策</string>
+    <string name="setting_privacy_policy_description">查看 Svartifoss 使用哪些資料，以及哪些線上服務為選用項目。</string>
+    <string name="setting_crash_reporting">傳送當機報告</string>
+    <string name="setting_crash_reporting_description">傳送 Firebase Crashlytics 診斷資料以協助修復問題。預設開啟；可隨時關閉。</string>
+    <string name="setting_announcements">公告通知</string>
+    <string name="setting_announcements_description">開發者偶爾傳送的通知 — 新版本與重要公告。透過 Firebase Cloud Messaging 傳送，不涉及帳號或使用者清單。預設開啟；可隨時關閉。</string>
+    <string name="announcement_notification_channel">公告</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">可將播放清單、專輯或曲目直接分享到 Svartifoss、貼上已複製的連結，或手動新增。手錶只會要求手機開啟連結；不需要登入服務。</string>
+    <string name="back">返回</string>
+    <string name="playlist_shortcuts_beta_badge">測試版</string>
+    <string name="playlist_shortcuts_intro_title">你的音樂，一點即達</string>
+    <string name="playlist_shortcuts_yours">你的捷徑</string>
+    <string name="playlist_shortcuts_empty_hint">新增分享的曲目、專輯或播放清單連結，讓它可在手錶上使用。</string>
+    <string name="playlist_shortcuts_add">新增捷徑</string>
+    <string name="playlist_shortcuts_paste">貼上連結</string>
+    <string name="playlist_shortcuts_reload_covers">重新載入封面</string>
+    <string name="playlist_shortcuts_reloading_covers">正在重新載入封面…</string>
+    <string name="playlist_shortcuts_covers_reloaded">封面已重新載入</string>
+    <string name="playlist_shortcuts_edit">編輯捷徑</string>
+    <string name="playlist_shortcut_save">儲存捷徑</string>
+    <string name="playlist_shortcut_editor_hint">貼上一個連結。Svartifoss 會自動識別其應用程式與內容類型。</string>
+    <string name="playlist_shortcut_detection_waiting">正在等待串流連結</string>
+    <string name="playlist_shortcut_detection_waiting_hint">支援 Spotify、YouTube Music、Apple Music、TIDAL、Deezer 等服務。</string>
+    <string name="playlist_shortcut_detected_format">已偵測：%1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">名稱</string>
+    <string name="playlist_shortcut_link_hint">分享連結或應用程式 URI</string>
+    <string name="playlist_shortcut_shuffle">隨機播放（僅限 YouTube Music）</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">連結</string>
+    <string name="playlist_type_track">曲目</string>
+    <string name="playlist_type_playlist">播放清單</string>
+    <string name="playlist_type_album">專輯</string>
+    <string name="playlist_type_artist">演出者</string>
+    <string name="playlist_type_show">節目</string>
+    <string name="playlist_type_episode">單集</string>
+    <string name="playlist_type_mix">合輯</string>
+    <string name="playlist_badge_shuffle">隨機播放</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">尚未新增串流捷徑</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="other">已儲存 %1$d 個</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">可排序的串流捷徑。長按並拖曳、使用「上移」或「下移」無障礙動作，或在鍵盤上按 Ctrl+上/下。</string>
+    <string name="playlist_shortcut_more_options">%1$s 的更多選項</string>
+    <string name="playlist_shortcut_menu_edit">編輯</string>
+    <string name="playlist_shortcut_menu_open">立即開啟</string>
+    <string name="playlist_shortcut_menu_copy">複製連結</string>
+    <string name="playlist_shortcut_menu_duplicate">複製</string>
+    <string name="playlist_shortcut_menu_share">分享</string>
+    <string name="playlist_shortcut_menu_delete">刪除</string>
+    <string name="playlist_shortcut_open_failed">沒有應用程式可開啟此連結</string>
+    <string name="streaming_shortcut_choose_app">開啟串流連結的應用程式</string>
+    <string name="playlist_shortcut_link_copied">已複製連結</string>
+    <string name="playlist_shortcut_import_invalid">分享的文字不包含有效的串流連結</string>
+    <string name="playlist_shortcut_clipboard_invalid">剪貼簿不包含有效的串流連結</string>
+    <string name="playlist_shortcut_name_required">輸入捷徑名稱</string>
+    <string name="playlist_shortcut_link_invalid">輸入有效的網頁連結或應用程式 URI</string>
+    <string name="playlist_shortcut_service_invalid">貼上有效連結以偵測服務</string>
+    <string name="playlist_shortcut_service_generic">相容連結 · Android 將選擇應用程式</string>
+    <string name="playlist_shortcut_service_installed">已安裝 %1$s · 可直接在其應用程式中開啟</string>
+    <string name="playlist_shortcut_service_not_installed">未安裝 %1$s · 可使用瀏覽器或相容應用程式</string>
+    <string name="playlist_shortcut_copy_name">%1$s 副本</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s 副本 %2$d</string>
+    <string name="playlist_shortcut_duplicated">已建立 %1$s</string>
+    <string name="playlist_shortcut_share_title">分享串流捷徑</string>
+    <string name="playlist_shortcut_share_failed">沒有可分享此捷徑的應用程式</string>
+    <string name="playlist_shortcut_deleted">已刪除 %1$s</string>
+    <string name="playlist_shortcut_undo">復原</string>
+
+    <string name="action_play_liked_songs_shuffled">隨機播放喜歡的歌曲（YT Music）</string>
+    <string name="action_search_history">搜尋紀錄</string>
+    <string name="search_history_empty">尚無最近的搜尋紀錄</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">更新</string>
+    <string name="setting_update_check">通知新版本</string>
+    <string name="setting_update_check_description">約每天一次檢查 GitHub 是否有新版本，並顯示通知</string>
+    <string name="setting_update_prereleases">包含預先發行版</string>
+    <string name="setting_update_prereleases_description">同時通知 Beta 版本</string>
+    <string name="setting_update_check_now">立即檢查更新</string>
+    <string name="setting_update_check_now_description">顯示最新版本，並可透過 Bluetooth 更新手錶</string>
+    <string name="update_screen_title">更新</string>
+    <string name="update_cover_content_description">Svartifoss，這款應用程式名稱的由來瀑布</string>
+    <string name="update_notification_channel">應用程式更新</string>
+    <string name="update_available_title">Svartifoss %1$s 已推出</string>
+    <string name="update_notification_text">輕觸以更新</string>
+    <string name="update_available_action">有可用更新</string>
+    <string name="update_installed_phone">手機：%1$s</string>
+    <string name="update_installed_versions">手機：%1$s · 手錶：%2$s</string>
+    <string name="update_watch_version_unknown">未知</string>
+    <string name="update_checking">正在檢查更新…</string>
+    <string name="update_check_failed">無法檢查更新。請檢查連線後再試一次。</string>
+    <string name="update_available_line">新版本：%1$s (%2$s)</string>
+    <string name="update_prerelease_marker">（預發行版）</string>
+    <string name="update_up_to_date">您目前使用的是最新版本 (%1$s)</string>
+    <string name="update_no_wear_asset">此版本沒有可傳送的手錶 APK。</string>
+    <string name="update_watch_hint">「更新手錶」會下載新版手錶應用程式並透過 Bluetooth 傳送；您需在手錶上確認安裝，不需要傳輸線或 Wear Installer。</string>
+    <string name="update_downloading">正在下載… %1$d%%</string>
+    <string name="update_connecting_watch">正在連線至手錶…</string>
+    <string name="update_transferring">正在傳送至手錶… %1$d%%</string>
+    <string name="update_confirm_on_watch">已傳送！手錶上已出現通知，請在手錶上輕觸通知以安裝。</string>
+    <string name="update_no_watch">沒有已連線的手錶。</string>
+    <string name="update_push_failed">傳送更新至手錶失敗。請再試一次。</string>
+    <string name="update_watch_button">更新手錶</string>
+    <string name="update_open_release_button">開啟版本頁面</string>
+    <string name="update_watch_behind">您的手錶仍為 %1$s — 請在下方將更新傳送至手錶。</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">讓手機與手錶應用程式保持同步</string>
+    <string name="update_state_checking">正在檢查更新…</string>
+    <string name="update_state_current">已是最新版本</string>
+    <string name="update_state_current_sub">目前執行最新版本 %1$s</string>
+    <string name="update_state_available">有可用更新</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">無法檢查更新</string>
+    <string name="update_state_failed_sub">請檢查連線後再試一次</string>
+    <string name="update_device_phone">手機</string>
+    <string name="update_device_watch">手錶</string>
+    <string name="update_versions_header">已安裝</string>
+    <string name="update_whats_new">最新內容</string>
+    <string name="update_phone_button">更新手機</string>
+    <string name="update_installing">正在開啟安裝程式…</string>
+    <string name="update_install_permission_needed">允許從 Svartifoss 安裝應用程式，然後再次輕觸「更新手機」。</string>
+    <string name="update_phone_failed">下載手機更新失敗。請再試一次。</string>
+    <string name="update_install_notification_title">Svartifoss 更新</string>
+    <string name="update_install_notification_tap">輕觸以安裝新版本</string>
+    <string name="update_install_notification_failed">安裝失敗。請在「設定」中允許從 Svartifoss 安裝，然後再試一次。</string>
+    <string name="setting_wear_album_accent_source">專輯強調色來源</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>平衡</item>
+        <item>最鮮豔</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>關閉</item>
+        <item>柔和</item>
+        <item>標準</item>
+        <item>粗體</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">強調色下限</string>
+    <string name="preview_metadata_album">專輯</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">曲目</string>
+    <string name="preview_metadata_genre">曲風</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">年份</string>
+    <string name="preview_metadata_format">格式</string>
+    <string name="preview_metadata_bitrate">位元率</string>
+    <string name="preview_metadata_position">位置</string>
+    <string name="preview_metadata_output">輸出</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">專輯詳細資料</string>
+    <string name="setting_wear_metadata_core_description">專輯、專輯演出者、唱片中的位置與長度。</string>
+    <string name="setting_wear_metadata_release">發行詳細資料</string>
+    <string name="setting_wear_metadata_release_description">曲風、年份、發行日期與唱片公司。</string>
+    <string name="setting_wear_metadata_credits">製作人員</string>
+    <string name="setting_wear_metadata_credits_description">播放器有提供時，顯示作曲者、詞曲作者與作者。</string>
+    <string name="setting_wear_metadata_technical">檔案詳細資料</string>
+    <string name="setting_wear_metadata_technical_description">格式、位元率、取樣率、聲道與大小。僅限本機曲目。</string>
+    <string name="setting_split_panel">分割面板</string>
+    <string name="setting_split_panel_description">決定 Split 錶面下半部顯示的內容。模糊封面會在文字後延續同一張封面；純色則呈現通知卡片風格。</string>
+    <string-array name="wear_split_panel_entries">
+        <item>模糊圖片</item>
+        <item>純色</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">播放詳細資料</string>
+    <string name="setting_wear_metadata_playback_description">精確至毫秒的位置、速度、音訊輸出，以及音訊串流或播放的來源（包括曲目位址）。當串流曲目沒有檔案可描述時，這是仍可填滿的資訊區塊。</string>
+    <string name="setting_wear_metadata_identifiers">識別碼</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC 與目錄 ID。預設關閉；需要時很有用，不需要時只會增加雜訊。</string>
+    <string name="setting_metadata_lookup">線上查詢曲目詳細資料</string>
+    <string name="setting_metadata_lookup_description">從免費的公開資料庫 MusicBrainz 補上播放應用程式未提供的資訊，例如 ISRC、唱片公司與發行日期。預設關閉。Metadata 錶面不需此功能也能運作；它只會增加資料列。除非您開啟此功能並選擇該錶面，否則不會傳送任何資料，而且只會傳送曲目名稱與演出者。</string>
+</resources>

@@ -1,0 +1,1996 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS støttes ikke på denne enheten</string>
+    <string name="setting_no_wearable_api_banner_description">Denne enheten har ikke Wear OS-komponenten i Google Play Services som Svartifoss trenger for å kommunisere med en klokke. Paring hjelper ikke — telefonappen kan ikke nå en klokke her. Alt nedenfor lagres likevel og tas i bruk hvis du installerer Svartifoss på en enhet som støtter det.</string>
+    <string name="setting_no_watch_banner">Ingen klokke tilkoblet</string>
+    <string name="setting_no_watch_banner_description">Disse innstillingene synkroniseres til Wear OS-klokken din, så de blir ikke synlige før en klokke er paret og tilkoblet — men du kan fortsatt konfigurere alt nedenfor nå.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Utseende</string>
+    <string name="setting_theme">Tema</string>
+    <string name="theme_light">Klart hvitt</string>
+    <string name="theme_dark">Bare svart</string>
+    <string name="theme_system">Følg systemet</string>
+    <string name="setting_language">Språk</string>
+    <string name="language_system">Følg systemet</string>
+    <string name="language_change_watch_notice">Klokken følger også dette språket når den er synkronisert.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Utvikler</string>
+    <string name="dev_mode_unlocked">Utviklermodus aktivert ✦</string>
+    <string name="dev_mode_clicks_remaining">%1$d trykk til for å låse opp utviklermodus</string>
+    <string name="dev_disable_mode">Deaktiver utviklermodus</string>
+    <string name="dev_disable_mode_description">Skjul denne delen igjen — trykk sju ganger på \"Installert versjon\" for å vise den igjen</string>
+    <string name="dev_mode_disabled">Utviklermodus deaktivert</string>
+    <string name="dev_build_info">Bygginformasjon</string>
+    <string name="dev_sync_watch">Tving synkronisering av klokkeinnstillinger</string>
+    <string name="dev_sync_watch_description">Send alle gjeldende innstillinger til den parede klokken umiddelbart</string>
+    <string name="dev_sync_watch_done">Innstillingene er synkronisert til klokken</string>
+    <string name="dev_copy_debug_info">Kopier feilsøkingsinformasjon</string>
+    <string name="dev_copy_debug_info_description">Kopier bygge- og enhetsdetaljer til utklippstavlen</string>
+    <string name="dev_show_archived">Vis arkiverte alternativer</string>
+    <string name="dev_show_archived_description">Vis klokkeoppsett og innstillinger som er arkivert på grunn av kjente problemer</string>
+    <string name="dev_copy_debug_info_done">Feilsøkingsinformasjonen er kopiert</string>
+    <string name="dev_open_update_screen">Åpne oppdateringsskjermen</string>
+    <string name="dev_open_update_screen_description">Forhåndsvis Oppdateringer-skjermen (omslagsbanner og oppsett for versjonsnotater) uten å vente på en faktisk utgivelse</string>
+    <string name="dev_watch_layout_bounds">Vis oppsettsgrenser på klokken</string>
+    <string name="dev_watch_layout_bounds_description">Marker synlige spillerelementer og berøringsområder på klokken. Kun diagnostisk overlegg.</string>
+    <string name="dev_watch_player_info">Vis spillerinformasjon på klokken</string>
+    <string name="dev_watch_player_info_description">Legg aktiv urskive, avspillingsstatus, fremdrift og gjengivelsesinformasjon som et overlegg på klokken.</string>
+    <string name="pref_reset_default">Tilbakestill til standard</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Du fant den skjulte fossen.
+
+Svartifoss — svarte basaltsøyler
+rammer inn en foss på Island,
+en påminnelse om at musikk flyter
+som vann over stein.
+
+♪ Laget med omtanke. ♪</string>
+    <string name="easter_egg_ok">Lukk</string>
+
+    <string name="nav_watch_face">Klokke</string>
+    <string name="watch_face_header">Klokkens utseende</string>
+    <string name="nav_controls">Kontroller</string>
+    <string name="nav_actions">Handlinger</string>
+    <string name="nav_settings">Innstillinger</string>
+
+    <string name="controls_header">Kontroller</string>
+    <string name="controls_state_playing">Musikk spilles</string>
+    <string name="controls_state_stopped">Ingen avspilling</string>
+    <string name="controls_playing_description">Velg hva hver inndata skal gjøre mens musikk spilles. Dette oppsettet er uavhengig av tilstanden uten avspilling.</string>
+    <string name="controls_stopped_description">Velg hva hver inndata skal gjøre før avspillingen starter eller etter at den stopper. Dette oppsettet er uavhengig av avspillingstilstanden.</string>
+
+    <string name="watch_live_preview">Direkte forhåndsvisning av klokken</string>
+    <string name="watch_preview_description">Direkte forhåndsvisning av den valgte klokkeflaten. Endringer vises her før du prøver dem på klokken.</string>
+    <string name="watch_section_style">Spiller</string>
+    <string name="watch_section_style_description">Velg spilleroppsettet og hvordan tittel, tid og fremdrift skal oppføre seg.</string>
+    <string name="watch_section_background">Bakgrunn</string>
+    <string name="watch_section_background_description">Styr albumomslag, uskarphet, nedtoning og lesbarhet bak spilleren.</string>
+    <string name="watch_section_colors">Farger</string>
+    <string name="watch_section_colors_description">Angi grunn-, fremdrifts- og albumaksenter, og finjuster deretter farger for tittel, artist, klokke, volum og paneler.</string>
+    <string name="watch_section_typography">Tekst</string>
+    <string name="watch_section_typography_description">Velg skrifttyper og finjuster tittel, artist, klokke, appikon, sekundære skjermer og Flex-tekst.</string>
+    <string name="watch_section_aod">Alltid på</string>
+    <string name="watch_section_aod_description">Konfigurer lavstrømsskjermen og se utseendet i omgivelsesmodus i forhåndsvisningen.</string>
+    <string name="watch_section_panels">Paneler</string>
+    <string name="watch_section_panels_description">Tilpass volum, søking, hurtigpanel og kø; når en rad fokuseres, åpnes den flaten i forhåndsvisningen.</string>
+    <string name="watch_section_mini_buttons">Miniknapper</string>
+    <string name="watch_section_mini_buttons_description">Tilpass den valgfrie snarveiraden. Trykk på «Miniknapper» nedenfor for å tilordne handlingene under Kontroller.</string>
+    <string name="watch_overview_description">Velg hva du vil tilpasse. Forhåndsvisningen og det lagrede temaet forblir aktive i alle områder.</string>
+    <string name="watch_back_to_overview">Tilbake til klokkeområder</string>
+
+    <string name="settings_section_general">Generelt</string>
+    <string name="settings_section_general_description">Apptema, aksentfarge og oppdateringsinnstillinger.</string>
+    <string name="settings_section_watch">Atferd</string>
+    <string name="settings_section_watch_description">Krone-, berørings-, haptikk- og handlingsmenyatferd på klokken.</string>
+    <string name="settings_section_automation">Automatisering</string>
+    <string name="settings_section_automation_description">Velg når Svartifoss åpnes og lukkes automatisk.</string>
+    <string name="settings_section_apps">Apper</string>
+    <string name="settings_section_apps_description">Finn sangtekster og metadata, strømmesnarveier, køomslag og Android-tilgang.</string>
+    <string name="settings_section_data">Data &amp; støtte</string>
+    <string name="settings_section_data_description">Sikkerhetskopier oppsettet, kontroller versjonen, diagnostikk eller få hjelp.</string>
+    <string name="settings_overview_description">Velg et område. Relaterte alternativer holdes samlet, mens søk fortsatt kan ta deg direkte til en hvilken som helst innstilling.</string>
+    <string name="settings_back_to_overview">Tilbake til innstillingsområder</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Slik bruker du Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss gjør klokken til en fjernkontroll for musikken som spilles på telefonen. Her er alt du kan gjøre fra håndleddet.</string>
+
+    <string name="tutorial_taps_title">Trykk på skjermsonene</string>
+    <string name="tutorial_taps_desc">Klokkeskjermen er delt i fire soner — øverst, nederst, venstre og høyre. Når du trykker på en sone, kjøres handlingen du har tilordnet den. Som standard spiller eller pauser venstre sone, høyre hopper til neste spor, og øvre og nedre sone endrer volumet.</string>
+
+    <string name="tutorial_quick_panel_title">Hurtighandlingspanel</string>
+    <string name="tutorial_quick_panel_desc">Dobbelttrykk midt på Spilles nå-skjermen for å åpne et panel med fire plasser — tre runde knapper og én bred rad under dem. Hvis du lar plassene være urørt, speiler de knappene som den avspillende appen viser i sitt eget varsel, slik at du får dens faktiske kontroller for lik, tilfeldig rekkefølge og gjenta. Tilordne en hvilken som helst handling til en plass, eller sett den til \"Ingen\" for å skjule den, under Handlinger på telefonen.</string>
+    <string name="tutorial_gestures_title">Enkelt-, dobbelt- &amp; langt trykk</string>
+    <string name="tutorial_gestures_desc">De fire kantsonene støtter separate handlinger for enkelttrykk, dobbelttrykk og langt trykk. Enkelttrykk i midten kan også konfigureres; dobbelttrykk der åpner alltid Hurtighandlinger, mens langt trykk åpner urskivevelgeren, køen eller ingenting i henhold til Innstillinger → Atferd.</string>
+
+    <string name="tutorial_buttons_title">Fysiske knapper</string>
+    <string name="tutorial_buttons_desc">Hvis klokken har sideknapper, kan du tilordne handlinger for enkelttrykk, dobbelttrykk og langt trykk til dem også. De fortsetter å virke selv når skjermen er av.</string>
+
+    <string name="tutorial_rotary_title">Roterende krone</string>
+    <string name="tutorial_rotary_desc">Velg om den roterende kronen eller rammen skal endre volum, søke i sporet eller ikke gjøre noe under Innstillinger → Atferd → Roterende krone / ramme. På klokker som rapporterer kronedreininger som knapper, tilordner du dem i Kontroller i stedet.</string>
+
+    <string name="tutorial_swipe_up_title">Sveip opp, ned, venstre &amp; høyre</string>
+    <string name="tutorial_swipe_up_desc">Sveip opp, ned eller til venstre på Spilles nå-skjermen kan hver konfigureres til å åpne hva som helst — handlingsmenyen, avspillingskøen, hoppe over spor, spillelistene dine og mer. Konfigurer hver enkelt i Kontroller ved å velge Musikk spilles eller Ingen avspilling. Som standard åpner sveip opp handlingsmenyen, og de andre gjør ingenting før du tilordner dem. Sveip til høyre er urørt — det er den universelle Wear OS-bevegelsen for å avslutte appen.</string>
+    <string name="tutorial_shortcuts_title">Strømmesnarveier</string>
+    <string name="tutorial_shortcuts_desc">Lagre en lenke til et spor, album, en miks eller spilleliste fra Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music eller SoundCloud, og tilordne den deretter til en hvilken som helst knapp, bevegelse eller panelplass. Den raskeste måten er å dele lenken rett til Svartifoss fra strømmeappen; du kan også lime inn en kopiert lenke eller skrive inn en. Ingen konto eller pålogging kreves — klokken ber telefonen starte avspillingen, slik at en snarvei spiller i stedet for bare å åpne appen.</string>
+    <string name="tutorial_yt_music_title">YouTube Music-snarveier</string>
+    <string name="tutorial_yt_music_desc">Tilordne \"Spill likte sanger\", \"Spill likte sanger, tilfeldig\" eller \"Mine spillelister\" til en knapp, bevegelse eller sveip for å gå rett til musikken uten å ta på telefonen. \"Søkehistorikk\" husker nylige søk på klokken — trykk og hold på én for å slette den.</string>
+
+    <string name="tutorial_exit_title">Sveip for å avslutte</string>
+    <string name="tutorial_exit_desc">Sveip fra venstre kant for å forlate spilleren. Avspillingen kan pauses automatisk når du avslutter — aktiver dette i Innstillinger.</string>
+
+    <string name="tutorial_tile_title">Hurtigkontroll-flis</string>
+    <string name="tutorial_tile_desc">Sveip sidelengs på urskiven til Svartifoss-flisen for umiddelbar avspilling, pause og hopping uten å åpne appen.</string>
+
+    <string name="tutorial_complication_title">Komplikasjon på urskiven</string>
+    <string name="tutorial_complication_desc">Legg til Svartifoss-komplikasjonen for albumomslag på urskiven for å se gjeldende omslag med et blikk. Trykk på den for å åpne spilleren.</string>
+
+    <string name="tutorial_system_title">Systemets mediekontroller</string>
+    <string name="tutorial_system_desc">Gjeldende spor vises også i klokkens egne mediekontroller og nylige apper, slik at du kan styre avspillingen derfra også.</string>
+
+    <string name="tutorial_tip">Tips: Konfigurer begge tilstandene i Kontroller, og organiser deretter menyen i Handlinger.</string>
+
+    <string name="navigation_drawer_open">Åpne navigasjonsskuff</string>
+    <string name="navigation_drawer_close">Lukk navigasjonsskuff</string>
+
+    <string name="action_settings">Innstillinger</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_play">Spill av</string>
+    <string name="action_skip_prev">Hopp tilbake</string>
+    <string name="action_skip_next">Hopp frem</string>
+    <string name="action_play_pause">Spill av / Pause</string>
+    <string name="action_stop">Stopp</string>
+    <string name="action_restart">Start sporet på nytt</string>
+    <string name="action_mute">Demp / Slå på lyd</string>
+    <string name="action_skip_seconds">Hopp frem %1$d sekunder</string>
+    <string name="action_reverse_seconds">Spol tilbake %1$d sekunder</string>
+    <string name="action_like">Lik</string>
+    <string name="action_shuffle">Tilfeldig rekkefølge</string>
+    <string name="action_repeat">Gjenta</string>
+    <string name="action_repeat_one">Gjenta én</string>
+    <string name="action_search">Søk etter musikk</string>
+    <string name="action_open_lyrics">Sangtekster</string>
+    <string name="group_playback_controls">Avspillingskontroller</string>
+    <string name="group_streaming_shortcuts">Spor, album &amp; spillelister</string>
+    <string name="pick_action">Velg handling</string>
+    <string name="action_search_hint">Søk i denne listen</string>
+    <string name="action_search_empty">Ingen handlinger samsvarer med søket.</string>
+    <string name="action_opens_more">Flere alternativer</string>
+    <string name="action_volume_up">Øk volumet</string>
+    <string name="volume_down">Senk volumet</string>
+    <string name="group_volume_controls">Volumkontroller</string>
+    <string name="no_watch_detected">Ingen klokke oppdaget</string>
+    <string name="connection_instructions">Åpne Svartifoss på klokken for å opprette tilkoblingen</string>
+    <string name="playing_controls">Kontroller under avspilling</string>
+    <string name="stopped_controls">Kontroller uten avspilling</string>
+    <string name="actions_menu">Handlingsmeny</string>
+    <string name="actions_intro">Konfigurer begge handlingsflatene på klokken med avspillingskontroller, apper eller lagrede spor, album og spillelister. Hurtigpanelet forblir kompakt; menyen nedenfor kan inneholde en lengre sortert liste.</string>
+    <string name="actions_quick_panel_section">Hurtigpanel</string>
+    <string name="actions_watch_menu_section">Meny på klokken</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d handling · Trykk for å redigere · Hold og dra for å endre rekkefølge</item>
+        <item quantity="other">%1$d handlinger · Trykk for å redigere · Hold og dra for å endre rekkefølge</item>
+    </plurals>
+    <string name="actions_reorder_description">Sortert handlingsmeny. Trykk og hold for å dra, bruk tilgjengelighetshandlingene Flytt opp eller Flytt ned, eller trykk Ctrl+Opp/Ned på et tastatur.</string>
+    <string name="actions_move_up">Flytt opp</string>
+    <string name="actions_move_down">Flytt ned</string>
+    <string name="actions_moved_to_position">%1$s flyttet til posisjon %2$d av %3$d.</string>
+    <string name="actions_empty">Ingen handlinger ennå. Bruk legg til-knappen for å opprette den første.</string>
+    <string name="actions_add">Legg til handling</string>
+    <string name="on_screen_buttons">BERØRINGSSONER</string>
+    <string name="physical_buttons">FYSISKE KNAPPER</string>
+    <string name="physical_buttons_disconnected">Koble til og åpne Svartifoss på klokken for å konfigurere de fysiske knappene. Berøringssoner, sveip og miniknapper er tilgjengelige nå.</string>
+    <string name="physical_buttons_unavailable">Denne klokken rapporterte ingen konfigurerbare fysiske knapper.</string>
+    <string name="control_assignment_tap">Trykk: %1$s</string>
+    <string name="control_assignment_hold">Hold: %1$s</string>
+    <string name="control_assignment_both">Trykk: %1$s · Hold: %2$s</string>
+    <string name="tap_a_zone_to_configure">Trykk på en sone på klokken for å tilordne en handling</string>
+    <string name="touch_zone_top">Øvre sone</string>
+    <string name="touch_zone_bottom">Nedre sone</string>
+    <string name="touch_zone_left">Venstre sone</string>
+    <string name="touch_zone_right">Høyre sone</string>
+    <string name="touch_zone_center">Trykk i midten</string>
+    <string name="touch_zone_action">%1$s: %2$s. Trykk for å konfigurere.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">SVEIPBEVEGELSER</string>
+    <string name="tap_a_swipe_to_configure">Trykk på en retning for å velge hva den åpner</string>
+    <string name="swipe_gesture_up">Sveip opp</string>
+    <string name="swipe_gesture_down">Sveip ned</string>
+    <string name="swipe_gesture_left">Sveip til venstre</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Opp</string>
+    <string name="swipe_gesture_label_down">Ned</string>
+    <string name="swipe_gesture_label_left">Venstre</string>
+
+    <string name="screen_buttons">MINIKNAPPER</string>
+    <string name="tap_a_screen_button_to_configure">Opptil tre synlige knapper nær bunnen av klokkeskjermen — trykk på en plass for å tilordne en handling</string>
+    <string name="screen_button_1">Miniknapp 1 (venstre)</string>
+    <string name="screen_button_2">Miniknapp 2 (midten)</string>
+    <string name="screen_button_3">Miniknapp 3 (høyre)</string>
+    <string name="screen_button_label_1">Knapp 1</string>
+    <string name="screen_button_label_2">Knapp 2</string>
+    <string name="screen_button_label_3">Knapp 3</string>
+    <string name="no_action">Ingen handling</string>
+    <string name="gesture_single_press">Enkelttrykk</string>
+    <string name="gesture_double_press">Dobbelttrykk</string>
+    <string name="gesture_long_press">Langt trykk</string>
+    <string name="gesture_swipe_action">Handling</string>
+    <string name="center_button_quick_panel_note">Dobbelttrykk i midten åpner alltid Hurtighandlinger. Langt trykk der kjører valget under Innstillinger → Atferd. Ingen av bevegelsene endres når du tilordner midttrykket her.</string>
+    <string name="start_playback">Start avspilling</string>
+    <string name="uninstalled_app">Avinstallert app</string>
+
+    <string name="play_app">Spill %1$s</string>
+    <string name="tasker_task">Tasker-oppgave</string>
+    <string name="icon_selection_title">Ikonvalg</string>
+    <string name="icon_selection_gallery">Fra galleri</string>
+    <string name="icon_selection_no_icon_pack">Med denne funksjonen kan du velge et egendefinert ikon for handlingen fra
+        en installert ikonpakke.
+
+Det ser dessverre ut til at du ikke har noen ikonpakker installert.</string>
+    <string name="icon_selection_no_storage_permission">Med denne funksjonen kan du velge et egendefinert ikon for handlingen fra
+        en installert ikonpakke.
+
+Noen ikonpakker krever at apper har lagringstillatelse. Du må tillate dette for å bruke funksjonen.</string>
+    <string name="delete">Slett</string>
+    <string name="action_text">Handlingstekst</string>
+    <string name="swap_action">Bytt handling</string>
+    <string name="open_actions_menu">Åpne handlingsmenyen</string>
+    <string name="open_playlist_menu">Vis gjeldende spilleliste</string>
+    <string name="misc_settings">Diverse innstillinger</string>
+
+    <string name="category_backup">Sikkerhetskopi</string>
+    <string name="export_config">Eksporter konfigurasjon</string>
+    <string name="export_config_description">Lagre knappetilordninger, handlingsliste og klokkeinnstillinger i en fil</string>
+    <string name="import_config">Importer konfigurasjon</string>
+    <string name="import_config_description">Gjenopprett knappetilordninger, handlingsliste og klokkeinnstillinger fra en fil</string>
+    <string name="export_config_done">Konfigurasjonen er eksportert</string>
+    <string name="export_config_failed">Kunne ikke eksportere konfigurasjonen</string>
+    <string name="import_config_done_title">Importen var vellykket</string>
+    <string name="import_config_done_message">Svartifoss må startes på nytt for å bruke den importerte konfigurasjonen.</string>
+    <string name="import_config_failed">Kunne ikke importere konfigurasjonen — filen kan være ugyldig eller fra en inkompatibel versjon</string>
+    <string name="action_restart_now">Start på nytt nå</string>
+
+    <string name="category_about">Om</string>
+    <string name="category_music_screen">Musikkskjerm</string>
+    <string name="category_watch_screen">Klokkeskjerm</string>
+    <string name="category_mini_buttons">Miniknapper</string>
+    <string name="category_screen_face">Spillerutseende</string>
+    <string name="category_wf_screen_behavior">Skjermatferd</string>
+    <string name="category_wf_player_progress">Fremdrift, søking &amp; tid</string>
+    <string name="category_album_background">Albumbakgrunn</string>
+    <string name="category_music_colors">Farger fra musikken</string>
+    <string name="category_wf_typography_font">Skrifttype</string>
+    <string name="category_wf_typography_title">Tittel</string>
+    <string name="category_wf_typography_artist">Artist</string>
+    <string name="category_wf_typography_icon">Appikon</string>
+    <string name="category_wf_typography_flex">Google Sans Flex-akser</string>
+    <string name="category_wf_metadata">Innhold på Metadata-urskiven</string>
+    <string name="category_wf_typography_secondary">Tekst på andre skjermer</string>
+    <string name="category_wf_colors_title">Tittelfarger</string>
+    <string name="category_wf_colors_artist">Artistfarger</string>
+    <string name="category_wf_colors_clock">Klokkefarger</string>
+    <string name="setting_wear_font_flex_hint_title">Om disse kontrollene</string>
+    <string name="setting_wear_flex_axes_hint">Disse innstillingene finjusterer Google Sans Flex spesifikt — velg det ovenfor for å bruke dem. Tittel- og artistvekt/kursiv ovenfor angir allerede denne skrifttypens egne akser for vekt (wght) og helning (slnt); de fire kontrollene nedenfor gjelder hele urskiven.</string>
+    <string name="setting_wear_font_flex_width">Bredde</string>
+    <string name="setting_wear_font_flex_width_description">Horisontal strekking, fra kondensert til utvidet (25–151). 100 er skrifttypens normale bredde.</string>
+    <string name="setting_wear_font_flex_optical_size">Optisk størrelse</string>
+    <string name="setting_wear_font_flex_optical_size_description">Justerer strekdetaljer etter tekstens effektive størrelse (6–144). Lavere verdier passer liten tekst; høyere verdier passer stor visningstekst.</string>
+    <string name="setting_wear_font_flex_grade">Grad</string>
+    <string name="setting_wear_font_flex_grade_description">Forskyver vekten litt uten å endre oppsettet (0–100) — en subtil måte å øke kontrasten på en mørk skjerm.</string>
+    <string name="setting_wear_font_flex_roundness">Rundhet</string>
+    <string name="setting_wear_font_flex_roundness_description">Blander strekavslutninger fra skarpe (0) til helt avrundede (100) for et vennligere uttrykk.</string>
+    <string name="preview_sample_title">Sangtittel</string>
+    <string name="preview_sample_artist">Artistnavn</string>
+    <string name="preview_sample_next_title">Neste sang</string>
+    <string name="preview_playback_stopped">Stoppet</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">linjen før</string>
+    <string name="preview_verse_current">linjen som spilles nå</string>
+    <string name="preview_verse_next">og linjen etter</string>
+    <string name="preview_chat_today">I dag</string>
+    <string name="category_gestures">Bevegelser &amp; inndata</string>
+    <string name="category_watch_navigation">Navigasjon &amp; snarveier</string>
+    <string name="category_rotary_input">Roterende inndata &amp; finjustering</string>
+    <string name="category_watch_feedback">Tilbakemelding &amp; avslutningsatferd</string>
+    <string name="category_watch_display">Klokkeskjerm</string>
+    <string name="setting_wear_keep_screen_on">Hold skjermen på</string>
+    <string name="setting_wear_keep_screen_on_description">Forhindre at klokkeskjermen slås av når tidsavbruddet for inaktivitet utløper mens en Svartifoss-skjerm er åpen. Når du senker håndleddet, dimmes klokken fortsatt — denne bevegelsen styres av systemet. Bruker mer batteri. Sangtekstskjermen holdes alltid på uansett denne innstillingen.</string>
+    <string name="setting_lyrics_enabled">Slå opp sangtekster på nettet</string>
+    <string name="setting_lyrics_enabled_description">La telefonen hente synkroniserte sangtekster fra LRCLIB når du åpner sangtekstskjermen på klokken. Spornavn, artist og lengde sendes; ingenting annet, og ingenting lagres på disk. Slå dette av, så opplyser sangtekstskjermen at oppslag er deaktivert.</string>
+    <string name="setting_overlay_blur_radius">Overleggsuskarphet</string>
+    <string name="setting_overlay_blur_radius_description">Styrken på uskarpheten (px) i den frostede bakgrunnen bak volum-/søkringene og hurtighandlingspanelet — uavhengig av uskarpheten i albumomslagsbakgrunnen</string>
+    <string name="category_action_list">Handlingsliste</string>
+    <string name="category_automation">Automatisering</string>
+    <string name="category_idle">Når ingenting spilles</string>
+    <string name="installed_version">Installert versjon</string>
+    <string name="get_support">Få støtte</string>
+    <string name="get_support_description">Send applogger til utvikleren for støtte</string>
+    <string name="contact_developer">Kontakt utvikleren</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — kontakt</string>
+    <string name="contact_developer_chooser">Send e-post</string>
+    <string name="contact_developer_no_client">Ingen e-postapp er installert. Adressen ble kopiert til utklippstavlen.</string>
+    <string name="about_developer_title">Om utvikleren</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss startet som et personlig prosjekt — jeg ville oppdatere Music Center for Wear til det som er mulig i dag, ganske enkelt for å kunne bruke det selv hver dag. Resultatet ble godt nok til at jeg bestemte meg for å dele det med alle. Dette er min første app, og det er lite som slår følelsen av å se at noe du har laget faktisk er nyttig for andre også.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Lisenser for åpen kildekode</string>
+    <string name="setting_always_show_time">Vis alltid tiden</string>
+    <string name="setting_always_show_time_off_description">Gjeldende tid vises bare i omgivelsesmodus</string>
+    <string name="setting_always_show_time_on_description">Gjeldende tid vises alltid. Ikonet for den øvre handlingen vil ikke være synlig (det erstattes av klokken), men handlingen fungerer fortsatt normalt.</string>
+    <string name="tap_to_force_stop">Trykk for å stoppe kontrollene</string>
+    <string name="notification_action_stop">Stopp</string>
+    <string name="notification_action_force_stop">Tving stopp</string>
+    <string name="error_notification_access">Ingen tilgang til varsler. Sjekk telefonen.</string>
+    <string name="error_notifications">Feilvarsler</string>
+    <string name="notification_access_notification_title">Svartifoss trenger tilgang til varsler</string>
+    <string name="notification_access_notification_title_description">Trykk på dette varselet og aktiver Svartifoss for å løse problemet</string>
+    <string name="error_service_not_enabled">Tilgang til varsler kreves</string>
+    <string name="error_service_not_enabled_description">For å styre musikk fra klokken trenger Svartifoss tilgang til varsler — det er slik Android lar appen se hvilken app som spiller og sende kommandoer for spill av, pause og hopp.
+
+Svartifoss leser aldri innholdet i varslene dine. Denne tillatelsen brukes bare til å finne den aktive medieøkten.
+
+Trykk på \"Åpne innstillinger\", og slå deretter på Svartifoss under varslingstilgang.</string>
+    <string name="action_open_settings">Åpne innstillinger</string>
+    <string name="settings_search_title">Søk i innstillinger</string>
+    <string name="settings_search_hint">Søk i innstillinger</string>
+    <string name="settings_search_clear">Tøm søk</string>
+    <string name="settings_search_prompt">Søk etter navn i alle innstillinger under Innstillinger og Klokkens utseende.</string>
+    <string name="settings_search_no_results">Ingen innstilling samsvarer.</string>
+    <string name="settings_search_prerequisite">Dette alternativet avhenger av et annet valg. Juster innstillingen som vises her for å gjøre det synlig.</string>
+    <string name="setting_numeric_range_error">Skriv inn en verdi fra %1$d til %2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">Trykk for å gi tilgang — avspillingskontrollen forblir inaktiv til du gjør det</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Installer Svartifoss på klokken</string>
+    <string name="no_watch_app_description">Svartifoss fant ikke klokkeappen sin på den parede Wear OS-klokken. Telefon- og klokkeappen fungerer sammen — uten klokkeappen vil styring av avspilling fra håndleddet ikke fungere.
+
+Svartifoss finnes ikke i Play Butikk — klokkeappen sidelastes separat (f.eks. med Wear Installer). Trykk på \"Vis utgivelser\" for å åpne utgivelsessiden på GitHub og hente APK-en for klokken. Hvis du nettopp installerte den, gi synkroniseringen et minutt til å fullføres.</string>
+    <string name="no_watch_app_button">Vis utgivelser</string>
+    <string name="required_permission">Nødvendig tillatelse</string>
+    <string name="setting_pause_on_swipe_exit">Pause avspilling ved avslutning med sveip</string>
+    <string name="setting_pause_on_swipe_exit_description">Pause all avspilling automatisk når du avslutter Svartifoss på klokken med et sveip til venstre.
+
+Avslutning med strømknappen påvirkes ikke og vil aldri gi automatisk pause.</string>
+    <string name="setting_rotating_crown_off_period">Forsinkelse for roterende inndata etter at skjermen slås på</string>
+    <string name="setting_rotating_crown_off_period_description">Roterende inndata (for eksempel roterende kroner) kan være overfølsomme på noen enheter. For å unngå utilsiktede volumendringer deaktiveres roterende inndata i <![CDATA[<b>%1$s millisekunder</b>]]> etter at du slår på skjermen.</string>
+    <string name="setting_rotary_seek">Søk med roterende krone</string>
+    <string name="setting_rotary_seek_description">Når dette er aktivert, søker du i det gjeldende sporet ved å dreie kronen i stedet for å endre volumet. Volumet kan fortsatt endres med knapper på skjermen eller fysiske knapper.</string>
+    <string name="setting_wear_rotary_action">Roterende krone / ramme</string>
+    <string name="wear_rotary_action_volume">Endre volum</string>
+    <string name="wear_rotary_action_seek">Søk i sporet</string>
+    <string name="wear_rotary_action_off">Gjør ingenting</string>
+    <string name="setting_rotating_sensitivity">Følsomhet for roterende inndata</string>
+    <string name="setting_rotating_sensitivity_description">Følsomhet for roterende inndata. Et høyere tall betyr at samme bevegelse på den roterende kronen øker volumet mer. Nå satt til <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Deaktiver dobbeltklikk på fysisk knapp i omgivelsesmodus</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Noen klokker har feilaktige knapper der ett klikk på den fysiske knappen i omgivelsesmodus noen ganger registreres som et dobbeltklikk.
+
+Hvis du opplever dette, kan du aktivere dette alternativet for å deaktivere dobbeltklikk helt i omgivelsesmodus (f.eks. vil to klikk bare aktivere handlingen for ett klikk). To klikk når klokken er aktiv påvirkes ikke.</string>
+    <string name="setting_haptic_feedback">Haptisk tilbakemelding</string>
+    <string name="setting_haptic_feedback_description">La klokken vibrere når du trykker på knapper.</string>
+    <string name="setting_auto_start">Åpne Svartifoss automatisk</string>
+    <string name="setting_auto_start_description">Åpne Svartifoss automatisk på klokken når musikkavspilling starter på telefonen.</string>
+    <string name="setting_auto_start_apps_blacklist">Apper for automatisk start</string>
+    <string name="setting_auto_start_apps_blacklist_description">Liste over medieapper som kan starte Svartifoss automatisk</string>
+    <string name="setting_dim_album_art">Spillerskyggelegging</string>
+    <string name="setting_dim_album_art_description">Legg til en brukervalgt skyggebehandling mellom omslaget og spillerkontrollene.</string>
+    <string name="setting_album_art_style">Stil for albumomslag</string>
+    <string name="setting_album_art_style_description">Velg hvordan bakgrunnen for Spilles nå ser ut på klokken.</string>
+    <string name="setting_album_art_blur_radius">Uskarphetsintensitet</string>
+    <string name="setting_album_art_blur_radius_description">Styrken på uskarphet over hele skjermen når den valgte bakgrunnen bruker uskarphet. Nå <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Dimmestyrke</string>
+    <string name="setting_album_art_dim_strength_description">Hvor kraftig albumomslaget mørklegges for at teksten skal være lesbar. Nå <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Skyggeleggingstil</string>
+    <string name="setting_player_shading_intensity">Skyggeleggingens intensitet</string>
+    <string name="setting_player_shading_intensity_description">Hvor kraftig skyggeleggingen mørklegger bakgrunnen. 100%% er full styrke; gå høyere for ekstra kontrast (opptil 150%%). Nå <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Bruk dette utseendet på alle urskiver</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Kopier utseendeinnstillingene for denne urskiven til alle andre urskiver</string>
+    <string name="apply_appearance_confirm_title">Bruke på alle urskiver?</string>
+    <string name="apply_appearance_confirm_message">Dette overskriver utseendeinnstillingene for alle andre urskiver med de gjeldende. Atferdsinnstillingene dine endres ikke.</string>
+    <string name="apply_appearance_confirm_button">Bruk</string>
+    <string name="apply_appearance_done">Brukt på alle urskiver</string>
+    <string name="category_wf_layout_actions">Oppsett</string>
+    <string name="setting_reset_appearance">Tilbakestill dette oppsettet</string>
+    <string name="setting_reset_appearance_description">Gjenopprett utseendet til denne urskiven til de opprinnelige standardverdiene</string>
+    <string name="reset_appearance_confirm_title">Tilbakestille dette oppsettet?</string>
+    <string name="reset_appearance_confirm_message">Utseendeinnstillingene for denne urskiven går tilbake til standardverdiene. Atferdsinnstillingene og andre urskiver påvirkes ikke.</string>
+    <string name="reset_appearance_confirm_button">Tilbakestill</string>
+    <string name="reset_appearance_done">Oppsettet er tilbakestilt til standard</string>
+    <string name="setting_reset_all_faces">Tilbakestill alle urskiver til standard</string>
+    <string name="setting_reset_all_faces_description">Gjenopprett utseendet til alle innebygde urskiver til de opprinnelige standardverdiene</string>
+    <string name="reset_all_faces_confirm_title">Tilbakestille alle urskiver?</string>
+    <string name="reset_all_faces_confirm_message">Utseendet til alle innebygde urskiver går tilbake til de opprinnelige standardverdiene, og eventuelle aktive egendefinerte temaer slås av. Lagrede egendefinerte temaer, atferdsinnstillinger og valgt urskive beholdes.</string>
+    <string name="reset_all_faces_confirm_button">Tilbakestill alle</string>
+    <string name="reset_all_faces_done">Alle urskiver er tilbakestilt til standard</string>
+    <string name="face_reset_migration_title">Oppdater klokkens utseende</string>
+    <string name="face_reset_migration_message">Du oppdaterte fra en eldre versjon der alle urskiver delte ett sett med utseendeinnstillinger. Hver urskive husker nå sine egne, så de gamle innstillingene kan se feiltilpasset ut på urskiver du aldri tilpasset direkte. Vi anbefaler å tilbakestille alle urskiver til de nye standardverdiene, eller tømme appdataene for en helt ny start.</string>
+    <string name="face_reset_migration_reset_button">Tilbakestill alle urskiver</string>
+    <string name="face_reset_migration_clear_data_button">Tøm appdata</string>
+    <string name="setting_player_shading_color">Skyggefarge</string>
+    <string name="setting_wear_shading_custom_color">Egendefinert skyggefarge</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Svart</item>
+        <item>Albumaksent</item>
+        <item>Dempet album</item>
+        <item>Egendefinert farge</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Følg spillertema</item>
+        <item>Kantvignett</item>
+        <item>Kantvignett (sterk)</item>
+        <item>Kantvignett (kraftig)</item>
+        <item>Nedre hjørne</item>
+        <item>Nedre toning</item>
+        <item>Gulv og tak</item>
+        <item>Fullskjermsfilter</item>
+        <item>Albumfargetoning</item>
+        <item>Tofarget albumgradient</item>
+        <item>Sidegardiner</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Albumomslagets opasitet i omgivelsesmodus</string>
+    <string name="setting_ambient_album_art_opacity_description">Hvor synlig albumomslaget forblir i omgivelsesmodus. Nå <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Tidsavbrudd for volum-/søkeoverlegg</string>
+    <string name="setting_volume_overlay_timeout_description">Hvor lenge volum- og søkeoverlegg forblir på skjermen etter justering. Nå <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Dødsone for roterende inndata</string>
+    <string name="setting_rotary_deadzone_description">Minste bevegelse på kronen før endringer i volum eller søking trer i kraft. Bidrar til å hindre utilsiktede justeringer. Nå <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Wear-opplevelse</string>
+    <string name="setting_swipe_gestures_hint">Sveipbevegelser</string>
+    <string name="setting_swipe_gestures_hint_description">Sveip opp/ned/venstre kan hver åpne en hvilken som helst handling. Trykk her for å konfigurere dem for Musikk spilles eller Ingen avspilling. Sveip til høyre er fortsatt reservert for å avslutte appen.</string>
+    <string name="setting_screen_buttons_hint">Miniknapper</string>
+    <string name="setting_screen_buttons_hint_description">Opptil tre synlige knapper, hver med handlinger for trykk og langt trykk. Trykk her for å konfigurere dem for Musikk spilles eller Ingen avspilling.</string>
+    <string name="dev_screen_buttons_offset">Miniknappenes posisjon</string>
+    <string name="dev_screen_buttons_offset_description">Foretrukket avstand i dp mellom bunnen av klokkeskjermen og miniknappene (standard 42). Raden justerer seg fortsatt automatisk bort fra lange titler.</string>
+    <string name="setting_screen_buttons_tilt">Knappehelling</string>
+    <string name="setting_screen_buttons_tilt_description">Hvor mye sideknappene følger skjermens kurve. 0 = rett rad; 100 = full bue med skrå ikoner.</string>
+    <string name="setting_screen_buttons_bg">Bakgrunn for miniknapper</string>
+    <string name="setting_screen_buttons_opacity">Miniknappenes opasitet</string>
+    <string name="setting_screen_buttons_opacity_description">Opasiteten til hele miniknappgruppen (0–100%%). Nå <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Hurtighandlingspanel</string>
+    <string name="quick_panel_link_summary">Dobbelttrykk midt på klokkeskjermen for å åpne den. Trykk her for å konfigurere de fire plassene under Handlinger.</string>
+    <string name="quick_panel_config_hint">Dette er knappene i panelet som åpnes ved å dobbelttrykke midt på klokkeskjermen. Trykk på en rad for å velge handlingen (\"Ingen\" skjuler den); langt trykk gjenoppretter standardverdien.</string>
+    <string name="quick_panel_slot_1">Knapp 1</string>
+    <string name="quick_panel_slot_2">Knapp 2</string>
+    <string name="quick_panel_slot_3">Knapp 3</string>
+    <string name="quick_panel_slot_long">Lang knapp</string>
+    <string name="quick_panel_slot_default">%1$s (standard)</string>
+    <string name="quick_panel_slot_hidden">Skjult</string>
+    <string name="quick_panel_default_like">Lik</string>
+    <string name="quick_panel_default_shuffle">Tilfeldig rekkefølge</string>
+    <string name="quick_panel_default_repeat">Gjenta</string>
+    <string name="quick_panel_default_up_next">Neste</string>
+    <string name="setting_wear_center_long_press_queue">Langt trykk i midten for kø</string>
+    <string name="setting_wear_center_long_press_queue_description">Langt trykk midt på Spilles nå-skjermen for å åpne avspillingskøen.</string>
+    <string name="setting_wear_center_long_press">Langt trykk i midten</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Bytt urskive</item>
+        <item>Åpne køen</item>
+        <item>Ingenting</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Grunnoppsett</string>
+    <string name="setting_wear_screen_face_description">Velg strukturen dette temaet bruker. Lagrede temaer kan kombinere dette oppsettet med egne skrifttyper, farger, uskarphet, skyggelegging, AOD og paneler.</string>
+    <string name="setting_wear_show_track_title">Vis sangtittel</string>
+    <string name="setting_wear_show_track_title_description">Vis navnet på den gjeldende sangen i spilleren</string>
+    <string name="setting_wear_show_track_artist">Vis artistnavn</string>
+    <string name="setting_wear_show_track_artist_description">Vis gjeldende artist i spilleren</string>
+    <string name="setting_wear_show_source_icon">Vis ikonet til appen som spiller</string>
+    <string name="setting_wear_show_source_icon_description">Vis ikonet til appen som spiller ved siden av artisten. Bruker ikonet fra medievarselet. Når dette er av, sendes ikonet aldri til klokken.</string>
+    <string name="setting_wear_player_controls_visible">Vis spillerkontroller</string>
+    <string name="setting_wear_player_controls_visible_description">Vis eller skjul innebygde knapper i Klassisk, Plakat, Studio og andre konfigurerbare oppsett uten å deaktivere berøringsområdene deres</string>
+    <string name="setting_wear_quadrant_tap_flash">Blink med ikonet ved trykk</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Når handlingen til en hjørnesone utløses, blinker ikonet kort med full lysstyrke — spesielt nyttig med skjermtemaet Skjult, der ikonet ellers er usynlig og ikke gir noen bekreftelse på hvilken handling som nettopp ble kjørt.</string>
+    <string name="setting_wear_internal_progress_visible">Oppsettets fremdriftsindikator</string>
+    <string name="setting_wear_internal_progress_visible_description">Vis den ekstra fremdriftsindikatoren som er utformet for dette oppsettet. Ringene rundt avspillingsknappen i Expressive og Material er en del av kontrollene deres og forblir tilgjengelige.</string>
+    <string name="setting_wear_edge_progress_visible">Vis fremdriftsbue ved kanten</string>
+    <string name="setting_wear_edge_progress_visible_description">Skjul bare den visuelle buen rundt skjermen. Kantsøking er fortsatt et eget alternativ.</string>
+    <string name="setting_wear_edge_seek_enabled">Søk fra skjermkanten</string>
+    <string name="setting_wear_edge_seek_enabled_description">Trykk eller dra langs skjermkanten for å hoppe til et nøyaktig punkt, selv når buen er skjult</string>
+    <string name="setting_wear_screen_theme">Kontrollstil</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Balansert</string>
+    <string name="wear_screen_theme_default_description">Standard hierarki og kontrollstørrelser.</string>
+    <string name="wear_screen_theme_minimal">Minimal</string>
+    <string name="wear_screen_theme_minimal_description">Bruker mindre og mer diskrete kontroller samtidig som alle handlinger forblir synlige og brukbare.</string>
+    <string name="wear_screen_theme_compact">Kompakt</string>
+    <string name="wear_screen_theme_compact_description">Bruker en tettere kontrollutforming uten å endre handlingene dine.</string>
+    <string name="wear_screen_theme_cinema">Kino</string>
+    <string name="wear_screen_theme_cinema_description">Mykner kontrollene uten å endre omslaget.</string>
+    <string name="wear_screen_theme_vivid">Livlig</string>
+    <string name="wear_screen_theme_vivid_description">Bruker større og mer fremtredende kontroller.</string>
+    <string name="wear_screen_theme_contrast">Høy kontrast</string>
+    <string name="wear_screen_theme_contrast_description">Bruker større kontroller for enklere lesing.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Bruker kompakte, litt nedtonede kontroller. Selve bakgrunnen mørklegges ikke — bruk bakgrunnsinnstillingene for det.</string>
+    <string name="wear_screen_theme_hidden">Skjult</string>
+    <string name="wear_screen_theme_hidden_description">Skjuler alle kontrollikoner fullstendig. Berøringsområdene forblir aktive og fullt funksjonelle.</string>
+    <string name="setting_wear_font">Skrifttype</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Appens standardskrifttype.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">En variabel versjon av Google Sans med justerbar bredde, optisk størrelse, grad og rundhet — låser opp aksekontrollene nedenfor.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Androids klassiske systemskrifttype.</string>
+    <string name="wear_font_rounded">Avrundet</string>
+    <string name="wear_font_rounded_description">Vennlige moderne bokstavformer med mykt avrundede avslutninger.</string>
+    <string name="wear_font_sans_light">Modern Light</string>
+    <string name="wear_font_sans_light_description">En ren, luftig sans-serif med lettere visuell vekt.</string>
+    <string name="wear_font_sans_thin">Ultra Thin</string>
+    <string name="wear_font_sans_thin_description">En ekstra tynn visningsstil for en minimalistisk spiller.</string>
+    <string name="wear_font_sans_medium">Modern Medium</string>
+    <string name="wear_font_sans_medium_description">En skarp sans-serif med sterkere, kompakte streker.</string>
+    <string name="wear_font_sans_black">Tung</string>
+    <string name="wear_font_sans_black_description">En fet visningsfamilie med maksimal visuell effekt.</string>
+    <string name="wear_font_small_caps">Kapitéler</string>
+    <string name="wear_font_small_caps_description">Kompakte former som ligner versaler, med redaksjonelt preg.</string>
+    <string name="wear_font_casual">Uformell</string>
+    <string name="wear_font_casual_description">En leken håndskrevet systemfamilie.</string>
+    <string name="wear_font_typewriter">Skrivemaskin (arkivert)</string>
+    <string name="wear_font_typewriter_description">Et retro skrivemaskinutseende (Mom’s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">En avrundet geometrisk sans-serif, et gratis (OFL) alternativ i samme ånd som Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">En ren geometrisk sans-serif, et gratis (OFL) alternativ i samme ånd som Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">En elegant humanistisk antikva, et gratis (OFL) alternativ i samme ånd som Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">En mykere skrivemaskinstil (Love Letter Typewriter) — vanligvis reservert for spor med \"Lain\"-tema.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">En klassisk serifskrifttype.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">Serifbokstaver med fast bredde og et særpreget redaksjonelt/terminalaktig uttrykk.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Teknisk utseende med fast tegnbredde.</string>
+    <string name="wear_font_condensed">Kondensert</string>
+    <string name="wear_font_condensed_description">Smalere bokstavformer som får plass til mer tekst.</string>
+    <string name="wear_font_condensed_light">Condensed Light</string>
+    <string name="wear_font_condensed_light_description">En smalere, lettere familie for lange titler.</string>
+    <string name="wear_font_condensed_medium">Condensed Medium</string>
+    <string name="wear_font_condensed_medium_description">En smal familie med kraftigere streker og svært god lesbarhet.</string>
+    <string name="wear_font_cursive">Kursiv</string>
+    <string name="wear_font_cursive_description">En dekorativ skriftskrifttype.</string>
+    <string name="setting_wear_dynamic_accent">Dynamisk aksent på klokken</string>
+    <string name="setting_wear_dynamic_accent_description">Tilpass albumbaserte klokkefarger til gjeldende omslag. Når dette er av, bruker valg av albumfarge temaets statiske aksent.</string>
+    <string name="setting_wear_album_art_fade">Overgang med toning av albumomslag</string>
+    <string name="setting_wear_album_art_fade_description">Ton albumomslaget jevnt når sporet endres.</string>
+    <string name="setting_wear_title_text_mode">Titteltekstens atferd</string>
+    <string name="setting_wear_title_text_mode_description">Hvordan tittelen på det som spilles nå oppfører seg når den ikke får plass: Automatisk kombinerer krymping, linjebryting og rulling; de andre alternativene bruker bare én atferd.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automatisk (krymp, deretter bryt, deretter rull)</item>
+        <item>Rull (marquee)</item>
+        <item>Bryt til to linjer</item>
+        <item>Bryt til tre linjer</item>
+        <item>Bryt til fem linjer</item>
+        <item>Statisk (én linje, ingen rulling eller krymping)</item>
+        <item>Krymp for å passe</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Farge på artisttekst</string>
+    <string name="setting_wear_artist_custom_color">Egendefinert artistfarge</string>
+    <string name="setting_wear_artist_custom_color_description">Velg artistfargen som brukes med behandlingen Normal</string>
+    <string name="setting_wear_artist_desaturated">Dempet artistfarge</string>
+    <string name="setting_wear_artist_desaturated_description">Myk opp den albumbaserte fargen på artistteksten — gjelder bare når \"Farge på artisttekst\" er satt til Albumfarge</string>
+
+    <string name="setting_wear_progress_color">Farge på fremdriftslinje</string>
+    <string name="setting_wear_progress_custom_color">Egendefinert farge på fremdriftslinje</string>
+    <string name="setting_wear_progress_custom_color_description">Velg fargen for fremdrift og søking som brukes med behandlingen Normal</string>
+    <string name="setting_wear_progress_desaturated">Dempet farge på fremdriftslinje</string>
+    <string name="setting_wear_progress_desaturated_description">Myk opp den albumbaserte fargen på fremdriftslinjen — gjelder bare når \"Farge på fremdriftslinje\" er satt til Albumfarge</string>
+
+    <string name="setting_wear_volume_color">Farge på volumlinje</string>
+    <string name="setting_wear_volume_custom_color">Egendefinert volumfarge</string>
+    <string name="setting_wear_volume_custom_color_description">Velg volumfargen som brukes med behandlingen Normal</string>
+    <string name="setting_wear_quick_panel_color">Farge for Hurtighandlinger</string>
+    <string name="setting_wear_quick_panel_custom_color">Egendefinert farge for Hurtighandlinger</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Velg fargen for Hurtighandlinger som brukes med behandlingen Normal</string>
+    <string name="setting_wear_shading_custom_color_description">Velg fargen som toner skyggegradienten</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Nøytral (statisk temafarge)</item>
+        <item>Albumfarge</item>
+        <item>Egendefinert farge</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Klassisk</item>
+        <item>Uttrykksfull</item>
+        <item>Vinyl</item>
+        <item>Plakat</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Nordlys</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spektrum</item>
+        <item>Material</item>
+        <item>Oppslukende</item>
+        <item>Dybde</item>
+        <item>Karusell</item>
+        <item>Chat</item>
+        <item>Delt</item>
+        <item>Notat</item>
+        <item>Vers</item>
+        <item>Metadata</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Expressive-søking</string>
+    <string name="setting_wear_expressive_seek_mode_description">Slik søker du i sporet med berøring på Expressive-urskiven. Midtring gjør ringen rundt avspillingsknappen dra-bar; Kantring viser også Classic-rammeringen; Ingen lar bare den roterende kronen søke.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Midtring</item>
+        <item>Kantring</item>
+        <item>Ingen</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Alltid på-skjerm</string>
+    <string name="setting_wear_aod_style">Alltid på-stil</string>
+    <string name="setting_wear_aod_style_description">Hvordan Spilles nå-skjermen ser ut når klokken er i omgivelsesmodus. Følg urskive matcher den valgte urskiven; Minimal viser bare dimmet tekst på helt svart bakgrunn for lengst mulig batteritid.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Følg urskive</item>
+        <item>Klassisk</item>
+        <item>Expressive (kontur)</item>
+        <item>Material (kontur)</item>
+        <item>AMOLED-kontroller</item>
+        <item>Chrono (stor klokke)</item>
+        <item>Plakat</item>
+        <item>Studio</item>
+        <item>Oppslukende</item>
+        <item>Karusell</item>
+        <item>Chat</item>
+        <item>Delt</item>
+        <item>Notat</item>
+        <item>Vers</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Alltid på-farge</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Hvit</item>
+        <item>Albumfarge</item>
+        <item>Egendefinert farge</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Hvit</item>
+        <item>Dynamisk (etter området under klokken)</item>
+        <item>Albumfarge</item>
+        <item>Egendefinert farge</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Følg panelstil</item>
+        <item>Gjennomsiktig (ingen bakgrunn)</item>
+        <item>Albumaksent</item>
+        <item>Halvgjennomsiktig</item>
+        <item>Hvit</item>
+        <item>Frostet hvit</item>
+        <item>Svart</item>
+        <item>Dynamisk (albumtone)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Bakgrunn for Neste-pille</string>
+    <string name="setting_wear_show_up_next_pill">Neste-pille i spilleren</string>
+    <string name="setting_wear_show_up_next_pill_description">Vis en Neste-pille nederst på Spilles nå-skjermen. Den fyller plassen som miniknappraden ellers ville tatt, så den vises bare når den raden ikke vises.</string>
+    <string name="category_wf_clock">Klokke</string>
+    <string name="setting_wear_clock_color">Klokkefarge</string>
+    <string name="setting_wear_clock_custom_color">Egendefinert klokkefarge</string>
+    <string name="setting_wear_clock_custom_color_description">Trykk for å velge klokkefargen som brukes når Klokkefarge er satt til Egendefinert farge</string>
+    <string name="setting_wear_clock_opacity">Klokkens opasitet</string>
+    <string name="setting_wear_clock_opacity_description">Hvor ugjennomsiktig den alltid viste klokken er (10–100%%). Nå <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Egendefinert alltid på-farge</string>
+    <string name="setting_wear_aod_custom_color_description">Trykk for å velge fargen som brukes for alltid på-tekst, kontroller og klokke når \"Alltid på-farge\" er satt til Egendefinert farge</string>
+    <string name="setting_wear_aod_intensity">Lysstyrke for alltid på-skjerm</string>
+    <string name="setting_wear_aod_intensity_description">Hvor lyst alltid på-skjermen gjengis (20–100%%). Lavere er mørkere og bruker mindre batteri. Nå <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Transportknapper på alltid på-skjermen</string>
+    <string name="setting_wear_aod_show_transport_description">Vis konturknappene for forrige/spill av/neste i støttede visuelle alltid på-stiler. De kan ikke trykkes mens skjermen er dimmet, men et trykk vekker klokken med knappen allerede under fingeren.</string>
+    <string name="setting_wear_aod_show_progress">Fremdriftsring på alltid på-skjermen</string>
+    <string name="setting_wear_aod_show_progress_description">Vis fremdriftsringen rundt avspillingsknappen i omgivelsesmodus — posisjonen oppdateres der bare omtrent én gang i minuttet</string>
+    <string name="setting_wear_aod_show_pills">Neste på alltid på-skjermen</string>
+    <string name="setting_wear_aod_show_pills_description">Vis en statisk konturert Neste-pille nederst i de visuelle alltid på-stilene</string>
+    <string name="category_wf_gestures">Skjermbevegelser</string>
+    <string name="setting_wear_mini_buttons_mode">Vis miniknapper</string>
+    <string name="setting_wear_gestures_mode">Skjermbevegelser</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Alltid</item>
+        <item>Bare under avspilling</item>
+        <item>Bare ved pause</item>
+        <item>Aldri</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Albumomslag på alltid på-skjermen</string>
+    <string name="setting_wear_aod_show_art_description">Behold det dimmede albumomslaget synlig i omgivelsesmodus. Når dette slås av, vises en helt svart bakgrunn, noe som sparer merkbart mer batteri på AMOLED-skjermer.</string>
+    <string name="setting_wear_aod_art_treatment">Stil for albumomslag på alltid på-skjermen</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Myk uskarphet</item>
+        <item>Klart omslag</item>
+        <item>Monokrom uskarphet</item>
+        <item>Følg spillerens omslagsbehandling</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Klokke på alltid på-skjermen</string>
+    <string name="setting_wear_aod_show_clock_description">Vis klokken når klokken er i omgivelsesmodus</string>
+    <string name="setting_wear_aod_show_track_info">Sporinformasjon på alltid på-skjermen</string>
+    <string name="setting_wear_aod_show_track_info_description">Vis sportittel og artist i omgivelsesmodus</string>
+
+    <string name="category_overlays_queue">Overlegg &amp; kø</string>
+    <string name="category_wf_panel_shared">Felles panelutseende</string>
+    <string name="category_wf_panel_volume">Volumpanel</string>
+    <string name="category_wf_panel_seek">Fremdrift &amp; søkepanel</string>
+    <string name="category_wf_panel_quick">Hurtighandlingspanel</string>
+    <string name="category_wf_panel_queue">Kø &amp; lister</string>
+    <string name="category_wf_panel_effects">Paneleffekter</string>
+    <string name="setting_wear_overlay_backdrop_style">Panelbakgrunn</string>
+    <string name="setting_wear_volume_style">Volumstil</string>
+    <string name="setting_wear_volume_layout">Volumoppsett</string>
+    <string name="setting_wear_quick_panel_style">Hurtigpanelstil</string>
+    <string name="setting_wear_quick_panel_layout">Hurtigpaneloppsett</string>
+    <string name="setting_wear_quick_panel_source">Hurtighandlinger</string>
+    <string name="setting_wear_quick_panel_source_description">Velg de konfigurerte knappene dine, eller handlinger levert av appen som spiller nå.</string>
+    <string name="quick_panel_open_note_title">Åpne panelet</string>
+    <string name="quick_panel_open_note_description">Dobbelttrykk midt på Spilles nå-skjermen for å åpne hurtighandlingspanelet på klokken.</string>
+    <string name="preview_current_app_action">Handling fra gjeldende app</string>
+    <string name="preview_notification_controls">Ikon fra medievarsel</string>
+    <string name="setting_wear_queue_style">Køstil</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Bruk snarveisomslag som bakgrunn</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Når Køstil er en omslagsvariant, fyller en handlingsrad i hurtigpanelet med et hentet snarveisomslag (spor, spilleliste, artist…) også pillen sin med bildet, slik Neste gjør. Snarveier uten et hentet omslag (bare et vanlig appikon) påvirkes ikke.</string>
+    <string name="setting_wear_list_row_size">Størrelse på listepille</string>
+    <string name="setting_wear_list_row_size_description">Høyden på rader i full bredde i køen, menyer og hurtigpanelet.</string>
+    <string name="setting_wear_progress_gradient">Bland paletten inn i ringen</string>
+    <string name="setting_wear_progress_gradient_description">Med en flerfarget behandling (Komplementær, Triadisk, Analog, Duotone) toner den fylte ringen gjennom alle tre fargene. Slå dette av for en ring med én farge samtidig som albumpaletten beholdes alle andre steder.</string>
+    <string name="setting_wear_progress_style">Stil for fremdriftsring</string>
+    <string name="setting_wear_seek_style">Stil for søke- &amp; volumverdi</string>
+    <string name="setting_wear_seek_layout">Søkepaneloppsett</string>
+    <string name="setting_wear_color_treatment">Klokkens fargebehandling</string>
+    <string name="setting_wear_normal_color">Normal farge</string>
+    <string name="setting_wear_normal_color_description">Velg den ene fargen som brukes for tittelaksenter, fremdrift, volum, paneler og miniknappenes detaljer i Normal-modus</string>
+    <string name="setting_wear_normal_color_multi">Bruk en fargepalett</string>
+    <string name="setting_wear_normal_color_multi_description">Når dette er på, bruker skjermen en hovedfarge pluss to støttetoner. Når det er av, brukes én enkelt farge overalt — albumets egen farge eller den du valgte.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normal (valgt farge)</item>
+        <item>Dempet (myk albumfarge)</item>
+        <item>Expressive (hele albumpaletten)</item>
+        <item>Komplementær (album + motsatt)</item>
+        <item>Triadisk (tre albumtoner)</item>
+        <item>Analog (nærliggende toner)</item>
+        <item>Monokrom (én tone, tre nyanser)</item>
+        <item>Duotone (to albumfarger)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Følg klokkebehandling</item>
+        <item>Normal (valgt farge)</item>
+        <item>Dempet (myk albumfarge)</item>
+        <item>Expressive (hele albumpaletten)</item>
+        <item>Komplementær (album + motsatt)</item>
+        <item>Triadisk (tre albumtoner)</item>
+        <item>Analog (nærliggende toner)</item>
+        <item>Monokrom (én tone, tre nyanser)</item>
+        <item>Duotone (to albumfarger)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Tittelvekt</string>
+    <string name="setting_wear_title_font_italic">Kursiv tittel</string>
+    <string name="setting_wear_title_font_scale">Tittelstørrelse</string>
+    <string name="setting_wear_title_font_opacity">Tittelopasitet</string>
+    <string name="setting_wear_title_font_tracking">Bokstavavstand for tittel</string>
+    <string name="setting_wear_title_color">Farge på titteltekst</string>
+    <string name="setting_wear_title_custom_color">Egendefinert tittelfarge</string>
+    <string name="wear_title_color_face_default">Urskivens standard (som utformet)</string>
+    <string name="setting_wear_title_adaptive_contrast">Tilpass tittelfarge for kontrast</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Gjør tittelen lysere eller mørkere når fargen ligger for nær omslaget bak den, samtidig som fargetonen beholdes. Har ingen effekt mens tittelen bruker urskivens standard.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Tilpass artistfarge for kontrast</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Gjør artistraden lysere eller mørkere når albumfargen ligger for nær omslaget bak den, samtidig som fargetonen beholdes. Måler bare stripen raden ligger på, ikke hele omslaget.</string>
+    <string name="setting_wear_artist_font_weight">Artistvekt</string>
+    <string name="setting_wear_artist_font_italic">Kursiv artist</string>
+    <string name="setting_wear_artist_font_scale">Artiststørrelse</string>
+    <string name="setting_wear_artist_font_opacity">Artistopasitet</string>
+    <string name="setting_wear_artist_font_tracking">Bokstavavstand for artist</string>
+    <string name="setting_wear_source_icon_scale">Størrelse på appikon</string>
+    <string name="setting_wear_source_icon_opacity">Opasitet for appikon</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 er urskivens normale vekt; høyere er fetere. For Google Sans Flex er dette skrifttypens egen vektakse</string>
+    <string name="setting_wear_typography_scale_description">Prosent av urskivens egen størrelse (70–140). 100 beholder den utformede størrelsen for hvert oppsett</string>
+    <string name="setting_wear_typography_opacity_description">Prosent (20–100). 100 beholder urskivens egen opasitet</string>
+    <string name="setting_wear_typography_tracking_description">Ekstra avstand mellom bokstaver, i hundredeler av en em (−5 til 20). 0 beholder skrifttypens egen avstand</string>
+    <string name="setting_wear_color_modifier">Tone</string>
+    <string name="setting_wear_color_modifier_description">Juster hele paletten uten å endre hvordan den utledes — fungerer med alle fargebehandlinger</string>
+    <string name="setting_wear_color_hue_shift">Fargeforskyvning</string>
+    <string name="setting_wear_color_hue_shift_description">Roterer albumpaletten rundt fargehjulet i grader (0–359). Hver behandling beholder hovedfargen på albumets egen fargetone, så dette er det som varierer den. 0 bruker albumfargen som den er; en fast Normal-farge forskyves aldri.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Ingen</item>
+        <item>Livlig</item>
+        <item>Pastell</item>
+        <item>Varm</item>
+        <item>Kjølig</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Kantbue (venstre)</item>
+        <item>Kantbue (høy)</item>
+        <item>Kantbue (høyre)</item>
+        <item>Kantbue (øverst)</item>
+        <item>Kantbue (nederst)</item>
+        <item>Hel ring</item>
+        <item>Midthalo</item>
+        <item>Horisontal måler</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Kantring</item>
+        <item>Kantring (tynn)</item>
+        <item>Kantring (tykk)</item>
+        <item>Tidslinje</item>
+        <item>Segmentert tidslinje</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metadata først</item>
+        <item>Bue</item>
+        <item>Hoved</item>
+        <item>Rutenett</item>
+        <item>Merkede rader</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Heldekkende</item>
+        <item>Stiplet</item>
+        <item>Prikker</item>
+        <item>Hårfin</item>
+        <item>Komet</item>
+        <item>60 klokkeprikker</item>
+        <item>60 klokkemerker</item>
+        <item>12-timerssegmenter</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Enkel</item>
+        <item>Glasspille</item>
+        <item>Expressive-pille</item>
+        <item>Material-pille</item>
+        <item>Hvit pille</item>
+        <item>Kjempe</item>
+        <item>Posisjon / totalt</item>
+        <item>Hvitt glass</item>
+        <item>Halvgjennomsiktig album</item>
+        <item>Albumglød</item>
+        <item>Kontur</item>
+        <item>Heldekkende tema</item>
+        <item>Heldekkende album</item>
+        <item>Mikro</item>
+        <item>Skygge (uten ramme)</item>
+        <item>Understrek</item>
+        <item>Hårfin kontur</item>
+        <item>Kjempestor albumfarge</item>
+        <item>Mono</item>
+        <item>Mørk tonal</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Konfigurerte knapper</item>
+        <item>Fra gjeldende medieapp</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Følg panelstil</item>
+        <item>Albumuskarphet (akryl)</item>
+        <item>Helsvart</item>
+        <item>Heldekkende albumfarge</item>
+        <item>Glass</item>
+        <item>Albumgradient</item>
+        <item>Album-duotone</item>
+        <item>Prisme</item>
+        <item>Flytende glass</item>
+        <item>Expressive-uskarphet</item>
+        <item>Uttrykksfull</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Lys</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Kontur</item>
+        <item>Duotone</item>
+        <item>Prisme</item>
+        <item>Høy kontrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Segmenter</item>
+        <item>Nordlys</item>
+        <item>Blekk</item>
+        <item>Spor</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Kompakt</item>
+        <item>Normal</item>
+        <item>Høy</item>
+        <item>Ekstra høy</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Lys</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Kontur</item>
+        <item>Duotone</item>
+        <item>Prisme</item>
+        <item>Høy kontrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Omslag</item>
+            <item>Uskarpt omslag</item>
+        <item>Tonalt omslag</item>
+        <item>Firkantet omslag</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Glass</item>
+        <item>Hvitt glass</item>
+        <item>Tonalt glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Lys</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Kontur</item>
+        <item>Konturert hvitt glass</item>
+        <item>Duotone</item>
+        <item>Prisme</item>
+        <item>Høy kontrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Spøkelse (uten ramme)</item>
+        <item>Dis</item>
+        <item>Blekk</item>
+        <item>Prikk</item>
+        <item>Plate</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Hold appen aktiv etter pause</string>
+    <string name="setting_wear_paused_hold_description">Hvor lenge klokkeappen forblir tilgjengelig fra urskiven etter at du pauser, slik at du kan fortsette ved å løfte håndleddet i stedet for å åpne den igjen. Lengre innstillinger holder en bakgrunnstjeneste i gang.</string>
+    <string name="wear_paused_hold_off">Ikke behold</string>
+    <string name="wear_paused_hold_5">5 minutter</string>
+    <string name="wear_paused_hold_15">15 minutter</string>
+    <string name="wear_paused_hold_30">30 minutter</string>
+    <string name="wear_paused_hold_60">1 time</string>
+    <string name="wear_paused_hold_always">Til avspillingen avsluttes</string>
+
+    <string name="setting_wear_idle_button_action">Knapp når ingenting spilles</string>
+    <string name="setting_wear_idle_auto_open">Åpne når ingenting spilles</string>
+    <string name="setting_wear_idle_auto_open_description">Går rett til denne skjermen når du åpner klokkeappen uten at musikk spilles.</string>
+    <string name="wear_idle_action_resume">Fortsett i siste app</string>
+    <string name="wear_idle_action_shortcuts">Spillelistesnarveier</string>
+    <string name="wear_idle_action_menu">Handlingsmeny</string>
+    <string name="wear_idle_action_search">Søk</string>
+    <string name="wear_idle_action_queue">Nylig avspilt</string>
+    <string name="wear_idle_action_none">Ingen knapp</string>
+    <string name="wear_idle_auto_open_none">Bli i spilleren</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Bla i biblioteket</string>
+    <string name="library_up">Tilbake</string>
+    <string name="error_library_unavailable">Denne appen har ikke et bibliotek som kan bla gjennom</string>
+    <string name="error_library_empty">Ingenting her</string>
+    <string name="error_library_no_player">Start avspilling av noe først</string>
+
+    <string name="setting_wear_carousel_card_shape">Form på karusellkort</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Avrundet</item>
+        <item>Firkant</item>
+        <item>Squircle</item>
+        <item>Sirkel</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Bruk skrifttypen overalt</string>
+    <string name="setting_wear_font_all_screens_description">Bruker den valgte skrifttypen i menyer, køen og Hurtighandlinger, ikke bare i spilleren. Visnings- og håndskrevne skrifttyper kan være vanskeligere å lese i lister.</string>
+
+    <string name="setting_wear_clock_font">Klokkens skrifttype</string>
+    <string name="wear_clock_font_follow">Følg sporets skrifttype</string>
+    <string name="setting_wear_lyrics_font">Sangtekstens skrifttype</string>
+    <string name="setting_wear_lyrics_font_description">Skrifttypen for sangord på sangtekstskjermen og Verse-urskiven. Følger sporets skrifttype med mindre du velger en her.</string>
+    <string name="wear_lyrics_font_follow">Følg sporets skrifttype</string>
+    <string name="setting_wear_clock_font_weight">Klokkevekt</string>
+    <string name="setting_wear_clock_font_italic">Kursiv klokke</string>
+    <string name="setting_wear_clock_font_scale">Klokkestørrelse</string>
+    <string name="setting_wear_clock_font_tracking">Klokkens bokstavavstand</string>
+    <string name="setting_wear_clock_adaptive_contrast">Tilpass klokkefarge for kontrast</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Gjør klokken lysere eller mørkere når albumfargen ligger for nær omslaget bak den, samtidig som fargetonen beholdes. Gjelder bare når klokkefargen er satt til Albumfarge.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Kondensert visningsskrift med bare versaler — plakataktig, passer lange titler</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Redaksjonell serif med høy kontrast — magasinpreg</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Teknisk geometrisk sans-serif med særegne detaljer</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Firkantet sci-fi-visningsskrift — dristig og futuristisk</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Håndskrevet skript — uformelt og personlig</string>
+    <string name="setting_wear_track_time_mode">Visning av sportid</string>
+    <string name="setting_wear_track_time_mode_description">Når sporposisjonen (f.eks. 1:23 / 3:45) vises på Spilles nå-skjermen.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Alltid</item>
+        <item>Bare under avspilling</item>
+        <item>Bare ved pause</item>
+        <item>Aldri</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Miniknappenes kurve</string>
+    <string name="setting_screen_buttons_curve_description">Velg kurvestil for miniknapper: flat, bue, myk, buet.</string>
+    <string name="setting_screen_buttons_shape">Miniknappenes form</string>
+    <string name="setting_screen_buttons_shape_description">Velg form og oppsettformat for miniknapper.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pille (standard)</item>
+        <item>Sirkel</item>
+        <item>Firkant</item>
+        <item>Avrundet firkant (myk)</item>
+        <item>Avrundet firkant (middels)</item>
+        <item>Squircle</item>
+        <item>Blad</item>
+        <item>Dråpe</item>
+        <item>Pille (bred liten)</item>
+        <item>Pille (bred middels)</item>
+        <item>Pille (bred stor)</item>
+        <item>Pille (bred ekstra stor)</item>
+        <item>Avrundet rektangel (liten)</item>
+        <item>Avrundet rektangel (middels)</item>
+        <item>Avrundet rektangel (stor)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Flat</item>
+        <item>Bue</item>
+        <item>Svak kurve</item>
+        <item>Myk kurve</item>
+        <item>Middels kurve</item>
+        <item>Buet</item>
+        <item>Ekstrem kurve</item>
+        <item>Spre til kantene</item>
+        <item>Venstre kant</item>
+        <item>Høyre kant</item>
+        <item>Begge kanter</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Standardbakgrunn</item>
+        <item>Glass (jevnt)</item>
+        <item>Glass (lyst)</item>
+        <item>Halvgjennomsiktig album</item>
+        <item>Halvgjennomsiktig album Exp</item>
+        <item>Albumglød</item>
+        <item>Glød Exp</item>
+        <item>Heldekkende tema</item>
+        <item>Heldekkende album</item>
+        <item>Heldekkende Exp-album</item>
+        <item>Kontur</item>
+        <item>Kontur Exp-album</item>
+        <item>Bare ikon (gjennomsiktig)</item>
+        <item>Ikon Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Nøytral</item>
+        <item>Albumfarge</item>
+        <item>Egendefinert farge</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Fullt omslag</item>
+        <item>Uskarp bakgrunn</item>
+        <item>Frostede kanter</item>
+        <item>Firkant (skarpe hjørner)</item>
+        <item>Firkant (myke hjørner)</item>
+        <item>Firkant (avrundede hjørner)</item>
+        <item>Svart &amp; hvitt</item>
+        <item>Uskarpt svart &amp; hvitt</item>
+        <item>Expressive-uskarphet</item>
+        <item>Uttrykksfull</item>
+        <item>Material-tonal gradient</item>
+        <item>Plakatomslag</item>
+        <item>Studio-gradient</item>
+        <item>Radiell vinylglød</item>
+        <item>Halo-glød</item>
+        <item>Nordlysbånd</item>
+        <item>Spektrumgradient</item>
+        <item>Corona-sveip</item>
+        <item>Skumringstoning</item>
+        <item>Blomstring</item>
+        <item>Horisonttoning</item>
+        <item>Glødende ember</item>
+        <item>Eclipse AMOLED-svart</item>
+        <item>Skjult (helsvart)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Deaktivert</item>
+        <item>Vis musikkurskiveikon (bare for Wear 3.0)</item>
+        <item>Åpne Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Tidsavbrudd for lukking</string>
+    <string name="setting_close_timeout_description">Svartifoss lukkes automatisk når ingen musikk har blitt spilt på <![CDATA[<b>%1$s sekunder</b>]]>. Funksjonen er deaktivert når tidsavbruddet er satt til 0 sekunder. Vær oppmerksom på at dette alternativet av hensyn til batteriet av og til ikke er helt nøyaktig, og lukkingen kan bli forsinket med opptil ett minutt.</string>
+    <string name="setting_wear_close_on_idle">Lukk ved \"Ingenting spilles\"</string>
+    <string name="setting_wear_close_on_idle_description">Lukker klokkeappen automatisk omtrent ett minutt etter at den når den inaktive skjermen \"Ingenting spilles\", slik at den aldri blir liggende der. Uavhengig av tidsavbruddet for lukking ovenfor, som gjelder et pauset spor.</string>
+    <string name="category_notifications">Varselpopup</string>
+    <string name="setting_enable_notifications">Vis varselpopup</string>
+    <string name="setting_enable_notifications_description">Denne funksjonen krever en annen app for å håndtere varsler (Vibration Center for Wear).
+
+Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med varselteksten, slik at du raskt kan se varselet uten å forlate Svartifoss.</string>
+    <string name="setting_notification_timeout">Tidsavbrudd for varselpopup</string>
+    <string name="setting_notification_timeout_description">Varselpopupen lukkes automatisk etter <![CDATA[<b>%1$s sekunder</b>]]>. Skriv inn 0 for å deaktivere automatisk lukking.</string>
+    <string name="app_required">App kreves</string>
+    <string name="vibration_center_required_description">For å bruke denne funksjonen må du installere en annen (gratis) app: Vibration Center for Wear.</string>
+    <string name="open_play_store">Åpne Play Butikk</string>
+    <string name="error_no_notification_service_support">Beklager, enheten din ser ikke ut til å støtte varslingstjenester</string>
+    <string name="setting_always_select_center_action">Velg alltid midthandlingen</string>
+    <string name="setting_always_select_center_action_description">Når dette er aktivert, vil et trykk på handlingslisten alltid velge det midtre (markerte) alternativet, uansett hvilket alternativ du trykket på.</string>
+    <string name="change_icon">Endre ikon</string>
+    <string name="please_wait">Vennligst vent</string>
+
+    <string name="error_playlist_not_supported">Støttes ikke av denne medieappen</string>
+    <string name="error_search_no_results">Ingen resultater funnet</string>
+    <string name="seconds_to_skip">Sekunder å hoppe frem:</string>
+    <string name="seconds_to_reverse">Sekunder å spole tilbake:</string>
+
+    <string name="setting_dynamic_accent_color">Dynamisk aksentfarge</string>
+    <string name="setting_dynamic_accent_color_description">Når dette er aktivert, tilpasser aksentfargen (SeekBar, aktiv køoppføring) seg automatisk til den dominerende fargen i gjeldende albumomslag.</string>
+    <string name="setting_desaturated_color">Dempet farge</string>
+    <string name="setting_desaturated_color_description">Justerer metning og lysstyrke for den utledede fargen for å sikre høy lesbarhet og kontrast avhengig av det aktive temaet.</string>
+
+    <string name="queue_header">Avspillingskø</string>
+    <string name="queue_unavailable">Kø utilgjengelig</string>
+
+    <string name="setting_custom_accent_color">Aksentfarge</string>
+    <string name="setting_custom_accent_color_description">Velg en egendefinert aksentfarge for appgrensesnittet</string>
+    <string name="setting_mini_player">Minispiller</string>
+    <string name="setting_mini_player_description">Viser en vedvarende Spilles nå-linje over den nederste navigasjonen når medier er aktive. Aktivert som standard; slå den av for å få tilbake plassen.</string>
+    <string name="color_picker_title">Velg aksentfarge</string>
+    <string name="color_picker_reset">Tilbakestill</string>
+    <string name="color_picker_apply">Bruk</string>
+    <string name="color_picker_default">Standard</string>
+    <string name="color_picker_invalid">Ugyldig fargekode</string>
+    <string name="color_picker_current">Gjeldende: %s</string>
+
+    <string name="drawer_version_format">Versjon %1$s</string>
+    <string name="drawer_tagline">Følgeapp for Wear OS</string>
+    <string name="drawer_about_heading">Om</string>
+    <string name="drawer_about_summary">Svartifoss lar deg styre musikken på telefonen fra Wear OS-klokken — med en fullt tilpassbar fjernkontroll skreddersydd for enheten din.</string>
+    <string name="drawer_name_heading">Navnet</string>
+    <string name="drawer_name_meaning">Svartifoss betyr «Svart foss» på islandsk — oppkalt etter fossen i Vatnajökull nasjonalpark, der mørke basaltsøyler rammer inn en smal kaskade. Som vann over stein flyter musikken gjennom appen.</string>
+    <string name="drawer_sync_heading">Synkronisering</string>
+    <string name="drawer_sync_summary">Klokkeinnstillingene konfigureres her på telefonen og synkroniseres automatisk til den parede klokken.</string>
+    <string name="drawer_support_heading">Støtte</string>
+    <string name="drawer_support_summary">Svartifoss er gratis og åpen kildekode — kjøp meg en kaffe hvis du har nytte av appen :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Last ned omslag</string>
+    <string name="album_art_saved">Omslaget er lagret i galleriet</string>
+    <string name="album_art_save_error">Kunne ikke lagre omslaget</string>
+
+    <string name="action_play_liked_songs">Spill likte sanger (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Spill likte sanger (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Spill likte spor (SoundCloud)</string>
+    <string name="action_my_playlists">Strømmesnarveier</string>
+    <string name="action_play_specific_playlist">Åpne strømmesnarvei</string>
+    <string name="action_choose_or_add_streaming_shortcut">Velg eller legg til en strømmesnarvei</string>
+    <string name="action_show_streaming_library">Vis alle lagrede snarveier</string>
+    <string name="playlist_shortcut_pick_title">Velg snarvei</string>
+    <string name="playlist_shortcut_pick_empty">Ingen strømmesnarveier er lagret ennå — legg til en nedenfor, og trykk deretter på den for å velge den</string>
+    <string name="playlist_shortcuts_empty">Ingen strømmesnarveier ennå — legg dem til i innstillingene i telefonappen</string>
+    <string name="setting_playlist_shortcuts">Strømmesnarveier</string>
+    <string name="setting_playlist_shortcuts_description">Åpne delingslenker fra klokken i YouTube Music, Spotify og andre strømmeapper</string>
+    <string name="setting_shortcut_artwork">Hent snarveisbilder på nettet</string>
+    <string name="setting_shortcut_artwork_description">Last ned et miniatyrbilde for hver lagrede snarvei fra tjenesten, som vises i telefonlisten, klokkemenyen og tilordnede knapper. Hvert miniatyrbilde hentes én gang; bare den offentlige delingslenken sendes. Av som standard.</string>
+    <string name="setting_queue_local_artwork">Køomslag fra biblioteket ditt</string>
+    <string name="setting_queue_local_artwork_description">Lokale musikkspillere publiserer køomslag som bibliotekreferanser. Gi medietilgang slik at de kan vises i køen på klokken. Ingen internettilgang er involvert.</string>
+    <string name="setting_queue_local_artwork_granted">Medietilgang gitt — lokale køomslag vises</string>
+    <string name="setting_queue_local_artwork_denied">Medietilgang avslått. Aktiver den i Android-innstillingene for å vise lokale køomslag.</string>
+    <string name="setting_queue_remote_artwork">Hent køomslag på nettet</string>
+    <string name="setting_queue_remote_artwork_short_description">Strømmeapper (YouTube Music-klienter, Echo Music…) publiserer køomslag som lenker, ikke bilder, så dette laster dem ned og mellomlagrer dem. Slå av for å holde køen helt frakoblet — disse radene viser da ikke noe omslag.</string>
+    <string name="setting_queue_remote_artwork_description">Strømmespillere publiserer køomslag som lenker i stedet for bilder. Last ned hvert omslag én gang og mellomlagre det på denne telefonen for å vise det i køen på klokken. Bare omslags-URL-en som spilleren allerede publiserte, forespørres — ingen konto eller personlige data. På som standard; slå av for å holde køen helt frakoblet.</string>
+    <string name="watch_streaming_shortcuts_empty">Legg til spor, album eller spillelister for Hurtighandlinger og klokkemenyen</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d lagret snarvei · Tilgjengelig i Hurtighandlinger og klokkemenyen</item>
+        <item quantity="other">%1$d lagrede snarveier · Tilgjengelige i Hurtighandlinger og klokkemenyen</item>
+    </plurals>
+    <string name="category_music_apps">Musikkapper &amp; tjenester</string>
+    <string name="category_apps_content">Sangtekster &amp; metadata</string>
+    <string name="category_streaming_services">Strømmesnarveier</string>
+    <string name="category_queue_artwork">Købilder</string>
+    <string name="category_system_access">Android-tilgang &amp; varsler</string>
+    <string name="setting_apps_integrations">Støttede musikktjenester</string>
+    <string name="setting_apps_integrations_description">Lenker fungerer med YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music og SoundCloud. Ingen kontotilgang kreves.</string>
+    <string name="setting_apps_integrations_none">Ingen støttet app oppdaget. Snarveier kan fortsatt åpnes i en nettleser eller en annen kompatibel app.</string>
+    <string name="setting_apps_integrations_installed">%1$d av %2$d oppdaget: %3$s</string>
+    <string name="setting_streaming_open_mode">Åpne strømmelenker med</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Oppdaget strømmeapp</item>
+        <item>Android-standard</item>
+        <item>Spør hver gang</item>
+    </string-array>
+    <string name="setting_persistent_notification">Administrer varselet \"Svartifoss aktiv\"</string>
+    <string name="setting_persistent_notification_description">Åpner Android-innstillingene for dette varselet — demp det, skjul det fra låseskjermen eller juster det på annen måte. Det kan ikke slås helt av: Android krever et vedvarende varsel mens bakgrunnstjenesten som kommuniserer med klokken kjører.</string>
+    <string name="setting_notification_access">Tilgang til medievarsler</string>
+    <string name="setting_notification_access_enabled">Tillatt · Trykk for å se gjennom Android-innstillingene</string>
+    <string name="setting_notification_access_disabled">Ikke tillatt · Kreves for mediehandlinger i varsler og filtre for automatisk start</string>
+    <string name="setting_notification_access_unavailable">Innstillinger for varslingstilgang er utilgjengelige på denne enheten</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d lagret snarvei · Trykk for å administrere eller importere lenker</item>
+        <item quantity="other">%1$d lagrede snarveier · Trykk for å administrere eller importere lenker</item>
+    </plurals>
+    <string name="category_privacy">Personvern</string>
+    <string name="setting_privacy_policy">Personvernerklæring</string>
+    <string name="setting_privacy_policy_description">Se hvilke data Svartifoss bruker og hvilke nettjenester som er valgfrie.</string>
+    <string name="setting_crash_reporting">Send krasjrapporter</string>
+    <string name="setting_crash_reporting_description">Send diagnostikk fra Firebase Crashlytics for å bidra til å rette feil. Aktivert som standard; slå av når som helst.</string>
+    <string name="setting_announcements">Kunngjøringsvarsler</string>
+    <string name="setting_announcements_description">Sporadiske varsler fra utvikleren — nye utgivelser, viktige meldinger. Sendes via Firebase Cloud Messaging; ingen konto eller brukerliste er involvert. Aktivert som standard; slå av når som helst.</string>
+    <string name="announcement_notification_channel">Kunngjøringer</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Del en spilleliste, et album eller spor direkte til Svartifoss, lim inn en kopiert lenke, eller legg til en manuelt. Klokken ber telefonen åpne den; ingen pålogging til tjenesten kreves.</string>
+    <string name="back">Tilbake</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Musikken din, ett trykk unna</string>
+    <string name="playlist_shortcuts_yours">Snarveiene dine</string>
+    <string name="playlist_shortcuts_empty_hint">Legg til en delt lenke til et spor, album eller en spilleliste for å gjøre den tilgjengelig på klokken.</string>
+    <string name="playlist_shortcuts_add">Legg til snarvei</string>
+    <string name="playlist_shortcuts_paste">Lim inn lenke</string>
+    <string name="playlist_shortcuts_reload_covers">Last inn omslag på nytt</string>
+    <string name="playlist_shortcuts_reloading_covers">Laster inn omslag på nytt…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Omslagene er lastet inn på nytt</string>
+    <string name="playlist_shortcuts_edit">Rediger snarvei</string>
+    <string name="playlist_shortcut_save">Lagre snarvei</string>
+    <string name="playlist_shortcut_editor_hint">Lim inn én lenke. Svartifoss identifiserer appen og innholdstypen automatisk.</string>
+    <string name="playlist_shortcut_detection_waiting">Venter på en strømmelenke</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer og flere støttes.</string>
+    <string name="playlist_shortcut_detected_format">Oppdaget: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Navn</string>
+    <string name="playlist_shortcut_link_hint">Delingslenke eller app-URI</string>
+    <string name="playlist_shortcut_shuffle">Spill tilfeldig (kun YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Lenke</string>
+    <string name="playlist_type_track">Spor</string>
+    <string name="playlist_type_playlist">Spilleliste</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">Artist</string>
+    <string name="playlist_type_show">Program</string>
+    <string name="playlist_type_episode">Episode</string>
+    <string name="playlist_type_mix">Miks</string>
+    <string name="playlist_badge_shuffle">Tilfeldig rekkefølge</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Ingen strømmesnarveier er lagt til ennå</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d lagret</item>
+        <item quantity="other">%1$d lagret</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Sorterte strømmesnarveier. Trykk og hold for å dra, bruk tilgjengelighetshandlingene Flytt opp eller Flytt ned, eller trykk Ctrl+Opp/Ned på et tastatur.</string>
+    <string name="playlist_shortcut_more_options">Flere alternativer for %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Rediger</string>
+    <string name="playlist_shortcut_menu_open">Åpne nå</string>
+    <string name="playlist_shortcut_menu_copy">Kopier lenke</string>
+    <string name="playlist_shortcut_menu_duplicate">Dupliser</string>
+    <string name="playlist_shortcut_menu_share">Del</string>
+    <string name="playlist_shortcut_menu_delete">Slett</string>
+    <string name="playlist_shortcut_open_failed">Ingen app kan åpne denne lenken</string>
+    <string name="streaming_shortcut_choose_app">Åpne strømmelenke med</string>
+    <string name="playlist_shortcut_link_copied">Lenke kopiert</string>
+    <string name="playlist_shortcut_import_invalid">Den delte teksten inneholder ingen gyldig strømmelenke</string>
+    <string name="playlist_shortcut_clipboard_invalid">Utklippstavlen inneholder ingen gyldig strømmelenke</string>
+    <string name="playlist_shortcut_name_required">Skriv inn et navn på snarveien</string>
+    <string name="playlist_shortcut_link_invalid">Skriv inn en gyldig nettlenke eller app-URI</string>
+    <string name="playlist_shortcut_service_invalid">Lim inn en gyldig lenke for å oppdage tjenesten</string>
+    <string name="playlist_shortcut_service_generic">Kompatibel lenke · Android velger en app</string>
+    <string name="playlist_shortcut_service_installed">%1$s installert · Klar til å åpnes i appen</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s ikke installert · En nettleser eller kompatibel app kan brukes</string>
+    <string name="playlist_shortcut_copy_name">%1$s-kopi</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s-kopi %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s opprettet</string>
+    <string name="playlist_shortcut_share_title">Del strømmesnarvei</string>
+    <string name="playlist_shortcut_share_failed">Ingen app er tilgjengelig for å dele denne snarveien</string>
+    <string name="playlist_shortcut_deleted">%1$s slettet</string>
+    <string name="playlist_shortcut_undo">Angre</string>
+
+    <string name="action_play_liked_songs_shuffled">Spill likte sanger, tilfeldig (YT Music)</string>
+    <string name="action_search_history">Søkehistorikk</string>
+    <string name="search_history_empty">Ingen nylige søk ennå</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Oppdateringer</string>
+    <string name="setting_update_check">Varsle om nye versjoner</string>
+    <string name="setting_update_check_description">Ser etter nye utgivelser på GitHub omtrent én gang om dagen og viser et varsel</string>
+    <string name="setting_update_prereleases">Inkluder forhåndsutgivelser</string>
+    <string name="setting_update_prereleases_description">Få også varsler om betaversjoner</string>
+    <string name="setting_update_check_now">Se etter oppdateringer nå</string>
+    <string name="setting_update_check_now_description">Viser den nyeste versjonen og lar deg oppdatere klokken via Bluetooth</string>
+    <string name="update_screen_title">Oppdateringer</string>
+    <string name="update_cover_content_description">Svartifoss, fossen appen er oppkalt etter</string>
+    <string name="update_notification_channel">Appoppdateringer</string>
+    <string name="update_available_title">Svartifoss %1$s er tilgjengelig</string>
+    <string name="update_notification_text">Trykk for å oppdatere</string>
+    <string name="update_available_action">Oppdatering tilgjengelig</string>
+    <string name="update_installed_phone">Telefon: %1$s</string>
+    <string name="update_installed_versions">Telefon: %1$s · Klokke: %2$s</string>
+    <string name="update_watch_version_unknown">ukjent</string>
+    <string name="update_checking">Ser etter oppdateringer…</string>
+    <string name="update_check_failed">Kunne ikke se etter oppdateringer. Kontroller tilkoblingen og prøv igjen.</string>
+    <string name="update_available_line">Ny versjon: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(forhåndsutgivelse)</string>
+    <string name="update_up_to_date">Du bruker den nyeste versjonen (%1$s)</string>
+    <string name="update_no_wear_asset">Denne utgivelsen har ingen klokke-APK å sende.</string>
+    <string name="update_watch_hint">«Oppdater klokken» laster ned den nye klokkeappen og sender den via Bluetooth — du bekrefter installasjonen på selve klokken, uten kabel eller Wear Installer.</string>
+    <string name="update_downloading">Laster ned… %1$d%%</string>
+    <string name="update_connecting_watch">Kobler til klokken…</string>
+    <string name="update_transferring">Sender til klokken… %1$d%%</string>
+    <string name="update_confirm_on_watch">Sendt! Et varsel dukket opp på klokken — trykk på det der for å installere.</string>
+    <string name="update_no_watch">Ingen klokke tilkoblet.</string>
+    <string name="update_push_failed">Kunne ikke sende oppdateringen til klokken. Prøv igjen.</string>
+    <string name="update_watch_button">Oppdater klokken</string>
+    <string name="update_open_release_button">Åpne utgivelsessiden</string>
+    <string name="update_watch_behind">Klokken bruker fortsatt %1$s — send den oppdateringen nedenfor.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Hold telefon- og klokkeappene synkronisert</string>
+    <string name="update_state_checking">Ser etter oppdateringer…</string>
+    <string name="update_state_current">Du er oppdatert</string>
+    <string name="update_state_current_sub">Kjører den nyeste utgivelsen, %1$s</string>
+    <string name="update_state_available">Oppdatering tilgjengelig</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Kunne ikke se etter oppdateringer</string>
+    <string name="update_state_failed_sub">Kontroller tilkoblingen og prøv igjen</string>
+    <string name="update_device_phone">Telefon</string>
+    <string name="update_device_watch">Klokke</string>
+    <string name="update_versions_header">Installert</string>
+    <string name="update_whats_new">Hva er nytt</string>
+    <string name="update_phone_button">Oppdater telefonen</string>
+    <string name="update_installing">Åpner installasjonsprogrammet…</string>
+    <string name="update_install_permission_needed">Tillat installasjon av apper fra Svartifoss, og trykk deretter på Oppdater telefonen igjen.</string>
+    <string name="update_phone_failed">Nedlasting av telefonoppdateringen mislyktes. Prøv igjen.</string>
+    <string name="update_install_notification_title">Svartifoss-oppdatering</string>
+    <string name="update_install_notification_tap">Trykk for å installere den nye versjonen</string>
+    <string name="update_install_notification_failed">Installasjonen mislyktes. Tillat installasjoner fra Svartifoss i Innstillinger og prøv igjen.</string>
+    <string name="setting_wear_album_accent_source">Kilde for albumaksent</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Balansert</item>
+        <item>Mest livlig</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Av</item>
+        <item>Myk</item>
+        <item>Standard</item>
+        <item>Fet</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Aksentgulv</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Spor</string>
+    <string name="preview_metadata_genre">Sjanger</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">År</string>
+    <string name="preview_metadata_format">Format</string>
+    <string name="preview_metadata_bitrate">Bithastighet</string>
+    <string name="preview_metadata_position">Posisjon</string>
+    <string name="preview_metadata_output">Utgang</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Albumdetaljer</string>
+    <string name="setting_wear_metadata_core_description">Album, albumartist, posisjon på utgivelsen og lengde.</string>
+    <string name="setting_wear_metadata_release">Utgivelsesdetaljer</string>
+    <string name="setting_wear_metadata_release_description">Sjanger, år, utgivelsesdato og plateselskap.</string>
+    <string name="setting_wear_metadata_credits">Bidragsytere</string>
+    <string name="setting_wear_metadata_credits_description">Komponist, tekstforfatter og forfatter, der spilleren publiserer dem.</string>
+    <string name="setting_wear_metadata_technical">Fildetaljer</string>
+    <string name="setting_wear_metadata_technical_description">Format, bithastighet, samplingsfrekvens, kanaler og størrelse. Kun lokale spor.</string>
+    <string name="setting_split_panel">Delt panel</string>
+    <string name="setting_split_panel_description">Hva som fyller den nedre halvdelen av Split-urskiven. Uskarpt omslag fortsetter med samme bilde bak teksten; heldekkende farge gir utseendet til et varselkort.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Uskarpt omslag</item>
+        <item>Heldekkende farge</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Avspillingsdetaljer</string>
+    <string name="setting_wear_metadata_playback_description">Posisjon ned til millisekundet, hastighet, lydutgang og hvor lyden strømmes eller spilles fra — inkludert sporets adresse. Den ene blokken et strømmespor kan fylle når det ikke finnes noen fil å beskrive.</string>
+    <string name="setting_wear_metadata_identifiers">Identifikatorer</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC og katalog-ID-er. Av som standard — nyttig når du trenger dem, støy når du ikke gjør det.</string>
+    <string name="setting_metadata_lookup">Slå opp spordetaljer på nettet</string>
+    <string name="setting_metadata_lookup_description">Fyller inn det den avspillende appen ikke publiserte — ISRC, plateselskap, utgivelsesdato — fra MusicBrainz, en gratis offentlig database. Av som standard. Metadata-urskiven fungerer uten dette; alternativet legger bare til rader. Ingenting sendes med mindre du slår dette på og velger den urskiven, og bare spornavn og artist sendes.</string>
+</resources>

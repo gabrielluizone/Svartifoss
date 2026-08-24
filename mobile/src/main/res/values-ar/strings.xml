@@ -1,0 +1,2012 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS غير مدعوم على هذا الجهاز</string>
+    <string name="setting_no_wearable_api_banner_description">لا يوفّر هذا الجهاز مكوّن Wear OS ضمن Google Play Services، وهو ما يحتاجه Svartifoss للتواصل مع الساعة. لن يفيد الاقتران — لا يستطيع تطبيق الهاتف الوصول إلى ساعة من هذا الجهاز. سيظل كل ما أدناه محفوظًا، وسيُطبَّق إذا ثبّت Svartifoss على جهاز يدعمه.</string>
+    <string name="setting_no_watch_banner">لا توجد ساعة متصلة</string>
+    <string name="setting_no_watch_banner_description">تتم مزامنة هذه الإعدادات مع ساعة Wear OS، لذلك لن يظهر تأثيرها حتى يتم إقران ساعة واتصالها — ولكن لا يزال بإمكانك إعداد كل ما أدناه الآن.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">المظهر</string>
+    <string name="setting_theme">سمة</string>
+    <string name="theme_light">أبيض واضح</string>
+    <string name="theme_dark">أسود خالص</string>
+    <string name="theme_system">اتباع النظام</string>
+    <string name="setting_language">اللغة</string>
+    <string name="language_system">اتباع النظام</string>
+    <string name="language_change_watch_notice">ستتبع الساعة هذه اللغة أيضًا بعد المزامنة.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">المطوّر</string>
+    <string name="dev_mode_unlocked">تم تفعيل وضع المطوّر ✦</string>
+    <string name="dev_mode_clicks_remaining">%1$d نقرات إضافية لفتح وضع المطوّر</string>
+    <string name="dev_disable_mode">تعطيل وضع المطوّر</string>
+    <string name="dev_disable_mode_description">إخفاء هذا القسم مجددًا — انقر على \"الإصدار المثبّت\" سبع مرات لإظهاره مرة أخرى</string>
+    <string name="dev_mode_disabled">تم تعطيل وضع المطوّر</string>
+    <string name="dev_build_info">معلومات البناء</string>
+    <string name="dev_sync_watch">فرض مزامنة إعدادات الساعة</string>
+    <string name="dev_sync_watch_description">إرسال جميع الإعدادات الحالية إلى الساعة المقترنة فورًا</string>
+    <string name="dev_sync_watch_done">تمت مزامنة الإعدادات مع الساعة</string>
+    <string name="dev_copy_debug_info">نسخ معلومات تصحيح الأخطاء</string>
+    <string name="dev_copy_debug_info_description">نسخ تفاصيل البناء والجهاز إلى الحافظة</string>
+    <string name="dev_show_archived">إظهار الخيارات المؤرشفة</string>
+    <string name="dev_show_archived_description">إظهار تخطيطات الساعة والإعدادات التي أُرشفت بسبب مشكلات معروفة</string>
+    <string name="dev_copy_debug_info_done">تم نسخ معلومات تصحيح الأخطاء</string>
+    <string name="dev_open_update_screen">فتح شاشة التحديث</string>
+    <string name="dev_open_update_screen_description">معاينة شاشة التحديثات (شريط الغلاف وتخطيط ملاحظات الإصدار) من دون انتظار إصدار فعلي</string>
+    <string name="dev_watch_layout_bounds">إظهار حدود تخطيط الساعة</string>
+    <string name="dev_watch_layout_bounds_description">تحديد عناصر المشغّل المرئية ومناطق اللمس على الساعة. طبقة تشخيصية فقط.</string>
+    <string name="dev_watch_player_info">إظهار معلومات مشغّل الساعة</string>
+    <string name="dev_watch_player_info_description">عرض الواجهة النشطة وحالة التشغيل والتقدم ومعلومات العرض فوق شاشة الساعة.</string>
+    <string name="pref_reset_default">إعادة التعيين إلى الافتراضي</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">لقد عثرت على الشلال المخفي.
+
+Svartifoss — أعمدة بازلت سوداء
+تؤطّر شلالًا في آيسلندا،
+تذكير بأن الموسيقى تتدفق
+كالماء بين الصخور.
+
+♪ صُنع بعناية. ♪</string>
+    <string name="easter_egg_ok">إغلاق</string>
+
+    <string name="nav_watch_face">الساعة</string>
+    <string name="watch_face_header">مظهر الساعة</string>
+    <string name="nav_controls">عناصر التحكم</string>
+    <string name="nav_actions">الإجراءات</string>
+    <string name="nav_settings">الإعدادات</string>
+
+    <string name="controls_header">عناصر التحكم</string>
+    <string name="controls_state_playing">الموسيقى قيد التشغيل</string>
+    <string name="controls_state_stopped">لا يوجد تشغيل</string>
+    <string name="controls_playing_description">اختر وظيفة كل إدخال أثناء تشغيل الموسيقى. هذا الإعداد مستقل عن حالة عدم التشغيل.</string>
+    <string name="controls_stopped_description">اختر وظيفة كل إدخال قبل بدء التشغيل أو بعد توقفه. هذا الإعداد مستقل عن حالة التشغيل.</string>
+
+    <string name="watch_live_preview">معاينة مباشرة للساعة</string>
+    <string name="watch_preview_description">معاينة مباشرة لواجهة الساعة المحددة. تظهر التغييرات هنا قبل تجربتها على الساعة.</string>
+    <string name="watch_section_style">المشغّل</string>
+    <string name="watch_section_style_description">اختر تخطيط المشغّل وكيف يتصرف العنوان والوقت والتقدم.</string>
+    <string name="watch_section_background">الخلفية</string>
+    <string name="watch_section_background_description">تحكّم في صورة الألبوم والتمويه والتلاشي وسهولة القراءة خلف المشغّل.</string>
+    <string name="watch_section_colors">الألوان</string>
+    <string name="watch_section_colors_description">اضبط اللون الأساسي ولون التقدم وألوان الألبوم، ثم خصّص ألوان العنوان والفنان والساعة ومستوى الصوت واللوحات.</string>
+    <string name="watch_section_typography">النص</string>
+    <string name="watch_section_typography_description">اختر الخطوط واضبط العنوان والفنان والساعة وأيقونة التطبيق والشاشات الثانوية ونص Flex.</string>
+    <string name="watch_section_aod">العرض الدائم</string>
+    <string name="watch_section_aod_description">اضبط شاشة الطاقة المنخفضة وشاهد مظهرها المحيطي في المعاينة.</string>
+    <string name="watch_section_panels">اللوحات</string>
+    <string name="watch_section_panels_description">خصّص مستوى الصوت والتنقل واللوحة السريعة وقائمة الانتظار؛ يؤدي التركيز على صف إلى فتح تلك الواجهة في المعاينة.</string>
+    <string name="watch_section_mini_buttons">الأزرار المصغّرة</string>
+    <string name="watch_section_mini_buttons_description">خصّص صف الاختصارات الاختياري. انقر على «الأزرار المصغّرة» أدناه لتعيين إجراءاته في «عناصر التحكم».</string>
+    <string name="watch_overview_description">اختر ما تريد تخصيصه. تظل المعاينة والسمة المحفوظة نشطتين في جميع الأقسام.</string>
+    <string name="watch_back_to_overview">العودة إلى أقسام الساعة</string>
+
+    <string name="settings_section_general">عام</string>
+    <string name="settings_section_general_description">سمة التطبيق ولون التمييز وتفضيلات التحديث.</string>
+    <string name="settings_section_watch">السلوك</string>
+    <string name="settings_section_watch_description">سلوك التاج واللمس والاهتزاز وقائمة الإجراءات على ساعتك.</string>
+    <string name="settings_section_automation">الأتمتة</string>
+    <string name="settings_section_automation_description">اختر متى يفتح Svartifoss ويغلق تلقائيًا.</string>
+    <string name="settings_section_apps">التطبيقات</string>
+    <string name="settings_section_apps_description">البحث عن الكلمات والبيانات الوصفية، واختصارات البث، وصور قائمة الانتظار، وصلاحيات Android.</string>
+    <string name="settings_section_data">البيانات والدعم</string>
+    <string name="settings_section_data_description">انسخ إعداداتك احتياطيًا، وتحقق من الإصدار والتشخيصات أو احصل على المساعدة.</string>
+    <string name="settings_overview_description">اختر قسمًا. تبقى الخيارات ذات الصلة مجمّعة، بينما يتيح لك البحث الانتقال مباشرةً إلى أي إعداد.</string>
+    <string name="settings_back_to_overview">العودة إلى أقسام الإعدادات</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">كيفية استخدام Svartifoss</string>
+    <string name="tutorial_intro">يحوّل Svartifoss ساعتك إلى جهاز تحكم عن بُعد للموسيقى التي تُشغَّل على هاتفك. إليك كل ما يمكنك فعله من معصمك.</string>
+
+    <string name="tutorial_taps_title">النقر على مناطق الشاشة</string>
+    <string name="tutorial_taps_desc">تنقسم شاشة الساعة إلى أربع مناطق — أعلى وأسفل ويسار ويمين. يؤدي النقر على منطقة إلى تنفيذ الإجراء الذي عيّنته لها. افتراضيًا، تشغّل المنطقة اليسرى أو توقف مؤقتًا، وتتخطى اليمنى إلى المقطع التالي، وتغيّر المنطقتان العلوية والسفلية مستوى الصوت.</string>
+
+    <string name="tutorial_quick_panel_title">لوحة الإجراءات السريعة</string>
+    <string name="tutorial_quick_panel_desc">انقر نقرًا مزدوجًا على وسط شاشة «يتم التشغيل الآن» لفتح لوحة من أربع خانات — ثلاثة أزرار دائرية وصف عريض تحتها. عند تركها كما هي، تعكس الخانات الأزرار التي يضعها تطبيق التشغيل في إشعاره، فتحصل على عناصر التحكم الحقيقية للإعجاب والتشغيل العشوائي والتكرار. عيّن أي إجراء لخانة، أو اضبطها على \"بلا\" لإخفائها، ضمن «الإجراءات» على الهاتف.</string>
+    <string name="tutorial_gestures_title">نقرة واحدة ومزدوجة وضغط مطوّل</string>
+    <string name="tutorial_gestures_desc">تدعم كل منطقة من مناطق الحافة الأربع إجراءات منفصلة للنقرة الواحدة والنقرتين والضغط المطوّل. ويمكن تخصيص النقرة الواحدة في الوسط أيضًا؛ أما النقر المزدوج فيفتح دائمًا «الإجراءات السريعة»، بينما يفتح الضغط المطوّل محدد الواجهة أو قائمة الانتظار أو لا يفعل شيئًا بحسب «الإعدادات ← السلوك».</string>
+
+    <string name="tutorial_buttons_title">الأزرار الفعلية</string>
+    <string name="tutorial_buttons_desc">إذا كانت ساعتك تحتوي على أزرار جانبية، فيمكنك تعيين إجراءات النقرة الواحدة والنقرتين والضغط المطوّل لها أيضًا. وتستمر في العمل حتى عندما تكون الشاشة مطفأة.</string>
+
+    <string name="tutorial_rotary_title">التاج الدوّار</string>
+    <string name="tutorial_rotary_desc">اختر ما إذا كان التاج الدوّار أو الإطار يغيّر مستوى الصوت أو يتنقل داخل المقطع أو لا يفعل شيئًا من «الإعدادات ← السلوك ← التاج الدوّار / الإطار». في الساعات التي تعرض دوران التاج كأزرار، عيّنها من «عناصر التحكم» بدلًا من ذلك.</string>
+
+    <string name="tutorial_swipe_up_title">السحب لأعلى ولأسفل ولليسار ولليمين</string>
+    <string name="tutorial_swipe_up_desc">يمكن إعداد السحب لأعلى أو لأسفل أو لليسار على شاشة «يتم التشغيل الآن» لفتح أي شيء — قائمة الإجراءات، أو قائمة انتظار التشغيل، أو تخطي المقاطع، أو قوائم التشغيل، وغير ذلك. اضبط كل اتجاه في «عناصر التحكم»، مع اختيار «الموسيقى قيد التشغيل» أو «لا يوجد تشغيل». افتراضيًا، يفتح السحب لأعلى قائمة الإجراءات، ولا تفعل الاتجاهات الأخرى شيئًا حتى تعيّنها. يبقى السحب لليمين دون تغيير — فهو إيماءة Wear OS العامة للخروج من التطبيق.</string>
+    <string name="tutorial_shortcuts_title">اختصارات خدمات البث</string>
+    <string name="tutorial_shortcuts_desc">احفظ رابطًا لمقطع أو ألبوم أو مزيج أو قائمة تشغيل من Spotify أو YouTube Music أو Apple Music أو TIDAL أو Deezer أو Amazon Music أو SoundCloud، ثم عيّنه لأي زر أو إيماءة أو خانة لوحة. أسرع طريقة هي مشاركة الرابط مباشرةً إلى Svartifoss من تطبيق البث؛ ويمكنك أيضًا لصق رابط منسوخ أو كتابته. لا يلزم حساب أو تسجيل دخول — تطلب الساعة من الهاتف بدء التشغيل، لذلك يشغّل الاختصار المحتوى بدلًا من مجرد فتح التطبيق.</string>
+    <string name="tutorial_yt_music_title">اختصارات YouTube Music</string>
+    <string name="tutorial_yt_music_desc">عيّن \"تشغيل الأغاني التي أعجبتني\" أو \"تشغيل الأغاني التي أعجبتني عشوائيًا\" أو \"قوائم التشغيل الخاصة بي\" لأي زر أو إيماءة أو سحب للانتقال مباشرة إلى موسيقاك دون لمس الهاتف. يتذكر \"سجل البحث\" عمليات البحث الأخيرة على الساعة — اضغط مطولًا على إحداها لحذفها.</string>
+
+    <string name="tutorial_exit_title">السحب للخروج</string>
+    <string name="tutorial_exit_desc">اسحب من الحافة اليسرى لمغادرة المشغّل. ويمكنه إيقاف التشغيل مؤقتًا تلقائيًا عند الخروج — فعّل ذلك في الإعدادات.</string>
+
+    <string name="tutorial_tile_title">لوحة تحكم سريعة Tile</string>
+    <string name="tutorial_tile_desc">اسحب واجهة الساعة جانبًا إلى لوحة Svartifoss للوصول الفوري إلى التشغيل والإيقاف المؤقت والتخطي من دون فتح التطبيق.</string>
+
+    <string name="tutorial_complication_title">إضافة مصغّرة لواجهة الساعة</string>
+    <string name="tutorial_complication_desc">أضف إضافة صورة ألبوم Svartifoss إلى واجهة الساعة لترى الغلاف الحالي بنظرة سريعة. انقر عليها لفتح المشغّل.</string>
+
+    <string name="tutorial_system_title">عناصر تحكم الوسائط في النظام</string>
+    <string name="tutorial_system_desc">يظهر المقطع الحالي أيضًا في عناصر تحكم الوسائط الخاصة بالساعة وفي التطبيقات الحديثة، لذا يمكنك التحكم بالتشغيل من هناك أيضًا.</string>
+
+    <string name="tutorial_tip">نصيحة: اضبط الحالتين في «عناصر التحكم»، ثم نظّم القائمة في «الإجراءات».</string>
+
+    <string name="navigation_drawer_open">فتح درج التنقل</string>
+    <string name="navigation_drawer_close">إغلاق درج التنقل</string>
+
+    <string name="action_settings">الإعدادات</string>
+    <string name="action_pause">إيقاف مؤقت</string>
+    <string name="action_play">تشغيل</string>
+    <string name="action_skip_prev">السابق</string>
+    <string name="action_skip_next">التالي</string>
+    <string name="action_play_pause">تشغيل / إيقاف مؤقت</string>
+    <string name="action_stop">إيقاف</string>
+    <string name="action_restart">إعادة تشغيل المقطع</string>
+    <string name="action_mute">كتم / إلغاء كتم</string>
+    <string name="action_skip_seconds">تخطي %1$d ثانية</string>
+    <string name="action_reverse_seconds">إرجاع %1$d ثانية</string>
+    <string name="action_like">إعجاب</string>
+    <string name="action_shuffle">تشغيل عشوائي</string>
+    <string name="action_repeat">تكرار</string>
+    <string name="action_repeat_one">تكرار واحد</string>
+    <string name="action_search">البحث عن موسيقى</string>
+    <string name="action_open_lyrics">الكلمات</string>
+    <string name="group_playback_controls">عناصر تحكم التشغيل</string>
+    <string name="group_streaming_shortcuts">المقاطع والألبومات وقوائم التشغيل</string>
+    <string name="pick_action">اختيار إجراء</string>
+    <string name="action_search_hint">البحث في هذه القائمة</string>
+    <string name="action_search_empty">لا توجد إجراءات تطابق هذا البحث.</string>
+    <string name="action_opens_more">خيارات متعددة</string>
+    <string name="action_volume_up">رفع مستوى الصوت</string>
+    <string name="volume_down">خفض مستوى الصوت</string>
+    <string name="group_volume_controls">عناصر تحكم مستوى الصوت</string>
+    <string name="no_watch_detected">لم يتم اكتشاف ساعة</string>
+    <string name="connection_instructions">افتح Svartifoss على الساعة لبدء الاتصال</string>
+    <string name="playing_controls">عناصر التحكم أثناء التشغيل</string>
+    <string name="stopped_controls">عناصر التحكم دون تشغيل</string>
+    <string name="actions_menu">قائمة الإجراءات</string>
+    <string name="actions_intro">اضبط واجهتي الإجراءات على ساعتك باستخدام عناصر تحكم التشغيل أو التطبيقات أو المقاطع والألبومات وقوائم التشغيل المحفوظة. تظل اللوحة السريعة مضغوطة؛ ويمكن أن تحتوي القائمة أدناه على قائمة مرتبة أطول.</string>
+    <string name="actions_quick_panel_section">اللوحة السريعة</string>
+    <string name="actions_watch_menu_section">القائمة على الساعة</string>
+    <plurals name="actions_list_summary">
+        <item quantity="zero">%1$d إجراءات · انقر للتعديل · اضغط مطولًا واسحب لإعادة الترتيب</item>
+        <item quantity="one">%1$d إجراء · انقر للتعديل · اضغط مطولًا واسحب لإعادة الترتيب</item>
+        <item quantity="two">%1$d إجراءان · انقر للتعديل · اضغط مطولًا واسحب لإعادة الترتيب</item>
+        <item quantity="few">%1$d إجراءات · انقر للتعديل · اضغط مطولًا واسحب لإعادة الترتيب</item>
+        <item quantity="many">%1$d إجراءً · انقر للتعديل · اضغط مطولًا واسحب لإعادة الترتيب</item>
+        <item quantity="other">%1$d إجراء · انقر للتعديل · اضغط مطولًا واسحب لإعادة الترتيب</item>
+    </plurals>
+    <string name="actions_reorder_description">قائمة إجراءات مرتبة. المس مطولًا للسحب، أو استخدم إجراءَي تسهيل الاستخدام «تحريك لأعلى» أو «تحريك لأسفل»، أو اضغط Ctrl+Up/Down على لوحة المفاتيح.</string>
+    <string name="actions_move_up">تحريك لأعلى</string>
+    <string name="actions_move_down">تحريك لأسفل</string>
+    <string name="actions_moved_to_position">تم نقل %1$s إلى الموضع %2$d من %3$d.</string>
+    <string name="actions_empty">لا توجد إجراءات بعد. استخدم زر الإضافة لإنشاء الأول.</string>
+    <string name="actions_add">إضافة إجراء</string>
+    <string name="on_screen_buttons">مناطق اللمس</string>
+    <string name="physical_buttons">الأزرار الفعلية</string>
+    <string name="physical_buttons_disconnected">صِل ساعتك وافتح Svartifoss عليها لإعداد أزرارها الفعلية. مناطق اللمس والسحب والأزرار المصغّرة متاحة الآن.</string>
+    <string name="physical_buttons_unavailable">لم تُبلغ هذه الساعة عن أي أزرار فعلية قابلة للضبط.</string>
+    <string name="control_assignment_tap">نقرة: %1$s</string>
+    <string name="control_assignment_hold">ضغط مطوّل: %1$s</string>
+    <string name="control_assignment_both">نقرة: %1$s · ضغط مطوّل: %2$s</string>
+    <string name="tap_a_zone_to_configure">انقر على منطقة في الساعة لتعيين إجراء</string>
+    <string name="touch_zone_top">المنطقة العلوية</string>
+    <string name="touch_zone_bottom">المنطقة السفلية</string>
+    <string name="touch_zone_left">المنطقة اليسرى</string>
+    <string name="touch_zone_right">المنطقة اليمنى</string>
+    <string name="touch_zone_center">نقرة الوسط</string>
+    <string name="touch_zone_action">%1$s: %2$s. انقر للضبط.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">إيماءات السحب</string>
+    <string name="tap_a_swipe_to_configure">انقر على اتجاه لاختيار ما يفتحه</string>
+    <string name="swipe_gesture_up">السحب لأعلى</string>
+    <string name="swipe_gesture_down">السحب لأسفل</string>
+    <string name="swipe_gesture_left">السحب لليسار</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">أعلى</string>
+    <string name="swipe_gesture_label_down">أسفل</string>
+    <string name="swipe_gesture_label_left">يسار</string>
+
+    <string name="screen_buttons">الأزرار المصغّرة</string>
+    <string name="tap_a_screen_button_to_configure">حتى ثلاثة أزرار ظاهرة قرب أسفل شاشة الساعة — انقر على خانة لتعيين إجراء</string>
+    <string name="screen_button_1">الزر المصغّر 1 (يسار)</string>
+    <string name="screen_button_2">الزر المصغّر 2 (وسط)</string>
+    <string name="screen_button_3">الزر المصغّر 3 (يمين)</string>
+    <string name="screen_button_label_1">الزر 1</string>
+    <string name="screen_button_label_2">الزر 2</string>
+    <string name="screen_button_label_3">الزر 3</string>
+    <string name="no_action">لا إجراء</string>
+    <string name="gesture_single_press">نقرة واحدة</string>
+    <string name="gesture_double_press">نقرتان</string>
+    <string name="gesture_long_press">ضغط مطوّل</string>
+    <string name="gesture_swipe_action">إجراء</string>
+    <string name="center_button_quick_panel_note">يؤدي النقر المزدوج على الوسط دائمًا إلى فتح «الإجراءات السريعة». ويشغّل الضغط المطوّل الخيار الموجود ضمن «الإعدادات ← السلوك». لا تتغير أي من الإيماءتين عند تعيين نقرة الوسط هنا.</string>
+    <string name="start_playback">بدء التشغيل</string>
+    <string name="uninstalled_app">تطبيق غير مثبّت</string>
+
+    <string name="play_app">تشغيل %1$s</string>
+    <string name="tasker_task">مهمة Tasker</string>
+    <string name="icon_selection_title">اختيار الأيقونة</string>
+    <string name="icon_selection_gallery">من المعرض</string>
+    <string name="icon_selection_no_icon_pack">تتيح لك هذه الميزة اختيار أيقونة مخصّصة لإجرائك من
+        حزمة أيقونات مثبّتة.
+
+للأسف، يبدو أنه ليست لديك أي حزم أيقونات مثبّتة.</string>
+    <string name="icon_selection_no_storage_permission">تتيح لك هذه الميزة اختيار أيقونة مخصّصة لإجرائك من
+        حزمة أيقونات مثبّتة.
+
+تتطلب بعض حزم الأيقونات منح التطبيقات إذن التخزين. ستحتاج إلى السماح به لاستخدام هذه الميزة.</string>
+    <string name="delete">حذف</string>
+    <string name="action_text">نص الإجراء</string>
+    <string name="swap_action">تبديل الإجراء</string>
+    <string name="open_actions_menu">فتح قائمة الإجراءات</string>
+    <string name="open_playlist_menu">إظهار قائمة التشغيل الحالية</string>
+    <string name="misc_settings">إعدادات متنوعة</string>
+
+    <string name="category_backup">نسخ احتياطي</string>
+    <string name="export_config">تصدير الإعدادات</string>
+    <string name="export_config_description">حفظ تعيينات الأزرار وقائمة الإجراءات وإعدادات الساعة في ملف</string>
+    <string name="import_config">استيراد الإعدادات</string>
+    <string name="import_config_description">استعادة تعيينات الأزرار وقائمة الإجراءات وإعدادات الساعة من ملف</string>
+    <string name="export_config_done">تم تصدير الإعدادات</string>
+    <string name="export_config_failed">تعذّر تصدير الإعدادات</string>
+    <string name="import_config_done_title">تم الاستيراد بنجاح</string>
+    <string name="import_config_done_message">يحتاج Svartifoss إلى إعادة التشغيل لتطبيق الإعدادات المستوردة.</string>
+    <string name="import_config_failed">تعذّر استيراد الإعدادات — قد يكون الملف غير صالح أو من إصدار غير متوافق</string>
+    <string name="action_restart_now">إعادة التشغيل الآن</string>
+
+    <string name="category_about">حول</string>
+    <string name="category_music_screen">شاشة الموسيقى</string>
+    <string name="category_watch_screen">شاشة الساعة</string>
+    <string name="category_mini_buttons">الأزرار المصغّرة</string>
+    <string name="category_screen_face">مظهر المشغّل</string>
+    <string name="category_wf_screen_behavior">سلوك الشاشة</string>
+    <string name="category_wf_player_progress">التقدم والتنقل والوقت</string>
+    <string name="category_album_background">خلفية الألبوم</string>
+    <string name="category_music_colors">ألوان من الموسيقى</string>
+    <string name="category_wf_typography_font">نوع الخط</string>
+    <string name="category_wf_typography_title">العنوان</string>
+    <string name="category_wf_typography_artist">الفنان</string>
+    <string name="category_wf_typography_icon">أيقونة التطبيق</string>
+    <string name="category_wf_typography_flex">محاور Google Sans Flex</string>
+    <string name="category_wf_metadata">محتوى واجهة البيانات الوصفية</string>
+    <string name="category_wf_typography_secondary">النص على الشاشات الأخرى</string>
+    <string name="category_wf_colors_title">ألوان العنوان</string>
+    <string name="category_wf_colors_artist">ألوان الفنان</string>
+    <string name="category_wf_colors_clock">ألوان الساعة</string>
+    <string name="setting_wear_font_flex_hint_title">حول عناصر التحكم هذه</string>
+    <string name="setting_wear_flex_axes_hint">تضبط هذه العناصر Google Sans Flex بدقة — اختره أعلاه لاستخدامها. يضبط وزن/ميل العنوان والفنان أعلاه محوري الوزن (wght) والميل (slnt) الخاصين بهذا الخط بالفعل؛ وتُطبّق عناصر التحكم الأربعة أدناه على الواجهة كلها.</string>
+    <string name="setting_wear_font_flex_width">العرض</string>
+    <string name="setting_wear_font_flex_width_description">التمدد الأفقي من مضغوط إلى موسّع (25–151). القيمة 100 هي العرض الطبيعي للخط.</string>
+    <string name="setting_wear_font_flex_optical_size">الحجم البصري</string>
+    <string name="setting_wear_font_flex_optical_size_description">يضبط تفاصيل الخط بحسب الحجم الفعلي للنص (6–144). القيم المنخفضة تناسب النص الصغير، والعالية تناسب نص العرض الكبير.</string>
+    <string name="setting_wear_font_flex_grade">السماكة الدقيقة</string>
+    <string name="setting_wear_font_flex_grade_description">يغيّر الوزن قليلًا من دون تغيير التخطيط (0–100) — طريقة خفيفة لتعزيز التباين على شاشة داكنة.</string>
+    <string name="setting_wear_font_flex_roundness">الاستدارة</string>
+    <string name="setting_wear_font_flex_roundness_description">يمزج نهايات الخطوط من حادة (0) إلى مستديرة بالكامل (100) لمظهر أكثر ودًّا.</string>
+    <string name="preview_sample_title">عنوان الأغنية</string>
+    <string name="preview_sample_artist">اسم الفنان</string>
+    <string name="preview_sample_next_title">الأغنية التالية</string>
+    <string name="preview_playback_stopped">متوقف</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">السطر السابق</string>
+    <string name="preview_verse_current">السطر الذي يُشغّل الآن</string>
+    <string name="preview_verse_next">والسطر الذي يليه</string>
+    <string name="preview_chat_today">اليوم</string>
+    <string name="category_gestures">الإيماءات والإدخال</string>
+    <string name="category_watch_navigation">التنقل والاختصارات</string>
+    <string name="category_rotary_input">الإدخال الدوّار والضبط</string>
+    <string name="category_watch_feedback">الاستجابة وسلوك الخروج</string>
+    <string name="category_watch_display">شاشة الساعة</string>
+    <string name="setting_wear_keep_screen_on">إبقاء الشاشة قيد التشغيل</string>
+    <string name="setting_wear_keep_screen_on_description">منع شاشة الساعة من الإطفاء عند انتهاء مهلة الخمول أثناء فتح إحدى شاشات Svartifoss. سيظل خفض المعصم يعتّم الساعة — فهذه الإيماءة تابعة للنظام. يستهلك بطارية أكثر. تبقى شاشة الكلمات قيد التشغيل دائمًا بغض النظر عن هذا الإعداد.</string>
+    <string name="setting_lyrics_enabled">البحث عن الكلمات عبر الإنترنت</string>
+    <string name="setting_lyrics_enabled_description">السماح للهاتف بجلب الكلمات المتزامنة من LRCLIB عند فتح شاشة الكلمات على الساعة. يتم إرسال اسم المقطع والفنان والمدة فقط؛ لا شيء آخر، ولا يتم تخزين شيء على القرص. إذا أوقفت هذا الخيار فستوضح شاشة الكلمات أن البحث معطّل.</string>
+    <string name="setting_overlay_blur_radius">تمويه الطبقة العلوية</string>
+    <string name="setting_overlay_blur_radius_description">قوة التمويه (px) للخلفية الزجاجية خلف حلقات مستوى الصوت/التنقل ولوحة الإجراءات السريعة — مستقلة عن تمويه خلفية صورة الألبوم</string>
+    <string name="category_action_list">قائمة الإجراءات</string>
+    <string name="category_automation">الأتمتة</string>
+    <string name="category_idle">عندما لا يتم تشغيل شيء</string>
+    <string name="installed_version">الإصدار المثبّت</string>
+    <string name="get_support">الحصول على الدعم</string>
+    <string name="get_support_description">إرسال سجلات التطبيق إلى المطوّر للحصول على الدعم</string>
+    <string name="contact_developer">التواصل مع المطوّر</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — تواصل</string>
+    <string name="contact_developer_chooser">إرسال بريد إلكتروني</string>
+    <string name="contact_developer_no_client">لا يوجد تطبيق بريد إلكتروني مثبّت. تم نسخ العنوان إلى الحافظة.</string>
+    <string name="about_developer_title">حول المطوّر</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">بدأ Svartifoss كمشروع شخصي — أردت تحديث Music Center for Wear بما أصبح ممكنًا اليوم، فقط لأستخدمه بنفسي كل يوم. وكانت النتيجة جيدة بما يكفي لأن أقرر مشاركته مع الجميع. هذا أول تطبيق لي، ولا شيء يضاهي رؤية شيء صنعته يتحول إلى أداة مفيدة للآخرين أيضًا.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">تراخيص المصادر المفتوحة</string>
+    <string name="setting_always_show_time">إظهار الوقت دائمًا</string>
+    <string name="setting_always_show_time_off_description">لن يظهر الوقت الحالي إلا في الوضع المحيطي</string>
+    <string name="setting_always_show_time_on_description">سيظهر الوقت الحالي دائمًا. لن تظهر أيقونة الإجراء العلوية (سيحل محلها الوقت)، لكن الإجراء سيظل يعمل بشكل طبيعي.</string>
+    <string name="tap_to_force_stop">انقر لإيقاف عناصر التحكم</string>
+    <string name="notification_action_stop">إيقاف</string>
+    <string name="notification_action_force_stop">إيقاف إجباري</string>
+    <string name="error_notification_access">لا يوجد إذن للوصول إلى الإشعارات. تحقّق من الهاتف.</string>
+    <string name="error_notifications">إشعارات الأخطاء</string>
+    <string name="notification_access_notification_title">يحتاج Svartifoss إلى إذن الوصول إلى الإشعارات</string>
+    <string name="notification_access_notification_title_description">انقر على هذا الإشعار وحدد Svartifoss لإصلاح المشكلة</string>
+    <string name="error_service_not_enabled">يلزم الوصول إلى الإشعارات</string>
+    <string name="error_service_not_enabled_description">للتحكم بالموسيقى من ساعتك، يحتاج Svartifoss إلى الوصول إلى الإشعارات — فهذه هي الطريقة التي يتيح بها Android معرفة التطبيق الذي يشغّل الموسيقى وإرسال أوامر التشغيل والإيقاف المؤقت والتخطي إليه.
+
+لا يقرأ Svartifoss محتوى إشعاراتك مطلقًا. يستخدم هذا الإذن فقط للعثور على جلسة الوسائط النشطة.
+
+انقر على \"فتح الإعدادات\"، ثم فعّل Svartifoss ضمن الوصول إلى الإشعارات.</string>
+    <string name="action_open_settings">فتح الإعدادات</string>
+    <string name="settings_search_title">البحث في الإعدادات</string>
+    <string name="settings_search_hint">البحث في الإعدادات</string>
+    <string name="settings_search_clear">مسح البحث</string>
+    <string name="settings_search_prompt">ابحث بالاسم في كل إعداد ضمن «الإعدادات» و«مظهر الساعة».</string>
+    <string name="settings_search_no_results">لا يوجد إعداد يطابق ذلك.</string>
+    <string name="settings_search_prerequisite">يعتمد هذا الخيار على اختيار آخر. عدّل الإعداد المعروض هنا لإظهاره.</string>
+    <string name="setting_numeric_range_error">أدخل قيمة من %1$d إلى %2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">انقر لمنحه — سيظل التحكم بالتشغيل غير نشط حتى تفعل</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">ثبّت Svartifoss على ساعتك</string>
+    <string name="no_watch_app_description">تعذّر على Svartifoss العثور على تطبيق الساعة على ساعة Wear OS المقترنة. يعمل تطبيق الهاتف والساعة معًا — ومن دون تطبيق الساعة لن يعمل التحكم بالتشغيل من معصمك.
+
+Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبيق الساعة منفصلًا عبر sideload (مثلًا باستخدام Wear Installer). انقر على \"عرض الإصدارات\" لفتح صفحة إصدارات GitHub وتنزيل APK الخاص بالساعة. إذا كنت قد ثبّتّه للتو، فامنحه دقيقة لإكمال المزامنة.</string>
+    <string name="no_watch_app_button">عرض الإصدارات</string>
+    <string name="required_permission">إذن مطلوب</string>
+    <string name="setting_pause_on_swipe_exit">إيقاف التشغيل مؤقتًا عند الخروج بالسحب</string>
+    <string name="setting_pause_on_swipe_exit_description">إيقاف أي تشغيل تلقائيًا عند الخروج من Svartifoss على الساعة عبر إيماءة السحب لليسار.
+
+الخروج عبر زر الطاقة لا يتأثر ولن يؤدي أبدًا إلى الإيقاف المؤقت تلقائيًا.</string>
+    <string name="setting_rotating_crown_off_period">تأخير الإدخال الدوّار بعد تشغيل الشاشة</string>
+    <string name="setting_rotating_crown_off_period_description">قد تكون المدخلات الدوّارة (مثل التيجان الدوّارة) شديدة الحساسية على بعض الأجهزة. لمنع تغييرات مستوى الصوت غير المقصودة، سيتم تعطيل الإدخال الدوّار لمدة <![CDATA[<b>%1$s milliseconds</b>]]> بعد تشغيل الشاشة.</string>
+    <string name="setting_rotary_seek">التنقل بالتاج الدوّار</string>
+    <string name="setting_rotary_seek_description">عند التفعيل، يؤدي تدوير التاج إلى التنقل داخل المقطع الحالي بدلًا من تغيير مستوى الصوت. ويمكن تغيير مستوى الصوت بأزرار الشاشة أو الأزرار الفعلية.</string>
+    <string name="setting_wear_rotary_action">التاج الدوّار / الإطار</string>
+    <string name="wear_rotary_action_volume">تغيير مستوى الصوت</string>
+    <string name="wear_rotary_action_seek">التنقل داخل المقطع</string>
+    <string name="wear_rotary_action_off">عدم فعل شيء</string>
+    <string name="setting_rotating_sensitivity">حساسية الإدخال الدوّار</string>
+    <string name="setting_rotating_sensitivity_description">حساسية الإدخال الدوّار. كلما زاد الرقم، أدى تحريك التاج الدوّار بالطريقة نفسها إلى زيادة أكبر في مستوى الصوت. القيمة الحالية <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">تعطيل النقر المزدوج للزر الفعلي في الوضع المحيطي</string>
+    <string name="setting_disable_ambient_physical_double_click_description">تحتوي بعض الساعات على أزرار بها خلل يجعل نقرة واحدة على الزر الفعلي في الوضع المحيطي تُسجَّل أحيانًا كنقرتين.
+
+إذا واجهت ذلك، يمكنك تفعيل هذا الخيار لتعطيل النقرات المزدوجة كليًا في الوضع المحيطي (مثلًا، ستنفّذ النقرتان إجراء النقرة الواحدة فقط). لا يتأثر الضغط مرتين عندما تكون الساعة نشطة.</string>
+    <string name="setting_haptic_feedback">استجابة لمسية</string>
+    <string name="setting_haptic_feedback_description">اهتزاز الساعة عند الضغط على الأزرار.</string>
+    <string name="setting_auto_start">فتح Svartifoss تلقائيًا</string>
+    <string name="setting_auto_start_description">فتح Svartifoss تلقائيًا على الساعة عند بدء تشغيل الموسيقى على الهاتف.</string>
+    <string name="setting_auto_start_apps_blacklist">تطبيقات التشغيل التلقائي</string>
+    <string name="setting_auto_start_apps_blacklist_description">قائمة تطبيقات الوسائط التي يمكنها فتح Svartifoss تلقائيًا</string>
+    <string name="setting_dim_album_art">تظليل المشغّل</string>
+    <string name="setting_dim_album_art_description">إضافة معالجة ظل يختارها المستخدم بين الصورة وعناصر تحكم المشغّل.</string>
+    <string name="setting_album_art_style">نمط صورة الألبوم</string>
+    <string name="setting_album_art_style_description">اختر مظهر خلفية «يتم التشغيل الآن» على الساعة.</string>
+    <string name="setting_album_art_blur_radius">شدة التمويه</string>
+    <string name="setting_album_art_blur_radius_description">قوة تمويه ملء الشاشة عندما تستخدم الخلفية المحددة التمويه. حاليًا <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">شدة التعتيم</string>
+    <string name="setting_album_art_dim_strength_description">مقدار تعتيم صورة الألبوم لتحسين قراءة النص. حاليًا <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">نمط التظليل</string>
+    <string name="setting_player_shading_intensity">شدة التظليل</string>
+    <string name="setting_player_shading_intensity_description">مدى تعتيم التظليل للخلفية. 100%% هي القوة الكاملة؛ زدها للحصول على تباين إضافي (حتى 150%%). حاليًا <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">تطبيق هذا المظهر على كل الواجهات</string>
+    <string name="setting_apply_appearance_to_all_faces_description">نسخ إعدادات مظهر هذه الواجهة إلى كل الواجهات الأخرى</string>
+    <string name="apply_appearance_confirm_title">تطبيق على كل الواجهات؟</string>
+    <string name="apply_appearance_confirm_message">سيؤدي هذا إلى استبدال إعدادات مظهر كل الواجهات الأخرى بالإعدادات الحالية. لن تتغير إعدادات السلوك.</string>
+    <string name="apply_appearance_confirm_button">تطبيق</string>
+    <string name="apply_appearance_done">تم التطبيق على كل الواجهات</string>
+    <string name="category_wf_layout_actions">التخطيط</string>
+    <string name="setting_reset_appearance">إعادة تعيين هذا التخطيط</string>
+    <string name="setting_reset_appearance_description">استعادة مظهر هذه الواجهة إلى إعداداته الافتراضية الأصلية</string>
+    <string name="reset_appearance_confirm_title">إعادة تعيين هذا التخطيط؟</string>
+    <string name="reset_appearance_confirm_message">ستعود إعدادات مظهر هذه الواجهة إلى القيم الافتراضية. لن تتأثر إعدادات السلوك أو الواجهات الأخرى.</string>
+    <string name="reset_appearance_confirm_button">إعادة تعيين</string>
+    <string name="reset_appearance_done">تمت إعادة التخطيط إلى الإعدادات الافتراضية</string>
+    <string name="setting_reset_all_faces">إعادة كل الواجهات إلى الافتراضي</string>
+    <string name="setting_reset_all_faces_description">استعادة مظهر كل واجهة مضمّنة إلى إعداداته الافتراضية الأصلية</string>
+    <string name="reset_all_faces_confirm_title">إعادة تعيين كل الواجهات؟</string>
+    <string name="reset_all_faces_confirm_message">سيعود مظهر كل واجهة مضمّنة إلى إعداداته الافتراضية الأصلية، وسيتم إيقاف أي سمة مخصّصة نشطة. ستظل السمات المخصّصة المحفوظة وإعدادات السلوك والواجهة المختارة محفوظة.</string>
+    <string name="reset_all_faces_confirm_button">إعادة تعيين الكل</string>
+    <string name="reset_all_faces_done">تمت إعادة كل الواجهات إلى الإعدادات الافتراضية</string>
+    <string name="face_reset_migration_title">حدّث مظهر ساعتك</string>
+    <string name="face_reset_migration_message">لقد حدّثت من إصدار أقدم كانت فيه كل واجهات الساعة تشترك في مجموعة واحدة من إعدادات المظهر. الآن تتذكر كل واجهة إعداداتها الخاصة، لذلك قد تبدو إعداداتك القديمة غير متناسقة على الواجهات التي لم تخصّصها مباشرةً. نوصي بإعادة كل الواجهات إلى إعداداتها الافتراضية الجديدة، أو مسح بيانات التطبيق لبدء جديد تمامًا.</string>
+    <string name="face_reset_migration_reset_button">إعادة تعيين كل الواجهات</string>
+    <string name="face_reset_migration_clear_data_button">مسح بيانات التطبيق</string>
+    <string name="setting_player_shading_color">لون التظليل</string>
+    <string name="setting_wear_shading_custom_color">لون تظليل مخصّص</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>أسود</item>
+        <item>تمييز الألبوم</item>
+        <item>ألبوم منخفض التشبع</item>
+        <item>لون مخصّص</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>اتباع سمة المشغّل</item>
+        <item>تظليل الحواف</item>
+        <item>تظليل الحواف (قوي)</item>
+        <item>تظليل الحواف (ثقيل)</item>
+        <item>الزاوية السفلية</item>
+        <item>تلاشي سفلي</item>
+        <item>الأرضية والسقف</item>
+        <item>مرشح ملء الشاشة</item>
+        <item>غسل بلون الألبوم</item>
+        <item>تدرج ألبوم بلونين</item>
+        <item>ستائر جانبية</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">شفافية صورة الألبوم في الوضع المحيطي</string>
+    <string name="setting_ambient_album_art_opacity_description">مدى بقاء صورة الألبوم مرئية في الوضع المحيطي. حاليًا <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">مهلة طبقة مستوى الصوت/التنقل</string>
+    <string name="setting_volume_overlay_timeout_description">مدة بقاء طبقات مستوى الصوت والتنقل على الشاشة بعد التعديل. حاليًا <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">المنطقة الميتة للإدخال الدوّار</string>
+    <string name="setting_rotary_deadzone_description">أدنى حركة للتاج قبل تطبيق تغييرات مستوى الصوت أو التنقل. تساعد على منع التعديلات غير المقصودة. حاليًا <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">تجربة Wear</string>
+    <string name="setting_swipe_gestures_hint">إيماءات السحب</string>
+    <string name="setting_swipe_gestures_hint_description">يمكن لكل من السحب لأعلى/لأسفل/لليسار فتح أي إجراء. انقر هنا لضبطها لحالة «الموسيقى قيد التشغيل» أو «لا يوجد تشغيل». يظل السحب لليمين مخصصًا للخروج من التطبيق.</string>
+    <string name="setting_screen_buttons_hint">الأزرار المصغّرة</string>
+    <string name="setting_screen_buttons_hint_description">حتى ثلاثة أزرار ظاهرة، لكل منها إجراء للنقرة والضغط المطوّل. انقر هنا لضبطها لحالة «الموسيقى قيد التشغيل» أو «لا يوجد تشغيل».</string>
+    <string name="dev_screen_buttons_offset">موضع الأزرار المصغّرة</string>
+    <string name="dev_screen_buttons_offset_description">المسافة المفضلة بوحدة dp بين أسفل شاشة الساعة والأزرار المصغّرة (الافتراضي 42). لا يزال الصف يبتعد تلقائيًا عن العناوين الطويلة عند الحاجة.</string>
+    <string name="setting_screen_buttons_tilt">ميل الأزرار</string>
+    <string name="setting_screen_buttons_tilt_description">مدى اتباع الأزرار الجانبية لانحناء الشاشة. 0 = صف مستقيم؛ 100 = ارتفاع قوسي كامل مع أيقونات مائلة.</string>
+    <string name="setting_screen_buttons_bg">خلفية الأزرار المصغّرة</string>
+    <string name="setting_screen_buttons_opacity">شفافية الأزرار المصغّرة</string>
+    <string name="setting_screen_buttons_opacity_description">شفافية مجموعة الأزرار المصغّرة بالكامل (0–100%%). حاليًا <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">لوحة الإجراءات السريعة</string>
+    <string name="quick_panel_link_summary">انقر نقرًا مزدوجًا على وسط شاشة الساعة لفتحها. انقر هنا لإعداد خاناتها الأربع في «الإجراءات».</string>
+    <string name="quick_panel_config_hint">هذه هي أزرار اللوحة التي تُفتح بالنقر المزدوج على وسط شاشة الساعة. انقر على صف لاختيار إجرائه (\"بلا\" يخفيه)؛ واضغط مطولًا لاستعادة الإعداد الافتراضي.</string>
+    <string name="quick_panel_slot_1">الزر 1</string>
+    <string name="quick_panel_slot_2">الزر 2</string>
+    <string name="quick_panel_slot_3">الزر 3</string>
+    <string name="quick_panel_slot_long">زر طويل</string>
+    <string name="quick_panel_slot_default">%1$s (افتراضي)</string>
+    <string name="quick_panel_slot_hidden">مخفي</string>
+    <string name="quick_panel_default_like">إعجاب</string>
+    <string name="quick_panel_default_shuffle">تشغيل عشوائي</string>
+    <string name="quick_panel_default_repeat">تكرار</string>
+    <string name="quick_panel_default_up_next">التالي</string>
+    <string name="setting_wear_center_long_press_queue">ضغط مطوّل على الوسط لفتح قائمة الانتظار</string>
+    <string name="setting_wear_center_long_press_queue_description">اضغط مطولًا على وسط شاشة «يتم التشغيل الآن» لفتح قائمة انتظار التشغيل.</string>
+    <string name="setting_wear_center_long_press">ضغط مطوّل على الوسط</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>تغيير واجهة الساعة</item>
+        <item>فتح قائمة الانتظار</item>
+        <item>لا شيء</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">التخطيط الأساسي</string>
+    <string name="setting_wear_screen_face_description">اختر البنية التي تستخدمها هذه السمة. يمكن للسمات المحفوظة دمج هذا التخطيط مع الخطوط والألوان والتمويه والتظليل وAOD واللوحات الخاصة بها.</string>
+    <string name="setting_wear_show_track_title">إظهار عنوان الأغنية</string>
+    <string name="setting_wear_show_track_title_description">عرض اسم الأغنية الحالية على المشغّل</string>
+    <string name="setting_wear_show_track_artist">إظهار اسم الفنان</string>
+    <string name="setting_wear_show_track_artist_description">عرض الفنان الحالي على المشغّل</string>
+    <string name="setting_wear_show_source_icon">إظهار أيقونة تطبيق التشغيل</string>
+    <string name="setting_wear_show_source_icon_description">إظهار أيقونة التطبيق الذي يشغّل حاليًا بجانب الفنان. تستخدم الأيقونة من إشعار الوسائط الخاص به. عند الإيقاف، لا تُرسل الأيقونة إلى الساعة مطلقًا.</string>
+    <string name="setting_wear_player_controls_visible">إظهار عناصر تحكم المشغّل</string>
+    <string name="setting_wear_player_controls_visible_description">إظهار أو إخفاء الأزرار المضمّنة في تخطيطات Classic وPoster وStudio وغيرها من التخطيطات القابلة للضبط من دون تعطيل مناطق لمسها</string>
+    <string name="setting_wear_quadrant_tap_flash">وميض الأيقونة عند النقر</string>
+    <string name="setting_wear_quadrant_tap_flash_description">عند تنفيذ إجراء منطقة في زاوية، أضئ أيقونتها لفترة وجيزة بأقصى سطوع — مفيد خصوصًا في سمة الشاشة Hidden، حيث تكون الأيقونة غير مرئية وإلا فلن تحصل على تأكيد للإجراء الذي نُفِّذ.</string>
+    <string name="setting_wear_internal_progress_visible">مؤشر تقدم التخطيط</string>
+    <string name="setting_wear_internal_progress_visible_description">إظهار مؤشر التقدم الإضافي المصمم ضمن هذا التخطيط. حلقات زر التشغيل في Expressive وMaterial جزء من عناصر التحكم الخاصة بهما وتظل متاحة.</string>
+    <string name="setting_wear_edge_progress_visible">إظهار قوس التقدم على الحافة</string>
+    <string name="setting_wear_edge_progress_visible_description">إخفاء القوس المرئي حول الشاشة فقط. يظل التنقل من الحافة خيارًا مستقلًا.</string>
+    <string name="setting_wear_edge_seek_enabled">التنقل من حافة الشاشة</string>
+    <string name="setting_wear_edge_seek_enabled_description">انقر أو اسحب على طول حافة الشاشة للانتقال إلى نقطة دقيقة، حتى عندما يكون القوس مخفيًا</string>
+    <string name="setting_wear_screen_theme">نمط عناصر التحكم</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">متوازن</string>
+    <string name="wear_screen_theme_default_description">تدرج قياسي وأحجام قياسية لعناصر التحكم.</string>
+    <string name="wear_screen_theme_minimal">حد أدنى</string>
+    <string name="wear_screen_theme_minimal_description">يستخدم عناصر تحكم أصغر وأقل بروزًا مع إبقاء كل إجراء مرئيًا وقابلًا للاستخدام.</string>
+    <string name="wear_screen_theme_compact">مضغوط</string>
+    <string name="wear_screen_theme_compact_description">يستخدم معالجة أكثر إحكامًا لعناصر التحكم دون تغيير إجراءاتك.</string>
+    <string name="wear_screen_theme_cinema">سينمائي</string>
+    <string name="wear_screen_theme_cinema_description">يخفف بروز عناصر التحكم دون تغيير الصورة.</string>
+    <string name="wear_screen_theme_vivid">زاهٍ</string>
+    <string name="wear_screen_theme_vivid_description">يستخدم عناصر تحكم أكبر وأكثر بروزًا.</string>
+    <string name="wear_screen_theme_contrast">تباين عالٍ</string>
+    <string name="wear_screen_theme_contrast_description">يستخدم عناصر تحكم أكبر لتسهيل القراءة.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">يستخدم عناصر تحكم مضغوطة ومعتمة قليلًا. لا يعتّم الخلفية نفسها — استخدم إعدادات الخلفية لذلك.</string>
+    <string name="wear_screen_theme_hidden">مخفي</string>
+    <string name="wear_screen_theme_hidden_description">يخفي كل أيقونات التحكم تمامًا. تظل مناطق اللمس نشطة وتعمل بالكامل.</string>
+    <string name="setting_wear_font">نوع الخط</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">خط التطبيق الافتراضي.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">إصدار متغير من Google Sans بعرض وحجم بصري ودرجة واستدارة قابلة للضبط — يفتح عناصر تحكم المحاور أدناه.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">خط النظام الكلاسيكي في Android.</string>
+    <string name="wear_font_rounded">مستدير</string>
+    <string name="wear_font_rounded_description">أشكال أحرف عصرية ودودة بنهايات مستديرة برفق.</string>
+    <string name="wear_font_sans_light">حديث خفيف</string>
+    <string name="wear_font_sans_light_description">خط sans-serif نظيف وواسع بإحساس بصري أخف.</string>
+    <string name="wear_font_sans_thin">رفيع جدًا</string>
+    <string name="wear_font_sans_thin_description">نمط عرض خفيف للغاية لمشغّل بسيط.</string>
+    <string name="wear_font_sans_medium">حديث متوسط</string>
+    <string name="wear_font_sans_medium_description">خط sans-serif واضح بضربات أقوى ومضغوطة.</string>
+    <string name="wear_font_sans_black">ثقيل</string>
+    <string name="wear_font_sans_black_description">عائلة عرض عريضة بأقصى تأثير بصري.</string>
+    <string name="wear_font_small_caps">حروف كبيرة صغيرة</string>
+    <string name="wear_font_small_caps_description">أشكال مدمجة تشبه الحروف الكبيرة بطابع تحريري.</string>
+    <string name="wear_font_casual">عفوي</string>
+    <string name="wear_font_casual_description">عائلة نظام مرحة تشبه الكتابة اليدوية.</string>
+    <string name="wear_font_typewriter">آلة كاتبة (مؤرشف)</string>
+    <string name="wear_font_typewriter_description">مظهر آلة كاتبة قديم (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">خط sans هندسي مستدير، بديل مجاني (OFL) بروح Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">خط sans هندسي نظيف، بديل مجاني (OFL) بروح Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">خط روماني إنساني أنيق، بديل مجاني (OFL) بروح Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">نمط آلة كاتبة أكثر نعومة (Love Letter Typewriter) — مخصص عادةً للمقاطع ذات سمة \"Lain\".</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">خط serif كلاسيكي.</string>
+    <string name="wear_font_serif_monospace">Serif أحادي المسافة</string>
+    <string name="wear_font_serif_monospace_description">حروف serif ثابتة العرض بمظهر تحريري/طرفي مميز.</string>
+    <string name="wear_font_monospace">أحادي المسافة</string>
+    <string name="wear_font_monospace_description">مظهر تقني ثابت العرض.</string>
+    <string name="wear_font_condensed">مكثّف</string>
+    <string name="wear_font_condensed_description">أشكال أحرف أضيق تستوعب نصًا أكثر.</string>
+    <string name="wear_font_condensed_light">مكثّف خفيف</string>
+    <string name="wear_font_condensed_light_description">عائلة أضيق وأخف للعناوين الطويلة.</string>
+    <string name="wear_font_condensed_medium">مكثّف متوسط</string>
+    <string name="wear_font_condensed_medium_description">عائلة ضيقة بضربات أقوى ووضوح قراءة ممتاز.</string>
+    <string name="wear_font_cursive">متصل</string>
+    <string name="wear_font_cursive_description">خط زخرفي متصل.</string>
+    <string name="setting_wear_dynamic_accent">تمييز ديناميكي على الساعة</string>
+    <string name="setting_wear_dynamic_accent_description">تكييف ألوان الساعة المستندة إلى الألبوم مع صورة الغلاف الحالية. عند الإيقاف، تستخدم خيارات «لون الألبوم» لون التمييز الثابت للسمة.</string>
+    <string name="setting_wear_album_art_fade">انتقال تلاشي صورة الألبوم</string>
+    <string name="setting_wear_album_art_fade_description">تلاشي صورة الألبوم بسلاسة عند تغيير المقطع.</string>
+    <string name="setting_wear_title_text_mode">سلوك نص العنوان</string>
+    <string name="setting_wear_title_text_mode_description">كيفية تصرف عنوان «يتم التشغيل الآن» عندما لا يتسع: يمزج «تلقائي» بين التصغير والالتفاف والتمرير؛ أما الخيارات الأخرى فتفرض سلوكًا واحدًا فقط.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>تلقائي (تصغير، ثم التفاف، ثم تمرير)</item>
+        <item>تمرير (شريط متحرك)</item>
+        <item>التفاف إلى سطرين</item>
+        <item>التفاف إلى ثلاثة أسطر</item>
+        <item>التفاف إلى خمسة أسطر</item>
+        <item>ثابت (سطر واحد، بلا تمرير أو تصغير)</item>
+        <item>تصغير ليلائم</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">لون نص الفنان</string>
+    <string name="setting_wear_artist_custom_color">لون مخصّص للفنان</string>
+    <string name="setting_wear_artist_custom_color_description">اختر لون الفنان المستخدم مع المعالجة العادية</string>
+    <string name="setting_wear_artist_desaturated">لون فنان منخفض التشبع</string>
+    <string name="setting_wear_artist_desaturated_description">تلطيف لون نص الفنان المستند إلى الألبوم — ينطبق فقط عندما يكون \"لون نص الفنان\" مضبوطًا على «لون الألبوم»</string>
+
+    <string name="setting_wear_progress_color">لون شريط التقدم</string>
+    <string name="setting_wear_progress_custom_color">لون مخصّص لشريط التقدم</string>
+    <string name="setting_wear_progress_custom_color_description">اختر لون التقدم والتنقل المستخدم مع المعالجة العادية</string>
+    <string name="setting_wear_progress_desaturated">لون شريط تقدم منخفض التشبع</string>
+    <string name="setting_wear_progress_desaturated_description">تلطيف لون شريط التقدم المستند إلى الألبوم — ينطبق فقط عندما يكون \"لون شريط التقدم\" مضبوطًا على «لون الألبوم»</string>
+
+    <string name="setting_wear_volume_color">لون شريط مستوى الصوت</string>
+    <string name="setting_wear_volume_custom_color">لون مخصّص لمستوى الصوت</string>
+    <string name="setting_wear_volume_custom_color_description">اختر لون مستوى الصوت المستخدم مع المعالجة العادية</string>
+    <string name="setting_wear_quick_panel_color">لون الإجراءات السريعة</string>
+    <string name="setting_wear_quick_panel_custom_color">لون مخصّص للإجراءات السريعة</string>
+    <string name="setting_wear_quick_panel_custom_color_description">اختر لون الإجراءات السريعة المستخدم مع المعالجة العادية</string>
+    <string name="setting_wear_shading_custom_color_description">اختر اللون الذي يلوّن تدرج التظليل</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>محايد (لون سمة ثابت)</item>
+        <item>لون الألبوم</item>
+        <item>لون مخصّص</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>كلاسيكي</item>
+        <item>تعبيري</item>
+        <item>فينيل</item>
+        <item>ملصق</item>
+        <item>استوديو</item>
+        <item>هالة</item>
+        <item>شفق قطبي</item>
+        <item>كسوف AMOLED</item>
+        <item>طيف</item>
+        <item>مادي</item>
+        <item>غامر</item>
+        <item>عمق</item>
+        <item>دوّار</item>
+        <item>دردشة</item>
+        <item>منقسم</item>
+        <item>ملاحظة</item>
+        <item>بيت شعري</item>
+        <item>بيانات وصفية</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">تنقل Expressive</string>
+    <string name="setting_wear_expressive_seek_mode_description">كيفية التنقل باللمس داخل المقطع على واجهة Expressive. تجعل «الحلقة المركزية» الحلقة حول زر التشغيل قابلة للسحب؛ وتُظهر «حلقة الحافة» أيضًا حلقة إطار Classic؛ أما «بلا» فيترك التنقل للتاج الدوّار فقط.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>حلقة مركزية</item>
+        <item>حلقة الحافة</item>
+        <item>بلا</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">العرض الدائم</string>
+    <string name="setting_wear_aod_style">نمط العرض الدائم</string>
+    <string name="setting_wear_aod_style_description">مظهر شاشة «يتم التشغيل الآن» عندما تكون الساعة في الوضع المحيطي. «اتباع الواجهة» يطابق الواجهة المحددة؛ ويعرض «الحد الأدنى» نصًا معتمًا فقط على أسود خالص لأطول عمر للبطارية.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>اتباع الواجهة</item>
+        <item>كلاسيكي</item>
+        <item>Expressive (حدود)</item>
+        <item>Material (حدود)</item>
+        <item>عناصر تحكم AMOLED</item>
+        <item>Chrono (ساعة كبيرة)</item>
+        <item>ملصق</item>
+        <item>استوديو</item>
+        <item>غامر</item>
+        <item>دوّار</item>
+        <item>دردشة</item>
+        <item>منقسم</item>
+        <item>ملاحظة</item>
+        <item>بيت شعري</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">لون العرض الدائم</string>
+    <string-array name="wear_aod_color_entries">
+        <item>أبيض</item>
+        <item>لون الألبوم</item>
+        <item>لون مخصّص</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>أبيض</item>
+        <item>ديناميكي (بحسب المنطقة تحت الساعة)</item>
+        <item>لون الألبوم</item>
+        <item>لون مخصّص</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>اتباع نمط اللوحة</item>
+        <item>شفاف (بلا خلفية)</item>
+        <item>تمييز الألبوم</item>
+        <item>شبه شفاف</item>
+        <item>أبيض</item>
+        <item>أبيض زجاجي</item>
+        <item>أسود</item>
+        <item>ديناميكي (درجة الألبوم)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">خلفية شارة «التالي»</string>
+    <string name="setting_wear_show_up_next_pill">شارة «التالي» على المشغّل</string>
+    <string name="setting_wear_show_up_next_pill_description">إظهار شارة «التالي» أسفل شاشة «يتم التشغيل الآن». تشغل المساحة التي سيستخدمها صف الأزرار المصغّرة، لذلك لا تظهر إلا عندما لا يكون ذلك الصف ظاهرًا.</string>
+    <string name="category_wf_clock">الساعة</string>
+    <string name="setting_wear_clock_color">لون الساعة</string>
+    <string name="setting_wear_clock_custom_color">لون مخصّص للساعة</string>
+    <string name="setting_wear_clock_custom_color_description">انقر لاختيار لون الساعة المستخدم عندما يكون «لون الساعة» مضبوطًا على «لون مخصّص»</string>
+    <string name="setting_wear_clock_opacity">شفافية الساعة</string>
+    <string name="setting_wear_clock_opacity_description">مدى عتامة الساعة الظاهرة دائمًا (10–100%%). حاليًا <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">لون مخصّص للعرض الدائم</string>
+    <string name="setting_wear_aod_custom_color_description">انقر لاختيار اللون المستخدم لنص وعناصر تحكم وساعة العرض الدائم عندما يكون \"لون العرض الدائم\" مضبوطًا على «لون مخصّص»</string>
+    <string name="setting_wear_aod_intensity">سطوع العرض الدائم</string>
+    <string name="setting_wear_aod_intensity_description">مدى سطوع العرض الدائم (20–100%%). القيم الأقل أكثر تعتيمًا وتستهلك بطارية أقل. حاليًا <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">أزرار النقل على العرض الدائم</string>
+    <string name="setting_wear_aod_show_transport_description">إظهار أزرار السابق/التشغيل/التالي ذات الحدود في أنماط العرض الدائم المرئية المدعومة. لا يمكن النقر عليها والشاشة معتمة، لكن النقر يوقظ الساعة والزر موجود أصلًا تحت إصبعك.</string>
+    <string name="setting_wear_aod_show_progress">حلقة التقدم على العرض الدائم</string>
+    <string name="setting_wear_aod_show_progress_description">إظهار حلقة التقدم حول زر التشغيل في الوضع المحيطي — يتم تحديث الموضع هناك مرة كل دقيقة تقريبًا فقط</string>
+    <string name="setting_wear_aod_show_pills">«التالي» على العرض الدائم</string>
+    <string name="setting_wear_aod_show_pills_description">إظهار شارة «التالي» ثابتة ذات حدود أسفل أنماط العرض الدائم المرئية</string>
+    <string name="category_wf_gestures">إيماءات الشاشة</string>
+    <string name="setting_wear_mini_buttons_mode">إظهار الأزرار المصغّرة</string>
+    <string name="setting_wear_gestures_mode">إيماءات الشاشة</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>دائمًا</item>
+        <item>أثناء التشغيل فقط</item>
+        <item>أثناء الإيقاف المؤقت فقط</item>
+        <item>أبدًا</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">صورة الألبوم على العرض الدائم</string>
+    <string name="setting_wear_aod_show_art_description">إبقاء صورة الألبوم المعتمة مرئية في الوضع المحيطي. يؤدي إيقافها إلى إظهار خلفية سوداء خالصة، ما يوفر بطارية أكثر بوضوح على شاشات AMOLED.</string>
+    <string name="setting_wear_aod_art_treatment">نمط صورة الألبوم في العرض الدائم</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>تمويه ناعم</item>
+        <item>غلاف واضح</item>
+        <item>تمويه أحادي اللون</item>
+        <item>اتباع معالجة صورة المشغّل</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">الساعة على العرض الدائم</string>
+    <string name="setting_wear_aod_show_clock_description">عرض الساعة عندما تكون الساعة الذكية في الوضع المحيطي</string>
+    <string name="setting_wear_aod_show_track_info">معلومات المقطع على العرض الدائم</string>
+    <string name="setting_wear_aod_show_track_info_description">إظهار عنوان المقطع والفنان في الوضع المحيطي</string>
+
+    <string name="category_overlays_queue">الطبقات وقائمة الانتظار</string>
+    <string name="category_wf_panel_shared">مظهر اللوحات المشترك</string>
+    <string name="category_wf_panel_volume">لوحة مستوى الصوت</string>
+    <string name="category_wf_panel_seek">لوحة التقدم والتنقل</string>
+    <string name="category_wf_panel_quick">لوحة الإجراءات السريعة</string>
+    <string name="category_wf_panel_queue">قائمة الانتظار والقوائم</string>
+    <string name="category_wf_panel_effects">تأثيرات اللوحة</string>
+    <string name="setting_wear_overlay_backdrop_style">خلفية اللوحة</string>
+    <string name="setting_wear_volume_style">نمط مستوى الصوت</string>
+    <string name="setting_wear_volume_layout">تخطيط مستوى الصوت</string>
+    <string name="setting_wear_quick_panel_style">نمط اللوحة السريعة</string>
+    <string name="setting_wear_quick_panel_layout">تخطيط اللوحة السريعة</string>
+    <string name="setting_wear_quick_panel_source">الإجراءات السريعة</string>
+    <string name="setting_wear_quick_panel_source_description">اختر أزرارك المضبوطة، أو الإجراءات التي يوفرها التطبيق الذي يشغّل حاليًا.</string>
+    <string name="quick_panel_open_note_title">فتح اللوحة</string>
+    <string name="quick_panel_open_note_description">انقر نقرًا مزدوجًا على وسط شاشة «يتم التشغيل الآن» لفتح لوحة الإجراءات السريعة على الساعة.</string>
+    <string name="preview_current_app_action">إجراء التطبيق الحالي</string>
+    <string name="preview_notification_controls">أيقونة من إشعار الوسائط</string>
+    <string name="setting_wear_queue_style">نمط قائمة الانتظار</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">استخدام أغلفة الاختصارات كخلفية</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">عندما يكون «نمط قائمة الانتظار» أحد أنماط الغلاف، فإن صف إجراء في اللوحة السريعة لديه غلاف اختصار تم جلبه (مقطع، قائمة تشغيل، فنان…) يملأ شارته أيضًا بتلك الصورة، كما تفعل «التالي». لا تتأثر الاختصارات التي بلا غلاف تم جلبه (أيقونة تطبيق عادية).</string>
+    <string name="setting_wear_list_row_size">حجم شارة القائمة</string>
+    <string name="setting_wear_list_row_size_description">ارتفاع الصفوف كاملة العرض في قائمة الانتظار والقوائم واللوحة السريعة.</string>
+    <string name="setting_wear_progress_gradient">دمج لوحة الألوان في الحلقة</string>
+    <string name="setting_wear_progress_gradient_description">مع معالجة ألوان متعددة الدرجات (مكمّل، ثلاثي، متجاور، ثنائي اللون)، تتدرج الحلقة المصمتة عبر الألوان الثلاثة. أوقف هذا للحصول على حلقة بلون واحد مع إبقاء لوحة ألوان الألبوم في بقية الأماكن.</string>
+    <string name="setting_wear_progress_style">نمط حلقة التقدم</string>
+    <string name="setting_wear_seek_style">نمط قراءة التنقل ومستوى الصوت</string>
+    <string name="setting_wear_seek_layout">تخطيط لوحة التنقل</string>
+    <string name="setting_wear_color_treatment">معالجة ألوان الساعة</string>
+    <string name="setting_wear_normal_color">اللون العادي</string>
+    <string name="setting_wear_normal_color_description">اختر اللون الواحد المستخدم لتمييز العنوان والتقدم ومستوى الصوت واللوحات وحواف الأزرار المصغّرة في الوضع العادي</string>
+    <string name="setting_wear_normal_color_multi">استخدام لوحة ألوان</string>
+    <string name="setting_wear_normal_color_multi_description">عند التفعيل، تستخدم الشاشة لونًا رئيسيًا ودرجتين داعمتين. عند الإيقاف، يُستخدم لون واحد في كل مكان — لون الألبوم نفسه أو اللون الذي اخترته.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>عادي (اللون المختار)</item>
+        <item>منخفض التشبع (لون ألبوم ناعم)</item>
+        <item>تعبيري (لوحة الألبوم الكاملة)</item>
+        <item>مكمّل (الألبوم + المقابل)</item>
+        <item>ثلاثي (ثلاث درجات من الألبوم)</item>
+        <item>متجاور (درجات متقاربة)</item>
+        <item>أحادي اللون (درجة واحدة، ثلاث نغمات)</item>
+        <item>ثنائي اللون (لونان من الألبوم)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>اتباع معالجة ألوان الساعة</item>
+        <item>عادي (اللون المختار)</item>
+        <item>منخفض التشبع (لون ألبوم ناعم)</item>
+        <item>تعبيري (لوحة الألبوم الكاملة)</item>
+        <item>مكمّل (الألبوم + المقابل)</item>
+        <item>ثلاثي (ثلاث درجات من الألبوم)</item>
+        <item>متجاور (درجات متقاربة)</item>
+        <item>أحادي اللون (درجة واحدة، ثلاث نغمات)</item>
+        <item>ثنائي اللون (لونان من الألبوم)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">وزن العنوان</string>
+    <string name="setting_wear_title_font_italic">عنوان مائل</string>
+    <string name="setting_wear_title_font_scale">حجم العنوان</string>
+    <string name="setting_wear_title_font_opacity">شفافية العنوان</string>
+    <string name="setting_wear_title_font_tracking">تباعد حروف العنوان</string>
+    <string name="setting_wear_title_color">لون نص العنوان</string>
+    <string name="setting_wear_title_custom_color">لون مخصّص للعنوان</string>
+    <string name="wear_title_color_face_default">افتراضي الواجهة (كما صُمم)</string>
+    <string name="setting_wear_title_adaptive_contrast">تكييف لون العنوان للتباين</string>
+    <string name="setting_wear_title_adaptive_contrast_description">تفتيح العنوان أو تعتيمه عندما يكون لونه قريبًا جدًا من الصورة خلفه مع الحفاظ على درجة اللون. لا تأثير عندما يستخدم العنوان القيمة الافتراضية للواجهة.</string>
+    <string name="setting_wear_artist_adaptive_contrast">تكييف لون الفنان للتباين</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">تفتيح سطر الفنان أو تعتيمه عندما يكون لون الألبوم قريبًا جدًا من الصورة خلفه، مع الحفاظ على درجة اللون. يقيس الشريط الذي يقع عليه السطر فقط، لا الغلاف كله.</string>
+    <string name="setting_wear_artist_font_weight">وزن الفنان</string>
+    <string name="setting_wear_artist_font_italic">فنان مائل</string>
+    <string name="setting_wear_artist_font_scale">حجم الفنان</string>
+    <string name="setting_wear_artist_font_opacity">شفافية الفنان</string>
+    <string name="setting_wear_artist_font_tracking">تباعد حروف الفنان</string>
+    <string name="setting_wear_source_icon_scale">حجم أيقونة التطبيق</string>
+    <string name="setting_wear_source_icon_opacity">شفافية أيقونة التطبيق</string>
+    <string name="setting_wear_typography_weight_description">1–1000. القيمة 400 هي الوزن الطبيعي للواجهة؛ الأعلى أكثر سماكة. في Google Sans Flex هذا هو محور الوزن الخاص بالخط</string>
+    <string name="setting_wear_typography_scale_description">نسبة من حجم الواجهة نفسه (70–140). القيمة 100 تحافظ على الحجم المصمم لكل تخطيط</string>
+    <string name="setting_wear_typography_opacity_description">نسبة مئوية (20–100). القيمة 100 تحافظ على شفافية الواجهة نفسها</string>
+    <string name="setting_wear_typography_tracking_description">مسافة إضافية بين الحروف، بأجزاء من مئة من em (−5 إلى 20). القيمة 0 تحافظ على تباعد الخط نفسه</string>
+    <string name="setting_wear_color_modifier">الدرجة اللونية</string>
+    <string name="setting_wear_color_modifier_description">اضبط لوحة الألوان كاملة من دون تغيير طريقة اشتقاقها — يعمل مع كل معالجات الألوان</string>
+    <string name="setting_wear_color_hue_shift">إزاحة اللون</string>
+    <string name="setting_wear_color_hue_shift_description">يدير لوحة ألوان الألبوم حول عجلة الألوان بالدرجات (0–359). تحتفظ كل معالجة بلونها الرئيسي على درجة لون الألبوم نفسه، لذا فهذا ما يغيّرها. القيمة 0 تستخدم لون الألبوم كما هو؛ ولا تتم إزاحة لون عادي ثابت أبدًا.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>بلا</item>
+        <item>زاهٍ</item>
+        <item>باستيل</item>
+        <item>دافئ</item>
+        <item>بارد</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>قوس الحافة (يسار)</item>
+        <item>قوس الحافة (طويل)</item>
+        <item>قوس الحافة (يمين)</item>
+        <item>قوس الحافة (أعلى)</item>
+        <item>قوس الحافة (أسفل)</item>
+        <item>حلقة كاملة</item>
+        <item>هالة مركزية</item>
+        <item>مقياس أفقي</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>حلقة الحافة</item>
+        <item>حلقة الحافة (رفيعة)</item>
+        <item>حلقة الحافة (سميكة)</item>
+        <item>خط زمني</item>
+        <item>خط زمني مقسّم</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>البيانات الوصفية أولًا</item>
+        <item>قوس</item>
+        <item>بارز</item>
+        <item>شبكة</item>
+        <item>صفوف بعناوين</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>مصمت</item>
+        <item>متقطع</item>
+        <item>نقاط</item>
+        <item>خط رفيع</item>
+        <item>مذنب</item>
+        <item>60 نقطة ساعة</item>
+        <item>60 علامة ساعة</item>
+        <item>مقاطع 12 ساعة</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>بسيط</item>
+        <item>شارة زجاجية</item>
+        <item>شارة Expressive</item>
+        <item>شارة Material</item>
+        <item>شارة بيضاء</item>
+        <item>عملاق</item>
+        <item>الموضع / الإجمالي</item>
+        <item>زجاج أبيض</item>
+        <item>ألبوم شبه شفاف</item>
+        <item>توهج الألبوم</item>
+        <item>حدود</item>
+        <item>سمة مصمتة</item>
+        <item>ألبوم مصمت</item>
+        <item>متناهي الصغر</item>
+        <item>ظل (بلا إطار)</item>
+        <item>تسطير</item>
+        <item>حدود بخط رفيع</item>
+        <item>عملاق بلون الألبوم</item>
+        <item>أحادي</item>
+        <item>داكن نغمي</item>
+        <item>طرفي</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>الأزرار المضبوطة</item>
+        <item>من تطبيق الوسائط الحالي</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>اتباع نمط اللوحة</item>
+        <item>تمويه الألبوم (أكريليك)</item>
+        <item>أسود مصمت</item>
+        <item>لون ألبوم مصمت</item>
+        <item>زجاج</item>
+        <item>تدرج الألبوم</item>
+        <item>ثنائي لون الألبوم</item>
+        <item>منشور</item>
+        <item>زجاج سائل</item>
+        <item>تمويه Expressive</item>
+        <item>تعبيري</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>زجاج</item>
+        <item>حد أدنى (AMOLED)</item>
+        <item>مادي</item>
+        <item>نغمي</item>
+        <item>نيون</item>
+        <item>فاتح</item>
+        <item>تدرج</item>
+        <item>أحادي</item>
+        <item>حدود</item>
+        <item>ثنائي اللون</item>
+        <item>منشور</item>
+        <item>تباين عالٍ</item>
+        <item>طرفي</item>
+        <item>صقيع</item>
+        <item>مقاطع</item>
+        <item>شفق قطبي</item>
+        <item>حبر</item>
+        <item>أخدود</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>مضغوط</item>
+        <item>عادي</item>
+        <item>طويل</item>
+        <item>طويل جدًا</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>زجاج</item>
+        <item>حد أدنى (AMOLED)</item>
+        <item>مادي</item>
+        <item>نغمي</item>
+        <item>نيون</item>
+        <item>فاتح</item>
+        <item>تدرج</item>
+        <item>أحادي</item>
+        <item>حدود</item>
+        <item>ثنائي اللون</item>
+        <item>منشور</item>
+        <item>تباين عالٍ</item>
+        <item>طرفي</item>
+        <item>صقيع</item>
+        <item>غلاف</item>
+            <item>غلاف مموّه</item>
+        <item>غلاف نغمي</item>
+        <item>غلاف مربع</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>زجاج</item>
+        <item>زجاج أبيض</item>
+        <item>زجاج نغمي</item>
+        <item>حد أدنى (AMOLED)</item>
+        <item>مادي</item>
+        <item>نغمي</item>
+        <item>نيون</item>
+        <item>فاتح</item>
+        <item>تدرج</item>
+        <item>أحادي</item>
+        <item>حدود</item>
+        <item>حدود زجاج أبيض</item>
+        <item>ثنائي اللون</item>
+        <item>منشور</item>
+        <item>تباين عالٍ</item>
+        <item>طرفي</item>
+        <item>صقيع</item>
+        <item>شبحي (بلا إطار)</item>
+        <item>ضباب</item>
+        <item>حبر</item>
+        <item>نقطة</item>
+        <item>لوح</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">إبقاء التطبيق نشطًا بعد الإيقاف المؤقت</string>
+    <string name="setting_wear_paused_hold_description">مدة بقاء تطبيق الساعة قابلًا للوصول من واجهة الساعة بعد الإيقاف المؤقت، بحيث يمكنك الاستئناف برفع معصمك بدل إعادة فتحه. الإعدادات الأطول تُبقي خدمة في الخلفية قيد التشغيل.</string>
+    <string name="wear_paused_hold_off">عدم إبقائه</string>
+    <string name="wear_paused_hold_5">5 دقائق</string>
+    <string name="wear_paused_hold_15">15 دقيقة</string>
+    <string name="wear_paused_hold_30">30 دقيقة</string>
+    <string name="wear_paused_hold_60">ساعة واحدة</string>
+    <string name="wear_paused_hold_always">حتى انتهاء التشغيل</string>
+
+    <string name="setting_wear_idle_button_action">زر «لا يتم تشغيل شيء»</string>
+    <string name="setting_wear_idle_auto_open">فتح عند عدم تشغيل شيء</string>
+    <string name="setting_wear_idle_auto_open_description">الانتقال مباشرةً إلى هذه الشاشة عند فتح تطبيق الساعة من دون تشغيل موسيقى.</string>
+    <string name="wear_idle_action_resume">استئناف آخر تطبيق</string>
+    <string name="wear_idle_action_shortcuts">اختصارات قوائم التشغيل</string>
+    <string name="wear_idle_action_menu">قائمة الإجراءات</string>
+    <string name="wear_idle_action_search">بحث</string>
+    <string name="wear_idle_action_queue">تم تشغيله مؤخرًا</string>
+    <string name="wear_idle_action_none">لا زر</string>
+    <string name="wear_idle_auto_open_none">البقاء على المشغّل</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">تصفح المكتبة</string>
+    <string name="library_up">رجوع</string>
+    <string name="error_library_unavailable">لا توجد مكتبة قابلة للتصفح في هذا التطبيق</string>
+    <string name="error_library_empty">لا يوجد شيء هنا</string>
+    <string name="error_library_no_player">ابدأ تشغيل شيء أولًا</string>
+
+    <string name="setting_wear_carousel_card_shape">شكل بطاقة العرض الدوّار</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>مستدير</item>
+        <item>مربع</item>
+        <item>مربع مستدير</item>
+        <item>دائرة</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">استخدام الخط في كل مكان</string>
+    <string name="setting_wear_font_all_screens_description">تطبيق الخط المختار على القوائم وقائمة الانتظار و«الإجراءات السريعة»، وليس المشغّل فقط. قد تكون خطوط العرض والخطوط اليدوية أصعب في القراءة داخل القوائم.</string>
+
+    <string name="setting_wear_clock_font">خط الساعة</string>
+    <string name="wear_clock_font_follow">اتباع خط المقطع</string>
+    <string name="setting_wear_lyrics_font">خط الكلمات</string>
+    <string name="setting_wear_lyrics_font_description">خط كلمات الأغنية على شاشة الكلمات وواجهة Verse. يتبع خط المقطع ما لم تختر خطًا هنا.</string>
+    <string name="wear_lyrics_font_follow">اتباع خط المقطع</string>
+    <string name="setting_wear_clock_font_weight">وزن الساعة</string>
+    <string name="setting_wear_clock_font_italic">ساعة مائلة</string>
+    <string name="setting_wear_clock_font_scale">حجم الساعة</string>
+    <string name="setting_wear_clock_font_tracking">تباعد حروف الساعة</string>
+    <string name="setting_wear_clock_adaptive_contrast">تكييف لون الساعة للتباين</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">تفتيح الساعة أو تعتيمها عندما يكون لون الألبوم قريبًا جدًا من الصورة خلفها مع الحفاظ على درجة اللون. ينطبق فقط عندما يكون «لون الساعة» مضبوطًا على «لون الألبوم».</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">عرض مكثّف بحروف كبيرة — يشبه الملصقات ويتسع للعناوين الطويلة</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">serif تحريري عالي التباين — إحساس مجلة</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">sans هندسي تقني بتفاصيل غير مألوفة</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">عرض خيال علمي مربّع — جريء ومستقبلي</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">خط يدوي — عفوي وشخصي</string>
+    <string name="setting_wear_track_time_mode">عرض وقت المقطع</string>
+    <string name="setting_wear_track_time_mode_description">متى يظهر موضع المقطع (مثل 1:23 / 3:45) على شاشة «يتم التشغيل الآن».</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>دائمًا</item>
+        <item>أثناء التشغيل فقط</item>
+        <item>أثناء الإيقاف المؤقت فقط</item>
+        <item>أبدًا</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">انحناء الأزرار المصغّرة</string>
+    <string name="setting_screen_buttons_curve_description">اختر نمط انحناء الأزرار المصغّرة: مسطح، قوس، ناعم، منحني.</string>
+    <string name="setting_screen_buttons_shape">شكل الأزرار المصغّرة</string>
+    <string name="setting_screen_buttons_shape_description">اختر شكل وتنسيق تخطيط الأزرار المصغّرة.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>شارة (افتراضي)</item>
+        <item>دائرة</item>
+        <item>مربع</item>
+        <item>مربع مستدير (ناعم)</item>
+        <item>مربع مستدير (متوسط)</item>
+        <item>مربع مستدير</item>
+        <item>ورقة</item>
+        <item>قطرة</item>
+        <item>شارة (عريضة صغيرة)</item>
+        <item>شارة (عريضة متوسطة)</item>
+        <item>شارة (عريضة كبيرة)</item>
+        <item>شارة (عريضة كبيرة جدًا)</item>
+        <item>مستطيل مستدير (صغير)</item>
+        <item>مستطيل مستدير (متوسط)</item>
+        <item>مستطيل مستدير (كبير)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>مسطح</item>
+        <item>قوس</item>
+        <item>انحناء خفيف</item>
+        <item>انحناء ناعم</item>
+        <item>انحناء متوسط</item>
+        <item>منحني</item>
+        <item>انحناء شديد</item>
+        <item>توزيع إلى الحواف</item>
+        <item>الحافة اليسرى</item>
+        <item>الحافة اليمنى</item>
+        <item>كلتا الحافتين</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>الخلفية الافتراضية</item>
+        <item>زجاج (موحد)</item>
+        <item>زجاج (فاتح)</item>
+        <item>ألبوم شبه شفاف</item>
+        <item>ألبوم Expressive شبه شفاف</item>
+        <item>توهج الألبوم</item>
+        <item>توهج Expressive</item>
+        <item>سمة مصمتة</item>
+        <item>ألبوم مصمت</item>
+        <item>ألبوم Expressive مصمت</item>
+        <item>حدود</item>
+        <item>حدود ألبوم Expressive</item>
+        <item>الأيقونة فقط (شفافة)</item>
+        <item>أيقونة Expressive</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>محايد</item>
+        <item>لون الألبوم</item>
+        <item>لون مخصّص</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>الغلاف كاملًا</item>
+        <item>خلفية مموّهة</item>
+        <item>حواف زجاجية</item>
+        <item>مربع (زوايا حادة)</item>
+        <item>مربع (زوايا ناعمة)</item>
+        <item>مربع (زوايا مستديرة)</item>
+        <item>أبيض وأسود</item>
+        <item>أبيض وأسود مموّه</item>
+        <item>تمويه Expressive</item>
+        <item>تعبيري</item>
+        <item>تدرج Material نغمي</item>
+        <item>غلاف Poster</item>
+        <item>تدرج Studio</item>
+        <item>توهج شعاعي Vinyl</item>
+        <item>توهج Halo</item>
+        <item>أشرطة Aurora</item>
+        <item>تدرج Spectrum</item>
+        <item>مسح Corona</item>
+        <item>تلاشي الغسق</item>
+        <item>تفتح</item>
+        <item>تلاشي الأفق</item>
+        <item>توهج الجمر</item>
+        <item>أسود Eclipse AMOLED</item>
+        <item>مخفي (أسود مصمت)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>معطّل</item>
+        <item>إظهار أيقونة واجهة الموسيقى (لـ Wear 3.0 فقط)</item>
+        <item>فتح Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">مهلة الإغلاق</string>
+    <string name="setting_close_timeout_description">سيغلق Svartifoss نفسه تلقائيًا عندما لا تكون هناك موسيقى قيد التشغيل لمدة <![CDATA[<b>%1$s seconds</b>]]>. يتم تعطيل الميزة عندما تضبط المهلة على 0 ثانية. يرجى ملاحظة أنه، لتوفير البطارية، قد لا يكون هذا الخيار دقيقًا جدًا أحيانًا وقد يتأخر الإغلاق حتى دقيقة واحدة.</string>
+    <string name="setting_wear_close_on_idle">الإغلاق عند \"لا يتم تشغيل شيء\"</string>
+    <string name="setting_wear_close_on_idle_description">إغلاق تطبيق الساعة تلقائيًا بعد نحو دقيقة من وصوله إلى شاشة الخمول \"لا يتم تشغيل شيء\"، حتى لا يبقى عليها. هذا مستقل عن مهلة الإغلاق أعلاه، التي تغطي المقطع المتوقف مؤقتًا.</string>
+    <string name="category_notifications">نافذة الإشعار المنبثقة</string>
+    <string name="setting_enable_notifications">إظهار نافذة الإشعار المنبثقة</string>
+    <string name="setting_enable_notifications_description">تتطلب هذه الميزة تطبيقًا آخر لإدارة الإشعارات (Vibration Center for Wear).
+
+كلما جعل Vibration Center الساعة تهتز، سيعرض Svartifoss نافذة منبثقة بنص الإشعار، ما يتيح لك إلقاء نظرة سريعة على الإشعار دون مغادرة Svartifoss.</string>
+    <string name="setting_notification_timeout">مهلة نافذة الإشعار المنبثقة</string>
+    <string name="setting_notification_timeout_description">ستغلق نافذة الإشعار المنبثقة تلقائيًا بعد <![CDATA[<b>%1$s seconds</b>]]>. أدخل 0 لتعطيل الإغلاق التلقائي.</string>
+    <string name="app_required">تطبيق مطلوب</string>
+    <string name="vibration_center_required_description">لاستخدام هذه الميزة، ستحتاج إلى تثبيت تطبيق آخر (مجاني): Vibration Center for Wear.</string>
+    <string name="open_play_store">فتح Play Store</string>
+    <string name="error_no_notification_service_support">عذرًا، يبدو أن جهازك لا يدعم خدمات الإشعارات</string>
+    <string name="setting_always_select_center_action">تحديد إجراء الوسط دائمًا</string>
+    <string name="setting_always_select_center_action_description">عند التفعيل، يؤدي النقر على قائمة الإجراءات دائمًا إلى تحديد الخيار الأوسط (المميز)، بغض النظر عن الخيار الذي نقرت عليه.</string>
+    <string name="change_icon">تغيير الأيقونة</string>
+    <string name="please_wait">يرجى الانتظار</string>
+
+    <string name="error_playlist_not_supported">غير مدعوم في تطبيق الوسائط هذا</string>
+    <string name="error_search_no_results">لم يتم العثور على نتائج</string>
+    <string name="seconds_to_skip">الثواني المراد تخطيها:</string>
+    <string name="seconds_to_reverse">الثواني المراد إرجاعها:</string>
+
+    <string name="setting_dynamic_accent_color">لون تمييز ديناميكي</string>
+    <string name="setting_dynamic_accent_color_description">عند التفعيل، يتكيف لون التمييز (SeekBar، عنصر قائمة الانتظار النشط) تلقائيًا مع اللون الغالب في صورة الألبوم الحالية.</string>
+    <string name="setting_desaturated_color">لون منخفض التشبع</string>
+    <string name="setting_desaturated_color_description">يضبط تشبع وسطوع اللون المستخرج لضمان وضوح وتباين مرتفعين وفق السمة النشطة.</string>
+
+    <string name="queue_header">قائمة انتظار التشغيل</string>
+    <string name="queue_unavailable">قائمة الانتظار غير متاحة</string>
+
+    <string name="setting_custom_accent_color">لون التمييز</string>
+    <string name="setting_custom_accent_color_description">اختر لون تمييز مخصّصًا لواجهة التطبيق</string>
+    <string name="setting_mini_player">مشغّل مصغّر</string>
+    <string name="setting_mini_player_description">يعرض شريط «يتم التشغيل الآن» دائمًا فوق شريط التنقل السفلي كلما كانت الوسائط نشطة. مفعّل افتراضيًا؛ أوقفه لاستعادة تلك المساحة.</string>
+    <string name="color_picker_title">اختيار لون التمييز</string>
+    <string name="color_picker_reset">إعادة تعيين</string>
+    <string name="color_picker_apply">تطبيق</string>
+    <string name="color_picker_default">افتراضي</string>
+    <string name="color_picker_invalid">رمز لون غير صالح</string>
+    <string name="color_picker_current">الحالي: %s</string>
+
+    <string name="drawer_version_format">الإصدار %1$s</string>
+    <string name="drawer_tagline">التطبيق المرافق لـ Wear OS</string>
+    <string name="drawer_about_heading">حول</string>
+    <string name="drawer_about_summary">يتيح لك Svartifoss التحكم في موسيقى هاتفك من ساعة Wear OS — عبر جهاز تحكم قابل للتخصيص بالكامل ومهيأ لجهازك.</string>
+    <string name="drawer_name_heading">الاسم</string>
+    <string name="drawer_name_meaning">تعني Svartifoss «الشلال الأسود» باللغة الآيسلندية — وقد سُمّي التطبيق نسبةً إلى الشلال في متنزه Vatnajökull الوطني، حيث تؤطّر أعمدة البازلت الداكنة شلالًا ضيقًا. وكالماء فوق الصخر، تتدفق الموسيقى عبر التطبيق.</string>
+    <string name="drawer_sync_heading">المزامنة</string>
+    <string name="drawer_sync_summary">تتم تهيئة إعدادات الساعة هنا على الهاتف وتُزامن تلقائيًا مع ساعتك المقترنة.</string>
+    <string name="drawer_support_heading">الدعم</string>
+    <string name="drawer_support_summary">Svartifoss مجاني ومفتوح المصدر — اشترِ لي قهوة إذا كان مفيدًا لك :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">تنزيل صورة الغلاف</string>
+    <string name="album_art_saved">تم حفظ صورة الغلاف في المعرض</string>
+    <string name="album_art_save_error">فشل حفظ صورة الغلاف</string>
+
+    <string name="action_play_liked_songs">تشغيل الأغاني التي أعجبتني (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">تشغيل الأغاني التي أعجبتني (Spotify)</string>
+    <string name="action_play_soundcloud_likes">تشغيل المقاطع التي أعجبتني (SoundCloud)</string>
+    <string name="action_my_playlists">اختصارات خدمات البث</string>
+    <string name="action_play_specific_playlist">فتح اختصار بث</string>
+    <string name="action_choose_or_add_streaming_shortcut">اختيار اختصار بث أو إضافته</string>
+    <string name="action_show_streaming_library">إظهار كل الاختصارات المحفوظة</string>
+    <string name="playlist_shortcut_pick_title">اختيار اختصار</string>
+    <string name="playlist_shortcut_pick_empty">لا توجد اختصارات بث محفوظة بعد — أضف واحدًا أدناه ثم انقر عليه لاختياره</string>
+    <string name="playlist_shortcuts_empty">لا توجد اختصارات بث بعد — أضفها من إعدادات تطبيق الهاتف</string>
+    <string name="setting_playlist_shortcuts">اختصارات خدمات البث</string>
+    <string name="setting_playlist_shortcuts_description">فتح روابط المشاركة من الساعة في YouTube Music وSpotify وتطبيقات البث الأخرى</string>
+    <string name="setting_shortcut_artwork">جلب صور الاختصارات عبر الإنترنت</string>
+    <string name="setting_shortcut_artwork_description">تنزيل صورة مصغرة لكل اختصار محفوظ من الخدمة، لتظهر في قائمة الهاتف وقائمة الساعة والأزرار المعيّنة. يتم جلب كل صورة مرة واحدة؛ ولا يُرسل إلا رابط المشاركة العام. متوقف افتراضيًا.</string>
+    <string name="setting_queue_local_artwork">أغلفة قائمة الانتظار من مكتبتك</string>
+    <string name="setting_queue_local_artwork_description">تنشر مشغلات الموسيقى المحلية أغلفة قائمة الانتظار كمراجع للمكتبة. امنح إذن الوصول إلى الوسائط حتى تظهر في قائمة الانتظار على الساعة. لا يتم استخدام الإنترنت.</string>
+    <string name="setting_queue_local_artwork_granted">تم منح إذن الوصول إلى الوسائط — ستظهر أغلفة قائمة الانتظار المحلية</string>
+    <string name="setting_queue_local_artwork_denied">تم رفض إذن الوصول إلى الوسائط. فعّله في إعدادات Android لإظهار أغلفة قائمة الانتظار المحلية.</string>
+    <string name="setting_queue_remote_artwork">جلب أغلفة قائمة الانتظار عبر الإنترنت</string>
+    <string name="setting_queue_remote_artwork_short_description">تنشر تطبيقات البث (عملاء YouTube Music وEcho Music…) أغلفة قائمة الانتظار كروابط لا كصور، لذلك يقوم هذا الخيار بتنزيلها وتخزينها مؤقتًا. أوقفه لإبقاء قائمة الانتظار دون اتصال بالكامل — عندها لن تعرض تلك الصفوف أي غلاف.</string>
+    <string name="setting_queue_remote_artwork_description">تنشر مشغلات البث أغلفة قائمة الانتظار كروابط بدل الصور. نزّل كل غلاف مرة واحدة واحفظه مؤقتًا على هذا الهاتف لعرضه في قائمة الانتظار على الساعة. لا يُطلب سوى URL الغلاف الذي نشره المشغّل أصلًا — لا حساب ولا بيانات شخصية. مفعّل افتراضيًا؛ أوقفه لإبقاء قائمة الانتظار دون اتصال بالكامل.</string>
+    <string name="watch_streaming_shortcuts_empty">أضف مقاطع أو ألبومات أو قوائم تشغيل لاستخدامها في «الإجراءات السريعة» وقائمة الساعة</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="zero">%1$d اختصارات محفوظة · متاحة في الإجراءات السريعة وقائمة الساعة</item>
+        <item quantity="one">%1$d اختصار محفوظ · متاح في الإجراءات السريعة وقائمة الساعة</item>
+        <item quantity="two">%1$d اختصاران محفوظان · متاحان في الإجراءات السريعة وقائمة الساعة</item>
+        <item quantity="few">%1$d اختصارات محفوظة · متاحة في الإجراءات السريعة وقائمة الساعة</item>
+        <item quantity="many">%1$d اختصارًا محفوظًا · متاحًا في الإجراءات السريعة وقائمة الساعة</item>
+        <item quantity="other">%1$d اختصار محفوظ · متاح في الإجراءات السريعة وقائمة الساعة</item>
+    </plurals>
+    <string name="category_music_apps">تطبيقات وخدمات الموسيقى</string>
+    <string name="category_apps_content">الكلمات والبيانات الوصفية</string>
+    <string name="category_streaming_services">اختصارات خدمات البث</string>
+    <string name="category_queue_artwork">صور قائمة الانتظار</string>
+    <string name="category_system_access">صلاحيات Android والإشعارات</string>
+    <string name="setting_apps_integrations">خدمات الموسيقى المدعومة</string>
+    <string name="setting_apps_integrations_description">تعمل الروابط مع YouTube Music وSpotify وDeezer وTIDAL وApple Music وAmazon Music وSoundCloud. لا يلزم الوصول إلى أي حساب.</string>
+    <string name="setting_apps_integrations_none">لم يتم اكتشاف تطبيق مدعوم. لا يزال بإمكان الاختصارات الفتح في متصفح أو تطبيق متوافق آخر.</string>
+    <string name="setting_apps_integrations_installed">تم اكتشاف %1$d من %2$d: %3$s</string>
+    <string name="setting_streaming_open_mode">فتح روابط البث باستخدام</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>تطبيق البث المكتشف</item>
+        <item>افتراضي Android</item>
+        <item>السؤال في كل مرة</item>
+    </string-array>
+    <string name="setting_persistent_notification">إدارة إشعار \"Svartifoss نشط\"</string>
+    <string name="setting_persistent_notification_description">يفتح إعدادات Android لهذا الإشعار — يمكنك كتمه أو إخفاءه من شاشة القفل أو ضبطه بطرق أخرى. لا يمكن إيقافه تمامًا: يطلب Android إشعارًا مستمرًا أثناء تشغيل خدمة الخلفية التي تتواصل مع ساعتك.</string>
+    <string name="setting_notification_access">الوصول إلى إشعارات الوسائط</string>
+    <string name="setting_notification_access_enabled">مسموح · انقر لمراجعة إعدادات Android</string>
+    <string name="setting_notification_access_disabled">غير مسموح · مطلوب لإجراءات وسائط الإشعارات وفلاتر التشغيل التلقائي</string>
+    <string name="setting_notification_access_unavailable">إعدادات الوصول إلى الإشعارات غير متاحة على هذا الجهاز</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="zero">%1$d اختصارات محفوظة · انقر للإدارة أو استيراد الروابط</item>
+        <item quantity="one">%1$d اختصار محفوظ · انقر للإدارة أو استيراد الروابط</item>
+        <item quantity="two">%1$d اختصاران محفوظان · انقر للإدارة أو استيراد الروابط</item>
+        <item quantity="few">%1$d اختصارات محفوظة · انقر للإدارة أو استيراد الروابط</item>
+        <item quantity="many">%1$d اختصارًا محفوظًا · انقر للإدارة أو استيراد الروابط</item>
+        <item quantity="other">%1$d اختصار محفوظ · انقر للإدارة أو استيراد الروابط</item>
+    </plurals>
+    <string name="category_privacy">الخصوصية</string>
+    <string name="setting_privacy_policy">سياسة الخصوصية</string>
+    <string name="setting_privacy_policy_description">اطّلع على البيانات التي يستخدمها Svartifoss والخدمات عبر الإنترنت الاختيارية.</string>
+    <string name="setting_crash_reporting">إرسال تقارير الأعطال</string>
+    <string name="setting_crash_reporting_description">إرسال بيانات تشخيص Firebase Crashlytics للمساعدة في إصلاح الأعطال. مفعّل افتراضيًا؛ يمكنك إيقافه في أي وقت.</string>
+    <string name="setting_announcements">إشعارات الإعلانات</string>
+    <string name="setting_announcements_description">إشعارات عرضية من المطوّر — إصدارات جديدة وتنبيهات مهمة. تُرسل عبر Firebase Cloud Messaging؛ ولا يوجد حساب أو قائمة مستخدمين. مفعّلة افتراضيًا؛ يمكنك إيقافها في أي وقت.</string>
+    <string name="announcement_notification_channel">الإعلانات</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">شارك قائمة تشغيل أو ألبومًا أو مقطعًا مباشرةً مع Svartifoss، أو الصق رابطًا منسوخًا، أو أضف واحدًا يدويًا. تطلب الساعة من الهاتف فتحه؛ ولا يلزم تسجيل الدخول إلى الخدمة.</string>
+    <string name="back">رجوع</string>
+    <string name="playlist_shortcuts_beta_badge">تجريبي</string>
+    <string name="playlist_shortcuts_intro_title">موسيقاك بنقرة واحدة</string>
+    <string name="playlist_shortcuts_yours">اختصاراتك</string>
+    <string name="playlist_shortcuts_empty_hint">أضف رابطًا مشتركًا لمقطع أو ألبوم أو قائمة تشغيل ليصبح متاحًا على ساعتك.</string>
+    <string name="playlist_shortcuts_add">إضافة اختصار</string>
+    <string name="playlist_shortcuts_paste">لصق الرابط</string>
+    <string name="playlist_shortcuts_reload_covers">إعادة تحميل الأغلفة</string>
+    <string name="playlist_shortcuts_reloading_covers">جارٍ إعادة تحميل الأغلفة…</string>
+    <string name="playlist_shortcuts_covers_reloaded">تمت إعادة تحميل الأغلفة</string>
+    <string name="playlist_shortcuts_edit">تعديل الاختصار</string>
+    <string name="playlist_shortcut_save">حفظ الاختصار</string>
+    <string name="playlist_shortcut_editor_hint">الصق رابطًا واحدًا. يتعرّف Svartifoss تلقائيًا على التطبيق ونوع المحتوى.</string>
+    <string name="playlist_shortcut_detection_waiting">بانتظار رابط بث</string>
+    <string name="playlist_shortcut_detection_waiting_hint">يدعم Spotify وYouTube Music وApple Music وTIDAL وDeezer وغيرها.</string>
+    <string name="playlist_shortcut_detected_format">تم الاكتشاف: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">الاسم</string>
+    <string name="playlist_shortcut_link_hint">رابط مشاركة أو URI للتطبيق</string>
+    <string name="playlist_shortcut_shuffle">تشغيل عشوائي (YouTube Music فقط)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">رابط</string>
+    <string name="playlist_type_track">المقطع</string>
+    <string name="playlist_type_playlist">قائمة تشغيل</string>
+    <string name="playlist_type_album">الألبوم</string>
+    <string name="playlist_type_artist">الفنان</string>
+    <string name="playlist_type_show">برنامج</string>
+    <string name="playlist_type_episode">حلقة</string>
+    <string name="playlist_type_mix">مزيج</string>
+    <string name="playlist_badge_shuffle">تشغيل عشوائي</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">لم تتم إضافة اختصارات بث بعد</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="zero">تم حفظ %1$d</item>
+        <item quantity="one">تم حفظ %1$d</item>
+        <item quantity="two">تم حفظ %1$d</item>
+        <item quantity="few">تم حفظ %1$d</item>
+        <item quantity="many">تم حفظ %1$d</item>
+        <item quantity="other">تم حفظ %1$d</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">اختصارات بث مرتبة. المس مطولًا للسحب، أو استخدم إجراءَي تسهيل الاستخدام «تحريك لأعلى» أو «تحريك لأسفل»، أو اضغط Ctrl+Up/Down على لوحة المفاتيح.</string>
+    <string name="playlist_shortcut_more_options">المزيد من الخيارات لـ %1$s</string>
+    <string name="playlist_shortcut_menu_edit">تعديل</string>
+    <string name="playlist_shortcut_menu_open">فتح الآن</string>
+    <string name="playlist_shortcut_menu_copy">نسخ الرابط</string>
+    <string name="playlist_shortcut_menu_duplicate">تكرار</string>
+    <string name="playlist_shortcut_menu_share">مشاركة</string>
+    <string name="playlist_shortcut_menu_delete">حذف</string>
+    <string name="playlist_shortcut_open_failed">لا يوجد تطبيق يمكنه فتح هذا الرابط</string>
+    <string name="streaming_shortcut_choose_app">فتح رابط البث باستخدام</string>
+    <string name="playlist_shortcut_link_copied">تم نسخ الرابط</string>
+    <string name="playlist_shortcut_import_invalid">لا يحتوي النص المشارك على رابط بث صالح</string>
+    <string name="playlist_shortcut_clipboard_invalid">لا تحتوي الحافظة على رابط بث صالح</string>
+    <string name="playlist_shortcut_name_required">أدخل اسمًا للاختصار</string>
+    <string name="playlist_shortcut_link_invalid">أدخل رابط ويب أو URI تطبيق صالحًا</string>
+    <string name="playlist_shortcut_service_invalid">الصق رابطًا صالحًا لاكتشاف خدمته</string>
+    <string name="playlist_shortcut_service_generic">رابط متوافق · سيختار Android تطبيقًا</string>
+    <string name="playlist_shortcut_service_installed">%1$s مثبّت · جاهز للفتح في تطبيقه</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s غير مثبّت · يمكن استخدام متصفح أو تطبيق متوافق</string>
+    <string name="playlist_shortcut_copy_name">نسخة من %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">نسخة %1$s رقم %2$d</string>
+    <string name="playlist_shortcut_duplicated">تم إنشاء %1$s</string>
+    <string name="playlist_shortcut_share_title">مشاركة اختصار البث</string>
+    <string name="playlist_shortcut_share_failed">لا يوجد تطبيق متاح لمشاركة هذا الاختصار</string>
+    <string name="playlist_shortcut_deleted">تم حذف %1$s</string>
+    <string name="playlist_shortcut_undo">تراجع</string>
+
+    <string name="action_play_liked_songs_shuffled">تشغيل الأغاني التي أعجبتني عشوائيًا (YT Music)</string>
+    <string name="action_search_history">سجل البحث</string>
+    <string name="search_history_empty">لا توجد عمليات بحث حديثة بعد</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">التحديثات</string>
+    <string name="setting_update_check">الإشعار عن الإصدارات الجديدة</string>
+    <string name="setting_update_check_description">يتحقق من GitHub بحثًا عن إصدارات جديدة مرة كل يوم تقريبًا ويعرض إشعارًا</string>
+    <string name="setting_update_prereleases">تضمين الإصدارات التجريبية</string>
+    <string name="setting_update_prereleases_description">تلقي إشعارات أيضًا عن إصدارات بيتا</string>
+    <string name="setting_update_check_now">التحقق من التحديثات الآن</string>
+    <string name="setting_update_check_now_description">يعرض أحدث إصدار ويتيح لك تحديث الساعة عبر Bluetooth</string>
+    <string name="update_screen_title">التحديثات</string>
+    <string name="update_cover_content_description">Svartifoss، الشلال الذي سُمّي التطبيق باسمه</string>
+    <string name="update_notification_channel">تحديثات التطبيق</string>
+    <string name="update_available_title">Svartifoss %1$s متاح</string>
+    <string name="update_notification_text">انقر للتحديث</string>
+    <string name="update_available_action">تحديث متاح</string>
+    <string name="update_installed_phone">الهاتف: %1$s</string>
+    <string name="update_installed_versions">الهاتف: %1$s · الساعة: %2$s</string>
+    <string name="update_watch_version_unknown">غير معروف</string>
+    <string name="update_checking">جارٍ التحقق من التحديثات…</string>
+    <string name="update_check_failed">تعذّر التحقق من التحديثات. تحقق من اتصالك وحاول مرة أخرى.</string>
+    <string name="update_available_line">إصدار جديد: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(إصدار تجريبي)</string>
+    <string name="update_up_to_date">أنت تستخدم أحدث إصدار (%1$s)</string>
+    <string name="update_no_wear_asset">لا يحتوي هذا الإصدار على APK للساعة لإرساله.</string>
+    <string name="update_watch_hint">يقوم “تحديث الساعة” بتنزيل تطبيق الساعة الجديد وإرساله عبر Bluetooth — تؤكد التثبيت على الساعة نفسها، من دون كابل أو Wear Installer.</string>
+    <string name="update_downloading">جارٍ التنزيل… %1$d%%</string>
+    <string name="update_connecting_watch">جارٍ الاتصال بالساعة…</string>
+    <string name="update_transferring">جارٍ الإرسال إلى الساعة… %1$d%%</string>
+    <string name="update_confirm_on_watch">تم الإرسال! ظهر إشعار على الساعة — انقر عليه هناك للتثبيت.</string>
+    <string name="update_no_watch">لا توجد ساعة متصلة.</string>
+    <string name="update_push_failed">فشل إرسال التحديث إلى الساعة. حاول مرة أخرى.</string>
+    <string name="update_watch_button">تحديث الساعة</string>
+    <string name="update_open_release_button">فتح صفحة الإصدار</string>
+    <string name="update_watch_behind">لا تزال ساعتك على %1$s — أرسل إليها التحديث أدناه.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">حافظ على مزامنة تطبيقَي الهاتف والساعة</string>
+    <string name="update_state_checking">جارٍ التحقق من التحديثات…</string>
+    <string name="update_state_current">لديك أحدث إصدار</string>
+    <string name="update_state_current_sub">يعمل أحدث إصدار، %1$s</string>
+    <string name="update_state_available">تحديث متاح</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">تعذّر التحقق من التحديثات</string>
+    <string name="update_state_failed_sub">تحقق من اتصالك وحاول مرة أخرى</string>
+    <string name="update_device_phone">الهاتف</string>
+    <string name="update_device_watch">الساعة</string>
+    <string name="update_versions_header">المثبّت</string>
+    <string name="update_whats_new">ما الجديد</string>
+    <string name="update_phone_button">تحديث الهاتف</string>
+    <string name="update_installing">جارٍ فتح المثبّت…</string>
+    <string name="update_install_permission_needed">اسمح بتثبيت التطبيقات من Svartifoss، ثم انقر على «تحديث الهاتف» مرة أخرى.</string>
+    <string name="update_phone_failed">فشل تنزيل تحديث الهاتف. حاول مرة أخرى.</string>
+    <string name="update_install_notification_title">تحديث Svartifoss</string>
+    <string name="update_install_notification_tap">انقر لتثبيت الإصدار الجديد</string>
+    <string name="update_install_notification_failed">فشل التثبيت. اسمح بالتثبيت من Svartifoss في الإعدادات وحاول مرة أخرى.</string>
+    <string name="setting_wear_album_accent_source">مصدر تمييز الألبوم</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>متوازن</item>
+        <item>الأكثر حيوية</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>متوقف</item>
+        <item>ناعم</item>
+        <item>قياسي</item>
+        <item>جريء</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">الحد الأدنى للتمييز</string>
+    <string name="preview_metadata_album">الألبوم</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">المقطع</string>
+    <string name="preview_metadata_genre">النوع الموسيقي</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">السنة</string>
+    <string name="preview_metadata_format">التنسيق</string>
+    <string name="preview_metadata_bitrate">معدل البت</string>
+    <string name="preview_metadata_position">الموضع</string>
+    <string name="preview_metadata_output">الإخراج</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">تفاصيل الألبوم</string>
+    <string name="setting_wear_metadata_core_description">الألبوم وفنان الألبوم والموضع في التسجيل والمدة.</string>
+    <string name="setting_wear_metadata_release">تفاصيل الإصدار</string>
+    <string name="setting_wear_metadata_release_description">النوع والسنة وتاريخ الإصدار وشركة الإنتاج.</string>
+    <string name="setting_wear_metadata_credits">الاعتمادات</string>
+    <string name="setting_wear_metadata_credits_description">الملحن وكاتب الأغنية والمؤلف، عندما ينشرها المشغّل.</string>
+    <string name="setting_wear_metadata_technical">تفاصيل الملف</string>
+    <string name="setting_wear_metadata_technical_description">التنسيق ومعدل البت ومعدل أخذ العينات والقنوات والحجم. للمقاطع المحلية فقط.</string>
+    <string name="setting_split_panel">لوحة منقسمة</string>
+    <string name="setting_split_panel_description">ما يملأ النصف السفلي من واجهة Split. تواصل الصورة المموهة الغلاف نفسه خلف النص؛ أما اللون المصمت فيعطي مظهر بطاقة الإشعار.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>صورة مموّهة</item>
+        <item>لون مصمت</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">تفاصيل التشغيل</string>
+    <string name="setting_wear_metadata_playback_description">الموضع بالمللي ثانية والسرعة ومخرج الصوت ومصدر بث الصوت أو تشغيله — بما في ذلك عنوان المقطع. هذه هي المجموعة الوحيدة التي يمكن لمقطع بث ملؤها عندما لا يوجد ملف لوصفه.</string>
+    <string name="setting_wear_metadata_identifiers">المعرّفات</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC ومعرّفات الكتالوج. متوقف افتراضيًا — مفيد عندما تحتاج أحدها، وتشويش عندما لا تحتاجه.</string>
+    <string name="setting_metadata_lookup">البحث عن تفاصيل المقطع عبر الإنترنت</string>
+    <string name="setting_metadata_lookup_description">يملأ ما لم ينشره تطبيق التشغيل — ISRC وشركة الإنتاج وتاريخ الإصدار — من MusicBrainz، وهي قاعدة بيانات عامة مجانية. متوقف افتراضيًا. تعمل واجهة Metadata من دونه؛ وهذا الخيار يضيف صفوفًا فقط. لا يتم إرسال شيء إلا إذا فعّلته واخترت تلك الواجهة، وعندها لا يُرسل سوى اسم المقطع والفنان.</string>
+</resources>

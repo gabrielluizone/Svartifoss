@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">지금 재생 및 미디어 컨트롤</string>
+    <string name="complication_album_art_label">지금 재생 커버</string>
+    <string name="complication_no_music">재생 중인 항목 없음</string>
+    <string name="tile_nothing_playing">재생 중인 항목 없음</string>
+    <string name="tile_open_app">Svartifoss 열기</string>
+    <string name="tile_rewind_10">10초 되감기</string>
+    <string name="tile_forward_10">10초 건너뛰기</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">스트리밍 바로가기를 한 번의 탭으로</string>
+    <string name="shortcuts_tile_title">바로가기</string>
+    <string name="shortcuts_tile_empty">아직 바로가기가 없습니다</string>
+    <string name="shortcuts_tile_more">앱에서 더 보기</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">재생 중인 항목 없음</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">휴대전화에서 음악을 재생하세요</string>
+    <string name="idle_hint_resume">탭하여 마지막 앱에서 재개</string>
+    <string name="idle_hint_shortcuts">탭하여 바로가기 열기</string>
+    <string name="idle_hint_menu">탭하여 메뉴 열기</string>
+    <string name="idle_hint_search">탭하여 검색</string>
+    <string name="idle_hint_queue">탭하여 최근 재생 항목 열기</string>
+    <string name="idle_resume">재생 재개</string>
+    <string name="idle_action_shortcuts">바로가기 열기</string>
+    <string name="idle_action_menu">메뉴 열기</string>
+    <string name="idle_action_search">검색</string>
+    <string name="idle_action_queue">최근 재생 항목 열기</string>
+
+    <string name="no_phone">휴대전화가 연결되지 않음</string>
+    <string name="playback_stopped">중지됨</string>
+    <string name="error">오류</string>
+    <string name="error_play_services">Play 서비스 오류</string>
+    <string name="button">버튼</string>
+    <string name="back_button">뒤로</string>
+    <string name="turn_bezel_cw">베젤을 시계 방향으로 돌리기</string>
+    <string name="turn_bezel_ccw">베젤을 시계 반대 방향으로 돌리기</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">좋아요</string>
+    <string name="quick_action_shuffle">셔플</string>
+    <string name="quick_action_repeat">반복</string>
+    <string name="quick_action_repeat_all">전체 반복</string>
+    <string name="quick_action_repeat_one">한 곡 반복</string>
+    <string name="quick_action_up_next">다음 항목</string>
+    <string name="quick_actions_unavailable">현재 앱에 빠른 작업이 없습니다</string>
+    <string name="voice_search_prompt">음악 검색</string>
+    <string name="queue_empty">사용 가능한 대기열 없음</string>
+    <string name="queue_now_playing">지금 재생</string>
+    <string name="queue_load_more">더 불러오기</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">최근 재생</string>
+    <string name="queue_history_fallback_reason">이 앱은 대기열을 공유하지 않습니다</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">오늘</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">워치페이스</string>
+    <string name="face_picker_offline">휴대전화 연결 안 됨 — 이 페이스는 시계에 적용되지만 휴대전화는 설정을 유지합니다</string>
+    <string name="face_picker_section_builtin">기본 제공 페이스</string>
+    <string name="face_picker_section_custom">내 테마</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">%1$s 기반</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">사용 방법</string>
+    <string name="hint_edges">위, 아래, 왼쪽 또는 오른쪽 탭 — 각 영역에 지정된 작업 실행</string>
+    <string name="hint_center">중앙 — 재생/일시정지\n두 번 탭 — 빠른 작업\n길게 누르기 — 페이스 선택기(설정 가능)</string>
+    <string name="hint_swipe_up">위로 스와이프 — 작업 메뉴\n아래 또는 왼쪽 — 지정된 작업\n오른쪽 가장자리에서 오른쪽으로 — 종료</string>
+    <string name="hint_crown">크라운 — 볼륨 또는 탐색\n측면 버튼 — 지정된 작업\n휴대전화의 컨트롤 및 시계에서 모두 사용자 지정</string>
+    <string name="hint_next">다음</string>
+    <string name="hint_dismiss">완료</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">재생</string>
+    <string name="action_name_pause">일시정지</string>
+    <string name="action_name_skip_prev">이전 트랙</string>
+    <string name="action_name_skip_next">다음 트랙</string>
+    <string name="action_name_volume_up">볼륨 높이기</string>
+    <string name="action_name_volume_down">볼륨 낮추기</string>
+    <string name="action_name_open_menu">메뉴 열기</string>
+    <string name="action_name_skip_30">30초 건너뛰기</string>
+    <string name="action_name_reverse_30">30초 되감기</string>
+    <string name="action_name_play_pause">재생/일시정지</string>
+    <string name="action_name_stop">중지</string>
+    <string name="action_name_restart">트랙 다시 시작</string>
+    <string name="action_name_seek">트랙 탐색</string>
+    <string name="action_name_mute">음소거</string>
+    <string name="action_name_search">검색</string>
+    <string name="action_name_custom">사용자 지정 작업</string>
+    <string name="state_on">켜기</string>
+    <string name="state_off">끄기</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">앱 업데이트</string>
+    <string name="update_install_title">Svartifoss 업데이트</string>
+    <string name="update_install_tap">탭하여 새 버전 설치</string>
+    <string name="update_install_failed">설치에 실패했습니다. 시계 설정에서 Svartifoss의 앱 설치를 허용한 후 휴대전화에서 다시 시도하세요.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">여기서부터 재생</string>
+    <string name="lyrics_none">이 트랙의 가사를 찾을 수 없습니다</string>
+    <string name="lyrics_failed">가사를 가져올 수 없습니다. 휴대전화 연결을 확인하세요.</string>
+    <string name="lyrics_disabled">휴대전화 설정에서 가사 검색이 꺼져 있습니다</string>
+    <string name="lyrics_no_track">재생 중인 항목 없음</string>
+    <string name="metadata_none">이 트랙의 세부정보가 없습니다</string>
+    <string name="metadata_album">앨범</string>
+    <string name="metadata_album_artist">앨범 아티스트</string>
+    <string name="metadata_track">트랙</string>
+    <string name="metadata_duration">길이</string>
+    <string name="metadata_genre">장르</string>
+    <string name="metadata_year">연도</string>
+    <string name="metadata_released">발매일</string>
+    <string name="metadata_label">레이블</string>
+    <string name="metadata_country">국가</string>
+    <string name="metadata_composer">작곡가</string>
+    <string name="metadata_writer">작사가</string>
+    <string name="metadata_author">저자</string>
+    <string name="metadata_codec">형식</string>
+    <string name="metadata_bitrate">비트레이트</string>
+    <string name="metadata_sample_rate">샘플링 레이트</string>
+    <string name="metadata_channels">채널</string>
+    <string name="metadata_file_size">크기</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">릴리스 ID</string>
+    <string name="metadata_compilation">컴필레이션</string>
+    <string name="metadata_value_yes">예</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">위치</string>
+    <string name="metadata_speed">속도</string>
+    <string name="metadata_output">출력</string>
+    <string name="metadata_output_speaker">휴대전화 스피커</string>
+    <string name="metadata_output_wired">헤드폰</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB 오디오</string>
+    <string name="metadata_output_remote">캐스팅</string>
+    <string name="metadata_origin">소스</string>
+    <string name="metadata_origin_stream">스트림</string>
+    <string name="metadata_origin_local">휴대전화의 파일</string>
+    <string name="metadata_host">호스트</string>
+    <string name="metadata_file">파일</string>
+    <string name="metadata_download">다운로드</string>
+    <string name="metadata_download_no">다운로드되지 않음</string>
+    <string name="metadata_download_running">다운로드 중</string>
+    <string name="metadata_download_yes">다운로드됨</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">정보</string>
+    <string name="metadata_source">재생 위치</string>
+</resources>

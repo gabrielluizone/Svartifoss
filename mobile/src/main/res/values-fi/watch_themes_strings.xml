@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Hallitse teemoja</string>
+    <string name="watch_theme_builtin_subtitle">Sisäänrakennettu teema · %1$s-asettelu</string>
+    <string name="watch_theme_custom_subtitle">Mukautettu teema · %1$s-asettelu</string>
+    <string name="watch_theme_unknown_name">Tuntematon teema</string>
+
+    <string name="watch_themes_title">Kelloteemat</string>
+    <string name="watch_theme_active_label">KÄYTÖSSÄ OLEVA TEEMA</string>
+    <string name="watch_theme_active_layout">Asettelu: %1$s</string>
+    <string name="watch_theme_preview_description">Esikatselu kellossa tällä hetkellä käytössä olevasta teemasta</string>
+    <string name="watch_theme_create">Luo teema</string>
+    <string name="watch_theme_create_title">Luo uusi teema</string>
+    <string name="watch_theme_rename_title">Nimeä teema uudelleen</string>
+    <string name="watch_theme_name">Teeman nimi</string>
+    <string name="watch_theme_base_layout">Perusasettelu</string>
+    <string name="watch_theme_default_name">Oma %1$s-teemani</string>
+    <string name="watch_theme_generic_name">Teema</string>
+    <string name="watch_theme_copy_name">%1$s-kopio</string>
+    <string name="watch_theme_built_in_section">Sisäänrakennetut teemat</string>
+    <string name="watch_theme_custom_section">Omat teemat</string>
+    <string name="watch_theme_applied">KÄYTÖSSÄ</string>
+    <string name="watch_theme_apply_success">%1$s on otettu käyttöön kellossasi</string>
+    <string name="watch_theme_apply_error">Tätä teemaa ei voitu ottaa käyttöön</string>
+    <string name="watch_theme_more_options">Lisää teemavalintoja</string>
+    <string name="watch_theme_list_description">Sisäänrakennetut ja mukautetut kelloteemat</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Ota käyttöön napauttamalla.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Tällä hetkellä käytössä.</string>
+    <string name="watch_theme_rename">Nimeä uudelleen</string>
+    <string name="watch_theme_customize">Mukauta</string>
+    <string name="watch_theme_duplicate">Monista</string>
+    <string name="watch_theme_delete">Poista</string>
+    <string name="watch_theme_delete_title">Poistetaanko ”%1$s”?</string>
+    <string name="watch_theme_delete_message">Tämä tallennettu teema ja sen asetukset poistetaan pysyvästi.</string>
+    <string name="watch_theme_deleted">Teema poistettu</string>
+    <string name="watch_theme_duplicated">”%1$s” luotu</string>
+    <string name="watch_theme_limit_reached">Voit tallentaa enintään 24 mukautettua teemaa. Poista yksi ennen uuden luomista.</string>
+    <string name="watch_theme_name_required">Anna teeman nimi</string>
+    <string name="watch_theme_name_duplicate">Samanniminen teema on jo olemassa</string>
+
+    <string name="watch_theme_face_classic">Klassinen</string>
+    <string name="watch_theme_face_expressive">Ilmeikäs</string>
+    <string name="watch_theme_face_vinyl">Vinyyli</string>
+    <string name="watch_theme_face_poster">Juliste</string>
+    <string name="watch_theme_face_studio">Studio</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Revontulet</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Spektri</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Immersiivinen</string>
+    <string name="watch_theme_face_depth">Syvyys</string>
+    <string name="watch_theme_face_carousel">Karuselli</string>
+    <string name="watch_theme_face_chat">Keskustelu</string>
+    <string name="watch_theme_face_split">Jaettu</string>
+    <string name="watch_theme_face_note">Nuotti</string>
+    <string name="watch_theme_face_verse">Säkeistö</string>
+    <string name="watch_theme_face_metadata">Metatiedot</string>
+</resources>

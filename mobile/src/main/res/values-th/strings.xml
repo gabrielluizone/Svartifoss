@@ -1,0 +1,1967 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">อุปกรณ์นี้ไม่รองรับ Wear OS</string>
+    <string name="setting_no_wearable_api_banner_description">อุปกรณ์นี้ไม่มีคอมโพเนนต์ Wear OS ของบริการ Google Play ที่ Svartifoss ต้องใช้เพื่อสื่อสารกับนาฬิกา การจับคู่ไม่ช่วย เพราะแอปบนโทรศัพท์ไม่สามารถเชื่อมถึงนาฬิกาจากอุปกรณ์นี้ได้ การตั้งค่าด้านล่างจะยังคงถูกบันทึกไว้ และจะมีผลเมื่อคุณติดตั้ง Svartifoss บนอุปกรณ์ที่รองรับ</string>
+    <string name="setting_no_watch_banner">ไม่ได้เชื่อมต่อนาฬิกา</string>
+    <string name="setting_no_watch_banner_description">การตั้งค่าเหล่านี้จะซิงค์ไปยังนาฬิกา Wear OS จึงยังไม่เห็นผลจนกว่าจะจับคู่และเชื่อมต่อ แต่คุณสามารถตั้งค่าทุกรายการด้านล่างได้ทันที</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">รูปลักษณ์</string>
+    <string name="setting_theme">ธีม</string>
+    <string name="theme_light">ขาวใส</string>
+    <string name="theme_dark">ดำสนิท</string>
+    <string name="theme_system">ตามระบบ</string>
+    <string name="setting_language">ภาษา</string>
+    <string name="language_system">ตามระบบ</string>
+    <string name="language_change_watch_notice">เมื่อนาฬิกาซิงค์แล้ว จะใช้ภาษานี้ด้วย</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">นักพัฒนา</string>
+    <string name="dev_mode_unlocked">เปิดโหมดนักพัฒนาแล้ว ✦</string>
+    <string name="dev_mode_clicks_remaining">แตะอีก %1$d ครั้งเพื่อปลดล็อกโหมดนักพัฒนา</string>
+    <string name="dev_disable_mode">ปิดโหมดนักพัฒนา</string>
+    <string name="dev_disable_mode_description">ซ่อนส่วนนี้อีกครั้ง — แตะ \"เวอร์ชันที่ติดตั้ง\" เจ็ดครั้งเพื่อแสดงกลับมา</string>
+    <string name="dev_mode_disabled">ปิดโหมดนักพัฒนาแล้ว</string>
+    <string name="dev_build_info">ข้อมูลบิลด์</string>
+    <string name="dev_sync_watch">บังคับซิงค์การตั้งค่านาฬิกา</string>
+    <string name="dev_sync_watch_description">ส่งการตั้งค่าปัจจุบันทั้งหมดไปยังนาฬิกาที่จับคู่ทันที</string>
+    <string name="dev_sync_watch_done">ซิงค์การตั้งค่ากับนาฬิกาแล้ว</string>
+    <string name="dev_copy_debug_info">คัดลอกข้อมูลดีบัก</string>
+    <string name="dev_copy_debug_info_description">คัดลอกรายละเอียดบิลด์และอุปกรณ์ไปยังคลิปบอร์ด</string>
+    <string name="dev_show_archived">แสดงตัวเลือกที่เก็บถาวร</string>
+    <string name="dev_show_archived_description">แสดงเลย์เอาต์และการตั้งค่านาฬิกาที่ถูกเก็บถาวรเนื่องจากปัญหาที่ทราบ</string>
+    <string name="dev_copy_debug_info_done">คัดลอกข้อมูลดีบักแล้ว</string>
+    <string name="dev_open_update_screen">เปิดหน้าจออัปเดต</string>
+    <string name="dev_open_update_screen_description">ดูตัวอย่างหน้าจออัปเดต (แบนเนอร์ปก เลย์เอาต์บันทึกประจำรุ่น) โดยไม่ต้องรอรุ่นจริง</string>
+    <string name="dev_watch_layout_bounds">แสดงขอบเขตเลย์เอาต์นาฬิกา</string>
+    <string name="dev_watch_layout_bounds_description">แสดงเส้นขอบองค์ประกอบเครื่องเล่นและพื้นที่สัมผัสที่มองเห็นบนหน้าจอนาฬิกา ใช้เป็นโอเวอร์เลย์วินิจฉัยเท่านั้น</string>
+    <string name="dev_watch_player_info">แสดงข้อมูลเครื่องเล่นบนหน้าจอนาฬิกา</string>
+    <string name="dev_watch_player_info_description">ซ้อนข้อมูลหน้าปัดที่ใช้งานอยู่ สถานะการเล่น ความคืบหน้า และการเรนเดอร์บนหน้าจอนาฬิกา</string>
+    <string name="pref_reset_default">รีเซ็ตเป็นค่าเริ่มต้น</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">คุณพบน้ำตกที่ซ่อนอยู่แล้ว\n\nSvartifoss — เสาหินบะซอลต์สีดำ\nล้อมกรอบสายน้ำตกในไอซ์แลนด์\nเตือนใจว่าดนตรีไหลไป\nดั่งสายน้ำผ่านก้อนหิน\n\n♪ สร้างขึ้นด้วยความใส่ใจ ♪</string>
+    <string name="easter_egg_ok">ปิด</string>
+
+    <string name="nav_watch_face">นาฬิกา</string>
+    <string name="watch_face_header">รูปลักษณ์นาฬิกา</string>
+    <string name="nav_controls">การควบคุม</string>
+    <string name="nav_actions">การทำงาน</string>
+    <string name="nav_settings">การตั้งค่า</string>
+
+    <string name="controls_header">การควบคุม</string>
+    <string name="controls_state_playing">กำลังเล่นเพลง</string>
+    <string name="controls_state_stopped">ไม่มีการเล่น</string>
+    <string name="controls_playing_description">เลือกการทำงานของอินพุตแต่ละรายการขณะเล่นเพลง การตั้งค่านี้แยกจากสถานะที่ไม่มีการเล่น</string>
+    <string name="controls_stopped_description">เลือกการทำงานของอินพุตแต่ละรายการก่อนเริ่มเล่นหรือหลังหยุดเล่น การตั้งค่านี้แยกจากสถานะกำลังเล่น</string>
+
+    <string name="watch_live_preview">ตัวอย่างนาฬิกาแบบสด</string>
+    <string name="watch_preview_description">ดูตัวอย่างพื้นผิวนาฬิกาที่เลือกแบบสด การเปลี่ยนแปลงจะแสดงที่นี่ก่อนที่คุณจะลองบนหน้าจอนาฬิกา</string>
+    <string name="watch_section_style">เครื่องเล่น</string>
+    <string name="watch_section_style_description">เลือกเลย์เอาต์เครื่องเล่นและรูปแบบการแสดงชื่อ เวลา และความคืบหน้า</string>
+    <string name="watch_section_background">พื้นหลัง</string>
+    <string name="watch_section_background_description">ควบคุมภาพปกอัลบั้ม การเบลอ การจาง และความอ่านง่ายด้านหลังเครื่องเล่น</string>
+    <string name="watch_section_colors">สี</string>
+    <string name="watch_section_colors_description">ตั้งค่าสีพื้นฐาน สีความคืบหน้า และสีเน้นจากอัลบั้ม แล้วปรับสีชื่อ ศิลปิน นาฬิกา ระดับเสียง และแผงควบคุม</string>
+    <string name="watch_section_typography">ข้อความ</string>
+    <string name="watch_section_typography_description">เลือกแบบอักษรและปรับชื่อ ศิลปิน นาฬิกา ไอคอนแอป หน้าจอรอง และข้อความ Flex</string>
+    <string name="watch_section_aod">เปิดตลอดเวลา</string>
+    <string name="watch_section_aod_description">กำหนดค่าหน้าจอพลังงานต่ำและดูรูปลักษณ์ในโหมดแอมเบียนต์จากตัวอย่าง</string>
+    <string name="watch_section_panels">แผง</string>
+    <string name="watch_section_panels_description">ปรับสไตล์ระดับเสียง การเลื่อนตำแหน่ง แผงด่วน และคิว เมื่อโฟกัสแถวจะเปิดหน้าจอนั้นในตัวอย่าง</string>
+    <string name="watch_section_mini_buttons">ปุ่มขนาดเล็ก</string>
+    <string name="watch_section_mini_buttons_description">ปรับสไตล์แถวทางลัดเสริม แตะ “ปุ่มขนาดเล็ก” ด้านล่างเพื่อกำหนดการทำงานในส่วนการควบคุม</string>
+    <string name="watch_overview_description">เลือกสิ่งที่ต้องการปรับแต่ง ตัวอย่างและธีมที่บันทึกไว้จะยังคงใช้งานในทุกส่วน</string>
+    <string name="watch_back_to_overview">กลับไปยังส่วนของนาฬิกา</string>
+
+    <string name="settings_section_general">ทั่วไป</string>
+    <string name="settings_section_general_description">ธีมแอป สีเน้น และการตั้งค่าการอัปเดต</string>
+    <string name="settings_section_watch">ลักษณะการทำงาน</string>
+    <string name="settings_section_watch_description">การทำงานของเม็ดมะยม การสัมผัส การสั่นตอบสนอง และเมนูการทำงานบนหน้าจอนาฬิกา</string>
+    <string name="settings_section_automation">ระบบอัตโนมัติ</string>
+    <string name="settings_section_automation_description">เลือกเวลาที่ Svartifoss จะเปิดและปิดโดยอัตโนมัติ</string>
+    <string name="settings_section_apps">แอป</string>
+    <string name="settings_section_apps_description">ค้นหาเนื้อเพลงและข้อมูลเมตา ทางลัดสตรีมมิง ภาพคิว และสิทธิ์การเข้าถึง Android</string>
+    <string name="settings_section_data">ข้อมูลและการสนับสนุน</string>
+    <string name="settings_section_data_description">สำรองการตั้งค่า ตรวจสอบเวอร์ชันหรือการวินิจฉัย หรือขอความช่วยเหลือ</string>
+    <string name="settings_overview_description">เลือกส่วน ตัวเลือกที่เกี่ยวข้องจะอยู่รวมกัน และการค้นหายังพาคุณไปยังการตั้งค่าใด ๆ ได้โดยตรง</string>
+    <string name="settings_back_to_overview">กลับไปยังส่วนการตั้งค่า</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">วิธีใช้ Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss เปลี่ยนนาฬิกาของคุณให้เป็นรีโมตควบคุมเพลงที่กำลังเล่นบนโทรศัพท์ นี่คือทุกสิ่งที่คุณทำได้จากข้อมือ</string>
+
+    <string name="tutorial_taps_title">แตะโซนบนหน้าจอ</string>
+    <string name="tutorial_taps_desc">หน้าจอนาฬิกาแบ่งเป็นสี่โซน — บน ล่าง ซ้าย และขวา การแตะโซนจะเรียกใช้การทำงานที่คุณกำหนดไว้ โดยค่าเริ่มต้นโซนซ้ายจะเล่นหรือหยุดชั่วคราว โซนขวาข้ามไปเพลงถัดไป และโซนบนกับล่างปรับระดับเสียง</string>
+
+    <string name="tutorial_quick_panel_title">แผงการทำงานด่วน</string>
+    <string name="tutorial_quick_panel_desc">แตะสองครั้งตรงกลางหน้าจอกำลังเล่นเพื่อเปิดแผงที่มีสี่ช่อง — ปุ่มกลมสามปุ่มและแถวกว้างหนึ่งแถวด้านล่าง หากปล่อยไว้ ช่องเหล่านี้จะสะท้อนปุ่มที่แอปเล่นเพลงใส่ไว้ในการแจ้งเตือนของตัวเอง จึงใช้ปุ่มถูกใจ สุ่ม และเล่นซ้ำจริงของแอปได้ กำหนดการทำงานใด ๆ ให้ช่อง หรือตั้งเป็น \"ไม่มี\" เพื่อซ่อน ในส่วนการทำงานบนโทรศัพท์</string>
+    <string name="tutorial_gestures_title">กดครั้งเดียว สองครั้ง และกดค้าง</string>
+    <string name="tutorial_gestures_desc">โซนขอบทั้งสี่รองรับการทำงานแยกกันสำหรับการกดครั้งเดียว สองครั้ง และกดค้าง การแตะตรงกลางครั้งเดียวก็กำหนดค่าได้ การแตะสองครั้งจะเปิดการทำงานด่วนเสมอ ส่วนการกดค้างจะเปิดตัวเลือกหน้าปัด คิว หรือไม่ทำอะไร ตามการตั้งค่า → ลักษณะการทำงาน</string>
+
+    <string name="tutorial_buttons_title">ปุ่มจริง</string>
+    <string name="tutorial_buttons_desc">หากนาฬิกามีปุ่มด้านข้าง คุณสามารถกำหนดการทำงานสำหรับการกดครั้งเดียว สองครั้ง และกดค้างได้ด้วย ปุ่มยังทำงานแม้หน้าจอปิด</string>
+
+    <string name="tutorial_rotary_title">เม็ดมะยมแบบหมุน</string>
+    <string name="tutorial_rotary_desc">เลือกใน การตั้งค่า → ลักษณะการทำงาน → เม็ดมะยมหมุน / ขอบหน้าปัด ว่าจะให้เม็ดมะยมหรือขอบหน้าปัดปรับระดับเสียง เลื่อนตำแหน่งในเพลง หรือไม่ทำอะไร สำหรับนาฬิกาที่รายงานการหมุนเม็ดมะยมเป็นปุ่ม ให้กำหนดในส่วนการควบคุมแทน</string>
+
+    <string name="tutorial_swipe_up_title">ปัดขึ้น ลง ซ้าย และขวา</string>
+    <string name="tutorial_swipe_up_desc">การปัดขึ้น ลง หรือซ้ายบนหน้าจอกำลังเล่น สามารถตั้งค่าแยกกันให้เปิดอะไรก็ได้ — เมนูการทำงาน คิวการเล่น ข้ามเพลง เพลย์ลิสต์ และอื่น ๆ ตั้งค่าแต่ละรายการในส่วนการควบคุม โดยเลือก กำลังเล่นเพลง หรือ ไม่มีการเล่น โดยค่าเริ่มต้น การปัดขึ้นจะเปิดเมนูการทำงาน ส่วนทิศทางอื่นจะไม่ทำอะไรจนกว่าจะกำหนด การปัดขวาจะไม่ถูกเปลี่ยน — นั่นคือท่าทางมาตรฐานของ Wear OS สำหรับออกจากแอป</string>
+    <string name="tutorial_shortcuts_title">ทางลัดสตรีมมิง</string>
+    <string name="tutorial_shortcuts_desc">บันทึกลิงก์ไปยังเพลง อัลบั้ม มิกซ์ หรือเพลย์ลิสต์จาก Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music หรือ SoundCloud แล้วกำหนดให้ปุ่ม ท่าทาง หรือช่องในแผงใดก็ได้ วิธีที่เร็วที่สุดคือแชร์ลิงก์ตรงไปยัง Svartifoss จากแอปสตรีมมิง คุณยังวางลิงก์ที่คัดลอกหรือพิมพ์เองได้ ไม่ต้องมีบัญชีหรือเข้าสู่ระบบ — นาฬิกาจะขอให้โทรศัพท์เริ่มเล่น ดังนั้นทางลัดจะเล่นจริงแทนที่จะเพียงเปิดแอป</string>
+    <string name="tutorial_yt_music_title">ทางลัด YouTube Music</string>
+    <string name="tutorial_yt_music_desc">กำหนด \"เล่นเพลงที่ชอบ\", \"เล่นเพลงที่ชอบแบบสุ่ม\" หรือ \"เพลย์ลิสต์ของฉัน\" ให้ปุ่ม ท่าทาง หรือการปัดใดก็ได้ เพื่อเข้าสู่เพลงของคุณทันทีโดยไม่ต้องแตะโทรศัพท์ \"ประวัติการค้นหา\" จะจำการค้นหาล่าสุดบนหน้าจอนาฬิกา — กดค้างรายการเพื่อลบ</string>
+
+    <string name="tutorial_exit_title">ปัดเพื่อออก</string>
+    <string name="tutorial_exit_desc">ปัดจากขอบซ้ายเพื่อออกจากเครื่องเล่น สามารถหยุดการเล่นชั่วคราวโดยอัตโนมัติเมื่อออกได้ — เปิดใช้ในส่วนการตั้งค่า</string>
+
+    <string name="tutorial_tile_title">Tile ควบคุมด่วน</string>
+    <string name="tutorial_tile_desc">ปัดหน้าปัดไปด้านข้างเพื่อไปยัง Tile ของ Svartifoss แล้วเล่น หยุดชั่วคราว และข้ามได้ทันทีโดยไม่ต้องเปิดแอป</string>
+
+    <string name="tutorial_complication_title">Complication บนหน้าปัด</string>
+    <string name="tutorial_complication_desc">เพิ่ม Complication ภาพปกอัลบั้มของ Svartifoss ลงบนหน้าปัดเพื่อดูปกปัจจุบันได้ทันที แตะเพื่อเปิดเครื่องเล่น</string>
+
+    <string name="tutorial_system_title">การควบคุมสื่อของระบบ</string>
+    <string name="tutorial_system_desc">เพลงปัจจุบันจะแสดงในส่วนควบคุมสื่อของนาฬิกาและแอปล่าสุดด้วย คุณจึงควบคุมการเล่นจากตรงนั้นได้เช่นกัน</string>
+
+    <string name="tutorial_tip">เคล็ดลับ: ตั้งค่าทั้งสองสถานะในส่วนการควบคุม แล้วจัดเมนูในส่วนการทำงาน</string>
+
+    <string name="navigation_drawer_open">เปิดลิ้นชักการนำทาง</string>
+    <string name="navigation_drawer_close">ปิดลิ้นชักการนำทาง</string>
+
+    <string name="action_settings">การตั้งค่า</string>
+    <string name="action_pause">หยุดชั่วคราว</string>
+    <string name="action_play">เล่น</string>
+    <string name="action_skip_prev">เพลงก่อนหน้า</string>
+    <string name="action_skip_next">เพลงถัดไป</string>
+    <string name="action_play_pause">เล่น / หยุดชั่วคราว</string>
+    <string name="action_stop">หยุด</string>
+    <string name="action_restart">เริ่มเพลงใหม่</string>
+    <string name="action_mute">ปิดเสียง / เปิดเสียง</string>
+    <string name="action_skip_seconds">ข้ามไปข้างหน้า %1$d วินาที</string>
+    <string name="action_reverse_seconds">ย้อนกลับ %1$d วินาที</string>
+    <string name="action_like">ถูกใจ</string>
+    <string name="action_shuffle">สุ่ม</string>
+    <string name="action_repeat">เล่นซ้ำ</string>
+    <string name="action_repeat_one">เล่นซ้ำหนึ่งเพลง</string>
+    <string name="action_search">ค้นหาเพลง</string>
+    <string name="action_open_lyrics">เนื้อเพลง</string>
+    <string name="group_playback_controls">การควบคุมการเล่น</string>
+    <string name="group_streaming_shortcuts">เพลง อัลบั้ม และเพลย์ลิสต์</string>
+    <string name="pick_action">เลือกการทำงาน</string>
+    <string name="action_search_hint">ค้นหารายการนี้</string>
+    <string name="action_search_empty">ไม่มีการทำงานที่ตรงกับการค้นหานี้</string>
+    <string name="action_opens_more">หลายตัวเลือก</string>
+    <string name="action_volume_up">เพิ่มระดับเสียง</string>
+    <string name="volume_down">ลดระดับเสียง</string>
+    <string name="group_volume_controls">การควบคุมระดับเสียง</string>
+    <string name="no_watch_detected">ไม่พบนาฬิกา</string>
+    <string name="connection_instructions">เปิด Svartifoss บนนาฬิกาเพื่อเริ่มการเชื่อมต่อ</string>
+    <string name="playing_controls">การควบคุมขณะเล่น</string>
+    <string name="stopped_controls">การควบคุมเมื่อไม่มีการเล่น</string>
+    <string name="actions_menu">เมนูการทำงาน</string>
+    <string name="actions_intro">กำหนดค่าพื้นที่การทำงานทั้งสองบนหน้าจอนาฬิกาด้วยส่วนควบคุมการเล่น แอป หรือเพลง อัลบั้ม และเพลย์ลิสต์ที่บันทึกไว้ แผงด่วนยังคงกระชับ ส่วนเมนูด้านล่างสามารถเก็บรายการแบบเรียงลำดับที่ยาวกว่าได้</string>
+    <string name="actions_quick_panel_section">แผงด่วน</string>
+    <string name="actions_watch_menu_section">เมนูบนนาฬิกา</string>
+    <plurals name="actions_list_summary">
+        <item quantity="other">%1$d การทำงาน · แตะเพื่อแก้ไข · กดค้างแล้วลากเพื่อจัดลำดับใหม่</item>
+    </plurals>
+    <string name="actions_reorder_description">เมนูการทำงานแบบเรียงลำดับ แตะค้างแล้วลาก ใช้การทำงานการช่วยเหลือพิเศษ ย้ายขึ้น หรือ ย้ายลง หรือกด Ctrl+Up/Down บนแป้นพิมพ์</string>
+    <string name="actions_move_up">ย้ายขึ้น</string>
+    <string name="actions_move_down">ย้ายลง</string>
+    <string name="actions_moved_to_position">ย้าย %1$s ไปยังตำแหน่ง %2$d จาก %3$d แล้ว</string>
+    <string name="actions_empty">ยังไม่มีการทำงาน ใช้ปุ่มเพิ่มเพื่อสร้างรายการแรก</string>
+    <string name="actions_add">เพิ่มการทำงาน</string>
+    <string name="on_screen_buttons">โซนสัมผัส</string>
+    <string name="physical_buttons">ปุ่มจริง</string>
+    <string name="physical_buttons_disconnected">เชื่อมต่อและเปิด Svartifoss บนนาฬิกาเพื่อกำหนดค่าปุ่มจริง โซนสัมผัส การปัด และปุ่มขนาดเล็กใช้งานได้แล้วตอนนี้</string>
+    <string name="physical_buttons_unavailable">นาฬิกานี้ไม่รายงานปุ่มจริงที่กำหนดค่าได้</string>
+    <string name="control_assignment_tap">แตะ: %1$s</string>
+    <string name="control_assignment_hold">กดค้าง: %1$s</string>
+    <string name="control_assignment_both">แตะ: %1$s · กดค้าง: %2$s</string>
+    <string name="tap_a_zone_to_configure">แตะโซนบนนาฬิกาเพื่อกำหนดการทำงาน</string>
+    <string name="touch_zone_top">โซนบน</string>
+    <string name="touch_zone_bottom">โซนล่าง</string>
+    <string name="touch_zone_left">โซนซ้าย</string>
+    <string name="touch_zone_right">โซนขวา</string>
+    <string name="touch_zone_center">แตะตรงกลาง</string>
+    <string name="touch_zone_action">%1$s: %2$s แตะเพื่อกำหนดค่า</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">ท่าทางการปัด</string>
+    <string name="tap_a_swipe_to_configure">แตะทิศทางเพื่อเลือกสิ่งที่จะเปิด</string>
+    <string name="swipe_gesture_up">ปัดขึ้น</string>
+    <string name="swipe_gesture_down">ปัดลง</string>
+    <string name="swipe_gesture_left">ปัดซ้าย</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">ขึ้น</string>
+    <string name="swipe_gesture_label_down">ลง</string>
+    <string name="swipe_gesture_label_left">ซ้าย</string>
+
+    <string name="screen_buttons">ปุ่มขนาดเล็ก</string>
+    <string name="tap_a_screen_button_to_configure">แสดงปุ่มได้สูงสุดสามปุ่มใกล้ด้านล่างของหน้าจอนาฬิกา — แตะช่องเพื่อกำหนดการทำงาน</string>
+    <string name="screen_button_1">ปุ่มขนาดเล็ก 1 (ซ้าย)</string>
+    <string name="screen_button_2">ปุ่มขนาดเล็ก 2 (กลาง)</string>
+    <string name="screen_button_3">ปุ่มขนาดเล็ก 3 (ขวา)</string>
+    <string name="screen_button_label_1">ปุ่ม 1</string>
+    <string name="screen_button_label_2">ปุ่ม 2</string>
+    <string name="screen_button_label_3">ปุ่ม 3</string>
+    <string name="no_action">ไม่มีการทำงาน</string>
+    <string name="gesture_single_press">กดครั้งเดียว</string>
+    <string name="gesture_double_press">กดสองครั้ง</string>
+    <string name="gesture_long_press">กดค้าง</string>
+    <string name="gesture_swipe_action">การทำงาน</string>
+    <string name="center_button_quick_panel_note">การแตะตรงกลางสองครั้งจะเปิดการทำงานด่วนเสมอ การกดค้างจะเรียกตัวเลือกใน การตั้งค่า → ลักษณะการทำงาน การกำหนดการแตะตรงกลางที่นี่จะไม่เปลี่ยนท่าทางทั้งสองแบบ</string>
+    <string name="start_playback">เริ่มเล่น</string>
+    <string name="uninstalled_app">แอปที่ถอนการติดตั้งแล้ว</string>
+
+    <string name="play_app">เล่น %1$s</string>
+    <string name="tasker_task">งาน Tasker</string>
+    <string name="icon_selection_title">การเลือกไอคอน</string>
+    <string name="icon_selection_gallery">จากแกลเลอรี</string>
+    <string name="icon_selection_no_icon_pack">ฟีเจอร์นี้ให้คุณเลือกไอคอนแบบกำหนดเองสำหรับการทำงานจากชุดไอคอนที่ติดตั้งไว้\n\nขออภัย ดูเหมือนว่าคุณยังไม่ได้ติดตั้งชุดไอคอนใด ๆ</string>
+    <string name="icon_selection_no_storage_permission">ฟีเจอร์นี้ให้คุณเลือกไอคอนแบบกำหนดเองสำหรับการทำงานจากชุดไอคอนที่ติดตั้งไว้\n\nชุดไอคอนบางชุดต้องให้แอปมีสิทธิ์เข้าถึงพื้นที่เก็บข้อมูล คุณต้องอนุญาตเพื่อใช้ฟีเจอร์นี้</string>
+    <string name="delete">ลบ</string>
+    <string name="action_text">ข้อความการทำงาน</string>
+    <string name="swap_action">สลับการทำงาน</string>
+    <string name="open_actions_menu">เปิดเมนูการทำงาน</string>
+    <string name="open_playlist_menu">แสดงเพลย์ลิสต์ปัจจุบัน</string>
+    <string name="misc_settings">การตั้งค่าอื่น ๆ</string>
+
+    <string name="category_backup">สำรองข้อมูล</string>
+    <string name="export_config">ส่งออกการกำหนดค่า</string>
+    <string name="export_config_description">บันทึกการแมปปุ่ม รายการการทำงาน และการตั้งค่านาฬิกาลงในไฟล์</string>
+    <string name="import_config">นำเข้าการกำหนดค่า</string>
+    <string name="import_config_description">กู้คืนการแมปปุ่ม รายการการทำงาน และการตั้งค่านาฬิกาจากไฟล์</string>
+    <string name="export_config_done">ส่งออกการกำหนดค่าแล้ว</string>
+    <string name="export_config_failed">ส่งออกการกำหนดค่าไม่ได้</string>
+    <string name="import_config_done_title">นำเข้าสำเร็จ</string>
+    <string name="import_config_done_message">Svartifoss ต้องรีสตาร์ตเพื่อใช้การกำหนดค่าที่นำเข้า</string>
+    <string name="import_config_failed">นำเข้าการกำหนดค่าไม่ได้ — ไฟล์อาจไม่ถูกต้องหรือมาจากเวอร์ชันที่เข้ากันไม่ได้</string>
+    <string name="action_restart_now">รีสตาร์ตตอนนี้</string>
+
+    <string name="category_about">เกี่ยวกับ</string>
+    <string name="category_music_screen">หน้าจอเพลง</string>
+    <string name="category_watch_screen">หน้าจอนาฬิกา</string>
+    <string name="category_mini_buttons">ปุ่มขนาดเล็ก</string>
+    <string name="category_screen_face">รูปลักษณ์เครื่องเล่น</string>
+    <string name="category_wf_screen_behavior">ลักษณะการทำงานของหน้าจอ</string>
+    <string name="category_wf_player_progress">ความคืบหน้า การเลื่อนตำแหน่ง และเวลา</string>
+    <string name="category_album_background">พื้นหลังอัลบั้ม</string>
+    <string name="category_music_colors">สีจากเพลง</string>
+    <string name="category_wf_typography_font">แบบอักษร</string>
+    <string name="category_wf_typography_title">ชื่อ</string>
+    <string name="category_wf_typography_artist">ศิลปิน</string>
+    <string name="category_wf_typography_icon">ไอคอนแอป</string>
+    <string name="category_wf_typography_flex">แกน Google Sans Flex</string>
+    <string name="category_wf_metadata">เนื้อหาหน้าปัด Metadata</string>
+    <string name="category_wf_typography_secondary">ข้อความบนหน้าจออื่น</string>
+    <string name="category_wf_colors_title">สีชื่อ</string>
+    <string name="category_wf_colors_artist">สีศิลปิน</string>
+    <string name="category_wf_colors_clock">สีนาฬิกา</string>
+    <string name="setting_wear_font_flex_hint_title">เกี่ยวกับส่วนควบคุมเหล่านี้</string>
+    <string name="setting_wear_flex_axes_hint">ส่วนเหล่านี้ใช้ปรับ Google Sans Flex โดยเฉพาะ — เลือกแบบอักษรนี้ด้านบนเพื่อใช้งาน การตั้งค่าน้ำหนัก/ตัวเอียงของชื่อและศิลปินด้านบนได้กำหนดแกนน้ำหนัก (wght) และความเอียง (slnt) ของแบบอักษรนี้แล้ว ส่วนการควบคุมสี่รายการด้านล่างมีผลกับทั้งหน้าปัด</string>
+    <string name="setting_wear_font_flex_width">ความกว้าง</string>
+    <string name="setting_wear_font_flex_width_description">การยืดแนวนอน ตั้งแต่แคบไปจนถึงกว้าง (25–151) ค่า 100 คือความกว้างปกติของแบบอักษร</string>
+    <string name="setting_wear_font_flex_optical_size">ขนาดเชิงแสง</string>
+    <string name="setting_wear_font_flex_optical_size_description">ปรับรายละเอียดเส้นตามขนาดจริงของข้อความ (6–144) ค่าต่ำเหมาะกับข้อความขนาดเล็ก ค่าสูงเหมาะกับข้อความแสดงผลขนาดใหญ่</string>
+    <string name="setting_wear_font_flex_grade">เกรด</string>
+    <string name="setting_wear_font_flex_grade_description">ปรับน้ำหนักเล็กน้อยโดยไม่เปลี่ยนเลย์เอาต์ (0–100) — วิธีเพิ่มคอนทราสต์บนหน้าจอมืดอย่างละเอียด</string>
+    <string name="setting_wear_font_flex_roundness">ความโค้งมน</string>
+    <string name="setting_wear_font_flex_roundness_description">ปรับปลายเส้นจากคม (0) ไปจนถึงมนเต็มที่ (100) เพื่อให้ดูเป็นมิตรมากขึ้น</string>
+    <string name="preview_sample_title">ชื่อเพลง</string>
+    <string name="preview_sample_artist">ชื่อศิลปิน</string>
+    <string name="preview_sample_next_title">เพลงถัดไป</string>
+    <string name="preview_playback_stopped">หยุดแล้ว</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">บรรทัดก่อนหน้า</string>
+    <string name="preview_verse_current">บรรทัดที่กำลังเล่นอยู่</string>
+    <string name="preview_verse_next">และบรรทัดถัดไป</string>
+    <string name="preview_chat_today">วันนี้</string>
+    <string name="category_gestures">ท่าทางและอินพุต</string>
+    <string name="category_watch_navigation">การนำทางและทางลัด</string>
+    <string name="category_rotary_input">อินพุตแบบหมุนและการปรับ</string>
+    <string name="category_watch_feedback">การตอบสนองและการทำงานเมื่อออก</string>
+    <string name="category_watch_display">หน้าจอนาฬิกา</string>
+    <string name="setting_wear_keep_screen_on">เปิดหน้าจอค้างไว้</string>
+    <string name="setting_wear_keep_screen_on_description">ป้องกันหน้าจอนาฬิกาดับเมื่อหมดเวลาที่ไม่ได้ใช้งานขณะเปิดหน้าจอ Svartifoss การลดข้อมือลงยังคงทำให้นาฬิกาหรี่ลง — ท่าทางนี้เป็นของระบบ ใช้แบตเตอรี่มากขึ้น หน้าจอเนื้อเพลงจะเปิดค้างไว้เสมอไม่ว่าการตั้งค่านี้จะเป็นอย่างไร</string>
+    <string name="setting_lyrics_enabled">ค้นหาเนื้อเพลงออนไลน์</string>
+    <string name="setting_lyrics_enabled_description">อนุญาตให้โทรศัพท์ดึงเนื้อเพลงที่ซิงค์จาก LRCLIB เมื่อคุณเปิดหน้าจอเนื้อเพลงบนนาฬิกา ระบบจะส่งเฉพาะชื่อเพลง ศิลปิน และความยาวเท่านั้น ไม่มีข้อมูลอื่น และไม่บันทึกลงดิสก์ หากปิด หน้าจอเนื้อเพลงจะแจ้งว่าปิดการค้นหาแล้ว</string>
+    <string name="setting_overlay_blur_radius">ความเบลอของโอเวอร์เลย์</string>
+    <string name="setting_overlay_blur_radius_description">ความแรงการเบลอ (px) ของพื้นหลังแบบกระจกฝ้าด้านหลังวงแหวนระดับเสียง/การเลื่อนตำแหน่งและแผงการทำงานด่วน — แยกจากการเบลอพื้นหลังภาพปกอัลบั้ม</string>
+    <string name="category_action_list">รายการการทำงาน</string>
+    <string name="category_automation">ระบบอัตโนมัติ</string>
+    <string name="category_idle">เมื่อไม่มีอะไรเล่นอยู่</string>
+    <string name="installed_version">เวอร์ชันที่ติดตั้ง</string>
+    <string name="get_support">ขอรับการสนับสนุน</string>
+    <string name="get_support_description">ส่งบันทึกแอปพลิเคชันให้นักพัฒนาเพื่อขอรับการสนับสนุน</string>
+    <string name="contact_developer">ติดต่อนักพัฒนา</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — ติดต่อ</string>
+    <string name="contact_developer_chooser">ส่งอีเมล</string>
+    <string name="contact_developer_no_client">ไม่ได้ติดตั้งแอปอีเมล คัดลอกที่อยู่ไปยังคลิปบอร์ดแล้ว</string>
+    <string name="about_developer_title">เกี่ยวกับนักพัฒนา</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss เริ่มต้นจากโครงการส่วนตัว — ผมอยากปรับ Music Center for Wear ให้ทันกับสิ่งที่ทำได้ในปัจจุบัน เพื่อจะได้ใช้เองทุกวัน ผลออกมาดีพอจนตัดสินใจแบ่งปันให้ทุกคน นี่คือแอปแรกของผม และไม่มีอะไรเหมือนการได้เห็นว่าสิ่งที่คุณสร้างขึ้นมีประโยชน์ต่อคนอื่นด้วย</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">ใบอนุญาตโอเพนซอร์ส</string>
+    <string name="setting_always_show_time">แสดงเวลาเสมอ</string>
+    <string name="setting_always_show_time_off_description">เวลาปัจจุบันจะแสดงเฉพาะในโหมดแอมเบียนต์</string>
+    <string name="setting_always_show_time_on_description">เวลาปัจจุบันจะแสดงเสมอ ไอคอนการทำงานด้านบนจะไม่ปรากฏ (ถูกแทนที่ด้วยนาฬิกา) แต่การทำงานยังทำงานตามปกติ</string>
+    <string name="tap_to_force_stop">แตะเพื่อหยุดการควบคุม</string>
+    <string name="notification_action_stop">หยุด</string>
+    <string name="notification_action_force_stop">บังคับหยุด</string>
+    <string name="error_notification_access">ไม่มีสิทธิ์เข้าถึงการแจ้งเตือน ตรวจสอบโทรศัพท์</string>
+    <string name="error_notifications">การแจ้งเตือนข้อผิดพลาด</string>
+    <string name="notification_access_notification_title">Svartifoss ต้องการสิทธิ์เข้าถึงการแจ้งเตือน</string>
+    <string name="notification_access_notification_title_description">แตะการแจ้งเตือนนี้และตรวจสอบ Svartifoss เพื่อแก้ไขปัญหา</string>
+    <string name="error_service_not_enabled">ต้องมีสิทธิ์เข้าถึงการแจ้งเตือน</string>
+    <string name="error_service_not_enabled_description">ในการควบคุมเพลงจากนาฬิกา Svartifoss ต้องมีสิทธิ์เข้าถึงการแจ้งเตือน — นี่คือวิธีที่ Android อนุญาตให้เห็นว่าแอปใดกำลังเล่นและส่งคำสั่งเล่น หยุดชั่วคราว และข้าม\n\nSvartifoss ไม่เคยอ่านข้อความในการแจ้งเตือนของคุณ สิทธิ์นี้ใช้เพียงเพื่อค้นหาเซสชันสื่อที่ใช้งานอยู่\n\nแตะ \"เปิดการตั้งค่า\" แล้วเปิด Svartifoss ในส่วนสิทธิ์เข้าถึงการแจ้งเตือน</string>
+    <string name="action_open_settings">เปิดการตั้งค่า</string>
+    <string name="settings_search_title">ค้นหาการตั้งค่า</string>
+    <string name="settings_search_hint">ค้นหาการตั้งค่า</string>
+    <string name="settings_search_clear">ล้างการค้นหา</string>
+    <string name="settings_search_prompt">ค้นหาการตั้งค่าทุกอย่างในส่วนการตั้งค่าและรูปลักษณ์นาฬิกาตามชื่อ</string>
+    <string name="settings_search_no_results">ไม่มีการตั้งค่าที่ตรงกัน</string>
+    <string name="settings_search_prerequisite">ตัวเลือกนี้ขึ้นอยู่กับอีกตัวเลือกหนึ่ง ปรับการตั้งค่าที่แสดงที่นี่เพื่อให้ปรากฏ</string>
+    <string name="setting_numeric_range_error">ป้อนค่าตั้งแต่ %1$d ถึง %2$d</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">แตะเพื่ออนุญาต — การควบคุมการเล่นจะไม่ทำงานจนกว่าคุณจะอนุญาต</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">ติดตั้ง Svartifoss บนนาฬิกา</string>
+    <string name="no_watch_app_description">Svartifoss ไม่พบแอปสำหรับนาฬิกาบนนาฬิกา Wear OS ที่จับคู่ไว้ แอปบนโทรศัพท์และนาฬิกาทำงานร่วมกัน — หากไม่มีแอปบนหน้าจอนาฬิกา การควบคุมการเล่นจากข้อมือจะไม่ทำงาน\n\nSvartifoss ไม่มีใน Play Store — แอปนาฬิกาต้องไซด์โหลดแยกต่างหาก (เช่น ด้วย Wear Installer) แตะ \"ดูรุ่น\" เพื่อเปิดหน้ารุ่นของ GitHub และดาวน์โหลด APK สำหรับนาฬิกา หากเพิ่งติดตั้ง ให้รอสักครู่เพื่อให้การซิงค์เสร็จสิ้น</string>
+    <string name="no_watch_app_button">ดูรุ่น</string>
+    <string name="required_permission">สิทธิ์ที่จำเป็น</string>
+    <string name="setting_pause_on_swipe_exit">หยุดการเล่นชั่วคราวเมื่อปัดออก</string>
+    <string name="setting_pause_on_swipe_exit_description">หยุดการเล่นใด ๆ โดยอัตโนมัติเมื่อออกจาก Svartifoss บนนาฬิกาด้วยการปัดซ้าย\n\nการออกด้วยปุ่มเปิด/ปิดจะไม่ได้รับผลและจะไม่หยุดอัตโนมัติ</string>
+    <string name="setting_rotating_crown_off_period">หน่วงอินพุตแบบหมุนหลังเปิดหน้าจอ</string>
+    <string name="setting_rotating_crown_off_period_description">อินพุตแบบหมุน (เช่น เม็ดมะยมแบบหมุน) อาจไวเกินไปในบางอุปกรณ์ เพื่อป้องกันการเปลี่ยนระดับเสียงโดยไม่ตั้งใจ อินพุตแบบหมุนจะถูกปิดเป็นเวลา <![CDATA[<b>%1$s มิลลิวินาที</b>]]> หลังจากเปิดหน้าจอ</string>
+    <string name="setting_rotary_seek">เลื่อนตำแหน่งด้วยเม็ดมะยม</string>
+    <string name="setting_rotary_seek_description">เมื่อเปิดใช้ การหมุนเม็ดมะยมจะเลื่อนตำแหน่งในเพลงปัจจุบันแทนการปรับระดับเสียง ยังปรับระดับเสียงได้ด้วยปุ่มบนหน้าจอหรือปุ่มจริง</string>
+    <string name="setting_wear_rotary_action">เม็ดมะยม / ขอบหน้าปัดแบบหมุน</string>
+    <string name="wear_rotary_action_volume">เปลี่ยนระดับเสียง</string>
+    <string name="wear_rotary_action_seek">เลื่อนตำแหน่งในเพลง</string>
+    <string name="wear_rotary_action_off">ไม่ทำอะไร</string>
+    <string name="setting_rotating_sensitivity">ความไวอินพุตแบบหมุน</string>
+    <string name="setting_rotating_sensitivity_description">ความไวของอินพุตแบบหมุน ตัวเลขยิ่งสูง การหมุนเม็ดมะยมแบบเดียวกันจะเพิ่มระดับเสียงมากขึ้น ปัจจุบันตั้งไว้ที่ <![CDATA[<b>%1$s%%</b>]]></string>
+    <string name="setting_disable_ambient_physical_double_click">ปิดการกดปุ่มจริงสองครั้งในโหมดแอมเบียนต์</string>
+    <string name="setting_disable_ambient_physical_double_click_description">นาฬิกาบางรุ่นมีปุ่มที่ทำงานผิดพลาด โดยการกดปุ่มจริงครั้งเดียวในโหมดแอมเบียนต์อาจถูกลงทะเบียนเป็นการกดสองครั้ง\n\nหากพบปัญหานี้ คุณสามารถเปิดตัวเลือกนี้เพื่อปิดการกดสองครั้งในโหมดแอมเบียนต์ทั้งหมด (เช่น กดสองครั้งจะเรียกเพียงการทำงานของการกดครั้งเดียว) การกดสองครั้งเมื่อนาฬิกาใช้งานอยู่จะไม่ถูกกระทบ</string>
+    <string name="setting_haptic_feedback">การสั่นตอบสนอง</string>
+    <string name="setting_haptic_feedback_description">สั่นนาฬิกาเมื่อกดปุ่ม</string>
+    <string name="setting_auto_start">เปิด Svartifoss โดยอัตโนมัติ</string>
+    <string name="setting_auto_start_description">เปิด Svartifoss บนนาฬิกาโดยอัตโนมัติเมื่อเริ่มเล่นเพลงบนโทรศัพท์</string>
+    <string name="setting_auto_start_apps_blacklist">แอปเริ่มอัตโนมัติ</string>
+    <string name="setting_auto_start_apps_blacklist_description">รายการแอปสื่อที่สามารถเริ่ม Svartifoss โดยอัตโนมัติ</string>
+    <string name="setting_dim_album_art">การไล่เงาเครื่องเล่น</string>
+    <string name="setting_dim_album_art_description">เพิ่มเอฟเฟกต์เงาที่ผู้ใช้เลือกไว้ระหว่างอาร์ตเวิร์กกับตัวควบคุมเครื่องเล่น</string>
+    <string name="setting_album_art_style">สไตล์ภาพปกอัลบั้ม</string>
+    <string name="setting_album_art_style_description">เลือกรูปลักษณ์พื้นหลัง “กำลังเล่น” บนนาฬิกา</string>
+    <string name="setting_album_art_blur_radius">ความเข้มของการเบลอ</string>
+    <string name="setting_album_art_blur_radius_description">ความแรงของการเบลอเต็มหน้าจอเมื่อพื้นหลังที่เลือกใช้การเบลอ ปัจจุบัน <![CDATA[<b>%1$s px</b>]]></string>
+    <string name="setting_album_art_dim_strength">ความเข้มการทำให้มืด</string>
+    <string name="setting_album_art_dim_strength_description">ระดับการทำให้ภาพปกอัลบั้มมืดลงเพื่อให้อ่านข้อความได้ง่าย ปัจจุบัน <![CDATA[<b>%1$s%%</b>]]></string>
+    <string name="setting_player_shading_style">สไตล์การไล่เงา</string>
+    <string name="setting_player_shading_intensity">ความเข้มของการไล่เงา</string>
+    <string name="setting_player_shading_intensity_description">ระดับที่การไล่เงาทำให้พื้นหลังมืดลง 100%% คือความเข้มเต็ม เพิ่มค่าสูงกว่านี้เพื่อเพิ่มคอนทราสต์ได้ (สูงสุด 150%%) ปัจจุบัน <![CDATA[<b>%1$s%%</b>]]></string>
+    <string name="setting_apply_appearance_to_all_faces">ใช้รูปลักษณ์นี้กับหน้าปัดทั้งหมด</string>
+    <string name="setting_apply_appearance_to_all_faces_description">คัดลอกการตั้งค่ารูปลักษณ์ของหน้าปัดนี้ไปยังหน้าปัดอื่นทั้งหมด</string>
+    <string name="apply_appearance_confirm_title">ใช้กับหน้าปัดทั้งหมดหรือไม่</string>
+    <string name="apply_appearance_confirm_message">การทำเช่นนี้จะเขียนทับการตั้งค่ารูปลักษณ์ของหน้าปัดอื่นทั้งหมดด้วยค่าของหน้าปัดปัจจุบัน โดยไม่เปลี่ยนการตั้งค่าพฤติกรรม</string>
+    <string name="apply_appearance_confirm_button">ใช้</string>
+    <string name="apply_appearance_done">ใช้กับหน้าปัดทั้งหมดแล้ว</string>
+    <string name="category_wf_layout_actions">เค้าโครง</string>
+    <string name="setting_reset_appearance">รีเซ็ตเค้าโครงนี้</string>
+    <string name="setting_reset_appearance_description">คืนค่ารูปลักษณ์ของหน้าปัดนี้เป็นค่าเริ่มต้นดั้งเดิม</string>
+    <string name="reset_appearance_confirm_title">รีเซ็ตเค้าโครงนี้หรือไม่</string>
+    <string name="reset_appearance_confirm_message">การตั้งค่ารูปลักษณ์ของหน้าปัดนี้จะกลับเป็นค่าเริ่มต้น โดยไม่กระทบการตั้งค่าพฤติกรรมหรือหน้าปัดอื่น</string>
+    <string name="reset_appearance_confirm_button">รีเซ็ต</string>
+    <string name="reset_appearance_done">รีเซ็ตเค้าโครงเป็นค่าเริ่มต้นแล้ว</string>
+    <string name="setting_reset_all_faces">รีเซ็ตหน้าปัดทั้งหมดเป็นค่าเริ่มต้น</string>
+    <string name="setting_reset_all_faces_description">คืนค่ารูปลักษณ์ของหน้าปัดในตัวทุกแบบเป็นค่าเริ่มต้นดั้งเดิม</string>
+    <string name="reset_all_faces_confirm_title">รีเซ็ตหน้าปัดทั้งหมดหรือไม่</string>
+    <string name="reset_all_faces_confirm_message">รูปลักษณ์ของหน้าปัดในตัวทุกแบบจะกลับเป็นค่าเริ่มต้นดั้งเดิม และธีมกำหนดเองที่ใช้งานอยู่จะถูกปิด ธีมกำหนดเองที่บันทึกไว้ การตั้งค่าพฤติกรรม และหน้าปัดที่เลือกจะยังคงอยู่</string>
+    <string name="reset_all_faces_confirm_button">รีเซ็ตทั้งหมด</string>
+    <string name="reset_all_faces_done">รีเซ็ตหน้าปัดทั้งหมดเป็นค่าเริ่มต้นแล้ว</string>
+    <string name="face_reset_migration_title">อัปเดตรูปลักษณ์นาฬิกาของคุณ</string>
+    <string name="face_reset_migration_message">คุณอัปเดตมาจากเวอร์ชันเก่าที่หน้าปัดทั้งหมดใช้การตั้งค่ารูปลักษณ์ชุดเดียวร่วมกัน ตอนนี้แต่ละหน้าปัดจะจำค่าของตัวเอง ดังนั้นค่ารุ่นเก่าอาจดูไม่เข้ากันบนหน้าปัดที่คุณไม่เคยปรับแต่งโดยตรง เราแนะนำให้รีเซ็ตหน้าปัดทั้งหมดเป็นค่าเริ่มต้นใหม่ หรือล้างข้อมูลแอปเพื่อเริ่มต้นใหม่ทั้งหมด</string>
+    <string name="face_reset_migration_reset_button">รีเซ็ตหน้าปัดทั้งหมด</string>
+    <string name="face_reset_migration_clear_data_button">ล้างข้อมูลแอป</string>
+    <string name="setting_player_shading_color">สีการไล่เงา</string>
+    <string name="setting_wear_shading_custom_color">สีการไล่เงาแบบกำหนดเอง</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>ดำ</item>
+        <item>สีเน้นจากอัลบั้ม</item>
+        <item>สีอัลบั้มลดความอิ่มตัว</item>
+        <item>สีที่กำหนดเอง</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>ตามธีมของโปรแกรมเล่น</item>
+        <item>ขอบมืด</item>
+        <item>ขอบมืด (เข้ม)</item>
+        <item>ขอบมืด (เข้มมาก)</item>
+        <item>มุมล่าง</item>
+        <item>ไล่จางด้านล่าง</item>
+        <item>ค่าต่ำสุดและสูงสุด</item>
+        <item>ฟิลเตอร์เต็มหน้าจอ</item>
+        <item>เคลือบสีอัลบั้ม</item>
+        <item>ไล่ระดับสีอัลบั้มสองสี</item>
+        <item>ม่านด้านข้าง</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">ความทึบของภาพปกอัลบั้มในโหมดแอมเบียนต์</string>
+    <string name="setting_ambient_album_art_opacity_description">กำหนดว่าภาพปกอัลบั้มยังมองเห็นได้มากเพียงใดในโหมดแอมเบียนต์ ปัจจุบัน <![CDATA[<b>%1$s%%</b>]]></string>
+    <string name="setting_volume_overlay_timeout">เวลาหมดของโอเวอร์เลย์ระดับเสียง/การเลื่อน</string>
+    <string name="setting_volume_overlay_timeout_description">ระยะเวลาที่โอเวอร์เลย์ระดับเสียงและการเลื่อนคงอยู่บนหน้าจอหลังปรับค่า ปัจจุบัน <![CDATA[<b>%1$s ms</b>]]></string>
+    <string name="setting_rotary_deadzone">เดดโซนการหมุน</string>
+    <string name="setting_rotary_deadzone_description">การขยับเม็ดมะยมขั้นต่ำก่อนใช้การเปลี่ยนระดับเสียงหรือการเลื่อน ช่วยป้องกันการปรับโดยไม่ตั้งใจ ปัจจุบัน <![CDATA[<b>%1$s</b>]]></string>
+
+    <string name="category_wear_experience">ประสบการณ์ Wear</string>
+    <string name="setting_swipe_gestures_hint">ท่าทางปัด</string>
+    <string name="setting_swipe_gestures_hint_description">การปัดขึ้น/ลง/ซ้ายสามารถเปิดการทำงานใดก็ได้ แตะที่นี่เพื่อตั้งค่าสำหรับสถานะ กำลังเล่นเพลง หรือ ไม่มีการเล่น ส่วนการปัดขวาสงวนไว้สำหรับออกจากแอป</string>
+    <string name="setting_screen_buttons_hint">ปุ่มขนาดเล็ก</string>
+    <string name="setting_screen_buttons_hint_description">ปุ่มที่มองเห็นได้สูงสุดสามปุ่ม แต่ละปุ่มมีการทำงานเมื่อแตะและกดค้าง แตะที่นี่เพื่อตั้งค่าสำหรับสถานะ กำลังเล่นเพลง หรือ ไม่มีการเล่น</string>
+    <string name="dev_screen_buttons_offset">ตำแหน่งปุ่มขนาดเล็ก</string>
+    <string name="dev_screen_buttons_offset_description">ระยะที่ต้องการเป็น dp ระหว่างขอบล่างของหน้าจอนาฬิกากับปุ่มขนาดเล็ก (ค่าเริ่มต้น 42) แถวปุ่มจะยังปรับตำแหน่งอัตโนมัติเพื่อหลบชื่อเพลงที่ยาว</string>
+    <string name="setting_screen_buttons_tilt">ความเอียงของปุ่ม</string>
+    <string name="setting_screen_buttons_tilt_description">ระดับที่ปุ่มด้านข้างโค้งตามหน้าจอ 0 = แถวตรง; 100 = โค้งเต็มพร้อมไอคอนเอียง</string>
+    <string name="setting_screen_buttons_bg">พื้นหลังปุ่มขนาดเล็ก</string>
+    <string name="setting_screen_buttons_opacity">ความทึบของปุ่มขนาดเล็ก</string>
+    <string name="setting_screen_buttons_opacity_description">ความทึบของกลุ่มปุ่มขนาดเล็กทั้งหมด (0–100%%) ปัจจุบัน <![CDATA[<b>%1$s%%</b>]]></string>
+    <string name="quick_panel_row_title">แผงการทำงานด่วน</string>
+    <string name="quick_panel_link_summary">แตะสองครั้งตรงกลางหน้าจอนาฬิกาเพื่อเปิด แตะที่นี่เพื่อตั้งค่าสี่ช่องใน การทำงาน</string>
+    <string name="quick_panel_config_hint">นี่คือปุ่มบนแผงที่เปิดด้วยการแตะสองครั้งตรงกลางหน้าจอนาฬิกา แตะแถวเพื่อเลือกการทำงาน (\"ไม่มี\" จะซ่อนปุ่ม) กดค้างเพื่อคืนค่าเริ่มต้น</string>
+    <string name="quick_panel_slot_1">ปุ่ม 1</string>
+    <string name="quick_panel_slot_2">ปุ่ม 2</string>
+    <string name="quick_panel_slot_3">ปุ่ม 3</string>
+    <string name="quick_panel_slot_long">ปุ่มยาว</string>
+    <string name="quick_panel_slot_default">%1$s (ค่าเริ่มต้น)</string>
+    <string name="quick_panel_slot_hidden">ซ่อน</string>
+    <string name="quick_panel_default_like">ถูกใจ</string>
+    <string name="quick_panel_default_shuffle">สุ่ม</string>
+    <string name="quick_panel_default_repeat">เล่นซ้ำ</string>
+    <string name="quick_panel_default_up_next">ถัดไป</string>
+    <string name="setting_wear_center_long_press_queue">กดตรงกลางค้างเพื่อเปิดคิว</string>
+    <string name="setting_wear_center_long_press_queue_description">กดตรงกลางหน้าจอ กำลังเล่น ค้างเพื่อเปิดคิวการเล่น</string>
+    <string name="setting_wear_center_long_press">กดตรงกลางค้าง</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>เปลี่ยนหน้าปัด</item>
+        <item>เปิดคิว</item>
+        <item>ไม่มี</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">เค้าโครงพื้นฐาน</string>
+    <string name="setting_wear_screen_face_description">เลือกโครงสร้างที่ธีมนี้ใช้ ธีมที่บันทึกไว้สามารถรวมเค้าโครงนี้กับแบบอักษร สี การเบลอ การไล่เงา AOD และแผงของตนเองได้</string>
+    <string name="setting_wear_show_track_title">แสดงชื่อเพลง</string>
+    <string name="setting_wear_show_track_title_description">แสดงชื่อเพลงปัจจุบันบนเครื่องเล่น</string>
+    <string name="setting_wear_show_track_artist">แสดงชื่อศิลปิน</string>
+    <string name="setting_wear_show_track_artist_description">แสดงศิลปินปัจจุบันบนเครื่องเล่น</string>
+    <string name="setting_wear_show_source_icon">แสดงไอคอนแอปที่กำลังเล่น</string>
+    <string name="setting_wear_show_source_icon_description">แสดงไอคอนของแอปที่กำลังเล่นอยู่ข้างชื่อศิลปิน โดยใช้ไอคอนจากการแจ้งเตือนสื่อ เมื่อปิด ไอคอนจะไม่ถูกส่งไปยังนาฬิกา</string>
+    <string name="setting_wear_player_controls_visible">แสดงตัวควบคุมเครื่องเล่น</string>
+    <string name="setting_wear_player_controls_visible_description">แสดงหรือซ่อนปุ่มในตัวในเลย์เอาต์ Classic, Poster, Studio และเลย์เอาต์ที่กำหนดค่าได้อื่น ๆ โดยไม่ปิดพื้นที่สัมผัส</string>
+    <string name="setting_wear_quadrant_tap_flash">กะพริบไอคอนเมื่อแตะ</string>
+    <string name="setting_wear_quadrant_tap_flash_description">เมื่อการทำงานของโซนมุมถูกเรียก ให้ไอคอนกะพริบที่ความสว่างเต็มชั่วครู่ มีประโยชน์อย่างยิ่งกับธีมหน้าจอ Hidden ที่ปกติไอคอนจะมองไม่เห็นและไม่มีสิ่งยืนยันว่าการทำงานใดเพิ่งทำงาน</string>
+    <string name="setting_wear_internal_progress_visible">ตัวบ่งชี้ความคืบหน้าของเค้าโครง</string>
+    <string name="setting_wear_internal_progress_visible_description">แสดงตัวบ่งชี้ความคืบหน้าเพิ่มเติมที่ออกแบบมาสำหรับเค้าโครงนี้ วงแหวนปุ่มเล่นของ Expressive และ Material เป็นส่วนหนึ่งของตัวควบคุมและยังคงใช้งานได้</string>
+    <string name="setting_wear_edge_progress_visible">แสดงส่วนโค้งความคืบหน้าที่ขอบ</string>
+    <string name="setting_wear_edge_progress_visible_description">ซ่อนเฉพาะส่วนโค้งที่มองเห็นรอบหน้าจอ การเลื่อนจากขอบยังเป็นตัวเลือกแยกต่างหาก</string>
+    <string name="setting_wear_edge_seek_enabled">เลื่อนจากขอบหน้าจอ</string>
+    <string name="setting_wear_edge_seek_enabled_description">แตะหรือลากตามขอบหน้าจอเพื่อข้ามไปยังตำแหน่งที่แน่นอน แม้ส่วนโค้งจะถูกซ่อนอยู่</string>
+    <string name="setting_wear_screen_theme">สไตล์ตัวควบคุม</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">สมดุล</string>
+    <string name="wear_screen_theme_default_description">ลำดับชั้นและขนาดตัวควบคุมมาตรฐาน</string>
+    <string name="wear_screen_theme_minimal">มินิมอล</string>
+    <string name="wear_screen_theme_minimal_description">ใช้ตัวควบคุมที่เล็กและเรียบขึ้น โดยยังคงให้ทุกการทำงานมองเห็นและใช้งานได้</string>
+    <string name="wear_screen_theme_compact">กะทัดรัด</string>
+    <string name="wear_screen_theme_compact_description">ใช้การจัดวางตัวควบคุมที่กระชับขึ้นโดยไม่เปลี่ยนการทำงานของคุณ</string>
+    <string name="wear_screen_theme_cinema">ภาพยนตร์</string>
+    <string name="wear_screen_theme_cinema_description">ทำให้ตัวควบคุมดูนุ่มนวลขึ้นโดยไม่เปลี่ยนอาร์ตเวิร์ก</string>
+    <string name="wear_screen_theme_vivid">สดใส</string>
+    <string name="wear_screen_theme_vivid_description">ใช้ตัวควบคุมที่ใหญ่และเด่นขึ้น</string>
+    <string name="wear_screen_theme_contrast">คอนทราสต์สูง</string>
+    <string name="wear_screen_theme_contrast_description">ใช้ตัวควบคุมที่ใหญ่ขึ้นเพื่อให้อ่านง่าย</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">ใช้ตัวควบคุมขนาดกะทัดรัดที่หรี่ลงเล็กน้อย โดยไม่ได้ทำให้พื้นหลังมืดลงเอง — ใช้การตั้งค่าพื้นหลังหากต้องการ</string>
+    <string name="wear_screen_theme_hidden">ซ่อน</string>
+    <string name="wear_screen_theme_hidden_description">ซ่อนไอคอนตัวควบคุมทั้งหมดอย่างสมบูรณ์ พื้นที่สัมผัสยังคงทำงานและใช้งานได้เต็มรูปแบบ</string>
+    <string name="setting_wear_font">แบบอักษร</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">แบบอักษรเริ่มต้นของแอป</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Google Sans แบบตัวแปรที่ปรับความกว้าง ขนาดเชิงแสง น้ำหนัก และความโค้งมนได้ — ปลดล็อกการควบคุมแกนด้านล่าง</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">แบบอักษรระบบคลาสสิกของ Android</string>
+    <string name="wear_font_rounded">โค้งมน</string>
+    <string name="wear_font_rounded_description">รูปทรงตัวอักษรสมัยใหม่ที่เป็นมิตร พร้อมปลายโค้งมนอย่างนุ่มนวล</string>
+    <string name="wear_font_sans_light">โมเดิร์นไลต์</string>
+    <string name="wear_font_sans_light_description">ฟอนต์ sans-serif ที่สะอาด โปร่ง และมีน้ำหนักภาพเบากว่า</string>
+    <string name="wear_font_sans_thin">บางพิเศษ</string>
+    <string name="wear_font_sans_thin_description">สไตล์ตัวอักษรที่เบาเป็นพิเศษสำหรับเครื่องเล่นแบบมินิมอล</string>
+    <string name="wear_font_sans_medium">โมเดิร์นมีเดียม</string>
+    <string name="wear_font_sans_medium_description">ฟอนต์ sans-serif ที่คมชัด มีเส้นที่หนักแน่นและกระชับกว่า</string>
+    <string name="wear_font_sans_black">หนา</string>
+    <string name="wear_font_sans_black_description">ตระกูลแบบอักษรตัวหนาสำหรับการแสดงผลที่ให้ผลกระทบทางสายตาสูงสุด</string>
+    <string name="wear_font_small_caps">ตัวพิมพ์ใหญ่ขนาดเล็ก</string>
+    <string name="wear_font_small_caps_description">รูปทรงคล้ายตัวพิมพ์ใหญ่แบบกระชับ ให้ความรู้สึกแบบงานบรรณาธิการ</string>
+    <string name="wear_font_casual">ลำลอง</string>
+    <string name="wear_font_casual_description">ตระกูลแบบอักษรระบบลายมือที่ดูสนุกสนาน</string>
+    <string name="wear_font_typewriter">เครื่องพิมพ์ดีด (เก็บถาวร)</string>
+    <string name="wear_font_typewriter_description">ลุคเครื่องพิมพ์ดีดเรโทร (Mom\'s Typewriter)</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">ฟอนต์ sans-serif เรขาคณิตแบบโค้งมน เป็นทางเลือกฟรี (OFL) ในแนวทางของ Circular</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">ฟอนต์ sans-serif เรขาคณิตที่สะอาด เป็นทางเลือกฟรี (OFL) ในแนวทางของ Proxima Nova</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">ฟอนต์โรมันแบบมนุษยนิยมที่สง่างาม เป็นทางเลือกฟรี (OFL) ในแนวทางของ Optima</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">สไตล์เครื่องพิมพ์ดีดที่นุ่มนวลกว่า (Love Letter Typewriter) — โดยปกติสงวนไว้สำหรับเพลงธีม \"Lain\"</string>
+    <string name="wear_font_serif">มีเชิง</string>
+    <string name="wear_font_serif_description">แบบอักษรมีเชิงแบบคลาสสิก</string>
+    <string name="wear_font_serif_monospace">โมโนมีเชิง</string>
+    <string name="wear_font_serif_monospace_description">ตัวอักษรมีเชิงความกว้างคงที่ ให้ลุคงานบรรณาธิการ/เทอร์มินัลที่โดดเด่น</string>
+    <string name="wear_font_monospace">ความกว้างคงที่</string>
+    <string name="wear_font_monospace_description">ลุคเชิงเทคนิคแบบความกว้างคงที่</string>
+    <string name="wear_font_condensed">แคบ</string>
+    <string name="wear_font_condensed_description">รูปทรงตัวอักษรที่แคบลงเพื่อใส่ข้อความได้มากขึ้น</string>
+    <string name="wear_font_condensed_light">แคบไลต์</string>
+    <string name="wear_font_condensed_light_description">ตระกูลแบบอักษรที่แคบและเบาสำหรับชื่อยาว</string>
+    <string name="wear_font_condensed_medium">แคบมีเดียม</string>
+    <string name="wear_font_condensed_medium_description">ตระกูลแบบอักษรแคบที่มีเส้นหนักแน่นกว่าและอ่านง่ายยอดเยี่ยม</string>
+    <string name="wear_font_cursive">ตัวเขียน</string>
+    <string name="wear_font_cursive_description">แบบอักษรลายมือเชิงตกแต่ง</string>
+    <string name="setting_wear_dynamic_accent">สีเน้นแบบไดนามิกบนนาฬิกา</string>
+    <string name="setting_wear_dynamic_accent_description">ปรับสีบนนาฬิกาที่อิงจากอัลบั้มให้เข้ากับภาพปกปัจจุบัน เมื่อปิด ตัวเลือกสีอัลบั้มจะใช้สีเน้นของธีมแบบคงที่</string>
+    <string name="setting_wear_album_art_fade">การเปลี่ยนภาพปกแบบเฟด</string>
+    <string name="setting_wear_album_art_fade_description">เฟดภาพปกอย่างนุ่มนวลเมื่อเปลี่ยนเพลง</string>
+    <string name="setting_wear_title_text_mode">การทำงานของข้อความชื่อเพลง</string>
+    <string name="setting_wear_title_text_mode_description">กำหนดการทำงานของชื่อเพลงที่กำลังเล่นเมื่อข้อความไม่พอดี: อัตโนมัติจะผสมการย่อ การตัดบรรทัด และการเลื่อน ส่วนตัวเลือกอื่นจะใช้พฤติกรรมเดียวเท่านั้น</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>อัตโนมัติ (ย่อ แล้วตัดบรรทัด แล้วเลื่อน)</item>
+        <item>เลื่อน (ตัวอักษรวิ่ง)</item>
+        <item>ตัดเป็นสองบรรทัด</item>
+        <item>ตัดเป็นสามบรรทัด</item>
+        <item>ตัดเป็นห้าบรรทัด</item>
+        <item>คงที่ (หนึ่งบรรทัด ไม่เลื่อนหรือย่อ)</item>
+        <item>ย่อให้พอดี</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">สีข้อความศิลปิน</string>
+    <string name="setting_wear_artist_custom_color">สีศิลปินแบบกำหนดเอง</string>
+    <string name="setting_wear_artist_custom_color_description">เลือกสีศิลปินที่ใช้กับการประมวลผลแบบปกติ</string>
+    <string name="setting_wear_artist_desaturated">สีศิลปินลดความอิ่มตัว</string>
+    <string name="setting_wear_artist_desaturated_description">ทำให้สีข้อความศิลปินที่อิงจากอัลบั้มนุ่มลง — ใช้เฉพาะเมื่อ \"สีข้อความศิลปิน\" ตั้งเป็นสีอัลบั้ม</string>
+
+    <string name="setting_wear_progress_color">สีแถบความคืบหน้า</string>
+    <string name="setting_wear_progress_custom_color">สีแถบความคืบหน้าแบบกำหนดเอง</string>
+    <string name="setting_wear_progress_custom_color_description">เลือกสีความคืบหน้าและการเลื่อนตำแหน่งที่ใช้กับการประมวลผลแบบปกติ</string>
+    <string name="setting_wear_progress_desaturated">สีแถบความคืบหน้าลดความอิ่มตัว</string>
+    <string name="setting_wear_progress_desaturated_description">ทำให้สีแถบความคืบหน้าที่อิงจากอัลบั้มนุ่มลง — ใช้เฉพาะเมื่อ \"สีแถบความคืบหน้า\" ตั้งเป็นสีอัลบั้ม</string>
+
+    <string name="setting_wear_volume_color">สีแถบระดับเสียง</string>
+    <string name="setting_wear_volume_custom_color">สีระดับเสียงแบบกำหนดเอง</string>
+    <string name="setting_wear_volume_custom_color_description">เลือกสีระดับเสียงที่ใช้กับการประมวลผลแบบปกติ</string>
+    <string name="setting_wear_quick_panel_color">สีการทำงานด่วน</string>
+    <string name="setting_wear_quick_panel_custom_color">สีการทำงานด่วนแบบกำหนดเอง</string>
+    <string name="setting_wear_quick_panel_custom_color_description">เลือกสีการทำงานด่วนที่ใช้กับการประมวลผลแบบปกติ</string>
+    <string name="setting_wear_shading_custom_color_description">เลือกสีที่ใช้แต้มโทนให้กับการไล่เฉดเงา</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>เป็นกลาง (สีธีมคงที่)</item>
+        <item>สีอัลบั้ม</item>
+        <item>สีที่กำหนดเอง</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>คลาสสิก</item>
+        <item>เอ็กซ์เพรสซีฟ</item>
+        <item>ไวนิล</item>
+        <item>โปสเตอร์</item>
+        <item>สตูดิโอ</item>
+        <item>ฮาโล</item>
+        <item>ออโรรา</item>
+        <item>Eclipse AMOLED</item>
+        <item>สเปกตรัม</item>
+        <item>Material</item>
+        <item>ดื่มด่ำ</item>
+        <item>ความลึก</item>
+        <item>ภาพสไลด์</item>
+        <item>แชท</item>
+        <item>แบ่ง</item>
+        <item>โน้ต</item>
+        <item>ท่อนเพลง</item>
+        <item>ข้อมูลเมตา</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">การเลื่อนตำแหน่งแบบเอ็กซ์เพรสซีฟ</string>
+    <string name="setting_wear_expressive_seek_mode_description">กำหนดวิธีเลื่อนตำแหน่งเพลงด้วยการสัมผัสบนหน้าปัด Expressive วงแหวนกลางทำให้ลากวงแหวนรอบปุ่มเล่นได้; วงแหวนขอบจะแสดงวงแหวนขอบแบบ Classic เพิ่มด้วย; ไม่มี จะให้เลื่อนตำแหน่งด้วยเม็ดมะยมหมุนเท่านั้น</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>วงแหวนกลาง</item>
+        <item>วงแหวนขอบ</item>
+        <item>ไม่มี</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">จอแสดงผลเปิดตลอดเวลา</string>
+    <string name="setting_wear_aod_style">สไตล์จอเปิดตลอดเวลา</string>
+    <string name="setting_wear_aod_style_description">กำหนดลักษณะหน้าจอกำลังเล่นเมื่อนาฬิกาอยู่ในโหมดแอมเบียนต์ ตามหน้าปัดจะตรงกับหน้าปัดที่เลือก; มินิมอลจะแสดงเฉพาะข้อความที่หรี่ลงบนพื้นดำสนิทเพื่อประหยัดแบตเตอรี่ได้นานที่สุด</string>
+    <string-array name="wear_aod_style_entries">
+        <item>ตามหน้าปัด</item>
+        <item>คลาสสิก</item>
+        <item>เอ็กซ์เพรสซีฟ (เส้นขอบ)</item>
+        <item>Material (เส้นขอบ)</item>
+        <item>ตัวควบคุม AMOLED</item>
+        <item>Chrono (นาฬิกาขนาดใหญ่)</item>
+        <item>โปสเตอร์</item>
+        <item>สตูดิโอ</item>
+        <item>ดื่มด่ำ</item>
+        <item>ภาพสไลด์</item>
+        <item>แชท</item>
+        <item>แบ่ง</item>
+        <item>โน้ต</item>
+        <item>ท่อนเพลง</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">สีจอเปิดตลอดเวลา</string>
+    <string-array name="wear_aod_color_entries">
+        <item>ขาว</item>
+        <item>สีอัลบั้ม</item>
+        <item>สีที่กำหนดเอง</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>ขาว</item>
+        <item>ไดนามิก (ตามพื้นที่ใต้นาฬิกา)</item>
+        <item>สีอัลบั้ม</item>
+        <item>สีที่กำหนดเอง</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>ตามสไตล์แผง</item>
+        <item>โปร่งใส (ไม่มีพื้นหลัง)</item>
+        <item>สีเน้นจากอัลบั้ม</item>
+        <item>โปร่งแสง</item>
+        <item>ขาว</item>
+        <item>ขาวฝ้า</item>
+        <item>ดำ</item>
+        <item>ไดนามิก (โทนอัลบั้ม)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">พื้นหลังปุ่มแคปซูลเพลงถัดไป</string>
+    <string name="setting_wear_show_up_next_pill">ปุ่มแคปซูลเพลงถัดไปบนเครื่องเล่น</string>
+    <string name="setting_wear_show_up_next_pill_description">แสดงปุ่มแคปซูลเพลงถัดไปที่ด้านล่างของหน้าจอกำลังเล่น ปุ่มจะใช้พื้นที่ของแถวปุ่มขนาดเล็ก จึงปรากฏเฉพาะเมื่อแถวนั้นไม่ได้แสดงอยู่</string>
+    <string name="category_wf_clock">นาฬิกา</string>
+    <string name="setting_wear_clock_color">สีนาฬิกา</string>
+    <string name="setting_wear_clock_custom_color">สีนาฬิกาแบบกำหนดเอง</string>
+    <string name="setting_wear_clock_custom_color_description">แตะเพื่อเลือกสีนาฬิกาที่ใช้เมื่อสีนาฬิกาตั้งเป็นสีกำหนดเอง</string>
+    <string name="setting_wear_clock_opacity">ความทึบของนาฬิกา</string>
+    <string name="setting_wear_clock_opacity_description">กำหนดความทึบของนาฬิกาที่แสดงตลอดเวลา (10–100%%) ปัจจุบัน <![CDATA[<b>%1$s%%</b>]]></string>
+    <string name="setting_wear_aod_custom_color">สีจอเปิดตลอดเวลาแบบกำหนดเอง</string>
+    <string name="setting_wear_aod_custom_color_description">แตะเพื่อเลือกสีที่ใช้กับข้อความ ตัวควบคุม และนาฬิกาบนจอเปิดตลอดเวลา เมื่อ \"สีจอเปิดตลอดเวลา\" ตั้งเป็นสีกำหนดเอง</string>
+    <string name="setting_wear_aod_intensity">ความสว่างจอเปิดตลอดเวลา</string>
+    <string name="setting_wear_aod_intensity_description">กำหนดความสว่างของจอเปิดตลอดเวลา (20–100%%) ค่าต่ำจะมืดกว่าและใช้แบตเตอรี่น้อยลง ปัจจุบัน <![CDATA[<b>%1$s%%</b>]]></string>
+    <string name="setting_wear_aod_show_transport">ปุ่มควบคุมการเล่นบนจอเปิดตลอดเวลา</string>
+    <string name="setting_wear_aod_show_transport_description">แสดงปุ่มก่อนหน้า/เล่น/ถัดไปแบบเส้นขอบในสไตล์จอเปิดตลอดเวลาที่รองรับ ปุ่มแตะไม่ได้ขณะหน้าจอมืด แต่การแตะจะปลุกนาฬิกาโดยปุ่มยังอยู่ใต้ปลายนิ้วพอดี</string>
+    <string name="setting_wear_aod_show_progress">วงแหวนความคืบหน้าบนจอเปิดตลอดเวลา</string>
+    <string name="setting_wear_aod_show_progress_description">แสดงวงแหวนความคืบหน้ารอบปุ่มเล่นในโหมดแอมเบียนต์ — ตำแหน่งจะรีเฟรชประมาณหนึ่งครั้งต่อนาทีเท่านั้น</string>
+    <string name="setting_wear_aod_show_pills">เพลงถัดไปบนจอเปิดตลอดเวลา</string>
+    <string name="setting_wear_aod_show_pills_description">แสดงปุ่มแคปซูลเพลงถัดไปแบบเส้นขอบคงที่ที่ด้านล่างของสไตล์จอเปิดตลอดเวลาแบบภาพ</string>
+    <string name="category_wf_gestures">ท่าทางบนหน้าจอ</string>
+    <string name="setting_wear_mini_buttons_mode">แสดงปุ่มขนาดเล็ก</string>
+    <string name="setting_wear_gestures_mode">ท่าทางบนหน้าจอ</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>เสมอ</item>
+        <item>เฉพาะขณะเล่น</item>
+        <item>เฉพาะขณะหยุดชั่วคราว</item>
+        <item>ไม่เลย</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">ภาพปกบนจอเปิดตลอดเวลา</string>
+    <string name="setting_wear_aod_show_art_description">คงภาพปกที่หรี่ไว้ให้มองเห็นในโหมดแอมเบียนต์ การปิดจะแสดงพื้นหลังดำสนิท ซึ่งช่วยประหยัดแบตเตอรี่ได้มากขึ้นอย่างเห็นได้ชัดบนหน้าจอ AMOLED</string>
+    <string name="setting_wear_aod_art_treatment">สไตล์ภาพปกบนจอเปิดตลอดเวลา</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>เบลอนุ่ม</item>
+        <item>ปกชัดเจน</item>
+        <item>เบลอขาวดำ</item>
+        <item>ตามการปรับภาพปกของโปรแกรมเล่น</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">นาฬิกาบนจอเปิดตลอดเวลา</string>
+    <string name="setting_wear_aod_show_clock_description">แสดงนาฬิกาเมื่อนาฬิกาอยู่ในโหมดแอมเบียนต์</string>
+    <string name="setting_wear_aod_show_track_info">ข้อมูลเพลงบนจอเปิดตลอดเวลา</string>
+    <string name="setting_wear_aod_show_track_info_description">แสดงชื่อเพลงและศิลปินในโหมดแอมเบียนต์</string>
+
+    <string name="category_overlays_queue">โอเวอร์เลย์และคิว</string>
+    <string name="category_wf_panel_shared">ลักษณะแผงร่วม</string>
+    <string name="category_wf_panel_volume">แผงระดับเสียง</string>
+    <string name="category_wf_panel_seek">แผงความคืบหน้าและการเลื่อนตำแหน่ง</string>
+    <string name="category_wf_panel_quick">แผงการทำงานด่วน</string>
+    <string name="category_wf_panel_queue">คิวและรายการ</string>
+    <string name="category_wf_panel_effects">เอฟเฟกต์แผง</string>
+    <string name="setting_wear_overlay_backdrop_style">พื้นหลังแผง</string>
+    <string name="setting_wear_volume_style">สไตล์ระดับเสียง</string>
+    <string name="setting_wear_volume_layout">เค้าโครงระดับเสียง</string>
+    <string name="setting_wear_quick_panel_style">สไตล์แผงด่วน</string>
+    <string name="setting_wear_quick_panel_layout">เค้าโครงแผงด่วน</string>
+    <string name="setting_wear_quick_panel_source">การทำงานด่วน</string>
+    <string name="setting_wear_quick_panel_source_description">เลือกปุ่มที่คุณตั้งค่าไว้ หรือการทำงานที่แอปซึ่งกำลังเล่นอยู่มีให้</string>
+    <string name="quick_panel_open_note_title">การเปิดแผง</string>
+    <string name="quick_panel_open_note_description">แตะสองครั้งที่กึ่งกลางหน้าจอกำลังเล่นเพื่อเปิดแผงการทำงานด่วนบนนาฬิกา</string>
+    <string name="preview_current_app_action">การทำงานของแอปปัจจุบัน</string>
+    <string name="preview_notification_controls">ไอคอนจากการแจ้งเตือนสื่อ</string>
+    <string name="setting_wear_queue_style">สไตล์คิว</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">ใช้ภาพปกทางลัดเป็นพื้นหลัง</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">เมื่อสไตล์คิวเป็นแบบภาพปก แถวการทำงานในแผงด่วนที่มีภาพปกทางลัดที่ดึงมาแล้ว (เพลง เพลย์ลิสต์ ศิลปิน…) จะเติมแคปซูลด้วยภาพนั้นเหมือนเพลงถัดไป ทางลัดที่ไม่มีภาพปกที่ดึงมา (มีเพียงไอคอนแอป) จะไม่เปลี่ยนแปลง</string>
+    <string name="setting_wear_list_row_size">ขนาดแคปซูลรายการ</string>
+    <string name="setting_wear_list_row_size_description">ความสูงของแถวเต็มความกว้างในคิว เมนู และแผงด่วน</string>
+    <string name="setting_wear_progress_gradient">ผสมพาเลตเข้ากับวงแหวน</string>
+    <string name="setting_wear_progress_gradient_description">เมื่อใช้การจัดการสีหลายเฉด (คู่ตรงข้าม, ไตรแอด, สีใกล้เคียง, ดูโอโทน) วงแหวนสีทึบจะไล่ผ่านทั้งสามสี ปิดตัวเลือกนี้เพื่อใช้วงแหวนสีเดียวโดยยังคงพาเลตอัลบั้มไว้ในส่วนอื่น</string>
+    <string name="setting_wear_progress_style">สไตล์วงแหวนความคืบหน้า</string>
+    <string name="setting_wear_seek_style">สไตล์การแสดงค่าการเลื่อนตำแหน่งและระดับเสียง</string>
+    <string name="setting_wear_seek_layout">เค้าโครงแผงเลื่อนตำแหน่ง</string>
+    <string name="setting_wear_color_treatment">การจัดการสีของนาฬิกา</string>
+    <string name="setting_wear_normal_color">สีปกติ</string>
+    <string name="setting_wear_normal_color_description">เลือกสีเดียวที่ใช้กับสีเน้นชื่อเพลง ความคืบหน้า ระดับเสียง แผง และกรอบปุ่มขนาดเล็กในโหมดปกติ</string>
+    <string name="setting_wear_normal_color_multi">ใช้พาเลตสี</string>
+    <string name="setting_wear_normal_color_multi_description">เมื่อเปิด หน้าจอจะใช้สีหลักพร้อมสีเสริมสองโทน เมื่อปิด จะใช้สีเดียวทุกที่ — สีของอัลบั้มเองหรือสีที่คุณเลือก</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>ปกติ (สีที่เลือก)</item>
+        <item>ลดความอิ่มตัว (สีอัลบั้มนุ่ม)</item>
+        <item>เอ็กซ์เพรสซีฟ (พาเล็ตอัลบั้มเต็ม)</item>
+        <item>สีคู่ตรงข้าม (อัลบั้ม + สีตรงข้าม)</item>
+        <item>ไตรแอด (สามเฉดสีอัลบั้ม)</item>
+        <item>สีใกล้เคียง (เฉดสีข้างเคียง)</item>
+        <item>โมโนโครม (หนึ่งเฉดสี สามโทน)</item>
+        <item>ดูโอโทน (สองสีอัลบั้ม)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>ตามการปรับของนาฬิกา</item>
+        <item>ปกติ (สีที่เลือก)</item>
+        <item>ลดความอิ่มตัว (สีอัลบั้มนุ่ม)</item>
+        <item>เอ็กซ์เพรสซีฟ (พาเล็ตอัลบั้มเต็ม)</item>
+        <item>สีคู่ตรงข้าม (อัลบั้ม + สีตรงข้าม)</item>
+        <item>ไตรแอด (สามเฉดสีอัลบั้ม)</item>
+        <item>สีใกล้เคียง (เฉดสีข้างเคียง)</item>
+        <item>โมโนโครม (หนึ่งเฉดสี สามโทน)</item>
+        <item>ดูโอโทน (สองสีอัลบั้ม)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">น้ำหนักชื่อเพลง</string>
+    <string name="setting_wear_title_font_italic">ชื่อเพลงตัวเอียง</string>
+    <string name="setting_wear_title_font_scale">ขนาดชื่อเพลง</string>
+    <string name="setting_wear_title_font_opacity">ความทึบชื่อเพลง</string>
+    <string name="setting_wear_title_font_tracking">ระยะห่างตัวอักษรชื่อเพลง</string>
+    <string name="setting_wear_title_color">สีข้อความชื่อเพลง</string>
+    <string name="setting_wear_title_custom_color">สีชื่อเพลงแบบกำหนดเอง</string>
+    <string name="wear_title_color_face_default">ค่าเริ่มต้นของหน้าปัด (ตามที่ออกแบบ)</string>
+    <string name="setting_wear_title_adaptive_contrast">ปรับสีชื่อเพลงตามคอนทราสต์</string>
+    <string name="setting_wear_title_adaptive_contrast_description">ทำให้ชื่อเพลงสว่างขึ้นหรือมืดลงเมื่อสีใกล้เคียงกับภาพด้านหลังมากเกินไป โดยคงเฉดสีเดิมไว้ ไม่มีผลขณะที่ชื่อเพลงใช้ค่าเริ่มต้นของหน้าปัด</string>
+    <string name="setting_wear_artist_adaptive_contrast">ปรับสีศิลปินตามคอนทราสต์</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">ทำให้บรรทัดศิลปินสว่างขึ้นหรือมืดลงเมื่อสีอัลบั้มใกล้เคียงกับภาพด้านหลังมากเกินไป โดยคงเฉดสีไว้ วัดเฉพาะแถบที่บรรทัดนั้นอยู่ ไม่ใช่ทั้งภาพปก</string>
+    <string name="setting_wear_artist_font_weight">น้ำหนักศิลปิน</string>
+    <string name="setting_wear_artist_font_italic">ศิลปินตัวเอียง</string>
+    <string name="setting_wear_artist_font_scale">ขนาดศิลปิน</string>
+    <string name="setting_wear_artist_font_opacity">ความทึบศิลปิน</string>
+    <string name="setting_wear_artist_font_tracking">ระยะห่างตัวอักษรศิลปิน</string>
+    <string name="setting_wear_source_icon_scale">ขนาดไอคอนแอป</string>
+    <string name="setting_wear_source_icon_opacity">ความทึบไอคอนแอป</string>
+    <string name="setting_wear_typography_weight_description">1–1000 ค่า 400 คือน้ำหนักปกติของหน้าปัด ค่าสูงขึ้นจะหนาขึ้น สำหรับ Google Sans Flex ค่านี้คือแกนน้ำหนักของฟอนต์เอง</string>
+    <string name="setting_wear_typography_scale_description">เปอร์เซ็นต์ของขนาดเดิมของหน้าปัด (70–140) ค่า 100 คงขนาดที่ออกแบบไว้ของแต่ละเค้าโครง</string>
+    <string name="setting_wear_typography_opacity_description">เปอร์เซ็นต์ (20–100) ค่า 100 คงความทึบเดิมของหน้าปัด</string>
+    <string name="setting_wear_typography_tracking_description">ระยะห่างเพิ่มเติมระหว่างตัวอักษร หน่วยเป็นหนึ่งในร้อยของ em (−5 ถึง 20) ค่า 0 คงระยะห่างเดิมของฟอนต์</string>
+    <string name="setting_wear_color_modifier">โทน</string>
+    <string name="setting_wear_color_modifier_description">ปรับพาเลตทั้งหมดโดยไม่เปลี่ยนวิธีที่สร้างพาเลต — ใช้ได้กับการจัดการสีทุกแบบ</string>
+    <string name="setting_wear_color_hue_shift">การเลื่อนสี</string>
+    <string name="setting_wear_color_hue_shift_description">หมุนพาเลตอัลบั้มไปรอบวงล้อสีเป็นองศา (0–359) การจัดการทุกแบบจะคงสีหลักไว้ที่เฉดเดิมของอัลบั้ม ดังนั้นค่านี้จึงใช้ปรับความแตกต่าง 0 ใช้สีอัลบั้มตามเดิม; สีปกติแบบคงที่จะไม่ถูกเลื่อน</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>ไม่มี</item>
+        <item>สดใส</item>
+        <item>พาสเทล</item>
+        <item>อุ่น</item>
+        <item>เย็น</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>ส่วนโค้งขอบ (ซ้าย)</item>
+        <item>ส่วนโค้งขอบ (สูง)</item>
+        <item>ส่วนโค้งขอบ (ขวา)</item>
+        <item>ส่วนโค้งขอบ (บน)</item>
+        <item>ส่วนโค้งขอบ (ล่าง)</item>
+        <item>วงแหวนเต็ม</item>
+        <item>ฮาโลตรงกลาง</item>
+        <item>มาตรวัดแนวนอน</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>วงแหวนขอบ</item>
+        <item>วงแหวนขอบ (บาง)</item>
+        <item>วงแหวนขอบ (หนา)</item>
+        <item>ไทม์ไลน์</item>
+        <item>ไทม์ไลน์แบบแบ่งส่วน</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>ข้อมูลเมตาก่อน</item>
+        <item>ส่วนโค้ง</item>
+        <item>ฮีโร่</item>
+        <item>ตาราง</item>
+        <item>แถวพร้อมป้ายกำกับ</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>ทึบ</item>
+        <item>เส้นประ</item>
+        <item>จุด</item>
+        <item>เส้นบางมาก</item>
+        <item>ดาวหาง</item>
+        <item>จุดนาฬิกา 60 จุด</item>
+        <item>ขีดนาฬิกา 60 ขีด</item>
+        <item>ส่วน 12 ชั่วโมง</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>เรียบ</item>
+        <item>แคปซูลแก้ว</item>
+        <item>แคปซูลแบบ Expressive</item>
+        <item>แคปซูล Material</item>
+        <item>แคปซูลสีขาว</item>
+        <item>ยักษ์</item>
+        <item>ตำแหน่ง / ทั้งหมด</item>
+        <item>แก้วสีขาว</item>
+        <item>อัลบั้มโปร่งแสง</item>
+        <item>อัลบั้มเรืองแสง</item>
+        <item>เส้นขอบ</item>
+        <item>ธีมสีทึบ</item>
+        <item>อัลบั้มสีทึบ</item>
+        <item>ไมโคร</item>
+        <item>เงา (ไม่มีกรอบตกแต่ง)</item>
+        <item>ขีดเส้นใต้</item>
+        <item>เส้นขอบบางมาก</item>
+        <item>สีอัลบั้มขนาดใหญ่</item>
+        <item>โมโน</item>
+        <item>โทนเข้ม</item>
+        <item>เทอร์มินัล</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>ปุ่มที่กำหนดค่าแล้ว</item>
+        <item>จากแอปสื่อปัจจุบัน</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>ตามสไตล์แผง</item>
+        <item>เบลออัลบั้ม (อะคริลิก)</item>
+        <item>ดำทึบ</item>
+        <item>สีอัลบั้มแบบทึบ</item>
+        <item>แก้ว</item>
+        <item>ไล่สีอัลบั้ม</item>
+        <item>ดูโอโทนอัลบั้ม</item>
+        <item>ปริซึม</item>
+        <item>กระจกเหลว</item>
+        <item>เบลอแบบ Expressive</item>
+        <item>เอ็กซ์เพรสซีฟ</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>แก้ว</item>
+        <item>มินิมอล (AMOLED)</item>
+        <item>Material</item>
+        <item>โทน</item>
+        <item>นีออน</item>
+        <item>สว่าง</item>
+        <item>ไล่สี</item>
+        <item>โมโน</item>
+        <item>เส้นขอบ</item>
+        <item>ดูโอโทน</item>
+        <item>ปริซึม</item>
+        <item>คอนทราสต์สูง</item>
+        <item>เทอร์มินัล</item>
+        <item>ฝ้า</item>
+        <item>ส่วน</item>
+        <item>ออโรรา</item>
+        <item>หมึก</item>
+        <item>ร่อง</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>กะทัดรัด</item>
+        <item>ปกติ</item>
+        <item>สูง</item>
+        <item>สูงมาก</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>แก้ว</item>
+        <item>มินิมอล (AMOLED)</item>
+        <item>Material</item>
+        <item>โทน</item>
+        <item>นีออน</item>
+        <item>สว่าง</item>
+        <item>ไล่สี</item>
+        <item>โมโน</item>
+        <item>เส้นขอบ</item>
+        <item>ดูโอโทน</item>
+        <item>ปริซึม</item>
+        <item>คอนทราสต์สูง</item>
+        <item>เทอร์มินัล</item>
+        <item>ฝ้า</item>
+        <item>ปก</item>
+            <item>เบลอปก</item>
+        <item>โทนปก</item>
+        <item>ปกสี่เหลี่ยม</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>แก้ว</item>
+        <item>แก้วสีขาว</item>
+        <item>แก้วโทนสี</item>
+        <item>มินิมอล (AMOLED)</item>
+        <item>Material</item>
+        <item>โทน</item>
+        <item>นีออน</item>
+        <item>สว่าง</item>
+        <item>ไล่สี</item>
+        <item>โมโน</item>
+        <item>เส้นขอบ</item>
+        <item>เส้นขอบแก้วสีขาว</item>
+        <item>ดูโอโทน</item>
+        <item>ปริซึม</item>
+        <item>คอนทราสต์สูง</item>
+        <item>เทอร์มินัล</item>
+        <item>ฝ้า</item>
+        <item>โกสต์ (ไม่มีกรอบตกแต่ง)</item>
+        <item>หมอก</item>
+        <item>หมึก</item>
+        <item>จุด</item>
+        <item>แผ่นหนา</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">คงแอปให้ทำงานหลังหยุดชั่วคราว</string>
+    <string name="setting_wear_paused_hold_description">กำหนดระยะเวลาหลังหยุดชั่วคราวที่ยังเข้าถึงแอปนาฬิกาจากหน้าปัดได้ เพื่อให้ยกข้อมือแล้วเล่นต่อได้โดยไม่ต้องเปิดใหม่ ค่านานขึ้นจะทำให้บริการเบื้องหลังทำงานนานขึ้น</string>
+    <string name="wear_paused_hold_off">ไม่คงไว้</string>
+    <string name="wear_paused_hold_5">5 นาที</string>
+    <string name="wear_paused_hold_15">15 นาที</string>
+    <string name="wear_paused_hold_30">30 นาที</string>
+    <string name="wear_paused_hold_60">1 ชั่วโมง</string>
+    <string name="wear_paused_hold_always">จนกว่าการเล่นจะสิ้นสุด</string>
+
+    <string name="setting_wear_idle_button_action">ปุ่มเมื่อไม่มีอะไรเล่น</string>
+    <string name="setting_wear_idle_auto_open">เปิดเมื่อไม่มีอะไรเล่น</string>
+    <string name="setting_wear_idle_auto_open_description">ไปยังหน้าจอนี้โดยตรงเมื่อเปิดแอปนาฬิกาขณะที่ไม่มีเพลงเล่น</string>
+    <string name="wear_idle_action_resume">เล่นต่อจากแอปล่าสุด</string>
+    <string name="wear_idle_action_shortcuts">ทางลัดเพลย์ลิสต์</string>
+    <string name="wear_idle_action_menu">เมนูการทำงาน</string>
+    <string name="wear_idle_action_search">ค้นหา</string>
+    <string name="wear_idle_action_queue">เล่นล่าสุด</string>
+    <string name="wear_idle_action_none">ไม่มีปุ่ม</string>
+    <string name="wear_idle_auto_open_none">อยู่ในเครื่องเล่น</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">เรียกดูคลัง</string>
+    <string name="library_up">ย้อนกลับ</string>
+    <string name="error_library_unavailable">แอปนี้ไม่มีคลังที่เรียกดูได้</string>
+    <string name="error_library_empty">ไม่มีอะไรที่นี่</string>
+    <string name="error_library_no_player">เริ่มเล่นอะไรสักอย่างก่อน</string>
+
+    <string name="setting_wear_carousel_card_shape">รูปร่างการ์ดแบบหมุน</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>โค้งมน</item>
+        <item>สี่เหลี่ยมจัตุรัส</item>
+        <item>สเควอร์เคิล</item>
+        <item>วงกลม</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">ใช้ฟอนต์ทุกที่</string>
+    <string name="setting_wear_font_all_screens_description">ใช้ฟอนต์ที่เลือกกับเมนู คิว และการทำงานด่วน ไม่ใช่เฉพาะเครื่องเล่น ฟอนต์สำหรับการแสดงผลและฟอนต์ลายมืออาจอ่านยากขึ้นในรายการ</string>
+
+    <string name="setting_wear_clock_font">แบบอักษรนาฬิกา</string>
+    <string name="wear_clock_font_follow">ตามฟอนต์เพลง</string>
+    <string name="setting_wear_lyrics_font">แบบอักษรเนื้อเพลง</string>
+    <string name="setting_wear_lyrics_font_description">แบบอักษรสำหรับเนื้อเพลงบนหน้าจอเนื้อเพลงและหน้าปัด Verse จะตามแบบอักษรของเพลงเว้นแต่คุณจะเลือกแบบอื่นที่นี่</string>
+    <string name="wear_lyrics_font_follow">ตามแบบอักษรเพลง</string>
+    <string name="setting_wear_clock_font_weight">น้ำหนักนาฬิกา</string>
+    <string name="setting_wear_clock_font_italic">นาฬิกาตัวเอียง</string>
+    <string name="setting_wear_clock_font_scale">ขนาดนาฬิกา</string>
+    <string name="setting_wear_clock_font_tracking">ระยะห่างตัวอักษรนาฬิกา</string>
+    <string name="setting_wear_clock_adaptive_contrast">ปรับสีนาฬิกาตามคอนทราสต์</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">ทำให้นาฬิกาสว่างขึ้นหรือมืดลงเมื่อสีอัลบั้มใกล้เคียงกับภาพด้านหลังมากเกินไป โดยคงเฉดสีไว้ ใช้เฉพาะเมื่อ \"สีนาฬิกา\" ตั้งเป็นสีอัลบั้ม</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">ฟอนต์แสดงผลตัวพิมพ์ใหญ่ทั้งหมดแบบแคบ — สไตล์โปสเตอร์ เหมาะกับชื่อยาว</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">ฟอนต์มีเชิงแบบงานบรรณาธิการคอนทราสต์สูง — ให้ความรู้สึกเหมือนนิตยสาร</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">ฟอนต์ sans-serif เรขาคณิตเชิงเทคนิคพร้อมรายละเอียดที่มีเอกลักษณ์</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">ฟอนต์แสดงผลไซไฟทรงเหลี่ยม — หนาและล้ำอนาคต</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">ลายมือ — ลำลองและเป็นส่วนตัว</string>
+    <string name="setting_wear_track_time_mode">การแสดงเวลาเพลง</string>
+    <string name="setting_wear_track_time_mode_description">กำหนดเวลาที่จะแสดงตำแหน่งเพลง (เช่น 1:23 / 3:45) บนหน้าจอกำลังเล่น</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>เสมอ</item>
+        <item>เฉพาะขณะเล่น</item>
+        <item>เฉพาะขณะหยุดชั่วคราว</item>
+        <item>ไม่เลย</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">ความโค้งของปุ่มขนาดเล็ก</string>
+    <string name="setting_screen_buttons_curve_description">เลือกรูปแบบความโค้งของปุ่มขนาดเล็ก: แบน, โค้ง, นุ่มนวล, โค้งมาก</string>
+    <string name="setting_screen_buttons_shape">รูปร่างปุ่มขนาดเล็ก</string>
+    <string name="setting_screen_buttons_shape_description">เลือกรูปร่างและรูปแบบเค้าโครงของปุ่มขนาดเล็ก</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>แคปซูล (ค่าเริ่มต้น)</item>
+        <item>วงกลม</item>
+        <item>สี่เหลี่ยมจัตุรัส</item>
+        <item>สี่เหลี่ยมมุมมน (นุ่ม)</item>
+        <item>สี่เหลี่ยมมุมมน (กลาง)</item>
+        <item>สเควอร์เคิล</item>
+        <item>ใบไม้</item>
+        <item>หยดน้ำ</item>
+        <item>แคปซูล (กว้าง เล็ก)</item>
+        <item>แคปซูล (กว้าง กลาง)</item>
+        <item>แคปซูล (กว้าง ใหญ่)</item>
+        <item>แคปซูล (กว้าง ใหญ่มาก)</item>
+        <item>สี่เหลี่ยมผืนผ้ามุมมน (เล็ก)</item>
+        <item>สี่เหลี่ยมผืนผ้ามุมมน (กลาง)</item>
+        <item>สี่เหลี่ยมผืนผ้ามุมมน (ใหญ่)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>แบน</item>
+        <item>ส่วนโค้ง</item>
+        <item>โค้งอ่อน</item>
+        <item>โค้งนุ่ม</item>
+        <item>โค้งปานกลาง</item>
+        <item>โค้ง</item>
+        <item>โค้งมาก</item>
+        <item>ขยายถึงขอบ</item>
+        <item>ขอบซ้าย</item>
+        <item>ขอบขวา</item>
+        <item>ทั้งสองขอบ</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>พื้นหลังเริ่มต้น</item>
+        <item>แก้ว (สม่ำเสมอ)</item>
+        <item>แก้ว (สว่าง)</item>
+        <item>อัลบั้มโปร่งแสง</item>
+        <item>อัลบั้มโปร่งแสง Exp</item>
+        <item>อัลบั้มเรืองแสง</item>
+        <item>เรืองแสง Exp</item>
+        <item>ธีมสีทึบ</item>
+        <item>อัลบั้มสีทึบ</item>
+        <item>อัลบั้มสีทึบ Exp</item>
+        <item>เส้นขอบ</item>
+        <item>อัลบั้มเส้นขอบ Exp</item>
+        <item>ไอคอนเท่านั้น (โปร่งใส)</item>
+        <item>ไอคอน Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>กลาง</item>
+        <item>สีอัลบั้ม</item>
+        <item>สีที่กำหนดเอง</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>ปกเต็ม</item>
+        <item>พื้นหลังเบลอ</item>
+        <item>ขอบฝ้า</item>
+        <item>สี่เหลี่ยม (มุมคม)</item>
+        <item>สี่เหลี่ยม (มุมนุ่ม)</item>
+        <item>สี่เหลี่ยม (มุมมน)</item>
+        <item>ขาว &amp; ดำ</item>
+        <item>ขาวดำแบบเบลอ</item>
+        <item>เบลอแบบ Expressive</item>
+        <item>เอ็กซ์เพรสซีฟ</item>
+        <item>ไล่โทนสี Material</item>
+        <item>ปกโปสเตอร์</item>
+        <item>ไล่สีสตูดิโอ</item>
+        <item>เรืองแสงรัศมีไวนิล</item>
+        <item>ฮาโลเรืองแสง</item>
+        <item>ริบบิ้นออโรรา</item>
+        <item>ไล่สีสเปกตรัม</item>
+        <item>กวาดโคโรนา</item>
+        <item>เฟดยามโพล้เพล้</item>
+        <item>บลูม</item>
+        <item>เฟดขอบฟ้า</item>
+        <item>เรืองแสงถ่านคุ</item>
+        <item>Eclipse AMOLED ดำ</item>
+        <item>ซ่อน (ดำทึบ)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>ปิดใช้งาน</item>
+        <item>แสดงไอคอนหน้าปัดเพลง (เฉพาะ Wear 3.0)</item>
+        <item>เปิด Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">หมดเวลาปิด</string>
+    <string name="setting_close_timeout_description">Svartifoss จะปิดตัวเองอัตโนมัติเมื่อไม่มีเพลงเล่นเป็นเวลา <![CDATA[<b>%1$s วินาที</b>]]> ฟีเจอร์จะถูกปิดเมื่อกำหนดหมดเวลาเป็น 0 วินาที เพื่อประหยัดแบตเตอรี่ ตัวเลือกนี้อาจไม่แม่นยำเสมอและอาจทำให้การปิดล่าช้าได้ถึงประมาณหนึ่งนาที</string>
+    <string name="setting_wear_close_on_idle">ปิดเมื่อ \"ไม่มีอะไรเล่น\"</string>
+    <string name="setting_wear_close_on_idle_description">ปิดแอปนาฬิกาอัตโนมัติประมาณหนึ่งนาทีหลังเข้าสู่หน้าจอว่าง \"ไม่มีอะไรเล่น\" เพื่อไม่ให้ค้างอยู่ที่หน้านั้น เป็นอิสระจากหมดเวลาปิดด้านบน ซึ่งใช้กับเพลงที่หยุดชั่วคราว</string>
+    <string name="category_notifications">ป๊อปอัปการแจ้งเตือน</string>
+    <string name="setting_enable_notifications">แสดงป๊อปอัปการแจ้งเตือน</string>
+    <string name="setting_enable_notifications_description">ฟีเจอร์นี้ต้องใช้แอปอื่นเพื่อจัดการการแจ้งเตือน (Vibration Center for Wear)\n\nทุกครั้งที่ Vibration Center สั่นนาฬิกา Svartifoss จะแสดงป๊อปอัปข้อความแจ้งเตือน ให้คุณดูการแจ้งเตือนได้อย่างรวดเร็วโดยไม่ต้องออกจาก Svartifoss</string>
+    <string name="setting_notification_timeout">หมดเวลาป๊อปอัปการแจ้งเตือน</string>
+    <string name="setting_notification_timeout_description">ป๊อปอัปการแจ้งเตือนจะปิดอัตโนมัติหลัง <![CDATA[<b>%1$s วินาที</b>]]> ป้อน 0 เพื่อปิดการปิดอัตโนมัติ</string>
+    <string name="app_required">ต้องใช้แอป</string>
+    <string name="vibration_center_required_description">ในการใช้ฟีเจอร์นี้ คุณต้องติดตั้งแอปฟรีอีกตัว: Vibration Center for Wear</string>
+    <string name="open_play_store">เปิด Play Store</string>
+    <string name="error_no_notification_service_support">ขออภัย อุปกรณ์ของคุณดูเหมือนจะไม่รองรับบริการการแจ้งเตือน</string>
+    <string name="setting_always_select_center_action">เลือกการทำงานตรงกลางเสมอ</string>
+    <string name="setting_always_select_center_action_description">เมื่อเปิด การแตะรายการการทำงานจะเลือกตัวเลือกตรงกลาง (ที่ไฮไลต์) เสมอ ไม่ว่าคุณจะแตะตัวเลือกใด</string>
+    <string name="change_icon">เปลี่ยนไอคอน</string>
+    <string name="please_wait">โปรดรอสักครู่</string>
+
+    <string name="error_playlist_not_supported">แอปสื่อนี้ไม่รองรับ</string>
+    <string name="error_search_no_results">ไม่พบผลลัพธ์</string>
+    <string name="seconds_to_skip">จำนวนวินาทีที่จะข้าม:</string>
+    <string name="seconds_to_reverse">จำนวนวินาทีที่จะย้อนกลับ:</string>
+
+    <string name="setting_dynamic_accent_color">สีเน้นแบบไดนามิก</string>
+    <string name="setting_dynamic_accent_color_description">เมื่อเปิด สีเน้น (แถบเลื่อนตำแหน่ง, รายการคิวที่ใช้งาน) จะปรับตามสีเด่นของภาพปกปัจจุบันโดยอัตโนมัติ</string>
+    <string name="setting_desaturated_color">สีลดความอิ่มตัว</string>
+    <string name="setting_desaturated_color_description">ปรับความอิ่มตัวและความสว่างของสีที่ดึงมาเพื่อให้มั่นใจว่าอ่านง่ายและมีคอนทราสต์สูงตามธีมที่ใช้งาน</string>
+
+    <string name="queue_header">คิวการเล่น</string>
+    <string name="queue_unavailable">คิวไม่พร้อมใช้งาน</string>
+
+    <string name="setting_custom_accent_color">สีเน้น</string>
+    <string name="setting_custom_accent_color_description">เลือกสีเน้นแบบกำหนดเองสำหรับอินเทอร์เฟซแอป</string>
+    <string name="setting_mini_player">มินิเพลเยอร์</string>
+    <string name="setting_mini_player_description">แสดงแถบกำลังเล่นแบบคงอยู่เหนือแถบนำทางด้านล่างทุกครั้งที่มีสื่อทำงาน เปิดไว้โดยค่าเริ่มต้น; ปิดเพื่อคืนพื้นที่นั้น</string>
+    <string name="color_picker_title">เลือกสีเน้น</string>
+    <string name="color_picker_reset">รีเซ็ต</string>
+    <string name="color_picker_apply">ใช้</string>
+    <string name="color_picker_default">ค่าเริ่มต้น</string>
+    <string name="color_picker_invalid">รหัสสีไม่ถูกต้อง</string>
+    <string name="color_picker_current">ปัจจุบัน: %s</string>
+
+    <string name="drawer_version_format">เวอร์ชัน %1$s</string>
+    <string name="drawer_tagline">แอปคู่หูสำหรับ Wear OS</string>
+    <string name="drawer_about_heading">เกี่ยวกับ</string>
+    <string name="drawer_about_summary">Svartifoss ให้คุณควบคุมเพลงบนโทรศัพท์จากนาฬิกา Wear OS — ด้วยรีโมตที่ปรับแต่งได้เต็มที่ให้เหมาะกับอุปกรณ์ของคุณ</string>
+    <string name="drawer_name_heading">ชื่อ</string>
+    <string name="drawer_name_meaning">Svartifoss แปลว่า “น้ำตกดำ” ในภาษาไอซ์แลนด์ — ตั้งชื่อตามน้ำตกในอุทยานแห่งชาติ Vatnajökull ที่เสาหินบะซอลต์สีเข้มล้อมกรอบสายน้ำตกแคบ ๆ ดั่งน้ำที่ไหลผ่านหิน ดนตรีก็ไหลผ่านแอป</string>
+    <string name="drawer_sync_heading">ซิงค์</string>
+    <string name="drawer_sync_summary">ตั้งค่านาฬิกาที่นี่บนโทรศัพท์และซิงค์ไปยังนาฬิกาที่จับคู่โดยอัตโนมัติ</string>
+    <string name="drawer_support_heading">สนับสนุน</string>
+    <string name="drawer_support_summary">Svartifoss ฟรีและโอเพนซอร์ส — หากมีประโยชน์กับคุณ เลี้ยงกาแฟฉันสักแก้วได้ :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">ดาวน์โหลดภาพปก</string>
+    <string name="album_art_saved">บันทึกภาพปกลงแกลเลอรีแล้ว</string>
+    <string name="album_art_save_error">บันทึกภาพปกไม่สำเร็จ</string>
+
+    <string name="action_play_liked_songs">เล่นเพลงที่กดถูกใจ (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">เล่นเพลงที่กดถูกใจ (Spotify)</string>
+    <string name="action_play_soundcloud_likes">เล่นแทร็กที่กดถูกใจ (SoundCloud)</string>
+    <string name="action_my_playlists">ทางลัดสตรีมมิง</string>
+    <string name="action_play_specific_playlist">เปิดทางลัดสตรีมมิง</string>
+    <string name="action_choose_or_add_streaming_shortcut">เลือกหรือเพิ่มทางลัดสตรีมมิง</string>
+    <string name="action_show_streaming_library">แสดงทางลัดที่บันทึกไว้ทั้งหมด</string>
+    <string name="playlist_shortcut_pick_title">เลือกทางลัด</string>
+    <string name="playlist_shortcut_pick_empty">ยังไม่มีทางลัดสตรีมมิงที่บันทึกไว้ — เพิ่มหนึ่งรายการด้านล่าง แล้วแตะเพื่อเลือก</string>
+    <string name="playlist_shortcuts_empty">ยังไม่มีทางลัดสตรีมมิง — เพิ่มได้ในการตั้งค่าแอปบนโทรศัพท์</string>
+    <string name="setting_playlist_shortcuts">ทางลัดสตรีมมิง</string>
+    <string name="setting_playlist_shortcuts_description">เปิดลิงก์แชร์จากนาฬิกาใน YouTube Music, Spotify และแอปสตรีมมิงอื่น ๆ</string>
+    <string name="setting_shortcut_artwork">ดึงภาพทางลัดออนไลน์</string>
+    <string name="setting_shortcut_artwork_description">ดาวน์โหลดภาพขนาดย่อจากบริการสำหรับทางลัดที่บันทึกไว้แต่ละรายการ โดยแสดงในรายการบนโทรศัพท์ เมนูนาฬิกา และปุ่มที่กำหนด ภาพขนาดย่อแต่ละภาพจะดึงเพียงครั้งเดียว; ส่งเฉพาะลิงก์แชร์สาธารณะ ปิดไว้โดยค่าเริ่มต้น</string>
+    <string name="setting_queue_local_artwork">ภาพปกคิวจากคลังของคุณ</string>
+    <string name="setting_queue_local_artwork_description">เครื่องเล่นเพลงในเครื่องเผยแพร่ภาพปกคิวเป็นการอ้างอิงคลัง อนุญาตการเข้าถึงสื่อเพื่อให้แสดงในคิวบนนาฬิกาได้ โดยไม่ใช้อินเทอร์เน็ต</string>
+    <string name="setting_queue_local_artwork_granted">อนุญาตการเข้าถึงสื่อแล้ว — จะแสดงภาพปกคิวในเครื่อง</string>
+    <string name="setting_queue_local_artwork_denied">ปฏิเสธการเข้าถึงสื่อ เปิดใช้งานในการตั้งค่า Android เพื่อแสดงภาพปกคิวในเครื่อง</string>
+    <string name="setting_queue_remote_artwork">ดึงภาพปกคิวออนไลน์</string>
+    <string name="setting_queue_remote_artwork_short_description">แอปสตรีมมิง (ไคลเอนต์ YouTube Music, Echo Music…) เผยแพร่ภาพปกคิวเป็นลิงก์ ไม่ใช่รูปภาพ จึงต้องดาวน์โหลดและแคช ปิดเพื่อให้คิวออฟไลน์ทั้งหมด — แถวนั้นจะไม่แสดงภาพปกเลย</string>
+    <string name="setting_queue_remote_artwork_description">เครื่องเล่นสตรีมมิงเผยแพร่ภาพปกคิวเป็นลิงก์แทนรูปภาพ ดาวน์โหลดแต่ละภาพเพียงครั้งเดียวและแคชไว้บนโทรศัพท์นี้เพื่อแสดงในคิวบนนาฬิกา ขอเพียง URL ภาพปกที่เครื่องเล่นเผยแพร่ไว้แล้ว — ไม่มีบัญชีหรือข้อมูลส่วนบุคคล เปิดไว้โดยค่าเริ่มต้น; ปิดเพื่อให้คิวออฟไลน์ทั้งหมด</string>
+    <string name="watch_streaming_shortcuts_empty">เพิ่มเพลง อัลบั้ม หรือเพลย์ลิสต์สำหรับการทำงานด่วนและเมนูนาฬิกา</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="other">ทางลัดที่บันทึกไว้ %1$d รายการ · ใช้ได้ในการทำงานด่วนและเมนูนาฬิกา</item>
+    </plurals>
+    <string name="category_music_apps">แอปและบริการเพลง</string>
+    <string name="category_apps_content">เนื้อเพลงและข้อมูลเมตา</string>
+    <string name="category_streaming_services">ทางลัดสตรีมมิง</string>
+    <string name="category_queue_artwork">ภาพคิว</string>
+    <string name="category_system_access">การเข้าถึง Android และการแจ้งเตือน</string>
+    <string name="setting_apps_integrations">บริการเพลงที่รองรับ</string>
+    <string name="setting_apps_integrations_description">ลิงก์ใช้ได้กับ YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music และ SoundCloud ไม่ต้องเข้าถึงบัญชี</string>
+    <string name="setting_apps_integrations_none">ไม่พบแอปที่รองรับ ทางลัดยังสามารถเปิดในเบราว์เซอร์หรือแอปอื่นที่เข้ากันได้</string>
+    <string name="setting_apps_integrations_installed">ตรวจพบ %1$d จาก %2$d: %3$s</string>
+    <string name="setting_streaming_open_mode">เปิดลิงก์สตรีมมิงด้วย</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>แอปสตรีมมิงที่ตรวจพบ</item>
+        <item>ค่าเริ่มต้นของ Android</item>
+        <item>ถามทุกครั้ง</item>
+    </string-array>
+    <string name="setting_persistent_notification">จัดการการแจ้งเตือน \"Svartifoss ทำงานอยู่\"</string>
+    <string name="setting_persistent_notification_description">เปิดการตั้งค่า Android ของการแจ้งเตือนนี้ — ปิดเสียง ซ่อนจากหน้าจอล็อก หรือปรับอย่างอื่นได้ ไม่สามารถปิดทั้งหมดได้: Android กำหนดให้มีการแจ้งเตือนต่อเนื่องขณะบริการเบื้องหลังที่สื่อสารกับนาฬิกาทำงาน</string>
+    <string name="setting_notification_access">การเข้าถึงการแจ้งเตือนสื่อ</string>
+    <string name="setting_notification_access_enabled">อนุญาตแล้ว · แตะเพื่อตรวจสอบการตั้งค่า Android</string>
+    <string name="setting_notification_access_disabled">ไม่ได้รับอนุญาต · จำเป็นสำหรับการทำงานสื่อในการแจ้งเตือนและตัวกรองเปิดอัตโนมัติ</string>
+    <string name="setting_notification_access_unavailable">การตั้งค่าการเข้าถึงการแจ้งเตือนไม่พร้อมใช้งานบนอุปกรณ์นี้</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="other">ทางลัดที่บันทึกไว้ %1$d รายการ · แตะเพื่อจัดการหรือนำเข้าลิงก์</item>
+    </plurals>
+    <string name="category_privacy">ความเป็นส่วนตัว</string>
+    <string name="setting_privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="setting_privacy_policy_description">ดูว่า Svartifoss ใช้ข้อมูลอะไรและบริการออนไลน์ใดเป็นตัวเลือก</string>
+    <string name="setting_crash_reporting">ส่งรายงานข้อขัดข้อง</string>
+    <string name="setting_crash_reporting_description">ส่งข้อมูลวินิจฉัย Firebase Crashlytics เพื่อช่วยแก้ไขข้อผิดพลาด เปิดไว้โดยค่าเริ่มต้น; ปิดได้ทุกเมื่อ</string>
+    <string name="setting_announcements">การแจ้งเตือนประกาศ</string>
+    <string name="setting_announcements_description">การแจ้งเตือนเป็นครั้งคราวจากนักพัฒนา — รุ่นใหม่และประกาศสำคัญ ส่งผ่าน Firebase Cloud Messaging; ไม่มีบัญชีหรือรายชื่อผู้ใช้ เปิดไว้โดยค่าเริ่มต้น; ปิดได้ทุกเมื่อ</string>
+    <string name="announcement_notification_channel">ประกาศ</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">แชร์เพลย์ลิสต์ อัลบั้ม หรือเพลงไปยัง Svartifoss โดยตรง วางลิงก์ที่คัดลอก หรือเพิ่มด้วยตนเอง นาฬิกาเพียงขอให้โทรศัพท์เปิดลิงก์; ไม่ต้องลงชื่อเข้าใช้บริการ</string>
+    <string name="back">ย้อนกลับ</string>
+    <string name="playlist_shortcuts_beta_badge">เบต้า</string>
+    <string name="playlist_shortcuts_intro_title">เพลงของคุณ แตะครั้งเดียวก็ถึง</string>
+    <string name="playlist_shortcuts_yours">ทางลัดของคุณ</string>
+    <string name="playlist_shortcuts_empty_hint">เพิ่มลิงก์แชร์ของเพลง อัลบั้ม หรือเพลย์ลิสต์เพื่อให้ใช้งานได้บนนาฬิกา</string>
+    <string name="playlist_shortcuts_add">เพิ่มทางลัด</string>
+    <string name="playlist_shortcuts_paste">วางลิงก์</string>
+    <string name="playlist_shortcuts_reload_covers">โหลดภาพปกใหม่</string>
+    <string name="playlist_shortcuts_reloading_covers">กำลังโหลดภาพปกใหม่…</string>
+    <string name="playlist_shortcuts_covers_reloaded">โหลดภาพปกใหม่แล้ว</string>
+    <string name="playlist_shortcuts_edit">แก้ไขทางลัด</string>
+    <string name="playlist_shortcut_save">บันทึกทางลัด</string>
+    <string name="playlist_shortcut_editor_hint">วางลิงก์หนึ่งรายการ Svartifoss จะระบุแอปและประเภทเนื้อหาโดยอัตโนมัติ</string>
+    <string name="playlist_shortcut_detection_waiting">กำลังรอลิงก์สตรีมมิง</string>
+    <string name="playlist_shortcut_detection_waiting_hint">รองรับ Spotify, YouTube Music, Apple Music, TIDAL, Deezer และอื่น ๆ</string>
+    <string name="playlist_shortcut_detected_format">ตรวจพบ: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">ชื่อ</string>
+    <string name="playlist_shortcut_link_hint">ลิงก์แชร์หรือ URI ของแอป</string>
+    <string name="playlist_shortcut_shuffle">เล่นแบบสุ่ม (YouTube Music เท่านั้น)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">ลิงก์</string>
+    <string name="playlist_type_track">แทร็ก</string>
+    <string name="playlist_type_playlist">เพลย์ลิสต์</string>
+    <string name="playlist_type_album">อัลบั้ม</string>
+    <string name="playlist_type_artist">ศิลปิน</string>
+    <string name="playlist_type_show">รายการ</string>
+    <string name="playlist_type_episode">ตอน</string>
+    <string name="playlist_type_mix">มิกซ์</string>
+    <string name="playlist_badge_shuffle">สุ่ม</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">ยังไม่ได้เพิ่มทางลัดสตรีมมิง</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="other">บันทึกแล้ว %1$d รายการ</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">ทางลัดสตรีมมิงที่เรียงลำดับได้ แตะค้างเพื่อลาก ใช้การทำงานช่วยการเข้าถึง ย้ายขึ้น หรือ ย้ายลง หรือกด Ctrl+ขึ้น/ลง บนแป้นพิมพ์</string>
+    <string name="playlist_shortcut_more_options">ตัวเลือกเพิ่มเติมสำหรับ %1$s</string>
+    <string name="playlist_shortcut_menu_edit">แก้ไข</string>
+    <string name="playlist_shortcut_menu_open">เปิดตอนนี้</string>
+    <string name="playlist_shortcut_menu_copy">คัดลอกลิงก์</string>
+    <string name="playlist_shortcut_menu_duplicate">ทำสำเนา</string>
+    <string name="playlist_shortcut_menu_share">แชร์</string>
+    <string name="playlist_shortcut_menu_delete">ลบ</string>
+    <string name="playlist_shortcut_open_failed">ไม่มีแอปที่เปิดลิงก์นี้ได้</string>
+    <string name="streaming_shortcut_choose_app">เปิดลิงก์สตรีมมิงด้วย</string>
+    <string name="playlist_shortcut_link_copied">คัดลอกลิงก์แล้ว</string>
+    <string name="playlist_shortcut_import_invalid">ข้อความที่แชร์ไม่มีลิงก์สตรีมมิงที่ถูกต้อง</string>
+    <string name="playlist_shortcut_clipboard_invalid">คลิปบอร์ดไม่มีลิงก์สตรีมมิงที่ถูกต้อง</string>
+    <string name="playlist_shortcut_name_required">ป้อนชื่อทางลัด</string>
+    <string name="playlist_shortcut_link_invalid">ป้อนลิงก์เว็บหรือ URI ของแอปที่ถูกต้อง</string>
+    <string name="playlist_shortcut_service_invalid">วางลิงก์ที่ถูกต้องเพื่อตรวจหาบริการ</string>
+    <string name="playlist_shortcut_service_generic">ลิงก์ที่เข้ากันได้ · Android จะเลือกแอป</string>
+    <string name="playlist_shortcut_service_installed">ติดตั้ง %1$s แล้ว · พร้อมเปิดในแอป</string>
+    <string name="playlist_shortcut_service_not_installed">ยังไม่ได้ติดตั้ง %1$s · สามารถใช้เบราว์เซอร์หรือแอปที่เข้ากันได้</string>
+    <string name="playlist_shortcut_copy_name">สำเนา %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">สำเนา %1$s %2$d</string>
+    <string name="playlist_shortcut_duplicated">สร้าง %1$s แล้ว</string>
+    <string name="playlist_shortcut_share_title">แชร์ทางลัดสตรีมมิง</string>
+    <string name="playlist_shortcut_share_failed">ไม่มีแอปสำหรับแชร์ทางลัดนี้</string>
+    <string name="playlist_shortcut_deleted">ลบ %1$s แล้ว</string>
+    <string name="playlist_shortcut_undo">เลิกทำ</string>
+
+    <string name="action_play_liked_songs_shuffled">เล่นเพลงที่กดถูกใจแบบสุ่ม (YT Music)</string>
+    <string name="action_search_history">ประวัติการค้นหา</string>
+    <string name="search_history_empty">ยังไม่มีการค้นหาล่าสุด</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">อัปเดต</string>
+    <string name="setting_update_check">แจ้งเตือนเวอร์ชันใหม่</string>
+    <string name="setting_update_check_description">ตรวจ GitHub หารุ่นใหม่ประมาณวันละครั้งและแสดงการแจ้งเตือน</string>
+    <string name="setting_update_prereleases">รวมเวอร์ชันก่อนเผยแพร่</string>
+    <string name="setting_update_prereleases_description">รับการแจ้งเตือนเกี่ยวกับเวอร์ชันเบต้าด้วย</string>
+    <string name="setting_update_check_now">ตรวจสอบอัปเดตตอนนี้</string>
+    <string name="setting_update_check_now_description">แสดงเวอร์ชันล่าสุดและให้คุณอัปเดตนาฬิกาผ่าน Bluetooth</string>
+    <string name="update_screen_title">อัปเดต</string>
+    <string name="update_cover_content_description">Svartifoss น้ำตกที่เป็นที่มาของชื่อแอป</string>
+    <string name="update_notification_channel">อัปเดตแอป</string>
+    <string name="update_available_title">Svartifoss %1$s พร้อมใช้งานแล้ว</string>
+    <string name="update_notification_text">แตะเพื่ออัปเดต</string>
+    <string name="update_available_action">มีอัปเดต</string>
+    <string name="update_installed_phone">โทรศัพท์: %1$s</string>
+    <string name="update_installed_versions">โทรศัพท์: %1$s · นาฬิกา: %2$s</string>
+    <string name="update_watch_version_unknown">ไม่ทราบ</string>
+    <string name="update_checking">กำลังตรวจสอบอัปเดต…</string>
+    <string name="update_check_failed">ตรวจสอบอัปเดตไม่ได้ โปรดตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
+    <string name="update_available_line">เวอร์ชันใหม่: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(รุ่นก่อนเผยแพร่)</string>
+    <string name="update_up_to_date">คุณใช้เวอร์ชันล่าสุดแล้ว (%1$s)</string>
+    <string name="update_no_wear_asset">รุ่นนี้ไม่มี APK สำหรับนาฬิกาให้ส่ง</string>
+    <string name="update_watch_hint">“อัปเดตนาฬิกา” จะดาวน์โหลดแอปนาฬิกาใหม่และส่งผ่าน Bluetooth — คุณยืนยันการติดตั้งบนตัวนาฬิกาได้เลย โดยไม่ต้องใช้สายหรือ Wear Installer</string>
+    <string name="update_downloading">กำลังดาวน์โหลด… %1$d%%</string>
+    <string name="update_connecting_watch">กำลังเชื่อมต่อกับนาฬิกา…</string>
+    <string name="update_transferring">กำลังส่งไปยังนาฬิกา… %1$d%%</string>
+    <string name="update_confirm_on_watch">ส่งแล้ว! มีการแจ้งเตือนปรากฏบนนาฬิกา — แตะที่นาฬิกาเพื่อติดตั้ง</string>
+    <string name="update_no_watch">ไม่มีนาฬิกาที่เชื่อมต่อ</string>
+    <string name="update_push_failed">ส่งอัปเดตไปยังนาฬิกาไม่สำเร็จ โปรดลองอีกครั้ง</string>
+    <string name="update_watch_button">อัปเดตนาฬิกา</string>
+    <string name="update_open_release_button">เปิดหน้ารุ่นเผยแพร่</string>
+    <string name="update_watch_behind">นาฬิกาของคุณยังเป็น %1$s — ส่งอัปเดตให้ด้านล่าง</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">ทำให้แอปโทรศัพท์และนาฬิกาตรงกันอยู่เสมอ</string>
+    <string name="update_state_checking">กำลังตรวจสอบอัปเดต…</string>
+    <string name="update_state_current">เป็นเวอร์ชันล่าสุดแล้ว</string>
+    <string name="update_state_current_sub">กำลังใช้รุ่นล่าสุด %1$s</string>
+    <string name="update_state_available">มีอัปเดต</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">ตรวจสอบอัปเดตไม่ได้</string>
+    <string name="update_state_failed_sub">ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
+    <string name="update_device_phone">โทรศัพท์</string>
+    <string name="update_device_watch">นาฬิกา</string>
+    <string name="update_versions_header">ติดตั้งแล้ว</string>
+    <string name="update_whats_new">มีอะไรใหม่</string>
+    <string name="update_phone_button">อัปเดตโทรศัพท์</string>
+    <string name="update_installing">กำลังเปิดตัวติดตั้ง…</string>
+    <string name="update_install_permission_needed">อนุญาตให้ติดตั้งแอปจาก Svartifoss แล้วแตะอัปเดตโทรศัพท์อีกครั้ง</string>
+    <string name="update_phone_failed">ดาวน์โหลดอัปเดตโทรศัพท์ไม่สำเร็จ โปรดลองอีกครั้ง</string>
+    <string name="update_install_notification_title">อัปเดต Svartifoss</string>
+    <string name="update_install_notification_tap">แตะเพื่อติดตั้งเวอร์ชันใหม่</string>
+    <string name="update_install_notification_failed">ติดตั้งไม่สำเร็จ อนุญาตการติดตั้งจาก Svartifoss ในการตั้งค่าแล้วลองอีกครั้ง</string>
+    <string name="setting_wear_album_accent_source">แหล่งสีเน้นของอัลบั้ม</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>สมดุล</item>
+        <item>สดที่สุด</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>ปิด</item>
+        <item>นุ่ม</item>
+        <item>มาตรฐาน</item>
+        <item>หนา</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">ค่าต่ำสุดของสีเน้น</string>
+    <string name="preview_metadata_album">อัลบั้ม</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">แทร็ก</string>
+    <string name="preview_metadata_genre">แนวเพลง</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">ปี</string>
+    <string name="preview_metadata_format">รูปแบบ</string>
+    <string name="preview_metadata_bitrate">บิตเรต</string>
+    <string name="preview_metadata_position">ตำแหน่ง</string>
+    <string name="preview_metadata_output">เอาต์พุต</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">รายละเอียดอัลบั้ม</string>
+    <string name="setting_wear_metadata_core_description">อัลบั้ม ศิลปินอัลบั้ม ตำแหน่งบนแผ่น และความยาว</string>
+    <string name="setting_wear_metadata_release">รายละเอียดการเผยแพร่</string>
+    <string name="setting_wear_metadata_release_description">แนวเพลง ปี วันที่เผยแพร่ และค่ายเพลง</string>
+    <string name="setting_wear_metadata_credits">เครดิต</string>
+    <string name="setting_wear_metadata_credits_description">ผู้แต่ง ผู้เขียนเนื้อเพลง และผู้เขียน เมื่อโปรแกรมเล่นเผยแพร่ข้อมูลเหล่านี้</string>
+    <string name="setting_wear_metadata_technical">รายละเอียดไฟล์</string>
+    <string name="setting_wear_metadata_technical_description">รูปแบบ บิตเรต อัตราสุ่มตัวอย่าง ช่องสัญญาณ และขนาด เฉพาะแทร็กในเครื่องเท่านั้น</string>
+    <string name="setting_split_panel">แผงแบบแบ่ง</string>
+    <string name="setting_split_panel_description">กำหนดสิ่งที่เติมครึ่งล่างของหน้าปัด Split ภาพปกแบบเบลอจะต่อภาพเดียวกันไว้หลังข้อความ ส่วนสีทึบจะดูคล้ายการ์ดแจ้งเตือน</string>
+    <string-array name="wear_split_panel_entries">
+        <item>อาร์ตเวิร์กเบลอ</item>
+        <item>สีทึบ</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">รายละเอียดการเล่น</string>
+    <string name="setting_wear_metadata_playback_description">ตำแหน่งละเอียดถึงมิลลิวินาที ความเร็ว เอาต์พุตเสียง และแหล่งที่เสียงกำลังสตรีมหรือเล่นอยู่ รวมถึงที่อยู่ของแทร็ก เป็นบล็อกข้อมูลที่แทร็กสตรีมสามารถเติมได้เมื่อไม่มีไฟล์ให้บรรยาย</string>
+    <string name="setting_wear_metadata_identifiers">ตัวระบุ</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC และรหัสแค็ตตาล็อก ปิดเป็นค่าเริ่มต้น — มีประโยชน์เมื่อคุณต้องการ แต่เป็นข้อมูลรบกวนเมื่อไม่ต้องการ</string>
+    <string name="setting_metadata_lookup">ค้นหารายละเอียดแทร็กออนไลน์</string>
+    <string name="setting_metadata_lookup_description">เติมข้อมูลที่แอปเล่นเพลงไม่ได้เผยแพร่ เช่น ISRC ค่ายเพลง และวันที่เผยแพร่ จาก MusicBrainz ซึ่งเป็นฐานข้อมูลสาธารณะฟรี ปิดเป็นค่าเริ่มต้น หน้าปัด Metadata ทำงานได้โดยไม่ต้องใช้ตัวเลือกนี้ ตัวเลือกนี้เพียงเพิ่มแถวข้อมูล จะไม่มีการส่งข้อมูลใด ๆ จนกว่าคุณจะเปิดตัวเลือกนี้และเลือกหน้าปัดดังกล่าว และจะส่งเฉพาะชื่อแทร็กกับศิลปินเท่านั้น</string>
+</resources>

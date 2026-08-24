@@ -1,0 +1,2004 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS není na tomto zařízení podporován</string>
+    <string name="setting_no_wearable_api_banner_description">Toto zařízení neposkytuje součást Wear OS ve Službách Google Play, kterou Svartifoss potřebuje ke komunikaci s hodinkami. Spárování nepomůže — aplikace v telefonu se zde k hodinkám nedostane. Všechna nastavení níže se přesto uloží a použijí se, pokud nainstalujete Svartifoss na zařízení, které Wear OS podporuje.</string>
+    <string name="setting_no_watch_banner">Nejsou připojeny žádné hodinky</string>
+    <string name="setting_no_watch_banner_description">Tato nastavení se synchronizují s hodinkami Wear OS, takže se viditelně projeví až po jejich spárování a připojení — vše níže si ale můžete nastavit už teď.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Vzhled</string>
+    <string name="setting_theme">Motiv</string>
+    <string name="theme_light">Čistě bílý</string>
+    <string name="theme_dark">Čistě černý</string>
+    <string name="theme_system">Podle systému</string>
+    <string name="setting_language">Jazyk</string>
+    <string name="language_system">Podle systému</string>
+    <string name="language_change_watch_notice">Po synchronizaci bude tento jazyk používat i hodinky.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Vývojář</string>
+    <string name="dev_mode_unlocked">Vývojářský režim zapnut ✦</string>
+    <string name="dev_mode_clicks_remaining">Ještě %1$d klepnutí pro odemknutí vývojářského režimu</string>
+    <string name="dev_disable_mode">Vypnout vývojářský režim</string>
+    <string name="dev_disable_mode_description">Tuto sekci znovu skryjete — sedmkrát klepněte na \"Nainstalovaná verze\", aby se znovu objevila</string>
+    <string name="dev_mode_disabled">Vývojářský režim vypnut</string>
+    <string name="dev_build_info">Informace o sestavení</string>
+    <string name="dev_sync_watch">Vynutit synchronizaci nastavení hodinek</string>
+    <string name="dev_sync_watch_description">Okamžitě odeslat všechna aktuální nastavení do spárovaných hodinek</string>
+    <string name="dev_sync_watch_done">Nastavení synchronizována s hodinkami</string>
+    <string name="dev_copy_debug_info">Kopírovat ladicí informace</string>
+    <string name="dev_copy_debug_info_description">Zkopírovat údaje o sestavení a zařízení do schránky</string>
+    <string name="dev_show_archived">Zobrazit archivované možnosti</string>
+    <string name="dev_show_archived_description">Odhalit rozložení a nastavení hodinek archivovaná kvůli známým problémům</string>
+    <string name="dev_copy_debug_info_done">Ladicí informace zkopírovány</string>
+    <string name="dev_open_update_screen">Otevřít obrazovku aktualizací</string>
+    <string name="dev_open_update_screen_description">Zobrazit náhled obrazovky Aktualizace (banner s obalem, rozložení poznámek k vydání) bez čekání na skutečné vydání</string>
+    <string name="dev_watch_layout_bounds">Zobrazit hranice rozložení hodinek</string>
+    <string name="dev_watch_layout_bounds_description">Orámovat viditelné prvky přehrávače a dotykové oblasti na hodinkách. Pouze diagnostická vrstva.</string>
+    <string name="dev_watch_player_info">Zobrazit informace o přehrávači hodinek</string>
+    <string name="dev_watch_player_info_description">Překrýt na hodinkách aktivní ciferník, stav přehrávání, průběh a informace o vykreslování.</string>
+    <string name="pref_reset_default">Obnovit výchozí</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Našli jste skrytý vodopád.
+
+Svartifoss — černé čedičové sloupy
+rámující kaskádu na Islandu,
+připomínku, že hudba plyne
+jako voda skrz kámen.
+
+♪ Vytvořeno s péčí. ♪</string>
+    <string name="easter_egg_ok">Zavřít</string>
+
+    <string name="nav_watch_face">Hodinky</string>
+    <string name="watch_face_header">Vzhled hodinek</string>
+    <string name="nav_controls">Ovládání</string>
+    <string name="nav_actions">Akce</string>
+    <string name="nav_settings">Nastavení</string>
+
+    <string name="controls_header">Ovládání</string>
+    <string name="controls_state_playing">Hudba se přehrává</string>
+    <string name="controls_state_stopped">Bez přehrávání</string>
+    <string name="controls_playing_description">Zvolte, co dělá každý vstup během přehrávání hudby. Toto nastavení je nezávislé na stavu bez přehrávání.</string>
+    <string name="controls_stopped_description">Zvolte, co dělá každý vstup před spuštěním přehrávání nebo po jeho zastavení. Toto nastavení je nezávislé na stavu přehrávání.</string>
+
+    <string name="watch_live_preview">Živý náhled hodinek</string>
+    <string name="watch_preview_description">Živý náhled vybraného vzhledu hodinek. Změny se zde objeví dříve, než je vyzkoušíte na hodinkách.</string>
+    <string name="watch_section_style">Přehrávač</string>
+    <string name="watch_section_style_description">Zvolte rozložení přehrávače a chování jeho názvu, času a průběhu.</string>
+    <string name="watch_section_background">Pozadí</string>
+    <string name="watch_section_background_description">Nastavte obal alba, rozmazání, stmívání a čitelnost za přehrávačem.</string>
+    <string name="watch_section_colors">Barvy</string>
+    <string name="watch_section_colors_description">Nastavte základní, průběhové a albové akcenty a poté dolaďte barvy názvu, interpreta, hodin, hlasitosti a panelů.</string>
+    <string name="watch_section_typography">Text</string>
+    <string name="watch_section_typography_description">Zvolte písma a dolaďte název, interpreta, hodiny, ikonu aplikace, vedlejší obrazovky a text Flex.</string>
+    <string name="watch_section_aod">Vždy zapnuto</string>
+    <string name="watch_section_aod_description">Nastavte úspornou obrazovku a zobrazte její ambientní vzhled v náhledu.</string>
+    <string name="watch_section_panels">Panely</string>
+    <string name="watch_section_panels_description">Upravte hlasitost, posun, rychlý panel a frontu; zaměření řádku otevře daný prvek v náhledu.</string>
+    <string name="watch_section_mini_buttons">Mini tlačítka</string>
+    <string name="watch_section_mini_buttons_description">Upravte volitelný řádek zkratek. Klepnutím na „Mini tlačítka“ níže přiřadíte jejich akce v Ovládání.</string>
+    <string name="watch_overview_description">Vyberte, co chcete přizpůsobit. Náhled a uložený motiv zůstávají aktivní ve všech oblastech.</string>
+    <string name="watch_back_to_overview">Zpět do oblastí Hodinky</string>
+
+    <string name="settings_section_general">Obecné</string>
+    <string name="settings_section_general_description">Motiv aplikace, barva akcentu a předvolby aktualizací.</string>
+    <string name="settings_section_watch">Chování</string>
+    <string name="settings_section_watch_description">Chování korunky, dotyku, haptiky a nabídky akcí na hodinkách.</string>
+    <string name="settings_section_automation">Automatizace</string>
+    <string name="settings_section_automation_description">Zvolte, kdy se Svartifoss automaticky otevře a zavře.</string>
+    <string name="settings_section_apps">Aplikace</string>
+    <string name="settings_section_apps_description">Vyhledávání textů a metadat, streamovací zkratky, obrázky fronty a přístup Androidu.</string>
+    <string name="settings_section_data">Data a podpora</string>
+    <string name="settings_section_data_description">Zálohujte nastavení, zkontrolujte verzi či diagnostiku nebo získejte pomoc.</string>
+    <string name="settings_overview_description">Vyberte oblast. Související možnosti zůstanou pohromadě a vyhledávání vás stále může zavést přímo ke kterémukoli nastavení.</string>
+    <string name="settings_back_to_overview">Zpět do oblastí nastavení</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Jak používat Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss promění hodinky v dálkové ovládání hudby přehrávané na telefonu. Tady je vše, co můžete dělat přímo ze zápěstí.</string>
+
+    <string name="tutorial_taps_title">Klepněte na zóny obrazovky</string>
+    <string name="tutorial_taps_desc">Obrazovka hodinek je rozdělena do čtyř zón — horní, dolní, levé a pravé. Klepnutí na zónu spustí přiřazenou akci. Ve výchozím nastavení levá zóna přehrává nebo pozastavuje, pravá přeskočí na další skladbu a horní a dolní mění hlasitost.</string>
+
+    <string name="tutorial_quick_panel_title">Panel rychlých akcí</string>
+    <string name="tutorial_quick_panel_desc">Dvojitým klepnutím doprostřed obrazovky přehrávání otevřete panel se čtyřmi pozicemi — třemi kulatými tlačítky a jedním širokým řádkem pod nimi. Pokud je neupravíte, pozice zrcadlí tlačítka, která přehrávající aplikace přidává do svého oznámení, takže získáte její skutečné ovládání To se mi líbí, náhodného přehrávání a opakování. Přiřaďte pozici libovolnou akci nebo ji v části Akce na telefonu nastavte na „Žádná“, chcete-li ji skrýt.</string>
+    <string name="tutorial_gestures_title">Jedno, dvojité a dlouhé stisknutí</string>
+    <string name="tutorial_gestures_desc">Každá ze čtyř okrajových zón podporuje samostatné akce pro jedno, dvojité a dlouhé stisknutí. Jedno klepnutí uprostřed lze také nastavit; dvojité vždy otevře Rychlé akce a dlouhé otevře výběr ciferníku, frontu nebo nic podle Nastavení → Chování.</string>
+
+    <string name="tutorial_buttons_title">Fyzická tlačítka</string>
+    <string name="tutorial_buttons_desc">Pokud mají hodinky boční tlačítka, můžete jim také přiřadit akce pro jedno, dvojité a dlouhé stisknutí. Fungují i při vypnuté obrazovce.</string>
+
+    <string name="tutorial_rotary_title">Otočná korunka</string>
+    <string name="tutorial_rotary_desc">V Nastavení → Chování → Otočná korunka / luneta zvolte, zda otočná korunka nebo luneta mění hlasitost, posouvá ve skladbě, nebo nedělá nic. U hodinek, které hlásí otočení korunky jako tlačítka, je místo toho přiřaďte v Ovládání.</string>
+
+    <string name="tutorial_swipe_up_title">Přejet nahoru, dolů, vlevo a vpravo</string>
+    <string name="tutorial_swipe_up_desc">Přejetí nahoru, dolů nebo vlevo na obrazovce přehrávání lze jednotlivě nastavit tak, aby otevřelo cokoli — nabídku akcí, frontu přehrávání, přeskakování skladeb, vaše playlisty a další. Každé nastavte v Ovládání a zvolte Hudba se přehrává nebo Bez přehrávání. Ve výchozím nastavení přejetí nahoru otevře nabídku akcí a ostatní nic nedělají, dokud jim něco nepřiřadíte. Přejetí vpravo zůstává beze změny — je to univerzální gesto Wear OS pro ukončení aplikace.</string>
+    <string name="tutorial_shortcuts_title">Streamovací zkratky</string>
+    <string name="tutorial_shortcuts_desc">Uložte odkaz na skladbu, album, mix nebo playlist ze Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music nebo SoundCloud a přiřaďte jej libovolnému tlačítku, gestu nebo pozici panelu. Nejrychlejší je sdílet odkaz přímo do Svartifoss ze streamovací aplikace; můžete také vložit zkopírovaný odkaz nebo jej napsat. Není potřeba účet ani přihlášení — hodinky požádají telefon o spuštění přehrávání, takže zkratka obsah přehraje místo pouhého otevření aplikace.</string>
+    <string name="tutorial_yt_music_title">Zkratky YouTube Music</string>
+    <string name="tutorial_yt_music_desc">Přiřaďte „Přehrát oblíbené skladby“, „Přehrát oblíbené skladby náhodně“ nebo „Moje playlisty“ libovolnému tlačítku, gestu či přejetí a přejděte rovnou k hudbě bez dotyku telefonu. „Historie vyhledávání“ si pamatuje nedávná hledání na hodinkách — dlouhým stisknutím je smažete.</string>
+
+    <string name="tutorial_exit_title">Přejetím ukončit</string>
+    <string name="tutorial_exit_desc">Přejetím od levého okraje opusťte přehrávač. Při ukončení lze přehrávání automaticky pozastavit — zapněte to v Nastavení.</string>
+
+    <string name="tutorial_tile_title">Tile rychlého ovládání</string>
+    <string name="tutorial_tile_desc">Přejeďte po ciferníku do strany na Tile Svartifoss a okamžitě přehrávejte, pozastavujte a přeskakujte bez otevření aplikace.</string>
+
+    <string name="tutorial_complication_title">Komplikace ciferníku</string>
+    <string name="tutorial_complication_desc">Přidejte na ciferník komplikaci obalu alba Svartifoss, abyste aktuální obal viděli na první pohled. Klepnutím otevřete přehrávač.</string>
+
+    <string name="tutorial_system_title">Systémové ovládání médií</string>
+    <string name="tutorial_system_desc">Aktuální skladba se zobrazuje také ve vlastním ovládání médií hodinek a v nedávných aplikacích, takže přehrávání můžete ovládat i odtud.</string>
+
+    <string name="tutorial_tip">Tip: nastavte oba stavy v Ovládání a poté uspořádejte nabídku v Akcích.</string>
+
+    <string name="navigation_drawer_open">Otevřít navigační panel</string>
+    <string name="navigation_drawer_close">Zavřít navigační panel</string>
+
+    <string name="action_settings">Nastavení</string>
+    <string name="action_pause">Pozastavit</string>
+    <string name="action_play">Přehrát</string>
+    <string name="action_skip_prev">Předchozí</string>
+    <string name="action_skip_next">Další</string>
+    <string name="action_play_pause">Přehrát / Pozastavit</string>
+    <string name="action_stop">Zastavit</string>
+    <string name="action_restart">Spustit skladbu od začátku</string>
+    <string name="action_mute">Ztlumit / Zapnout zvuk</string>
+    <string name="action_skip_seconds">Přeskočit o %1$d sekund</string>
+    <string name="action_reverse_seconds">Vrátit o %1$d sekund</string>
+    <string name="action_like">To se mi líbí</string>
+    <string name="action_shuffle">Náhodné přehrávání</string>
+    <string name="action_repeat">Opakovat</string>
+    <string name="action_repeat_one">Opakovat jednu skladbu</string>
+    <string name="action_search">Hledat hudbu</string>
+    <string name="action_open_lyrics">Texty</string>
+    <string name="group_playback_controls">Ovládání přehrávání</string>
+    <string name="group_streaming_shortcuts">Skladby, alba a playlisty</string>
+    <string name="pick_action">Vybrat akci</string>
+    <string name="action_search_hint">Hledat v tomto seznamu</string>
+    <string name="action_search_empty">Tomuto hledání neodpovídají žádné akce.</string>
+    <string name="action_opens_more">Více možností</string>
+    <string name="action_volume_up">Zvýšit hlasitost</string>
+    <string name="volume_down">Snížit hlasitost</string>
+    <string name="group_volume_controls">Ovládání hlasitosti</string>
+    <string name="no_watch_detected">Hodinky nebyly zjištěny</string>
+    <string name="connection_instructions">Pro zahájení připojení otevřete Svartifoss na hodinkách</string>
+    <string name="playing_controls">Ovládání během přehrávání</string>
+    <string name="stopped_controls">Ovládání bez přehrávání</string>
+    <string name="actions_menu">Nabídka akcí</string>
+    <string name="actions_intro">Nastavte obě plochy akcí na hodinkách pomocí ovládání přehrávání, aplikací nebo uložených skladeb, alb a playlistů. Rychlý panel zůstává kompaktní; nabídka níže může obsahovat delší seřazený seznam.</string>
+    <string name="actions_quick_panel_section">Rychlý panel</string>
+    <string name="actions_watch_menu_section">Nabídka na hodinkách</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d akce · Klepnutím upravíte · Podržením a přetažením změníte pořadí</item>
+        <item quantity="few">%1$d akce · Klepnutím upravíte · Podržením a přetažením změníte pořadí</item>
+        <item quantity="many">%1$d akce · Klepnutím upravíte · Podržením a přetažením změníte pořadí</item>
+        <item quantity="other">%1$d akcí · Klepnutím upravíte · Podržením a přetažením změníte pořadí</item>
+    </plurals>
+    <string name="actions_reorder_description">Seřazená nabídka akcí. Dotykem a podržením přetáhněte, použijte akce přístupnosti Posunout nahoru nebo Posunout dolů, případně na klávesnici stiskněte Ctrl+Nahoru/Dolů.</string>
+    <string name="actions_move_up">Posunout nahoru</string>
+    <string name="actions_move_down">Posunout dolů</string>
+    <string name="actions_moved_to_position">%1$s přesunuto na pozici %2$d z %3$d.</string>
+    <string name="actions_empty">Zatím žádné akce. Pomocí tlačítka Přidat vytvořte první.</string>
+    <string name="actions_add">Přidat akci</string>
+    <string name="on_screen_buttons">DOTYKOVÉ ZÓNY</string>
+    <string name="physical_buttons">FYZICKÁ TLAČÍTKA</string>
+    <string name="physical_buttons_disconnected">Připojte hodinky a otevřete na nich Svartifoss, abyste mohli nastavit jejich fyzická tlačítka. Dotykové zóny, přejetí a mini tlačítka jsou k dispozici už teď.</string>
+    <string name="physical_buttons_unavailable">Tyto hodinky nenahlásily žádná nastavitelná fyzická tlačítka.</string>
+    <string name="control_assignment_tap">Klepnutí: %1$s</string>
+    <string name="control_assignment_hold">Podržení: %1$s</string>
+    <string name="control_assignment_both">Klepnutí: %1$s · Podržení: %2$s</string>
+    <string name="tap_a_zone_to_configure">Klepnutím na zónu hodinek přiřadíte akci</string>
+    <string name="touch_zone_top">Horní zóna</string>
+    <string name="touch_zone_bottom">Dolní zóna</string>
+    <string name="touch_zone_left">Levá zóna</string>
+    <string name="touch_zone_right">Pravá zóna</string>
+    <string name="touch_zone_center">Klepnutí doprostřed</string>
+    <string name="touch_zone_action">%1$s: %2$s. Klepnutím nastavíte.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">GESTA PŘEJETÍ</string>
+    <string name="tap_a_swipe_to_configure">Klepněte na směr a vyberte, co otevře</string>
+    <string name="swipe_gesture_up">Přejet nahoru</string>
+    <string name="swipe_gesture_down">Přejet dolů</string>
+    <string name="swipe_gesture_left">Přejet vlevo</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Nahoru</string>
+    <string name="swipe_gesture_label_down">Dolů</string>
+    <string name="swipe_gesture_label_left">Vlevo</string>
+
+    <string name="screen_buttons">MINI TLAČÍTKA</string>
+    <string name="tap_a_screen_button_to_configure">Až tři viditelná tlačítka u spodního okraje obrazovky hodinek — klepnutím na pozici přiřadíte akci</string>
+    <string name="screen_button_1">Mini tlačítko 1 (vlevo)</string>
+    <string name="screen_button_2">Mini tlačítko 2 (uprostřed)</string>
+    <string name="screen_button_3">Mini tlačítko 3 (vpravo)</string>
+    <string name="screen_button_label_1">Tlačítko 1</string>
+    <string name="screen_button_label_2">Tlačítko 2</string>
+    <string name="screen_button_label_3">Tlačítko 3</string>
+    <string name="no_action">Žádná akce</string>
+    <string name="gesture_single_press">Jedno stisknutí</string>
+    <string name="gesture_double_press">Dvojité stisknutí</string>
+    <string name="gesture_long_press">Dlouhé stisknutí</string>
+    <string name="gesture_swipe_action">Akce</string>
+    <string name="center_button_quick_panel_note">Dvojité klepnutí doprostřed vždy otevře Rychlé akce. Dlouhé stisknutí spustí volbu z Nastavení → Chování. Ani jedno gesto se nezmění, když zde přiřadíte klepnutí doprostřed.</string>
+    <string name="start_playback">Spustit přehrávání</string>
+    <string name="uninstalled_app">Odinstalovaná aplikace</string>
+
+    <string name="play_app">Přehrát %1$s</string>
+    <string name="tasker_task">Úloha Tasker</string>
+    <string name="icon_selection_title">Výběr ikony</string>
+    <string name="icon_selection_gallery">Z galerie</string>
+    <string name="icon_selection_no_icon_pack">Tato funkce umožňuje vybrat vlastní ikonu pro akci z
+        nainstalovaného balíčku ikon.
+
+Zdá se však, že nemáte nainstalovaný žádný balíček ikon.</string>
+    <string name="icon_selection_no_storage_permission">Tato funkce umožňuje vybrat vlastní ikonu pro akci z
+        nainstalovaného balíčku ikon.
+
+Některé balíčky ikon vyžadují oprávnění aplikace k úložišti. Abyste tuto funkci mohli používat, budete jej muset povolit.</string>
+    <string name="delete">Smazat</string>
+    <string name="action_text">Text akce</string>
+    <string name="swap_action">Vyměnit akci</string>
+    <string name="open_actions_menu">Otevřít nabídku akcí</string>
+    <string name="open_playlist_menu">Zobrazit aktuální playlist</string>
+    <string name="misc_settings">Různá nastavení</string>
+
+    <string name="category_backup">Záloha</string>
+    <string name="export_config">Exportovat konfiguraci</string>
+    <string name="export_config_description">Uložit mapování tlačítek, seznam akcí a nastavení hodinek do souboru</string>
+    <string name="import_config">Importovat konfiguraci</string>
+    <string name="import_config_description">Obnovit mapování tlačítek, seznam akcí a nastavení hodinek ze souboru</string>
+    <string name="export_config_done">Konfigurace exportována</string>
+    <string name="export_config_failed">Konfiguraci se nepodařilo exportovat</string>
+    <string name="import_config_done_title">Import úspěšný</string>
+    <string name="import_config_done_message">Pro použití importované konfigurace je třeba Svartifoss restartovat.</string>
+    <string name="import_config_failed">Konfiguraci se nepodařilo importovat — soubor může být neplatný nebo z nekompatibilní verze</string>
+    <string name="action_restart_now">Restartovat nyní</string>
+
+    <string name="category_about">O aplikaci</string>
+    <string name="category_music_screen">Obrazovka hudby</string>
+    <string name="category_watch_screen">Obrazovka hodinek</string>
+    <string name="category_mini_buttons">Mini tlačítka</string>
+    <string name="category_screen_face">Vzhled přehrávače</string>
+    <string name="category_wf_screen_behavior">Chování obrazovky</string>
+    <string name="category_wf_player_progress">Průběh, posun a čas</string>
+    <string name="category_album_background">Pozadí alba</string>
+    <string name="category_music_colors">Barvy z hudby</string>
+    <string name="category_wf_typography_font">Písmo</string>
+    <string name="category_wf_typography_title">Název</string>
+    <string name="category_wf_typography_artist">Interpret</string>
+    <string name="category_wf_typography_icon">Ikona aplikace</string>
+    <string name="category_wf_typography_flex">Osy Google Sans Flex</string>
+    <string name="category_wf_metadata">Obsah ciferníku Metadata</string>
+    <string name="category_wf_typography_secondary">Text na ostatních obrazovkách</string>
+    <string name="category_wf_colors_title">Barvy názvu</string>
+    <string name="category_wf_colors_artist">Barvy interpreta</string>
+    <string name="category_wf_colors_clock">Barvy hodin</string>
+    <string name="setting_wear_font_flex_hint_title">O těchto ovládacích prvcích</string>
+    <string name="setting_wear_flex_axes_hint">Tyto volby dolaďují konkrétně Google Sans Flex — chcete-li je použít, vyberte toto písmo výše. Výše uvedená tloušťka/kurzíva názvu a interpreta již nastavuje vlastní osy tloušťky (wght) a sklonu (slnt) tohoto písma; čtyři ovládací prvky níže se použijí na celý ciferník.</string>
+    <string name="setting_wear_font_flex_width">Šířka</string>
+    <string name="setting_wear_font_flex_width_description">Vodorovné roztažení od zúženého po rozšířené (25–151). 100 je normální šířka písma.</string>
+    <string name="setting_wear_font_flex_optical_size">Optická velikost</string>
+    <string name="setting_wear_font_flex_optical_size_description">Upravuje detaily tahů podle efektivní velikosti textu (6–144). Nižší hodnoty jsou vhodné pro malý text, vyšší pro velký zobrazovaný text.</string>
+    <string name="setting_wear_font_flex_grade">Stupeň</string>
+    <string name="setting_wear_font_flex_grade_description">Mírně posune tloušťku bez změny rozložení (0–100) — jemný způsob zvýšení kontrastu na tmavé obrazovce.</string>
+    <string name="setting_wear_font_flex_roundness">Zaoblení</string>
+    <string name="setting_wear_font_flex_roundness_description">Mění zakončení tahů od ostrých (0) po zcela zaoblená (100) pro přívětivější dojem.</string>
+    <string name="preview_sample_title">Název skladby</string>
+    <string name="preview_sample_artist">Jméno interpreta</string>
+    <string name="preview_sample_next_title">Další skladba</string>
+    <string name="preview_playback_stopped">Zastaveno</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">předchozí řádek</string>
+    <string name="preview_verse_current">právě přehrávaný řádek</string>
+    <string name="preview_verse_next">a následující</string>
+    <string name="preview_chat_today">Dnes</string>
+    <string name="category_gestures">Gesta &amp; vstup</string>
+    <string name="category_watch_navigation">Navigace &amp; zkratky</string>
+    <string name="category_rotary_input">Otočný vstup &amp; ladění</string>
+    <string name="category_watch_feedback">Odezva &amp; chování při ukončení</string>
+    <string name="category_watch_display">Obrazovka hodinek</string>
+    <string name="setting_wear_keep_screen_on">Ponechat obrazovku zapnutou</string>
+    <string name="setting_wear_keep_screen_on_description">Zabrání zhasnutí obrazovky hodinek po vypršení systémového časového limitu nečinnosti, když je otevřená obrazovka Svartifoss. Spuštění zápěstí hodinky stále ztlumí — toto gesto řídí systém. Spotřebovává více baterie. Obrazovka textů písní zůstává zapnutá vždy bez ohledu na toto nastavení.</string>
+    <string name="setting_lyrics_enabled">Vyhledávat texty písní online</string>
+    <string name="setting_lyrics_enabled_description">Povolit telefonu načítat synchronizované texty z LRCLIB při otevření obrazovky textů na hodinkách. Odesílá se název skladby, interpret a délka; nic dalšího a nic se neukládá na disk. Po vypnutí obrazovka textů oznámí, že vyhledávání je zakázáno.</string>
+    <string name="setting_overlay_blur_radius">Rozostření překryvu</string>
+    <string name="setting_overlay_blur_radius_description">Síla rozostření (px) matného pozadí za kruhy hlasitosti/posuvu a panelem rychlých akcí — nezávisle na rozostření pozadí obalu alba</string>
+    <string name="category_action_list">Seznam akcí</string>
+    <string name="category_automation">Automatizace</string>
+    <string name="category_idle">Když se nic nepřehrává</string>
+    <string name="installed_version">Nainstalovaná verze</string>
+    <string name="get_support">Získat podporu</string>
+    <string name="get_support_description">Odeslat vývojáři protokoly aplikace pro podporu</string>
+    <string name="contact_developer">Kontaktovat vývojáře</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — kontakt</string>
+    <string name="contact_developer_chooser">Odeslat e-mail</string>
+    <string name="contact_developer_no_client">Není nainstalovaná žádná e-mailová aplikace. Adresa byla zkopírována do schránky.</string>
+    <string name="about_developer_title">O vývojáři</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss začal jako osobní projekt — chtěl jsem přivést Music Center for Wear na úroveň dnešních možností, jednoduše proto, abych ho mohl sám každý den používat. Výsledek byl natolik dobrý, že jsem se rozhodl podělit se o něj se všemi. Je to moje první aplikace a jen málo věcí se vyrovná pocitu, když vidíte, že něco, co jste vytvořili, je užitečné i pro ostatní.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Licence open source</string>
+    <string name="setting_always_show_time">Vždy zobrazovat čas</string>
+    <string name="setting_always_show_time_off_description">Aktuální čas se zobrazí pouze v ambientním režimu</string>
+    <string name="setting_always_show_time_on_description">Aktuální čas se zobrazí vždy. Ikona horní akce nebude viditelná (nahradí ji hodiny), ale akce bude dál fungovat normálně.</string>
+    <string name="tap_to_force_stop">Klepnutím zastavíte ovládání</string>
+    <string name="notification_action_stop">Zastavit</string>
+    <string name="notification_action_force_stop">Vynutit zastavení</string>
+    <string name="error_notification_access">Chybí přístup k oznámením. Zkontrolujte telefon.</string>
+    <string name="error_notifications">Chybová oznámení</string>
+    <string name="notification_access_notification_title">Svartifoss potřebuje přístup k oznámením</string>
+    <string name="notification_access_notification_title_description">Klepněte na toto oznámení a povolte Svartifoss, abyste problém vyřešili</string>
+    <string name="error_service_not_enabled">Je vyžadován přístup k oznámením</string>
+    <string name="error_service_not_enabled_description">Aby mohl Svartifoss ovládat hudbu z hodinek, potřebuje přístup k oznámením — Android mu tak umožňuje zjistit, která aplikace přehrává, a posílat jí příkazy přehrát, pozastavit a přeskočit.
+
+Svartifoss nikdy nečte obsah vašich oznámení. Toto oprávnění používá pouze k nalezení aktivní relace médií.
+
+Klepněte na \"Otevřít nastavení\" a poté v přístupu k oznámením zapněte Svartifoss.</string>
+    <string name="action_open_settings">Otevřít nastavení</string>
+    <string name="settings_search_title">Hledat v nastavení</string>
+    <string name="settings_search_hint">Hledat v nastavení</string>
+    <string name="settings_search_clear">Vymazat hledání</string>
+    <string name="settings_search_prompt">Hledejte podle názvu ve všech nastaveních v částech Nastavení a Vzhled hodinek.</string>
+    <string name="settings_search_no_results">Žádné nastavení neodpovídá.</string>
+    <string name="settings_search_prerequisite">Tato možnost závisí na jiné volbě. Upravte zde zobrazené nastavení, aby se zpřístupnila.</string>
+    <string name="setting_numeric_range_error">Zadejte hodnotu od %1$d do %2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">Klepnutím udělte oprávnění — ovládání přehrávání zůstane do té doby neaktivní</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Nainstalujte Svartifoss do hodinek</string>
+    <string name="no_watch_app_description">Svartifoss nenašel svou aplikaci pro hodinky na spárovaných hodinkách Wear OS. Aplikace v telefonu a hodinkách spolupracují — bez aplikace v hodinkách nebude ovládání přehrávání ze zápěstí fungovat.
+
+Svartifoss není v Obchodu Play — aplikace pro hodinky se instaluje samostatně mimo obchod (např. pomocí Wear Installer). Klepnutím na \"Zobrazit vydání\" otevřete stránku vydání na GitHubu a stáhnete APK pro hodinky. Pokud jste ji právě nainstalovali, dejte synchronizaci minutu na dokončení.</string>
+    <string name="no_watch_app_button">Zobrazit vydání</string>
+    <string name="required_permission">Požadované oprávnění</string>
+    <string name="setting_pause_on_swipe_exit">Pozastavit přehrávání při ukončení přejetím</string>
+    <string name="setting_pause_on_swipe_exit_description">Automaticky pozastaví veškeré přehrávání při ukončení Svartifoss na hodinkách gestem přejetí doleva.
+
+Ukončení pomocí tlačítka napájení není ovlivněno a nikdy nezpůsobí automatické pozastavení.</string>
+    <string name="setting_rotating_crown_off_period">Prodleva otočného vstupu po zapnutí obrazovky</string>
+    <string name="setting_rotating_crown_off_period_description">Otočné ovládací prvky (například otočné korunky) mohou být na některých zařízeních příliš citlivé. Aby se zabránilo nechtěným změnám hlasitosti, otočný vstup bude po zapnutí obrazovky vypnut na <![CDATA[<b>%1$s milisekund</b>]]>.</string>
+    <string name="setting_rotary_seek">Posouvat otočnou korunkou</string>
+    <string name="setting_rotary_seek_description">Když je zapnuto, otáčením korunky se místo změny hlasitosti posouváte v aktuální skladbě. Hlasitost lze stále měnit tlačítky na obrazovce nebo fyzickými tlačítky.</string>
+    <string name="setting_wear_rotary_action">Otočná korunka / luneta</string>
+    <string name="wear_rotary_action_volume">Změnit hlasitost</string>
+    <string name="wear_rotary_action_seek">Posouvat skladbu</string>
+    <string name="wear_rotary_action_off">Nedělat nic</string>
+    <string name="setting_rotating_sensitivity">Citlivost otočného vstupu</string>
+    <string name="setting_rotating_sensitivity_description">Citlivost otočného vstupu. Vyšší číslo znamená, že stejný pohyb otočné korunky zvýší hlasitost více. Aktuálně nastaveno na <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Zakázat dvojité stisknutí fyzického tlačítka v ambientním režimu</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Některé hodinky mají chybně fungující tlačítka, u nichž je jedno stisknutí fyzického tlačítka v ambientním režimu někdy zaznamenáno jako dvojité.
+
+Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v ambientním režimu úplně zakázat (např. dvě stisknutí provedou pouze akci jednoho stisknutí). Dvojité stisknutí tlačítka při aktivních hodinkách tím není ovlivněno.</string>
+    <string name="setting_haptic_feedback">Haptická odezva</string>
+    <string name="setting_haptic_feedback_description">Při stisknutí tlačítek zavibrovat hodinkami.</string>
+    <string name="setting_auto_start">Automaticky otevírat Svartifoss</string>
+    <string name="setting_auto_start_description">Automaticky otevřít Svartifoss na hodinkách, když v telefonu začne přehrávání hudby.</string>
+    <string name="setting_auto_start_apps_blacklist">Aplikace pro automatické spuštění</string>
+    <string name="setting_auto_start_apps_blacklist_description">Seznam mediálních aplikací, které mohou automaticky spustit Svartifoss</string>
+    <string name="setting_dim_album_art">Stínování přehrávače</string>
+    <string name="setting_dim_album_art_description">Přidat uživatelem zvolený efekt stínu mezi obal a ovládací prvky přehrávače.</string>
+    <string name="setting_album_art_style">Styl obalu alba</string>
+    <string name="setting_album_art_style_description">Zvolte vzhled pozadí právě přehrávané skladby na hodinkách.</string>
+    <string name="setting_album_art_blur_radius">Intenzita rozostření</string>
+    <string name="setting_album_art_blur_radius_description">Síla celoobrazovkového rozostření, kdykoli zvolené pozadí používá rozostření. Aktuálně <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Síla ztmavení</string>
+    <string name="setting_album_art_dim_strength_description">Jak výrazně je obal alba ztmaven kvůli čitelnosti textu. Aktuálně <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Styl stínování</string>
+    <string name="setting_player_shading_intensity">Intenzita stínování</string>
+    <string name="setting_player_shading_intensity_description">Jak výrazně stínování ztmavuje pozadí. 100%% je plná síla; pro větší kontrast lze nastavit více (až 150%%). Aktuálně <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Použít tento vzhled na všechny ciferníky</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Zkopírovat nastavení vzhledu tohoto ciferníku do všech ostatních ciferníků</string>
+    <string name="apply_appearance_confirm_title">Použít na všechny ciferníky?</string>
+    <string name="apply_appearance_confirm_message">Tím se přepíše nastavení vzhledu všech ostatních ciferníků aktuálním nastavením. Nastavení chování se nezmění.</string>
+    <string name="apply_appearance_confirm_button">Použít</string>
+    <string name="apply_appearance_done">Použito na všechny ciferníky</string>
+    <string name="category_wf_layout_actions">Rozložení</string>
+    <string name="setting_reset_appearance">Obnovit toto rozložení</string>
+    <string name="setting_reset_appearance_description">Vrátit vzhled tohoto ciferníku na původní výchozí hodnoty</string>
+    <string name="reset_appearance_confirm_title">Obnovit toto rozložení?</string>
+    <string name="reset_appearance_confirm_message">Nastavení vzhledu tohoto ciferníku se vrátí na výchozí hodnoty. Nastavení chování ani ostatní ciferníky nebudou ovlivněny.</string>
+    <string name="reset_appearance_confirm_button">Obnovit</string>
+    <string name="reset_appearance_done">Rozložení obnoveno na výchozí hodnoty</string>
+    <string name="setting_reset_all_faces">Obnovit všechny ciferníky na výchozí hodnoty</string>
+    <string name="setting_reset_all_faces_description">Vrátit vzhled všech vestavěných ciferníků na původní výchozí hodnoty</string>
+    <string name="reset_all_faces_confirm_title">Obnovit všechny ciferníky?</string>
+    <string name="reset_all_faces_confirm_message">Vzhled všech vestavěných ciferníků se vrátí na původní výchozí hodnoty a případný aktivní vlastní motiv se vypne. Uložené vlastní motivy, nastavení chování a vybraný ciferník zůstanou zachovány.</string>
+    <string name="reset_all_faces_confirm_button">Obnovit vše</string>
+    <string name="reset_all_faces_done">Všechny ciferníky obnoveny na výchozí hodnoty</string>
+    <string name="face_reset_migration_title">Aktualizujte vzhled hodinek</string>
+    <string name="face_reset_migration_message">Aktualizovali jste ze starší verze, ve které všechny ciferníky sdílely jednu sadu nastavení vzhledu. Každý ciferník si nyní pamatuje vlastní nastavení, takže stará nastavení mohou na cifernících, které jste přímo neupravovali, působit nesourodě. Doporučujeme obnovit všechny ciferníky na jejich nové výchozí hodnoty nebo vymazat data aplikace pro zcela čistý začátek.</string>
+    <string name="face_reset_migration_reset_button">Obnovit všechny ciferníky</string>
+    <string name="face_reset_migration_clear_data_button">Vymazat data aplikace</string>
+    <string name="setting_player_shading_color">Barva stínování</string>
+    <string name="setting_wear_shading_custom_color">Vlastní barva stínování</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Černá</item>
+        <item>Akcent alba</item>
+        <item>Odsycené album</item>
+        <item>Vlastní barva</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Podle motivu přehrávače</item>
+        <item>Vinětace okrajů</item>
+        <item>Vinětace okrajů (silná)</item>
+        <item>Vinětace okrajů (velmi silná)</item>
+        <item>Dolní roh</item>
+        <item>Dolní přechod</item>
+        <item>Podlaha a strop</item>
+        <item>Filtr přes celou obrazovku</item>
+        <item>Barevný závoj alba</item>
+        <item>Dvoubarevný přechod alba</item>
+        <item>Boční závěsy</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Krytí obalu alba v ambientním režimu</string>
+    <string name="setting_ambient_album_art_opacity_description">Jak viditelný zůstává obal alba v ambientním režimu. Aktuálně <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Časový limit překryvu hlasitosti/posuvu</string>
+    <string name="setting_volume_overlay_timeout_description">Jak dlouho zůstanou překryvy hlasitosti a posuvu na obrazovce po úpravě. Aktuálně <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Mrtvá zóna otočného ovládání</string>
+    <string name="setting_rotary_deadzone_description">Minimální pohyb korunky, než se projeví změny hlasitosti nebo posuvu. Pomáhá zabránit nechtěným úpravám. Aktuálně <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Prostředí Wear</string>
+    <string name="setting_swipe_gestures_hint">Gesta přejetí</string>
+    <string name="setting_swipe_gestures_hint_description">Přejetí nahoru/dolů/doleva může otevřít libovolnou akci. Klepnutím zde je nastavíte zvlášť pro Přehrává se hudba nebo Nic se nepřehrává. Přejetí doprava zůstává vyhrazeno pro ukončení aplikace.</string>
+    <string name="setting_screen_buttons_hint">Mini tlačítka</string>
+    <string name="setting_screen_buttons_hint_description">Až tři viditelná tlačítka, každé s akcí klepnutí a dlouhého stisknutí. Klepnutím zde je nastavíte zvlášť pro Přehrává se hudba nebo Nic se nepřehrává.</string>
+    <string name="dev_screen_buttons_offset">Poloha mini tlačítek</string>
+    <string name="dev_screen_buttons_offset_description">Preferovaná vzdálenost v dp mezi spodním okrajem obrazovky hodinek a mini tlačítky (výchozí 42). Řádek se stále automaticky posune, aby nepřekážel dlouhým názvům.</string>
+    <string name="setting_screen_buttons_tilt">Naklonění tlačítek</string>
+    <string name="setting_screen_buttons_tilt_description">Jak výrazně boční tlačítka kopírují zakřivení obrazovky. 0 = rovný řádek; 100 = plný oblouk se skloněnými ikonami.</string>
+    <string name="setting_screen_buttons_bg">Pozadí mini tlačítek</string>
+    <string name="setting_screen_buttons_opacity">Krytí mini tlačítek</string>
+    <string name="setting_screen_buttons_opacity_description">Krytí celé skupiny mini tlačítek (0–100%%). Aktuálně <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Panel rychlých akcí</string>
+    <string name="quick_panel_link_summary">Dvojitým klepnutím na střed obrazovky hodinek jej otevřete. Klepnutím zde nastavíte jeho čtyři pozice v Akcích.</string>
+    <string name="quick_panel_config_hint">Toto jsou tlačítka na panelu otevřeném dvojitým klepnutím na střed obrazovky hodinek. Klepnutím na řádek zvolíte jeho akci (\"Žádná\" jej skryje); dlouhým stisknutím obnovíte výchozí hodnotu.</string>
+    <string name="quick_panel_slot_1">Tlačítko 1</string>
+    <string name="quick_panel_slot_2">Tlačítko 2</string>
+    <string name="quick_panel_slot_3">Tlačítko 3</string>
+    <string name="quick_panel_slot_long">Dlouhé tlačítko</string>
+    <string name="quick_panel_slot_default">%1$s (výchozí)</string>
+    <string name="quick_panel_slot_hidden">Skryté</string>
+    <string name="quick_panel_default_like">To se mi líbí</string>
+    <string name="quick_panel_default_shuffle">Náhodné přehrávání</string>
+    <string name="quick_panel_default_repeat">Opakovat</string>
+    <string name="quick_panel_default_up_next">Další na řadě</string>
+    <string name="setting_wear_center_long_press_queue">Dlouhým stisknutím středu otevřít frontu</string>
+    <string name="setting_wear_center_long_press_queue_description">Dlouhým stisknutím středu obrazovky právě přehrávané skladby otevřít frontu přehrávání.</string>
+    <string name="setting_wear_center_long_press">Dlouhé stisknutí středu</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Změnit ciferník</item>
+        <item>Otevřít frontu</item>
+        <item>Nic</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Základní rozložení</string>
+    <string name="setting_wear_screen_face_description">Zvolte strukturu používanou tímto motivem. Uložené motivy mohou toto rozložení kombinovat s vlastním písmem, barvami, rozostřením, stínováním, AOD a panely.</string>
+    <string name="setting_wear_show_track_title">Zobrazit název skladby</string>
+    <string name="setting_wear_show_track_title_description">Zobrazit v přehrávači název aktuální skladby</string>
+    <string name="setting_wear_show_track_artist">Zobrazit jméno interpreta</string>
+    <string name="setting_wear_show_track_artist_description">Zobrazit v přehrávači aktuálního interpreta</string>
+    <string name="setting_wear_show_source_icon">Zobrazit ikonu přehrávající aplikace</string>
+    <string name="setting_wear_show_source_icon_description">Zobrazit vedle interpreta ikonu právě přehrávající aplikace. Používá ikonu z jejího mediálního oznámení. Když je vypnuto, ikona se do hodinek nikdy neposílá.</string>
+    <string name="setting_wear_player_controls_visible">Zobrazit ovládací prvky přehrávače</string>
+    <string name="setting_wear_player_controls_visible_description">Zobrazit nebo skrýt vestavěná tlačítka v rozloženích Classic, Poster, Studio a dalších konfigurovatelných rozloženích bez vypnutí jejich dotykových oblastí</string>
+    <string name="setting_wear_quadrant_tap_flash">Při klepnutí probliknout ikonou</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Když se spustí akce rohové zóny, její ikona krátce problikne v plném jasu — obzvlášť užitečné u motivu Skrytá obrazovka, kde je jinak ikona neviditelná a neposkytuje žádné potvrzení, která akce právě proběhla.</string>
+    <string name="setting_wear_internal_progress_visible">Indikátor průběhu rozložení</string>
+    <string name="setting_wear_internal_progress_visible_description">Zobrazit doplňkový indikátor průběhu navržený pro toto rozložení. Kruhy tlačítka přehrávání v rozloženích Expressive a Material jsou součástí jejich ovládání a zůstávají dostupné.</string>
+    <string name="setting_wear_edge_progress_visible">Zobrazit oblouk průběhu na okraji</string>
+    <string name="setting_wear_edge_progress_visible_description">Skrýt pouze vizuální oblouk kolem obrazovky. Posouvání po okraji zůstává samostatnou možností.</string>
+    <string name="setting_wear_edge_seek_enabled">Posouvat z okraje obrazovky</string>
+    <string name="setting_wear_edge_seek_enabled_description">Klepnutím nebo tažením podél okraje obrazovky přeskočit na přesné místo, i když je oblouk skrytý</string>
+    <string name="setting_wear_screen_theme">Styl ovládání</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Vyvážený</string>
+    <string name="wear_screen_theme_default_description">Standardní hierarchie a velikosti ovládacích prvků.</string>
+    <string name="wear_screen_theme_minimal">Minimální</string>
+    <string name="wear_screen_theme_minimal_description">Používá menší, nenápadnější ovládací prvky a přitom ponechává všechny akce viditelné a použitelné.</string>
+    <string name="wear_screen_theme_compact">Kompaktní</string>
+    <string name="wear_screen_theme_compact_description">Používá úspornější vzhled ovládání bez změny vašich akcí.</string>
+    <string name="wear_screen_theme_cinema">Kino</string>
+    <string name="wear_screen_theme_cinema_description">Zjemňuje ovládací prvky bez změny obalu.</string>
+    <string name="wear_screen_theme_vivid">Výrazný</string>
+    <string name="wear_screen_theme_vivid_description">Používá větší a výraznější ovládací prvky.</string>
+    <string name="wear_screen_theme_contrast">Vysoký kontrast</string>
+    <string name="wear_screen_theme_contrast_description">Používá větší ovládací prvky pro snazší čtení.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Používá kompaktní, mírně ztlumené ovládací prvky. Samotné pozadí neztmavuje — k tomu použijte nastavení pozadí.</string>
+    <string name="wear_screen_theme_hidden">Skryté</string>
+    <string name="wear_screen_theme_hidden_description">Úplně skryje všechny ikony ovládacích prvků. Dotykové oblasti zůstávají aktivní a plně funkční.</string>
+    <string name="setting_wear_font">Písmo</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Výchozí písmo aplikace.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Variabilní verze Google Sans s nastavitelnou šířkou, optickou velikostí, stupněm a zaoblením — zpřístupní ovládání os níže.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Klasické systémové písmo Androidu.</string>
+    <string name="wear_font_rounded">Zaoblené</string>
+    <string name="wear_font_rounded_description">Přátelské moderní tvary písmen s jemně zaoblenými zakončeními.</string>
+    <string name="wear_font_sans_light">Moderní lehké</string>
+    <string name="wear_font_sans_light_description">Čisté, vzdušné bezpatkové písmo s lehčí vizuální váhou.</string>
+    <string name="wear_font_sans_thin">Ultratenké</string>
+    <string name="wear_font_sans_thin_description">Mimořádně lehký zobrazovací styl pro minimalistický přehrávač.</string>
+    <string name="wear_font_sans_medium">Moderní střední</string>
+    <string name="wear_font_sans_medium_description">Ostré bezpatkové písmo se silnějšími, kompaktními tahy.</string>
+    <string name="wear_font_sans_black">Silné</string>
+    <string name="wear_font_sans_black_description">Výrazná zobrazovací rodina s maximálním vizuálním účinkem.</string>
+    <string name="wear_font_small_caps">Kapitálky</string>
+    <string name="wear_font_small_caps_description">Kompaktní tvary připomínající verzálky s redakčním dojmem.</string>
+    <string name="wear_font_casual">Neformální</string>
+    <string name="wear_font_casual_description">Hravá ručně psaná systémová rodina.</string>
+    <string name="wear_font_typewriter">Psací stroj (archivováno)</string>
+    <string name="wear_font_typewriter_description">Retro vzhled psacího stroje (Mom’s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Zaoblené geometrické bezpatkové písmo, bezplatná alternativa (OFL) v duchu Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Čisté geometrické bezpatkové písmo, bezplatná alternativa (OFL) v duchu Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Elegantní humanistická antikva, bezplatná alternativa (OFL) v duchu Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Měkčí styl psacího stroje (Love Letter Typewriter) — běžně vyhrazený pro skladby s motivem \"Lain\".</string>
+    <string name="wear_font_serif">Patkové</string>
+    <string name="wear_font_serif_description">Klasické patkové písmo.</string>
+    <string name="wear_font_serif_monospace">Patkové monospace</string>
+    <string name="wear_font_serif_monospace_description">Patková písmena s pevnou šířkou a osobitým redakčním/terminálovým vzhledem.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Technický vzhled s pevnou šířkou znaků.</string>
+    <string name="wear_font_condensed">Zúžené</string>
+    <string name="wear_font_condensed_description">Užší tvary písmen, díky kterým se vejde více textu.</string>
+    <string name="wear_font_condensed_light">Zúžené lehké</string>
+    <string name="wear_font_condensed_light_description">Úzká, lehčí rodina pro dlouhé názvy.</string>
+    <string name="wear_font_condensed_medium">Zúžené střední</string>
+    <string name="wear_font_condensed_medium_description">Úzká rodina se silnějšími tahy a výbornou čitelností.</string>
+    <string name="wear_font_cursive">Kurzíva</string>
+    <string name="wear_font_cursive_description">Dekorativní skriptové písmo.</string>
+    <string name="setting_wear_dynamic_accent">Dynamický akcent na hodinkách</string>
+    <string name="setting_wear_dynamic_accent_description">Přizpůsobovat barvy hodinek založené na albu aktuálnímu obalu. Když je vypnuto, volby barvy alba používají statický akcent motivu.</string>
+    <string name="setting_wear_album_art_fade">Přechod prolínání obalu alba</string>
+    <string name="setting_wear_album_art_fade_description">Při změně skladby plynule prolínat obal alba.</string>
+    <string name="setting_wear_title_text_mode">Chování textu názvu</string>
+    <string name="setting_wear_title_text_mode_description">Jak se chová název právě přehrávané skladby, když se nevejde: Automaticky kombinuje zmenšování, zalamování a posouvání; ostatní možnosti vynutí pouze jedno chování.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automaticky (zmenšit, pak zalomit, pak posouvat)</item>
+        <item>Posouvat (marquee)</item>
+        <item>Zalomit na dva řádky</item>
+        <item>Zalomit na tři řádky</item>
+        <item>Zalomit na pět řádků</item>
+        <item>Staticky (jeden řádek, bez posouvání a zmenšování)</item>
+        <item>Zmenšit, aby se vešlo</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Barva textu interpreta</string>
+    <string name="setting_wear_artist_custom_color">Vlastní barva interpreta</string>
+    <string name="setting_wear_artist_custom_color_description">Zvolte barvu interpreta použitou při úpravě Normální</string>
+    <string name="setting_wear_artist_desaturated">Odsycená barva interpreta</string>
+    <string name="setting_wear_artist_desaturated_description">Zjemnit barvu textu interpreta odvozenou z alba — platí pouze tehdy, když je \"Barva textu interpreta\" nastavena na Barva alba</string>
+
+    <string name="setting_wear_progress_color">Barva ukazatele průběhu</string>
+    <string name="setting_wear_progress_custom_color">Vlastní barva ukazatele průběhu</string>
+    <string name="setting_wear_progress_custom_color_description">Zvolte barvu průběhu a posuvu použitou při úpravě Normální</string>
+    <string name="setting_wear_progress_desaturated">Odsycená barva ukazatele průběhu</string>
+    <string name="setting_wear_progress_desaturated_description">Zjemnit barvu ukazatele průběhu odvozenou z alba — platí pouze tehdy, když je \"Barva ukazatele průběhu\" nastavena na Barva alba</string>
+
+    <string name="setting_wear_volume_color">Barva ukazatele hlasitosti</string>
+    <string name="setting_wear_volume_custom_color">Vlastní barva hlasitosti</string>
+    <string name="setting_wear_volume_custom_color_description">Zvolte barvu hlasitosti použitou při úpravě Normální</string>
+    <string name="setting_wear_quick_panel_color">Barva Rychlých akcí</string>
+    <string name="setting_wear_quick_panel_custom_color">Vlastní barva Rychlých akcí</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Zvolte barvu Rychlých akcí použitou při úpravě Normální</string>
+    <string name="setting_wear_shading_custom_color_description">Zvolte barvu tónování přechodu stínování</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Neutrální (statická barva motivu)</item>
+        <item>Barva alba</item>
+        <item>Vlastní barva</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Klasický</item>
+        <item>Expresivní</item>
+        <item>Vinyl</item>
+        <item>Plakát</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spektrum</item>
+        <item>Material</item>
+        <item>Pohlcující</item>
+        <item>Hloubka</item>
+        <item>Karusel</item>
+        <item>Chat</item>
+        <item>Rozdělený</item>
+        <item>Poznámka</item>
+        <item>Verš</item>
+        <item>Metadata</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Posouvání Expressive</string>
+    <string name="setting_wear_expressive_seek_mode_description">Jak se na ciferníku Expressive posouvat ve skladbě dotykem. Středový kruh umožní táhnout kruhem kolem tlačítka přehrávání; Okrajový kruh navíc zobrazí kruh lunety Classic; Žádný ponechá posouvání pouze otočné korunce.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Středový kruh</item>
+        <item>Okrajový kruh</item>
+        <item>Žádný</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Vždy zapnutý displej</string>
+    <string name="setting_wear_aod_style">Styl vždy zapnutého displeje</string>
+    <string name="setting_wear_aod_style_description">Jak vypadá obrazovka právě přehrávané skladby, když jsou hodinky v ambientním režimu. Podle ciferníku odpovídá vybranému ciferníku; Minimální zobrazuje pro co nejdelší výdrž baterie pouze ztlumený text na čistě černém pozadí.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Podle ciferníku</item>
+        <item>Klasický</item>
+        <item>Expressive (obrys)</item>
+        <item>Material (obrys)</item>
+        <item>Ovládání AMOLED</item>
+        <item>Chrono (velké hodiny)</item>
+        <item>Plakát</item>
+        <item>Studio</item>
+        <item>Pohlcující</item>
+        <item>Karusel</item>
+        <item>Chat</item>
+        <item>Rozdělený</item>
+        <item>Poznámka</item>
+        <item>Verš</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Barva vždy zapnutého displeje</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Bílá</item>
+        <item>Barva alba</item>
+        <item>Vlastní barva</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Bílá</item>
+        <item>Dynamická (podle oblasti pod hodinami)</item>
+        <item>Barva alba</item>
+        <item>Vlastní barva</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Podle stylu panelu</item>
+        <item>Průhledné (bez pozadí)</item>
+        <item>Akcent alba</item>
+        <item>Poloprůhledné</item>
+        <item>Bílá</item>
+        <item>Matná bílá</item>
+        <item>Černá</item>
+        <item>Dynamická (tón alba)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Pozadí štítku Další</string>
+    <string name="setting_wear_show_up_next_pill">Štítek Další v přehrávači</string>
+    <string name="setting_wear_show_up_next_pill_description">Zobrazit ve spodní části obrazovky právě přehrávané skladby štítek Další. Zabírá prostor, který by jinak využíval řádek mini tlačítek, takže se objeví jen tehdy, když tento řádek není zobrazen.</string>
+    <string name="category_wf_clock">Hodiny</string>
+    <string name="setting_wear_clock_color">Barva hodin</string>
+    <string name="setting_wear_clock_custom_color">Vlastní barva hodin</string>
+    <string name="setting_wear_clock_custom_color_description">Klepnutím vyberte barvu hodin použitou, když je Barva hodin nastavena na Vlastní barva</string>
+    <string name="setting_wear_clock_opacity">Krytí hodin</string>
+    <string name="setting_wear_clock_opacity_description">Jak neprůhledné jsou vždy zobrazené hodiny (10–100%%). Aktuálně <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Vlastní barva vždy zapnutého displeje</string>
+    <string name="setting_wear_aod_custom_color_description">Klepnutím vyberte barvu použitou pro text, ovládací prvky a hodiny vždy zapnutého displeje, když je \"Barva vždy zapnutého displeje\" nastavena na Vlastní barva</string>
+    <string name="setting_wear_aod_intensity">Jas vždy zapnutého displeje</string>
+    <string name="setting_wear_aod_intensity_description">Jak jasně se vykresluje vždy zapnutý displej (20–100%%). Nižší hodnota je tmavší a spotřebovává méně baterie. Aktuálně <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Tlačítka přehrávání na vždy zapnutém displeji</string>
+    <string name="setting_wear_aod_show_transport_description">Zobrazit obrysová tlačítka předchozí/přehrát/další v podporovaných vizuálních stylech vždy zapnutého displeje. Když je obrazovka ztlumená, nelze na ně klepnout, ale klepnutí hodinky probudí s tlačítkem už přímo pod prstem.</string>
+    <string name="setting_wear_aod_show_progress">Kruh průběhu na vždy zapnutém displeji</string>
+    <string name="setting_wear_aod_show_progress_description">Zobrazit v ambientním režimu kruh průběhu kolem tlačítka přehrávání — jeho poloha se tam aktualizuje přibližně jen jednou za minutu</string>
+    <string name="setting_wear_aod_show_pills">Další na vždy zapnutém displeji</string>
+    <string name="setting_wear_aod_show_pills_description">Zobrazit ve spodní části vizuálních stylů vždy zapnutého displeje statický obrysový štítek Další</string>
+    <string name="category_wf_gestures">Gesta obrazovky</string>
+    <string name="setting_wear_mini_buttons_mode">Zobrazit mini tlačítka</string>
+    <string name="setting_wear_gestures_mode">Gesta obrazovky</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Vždy</item>
+        <item>Pouze při přehrávání</item>
+        <item>Pouze při pozastavení</item>
+        <item>Nikdy</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Obal alba na vždy zapnutém displeji</string>
+    <string name="setting_wear_aod_show_art_description">Ponechat ztlumený obal alba viditelný v ambientním režimu. Po vypnutí se zobrazí čistě černé pozadí, které na AMOLED displejích znatelně šetří více baterie.</string>
+    <string name="setting_wear_aod_art_treatment">Styl obalu alba na vždy zapnutém displeji</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Jemné rozostření</item>
+        <item>Čistý obal</item>
+        <item>Monochromatické rozostření</item>
+        <item>Podle úpravy obalu v přehrávači</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Hodiny na vždy zapnutém displeji</string>
+    <string name="setting_wear_aod_show_clock_description">Zobrazit hodiny, když jsou hodinky v ambientním režimu</string>
+    <string name="setting_wear_aod_show_track_info">Informace o skladbě na vždy zapnutém displeji</string>
+    <string name="setting_wear_aod_show_track_info_description">Zobrazit v ambientním režimu název skladby a interpreta</string>
+
+    <string name="category_overlays_queue">Překryvy &amp; fronta</string>
+    <string name="category_wf_panel_shared">Sdílený vzhled panelů</string>
+    <string name="category_wf_panel_volume">Panel hlasitosti</string>
+    <string name="category_wf_panel_seek">Panel průběhu &amp; posuvu</string>
+    <string name="category_wf_panel_quick">Panel rychlých akcí</string>
+    <string name="category_wf_panel_queue">Fronta &amp; seznamy</string>
+    <string name="category_wf_panel_effects">Efekty panelu</string>
+    <string name="setting_wear_overlay_backdrop_style">Pozadí panelu</string>
+    <string name="setting_wear_volume_style">Styl hlasitosti</string>
+    <string name="setting_wear_volume_layout">Rozložení hlasitosti</string>
+    <string name="setting_wear_quick_panel_style">Styl rychlého panelu</string>
+    <string name="setting_wear_quick_panel_layout">Rozložení rychlého panelu</string>
+    <string name="setting_wear_quick_panel_source">Rychlé akce</string>
+    <string name="setting_wear_quick_panel_source_description">Vyberte svá nakonfigurovaná tlačítka nebo akce poskytované právě přehrávající aplikací.</string>
+    <string name="quick_panel_open_note_title">Otevření panelu</string>
+    <string name="quick_panel_open_note_description">Dvojitým klepnutím na střed obrazovky právě přehrávané skladby otevřete panel rychlých akcí na hodinkách.</string>
+    <string name="preview_current_app_action">Akce aktuální aplikace</string>
+    <string name="preview_notification_controls">Ikona z mediálního oznámení</string>
+    <string name="setting_wear_queue_style">Styl fronty</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Použít obaly zkratek jako pozadí</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Když je Styl fronty nastaven na variantu s obalem, řádek akce v rychlém panelu s načteným obalem zkratky (skladba, playlist, interpret…) také vyplní svůj štítek tímto obrázkem, podobně jako Další. Zkratky bez načteného obalu (pouze s ikonou aplikace) nejsou ovlivněny.</string>
+    <string name="setting_wear_list_row_size">Velikost štítků seznamu</string>
+    <string name="setting_wear_list_row_size_description">Výška řádků přes celou šířku ve frontě, nabídkách a rychlém panelu.</string>
+    <string name="setting_wear_progress_gradient">Prolnout paletu do kruhu</string>
+    <string name="setting_wear_progress_gradient_description">Při vícebarevné úpravě (Doplňková, Triadická, Analogická, Duotone) se plný kruh plynule prolíná všemi třemi barvami. Vypnutím získáte jednobarevný kruh, zatímco paleta alba zůstane všude jinde.</string>
+    <string name="setting_wear_progress_style">Styl kruhu průběhu</string>
+    <string name="setting_wear_seek_style">Styl hodnoty posuvu &amp; hlasitosti</string>
+    <string name="setting_wear_seek_layout">Rozložení panelu posuvu</string>
+    <string name="setting_wear_color_treatment">Barevná úprava hodinek</string>
+    <string name="setting_wear_normal_color">Normální barva</string>
+    <string name="setting_wear_normal_color_description">Zvolte jednu barvu používanou v režimu Normální pro akcenty názvu, průběh, hlasitost, panely a vzhled mini tlačítek</string>
+    <string name="setting_wear_normal_color_multi">Použít barevnou paletu</string>
+    <string name="setting_wear_normal_color_multi_description">Když je zapnuto, obrazovka používá hlavní barvu a dva podpůrné odstíny. Když je vypnuto, všude se používá jediná barva — vlastní barva alba nebo ta, kterou jste vybrali.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normální (zvolená barva)</item>
+        <item>Odsycená (jemná barva alba)</item>
+        <item>Expressive (celá paleta alba)</item>
+        <item>Doplňková (album + protilehlá)</item>
+        <item>Triadická (tři odstíny alba)</item>
+        <item>Analogická (sousední odstíny)</item>
+        <item>Monochromatická (jeden odstín, tři tóny)</item>
+        <item>Duotone (dvě barvy alba)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Podle úpravy hodinek</item>
+        <item>Normální (zvolená barva)</item>
+        <item>Odsycená (jemná barva alba)</item>
+        <item>Expressive (celá paleta alba)</item>
+        <item>Doplňková (album + protilehlá)</item>
+        <item>Triadická (tři odstíny alba)</item>
+        <item>Analogická (sousední odstíny)</item>
+        <item>Monochromatická (jeden odstín, tři tóny)</item>
+        <item>Duotone (dvě barvy alba)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Tloušťka názvu</string>
+    <string name="setting_wear_title_font_italic">Název kurzívou</string>
+    <string name="setting_wear_title_font_scale">Velikost názvu</string>
+    <string name="setting_wear_title_font_opacity">Krytí názvu</string>
+    <string name="setting_wear_title_font_tracking">Prostrkání názvu</string>
+    <string name="setting_wear_title_color">Barva textu názvu</string>
+    <string name="setting_wear_title_custom_color">Vlastní barva názvu</string>
+    <string name="wear_title_color_face_default">Výchozí pro ciferník (podle návrhu)</string>
+    <string name="setting_wear_title_adaptive_contrast">Přizpůsobit barvu názvu pro kontrast</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Zesvětlí nebo ztmaví název, když je jeho barva příliš podobná obalu za ním, přičemž zachová její odstín. Nemá vliv, pokud název používá výchozí nastavení ciferníku.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Přizpůsobit barvu interpreta pro kontrast</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Zesvětlí nebo ztmaví řádek interpreta, když je barva alba příliš podobná obalu za ním, přičemž zachová její odstín. Vyhodnocuje pouze pruh, na kterém řádek leží, nikoli celý obal.</string>
+    <string name="setting_wear_artist_font_weight">Tloušťka interpreta</string>
+    <string name="setting_wear_artist_font_italic">Interpret kurzívou</string>
+    <string name="setting_wear_artist_font_scale">Velikost interpreta</string>
+    <string name="setting_wear_artist_font_opacity">Krytí interpreta</string>
+    <string name="setting_wear_artist_font_tracking">Prostrkání interpreta</string>
+    <string name="setting_wear_source_icon_scale">Velikost ikony aplikace</string>
+    <string name="setting_wear_source_icon_opacity">Krytí ikony aplikace</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 je běžná tloušťka ciferníku; vyšší hodnota znamená tučnější písmo. U Google Sans Flex jde o vlastní osu tloušťky tohoto písma</string>
+    <string name="setting_wear_typography_scale_description">Procento vlastní velikosti ciferníku (70–140). 100 zachová navrženou velikost každého rozložení</string>
+    <string name="setting_wear_typography_opacity_description">Procento (20–100). 100 zachová vlastní krytí ciferníku</string>
+    <string name="setting_wear_typography_tracking_description">Dodatečná mezera mezi písmeny, ve setinách em (−5 až 20). 0 zachová vlastní rozestupy písma</string>
+    <string name="setting_wear_color_modifier">Tón</string>
+    <string name="setting_wear_color_modifier_description">Upravit celou paletu bez změny způsobu jejího odvození — funguje se všemi barevnými úpravami</string>
+    <string name="setting_wear_color_hue_shift">Posun barvy</string>
+    <string name="setting_wear_color_hue_shift_description">Otáčí paletu alba kolem barevného kruhu ve stupních (0–359). Každá úprava ponechává svou hlavní barvu na vlastním odstínu alba, takže právě tímto nastavením ji můžete obměnit. 0 použije barvu alba beze změny; pevná Normální barva se nikdy neposouvá.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Žádný</item>
+        <item>Sytá</item>
+        <item>Pastelová</item>
+        <item>Teplá</item>
+        <item>Studená</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Okrajový oblouk (vlevo)</item>
+        <item>Okrajový oblouk (vysoký)</item>
+        <item>Okrajový oblouk (vpravo)</item>
+        <item>Okrajový oblouk (nahoře)</item>
+        <item>Okrajový oblouk (dole)</item>
+        <item>Celý kruh</item>
+        <item>Středová záře</item>
+        <item>Vodorovný ukazatel</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Okrajový kruh</item>
+        <item>Okrajový kruh (tenký)</item>
+        <item>Okrajový kruh (silný)</item>
+        <item>Časová osa</item>
+        <item>Segmentovaná časová osa</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Nejprve metadata</item>
+        <item>Oblouk</item>
+        <item>Hlavní</item>
+        <item>Mřížka</item>
+        <item>Řádky s popisky</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Plná</item>
+        <item>Přerušovaná</item>
+        <item>Tečky</item>
+        <item>Vlasová čára</item>
+        <item>Kometa</item>
+        <item>60 teček hodinek</item>
+        <item>60 značek hodinek</item>
+        <item>12hodinové segmenty</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Jednoduché</item>
+        <item>Skleněný štítek</item>
+        <item>Štítek Expressive</item>
+        <item>Štítek Material</item>
+        <item>Bílý štítek</item>
+        <item>Obří</item>
+        <item>Pozice / celkem</item>
+        <item>Bílé sklo</item>
+        <item>Průsvitné album</item>
+        <item>Záře alba</item>
+        <item>Obrys</item>
+        <item>Plný motiv</item>
+        <item>Plné album</item>
+        <item>Mikro</item>
+        <item>Stín (bez rámečku)</item>
+        <item>Podtržení</item>
+        <item>Tenký obrys</item>
+        <item>Obří barva alba</item>
+        <item>Mono</item>
+        <item>Tmavá tónová</item>
+        <item>Terminál</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Nakonfigurovaná tlačítka</item>
+        <item>Z aktuální mediální aplikace</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Podle stylu panelu</item>
+        <item>Rozostření alba (akryl)</item>
+        <item>Plná černá</item>
+        <item>Plná barva alba</item>
+        <item>Sklo</item>
+        <item>Přechod alba</item>
+        <item>Duotone alba</item>
+        <item>Prizma</item>
+        <item>Tekuté sklo</item>
+        <item>Rozostření Expressive</item>
+        <item>Expresivní</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Sklo</item>
+        <item>Minimální (AMOLED)</item>
+        <item>Material</item>
+        <item>Tónové</item>
+        <item>Neonové</item>
+        <item>Světlé</item>
+        <item>Přechod</item>
+        <item>Mono</item>
+        <item>Obrys</item>
+        <item>Duotone</item>
+        <item>Prizma</item>
+        <item>Vysoký kontrast</item>
+        <item>Terminál</item>
+        <item>Námraza</item>
+        <item>Segmenty</item>
+        <item>Aurora</item>
+        <item>Inkoust</item>
+        <item>Drážka</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Kompaktní</item>
+        <item>Normální</item>
+        <item>Vysoké</item>
+        <item>Extra vysoké</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Sklo</item>
+        <item>Minimální (AMOLED)</item>
+        <item>Material</item>
+        <item>Tónové</item>
+        <item>Neonové</item>
+        <item>Světlé</item>
+        <item>Přechod</item>
+        <item>Mono</item>
+        <item>Obrys</item>
+        <item>Duotone</item>
+        <item>Prizma</item>
+        <item>Vysoký kontrast</item>
+        <item>Terminál</item>
+        <item>Námraza</item>
+        <item>Obal</item>
+            <item>Rozostřený obal</item>
+        <item>Tónový obal</item>
+        <item>Čtvercový obal</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Sklo</item>
+        <item>Bílé sklo</item>
+        <item>Tónové sklo</item>
+        <item>Minimální (AMOLED)</item>
+        <item>Material</item>
+        <item>Tónové</item>
+        <item>Neonové</item>
+        <item>Světlé</item>
+        <item>Přechod</item>
+        <item>Mono</item>
+        <item>Obrys</item>
+        <item>Obrysové bílé sklo</item>
+        <item>Duotone</item>
+        <item>Prizma</item>
+        <item>Vysoký kontrast</item>
+        <item>Terminál</item>
+        <item>Námraza</item>
+        <item>Duch (bez rámečku)</item>
+        <item>Opar</item>
+        <item>Inkoust</item>
+        <item>Tečka</item>
+        <item>Deska</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Ponechat aplikaci aktivní po pozastavení</string>
+    <string name="setting_wear_paused_hold_description">Jak dlouho zůstane aplikace v hodinkách dostupná z ciferníku po pozastavení, abyste mohli pokračovat zvednutím zápěstí místo jejího znovuotevření. Delší nastavení udržují službu spuštěnou na pozadí.</string>
+    <string name="wear_paused_hold_off">Neponechávat</string>
+    <string name="wear_paused_hold_5">5 minut</string>
+    <string name="wear_paused_hold_15">15 minut</string>
+    <string name="wear_paused_hold_30">30 minut</string>
+    <string name="wear_paused_hold_60">1 hodina</string>
+    <string name="wear_paused_hold_always">Do ukončení přehrávání</string>
+
+    <string name="setting_wear_idle_button_action">Tlačítko při nečinnosti</string>
+    <string name="setting_wear_idle_auto_open">Otevřít, když se nic nepřehrává</string>
+    <string name="setting_wear_idle_auto_open_description">Při otevření aplikace v hodinkách bez přehrávané hudby přejde rovnou na tuto obrazovku.</string>
+    <string name="wear_idle_action_resume">Pokračovat v poslední aplikaci</string>
+    <string name="wear_idle_action_shortcuts">Zkratky playlistů</string>
+    <string name="wear_idle_action_menu">Nabídka akcí</string>
+    <string name="wear_idle_action_search">Hledat</string>
+    <string name="wear_idle_action_queue">Nedávno přehrávané</string>
+    <string name="wear_idle_action_none">Žádné tlačítko</string>
+    <string name="wear_idle_auto_open_none">Zůstat v přehrávači</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Procházet knihovnu</string>
+    <string name="library_up">Zpět</string>
+    <string name="error_library_unavailable">Tato aplikace nemá knihovnu, kterou lze procházet</string>
+    <string name="error_library_empty">Nic tu není</string>
+    <string name="error_library_no_player">Nejprve spusťte přehrávání</string>
+
+    <string name="setting_wear_carousel_card_shape">Tvar karty karuselu</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Zaoblené</item>
+        <item>Čtverec</item>
+        <item>Zaoblený čtverec</item>
+        <item>Kruh</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Používat písmo všude</string>
+    <string name="setting_wear_font_all_screens_description">Použije vybrané písmo v nabídkách, frontě a Rychlých akcích, nejen v přehrávači. Dekorativní a ručně psaná písma mohou být v seznamech hůře čitelná.</string>
+
+    <string name="setting_wear_clock_font">Písmo hodin</string>
+    <string name="wear_clock_font_follow">Podle písma skladby</string>
+    <string name="setting_wear_lyrics_font">Písmo textů písní</string>
+    <string name="setting_wear_lyrics_font_description">Písmo slov písně na obrazovce textů a ciferníku Verse. Pokud zde žádné nevyberete, používá písmo skladby.</string>
+    <string name="wear_lyrics_font_follow">Podle písma skladby</string>
+    <string name="setting_wear_clock_font_weight">Tloušťka hodin</string>
+    <string name="setting_wear_clock_font_italic">Hodiny kurzívou</string>
+    <string name="setting_wear_clock_font_scale">Velikost hodin</string>
+    <string name="setting_wear_clock_font_tracking">Prostrkání hodin</string>
+    <string name="setting_wear_clock_adaptive_contrast">Přizpůsobit barvu hodin pro kontrast</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Zesvětlí nebo ztmaví hodiny, když je barva alba příliš podobná obalu za nimi, přičemž zachová její odstín. Platí pouze tehdy, když je barva hodin nastavena na Barva alba.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Zúžené verzálkové zobrazovací písmo — jako plakát, vhodné pro dlouhé názvy</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Kontrastní redakční patkové písmo — dojem časopisu</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Technické geometrické bezpatkové písmo s neobvyklými detaily</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Hranaté sci-fi zobrazovací písmo — výrazné a futuristické</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Ručně psaný skript — neformální a osobní</string>
+    <string name="setting_wear_track_time_mode">Zobrazení času skladby</string>
+    <string name="setting_wear_track_time_mode_description">Kdy se na obrazovce právě přehrávané skladby zobrazí poloha skladby (např. 1:23 / 3:45).</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Vždy</item>
+        <item>Pouze při přehrávání</item>
+        <item>Pouze při pozastavení</item>
+        <item>Nikdy</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Zakřivení mini tlačítek</string>
+    <string name="setting_screen_buttons_curve_description">Vyberte styl zakřivení mini tlačítek: plochý, oblouk, jemný, zakřivený.</string>
+    <string name="setting_screen_buttons_shape">Tvar mini tlačítek</string>
+    <string name="setting_screen_buttons_shape_description">Vyberte tvar a formát rozložení mini tlačítek.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pilulka (výchozí)</item>
+        <item>Kruh</item>
+        <item>Čtverec</item>
+        <item>Zaoblený čtverec (jemný)</item>
+        <item>Zaoblený čtverec (střední)</item>
+        <item>Zaoblený čtverec</item>
+        <item>List</item>
+        <item>Kapka</item>
+        <item>Pilulka (široká malá)</item>
+        <item>Pilulka (široká střední)</item>
+        <item>Pilulka (široká velká)</item>
+        <item>Pilulka (široká extra velká)</item>
+        <item>Zaoblený obdélník (malý)</item>
+        <item>Zaoblený obdélník (střední)</item>
+        <item>Zaoblený obdélník (velký)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Plochá</item>
+        <item>Oblouk</item>
+        <item>Mírné zakřivení</item>
+        <item>Jemné zakřivení</item>
+        <item>Střední zakřivení</item>
+        <item>Zakřivené</item>
+        <item>Extrémní zakřivení</item>
+        <item>Roztáhnout k okrajům</item>
+        <item>Levý okraj</item>
+        <item>Pravý okraj</item>
+        <item>Oba okraje</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Výchozí pozadí</item>
+        <item>Sklo (rovnoměrné)</item>
+        <item>Sklo (světlé)</item>
+        <item>Průsvitné album</item>
+        <item>Průsvitné album Exp</item>
+        <item>Záře alba</item>
+        <item>Záře Exp</item>
+        <item>Plný motiv</item>
+        <item>Plné album</item>
+        <item>Plné album Exp</item>
+        <item>Obrys</item>
+        <item>Obrys alba Exp</item>
+        <item>Pouze ikona (průhledná)</item>
+        <item>Ikona Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Neutrální</item>
+        <item>Barva alba</item>
+        <item>Vlastní barva</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Celý obal</item>
+        <item>Rozostřené pozadí</item>
+        <item>Matné okraje</item>
+        <item>Čtverec (ostré rohy)</item>
+        <item>Čtverec (jemné rohy)</item>
+        <item>Čtverec (zaoblené rohy)</item>
+        <item>Černobílé</item>
+        <item>Rozostřené černobílé</item>
+        <item>Rozostření Expressive</item>
+        <item>Expresivní</item>
+        <item>Tónový přechod Material</item>
+        <item>Plakátový obal</item>
+        <item>Přechod Studio</item>
+        <item>Radiální záře vinylu</item>
+        <item>Záře svatozáře</item>
+        <item>Pruhy polární záře</item>
+        <item>Spektrální přechod</item>
+        <item>Přejetí korony</item>
+        <item>Soumrakové prolínání</item>
+        <item>Rozkvět</item>
+        <item>Prolínání horizontu</item>
+        <item>Žhavá záře</item>
+        <item>Eclipse AMOLED černá</item>
+        <item>Skryté (plná černá)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Zakázáno</item>
+        <item>Zobrazit ikonu hudebního ciferníku (pouze pro Wear 3.0)</item>
+        <item>Otevřít Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Časový limit zavření</string>
+    <string name="setting_close_timeout_description">Svartifoss se automaticky zavře, pokud se po dobu <![CDATA[<b>%1$s sekund</b>]]> nepřehrává hudba. Funkce je vypnutá, když je časový limit nastaven na 0 sekund. Upozorňujeme, že kvůli úspoře baterie nemusí být tato možnost vždy zcela přesná a zavření se může opozdit až o minutu.</string>
+    <string name="setting_wear_close_on_idle">Zavřít při \"Nic se nepřehrává\"</string>
+    <string name="setting_wear_close_on_idle_description">Automaticky zavře aplikaci v hodinkách přibližně minutu poté, co přejde na neaktivní obrazovku \"Nic se nepřehrává\", takže na ní nikdy nezůstane zbytečně otevřená. Funguje nezávisle na časovém limitu zavření výše, který se vztahuje na pozastavenou skladbu.</string>
+    <string name="category_notifications">Vyskakovací oznámení</string>
+    <string name="setting_enable_notifications">Zobrazit vyskakovací oznámení</string>
+    <string name="setting_enable_notifications_description">Tato funkce vyžaduje jinou aplikaci pro správu oznámení (Vibration Center for Wear).
+
+Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací okno s textem oznámení, abyste si jej mohli rychle přečíst bez opuštění Svartifoss.</string>
+    <string name="setting_notification_timeout">Časový limit vyskakovacího oznámení</string>
+    <string name="setting_notification_timeout_description">Vyskakovací oznámení se automaticky zavře po <![CDATA[<b>%1$s sekundách</b>]]>. Zadáním 0 automatické zavření vypnete.</string>
+    <string name="app_required">Vyžadovaná aplikace</string>
+    <string name="vibration_center_required_description">K použití této funkce je třeba nainstalovat další (bezplatnou) aplikaci: Vibration Center for Wear.</string>
+    <string name="open_play_store">Otevřít Obchod Play</string>
+    <string name="error_no_notification_service_support">Litujeme, vaše zařízení zřejmě nepodporuje služby oznámení</string>
+    <string name="setting_always_select_center_action">Vždy vybrat prostřední akci</string>
+    <string name="setting_always_select_center_action_description">Když je zapnuto, klepnutí na seznam akcí vždy vybere prostřední (zvýrazněnou) možnost bez ohledu na to, na kterou možnost jste klepli.</string>
+    <string name="change_icon">Změnit ikonu</string>
+    <string name="please_wait">Počkejte prosím</string>
+
+    <string name="error_playlist_not_supported">Tato mediální aplikace není podporována</string>
+    <string name="error_search_no_results">Nebyly nalezeny žádné výsledky</string>
+    <string name="seconds_to_skip">Sekundy k přeskočení:</string>
+    <string name="seconds_to_reverse">Sekundy k návratu:</string>
+
+    <string name="setting_dynamic_accent_color">Dynamická barva akcentu</string>
+    <string name="setting_dynamic_accent_color_description">Když je zapnuto, barva akcentu (SeekBar, aktivní položka fronty) se automaticky přizpůsobuje dominantní barvě aktuálního obalu alba.</string>
+    <string name="setting_desaturated_color">Odsycená barva</string>
+    <string name="setting_desaturated_color_description">Upravuje sytost a jas získané barvy tak, aby zajistila vysokou čitelnost a kontrast podle aktivního motivu.</string>
+
+    <string name="queue_header">Fronta přehrávání</string>
+    <string name="queue_unavailable">Fronta není dostupná</string>
+
+    <string name="setting_custom_accent_color">Barva akcentu</string>
+    <string name="setting_custom_accent_color_description">Zvolte vlastní barvu akcentu rozhraní aplikace</string>
+    <string name="setting_mini_player">Mini přehrávač</string>
+    <string name="setting_mini_player_description">Kdykoli jsou média aktivní, zobrazuje nad spodní navigací trvalý panel právě přehrávané skladby. Ve výchozím nastavení je zapnutý; vypnutím získáte tento prostor zpět.</string>
+    <string name="color_picker_title">Zvolit barvu akcentu</string>
+    <string name="color_picker_reset">Obnovit</string>
+    <string name="color_picker_apply">Použít</string>
+    <string name="color_picker_default">Výchozí</string>
+    <string name="color_picker_invalid">Neplatný kód barvy</string>
+    <string name="color_picker_current">Aktuálně: %s</string>
+
+    <string name="drawer_version_format">Verze %1$s</string>
+    <string name="drawer_tagline">Doprovodná aplikace pro Wear OS</string>
+    <string name="drawer_about_heading">O aplikaci</string>
+    <string name="drawer_about_summary">Svartifoss vám umožňuje ovládat hudbu v telefonu z hodinek Wear OS — pomocí plně přizpůsobitelného dálkového ovladače uzpůsobeného vašemu zařízení.</string>
+    <string name="drawer_name_heading">Název</string>
+    <string name="drawer_name_meaning">Svartifoss znamená v islandštině „Černé vodopády“ — jméno pochází od vodopádu v národním parku Vatnajökull, kde tmavé čedičové sloupy rámují úzkou kaskádu. Stejně jako voda přes kámen proudí aplikací hudba.</string>
+    <string name="drawer_sync_heading">Synchronizace</string>
+    <string name="drawer_sync_summary">Nastavení hodinek se provádí zde v telefonu a automaticky se synchronizuje se spárovanými hodinkami.</string>
+    <string name="drawer_support_heading">Podpora</string>
+    <string name="drawer_support_summary">Svartifoss je zdarma a open source — pokud je pro vás užitečný, můžete mi koupit kávu :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Stáhnout obal</string>
+    <string name="album_art_saved">Obal uložen do galerie</string>
+    <string name="album_art_save_error">Obal se nepodařilo uložit</string>
+
+    <string name="action_play_liked_songs">Přehrát oblíbené skladby (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Přehrát oblíbené skladby (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Přehrát oblíbené skladby (SoundCloud)</string>
+    <string name="action_my_playlists">Streamovací zkratky</string>
+    <string name="action_play_specific_playlist">Otevřít streamovací zkratku</string>
+    <string name="action_choose_or_add_streaming_shortcut">Vybrat nebo přidat streamovací zkratku</string>
+    <string name="action_show_streaming_library">Zobrazit všechny uložené zkratky</string>
+    <string name="playlist_shortcut_pick_title">Vybrat zkratku</string>
+    <string name="playlist_shortcut_pick_empty">Zatím nejsou uloženy žádné streamovací zkratky — přidejte jednu níže a potom ji klepnutím vyberte</string>
+    <string name="playlist_shortcuts_empty">Zatím nejsou žádné streamovací zkratky — přidejte je v nastavení aplikace v telefonu</string>
+    <string name="setting_playlist_shortcuts">Streamovací zkratky</string>
+    <string name="setting_playlist_shortcuts_description">Otevírat sdílené odkazy z hodinek v YouTube Music, Spotify a dalších streamovacích aplikacích</string>
+    <string name="setting_shortcut_artwork">Načítat obrázky zkratek online</string>
+    <string name="setting_shortcut_artwork_description">Stáhnout náhled každé uložené zkratky ze služby a zobrazovat jej v seznamu v telefonu, nabídce hodinek a přiřazených tlačítkách. Každý náhled se načte pouze jednou; odesílá se jen veřejný odkaz ke sdílení. Ve výchozím nastavení vypnuto.</string>
+    <string name="setting_queue_local_artwork">Obaly fronty z vaší knihovny</string>
+    <string name="setting_queue_local_artwork_description">Lokální hudební přehrávače zveřejňují obaly fronty jako odkazy na knihovnu. Udělte přístup k médiím, aby je bylo možné zobrazit ve frontě na hodinkách. Přístup k internetu se nepoužívá.</string>
+    <string name="setting_queue_local_artwork_granted">Přístup k médiím udělen — místní obaly fronty se zobrazí</string>
+    <string name="setting_queue_local_artwork_denied">Přístup k médiím zamítnut. Chcete-li zobrazovat místní obaly fronty, povolte jej v nastavení Androidu.</string>
+    <string name="setting_queue_remote_artwork">Načítat obaly fronty online</string>
+    <string name="setting_queue_remote_artwork_short_description">Streamovací aplikace (klienti YouTube Music, Echo Music…) zveřejňují obaly fronty jako odkazy, nikoli obrázky, takže se zde stahují a ukládají do mezipaměti. Vypnutím zachováte frontu zcela offline — tyto řádky pak nebudou zobrazovat žádný obal.</string>
+    <string name="setting_queue_remote_artwork_description">Streamovací přehrávače zveřejňují obaly fronty jako odkazy, nikoli obrázky. Každý se jednou stáhne a uloží do mezipaměti tohoto telefonu, aby se mohl zobrazit ve frontě na hodinkách. Vyžádá se pouze URL obalu, kterou už přehrávač zveřejnil — žádný účet ani osobní údaje. Ve výchozím nastavení zapnuto; vypnutím zachováte frontu zcela offline.</string>
+    <string name="watch_streaming_shortcuts_empty">Přidat skladby, alba nebo playlisty pro Rychlé akce a nabídku hodinek</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d uložená zkratka · Dostupná v Rychlých akcích a nabídce hodinek</item>
+        <item quantity="few">%1$d uložené zkratky · Dostupné v Rychlých akcích a nabídce hodinek</item>
+        <item quantity="many">%1$d uložené zkratky · Dostupné v Rychlých akcích a nabídce hodinek</item>
+        <item quantity="other">%1$d uložených zkratek · Dostupných v Rychlých akcích a nabídce hodinek</item>
+    </plurals>
+    <string name="category_music_apps">Hudební aplikace &amp; služby</string>
+    <string name="category_apps_content">Texty písní &amp; metadata</string>
+    <string name="category_streaming_services">Streamovací zkratky</string>
+    <string name="category_queue_artwork">Obrázky fronty</string>
+    <string name="category_system_access">Přístup Androidu &amp; oznámení</string>
+    <string name="setting_apps_integrations">Podporované hudební služby</string>
+    <string name="setting_apps_integrations_description">Odkazy fungují s YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music a SoundCloud. Přístup k účtu není vyžadován.</string>
+    <string name="setting_apps_integrations_none">Nebyla zjištěna žádná podporovaná aplikace. Zkratky lze přesto otevřít v prohlížeči nebo jiné kompatibilní aplikaci.</string>
+    <string name="setting_apps_integrations_installed">Zjištěno %1$d z %2$d: %3$s</string>
+    <string name="setting_streaming_open_mode">Otevírat streamovací odkazy pomocí</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Zjištěná streamovací aplikace</item>
+        <item>Výchozí Android</item>
+        <item>Vždy se zeptat</item>
+    </string-array>
+    <string name="setting_persistent_notification">Spravovat oznámení \"Svartifoss aktivní\"</string>
+    <string name="setting_persistent_notification_description">Otevře nastavení tohoto oznámení v Androidu — můžete jej ztlumit, skrýt na zamčené obrazovce nebo jinak upravit. Nelze jej úplně vypnout: Android vyžaduje trvalé oznámení, když běží služba na pozadí komunikující s hodinkami.</string>
+    <string name="setting_notification_access">Přístup k mediálním oznámením</string>
+    <string name="setting_notification_access_enabled">Povoleno · Klepnutím zkontrolujete nastavení Androidu</string>
+    <string name="setting_notification_access_disabled">Nepovoleno · Vyžadováno pro mediální akce oznámení a filtry automatického spuštění</string>
+    <string name="setting_notification_access_unavailable">Nastavení přístupu k oznámením není na tomto zařízení dostupné</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d uložená zkratka · Klepnutím můžete spravovat nebo importovat odkazy</item>
+        <item quantity="few">%1$d uložené zkratky · Klepnutím můžete spravovat nebo importovat odkazy</item>
+        <item quantity="many">%1$d uložené zkratky · Klepnutím můžete spravovat nebo importovat odkazy</item>
+        <item quantity="other">%1$d uložených zkratek · Klepnutím můžete spravovat nebo importovat odkazy</item>
+    </plurals>
+    <string name="category_privacy">Soukromí</string>
+    <string name="setting_privacy_policy">Zásady ochrany soukromí</string>
+    <string name="setting_privacy_policy_description">Podívejte se, jaká data Svartifoss používá a které online služby jsou volitelné.</string>
+    <string name="setting_crash_reporting">Odesílat hlášení o pádech</string>
+    <string name="setting_crash_reporting_description">Odesílat diagnostická data Firebase Crashlytics, která pomáhají opravovat chyby. Ve výchozím nastavení zapnuto; kdykoli můžete vypnout.</string>
+    <string name="setting_announcements">Oznámení vývojáře</string>
+    <string name="setting_announcements_description">Příležitostná oznámení od vývojáře — nová vydání, důležitá upozornění. Odesílají se přes Firebase Cloud Messaging; není k tomu potřeba účet ani seznam uživatelů. Ve výchozím nastavení zapnuto; kdykoli můžete vypnout.</string>
+    <string name="announcement_notification_channel">Oznámení</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Sdílejte playlist, album nebo skladbu přímo do Svartifoss, vložte zkopírovaný odkaz nebo jej přidejte ručně. Hodinky požádají telefon o jeho otevření; přihlášení ke službě není potřeba.</string>
+    <string name="back">Zpět</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Vaše hudba na jedno klepnutí</string>
+    <string name="playlist_shortcuts_yours">Vaše zkratky</string>
+    <string name="playlist_shortcuts_empty_hint">Přidejte sdílený odkaz na skladbu, album nebo playlist, aby byl dostupný na hodinkách.</string>
+    <string name="playlist_shortcuts_add">Přidat zkratku</string>
+    <string name="playlist_shortcuts_paste">Vložit odkaz</string>
+    <string name="playlist_shortcuts_reload_covers">Znovu načíst obaly</string>
+    <string name="playlist_shortcuts_reloading_covers">Obaly se znovu načítají…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Obaly znovu načteny</string>
+    <string name="playlist_shortcuts_edit">Upravit zkratku</string>
+    <string name="playlist_shortcut_save">Uložit zkratku</string>
+    <string name="playlist_shortcut_editor_hint">Vložte jeden odkaz. Svartifoss automaticky rozpozná jeho aplikaci a typ obsahu.</string>
+    <string name="playlist_shortcut_detection_waiting">Čeká se na streamovací odkaz</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Podporovány jsou Spotify, YouTube Music, Apple Music, TIDAL, Deezer a další.</string>
+    <string name="playlist_shortcut_detected_format">Zjištěno: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Název</string>
+    <string name="playlist_shortcut_link_hint">Odkaz ke sdílení nebo URI aplikace</string>
+    <string name="playlist_shortcut_shuffle">Přehrát náhodně (pouze YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Odkaz</string>
+    <string name="playlist_type_track">Skladba</string>
+    <string name="playlist_type_playlist">Playlist</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">Interpret</string>
+    <string name="playlist_type_show">Pořad</string>
+    <string name="playlist_type_episode">Epizoda</string>
+    <string name="playlist_type_mix">Mix</string>
+    <string name="playlist_badge_shuffle">Náhodné přehrávání</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Zatím nebyly přidány žádné streamovací zkratky</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d uloženo</item>
+        <item quantity="few">%1$d uloženo</item>
+        <item quantity="many">%1$d uloženo</item>
+        <item quantity="other">%1$d uloženo</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Seřazené streamovací zkratky. Dotykem a podržením je můžete přetáhnout, použít akce přístupnosti Posunout nahoru nebo Posunout dolů, případně na klávesnici stisknout Ctrl+Nahoru/Dolů.</string>
+    <string name="playlist_shortcut_more_options">Další možnosti pro %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Upravit</string>
+    <string name="playlist_shortcut_menu_open">Otevřít nyní</string>
+    <string name="playlist_shortcut_menu_copy">Kopírovat odkaz</string>
+    <string name="playlist_shortcut_menu_duplicate">Duplikovat</string>
+    <string name="playlist_shortcut_menu_share">Sdílet</string>
+    <string name="playlist_shortcut_menu_delete">Smazat</string>
+    <string name="playlist_shortcut_open_failed">Tento odkaz nemůže otevřít žádná aplikace</string>
+    <string name="streaming_shortcut_choose_app">Otevřít streamovací odkaz pomocí</string>
+    <string name="playlist_shortcut_link_copied">Odkaz zkopírován</string>
+    <string name="playlist_shortcut_import_invalid">Sdílený text neobsahuje platný streamovací odkaz</string>
+    <string name="playlist_shortcut_clipboard_invalid">Schránka neobsahuje platný streamovací odkaz</string>
+    <string name="playlist_shortcut_name_required">Zadejte název zkratky</string>
+    <string name="playlist_shortcut_link_invalid">Zadejte platný webový odkaz nebo URI aplikace</string>
+    <string name="playlist_shortcut_service_invalid">Vložte platný odkaz, aby bylo možné rozpoznat jeho službu</string>
+    <string name="playlist_shortcut_service_generic">Kompatibilní odkaz · Android vybere aplikaci</string>
+    <string name="playlist_shortcut_service_installed">%1$s je nainstalováno · Připraveno k otevření v aplikaci</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s není nainstalováno · Lze použít prohlížeč nebo kompatibilní aplikaci</string>
+    <string name="playlist_shortcut_copy_name">Kopie %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s – kopie %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s vytvořeno</string>
+    <string name="playlist_shortcut_share_title">Sdílet streamovací zkratku</string>
+    <string name="playlist_shortcut_share_failed">Pro sdílení této zkratky není dostupná žádná aplikace</string>
+    <string name="playlist_shortcut_deleted">%1$s odstraněno</string>
+    <string name="playlist_shortcut_undo">Zpět</string>
+
+    <string name="action_play_liked_songs_shuffled">Přehrát oblíbené skladby náhodně (YT Music)</string>
+    <string name="action_search_history">Historie hledání</string>
+    <string name="search_history_empty">Zatím žádná nedávná hledání</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Aktualizace</string>
+    <string name="setting_update_check">Upozorňovat na nové verze</string>
+    <string name="setting_update_check_description">Přibližně jednou denně kontroluje nová vydání na GitHubu a zobrazí oznámení</string>
+    <string name="setting_update_prereleases">Zahrnout předběžná vydání</string>
+    <string name="setting_update_prereleases_description">Upozorňovat také na beta verze</string>
+    <string name="setting_update_check_now">Zkontrolovat aktualizace nyní</string>
+    <string name="setting_update_check_now_description">Zobrazí nejnovější verzi a umožní aktualizovat hodinky přes Bluetooth</string>
+    <string name="update_screen_title">Aktualizace</string>
+    <string name="update_cover_content_description">Svartifoss, vodopád, podle kterého je aplikace pojmenována</string>
+    <string name="update_notification_channel">Aktualizace aplikace</string>
+    <string name="update_available_title">Je dostupný Svartifoss %1$s</string>
+    <string name="update_notification_text">Klepnutím aktualizujete</string>
+    <string name="update_available_action">Je dostupná aktualizace</string>
+    <string name="update_installed_phone">Telefon: %1$s</string>
+    <string name="update_installed_versions">Telefon: %1$s · Hodinky: %2$s</string>
+    <string name="update_watch_version_unknown">neznámá</string>
+    <string name="update_checking">Kontrola aktualizací…</string>
+    <string name="update_check_failed">Aktualizace se nepodařilo zkontrolovat. Zkontrolujte připojení a zkuste to znovu.</string>
+    <string name="update_available_line">Nová verze: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(předběžné vydání)</string>
+    <string name="update_up_to_date">Používáte nejnovější verzi (%1$s)</string>
+    <string name="update_no_wear_asset">Toto vydání neobsahuje APK pro hodinky k odeslání.</string>
+    <string name="update_watch_hint">„Aktualizovat hodinky“ stáhne novou aplikaci pro hodinky a odešle ji přes Bluetooth — instalaci potvrdíte přímo na hodinkách, bez kabelu nebo Wear Installer.</string>
+    <string name="update_downloading">Stahování… %1$d%%</string>
+    <string name="update_connecting_watch">Připojování k hodinkám…</string>
+    <string name="update_transferring">Odesílání do hodinek… %1$d%%</string>
+    <string name="update_confirm_on_watch">Odesláno! Na hodinkách se zobrazilo oznámení — klepnutím na něj tam spustíte instalaci.</string>
+    <string name="update_no_watch">Nejsou připojeny žádné hodinky.</string>
+    <string name="update_push_failed">Odeslání aktualizace do hodinek se nezdařilo. Zkuste to znovu.</string>
+    <string name="update_watch_button">Aktualizovat hodinky</string>
+    <string name="update_open_release_button">Otevřít stránku vydání</string>
+    <string name="update_watch_behind">Vaše hodinky stále používají %1$s — odešlete jim aktualizaci níže.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Udržujte aplikace v telefonu a hodinkách synchronizované</string>
+    <string name="update_state_checking">Kontrola aktualizací…</string>
+    <string name="update_state_current">Máte aktuální verzi</string>
+    <string name="update_state_current_sub">Používáte nejnovější vydání, %1$s</string>
+    <string name="update_state_available">Je dostupná aktualizace</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Aktualizace se nepodařilo zkontrolovat</string>
+    <string name="update_state_failed_sub">Zkontrolujte připojení a zkuste to znovu</string>
+    <string name="update_device_phone">Telefon</string>
+    <string name="update_device_watch">Hodinky</string>
+    <string name="update_versions_header">Nainstalováno</string>
+    <string name="update_whats_new">Co je nového</string>
+    <string name="update_phone_button">Aktualizovat telefon</string>
+    <string name="update_installing">Otevírání instalátoru…</string>
+    <string name="update_install_permission_needed">Povolte instalaci aplikací ze Svartifoss a poté znovu klepněte na Aktualizovat telefon.</string>
+    <string name="update_phone_failed">Stažení aktualizace telefonu se nezdařilo. Zkuste to znovu.</string>
+    <string name="update_install_notification_title">Aktualizace Svartifoss</string>
+    <string name="update_install_notification_tap">Klepnutím nainstalujete novou verzi</string>
+    <string name="update_install_notification_failed">Instalace se nezdařila. V Nastavení povolte instalace ze Svartifoss a zkuste to znovu.</string>
+    <string name="setting_wear_album_accent_source">Zdroj akcentu alba</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Vyvážený</item>
+        <item>Nejsytější</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Vypnuto</item>
+        <item>Jemné</item>
+        <item>Standardní</item>
+        <item>Výrazné</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Spodní akcent</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Skladba</string>
+    <string name="preview_metadata_genre">Žánr</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Rok</string>
+    <string name="preview_metadata_format">Formát</string>
+    <string name="preview_metadata_bitrate">Datový tok</string>
+    <string name="preview_metadata_position">Pozice</string>
+    <string name="preview_metadata_output">Výstup</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Podrobnosti alba</string>
+    <string name="setting_wear_metadata_core_description">Album, interpret alba, pozice na nahrávce a délka.</string>
+    <string name="setting_wear_metadata_release">Podrobnosti vydání</string>
+    <string name="setting_wear_metadata_release_description">Žánr, rok, datum vydání a vydavatelství.</string>
+    <string name="setting_wear_metadata_credits">Autoři</string>
+    <string name="setting_wear_metadata_credits_description">Skladatel, textař a autor, pokud je přehrávač zveřejňuje.</string>
+    <string name="setting_wear_metadata_technical">Podrobnosti souboru</string>
+    <string name="setting_wear_metadata_technical_description">Formát, datový tok, vzorkovací frekvence, kanály a velikost. Pouze místní skladby.</string>
+    <string name="setting_split_panel">Rozdělený panel</string>
+    <string name="setting_split_panel_description">Co vyplňuje dolní polovinu ciferníku Split. Rozostřený obal pokračuje stejným obrázkem za textem; plná barva připomíná vzhled karty oznámení.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Rozostřený obal</item>
+        <item>Plná barva</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Podrobnosti přehrávání</string>
+    <string name="setting_wear_metadata_playback_description">Poloha na milisekundu, rychlost, zvukový výstup a místo, odkud se zvuk streamuje nebo přehrává — včetně adresy skladby. Jediný blok, který může streamovaná skladba vyplnit, když není k dispozici soubor k popisu.</string>
+    <string name="setting_wear_metadata_identifiers">Identifikátory</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC a katalogová ID. Ve výchozím nastavení vypnuto — užitečné, když je potřebujete, jinak jen rušivé.</string>
+    <string name="setting_metadata_lookup">Vyhledávat podrobnosti skladby online</string>
+    <string name="setting_metadata_lookup_description">Doplní údaje, které přehrávající aplikace nezveřejnila — ISRC, vydavatelství, datum vydání — z MusicBrainz, bezplatné veřejné databáze. Ve výchozím nastavení vypnuto. Ciferník Metadata funguje i bez toho; tato možnost pouze přidá řádky. Nic se neodesílá, dokud ji nezapnete a nevyberete tento ciferník, a odesílá se pouze název skladby a interpret.</string>
+</resources>

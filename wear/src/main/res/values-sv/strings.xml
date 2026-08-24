@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Spelas nu och mediekontroller</string>
+    <string name="complication_album_art_label">Omslag för det som spelas nu</string>
+    <string name="complication_no_music">Inget spelas</string>
+    <string name="tile_nothing_playing">Inget spelas</string>
+    <string name="tile_open_app">Öppna Svartifoss</string>
+    <string name="tile_rewind_10">Spola tillbaka 10 sekunder</string>
+    <string name="tile_forward_10">Hoppa fram 10 sekunder</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Dina streaminggenvägar, ett tryck bort</string>
+    <string name="shortcuts_tile_title">Genvägar</string>
+    <string name="shortcuts_tile_empty">Inga genvägar ännu</string>
+    <string name="shortcuts_tile_more">Mer i appen</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Inget spelas</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Spela något på telefonen</string>
+    <string name="idle_hint_resume">Tryck för att återuppta senaste appen</string>
+    <string name="idle_hint_shortcuts">Tryck för dina genvägar</string>
+    <string name="idle_hint_menu">Tryck för att öppna menyn</string>
+    <string name="idle_hint_search">Tryck för att söka</string>
+    <string name="idle_hint_queue">Tryck för nyligen spelat</string>
+    <string name="idle_resume">Återuppta uppspelning</string>
+    <string name="idle_action_shortcuts">Öppna genvägar</string>
+    <string name="idle_action_menu">Öppna menyn</string>
+    <string name="idle_action_search">Sök</string>
+    <string name="idle_action_queue">Öppna nyligen spelat</string>
+
+    <string name="no_phone">Ingen telefon ansluten</string>
+    <string name="playback_stopped">Stoppad</string>
+    <string name="error">FEL</string>
+    <string name="error_play_services">Fel i Play Services</string>
+    <string name="button">Knapp</string>
+    <string name="back_button">Tillbaka</string>
+    <string name="turn_bezel_cw">Vrid ramen medurs</string>
+    <string name="turn_bezel_ccw">Vrid ramen moturs</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Gilla</string>
+    <string name="quick_action_shuffle">Blanda</string>
+    <string name="quick_action_repeat">Upprepa</string>
+    <string name="quick_action_repeat_all">Upprepa alla</string>
+    <string name="quick_action_repeat_one">Upprepa en</string>
+    <string name="quick_action_up_next">Härnäst</string>
+    <string name="quick_actions_unavailable">Den aktuella appen har inga snabbåtgärder</string>
+    <string name="voice_search_prompt">Sök musik</string>
+    <string name="queue_empty">Ingen kö tillgänglig</string>
+    <string name="queue_now_playing">Spelas nu</string>
+    <string name="queue_load_more">Läs in fler</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Nyligen spelat</string>
+    <string name="queue_history_fallback_reason">Den här appen delar inte sin kö</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">I dag</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Urtavla</string>
+    <string name="face_picker_offline">Telefonen är inte ansluten — den här urtavlan används på klockan, men telefonen behåller inställningen</string>
+    <string name="face_picker_section_builtin">Inbyggda urtavlor</string>
+    <string name="face_picker_section_custom">Mina teman</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Baserat på %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Så använder du appen</string>
+    <string name="hint_edges">Tryck upptill, nedtill, till vänster eller höger — varje zon kör sin tilldelade åtgärd</string>
+    <string name="hint_center">Mitten — spela upp/pausa
+Dubbeltryck — snabbåtgärder
+Långtryck — välj urtavla (kan konfigureras)</string>
+    <string name="hint_swipe_up">Svep uppåt — åtgärdsmeny
+Nedåt eller åt vänster — tilldelade åtgärder
+Åt höger från kanten — avsluta</string>
+    <string name="hint_crown">Krona — volym eller sökning
+Sidoknappar — tilldelade åtgärder
+Anpassa allt under Kontroller och Klocka på telefonen</string>
+    <string name="hint_next">Nästa</string>
+    <string name="hint_dismiss">Klar</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Spela upp</string>
+    <string name="action_name_pause">Pausa</string>
+    <string name="action_name_skip_prev">Föregående spår</string>
+    <string name="action_name_skip_next">Nästa spår</string>
+    <string name="action_name_volume_up">Höj volymen</string>
+    <string name="action_name_volume_down">Sänk volymen</string>
+    <string name="action_name_open_menu">Öppna menyn</string>
+    <string name="action_name_skip_30">Hoppa fram 30 sekunder</string>
+    <string name="action_name_reverse_30">Spola tillbaka 30 sekunder</string>
+    <string name="action_name_play_pause">Spela upp/Pausa</string>
+    <string name="action_name_stop">Stoppa</string>
+    <string name="action_name_restart">Starta om spåret</string>
+    <string name="action_name_seek">Sök i spåret</string>
+    <string name="action_name_mute">Ljud av</string>
+    <string name="action_name_search">Sök</string>
+    <string name="action_name_custom">Anpassad åtgärd</string>
+    <string name="state_on">På</string>
+    <string name="state_off">Av</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Appuppdateringar</string>
+    <string name="update_install_title">Svartifoss-uppdatering</string>
+    <string name="update_install_tap">Tryck för att installera den nya versionen</string>
+    <string name="update_install_failed">Installationen misslyckades. Tillåt installationer från Svartifoss i klockans inställningar och försök igen från telefonen.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Spela härifrån</string>
+    <string name="lyrics_none">Ingen låttext hittades för det här spåret</string>
+    <string name="lyrics_failed">Det gick inte att hämta låttexten. Kontrollera telefonens anslutning.</string>
+    <string name="lyrics_disabled">Sökning efter låttexter är avstängd i telefonens inställningar</string>
+    <string name="lyrics_no_track">Inget spelas</string>
+    <string name="metadata_none">Inga detaljer för det här spåret</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Albumartist</string>
+    <string name="metadata_track">Spår</string>
+    <string name="metadata_duration">Längd</string>
+    <string name="metadata_genre">Genre</string>
+    <string name="metadata_year">År</string>
+    <string name="metadata_released">Utgiven</string>
+    <string name="metadata_label">Skivbolag</string>
+    <string name="metadata_country">Land</string>
+    <string name="metadata_composer">Kompositör</string>
+    <string name="metadata_writer">Textförfattare</string>
+    <string name="metadata_author">Författare</string>
+    <string name="metadata_codec">Format</string>
+    <string name="metadata_bitrate">Bithastighet</string>
+    <string name="metadata_sample_rate">Samplingsfrekvens</string>
+    <string name="metadata_channels">Kanaler</string>
+    <string name="metadata_file_size">Storlek</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Utgåve-ID</string>
+    <string name="metadata_compilation">Samling</string>
+    <string name="metadata_value_yes">Ja</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Position</string>
+    <string name="metadata_speed">Hastighet</string>
+    <string name="metadata_output">Utgång</string>
+    <string name="metadata_output_speaker">Telefonhögtalare</string>
+    <string name="metadata_output_wired">Hörlurar</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB-ljud</string>
+    <string name="metadata_output_remote">Castar</string>
+    <string name="metadata_origin">Källa</string>
+    <string name="metadata_origin_stream">Ström</string>
+    <string name="metadata_origin_local">Fil på telefonen</string>
+    <string name="metadata_host">Värd</string>
+    <string name="metadata_file">Fil</string>
+    <string name="metadata_download">Hämta</string>
+    <string name="metadata_download_no">Inte hämtad</string>
+    <string name="metadata_download_running">Hämtar</string>
+    <string name="metadata_download_yes">Hämtad</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Om</string>
+    <string name="metadata_source">Spelas i</string>
+</resources>

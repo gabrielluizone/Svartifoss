@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">테마 관리</string>
+    <string name="watch_theme_builtin_subtitle">기본 제공 테마 · %1$s 레이아웃</string>
+    <string name="watch_theme_custom_subtitle">사용자 지정 테마 · %1$s 레이아웃</string>
+    <string name="watch_theme_unknown_name">알 수 없는 테마</string>
+
+    <string name="watch_themes_title">시계 테마</string>
+    <string name="watch_theme_active_label">적용된 테마</string>
+    <string name="watch_theme_active_layout">레이아웃: %1$s</string>
+    <string name="watch_theme_preview_description">현재 시계에 적용된 테마 미리보기</string>
+    <string name="watch_theme_create">테마 만들기</string>
+    <string name="watch_theme_create_title">새 테마 만들기</string>
+    <string name="watch_theme_rename_title">테마 이름 바꾸기</string>
+    <string name="watch_theme_name">테마 이름</string>
+    <string name="watch_theme_base_layout">기본 레이아웃</string>
+    <string name="watch_theme_default_name">내 %1$s 테마</string>
+    <string name="watch_theme_generic_name">테마</string>
+    <string name="watch_theme_copy_name">%1$s 복사본</string>
+    <string name="watch_theme_built_in_section">기본 제공 테마</string>
+    <string name="watch_theme_custom_section">내 테마</string>
+    <string name="watch_theme_applied">적용됨</string>
+    <string name="watch_theme_apply_success">%1$s 테마가 시계에 적용됨</string>
+    <string name="watch_theme_apply_error">이 테마를 적용하지 못했습니다</string>
+    <string name="watch_theme_more_options">테마 추가 옵션</string>
+    <string name="watch_theme_list_description">기본 제공 및 사용자 지정 시계 테마</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. 탭하여 적용하세요.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. 현재 적용됨.</string>
+    <string name="watch_theme_rename">이름 바꾸기</string>
+    <string name="watch_theme_customize">사용자 지정</string>
+    <string name="watch_theme_duplicate">복제</string>
+    <string name="watch_theme_delete">삭제</string>
+    <string name="watch_theme_delete_title">“%1$s” 삭제?</string>
+    <string name="watch_theme_delete_message">저장된 이 테마와 설정이 영구적으로 삭제됩니다.</string>
+    <string name="watch_theme_deleted">테마가 삭제되었습니다</string>
+    <string name="watch_theme_duplicated">“%1$s” 생성됨</string>
+    <string name="watch_theme_limit_reached">사용자 지정 테마는 최대 24개까지 저장할 수 있습니다. 새로 만들기 전에 하나를 삭제하세요.</string>
+    <string name="watch_theme_name_required">테마 이름 입력</string>
+    <string name="watch_theme_name_duplicate">같은 이름의 테마가 이미 있습니다</string>
+
+    <string name="watch_theme_face_classic">클래식</string>
+    <string name="watch_theme_face_expressive">익스프레시브</string>
+    <string name="watch_theme_face_vinyl">바이닐</string>
+    <string name="watch_theme_face_poster">포스터</string>
+    <string name="watch_theme_face_studio">스튜디오</string>
+    <string name="watch_theme_face_halo">헤일로</string>
+    <string name="watch_theme_face_aurora">오로라</string>
+    <string name="watch_theme_face_eclipse">이클립스 AMOLED</string>
+    <string name="watch_theme_face_spectrum">스펙트럼</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">몰입형</string>
+    <string name="watch_theme_face_depth">깊이</string>
+    <string name="watch_theme_face_carousel">캐러셀</string>
+    <string name="watch_theme_face_chat">채팅</string>
+    <string name="watch_theme_face_split">분할</string>
+    <string name="watch_theme_face_note">노트</string>
+    <string name="watch_theme_face_verse">가사</string>
+    <string name="watch_theme_face_metadata">메타데이터</string>
+</resources>

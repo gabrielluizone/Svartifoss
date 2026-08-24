@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Đang phát và các nút điều khiển</string>
+    <string name="complication_album_art_label">Ảnh bìa bài đang phát</string>
+    <string name="complication_no_music">Không có gì đang phát</string>
+    <string name="tile_nothing_playing">Không có gì đang phát</string>
+    <string name="tile_open_app">Mở Svartifoss</string>
+    <string name="tile_rewind_10">Tua lại 10 giây</string>
+    <string name="tile_forward_10">Tua tới 10 giây</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Lối tắt phát nhạc trực tuyến của bạn, chỉ cách một chạm</string>
+    <string name="shortcuts_tile_title">Lối tắt</string>
+    <string name="shortcuts_tile_empty">Chưa có lối tắt nào</string>
+    <string name="shortcuts_tile_more">Xem thêm trong ứng dụng</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Không có gì đang phát</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Hãy phát nhạc gì đó trên điện thoại của bạn</string>
+    <string name="idle_hint_resume">Nhấn để tiếp tục ứng dụng gần nhất</string>
+    <string name="idle_hint_shortcuts">Nhấn để xem lối tắt của bạn</string>
+    <string name="idle_hint_menu">Nhấn để mở menu</string>
+    <string name="idle_hint_search">Nhấn để tìm kiếm</string>
+    <string name="idle_hint_queue">Nhấn để xem danh sách vừa phát</string>
+    <string name="idle_resume">Tiếp tục phát</string>
+    <string name="idle_action_shortcuts">Mở lối tắt</string>
+    <string name="idle_action_menu">Mở menu</string>
+    <string name="idle_action_search">Tìm kiếm</string>
+    <string name="idle_action_queue">Mở danh sách vừa phát</string>
+
+    <string name="no_phone">Chưa kết nối điện thoại</string>
+    <string name="playback_stopped">Đã dừng</string>
+    <string name="error">LỖI</string>
+    <string name="error_play_services">Lỗi Play Services</string>
+    <string name="button">Nút</string>
+    <string name="back_button">Quay lại</string>
+    <string name="turn_bezel_cw">Xoay viền theo chiều kim đồng hồ</string>
+    <string name="turn_bezel_ccw">Xoay viền ngược chiều kim đồng hồ</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Thích</string>
+    <string name="quick_action_shuffle">Phát ngẫu nhiên</string>
+    <string name="quick_action_repeat">Lặp lại</string>
+    <string name="quick_action_repeat_all">Lặp lại tất cả</string>
+    <string name="quick_action_repeat_one">Lặp lại một bài</string>
+    <string name="quick_action_up_next">Tiếp theo</string>
+    <string name="quick_actions_unavailable">Ứng dụng hiện tại không có thao tác nhanh</string>
+    <string name="voice_search_prompt">Tìm nhạc</string>
+    <string name="queue_empty">Không có danh sách phát</string>
+    <string name="queue_now_playing">Đang phát</string>
+    <string name="queue_load_more">Tải thêm</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Vừa phát</string>
+    <string name="queue_history_fallback_reason">Ứng dụng này không chia sẻ danh sách phát của nó</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Hôm nay</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Mặt đồng hồ</string>
+    <string name="face_picker_offline">Điện thoại chưa kết nối — mặt đồng hồ này sẽ được áp dụng trên đồng hồ, nhưng điện thoại vẫn giữ thiết lập</string>
+    <string name="face_picker_section_builtin">Mặt đồng hồ tích hợp sẵn</string>
+    <string name="face_picker_section_custom">Chủ đề của tôi</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Dựa trên %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Cách sử dụng</string>
+    <string name="hint_edges">Nhấn vào trên, dưới, trái hoặc phải — mỗi vùng sẽ thực hiện thao tác đã gán</string>
+    <string name="hint_center">Giữa màn hình — phát/tạm dừng\nNhấn đúp — thao tác nhanh\nNhấn giữ — chọn mặt đồng hồ (có thể tùy chỉnh)</string>
+    <string name="hint_swipe_up">Vuốt lên — menu thao tác\nVuốt xuống hoặc sang trái — thao tác đã gán\nVuốt từ mép sang phải — thoát</string>
+    <string name="hint_crown">Núm xoay — âm lượng hoặc tua bài\nNút bên hông — thao tác đã gán\nTùy chỉnh mọi thứ trong mục Điều khiển và Đồng hồ trên điện thoại của bạn</string>
+    <string name="hint_next">Tiếp theo</string>
+    <string name="hint_dismiss">Xong</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Phát</string>
+    <string name="action_name_pause">Tạm dừng</string>
+    <string name="action_name_skip_prev">Bài trước</string>
+    <string name="action_name_skip_next">Bài tiếp theo</string>
+    <string name="action_name_volume_up">Tăng âm lượng</string>
+    <string name="action_name_volume_down">Giảm âm lượng</string>
+    <string name="action_name_open_menu">Mở menu</string>
+    <string name="action_name_skip_30">Tua tới 30 giây</string>
+    <string name="action_name_reverse_30">Tua lại 30 giây</string>
+    <string name="action_name_play_pause">Phát/Tạm dừng</string>
+    <string name="action_name_stop">Dừng</string>
+    <string name="action_name_restart">Phát lại từ đầu</string>
+    <string name="action_name_seek">Tua trong bài hát</string>
+    <string name="action_name_mute">Tắt tiếng</string>
+    <string name="action_name_search">Tìm kiếm</string>
+    <string name="action_name_custom">Thao tác tùy chỉnh</string>
+    <string name="state_on">Bật</string>
+    <string name="state_off">Tắt</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Cập nhật ứng dụng</string>
+    <string name="update_install_title">Cập nhật Svartifoss</string>
+    <string name="update_install_tap">Nhấn để cài đặt phiên bản mới</string>
+    <string name="update_install_failed">Cài đặt không thành công. Hãy cho phép cài đặt từ Svartifoss trong thiết lập đồng hồ rồi thử lại từ điện thoại.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Phát từ đây</string>
+    <string name="lyrics_none">Không tìm thấy lời bài hát cho bản nhạc này</string>
+    <string name="lyrics_failed">Không thể tải lời bài hát. Hãy kiểm tra kết nối của điện thoại.</string>
+    <string name="lyrics_disabled">Tính năng tra lời bài hát đang tắt trong thiết lập điện thoại</string>
+    <string name="lyrics_no_track">Không có gì đang phát</string>
+    <string name="metadata_none">Không có chi tiết cho bản nhạc này</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Nghệ sĩ album</string>
+    <string name="metadata_track">Số bài</string>
+    <string name="metadata_duration">Thời lượng</string>
+    <string name="metadata_genre">Thể loại</string>
+    <string name="metadata_year">Năm</string>
+    <string name="metadata_released">Phát hành</string>
+    <string name="metadata_label">Hãng đĩa</string>
+    <string name="metadata_country">Quốc gia</string>
+    <string name="metadata_composer">Nhà soạn nhạc</string>
+    <string name="metadata_writer">Tác giả lời</string>
+    <string name="metadata_author">Tác giả</string>
+    <string name="metadata_codec">Định dạng</string>
+    <string name="metadata_bitrate">Tốc độ bit</string>
+    <string name="metadata_sample_rate">Tần số lấy mẫu</string>
+    <string name="metadata_channels">Kênh</string>
+    <string name="metadata_file_size">Dung lượng</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID phát hành</string>
+    <string name="metadata_compilation">Tuyển tập</string>
+    <string name="metadata_value_yes">Có</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Vị trí</string>
+    <string name="metadata_speed">Tốc độ</string>
+    <string name="metadata_output">Đầu ra</string>
+    <string name="metadata_output_speaker">Loa điện thoại</string>
+    <string name="metadata_output_wired">Tai nghe</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">Âm thanh USB</string>
+    <string name="metadata_output_remote">Truyền phát</string>
+    <string name="metadata_origin">Nguồn</string>
+    <string name="metadata_origin_stream">Trực tuyến</string>
+    <string name="metadata_origin_local">Tệp trên điện thoại</string>
+    <string name="metadata_host">Máy chủ</string>
+    <string name="metadata_file">Tệp</string>
+    <string name="metadata_download">Tải xuống</string>
+    <string name="metadata_download_no">Chưa tải xuống</string>
+    <string name="metadata_download_running">Đang tải xuống</string>
+    <string name="metadata_download_yes">Đã tải xuống</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Về bản nhạc</string>
+    <string name="metadata_source">Đang phát trong</string>
+</resources>

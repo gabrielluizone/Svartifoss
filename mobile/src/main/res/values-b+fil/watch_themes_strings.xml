@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Pamahalaan ang mga theme</string>
+    <string name="watch_theme_builtin_subtitle">Built-in na theme · %1$s layout</string>
+    <string name="watch_theme_custom_subtitle">Custom na theme · %1$s layout</string>
+    <string name="watch_theme_unknown_name">Hindi kilalang theme</string>
+
+    <string name="watch_themes_title">Mga watch theme</string>
+    <string name="watch_theme_active_label">NAKA-APPLY NA THEME</string>
+    <string name="watch_theme_active_layout">Layout: %1$s</string>
+    <string name="watch_theme_preview_description">Preview ng theme na kasalukuyang naka-apply sa relo</string>
+    <string name="watch_theme_create">Gumawa ng theme</string>
+    <string name="watch_theme_create_title">Gumawa ng bagong theme</string>
+    <string name="watch_theme_rename_title">Palitan ang pangalan ng theme</string>
+    <string name="watch_theme_name">Pangalan ng theme</string>
+    <string name="watch_theme_base_layout">Pangunahing layout</string>
+    <string name="watch_theme_default_name">Aking %1$s theme</string>
+    <string name="watch_theme_generic_name">Tema</string>
+    <string name="watch_theme_copy_name">Kopya ng %1$s</string>
+    <string name="watch_theme_built_in_section">Mga built-in na theme</string>
+    <string name="watch_theme_custom_section">Mga theme ko</string>
+    <string name="watch_theme_applied">NAKA-APPLY</string>
+    <string name="watch_theme_apply_success">Na-apply ang %1$s sa relo mo</string>
+    <string name="watch_theme_apply_error">Hindi ma-apply ang theme na ito</string>
+    <string name="watch_theme_more_options">Higit pang opsyon sa theme</string>
+    <string name="watch_theme_list_description">Mga built-in at custom na watch theme</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. I-tap para i-apply.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Kasalukuyang naka-apply.</string>
+    <string name="watch_theme_rename">Palitan ang pangalan</string>
+    <string name="watch_theme_customize">I-customize</string>
+    <string name="watch_theme_duplicate">Gumawa ng kopya</string>
+    <string name="watch_theme_delete">Tanggalin</string>
+    <string name="watch_theme_delete_title">Tanggalin ang “%1$s”?</string>
+    <string name="watch_theme_delete_message">Permanenteng aalisin ang naka-save na theme na ito at ang mga setting nito.</string>
+    <string name="watch_theme_deleted">Tinanggal ang theme</string>
+    <string name="watch_theme_duplicated">Ginawa ang “%1$s”</string>
+    <string name="watch_theme_limit_reached">Maaari kang mag-save ng hanggang 24 custom na theme. Magtanggal muna ng isa bago gumawa ng panibago.</string>
+    <string name="watch_theme_name_required">Maglagay ng pangalan ng theme</string>
+    <string name="watch_theme_name_duplicate">May theme nang may ganitong pangalan</string>
+
+    <string name="watch_theme_face_classic">Classic</string>
+    <string name="watch_theme_face_expressive">Expressive</string>
+    <string name="watch_theme_face_vinyl">Vinyl</string>
+    <string name="watch_theme_face_poster">Poster</string>
+    <string name="watch_theme_face_studio">Studio</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Spectrum</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Immersive</string>
+    <string name="watch_theme_face_depth">Depth</string>
+    <string name="watch_theme_face_carousel">Carousel</string>
+    <string name="watch_theme_face_chat">Chat</string>
+    <string name="watch_theme_face_split">Split</string>
+    <string name="watch_theme_face_note">Note</string>
+    <string name="watch_theme_face_verse">Verse</string>
+    <string name="watch_theme_face_metadata">Metadata</string>
+</resources>

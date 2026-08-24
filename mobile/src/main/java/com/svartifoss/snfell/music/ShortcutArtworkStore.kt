@@ -16,6 +16,9 @@ object ShortcutArtworkStore {
     private fun folder(context: Context): File =
             File(context.filesDir, FOLDER).apply { mkdirs() }
 
+    /** Folder included by [com.svartifoss.snfell.config.ConfigBackup] with the shortcut library. */
+    internal fun backupDirectory(context: Context): File = File(context.filesDir, FOLDER)
+
     private fun fileFor(context: Context, link: String): File =
             File(folder(context), hashKey(link) + ".png")
 

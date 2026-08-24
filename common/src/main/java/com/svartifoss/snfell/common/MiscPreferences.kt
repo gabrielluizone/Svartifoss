@@ -560,20 +560,16 @@ object MiscPreferences {
      *  enabled. Decoded by watchFontFamily and mirrored by WatchPreviewView. */
     val WEAR_FONT: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_font", "google_sans")
 
-    /**
-     * Whether [WEAR_FONT] also styles the menu, the queue and the shared chrome, instead of only
-     * the now-playing title/artist.
-     *
-     * Off by default and deliberately global rather than face-scoped: those screens are not faces,
-     * and defaulting it on would restyle the whole watch for everyone who picked a decorative font
-     * for the player alone - several of the catalog's display and script faces are a poor fit for
-     * dense list rows.
-     */
     /** Card outline for the Carousel face's cover rail - see [CarouselCardShape]. */
     val WEAR_CAROUSEL_CARD_SHAPE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_carousel_card_shape",
                     CarouselCardShape.ROUNDED.preferenceValue)
 
+    /**
+     * Whether [WEAR_FONT] also styles the menu, the queue and the shared chrome, instead of only
+     * the now-playing title/artist. It is scoped with [WEAR_FONT], so each theme can decide whether
+     * its typeface extends to those surfaces. Decorative and script fonts remain opt-in per theme.
+     */
     val WEAR_FONT_ALL_SCREENS: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("wear_font_all_screens", false)
 
@@ -970,8 +966,8 @@ object MiscPreferences {
 
     /** Shows/hides the phone app's persistent mini player bar (the currently-playing summary
      *  docked above the bottom nav). Enabled by default. Deliberately excluded from EXPORTABLE:
-     *  it is a phone-UI-only concept with no watch-side meaning, so it neither syncs to the
-     *  watch nor needs to survive a config backup/restore. */
+     *  it is a phone-UI-only concept with no watch-side meaning, so it does not sync to the
+     *  watch. ConfigBackup still preserves it as part of the complete phone configuration. */
     val MINI_PLAYER_ENABLED: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("mini_player_enabled", true)
 

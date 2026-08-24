@@ -1,0 +1,1979 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS не підтримується на цьому пристрої</string>
+    <string name="setting_no_wearable_api_banner_description">На цьому пристрої немає компонента Wear OS у сервісах Google Play, який потрібен Svartifoss для зв’язку з годинником. Сполучення не допоможе — застосунок на телефоні не може зв’язатися з годинником на цьому пристрої. Усі налаштування нижче все одно зберігаються й будуть застосовані, якщо встановити Svartifoss на пристрій із підтримкою цього компонента.</string>
+    <string name="setting_no_watch_banner">Годинник не підключено</string>
+    <string name="setting_no_watch_banner_description">Ці налаштування синхронізуються з годинником Wear OS, тому зміни не буде видно, доки годинник не буде сполучено й підключено — але все нижче можна налаштувати вже зараз.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Вигляд</string>
+    <string name="setting_theme">Тема</string>
+    <string name="theme_light">Чисто-біла</string>
+    <string name="theme_dark">Справжній чорний</string>
+    <string name="theme_system">Як у системі</string>
+    <string name="setting_language">Мова</string>
+    <string name="language_system">Як у системі</string>
+    <string name="language_change_watch_notice">Після синхронізації годинник також використовуватиме цю мову.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Розробник</string>
+    <string name="dev_mode_unlocked">Режим розробника ввімкнено ✦</string>
+    <string name="dev_mode_clicks_remaining">Ще %1$d натискань, щоб розблокувати режим розробника</string>
+    <string name="dev_disable_mode">Вимкнути режим розробника</string>
+    <string name="dev_disable_mode_description">Знову приховати цей розділ — натисніть «Встановлена версія» сім разів, щоб повернути його</string>
+    <string name="dev_mode_disabled">Режим розробника вимкнено</string>
+    <string name="dev_build_info">Інформація про збірку</string>
+    <string name="dev_sync_watch">Примусово синхронізувати налаштування годинника</string>
+    <string name="dev_sync_watch_description">Негайно надіслати всі поточні налаштування на сполучений годинник</string>
+    <string name="dev_sync_watch_done">Налаштування синхронізовано з годинником</string>
+    <string name="dev_copy_debug_info">Копіювати дані налагодження</string>
+    <string name="dev_copy_debug_info_description">Копіювати дані про збірку та пристрій у буфер обміну</string>
+    <string name="dev_show_archived">Показати архівні параметри</string>
+    <string name="dev_show_archived_description">Показати макети годинника та налаштування, заархівовані через відомі проблеми</string>
+    <string name="dev_copy_debug_info_done">Дані налагодження скопійовано</string>
+    <string name="dev_open_update_screen">Відкрити екран оновлень</string>
+    <string name="dev_open_update_screen_description">Попередній перегляд екрана оновлень (банер обкладинки, макет приміток до випуску) без очікування справжнього випуску</string>
+    <string name="dev_watch_layout_bounds">Показати межі макета годинника</string>
+    <string name="dev_watch_layout_bounds_description">Окреслити видимі елементи програвача та області дотику на годиннику. Лише діагностичне накладання.</string>
+    <string name="dev_watch_player_info">Показати дані програвача на годиннику</string>
+    <string name="dev_watch_player_info_description">Накладати на годинник інформацію про активний циферблат, стан відтворення, прогрес і рендеринг.</string>
+    <string name="pref_reset_default">Скинути до типових</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Ви знайшли прихований водоспад.\n\nSvartifoss — чорні базальтові колони,\nщо обрамляють водоспад в Ісландії,\nнагадують: музика тече,\nначе вода крізь камінь.\n\n♪ Створено з турботою. ♪</string>
+    <string name="easter_egg_ok">Закрити</string>
+
+    <string name="nav_watch_face">Годинник</string>
+    <string name="watch_face_header">Вигляд годинника</string>
+    <string name="nav_controls">Керування</string>
+    <string name="nav_actions">Дії</string>
+    <string name="nav_settings">Налаштування</string>
+
+    <string name="controls_header">Керування</string>
+    <string name="controls_state_playing">Музика відтворюється</string>
+    <string name="controls_state_stopped">Немає відтворення</string>
+    <string name="controls_playing_description">Виберіть, що робитиме кожен елемент керування під час відтворення музики. Це налаштування не залежить від стану без відтворення.</string>
+    <string name="controls_stopped_description">Виберіть, що робитиме кожен елемент керування до початку або після завершення відтворення. Це налаштування не залежить від стану відтворення.</string>
+
+    <string name="watch_live_preview">Живий попередній перегляд годинника</string>
+    <string name="watch_preview_description">Живий перегляд вибраної поверхні годинника. Зміни з’являються тут до того, як ви спробуєте їх на годиннику.</string>
+    <string name="watch_section_style">Програвач</string>
+    <string name="watch_section_style_description">Виберіть макет програвача та поведінку назви, часу й прогресу.</string>
+    <string name="watch_section_background">Тло</string>
+    <string name="watch_section_background_description">Керуйте обкладинкою альбому, розмиттям, згасанням і читабельністю позаду програвача.</string>
+    <string name="watch_section_colors">Кольори</string>
+    <string name="watch_section_colors_description">Налаштуйте базові кольори, прогрес і акценти альбому, а потім кольори назви, виконавця, годинника, гучності та панелей.</string>
+    <string name="watch_section_typography">Текст</string>
+    <string name="watch_section_typography_description">Виберіть шрифти й налаштуйте назву, виконавця, годинник, значок застосунку, додаткові екрани та текст Flex.</string>
+    <string name="watch_section_aod">Завжди ввімкнено</string>
+    <string name="watch_section_aod_description">Налаштуйте екран із низьким енергоспоживанням і перегляньте його вигляд у фоновому режимі.</string>
+    <string name="watch_section_panels">Панелі</string>
+    <string name="watch_section_panels_description">Стилізуйте гучність, перемотування, швидку панель і чергу; фокус на рядку відкриває цю поверхню в попередньому перегляді.</string>
+    <string name="watch_section_mini_buttons">Мінікнопки</string>
+    <string name="watch_section_mini_buttons_description">Налаштуйте стиль додаткового рядка ярликів. Натисніть «Мінікнопки» нижче, щоб призначити їм дії в розділі керування.</string>
+    <string name="watch_overview_description">Виберіть, що хочете налаштувати. Попередній перегляд і збережена тема залишаються активними в усіх розділах.</string>
+    <string name="watch_back_to_overview">Назад до розділів годинника</string>
+
+    <string name="settings_section_general">Загальні</string>
+    <string name="settings_section_general_description">Тема застосунку, колір акценту та параметри оновлень.</string>
+    <string name="settings_section_watch">Поведінка</string>
+    <string name="settings_section_watch_description">Поведінка коронки, дотиків, вібровідгуку та меню дій на годиннику.</string>
+    <string name="settings_section_automation">Автоматизація</string>
+    <string name="settings_section_automation_description">Виберіть, коли Svartifoss відкриватиметься та закриватиметься автоматично.</string>
+    <string name="settings_section_apps">Застосунки</string>
+    <string name="settings_section_apps_description">Знаходьте тексти пісень і метадані, потокові ярлики, обкладинки черги та доступ Android.</string>
+    <string name="settings_section_data">Дані та підтримка</string>
+    <string name="settings_section_data_description">Створіть резервну копію налаштувань, перевірте версію й діагностику або отримайте допомогу.</string>
+    <string name="settings_overview_description">Виберіть розділ. Пов’язані параметри згруповано разом, а пошук усе одно може одразу перейти до будь-якого налаштування.</string>
+    <string name="settings_back_to_overview">Назад до розділів налаштувань</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Як користуватися Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss перетворює ваш годинник на пульт для музики, що відтворюється на телефоні. Ось усе, що можна робити із зап’ястя.</string>
+
+    <string name="tutorial_taps_title">Торкніться зон екрана</string>
+    <string name="tutorial_taps_desc">Екран годинника поділено на чотири зони — верхню, нижню, ліву та праву. Дотик до зони виконує призначену їй дію. Типово ліва зона відтворює або призупиняє, права переходить до наступного треку, а верхня й нижня змінюють гучність.</string>
+
+    <string name="tutorial_quick_panel_title">Панель швидких дій</string>
+    <string name="tutorial_quick_panel_desc">Двічі торкніться центру екрана відтворення, щоб відкрити панель із чотирма слотами — трьома круглими кнопками та одним широким рядком під ними. Якщо їх не змінювати, слоти відтворюють кнопки з власного сповіщення програми відтворення, тож ви отримуєте справжні елементи «подобається», перемішування й повтору. Призначте будь-яку дію слоту або встановіть «Немає», щоб приховати його, у розділі «Дії» на телефоні.</string>
+    <string name="tutorial_gestures_title">Одинарне, подвійне та довге натискання</string>
+    <string name="tutorial_gestures_desc">Кожна з чотирьох крайніх зон підтримує окремі дії для одинарного, подвійного й довгого натискання. Одинарний дотик у центрі також можна налаштувати; подвійний завжди відкриває «Швидкі дії», а довгий — вибір циферблата, чергу або нічого, відповідно до Налаштування → Поведінка.</string>
+
+    <string name="tutorial_buttons_title">Фізичні кнопки</string>
+    <string name="tutorial_buttons_desc">Якщо годинник має бічні кнопки, їм також можна призначити дії для одинарного, подвійного й довгого натискання. Вони працюють навіть із вимкненим екраном.</string>
+
+    <string name="tutorial_rotary_title">Обертова коронка</string>
+    <string name="tutorial_rotary_desc">У Налаштування → Поведінка → Обертова коронка / безель виберіть, чи обертова коронка або безель змінює гучність, перемотує трек або нічого не робить. На годинниках, де оберти коронки доступні як кнопки, натомість призначте їх у розділі Керування.</string>
+
+    <string name="tutorial_swipe_up_title">Проведіть угору, вниз, ліворуч і праворуч</string>
+    <string name="tutorial_swipe_up_desc">Проведення вгору, вниз або ліворуч на екрані відтворення можна окремо налаштувати для відкриття будь-чого — меню дій, черги відтворення, пропуску треків, ваших списків відтворення тощо. Налаштуйте кожне в розділі Керування, вибравши «Музика відтворюється» або «Немає відтворення». Типово проведення вгору відкриває меню дій, а інші нічого не роблять, доки ви їх не призначите. Проведення праворуч залишається без змін — це універсальний жест Wear OS для виходу із застосунку.</string>
+    <string name="tutorial_shortcuts_title">Потокові ярлики</string>
+    <string name="tutorial_shortcuts_desc">Збережіть посилання на трек, альбом, мікс або список відтворення зі Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music чи SoundCloud, а потім призначте його будь-якій кнопці, жесту або слоту панелі. Найшвидше — поділитися посиланням безпосередньо в Svartifoss із потокового застосунку; також можна вставити скопійоване посилання або ввести його вручну. Обліковий запис і вхід не потрібні — годинник просить телефон почати відтворення, тому ярлик відтворює вміст, а не просто відкриває застосунок.</string>
+    <string name="tutorial_yt_music_title">Ярлики YouTube Music</string>
+    <string name="tutorial_yt_music_desc">Призначте «Відтворити вподобані пісні», «Відтворити вподобані пісні в довільному порядку» або «Мої списки відтворення» будь-якій кнопці, жесту чи проведенню, щоб одразу перейти до своєї музики, не торкаючись телефону. «Історія пошуку» запам’ятовує останні пошуки на годиннику — натисніть і утримуйте запис, щоб видалити його.</string>
+
+    <string name="tutorial_exit_title">Проведіть, щоб вийти</string>
+    <string name="tutorial_exit_desc">Проведіть від лівого краю, щоб вийти з програвача. Під час виходу відтворення може автоматично призупинятися — увімкніть це в налаштуваннях.</string>
+
+    <string name="tutorial_tile_title">Tile швидкого керування</string>
+    <string name="tutorial_tile_desc">Проведіть по циферблату вбік до Tile Svartifoss, щоб одразу відтворювати, призупиняти й пропускати без відкриття застосунку.</string>
+
+    <string name="tutorial_complication_title">Комплікація циферблата</string>
+    <string name="tutorial_complication_desc">Додайте комплікацію обкладинки альбому Svartifoss на циферблат, щоб одразу бачити поточну обкладинку. Торкніться її, щоб відкрити програвач.</string>
+
+    <string name="tutorial_system_title">Системне керування медіа</string>
+    <string name="tutorial_system_desc">Поточний трек також відображається у власних елементах керування медіа годинника та недавніх застосунках, тож керувати відтворенням можна й звідти.</string>
+
+    <string name="tutorial_tip">Порада: налаштуйте обидва стани в Керуванні, а потім упорядкуйте меню в Діях.</string>
+
+    <string name="navigation_drawer_open">Відкрити панель навігації</string>
+    <string name="navigation_drawer_close">Закрити панель навігації</string>
+
+    <string name="action_settings">Налаштування</string>
+    <string name="action_pause">Пауза</string>
+    <string name="action_play">Відтворити</string>
+    <string name="action_skip_prev">Попередній трек</string>
+    <string name="action_skip_next">Наступний трек</string>
+    <string name="action_play_pause">Відтворити / Пауза</string>
+    <string name="action_stop">Зупинити</string>
+    <string name="action_restart">Перезапустити трек</string>
+    <string name="action_mute">Вимкнути / Увімкнути звук</string>
+    <string name="action_skip_seconds">Пропустити %1$d с</string>
+    <string name="action_reverse_seconds">Назад на %1$d с</string>
+    <string name="action_like">Подобається</string>
+    <string name="action_shuffle">Перемішати</string>
+    <string name="action_repeat">Повтор</string>
+    <string name="action_repeat_one">Повторювати одну</string>
+    <string name="action_search">Пошук музики</string>
+    <string name="action_open_lyrics">Текст пісні</string>
+    <string name="group_playback_controls">Керування відтворенням</string>
+    <string name="group_streaming_shortcuts">Треки, альбоми та списки відтворення</string>
+    <string name="pick_action">Вибрати дію</string>
+    <string name="action_search_hint">Пошук у цьому списку</string>
+    <string name="action_search_empty">Немає дій, що відповідають цьому пошуку.</string>
+    <string name="action_opens_more">Кілька варіантів</string>
+    <string name="action_volume_up">Збільшити гучність</string>
+    <string name="volume_down">Зменшити гучність</string>
+    <string name="group_volume_controls">Керування гучністю</string>
+    <string name="no_watch_detected">Годинник не виявлено</string>
+    <string name="connection_instructions">Відкрийте Svartifoss на годиннику, щоб розпочати підключення</string>
+    <string name="playing_controls">Керування під час відтворення</string>
+    <string name="stopped_controls">Керування без відтворення</string>
+    <string name="actions_menu">Меню дій</string>
+    <string name="actions_intro">Налаштуйте обидві поверхні дій на годиннику елементами керування відтворенням, застосунками або збереженими треками, альбомами й списками відтворення. Швидка панель залишається компактною; меню нижче може містити довший упорядкований список.</string>
+    <string name="actions_quick_panel_section">Швидка панель</string>
+    <string name="actions_watch_menu_section">Меню на годиннику</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d дія · Торкніться, щоб редагувати · Утримуйте й перетягуйте, щоб змінити порядок</item>
+        <item quantity="few">%1$d дії · Торкніться, щоб редагувати · Утримуйте й перетягуйте, щоб змінити порядок</item>
+        <item quantity="many">%1$d дій · Торкніться, щоб редагувати · Утримуйте й перетягуйте, щоб змінити порядок</item>
+        <item quantity="other">%1$d дії · Торкніться, щоб редагувати · Утримуйте й перетягуйте, щоб змінити порядок</item>
+    </plurals>
+    <string name="actions_reorder_description">Упорядковане меню дій. Натисніть і утримуйте для перетягування, скористайтеся діями доступності «Перемістити вгору» чи «Перемістити вниз» або натисніть Ctrl+Up/Down на клавіатурі.</string>
+    <string name="actions_move_up">Перемістити вгору</string>
+    <string name="actions_move_down">Перемістити вниз</string>
+    <string name="actions_moved_to_position">%1$s переміщено на позицію %2$d з %3$d.</string>
+    <string name="actions_empty">Дій ще немає. Скористайтеся кнопкою додавання, щоб створити першу.</string>
+    <string name="actions_add">Додати дію</string>
+    <string name="on_screen_buttons">ЗОНИ ДОТИКУ</string>
+    <string name="physical_buttons">ФІЗИЧНІ КНОПКИ</string>
+    <string name="physical_buttons_disconnected">Підключіться й відкрийте Svartifoss на годиннику, щоб налаштувати його фізичні кнопки. Зони дотику, проведення та мінікнопки доступні вже зараз.</string>
+    <string name="physical_buttons_unavailable">Цей годинник не повідомив про фізичні кнопки, які можна налаштувати.</string>
+    <string name="control_assignment_tap">Дотик: %1$s</string>
+    <string name="control_assignment_hold">Утримання: %1$s</string>
+    <string name="control_assignment_both">Дотик: %1$s · Утримання: %2$s</string>
+    <string name="tap_a_zone_to_configure">Торкніться зони на годиннику, щоб призначити дію</string>
+    <string name="touch_zone_top">Верхня зона</string>
+    <string name="touch_zone_bottom">Нижня зона</string>
+    <string name="touch_zone_left">Ліва зона</string>
+    <string name="touch_zone_right">Права зона</string>
+    <string name="touch_zone_center">Дотик у центрі</string>
+    <string name="touch_zone_action">%1$s: %2$s. Торкніться, щоб налаштувати.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">ЖЕСТИ ПРОВЕДЕННЯ</string>
+    <string name="tap_a_swipe_to_configure">Торкніться напрямку, щоб вибрати, що він відкриває</string>
+    <string name="swipe_gesture_up">Провести вгору</string>
+    <string name="swipe_gesture_down">Провести вниз</string>
+    <string name="swipe_gesture_left">Провести ліворуч</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Вгору</string>
+    <string name="swipe_gesture_label_down">Вниз</string>
+    <string name="swipe_gesture_label_left">Ліворуч</string>
+
+    <string name="screen_buttons">МІНІКНОПКИ</string>
+    <string name="tap_a_screen_button_to_configure">До трьох видимих кнопок біля нижнього краю екрана годинника — торкніться слоту, щоб призначити дію</string>
+    <string name="screen_button_1">Мінікнопка 1 (ліворуч)</string>
+    <string name="screen_button_2">Мінікнопка 2 (посередині)</string>
+    <string name="screen_button_3">Мінікнопка 3 (праворуч)</string>
+    <string name="screen_button_label_1">Кнопка 1</string>
+    <string name="screen_button_label_2">Кнопка 2</string>
+    <string name="screen_button_label_3">Кнопка 3</string>
+    <string name="no_action">Без дії</string>
+    <string name="gesture_single_press">Одинарне натискання</string>
+    <string name="gesture_double_press">Подвійне натискання</string>
+    <string name="gesture_long_press">Довге натискання</string>
+    <string name="gesture_swipe_action">Дія</string>
+    <string name="center_button_quick_panel_note">Подвійний дотик у центрі завжди відкриває «Швидкі дії». Довге натискання виконує вибір із Налаштування → Поведінка. Призначення центрального дотику тут не змінює жоден із цих жестів.</string>
+    <string name="start_playback">Почати відтворення</string>
+    <string name="uninstalled_app">Видалений застосунок</string>
+
+    <string name="play_app">Відтворити %1$s</string>
+    <string name="tasker_task">Завдання Tasker</string>
+    <string name="icon_selection_title">Вибір значка</string>
+    <string name="icon_selection_gallery">З галереї</string>
+    <string name="icon_selection_no_icon_pack">Ця функція дає змогу вибрати власний значок для дії з установленого пакета значків.\n\nНа жаль, схоже, у вас не встановлено жодного пакета значків.</string>
+    <string name="icon_selection_no_storage_permission">Ця функція дає змогу вибрати власний значок для дії з установленого пакета значків.\n\nДеякі пакети значків вимагають дозволу застосунку на доступ до сховища. Щоб користуватися цією функцією, потрібно надати цей дозвіл.</string>
+    <string name="delete">Видалити</string>
+    <string name="action_text">Текст дії</string>
+    <string name="swap_action">Замінити дію</string>
+    <string name="open_actions_menu">Відкрити меню дій</string>
+    <string name="open_playlist_menu">Показати поточний список відтворення</string>
+    <string name="misc_settings">Інші налаштування</string>
+
+    <string name="category_backup">Резервна копія</string>
+    <string name="export_config">Експортувати конфігурацію</string>
+    <string name="export_config_description">Зберегти призначення кнопок, список дій і налаштування годинника у файл</string>
+    <string name="import_config">Імпортувати конфігурацію</string>
+    <string name="import_config_description">Відновити призначення кнопок, список дій і налаштування годинника з файлу</string>
+    <string name="export_config_done">Конфігурацію експортовано</string>
+    <string name="export_config_failed">Не вдалося експортувати конфігурацію</string>
+    <string name="import_config_done_title">Імпорт успішний</string>
+    <string name="import_config_done_message">Svartifoss потрібно перезапустити, щоб застосувати імпортовану конфігурацію.</string>
+    <string name="import_config_failed">Не вдалося імпортувати конфігурацію — файл може бути недійсним або з несумісної версії</string>
+    <string name="action_restart_now">Перезапустити зараз</string>
+
+    <string name="category_about">Про програму</string>
+    <string name="category_music_screen">Екран музики</string>
+    <string name="category_watch_screen">Екран годинника</string>
+    <string name="category_mini_buttons">Мінікнопки</string>
+    <string name="category_screen_face">Вигляд програвача</string>
+    <string name="category_wf_screen_behavior">Поведінка екрана</string>
+    <string name="category_wf_player_progress">Прогрес, перемотування та час</string>
+    <string name="category_album_background">Тло альбому</string>
+    <string name="category_music_colors">Кольори з музики</string>
+    <string name="category_wf_typography_font">Шрифт</string>
+    <string name="category_wf_typography_title">Назва</string>
+    <string name="category_wf_typography_artist">Виконавець</string>
+    <string name="category_wf_typography_icon">Значок застосунку</string>
+    <string name="category_wf_typography_flex">Осі Google Sans Flex</string>
+    <string name="category_wf_metadata">Вміст циферблата Metadata</string>
+    <string name="category_wf_typography_secondary">Текст на інших екранах</string>
+    <string name="category_wf_colors_title">Кольори назви</string>
+    <string name="category_wf_colors_artist">Кольори виконавця</string>
+    <string name="category_wf_colors_clock">Кольори годинника</string>
+    <string name="setting_wear_font_flex_hint_title">Про ці елементи керування</string>
+    <string name="setting_wear_flex_axes_hint">Ці параметри тонко налаштовують саме Google Sans Flex — виберіть цей шрифт вище, щоб користуватися ними. Налаштування товщини/курсиву назви та виконавця вище вже задають власні осі товщини (wght) і нахилу (slnt) цього шрифту; чотири елементи нижче застосовуються до всього циферблата.</string>
+    <string name="setting_wear_font_flex_width">Ширина</string>
+    <string name="setting_wear_font_flex_width_description">Горизонтальне розтягування від стисненого до розширеного (25–151). 100 — нормальна ширина шрифту.</string>
+    <string name="setting_wear_font_flex_optical_size">Оптичний розмір</string>
+    <string name="setting_wear_font_flex_optical_size_description">Налаштовує деталі штрихів відповідно до ефективного розміру тексту (6–144). Нижчі значення підходять для дрібного тексту, вищі — для великого дисплейного.</string>
+    <string name="setting_wear_font_flex_grade">Градація</string>
+    <string name="setting_wear_font_flex_grade_description">Трохи змінює товщину без зміни макета (0–100) — делікатний спосіб посилити контраст на темному екрані.</string>
+    <string name="setting_wear_font_flex_roundness">Округлість</string>
+    <string name="setting_wear_font_flex_roundness_description">Змінює кінці штрихів від гострих (0) до повністю округлих (100), надаючи дружнішого вигляду.</string>
+    <string name="preview_sample_title">Назва пісні</string>
+    <string name="preview_sample_artist">Ім’я виконавця</string>
+    <string name="preview_sample_next_title">Наступна пісня</string>
+    <string name="preview_playback_stopped">Зупинено</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">попередній рядок</string>
+    <string name="preview_verse_current">рядок, що відтворюється зараз</string>
+    <string name="preview_verse_next">і наступний</string>
+    <string name="preview_chat_today">Сьогодні</string>
+    <string name="category_gestures">Жести та введення</string>
+    <string name="category_watch_navigation">Навігація та ярлики</string>
+    <string name="category_rotary_input">Обертальне введення та налаштування</string>
+    <string name="category_watch_feedback">Відгук і поведінка при виході</string>
+    <string name="category_watch_display">Екран годинника</string>
+    <string name="setting_wear_keep_screen_on">Не вимикати екран</string>
+    <string name="setting_wear_keep_screen_on_description">Не дозволяє екрану годинника гаснути за тайм-аутом бездіяльності, поки відкрито екран Svartifoss. Опускання зап’ястя все одно затемнює годинник — цим жестом керує система. Використовує більше батареї. Екран тексту пісні завжди залишається ввімкненим незалежно від цього параметра.</string>
+    <string name="setting_lyrics_enabled">Шукати тексти онлайн</string>
+    <string name="setting_lyrics_enabled_description">Дозволяє телефону отримувати синхронізовані тексти з LRCLIB, коли ви відкриваєте екран тексту на годиннику. Надсилаються лише назва треку, виконавець і тривалість; нічого більше, і нічого не зберігається на диску. Якщо вимкнути, екран тексту повідомить, що пошук вимкнено.</string>
+    <string name="setting_overlay_blur_radius">Розмиття накладання</string>
+    <string name="setting_overlay_blur_radius_description">Сила розмиття (px) матового тла позаду кілець гучності/перемотування та панелі швидких дій — незалежно від розмиття тла обкладинки альбому</string>
+    <string name="category_action_list">Список дій</string>
+    <string name="category_automation">Автоматизація</string>
+    <string name="category_idle">Коли нічого не відтворюється</string>
+    <string name="installed_version">Встановлена версія</string>
+    <string name="get_support">Отримати підтримку</string>
+    <string name="get_support_description">Надіслати журнали застосунку розробнику для підтримки</string>
+    <string name="contact_developer">Зв’язатися з розробником</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — контакт</string>
+    <string name="contact_developer_chooser">Надіслати лист</string>
+    <string name="contact_developer_no_client">Поштовий застосунок не встановлено. Адресу скопійовано в буфер обміну.</string>
+    <string name="about_developer_title">Про розробника</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss починався як особистий проєкт — я хотів осучаснити Music Center for Wear відповідно до сьогоднішніх можливостей, просто щоб самому користуватися ним щодня. Вийшло досить добре, тож я вирішив поділитися ним з усіма. Це мій перший застосунок, і мало що зрівняється з відчуттям, коли бачиш, що створене тобою корисне й іншим людям.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Ліцензії відкритого ПЗ</string>
+    <string name="setting_always_show_time">Завжди показувати час</string>
+    <string name="setting_always_show_time_off_description">Поточний час відображатиметься лише у фоновому режимі</string>
+    <string name="setting_always_show_time_on_description">Поточний час відображатиметься завжди. Верхній значок дії не буде видно (його замінить годинник), але сама дія працюватиме як завжди.</string>
+    <string name="tap_to_force_stop">Торкніться, щоб зупинити керування</string>
+    <string name="notification_action_stop">Зупинити</string>
+    <string name="notification_action_force_stop">Примусово зупинити</string>
+    <string name="error_notification_access">Немає доступу до сповіщень. Перевірте телефон.</string>
+    <string name="error_notifications">Сповіщення про помилки</string>
+    <string name="notification_access_notification_title">Svartifoss потрібен доступ до сповіщень</string>
+    <string name="notification_access_notification_title_description">Торкніться цього сповіщення та перевірте Svartifoss, щоб виправити проблему</string>
+    <string name="error_service_not_enabled">Потрібен доступ до сповіщень</string>
+    <string name="error_service_not_enabled_description">Щоб керувати музикою з годинника, Svartifoss потрібен доступ до сповіщень — так Android дозволяє йому бачити, який застосунок відтворює, і надсилати команди відтворення, паузи та пропуску.\n\nSvartifoss ніколи не читає вміст ваших сповіщень. Цей дозвіл використовується лише для пошуку активної медіасесії.\n\nНатисніть \"Відкрити налаштування\", а потім увімкніть Svartifoss у доступі до сповіщень.</string>
+    <string name="action_open_settings">Відкрити налаштування</string>
+    <string name="settings_search_title">Пошук налаштувань</string>
+    <string name="settings_search_hint">Пошук налаштувань</string>
+    <string name="settings_search_clear">Очистити пошук</string>
+    <string name="settings_search_prompt">Шукайте за назвою всі налаштування в Налаштуваннях і Вигляді годинника.</string>
+    <string name="settings_search_no_results">Немає відповідного налаштування.</string>
+    <string name="settings_search_prerequisite">Цей параметр залежить від іншого вибору. Змініть показане тут налаштування, щоб відкрити його.</string>
+    <string name="setting_numeric_range_error">Введіть значення від %1$d до %2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">Торкніться, щоб надати дозвіл — керування відтворенням не працюватиме, доки ви цього не зробите</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Встановіть Svartifoss на годинник</string>
+    <string name="no_watch_app_description">Svartifoss не знайшов свій застосунок для годинника на сполученому годиннику Wear OS. Застосунки телефону й годинника працюють разом — без застосунку на годиннику керування відтворенням із зап’ястя не працюватиме.\n\nSvartifoss немає в Play Маркеті — застосунок для годинника встановлюється окремо через sideload (наприклад, Wear Installer). Натисніть \"Переглянути випуски\", щоб відкрити сторінку випусків GitHub і завантажити APK для годинника. Якщо щойно встановили його, зачекайте близько хвилини, щоб синхронізація завершилася.</string>
+    <string name="no_watch_app_button">Переглянути випуски</string>
+    <string name="required_permission">Необхідний дозвіл</string>
+    <string name="setting_pause_on_swipe_exit">Призупиняти відтворення при виході проведенням</string>
+    <string name="setting_pause_on_swipe_exit_description">Автоматично призупиняти будь-яке відтворення, коли ви виходите зі Svartifoss на годиннику жестом проведення ліворуч.\n\nВихід кнопкою живлення не впливає на це й ніколи не спричиняє автопаузу.</string>
+    <string name="setting_rotating_crown_off_period">Затримка обертального введення після ввімкнення екрана</string>
+    <string name="setting_rotating_crown_off_period_description">Обертальні елементи введення (наприклад, коронки) на деяких пристроях можуть бути надто чутливими. Щоб уникнути випадкової зміни гучності, обертальне введення буде вимкнено на <![CDATA[<b>%1$s мілісекунд</b>]]> після ввімкнення екрана.</string>
+    <string name="setting_rotary_seek">Перемотування обертовою коронкою</string>
+    <string name="setting_rotary_seek_description">Якщо ввімкнено, обертання коронки перемотує поточний трек замість зміни гучності. Гучність усе ще можна змінювати екранними або фізичними кнопками.</string>
+    <string name="setting_wear_rotary_action">Обертова коронка / безель</string>
+    <string name="wear_rotary_action_volume">Змінювати гучність</string>
+    <string name="wear_rotary_action_seek">Перемотувати трек</string>
+    <string name="wear_rotary_action_off">Нічого не робити</string>
+    <string name="setting_rotating_sensitivity">Чутливість обертального введення</string>
+    <string name="setting_rotating_sensitivity_description">Чутливість обертального введення. Вище число означає більшу зміну гучності при тому самому русі коронки. Зараз встановлено <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Вимкнути подвійне натискання фізичної кнопки у фоновому режимі</string>
+    <string name="setting_disable_ambient_physical_double_click_description">На деяких годинниках кнопки працюють некоректно: одинарне натискання фізичної кнопки у фоновому режимі іноді реєструється як подвійне.\n\nЯкщо ви стикаєтеся з цим, увімкніть цей параметр, щоб повністю вимкнути подвійні натискання у фоновому режимі (наприклад, два натискання виконають лише дію одинарного). Подвійні натискання, коли годинник активний, не змінюються.</string>
+    <string name="setting_haptic_feedback">Вібровідгук</string>
+    <string name="setting_haptic_feedback_description">Вібрувати годинником під час натискання кнопок.</string>
+    <string name="setting_auto_start">Автоматично відкривати Svartifoss</string>
+    <string name="setting_auto_start_description">Автоматично відкривати Svartifoss на годиннику, коли на телефоні починається відтворення музики.</string>
+    <string name="setting_auto_start_apps_blacklist">Програми для автозапуску</string>
+    <string name="setting_auto_start_apps_blacklist_description">Список медіапрограм, які можуть автоматично запускати Svartifoss</string>
+    <string name="setting_dim_album_art">Затінення програвача</string>
+    <string name="setting_dim_album_art_description">Додати вибраний користувачем ефект тіні між обкладинкою та елементами керування програвачем.</string>
+    <string name="setting_album_art_style">Стиль обкладинки альбому</string>
+    <string name="setting_album_art_style_description">Виберіть вигляд фону екрана «Зараз відтворюється» на годиннику.</string>
+    <string name="setting_album_art_blur_radius">Інтенсивність розмиття</string>
+    <string name="setting_album_art_blur_radius_description">Сила розмиття всього екрана, коли вибраний фон використовує розмиття. Зараз <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Сила затемнення</string>
+    <string name="setting_album_art_dim_strength_description">Наскільки затемнюється обкладинка альбому для кращої читабельності тексту. Зараз <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Стиль затінення</string>
+    <string name="setting_player_shading_intensity">Інтенсивність затінення</string>
+    <string name="setting_player_shading_intensity_description">Наскільки затінення затемнює фон. 100%% — повна сила; більше значення дає додатковий контраст (до 150%%). Зараз <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Застосувати цей вигляд до всіх циферблатів</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Скопіювати налаштування вигляду цього циферблата на всі інші</string>
+    <string name="apply_appearance_confirm_title">Застосувати до всіх циферблатів?</string>
+    <string name="apply_appearance_confirm_message">Це перезапише налаштування вигляду всіх інших циферблатів поточними. Налаштування поведінки не зміняться.</string>
+    <string name="apply_appearance_confirm_button">Застосувати</string>
+    <string name="apply_appearance_done">Застосовано до всіх циферблатів</string>
+    <string name="category_wf_layout_actions">Макет</string>
+    <string name="setting_reset_appearance">Скинути цей макет</string>
+    <string name="setting_reset_appearance_description">Відновити вигляд цього циферблата до початкових типових значень</string>
+    <string name="reset_appearance_confirm_title">Скинути цей макет?</string>
+    <string name="reset_appearance_confirm_message">Налаштування вигляду цього циферблата повернуться до типових. Налаштування поведінки та інші циферблати не зміняться.</string>
+    <string name="reset_appearance_confirm_button">Скинути</string>
+    <string name="reset_appearance_done">Макет скинуто до типових значень</string>
+    <string name="setting_reset_all_faces">Скинути всі циферблати до типових значень</string>
+    <string name="setting_reset_all_faces_description">Відновити вигляд усіх вбудованих циферблатів до початкових типових значень</string>
+    <string name="reset_all_faces_confirm_title">Скинути всі циферблати?</string>
+    <string name="reset_all_faces_confirm_message">Вигляд усіх вбудованих циферблатів повернеться до початкових типових значень, а активна користувацька тема буде вимкнена. Збережені користувацькі теми, налаштування поведінки та вибраний циферблат залишаться.</string>
+    <string name="reset_all_faces_confirm_button">Скинути все</string>
+    <string name="reset_all_faces_done">Усі циферблати скинуто до типових значень</string>
+    <string name="face_reset_migration_title">Оновіть вигляд годинника</string>
+    <string name="face_reset_migration_message">Ви оновилися зі старішої версії, де всі циферблати годинника використовували спільний набір налаштувань вигляду. Тепер кожен циферблат запам’ятовує власні параметри, тому старі налаштування можуть виглядати невдало на циферблатах, які ви не налаштовували окремо. Радимо скинути всі циферблати до нових типових значень або очистити дані програми, щоб почати повністю заново.</string>
+    <string name="face_reset_migration_reset_button">Скинути всі циферблати</string>
+    <string name="face_reset_migration_clear_data_button">Очистити дані програми</string>
+    <string name="setting_player_shading_color">Колір затінення</string>
+    <string name="setting_wear_shading_custom_color">Власний колір затінення</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Чорний</item>
+        <item>Акцент альбому</item>
+        <item>Приглушений альбом</item>
+        <item>Власний колір</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Відповідно до теми програвача</item>
+        <item>Віньєтка по краях</item>
+        <item>Віньєтка по краях (сильна)</item>
+        <item>Віньєтка по краях (дуже сильна)</item>
+        <item>Нижній кут</item>
+        <item>Згасання знизу</item>
+        <item>Нижня та верхня межа</item>
+        <item>Повноекранний фільтр</item>
+        <item>Заливка кольором альбому</item>
+        <item>Двоколірний градієнт альбому</item>
+        <item>Бічні завіси</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Непрозорість обкладинки альбому в фоновому режимі</string>
+    <string name="setting_ambient_album_art_opacity_description">Наскільки видимою залишається обкладинка альбому у фоновому режимі. Зараз <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Тайм-аут накладки гучності/перемотування</string>
+    <string name="setting_volume_overlay_timeout_description">Як довго накладки гучності й перемотування залишаються на екрані після зміни. Зараз <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Мертва зона обертання</string>
+    <string name="setting_rotary_deadzone_description">Мінімальний рух коронки, потрібний перед застосуванням зміни гучності або перемотування. Допомагає уникнути випадкових змін. Зараз <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Взаємодія з Wear</string>
+    <string name="setting_swipe_gestures_hint">Жести проведення</string>
+    <string name="setting_swipe_gestures_hint_description">Проведення вгору, вниз і вліво можуть запускати будь-яку дію. Торкніться тут, щоб налаштувати їх для станів «Музика відтворюється» або «Немає відтворення». Проведення вправо зарезервовано для виходу з програми.</string>
+    <string name="setting_screen_buttons_hint">Мінікнопки</string>
+    <string name="setting_screen_buttons_hint_description">До трьох видимих кнопок, кожна з діями торкання та довгого натискання. Торкніться тут, щоб налаштувати їх для станів «Музика відтворюється» або «Немає відтворення».</string>
+    <string name="dev_screen_buttons_offset">Розташування мінікнопок</string>
+    <string name="dev_screen_buttons_offset_description">Бажана відстань у dp між нижнім краєм екрана годинника та мінікнопками (типово 42). Рядок усе одно автоматично відсувається від довгих назв.</string>
+    <string name="setting_screen_buttons_tilt">Нахил кнопок</string>
+    <string name="setting_screen_buttons_tilt_description">Наскільки бічні кнопки повторюють вигин екрана. 0 = прямий ряд; 100 = повна дуга з нахиленими піктограмами.</string>
+    <string name="setting_screen_buttons_bg">Фон мінікнопок</string>
+    <string name="setting_screen_buttons_opacity">Непрозорість мінікнопок</string>
+    <string name="setting_screen_buttons_opacity_description">Непрозорість усієї групи мінікнопок (0–100%%). Зараз <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Панель швидких дій</string>
+    <string name="quick_panel_link_summary">Відкривається подвійним торканням центру екрана годинника. Торкніться тут, щоб налаштувати чотири слоти в розділі «Дії».</string>
+    <string name="quick_panel_config_hint">Це кнопки панелі, що відкривається подвійним торканням центру екрана годинника. Торкніться рядка, щоб вибрати дію («Немає» приховує її); довге натискання відновлює типове значення.</string>
+    <string name="quick_panel_slot_1">Кнопка 1</string>
+    <string name="quick_panel_slot_2">Кнопка 2</string>
+    <string name="quick_panel_slot_3">Кнопка 3</string>
+    <string name="quick_panel_slot_long">Довга кнопка</string>
+    <string name="quick_panel_slot_default">%1$s (типово)</string>
+    <string name="quick_panel_slot_hidden">Приховано</string>
+    <string name="quick_panel_default_like">Подобається</string>
+    <string name="quick_panel_default_shuffle">Перемішати</string>
+    <string name="quick_panel_default_repeat">Повтор</string>
+    <string name="quick_panel_default_up_next">Далі</string>
+    <string name="setting_wear_center_long_press_queue">Довге натискання центру відкриває чергу</string>
+    <string name="setting_wear_center_long_press_queue_description">Довго натисніть центр екрана «Зараз відтворюється», щоб відкрити чергу відтворення.</string>
+    <string name="setting_wear_center_long_press">Довге натискання центру</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Змінити циферблат</item>
+        <item>Відкрити чергу</item>
+        <item>Нічого</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Базовий макет</string>
+    <string name="setting_wear_screen_face_description">Виберіть структуру цієї теми. Збережені теми можуть поєднувати цей макет із власним шрифтом, кольорами, розмиттям, затіненням, AOD і панелями.</string>
+    <string name="setting_wear_show_track_title">Показувати назву пісні</string>
+    <string name="setting_wear_show_track_title_description">Показувати назву поточної пісні в програвачі</string>
+    <string name="setting_wear_show_track_artist">Показувати ім’я виконавця</string>
+    <string name="setting_wear_show_track_artist_description">Показувати поточного виконавця в програвачі</string>
+    <string name="setting_wear_show_source_icon">Показувати піктограму програми відтворення</string>
+    <string name="setting_wear_show_source_icon_description">Показувати поруч із виконавцем піктограму програми, яка зараз відтворює медіа. Використовується піктограма з медіасповіщення. Якщо вимкнено, піктограма ніколи не надсилається на годинник.</string>
+    <string name="setting_wear_player_controls_visible">Показувати елементи керування програвачем</string>
+    <string name="setting_wear_player_controls_visible_description">Показувати або приховувати вбудовані кнопки в Classic, Poster, Studio та інших налаштовуваних макетах, не вимикаючи їхні області дотику</string>
+    <string name="setting_wear_quadrant_tap_flash">Блимання піктограми при торканні</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Коли спрацьовує дія кутової зони, її піктограма коротко блимає на повній яскравості — особливо корисно для теми екрана Hidden, де піктограма зазвичай невидима й не показує, яка дія щойно виконалася.</string>
+    <string name="setting_wear_internal_progress_visible">Індикатор прогресу макета</string>
+    <string name="setting_wear_internal_progress_visible_description">Показувати додатковий індикатор прогресу, створений для цього макета. Кільця кнопки відтворення Expressive і Material є частиною їхніх елементів керування та залишаються доступними.</string>
+    <string name="setting_wear_edge_progress_visible">Показувати дугу прогресу по краю</string>
+    <string name="setting_wear_edge_progress_visible_description">Приховує лише візуальну дугу навколо екрана. Перемотування з краю залишається окремим параметром.</string>
+    <string name="setting_wear_edge_seek_enabled">Перемотування з краю екрана</string>
+    <string name="setting_wear_edge_seek_enabled_description">Торкніться або перетягніть уздовж краю екрана, щоб перейти до точного місця, навіть коли дугу приховано</string>
+    <string name="setting_wear_screen_theme">Стиль елементів керування</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Збалансований</string>
+    <string name="wear_screen_theme_default_description">Стандартна ієрархія та розміри елементів керування.</string>
+    <string name="wear_screen_theme_minimal">Мінімальний</string>
+    <string name="wear_screen_theme_minimal_description">Використовує менші, стриманіші елементи керування, зберігаючи всі дії видимими й доступними.</string>
+    <string name="wear_screen_theme_compact">Компактний</string>
+    <string name="wear_screen_theme_compact_description">Використовує щільніше оформлення елементів керування без зміни ваших дій.</string>
+    <string name="wear_screen_theme_cinema">Кіно</string>
+    <string name="wear_screen_theme_cinema_description">Пом’якшує вигляд елементів керування, не змінюючи обкладинку.</string>
+    <string name="wear_screen_theme_vivid">Яскравий</string>
+    <string name="wear_screen_theme_vivid_description">Використовує більші та помітніші елементи керування.</string>
+    <string name="wear_screen_theme_contrast">Високий контраст</string>
+    <string name="wear_screen_theme_contrast_description">Використовує більші елементи керування для легшого читання.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Використовує компактні, трохи приглушені елементи керування. Сам фон не затемнюється — для цього використовуйте налаштування фону.</string>
+    <string name="wear_screen_theme_hidden">Приховано</string>
+    <string name="wear_screen_theme_hidden_description">Повністю приховує всі піктограми керування. Області дотику залишаються активними й повністю працездатними.</string>
+    <string name="setting_wear_font">Шрифт</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Типовий шрифт програми.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Варіативна версія Google Sans із регульованими шириною, оптичним розміром, насиченістю та округлістю — відкриває наведені нижче налаштування осей.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Класичний системний шрифт Android.</string>
+    <string name="wear_font_rounded">Округлий</string>
+    <string name="wear_font_rounded_description">Дружні сучасні форми літер із м’яко заокругленими закінченнями.</string>
+    <string name="wear_font_sans_light">Сучасний легкий</string>
+    <string name="wear_font_sans_light_description">Чистий, легкий гротеск із меншою візуальною вагою.</string>
+    <string name="wear_font_sans_thin">Надтонкий</string>
+    <string name="wear_font_sans_thin_description">Надлегкий дисплейний стиль для мінімалістичного програвача.</string>
+    <string name="wear_font_sans_medium">Сучасний середній</string>
+    <string name="wear_font_sans_medium_description">Чіткий гротеск із міцнішими, компактними штрихами.</string>
+    <string name="wear_font_sans_black">Важкий</string>
+    <string name="wear_font_sans_black_description">Жирна дисплейна гарнітура з максимальним візуальним ефектом.</string>
+    <string name="wear_font_small_caps">Малі капітелі</string>
+    <string name="wear_font_small_caps_description">Компактні форми у вигляді великих літер із редакційним характером.</string>
+    <string name="wear_font_casual">Неформальний</string>
+    <string name="wear_font_casual_description">Грайлива рукописна системна гарнітура.</string>
+    <string name="wear_font_typewriter">Друкарська машинка (архівна)</string>
+    <string name="wear_font_typewriter_description">Ретро-стиль друкарської машинки (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Округлий геометричний гротеск, безкоштовна (OFL) альтернатива в дусі Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Чистий геометричний гротеск, безкоштовна (OFL) альтернатива в дусі Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Елегантний гуманістичний роман, безкоштовна (OFL) альтернатива в дусі Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">М’якший стиль друкарської машинки (Love Letter Typewriter) — зазвичай призначений для треків у стилі «Lain».</string>
+    <string name="wear_font_serif">Із засічками</string>
+    <string name="wear_font_serif_description">Класичний шрифт із засічками.</string>
+    <string name="wear_font_serif_monospace">Моноширинний із засічками</string>
+    <string name="wear_font_serif_monospace_description">Моноширинні літери із засічками з виразним редакційно-термінальним виглядом.</string>
+    <string name="wear_font_monospace">Моноширинний</string>
+    <string name="wear_font_monospace_description">Моноширинний технічний вигляд.</string>
+    <string name="wear_font_condensed">Стиснутий</string>
+    <string name="wear_font_condensed_description">Вужчі форми літер, що вміщують більше тексту.</string>
+    <string name="wear_font_condensed_light">Стиснутий легкий</string>
+    <string name="wear_font_condensed_light_description">Вузька, легша гарнітура для довгих назв.</string>
+    <string name="wear_font_condensed_medium">Стиснутий середній</string>
+    <string name="wear_font_condensed_medium_description">Вузька гарнітура з виразнішими штрихами та чудовою читабельністю.</string>
+    <string name="wear_font_cursive">Рукописний</string>
+    <string name="wear_font_cursive_description">Декоративний рукописний шрифт.</string>
+    <string name="setting_wear_dynamic_accent">Динамічний акцент на годиннику</string>
+    <string name="setting_wear_dynamic_accent_description">Адаптувати кольори годинника на основі альбому до поточної обкладинки. Якщо вимкнено, параметри кольору альбому використовують статичний акцент теми.</string>
+    <string name="setting_wear_album_art_fade">Плавний перехід обкладинки</string>
+    <string name="setting_wear_album_art_fade_description">Плавно змінювати обкладинку альбому при зміні треку.</string>
+    <string name="setting_wear_title_text_mode">Поведінка тексту назви</string>
+    <string name="setting_wear_title_text_mode_description">Визначає поведінку назви поточного треку, коли вона не вміщується: Автоматично поєднує зменшення, перенесення та прокручування; інші варіанти використовують лише одну поведінку.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Автоматично (зменшити, потім переносити, потім прокручувати)</item>
+        <item>Прокручування (рухомий рядок)</item>
+        <item>Переносити на два рядки</item>
+        <item>Переносити на три рядки</item>
+        <item>Переносити на п’ять рядків</item>
+        <item>Статично (один рядок, без прокручування чи зменшення)</item>
+        <item>Зменшити до розміру</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Колір тексту виконавця</string>
+    <string name="setting_wear_artist_custom_color">Власний колір виконавця</string>
+    <string name="setting_wear_artist_custom_color_description">Виберіть колір виконавця для обробки «Звичайна»</string>
+    <string name="setting_wear_artist_desaturated">Приглушений колір виконавця</string>
+    <string name="setting_wear_artist_desaturated_description">Пом’якшити колір тексту виконавця на основі альбому — застосовується лише коли «Колір тексту виконавця» встановлено на Колір альбому</string>
+
+    <string name="setting_wear_progress_color">Колір смуги прогресу</string>
+    <string name="setting_wear_progress_custom_color">Власний колір смуги прогресу</string>
+    <string name="setting_wear_progress_custom_color_description">Виберіть колір прогресу та перемотування для обробки «Звичайна»</string>
+    <string name="setting_wear_progress_desaturated">Приглушений колір смуги прогресу</string>
+    <string name="setting_wear_progress_desaturated_description">Пом’якшити колір смуги прогресу на основі альбому — застосовується лише коли «Колір смуги прогресу» встановлено на Колір альбому</string>
+
+    <string name="setting_wear_volume_color">Колір смуги гучності</string>
+    <string name="setting_wear_volume_custom_color">Власний колір гучності</string>
+    <string name="setting_wear_volume_custom_color_description">Виберіть колір гучності для обробки «Звичайна»</string>
+    <string name="setting_wear_quick_panel_color">Колір швидких дій</string>
+    <string name="setting_wear_quick_panel_custom_color">Власний колір швидких дій</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Виберіть колір швидких дій для обробки «Звичайна»</string>
+    <string name="setting_wear_shading_custom_color_description">Виберіть колір, яким тонуватиметься градієнт затінення</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Нейтральний (статичний колір теми)</item>
+        <item>Колір альбому</item>
+        <item>Власний колір</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Класичний</item>
+        <item>Виразний</item>
+        <item>Вініл</item>
+        <item>Постер</item>
+        <item>Студія</item>
+        <item>Ореол</item>
+        <item>Аврора</item>
+        <item>Eclipse AMOLED</item>
+        <item>Спектр</item>
+        <item>Material</item>
+        <item>Імерсивний</item>
+        <item>Глибина</item>
+        <item>Карусель</item>
+        <item>Чат</item>
+        <item>Розділений</item>
+        <item>Нота</item>
+        <item>Куплет</item>
+        <item>Метадані</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Виразне перемотування</string>
+    <string name="setting_wear_expressive_seek_mode_description">Визначає спосіб перемотування треку дотиком на циферблаті Expressive. Центральне кільце робить кільце навколо кнопки відтворення перетягуваним; Крайове кільце також показує класичне кільце безеля; Немає залишає перемотування лише за поворотною коронкою.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Центральне кільце</item>
+        <item>Кільце по краю</item>
+        <item>Немає</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Завжди ввімкнений дисплей</string>
+    <string name="setting_wear_aod_style">Стиль постійно ввімкненого екрана</string>
+    <string name="setting_wear_aod_style_description">Визначає вигляд екрана відтворення, коли годинник у режимі очікування. «Відповідно до циферблата» відповідає вибраному циферблату; «Мінімальний» показує лише приглушений текст на чистому чорному тлі для найдовшої роботи батареї.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Відповідно до циферблата</item>
+        <item>Класичний</item>
+        <item>Виразний (контур)</item>
+        <item>Material (контур)</item>
+        <item>Елементи керування AMOLED</item>
+        <item>Chrono (великий годинник)</item>
+        <item>Постер</item>
+        <item>Студія</item>
+        <item>Імерсивний</item>
+        <item>Карусель</item>
+        <item>Чат</item>
+        <item>Розділений</item>
+        <item>Нота</item>
+        <item>Куплет</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Колір постійно ввімкненого екрана</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Білий</item>
+        <item>Колір альбому</item>
+        <item>Власний колір</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Білий</item>
+        <item>Динамічний (за областю під годинником)</item>
+        <item>Колір альбому</item>
+        <item>Власний колір</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Відповідно до стилю панелі</item>
+        <item>Прозорий (без тла)</item>
+        <item>Акцент альбому</item>
+        <item>Напівпрозорий</item>
+        <item>Білий</item>
+        <item>Матово-білий</item>
+        <item>Чорний</item>
+        <item>Динамічний (тон альбому)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Фон пігулки «Далі»</string>
+    <string name="setting_wear_show_up_next_pill">Пігулка «Далі» у програвачі</string>
+    <string name="setting_wear_show_up_next_pill_description">Показувати пігулку «Далі» внизу екрана відтворення. Вона займає місце рядка мінікнопок, тому з’являється лише коли цей рядок не показується.</string>
+    <string name="category_wf_clock">Годинник</string>
+    <string name="setting_wear_clock_color">Колір годинника</string>
+    <string name="setting_wear_clock_custom_color">Власний колір годинника</string>
+    <string name="setting_wear_clock_custom_color_description">Торкніться, щоб вибрати колір годинника, який використовується, коли «Колір годинника» встановлено на «Власний колір»</string>
+    <string name="setting_wear_clock_opacity">Непрозорість годинника</string>
+    <string name="setting_wear_clock_opacity_description">Визначає непрозорість годинника, що завжди відображається (10–100%%). Зараз <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Власний колір постійно ввімкненого екрана</string>
+    <string name="setting_wear_aod_custom_color_description">Торкніться, щоб вибрати колір тексту, елементів керування та годинника постійно ввімкненого екрана, коли «Колір постійно ввімкненого екрана» встановлено на «Власний колір»</string>
+    <string name="setting_wear_aod_intensity">Яскравість постійно ввімкненого екрана</string>
+    <string name="setting_wear_aod_intensity_description">Визначає яскравість постійно ввімкненого екрана (20–100%%). Менше значення означає темніший екран і менше споживання батареї. Зараз <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Кнопки керування на постійно ввімкненому екрані</string>
+    <string name="setting_wear_aod_show_transport_description">Показувати контурні кнопки попередній/відтворення/наступний у підтримуваних візуальних стилях постійно ввімкненого екрана. Поки екран приглушений, їх не можна натиснути, але дотик будить годинник, і кнопка вже залишається під пальцем.</string>
+    <string name="setting_wear_aod_show_progress">Кільце прогресу на постійно ввімкненому екрані</string>
+    <string name="setting_wear_aod_show_progress_description">Показувати кільце прогресу навколо кнопки відтворення в режимі очікування — позиція там оновлюється лише приблизно раз на хвилину</string>
+    <string name="setting_wear_aod_show_pills">«Далі» на постійно ввімкненому екрані</string>
+    <string name="setting_wear_aod_show_pills_description">Показувати статичну контурну пігулку «Далі» внизу візуальних стилів постійно ввімкненого екрана</string>
+    <string name="category_wf_gestures">Жести екрана</string>
+    <string name="setting_wear_mini_buttons_mode">Показувати мінікнопки</string>
+    <string name="setting_wear_gestures_mode">Жести екрана</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Завжди</item>
+        <item>Лише під час відтворення</item>
+        <item>Лише під час паузи</item>
+        <item>Ніколи</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Обкладинка на постійно ввімкненому екрані</string>
+    <string name="setting_wear_aod_show_art_description">Залишати приглушену обкладинку видимою в режимі очікування. Вимкнення показує чисто чорний фон, що помітно більше заощаджує батарею на AMOLED-екранах.</string>
+    <string name="setting_wear_aod_art_treatment">Стиль обкладинки постійно ввімкненого екрана</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>М’яке розмиття</item>
+        <item>Чітка обкладинка</item>
+        <item>Монохромне розмиття</item>
+        <item>Відповідно до обробки обкладинки програвача</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Годинник на постійно ввімкненому екрані</string>
+    <string name="setting_wear_aod_show_clock_description">Показувати годинник, коли пристрій у режимі очікування</string>
+    <string name="setting_wear_aod_show_track_info">Інформація про трек на постійно ввімкненому екрані</string>
+    <string name="setting_wear_aod_show_track_info_description">Показувати назву треку та виконавця в режимі очікування</string>
+
+    <string name="category_overlays_queue">Накладки й черга</string>
+    <string name="category_wf_panel_shared">Вигляд спільних панелей</string>
+    <string name="category_wf_panel_volume">Панель гучності</string>
+    <string name="category_wf_panel_seek">Панель прогресу й перемотування</string>
+    <string name="category_wf_panel_quick">Панель швидких дій</string>
+    <string name="category_wf_panel_queue">Черга й списки</string>
+    <string name="category_wf_panel_effects">Ефекти панелей</string>
+    <string name="setting_wear_overlay_backdrop_style">Фон панелі</string>
+    <string name="setting_wear_volume_style">Стиль гучності</string>
+    <string name="setting_wear_volume_layout">Макет гучності</string>
+    <string name="setting_wear_quick_panel_style">Стиль швидкої панелі</string>
+    <string name="setting_wear_quick_panel_layout">Макет швидкої панелі</string>
+    <string name="setting_wear_quick_panel_source">Швидкі дії</string>
+    <string name="setting_wear_quick_panel_source_description">Виберіть налаштовані кнопки або дії, які надає програма, що зараз відтворює медіа.</string>
+    <string name="quick_panel_open_note_title">Відкриття панелі</string>
+    <string name="quick_panel_open_note_description">Двічі торкніться центру екрана відтворення, щоб відкрити панель швидких дій на годиннику.</string>
+    <string name="preview_current_app_action">Дія поточної програми</string>
+    <string name="preview_notification_controls">Піктограма з медіасповіщення</string>
+    <string name="setting_wear_queue_style">Стиль черги</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Використовувати обкладинки ярликів як фон</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Коли Стиль черги — варіант з обкладинкою, рядок дії швидкої панелі з отриманою обкладинкою ярлика (трек, плейлист, виконавець…) також заповнює свою пігулку цим зображенням, як «Далі». Ярлики без отриманої обкладинки (звичайна піктограма програми) не змінюються.</string>
+    <string name="setting_wear_list_row_size">Розмір пігулки списку</string>
+    <string name="setting_wear_list_row_size_description">Висота рядків на всю ширину в черзі, меню та швидкій панелі.</string>
+    <string name="setting_wear_progress_gradient">Змішувати палітру в кільці</string>
+    <string name="setting_wear_progress_gradient_description">За багатоколірної обробки (Доповняльна, Тріадна, Аналогова, Дуотон) суцільне кільце плавно переходить через усі три кольори. Вимкніть, щоб кільце було одноколірним, зберігши палітру альбому в інших місцях.</string>
+    <string name="setting_wear_progress_style">Стиль кільця прогресу</string>
+    <string name="setting_wear_seek_style">Стиль показу перемотування й гучності</string>
+    <string name="setting_wear_seek_layout">Макет панелі перемотування</string>
+    <string name="setting_wear_color_treatment">Обробка кольорів годинника</string>
+    <string name="setting_wear_normal_color">Звичайний колір</string>
+    <string name="setting_wear_normal_color_description">Виберіть один колір для акцентів назви, прогресу, гучності, панелей і оформлення мінікнопок у звичайному режимі</string>
+    <string name="setting_wear_normal_color_multi">Використовувати палітру кольорів</string>
+    <string name="setting_wear_normal_color_multi_description">Якщо ввімкнено, екран використовує основний колір і два допоміжні відтінки. Якщо вимкнено, всюди використовується один колір — власний колір альбому або вибраний вами.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Звичайний (вибраний колір)</item>
+        <item>Приглушений (м’який колір альбому)</item>
+        <item>Виразний (повна палітра альбому)</item>
+        <item>Комплементарний (альбом + протилежний)</item>
+        <item>Тріадний (три відтінки альбому)</item>
+        <item>Аналогічний (сусідні відтінки)</item>
+        <item>Монохромний (один відтінок, три тони)</item>
+        <item>Двотоновий (два кольори альбому)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Відповідно до обробки годинника</item>
+        <item>Звичайний (вибраний колір)</item>
+        <item>Приглушений (м’який колір альбому)</item>
+        <item>Виразний (повна палітра альбому)</item>
+        <item>Комплементарний (альбом + протилежний)</item>
+        <item>Тріадний (три відтінки альбому)</item>
+        <item>Аналогічний (сусідні відтінки)</item>
+        <item>Монохромний (один відтінок, три тони)</item>
+        <item>Двотоновий (два кольори альбому)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Насиченість назви</string>
+    <string name="setting_wear_title_font_italic">Курсивна назва</string>
+    <string name="setting_wear_title_font_scale">Розмір назви</string>
+    <string name="setting_wear_title_font_opacity">Непрозорість назви</string>
+    <string name="setting_wear_title_font_tracking">Інтервал між літерами назви</string>
+    <string name="setting_wear_title_color">Колір тексту назви</string>
+    <string name="setting_wear_title_custom_color">Власний колір назви</string>
+    <string name="wear_title_color_face_default">Типове для циферблата (як задумано)</string>
+    <string name="setting_wear_title_adaptive_contrast">Адаптувати колір назви для контрасту</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Освітлює або затемнює назву, якщо її колір надто близький до зображення позаду, зберігаючи відтінок. Не діє, доки назва використовує типовий колір циферблата.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Адаптувати колір виконавця для контрасту</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Освітлює або затемнює рядок виконавця, якщо колір альбому надто близький до зображення позаду, зберігаючи відтінок. Вимірюється лише смуга, на якій розташований рядок, а не вся обкладинка.</string>
+    <string name="setting_wear_artist_font_weight">Насиченість виконавця</string>
+    <string name="setting_wear_artist_font_italic">Курсивний виконавець</string>
+    <string name="setting_wear_artist_font_scale">Розмір виконавця</string>
+    <string name="setting_wear_artist_font_opacity">Непрозорість виконавця</string>
+    <string name="setting_wear_artist_font_tracking">Інтервал між літерами виконавця</string>
+    <string name="setting_wear_source_icon_scale">Розмір піктограми програми</string>
+    <string name="setting_wear_source_icon_opacity">Непрозорість піктограми програми</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 — нормальна насиченість циферблата; більше значення означає жирніший шрифт. Для Google Sans Flex це власна вісь насиченості шрифту</string>
+    <string name="setting_wear_typography_scale_description">Відсоток від власного розміру циферблата (70–140). 100 зберігає задуманий розмір кожного макета</string>
+    <string name="setting_wear_typography_opacity_description">Відсоток (20–100). 100 зберігає власну непрозорість циферблата</string>
+    <string name="setting_wear_typography_tracking_description">Додатковий простір між літерами, у сотих частках em (−5 до 20). 0 зберігає власний інтервал шрифту</string>
+    <string name="setting_wear_color_modifier">Тон</string>
+    <string name="setting_wear_color_modifier_description">Налаштуйте всю палітру, не змінюючи спосіб її отримання — працює з будь-якою обробкою кольору</string>
+    <string name="setting_wear_color_hue_shift">Зсув кольору</string>
+    <string name="setting_wear_color_hue_shift_description">Обертає палітру альбому навколо колірного кола в градусах (0–359). Кожна обробка зберігає основний колір на власному відтінку альбому, тому цей параметр змінює його. 0 використовує колір альбому без змін; фіксований звичайний колір ніколи не зсувається.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Немає</item>
+        <item>Яскравий</item>
+        <item>Пастельний</item>
+        <item>Теплий</item>
+        <item>Холодний</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Дуга по краю (ліворуч)</item>
+        <item>Дуга по краю (висока)</item>
+        <item>Дуга по краю (праворуч)</item>
+        <item>Дуга по краю (зверху)</item>
+        <item>Дуга по краю (знизу)</item>
+        <item>Повне кільце</item>
+        <item>Центральне сяйво</item>
+        <item>Горизонтальний індикатор</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Кільце по краю</item>
+        <item>Кільце по краю (тонке)</item>
+        <item>Кільце по краю (товсте)</item>
+        <item>Шкала часу</item>
+        <item>Сегментована шкала часу</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Спочатку метадані</item>
+        <item>Дуга</item>
+        <item>Головний</item>
+        <item>Сітка</item>
+        <item>Рядки з підписами</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Суцільний</item>
+        <item>Пунктир</item>
+        <item>Крапки</item>
+        <item>Тонка лінія</item>
+        <item>Комета</item>
+        <item>60 точок годинника</item>
+        <item>60 поділок годинника</item>
+        <item>12-годинні сегменти</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Простий</item>
+        <item>Скляна капсула</item>
+        <item>Виразна капсула</item>
+        <item>Капсула Material</item>
+        <item>Біла капсула</item>
+        <item>Гігантський</item>
+        <item>Позиція / всього</item>
+        <item>Біле скло</item>
+        <item>Напівпрозорий альбом</item>
+        <item>Сяйво альбому</item>
+        <item>Контур</item>
+        <item>Суцільна тема</item>
+        <item>Суцільний альбом</item>
+        <item>Мікро</item>
+        <item>Тінь (без оздоблення)</item>
+        <item>Підкреслення</item>
+        <item>Тонкий контур</item>
+        <item>Гігантський колір альбому</item>
+        <item>Моно</item>
+        <item>Темний тональний</item>
+        <item>Термінал</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Налаштовані кнопки</item>
+        <item>З поточного медіазастосунку</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Відповідно до стилю панелі</item>
+        <item>Розмиття альбому (акрил)</item>
+        <item>Суцільний чорний</item>
+        <item>Суцільний колір альбому</item>
+        <item>Скло</item>
+        <item>Градієнт альбому</item>
+        <item>Дуотон альбому</item>
+        <item>Призма</item>
+        <item>Рідке скло</item>
+        <item>Виразне розмиття</item>
+        <item>Виразний</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Скло</item>
+        <item>Мінімальний (AMOLED)</item>
+        <item>Material</item>
+        <item>Тональний</item>
+        <item>Неон</item>
+        <item>Світлий</item>
+        <item>Градієнт</item>
+        <item>Моно</item>
+        <item>Контур</item>
+        <item>Дуотон</item>
+        <item>Призма</item>
+        <item>Високий контраст</item>
+        <item>Термінал</item>
+        <item>Іній</item>
+        <item>Сегменти</item>
+        <item>Аврора</item>
+        <item>Чорнило</item>
+        <item>Канавка</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Компактний</item>
+        <item>Звичайний</item>
+        <item>Високий</item>
+        <item>Дуже високий</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Скло</item>
+        <item>Мінімальний (AMOLED)</item>
+        <item>Material</item>
+        <item>Тональний</item>
+        <item>Неон</item>
+        <item>Світлий</item>
+        <item>Градієнт</item>
+        <item>Моно</item>
+        <item>Контур</item>
+        <item>Дуотон</item>
+        <item>Призма</item>
+        <item>Високий контраст</item>
+        <item>Термінал</item>
+        <item>Іній</item>
+        <item>Обкладинка</item>
+            <item>Розмиття обкладинки</item>
+        <item>Тональна обкладинка</item>
+        <item>Квадратна обкладинка</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Скло</item>
+        <item>Біле скло</item>
+        <item>Тональне скло</item>
+        <item>Мінімальний (AMOLED)</item>
+        <item>Material</item>
+        <item>Тональний</item>
+        <item>Неон</item>
+        <item>Світлий</item>
+        <item>Градієнт</item>
+        <item>Моно</item>
+        <item>Контур</item>
+        <item>Контурне біле скло</item>
+        <item>Дуотон</item>
+        <item>Призма</item>
+        <item>Високий контраст</item>
+        <item>Термінал</item>
+        <item>Іній</item>
+        <item>Привид (без оздоблення)</item>
+        <item>Туман</item>
+        <item>Чорнило</item>
+        <item>Крапка</item>
+        <item>Плита</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Зберігати програму активною після паузи</string>
+    <string name="setting_wear_paused_hold_description">Визначає, як довго після паузи програма годинника залишається доступною з циферблата, щоб можна було продовжити, просто піднявши зап’ястя, без повторного відкриття. Довші значення довше тримають фонову службу активною.</string>
+    <string name="wear_paused_hold_off">Не зберігати</string>
+    <string name="wear_paused_hold_5">5 хвилин</string>
+    <string name="wear_paused_hold_15">15 хвилин</string>
+    <string name="wear_paused_hold_30">30 хвилин</string>
+    <string name="wear_paused_hold_60">1 година</string>
+    <string name="wear_paused_hold_always">До завершення відтворення</string>
+
+    <string name="setting_wear_idle_button_action">Кнопка, коли нічого не відтворюється</string>
+    <string name="setting_wear_idle_auto_open">Відкривати, коли нічого не відтворюється</string>
+    <string name="setting_wear_idle_auto_open_description">Одразу переходить на цей екран, коли ви відкриваєте програму годинника без відтворення музики.</string>
+    <string name="wear_idle_action_resume">Відновити останню програму</string>
+    <string name="wear_idle_action_shortcuts">Ярлики плейлистів</string>
+    <string name="wear_idle_action_menu">Меню дій</string>
+    <string name="wear_idle_action_search">Пошук</string>
+    <string name="wear_idle_action_queue">Нещодавно відтворене</string>
+    <string name="wear_idle_action_none">Без кнопки</string>
+    <string name="wear_idle_auto_open_none">Залишитися в програвачі</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Переглянути бібліотеку</string>
+    <string name="library_up">Назад</string>
+    <string name="error_library_unavailable">У цієї програми немає бібліотеки для перегляду</string>
+    <string name="error_library_empty">Тут нічого немає</string>
+    <string name="error_library_no_player">Спочатку почніть щось відтворювати</string>
+
+    <string name="setting_wear_carousel_card_shape">Форма картки каруселі</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Округлий</item>
+        <item>Квадрат</item>
+        <item>Скворкл</item>
+        <item>Коло</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Використовувати шрифт всюди</string>
+    <string name="setting_wear_font_all_screens_description">Застосовує вибраний шрифт до меню, черги та швидких дій, а не лише до програвача. Дисплейні та рукописні шрифти можуть бути складнішими для читання у списках.</string>
+
+    <string name="setting_wear_clock_font">Шрифт годинника</string>
+    <string name="wear_clock_font_follow">Відповідно до шрифту треку</string>
+    <string name="setting_wear_lyrics_font">Шрифт тексту пісні</string>
+    <string name="setting_wear_lyrics_font_description">Шрифт для слів пісні на екрані тексту та циферблаті Verse. Використовує шрифт треку, якщо тут не вибрати інший.</string>
+    <string name="wear_lyrics_font_follow">Відповідно до шрифту треку</string>
+    <string name="setting_wear_clock_font_weight">Насиченість годинника</string>
+    <string name="setting_wear_clock_font_italic">Курсивний годинник</string>
+    <string name="setting_wear_clock_font_scale">Розмір годинника</string>
+    <string name="setting_wear_clock_font_tracking">Інтервал між літерами годинника</string>
+    <string name="setting_wear_clock_adaptive_contrast">Адаптувати колір годинника для контрасту</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Освітлює або затемнює годинник, якщо колір альбому надто близький до зображення позаду, зберігаючи відтінок. Застосовується лише коли «Колір годинника» встановлено на «Колір альбому».</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Стиснутий дисплейний шрифт ВЕЛИКИМИ ЛІТЕРАМИ — постерний стиль, добре вміщує довгі назви</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Висококонтрастний редакційний шрифт із засічками — журнальний стиль</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Технічний геометричний гротеск із химерними деталями</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Квадратний sci-fi дисплейний шрифт — жирний і футуристичний</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Рукописний шрифт — невимушений і особистий</string>
+    <string name="setting_wear_track_time_mode">Відображення часу треку</string>
+    <string name="setting_wear_track_time_mode_description">Визначає, коли позиція треку (наприклад, 1:23 / 3:45) відображається на екрані відтворення.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Завжди</item>
+        <item>Лише під час відтворення</item>
+        <item>Лише під час паузи</item>
+        <item>Ніколи</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Вигин мінікнопок</string>
+    <string name="setting_screen_buttons_curve_description">Виберіть стиль вигину мінікнопок: плоский, дуга, м’який, вигнутий.</string>
+    <string name="setting_screen_buttons_shape">Форма мінікнопок</string>
+    <string name="setting_screen_buttons_shape_description">Виберіть форму та формат розташування мінікнопок.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Капсула (типово)</item>
+        <item>Коло</item>
+        <item>Квадрат</item>
+        <item>Заокруглений квадрат (м’який)</item>
+        <item>Заокруглений квадрат (середній)</item>
+        <item>Скворкл</item>
+        <item>Листок</item>
+        <item>Крапля</item>
+        <item>Капсула (широка мала)</item>
+        <item>Капсула (широка середня)</item>
+        <item>Капсула (широка велика)</item>
+        <item>Капсула (широка дуже велика)</item>
+        <item>Заокруглений прямокутник (малий)</item>
+        <item>Заокруглений прямокутник (середній)</item>
+        <item>Заокруглений прямокутник (великий)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Плаский</item>
+        <item>Дуга</item>
+        <item>Плавний вигин</item>
+        <item>М’який вигин</item>
+        <item>Середній вигин</item>
+        <item>Вигнутий</item>
+        <item>Екстремальний вигин</item>
+        <item>Розтягнути до країв</item>
+        <item>Лівий край</item>
+        <item>Правий край</item>
+        <item>Обидва краї</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Типове тло</item>
+        <item>Скло (рівномірне)</item>
+        <item>Скло (світле)</item>
+        <item>Напівпрозорий альбом</item>
+        <item>Напівпрозорий альбом Exp</item>
+        <item>Сяйво альбому</item>
+        <item>Сяйво Exp</item>
+        <item>Суцільна тема</item>
+        <item>Суцільний альбом</item>
+        <item>Суцільний Exp альбом</item>
+        <item>Контур</item>
+        <item>Контурний Exp альбом</item>
+        <item>Лише піктограма (прозора)</item>
+        <item>Піктограма Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Нейтральний</item>
+        <item>Колір альбому</item>
+        <item>Власний колір</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Повна обкладинка</item>
+        <item>Розмите тло</item>
+        <item>Заморожені краї</item>
+        <item>Квадрат (гострі кути)</item>
+        <item>Квадрат (м’які кути)</item>
+        <item>Квадрат (заокруглені кути)</item>
+        <item>Чорно-білий</item>
+        <item>Розмитий чорно-білий</item>
+        <item>Виразне розмиття</item>
+        <item>Виразний</item>
+        <item>Тональний градієнт Material</item>
+        <item>Постерна обкладинка</item>
+        <item>Студійний градієнт</item>
+        <item>Радіальне сяйво вінілу</item>
+        <item>Сяйво гало</item>
+        <item>Стрічки аврори</item>
+        <item>Спектральний градієнт</item>
+        <item>Розгортка корони</item>
+        <item>Згасання сутінків</item>
+        <item>Цвітіння</item>
+        <item>Згасання горизонту</item>
+        <item>Сяйво жару</item>
+        <item>Чорний Eclipse AMOLED</item>
+        <item>Приховано (суцільний чорний)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Вимкнено</item>
+        <item>Показувати піктограму музичного циферблата (лише Wear 3.0)</item>
+        <item>Відкрити Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Тайм-аут закриття</string>
+    <string name="setting_close_timeout_description">Svartifoss автоматично закриється, якщо музика не відтворюється протягом <![CDATA[<b>%1$s секунд</b>]]>. Функцію вимкнено, якщо тайм-аут дорівнює 0 секунд. Для економії батареї цей параметр інколи може бути неточним, і закриття може затриматися до хвилини.</string>
+    <string name="setting_wear_close_on_idle">Закривати на екрані «Нічого не відтворюється»</string>
+    <string name="setting_wear_close_on_idle_description">Автоматично закриває програму годинника приблизно через хвилину після переходу на неактивний екран «Нічого не відтворюється», щоб вона не залишалася там. Працює незалежно від тайм-ауту закриття вище, який стосується призупиненого треку.</string>
+    <string name="category_notifications">Спливне сповіщення</string>
+    <string name="setting_enable_notifications">Показувати спливне сповіщення</string>
+    <string name="setting_enable_notifications_description">Для цієї функції потрібна інша програма для керування сповіщеннями (Vibration Center for Wear).\n\nЩоразу, коли Vibration Center вібрує годинником, Svartifoss показуватиме спливне вікно з текстом сповіщення, щоб ви могли швидко переглянути його, не виходячи зі Svartifoss.</string>
+    <string name="setting_notification_timeout">Тайм-аут спливного сповіщення</string>
+    <string name="setting_notification_timeout_description">Спливне сповіщення автоматично закриється через <![CDATA[<b>%1$s секунд</b>]]>. Введіть 0, щоб вимкнути автозакриття.</string>
+    <string name="app_required">Потрібна програма</string>
+    <string name="vibration_center_required_description">Щоб користуватися цією функцією, потрібно встановити іншу безкоштовну програму: Vibration Center for Wear.</string>
+    <string name="open_play_store">Відкрити Play Маркет</string>
+    <string name="error_no_notification_service_support">На жаль, схоже, цей пристрій не підтримує служби сповіщень</string>
+    <string name="setting_always_select_center_action">Завжди вибирати центральну дію</string>
+    <string name="setting_always_select_center_action_description">Якщо ввімкнено, торкання списку дій завжди вибирає центральний (виділений) варіант, незалежно від того, якого варіанта ви торкнулися.</string>
+    <string name="change_icon">Змінити піктограму</string>
+    <string name="please_wait">Зачекайте</string>
+
+    <string name="error_playlist_not_supported">Не підтримується цією медіапрограмою</string>
+    <string name="error_search_no_results">Нічого не знайдено</string>
+    <string name="seconds_to_skip">Секунд для пропуску:</string>
+    <string name="seconds_to_reverse">Секунд для перемотування назад:</string>
+
+    <string name="setting_dynamic_accent_color">Динамічний акцентний колір</string>
+    <string name="setting_dynamic_accent_color_description">Якщо ввімкнено, акцентний колір (смуга перемотування, активний елемент черги) автоматично адаптується до домінантного кольору поточної обкладинки.</string>
+    <string name="setting_desaturated_color">Приглушений колір</string>
+    <string name="setting_desaturated_color_description">Регулює насиченість і яскравість виділеного кольору, щоб гарантувати високу читабельність і контраст залежно від активної теми.</string>
+
+    <string name="queue_header">Черга відтворення</string>
+    <string name="queue_unavailable">Черга недоступна</string>
+
+    <string name="setting_custom_accent_color">Акцентний колір</string>
+    <string name="setting_custom_accent_color_description">Виберіть власний акцентний колір для інтерфейсу програми</string>
+    <string name="setting_mini_player">Мініпрогравач</string>
+    <string name="setting_mini_player_description">Показує постійну панель поточного відтворення над нижньою навігацією, коли медіа активне. Увімкнено за замовчуванням; вимкніть, щоб звільнити місце.</string>
+    <string name="color_picker_title">Вибрати акцентний колір</string>
+    <string name="color_picker_reset">Скинути</string>
+    <string name="color_picker_apply">Застосувати</string>
+    <string name="color_picker_default">Типово</string>
+    <string name="color_picker_invalid">Недійсний код кольору</string>
+    <string name="color_picker_current">Зараз: %s</string>
+
+    <string name="drawer_version_format">Версія %1$s</string>
+    <string name="drawer_tagline">Супутня програма для Wear OS</string>
+    <string name="drawer_about_heading">Про програму</string>
+    <string name="drawer_about_summary">Svartifoss дає змогу керувати музикою на телефоні з годинника Wear OS — за допомогою повністю налаштовуваного пульта, адаптованого до вашого пристрою.</string>
+    <string name="drawer_name_heading">Назва</string>
+    <string name="drawer_name_meaning">Svartifoss ісландською означає «Чорний водоспад» — названий на честь водоспаду в Національному парку Ватнайокутль, де темні базальтові колони обрамляють вузький каскад. Як вода тече по каменю, так музика тече крізь програму.</string>
+    <string name="drawer_sync_heading">Синхронізація</string>
+    <string name="drawer_sync_summary">Налаштування годинника задаються тут на телефоні й автоматично синхронізуються зі спареним годинником.</string>
+    <string name="drawer_support_heading">Підтримка</string>
+    <string name="drawer_support_summary">Svartifoss безкоштовний і з відкритим кодом — якщо він вам корисний, пригостіть мене кавою :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Завантажити обкладинку</string>
+    <string name="album_art_saved">Обкладинку збережено в галереї</string>
+    <string name="album_art_save_error">Не вдалося зберегти обкладинку</string>
+
+    <string name="action_play_liked_songs">Відтворити вподобані пісні (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Відтворити вподобані пісні (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Відтворити вподобані треки (SoundCloud)</string>
+    <string name="action_my_playlists">Потокові ярлики</string>
+    <string name="action_play_specific_playlist">Відкрити ярлик стримінгу</string>
+    <string name="action_choose_or_add_streaming_shortcut">Вибрати або додати ярлик стримінгу</string>
+    <string name="action_show_streaming_library">Показати всі збережені ярлики</string>
+    <string name="playlist_shortcut_pick_title">Вибрати ярлик</string>
+    <string name="playlist_shortcut_pick_empty">Ще немає збережених ярликів стримінгу — додайте один нижче, потім торкніться його, щоб вибрати</string>
+    <string name="playlist_shortcuts_empty">Ще немає ярликів стримінгу — додайте їх у налаштуваннях програми на телефоні</string>
+    <string name="setting_playlist_shortcuts">Потокові ярлики</string>
+    <string name="setting_playlist_shortcuts_description">Відкривати посилання з годинника в YouTube Music, Spotify та інших стримінгових програмах</string>
+    <string name="setting_shortcut_artwork">Завантажувати зображення ярликів онлайн</string>
+    <string name="setting_shortcut_artwork_description">Завантажує мініатюру з сервісу для кожного збереженого ярлика та показує її у списку на телефоні, меню годинника й на призначених кнопках. Кожну мініатюру отримують один раз; надсилається лише публічне посилання. Типово вимкнено.</string>
+    <string name="setting_queue_local_artwork">Обкладинки черги з бібліотеки</string>
+    <string name="setting_queue_local_artwork_description">Локальні музичні програвачі публікують обкладинки черги як посилання на бібліотеку. Надайте доступ до медіа, щоб показувати їх у черзі на годиннику. Інтернет не використовується.</string>
+    <string name="setting_queue_local_artwork_granted">Доступ до медіа надано — локальні обкладинки черги відображатимуться</string>
+    <string name="setting_queue_local_artwork_denied">Доступ до медіа заборонено. Увімкніть його в налаштуваннях Android, щоб показувати локальні обкладинки черги.</string>
+    <string name="setting_queue_remote_artwork">Завантажувати обкладинки черги онлайн</string>
+    <string name="setting_queue_remote_artwork_short_description">Стримінгові програми (клієнти YouTube Music, Echo Music…) публікують обкладинки черги як посилання, а не зображення, тому цей параметр завантажує й кешує їх. Вимкніть, щоб черга залишалася повністю офлайн — тоді ці рядки не матимуть обкладинок.</string>
+    <string name="setting_queue_remote_artwork_description">Стримінгові програвачі публікують обкладинки черги як посилання, а не зображення. Кожну обкладинку завантажують один раз і кешують на цьому телефоні для показу в черзі на годиннику. Запитується лише URL обкладинки, який уже опублікував програвач — без облікового запису чи персональних даних. Типово ввімкнено; вимкніть, щоб залишити чергу повністю офлайн.</string>
+    <string name="watch_streaming_shortcuts_empty">Додати треки, альбоми або плейлисти для швидких дій і меню годинника</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d збережений ярлик · Доступний у швидких діях і меню годинника</item>
+        <item quantity="few">%1$d збережені ярлики · Доступні у швидких діях і меню годинника</item>
+        <item quantity="many">%1$d збережених ярликів · Доступні у швидких діях і меню годинника</item>
+        <item quantity="other">%1$d збереженого ярлика · Доступно у швидких діях і меню годинника</item>
+    </plurals>
+    <string name="category_music_apps">Музичні програми й сервіси</string>
+    <string name="category_apps_content">Тексти й метадані</string>
+    <string name="category_streaming_services">Потокові ярлики</string>
+    <string name="category_queue_artwork">Зображення черги</string>
+    <string name="category_system_access">Доступ Android і сповіщення</string>
+    <string name="setting_apps_integrations">Підтримувані музичні сервіси</string>
+    <string name="setting_apps_integrations_description">Посилання працюють із YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music і SoundCloud. Доступ до облікового запису не потрібен.</string>
+    <string name="setting_apps_integrations_none">Підтримувану програму не виявлено. Ярлики все одно можуть відкриватися в браузері або іншій сумісній програмі.</string>
+    <string name="setting_apps_integrations_installed">Виявлено %1$d з %2$d: %3$s</string>
+    <string name="setting_streaming_open_mode">Відкривати стримінгові посилання за допомогою</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Виявлений стримінговий застосунок</item>
+        <item>Типове для Android</item>
+        <item>Запитувати щоразу</item>
+    </string-array>
+    <string name="setting_persistent_notification">Керувати сповіщенням «Svartifoss активний»</string>
+    <string name="setting_persistent_notification_description">Відкриває налаштування Android для цього сповіщення — можна вимкнути звук, приховати з екрана блокування або змінити інші параметри. Повністю вимкнути його не можна: Android вимагає постійне сповіщення, доки працює фонова служба зв’язку з годинником.</string>
+    <string name="setting_notification_access">Доступ до медіасповіщень</string>
+    <string name="setting_notification_access_enabled">Дозволено · Торкніться, щоб переглянути налаштування Android</string>
+    <string name="setting_notification_access_disabled">Не дозволено · Потрібно для медіадій у сповіщеннях і фільтрів автозапуску</string>
+    <string name="setting_notification_access_unavailable">Налаштування доступу до сповіщень недоступні на цьому пристрої</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d збережений ярлик · Торкніться, щоб керувати або імпортувати посилання</item>
+        <item quantity="few">%1$d збережені ярлики · Торкніться, щоб керувати або імпортувати посилання</item>
+        <item quantity="many">%1$d збережених ярликів · Торкніться, щоб керувати або імпортувати посилання</item>
+        <item quantity="other">%1$d збереженого ярлика · Торкніться, щоб керувати або імпортувати посилання</item>
+    </plurals>
+    <string name="category_privacy">Конфіденційність</string>
+    <string name="setting_privacy_policy">Політика конфіденційності</string>
+    <string name="setting_privacy_policy_description">Дізнайтеся, які дані використовує Svartifoss і які онлайн-сервіси є необов’язковими.</string>
+    <string name="setting_crash_reporting">Надсилати звіти про збої</string>
+    <string name="setting_crash_reporting_description">Надсилати діагностику Firebase Crashlytics, щоб допомогти виправляти збої. Типово ввімкнено; можна вимкнути будь-коли.</string>
+    <string name="setting_announcements">Сповіщення про оголошення</string>
+    <string name="setting_announcements_description">Час від часу сповіщення від розробника — нові випуски та важливі повідомлення. Надсилаються через Firebase Cloud Messaging; облікових записів чи списків користувачів немає. Типово ввімкнено; можна вимкнути будь-коли.</string>
+    <string name="announcement_notification_channel">Оголошення</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Поділіться плейлистом, альбомом або треком безпосередньо зі Svartifoss, вставте скопійоване посилання або додайте його вручну. Годинник лише просить телефон відкрити його; вхід у сервіс не потрібен.</string>
+    <string name="back">Назад</string>
+    <string name="playlist_shortcuts_beta_badge">БЕТА</string>
+    <string name="playlist_shortcuts_intro_title">Ваша музика в один дотик</string>
+    <string name="playlist_shortcuts_yours">Ваші ярлики</string>
+    <string name="playlist_shortcuts_empty_hint">Додайте спільне посилання на трек, альбом або плейлист, щоб воно було доступне на годиннику.</string>
+    <string name="playlist_shortcuts_add">Додати ярлик</string>
+    <string name="playlist_shortcuts_paste">Вставити посилання</string>
+    <string name="playlist_shortcuts_reload_covers">Перезавантажити обкладинки</string>
+    <string name="playlist_shortcuts_reloading_covers">Перезавантаження обкладинок…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Обкладинки перезавантажено</string>
+    <string name="playlist_shortcuts_edit">Редагувати ярлик</string>
+    <string name="playlist_shortcut_save">Зберегти ярлик</string>
+    <string name="playlist_shortcut_editor_hint">Вставте одне посилання. Svartifoss автоматично визначить програму й тип вмісту.</string>
+    <string name="playlist_shortcut_detection_waiting">Очікування стримінгового посилання</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Підтримуються Spotify, YouTube Music, Apple Music, TIDAL, Deezer та інші.</string>
+    <string name="playlist_shortcut_detected_format">Виявлено: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Назва</string>
+    <string name="playlist_shortcut_link_hint">Посилання для поширення або URI програми</string>
+    <string name="playlist_shortcut_shuffle">Відтворювати у випадковому порядку (лише YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Посилання</string>
+    <string name="playlist_type_track">Трек</string>
+    <string name="playlist_type_playlist">Плейлист</string>
+    <string name="playlist_type_album">Альбом</string>
+    <string name="playlist_type_artist">Виконавець</string>
+    <string name="playlist_type_show">Шоу</string>
+    <string name="playlist_type_episode">Епізод</string>
+    <string name="playlist_type_mix">Мікс</string>
+    <string name="playlist_badge_shuffle">Перемішати</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Ще не додано ярликів стримінгу</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">Збережено: %1$d</item>
+        <item quantity="few">Збережено: %1$d</item>
+        <item quantity="many">Збережено: %1$d</item>
+        <item quantity="other">Збережено: %1$d</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Упорядковані ярлики стримінгу. Натисніть і утримуйте для перетягування, скористайтеся діями доступності «Перемістити вгору» чи «Перемістити вниз» або натисніть Ctrl+Вгору/Вниз на клавіатурі.</string>
+    <string name="playlist_shortcut_more_options">Більше параметрів для %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Редагувати</string>
+    <string name="playlist_shortcut_menu_open">Відкрити зараз</string>
+    <string name="playlist_shortcut_menu_copy">Копіювати посилання</string>
+    <string name="playlist_shortcut_menu_duplicate">Дублювати</string>
+    <string name="playlist_shortcut_menu_share">Поділитися</string>
+    <string name="playlist_shortcut_menu_delete">Видалити</string>
+    <string name="playlist_shortcut_open_failed">Жодна програма не може відкрити це посилання</string>
+    <string name="streaming_shortcut_choose_app">Відкрити стримінгове посилання за допомогою</string>
+    <string name="playlist_shortcut_link_copied">Посилання скопійовано</string>
+    <string name="playlist_shortcut_import_invalid">У спільному тексті немає дійсного стримінгового посилання</string>
+    <string name="playlist_shortcut_clipboard_invalid">У буфері обміну немає дійсного стримінгового посилання</string>
+    <string name="playlist_shortcut_name_required">Введіть назву ярлика</string>
+    <string name="playlist_shortcut_link_invalid">Введіть дійсне вебпосилання або URI програми</string>
+    <string name="playlist_shortcut_service_invalid">Вставте дійсне посилання, щоб визначити сервіс</string>
+    <string name="playlist_shortcut_service_generic">Сумісне посилання · Android вибере програму</string>
+    <string name="playlist_shortcut_service_installed">%1$s встановлено · Готово до відкриття в програмі</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s не встановлено · Можна використати браузер або сумісну програму</string>
+    <string name="playlist_shortcut_copy_name">Копія %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">Копія %1$s %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s створено</string>
+    <string name="playlist_shortcut_share_title">Поділитися ярликом стримінгу</string>
+    <string name="playlist_shortcut_share_failed">Немає програми, яка може поділитися цим ярликом</string>
+    <string name="playlist_shortcut_deleted">%1$s видалено</string>
+    <string name="playlist_shortcut_undo">Скасувати</string>
+
+    <string name="action_play_liked_songs_shuffled">Відтворити вподобані пісні у випадковому порядку (YT Music)</string>
+    <string name="action_search_history">Історія пошуку</string>
+    <string name="search_history_empty">Ще немає недавніх пошуків</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Оновлення</string>
+    <string name="setting_update_check">Сповіщати про нові версії</string>
+    <string name="setting_update_check_description">Приблизно раз на день перевіряє GitHub на наявність нових випусків і показує сповіщення</string>
+    <string name="setting_update_prereleases">Включати попередні випуски</string>
+    <string name="setting_update_prereleases_description">Також сповіщати про бета-версії</string>
+    <string name="setting_update_check_now">Перевірити оновлення зараз</string>
+    <string name="setting_update_check_now_description">Показує найновішу версію та дає змогу оновити годинник через Bluetooth</string>
+    <string name="update_screen_title">Оновлення</string>
+    <string name="update_cover_content_description">Svartifoss — водоспад, на честь якого названо застосунок</string>
+    <string name="update_notification_channel">Оновлення застосунку</string>
+    <string name="update_available_title">Доступний Svartifoss %1$s</string>
+    <string name="update_notification_text">Торкніться, щоб оновити</string>
+    <string name="update_available_action">Доступне оновлення</string>
+    <string name="update_installed_phone">Телефон: %1$s</string>
+    <string name="update_installed_versions">Телефон: %1$s · Годинник: %2$s</string>
+    <string name="update_watch_version_unknown">невідомо</string>
+    <string name="update_checking">Перевірка оновлень…</string>
+    <string name="update_check_failed">Не вдалося перевірити оновлення. Перевірте з’єднання та повторіть спробу.</string>
+    <string name="update_available_line">Нова версія: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(попередній випуск)</string>
+    <string name="update_up_to_date">У вас найновіша версія (%1$s)</string>
+    <string name="update_no_wear_asset">У цьому випуску немає APK годинника для надсилання.</string>
+    <string name="update_watch_hint">«Оновити годинник» завантажує новий застосунок для годинника й надсилає його через Bluetooth — установлення підтверджується на самому годиннику, без кабелю чи Wear Installer.</string>
+    <string name="update_downloading">Завантаження… %1$d%%</string>
+    <string name="update_connecting_watch">Підключення до годинника…</string>
+    <string name="update_transferring">Надсилання на годинник… %1$d%%</string>
+    <string name="update_confirm_on_watch">Надіслано! На годиннику з’явилося сповіщення — торкніться його на годиннику, щоб установити.</string>
+    <string name="update_no_watch">Немає підключеного годинника.</string>
+    <string name="update_push_failed">Не вдалося надіслати оновлення на годинник. Спробуйте ще раз.</string>
+    <string name="update_watch_button">Оновити годинник</string>
+    <string name="update_open_release_button">Відкрити сторінку випуску</string>
+    <string name="update_watch_behind">На годиннику досі %1$s — надішліть йому оновлення нижче.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Підтримуйте застосунки телефона й годинника синхронізованими</string>
+    <string name="update_state_checking">Перевірка оновлень…</string>
+    <string name="update_state_current">Усе актуально</string>
+    <string name="update_state_current_sub">Використовується найновіший випуск, %1$s</string>
+    <string name="update_state_available">Доступне оновлення</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Не вдалося перевірити оновлення</string>
+    <string name="update_state_failed_sub">Перевірте з’єднання та повторіть спробу</string>
+    <string name="update_device_phone">Телефон</string>
+    <string name="update_device_watch">Годинник</string>
+    <string name="update_versions_header">Установлено</string>
+    <string name="update_whats_new">Що нового</string>
+    <string name="update_phone_button">Оновити телефон</string>
+    <string name="update_installing">Відкриття інсталятора…</string>
+    <string name="update_install_permission_needed">Дозвольте встановлення застосунків із Svartifoss, а потім знову торкніться «Оновити телефон».</string>
+    <string name="update_phone_failed">Не вдалося завантажити оновлення телефона. Спробуйте ще раз.</string>
+    <string name="update_install_notification_title">Оновлення Svartifoss</string>
+    <string name="update_install_notification_tap">Торкніться, щоб установити нову версію</string>
+    <string name="update_install_notification_failed">Не вдалося встановити. Дозвольте встановлення зі Svartifoss у Налаштуваннях і повторіть спробу.</string>
+    <string name="setting_wear_album_accent_source">Джерело акцентного кольору альбому</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Збалансований</item>
+        <item>Найяскравіший</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Вимкнено</item>
+        <item>М’який</item>
+        <item>Стандартний</item>
+        <item>Жирний</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Нижня межа акценту</string>
+    <string name="preview_metadata_album">Альбом</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Трек</string>
+    <string name="preview_metadata_genre">Жанр</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Рік</string>
+    <string name="preview_metadata_format">Формат</string>
+    <string name="preview_metadata_bitrate">Бітрейт</string>
+    <string name="preview_metadata_position">Позиція</string>
+    <string name="preview_metadata_output">Вихід</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Відомості про альбом</string>
+    <string name="setting_wear_metadata_core_description">Альбом, виконавець альбому, позиція на диску та тривалість.</string>
+    <string name="setting_wear_metadata_release">Відомості про випуск</string>
+    <string name="setting_wear_metadata_release_description">Жанр, рік, дата випуску та лейбл.</string>
+    <string name="setting_wear_metadata_credits">Авторство</string>
+    <string name="setting_wear_metadata_credits_description">Композитор, автор тексту й автор, якщо програвач їх публікує.</string>
+    <string name="setting_wear_metadata_technical">Відомості про файл</string>
+    <string name="setting_wear_metadata_technical_description">Формат, бітрейт, частота дискретизації, канали та розмір. Лише локальні треки.</string>
+    <string name="setting_split_panel">Розділена панель</string>
+    <string name="setting_split_panel_description">Вміст нижньої половини циферблата Split. Розмита обкладинка продовжує те саме зображення за текстом; суцільний колір нагадує картку сповіщення.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Розмите зображення</item>
+        <item>Суцільний колір</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Відомості про відтворення</string>
+    <string name="setting_wear_metadata_playback_description">Позиція до мілісекунди, швидкість, аудіовихід і джерело потокового відтворення чи відтворення звуку — включно з адресою треку. Це блок, який потоковий трек може заповнити, коли немає файла для опису.</string>
+    <string name="setting_wear_metadata_identifiers">Ідентифікатори</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC та каталожні ідентифікатори. Типово вимкнено — корисно, коли потрібно, зайве, коли ні.</string>
+    <string name="setting_metadata_lookup">Шукати відомості про трек онлайн</string>
+    <string name="setting_metadata_lookup_description">Доповнює дані, яких не надав застосунок програвача — ISRC, лейбл, дату випуску — з MusicBrainz, безкоштовної публічної бази даних. Типово вимкнено. Циферблат Metadata працює й без цього; параметр лише додає рядки. Нічого не надсилається, доки ви не ввімкнете цю функцію й не виберете цей циферблат, і надсилаються лише назва треку та виконавець.</string>
+</resources>

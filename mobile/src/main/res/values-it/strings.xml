@@ -1781,6 +1781,32 @@
         <item>فارسی</item>
         <item>简体中文</item>
         <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1798,6 +1824,32 @@
         <item>fa</item>
         <item>zh-Hans</item>
         <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -1823,7 +1875,7 @@
         <item>standard</item>
         <item>bold</item>
     </string-array>
-    <string name="setting_wear_accent_floor">Base del colore d'accento</string>
+    <string name="setting_wear_accent_floor">Base del colore d\'accento</string>
     <string name="preview_metadata_album">Album</string>
     <string name="preview_metadata_album_value">Slow Rivers</string>
     <string name="preview_metadata_track">Traccia</string>
@@ -1836,7 +1888,7 @@
     <string name="preview_metadata_output">Uscita</string>
     <string name="preview_metadata_output_value">Bluetooth</string>
     <string name="setting_wear_metadata_core">Dettagli album</string>
-    <string name="setting_wear_metadata_core_description">Album, artista dell'album, posizione nell'album e durata.</string>
+    <string name="setting_wear_metadata_core_description">Album, artista dell\'album, posizione nell\'album e durata.</string>
     <string name="setting_wear_metadata_release">Dettagli di pubblicazione</string>
     <string name="setting_wear_metadata_release_description">Genere, anno, data di pubblicazione ed etichetta.</string>
     <string name="setting_wear_metadata_credits">Crediti</string>
@@ -1844,7 +1896,7 @@
     <string name="setting_wear_metadata_technical">Dettagli file</string>
     <string name="setting_wear_metadata_technical_description">Formato, bitrate, frequenza di campionamento, canali e dimensione. Solo per brani locali.</string>
     <string name="setting_split_panel">Pannello Split</string>
-    <string name="setting_split_panel_description">Cosa riempie la metà inferiore della faccia Split. La copertina sfocata prosegue la stessa copertina dietro al testo; il colore pieno è l'aspetto di una scheda di notifica.</string>
+    <string name="setting_split_panel_description">Cosa riempie la metà inferiore della faccia Split. La copertina sfocata prosegue la stessa copertina dietro al testo; il colore pieno è l\'aspetto di una scheda di notifica.</string>
     <string-array name="wear_split_panel_entries">
         <item>Copertina sfocata</item>
         <item>Colore pieno</item>
@@ -1854,11 +1906,11 @@
         <item>solid</item>
     </string-array>
     <string name="setting_wear_metadata_playback">Dettagli di riproduzione</string>
-    <string name="setting_wear_metadata_playback_description">Posizione al millisecondo, velocità, uscita audio e da dove proviene lo streaming o la riproduzione — incluso l'indirizzo del brano. L'unico blocco che un brano in streaming può riempire quando non c'è alcun file da descrivere.</string>
+    <string name="setting_wear_metadata_playback_description">Posizione al millisecondo, velocità, uscita audio e da dove proviene lo streaming o la riproduzione — incluso l\'indirizzo del brano. L\'unico blocco che un brano in streaming può riempire quando non c\'è alcun file da descrivere.</string>
     <string name="setting_wear_metadata_identifiers">Identificatori</string>
     <string name="setting_wear_metadata_identifiers_description">ISRC e codici di catalogo. Disattivato per impostazione predefinita — utile quando ti serve, fastidioso quando non ti serve.</string>
     <string name="setting_metadata_lookup">Cerca i dettagli del brano online</string>
-    <string name="setting_metadata_lookup_description">Completa ciò che l'app di riproduzione non ha pubblicato — ISRC, etichetta, data di pubblicazione — da MusicBrainz, un database pubblico gratuito. Disattivato per impostazione predefinita. La faccia Metadata funziona anche senza; questo aggiunge solo righe. Non viene inviato nulla a meno che tu non lo attivi e selezioni quella faccia, e in tal caso solo il titolo del brano e l'artista.</string>
+    <string name="setting_metadata_lookup_description">Completa ciò che l\'app di riproduzione non ha pubblicato — ISRC, etichetta, data di pubblicazione — da MusicBrainz, un database pubblico gratuito. Disattivato per impostazione predefinita. La faccia Metadata funziona anche senza; questo aggiunge solo righe. Non viene inviato nulla a meno che tu non lo attivi e selezioni quella faccia, e in tal caso solo il titolo del brano e l\'artista.</string>
     <!-- Information architecture and navigation -->
     <string name="watch_overview_description">Scegli cosa personalizzare. L’anteprima e il tema salvato restano attivi in ogni area.</string>
     <string name="watch_back_to_overview">Torna alle aree Orologio</string>
@@ -1879,11 +1931,11 @@
     <string name="category_watch_navigation">Navigazione e scorciatoie</string>
     <string name="category_rotary_input">Input rotante e regolazione</string>
     <string name="category_watch_feedback">Feedback e comportamento all’uscita</string>
-    <string name="category_watch_display">Schermo dell'orologio</string>
+    <string name="category_watch_display">Schermo dell\'orologio</string>
     <string name="setting_wear_keep_screen_on">Mantieni lo schermo acceso</string>
-    <string name="setting_wear_keep_screen_on_description">Impedisce che lo schermo dell'orologio si spenga per inattività mentre è aperta una schermata di Svartifoss. Abbassare il polso continua comunque ad attenuare l'orologio — quel gesto appartiene al sistema. Consuma più batteria. La schermata dei testi resta sempre accesa, indipendentemente da questa impostazione.</string>
+    <string name="setting_wear_keep_screen_on_description">Impedisce che lo schermo dell\'orologio si spenga per inattività mentre è aperta una schermata di Svartifoss. Abbassare il polso continua comunque ad attenuare l\'orologio — quel gesto appartiene al sistema. Consuma più batteria. La schermata dei testi resta sempre accesa, indipendentemente da questa impostazione.</string>
     <string name="setting_lyrics_enabled">Cerca i testi online</string>
-    <string name="setting_lyrics_enabled_description">Consente al telefono di recuperare i testi sincronizzati da LRCLIB quando apri la schermata dei testi sull'orologio. Vengono inviati solo il titolo del brano, l'artista e la durata; nient'altro, e nulla viene salvato sul dispositivo. Disattivalo e la schermata dei testi segnalerà che la ricerca è disattivata.</string>
+    <string name="setting_lyrics_enabled_description">Consente al telefono di recuperare i testi sincronizzati da LRCLIB quando apri la schermata dei testi sull\'orologio. Vengono inviati solo il titolo del brano, l\'artista e la durata; nient\'altro, e nulla viene salvato sul dispositivo. Disattivalo e la schermata dei testi segnalerà che la ricerca è disattivata.</string>
     <string name="settings_search_prerequisite">Questa opzione dipende da un’altra scelta. Modifica l’impostazione mostrata qui per renderla visibile.</string>
     <string name="setting_numeric_range_error">Inserisci un valore da %1$d a %2$d.</string>
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>

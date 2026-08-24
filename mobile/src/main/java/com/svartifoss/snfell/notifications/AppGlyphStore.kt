@@ -198,6 +198,23 @@ object AppGlyphStore {
     }
 
     /**
+     * Makes restored glyph files visible immediately and guarantees the next config push includes
+     * them. The generation metadata is deliberately phone-local, so it is rebuilt rather than
+     * copied from a backup.
+     */
+    fun markRestored(context: Context) {
+        invalidateMemoryCache()
+        val prefs = prefs(context)
+        prefs.edit()
+                .putLong(KEY_GENERATION, prefs.getLong(KEY_GENERATION, 0L) + 1L)
+                .putLong(KEY_TRANSMITTED, 0L)
+                .apply()
+    }
+
+    /** Folder included by [com.svartifoss.snfell.config.ConfigBackup] with its action icons. */
+    internal fun backupDirectory(context: Context): File = File(context.filesDir, DIR_NAME)
+
+    /**
      * One file per package.
      *
      * A package name is already restricted to letters, digits, `_` and `.`, so it is a safe file

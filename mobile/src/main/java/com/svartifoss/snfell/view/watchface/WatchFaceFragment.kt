@@ -59,8 +59,7 @@ private val WATCH_APPEARANCE_PREF_KEYS = FaceScopedPreferences.SCOPED_KEYS + set
     "wear_custom_theme_complete",
     "wear_custom_theme_revision",
     "wear_quick_panel_source",
-    "queue_remote_artwork",
-    "wear_font_all_screens"
+    "queue_remote_artwork"
 )
 
 /**

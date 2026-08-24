@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Administrer temaer</string>
+    <string name="watch_theme_builtin_subtitle">Innebygd tema · %1$s-oppsett</string>
+    <string name="watch_theme_custom_subtitle">Egendefinert tema · %1$s-oppsett</string>
+    <string name="watch_theme_unknown_name">Ukjent tema</string>
+
+    <string name="watch_themes_title">Klokketemaer</string>
+    <string name="watch_theme_active_label">BRUKT TEMA</string>
+    <string name="watch_theme_active_layout">Oppsett: %1$s</string>
+    <string name="watch_theme_preview_description">Forhåndsvisning av temaet som for øyeblikket brukes på klokken</string>
+    <string name="watch_theme_create">Opprett tema</string>
+    <string name="watch_theme_create_title">Opprett et nytt tema</string>
+    <string name="watch_theme_rename_title">Gi tema nytt navn</string>
+    <string name="watch_theme_name">Temanavn</string>
+    <string name="watch_theme_base_layout">Grunnoppsett</string>
+    <string name="watch_theme_default_name">Mitt %1$s-tema</string>
+    <string name="watch_theme_generic_name">Tema</string>
+    <string name="watch_theme_copy_name">%1$s-kopi</string>
+    <string name="watch_theme_built_in_section">Innebygde temaer</string>
+    <string name="watch_theme_custom_section">Mine temaer</string>
+    <string name="watch_theme_applied">BRUKT</string>
+    <string name="watch_theme_apply_success">%1$s er brukt på klokken</string>
+    <string name="watch_theme_apply_error">Kunne ikke bruke dette temaet</string>
+    <string name="watch_theme_more_options">Flere temaalternativer</string>
+    <string name="watch_theme_list_description">Innebygde og egendefinerte klokketemaer</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Trykk for å bruke.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Brukes nå.</string>
+    <string name="watch_theme_rename">Gi nytt navn</string>
+    <string name="watch_theme_customize">Tilpass</string>
+    <string name="watch_theme_duplicate">Dupliser</string>
+    <string name="watch_theme_delete">Slett</string>
+    <string name="watch_theme_delete_title">Slette «%1$s»?</string>
+    <string name="watch_theme_delete_message">Dette lagrede temaet og innstillingene blir fjernet permanent.</string>
+    <string name="watch_theme_deleted">Tema slettet</string>
+    <string name="watch_theme_duplicated">Opprettet «%1$s»</string>
+    <string name="watch_theme_limit_reached">Du kan lagre opptil 24 egendefinerte temaer. Slett ett før du oppretter et nytt.</string>
+    <string name="watch_theme_name_required">Skriv inn et temanavn</string>
+    <string name="watch_theme_name_duplicate">Et tema med dette navnet finnes allerede</string>
+
+    <string name="watch_theme_face_classic">Klassisk</string>
+    <string name="watch_theme_face_expressive">Uttrykksfull</string>
+    <string name="watch_theme_face_vinyl">Vinyl</string>
+    <string name="watch_theme_face_poster">Plakat</string>
+    <string name="watch_theme_face_studio">Studio</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Nordlys</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Spektrum</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Oppslukende</string>
+    <string name="watch_theme_face_depth">Dybde</string>
+    <string name="watch_theme_face_carousel">Karusell</string>
+    <string name="watch_theme_face_chat">Chat</string>
+    <string name="watch_theme_face_split">Delt</string>
+    <string name="watch_theme_face_note">Notat</string>
+    <string name="watch_theme_face_verse">Vers</string>
+    <string name="watch_theme_face_metadata">Metadata</string>
+</resources>

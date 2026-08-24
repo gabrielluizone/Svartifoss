@@ -1,0 +1,1996 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">A Wear OS nem támogatott ezen az eszközön</string>
+    <string name="setting_no_wearable_api_banner_description">Ez az eszköz nem biztosítja a Google Play Services Wear OS-összetevőjét, amelyre a Svartifossnak szüksége van az órával való kommunikációhoz. A párosítás nem segít — a telefonos alkalmazás itt nem tud órát elérni. Az alábbiak ettől függetlenül mentésre kerülnek, és alkalmazódnak, ha a Svartifosst olyan eszközre telepíti, amely támogatja ezt.</string>
+    <string name="setting_no_watch_banner">Nincs csatlakoztatott óra</string>
+    <string name="setting_no_watch_banner_description">Ezek a beállítások szinkronizálódnak a Wear OS-órájára, ezért láthatóan csak akkor alkalmazódnak, ha egy óra párosítva és csatlakoztatva van — de az alábbiakat már most is beállíthatja.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Megjelenés</string>
+    <string name="setting_theme">Téma</string>
+    <string name="theme_light">Tiszta fehér</string>
+    <string name="theme_dark">Csak fekete</string>
+    <string name="theme_system">Rendszer követése</string>
+    <string name="setting_language">Nyelv</string>
+    <string name="language_system">Rendszer követése</string>
+    <string name="language_change_watch_notice">Szinkronizálás után az óra is ezt a nyelvet használja.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Fejlesztő</string>
+    <string name="dev_mode_unlocked">Fejlesztői mód engedélyezve ✦</string>
+    <string name="dev_mode_clicks_remaining">Még %1$d koppintás a fejlesztői mód feloldásához</string>
+    <string name="dev_disable_mode">Fejlesztői mód letiltása</string>
+    <string name="dev_disable_mode_description">A szakasz újbóli elrejtése — a visszahozásához koppintson hétszer a \"Telepített verzió\" elemre</string>
+    <string name="dev_mode_disabled">Fejlesztői mód letiltva</string>
+    <string name="dev_build_info">Buildinformáció</string>
+    <string name="dev_sync_watch">Órabeállítások kényszerített szinkronizálása</string>
+    <string name="dev_sync_watch_description">Az összes jelenlegi beállítás azonnali elküldése a párosított órára</string>
+    <string name="dev_sync_watch_done">A beállítások szinkronizálva az órára</string>
+    <string name="dev_copy_debug_info">Hibakeresési adatok másolása</string>
+    <string name="dev_copy_debug_info_description">Build- és eszközadatok másolása a vágólapra</string>
+    <string name="dev_show_archived">Archivált beállítások megjelenítése</string>
+    <string name="dev_show_archived_description">Ismert problémák miatt archivált óraelrendezések és beállítások megjelenítése</string>
+    <string name="dev_copy_debug_info_done">Hibakeresési adatok másolva</string>
+    <string name="dev_open_update_screen">Frissítési képernyő megnyitása</string>
+    <string name="dev_open_update_screen_description">A Frissítések képernyő előnézete (borító banner, kiadási megjegyzések elrendezése) valódi kiadásra várakozás nélkül</string>
+    <string name="dev_watch_layout_bounds">Óraelrendezés határainak megjelenítése</string>
+    <string name="dev_watch_layout_bounds_description">A látható lejátszóelemek és érintési területek körvonalazása az órán. Csak diagnosztikai átfedés.</string>
+    <string name="dev_watch_player_info">Óra lejátszóinformációinak megjelenítése</string>
+    <string name="dev_watch_player_info_description">Az aktív óralap, lejátszási állapot, előrehaladás és renderelési adatok megjelenítése átfedésként az órán.</string>
+    <string name="pref_reset_default">Alapértékek visszaállítása</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Megtalálta a rejtett vízesést.
+
+Svartifoss — fekete bazaltoszlopok
+kereteznek egy izlandi vízesést,
+emlékeztetve arra, hogy a zene úgy folyik,
+mint a víz a köveken.
+
+♪ Gondossággal készült. ♪</string>
+    <string name="easter_egg_ok">Bezárás</string>
+
+    <string name="nav_watch_face">Óra</string>
+    <string name="watch_face_header">Óra megjelenése</string>
+    <string name="nav_controls">Vezérlők</string>
+    <string name="nav_actions">Műveletek</string>
+    <string name="nav_settings">Beállítások</string>
+
+    <string name="controls_header">Vezérlők</string>
+    <string name="controls_state_playing">Zene szól</string>
+    <string name="controls_state_stopped">Nincs lejátszás</string>
+    <string name="controls_playing_description">Válassza ki, mit tegyen az egyes bemenet, miközben zene szól. Ez a beállítás független a lejátszás nélküli állapottól.</string>
+    <string name="controls_stopped_description">Válassza ki, mit tegyen az egyes bemenet a lejátszás kezdete előtt vagy leállása után. Ez a beállítás független a lejátszási állapottól.</string>
+
+    <string name="watch_live_preview">Élő óraelőnézet</string>
+    <string name="watch_preview_description">A kiválasztott órafelület élő előnézete. A módosítások itt jelennek meg, mielőtt kipróbálná őket az órán.</string>
+    <string name="watch_section_style">Lejátszó</string>
+    <string name="watch_section_style_description">Válassza ki a lejátszó elrendezését, valamint a cím, idő és előrehaladás viselkedését.</string>
+    <string name="watch_section_background">Háttér</string>
+    <string name="watch_section_background_description">Az albumborító, elmosás, halványítás és olvashatóság szabályozása a lejátszó mögött.</string>
+    <string name="watch_section_colors">Színek</string>
+    <string name="watch_section_colors_description">Állítsa be az alap-, előrehaladási és albumkiemeléseket, majd finomhangolja a cím, előadó, óra, hangerő és panelek színeit.</string>
+    <string name="watch_section_typography">Szöveg</string>
+    <string name="watch_section_typography_description">Válasszon betűtípust, és finomhangolja a címet, előadót, órát, alkalmazásikont, másodlagos képernyőket és Flex-szöveget.</string>
+    <string name="watch_section_aod">Mindig bekapcsolva</string>
+    <string name="watch_section_aod_description">Állítsa be az alacsony fogyasztású képernyőt, és tekintse meg ambient megjelenését az előnézetben.</string>
+    <string name="watch_section_panels">Panelek</string>
+    <string name="watch_section_panels_description">Formázza a hangerőt, tekerést, gyorspanelt és lejátszási sort; egy sor fókuszálásakor az adott felület nyílik meg az előnézetben.</string>
+    <string name="watch_section_mini_buttons">Minigombok</string>
+    <string name="watch_section_mini_buttons_description">Formázza az opcionális parancsikonsort. A műveletek hozzárendeléséhez koppintson alább a „Minigombok” elemre a Vezérlők részben.</string>
+    <string name="watch_overview_description">Válassza ki, mit szeretne testreszabni. Az előnézet és a mentett téma minden területen aktív marad.</string>
+    <string name="watch_back_to_overview">Vissza az óraterületekhez</string>
+
+    <string name="settings_section_general">Általános</string>
+    <string name="settings_section_general_description">Alkalmazástéma, kiemelőszín és frissítési beállítások.</string>
+    <string name="settings_section_watch">Viselkedés</string>
+    <string name="settings_section_watch_description">A korona, érintés, haptika és műveletmenü viselkedése az órán.</string>
+    <string name="settings_section_automation">Automatizálás</string>
+    <string name="settings_section_automation_description">Válassza ki, mikor nyíljon meg és záródjon be automatikusan a Svartifoss.</string>
+    <string name="settings_section_apps">Alkalmazások</string>
+    <string name="settings_section_apps_description">Dalszövegek és metaadatok, streaming parancsikonok, lejátszásisor-borítók és Android-hozzáférés.</string>
+    <string name="settings_section_data">Adatok &amp; támogatás</string>
+    <string name="settings_section_data_description">Készítsen biztonsági mentést a beállításokról, ellenőrizze a verziót és a diagnosztikát, vagy kérjen segítséget.</string>
+    <string name="settings_overview_description">Válasszon területet. A kapcsolódó lehetőségek együtt maradnak, miközben a keresés továbbra is közvetlenül bármely beállításhoz viheti.</string>
+    <string name="settings_back_to_overview">Vissza a beállítási területekhez</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">A Svartifoss használata</string>
+    <string name="tutorial_intro">A Svartifoss a telefonján lejátszott zene távirányítójává alakítja az óráját. Íme minden, amit a csuklójáról megtehet.</string>
+
+    <string name="tutorial_taps_title">Koppintson a képernyőzónákra</string>
+    <string name="tutorial_taps_desc">Az óra képernyője négy zónára van osztva — felső, alsó, bal és jobb. Egy zónára koppintva a hozzárendelt művelet fut le. Alapértelmezés szerint a bal zóna lejátszik vagy szüneteltet, a jobb a következő számra ugrik, a felső és alsó pedig a hangerőt módosítja.</string>
+
+    <string name="tutorial_quick_panel_title">Gyorsműveletek panel</string>
+    <string name="tutorial_quick_panel_desc">Koppintson duplán a Most játszott képernyő közepére egy négyelemes panel megnyitásához — három kerek gomb és alattuk egy széles sor. Ha nem módosítja őket, a helyek a lejátszó alkalmazás saját értesítésének gombjait tükrözik, így annak valódi kedvelés, véletlen sorrend és ismétlés vezérlőit kapja. Bármely műveletet hozzárendelhet egy helyhez, vagy a telefon Műveletek részében \"Nincs\" értékre állíthatja az elrejtéséhez.</string>
+    <string name="tutorial_gestures_title">Egyszeres, dupla &amp; hosszú nyomás</string>
+    <string name="tutorial_gestures_desc">A négy szélső zóna külön egyszeres, dupla és hosszú nyomási műveletet támogat. A középső egyszeres koppintás is konfigurálható; a dupla koppintás mindig a Gyorsműveleteket nyitja meg, a hosszú nyomás pedig a Beállítások → Viselkedés alapján az óralapválasztót, a lejátszási sort vagy semmit.</string>
+
+    <string name="tutorial_buttons_title">Fizikai gombok</string>
+    <string name="tutorial_buttons_desc">Ha az órán vannak oldalsó gombok, azokhoz is hozzárendelhet egyszeres, dupla és hosszú nyomási műveleteket. Akkor is működnek, amikor a képernyő ki van kapcsolva.</string>
+
+    <string name="tutorial_rotary_title">Forgatható korona</string>
+    <string name="tutorial_rotary_desc">A Beállítások → Viselkedés → Forgatható korona / lünetta alatt válassza ki, hogy a korona vagy lünetta a hangerőt módosítsa, a számban tekerjen, vagy ne tegyen semmit. Azokon az órákon, amelyek a koronaforgatást gombként jelentik, inkább a Vezérlőkben rendelje hozzá őket.</string>
+
+    <string name="tutorial_swipe_up_title">Felfelé, lefelé, balra &amp; jobbra húzás</string>
+    <string name="tutorial_swipe_up_desc">A Most játszott képernyőn a felfelé, lefelé vagy balra húzás külön-külön beállítható bármire — műveletmenü, lejátszási sor, számugrás, lejátszási listák és egyebek. Mindegyiket a Vezérlőkben állíthatja be, a Zene szól vagy Nincs lejátszás állapot kiválasztásával. Alapértelmezés szerint a felfelé húzás a műveletmenüt nyitja meg, a többi nem tesz semmit, amíg hozzá nem rendeli. A jobbra húzás érintetlen marad — ez a Wear OS általános kilépési gesztusa.</string>
+    <string name="tutorial_shortcuts_title">Streaming parancsikonok</string>
+    <string name="tutorial_shortcuts_desc">Mentsen el egy Spotify-, YouTube Music-, Apple Music-, TIDAL-, Deezer-, Amazon Music- vagy SoundCloud-számra, albumra, mixre vagy lejátszási listára mutató hivatkozást, majd rendelje bármely gombhoz, gesztushoz vagy panelhelyhez. A leggyorsabb, ha a streaming alkalmazásból közvetlenül megosztja a hivatkozást a Svartifosszal; másolt hivatkozást is beilleszthet vagy kézzel beírhat. Nincs szükség fiókra vagy bejelentkezésre — az óra a telefont kéri a lejátszás indítására, így a parancsikon valóban lejátszik, nem csak megnyitja az alkalmazást.</string>
+    <string name="tutorial_yt_music_title">YouTube Music-parancsikonok</string>
+    <string name="tutorial_yt_music_desc">Rendelje a \"Kedvelt dalok lejátszása\", \"Kedvelt dalok lejátszása véletlen sorrendben\" vagy \"Saját lejátszási listák\" műveletet bármely gombhoz, gesztushoz vagy húzáshoz, hogy a telefon érintése nélkül közvetlenül a zenéihez ugorjon. A \"Keresési előzmények\" megjegyzi az órán végzett legutóbbi kereséseket — hosszan nyomva törölheti őket.</string>
+
+    <string name="tutorial_exit_title">Húzás a kilépéshez</string>
+    <string name="tutorial_exit_desc">Húzzon a bal széltől a lejátszó elhagyásához. Kilépéskor a lejátszás automatikusan szüneteltethető — engedélyezze a Beállításokban.</string>
+
+    <string name="tutorial_tile_title">Gyorsvezérlő csempe</string>
+    <string name="tutorial_tile_desc">Húzza oldalra az óralapot a Svartifoss csempéhez az azonnali lejátszáshoz, szüneteltetéshez és ugráshoz az alkalmazás megnyitása nélkül.</string>
+
+    <string name="tutorial_complication_title">Óralap-komplikáció</string>
+    <string name="tutorial_complication_desc">Adja hozzá a Svartifoss albumborító-komplikációját az óralaphoz, hogy egy pillantással lássa az aktuális borítót. Koppintson rá a lejátszó megnyitásához.</string>
+
+    <string name="tutorial_system_title">Rendszer médiavezérlői</string>
+    <string name="tutorial_system_desc">Az aktuális szám az óra saját médiavezérlőiben és legutóbbi alkalmazásaiban is megjelenik, így onnan is vezérelheti a lejátszást.</string>
+
+    <string name="tutorial_tip">Tipp: állítsa be mindkét állapotot a Vezérlőkben, majd rendezze a menüt a Műveletekben.</string>
+
+    <string name="navigation_drawer_open">Navigációs fiók megnyitása</string>
+    <string name="navigation_drawer_close">Navigációs fiók bezárása</string>
+
+    <string name="action_settings">Beállítások</string>
+    <string name="action_pause">Szünet</string>
+    <string name="action_play">Lejátszás</string>
+    <string name="action_skip_prev">Ugrás vissza</string>
+    <string name="action_skip_next">Ugrás előre</string>
+    <string name="action_play_pause">Lejátszás / Szünet</string>
+    <string name="action_stop">Leállítás</string>
+    <string name="action_restart">Szám újraindítása</string>
+    <string name="action_mute">Némítás / Némítás feloldása</string>
+    <string name="action_skip_seconds">Ugrás előre %1$d másodperccel</string>
+    <string name="action_reverse_seconds">Visszatekerés %1$d másodperccel</string>
+    <string name="action_like">Kedvelés</string>
+    <string name="action_shuffle">Véletlen sorrend</string>
+    <string name="action_repeat">Ismétlés</string>
+    <string name="action_repeat_one">Egy ismétlése</string>
+    <string name="action_search">Zene keresése</string>
+    <string name="action_open_lyrics">Dalszöveg</string>
+    <string name="group_playback_controls">Lejátszásvezérlők</string>
+    <string name="group_streaming_shortcuts">Számok, albumok &amp; lejátszási listák</string>
+    <string name="pick_action">Művelet kiválasztása</string>
+    <string name="action_search_hint">Keresés ebben a listában</string>
+    <string name="action_search_empty">Nincs a keresésnek megfelelő művelet.</string>
+    <string name="action_opens_more">Több lehetőség</string>
+    <string name="action_volume_up">Hangerő növelése</string>
+    <string name="volume_down">Hangerő csökkentése</string>
+    <string name="group_volume_controls">Hangerővezérlők</string>
+    <string name="no_watch_detected">Nem található óra</string>
+    <string name="connection_instructions">A kapcsolat létrehozásához nyissa meg a Svartifosst az órán</string>
+    <string name="playing_controls">Vezérlők lejátszás közben</string>
+    <string name="stopped_controls">Vezérlők lejátszás nélkül</string>
+    <string name="actions_menu">Műveletmenü</string>
+    <string name="actions_intro">Állítsa be mindkét műveletfelületet az órán lejátszásvezérlőkkel, alkalmazásokkal vagy mentett számokkal, albumokkal és lejátszási listákkal. A gyorspanel kompakt marad; az alábbi menü hosszabb, rendezett listát is tartalmazhat.</string>
+    <string name="actions_quick_panel_section">Gyorspanel</string>
+    <string name="actions_watch_menu_section">Menü az órán</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d művelet · Koppintson a szerkesztéshez · Tartsa lenyomva és húzza az átrendezéshez</item>
+        <item quantity="other">%1$d művelet · Koppintson a szerkesztéshez · Tartsa lenyomva és húzza az átrendezéshez</item>
+    </plurals>
+    <string name="actions_reorder_description">Rendezett műveletmenü. Érintse meg és tartsa lenyomva a húzáshoz, használja a Mozgatás fel vagy Mozgatás le akadálymentesítési műveleteket, vagy nyomja meg a Ctrl+Fel/Le billentyűket.</string>
+    <string name="actions_move_up">Mozgatás fel</string>
+    <string name="actions_move_down">Mozgatás le</string>
+    <string name="actions_moved_to_position">%1$s áthelyezve a(z) %2$d. helyre, összesen %3$d közül.</string>
+    <string name="actions_empty">Még nincsenek műveletek. Az első létrehozásához használja a hozzáadás gombot.</string>
+    <string name="actions_add">Művelet hozzáadása</string>
+    <string name="on_screen_buttons">ÉRINTÉSI ZÓNÁK</string>
+    <string name="physical_buttons">FIZIKAI GOMBOK</string>
+    <string name="physical_buttons_disconnected">A fizikai gombok beállításához csatlakoztassa az órát, és nyissa meg rajta a Svartifosst. Az érintési zónák, húzások és minigombok már most elérhetők.</string>
+    <string name="physical_buttons_unavailable">Ez az óra nem jelentett be konfigurálható fizikai gombokat.</string>
+    <string name="control_assignment_tap">Koppintás: %1$s</string>
+    <string name="control_assignment_hold">Tartás: %1$s</string>
+    <string name="control_assignment_both">Koppintás: %1$s · Tartás: %2$s</string>
+    <string name="tap_a_zone_to_configure">Művelet hozzárendeléséhez koppintson egy zónára az órán</string>
+    <string name="touch_zone_top">Felső zóna</string>
+    <string name="touch_zone_bottom">Alsó zóna</string>
+    <string name="touch_zone_left">Bal zóna</string>
+    <string name="touch_zone_right">Jobb zóna</string>
+    <string name="touch_zone_center">Középső koppintás</string>
+    <string name="touch_zone_action">%1$s: %2$s. Koppintson a beállításhoz.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">HÚZÁSI GESZTUSOK</string>
+    <string name="tap_a_swipe_to_configure">Koppintson egy irányra annak kiválasztásához, mit nyisson meg</string>
+    <string name="swipe_gesture_up">Felfelé húzás</string>
+    <string name="swipe_gesture_down">Lefelé húzás</string>
+    <string name="swipe_gesture_left">Balra húzás</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Fel</string>
+    <string name="swipe_gesture_label_down">Le</string>
+    <string name="swipe_gesture_label_left">Bal</string>
+
+    <string name="screen_buttons">MINIGOMBOK</string>
+    <string name="tap_a_screen_button_to_configure">Legfeljebb három látható gomb az óraképernyő alján — koppintson egy helyre művelet hozzárendeléséhez</string>
+    <string name="screen_button_1">1. minigomb (bal)</string>
+    <string name="screen_button_2">2. minigomb (közép)</string>
+    <string name="screen_button_3">3. minigomb (jobb)</string>
+    <string name="screen_button_label_1">1. gomb</string>
+    <string name="screen_button_label_2">2. gomb</string>
+    <string name="screen_button_label_3">3. gomb</string>
+    <string name="no_action">Nincs művelet</string>
+    <string name="gesture_single_press">Egyszeres nyomás</string>
+    <string name="gesture_double_press">Dupla nyomás</string>
+    <string name="gesture_long_press">Hosszú nyomás</string>
+    <string name="gesture_swipe_action">Művelet</string>
+    <string name="center_button_quick_panel_note">A középső dupla koppintás mindig a Gyorsműveleteket nyitja meg. A hosszú nyomás a Beállítások → Viselkedés alatti választást hajtja végre. Egyik gesztus sem változik, amikor itt hozzárendeli a középső koppintást.</string>
+    <string name="start_playback">Lejátszás indítása</string>
+    <string name="uninstalled_app">Eltávolított alkalmazás</string>
+
+    <string name="play_app">%1$s lejátszása</string>
+    <string name="tasker_task">Tasker-feladat</string>
+    <string name="icon_selection_title">Ikon kiválasztása</string>
+    <string name="icon_selection_gallery">Galériából</string>
+    <string name="icon_selection_no_icon_pack">Ezzel a funkcióval egyéni ikont választhat a művelethez egy
+        telepített ikoncsomagból.
+
+Úgy tűnik, sajnos nincs telepítve ikoncsomag.</string>
+    <string name="icon_selection_no_storage_permission">Ezzel a funkcióval egyéni ikont választhat a művelethez egy
+        telepített ikoncsomagból.
+
+Egyes ikoncsomagok tárhelyengedélyt igényelnek az alkalmazásoktól. A funkció használatához ezt engedélyeznie kell.</string>
+    <string name="delete">Törlés</string>
+    <string name="action_text">Művelet szövege</string>
+    <string name="swap_action">Művelet cseréje</string>
+    <string name="open_actions_menu">Műveletmenü megnyitása</string>
+    <string name="open_playlist_menu">Jelenlegi lejátszási lista megjelenítése</string>
+    <string name="misc_settings">Egyéb beállítások</string>
+
+    <string name="category_backup">Biztonsági mentés</string>
+    <string name="export_config">Konfiguráció exportálása</string>
+    <string name="export_config_description">Gombkiosztások, műveletlista és órabeállítások mentése fájlba</string>
+    <string name="import_config">Konfiguráció importálása</string>
+    <string name="import_config_description">Gombkiosztások, műveletlista és órabeállítások visszaállítása fájlból</string>
+    <string name="export_config_done">Konfiguráció exportálva</string>
+    <string name="export_config_failed">A konfiguráció nem exportálható</string>
+    <string name="import_config_done_title">Sikeres importálás</string>
+    <string name="import_config_done_message">Az importált konfiguráció alkalmazásához újra kell indítani a Svartifosst.</string>
+    <string name="import_config_failed">A konfiguráció nem importálható — a fájl érvénytelen vagy nem kompatibilis verzióból származhat</string>
+    <string name="action_restart_now">Újraindítás most</string>
+
+    <string name="category_about">Névjegy</string>
+    <string name="category_music_screen">Zenei képernyő</string>
+    <string name="category_watch_screen">Óraképernyő</string>
+    <string name="category_mini_buttons">Minigombok</string>
+    <string name="category_screen_face">Lejátszó megjelenése</string>
+    <string name="category_wf_screen_behavior">Képernyő viselkedése</string>
+    <string name="category_wf_player_progress">Előrehaladás, tekerés &amp; idő</string>
+    <string name="category_album_background">Albumháttér</string>
+    <string name="category_music_colors">Színek a zenéből</string>
+    <string name="category_wf_typography_font">Betűtípus</string>
+    <string name="category_wf_typography_title">Cím</string>
+    <string name="category_wf_typography_artist">Előadó</string>
+    <string name="category_wf_typography_icon">Alkalmazásikon</string>
+    <string name="category_wf_typography_flex">Google Sans Flex tengelyek</string>
+    <string name="category_wf_metadata">Metadata óralap tartalma</string>
+    <string name="category_wf_typography_secondary">Szöveg más képernyőkön</string>
+    <string name="category_wf_colors_title">Címszínek</string>
+    <string name="category_wf_colors_artist">Előadószínek</string>
+    <string name="category_wf_colors_clock">Óraszínek</string>
+    <string name="setting_wear_font_flex_hint_title">Ezekről a vezérlőkről</string>
+    <string name="setting_wear_flex_axes_hint">Ezek kifejezetten a Google Sans Flex finomhangolására szolgálnak — használatukhoz válassza ki fent. A cím és előadó fenti vastagsága/dőlése már ennek a betűtípusnak a saját vastagság- (wght) és dőlés- (slnt) tengelyét állítja; az alábbi négy vezérlő az egész óralapra érvényes.</string>
+    <string name="setting_wear_font_flex_width">Szélesség</string>
+    <string name="setting_wear_font_flex_width_description">Vízszintes nyújtás a keskenytől a szélesig (25–151). A 100 a betűtípus normál szélessége.</string>
+    <string name="setting_wear_font_flex_optical_size">Optikai méret</string>
+    <string name="setting_wear_font_flex_optical_size_description">A vonalrészleteket a szöveg tényleges méretéhez igazítja (6–144). Az alacsonyabb értékek kis szöveghez, a magasabbak nagy megjelenítőszöveghez illenek.</string>
+    <string name="setting_wear_font_flex_grade">Fokozat</string>
+    <string name="setting_wear_font_flex_grade_description">Kissé módosítja a vastagságot az elrendezés megváltoztatása nélkül (0–100) — finom módszer a sötét képernyő kontrasztjának növelésére.</string>
+    <string name="setting_wear_font_flex_roundness">Kerekítettség</string>
+    <string name="setting_wear_font_flex_roundness_description">A vonalvégeket az éles (0) és a teljesen lekerekített (100) között keveri barátságosabb megjelenésért.</string>
+    <string name="preview_sample_title">Dal címe</string>
+    <string name="preview_sample_artist">Előadó neve</string>
+    <string name="preview_sample_next_title">Következő dal</string>
+    <string name="preview_playback_stopped">Leállítva</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">az előző sor</string>
+    <string name="preview_verse_current">a most játszott sor</string>
+    <string name="preview_verse_next">és az utána következő</string>
+    <string name="preview_chat_today">Ma</string>
+    <string name="category_gestures">Gesztusok &amp; bevitel</string>
+    <string name="category_watch_navigation">Navigáció &amp; parancsikonok</string>
+    <string name="category_rotary_input">Forgó bevitel &amp; finomhangolás</string>
+    <string name="category_watch_feedback">Visszajelzés &amp; kilépési viselkedés</string>
+    <string name="category_watch_display">Óraképernyő</string>
+    <string name="setting_wear_keep_screen_on">Képernyő bekapcsolva tartása</string>
+    <string name="setting_wear_keep_screen_on_description">Megakadályozza, hogy az óra képernyője az inaktivitási időkorlát miatt elsötétüljön, amíg egy Svartifoss-képernyő nyitva van. A csukló leengedése továbbra is elhalványítja az órát — ezt a gesztust a rendszer kezeli. Több akkumulátort fogyaszt. A dalszöveg-képernyő ettől a beállítástól függetlenül mindig bekapcsolva marad.</string>
+    <string name="setting_lyrics_enabled">Dalszövegek keresése online</string>
+    <string name="setting_lyrics_enabled_description">Engedélyezi, hogy a telefon szinkronizált dalszöveget töltsön le az LRCLIB-ről, amikor megnyitja a dalszöveg-képernyőt az órán. A szám neve, az előadó és a hossz kerül elküldésre; semmi más, és semmi nem kerül lemezre. Kikapcsolva a dalszöveg-képernyő jelzi, hogy a keresés le van tiltva.</string>
+    <string name="setting_overlay_blur_radius">Átfedés elmosása</string>
+    <string name="setting_overlay_blur_radius_description">A hangerő-/tekerőgyűrűk és a gyorsműveletek panel mögötti matt háttér elmosásának erőssége (px) — független az albumborító hátterének elmosásától</string>
+    <string name="category_action_list">Műveletlista</string>
+    <string name="category_automation">Automatizálás</string>
+    <string name="category_idle">Amikor semmi sem szól</string>
+    <string name="installed_version">Telepített verzió</string>
+    <string name="get_support">Támogatás kérése</string>
+    <string name="get_support_description">Alkalmazásnaplók elküldése a fejlesztőnek támogatáshoz</string>
+    <string name="contact_developer">Kapcsolat a fejlesztővel</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — kapcsolat</string>
+    <string name="contact_developer_chooser">E-mail küldése</string>
+    <string name="contact_developer_no_client">Nincs telepített e-mail-alkalmazás. A cím a vágólapra másolva.</string>
+    <string name="about_developer_title">A fejlesztőről</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">A Svartifoss személyes projektként indult — a Music Center for Weart szerettem volna naprakésszé tenni a mai lehetőségekkel, egyszerűen azért, hogy én magam minden nap használhassam. Olyan jól sikerült, hogy úgy döntöttem, mindenkivel megosztom. Ez az első alkalmazásom, és kevés dolog fogható ahhoz, amikor látja az ember, hogy amit készített, másoknak is hasznos.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Nyílt forráskódú licencek</string>
+    <string name="setting_always_show_time">Idő mindig megjelenítése</string>
+    <string name="setting_always_show_time_off_description">A pontos idő csak ambient módban jelenik meg</string>
+    <string name="setting_always_show_time_on_description">A pontos idő mindig megjelenik. A felső művelet ikonja nem lesz látható (az óra váltja fel), de a művelet továbbra is normálisan működik.</string>
+    <string name="tap_to_force_stop">Koppintson a vezérlők leállításához</string>
+    <string name="notification_action_stop">Leállítás</string>
+    <string name="notification_action_force_stop">Kényszerített leállítás</string>
+    <string name="error_notification_access">Nincs értesítés-hozzáférés. Ellenőrizze a telefont.</string>
+    <string name="error_notifications">Hibaértesítések</string>
+    <string name="notification_access_notification_title">A Svartifossnak értesítés-hozzáférésre van szüksége</string>
+    <string name="notification_access_notification_title_description">Koppintson erre az értesítésre, és engedélyezze a Svartifosst a probléma megoldásához</string>
+    <string name="error_service_not_enabled">Értesítés-hozzáférés szükséges</string>
+    <string name="error_service_not_enabled_description">A zene óráról történő vezérléséhez a Svartifossnak értesítés-hozzáférésre van szüksége — az Android így engedi, hogy lássa, melyik alkalmazás játszik le, és lejátszás, szünet és ugrás parancsokat küldjön neki.
+
+A Svartifoss soha nem olvassa az értesítései tartalmát. Ezt az engedélyt csak az aktív médiamenet megkeresésére használja.
+
+Koppintson a \"Beállítások megnyitása\" lehetőségre, majd kapcsolja be a Svartifosst az értesítés-hozzáférésnél.</string>
+    <string name="action_open_settings">Beállítások megnyitása</string>
+    <string name="settings_search_title">Keresés a beállításokban</string>
+    <string name="settings_search_hint">Keresés a beállításokban</string>
+    <string name="settings_search_clear">Keresés törlése</string>
+    <string name="settings_search_prompt">Keressen név szerint a Beállítások és az Óra megjelenése minden beállításában.</string>
+    <string name="settings_search_no_results">Nincs egyező beállítás.</string>
+    <string name="settings_search_prerequisite">Ez a lehetőség egy másik választástól függ. Módosítsa az itt látható beállítást a megjelenítéséhez.</string>
+    <string name="setting_numeric_range_error">Adjon meg egy értéket %1$d és %2$d között.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">Koppintson az engedélyezéshez — addig a lejátszásvezérlés inaktív marad</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Telepítse a Svartifosst az órára</string>
+    <string name="no_watch_app_description">A Svartifoss nem találta az óraalkalmazását a párosított Wear OS-órán. A telefonos és óraalkalmazás együtt működik — az óraalkalmazás nélkül a csuklóról történő lejátszásvezérlés nem működik.
+
+A Svartifoss nincs a Play Áruházban — az óraalkalmazást külön kell sideloadolni (pl. Wear Installerrel). Koppintson a \"Kiadások megtekintése\" elemre a GitHub kiadási oldalának megnyitásához és az óra APK-jának letöltéséhez. Ha most telepítette, várjon egy percet a szinkronizálás befejezésére.</string>
+    <string name="no_watch_app_button">Kiadások megtekintése</string>
+    <string name="required_permission">Szükséges engedély</string>
+    <string name="setting_pause_on_swipe_exit">Lejátszás szüneteltetése húzásos kilépéskor</string>
+    <string name="setting_pause_on_swipe_exit_description">Automatikusan szünetelteti a lejátszást, amikor balra húzással kilép a Svartifossból az órán.
+
+A bekapcsológombbal történő kilépést ez nem érinti, és soha nem okoz automatikus szünetet.</string>
+    <string name="setting_rotating_crown_off_period">Forgó bevitel képernyő-bekapcsolási késleltetése</string>
+    <string name="setting_rotating_crown_off_period_description">A forgó beviteli eszközök (például forgatható koronák) egyes készülékeken túlérzékenyek lehetnek. A véletlen hangerőváltoztatás elkerülésére a forgó bevitel a képernyő bekapcsolása után <![CDATA[<b>%1$s ezredmásodpercig</b>]]> letiltva marad.</string>
+    <string name="setting_rotary_seek">Tekerés forgatható koronával</string>
+    <string name="setting_rotary_seek_description">Bekapcsolva a korona forgatása a hangerő módosítása helyett az aktuális számban teker. A hangerő továbbra is módosítható képernyőn lévő vagy fizikai gombokkal.</string>
+    <string name="setting_wear_rotary_action">Forgatható korona / lünetta</string>
+    <string name="wear_rotary_action_volume">Hangerő módosítása</string>
+    <string name="wear_rotary_action_seek">Tekerés a számban</string>
+    <string name="wear_rotary_action_off">Ne tegyen semmit</string>
+    <string name="setting_rotating_sensitivity">Forgó bevitel érzékenysége</string>
+    <string name="setting_rotating_sensitivity_description">A forgó bevitel érzékenysége. Magasabb számnál ugyanaz a koronamozdulat nagyobb hangerőváltozást okoz. Jelenlegi érték: <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Fizikai gomb dupla kattintásának letiltása ambient módban</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Egyes órák hibás gombokkal rendelkeznek, ahol a fizikai gomb egyszeri kattintása ambient módban néha dupla kattintásként regisztrálódik.
+
+Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen letiltsa a dupla kattintást (pl. két kattintás csak az egyszeres kattintás műveletét aktiválja). Az aktív óra mellett történő dupla kattintást ez nem érinti.</string>
+    <string name="setting_haptic_feedback">Haptikus visszajelzés</string>
+    <string name="setting_haptic_feedback_description">Az óra rezegjen gombnyomáskor.</string>
+    <string name="setting_auto_start">Svartifoss automatikus megnyitása</string>
+    <string name="setting_auto_start_description">A Svartifoss automatikus megnyitása az órán, amikor a telefonon elindul a zenelejátszás.</string>
+    <string name="setting_auto_start_apps_blacklist">Automatikusan indítható alkalmazások</string>
+    <string name="setting_auto_start_apps_blacklist_description">Azon médiaalkalmazások listája, amelyek automatikusan elindíthatják a Svartifosst</string>
+    <string name="setting_dim_album_art">Lejátszó árnyékolása</string>
+    <string name="setting_dim_album_art_description">Felhasználó által választott árnyékhatás hozzáadása a borító és a lejátszóvezérlők közé.</string>
+    <string name="setting_album_art_style">Albumborító stílusa</string>
+    <string name="setting_album_art_style_description">Válassza ki, hogyan nézzen ki a Most játszott háttér az órán.</string>
+    <string name="setting_album_art_blur_radius">Elmosás intenzitása</string>
+    <string name="setting_album_art_blur_radius_description">A teljes képernyős elmosás erőssége, amikor a kiválasztott háttér elmosást használ. Jelenleg <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Sötétítés erőssége</string>
+    <string name="setting_album_art_dim_strength_description">Mennyire sötétüljön el az albumborító a szöveg olvashatósága érdekében. Jelenleg <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Árnyékolási stílus</string>
+    <string name="setting_player_shading_intensity">Árnyékolás intenzitása</string>
+    <string name="setting_player_shading_intensity_description">Mennyire sötétítse az árnyékolás a hátteret. A 100%% teljes erősség; nagyobb kontraszthoz növelje (legfeljebb 150%%). Jelenleg <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Ennek a megjelenésnek alkalmazása minden óralapra</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Az óralap megjelenési beállításainak másolása minden más óralapra</string>
+    <string name="apply_appearance_confirm_title">Alkalmazza minden óralapra?</string>
+    <string name="apply_appearance_confirm_message">Ez felülírja minden más óralap megjelenési beállításait a jelenlegi beállításokkal. A viselkedési beállításokat nem módosítja.</string>
+    <string name="apply_appearance_confirm_button">Alkalmazás</string>
+    <string name="apply_appearance_done">Minden óralapra alkalmazva</string>
+    <string name="category_wf_layout_actions">Elrendezés</string>
+    <string name="setting_reset_appearance">Elrendezés visszaállítása</string>
+    <string name="setting_reset_appearance_description">Az óralap megjelenésének visszaállítása az eredeti alapértékekre</string>
+    <string name="reset_appearance_confirm_title">Visszaállítja ezt az elrendezést?</string>
+    <string name="reset_appearance_confirm_message">Az óralap megjelenési beállításai visszaállnak alapértékre. A viselkedési beállítások és más óralapok nem változnak.</string>
+    <string name="reset_appearance_confirm_button">Visszaállítás</string>
+    <string name="reset_appearance_done">Elrendezés visszaállítva alapértékre</string>
+    <string name="setting_reset_all_faces">Minden óralap visszaállítása alapértelmezettre</string>
+    <string name="setting_reset_all_faces_description">Minden beépített óralap megjelenésének visszaállítása az eredeti alapértékekre</string>
+    <string name="reset_all_faces_confirm_title">Visszaállítja az összes óralapot?</string>
+    <string name="reset_all_faces_confirm_message">Minden beépített óralap megjelenése visszaáll az eredeti alapértékekre, és minden aktív egyéni téma kikapcsol. A mentett egyéni témák, viselkedési beállítások és a kiválasztott óralap megmaradnak.</string>
+    <string name="reset_all_faces_confirm_button">Összes visszaállítása</string>
+    <string name="reset_all_faces_done">Minden óralap visszaállítva alapértékre</string>
+    <string name="face_reset_migration_title">Frissítse az óra megjelenését</string>
+    <string name="face_reset_migration_message">Egy régebbi verzióról frissített, amelyben minden óralap ugyanazt a megjelenési beállításkészletet használta. Most minden óralap megjegyzi a sajátját, ezért a régi beállítások eltérően nézhetnek ki olyan óralapokon, amelyeket soha nem szabott személyre közvetlenül. Javasoljuk, hogy állítsa vissza az összes óralapot az új alapértékekre, vagy törölje az alkalmazás adatait a teljesen tiszta kezdéshez.</string>
+    <string name="face_reset_migration_reset_button">Összes óralap visszaállítása</string>
+    <string name="face_reset_migration_clear_data_button">Alkalmazásadatok törlése</string>
+    <string name="setting_player_shading_color">Árnyékolás színe</string>
+    <string name="setting_wear_shading_custom_color">Egyéni árnyékolási szín</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Fekete</item>
+        <item>Albumkiemelés</item>
+        <item>Telítetlen album</item>
+        <item>Egyéni szín</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Lejátszó témájának követése</item>
+        <item>Széli vignetta</item>
+        <item>Széli vignetta (erős)</item>
+        <item>Széli vignetta (nagyon erős)</item>
+        <item>Alsó sarok</item>
+        <item>Alsó áttűnés</item>
+        <item>Alsó és felső sáv</item>
+        <item>Teljes képernyős szűrő</item>
+        <item>Albumszín-fátyol</item>
+        <item>Kétszínű albumátmenet</item>
+        <item>Oldalsó függönyök</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Albumborító átlátszatlansága ambient módban</string>
+    <string name="setting_ambient_album_art_opacity_description">Mennyire marad látható az albumborító ambient módban. Jelenleg <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Hangerő-/tekerésátfedés időkorlátja</string>
+    <string name="setting_volume_overlay_timeout_description">Meddig maradjanak a hangerő- és tekerésátfedések a képernyőn módosítás után. Jelenleg <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Forgó vezérlés holtzónája</string>
+    <string name="setting_rotary_deadzone_description">A korona minimális mozgása, mielőtt a hangerő- vagy tekerésváltozás érvénybe lép. Segít megelőzni a véletlen módosításokat. Jelenleg <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Wear-élmény</string>
+    <string name="setting_swipe_gestures_hint">Húzási gesztusok</string>
+    <string name="setting_swipe_gestures_hint_description">A felfelé/lefelé/balra húzás mindegyike bármilyen műveletet megnyithat. Koppintson ide a Zene szól vagy Nincs lejátszás állapothoz való beállításhoz. A jobbra húzás továbbra is az alkalmazásból való kilépésre van fenntartva.</string>
+    <string name="setting_screen_buttons_hint">Minigombok</string>
+    <string name="setting_screen_buttons_hint_description">Legfeljebb három látható gomb, mindegyik koppintási és hosszú nyomási művelettel. Koppintson ide a Zene szól vagy Nincs lejátszás állapothoz való beállításhoz.</string>
+    <string name="dev_screen_buttons_offset">Minigombok helyzete</string>
+    <string name="dev_screen_buttons_offset_description">A kívánt távolság dp-ben az óraképernyő alja és a minigombok között (alapértelmezett: 42). A sor továbbra is automatikusan elmozdul a hosszú címektől.</string>
+    <string name="setting_screen_buttons_tilt">Gombok dőlése</string>
+    <string name="setting_screen_buttons_tilt_description">Mennyire kövessék az oldalsó gombok a képernyő ívét. 0 = egyenes sor; 100 = teljes ív, döntött ikonokkal.</string>
+    <string name="setting_screen_buttons_bg">Minigombok háttere</string>
+    <string name="setting_screen_buttons_opacity">Minigombok átlátszatlansága</string>
+    <string name="setting_screen_buttons_opacity_description">A teljes minigombcsoport átlátszatlansága (0–100%%). Jelenleg <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Gyorsműveletek panel</string>
+    <string name="quick_panel_link_summary">A megnyitásához koppintson duplán az óraképernyő közepére. Koppintson ide a négy hely beállításához a Műveletekben.</string>
+    <string name="quick_panel_config_hint">Ezek a gombok az óraképernyő közepére duplán koppintva megnyíló panelen találhatók. Koppintson egy sorra a művelet kiválasztásához (a \"Nincs\" elrejti); hosszan nyomva visszaáll az alapérték.</string>
+    <string name="quick_panel_slot_1">1. gomb</string>
+    <string name="quick_panel_slot_2">2. gomb</string>
+    <string name="quick_panel_slot_3">3. gomb</string>
+    <string name="quick_panel_slot_long">Hosszú gomb</string>
+    <string name="quick_panel_slot_default">%1$s (alapértelmezett)</string>
+    <string name="quick_panel_slot_hidden">Rejtett</string>
+    <string name="quick_panel_default_like">Kedvelés</string>
+    <string name="quick_panel_default_shuffle">Véletlen sorrend</string>
+    <string name="quick_panel_default_repeat">Ismétlés</string>
+    <string name="quick_panel_default_up_next">Következik</string>
+    <string name="setting_wear_center_long_press_queue">Hosszú nyomás középen a lejátszási sorhoz</string>
+    <string name="setting_wear_center_long_press_queue_description">A Most játszott képernyő közepének hosszú nyomásával nyissa meg a lejátszási sort.</string>
+    <string name="setting_wear_center_long_press">Hosszú nyomás középen</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Óralap váltása</item>
+        <item>Lejátszási sor megnyitása</item>
+        <item>Semmi</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Alapelrendezés</string>
+    <string name="setting_wear_screen_face_description">Válassza ki a téma által használt szerkezetet. A mentett témák ezt az elrendezést saját betűtípussal, színekkel, elmosással, árnyékolással, AOD-dal és panelekkel kombinálhatják.</string>
+    <string name="setting_wear_show_track_title">Dalcím megjelenítése</string>
+    <string name="setting_wear_show_track_title_description">Az aktuális dal nevének megjelenítése a lejátszóban</string>
+    <string name="setting_wear_show_track_artist">Előadó nevének megjelenítése</string>
+    <string name="setting_wear_show_track_artist_description">Az aktuális előadó megjelenítése a lejátszóban</string>
+    <string name="setting_wear_show_source_icon">Lejátszó alkalmazás ikonjának megjelenítése</string>
+    <string name="setting_wear_show_source_icon_description">A jelenleg lejátszó alkalmazás ikonjának megjelenítése az előadó mellett. A médiaértesítés ikonját használja. Kikapcsolva az ikon soha nem kerül elküldésre az órára.</string>
+    <string name="setting_wear_player_controls_visible">Lejátszóvezérlők megjelenítése</string>
+    <string name="setting_wear_player_controls_visible_description">A Klasszikus, Poszter, Stúdió és más konfigurálható elrendezések beépített gombjainak megjelenítése vagy elrejtése az érintési célterületek kikapcsolása nélkül</string>
+    <string name="setting_wear_quadrant_tap_flash">Ikon felvillantása koppintáskor</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Amikor egy sarokzóna művelete lefut, röviden teljes fényerővel villanjon fel az ikonja — különösen hasznos a Rejtett képernyőtémánál, ahol az ikon egyébként láthatatlan, és nem jelezné, melyik művelet futott le.</string>
+    <string name="setting_wear_internal_progress_visible">Elrendezés előrehaladás-jelzője</string>
+    <string name="setting_wear_internal_progress_visible_description">Az ehhez az elrendezéshez tervezett extra előrehaladás-jelző megjelenítése. Az Expressive és Material lejátszásgomb-gyűrűi a vezérlőik részei, és elérhetők maradnak.</string>
+    <string name="setting_wear_edge_progress_visible">Széli előrehaladási ív megjelenítése</string>
+    <string name="setting_wear_edge_progress_visible_description">Csak a képernyő körüli vizuális ív elrejtése. A szélről történő tekerés külön beállítás marad.</string>
+    <string name="setting_wear_edge_seek_enabled">Tekerés a képernyő széléről</string>
+    <string name="setting_wear_edge_seek_enabled_description">Koppintson vagy húzzon a képernyő széle mentén egy pontos pontra ugráshoz, még akkor is, ha az ív rejtve van</string>
+    <string name="setting_wear_screen_theme">Vezérlőstílus</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Kiegyensúlyozott</string>
+    <string name="wear_screen_theme_default_description">Szabványos hierarchia és vezérlőméretek.</string>
+    <string name="wear_screen_theme_minimal">Minimális</string>
+    <string name="wear_screen_theme_minimal_description">Kisebb, visszafogottabb vezérlőket használ úgy, hogy minden művelet látható és használható marad.</string>
+    <string name="wear_screen_theme_compact">Kompakt</string>
+    <string name="wear_screen_theme_compact_description">Szorosabb vezérlőmegjelenést használ a műveletek megváltoztatása nélkül.</string>
+    <string name="wear_screen_theme_cinema">Mozi</string>
+    <string name="wear_screen_theme_cinema_description">Lágyítja a vezérlőket a borító megváltoztatása nélkül.</string>
+    <string name="wear_screen_theme_vivid">Élénk</string>
+    <string name="wear_screen_theme_vivid_description">Nagyobb, hangsúlyosabb vezérlőket használ.</string>
+    <string name="wear_screen_theme_contrast">Nagy kontraszt</string>
+    <string name="wear_screen_theme_contrast_description">Nagyobb vezérlőket használ a könnyebb olvashatóságért.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Kompakt, kissé elhalványított vezérlőket használ. Magát a hátteret nem sötétíti — ehhez használja a háttérbeállításokat.</string>
+    <string name="wear_screen_theme_hidden">Rejtett</string>
+    <string name="wear_screen_theme_hidden_description">Teljesen elrejti az összes vezérlőikont. Az érintési célterületek aktívak és teljesen működőképesek maradnak.</string>
+    <string name="setting_wear_font">Betűtípus</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Az alkalmazás alapértelmezett betűtípusa.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">A Google Sans változó verziója állítható szélességgel, optikai mérettel, fokozattal és kerekítettséggel — feloldja az alábbi tengelyvezérlőket.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Az Android klasszikus rendszerbetűtípusa.</string>
+    <string name="wear_font_rounded">Lekerekített</string>
+    <string name="wear_font_rounded_description">Barátságos, modern betűformák lágyan lekerekített végződésekkel.</string>
+    <string name="wear_font_sans_light">Modern Light</string>
+    <string name="wear_font_sans_light_description">Tiszta, levegős talpatlan betűtípus könnyebb vizuális súllyal.</string>
+    <string name="wear_font_sans_thin">Ultra Thin</string>
+    <string name="wear_font_sans_thin_description">Extra vékony megjelenítőstílus minimalista lejátszóhoz.</string>
+    <string name="wear_font_sans_medium">Modern Medium</string>
+    <string name="wear_font_sans_medium_description">Határozott talpatlan betűtípus erősebb, kompakt vonásokkal.</string>
+    <string name="wear_font_sans_black">Nehéz</string>
+    <string name="wear_font_sans_black_description">Vastag megjelenítőcsalád maximális vizuális hatással.</string>
+    <string name="wear_font_small_caps">Kiskapitális</string>
+    <string name="wear_font_small_caps_description">Kompakt, nagybetűszerű formák szerkesztőségi hangulattal.</string>
+    <string name="wear_font_casual">Laza</string>
+    <string name="wear_font_casual_description">Játékos, kézírásos rendszerbetűtípus-család.</string>
+    <string name="wear_font_typewriter">Írógép (archivált)</string>
+    <string name="wear_font_typewriter_description">Retró írógépes megjelenés (Mom’s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Lekerekített geometrikus talpatlan, ingyenes (OFL) alternatíva a Circular szellemében.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Tiszta geometrikus talpatlan, ingyenes (OFL) alternatíva a Proxima Nova szellemében.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Elegáns humanista antikva, ingyenes (OFL) alternatíva az Optima szellemében.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Lágyabb írógépes stílus (Love Letter Typewriter) — általában a \"Lain\" témájú számokhoz fenntartva.</string>
+    <string name="wear_font_serif">Talpas</string>
+    <string name="wear_font_serif_description">Klasszikus talpas betűtípus.</string>
+    <string name="wear_font_serif_monospace">Talpas monospace</string>
+    <string name="wear_font_serif_monospace_description">Rögzített szélességű talpas betűk jellegzetes szerkesztőségi/terminál megjelenéssel.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Rögzített szélességű, technikai megjelenés.</string>
+    <string name="wear_font_condensed">Keskeny</string>
+    <string name="wear_font_condensed_description">Keskenyebb betűformák, hogy több szöveg férjen el.</string>
+    <string name="wear_font_condensed_light">Condensed Light</string>
+    <string name="wear_font_condensed_light_description">Keskenyebb, könnyebb család hosszú címekhez.</string>
+    <string name="wear_font_condensed_medium">Condensed Medium</string>
+    <string name="wear_font_condensed_medium_description">Keskeny család erősebb vonásokkal és kiváló olvashatósággal.</string>
+    <string name="wear_font_cursive">Kézírásos</string>
+    <string name="wear_font_cursive_description">Dekoratív kézírásos betűtípus.</string>
+    <string name="setting_wear_dynamic_accent">Dinamikus kiemelés az órán</string>
+    <string name="setting_wear_dynamic_accent_description">Az albumalapú óraszínek igazítása az aktuális borítóhoz. Kikapcsolva az Album szín választások a téma statikus kiemelését használják.</string>
+    <string name="setting_wear_album_art_fade">Albumborító áttűnés</string>
+    <string name="setting_wear_album_art_fade_description">Az albumborító finom áttűnése számváltáskor.</string>
+    <string name="setting_wear_title_text_mode">Címszöveg viselkedése</string>
+    <string name="setting_wear_title_text_mode_description">Hogyan viselkedik a Most játszott cím, ha nem fér el: az Automatikus a kicsinyítést, tördelést és görgetést vegyíti; a többi lehetőség kizárólag egy viselkedést használ.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automatikus (kicsinyítés, majd tördelés, majd görgetés)</item>
+        <item>Görgetés (marquee)</item>
+        <item>Tördelés két sorba</item>
+        <item>Tördelés három sorba</item>
+        <item>Tördelés öt sorba</item>
+        <item>Statikus (egy sor, nincs görgetés vagy kicsinyítés)</item>
+        <item>Kicsinyítés, hogy elférjen</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Előadószöveg színe</string>
+    <string name="setting_wear_artist_custom_color">Egyéni előadószín</string>
+    <string name="setting_wear_artist_custom_color_description">Válassza ki a Normál kezelésnél használt előadószínt</string>
+    <string name="setting_wear_artist_desaturated">Telítetlen előadószín</string>
+    <string name="setting_wear_artist_desaturated_description">Az albumalapú előadószöveg színének lágyítása — csak akkor érvényes, ha az \"Előadószöveg színe\" Album színre van állítva</string>
+
+    <string name="setting_wear_progress_color">Folyamatjelző színe</string>
+    <string name="setting_wear_progress_custom_color">Egyéni folyamatjelző-szín</string>
+    <string name="setting_wear_progress_custom_color_description">Válassza ki a Normál kezelésnél használt előrehaladási és tekerési színt</string>
+    <string name="setting_wear_progress_desaturated">Telítetlen folyamatjelző-szín</string>
+    <string name="setting_wear_progress_desaturated_description">Az albumalapú folyamatjelző-szín lágyítása — csak akkor érvényes, ha a \"Folyamatjelző színe\" Album színre van állítva</string>
+
+    <string name="setting_wear_volume_color">Hangerősáv színe</string>
+    <string name="setting_wear_volume_custom_color">Egyéni hangerőszín</string>
+    <string name="setting_wear_volume_custom_color_description">Válassza ki a Normál kezelésnél használt hangerőszínt</string>
+    <string name="setting_wear_quick_panel_color">Gyorsműveletek színe</string>
+    <string name="setting_wear_quick_panel_custom_color">Gyorsműveletek egyéni színe</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Válassza ki a Normál kezelésnél használt Gyorsműveletek-színt</string>
+    <string name="setting_wear_shading_custom_color_description">Válassza ki az árnyékolási színátmenetet színező színt</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Semleges (statikus témaszín)</item>
+        <item>Album színe</item>
+        <item>Egyéni szín</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Klasszikus</item>
+        <item>Kifejező</item>
+        <item>Vinyl</item>
+        <item>Poszter</item>
+        <item>Stúdió</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spektrum</item>
+        <item>Material</item>
+        <item>Magával ragadó</item>
+        <item>Mélység</item>
+        <item>Körhinta</item>
+        <item>Csevegés</item>
+        <item>Osztott</item>
+        <item>Jegyzet</item>
+        <item>Versszak</item>
+        <item>Metaadatok</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Expressive tekerés</string>
+    <string name="setting_wear_expressive_seek_mode_description">A szám érintéses tekerése az Expressive óralapon. A Középső gyűrű húzhatóvá teszi a lejátszásgomb körüli gyűrűt; a Széli gyűrű a Classic lünettagyűrűt is megjeleníti; a Nincs csak a forgatható koronára hagyja a tekerést.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Középső gyűrű</item>
+        <item>Széli gyűrű</item>
+        <item>Nincs</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Mindig bekapcsolt kijelző</string>
+    <string name="setting_wear_aod_style">Mindig bekapcsolt stílus</string>
+    <string name="setting_wear_aod_style_description">Hogyan néz ki a Most játszott képernyő, amikor az óra ambient módban van. Az Óralap követése a kiválasztott óralapot követi; a Minimális csak halvány szöveget mutat teljesen fekete háttéren a leghosszabb akkumulátor-üzemidőért.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Óralap követése</item>
+        <item>Klasszikus</item>
+        <item>Expressive (körvonalas)</item>
+        <item>Material (körvonalas)</item>
+        <item>AMOLED-vezérlők</item>
+        <item>Chrono (nagy óra)</item>
+        <item>Poszter</item>
+        <item>Stúdió</item>
+        <item>Magával ragadó</item>
+        <item>Körhinta</item>
+        <item>Csevegés</item>
+        <item>Osztott</item>
+        <item>Jegyzet</item>
+        <item>Versszak</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Mindig bekapcsolt szín</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Fehér</item>
+        <item>Album színe</item>
+        <item>Egyéni szín</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Fehér</item>
+        <item>Dinamikus (az óra alatti terület szerint)</item>
+        <item>Album színe</item>
+        <item>Egyéni szín</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Panelstílus követése</item>
+        <item>Átlátszó (nincs háttér)</item>
+        <item>Albumkiemelés</item>
+        <item>Áttetsző</item>
+        <item>Fehér</item>
+        <item>Matt fehér</item>
+        <item>Fekete</item>
+        <item>Dinamikus (albumtónus)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Következik kapszula háttere</string>
+    <string name="setting_wear_show_up_next_pill">Következik kapszula a lejátszóban</string>
+    <string name="setting_wear_show_up_next_pill_description">Következik kapszula megjelenítése a Most játszott képernyő alján. A minigombok sorának helyét foglalja el, ezért csak akkor jelenik meg, amikor az a sor nem látható.</string>
+    <string name="category_wf_clock">Óra</string>
+    <string name="setting_wear_clock_color">Óra színe</string>
+    <string name="setting_wear_clock_custom_color">Egyéni óraszín</string>
+    <string name="setting_wear_clock_custom_color_description">Koppintson a használt óraszín kiválasztásához, amikor az Óra színe Egyéni színre van állítva</string>
+    <string name="setting_wear_clock_opacity">Óra átlátszatlansága</string>
+    <string name="setting_wear_clock_opacity_description">A mindig látható óra átlátszatlansága (10–100%%). Jelenleg <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Egyéni mindig bekapcsolt szín</string>
+    <string name="setting_wear_aod_custom_color_description">Koppintson a mindig bekapcsolt szöveg, vezérlők és óra színének kiválasztásához, amikor a \"Mindig bekapcsolt szín\" Egyéni színre van állítva</string>
+    <string name="setting_wear_aod_intensity">Mindig bekapcsolt fényerő</string>
+    <string name="setting_wear_aod_intensity_description">A mindig bekapcsolt kijelző fényereje (20–100%%). Az alacsonyabb érték halványabb és kevesebb akkumulátort fogyaszt. Jelenleg <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Lejátszásvezérlő gombok a mindig bekapcsolt kijelzőn</string>
+    <string name="setting_wear_aod_show_transport_description">A körvonalas előző/lejátszás/következő gombok megjelenítése a támogatott vizuális mindig bekapcsolt stílusokban. Halvány képernyőn nem koppinthatók, de egy koppintás felébreszti az órát úgy, hogy a gomb már az ujja alatt van.</string>
+    <string name="setting_wear_aod_show_progress">Előrehaladási gyűrű a mindig bekapcsolt kijelzőn</string>
+    <string name="setting_wear_aod_show_progress_description">Az előrehaladási gyűrű megjelenítése a lejátszásgomb körül ambient módban — ott a pozíció csak körülbelül percenként egyszer frissül</string>
+    <string name="setting_wear_aod_show_pills">Következik a mindig bekapcsolt kijelzőn</string>
+    <string name="setting_wear_aod_show_pills_description">Statikus körvonalas Következik kapszula megjelenítése a vizuális mindig bekapcsolt stílusok alján</string>
+    <string name="category_wf_gestures">Képernyőgesztusok</string>
+    <string name="setting_wear_mini_buttons_mode">Minigombok megjelenítése</string>
+    <string name="setting_wear_gestures_mode">Képernyőgesztusok</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Mindig</item>
+        <item>Csak lejátszás közben</item>
+        <item>Csak szüneteltetéskor</item>
+        <item>Soha</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Albumborító a mindig bekapcsolt kijelzőn</string>
+    <string name="setting_wear_aod_show_art_description">A halványított albumborító látható marad ambient módban. Kikapcsolva teljesen fekete háttér jelenik meg, ami AMOLED-kijelzőkön észrevehetően több akkumulátort takarít meg.</string>
+    <string name="setting_wear_aod_art_treatment">Mindig bekapcsolt albumborító stílusa</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Lágy elmosás</item>
+        <item>Tiszta borító</item>
+        <item>Monokróm elmosás</item>
+        <item>Lejátszó borítókezelésének követése</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Óra a mindig bekapcsolt kijelzőn</string>
+    <string name="setting_wear_aod_show_clock_description">Óra megjelenítése, amikor az óra ambient módban van</string>
+    <string name="setting_wear_aod_show_track_info">Száminformáció a mindig bekapcsolt kijelzőn</string>
+    <string name="setting_wear_aod_show_track_info_description">A szám címének és előadójának megjelenítése ambient módban</string>
+
+    <string name="category_overlays_queue">Átfedések &amp; lejátszási sor</string>
+    <string name="category_wf_panel_shared">Megosztott panelmegjelenés</string>
+    <string name="category_wf_panel_volume">Hangerőpanel</string>
+    <string name="category_wf_panel_seek">Előrehaladás &amp; tekerés panel</string>
+    <string name="category_wf_panel_quick">Gyorsműveletek panel</string>
+    <string name="category_wf_panel_queue">Lejátszási sor &amp; listák</string>
+    <string name="category_wf_panel_effects">Panelhatások</string>
+    <string name="setting_wear_overlay_backdrop_style">Panel háttere</string>
+    <string name="setting_wear_volume_style">Hangerőstílus</string>
+    <string name="setting_wear_volume_layout">Hangerőelrendezés</string>
+    <string name="setting_wear_quick_panel_style">Gyorspanel stílusa</string>
+    <string name="setting_wear_quick_panel_layout">Gyorspanel elrendezése</string>
+    <string name="setting_wear_quick_panel_source">Gyorsműveletek</string>
+    <string name="setting_wear_quick_panel_source_description">Válassza a beállított gombjait vagy a jelenleg lejátszó alkalmazás által biztosított műveleteket.</string>
+    <string name="quick_panel_open_note_title">Panel megnyitása</string>
+    <string name="quick_panel_open_note_description">A gyorsműveletek panel megnyitásához az órán koppintson duplán a Most játszott képernyő közepére.</string>
+    <string name="preview_current_app_action">Jelenlegi alkalmazás művelete</string>
+    <string name="preview_notification_controls">Ikon a médiaértesítésből</string>
+    <string name="setting_wear_queue_style">Lejátszásisor-stílus</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Parancsikon-borítók használata háttérként</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Ha a Lejátszásisor-stílus Borító változat, a letöltött parancsikon-borítóval (szám, lejátszási lista, előadó…) rendelkező gyorspanel műveletsora is ezzel a képpel tölti ki a kapszuláját, akárcsak a Következik. A letöltött borító nélküli parancsikonokat (egyszerű alkalmazásikonnal) ez nem érinti.</string>
+    <string name="setting_wear_list_row_size">Lista kapszulamérete</string>
+    <string name="setting_wear_list_row_size_description">A teljes szélességű sorok magassága a lejátszási sorban, menükben és gyorspanelen.</string>
+    <string name="setting_wear_progress_gradient">Paletta beleolvasztása a gyűrűbe</string>
+    <string name="setting_wear_progress_gradient_description">Többárnyalatú színkezelésnél (Komplementer, Triádikus, Analóg, Duotone) a tömör gyűrű mindhárom színen végighalványul. Kapcsolja ki egyszínű gyűrűhöz úgy, hogy az albumpaletta mindenhol máshol megmaradjon.</string>
+    <string name="setting_wear_progress_style">Előrehaladási gyűrű stílusa</string>
+    <string name="setting_wear_seek_style">Tekerési &amp; hangerőérték stílusa</string>
+    <string name="setting_wear_seek_layout">Tekerőpanel elrendezése</string>
+    <string name="setting_wear_color_treatment">Óra színkezelése</string>
+    <string name="setting_wear_normal_color">Normál szín</string>
+    <string name="setting_wear_normal_color_description">Válassza ki a Normál módban a címkiemelésekhez, előrehaladáshoz, hangerőhöz, panelekhez és minigomb-díszítéshez használt egyetlen színt</string>
+    <string name="setting_wear_normal_color_multi">Színpaletta használata</string>
+    <string name="setting_wear_normal_color_multi_description">Bekapcsolva a képernyő egy főszínt és két kiegészítő árnyalatot használ. Kikapcsolva mindenhol egyetlen szín jelenik meg — az album saját színe vagy az Ön által választott.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normál (kiválasztott szín)</item>
+        <item>Telítetlen (lágy albumszín)</item>
+        <item>Expressive (teljes albumpaletta)</item>
+        <item>Komplementer (album + ellentétes)</item>
+        <item>Triádikus (három albumárnyalat)</item>
+        <item>Analóg (szomszédos árnyalatok)</item>
+        <item>Monokróm (egy árnyalat, három tónus)</item>
+        <item>Duotone (két albumszín)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Óra kezelésének követése</item>
+        <item>Normál (kiválasztott szín)</item>
+        <item>Telítetlen (lágy albumszín)</item>
+        <item>Expressive (teljes albumpaletta)</item>
+        <item>Komplementer (album + ellentétes)</item>
+        <item>Triádikus (három albumárnyalat)</item>
+        <item>Analóg (szomszédos árnyalatok)</item>
+        <item>Monokróm (egy árnyalat, három tónus)</item>
+        <item>Duotone (két albumszín)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Cím vastagsága</string>
+    <string name="setting_wear_title_font_italic">Dőlt cím</string>
+    <string name="setting_wear_title_font_scale">Cím mérete</string>
+    <string name="setting_wear_title_font_opacity">Cím átlátszatlansága</string>
+    <string name="setting_wear_title_font_tracking">Cím betűköze</string>
+    <string name="setting_wear_title_color">Címszöveg színe</string>
+    <string name="setting_wear_title_custom_color">Egyéni címszín</string>
+    <string name="wear_title_color_face_default">Óralap alapértéke (tervezés szerint)</string>
+    <string name="setting_wear_title_adaptive_contrast">Címszín igazítása a kontraszthoz</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Világosítja vagy sötétíti a címet, ha színe túl közel van a mögötte lévő borítóhoz, miközben megőrzi a színárnyalatot. Nincs hatása, amíg a cím az óralap alapértékét használja.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Előadószín igazítása a kontraszthoz</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Világosítja vagy sötétíti az előadósort, ha az albumszín túl közel van a mögötte lévő borítóhoz, miközben megőrzi a színárnyalatot. Csak azt a sávot méri, ahol a sor található, nem az egész borítót.</string>
+    <string name="setting_wear_artist_font_weight">Előadó vastagsága</string>
+    <string name="setting_wear_artist_font_italic">Dőlt előadó</string>
+    <string name="setting_wear_artist_font_scale">Előadó mérete</string>
+    <string name="setting_wear_artist_font_opacity">Előadó átlátszatlansága</string>
+    <string name="setting_wear_artist_font_tracking">Előadó betűköze</string>
+    <string name="setting_wear_source_icon_scale">Alkalmazásikon mérete</string>
+    <string name="setting_wear_source_icon_opacity">Alkalmazásikon átlátszatlansága</string>
+    <string name="setting_wear_typography_weight_description">1–1000. A 400 az óralap normál vastagsága; a magasabb vastagabb. Google Sans Flex esetén ez a betűtípus saját vastagságtengelye</string>
+    <string name="setting_wear_typography_scale_description">Az óralap saját méretének százaléka (70–140). A 100 megtartja minden elrendezés tervezett méretét</string>
+    <string name="setting_wear_typography_opacity_description">Százalék (20–100). A 100 megtartja az óralap saját átlátszatlanságát</string>
+    <string name="setting_wear_typography_tracking_description">Extra betűköz em századrészében (−5 és 20 között). A 0 megtartja a betűtípus saját térközét</string>
+    <string name="setting_wear_color_modifier">Tónus</string>
+    <string name="setting_wear_color_modifier_description">A teljes paletta módosítása a származtatási mód megváltoztatása nélkül — minden színkezeléssel működik</string>
+    <string name="setting_wear_color_hue_shift">Színeltolás</string>
+    <string name="setting_wear_color_hue_shift_description">Az albumpalettát a színkörön forgatja fokokban (0–359). Minden kezelés az album saját színárnyalatán tartja a főszínt, ezért ezzel változtatható. A 0 változatlanul használja az albumszínt; a rögzített Normál szín soha nem tolódik el.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Nincs</item>
+        <item>Élénk</item>
+        <item>Pasztell</item>
+        <item>Meleg</item>
+        <item>Hűvös</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Széli ív (bal)</item>
+        <item>Széli ív (magas)</item>
+        <item>Széli ív (jobb)</item>
+        <item>Széli ív (felső)</item>
+        <item>Széli ív (alsó)</item>
+        <item>Teljes gyűrű</item>
+        <item>Középső ragyogás</item>
+        <item>Vízszintes mérő</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Széli gyűrű</item>
+        <item>Széli gyűrű (vékony)</item>
+        <item>Széli gyűrű (vastag)</item>
+        <item>Idővonal</item>
+        <item>Szegmentált idővonal</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metaadatok elöl</item>
+        <item>Ív</item>
+        <item>Kiemelt</item>
+        <item>Rács</item>
+        <item>Feliratozott sorok</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Tömör</item>
+        <item>Szaggatott</item>
+        <item>Pontok</item>
+        <item>Hajszálvékony</item>
+        <item>Üstökös</item>
+        <item>60 órapont</item>
+        <item>60 órajelölés</item>
+        <item>12 órás szegmensek</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Egyszerű</item>
+        <item>Üvegkapszula</item>
+        <item>Expressive kapszula</item>
+        <item>Material kapszula</item>
+        <item>Fehér kapszula</item>
+        <item>Óriás</item>
+        <item>Pozíció / összes</item>
+        <item>Fehér üveg</item>
+        <item>Áttetsző album</item>
+        <item>Albumragyogás</item>
+        <item>Körvonal</item>
+        <item>Tömör téma</item>
+        <item>Tömör album</item>
+        <item>Mikro</item>
+        <item>Árnyék (keret nélkül)</item>
+        <item>Aláhúzás</item>
+        <item>Hajszálvékony körvonal</item>
+        <item>Óriás albumszín</item>
+        <item>Mono</item>
+        <item>Sötét tónusos</item>
+        <item>Terminál</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Beállított gombok</item>
+        <item>A jelenlegi médiaalkalmazásból</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Panelstílus követése</item>
+        <item>Albumelmosás (akril)</item>
+        <item>Tömör fekete</item>
+        <item>Tömör albumszín</item>
+        <item>Üveg</item>
+        <item>Albumátmenet</item>
+        <item>Album duotone</item>
+        <item>Prizma</item>
+        <item>Folyékony üveg</item>
+        <item>Expressive elmosás</item>
+        <item>Kifejező</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Üveg</item>
+        <item>Minimális (AMOLED)</item>
+        <item>Material</item>
+        <item>Tónusos</item>
+        <item>Neon</item>
+        <item>Világos</item>
+        <item>Színátmenet</item>
+        <item>Mono</item>
+        <item>Körvonal</item>
+        <item>Duotone</item>
+        <item>Prizma</item>
+        <item>Nagy kontraszt</item>
+        <item>Terminál</item>
+        <item>Dér</item>
+        <item>Szegmensek</item>
+        <item>Aurora</item>
+        <item>Tinta</item>
+        <item>Vájat</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Kompakt</item>
+        <item>Normál</item>
+        <item>Magas</item>
+        <item>Extra magas</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Üveg</item>
+        <item>Minimális (AMOLED)</item>
+        <item>Material</item>
+        <item>Tónusos</item>
+        <item>Neon</item>
+        <item>Világos</item>
+        <item>Színátmenet</item>
+        <item>Mono</item>
+        <item>Körvonal</item>
+        <item>Duotone</item>
+        <item>Prizma</item>
+        <item>Nagy kontraszt</item>
+        <item>Terminál</item>
+        <item>Dér</item>
+        <item>Borító</item>
+            <item>Elmosott borító</item>
+        <item>Tónusos borító</item>
+        <item>Négyzetes borító</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Üveg</item>
+        <item>Fehér üveg</item>
+        <item>Tónusos üveg</item>
+        <item>Minimális (AMOLED)</item>
+        <item>Material</item>
+        <item>Tónusos</item>
+        <item>Neon</item>
+        <item>Világos</item>
+        <item>Színátmenet</item>
+        <item>Mono</item>
+        <item>Körvonal</item>
+        <item>Körvonalas fehér üveg</item>
+        <item>Duotone</item>
+        <item>Prizma</item>
+        <item>Nagy kontraszt</item>
+        <item>Terminál</item>
+        <item>Dér</item>
+        <item>Szellem (keret nélkül)</item>
+        <item>Köd</item>
+        <item>Tinta</item>
+        <item>Pont</item>
+        <item>Tömb</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Alkalmazás aktívan tartása szünet után</string>
+    <string name="setting_wear_paused_hold_description">Meddig maradjon elérhető az óraalkalmazás az óralapról szüneteltetés után, hogy a csukló felemelésével folytathassa az újbóli megnyitás helyett. A hosszabb beállítások háttérszolgáltatást tartanak futva.</string>
+    <string name="wear_paused_hold_off">Ne tartsa meg</string>
+    <string name="wear_paused_hold_5">5 perc</string>
+    <string name="wear_paused_hold_15">15 perc</string>
+    <string name="wear_paused_hold_30">30 perc</string>
+    <string name="wear_paused_hold_60">1 óra</string>
+    <string name="wear_paused_hold_always">A lejátszás végéig</string>
+
+    <string name="setting_wear_idle_button_action">Gomb, amikor semmi sem szól</string>
+    <string name="setting_wear_idle_auto_open">Megnyitás, amikor semmi sem szól</string>
+    <string name="setting_wear_idle_auto_open_description">Közvetlenül erre a képernyőre ugrik, amikor zenelejátszás nélkül nyitja meg az óraalkalmazást.</string>
+    <string name="wear_idle_action_resume">Utolsó alkalmazás folytatása</string>
+    <string name="wear_idle_action_shortcuts">Lejátszásilista-parancsikonok</string>
+    <string name="wear_idle_action_menu">Műveletmenü</string>
+    <string name="wear_idle_action_search">Keresés</string>
+    <string name="wear_idle_action_queue">Legutóbb lejátszott</string>
+    <string name="wear_idle_action_none">Nincs gomb</string>
+    <string name="wear_idle_auto_open_none">Maradjon a lejátszóban</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Könyvtár böngészése</string>
+    <string name="library_up">Vissza</string>
+    <string name="error_library_unavailable">Ennek az alkalmazásnak nincs böngészhető könyvtára</string>
+    <string name="error_library_empty">Nincs itt semmi</string>
+    <string name="error_library_no_player">Előbb indítson el valamit</string>
+
+    <string name="setting_wear_carousel_card_shape">Körhintakártya alakja</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Lekerekített</item>
+        <item>Négyzet</item>
+        <item>Kerekített négyzet</item>
+        <item>Kör</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Betűtípus használata mindenhol</string>
+    <string name="setting_wear_font_all_screens_description">A kiválasztott betűtípust a menükre, a lejátszási sorra és a Gyorsműveletekre is alkalmazza, nem csak a lejátszóra. A megjelenítő és kézírásos betűtípusok nehezebben olvashatók lehetnek listákban.</string>
+
+    <string name="setting_wear_clock_font">Óra betűtípusa</string>
+    <string name="wear_clock_font_follow">Szám betűtípusának követése</string>
+    <string name="setting_wear_lyrics_font">Dalszöveg betűtípusa</string>
+    <string name="setting_wear_lyrics_font_description">A dalszöveg-képernyőn és a Verse óralapon megjelenő dalszöveg betűtípusa. A szám betűtípusát követi, hacsak itt nem választ mást.</string>
+    <string name="wear_lyrics_font_follow">Szám betűtípusának követése</string>
+    <string name="setting_wear_clock_font_weight">Óra vastagsága</string>
+    <string name="setting_wear_clock_font_italic">Dőlt óra</string>
+    <string name="setting_wear_clock_font_scale">Óra mérete</string>
+    <string name="setting_wear_clock_font_tracking">Óra betűköze</string>
+    <string name="setting_wear_clock_adaptive_contrast">Óraszín igazítása a kontraszthoz</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Világosítja vagy sötétíti az órát, ha az albumszín túl közel van a mögötte lévő borítóhoz, miközben megőrzi a színárnyalatot. Csak akkor érvényes, ha az óra színe Album színre van állítva.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Keskeny, csupa nagybetűs megjelenítő — poszterszerű, hosszú címekhez is elfér</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Nagy kontrasztú szerkesztőségi talpas — magazinos hangulat</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Technikai geometrikus talpatlan különleges részletekkel</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Szögletes sci-fi megjelenítő — merész és futurisztikus</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Kézírásos íráskép — laza és személyes</string>
+    <string name="setting_wear_track_time_mode">Számidő megjelenítése</string>
+    <string name="setting_wear_track_time_mode_description">Mikor jelenjen meg a szám pozíciója (pl. 1:23 / 3:45) a Most játszott képernyőn.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Mindig</item>
+        <item>Csak lejátszás közben</item>
+        <item>Csak szüneteltetéskor</item>
+        <item>Soha</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Minigombok íve</string>
+    <string name="setting_screen_buttons_curve_description">Válassza ki a minigombok görbületi stílusát: lapos, íves, lágy, hajlított.</string>
+    <string name="setting_screen_buttons_shape">Minigombok alakja</string>
+    <string name="setting_screen_buttons_shape_description">Válassza ki a minigombok alakját és elrendezési formátumát.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Kapszula (alapértelmezett)</item>
+        <item>Kör</item>
+        <item>Négyzet</item>
+        <item>Lekerekített négyzet (lágy)</item>
+        <item>Lekerekített négyzet (közepes)</item>
+        <item>Kerekített négyzet</item>
+        <item>Levél</item>
+        <item>Csepp</item>
+        <item>Kapszula (széles, kicsi)</item>
+        <item>Kapszula (széles, közepes)</item>
+        <item>Kapszula (széles, nagy)</item>
+        <item>Kapszula (széles, extra nagy)</item>
+        <item>Lekerekített téglalap (kicsi)</item>
+        <item>Lekerekített téglalap (közepes)</item>
+        <item>Lekerekített téglalap (nagy)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Lapos</item>
+        <item>Ív</item>
+        <item>Enyhe ív</item>
+        <item>Lágy ív</item>
+        <item>Közepes ív</item>
+        <item>Ívelt</item>
+        <item>Extrém ív</item>
+        <item>Szélekig terítés</item>
+        <item>Bal szél</item>
+        <item>Jobb szél</item>
+        <item>Mindkét szél</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Alapértelmezett háttér</item>
+        <item>Üveg (egyenletes)</item>
+        <item>Üveg (világos)</item>
+        <item>Áttetsző album</item>
+        <item>Áttetsző album Exp</item>
+        <item>Albumragyogás</item>
+        <item>Ragyogás Exp</item>
+        <item>Tömör téma</item>
+        <item>Tömör album</item>
+        <item>Tömör Exp album</item>
+        <item>Körvonal</item>
+        <item>Körvonalas Exp album</item>
+        <item>Csak ikon (átlátszó)</item>
+        <item>Ikon Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Semleges</item>
+        <item>Album színe</item>
+        <item>Egyéni szín</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Teljes borító</item>
+        <item>Elmosott háttér</item>
+        <item>Matt szélek</item>
+        <item>Négyzet (éles sarkok)</item>
+        <item>Négyzet (lágy sarkok)</item>
+        <item>Négyzet (lekerekített sarkok)</item>
+        <item>Fekete &amp; fehér</item>
+        <item>Elmosott fekete &amp; fehér</item>
+        <item>Expressive elmosás</item>
+        <item>Kifejező</item>
+        <item>Material tónusos átmenet</item>
+        <item>Poszterborító</item>
+        <item>Stúdióátmenet</item>
+        <item>Vinyl radiális ragyogás</item>
+        <item>Halo ragyogás</item>
+        <item>Aurora szalagok</item>
+        <item>Spektrumátmenet</item>
+        <item>Corona söprés</item>
+        <item>Alkonyati áttűnés</item>
+        <item>Virágzás</item>
+        <item>Horizont áttűnés</item>
+        <item>Parázsragyogás</item>
+        <item>Eclipse AMOLED fekete</item>
+        <item>Rejtett (tömör fekete)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Letiltva</item>
+        <item>Zenei óralapikon megjelenítése (csak Wear 3.0)</item>
+        <item>Svartifoss megnyitása</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Bezárási időkorlát</string>
+    <string name="setting_close_timeout_description">A Svartifoss automatikusan bezárul, ha <![CDATA[<b>%1$s másodpercig</b>]]> nem szól zene. A funkció ki van kapcsolva, ha az időkorlát 0 másodperc. Az akkumulátor kímélése érdekében ez a lehetőség időnként nem teljesen pontos, és a bezárás akár egy percet is késhet.</string>
+    <string name="setting_wear_close_on_idle">Bezárás \"Nincs lejátszás\" esetén</string>
+    <string name="setting_wear_close_on_idle_description">Automatikusan bezárja az óraalkalmazást körülbelül egy perccel azután, hogy eléri a tétlen \"Nincs lejátszás\" képernyőt, így nem marad ott nyitva. Független a fenti bezárási időkorláttól, amely a szüneteltetett számra vonatkozik.</string>
+    <string name="category_notifications">Értesítési felugró ablak</string>
+    <string name="setting_enable_notifications">Értesítési felugró ablak megjelenítése</string>
+    <string name="setting_enable_notifications_description">Ehhez a funkcióhoz egy másik alkalmazás szükséges az értesítések kezelésére (Vibration Center for Wear).
+
+Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban megjeleníti az értesítés szövegét, így gyorsan rápillanthat anélkül, hogy elhagyná a Svartifosst.</string>
+    <string name="setting_notification_timeout">Értesítési felugró ablak időkorlátja</string>
+    <string name="setting_notification_timeout_description">Az értesítési felugró ablak <![CDATA[<b>%1$s másodperc</b>]]> után automatikusan bezárul. Az automatikus bezárás kikapcsolásához adjon meg 0-t.</string>
+    <string name="app_required">Szükséges alkalmazás</string>
+    <string name="vibration_center_required_description">A funkció használatához telepítenie kell egy másik (ingyenes) alkalmazást: Vibration Center for Wear.</string>
+    <string name="open_play_store">Play Áruház megnyitása</string>
+    <string name="error_no_notification_service_support">Sajnáljuk, az eszköze úgy tűnik, nem támogatja az értesítési szolgáltatásokat</string>
+    <string name="setting_always_select_center_action">Mindig a középső művelet kiválasztása</string>
+    <string name="setting_always_select_center_action_description">Bekapcsolva a műveletlistára koppintás mindig a középső (kiemelt) lehetőséget választja ki, függetlenül attól, melyikre koppintott.</string>
+    <string name="change_icon">Ikon módosítása</string>
+    <string name="please_wait">Kérjük, várjon</string>
+
+    <string name="error_playlist_not_supported">Ez a médiaalkalmazás nem támogatja</string>
+    <string name="error_search_no_results">Nincs találat</string>
+    <string name="seconds_to_skip">Átugrandó másodpercek:</string>
+    <string name="seconds_to_reverse">Visszatekerendő másodpercek:</string>
+
+    <string name="setting_dynamic_accent_color">Dinamikus kiemelőszín</string>
+    <string name="setting_dynamic_accent_color_description">Bekapcsolva a kiemelőszín (SeekBar, aktív lejátszásisor-elem) automatikusan az aktuális albumborító domináns színéhez igazodik.</string>
+    <string name="setting_desaturated_color">Telítetlen szín</string>
+    <string name="setting_desaturated_color_description">Az aktív témától függően módosítja a kinyert szín telítettségét és fényerejét a jó olvashatóság és kontraszt érdekében.</string>
+
+    <string name="queue_header">Lejátszási sor</string>
+    <string name="queue_unavailable">A lejátszási sor nem érhető el</string>
+
+    <string name="setting_custom_accent_color">Kiemelőszín</string>
+    <string name="setting_custom_accent_color_description">Válasszon egyéni kiemelőszínt az alkalmazás felületéhez</string>
+    <string name="setting_mini_player">Minilejátszó</string>
+    <string name="setting_mini_player_description">Állandó Most játszott sávot jelenít meg az alsó navigáció felett, amikor média aktív. Alapértelmezés szerint engedélyezve; kapcsolja ki a hely felszabadításához.</string>
+    <string name="color_picker_title">Kiemelőszín kiválasztása</string>
+    <string name="color_picker_reset">Visszaállítás</string>
+    <string name="color_picker_apply">Alkalmazás</string>
+    <string name="color_picker_default">Alapértelmezett</string>
+    <string name="color_picker_invalid">Érvénytelen színkód</string>
+    <string name="color_picker_current">Jelenlegi: %s</string>
+
+    <string name="drawer_version_format">Verzió: %1$s</string>
+    <string name="drawer_tagline">Kísérőalkalmazás Wear OS-hez</string>
+    <string name="drawer_about_heading">Névjegy</string>
+    <string name="drawer_about_summary">A Svartifoss segítségével Wear OS-órájáról vezérelheti a telefonon szóló zenét — teljesen testreszabható, az eszközére szabott távirányítóval.</string>
+    <string name="drawer_name_heading">A név</string>
+    <string name="drawer_name_meaning">A Svartifoss izlandiul „Fekete vízesést” jelent — nevét a Vatnajökull Nemzeti Park vízeséséről kapta, ahol sötét bazaltoszlopok kereteznek egy keskeny zuhatagot. Ahogy a víz a köveken, úgy áramlik a zene az alkalmazáson keresztül.</string>
+    <string name="drawer_sync_heading">Szinkronizálás</string>
+    <string name="drawer_sync_summary">Az órabeállításokat itt, a telefonon konfigurálhatja, és automatikusan szinkronizálódnak a párosított órára.</string>
+    <string name="drawer_support_heading">Támogatás</string>
+    <string name="drawer_support_summary">A Svartifoss ingyenes és nyílt forráskódú — ha hasznos, meghívhat egy kávéra :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Borító letöltése</string>
+    <string name="album_art_saved">Borító mentve a galériába</string>
+    <string name="album_art_save_error">A borító mentése sikertelen</string>
+
+    <string name="action_play_liked_songs">Kedvelt dalok lejátszása (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Kedvelt dalok lejátszása (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Kedvelt számok lejátszása (SoundCloud)</string>
+    <string name="action_my_playlists">Streaming parancsikonok</string>
+    <string name="action_play_specific_playlist">Streaming parancsikon megnyitása</string>
+    <string name="action_choose_or_add_streaming_shortcut">Streaming parancsikon kiválasztása vagy hozzáadása</string>
+    <string name="action_show_streaming_library">Összes mentett parancsikon megjelenítése</string>
+    <string name="playlist_shortcut_pick_title">Parancsikon kiválasztása</string>
+    <string name="playlist_shortcut_pick_empty">Még nincs mentett streaming parancsikon — adjon hozzá egyet alább, majd koppintson rá a kiválasztásához</string>
+    <string name="playlist_shortcuts_empty">Még nincsenek streaming parancsikonok — adja hozzá őket a telefonos alkalmazás beállításaiban</string>
+    <string name="setting_playlist_shortcuts">Streaming parancsikonok</string>
+    <string name="setting_playlist_shortcuts_description">Megosztott hivatkozások megnyitása az óráról a YouTube Musicban, Spotifyban és más streaming alkalmazásokban</string>
+    <string name="setting_shortcut_artwork">Parancsikon-kép letöltése online</string>
+    <string name="setting_shortcut_artwork_description">Minden mentett parancsikonhoz bélyegkép letöltése a szolgáltatásból, amely a telefon listájában, az óra menüjében és a hozzárendelt gombokon jelenik meg. Minden bélyegkép csak egyszer töltődik le; csak a nyilvános megosztási hivatkozás kerül elküldésre. Alapértelmezés szerint kikapcsolva.</string>
+    <string name="setting_queue_local_artwork">Lejátszásisor-borítók a könyvtárából</string>
+    <string name="setting_queue_local_artwork_description">A helyi zenelejátszók könyvtárhivatkozásként teszik közzé a lejátszási sor borítóit. Adjon médiahozzáférést, hogy megjelenhessenek az óra lejátszási sorában. Nincs szükség internet-hozzáférésre.</string>
+    <string name="setting_queue_local_artwork_granted">Médiahozzáférés engedélyezve — a helyi lejátszásisor-borítók megjelennek</string>
+    <string name="setting_queue_local_artwork_denied">Médiahozzáférés megtagadva. Engedélyezze az Android beállításaiban a helyi lejátszásisor-borítók megjelenítéséhez.</string>
+    <string name="setting_queue_remote_artwork">Lejátszásisor-borítók letöltése online</string>
+    <string name="setting_queue_remote_artwork_short_description">A streaming alkalmazások (YouTube Music-kliensek, Echo Music…) hivatkozásként, nem képként teszik közzé a lejátszási sor borítóit, ezért ez letölti és gyorsítótárazza őket. Kapcsolja ki, hogy a lejátszási sor teljesen offline maradjon — ezek a sorok akkor egyáltalán nem mutatnak borítót.</string>
+    <string name="setting_queue_remote_artwork_description">A streaming lejátszók a lejátszási sor borítóit képek helyett hivatkozásként teszik közzé. Töltse le mindegyiket egyszer, és tárolja gyorsítótárban ezen a telefonon, hogy megjelenjenek az óra lejátszási sorában. Csak a lejátszó által már közzétett borító-URL kerül lekérésre — nincs fiók- vagy személyes adat. Alapértelmezés szerint bekapcsolva; kapcsolja ki a teljesen offline lejátszási sorhoz.</string>
+    <string name="watch_streaming_shortcuts_empty">Számok, albumok vagy lejátszási listák hozzáadása a Gyorsműveletekhez és az óra menüjéhez</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d mentett parancsikon · Elérhető a Gyorsműveletekben és az óra menüjében</item>
+        <item quantity="other">%1$d mentett parancsikon · Elérhető a Gyorsműveletekben és az óra menüjében</item>
+    </plurals>
+    <string name="category_music_apps">Zenealkalmazások &amp; szolgáltatások</string>
+    <string name="category_apps_content">Dalszövegek &amp; metaadatok</string>
+    <string name="category_streaming_services">Streaming parancsikonok</string>
+    <string name="category_queue_artwork">Lejátszásisor-képek</string>
+    <string name="category_system_access">Android-hozzáférés &amp; értesítések</string>
+    <string name="setting_apps_integrations">Támogatott zenei szolgáltatások</string>
+    <string name="setting_apps_integrations_description">A hivatkozások működnek a YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music és SoundCloud szolgáltatásokkal. Nincs szükség fiókhozzáférésre.</string>
+    <string name="setting_apps_integrations_none">Nem található támogatott alkalmazás. A parancsikonok böngészőben vagy más kompatibilis alkalmazásban továbbra is megnyithatók.</string>
+    <string name="setting_apps_integrations_installed">%1$d / %2$d észlelve: %3$s</string>
+    <string name="setting_streaming_open_mode">Streaming hivatkozások megnyitása ezzel</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Észlelt streaming alkalmazás</item>
+        <item>Android alapértelmezett</item>
+        <item>Mindig kérdezzen</item>
+    </string-array>
+    <string name="setting_persistent_notification">A \"Svartifoss aktív\" értesítés kezelése</string>
+    <string name="setting_persistent_notification_description">Megnyitja ennek az értesítésnek az Android-beállításait — némíthatja, elrejtheti a zárolási képernyőről vagy más módon módosíthatja. Teljesen nem kapcsolható ki: az Android folyamatos értesítést igényel, amíg az órával kommunikáló háttérszolgáltatás fut.</string>
+    <string name="setting_notification_access">Médiaértesítés-hozzáférés</string>
+    <string name="setting_notification_access_enabled">Engedélyezve · Koppintson az Android-beállítások áttekintéséhez</string>
+    <string name="setting_notification_access_disabled">Nincs engedélyezve · Szükséges az értesítési médiaműveletekhez és automatikus indítási szűrőkhöz</string>
+    <string name="setting_notification_access_unavailable">Az értesítés-hozzáférési beállítások nem érhetők el ezen az eszközön</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d mentett parancsikon · Koppintson a hivatkozások kezeléséhez vagy importálásához</item>
+        <item quantity="other">%1$d mentett parancsikon · Koppintson a hivatkozások kezeléséhez vagy importálásához</item>
+    </plurals>
+    <string name="category_privacy">Adatvédelem</string>
+    <string name="setting_privacy_policy">Adatvédelmi irányelvek</string>
+    <string name="setting_privacy_policy_description">Tekintse meg, milyen adatokat használ a Svartifoss, és mely online szolgáltatások opcionálisak.</string>
+    <string name="setting_crash_reporting">Összeomlási jelentések küldése</string>
+    <string name="setting_crash_reporting_description">Firebase Crashlytics diagnosztika küldése a hibák javításának segítésére. Alapértelmezés szerint engedélyezve; bármikor kikapcsolható.</string>
+    <string name="setting_announcements">Bejelentési értesítések</string>
+    <string name="setting_announcements_description">Alkalmi értesítések a fejlesztőtől — új kiadások, fontos közlemények. Firebase Cloud Messagingen keresztül érkeznek; nincs hozzá fiók vagy felhasználói lista. Alapértelmezés szerint engedélyezve; bármikor kikapcsolható.</string>
+    <string name="announcement_notification_channel">Bejelentések</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Osszon meg lejátszási listát, albumot vagy számot közvetlenül a Svartifosszal, illesszen be másolt hivatkozást, vagy adjon hozzá egyet kézzel. Az óra megkéri a telefont a megnyitására; nincs szükség szolgáltatásbejelentkezésre.</string>
+    <string name="back">Vissza</string>
+    <string name="playlist_shortcuts_beta_badge">BÉTA</string>
+    <string name="playlist_shortcuts_intro_title">A zenéje egy koppintásra</string>
+    <string name="playlist_shortcuts_yours">Parancsikonjai</string>
+    <string name="playlist_shortcuts_empty_hint">Adjon hozzá megosztott szám-, album- vagy lejátszásilista-hivatkozást, hogy elérhető legyen az órán.</string>
+    <string name="playlist_shortcuts_add">Parancsikon hozzáadása</string>
+    <string name="playlist_shortcuts_paste">Hivatkozás beillesztése</string>
+    <string name="playlist_shortcuts_reload_covers">Borítók újratöltése</string>
+    <string name="playlist_shortcuts_reloading_covers">Borítók újratöltése…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Borítók újratöltve</string>
+    <string name="playlist_shortcuts_edit">Parancsikon szerkesztése</string>
+    <string name="playlist_shortcut_save">Parancsikon mentése</string>
+    <string name="playlist_shortcut_editor_hint">Illesszen be egy hivatkozást. A Svartifoss automatikusan azonosítja az alkalmazást és a tartalomtípust.</string>
+    <string name="playlist_shortcut_detection_waiting">Várakozás streaming hivatkozásra</string>
+    <string name="playlist_shortcut_detection_waiting_hint">A Spotify, YouTube Music, Apple Music, TIDAL, Deezer és más szolgáltatások támogatottak.</string>
+    <string name="playlist_shortcut_detected_format">Észlelve: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Név</string>
+    <string name="playlist_shortcut_link_hint">Megosztási hivatkozás vagy alkalmazás-URI</string>
+    <string name="playlist_shortcut_shuffle">Lejátszás véletlen sorrendben (csak YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Hivatkozás</string>
+    <string name="playlist_type_track">Szám</string>
+    <string name="playlist_type_playlist">Lejátszási lista</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">Előadó</string>
+    <string name="playlist_type_show">Műsor</string>
+    <string name="playlist_type_episode">Epizód</string>
+    <string name="playlist_type_mix">Mix</string>
+    <string name="playlist_badge_shuffle">Véletlen sorrend</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Még nincs hozzáadott streaming parancsikon</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d mentve</item>
+        <item quantity="other">%1$d mentve</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Rendezett streaming parancsikonok. Érintse meg és tartsa lenyomva a húzáshoz, használja a Mozgatás fel vagy Mozgatás le akadálymentesítési műveleteket, vagy nyomja meg a Ctrl+Fel/Le billentyűket.</string>
+    <string name="playlist_shortcut_more_options">További lehetőségek ehhez: %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Szerkesztés</string>
+    <string name="playlist_shortcut_menu_open">Megnyitás most</string>
+    <string name="playlist_shortcut_menu_copy">Hivatkozás másolása</string>
+    <string name="playlist_shortcut_menu_duplicate">Másolat készítése</string>
+    <string name="playlist_shortcut_menu_share">Megosztás</string>
+    <string name="playlist_shortcut_menu_delete">Törlés</string>
+    <string name="playlist_shortcut_open_failed">Ezt a hivatkozást egyetlen alkalmazás sem tudja megnyitni</string>
+    <string name="streaming_shortcut_choose_app">Streaming hivatkozás megnyitása ezzel</string>
+    <string name="playlist_shortcut_link_copied">Hivatkozás másolva</string>
+    <string name="playlist_shortcut_import_invalid">A megosztott szöveg nem tartalmaz érvényes streaming hivatkozást</string>
+    <string name="playlist_shortcut_clipboard_invalid">A vágólap nem tartalmaz érvényes streaming hivatkozást</string>
+    <string name="playlist_shortcut_name_required">Adja meg a parancsikon nevét</string>
+    <string name="playlist_shortcut_link_invalid">Adjon meg érvényes webes hivatkozást vagy alkalmazás-URI-t</string>
+    <string name="playlist_shortcut_service_invalid">Illesszen be érvényes hivatkozást a szolgáltatás felismeréséhez</string>
+    <string name="playlist_shortcut_service_generic">Kompatibilis hivatkozás · Az Android választ alkalmazást</string>
+    <string name="playlist_shortcut_service_installed">%1$s telepítve · Megnyitható az alkalmazásában</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s nincs telepítve · Böngésző vagy kompatibilis alkalmazás használható</string>
+    <string name="playlist_shortcut_copy_name">%1$s másolat</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s másolat %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s létrehozva</string>
+    <string name="playlist_shortcut_share_title">Streaming parancsikon megosztása</string>
+    <string name="playlist_shortcut_share_failed">Nincs elérhető alkalmazás a parancsikon megosztásához</string>
+    <string name="playlist_shortcut_deleted">%1$s törölve</string>
+    <string name="playlist_shortcut_undo">Visszavonás</string>
+
+    <string name="action_play_liked_songs_shuffled">Kedvelt dalok lejátszása véletlen sorrendben (YT Music)</string>
+    <string name="action_search_history">Keresési előzmények</string>
+    <string name="search_history_empty">Még nincsenek legutóbbi keresések</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Frissítések</string>
+    <string name="setting_update_check">Értesítés új verziókról</string>
+    <string name="setting_update_check_description">Körülbelül naponta egyszer ellenőrzi a GitHub új kiadásait, és értesítést jelenít meg</string>
+    <string name="setting_update_prereleases">Előzetes kiadások belefoglalása</string>
+    <string name="setting_update_prereleases_description">Értesítés a bétaverziókról is</string>
+    <string name="setting_update_check_now">Frissítések keresése most</string>
+    <string name="setting_update_check_now_description">Megjeleníti a legújabb verziót, és lehetővé teszi az óra frissítését Bluetoothon keresztül</string>
+    <string name="update_screen_title">Frissítések</string>
+    <string name="update_cover_content_description">Svartifoss, a vízesés, amelyről az alkalmazás a nevét kapta</string>
+    <string name="update_notification_channel">Alkalmazásfrissítések</string>
+    <string name="update_available_title">Elérhető a Svartifoss %1$s</string>
+    <string name="update_notification_text">Koppintson a frissítéshez</string>
+    <string name="update_available_action">Frissítés érhető el</string>
+    <string name="update_installed_phone">Telefon: %1$s</string>
+    <string name="update_installed_versions">Telefon: %1$s · Óra: %2$s</string>
+    <string name="update_watch_version_unknown">ismeretlen</string>
+    <string name="update_checking">Frissítések keresése…</string>
+    <string name="update_check_failed">Nem sikerült frissítéseket keresni. Ellenőrizze a kapcsolatot, és próbálja újra.</string>
+    <string name="update_available_line">Új verzió: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(előzetes kiadás)</string>
+    <string name="update_up_to_date">A legújabb verziót használja (%1$s)</string>
+    <string name="update_no_wear_asset">Ehhez a kiadáshoz nincs elküldhető óra-APK.</string>
+    <string name="update_watch_hint">Az „Óra frissítése” letölti az új óraalkalmazást, és Bluetoothon elküldi — a telepítést magán az órán erősíti meg, kábel vagy Wear Installer nélkül.</string>
+    <string name="update_downloading">Letöltés… %1$d%%</string>
+    <string name="update_connecting_watch">Kapcsolódás az órához…</string>
+    <string name="update_transferring">Küldés az órára… %1$d%%</string>
+    <string name="update_confirm_on_watch">Elküldve! Értesítés jelent meg az órán — koppintson rá ott a telepítéshez.</string>
+    <string name="update_no_watch">Nincs csatlakoztatott óra.</string>
+    <string name="update_push_failed">A frissítés órára küldése sikertelen. Próbálja újra.</string>
+    <string name="update_watch_button">Óra frissítése</string>
+    <string name="update_open_release_button">Kiadási oldal megnyitása</string>
+    <string name="update_watch_behind">Az órán még mindig a(z) %1$s fut — küldje el rá az alábbi frissítést.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">A telefonos és óraalkalmazás szinkronban tartása</string>
+    <string name="update_state_checking">Frissítések keresése…</string>
+    <string name="update_state_current">Naprakész</string>
+    <string name="update_state_current_sub">A legújabb kiadás fut: %1$s</string>
+    <string name="update_state_available">Frissítés érhető el</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Nem sikerült frissítéseket keresni</string>
+    <string name="update_state_failed_sub">Ellenőrizze a kapcsolatot, és próbálja újra</string>
+    <string name="update_device_phone">Telefon</string>
+    <string name="update_device_watch">Óra</string>
+    <string name="update_versions_header">Telepítve</string>
+    <string name="update_whats_new">Újdonságok</string>
+    <string name="update_phone_button">Telefon frissítése</string>
+    <string name="update_installing">Telepítő megnyitása…</string>
+    <string name="update_install_permission_needed">Engedélyezze az alkalmazások telepítését a Svartifossból, majd koppintson újra a Telefon frissítése elemre.</string>
+    <string name="update_phone_failed">A telefonfrissítés letöltése sikertelen. Próbálja újra.</string>
+    <string name="update_install_notification_title">Svartifoss-frissítés</string>
+    <string name="update_install_notification_tap">Koppintson az új verzió telepítéséhez</string>
+    <string name="update_install_notification_failed">A telepítés sikertelen. A Beállításokban engedélyezze a Svartifossból történő telepítést, majd próbálja újra.</string>
+    <string name="setting_wear_album_accent_source">Albumkiemelés forrása</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Kiegyensúlyozott</item>
+        <item>Legélénkebb</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Ki</item>
+        <item>Lágy</item>
+        <item>Szabványos</item>
+        <item>Félkövér</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Kiemelési alsó szín</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Szám</string>
+    <string name="preview_metadata_genre">Műfaj</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Év</string>
+    <string name="preview_metadata_format">Formátum</string>
+    <string name="preview_metadata_bitrate">Bitráta</string>
+    <string name="preview_metadata_position">Pozíció</string>
+    <string name="preview_metadata_output">Kimenet</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Album részletei</string>
+    <string name="setting_wear_metadata_core_description">Album, album előadója, lemezen elfoglalt hely és hossz.</string>
+    <string name="setting_wear_metadata_release">Kiadás részletei</string>
+    <string name="setting_wear_metadata_release_description">Műfaj, év, megjelenési dátum és kiadó.</string>
+    <string name="setting_wear_metadata_credits">Közreműködők</string>
+    <string name="setting_wear_metadata_credits_description">Zeneszerző, szövegíró és szerző, ahol a lejátszó közzéteszi őket.</string>
+    <string name="setting_wear_metadata_technical">Fájl részletei</string>
+    <string name="setting_wear_metadata_technical_description">Formátum, bitráta, mintavételi frekvencia, csatornák és méret. Csak helyi számoknál.</string>
+    <string name="setting_split_panel">Osztott panel</string>
+    <string name="setting_split_panel_description">Mi töltse ki a Split óralap alsó felét. Az elmosott borító ugyanazzal a képpel folytatódik a szöveg mögött; az egyszínű az értesítési kártyák megjelenését adja.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Elmosott borító</item>
+        <item>Tömör szín</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Lejátszás részletei</string>
+    <string name="setting_wear_metadata_playback_description">Pozíció ezredmásodperc pontossággal, sebesség, hangkimenet, valamint honnan streamelődik vagy játszódik a hang — a szám címével együtt. Ez az egy blokk, amelyet egy streaming szám kitölthet, amikor nincs leírható fájl.</string>
+    <string name="setting_wear_metadata_identifiers">Azonosítók</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC- és katalógusazonosítók. Alapértelmezés szerint kikapcsolva — hasznos, ha szüksége van rájuk, különben csak zaj.</string>
+    <string name="setting_metadata_lookup">Szám részleteinek keresése online</string>
+    <string name="setting_metadata_lookup_description">Kiegészíti, amit a lejátszó alkalmazás nem tett közzé — ISRC, kiadó, megjelenési dátum — a MusicBrainz ingyenes nyilvános adatbázisból. Alapértelmezés szerint kikapcsolva. A Metadata óralap enélkül is működik; ez csak sorokat ad hozzá. Semmi nem kerül elküldésre, hacsak be nem kapcsolja és ki nem választja ezt az óralapot, és csak a szám neve és az előadó kerül elküldésre.</string>
+</resources>

@@ -13,8 +13,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 35
         compileSdk 36
-        versionCode 59
-        versionName "3.1"
+        versionCode 60
+        versionName "3.2"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
         multiDexEnabled true

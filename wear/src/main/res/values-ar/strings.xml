@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">ما يتم تشغيله الآن وعناصر التحكم في الوسائط</string>
+    <string name="complication_album_art_label">غلاف ما يتم تشغيله الآن</string>
+    <string name="complication_no_music">لا يتم تشغيل شيء</string>
+    <string name="tile_nothing_playing">لا يتم تشغيل شيء</string>
+    <string name="tile_open_app">فتح Svartifoss</string>
+    <string name="tile_rewind_10">إرجاع 10 ثوانٍ</string>
+    <string name="tile_forward_10">تخطي 10 ثوانٍ</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">اختصارات خدمات البث لديك، بنقرة واحدة</string>
+    <string name="shortcuts_tile_title">الاختصارات</string>
+    <string name="shortcuts_tile_empty">لا توجد اختصارات بعد</string>
+    <string name="shortcuts_tile_more">المزيد في التطبيق</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">لا يتم تشغيل شيء</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">شغّل شيئًا على هاتفك</string>
+    <string name="idle_hint_resume">انقر لاستئناف آخر تطبيق</string>
+    <string name="idle_hint_shortcuts">انقر لعرض اختصاراتك</string>
+    <string name="idle_hint_menu">انقر لفتح القائمة</string>
+    <string name="idle_hint_search">انقر للبحث</string>
+    <string name="idle_hint_queue">انقر لعرض ما تم تشغيله مؤخرًا</string>
+    <string name="idle_resume">استئناف التشغيل</string>
+    <string name="idle_action_shortcuts">فتح الاختصارات</string>
+    <string name="idle_action_menu">فتح القائمة</string>
+    <string name="idle_action_search">بحث</string>
+    <string name="idle_action_queue">فتح ما تم تشغيله مؤخرًا</string>
+
+    <string name="no_phone">لا يوجد هاتف متصل</string>
+    <string name="playback_stopped">متوقف</string>
+    <string name="error">خطأ</string>
+    <string name="error_play_services">خطأ في خدمات Play</string>
+    <string name="button">زر</string>
+    <string name="back_button">رجوع</string>
+    <string name="turn_bezel_cw">أدر الإطار باتجاه عقارب الساعة</string>
+    <string name="turn_bezel_ccw">أدر الإطار عكس اتجاه عقارب الساعة</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">إعجاب</string>
+    <string name="quick_action_shuffle">تشغيل عشوائي</string>
+    <string name="quick_action_repeat">تكرار</string>
+    <string name="quick_action_repeat_all">تكرار الكل</string>
+    <string name="quick_action_repeat_one">تكرار واحد</string>
+    <string name="quick_action_up_next">التالي</string>
+    <string name="quick_actions_unavailable">التطبيق الحالي لا يوفّر إجراءات سريعة</string>
+    <string name="voice_search_prompt">البحث عن موسيقى</string>
+    <string name="queue_empty">لا توجد قائمة انتظار متاحة</string>
+    <string name="queue_now_playing">يتم التشغيل الآن</string>
+    <string name="queue_load_more">تحميل المزيد</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">تم تشغيله مؤخرًا</string>
+    <string name="queue_history_fallback_reason">هذا التطبيق لا يشارك قائمة الانتظار الخاصة به</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">اليوم</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">واجهة الساعة</string>
+    <string name="face_picker_offline">الهاتف غير متصل — ستُطبَّق هذه الواجهة على الساعة، لكن الهاتف سيحتفظ بإعداده</string>
+    <string name="face_picker_section_builtin">واجهات مضمّنة</string>
+    <string name="face_picker_section_custom">سماتي</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">استنادًا إلى %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">كيفية الاستخدام</string>
+    <string name="hint_edges">انقر أعلى أو أسفل أو يسار أو يمين — كل منطقة تنفّذ الإجراء المعيّن لها</string>
+    <string name="hint_center">الوسط — تشغيل/إيقاف مؤقت
+نقرتان — إجراءات سريعة
+ضغط مطوّل — اختيار الواجهة (قابل للتخصيص)</string>
+    <string name="hint_swipe_up">اسحب لأعلى — قائمة الإجراءات
+لأسفل أو لليسار — الإجراءات المعيّنة
+من الحافة إلى اليمين — خروج</string>
+    <string name="hint_crown">التاج — مستوى الصوت أو التنقل داخل المقطع
+الأزرار الجانبية — الإجراءات المعيّنة
+خصّص كل شيء من «عناصر التحكم» و«الساعة» على هاتفك</string>
+    <string name="hint_next">التالي</string>
+    <string name="hint_dismiss">تم</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">تشغيل</string>
+    <string name="action_name_pause">إيقاف مؤقت</string>
+    <string name="action_name_skip_prev">المقطع السابق</string>
+    <string name="action_name_skip_next">المقطع التالي</string>
+    <string name="action_name_volume_up">رفع مستوى الصوت</string>
+    <string name="action_name_volume_down">خفض مستوى الصوت</string>
+    <string name="action_name_open_menu">فتح القائمة</string>
+    <string name="action_name_skip_30">تخطي 30 ثانية</string>
+    <string name="action_name_reverse_30">إرجاع 30 ثانية</string>
+    <string name="action_name_play_pause">تشغيل/إيقاف مؤقت</string>
+    <string name="action_name_stop">إيقاف</string>
+    <string name="action_name_restart">إعادة تشغيل المقطع</string>
+    <string name="action_name_seek">التنقل داخل المقطع</string>
+    <string name="action_name_mute">كتم الصوت</string>
+    <string name="action_name_search">بحث</string>
+    <string name="action_name_custom">إجراء مخصّص</string>
+    <string name="state_on">مفعّل</string>
+    <string name="state_off">متوقف</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">تحديثات التطبيق</string>
+    <string name="update_install_title">تحديث Svartifoss</string>
+    <string name="update_install_tap">انقر لتثبيت الإصدار الجديد</string>
+    <string name="update_install_failed">فشل التثبيت. اسمح بالتثبيت من Svartifoss في إعدادات الساعة، ثم حاول مرة أخرى من الهاتف.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">التشغيل من هنا</string>
+    <string name="lyrics_none">لم يتم العثور على كلمات لهذا المقطع</string>
+    <string name="lyrics_failed">تعذّر جلب الكلمات. تحقّق من اتصال هاتفك.</string>
+    <string name="lyrics_disabled">البحث عن الكلمات متوقف في إعدادات الهاتف</string>
+    <string name="lyrics_no_track">لا يتم تشغيل شيء</string>
+    <string name="metadata_none">لا توجد تفاصيل لهذا المقطع</string>
+    <string name="metadata_album">الألبوم</string>
+    <string name="metadata_album_artist">فنان الألبوم</string>
+    <string name="metadata_track">المقطع</string>
+    <string name="metadata_duration">المدة</string>
+    <string name="metadata_genre">النوع الموسيقي</string>
+    <string name="metadata_year">السنة</string>
+    <string name="metadata_released">تاريخ الإصدار</string>
+    <string name="metadata_label">شركة الإنتاج</string>
+    <string name="metadata_country">البلد</string>
+    <string name="metadata_composer">الملحن</string>
+    <string name="metadata_writer">كاتب الأغنية</string>
+    <string name="metadata_author">المؤلف</string>
+    <string name="metadata_codec">التنسيق</string>
+    <string name="metadata_bitrate">معدل البت</string>
+    <string name="metadata_sample_rate">معدل أخذ العينات</string>
+    <string name="metadata_channels">القنوات</string>
+    <string name="metadata_file_size">الحجم</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">معرّف الإصدار</string>
+    <string name="metadata_compilation">تجميعة</string>
+    <string name="metadata_value_yes">نعم</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">الموضع</string>
+    <string name="metadata_speed">السرعة</string>
+    <string name="metadata_output">الإخراج</string>
+    <string name="metadata_output_speaker">مكبر صوت الهاتف</string>
+    <string name="metadata_output_wired">سماعات الرأس</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">صوت USB</string>
+    <string name="metadata_output_remote">البث إلى جهاز</string>
+    <string name="metadata_origin">المصدر</string>
+    <string name="metadata_origin_stream">بث</string>
+    <string name="metadata_origin_local">ملف على الهاتف</string>
+    <string name="metadata_host">المضيف</string>
+    <string name="metadata_file">الملف</string>
+    <string name="metadata_download">التنزيل</string>
+    <string name="metadata_download_no">غير منزّل</string>
+    <string name="metadata_download_running">جارٍ التنزيل</string>
+    <string name="metadata_download_yes">تم التنزيل</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">حول</string>
+    <string name="metadata_source">يتم التشغيل في</string>
+</resources>

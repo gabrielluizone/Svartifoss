@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Zarządzaj motywami</string>
+    <string name="watch_theme_builtin_subtitle">Motyw wbudowany · Układ %1$s</string>
+    <string name="watch_theme_custom_subtitle">Motyw niestandardowy · Układ %1$s</string>
+    <string name="watch_theme_unknown_name">Nieznany motyw</string>
+
+    <string name="watch_themes_title">Motywy zegarka</string>
+    <string name="watch_theme_active_label">ZASTOSOWANY MOTYW</string>
+    <string name="watch_theme_active_layout">Układ: %1$s</string>
+    <string name="watch_theme_preview_description">Podgląd motywu aktualnie zastosowanego na zegarku</string>
+    <string name="watch_theme_create">Utwórz motyw</string>
+    <string name="watch_theme_create_title">Utwórz nowy motyw</string>
+    <string name="watch_theme_rename_title">Zmień nazwę motywu</string>
+    <string name="watch_theme_name">Nazwa motywu</string>
+    <string name="watch_theme_base_layout">Układ bazowy</string>
+    <string name="watch_theme_default_name">Mój motyw %1$s</string>
+    <string name="watch_theme_generic_name">Motyw</string>
+    <string name="watch_theme_copy_name">Kopia %1$s</string>
+    <string name="watch_theme_built_in_section">Motywy wbudowane</string>
+    <string name="watch_theme_custom_section">Moje motywy</string>
+    <string name="watch_theme_applied">ZASTOSOWANO</string>
+    <string name="watch_theme_apply_success">%1$s zastosowano na zegarku</string>
+    <string name="watch_theme_apply_error">Nie udało się zastosować tego motywu</string>
+    <string name="watch_theme_more_options">Więcej opcji motywu</string>
+    <string name="watch_theme_list_description">Wbudowane i niestandardowe motywy zegarka</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Dotknij, aby zastosować.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Aktualnie zastosowany.</string>
+    <string name="watch_theme_rename">Zmień nazwę</string>
+    <string name="watch_theme_customize">Dostosuj</string>
+    <string name="watch_theme_duplicate">Duplikuj</string>
+    <string name="watch_theme_delete">Usuń</string>
+    <string name="watch_theme_delete_title">Usunąć „%1$s”?</string>
+    <string name="watch_theme_delete_message">Ten zapisany motyw i jego ustawienia zostaną trwale usunięte.</string>
+    <string name="watch_theme_deleted">Motyw usunięty</string>
+    <string name="watch_theme_duplicated">Utworzono „%1$s”</string>
+    <string name="watch_theme_limit_reached">Możesz zapisać maksymalnie 24 niestandardowe motywy. Usuń jeden przed utworzeniem kolejnego.</string>
+    <string name="watch_theme_name_required">Wpisz nazwę motywu</string>
+    <string name="watch_theme_name_duplicate">Motyw o tej nazwie już istnieje</string>
+
+    <string name="watch_theme_face_classic">Klasyczny</string>
+    <string name="watch_theme_face_expressive">Ekspresyjny</string>
+    <string name="watch_theme_face_vinyl">Winyl</string>
+    <string name="watch_theme_face_poster">Plakat</string>
+    <string name="watch_theme_face_studio">Studio</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Spektrum</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Immersyjny</string>
+    <string name="watch_theme_face_depth">Głębia</string>
+    <string name="watch_theme_face_carousel">Karuzela</string>
+    <string name="watch_theme_face_chat">Czat</string>
+    <string name="watch_theme_face_split">Podział</string>
+    <string name="watch_theme_face_note">Notatka</string>
+    <string name="watch_theme_face_verse">Wers</string>
+    <string name="watch_theme_face_metadata">Metadane</string>
+</resources>

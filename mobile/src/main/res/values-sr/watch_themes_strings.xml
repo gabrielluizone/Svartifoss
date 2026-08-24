@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Управљај темама</string>
+    <string name="watch_theme_builtin_subtitle">Уграђена тема · %1$s распоред</string>
+    <string name="watch_theme_custom_subtitle">Прилагођена тема · %1$s распоред</string>
+    <string name="watch_theme_unknown_name">Непозната тема</string>
+
+    <string name="watch_themes_title">Теме сата</string>
+    <string name="watch_theme_active_label">ПРИМЕЊЕНА ТЕМА</string>
+    <string name="watch_theme_active_layout">Распоред: %1$s</string>
+    <string name="watch_theme_preview_description">Преглед теме која је тренутно примењена на сату</string>
+    <string name="watch_theme_create">Направи тему</string>
+    <string name="watch_theme_create_title">Направи нову тему</string>
+    <string name="watch_theme_rename_title">Преименуј тему</string>
+    <string name="watch_theme_name">Назив теме</string>
+    <string name="watch_theme_base_layout">Основни распоред</string>
+    <string name="watch_theme_default_name">Моја %1$s тема</string>
+    <string name="watch_theme_generic_name">Тема</string>
+    <string name="watch_theme_copy_name">Копија %1$s</string>
+    <string name="watch_theme_built_in_section">Уграђене теме</string>
+    <string name="watch_theme_custom_section">Моје теме</string>
+    <string name="watch_theme_applied">ПРИМЕЊЕНО</string>
+    <string name="watch_theme_apply_success">%1$s је примењено на вашем сату</string>
+    <string name="watch_theme_apply_error">Није могуће применити ову тему</string>
+    <string name="watch_theme_more_options">Још опција теме</string>
+    <string name="watch_theme_list_description">Уграђене и прилагођене теме сата</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Додирните за примену.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Тренутно примењено.</string>
+    <string name="watch_theme_rename">Преименуј</string>
+    <string name="watch_theme_customize">Прилагоди</string>
+    <string name="watch_theme_duplicate">Дуплирај</string>
+    <string name="watch_theme_delete">Обриши</string>
+    <string name="watch_theme_delete_title">Избрисати „%1$s“?</string>
+    <string name="watch_theme_delete_message">Ова сачувана тема и њена подешавања биће трајно уклоњени.</string>
+    <string name="watch_theme_deleted">Тема је избрисана</string>
+    <string name="watch_theme_duplicated">Направљено „%1$s“</string>
+    <string name="watch_theme_limit_reached">Можете да сачувате до 24 прилагођене теме. Избришите једну пре него што направите нову.</string>
+    <string name="watch_theme_name_required">Унесите назив теме</string>
+    <string name="watch_theme_name_duplicate">Тема са овим називом већ постоји</string>
+
+    <string name="watch_theme_face_classic">Класично</string>
+    <string name="watch_theme_face_expressive">Експресивно</string>
+    <string name="watch_theme_face_vinyl">Винил</string>
+    <string name="watch_theme_face_poster">Постер</string>
+    <string name="watch_theme_face_studio">Студио</string>
+    <string name="watch_theme_face_halo">Ореол</string>
+    <string name="watch_theme_face_aurora">Аурора</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Спектар</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Имерзивно</string>
+    <string name="watch_theme_face_depth">Дубина</string>
+    <string name="watch_theme_face_carousel">Вртешка</string>
+    <string name="watch_theme_face_chat">Ћаскање</string>
+    <string name="watch_theme_face_split">Подељено</string>
+    <string name="watch_theme_face_note">Нота</string>
+    <string name="watch_theme_face_verse">Стих</string>
+    <string name="watch_theme_face_metadata">Метаподаци</string>
+</resources>

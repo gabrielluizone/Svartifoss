@@ -1,0 +1,1992 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Thiết bị này không hỗ trợ Wear OS</string>
+    <string name="setting_no_wearable_api_banner_description">Thiết bị này không cung cấp thành phần Wear OS của Dịch vụ Google Play mà Svartifoss cần để giao tiếp với đồng hồ. Ghép nối cũng không giúp được — ứng dụng trên điện thoại không thể kết nối với đồng hồ ở đây. Mọi cài đặt bên dưới vẫn được lưu và sẽ áp dụng nếu bạn cài Svartifoss trên thiết bị có hỗ trợ.</string>
+    <string name="setting_no_watch_banner">Chưa kết nối đồng hồ</string>
+    <string name="setting_no_watch_banner_description">Các cài đặt này đồng bộ với đồng hồ Wear OS của bạn, nên chúng sẽ chưa hiển thị hiệu lực cho đến khi đồng hồ được ghép nối và kết nối — nhưng bạn vẫn có thể cấu hình mọi thứ bên dưới ngay bây giờ.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Giao diện</string>
+    <string name="setting_theme">Chủ đề</string>
+    <string name="theme_light">Trắng tinh</string>
+    <string name="theme_dark">Đen tuyền</string>
+    <string name="theme_system">Theo hệ thống</string>
+    <string name="setting_language">Ngôn ngữ</string>
+    <string name="language_system">Theo hệ thống</string>
+    <string name="language_change_watch_notice">Đồng hồ cũng sẽ dùng ngôn ngữ này sau khi đồng bộ.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Nhà phát triển</string>
+    <string name="dev_mode_unlocked">Đã bật chế độ nhà phát triển ✦</string>
+    <string name="dev_mode_clicks_remaining">Nhấn thêm %1$d lần để mở khóa chế độ nhà phát triển</string>
+    <string name="dev_disable_mode">Tắt chế độ nhà phát triển</string>
+    <string name="dev_disable_mode_description">Ẩn lại mục này — nhấn \"Phiên bản đã cài\" bảy lần để hiện lại</string>
+    <string name="dev_mode_disabled">Đã tắt chế độ nhà phát triển</string>
+    <string name="dev_build_info">Thông tin bản dựng</string>
+    <string name="dev_sync_watch">Buộc đồng bộ cài đặt đồng hồ</string>
+    <string name="dev_sync_watch_description">Gửi ngay toàn bộ cài đặt hiện tại tới đồng hồ đã ghép nối</string>
+    <string name="dev_sync_watch_done">Đã đồng bộ cài đặt với đồng hồ</string>
+    <string name="dev_copy_debug_info">Sao chép thông tin gỡ lỗi</string>
+    <string name="dev_copy_debug_info_description">Sao chép thông tin bản dựng và thiết bị vào bảng nhớ tạm</string>
+    <string name="dev_show_archived">Hiển thị tùy chọn đã lưu trữ</string>
+    <string name="dev_show_archived_description">Hiển thị các bố cục và cài đặt đồng hồ đã lưu trữ do có lỗi đã biết</string>
+    <string name="dev_copy_debug_info_done">Đã sao chép thông tin gỡ lỗi</string>
+    <string name="dev_open_update_screen">Mở màn hình cập nhật</string>
+    <string name="dev_open_update_screen_description">Xem trước màn hình Cập nhật (biểu ngữ ảnh bìa, bố cục ghi chú phát hành) mà không cần chờ bản phát hành thật</string>
+    <string name="dev_watch_layout_bounds">Hiển thị ranh giới bố cục đồng hồ</string>
+    <string name="dev_watch_layout_bounds_description">Viền các thành phần trình phát hiển thị và vùng cảm ứng trên đồng hồ. Chỉ là lớp phủ chẩn đoán.</string>
+    <string name="dev_watch_player_info">Hiển thị thông tin trình phát trên đồng hồ</string>
+    <string name="dev_watch_player_info_description">Phủ thông tin về mặt đang dùng, trạng thái phát, tiến trình và kết xuất lên đồng hồ.</string>
+    <string name="pref_reset_default">Đặt lại về mặc định</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Bạn đã tìm thấy thác nước ẩn.
+
+Svartifoss — những cột bazan đen
+bao quanh một dòng thác ở Iceland,
+nhắc rằng âm nhạc chảy
+như nước xuyên qua đá.
+
+♪ Được tạo nên với sự chăm chút. ♪</string>
+    <string name="easter_egg_ok">Đóng</string>
+
+    <string name="nav_watch_face">Đồng hồ</string>
+    <string name="watch_face_header">Giao diện đồng hồ</string>
+    <string name="nav_controls">Điều khiển</string>
+    <string name="nav_actions">Hành động</string>
+    <string name="nav_settings">Cài đặt</string>
+
+    <string name="controls_header">Điều khiển</string>
+    <string name="controls_state_playing">Đang phát nhạc</string>
+    <string name="controls_state_stopped">Không phát</string>
+    <string name="controls_playing_description">Chọn chức năng của từng đầu vào khi đang phát nhạc. Thiết lập này độc lập với trạng thái không phát.</string>
+    <string name="controls_stopped_description">Chọn chức năng của từng đầu vào trước khi bắt đầu phát hoặc sau khi dừng. Thiết lập này độc lập với trạng thái đang phát.</string>
+
+    <string name="watch_live_preview">Xem trước đồng hồ trực tiếp</string>
+    <string name="watch_preview_description">Xem trước trực tiếp giao diện đồng hồ đã chọn. Thay đổi sẽ xuất hiện ở đây trước khi bạn thử trên đồng hồ.</string>
+    <string name="watch_section_style">Trình phát</string>
+    <string name="watch_section_style_description">Chọn bố cục trình phát và cách tiêu đề, thời gian và tiến trình hoạt động.</string>
+    <string name="watch_section_background">Nền</string>
+    <string name="watch_section_background_description">Điều chỉnh ảnh album, độ mờ, độ tối dần và độ dễ đọc phía sau trình phát.</string>
+    <string name="watch_section_colors">Màu sắc</string>
+    <string name="watch_section_colors_description">Đặt màu nhấn cơ bản, tiến trình và album, sau đó tinh chỉnh màu tiêu đề, nghệ sĩ, đồng hồ, âm lượng và bảng điều khiển.</string>
+    <string name="watch_section_typography">Văn bản</string>
+    <string name="watch_section_typography_description">Chọn phông chữ và tinh chỉnh tiêu đề, nghệ sĩ, đồng hồ, biểu tượng ứng dụng, màn hình phụ và văn bản Flex.</string>
+    <string name="watch_section_aod">Luôn bật</string>
+    <string name="watch_section_aod_description">Cấu hình màn hình tiết kiệm năng lượng và xem giao diện môi trường trong bản xem trước.</string>
+    <string name="watch_section_panels">Bảng điều khiển</string>
+    <string name="watch_section_panels_description">Tùy chỉnh âm lượng, tua, bảng nhanh và hàng đợi; chọn một hàng sẽ mở giao diện đó trong bản xem trước.</string>
+    <string name="watch_section_mini_buttons">Nút mini</string>
+    <string name="watch_section_mini_buttons_description">Tùy chỉnh hàng phím tắt tùy chọn. Nhấn “Nút mini” bên dưới để gán hành động trong Điều khiển.</string>
+    <string name="watch_overview_description">Chọn phần bạn muốn tùy chỉnh. Bản xem trước và chủ đề đã lưu vẫn hoạt động trên mọi khu vực.</string>
+    <string name="watch_back_to_overview">Quay lại các khu vực Đồng hồ</string>
+
+    <string name="settings_section_general">Chung</string>
+    <string name="settings_section_general_description">Chủ đề ứng dụng, màu nhấn và tùy chọn cập nhật.</string>
+    <string name="settings_section_watch">Hành vi</string>
+    <string name="settings_section_watch_description">Hành vi của núm xoay, cảm ứng, phản hồi rung và menu hành động trên đồng hồ.</string>
+    <string name="settings_section_automation">Tự động hóa</string>
+    <string name="settings_section_automation_description">Chọn thời điểm Svartifoss tự động mở và đóng.</string>
+    <string name="settings_section_apps">Ứng dụng</string>
+    <string name="settings_section_apps_description">Tìm lời bài hát và siêu dữ liệu, phím tắt phát trực tuyến, ảnh hàng đợi và quyền truy cập Android.</string>
+    <string name="settings_section_data">Dữ liệu &amp; hỗ trợ</string>
+    <string name="settings_section_data_description">Sao lưu thiết lập, kiểm tra phiên bản, chẩn đoán hoặc nhận trợ giúp.</string>
+    <string name="settings_overview_description">Chọn một khu vực. Các tùy chọn liên quan được nhóm cùng nhau, còn tìm kiếm vẫn có thể đưa bạn thẳng tới bất kỳ cài đặt nào.</string>
+    <string name="settings_back_to_overview">Quay lại các khu vực cài đặt</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Cách dùng Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss biến đồng hồ của bạn thành điều khiển từ xa cho nhạc đang phát trên điện thoại. Đây là mọi thứ bạn có thể làm ngay trên cổ tay.</string>
+
+    <string name="tutorial_taps_title">Chạm vào các vùng màn hình</string>
+    <string name="tutorial_taps_desc">Màn hình đồng hồ được chia thành bốn vùng — trên, dưới, trái và phải. Chạm vào một vùng sẽ chạy hành động bạn đã gán. Theo mặc định, vùng trái phát hoặc tạm dừng, vùng phải chuyển sang bài tiếp theo, còn vùng trên và dưới thay đổi âm lượng.</string>
+
+    <string name="tutorial_quick_panel_title">Bảng hành động nhanh</string>
+    <string name="tutorial_quick_panel_desc">Nhấn đúp vào giữa màn hình đang phát để mở bảng có bốn ô — ba nút tròn và một hàng rộng bên dưới. Nếu không tùy chỉnh, các ô sẽ phản ánh các nút mà ứng dụng đang phát đặt trong thông báo của nó, nhờ đó bạn có đúng các điều khiển thích, phát ngẫu nhiên và lặp lại. Gán bất kỳ hành động nào cho một ô hoặc đặt thành “Không có” để ẩn trong mục Hành động trên điện thoại.</string>
+    <string name="tutorial_gestures_title">Nhấn một lần, hai lần &amp; nhấn giữ</string>
+    <string name="tutorial_gestures_desc">Bốn vùng cạnh đều hỗ trợ riêng hành động nhấn một lần, hai lần và nhấn giữ. Nhấn một lần ở giữa cũng có thể cấu hình; nhấn đúp luôn mở Hành động nhanh, còn nhấn giữ mở bộ chọn mặt, hàng đợi hoặc không làm gì tùy theo Cài đặt → Hành vi.</string>
+
+    <string name="tutorial_buttons_title">Nút vật lý</string>
+    <string name="tutorial_buttons_desc">Nếu đồng hồ có nút bên, bạn cũng có thể gán hành động nhấn một lần, hai lần và nhấn giữ cho chúng. Các nút vẫn hoạt động ngay cả khi màn hình tắt.</string>
+
+    <string name="tutorial_rotary_title">Núm xoay</string>
+    <string name="tutorial_rotary_desc">Chọn núm xoay hoặc viền xoay sẽ thay đổi âm lượng, tua trong bài hát hay không làm gì tại Cài đặt → Hành vi → Núm xoay / viền xoay. Trên các đồng hồ báo thao tác xoay núm dưới dạng nút, hãy gán chúng trong Điều khiển.</string>
+
+    <string name="tutorial_swipe_up_title">Vuốt lên, xuống, trái &amp; phải</string>
+    <string name="tutorial_swipe_up_desc">Vuốt lên, xuống hoặc trái trên màn hình đang phát có thể được cấu hình riêng để mở bất kỳ thứ gì — menu hành động, hàng đợi phát, chuyển bài, danh sách phát và hơn thế nữa. Cấu hình từng thao tác trong Điều khiển, chọn Đang phát nhạc hoặc Không phát. Theo mặc định, vuốt lên mở menu hành động và các hướng khác không làm gì cho đến khi bạn gán. Vuốt phải được giữ nguyên — đó là cử chỉ Wear OS phổ biến để thoát ứng dụng.</string>
+    <string name="tutorial_shortcuts_title">Phím tắt phát trực tuyến</string>
+    <string name="tutorial_shortcuts_desc">Lưu liên kết tới bài hát, album, mix hoặc danh sách phát từ Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music hoặc SoundCloud, rồi gán nó cho bất kỳ nút, cử chỉ hoặc ô bảng nào. Cách nhanh nhất là chia sẻ liên kết thẳng tới Svartifoss từ ứng dụng phát trực tuyến; bạn cũng có thể dán liên kết đã sao chép hoặc nhập thủ công. Không cần tài khoản hay đăng nhập — đồng hồ yêu cầu điện thoại bắt đầu phát, nên phím tắt sẽ phát nội dung thay vì chỉ mở ứng dụng.</string>
+    <string name="tutorial_yt_music_title">Phím tắt YouTube Music</string>
+    <string name="tutorial_yt_music_desc">Gán “Phát bài đã thích”, “Phát ngẫu nhiên bài đã thích” hoặc “Danh sách phát của tôi” cho bất kỳ nút, cử chỉ hoặc thao tác vuốt nào để vào thẳng nhạc của bạn mà không cần chạm điện thoại. “Lịch sử tìm kiếm” ghi nhớ các tìm kiếm gần đây trên đồng hồ — nhấn giữ một mục để xóa.</string>
+
+    <string name="tutorial_exit_title">Vuốt để thoát</string>
+    <string name="tutorial_exit_desc">Vuốt từ cạnh trái để rời trình phát. Ứng dụng có thể tự động tạm dừng khi bạn thoát — bật trong Cài đặt.</string>
+
+    <string name="tutorial_tile_title">Tile điều khiển nhanh</string>
+    <string name="tutorial_tile_desc">Vuốt ngang trên mặt đồng hồ tới Tile Svartifoss để phát, tạm dừng và chuyển bài tức thì mà không cần mở ứng dụng.</string>
+
+    <string name="tutorial_complication_title">Complication mặt đồng hồ</string>
+    <string name="tutorial_complication_desc">Thêm complication ảnh album Svartifoss vào mặt đồng hồ để xem nhanh ảnh bìa hiện tại. Nhấn vào đó để mở trình phát.</string>
+
+    <string name="tutorial_system_title">Điều khiển phương tiện hệ thống</string>
+    <string name="tutorial_system_desc">Bài hiện tại cũng xuất hiện trong điều khiển phương tiện và ứng dụng gần đây của đồng hồ, nên bạn cũng có thể điều khiển phát từ đó.</string>
+
+    <string name="tutorial_tip">Mẹo: cấu hình cả hai trạng thái trong Điều khiển, rồi sắp xếp menu trong Hành động.</string>
+
+    <string name="navigation_drawer_open">Mở ngăn điều hướng</string>
+    <string name="navigation_drawer_close">Đóng ngăn điều hướng</string>
+
+    <string name="action_settings">Cài đặt</string>
+    <string name="action_pause">Tạm dừng</string>
+    <string name="action_play">Phát</string>
+    <string name="action_skip_prev">Bài trước</string>
+    <string name="action_skip_next">Bài tiếp</string>
+    <string name="action_play_pause">Phát / Tạm dừng</string>
+    <string name="action_stop">Dừng</string>
+    <string name="action_restart">Phát lại từ đầu</string>
+    <string name="action_mute">Tắt / Bật tiếng</string>
+    <string name="action_skip_seconds">Tua tới %1$d giây</string>
+    <string name="action_reverse_seconds">Tua lùi %1$d giây</string>
+    <string name="action_like">Thích</string>
+    <string name="action_shuffle">Phát ngẫu nhiên</string>
+    <string name="action_repeat">Lặp lại</string>
+    <string name="action_repeat_one">Lặp lại một bài</string>
+    <string name="action_search">Tìm nhạc</string>
+    <string name="action_open_lyrics">Lời bài hát</string>
+    <string name="group_playback_controls">Điều khiển phát</string>
+    <string name="group_streaming_shortcuts">Bài hát, album &amp; danh sách phát</string>
+    <string name="pick_action">Chọn hành động</string>
+    <string name="action_search_hint">Tìm trong danh sách này</string>
+    <string name="action_search_empty">Không có hành động nào khớp với tìm kiếm này.</string>
+    <string name="action_opens_more">Nhiều tùy chọn</string>
+    <string name="action_volume_up">Tăng âm lượng</string>
+    <string name="volume_down">Giảm âm lượng</string>
+    <string name="group_volume_controls">Điều khiển âm lượng</string>
+    <string name="no_watch_detected">Không phát hiện đồng hồ</string>
+    <string name="connection_instructions">Mở Svartifoss trên đồng hồ để bắt đầu kết nối</string>
+    <string name="playing_controls">Điều khiển khi đang phát</string>
+    <string name="stopped_controls">Điều khiển khi không phát</string>
+    <string name="actions_menu">Menu hành động</string>
+    <string name="actions_intro">Cấu hình cả hai khu vực hành động trên đồng hồ bằng điều khiển phát, ứng dụng hoặc bài hát, album và danh sách phát đã lưu. Bảng nhanh luôn gọn; menu bên dưới có thể chứa danh sách được sắp thứ tự dài hơn.</string>
+    <string name="actions_quick_panel_section">Bảng nhanh</string>
+    <string name="actions_watch_menu_section">Menu trên đồng hồ</string>
+    <plurals name="actions_list_summary">
+        <item quantity="other">%1$d hành động · Nhấn để sửa · Giữ và kéo để sắp xếp lại</item>
+    </plurals>
+    <string name="actions_reorder_description">Menu hành động có thứ tự. Chạm và giữ để kéo, dùng hành động trợ năng Di chuyển lên hoặc Di chuyển xuống, hoặc nhấn Ctrl+Lên/Xuống trên bàn phím.</string>
+    <string name="actions_move_up">Di chuyển lên</string>
+    <string name="actions_move_down">Di chuyển xuống</string>
+    <string name="actions_moved_to_position">Đã chuyển %1$s tới vị trí %2$d trên %3$d.</string>
+    <string name="actions_empty">Chưa có hành động nào. Dùng nút thêm để tạo hành động đầu tiên.</string>
+    <string name="actions_add">Thêm hành động</string>
+    <string name="on_screen_buttons">VÙNG CẢM ỨNG</string>
+    <string name="physical_buttons">NÚT VẬT LÝ</string>
+    <string name="physical_buttons_disconnected">Kết nối và mở Svartifoss trên đồng hồ để cấu hình các nút vật lý. Vùng cảm ứng, thao tác vuốt và nút mini đã có thể dùng ngay.</string>
+    <string name="physical_buttons_unavailable">Đồng hồ này không báo có nút vật lý nào có thể cấu hình.</string>
+    <string name="control_assignment_tap">Chạm: %1$s</string>
+    <string name="control_assignment_hold">Giữ: %1$s</string>
+    <string name="control_assignment_both">Chạm: %1$s · Giữ: %2$s</string>
+    <string name="tap_a_zone_to_configure">Chạm một vùng trên đồng hồ để gán hành động</string>
+    <string name="touch_zone_top">Vùng trên</string>
+    <string name="touch_zone_bottom">Vùng dưới</string>
+    <string name="touch_zone_left">Vùng trái</string>
+    <string name="touch_zone_right">Vùng phải</string>
+    <string name="touch_zone_center">Chạm giữa</string>
+    <string name="touch_zone_action">%1$s: %2$s. Nhấn để cấu hình.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">CỬ CHỈ VUỐT</string>
+    <string name="tap_a_swipe_to_configure">Chạm một hướng để chọn nội dung sẽ mở</string>
+    <string name="swipe_gesture_up">Vuốt lên</string>
+    <string name="swipe_gesture_down">Vuốt xuống</string>
+    <string name="swipe_gesture_left">Vuốt trái</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Lên</string>
+    <string name="swipe_gesture_label_down">Xuống</string>
+    <string name="swipe_gesture_label_left">Trái</string>
+
+    <string name="screen_buttons">NÚT MINI</string>
+    <string name="tap_a_screen_button_to_configure">Tối đa ba nút hiển thị gần đáy màn hình đồng hồ — chạm một ô để gán hành động</string>
+    <string name="screen_button_1">Nút mini 1 (trái)</string>
+    <string name="screen_button_2">Nút mini 2 (giữa)</string>
+    <string name="screen_button_3">Nút mini 3 (phải)</string>
+    <string name="screen_button_label_1">Nút 1</string>
+    <string name="screen_button_label_2">Nút 2</string>
+    <string name="screen_button_label_3">Nút 3</string>
+    <string name="no_action">Không có hành động</string>
+    <string name="gesture_single_press">Nhấn một lần</string>
+    <string name="gesture_double_press">Nhấn hai lần</string>
+    <string name="gesture_long_press">Nhấn giữ</string>
+    <string name="gesture_swipe_action">Hành động</string>
+    <string name="center_button_quick_panel_note">Nhấn đúp ở giữa luôn mở Hành động nhanh. Nhấn giữ sẽ chạy lựa chọn trong Cài đặt → Hành vi. Cả hai cử chỉ này không thay đổi khi bạn gán thao tác chạm giữa tại đây.</string>
+    <string name="start_playback">Bắt đầu phát</string>
+    <string name="uninstalled_app">Ứng dụng đã gỡ</string>
+
+    <string name="play_app">Phát %1$s</string>
+    <string name="tasker_task">Tác vụ Tasker</string>
+    <string name="icon_selection_title">Chọn biểu tượng</string>
+    <string name="icon_selection_gallery">Từ thư viện ảnh</string>
+    <string name="icon_selection_no_icon_pack">Tính năng này cho phép bạn chọn biểu tượng tùy chỉnh cho hành động từ
+        gói biểu tượng đã cài.
+
+Có vẻ như bạn chưa cài gói biểu tượng nào.</string>
+    <string name="icon_selection_no_storage_permission">Tính năng này cho phép bạn chọn biểu tượng tùy chỉnh cho hành động từ
+        gói biểu tượng đã cài.
+
+Một số gói biểu tượng yêu cầu ứng dụng có quyền truy cập bộ nhớ. Bạn cần cấp quyền để dùng tính năng này.</string>
+    <string name="delete">Xóa</string>
+    <string name="action_text">Văn bản hành động</string>
+    <string name="swap_action">Đổi hành động</string>
+    <string name="open_actions_menu">Mở menu hành động</string>
+    <string name="open_playlist_menu">Hiển thị danh sách phát hiện tại</string>
+    <string name="misc_settings">Cài đặt khác</string>
+
+    <string name="category_backup">Sao lưu</string>
+    <string name="export_config">Xuất cấu hình</string>
+    <string name="export_config_description">Lưu ánh xạ nút, danh sách hành động và cài đặt đồng hồ vào một tệp</string>
+    <string name="import_config">Nhập cấu hình</string>
+    <string name="import_config_description">Khôi phục ánh xạ nút, danh sách hành động và cài đặt đồng hồ từ một tệp</string>
+    <string name="export_config_done">Đã xuất cấu hình</string>
+    <string name="export_config_failed">Không thể xuất cấu hình</string>
+    <string name="import_config_done_title">Nhập thành công</string>
+    <string name="import_config_done_message">Svartifoss cần khởi động lại để áp dụng cấu hình đã nhập.</string>
+    <string name="import_config_failed">Không thể nhập cấu hình — tệp có thể không hợp lệ hoặc từ phiên bản không tương thích</string>
+    <string name="action_restart_now">Khởi động lại ngay</string>
+
+    <string name="category_about">Giới thiệu</string>
+    <string name="category_music_screen">Màn hình nhạc</string>
+    <string name="category_watch_screen">Màn hình đồng hồ</string>
+    <string name="category_mini_buttons">Nút mini</string>
+    <string name="category_screen_face">Giao diện trình phát</string>
+    <string name="category_wf_screen_behavior">Hành vi màn hình</string>
+    <string name="category_wf_player_progress">Tiến trình, tua &amp; thời gian</string>
+    <string name="category_album_background">Nền album</string>
+    <string name="category_music_colors">Màu từ âm nhạc</string>
+    <string name="category_wf_typography_font">Kiểu chữ</string>
+    <string name="category_wf_typography_title">Tiêu đề</string>
+    <string name="category_wf_typography_artist">Nghệ sĩ</string>
+    <string name="category_wf_typography_icon">Biểu tượng ứng dụng</string>
+    <string name="category_wf_typography_flex">Các trục Google Sans Flex</string>
+    <string name="category_wf_metadata">Nội dung mặt Siêu dữ liệu</string>
+    <string name="category_wf_typography_secondary">Văn bản trên các màn hình khác</string>
+    <string name="category_wf_colors_title">Màu tiêu đề</string>
+    <string name="category_wf_colors_artist">Màu nghệ sĩ</string>
+    <string name="category_wf_colors_clock">Màu đồng hồ</string>
+    <string name="setting_wear_font_flex_hint_title">Giới thiệu các điều khiển này</string>
+    <string name="setting_wear_flex_axes_hint">Các điều khiển này tinh chỉnh riêng Google Sans Flex — hãy chọn phông này ở trên để sử dụng. Trọng lượng/chữ nghiêng của tiêu đề và nghệ sĩ ở trên đã đặt các trục trọng lượng (wght) và độ nghiêng (slnt) riêng của phông; bốn điều khiển bên dưới áp dụng cho toàn bộ mặt.</string>
+    <string name="setting_wear_font_flex_width">Chiều rộng</string>
+    <string name="setting_wear_font_flex_width_description">Kéo giãn ngang, từ cô đọng đến mở rộng (25–151). 100 là chiều rộng bình thường của phông chữ.</string>
+    <string name="setting_wear_font_flex_optical_size">Kích thước quang học</string>
+    <string name="setting_wear_font_flex_optical_size_description">Điều chỉnh chi tiết nét theo kích thước hiển thị thực tế của văn bản (6–144). Giá trị thấp phù hợp văn bản nhỏ; giá trị cao phù hợp chữ hiển thị lớn.</string>
+    <string name="setting_wear_font_flex_grade">Grade</string>
+    <string name="setting_wear_font_flex_grade_description">Thay đổi nhẹ độ đậm mà không đổi bố cục (0–100) — cách tinh tế để tăng tương phản trên màn hình tối.</string>
+    <string name="setting_wear_font_flex_roundness">Độ bo tròn</string>
+    <string name="setting_wear_font_flex_roundness_description">Chuyển đầu nét từ sắc (0) tới bo tròn hoàn toàn (100) để có cảm giác thân thiện hơn.</string>
+    <string name="preview_sample_title">Tên bài hát</string>
+    <string name="preview_sample_artist">Tên nghệ sĩ</string>
+    <string name="preview_sample_next_title">Bài tiếp theo</string>
+    <string name="preview_playback_stopped">Đã dừng</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">dòng trước</string>
+    <string name="preview_verse_current">dòng đang phát</string>
+    <string name="preview_verse_next">và dòng sau</string>
+    <string name="preview_chat_today">Hôm nay</string>
+    <string name="category_gestures">Cử chỉ &amp; đầu vào</string>
+    <string name="category_watch_navigation">Điều hướng &amp; phím tắt</string>
+    <string name="category_rotary_input">Đầu vào xoay &amp; tinh chỉnh</string>
+    <string name="category_watch_feedback">Phản hồi &amp; hành vi thoát</string>
+    <string name="category_watch_display">Màn hình đồng hồ</string>
+    <string name="setting_wear_keep_screen_on">Giữ màn hình luôn bật</string>
+    <string name="setting_wear_keep_screen_on_description">Ngăn màn hình đồng hồ tắt theo thời gian chờ không hoạt động khi một màn hình Svartifoss đang mở. Hạ cổ tay vẫn làm mờ đồng hồ — cử chỉ đó do hệ thống quản lý. Tốn pin hơn. Màn hình lời bài hát luôn bật bất kể cài đặt này.</string>
+    <string name="setting_lyrics_enabled">Tìm lời bài hát trực tuyến</string>
+    <string name="setting_lyrics_enabled_description">Cho phép điện thoại lấy lời đồng bộ từ LRCLIB khi bạn mở màn hình lời bài hát trên đồng hồ. Tên bài, nghệ sĩ và thời lượng được gửi; không có dữ liệu nào khác và không có gì được lưu vào bộ nhớ. Nếu tắt, màn hình lời bài hát sẽ báo rằng tra cứu đã bị vô hiệu hóa.</string>
+    <string name="setting_overlay_blur_radius">Độ mờ lớp phủ</string>
+    <string name="setting_overlay_blur_radius_description">Cường độ mờ (px) của nền kính mờ phía sau vòng âm lượng/tua và bảng hành động nhanh — độc lập với độ mờ nền ảnh album</string>
+    <string name="category_action_list">Danh sách hành động</string>
+    <string name="category_automation">Tự động hóa</string>
+    <string name="category_idle">Khi không có gì đang phát</string>
+    <string name="installed_version">Phiên bản đã cài</string>
+    <string name="get_support">Nhận hỗ trợ</string>
+    <string name="get_support_description">Gửi nhật ký ứng dụng cho nhà phát triển để hỗ trợ</string>
+    <string name="contact_developer">Liên hệ nhà phát triển</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — liên hệ</string>
+    <string name="contact_developer_chooser">Gửi email</string>
+    <string name="contact_developer_no_client">Không có ứng dụng email nào được cài. Đã sao chép địa chỉ vào bảng nhớ tạm.</string>
+    <string name="about_developer_title">Giới thiệu nhà phát triển</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss bắt đầu như một dự án cá nhân — tôi muốn cập nhật Music Center for Wear theo những gì có thể làm được hiện nay, đơn giản để bản thân có thể dùng mỗi ngày. Kết quả đủ tốt nên tôi quyết định chia sẻ với mọi người. Đây là ứng dụng đầu tiên của tôi, và thật khó có gì sánh với cảm giác thấy thứ mình tạo ra cũng hữu ích cho người khác.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Giấy phép nguồn mở</string>
+    <string name="setting_always_show_time">Luôn hiển thị giờ</string>
+    <string name="setting_always_show_time_off_description">Giờ hiện tại chỉ được hiển thị ở chế độ môi trường</string>
+    <string name="setting_always_show_time_on_description">Giờ hiện tại sẽ luôn được hiển thị. Biểu tượng hành động phía trên sẽ không hiện (được thay bằng đồng hồ), nhưng hành động vẫn hoạt động bình thường.</string>
+    <string name="tap_to_force_stop">Nhấn để dừng điều khiển</string>
+    <string name="notification_action_stop">Dừng</string>
+    <string name="notification_action_force_stop">Buộc dừng</string>
+    <string name="error_notification_access">Không có quyền truy cập thông báo. Kiểm tra điện thoại.</string>
+    <string name="error_notifications">Thông báo lỗi</string>
+    <string name="notification_access_notification_title">Svartifoss cần quyền truy cập thông báo</string>
+    <string name="notification_access_notification_title_description">Nhấn thông báo này và kiểm tra Svartifoss để khắc phục sự cố</string>
+    <string name="error_service_not_enabled">Cần quyền truy cập thông báo</string>
+    <string name="error_service_not_enabled_description">Để điều khiển nhạc từ đồng hồ, Svartifoss cần quyền truy cập thông báo — đây là cách Android cho phép ứng dụng biết ứng dụng nào đang phát và gửi các lệnh phát, tạm dừng và chuyển bài.
+
+Svartifoss không bao giờ đọc nội dung thông báo của bạn. Quyền này chỉ được dùng để tìm phiên phương tiện đang hoạt động.
+
+Nhấn \"Mở Cài đặt\", sau đó bật Svartifoss trong quyền truy cập thông báo.</string>
+    <string name="action_open_settings">Mở Cài đặt</string>
+    <string name="settings_search_title">Tìm kiếm cài đặt</string>
+    <string name="settings_search_hint">Tìm kiếm cài đặt</string>
+    <string name="settings_search_clear">Xóa tìm kiếm</string>
+    <string name="settings_search_prompt">Tìm mọi cài đặt trong Cài đặt và Giao diện đồng hồ theo tên.</string>
+    <string name="settings_search_no_results">Không có cài đặt nào khớp.</string>
+    <string name="settings_search_prerequisite">Tùy chọn này phụ thuộc vào lựa chọn khác. Điều chỉnh cài đặt hiển thị ở đây để hiện tùy chọn.</string>
+    <string name="setting_numeric_range_error">Nhập giá trị từ %1$d đến %2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">Nhấn để cấp quyền — điều khiển phát vẫn không hoạt động cho đến khi bạn làm vậy</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Cài Svartifoss trên đồng hồ</string>
+    <string name="no_watch_app_description">Svartifoss không tìm thấy ứng dụng dành cho đồng hồ trên đồng hồ Wear OS đã ghép nối. Ứng dụng điện thoại và đồng hồ hoạt động cùng nhau — nếu không có ứng dụng đồng hồ, bạn sẽ không thể điều khiển phát từ cổ tay.
+
+Svartifoss không có trên Play Store — ứng dụng đồng hồ được sideload riêng (ví dụ bằng Wear Installer). Nhấn \"Xem bản phát hành\" để mở trang phát hành GitHub và tải APK dành cho đồng hồ. Nếu bạn vừa cài, hãy chờ một phút để đồng bộ hoàn tất.</string>
+    <string name="no_watch_app_button">Xem bản phát hành</string>
+    <string name="required_permission">Quyền bắt buộc</string>
+    <string name="setting_pause_on_swipe_exit">Tạm dừng khi vuốt để thoát</string>
+    <string name="setting_pause_on_swipe_exit_description">Tự động tạm dừng mọi nội dung đang phát khi thoát Svartifoss trên đồng hồ bằng cử chỉ vuốt trái.
+
+Thoát bằng nút nguồn không bị ảnh hưởng và sẽ không bao giờ tự động tạm dừng.</string>
+    <string name="setting_rotating_crown_off_period">Độ trễ bật đầu vào xoay</string>
+    <string name="setting_rotating_crown_off_period_description">Đầu vào xoay (ví dụ núm xoay) có thể quá nhạy trên một số thiết bị. Để tránh vô tình thay đổi âm lượng, đầu vào xoay sẽ bị vô hiệu hóa trong <![CDATA[<b>%1$s mili giây</b>]]> sau khi bạn bật màn hình.</string>
+    <string name="setting_rotary_seek">Tua bằng núm xoay</string>
+    <string name="setting_rotary_seek_description">Khi bật, xoay núm sẽ tua trong bài hiện tại thay vì thay đổi âm lượng. Vẫn có thể đổi âm lượng bằng nút trên màn hình hoặc nút vật lý.</string>
+    <string name="setting_wear_rotary_action">Núm xoay / viền xoay</string>
+    <string name="wear_rotary_action_volume">Thay đổi âm lượng</string>
+    <string name="wear_rotary_action_seek">Tua trong bài hát</string>
+    <string name="wear_rotary_action_off">Không làm gì</string>
+    <string name="setting_rotating_sensitivity">Độ nhạy đầu vào xoay</string>
+    <string name="setting_rotating_sensitivity_description">Độ nhạy của đầu vào xoay. Số càng cao thì cùng một thao tác xoay núm sẽ tăng âm lượng nhiều hơn. Hiện đặt ở <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Tắt nhấp đúp nút vật lý ở chế độ môi trường</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Một số đồng hồ có nút bị lỗi khiến một lần nhấn nút vật lý ở chế độ môi trường đôi khi bị nhận thành hai lần.
+
+Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt hoàn toàn nhấn đúp trong chế độ môi trường (ví dụ nhấn hai lần chỉ chạy hành động nhấn một lần). Nhấn hai lần khi đồng hồ đang hoạt động không bị ảnh hưởng.</string>
+    <string name="setting_haptic_feedback">Phản hồi rung</string>
+    <string name="setting_haptic_feedback_description">Rung đồng hồ khi nhấn nút.</string>
+    <string name="setting_auto_start">Tự động mở Svartifoss</string>
+    <string name="setting_auto_start_description">Tự động mở Svartifoss trên đồng hồ khi bắt đầu phát nhạc trên điện thoại.</string>
+    <string name="setting_auto_start_apps_blacklist">Ứng dụng tự khởi động</string>
+    <string name="setting_auto_start_apps_blacklist_description">Danh sách ứng dụng phương tiện có thể tự động khởi động Svartifoss</string>
+    <string name="setting_dim_album_art">Đổ bóng trình phát</string>
+    <string name="setting_dim_album_art_description">Thêm hiệu ứng bóng do người dùng chọn giữa hình ảnh và điều khiển trình phát.</string>
+    <string name="setting_album_art_style">Kiểu ảnh album</string>
+    <string name="setting_album_art_style_description">Chọn cách nền đang phát hiển thị trên đồng hồ.</string>
+    <string name="setting_album_art_blur_radius">Cường độ làm mờ</string>
+    <string name="setting_album_art_blur_radius_description">Cường độ làm mờ toàn màn hình khi nền đã chọn dùng hiệu ứng mờ. Hiện tại <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Mức làm tối</string>
+    <string name="setting_album_art_dim_strength_description">Mức làm tối ảnh album để văn bản dễ đọc. Hiện tại <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Kiểu đổ bóng</string>
+    <string name="setting_player_shading_intensity">Cường độ đổ bóng</string>
+    <string name="setting_player_shading_intensity_description">Mức đổ bóng làm tối nền. 100%% là cường độ đầy đủ; tăng cao hơn để có thêm tương phản (tối đa 150%%). Hiện tại <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Áp dụng giao diện này cho mọi mặt</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Sao chép cài đặt giao diện của mặt này sang mọi mặt khác</string>
+    <string name="apply_appearance_confirm_title">Áp dụng cho mọi mặt?</string>
+    <string name="apply_appearance_confirm_message">Thao tác này ghi đè cài đặt giao diện của mọi mặt khác bằng mặt hiện tại. Cài đặt hành vi của bạn không thay đổi.</string>
+    <string name="apply_appearance_confirm_button">Áp dụng</string>
+    <string name="apply_appearance_done">Đã áp dụng cho mọi mặt</string>
+    <string name="category_wf_layout_actions">Bố cục</string>
+    <string name="setting_reset_appearance">Đặt lại bố cục này</string>
+    <string name="setting_reset_appearance_description">Khôi phục giao diện của mặt này về mặc định ban đầu</string>
+    <string name="reset_appearance_confirm_title">Đặt lại bố cục này?</string>
+    <string name="reset_appearance_confirm_message">Cài đặt giao diện của mặt này sẽ trở về mặc định. Cài đặt hành vi và các mặt khác không bị ảnh hưởng.</string>
+    <string name="reset_appearance_confirm_button">Đặt lại</string>
+    <string name="reset_appearance_done">Đã đặt lại bố cục về mặc định</string>
+    <string name="setting_reset_all_faces">Đặt lại mọi mặt về mặc định</string>
+    <string name="setting_reset_all_faces_description">Khôi phục giao diện của mọi mặt tích hợp về mặc định ban đầu</string>
+    <string name="reset_all_faces_confirm_title">Đặt lại mọi mặt?</string>
+    <string name="reset_all_faces_confirm_message">Giao diện của mọi mặt tích hợp sẽ trở về mặc định ban đầu và mọi chủ đề tùy chỉnh đang hoạt động sẽ bị tắt. Các chủ đề tùy chỉnh đã lưu, cài đặt hành vi và mặt đã chọn vẫn được giữ lại.</string>
+    <string name="reset_all_faces_confirm_button">Đặt lại tất cả</string>
+    <string name="reset_all_faces_done">Đã đặt lại tất cả mặt về mặc định</string>
+    <string name="face_reset_migration_title">Cập nhật giao diện đồng hồ</string>
+    <string name="face_reset_migration_message">Bạn đã cập nhật từ phiên bản cũ nơi mọi mặt đồng hồ dùng chung một bộ cài đặt giao diện. Giờ mỗi mặt ghi nhớ cài đặt riêng, vì vậy cài đặt cũ có thể trông không khớp trên những mặt bạn chưa từng tùy chỉnh trực tiếp. Chúng tôi khuyên bạn đặt lại tất cả mặt về mặc định mới hoặc xóa dữ liệu ứng dụng để bắt đầu hoàn toàn mới.</string>
+    <string name="face_reset_migration_reset_button">Đặt lại mọi mặt</string>
+    <string name="face_reset_migration_clear_data_button">Xóa dữ liệu ứng dụng</string>
+    <string name="setting_player_shading_color">Màu đổ bóng</string>
+    <string name="setting_wear_shading_custom_color">Màu đổ bóng tùy chỉnh</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Đen</item>
+        <item>Màu nhấn album</item>
+        <item>Album giảm bão hòa</item>
+        <item>Màu tùy chỉnh</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Theo chủ đề trình phát</item>
+        <item>Tối viền cạnh</item>
+        <item>Tối viền cạnh (Mạnh)</item>
+        <item>Tối viền cạnh (Rất mạnh)</item>
+        <item>Góc dưới</item>
+        <item>Mờ dần phía dưới</item>
+        <item>Sàn và trần</item>
+        <item>Bộ lọc toàn màn hình</item>
+        <item>Lớp phủ màu album</item>
+        <item>Dải chuyển album hai màu</item>
+        <item>Rèm hai bên</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Độ mờ ảnh album ở chế độ môi trường</string>
+    <string name="setting_ambient_album_art_opacity_description">Mức ảnh album còn hiển thị trong chế độ môi trường. Hiện tại <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Thời gian hiển thị lớp phủ âm lượng/tua</string>
+    <string name="setting_volume_overlay_timeout_description">Thời gian lớp phủ âm lượng và tua còn trên màn hình sau khi điều chỉnh. Hiện tại <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Vùng chết của núm xoay</string>
+    <string name="setting_rotary_deadzone_description">Mức xoay núm tối thiểu trước khi thay đổi âm lượng hoặc tua được áp dụng. Giúp tránh điều chỉnh ngoài ý muốn. Hiện tại <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Trải nghiệm Wear</string>
+    <string name="setting_swipe_gestures_hint">Cử chỉ vuốt</string>
+    <string name="setting_swipe_gestures_hint_description">Vuốt lên/xuống/trái có thể mở bất kỳ hành động nào. Nhấn vào đây để cấu hình cho Đang phát nhạc hoặc Không phát. Vuốt phải vẫn được dành để thoát ứng dụng.</string>
+    <string name="setting_screen_buttons_hint">Nút mini</string>
+    <string name="setting_screen_buttons_hint_description">Tối đa ba nút hiển thị, mỗi nút có hành động chạm và nhấn giữ. Nhấn vào đây để cấu hình cho Đang phát nhạc hoặc Không phát.</string>
+    <string name="dev_screen_buttons_offset">Vị trí nút mini</string>
+    <string name="dev_screen_buttons_offset_description">Khoảng cách mong muốn tính bằng dp giữa đáy màn hình đồng hồ và các nút mini (mặc định 42). Hàng vẫn tự điều chỉnh tránh các tiêu đề dài.</string>
+    <string name="setting_screen_buttons_tilt">Độ nghiêng nút</string>
+    <string name="setting_screen_buttons_tilt_description">Mức các nút bên đi theo đường cong màn hình. 0 = hàng thẳng; 100 = cung đầy đủ với biểu tượng nghiêng.</string>
+    <string name="setting_screen_buttons_bg">Nền nút mini</string>
+    <string name="setting_screen_buttons_opacity">Độ mờ nút mini</string>
+    <string name="setting_screen_buttons_opacity_description">Độ mờ của toàn bộ nhóm nút mini (0–100%%). Hiện tại <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Bảng hành động nhanh</string>
+    <string name="quick_panel_link_summary">Nhấn đúp giữa màn hình đồng hồ để mở. Nhấn vào đây để thiết lập bốn ô trong Hành động.</string>
+    <string name="quick_panel_config_hint">Đây là các nút trên bảng mở bằng cách nhấn đúp giữa màn hình đồng hồ. Nhấn một hàng để chọn hành động (“Không có” sẽ ẩn); nhấn giữ để khôi phục mặc định.</string>
+    <string name="quick_panel_slot_1">Nút 1</string>
+    <string name="quick_panel_slot_2">Nút 2</string>
+    <string name="quick_panel_slot_3">Nút 3</string>
+    <string name="quick_panel_slot_long">Nút dài</string>
+    <string name="quick_panel_slot_default">%1$s (mặc định)</string>
+    <string name="quick_panel_slot_hidden">Đã ẩn</string>
+    <string name="quick_panel_default_like">Thích</string>
+    <string name="quick_panel_default_shuffle">Phát ngẫu nhiên</string>
+    <string name="quick_panel_default_repeat">Lặp lại</string>
+    <string name="quick_panel_default_up_next">Tiếp theo</string>
+    <string name="setting_wear_center_long_press_queue">Nhấn giữ giữa để mở hàng đợi</string>
+    <string name="setting_wear_center_long_press_queue_description">Nhấn giữ giữa màn hình đang phát để mở hàng đợi phát.</string>
+    <string name="setting_wear_center_long_press">Nhấn giữ giữa</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Đổi mặt đồng hồ</item>
+        <item>Mở hàng đợi</item>
+        <item>Không có gì</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Bố cục cơ sở</string>
+    <string name="setting_wear_screen_face_description">Chọn cấu trúc được chủ đề này sử dụng. Chủ đề đã lưu có thể kết hợp bố cục này với phông chữ, màu sắc, độ mờ, đổ bóng, AOD và bảng điều khiển riêng.</string>
+    <string name="setting_wear_show_track_title">Hiển thị tên bài hát</string>
+    <string name="setting_wear_show_track_title_description">Hiển thị tên bài hát hiện tại trên trình phát</string>
+    <string name="setting_wear_show_track_artist">Hiển thị tên nghệ sĩ</string>
+    <string name="setting_wear_show_track_artist_description">Hiển thị nghệ sĩ hiện tại trên trình phát</string>
+    <string name="setting_wear_show_source_icon">Hiển thị biểu tượng ứng dụng đang phát</string>
+    <string name="setting_wear_show_source_icon_description">Hiển thị biểu tượng của ứng dụng đang phát cạnh nghệ sĩ. Dùng biểu tượng từ thông báo phương tiện của ứng dụng. Khi tắt, biểu tượng không bao giờ được gửi tới đồng hồ.</string>
+    <string name="setting_wear_player_controls_visible">Hiển thị điều khiển trình phát</string>
+    <string name="setting_wear_player_controls_visible_description">Hiển thị hoặc ẩn các nút tích hợp trong Cổ điển, Poster, Studio và các bố cục có thể cấu hình khác mà không vô hiệu hóa vùng cảm ứng của chúng</string>
+    <string name="setting_wear_quadrant_tap_flash">Nháy biểu tượng khi chạm</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Khi hành động của một vùng góc chạy, biểu tượng sẽ nháy ngắn ở độ sáng tối đa — đặc biệt hữu ích với chủ đề màn hình Ẩn, nơi biểu tượng vốn không nhìn thấy và không xác nhận hành động vừa chạy.</string>
+    <string name="setting_wear_internal_progress_visible">Chỉ báo tiến trình bố cục</string>
+    <string name="setting_wear_internal_progress_visible_description">Hiển thị chỉ báo tiến trình bổ sung được thiết kế trong bố cục này. Vòng nút phát của Biểu cảm và Material là một phần của điều khiển và vẫn khả dụng.</string>
+    <string name="setting_wear_edge_progress_visible">Hiển thị cung tiến trình ở cạnh</string>
+    <string name="setting_wear_edge_progress_visible_description">Chỉ ẩn cung hiển thị quanh màn hình. Tua từ cạnh vẫn là tùy chọn độc lập.</string>
+    <string name="setting_wear_edge_seek_enabled">Tua từ cạnh màn hình</string>
+    <string name="setting_wear_edge_seek_enabled_description">Chạm hoặc kéo dọc cạnh màn hình để nhảy tới vị trí chính xác, ngay cả khi cung bị ẩn</string>
+    <string name="setting_wear_screen_theme">Kiểu điều khiển</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Cân bằng</string>
+    <string name="wear_screen_theme_default_description">Phân cấp và kích thước điều khiển tiêu chuẩn.</string>
+    <string name="wear_screen_theme_minimal">Tối giản</string>
+    <string name="wear_screen_theme_minimal_description">Dùng điều khiển nhỏ và nhẹ nhàng hơn nhưng vẫn giữ mọi hành động hiển thị và sử dụng được.</string>
+    <string name="wear_screen_theme_compact">Gọn</string>
+    <string name="wear_screen_theme_compact_description">Dùng cách trình bày điều khiển chặt chẽ hơn mà không thay đổi hành động.</string>
+    <string name="wear_screen_theme_cinema">Điện ảnh</string>
+    <string name="wear_screen_theme_cinema_description">Làm dịu các điều khiển mà không thay đổi hình ảnh.</string>
+    <string name="wear_screen_theme_vivid">Rực rỡ</string>
+    <string name="wear_screen_theme_vivid_description">Dùng điều khiển lớn và nổi bật hơn.</string>
+    <string name="wear_screen_theme_contrast">Tương phản cao</string>
+    <string name="wear_screen_theme_contrast_description">Dùng điều khiển lớn hơn để dễ đọc.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Dùng điều khiển gọn và hơi mờ. Tùy chọn này không tự làm tối nền — hãy dùng cài đặt nền cho việc đó.</string>
+    <string name="wear_screen_theme_hidden">Đã ẩn</string>
+    <string name="wear_screen_theme_hidden_description">Ẩn hoàn toàn mọi biểu tượng điều khiển. Vùng cảm ứng vẫn hoạt động đầy đủ.</string>
+    <string name="setting_wear_font">Kiểu chữ</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Kiểu chữ mặc định của ứng dụng.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Phiên bản biến thiên của Google Sans với chiều rộng, kích thước quang học, grade và độ bo tròn có thể điều chỉnh — mở khóa các điều khiển trục bên dưới.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Kiểu chữ hệ thống cổ điển của Android.</string>
+    <string name="wear_font_rounded">Bo tròn</string>
+    <string name="wear_font_rounded_description">Dáng chữ hiện đại thân thiện với các đầu nét bo tròn mềm mại.</string>
+    <string name="wear_font_sans_light">Hiện đại nhẹ</string>
+    <string name="wear_font_sans_light_description">Sans-serif sạch, thoáng với cảm giác nhẹ hơn.</string>
+    <string name="wear_font_sans_thin">Siêu mảnh</string>
+    <string name="wear_font_sans_thin_description">Kiểu hiển thị cực nhẹ cho trình phát tối giản.</string>
+    <string name="wear_font_sans_medium">Hiện đại vừa</string>
+    <string name="wear_font_sans_medium_description">Sans-serif sắc nét với nét chữ mạnh và gọn hơn.</string>
+    <string name="wear_font_sans_black">Đậm nặng</string>
+    <string name="wear_font_sans_black_description">Họ chữ hiển thị đậm cho tác động thị giác tối đa.</string>
+    <string name="wear_font_small_caps">Chữ hoa nhỏ</string>
+    <string name="wear_font_small_caps_description">Dáng chữ giống chữ hoa gọn với cảm giác biên tập.</string>
+    <string name="wear_font_casual">Thoải mái</string>
+    <string name="wear_font_casual_description">Họ chữ hệ thống viết tay vui nhộn.</string>
+    <string name="wear_font_typewriter">Máy đánh chữ (Đã lưu trữ)</string>
+    <string name="wear_font_typewriter_description">Giao diện máy đánh chữ cổ điển (Mom’s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Sans hình học bo tròn, lựa chọn miễn phí (OFL) theo tinh thần Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Sans hình học sạch, lựa chọn miễn phí (OFL) theo tinh thần Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Roman nhân văn thanh lịch, lựa chọn miễn phí (OFL) theo tinh thần Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Kiểu máy đánh chữ mềm hơn (Love Letter Typewriter) — thường dành cho các bài theo chủ đề “Lain”.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Kiểu chữ serif cổ điển.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">Chữ serif độ rộng cố định với phong cách biên tập/terminal đặc trưng.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Giao diện kỹ thuật, độ rộng cố định.</string>
+    <string name="wear_font_condensed">Cô đọng</string>
+    <string name="wear_font_condensed_description">Dáng chữ hẹp hơn để chứa nhiều văn bản hơn.</string>
+    <string name="wear_font_condensed_light">Cô đọng nhẹ</string>
+    <string name="wear_font_condensed_light_description">Họ chữ hẹp, nhẹ hơn cho tiêu đề dài.</string>
+    <string name="wear_font_condensed_medium">Cô đọng vừa</string>
+    <string name="wear_font_condensed_medium_description">Họ chữ hẹp với nét mạnh hơn và khả năng đọc rất tốt.</string>
+    <string name="wear_font_cursive">Chữ viết tay</string>
+    <string name="wear_font_cursive_description">Kiểu chữ script trang trí.</string>
+    <string name="setting_wear_dynamic_accent">Màu nhấn động trên đồng hồ</string>
+    <string name="setting_wear_dynamic_accent_description">Điều chỉnh màu đồng hồ dựa trên album theo ảnh bìa hiện tại. Khi tắt, lựa chọn Màu album dùng màu nhấn tĩnh của chủ đề.</string>
+    <string name="setting_wear_album_art_fade">Chuyển ảnh album bằng hiệu ứng mờ dần</string>
+    <string name="setting_wear_album_art_fade_description">Làm mờ chuyển tiếp ảnh album khi bài hát thay đổi.</string>
+    <string name="setting_wear_title_text_mode">Hành vi văn bản tiêu đề</string>
+    <string name="setting_wear_title_text_mode_description">Cách tiêu đề đang phát hoạt động khi không vừa: Tự động kết hợp thu nhỏ, xuống dòng và cuộn; các tùy chọn khác chỉ dùng một hành vi.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Tự động (thu nhỏ, rồi xuống dòng, rồi cuộn)</item>
+        <item>Cuộn (marquee)</item>
+        <item>Xuống hai dòng</item>
+        <item>Xuống ba dòng</item>
+        <item>Xuống năm dòng</item>
+        <item>Tĩnh (một dòng, không cuộn hoặc thu nhỏ)</item>
+        <item>Thu nhỏ cho vừa</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Màu văn bản nghệ sĩ</string>
+    <string name="setting_wear_artist_custom_color">Màu nghệ sĩ tùy chỉnh</string>
+    <string name="setting_wear_artist_custom_color_description">Chọn màu nghệ sĩ dùng với xử lý Bình thường</string>
+    <string name="setting_wear_artist_desaturated">Màu nghệ sĩ giảm bão hòa</string>
+    <string name="setting_wear_artist_desaturated_description">Làm dịu màu văn bản nghệ sĩ lấy từ album — chỉ áp dụng khi “Màu văn bản nghệ sĩ” được đặt thành Màu album</string>
+
+    <string name="setting_wear_progress_color">Màu thanh tiến trình</string>
+    <string name="setting_wear_progress_custom_color">Màu thanh tiến trình tùy chỉnh</string>
+    <string name="setting_wear_progress_custom_color_description">Chọn màu tiến trình và tua dùng với xử lý Bình thường</string>
+    <string name="setting_wear_progress_desaturated">Màu thanh tiến trình giảm bão hòa</string>
+    <string name="setting_wear_progress_desaturated_description">Làm dịu màu thanh tiến trình lấy từ album — chỉ áp dụng khi “Màu thanh tiến trình” được đặt thành Màu album</string>
+
+    <string name="setting_wear_volume_color">Màu thanh âm lượng</string>
+    <string name="setting_wear_volume_custom_color">Màu âm lượng tùy chỉnh</string>
+    <string name="setting_wear_volume_custom_color_description">Chọn màu âm lượng dùng với xử lý Bình thường</string>
+    <string name="setting_wear_quick_panel_color">Màu Hành động nhanh</string>
+    <string name="setting_wear_quick_panel_custom_color">Màu Hành động nhanh tùy chỉnh</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Chọn màu Hành động nhanh dùng với xử lý Bình thường</string>
+    <string name="setting_wear_shading_custom_color_description">Chọn màu nhuộm dải chuyển đổ bóng</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Trung tính (màu chủ đề tĩnh)</item>
+        <item>Màu album</item>
+        <item>Màu tùy chỉnh</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Cổ điển</item>
+        <item>Biểu cảm</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Đắm chìm</item>
+        <item>Chiều sâu</item>
+        <item>Băng chuyền</item>
+        <item>Trò chuyện</item>
+        <item>Chia đôi</item>
+        <item>Ghi chú</item>
+        <item>Lời thơ</item>
+        <item>Siêu dữ liệu</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Tua Biểu cảm</string>
+    <string name="setting_wear_expressive_seek_mode_description">Cách tua bài bằng cảm ứng trên mặt Biểu cảm. Vòng giữa cho phép kéo vòng quanh nút phát; Vòng cạnh cũng hiển thị vòng viền Cổ điển; Không có chỉ để thao tác tua cho núm xoay.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Vòng giữa</item>
+        <item>Vòng cạnh</item>
+        <item>Không có</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Màn hình luôn bật</string>
+    <string name="setting_wear_aod_style">Kiểu luôn bật</string>
+    <string name="setting_wear_aod_style_description">Giao diện màn hình đang phát khi đồng hồ ở chế độ môi trường. Theo mặt sẽ khớp với mặt đã chọn; Tối giản chỉ hiển thị văn bản mờ trên nền đen thuần để có thời lượng pin lâu nhất.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Theo mặt</item>
+        <item>Cổ điển</item>
+        <item>Biểu cảm (viền)</item>
+        <item>Material (viền)</item>
+        <item>Điều khiển AMOLED</item>
+        <item>Chrono (đồng hồ lớn)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Đắm chìm</item>
+        <item>Băng chuyền</item>
+        <item>Trò chuyện</item>
+        <item>Chia đôi</item>
+        <item>Ghi chú</item>
+        <item>Lời thơ</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Màu luôn bật</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Trắng</item>
+        <item>Màu album</item>
+        <item>Màu tùy chỉnh</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Trắng</item>
+        <item>Động (theo vùng dưới đồng hồ)</item>
+        <item>Màu album</item>
+        <item>Màu tùy chỉnh</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Theo kiểu bảng</item>
+        <item>Trong suốt (không nền)</item>
+        <item>Màu nhấn album</item>
+        <item>Bán trong suốt</item>
+        <item>Trắng</item>
+        <item>Trắng mờ kính</item>
+        <item>Đen</item>
+        <item>Động (tông album)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Nền thẻ Tiếp theo</string>
+    <string name="setting_wear_show_up_next_pill">Thẻ Tiếp theo trên trình phát</string>
+    <string name="setting_wear_show_up_next_pill_description">Hiển thị thẻ Tiếp theo ở đáy màn hình đang phát. Nó chiếm chỗ của hàng nút mini nên chỉ xuất hiện khi hàng đó không hiển thị.</string>
+    <string name="category_wf_clock">Đồng hồ</string>
+    <string name="setting_wear_clock_color">Màu đồng hồ</string>
+    <string name="setting_wear_clock_custom_color">Màu đồng hồ tùy chỉnh</string>
+    <string name="setting_wear_clock_custom_color_description">Nhấn để chọn màu đồng hồ dùng khi Màu đồng hồ được đặt thành Màu tùy chỉnh</string>
+    <string name="setting_wear_clock_opacity">Độ mờ đồng hồ</string>
+    <string name="setting_wear_clock_opacity_description">Độ mờ của đồng hồ luôn hiển thị (10–100%%). Hiện tại <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Màu luôn bật tùy chỉnh</string>
+    <string name="setting_wear_aod_custom_color_description">Nhấn để chọn màu dùng cho văn bản, điều khiển và đồng hồ luôn bật khi “Màu luôn bật” được đặt thành Màu tùy chỉnh</string>
+    <string name="setting_wear_aod_intensity">Độ sáng luôn bật</string>
+    <string name="setting_wear_aod_intensity_description">Độ sáng kết xuất của màn hình luôn bật (20–100%%). Thấp hơn sẽ tối hơn và dùng ít pin hơn. Hiện tại <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Nút phát trên màn hình luôn bật</string>
+    <string name="setting_wear_aod_show_transport_description">Hiển thị các nút viền trước/phát/tiếp theo trong các kiểu luôn bật trực quan được hỗ trợ. Không thể chạm khi màn hình đang mờ, nhưng một lần chạm sẽ đánh thức đồng hồ với nút đã ở ngay dưới ngón tay.</string>
+    <string name="setting_wear_aod_show_progress">Vòng tiến trình trên màn hình luôn bật</string>
+    <string name="setting_wear_aod_show_progress_description">Hiển thị vòng tiến trình quanh nút phát trong chế độ môi trường — vị trí chỉ cập nhật khoảng một lần mỗi phút tại đó</string>
+    <string name="setting_wear_aod_show_pills">Tiếp theo trên màn hình luôn bật</string>
+    <string name="setting_wear_aod_show_pills_description">Hiển thị thẻ Tiếp theo tĩnh có viền ở đáy các kiểu luôn bật trực quan</string>
+    <string name="category_wf_gestures">Cử chỉ màn hình</string>
+    <string name="setting_wear_mini_buttons_mode">Hiển thị nút mini</string>
+    <string name="setting_wear_gestures_mode">Cử chỉ màn hình</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Luôn luôn</item>
+        <item>Chỉ khi đang phát</item>
+        <item>Chỉ khi tạm dừng</item>
+        <item>Không bao giờ</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Ảnh album trên màn hình luôn bật</string>
+    <string name="setting_wear_aod_show_art_description">Giữ ảnh album đã làm mờ hiển thị trong chế độ môi trường. Tắt sẽ dùng nền đen thuần, giúp tiết kiệm pin đáng kể hơn trên màn hình AMOLED.</string>
+    <string name="setting_wear_aod_art_treatment">Kiểu ảnh album luôn bật</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Mờ nhẹ</item>
+        <item>Ảnh bìa rõ</item>
+        <item>Mờ đơn sắc</item>
+        <item>Theo xử lý hình ảnh của trình phát</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Đồng hồ trên màn hình luôn bật</string>
+    <string name="setting_wear_aod_show_clock_description">Hiển thị đồng hồ khi thiết bị ở chế độ môi trường</string>
+    <string name="setting_wear_aod_show_track_info">Thông tin bài hát trên màn hình luôn bật</string>
+    <string name="setting_wear_aod_show_track_info_description">Hiển thị tên bài và nghệ sĩ trong chế độ môi trường</string>
+
+    <string name="category_overlays_queue">Lớp phủ &amp; hàng đợi</string>
+    <string name="category_wf_panel_shared">Giao diện bảng dùng chung</string>
+    <string name="category_wf_panel_volume">Bảng âm lượng</string>
+    <string name="category_wf_panel_seek">Bảng tiến trình &amp; tua</string>
+    <string name="category_wf_panel_quick">Bảng hành động nhanh</string>
+    <string name="category_wf_panel_queue">Hàng đợi &amp; danh sách</string>
+    <string name="category_wf_panel_effects">Hiệu ứng bảng</string>
+    <string name="setting_wear_overlay_backdrop_style">Nền bảng</string>
+    <string name="setting_wear_volume_style">Kiểu âm lượng</string>
+    <string name="setting_wear_volume_layout">Bố cục âm lượng</string>
+    <string name="setting_wear_quick_panel_style">Kiểu bảng nhanh</string>
+    <string name="setting_wear_quick_panel_layout">Bố cục bảng nhanh</string>
+    <string name="setting_wear_quick_panel_source">Hành động nhanh</string>
+    <string name="setting_wear_quick_panel_source_description">Chọn các nút đã cấu hình hoặc hành động do ứng dụng đang phát cung cấp.</string>
+    <string name="quick_panel_open_note_title">Mở bảng</string>
+    <string name="quick_panel_open_note_description">Nhấn đúp giữa màn hình đang phát để mở bảng hành động nhanh trên đồng hồ.</string>
+    <string name="preview_current_app_action">Hành động của ứng dụng hiện tại</string>
+    <string name="preview_notification_controls">Biểu tượng từ thông báo phương tiện</string>
+    <string name="setting_wear_queue_style">Kiểu hàng đợi</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Dùng ảnh bìa phím tắt làm nền</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Khi Kiểu hàng đợi là biến thể Ảnh bìa, một hàng hành động bảng nhanh có ảnh bìa phím tắt đã tải (bài hát, danh sách phát, nghệ sĩ…) cũng tô thẻ bằng ảnh đó như Tiếp theo. Phím tắt không có ảnh bìa đã tải (chỉ có biểu tượng ứng dụng) không bị ảnh hưởng.</string>
+    <string name="setting_wear_list_row_size">Kích thước thẻ danh sách</string>
+    <string name="setting_wear_list_row_size_description">Chiều cao của các hàng toàn chiều rộng trong hàng đợi, menu và bảng nhanh.</string>
+    <string name="setting_wear_progress_gradient">Hòa bảng màu vào vòng</string>
+    <string name="setting_wear_progress_gradient_description">Với xử lý màu nhiều sắc độ (Bổ sung, Bộ ba, Tương đồng, Duotone), vòng đặc chuyển dần qua cả ba màu. Tắt để dùng vòng một màu nhưng vẫn giữ bảng màu album ở mọi nơi khác.</string>
+    <string name="setting_wear_progress_style">Kiểu vòng tiến trình</string>
+    <string name="setting_wear_seek_style">Kiểu hiển thị tua &amp; âm lượng</string>
+    <string name="setting_wear_seek_layout">Bố cục bảng tua</string>
+    <string name="setting_wear_color_treatment">Xử lý màu đồng hồ</string>
+    <string name="setting_wear_normal_color">Màu bình thường</string>
+    <string name="setting_wear_normal_color_description">Chọn một màu duy nhất dùng cho màu nhấn tiêu đề, tiến trình, âm lượng, bảng và phần trang trí nút mini ở chế độ Bình thường</string>
+    <string name="setting_wear_normal_color_multi">Dùng bảng màu</string>
+    <string name="setting_wear_normal_color_multi_description">Khi bật, màn hình dùng một màu chính cộng hai tông hỗ trợ. Khi tắt, một màu duy nhất được dùng khắp nơi — màu riêng của album hoặc màu bạn chọn.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Bình thường (màu đã chọn)</item>
+        <item>Giảm bão hòa (màu album dịu)</item>
+        <item>Biểu cảm (toàn bộ bảng màu album)</item>
+        <item>Bổ sung (album + màu đối diện)</item>
+        <item>Bộ ba (ba sắc album)</item>
+        <item>Tương đồng (các sắc liền kề)</item>
+        <item>Đơn sắc (một sắc, ba tông)</item>
+        <item>Duotone (hai màu album)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Theo xử lý đồng hồ</item>
+        <item>Bình thường (màu đã chọn)</item>
+        <item>Giảm bão hòa (màu album dịu)</item>
+        <item>Biểu cảm (toàn bộ bảng màu album)</item>
+        <item>Bổ sung (album + màu đối diện)</item>
+        <item>Bộ ba (ba sắc album)</item>
+        <item>Tương đồng (các sắc liền kề)</item>
+        <item>Đơn sắc (một sắc, ba tông)</item>
+        <item>Duotone (hai màu album)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Độ đậm tiêu đề</string>
+    <string name="setting_wear_title_font_italic">Tiêu đề nghiêng</string>
+    <string name="setting_wear_title_font_scale">Kích thước tiêu đề</string>
+    <string name="setting_wear_title_font_opacity">Độ mờ tiêu đề</string>
+    <string name="setting_wear_title_font_tracking">Khoảng cách chữ tiêu đề</string>
+    <string name="setting_wear_title_color">Màu văn bản tiêu đề</string>
+    <string name="setting_wear_title_custom_color">Màu tiêu đề tùy chỉnh</string>
+    <string name="wear_title_color_face_default">Mặc định của mặt (đúng thiết kế)</string>
+    <string name="setting_wear_title_adaptive_contrast">Điều chỉnh màu tiêu đề để tương phản</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Làm sáng hoặc tối tiêu đề khi màu quá gần với hình ảnh phía sau, nhưng giữ nguyên sắc màu. Không có tác dụng khi tiêu đề dùng mặc định của mặt.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Điều chỉnh màu nghệ sĩ để tương phản</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Làm sáng hoặc tối dòng nghệ sĩ khi màu album quá gần với hình ảnh phía sau, nhưng giữ nguyên sắc màu. Chỉ đo dải nơi dòng chữ nằm, không đo toàn bộ ảnh bìa.</string>
+    <string name="setting_wear_artist_font_weight">Độ đậm nghệ sĩ</string>
+    <string name="setting_wear_artist_font_italic">Nghệ sĩ nghiêng</string>
+    <string name="setting_wear_artist_font_scale">Kích thước nghệ sĩ</string>
+    <string name="setting_wear_artist_font_opacity">Độ mờ nghệ sĩ</string>
+    <string name="setting_wear_artist_font_tracking">Khoảng cách chữ nghệ sĩ</string>
+    <string name="setting_wear_source_icon_scale">Kích thước biểu tượng ứng dụng</string>
+    <string name="setting_wear_source_icon_opacity">Độ mờ biểu tượng ứng dụng</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 là độ đậm bình thường của mặt; số cao hơn đậm hơn. Với Google Sans Flex, đây là trục độ đậm riêng của phông</string>
+    <string name="setting_wear_typography_scale_description">Phần trăm kích thước riêng của mặt (70–140). 100 giữ kích thước được thiết kế cho từng bố cục</string>
+    <string name="setting_wear_typography_opacity_description">Phần trăm (20–100). 100 giữ độ mờ riêng của mặt</string>
+    <string name="setting_wear_typography_tracking_description">Khoảng cách bổ sung giữa các chữ, tính bằng phần trăm của em (−5 đến 20). 0 giữ khoảng cách riêng của phông</string>
+    <string name="setting_wear_color_modifier">Tông</string>
+    <string name="setting_wear_color_modifier_description">Điều chỉnh toàn bộ bảng màu mà không đổi cách tạo ra nó — hoạt động với mọi xử lý màu</string>
+    <string name="setting_wear_color_hue_shift">Dịch màu</string>
+    <string name="setting_wear_color_hue_shift_description">Xoay bảng màu album quanh bánh xe màu theo độ (0–359). Mỗi xử lý giữ màu chính ở sắc màu riêng của album, nên đây là cách thay đổi nó. 0 dùng màu album nguyên bản; màu Bình thường cố định không bao giờ bị dịch.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Không có</item>
+        <item>Rực</item>
+        <item>Pastel</item>
+        <item>Ấm</item>
+        <item>Mát</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Cung cạnh (trái)</item>
+        <item>Cung cạnh (cao)</item>
+        <item>Cung cạnh (phải)</item>
+        <item>Cung cạnh (trên)</item>
+        <item>Cung cạnh (dưới)</item>
+        <item>Vòng đầy đủ</item>
+        <item>Halo giữa</item>
+        <item>Đồng hồ đo ngang</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Vòng cạnh</item>
+        <item>Vòng cạnh (mỏng)</item>
+        <item>Vòng cạnh (dày)</item>
+        <item>Dòng thời gian</item>
+        <item>Dòng thời gian phân đoạn</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Siêu dữ liệu trước</item>
+        <item>Cung</item>
+        <item>Hero</item>
+        <item>Lưới</item>
+        <item>Hàng có nhãn</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Đặc</item>
+        <item>Nét đứt</item>
+        <item>Chấm</item>
+        <item>Nét mảnh</item>
+        <item>Sao chổi</item>
+        <item>60 chấm đồng hồ</item>
+        <item>60 vạch đồng hồ</item>
+        <item>Phân đoạn 12 giờ</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Đơn giản</item>
+        <item>Thẻ kính</item>
+        <item>Thẻ Biểu cảm</item>
+        <item>Thẻ Material</item>
+        <item>Thẻ trắng</item>
+        <item>Khổng lồ</item>
+        <item>Vị trí / tổng</item>
+        <item>Kính trắng</item>
+        <item>Album bán trong suốt</item>
+        <item>Phát sáng album</item>
+        <item>Viền</item>
+        <item>Chủ đề đặc</item>
+        <item>Album đặc</item>
+        <item>Siêu nhỏ</item>
+        <item>Bóng (không viền trang trí)</item>
+        <item>Gạch chân</item>
+        <item>Viền nét mảnh</item>
+        <item>Màu album khổng lồ</item>
+        <item>Mono</item>
+        <item>Tông tối</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Nút đã cấu hình</item>
+        <item>Từ ứng dụng phương tiện hiện tại</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Theo kiểu bảng</item>
+        <item>Mờ album (acrylic)</item>
+        <item>Đen đặc</item>
+        <item>Màu album đặc</item>
+        <item>Kính</item>
+        <item>Dải chuyển album</item>
+        <item>Duotone album</item>
+        <item>Lăng kính</item>
+        <item>Kính lỏng</item>
+        <item>Mờ Biểu cảm</item>
+        <item>Biểu cảm</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Kính</item>
+        <item>Tối giản (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Sáng</item>
+        <item>Dải chuyển</item>
+        <item>Mono</item>
+        <item>Viền</item>
+        <item>Duotone</item>
+        <item>Lăng kính</item>
+        <item>Tương phản cao</item>
+        <item>Terminal</item>
+        <item>Băng mờ</item>
+        <item>Phân đoạn</item>
+        <item>Aurora</item>
+        <item>Mực</item>
+        <item>Rãnh</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Gọn</item>
+        <item>Bình thường</item>
+        <item>Cao</item>
+        <item>Rất cao</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Kính</item>
+        <item>Tối giản (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Sáng</item>
+        <item>Dải chuyển</item>
+        <item>Mono</item>
+        <item>Viền</item>
+        <item>Duotone</item>
+        <item>Lăng kính</item>
+        <item>Tương phản cao</item>
+        <item>Terminal</item>
+        <item>Băng mờ</item>
+        <item>Ảnh bìa</item>
+            <item>Ảnh bìa mờ</item>
+        <item>Ảnh bìa tonal</item>
+        <item>Ảnh bìa vuông</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Kính</item>
+        <item>Kính trắng</item>
+        <item>Kính tonal</item>
+        <item>Tối giản (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Sáng</item>
+        <item>Dải chuyển</item>
+        <item>Mono</item>
+        <item>Viền</item>
+        <item>Viền kính trắng</item>
+        <item>Duotone</item>
+        <item>Lăng kính</item>
+        <item>Tương phản cao</item>
+        <item>Terminal</item>
+        <item>Băng mờ</item>
+        <item>Bóng ma (không viền trang trí)</item>
+        <item>Sương</item>
+        <item>Mực</item>
+        <item>Chấm</item>
+        <item>Phiến</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Giữ ứng dụng hoạt động sau khi tạm dừng</string>
+    <string name="setting_wear_paused_hold_description">Khoảng thời gian ứng dụng đồng hồ vẫn có thể truy cập từ mặt đồng hồ sau khi bạn tạm dừng, để có thể tiếp tục bằng cách nâng cổ tay thay vì mở lại. Thời gian dài hơn sẽ giữ dịch vụ nền chạy.</string>
+    <string name="wear_paused_hold_off">Không giữ</string>
+    <string name="wear_paused_hold_5">5 phút</string>
+    <string name="wear_paused_hold_15">15 phút</string>
+    <string name="wear_paused_hold_30">30 phút</string>
+    <string name="wear_paused_hold_60">1 giờ</string>
+    <string name="wear_paused_hold_always">Cho đến khi phát kết thúc</string>
+
+    <string name="setting_wear_idle_button_action">Nút khi không có gì đang phát</string>
+    <string name="setting_wear_idle_auto_open">Mở khi không có gì đang phát</string>
+    <string name="setting_wear_idle_auto_open_description">Đi thẳng tới màn hình này khi bạn mở ứng dụng đồng hồ mà không có nhạc đang phát.</string>
+    <string name="wear_idle_action_resume">Tiếp tục ứng dụng gần nhất</string>
+    <string name="wear_idle_action_shortcuts">Phím tắt danh sách phát</string>
+    <string name="wear_idle_action_menu">Menu hành động</string>
+    <string name="wear_idle_action_search">Tìm kiếm</string>
+    <string name="wear_idle_action_queue">Đã phát gần đây</string>
+    <string name="wear_idle_action_none">Không có nút</string>
+    <string name="wear_idle_auto_open_none">Ở lại trình phát</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Duyệt thư viện</string>
+    <string name="library_up">Quay lại</string>
+    <string name="error_library_unavailable">Ứng dụng này không có thư viện có thể duyệt</string>
+    <string name="error_library_empty">Không có gì ở đây</string>
+    <string name="error_library_no_player">Hãy phát nội dung trước</string>
+
+    <string name="setting_wear_carousel_card_shape">Hình dạng thẻ băng chuyền</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Bo tròn</item>
+        <item>Vuông</item>
+        <item>Squircle</item>
+        <item>Tròn</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Dùng phông ở mọi nơi</string>
+    <string name="setting_wear_font_all_screens_description">Áp dụng phông đã chọn cho menu, hàng đợi và Hành động nhanh, không chỉ trình phát. Phông hiển thị và viết tay có thể khó đọc hơn trong danh sách.</string>
+
+    <string name="setting_wear_clock_font">Kiểu chữ đồng hồ</string>
+    <string name="wear_clock_font_follow">Theo phông bài hát</string>
+    <string name="setting_wear_lyrics_font">Kiểu chữ lời bài hát</string>
+    <string name="setting_wear_lyrics_font_description">Kiểu chữ cho lời bài hát trên màn hình lời và mặt Lời thơ. Theo kiểu chữ bài hát trừ khi bạn chọn một kiểu ở đây.</string>
+    <string name="wear_lyrics_font_follow">Theo kiểu chữ bài hát</string>
+    <string name="setting_wear_clock_font_weight">Độ đậm đồng hồ</string>
+    <string name="setting_wear_clock_font_italic">Đồng hồ nghiêng</string>
+    <string name="setting_wear_clock_font_scale">Kích thước đồng hồ</string>
+    <string name="setting_wear_clock_font_tracking">Khoảng cách chữ đồng hồ</string>
+    <string name="setting_wear_clock_adaptive_contrast">Điều chỉnh màu đồng hồ để tương phản</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Làm sáng hoặc tối đồng hồ khi màu album quá gần với hình ảnh phía sau nhưng vẫn giữ sắc màu. Chỉ áp dụng khi màu đồng hồ đặt thành Màu album.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Hiển thị chữ hoa cô đọng — kiểu poster, vừa tiêu đề dài</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Serif biên tập tương phản cao — cảm giác tạp chí</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Sans hình học kỹ thuật với chi tiết độc đáo</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Kiểu hiển thị khoa học viễn tưởng vuông vức — táo bạo và tương lai</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Chữ viết tay — gần gũi và cá nhân</string>
+    <string name="setting_wear_track_time_mode">Hiển thị thời gian bài hát</string>
+    <string name="setting_wear_track_time_mode_description">Thời điểm vị trí bài hát (ví dụ 1:23 / 3:45) được hiển thị trên màn hình đang phát.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Luôn luôn</item>
+        <item>Chỉ khi đang phát</item>
+        <item>Chỉ khi tạm dừng</item>
+        <item>Không bao giờ</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Độ cong nút mini</string>
+    <string name="setting_screen_buttons_curve_description">Chọn kiểu cong của nút mini: phẳng, cung, mềm, cong.</string>
+    <string name="setting_screen_buttons_shape">Hình dạng nút mini</string>
+    <string name="setting_screen_buttons_shape_description">Chọn hình dạng và định dạng bố cục của nút mini.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Viên thuốc (Mặc định)</item>
+        <item>Tròn</item>
+        <item>Vuông</item>
+        <item>Vuông bo tròn (Mềm)</item>
+        <item>Vuông bo tròn (Vừa)</item>
+        <item>Squircle</item>
+        <item>Lá</item>
+        <item>Giọt nước</item>
+        <item>Viên thuốc (Rộng nhỏ)</item>
+        <item>Viên thuốc (Rộng vừa)</item>
+        <item>Viên thuốc (Rộng lớn)</item>
+        <item>Viên thuốc (Rộng cực lớn)</item>
+        <item>Chữ nhật bo tròn (Nhỏ)</item>
+        <item>Chữ nhật bo tròn (Vừa)</item>
+        <item>Chữ nhật bo tròn (Lớn)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Phẳng</item>
+        <item>Cung</item>
+        <item>Cong nhẹ</item>
+        <item>Cong mềm</item>
+        <item>Cong vừa</item>
+        <item>Cong</item>
+        <item>Cong cực đại</item>
+        <item>Trải tới cạnh</item>
+        <item>Cạnh trái</item>
+        <item>Cạnh phải</item>
+        <item>Cả hai cạnh</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Nền mặc định</item>
+        <item>Kính (đồng đều)</item>
+        <item>Kính (sáng)</item>
+        <item>Album bán trong suốt</item>
+        <item>Album bán trong suốt Biểu cảm</item>
+        <item>Phát sáng Album</item>
+        <item>Phát sáng Biểu cảm</item>
+        <item>Chủ đề đặc</item>
+        <item>Album đặc</item>
+        <item>Album đặc Biểu cảm</item>
+        <item>Viền</item>
+        <item>Viền Album Biểu cảm</item>
+        <item>Chỉ biểu tượng (trong suốt)</item>
+        <item>Biểu tượng Biểu cảm</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Trung tính</item>
+        <item>Màu album</item>
+        <item>Màu tùy chỉnh</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Ảnh bìa toàn màn hình</item>
+        <item>Nền làm mờ</item>
+        <item>Cạnh kính mờ</item>
+        <item>Vuông (góc sắc)</item>
+        <item>Vuông (góc mềm)</item>
+        <item>Vuông (góc bo tròn)</item>
+        <item>Đen &amp; trắng</item>
+        <item>Đen &amp; trắng làm mờ</item>
+        <item>Mờ Biểu cảm</item>
+        <item>Biểu cảm</item>
+        <item>Dải chuyển tonal Material</item>
+        <item>Ảnh bìa Poster</item>
+        <item>Dải chuyển Studio</item>
+        <item>Phát sáng xuyên tâm Vinyl</item>
+        <item>Phát sáng Halo</item>
+        <item>Dải Aurora</item>
+        <item>Dải chuyển Spectrum</item>
+        <item>Quét Corona</item>
+        <item>Mờ dần hoàng hôn</item>
+        <item>Nở sáng</item>
+        <item>Mờ dần chân trời</item>
+        <item>Phát sáng than hồng</item>
+        <item>Eclipse AMOLED đen</item>
+        <item>Ẩn (đen đặc)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Đã tắt</item>
+        <item>Hiển thị biểu tượng mặt đồng hồ nhạc (chỉ Wear 3.0)</item>
+        <item>Mở Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Thời gian chờ đóng</string>
+    <string name="setting_close_timeout_description">Svartifoss sẽ tự động đóng khi không có nhạc phát trong <![CDATA[<b>%1$s giây</b>]]>. Tính năng bị tắt khi thời gian chờ đặt thành 0 giây. Xin lưu ý rằng để tiết kiệm pin, tùy chọn này đôi khi có thể không chính xác và việc đóng có thể trễ tới một phút.</string>
+    <string name="setting_wear_close_on_idle">Đóng khi “Không có gì đang phát”</string>
+    <string name="setting_wear_close_on_idle_description">Tự động đóng ứng dụng đồng hồ khoảng một phút sau khi tới màn hình chờ “Không có gì đang phát”, để ứng dụng không nằm lại ở đó. Độc lập với thời gian chờ đóng ở trên, vốn áp dụng cho bài đang tạm dừng.</string>
+    <string name="category_notifications">Cửa sổ bật lên thông báo</string>
+    <string name="setting_enable_notifications">Hiển thị cửa sổ bật lên thông báo</string>
+    <string name="setting_enable_notifications_description">Tính năng này cần một ứng dụng khác để quản lý thông báo (Vibration Center for Wear).
+
+Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị cửa sổ bật lên chứa nội dung thông báo, giúp bạn xem nhanh mà không rời Svartifoss.</string>
+    <string name="setting_notification_timeout">Thời gian chờ cửa sổ thông báo</string>
+    <string name="setting_notification_timeout_description">Cửa sổ thông báo sẽ tự động đóng sau <![CDATA[<b>%1$s giây</b>]]>. Nhập 0 để tắt tự đóng.</string>
+    <string name="app_required">Cần ứng dụng</string>
+    <string name="vibration_center_required_description">Để dùng tính năng này, bạn cần cài một ứng dụng khác (miễn phí): Vibration Center for Wear.</string>
+    <string name="open_play_store">Mở Play Store</string>
+    <string name="error_no_notification_service_support">Rất tiếc, thiết bị của bạn dường như không hỗ trợ dịch vụ thông báo</string>
+    <string name="setting_always_select_center_action">Luôn chọn hành động ở giữa</string>
+    <string name="setting_always_select_center_action_description">Khi bật, chạm vào danh sách hành động sẽ luôn chọn tùy chọn ở giữa (được tô sáng), bất kể bạn chạm tùy chọn nào.</string>
+    <string name="change_icon">Đổi biểu tượng</string>
+    <string name="please_wait">Vui lòng chờ</string>
+
+    <string name="error_playlist_not_supported">Ứng dụng phương tiện này không hỗ trợ</string>
+    <string name="error_search_no_results">Không tìm thấy kết quả</string>
+    <string name="seconds_to_skip">Số giây tua tới:</string>
+    <string name="seconds_to_reverse">Số giây tua lùi:</string>
+
+    <string name="setting_dynamic_accent_color">Màu nhấn động</string>
+    <string name="setting_dynamic_accent_color_description">Khi bật, màu nhấn (SeekBar, mục hàng đợi đang hoạt động) tự động thích ứng với màu chủ đạo của ảnh album hiện tại.</string>
+    <string name="setting_desaturated_color">Màu giảm bão hòa</string>
+    <string name="setting_desaturated_color_description">Điều chỉnh độ bão hòa và độ sáng của màu trích xuất để đảm bảo khả năng đọc và độ tương phản cao theo chủ đề đang dùng.</string>
+
+    <string name="queue_header">Hàng đợi phát</string>
+    <string name="queue_unavailable">Hàng đợi không khả dụng</string>
+
+    <string name="setting_custom_accent_color">Màu nhấn</string>
+    <string name="setting_custom_accent_color_description">Chọn màu nhấn tùy chỉnh cho giao diện ứng dụng</string>
+    <string name="setting_mini_player">Trình phát mini</string>
+    <string name="setting_mini_player_description">Hiển thị thanh đang phát cố định phía trên điều hướng dưới khi có phương tiện đang hoạt động. Bật mặc định; tắt để lấy lại không gian đó.</string>
+    <string name="color_picker_title">Chọn màu nhấn</string>
+    <string name="color_picker_reset">Đặt lại</string>
+    <string name="color_picker_apply">Áp dụng</string>
+    <string name="color_picker_default">Mặc định</string>
+    <string name="color_picker_invalid">Mã màu không hợp lệ</string>
+    <string name="color_picker_current">Hiện tại: %s</string>
+
+    <string name="drawer_version_format">Phiên bản %1$s</string>
+    <string name="drawer_tagline">Ứng dụng đồng hành cho Wear OS</string>
+    <string name="drawer_about_heading">Giới thiệu</string>
+    <string name="drawer_about_summary">Svartifoss cho phép bạn điều khiển nhạc trên điện thoại từ đồng hồ Wear OS — với điều khiển từ xa có thể tùy chỉnh hoàn toàn theo thiết bị.</string>
+    <string name="drawer_name_heading">Tên gọi</string>
+    <string name="drawer_name_meaning">Svartifoss có nghĩa là “Thác Đen” trong tiếng Iceland — được đặt theo thác nước ở Vườn quốc gia Vatnajökull, nơi các cột bazan tối màu bao quanh một dòng thác hẹp. Như nước chảy qua đá, âm nhạc chảy qua ứng dụng.</string>
+    <string name="drawer_sync_heading">Đồng bộ</string>
+    <string name="drawer_sync_summary">Cài đặt đồng hồ được cấu hình tại đây trên điện thoại và tự động đồng bộ với đồng hồ đã ghép nối.</string>
+    <string name="drawer_support_heading">Hỗ trợ</string>
+    <string name="drawer_support_summary">Svartifoss miễn phí và mã nguồn mở — nếu hữu ích, hãy mời tôi một ly cà phê :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Tải ảnh bìa</string>
+    <string name="album_art_saved">Đã lưu ảnh bìa vào thư viện</string>
+    <string name="album_art_save_error">Không thể lưu ảnh bìa</string>
+
+    <string name="action_play_liked_songs">Phát bài đã thích (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Phát bài đã thích (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Phát bài đã thích (SoundCloud)</string>
+    <string name="action_my_playlists">Phím tắt phát trực tuyến</string>
+    <string name="action_play_specific_playlist">Mở phím tắt phát trực tuyến</string>
+    <string name="action_choose_or_add_streaming_shortcut">Chọn hoặc thêm phím tắt phát trực tuyến</string>
+    <string name="action_show_streaming_library">Hiển thị tất cả phím tắt đã lưu</string>
+    <string name="playlist_shortcut_pick_title">Chọn phím tắt</string>
+    <string name="playlist_shortcut_pick_empty">Chưa lưu phím tắt phát trực tuyến — hãy thêm một mục bên dưới rồi nhấn để chọn</string>
+    <string name="playlist_shortcuts_empty">Chưa có phím tắt phát trực tuyến — thêm trong cài đặt ứng dụng điện thoại</string>
+    <string name="setting_playlist_shortcuts">Phím tắt phát trực tuyến</string>
+    <string name="setting_playlist_shortcuts_description">Mở liên kết chia sẻ từ đồng hồ trong YouTube Music, Spotify và các ứng dụng phát trực tuyến khác</string>
+    <string name="setting_shortcut_artwork">Tải hình ảnh phím tắt trực tuyến</string>
+    <string name="setting_shortcut_artwork_description">Tải hình thu nhỏ cho từng phím tắt đã lưu từ dịch vụ, hiển thị trong danh sách điện thoại, menu đồng hồ và các nút đã gán. Mỗi hình chỉ được tải một lần; chỉ liên kết chia sẻ công khai được gửi. Tắt theo mặc định.</string>
+    <string name="setting_queue_local_artwork">Ảnh bìa hàng đợi từ thư viện</string>
+    <string name="setting_queue_local_artwork_description">Trình phát nhạc cục bộ công bố ảnh bìa hàng đợi dưới dạng tham chiếu thư viện. Cấp quyền truy cập phương tiện để chúng có thể hiển thị trong hàng đợi trên đồng hồ. Không dùng Internet.</string>
+    <string name="setting_queue_local_artwork_granted">Đã cấp quyền truy cập phương tiện — ảnh bìa hàng đợi cục bộ sẽ được hiển thị</string>
+    <string name="setting_queue_local_artwork_denied">Quyền truy cập phương tiện bị từ chối. Bật trong cài đặt Android để hiển thị ảnh bìa hàng đợi cục bộ.</string>
+    <string name="setting_queue_remote_artwork">Tải ảnh bìa hàng đợi trực tuyến</string>
+    <string name="setting_queue_remote_artwork_short_description">Các ứng dụng phát trực tuyến (ứng dụng YouTube Music, Echo Music…) công bố ảnh bìa hàng đợi dưới dạng liên kết chứ không phải ảnh, nên tùy chọn này tải và lưu bộ nhớ đệm. Tắt để giữ hàng đợi hoàn toàn ngoại tuyến — các hàng đó sẽ không hiển thị ảnh bìa.</string>
+    <string name="setting_queue_remote_artwork_description">Trình phát trực tuyến công bố ảnh bìa hàng đợi dưới dạng liên kết thay vì ảnh. Tải mỗi ảnh một lần và lưu bộ nhớ đệm trên điện thoại này để hiển thị trong hàng đợi trên đồng hồ. Chỉ URL ảnh bìa mà trình phát đã công bố được yêu cầu — không có tài khoản hay dữ liệu cá nhân. Bật theo mặc định; tắt để giữ hàng đợi hoàn toàn ngoại tuyến.</string>
+    <string name="watch_streaming_shortcuts_empty">Thêm bài hát, album hoặc danh sách phát cho Hành động nhanh và menu đồng hồ</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="other">%1$d phím tắt đã lưu · Có trong Hành động nhanh và menu đồng hồ</item>
+    </plurals>
+    <string name="category_music_apps">Ứng dụng &amp; dịch vụ âm nhạc</string>
+    <string name="category_apps_content">Lời bài hát &amp; siêu dữ liệu</string>
+    <string name="category_streaming_services">Phím tắt phát trực tuyến</string>
+    <string name="category_queue_artwork">Hình ảnh hàng đợi</string>
+    <string name="category_system_access">Quyền Android &amp; thông báo</string>
+    <string name="setting_apps_integrations">Dịch vụ âm nhạc được hỗ trợ</string>
+    <string name="setting_apps_integrations_description">Liên kết hoạt động với YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music và SoundCloud. Không cần quyền truy cập tài khoản.</string>
+    <string name="setting_apps_integrations_none">Không phát hiện ứng dụng được hỗ trợ. Phím tắt vẫn có thể mở trong trình duyệt hoặc ứng dụng tương thích khác.</string>
+    <string name="setting_apps_integrations_installed">Đã phát hiện %1$d trên %2$d: %3$s</string>
+    <string name="setting_streaming_open_mode">Mở liên kết phát trực tuyến bằng</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Ứng dụng phát trực tuyến đã nhận diện</item>
+        <item>Mặc định Android</item>
+        <item>Hỏi mỗi lần</item>
+    </string-array>
+    <string name="setting_persistent_notification">Quản lý thông báo “Svartifoss đang hoạt động”</string>
+    <string name="setting_persistent_notification_description">Mở cài đặt Android của thông báo này — tắt tiếng, ẩn khỏi màn hình khóa hoặc điều chỉnh theo cách khác. Không thể tắt hoàn toàn: Android yêu cầu thông báo đang diễn ra khi dịch vụ nền giao tiếp với đồng hồ đang chạy.</string>
+    <string name="setting_notification_access">Quyền truy cập thông báo phương tiện</string>
+    <string name="setting_notification_access_enabled">Đã cho phép · Nhấn để xem cài đặt Android</string>
+    <string name="setting_notification_access_disabled">Chưa cho phép · Bắt buộc cho hành động phương tiện trong thông báo và bộ lọc tự khởi động</string>
+    <string name="setting_notification_access_unavailable">Cài đặt quyền truy cập thông báo không khả dụng trên thiết bị này</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="other">%1$d phím tắt đã lưu · Nhấn để quản lý hoặc nhập liên kết</item>
+    </plurals>
+    <string name="category_privacy">Quyền riêng tư</string>
+    <string name="setting_privacy_policy">Chính sách quyền riêng tư</string>
+    <string name="setting_privacy_policy_description">Xem dữ liệu Svartifoss sử dụng và dịch vụ trực tuyến nào là tùy chọn.</string>
+    <string name="setting_crash_reporting">Gửi báo cáo sự cố</string>
+    <string name="setting_crash_reporting_description">Gửi chẩn đoán Firebase Crashlytics để giúp khắc phục lỗi. Bật theo mặc định; bạn có thể tắt bất kỳ lúc nào.</string>
+    <string name="setting_announcements">Thông báo từ nhà phát triển</string>
+    <string name="setting_announcements_description">Thông báo thỉnh thoảng từ nhà phát triển — bản phát hành mới, thông báo quan trọng. Gửi qua Firebase Cloud Messaging; không liên quan tới tài khoản hay danh sách người dùng. Bật theo mặc định; bạn có thể tắt bất kỳ lúc nào.</string>
+    <string name="announcement_notification_channel">Thông báo</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Chia sẻ trực tiếp danh sách phát, album hoặc bài hát tới Svartifoss, dán liên kết đã sao chép hoặc thêm thủ công. Đồng hồ yêu cầu điện thoại mở liên kết; không cần đăng nhập dịch vụ.</string>
+    <string name="back">Quay lại</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Âm nhạc của bạn, chỉ cách một lần chạm</string>
+    <string name="playlist_shortcuts_yours">Phím tắt của bạn</string>
+    <string name="playlist_shortcuts_empty_hint">Thêm liên kết bài hát, album hoặc danh sách phát được chia sẻ để dùng trên đồng hồ.</string>
+    <string name="playlist_shortcuts_add">Thêm phím tắt</string>
+    <string name="playlist_shortcuts_paste">Dán liên kết</string>
+    <string name="playlist_shortcuts_reload_covers">Tải lại ảnh bìa</string>
+    <string name="playlist_shortcuts_reloading_covers">Đang tải lại ảnh bìa…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Đã tải lại ảnh bìa</string>
+    <string name="playlist_shortcuts_edit">Chỉnh sửa phím tắt</string>
+    <string name="playlist_shortcut_save">Lưu phím tắt</string>
+    <string name="playlist_shortcut_editor_hint">Dán một liên kết. Svartifoss tự động nhận diện ứng dụng và loại nội dung.</string>
+    <string name="playlist_shortcut_detection_waiting">Đang chờ liên kết phát trực tuyến</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Hỗ trợ Spotify, YouTube Music, Apple Music, TIDAL, Deezer và nhiều dịch vụ khác.</string>
+    <string name="playlist_shortcut_detected_format">Đã nhận diện: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Tên</string>
+    <string name="playlist_shortcut_link_hint">Liên kết chia sẻ hoặc URI ứng dụng</string>
+    <string name="playlist_shortcut_shuffle">Phát ngẫu nhiên (chỉ YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Liên kết</string>
+    <string name="playlist_type_track">Bài hát</string>
+    <string name="playlist_type_playlist">Danh sách phát</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">Nghệ sĩ</string>
+    <string name="playlist_type_show">Chương trình</string>
+    <string name="playlist_type_episode">Tập</string>
+    <string name="playlist_type_mix">Mix</string>
+    <string name="playlist_badge_shuffle">Phát ngẫu nhiên</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Chưa thêm phím tắt phát trực tuyến</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="other">Đã lưu %1$d</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Phím tắt phát trực tuyến có thứ tự. Chạm và giữ để kéo, dùng hành động trợ năng Di chuyển lên hoặc Di chuyển xuống, hoặc nhấn Ctrl+Lên/Xuống trên bàn phím.</string>
+    <string name="playlist_shortcut_more_options">Thêm tùy chọn cho %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Chỉnh sửa</string>
+    <string name="playlist_shortcut_menu_open">Mở ngay</string>
+    <string name="playlist_shortcut_menu_copy">Sao chép liên kết</string>
+    <string name="playlist_shortcut_menu_duplicate">Nhân bản</string>
+    <string name="playlist_shortcut_menu_share">Chia sẻ</string>
+    <string name="playlist_shortcut_menu_delete">Xóa</string>
+    <string name="playlist_shortcut_open_failed">Không có ứng dụng nào mở được liên kết này</string>
+    <string name="streaming_shortcut_choose_app">Mở liên kết phát trực tuyến bằng</string>
+    <string name="playlist_shortcut_link_copied">Đã sao chép liên kết</string>
+    <string name="playlist_shortcut_import_invalid">Văn bản được chia sẻ không chứa liên kết phát trực tuyến hợp lệ</string>
+    <string name="playlist_shortcut_clipboard_invalid">Bảng nhớ tạm không chứa liên kết phát trực tuyến hợp lệ</string>
+    <string name="playlist_shortcut_name_required">Nhập tên phím tắt</string>
+    <string name="playlist_shortcut_link_invalid">Nhập liên kết web hoặc URI ứng dụng hợp lệ</string>
+    <string name="playlist_shortcut_service_invalid">Dán liên kết hợp lệ để nhận diện dịch vụ</string>
+    <string name="playlist_shortcut_service_generic">Liên kết tương thích · Android sẽ chọn ứng dụng</string>
+    <string name="playlist_shortcut_service_installed">Đã cài %1$s · Sẵn sàng mở trong ứng dụng</string>
+    <string name="playlist_shortcut_service_not_installed">Chưa cài %1$s · Có thể dùng trình duyệt hoặc ứng dụng tương thích</string>
+    <string name="playlist_shortcut_copy_name">Bản sao của %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">Bản sao %2$d của %1$s</string>
+    <string name="playlist_shortcut_duplicated">Đã tạo %1$s</string>
+    <string name="playlist_shortcut_share_title">Chia sẻ phím tắt phát trực tuyến</string>
+    <string name="playlist_shortcut_share_failed">Không có ứng dụng nào để chia sẻ phím tắt này</string>
+    <string name="playlist_shortcut_deleted">Đã xóa %1$s</string>
+    <string name="playlist_shortcut_undo">Hoàn tác</string>
+
+    <string name="action_play_liked_songs_shuffled">Phát ngẫu nhiên bài đã thích (YT Music)</string>
+    <string name="action_search_history">Lịch sử tìm kiếm</string>
+    <string name="search_history_empty">Chưa có tìm kiếm gần đây</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Cập nhật</string>
+    <string name="setting_update_check">Thông báo phiên bản mới</string>
+    <string name="setting_update_check_description">Kiểm tra GitHub để tìm bản phát hành mới khoảng một lần mỗi ngày và hiển thị thông báo</string>
+    <string name="setting_update_prereleases">Bao gồm bản phát hành trước</string>
+    <string name="setting_update_prereleases_description">Cũng nhận thông báo về phiên bản beta</string>
+    <string name="setting_update_check_now">Kiểm tra cập nhật ngay</string>
+    <string name="setting_update_check_now_description">Hiển thị phiên bản mới nhất và cho phép cập nhật đồng hồ qua Bluetooth</string>
+    <string name="update_screen_title">Cập nhật</string>
+    <string name="update_cover_content_description">Svartifoss, thác nước đặt tên cho ứng dụng</string>
+    <string name="update_notification_channel">Cập nhật ứng dụng</string>
+    <string name="update_available_title">Svartifoss %1$s đã có</string>
+    <string name="update_notification_text">Nhấn để cập nhật</string>
+    <string name="update_available_action">Có bản cập nhật</string>
+    <string name="update_installed_phone">Điện thoại: %1$s</string>
+    <string name="update_installed_versions">Điện thoại: %1$s · Đồng hồ: %2$s</string>
+    <string name="update_watch_version_unknown">không rõ</string>
+    <string name="update_checking">Đang kiểm tra cập nhật…</string>
+    <string name="update_check_failed">Không thể kiểm tra cập nhật. Kiểm tra kết nối rồi thử lại.</string>
+    <string name="update_available_line">Phiên bản mới: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(bản phát hành trước)</string>
+    <string name="update_up_to_date">Bạn đang dùng phiên bản mới nhất (%1$s)</string>
+    <string name="update_no_wear_asset">Bản phát hành này không có APK đồng hồ để gửi.</string>
+    <string name="update_watch_hint">“Cập nhật đồng hồ” tải ứng dụng đồng hồ mới và gửi qua Bluetooth — bạn xác nhận cài đặt trên chính đồng hồ, không cần cáp hay Wear Installer.</string>
+    <string name="update_downloading">Đang tải xuống… %1$d%%</string>
+    <string name="update_connecting_watch">Đang kết nối với đồng hồ…</string>
+    <string name="update_transferring">Đang gửi tới đồng hồ… %1$d%%</string>
+    <string name="update_confirm_on_watch">Đã gửi! Một thông báo đã xuất hiện trên đồng hồ — nhấn vào đó trên đồng hồ để cài đặt.</string>
+    <string name="update_no_watch">Chưa kết nối đồng hồ.</string>
+    <string name="update_push_failed">Không thể gửi bản cập nhật tới đồng hồ. Hãy thử lại.</string>
+    <string name="update_watch_button">Cập nhật đồng hồ</string>
+    <string name="update_open_release_button">Mở trang phát hành</string>
+    <string name="update_watch_behind">Đồng hồ của bạn vẫn đang ở %1$s — hãy gửi bản cập nhật bên dưới.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Giữ ứng dụng điện thoại và đồng hồ đồng bộ</string>
+    <string name="update_state_checking">Đang kiểm tra cập nhật…</string>
+    <string name="update_state_current">Bạn đã cập nhật</string>
+    <string name="update_state_current_sub">Đang chạy bản phát hành mới nhất, %1$s</string>
+    <string name="update_state_available">Có bản cập nhật</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Không thể kiểm tra cập nhật</string>
+    <string name="update_state_failed_sub">Kiểm tra kết nối rồi thử lại</string>
+    <string name="update_device_phone">Điện thoại</string>
+    <string name="update_device_watch">Đồng hồ</string>
+    <string name="update_versions_header">Đã cài</string>
+    <string name="update_whats_new">Có gì mới</string>
+    <string name="update_phone_button">Cập nhật điện thoại</string>
+    <string name="update_installing">Đang mở trình cài đặt…</string>
+    <string name="update_install_permission_needed">Cho phép cài ứng dụng từ Svartifoss, sau đó nhấn Cập nhật điện thoại lần nữa.</string>
+    <string name="update_phone_failed">Không thể tải bản cập nhật điện thoại. Hãy thử lại.</string>
+    <string name="update_install_notification_title">Cập nhật Svartifoss</string>
+    <string name="update_install_notification_tap">Nhấn để cài phiên bản mới</string>
+    <string name="update_install_notification_failed">Cài đặt thất bại. Cho phép cài từ Svartifoss trong Cài đặt rồi thử lại.</string>
+    <string name="setting_wear_album_accent_source">Nguồn màu nhấn album</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Cân bằng</item>
+        <item>Rực nhất</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Tắt</item>
+        <item>Mềm</item>
+        <item>Tiêu chuẩn</item>
+        <item>Đậm</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Ngưỡng màu nhấn</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Bài hát</string>
+    <string name="preview_metadata_genre">Thể loại</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Năm</string>
+    <string name="preview_metadata_format">Định dạng</string>
+    <string name="preview_metadata_bitrate">Bitrate</string>
+    <string name="preview_metadata_position">Vị trí</string>
+    <string name="preview_metadata_output">Đầu ra</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Chi tiết album</string>
+    <string name="setting_wear_metadata_core_description">Album, nghệ sĩ album, vị trí trên đĩa và thời lượng.</string>
+    <string name="setting_wear_metadata_release">Chi tiết phát hành</string>
+    <string name="setting_wear_metadata_release_description">Thể loại, năm, ngày phát hành và hãng đĩa.</string>
+    <string name="setting_wear_metadata_credits">Ghi công</string>
+    <string name="setting_wear_metadata_credits_description">Nhà soạn nhạc, người viết lời và tác giả khi trình phát cung cấp.</string>
+    <string name="setting_wear_metadata_technical">Chi tiết tệp</string>
+    <string name="setting_wear_metadata_technical_description">Định dạng, bitrate, tần số lấy mẫu, kênh và kích thước. Chỉ dành cho bài cục bộ.</string>
+    <string name="setting_split_panel">Bảng chia đôi</string>
+    <string name="setting_split_panel_description">Nội dung lấp nửa dưới của mặt Chia đôi. Hình ảnh làm mờ tiếp tục cùng ảnh bìa phía sau văn bản; màu đặc tạo giao diện giống thẻ thông báo.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Hình ảnh làm mờ</item>
+        <item>Màu đặc</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Chi tiết phát</string>
+    <string name="setting_wear_metadata_playback_description">Vị trí tới mili giây, tốc độ, đầu ra âm thanh và nơi âm thanh đang phát trực tuyến hoặc phát từ — bao gồm địa chỉ của bài hát. Đây là khối duy nhất mà một bài phát trực tuyến có thể điền khi không có tệp để mô tả.</string>
+    <string name="setting_wear_metadata_identifiers">Mã định danh</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC và mã danh mục. Tắt theo mặc định — hữu ích khi bạn cần, gây nhiễu khi không cần.</string>
+    <string name="setting_metadata_lookup">Tra cứu chi tiết bài hát trực tuyến</string>
+    <string name="setting_metadata_lookup_description">Bổ sung những gì ứng dụng đang phát không cung cấp — ISRC, hãng đĩa, ngày phát hành — từ MusicBrainz, cơ sở dữ liệu công khai miễn phí. Tắt theo mặc định. Mặt Siêu dữ liệu hoạt động mà không cần mục này; nó chỉ thêm hàng. Không có gì được gửi trừ khi bạn bật và chọn mặt đó, và chỉ tên bài cùng nghệ sĩ được gửi.</string>
+</resources>

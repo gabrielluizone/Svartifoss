@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">テーマを管理</string>
+    <string name="watch_theme_builtin_subtitle">組み込みテーマ · %1$s レイアウト</string>
+    <string name="watch_theme_custom_subtitle">カスタムテーマ · %1$s レイアウト</string>
+    <string name="watch_theme_unknown_name">不明なテーマ</string>
+
+    <string name="watch_themes_title">ウォッチテーマ</string>
+    <string name="watch_theme_active_label">適用中のテーマ</string>
+    <string name="watch_theme_active_layout">レイアウト: %1$s</string>
+    <string name="watch_theme_preview_description">現在ウォッチに適用されているテーマのプレビュー</string>
+    <string name="watch_theme_create">テーマを作成</string>
+    <string name="watch_theme_create_title">新しいテーマを作成</string>
+    <string name="watch_theme_rename_title">テーマ名を変更</string>
+    <string name="watch_theme_name">テーマ名</string>
+    <string name="watch_theme_base_layout">基本レイアウト</string>
+    <string name="watch_theme_default_name">マイ %1$s テーマ</string>
+    <string name="watch_theme_generic_name">テーマ</string>
+    <string name="watch_theme_copy_name">%1$s のコピー</string>
+    <string name="watch_theme_built_in_section">組み込みテーマ</string>
+    <string name="watch_theme_custom_section">マイテーマ</string>
+    <string name="watch_theme_applied">適用中</string>
+    <string name="watch_theme_apply_success">%1$s をウォッチに適用しました</string>
+    <string name="watch_theme_apply_error">このテーマを適用できませんでした</string>
+    <string name="watch_theme_more_options">その他のテーマオプション</string>
+    <string name="watch_theme_list_description">組み込みとカスタムのウォッチテーマ</string>
+    <string name="watch_theme_row_description">%1$s。%2$s。タップして適用。</string>
+    <string name="watch_theme_row_description_applied">%1$s。%2$s。現在適用中。</string>
+    <string name="watch_theme_rename">名前を変更</string>
+    <string name="watch_theme_customize">カスタマイズ</string>
+    <string name="watch_theme_duplicate">複製</string>
+    <string name="watch_theme_delete">削除</string>
+    <string name="watch_theme_delete_title">「%1$s」を削除しますか？</string>
+    <string name="watch_theme_delete_message">この保存済みテーマと設定は完全に削除されます。</string>
+    <string name="watch_theme_deleted">テーマを削除しました</string>
+    <string name="watch_theme_duplicated">「%1$s」を作成しました</string>
+    <string name="watch_theme_limit_reached">カスタムテーマは最大24個まで保存できます。新しく作成する前に1つ削除してください。</string>
+    <string name="watch_theme_name_required">テーマ名を入力</string>
+    <string name="watch_theme_name_duplicate">同じ名前のテーマがすでに存在します</string>
+
+    <string name="watch_theme_face_classic">クラシック</string>
+    <string name="watch_theme_face_expressive">エクスプレッシブ</string>
+    <string name="watch_theme_face_vinyl">ビニール</string>
+    <string name="watch_theme_face_poster">ポスター</string>
+    <string name="watch_theme_face_studio">スタジオ</string>
+    <string name="watch_theme_face_halo">ハロー</string>
+    <string name="watch_theme_face_aurora">オーロラ</string>
+    <string name="watch_theme_face_eclipse">エクリプス AMOLED</string>
+    <string name="watch_theme_face_spectrum">スペクトラム</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">没入型</string>
+    <string name="watch_theme_face_depth">奥行き</string>
+    <string name="watch_theme_face_carousel">カルーセル</string>
+    <string name="watch_theme_face_chat">チャット</string>
+    <string name="watch_theme_face_split">分割</string>
+    <string name="watch_theme_face_note">ノート</string>
+    <string name="watch_theme_face_verse">歌詞</string>
+    <string name="watch_theme_face_metadata">メタデータ</string>
+</resources>

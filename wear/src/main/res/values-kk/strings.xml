@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Қазір ойнатылып жатқан медиа және басқару элементтері</string>
+    <string name="complication_album_art_label">Қазір ойнатылып жатқан медиа мұқабасы</string>
+    <string name="complication_no_music">Ештеңе ойнатылып жатқан жоқ</string>
+    <string name="tile_nothing_playing">Ештеңе ойнатылып жатқан жоқ</string>
+    <string name="tile_open_app">Svartifoss қолданбасын ашу</string>
+    <string name="tile_rewind_10">10 секунд артқа айналдыру</string>
+    <string name="tile_forward_10">10 секунд алға өткізу</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Стриминг жарлықтарыңыз — бір түртім жерде</string>
+    <string name="shortcuts_tile_title">Жарлықтар</string>
+    <string name="shortcuts_tile_empty">Әзірге жарлық жоқ</string>
+    <string name="shortcuts_tile_more">Қолданбада көбірек</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Ештеңе ойнатылып жатқан жоқ</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Телефоныңызда бірдеңе ойнатыңыз</string>
+    <string name="idle_hint_resume">Соңғы қолданбаны жалғастыру үшін түртіңіз</string>
+    <string name="idle_hint_shortcuts">Жарлықтарыңыз үшін түртіңіз</string>
+    <string name="idle_hint_menu">Мәзірді ашу үшін түртіңіз</string>
+    <string name="idle_hint_search">Іздеу үшін түртіңіз</string>
+    <string name="idle_hint_queue">Жуырда ойнатылғандарды көру үшін түртіңіз</string>
+    <string name="idle_resume">Ойнатуды жалғастыру</string>
+    <string name="idle_action_shortcuts">Жарлықтарды ашу</string>
+    <string name="idle_action_menu">Мәзірді ашу</string>
+    <string name="idle_action_search">Іздеу</string>
+    <string name="idle_action_queue">Жуырда ойнатылғандарды ашу</string>
+
+    <string name="no_phone">Телефон қосылмаған</string>
+    <string name="playback_stopped">Тоқтатылды</string>
+    <string name="error">ҚАТЕ</string>
+    <string name="error_play_services">Play Services қатесі</string>
+    <string name="button">Түйме</string>
+    <string name="back_button">Артқа</string>
+    <string name="turn_bezel_cw">Жиекті сағат тілі бағытымен бұраңыз</string>
+    <string name="turn_bezel_ccw">Жиекті сағат тіліне қарсы бұраңыз</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Ұнату</string>
+    <string name="quick_action_shuffle">Араластырып ойнату</string>
+    <string name="quick_action_repeat">Қайталау</string>
+    <string name="quick_action_repeat_all">Барлығын қайталау</string>
+    <string name="quick_action_repeat_one">Біреуін қайталау</string>
+    <string name="quick_action_up_next">Келесі</string>
+    <string name="quick_actions_unavailable">Ағымдағы қолданбада жылдам әрекеттер жоқ</string>
+    <string name="voice_search_prompt">Музыка іздеу</string>
+    <string name="queue_empty">Кезек қолжетімсіз</string>
+    <string name="queue_now_playing">Қазір ойнатылуда</string>
+    <string name="queue_load_more">Тағы жүктеу</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Жуырда ойнатылған</string>
+    <string name="queue_history_fallback_reason">Бұл қолданба өз кезегін бөліспейді</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Бүгін</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Сағат циферблаты</string>
+    <string name="face_picker_offline">Телефон қосылмаған — бұл циферблат сағатқа қолданылады, бірақ телефон өз баптауын сақтайды</string>
+    <string name="face_picker_section_builtin">Кірістірілген циферблаттар</string>
+    <string name="face_picker_section_custom">Менің тақырыптарым</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">%1$s негізінде</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Қолдану жолы</string>
+    <string name="hint_edges">Жоғары, төмен, сол немесе оң жақты түртіңіз — әр аймақ өзіне тағайындалған әрекетті орындайды</string>
+    <string name="hint_center">Орта — ойнату/кідірту
+Екі рет түрту — жылдам әрекеттер
+Ұзақ басу — циферблат таңдағышы (баптауға болады)</string>
+    <string name="hint_swipe_up">Жоғары сырғыту — әрекеттер мәзірі
+Төмен немесе солға — тағайындалған әрекеттер
+Жиектен оңға — шығу</string>
+    <string name="hint_crown">Тәж — дыбыс деңгейі немесе трек бойынша жылжу
+Бүйірлік түймелер — тағайындалған әрекеттер
+Барлығын телефондағы Controls және Watch бөлімдерінен баптаңыз</string>
+    <string name="hint_next">Келесі</string>
+    <string name="hint_dismiss">Дайын</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Ойнату</string>
+    <string name="action_name_pause">Кідірту</string>
+    <string name="action_name_skip_prev">Алдыңғы трек</string>
+    <string name="action_name_skip_next">Келесі трек</string>
+    <string name="action_name_volume_up">Дыбысты күшейту</string>
+    <string name="action_name_volume_down">Дыбысты азайту</string>
+    <string name="action_name_open_menu">Мәзірді ашу</string>
+    <string name="action_name_skip_30">30 секунд алға өткізу</string>
+    <string name="action_name_reverse_30">30 секунд артқа айналдыру</string>
+    <string name="action_name_play_pause">Ойнату/Кідірту</string>
+    <string name="action_name_stop">Тоқтату</string>
+    <string name="action_name_restart">Тректі қайта бастау</string>
+    <string name="action_name_seek">Трек бойынша жылжу</string>
+    <string name="action_name_mute">Дыбысты өшіру</string>
+    <string name="action_name_search">Іздеу</string>
+    <string name="action_name_custom">Арнаулы әрекет</string>
+    <string name="state_on">Қосулы</string>
+    <string name="state_off">Өшірулі</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Қолданба жаңартулары</string>
+    <string name="update_install_title">Svartifoss жаңартуы</string>
+    <string name="update_install_tap">Жаңа нұсқаны орнату үшін түртіңіз</string>
+    <string name="update_install_failed">Орнату сәтсіз аяқталды. Сағат баптауларында Svartifoss арқылы орнатуға рұқсат беріп, телефоннан қайта көріңіз.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Осы жерден ойнату</string>
+    <string name="lyrics_none">Бұл трекке ән мәтіні табылмады</string>
+    <string name="lyrics_failed">Ән мәтінін алу мүмкін болмады. Телефон байланысын тексеріңіз.</string>
+    <string name="lyrics_disabled">Телефон баптауларында ән мәтінін іздеу өшірілген</string>
+    <string name="lyrics_no_track">Ештеңе ойнатылып жатқан жоқ</string>
+    <string name="metadata_none">Бұл трек туралы мәлімет жоқ</string>
+    <string name="metadata_album">Альбом</string>
+    <string name="metadata_album_artist">Альбом орындаушысы</string>
+    <string name="metadata_track">Трек</string>
+    <string name="metadata_duration">Ұзақтығы</string>
+    <string name="metadata_genre">Жанр</string>
+    <string name="metadata_year">Жыл</string>
+    <string name="metadata_released">Шығарылған күні</string>
+    <string name="metadata_label">Лейбл</string>
+    <string name="metadata_country">Ел</string>
+    <string name="metadata_composer">Композитор</string>
+    <string name="metadata_writer">Ән авторы</string>
+    <string name="metadata_author">Автор</string>
+    <string name="metadata_codec">Пішім</string>
+    <string name="metadata_bitrate">Битрейт</string>
+    <string name="metadata_sample_rate">Дискреттеу жиілігі</string>
+    <string name="metadata_channels">Арналар</string>
+    <string name="metadata_file_size">Өлшем</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Релиз ID</string>
+    <string name="metadata_compilation">Жинақ</string>
+    <string name="metadata_value_yes">Иә</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Орын</string>
+    <string name="metadata_speed">Жылдамдық</string>
+    <string name="metadata_output">Шығыс</string>
+    <string name="metadata_output_speaker">Телефон динамигі</string>
+    <string name="metadata_output_wired">Құлаққап</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB аудио</string>
+    <string name="metadata_output_remote">Трансляция</string>
+    <string name="metadata_origin">Дереккөз</string>
+    <string name="metadata_origin_stream">Ағын</string>
+    <string name="metadata_origin_local">Телефондағы файл</string>
+    <string name="metadata_host">Хост</string>
+    <string name="metadata_file">Файл</string>
+    <string name="metadata_download">Жүктеп алу</string>
+    <string name="metadata_download_no">Жүктелмеген</string>
+    <string name="metadata_download_running">Жүктелуде</string>
+    <string name="metadata_download_yes">Жүктелді</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Ақпарат</string>
+    <string name="metadata_source">Ойнатылып жатқан қолданба</string>
+</resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Управление на теми</string>
+    <string name="watch_theme_builtin_subtitle">Вградена тема · Оформление %1$s</string>
+    <string name="watch_theme_custom_subtitle">Персонализирана тема · Оформление %1$s</string>
+    <string name="watch_theme_unknown_name">Неизвестна тема</string>
+
+    <string name="watch_themes_title">Теми за часовника</string>
+    <string name="watch_theme_active_label">ПРИЛОЖЕНА ТЕМА</string>
+    <string name="watch_theme_active_layout">Оформление: %1$s</string>
+    <string name="watch_theme_preview_description">Преглед на темата, приложена в момента на часовника</string>
+    <string name="watch_theme_create">Създаване на тема</string>
+    <string name="watch_theme_create_title">Създаване на нова тема</string>
+    <string name="watch_theme_rename_title">Преименуване на тема</string>
+    <string name="watch_theme_name">Име на тема</string>
+    <string name="watch_theme_base_layout">Основно оформление</string>
+    <string name="watch_theme_default_name">Моята тема %1$s</string>
+    <string name="watch_theme_generic_name">Тема</string>
+    <string name="watch_theme_copy_name">Копие на %1$s</string>
+    <string name="watch_theme_built_in_section">Вградени теми</string>
+    <string name="watch_theme_custom_section">Моите теми</string>
+    <string name="watch_theme_applied">ПРИЛОЖЕНО</string>
+    <string name="watch_theme_apply_success">%1$s е приложено на часовника ви</string>
+    <string name="watch_theme_apply_error">Тази тема не можа да бъде приложена</string>
+    <string name="watch_theme_more_options">Още опции за темата</string>
+    <string name="watch_theme_list_description">Вградени и персонализирани теми за часовника</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Докоснете за прилагане.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Приложено в момента.</string>
+    <string name="watch_theme_rename">Преименуване</string>
+    <string name="watch_theme_customize">Персонализиране</string>
+    <string name="watch_theme_duplicate">Дублиране</string>
+    <string name="watch_theme_delete">Изтриване</string>
+    <string name="watch_theme_delete_title">Изтриване на „%1$s“?</string>
+    <string name="watch_theme_delete_message">Тази запазена тема и настройките ѝ ще бъдат премахнати завинаги.</string>
+    <string name="watch_theme_deleted">Темата е изтрита</string>
+    <string name="watch_theme_duplicated">Създадено е „%1$s“</string>
+    <string name="watch_theme_limit_reached">Можете да запазите до 24 персонализирани теми. Изтрийте една, преди да създадете нова.</string>
+    <string name="watch_theme_name_required">Въведете име на тема</string>
+    <string name="watch_theme_name_duplicate">Вече съществува тема с това име</string>
+
+    <string name="watch_theme_face_classic">Класически</string>
+    <string name="watch_theme_face_expressive">Експресивен</string>
+    <string name="watch_theme_face_vinyl">Винил</string>
+    <string name="watch_theme_face_poster">Плакат</string>
+    <string name="watch_theme_face_studio">Студио</string>
+    <string name="watch_theme_face_halo">Ореол</string>
+    <string name="watch_theme_face_aurora">Аврора</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Спектър</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Потапящ</string>
+    <string name="watch_theme_face_depth">Дълбочина</string>
+    <string name="watch_theme_face_carousel">Въртележка</string>
+    <string name="watch_theme_face_chat">Чат</string>
+    <string name="watch_theme_face_split">Разделено</string>
+    <string name="watch_theme_face_note">Нота</string>
+    <string name="watch_theme_face_verse">Куплет</string>
+    <string name="watch_theme_face_metadata">Метаданни</string>
+</resources>

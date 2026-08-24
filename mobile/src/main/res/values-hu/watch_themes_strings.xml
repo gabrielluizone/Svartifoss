@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Témák kezelése</string>
+    <string name="watch_theme_builtin_subtitle">Beépített téma · %1$s elrendezés</string>
+    <string name="watch_theme_custom_subtitle">Egyéni téma · %1$s elrendezés</string>
+    <string name="watch_theme_unknown_name">Ismeretlen téma</string>
+
+    <string name="watch_themes_title">Óratémák</string>
+    <string name="watch_theme_active_label">ALKALMAZOTT TÉMA</string>
+    <string name="watch_theme_active_layout">Elrendezés: %1$s</string>
+    <string name="watch_theme_preview_description">Az órán jelenleg alkalmazott téma előnézete</string>
+    <string name="watch_theme_create">Téma létrehozása</string>
+    <string name="watch_theme_create_title">Új téma létrehozása</string>
+    <string name="watch_theme_rename_title">Téma átnevezése</string>
+    <string name="watch_theme_name">Téma neve</string>
+    <string name="watch_theme_base_layout">Alapelrendezés</string>
+    <string name="watch_theme_default_name">Saját %1$s témám</string>
+    <string name="watch_theme_generic_name">Téma</string>
+    <string name="watch_theme_copy_name">%1$s másolat</string>
+    <string name="watch_theme_built_in_section">Beépített témák</string>
+    <string name="watch_theme_custom_section">Saját témák</string>
+    <string name="watch_theme_applied">ALKALMAZVA</string>
+    <string name="watch_theme_apply_success">%1$s alkalmazva az órán</string>
+    <string name="watch_theme_apply_error">Ezt a témát nem sikerült alkalmazni</string>
+    <string name="watch_theme_more_options">További témabeállítások</string>
+    <string name="watch_theme_list_description">Beépített és egyéni óratémák</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Koppintson az alkalmazáshoz.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Jelenleg alkalmazva.</string>
+    <string name="watch_theme_rename">Átnevezés</string>
+    <string name="watch_theme_customize">Testreszabás</string>
+    <string name="watch_theme_duplicate">Másolat készítése</string>
+    <string name="watch_theme_delete">Törlés</string>
+    <string name="watch_theme_delete_title">Törli ezt: „%1$s”?</string>
+    <string name="watch_theme_delete_message">Ez a mentett téma és beállításai véglegesen törlődnek.</string>
+    <string name="watch_theme_deleted">Téma törölve</string>
+    <string name="watch_theme_duplicated">„%1$s” létrehozva</string>
+    <string name="watch_theme_limit_reached">Legfeljebb 24 egyéni témát menthet. Új létrehozása előtt töröljön egyet.</string>
+    <string name="watch_theme_name_required">Adja meg a téma nevét</string>
+    <string name="watch_theme_name_duplicate">Már létezik ilyen nevű téma</string>
+
+    <string name="watch_theme_face_classic">Klasszikus</string>
+    <string name="watch_theme_face_expressive">Kifejező</string>
+    <string name="watch_theme_face_vinyl">Vinyl</string>
+    <string name="watch_theme_face_poster">Poszter</string>
+    <string name="watch_theme_face_studio">Stúdió</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Spektrum</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Magával ragadó</string>
+    <string name="watch_theme_face_depth">Mélység</string>
+    <string name="watch_theme_face_carousel">Körhinta</string>
+    <string name="watch_theme_face_chat">Csevegés</string>
+    <string name="watch_theme_face_split">Osztott</string>
+    <string name="watch_theme_face_note">Jegyzet</string>
+    <string name="watch_theme_face_verse">Versszak</string>
+    <string name="watch_theme_face_metadata">Metaadatok</string>
+</resources>

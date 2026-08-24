@@ -1,0 +1,1996 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Hindi suportado ang Wear OS sa device na ito</string>
+    <string name="setting_no_wearable_api_banner_description">Walang Google Play Services Wear OS component ang device na ito, na kailangan ng Svartifoss para makipag-ugnayan sa relo. Hindi makakatulong ang pag-pair — hindi maaabot ng phone app ang relo rito. Mase-save pa rin ang lahat ng nasa ibaba at malalapat kapag in-install mo ang Svartifoss sa device na sumusuporta rito.</string>
+    <string name="setting_no_watch_banner">Walang nakakonektang relo</string>
+    <string name="setting_no_watch_banner_description">Nagsi-sync ang mga setting na ito sa Wear OS watch mo, kaya hindi makikita ang epekto ng mga ito hangga’t walang naka-pair at nakakonektang relo — pero maaari mo pa ring i-configure ang lahat sa ibaba ngayon.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Hitsura</string>
+    <string name="setting_theme">Tema</string>
+    <string name="theme_light">Malinaw na Puti</string>
+    <string name="theme_dark">Purong Itim</string>
+    <string name="theme_system">Sundin ang System</string>
+    <string name="setting_language">Wika</string>
+    <string name="language_system">Sundin ang System</string>
+    <string name="language_change_watch_notice">Susunod din ang relo sa wikang ito kapag nakapag-sync na.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Developer</string>
+    <string name="dev_mode_unlocked">Naka-enable ang developer mode ✦</string>
+    <string name="dev_mode_clicks_remaining">%1$d pang tap para ma-unlock ang developer mode</string>
+    <string name="dev_disable_mode">I-disable ang developer mode</string>
+    <string name="dev_disable_mode_description">Itago muli ang seksyong ito — i-tap ang \"Installed version\" nang pitong beses para ibalik ito</string>
+    <string name="dev_mode_disabled">Naka-disable ang developer mode</string>
+    <string name="dev_build_info">Impormasyon ng build</string>
+    <string name="dev_sync_watch">Pilitin ang pag-sync ng mga setting ng relo</string>
+    <string name="dev_sync_watch_description">Ipadala agad ang lahat ng kasalukuyang setting sa naka-pair na relo</string>
+    <string name="dev_sync_watch_done">Na-sync ang mga setting sa relo</string>
+    <string name="dev_copy_debug_info">Kopyahin ang debug info</string>
+    <string name="dev_copy_debug_info_description">Kopyahin ang build at mga detalye ng device sa clipboard</string>
+    <string name="dev_show_archived">Ipakita ang mga naka-archive na opsyon</string>
+    <string name="dev_show_archived_description">Ipakita ang mga watch layout at setting na in-archive dahil sa mga kilalang isyu</string>
+    <string name="dev_copy_debug_info_done">Nakopya ang debug info</string>
+    <string name="dev_open_update_screen">Buksan ang update screen</string>
+    <string name="dev_open_update_screen_description">I-preview ang Updates screen (cover banner, layout ng release notes) nang hindi naghihintay ng totoong release</string>
+    <string name="dev_watch_layout_bounds">Ipakita ang hangganan ng watch layout</string>
+    <string name="dev_watch_layout_bounds_description">I-outline ang nakikitang player elements at touch regions sa relo. Diagnostic overlay lang.</string>
+    <string name="dev_watch_player_info">Ipakita ang impormasyon ng watch player</string>
+    <string name="dev_watch_player_info_description">I-overlay sa relo ang aktibong face, playback state, progress at render information.</string>
+    <string name="pref_reset_default">I-reset sa default</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Nakita mo ang nakatagong talon.
+
+Svartifoss — mga haliging itim na basalt
+na pumapalibot sa isang talon sa Iceland,
+paalala na ang musika ay dumadaloy
+na parang tubig sa pagitan ng bato.
+
+♪ Ginawa nang may malasakit. ♪</string>
+    <string name="easter_egg_ok">Isara</string>
+
+    <string name="nav_watch_face">Relo</string>
+    <string name="watch_face_header">Hitsura ng relo</string>
+    <string name="nav_controls">Mga control</string>
+    <string name="nav_actions">Mga action</string>
+    <string name="nav_settings">Mga setting</string>
+
+    <string name="controls_header">Mga control</string>
+    <string name="controls_state_playing">Tumutugtog ang musika</string>
+    <string name="controls_state_stopped">Walang playback</string>
+    <string name="controls_playing_description">Piliin kung ano ang ginagawa ng bawat input habang tumutugtog ang musika. Hiwalay ang setup na ito sa state na walang playback.</string>
+    <string name="controls_stopped_description">Piliin kung ano ang ginagawa ng bawat input bago magsimula ang playback o pagkatapos itong huminto. Hiwalay ang setup na ito sa playing state.</string>
+
+    <string name="watch_live_preview">Live na preview ng relo</string>
+    <string name="watch_preview_description">Live preview ng napiling watch surface. Makikita rito ang mga pagbabago bago mo subukan sa relo.</string>
+    <string name="watch_section_style">Player</string>
+    <string name="watch_section_style_description">Piliin ang player layout at kung paano kumikilos ang title, oras at progress nito.</string>
+    <string name="watch_section_background">Background</string>
+    <string name="watch_section_background_description">Kontrolin ang album art, blur, fading at readability sa likod ng player.</string>
+    <string name="watch_section_colors">Mga kulay</string>
+    <string name="watch_section_colors_description">Itakda ang base, progress at album accents, pagkatapos ay ayusin ang mga kulay ng title, artist, clock, volume at panel.</string>
+    <string name="watch_section_typography">Teksto</string>
+    <string name="watch_section_typography_description">Pumili ng mga font at ayusin ang title, artist, clock, app icon, secondary screens at Flex text.</string>
+    <string name="watch_section_aod">Always-on</string>
+    <string name="watch_section_aod_description">I-configure ang low-power screen at tingnan ang ambient na hitsura nito sa preview.</string>
+    <string name="watch_section_panels">Mga panel</string>
+    <string name="watch_section_panels_description">I-style ang volume, seek, quick panel at queue; kapag nag-focus sa isang row, bubukas ang surface na iyon sa preview.</string>
+    <string name="watch_section_mini_buttons">Mga mini button</string>
+    <string name="watch_section_mini_buttons_description">I-style ang opsyonal na shortcut row. I-tap ang “Mini buttons” sa ibaba para italaga ang mga action nito sa Controls.</string>
+    <string name="watch_overview_description">Piliin kung ano ang gusto mong i-customize. Mananatiling aktibo ang preview at naka-save na theme sa lahat ng area.</string>
+    <string name="watch_back_to_overview">Bumalik sa mga area ng Watch</string>
+
+    <string name="settings_section_general">Pangkalahatan</string>
+    <string name="settings_section_general_description">App theme, accent color at mga preference sa update.</string>
+    <string name="settings_section_watch">Gawi</string>
+    <string name="settings_section_watch_description">Pagkilos ng crown, touch, haptics at action menu sa relo mo.</string>
+    <string name="settings_section_automation">Awtomasyon</string>
+    <string name="settings_section_automation_description">Piliin kung kailan awtomatikong bubukas at magsasara ang Svartifoss.</string>
+    <string name="settings_section_apps">Mga app</string>
+    <string name="settings_section_apps_description">Maghanap ng lyrics at metadata, streaming shortcuts, queue artwork at Android access.</string>
+    <string name="settings_section_data">Data at suporta</string>
+    <string name="settings_section_data_description">I-back up ang setup mo, tingnan ang bersyon at diagnostics, o humingi ng tulong.</string>
+    <string name="settings_overview_description">Pumili ng area. Magkakasama ang magkakaugnay na opsyon, habang maaari ka pa ring dalhin ng search diretso sa anumang setting.</string>
+    <string name="settings_back_to_overview">Bumalik sa mga area ng setting</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Paano gamitin ang Svartifoss</string>
+    <string name="tutorial_intro">Ginagawang remote ng Svartifoss ang relo mo para sa musikang tumutugtog sa phone mo. Narito ang lahat ng magagawa mo mula sa iyong pulsuhan.</string>
+
+    <string name="tutorial_taps_title">I-tap ang mga zone sa screen</string>
+    <string name="tutorial_taps_desc">Nahahati sa apat na zone ang watch screen — itaas, ibaba, kaliwa at kanan. Kapag nag-tap ka ng zone, tatakbo ang action na itinalaga mo rito. Bilang default, play o pause ang kaliwang zone, lilipat sa susunod na track ang kanan, at binabago ng itaas at ibaba ang volume.</string>
+
+    <string name="tutorial_quick_panel_title">Panel ng mabilisang action</string>
+    <string name="tutorial_quick_panel_desc">I-double-tap ang gitna ng now-playing screen para magbukas ng panel na may apat na slot — tatlong bilog na button at isang malapad na row sa ilalim. Kapag hindi binago, ginagaya ng mga slot ang mga button na inilalagay ng tumutugtog na app sa notification nito, kaya makukuha mo ang tunay nitong like, shuffle at repeat controls. Magtalaga ng anumang action sa slot, o itakda ito sa \"None\" para itago, sa ilalim ng Actions sa phone.</string>
+    <string name="tutorial_gestures_title">Single, double at long press</string>
+    <string name="tutorial_gestures_desc">Sinusuportahan ng apat na edge zone ang magkahiwalay na single, double at long-press action. Nako-configure rin ang single tap sa gitna; laging binubuksan ng double-tap nito ang Quick actions, habang binubuksan naman ng long-press ang face picker, queue, o wala, ayon sa Settings → Behavior.</string>
+
+    <string name="tutorial_buttons_title">Mga pisikal na button</string>
+    <string name="tutorial_buttons_desc">Kung may mga side button ang relo mo, maaari ka ring magtalaga rito ng single, double at long-press action. Patuloy silang gumagana kahit naka-off ang screen.</string>
+
+    <string name="tutorial_rotary_title">Umiikot na crown</string>
+    <string name="tutorial_rotary_desc">Piliin sa Settings → Behavior → Rotary crown / bezel kung babaguhin ng umiikot na crown o bezel ang volume, magse-seek sa track, o walang gagawin. Sa mga relong nag-uulat ng pag-ikot ng crown bilang mga button, italaga ang mga iyon sa Controls sa halip.</string>
+
+    <string name="tutorial_swipe_up_title">Mag-swipe pataas, pababa, pakaliwa at pakanan</string>
+    <string name="tutorial_swipe_up_desc">Maaaring i-configure ang pag-swipe pataas, pababa o pakaliwa sa now-playing screen para magbukas ng kahit ano — actions menu, playback queue, pag-skip ng track, mga playlist mo, at iba pa. I-configure ang bawat isa sa Controls at piliin ang Music playing o No playback. Bilang default, binubuksan ng swipe up ang actions menu at walang ginagawa ang iba hanggang italaga mo ang mga ito. Hindi binabago ang swipe right — iyon ang pangkalahatang Wear OS gesture para lumabas sa app.</string>
+    <string name="tutorial_shortcuts_title">Mga streaming shortcut</string>
+    <string name="tutorial_shortcuts_desc">Mag-save ng link sa track, album, mix o playlist mula sa Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music o SoundCloud, pagkatapos ay italaga ito sa anumang button, gesture o panel slot. Pinakamabilis na i-share ang link diretso sa Svartifoss mula sa streaming app; maaari ka ring mag-paste ng kinopyang link o mag-type nito. Walang kailangang account o login — inuutusan ng relo ang phone na simulan ang playback, kaya nagpapatugtog ang shortcut sa halip na buksan lang ang app.</string>
+    <string name="tutorial_yt_music_title">Mga shortcut ng YouTube Music</string>
+    <string name="tutorial_yt_music_desc">Italaga ang \"Play liked songs\", \"Play liked songs, shuffled\" o \"My playlists\" sa anumang button, gesture o swipe para dumiretso sa musika mo nang hindi hinahawakan ang phone. Naaalala ng \"Search history\" ang mga kamakailang search mo sa relo — pindutin at hawakan ang isa para burahin ito.</string>
+
+    <string name="tutorial_exit_title">Mag-swipe para lumabas</string>
+    <string name="tutorial_exit_desc">Mag-swipe mula sa kaliwang gilid para umalis sa player. Maaari nitong awtomatikong i-pause ang playback kapag lumabas ka — i-enable ito sa Settings.</string>
+
+    <string name="tutorial_tile_title">Tile ng mabilisang control</string>
+    <string name="tutorial_tile_desc">Mag-swipe nang pahalang mula sa watch face papunta sa Svartifoss tile para sa agarang play, pause at skip nang hindi binubuksan ang app.</string>
+
+    <string name="tutorial_complication_title">Complication ng watch face</string>
+    <string name="tutorial_complication_desc">Idagdag ang Svartifoss album art complication sa watch face mo para makita agad ang kasalukuyang cover. I-tap ito para buksan ang player.</string>
+
+    <string name="tutorial_system_title">Mga media control ng system</string>
+    <string name="tutorial_system_desc">Lumalabas din ang kasalukuyang track sa sariling media controls at recent apps ng relo, kaya makokontrol mo rin ang playback mula roon.</string>
+
+    <string name="tutorial_tip">Tip: i-configure ang parehong state sa Controls, pagkatapos ay ayusin ang menu sa Actions.</string>
+
+    <string name="navigation_drawer_open">Buksan ang navigation drawer</string>
+    <string name="navigation_drawer_close">Isara ang navigation drawer</string>
+
+    <string name="action_settings">Mga setting</string>
+    <string name="action_pause">I-pause</string>
+    <string name="action_play">I-play</string>
+    <string name="action_skip_prev">Lumaktaw sa nakaraan</string>
+    <string name="action_skip_next">Lumaktaw sa susunod</string>
+    <string name="action_play_pause">Play / Pause</string>
+    <string name="action_stop">Ihinto</string>
+    <string name="action_restart">I-restart ang track</string>
+    <string name="action_mute">I-mute / I-unmute</string>
+    <string name="action_skip_seconds">Lumaktaw nang %1$d segundo</string>
+    <string name="action_reverse_seconds">Bumalik nang %1$d segundo</string>
+    <string name="action_like">I-like</string>
+    <string name="action_shuffle">Shuffle</string>
+    <string name="action_repeat">Ulitin</string>
+    <string name="action_repeat_one">Ulitin ang isa</string>
+    <string name="action_search">Maghanap ng musika</string>
+    <string name="action_open_lyrics">Lyrics</string>
+    <string name="group_playback_controls">Mga playback control</string>
+    <string name="group_streaming_shortcuts">Mga track, album at playlist</string>
+    <string name="pick_action">Pumili ng action</string>
+    <string name="action_search_hint">Hanapin sa listahang ito</string>
+    <string name="action_search_empty">Walang action na tumutugma sa search na ito.</string>
+    <string name="action_opens_more">Maraming opsyon</string>
+    <string name="action_volume_up">Lakasan ang volume</string>
+    <string name="volume_down">Hinaan ang volume</string>
+    <string name="group_volume_controls">Mga volume control</string>
+    <string name="no_watch_detected">Walang natukoy na relo</string>
+    <string name="connection_instructions">Buksan ang Svartifoss sa relo para simulan ang koneksyon</string>
+    <string name="playing_controls">Mga control habang tumutugtog</string>
+    <string name="stopped_controls">Mga control kapag walang playback</string>
+    <string name="actions_menu">Menu ng mga action</string>
+    <string name="actions_intro">I-configure ang parehong action surface sa relo mo gamit ang playback controls, apps, o mga naka-save na track, album at playlist. Mananatiling compact ang quick panel; maaaring maglaman ang menu sa ibaba ng mas mahabang nakaayos na listahan.</string>
+    <string name="actions_quick_panel_section">Mabilisang panel</string>
+    <string name="actions_watch_menu_section">Menu sa relo</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d action · I-tap para i-edit · Pindutin at i-drag para baguhin ang ayos</item>
+        <item quantity="other">%1$d actions · I-tap para i-edit · Pindutin at i-drag para baguhin ang ayos</item>
+    </plurals>
+    <string name="actions_reorder_description">Nakaayos na action menu. Pindutin at hawakan para i-drag, gamitin ang Move up o Move down accessibility actions, o pindutin ang Ctrl+Up/Down sa keyboard.</string>
+    <string name="actions_move_up">Ilipat pataas</string>
+    <string name="actions_move_down">Ilipat pababa</string>
+    <string name="actions_moved_to_position">Inilipat ang %1$s sa posisyon %2$d ng %3$d.</string>
+    <string name="actions_empty">Wala pang action. Gamitin ang add button para gawin ang una.</string>
+    <string name="actions_add">Magdagdag ng action</string>
+    <string name="on_screen_buttons">MGA TOUCH ZONE</string>
+    <string name="physical_buttons">MGA PISIKAL NA BUTTON</string>
+    <string name="physical_buttons_disconnected">Ikonekta at buksan ang Svartifoss sa relo mo para i-configure ang mga pisikal na button nito. Available na ngayon ang touch zones, swipes at mini buttons.</string>
+    <string name="physical_buttons_unavailable">Walang naiulat na nako-configure na pisikal na button ang relong ito.</string>
+    <string name="control_assignment_tap">I-tap: %1$s</string>
+    <string name="control_assignment_hold">Pindutin nang matagal: %1$s</string>
+    <string name="control_assignment_both">I-tap: %1$s · Pindutin nang matagal: %2$s</string>
+    <string name="tap_a_zone_to_configure">I-tap ang zone sa relo para magtalaga ng action</string>
+    <string name="touch_zone_top">Itaas na zone</string>
+    <string name="touch_zone_bottom">Ibabang zone</string>
+    <string name="touch_zone_left">Kaliwang zone</string>
+    <string name="touch_zone_right">Kanang zone</string>
+    <string name="touch_zone_center">Tap sa gitna</string>
+    <string name="touch_zone_action">%1$s: %2$s. I-tap para i-configure.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">MGA SWIPE GESTURE</string>
+    <string name="tap_a_swipe_to_configure">I-tap ang direksyon para piliin kung ano ang bubuksan nito</string>
+    <string name="swipe_gesture_up">Mag-swipe pataas</string>
+    <string name="swipe_gesture_down">Mag-swipe pababa</string>
+    <string name="swipe_gesture_left">Mag-swipe pakaliwa</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Pataas</string>
+    <string name="swipe_gesture_label_down">Pababa</string>
+    <string name="swipe_gesture_label_left">Pakaliwa</string>
+
+    <string name="screen_buttons">MGA MINI BUTTON</string>
+    <string name="tap_a_screen_button_to_configure">Hanggang tatlong nakikitang button malapit sa ibaba ng watch screen — i-tap ang slot para magtalaga ng action</string>
+    <string name="screen_button_1">Mini button 1 (kaliwa)</string>
+    <string name="screen_button_2">Mini button 2 (gitna)</string>
+    <string name="screen_button_3">Mini button 3 (kanan)</string>
+    <string name="screen_button_label_1">Pindutan 1</string>
+    <string name="screen_button_label_2">Pindutan 2</string>
+    <string name="screen_button_label_3">Pindutan 3</string>
+    <string name="no_action">Walang action</string>
+    <string name="gesture_single_press">Isang pindot</string>
+    <string name="gesture_double_press">Dalawang pindot</string>
+    <string name="gesture_long_press">Matagal na pindot</string>
+    <string name="gesture_swipe_action">Action</string>
+    <string name="center_button_quick_panel_note">Laging binubuksan ng pag-double-tap sa gitna ang Quick actions. Kapag ni-long-press ito, tatakbo ang napili sa Settings → Behavior. Hindi nagbabago ang alinman sa gesture kapag itinalaga mo rito ang center tap.</string>
+    <string name="start_playback">Simulan ang playback</string>
+    <string name="uninstalled_app">Na-uninstall na app</string>
+
+    <string name="play_app">I-play ang %1$s</string>
+    <string name="tasker_task">Tasker Task</string>
+    <string name="icon_selection_title">Pagpili ng icon</string>
+    <string name="icon_selection_gallery">Mula sa gallery</string>
+    <string name="icon_selection_no_icon_pack">Pinapayagan ka ng feature na ito na pumili ng custom na icon para sa action mo mula sa
+        naka-install na icon pack.
+
+Sa kasamaang-palad, mukhang wala kang naka-install na icon pack.</string>
+    <string name="icon_selection_no_storage_permission">Pinapayagan ka ng feature na ito na pumili ng custom na icon para sa action mo mula sa
+        naka-install na icon pack.
+
+Kinakailangan ng ilang icon pack na may storage permission ang mga app. Kailangan mong payagan ito para magamit ang feature na ito.</string>
+    <string name="delete">Tanggalin</string>
+    <string name="action_text">Text ng action</string>
+    <string name="swap_action">Palitan ang action</string>
+    <string name="open_actions_menu">Buksan ang actions menu</string>
+    <string name="open_playlist_menu">Ipakita ang kasalukuyang playlist</string>
+    <string name="misc_settings">Iba pang setting</string>
+
+    <string name="category_backup">Backup</string>
+    <string name="export_config">I-export ang configuration</string>
+    <string name="export_config_description">I-save sa file ang button mappings, action list at watch settings mo</string>
+    <string name="import_config">I-import ang configuration</string>
+    <string name="import_config_description">I-restore mula sa file ang button mappings, action list at watch settings</string>
+    <string name="export_config_done">Na-export ang configuration</string>
+    <string name="export_config_failed">Hindi ma-export ang configuration</string>
+    <string name="import_config_done_title">Matagumpay ang import</string>
+    <string name="import_config_done_message">Kailangang mag-restart ang Svartifoss para mailapat ang na-import na configuration.</string>
+    <string name="import_config_failed">Hindi ma-import ang configuration — maaaring invalid ang file o mula sa hindi compatible na bersyon</string>
+    <string name="action_restart_now">Mag-restart ngayon</string>
+
+    <string name="category_about">Tungkol dito</string>
+    <string name="category_music_screen">Screen ng musika</string>
+    <string name="category_watch_screen">Screen ng relo</string>
+    <string name="category_mini_buttons">Mga mini button</string>
+    <string name="category_screen_face">Hitsura ng player</string>
+    <string name="category_wf_screen_behavior">Behavior ng screen</string>
+    <string name="category_wf_player_progress">Progress, seeking at oras</string>
+    <string name="category_album_background">Background ng album</string>
+    <string name="category_music_colors">Mga kulay mula sa musika</string>
+    <string name="category_wf_typography_font">Typeface</string>
+    <string name="category_wf_typography_title">Pamagat</string>
+    <string name="category_wf_typography_artist">Artist</string>
+    <string name="category_wf_typography_icon">Icon ng app</string>
+    <string name="category_wf_typography_flex">Google Sans Flex axes</string>
+    <string name="category_wf_metadata">Content ng metadata face</string>
+    <string name="category_wf_typography_secondary">Text sa ibang screen</string>
+    <string name="category_wf_colors_title">Mga kulay ng title</string>
+    <string name="category_wf_colors_artist">Mga kulay ng artist</string>
+    <string name="category_wf_colors_clock">Mga kulay ng clock</string>
+    <string name="setting_wear_font_flex_hint_title">Tungkol sa mga control na ito</string>
+    <string name="setting_wear_flex_axes_hint">Pino-fine-tune ng mga ito ang Google Sans Flex — piliin ito sa itaas para magamit ang mga iyon. Naitatakda na ng title at artist weight/italic sa itaas ang sariling weight (wght) at slant (slnt) axes ng font na ito; ang apat na control sa ibaba ay nalalapat sa buong face.</string>
+    <string name="setting_wear_font_flex_width">Lapad</string>
+    <string name="setting_wear_font_flex_width_description">Pahalang na stretch, mula condensed hanggang expanded (25–151). 100 ang normal na lapad ng font.</string>
+    <string name="setting_wear_font_flex_optical_size">Optical size</string>
+    <string name="setting_wear_font_flex_optical_size_description">Ina-adjust ang detalye ng stroke para sa epektibong laki ng text (6–144). Bagay ang mas mababang value sa maliit na text; mas mataas naman sa malaking display text.</string>
+    <string name="setting_wear_font_flex_grade">Grade</string>
+    <string name="setting_wear_font_flex_grade_description">Bahagyang binabago ang weight nang hindi binabago ang layout (0–100) — banayad na paraan para dagdagan ang contrast sa madilim na screen.</string>
+    <string name="setting_wear_font_flex_roundness">Pagkabilog</string>
+    <string name="setting_wear_font_flex_roundness_description">Pinaghahalo ang stroke terminals mula matulis (0) hanggang ganap na bilog (100) para sa mas palakaibigang hitsura.</string>
+    <string name="preview_sample_title">Pamagat ng kanta</string>
+    <string name="preview_sample_artist">Pangalan ng artist</string>
+    <string name="preview_sample_next_title">Susunod na kanta</string>
+    <string name="preview_playback_stopped">Huminto</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">ang naunang linya</string>
+    <string name="preview_verse_current">ang linyang tumutugtog ngayon</string>
+    <string name="preview_verse_next">at ang kasunod</string>
+    <string name="preview_chat_today">Ngayon</string>
+    <string name="category_gestures">Mga gesture at input</string>
+    <string name="category_watch_navigation">Navigation at mga shortcut</string>
+    <string name="category_rotary_input">Rotary input at tuning</string>
+    <string name="category_watch_feedback">Feedback at behavior sa pag-exit</string>
+    <string name="category_watch_display">Screen ng relo</string>
+    <string name="setting_wear_keep_screen_on">Panatilihing naka-on ang screen</string>
+    <string name="setting_wear_keep_screen_on_description">Pigilan ang watch screen na mamatay dahil sa inactivity timeout habang bukas ang screen ng Svartifoss. Magdi-dim pa rin ang relo kapag ibinaba mo ang pulsuhan — system gesture iyon. Mas gumagamit ng baterya. Laging nananatiling naka-on ang lyrics screen anuman ang setting na ito.</string>
+    <string name="setting_lyrics_enabled">Maghanap ng lyrics online</string>
+    <string name="setting_lyrics_enabled_description">Payagan ang phone na kumuha ng synced lyrics mula sa LRCLIB kapag binuksan mo ang lyrics screen sa relo. Ipinapadala ang pangalan ng track, artist at haba; wala nang iba, at walang sine-save sa disk. I-off ito at sasabihin ng lyrics screen na disabled ang lookup.</string>
+    <string name="setting_overlay_blur_radius">Blur ng overlay</string>
+    <string name="setting_overlay_blur_radius_description">Lakas ng blur (px) ng frosted backdrop sa likod ng volume/seek rings at quick actions panel — hiwalay sa album art background blur</string>
+    <string name="category_action_list">Listahan ng mga action</string>
+    <string name="category_automation">Awtomasyon</string>
+    <string name="category_idle">Kapag walang tumutugtog</string>
+    <string name="installed_version">Naka-install na bersyon</string>
+    <string name="get_support">Humingi ng suporta</string>
+    <string name="get_support_description">Ipadala ang application logs sa developer para sa suporta</string>
+    <string name="contact_developer">Makipag-ugnayan sa developer</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — makipag-ugnayan</string>
+    <string name="contact_developer_chooser">Magpadala ng email</string>
+    <string name="contact_developer_no_client">Walang naka-install na email app. Kinopya ang address sa clipboard.</string>
+    <string name="about_developer_title">Tungkol sa developer</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Nagsimula ang Svartifoss bilang personal na proyekto — gusto kong i-update ang Music Center for Wear ayon sa kaya na ngayon, para magamit ko lang ito araw-araw. Naging maayos ito kaya nagpasya akong ibahagi sa lahat. Ito ang una kong app, at kakaiba ang pakiramdam na makitang ang ginawa mo ay napapakinabangan din ng ibang tao.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Mga open source license</string>
+    <string name="setting_always_show_time">Palaging ipakita ang oras</string>
+    <string name="setting_always_show_time_off_description">Ipapakita lang ang kasalukuyang oras sa ambient mode</string>
+    <string name="setting_always_show_time_on_description">Palaging ipapakita ang kasalukuyang oras. Hindi makikita ang top action icon (papalitan ito ng clock), pero gagana pa rin nang normal ang action.</string>
+    <string name="tap_to_force_stop">I-tap para ihinto ang mga control</string>
+    <string name="notification_action_stop">Ihinto</string>
+    <string name="notification_action_force_stop">Piliting ihinto</string>
+    <string name="error_notification_access">Walang notification access. Tingnan ang phone.</string>
+    <string name="error_notifications">Mga error notification</string>
+    <string name="notification_access_notification_title">Kailangan ng Svartifoss ng notification access</string>
+    <string name="notification_access_notification_title_description">I-tap ang notification na ito at piliin ang Svartifoss para ayusin ang problema</string>
+    <string name="error_service_not_enabled">Kailangan ang notification access</string>
+    <string name="error_service_not_enabled_description">Para makontrol ang musika mula sa relo, kailangan ng Svartifoss ng notification access — ito ang paraan ng Android para makita nito kung aling app ang tumutugtog at makapagpadala ng play, pause at skip commands.
+
+Hindi kailanman binabasa ng Svartifoss ang nilalaman ng mga notification mo. Ginagamit lang nito ang permission na ito para mahanap ang aktibong media session.
+
+I-tap ang \"Open Settings\", pagkatapos ay i-on ang Svartifoss sa notification access.</string>
+    <string name="action_open_settings">Buksan ang Settings</string>
+    <string name="settings_search_title">Hanapin sa settings</string>
+    <string name="settings_search_hint">Hanapin sa settings</string>
+    <string name="settings_search_clear">I-clear ang search</string>
+    <string name="settings_search_prompt">Hanapin ayon sa pangalan ang bawat setting sa Settings at Watch appearance.</string>
+    <string name="settings_search_no_results">Walang setting na tumutugma riyan.</string>
+    <string name="settings_search_prerequisite">Nakadepende ang opsyong ito sa isa pang pagpili. Ayusin ang setting na ipinapakita rito para lumabas ito.</string>
+    <string name="setting_numeric_range_error">Maglagay ng value mula %1$d hanggang %2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">I-tap para ibigay — mananatiling inactive ang playback control hanggang gawin mo ito</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">I-install ang Svartifoss sa relo mo</string>
+    <string name="no_watch_app_description">Hindi makita ng Svartifoss ang watch app nito sa naka-pair mong Wear OS watch. Magkasamang gumagana ang phone at watch apps — kung walang watch app, hindi gagana ang pagkontrol sa playback mula sa pulsuhan.
+
+Wala ang Svartifoss sa Play Store — hiwalay na sini-sideload ang watch app (hal. gamit ang Wear Installer). I-tap ang \"View releases\" para buksan ang GitHub releases page at kunin ang watch APK. Kung kaka-install mo lang nito, bigyan ito ng isang minuto para matapos ang pag-sync.</string>
+    <string name="no_watch_app_button">Tingnan ang releases</string>
+    <string name="required_permission">Kinakailangang permission</string>
+    <string name="setting_pause_on_swipe_exit">I-pause ang playback kapag lumabas sa swipe</string>
+    <string name="setting_pause_on_swipe_exit_description">Awtomatikong i-pause ang anumang playback kapag lumalabas sa Svartifoss sa relo gamit ang swipe-left gesture.
+
+Hindi apektado ang pag-exit gamit ang power button at hindi ito kailanman mag-a-auto-pause.</string>
+    <string name="setting_rotating_crown_off_period">Delay ng rotary input pagkatapos buksan ang screen</string>
+    <string name="setting_rotating_crown_off_period_description">Maaaring sobrang sensitibo ang umiikot na input (hal. rotating crown) sa ilang device. Para maiwasan ang aksidenteng pagbabago ng volume, idi-disable ang rotary input nang <![CDATA[<b>%1$s milliseconds</b>]]> pagkatapos mong buksan ang screen.</string>
+    <string name="setting_rotary_seek">Mag-seek gamit ang rotary crown</string>
+    <string name="setting_rotary_seek_description">Kapag enabled, ang pag-ikot ng crown ay nagse-seek sa kasalukuyang track sa halip na baguhin ang volume. Maaari pa ring baguhin ang volume gamit ang on-screen o pisikal na button.</string>
+    <string name="setting_wear_rotary_action">Umiikot na crown / bezel</string>
+    <string name="wear_rotary_action_volume">Baguhin ang volume</string>
+    <string name="wear_rotary_action_seek">Mag-seek sa track</string>
+    <string name="wear_rotary_action_off">Walang gawin</string>
+    <string name="setting_rotating_sensitivity">Sensitivity ng rotary input</string>
+    <string name="setting_rotating_sensitivity_description">Sensitivity para sa rotary input. Kapag mas mataas ang numero, mas malaki ang itataas ng volume sa parehong paggalaw ng rotary crown. Kasalukuyang naka-set sa <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">I-disable ang double click ng pisikal na button sa ambient</string>
+    <string name="setting_disable_ambient_physical_double_click_description">May ilang relo na may problemang button kung saan minsan nare-register bilang double click ang isang click ng pisikal na button sa ambient mode.
+
+Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-disable ang double clicks sa ambient mode (hal. ang dalawang click ay single-click action lang ang gagawin). Hindi apektado ang pag-click nang dalawang beses kapag aktibo ang relo.</string>
+    <string name="setting_haptic_feedback">Haptic feedback</string>
+    <string name="setting_haptic_feedback_description">I-vibrate ang relo kapag pinipindot ang mga button.</string>
+    <string name="setting_auto_start">Awtomatikong buksan ang Svartifoss</string>
+    <string name="setting_auto_start_description">Awtomatikong buksan ang Svartifoss sa relo kapag nagsimula ang music playback sa phone.</string>
+    <string name="setting_auto_start_apps_blacklist">Mga auto-start app</string>
+    <string name="setting_auto_start_apps_blacklist_description">Listahan ng media apps na maaaring awtomatikong magbukas ng Svartifoss</string>
+    <string name="setting_dim_album_art">Shading ng player</string>
+    <string name="setting_dim_album_art_description">Magdagdag ng piniling shadow treatment sa pagitan ng artwork at player controls.</string>
+    <string name="setting_album_art_style">Style ng album art</string>
+    <string name="setting_album_art_style_description">Piliin kung ano ang hitsura ng now-playing background sa relo.</string>
+    <string name="setting_album_art_blur_radius">Lakas ng blur</string>
+    <string name="setting_album_art_blur_radius_description">Lakas ng full-screen blur kapag gumagamit ng blur ang napiling background. Kasalukuyang <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Lakas ng pag-dim</string>
+    <string name="setting_album_art_dim_strength_description">Kung gaano kadilim ang album art para madaling mabasa ang text. Kasalukuyang <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Style ng shading</string>
+    <string name="setting_player_shading_intensity">Lakas ng shading</string>
+    <string name="setting_player_shading_intensity_description">Kung gaano kalakas pinapadilim ng shading ang background. 100%% ang buong lakas; taasan pa para sa dagdag na contrast (hanggang 150%%). Kasalukuyang <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Ilapat ang hitsurang ito sa lahat ng face</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Kopyahin ang appearance settings ng face na ito sa lahat ng iba pang face</string>
+    <string name="apply_appearance_confirm_title">Ilapat sa lahat ng face?</string>
+    <string name="apply_appearance_confirm_message">Papaltan nito ang appearance settings ng lahat ng ibang face gamit ang kasalukuyan. Hindi mababago ang behavior settings mo.</string>
+    <string name="apply_appearance_confirm_button">Ilapat</string>
+    <string name="apply_appearance_done">Nailapat sa lahat ng face</string>
+    <string name="category_wf_layout_actions">Layout</string>
+    <string name="setting_reset_appearance">I-reset ang layout na ito</string>
+    <string name="setting_reset_appearance_description">Ibalik ang hitsura ng face na ito sa orihinal na default</string>
+    <string name="reset_appearance_confirm_title">I-reset ang layout na ito?</string>
+    <string name="reset_appearance_confirm_message">Babalik sa default ang appearance settings ng face na ito. Hindi maaapektuhan ang behavior settings at iba pang face.</string>
+    <string name="reset_appearance_confirm_button">I-reset</string>
+    <string name="reset_appearance_done">Na-reset ang layout sa default</string>
+    <string name="setting_reset_all_faces">I-reset ang lahat ng face sa default</string>
+    <string name="setting_reset_all_faces_description">Ibalik ang hitsura ng bawat built-in na face sa orihinal nitong default</string>
+    <string name="reset_all_faces_confirm_title">I-reset ang lahat ng face?</string>
+    <string name="reset_all_faces_confirm_message">Babalik sa orihinal na default ang hitsura ng bawat built-in na face at io-off ang anumang aktibong custom theme. Mananatili ang naka-save mong custom themes, behavior settings at napiling face.</string>
+    <string name="reset_all_faces_confirm_button">I-reset lahat</string>
+    <string name="reset_all_faces_done">Na-reset ang lahat ng face sa default</string>
+    <string name="face_reset_migration_title">I-update ang hitsura ng relo mo</string>
+    <string name="face_reset_migration_message">Nag-update ka mula sa mas lumang bersyon kung saan iisang set ng appearance settings ang gamit ng lahat ng watch face. Ngayon ay naaalala ng bawat face ang sarili nito, kaya maaaring hindi bagay ang lumang settings sa mga face na hindi mo direktang na-customize. Inirerekomenda naming i-reset ang lahat ng face sa bagong default o i-clear ang app data para sa ganap na sariwang simula.</string>
+    <string name="face_reset_migration_reset_button">I-reset ang lahat ng face</string>
+    <string name="face_reset_migration_clear_data_button">I-clear ang app data</string>
+    <string name="setting_player_shading_color">Kulay ng shading</string>
+    <string name="setting_wear_shading_custom_color">Custom na kulay ng shading</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Itim</item>
+        <item>Accent ng album</item>
+        <item>Desaturated na album</item>
+        <item>Pasadyang kulay</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Sundin ang player theme</item>
+        <item>Vignette sa gilid</item>
+        <item>Edge vignette (Malakas)</item>
+        <item>Edge vignette (Mabigat)</item>
+        <item>Ibabang sulok</item>
+        <item>Fade sa ibaba</item>
+        <item>Floor at ceiling</item>
+        <item>Filter sa buong screen</item>
+        <item>Pahiran ng kulay ng album</item>
+        <item>Dalawang-kulay na gradient ng album</item>
+        <item>Mga tabing sa gilid</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Opacity ng album art sa ambient</string>
+    <string name="setting_ambient_album_art_opacity_description">Kung gaano nakikita ang album art sa ambient mode. Kasalukuyang <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Timeout ng volume/seek overlay</string>
+    <string name="setting_volume_overlay_timeout_description">Kung gaano katagal nananatili sa screen ang volume at seek overlays pagkatapos mag-adjust. Kasalukuyang <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Dead zone ng rotary</string>
+    <string name="setting_rotary_deadzone_description">Pinakamababang galaw ng crown bago ilapat ang pagbabago sa volume o seek. Nakakatulong itong maiwasan ang aksidenteng adjustment. Kasalukuyang <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Karanasan sa Wear</string>
+    <string name="setting_swipe_gestures_hint">Mga swipe gesture</string>
+    <string name="setting_swipe_gestures_hint_description">Ang swipe up/down/left ay maaaring magbukas ng anumang action. I-tap dito para i-configure ang mga ito para sa Music playing o No playback. Nananatiling nakalaan ang swipe right para lumabas sa app.</string>
+    <string name="setting_screen_buttons_hint">Mga mini button</string>
+    <string name="setting_screen_buttons_hint_description">Hanggang tatlong nakikitang button, bawat isa ay may tap at long-press action. I-tap dito para i-configure ang mga ito para sa Music playing o No playback.</string>
+    <string name="dev_screen_buttons_offset">Posisyon ng mini buttons</string>
+    <string name="dev_screen_buttons_offset_description">Gustong distansya sa dp sa pagitan ng ibaba ng watch screen at mini buttons (default 42). Awtomatiko pa ring lumalayo ang row sa mahahabang title.</string>
+    <string name="setting_screen_buttons_tilt">Pagkiling ng button</string>
+    <string name="setting_screen_buttons_tilt_description">Kung gaano sinusundan ng side buttons ang kurba ng screen. 0 = tuwid na row; 100 = buong arko na may nakatagilid na icon.</string>
+    <string name="setting_screen_buttons_bg">Background ng mini buttons</string>
+    <string name="setting_screen_buttons_opacity">Opacity ng mini buttons</string>
+    <string name="setting_screen_buttons_opacity_description">Opacity ng buong mini-button group (0–100%%). Kasalukuyang <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Panel ng mabilisang action</string>
+    <string name="quick_panel_link_summary">I-double-tap ang gitna ng watch screen para buksan ito. I-tap dito para i-set up ang apat nitong slot sa Actions.</string>
+    <string name="quick_panel_config_hint">Ito ang mga button sa panel na binubuksan sa pag-double-tap sa gitna ng watch screen. I-tap ang row para piliin ang action nito (itatago ito ng \"None\"); long-press para ibalik ang default.</string>
+    <string name="quick_panel_slot_1">Pindutan 1</string>
+    <string name="quick_panel_slot_2">Pindutan 2</string>
+    <string name="quick_panel_slot_3">Pindutan 3</string>
+    <string name="quick_panel_slot_long">Mahabang button</string>
+    <string name="quick_panel_slot_default">%1$s (default)</string>
+    <string name="quick_panel_slot_hidden">Nakatago</string>
+    <string name="quick_panel_default_like">I-like</string>
+    <string name="quick_panel_default_shuffle">Shuffle</string>
+    <string name="quick_panel_default_repeat">Ulitin</string>
+    <string name="quick_panel_default_up_next">Susunod</string>
+    <string name="setting_wear_center_long_press_queue">Long-press sa gitna para sa queue</string>
+    <string name="setting_wear_center_long_press_queue_description">I-long-press ang gitna ng now-playing screen para buksan ang playback queue.</string>
+    <string name="setting_wear_center_long_press">Long-press sa gitna</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Palitan ang watch face</item>
+        <item>Buksan ang queue</item>
+        <item>Wala</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Pangunahing layout</string>
+    <string name="setting_wear_screen_face_description">Piliin ang istrukturang ginagamit ng theme na ito. Maaaring pagsamahin ng naka-save na theme ang layout na ito sa sarili nitong font, kulay, blur, shading, AOD at panels.</string>
+    <string name="setting_wear_show_track_title">Ipakita ang title ng kanta</string>
+    <string name="setting_wear_show_track_title_description">Ipakita ang pangalan ng kasalukuyang kanta sa player</string>
+    <string name="setting_wear_show_track_artist">Ipakita ang pangalan ng artist</string>
+    <string name="setting_wear_show_track_artist_description">Ipakita ang kasalukuyang artist sa player</string>
+    <string name="setting_wear_show_source_icon">Ipakita ang icon ng tumutugtog na app</string>
+    <string name="setting_wear_show_source_icon_description">Ipakita ang icon ng app na kasalukuyang tumutugtog katabi ng artist. Ginagamit ang icon mula sa media notification nito. Kapag off, hindi kailanman ipinapadala ang icon sa relo.</string>
+    <string name="setting_wear_player_controls_visible">Ipakita ang player controls</string>
+    <string name="setting_wear_player_controls_visible_description">Ipakita o itago ang built-in na buttons sa Classic, Poster, Studio at iba pang nako-configure na layout nang hindi dini-disable ang touch targets nito</string>
+    <string name="setting_wear_quadrant_tap_flash">I-flash ang icon sa pag-tap</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Kapag tumakbo ang action ng corner zone, saglit na i-flash ang icon nito sa buong liwanag — lalo na kapaki-pakinabang sa Hidden screen theme, kung saan hindi nakikita ang icon at walang ibang kumpirmasyon kung aling action ang tumakbo.</string>
+    <string name="setting_wear_internal_progress_visible">Progress indicator ng layout</string>
+    <string name="setting_wear_internal_progress_visible_description">Ipakita ang karagdagang progress indicator na dinisenyo sa layout na ito. Bahagi ng controls ang play-button rings ng Expressive at Material at nananatiling available.</string>
+    <string name="setting_wear_edge_progress_visible">Ipakita ang edge progress arc</string>
+    <string name="setting_wear_edge_progress_visible_description">Itago lang ang visual arc sa paligid ng screen. Hiwalay na opsyon ang edge seeking.</string>
+    <string name="setting_wear_edge_seek_enabled">Mag-seek mula sa gilid ng screen</string>
+    <string name="setting_wear_edge_seek_enabled_description">I-tap o i-drag sa gilid ng screen para tumalon sa eksaktong punto, kahit nakatago ang arc nito</string>
+    <string name="setting_wear_screen_theme">Style ng control</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Balansyado</string>
+    <string name="wear_screen_theme_default_description">Karaniwang hierarchy at laki ng control.</string>
+    <string name="wear_screen_theme_minimal">Minimal</string>
+    <string name="wear_screen_theme_minimal_description">Gumagamit ng mas maliit at mas banayad na control habang nananatiling nakikita at magagamit ang bawat action.</string>
+    <string name="wear_screen_theme_compact">Compact</string>
+    <string name="wear_screen_theme_compact_description">Gumagamit ng mas siksik na control treatment nang hindi binabago ang mga action mo.</string>
+    <string name="wear_screen_theme_cinema">Cinema</string>
+    <string name="wear_screen_theme_cinema_description">Pinapalambot ang mga control nang hindi binabago ang artwork.</string>
+    <string name="wear_screen_theme_vivid">Matingkad</string>
+    <string name="wear_screen_theme_vivid_description">Gumagamit ng mas malaki at mas prominenteng control.</string>
+    <string name="wear_screen_theme_contrast">Mataas na contrast</string>
+    <string name="wear_screen_theme_contrast_description">Gumagamit ng mas malaking control para mas madaling basahin.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Gumagamit ng compact at bahagyang dim na control. Hindi nito mismong pinapadilim ang background — gamitin ang background settings para roon.</string>
+    <string name="wear_screen_theme_hidden">Nakatago</string>
+    <string name="wear_screen_theme_hidden_description">Ganap na itinatago ang lahat ng control icon. Nananatiling aktibo at gumagana nang buo ang touch targets.</string>
+    <string name="setting_wear_font">Typeface</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Default na typeface ng app.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Variable na bersyon ng Google Sans na may adjustable na width, optical size, grade at roundness — binubuksan ang axis controls sa ibaba.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Classic system typeface ng Android.</string>
+    <string name="wear_font_rounded">Bilugan</string>
+    <string name="wear_font_rounded_description">Friendly na modernong letterforms na may malumanay na rounded terminals.</string>
+    <string name="wear_font_sans_light">Modern Light</string>
+    <string name="wear_font_sans_light_description">Malinis at maaliwalas na sans-serif na may mas magaan na visual weight.</string>
+    <string name="wear_font_sans_thin">Ultra Thin</string>
+    <string name="wear_font_sans_thin_description">Napakagaan na display style para sa minimalist na player.</string>
+    <string name="wear_font_sans_medium">Modern Medium</string>
+    <string name="wear_font_sans_medium_description">Malinaw na sans-serif na may mas malalakas at compact na stroke.</string>
+    <string name="wear_font_sans_black">Makapal</string>
+    <string name="wear_font_sans_black_description">Bold display family na may pinakamalakas na visual impact.</string>
+    <string name="wear_font_small_caps">Small Caps</string>
+    <string name="wear_font_small_caps_description">Compact na hugis-capital na forms na may editorial na dating.</string>
+    <string name="wear_font_casual">Casual</string>
+    <string name="wear_font_casual_description">Masayang handwritten system family.</string>
+    <string name="wear_font_typewriter">Typewriter (Archived)</string>
+    <string name="wear_font_typewriter_description">Retro na typewriter look (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Rounded geometric sans, libreng (OFL) alternatibo na may diwa ng Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Malinis na geometric sans, libreng (OFL) alternatibo na may diwa ng Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Eleganteng humanist roman, libreng (OFL) alternatibo na may diwa ng Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Mas malambot na typewriter style (Love Letter Typewriter) — karaniwang nakalaan sa mga track na may \"Lain\" theme.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Classic na serif typeface.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">Fixed-width serif letters na may natatanging editorial/terminal na hitsura.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Fixed-width at teknikal na hitsura.</string>
+    <string name="wear_font_condensed">Condensed</string>
+    <string name="wear_font_condensed_description">Mas makikitid na letterform para mas maraming text ang magkasya.</string>
+    <string name="wear_font_condensed_light">Condensed Light</string>
+    <string name="wear_font_condensed_light_description">Makitid at mas magaang family para sa mahahabang title.</string>
+    <string name="wear_font_condensed_medium">Condensed Medium</string>
+    <string name="wear_font_condensed_medium_description">Makitid na family na may mas malalakas na stroke at mahusay na readability.</string>
+    <string name="wear_font_cursive">Kursibo</string>
+    <string name="wear_font_cursive_description">Decorative script typeface.</string>
+    <string name="setting_wear_dynamic_accent">Dynamic accent sa relo</string>
+    <string name="setting_wear_dynamic_accent_description">Iangkop ang album-based na watch colors sa kasalukuyang cover art. Kapag off, ginagamit ng Album color choices ang static theme accent.</string>
+    <string name="setting_wear_album_art_fade">Fade transition ng album art</string>
+    <string name="setting_wear_album_art_fade_description">Dahan-dahang i-fade ang album art kapag nagbago ang track.</string>
+    <string name="setting_wear_title_text_mode">Behavior ng title text</string>
+    <string name="setting_wear_title_text_mode_description">Kung paano kumikilos ang now-playing title kapag hindi kasya: pinagsasama ng Automatic ang pagliit, pag-wrap at pag-scroll; ginagawang eksklusibo ng ibang opsyon ang isang behavior.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automatic (liit, tapos wrap, tapos scroll)</item>
+        <item>Mag-scroll (marquee)</item>
+        <item>Wrap sa dalawang linya</item>
+        <item>Wrap sa tatlong linya</item>
+        <item>Wrap sa limang linya</item>
+        <item>Static (isang linya, walang scroll o pagliit)</item>
+        <item>Paliitin para magkasya</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Kulay ng text ng artist</string>
+    <string name="setting_wear_artist_custom_color">Custom na kulay ng artist</string>
+    <string name="setting_wear_artist_custom_color_description">Piliin ang kulay ng artist na ginagamit sa Normal treatment</string>
+    <string name="setting_wear_artist_desaturated">Desaturated na kulay ng artist</string>
+    <string name="setting_wear_artist_desaturated_description">Palambutin ang album-based na kulay ng artist text — nalalapat lang kapag naka-set sa Album color ang \"Artist text color\"</string>
+
+    <string name="setting_wear_progress_color">Kulay ng progress bar</string>
+    <string name="setting_wear_progress_custom_color">Custom na kulay ng progress bar</string>
+    <string name="setting_wear_progress_custom_color_description">Piliin ang progress at seek color na ginagamit sa Normal treatment</string>
+    <string name="setting_wear_progress_desaturated">Desaturated na kulay ng progress bar</string>
+    <string name="setting_wear_progress_desaturated_description">Palambutin ang album-based na kulay ng progress bar — nalalapat lang kapag naka-set sa Album color ang \"Progress bar color\"</string>
+
+    <string name="setting_wear_volume_color">Kulay ng volume bar</string>
+    <string name="setting_wear_volume_custom_color">Custom na kulay ng volume</string>
+    <string name="setting_wear_volume_custom_color_description">Piliin ang kulay ng volume na ginagamit sa Normal treatment</string>
+    <string name="setting_wear_quick_panel_color">Kulay ng Quick Actions</string>
+    <string name="setting_wear_quick_panel_custom_color">Custom na kulay ng Quick Actions</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Piliin ang kulay ng Quick Actions na ginagamit sa Normal treatment</string>
+    <string name="setting_wear_shading_custom_color_description">Piliin ang kulay na nagti-tint sa shading gradient</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Neutral (nakapirming kulay ng tema)</item>
+        <item>Kulay ng album</item>
+        <item>Pasadyang kulay</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+        <item>Depth</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+        <item>Metadata</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Expressive na seek</string>
+    <string name="setting_wear_expressive_seek_mode_description">Kung paano mag-scrub ng track sa pamamagitan ng touch sa Expressive face. Ginagawang draggable ng Central ring ang ring sa paligid ng play button; ipinapakita rin ng Edge ring ang Classic bezel ring; iniiwan ng None ang seeking sa rotary crown lang.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Gitnang singsing</item>
+        <item>Singsing sa gilid</item>
+        <item>Wala</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Laging naka-on na display</string>
+    <string name="setting_wear_aod_style">Style ng laging naka-on</string>
+    <string name="setting_wear_aod_style_description">Kung ano ang hitsura ng now-playing screen habang nasa ambient mode ang relo. Tinutularan ng Follow face ang napiling face; text na naka-dim lang sa purong itim ang ipinapakita ng Minimal para sa pinakamahabang battery life.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Sundin ang face</item>
+        <item>Classic</item>
+        <item>Expressive (may outline)</item>
+        <item>Material (may outline)</item>
+        <item>Mga control na AMOLED</item>
+        <item>Chrono (malaking clock)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Kulay ng laging naka-on</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Puti</item>
+        <item>Kulay ng album</item>
+        <item>Pasadyang kulay</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Puti</item>
+        <item>Dynamic (ayon sa area sa ilalim ng clock)</item>
+        <item>Kulay ng album</item>
+        <item>Pasadyang kulay</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Sundin ang panel style</item>
+        <item>Transparent (walang background)</item>
+        <item>Accent ng album</item>
+        <item>Translucent</item>
+        <item>Puti</item>
+        <item>Frosted na puti</item>
+        <item>Itim</item>
+        <item>Dynamic (tono ng album)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Background ng Up Next pill</string>
+    <string name="setting_wear_show_up_next_pill">Up Next pill sa player</string>
+    <string name="setting_wear_show_up_next_pill_description">Magpakita ng Up Next pill sa ibaba ng now-playing screen. Pinupuno nito ang puwesto ng mini-buttons row, kaya lumalabas lang ito kapag hindi nakikita ang row na iyon.</string>
+    <string name="category_wf_clock">Orasan</string>
+    <string name="setting_wear_clock_color">Kulay ng clock</string>
+    <string name="setting_wear_clock_custom_color">Custom na kulay ng clock</string>
+    <string name="setting_wear_clock_custom_color_description">I-tap para piliin ang kulay ng clock na ginagamit kapag naka-set sa Custom color ang Clock color</string>
+    <string name="setting_wear_clock_opacity">Opacity ng clock</string>
+    <string name="setting_wear_clock_opacity_description">Kung gaano ka-opaque ang palaging nakikitang clock (10–100%%). Kasalukuyang <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Custom na always-on color</string>
+    <string name="setting_wear_aod_custom_color_description">I-tap para piliin ang kulay na gagamitin sa always-on text, controls at clock kapag naka-set sa Custom color ang \"Always-on color\"</string>
+    <string name="setting_wear_aod_intensity">Liwanag ng laging naka-on</string>
+    <string name="setting_wear_aod_intensity_description">Kung gaano kaliwanag nire-render ang always-on display (20–100%%). Mas madilim at mas matipid sa baterya ang mas mababang value. Kasalukuyang <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Transport buttons sa always-on display</string>
+    <string name="setting_wear_aod_show_transport_description">Ipakita ang outlined previous/play/next buttons sa suportadong visual always-on styles. Hindi sila mata-tap habang dim ang screen, pero gigising ang relo sa isang tap na nasa ilalim na ng daliri mo ang button.</string>
+    <string name="setting_wear_aod_show_progress">Progress ring sa always-on display</string>
+    <string name="setting_wear_aod_show_progress_description">Ipakita ang progress ring sa paligid ng play button sa ambient mode — humigit-kumulang isang beses kada minuto lang nagre-refresh ang posisyon doon</string>
+    <string name="setting_wear_aod_show_pills">Up Next sa always-on display</string>
+    <string name="setting_wear_aod_show_pills_description">Ipakita ang static outlined Up Next pill sa ibaba ng visual always-on styles</string>
+    <string name="category_wf_gestures">Mga screen gesture</string>
+    <string name="setting_wear_mini_buttons_mode">Ipakita ang mini buttons</string>
+    <string name="setting_wear_gestures_mode">Mga screen gesture</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Palagi</item>
+        <item>Habang tumutugtog lang</item>
+        <item>Habang naka-pause lang</item>
+        <item>Hindi kailanman</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Album art sa always-on display</string>
+    <string name="setting_wear_aod_show_art_description">Panatilihing nakikita ang naka-dim na album art sa ambient mode. Kapag in-off, purong itim ang background, na kapansin-pansing mas nakakatipid ng baterya sa AMOLED screens.</string>
+    <string name="setting_wear_aod_art_treatment">Style ng album art habang laging naka-on</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Banayad na blur</item>
+        <item>Malinaw na cover</item>
+        <item>Monochrome na blur</item>
+        <item>Sundin ang artwork treatment ng player</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Clock sa always-on display</string>
+    <string name="setting_wear_aod_show_clock_description">Ipakita ang clock kapag nasa ambient mode ang relo</string>
+    <string name="setting_wear_aod_show_track_info">Track info sa always-on display</string>
+    <string name="setting_wear_aod_show_track_info_description">Ipakita ang track title at artist sa ambient mode</string>
+
+    <string name="category_overlays_queue">Overlays at queue</string>
+    <string name="category_wf_panel_shared">Shared na hitsura ng panel</string>
+    <string name="category_wf_panel_volume">Panel ng volume</string>
+    <string name="category_wf_panel_seek">Progress at seek panel</string>
+    <string name="category_wf_panel_quick">Panel ng mabilisang action</string>
+    <string name="category_wf_panel_queue">Queue at mga listahan</string>
+    <string name="category_wf_panel_effects">Mga effect ng panel</string>
+    <string name="setting_wear_overlay_backdrop_style">Background ng panel</string>
+    <string name="setting_wear_volume_style">Style ng volume</string>
+    <string name="setting_wear_volume_layout">Layout ng volume</string>
+    <string name="setting_wear_quick_panel_style">Style ng quick panel</string>
+    <string name="setting_wear_quick_panel_layout">Layout ng quick panel</string>
+    <string name="setting_wear_quick_panel_source">Quick actions</string>
+    <string name="setting_wear_quick_panel_source_description">Piliin ang configured buttons mo, o mga action na ibinibigay ng app na kasalukuyang tumutugtog.</string>
+    <string name="quick_panel_open_note_title">Pagbukas ng panel</string>
+    <string name="quick_panel_open_note_description">I-double-tap ang gitna ng now-playing screen para buksan ang quick actions panel sa relo.</string>
+    <string name="preview_current_app_action">Action ng kasalukuyang app</string>
+    <string name="preview_notification_controls">Icon mula sa media notification</string>
+    <string name="setting_wear_queue_style">Style ng queue</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Gamitin ang shortcut covers bilang background</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Kapag Cover variant ang Queue style, ang quick-panel action row na may nakuhang shortcut cover (track, playlist, artist…) ay pupunuin din ang pill nito ng art na iyon, gaya ng Up Next. Hindi apektado ang shortcuts na walang nakuhang cover (plain app icon).</string>
+    <string name="setting_wear_list_row_size">Laki ng list pill</string>
+    <string name="setting_wear_list_row_size_description">Taas ng full-width rows sa queue, menus at quick panel.</string>
+    <string name="setting_wear_progress_gradient">I-blend ang palette sa ring</string>
+    <string name="setting_wear_progress_gradient_description">Sa multi-hue color treatment (Complementary, Triadic, Analogous, Duotone), nagfa-fade ang solid ring sa lahat ng tatlong kulay. I-off ito para sa single-color ring habang pinapanatili ang album palette sa iba pang bahagi.</string>
+    <string name="setting_wear_progress_style">Style ng progress ring</string>
+    <string name="setting_wear_seek_style">Style ng seek at volume readout</string>
+    <string name="setting_wear_seek_layout">Layout ng seek panel</string>
+    <string name="setting_wear_color_treatment">Pagproseso ng kulay ng relo</string>
+    <string name="setting_wear_normal_color">Normal na kulay</string>
+    <string name="setting_wear_normal_color_description">Piliin ang iisang kulay na ginagamit ng title accents, progress, volume, panels at mini-button chrome sa Normal mode</string>
+    <string name="setting_wear_normal_color_multi">Gumamit ng color palette</string>
+    <string name="setting_wear_normal_color_multi_description">Kapag on, gumagamit ang screen ng main color at dalawang supporting tone. Kapag off, iisang kulay ang ginagamit sa lahat — sariling kulay ng album o ang pinili mo.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normal (piniling kulay)</item>
+        <item>Desaturated (malambot na album color)</item>
+        <item>Expressive (buong album palette)</item>
+        <item>Complementary (album + kabaligtaran)</item>
+        <item>Triadic (tatlong album hue)</item>
+        <item>Analogous (magkakatabing hue)</item>
+        <item>Monochrome (isang hue, tatlong tone)</item>
+        <item>Duotone (dalawang album color)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Sundin ang watch treatment</item>
+        <item>Normal (piniling kulay)</item>
+        <item>Desaturated (malambot na album color)</item>
+        <item>Expressive (buong album palette)</item>
+        <item>Complementary (album + kabaligtaran)</item>
+        <item>Triadic (tatlong album hue)</item>
+        <item>Analogous (magkakatabing hue)</item>
+        <item>Monochrome (isang hue, tatlong tone)</item>
+        <item>Duotone (dalawang album color)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Weight ng title</string>
+    <string name="setting_wear_title_font_italic">Italic na title</string>
+    <string name="setting_wear_title_font_scale">Laki ng title</string>
+    <string name="setting_wear_title_font_opacity">Opacity ng title</string>
+    <string name="setting_wear_title_font_tracking">Letter spacing ng title</string>
+    <string name="setting_wear_title_color">Kulay ng title text</string>
+    <string name="setting_wear_title_custom_color">Custom na kulay ng title</string>
+    <string name="wear_title_color_face_default">Default ng face (ayon sa design)</string>
+    <string name="setting_wear_title_adaptive_contrast">I-adapt ang kulay ng title para sa contrast</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Liliwanagan o didiliman ang title kapag masyadong malapit ang kulay nito sa artwork sa likod, habang pinananatili ang hue. Walang epekto habang gamit ng title ang face default.</string>
+    <string name="setting_wear_artist_adaptive_contrast">I-adapt ang kulay ng artist para sa contrast</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Liliwanagan o didiliman ang artist line kapag masyadong malapit ang album color sa artwork sa likod nito, habang pinananatili ang hue. Ang strip lang na kinalalagyan ng line ang sinusukat, hindi ang buong cover.</string>
+    <string name="setting_wear_artist_font_weight">Weight ng artist</string>
+    <string name="setting_wear_artist_font_italic">Italic na artist</string>
+    <string name="setting_wear_artist_font_scale">Laki ng artist</string>
+    <string name="setting_wear_artist_font_opacity">Opacity ng artist</string>
+    <string name="setting_wear_artist_font_tracking">Letter spacing ng artist</string>
+    <string name="setting_wear_source_icon_scale">Laki ng app icon</string>
+    <string name="setting_wear_source_icon_opacity">Opacity ng app icon</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 ang normal na weight ng face; mas bold ang mas mataas. Para sa Google Sans Flex, ito ang sariling weight axis ng font</string>
+    <string name="setting_wear_typography_scale_description">Porsyento ng sariling laki ng face (70–140). Pinapanatili ng 100 ang dinisenyong laki ng bawat layout</string>
+    <string name="setting_wear_typography_opacity_description">Porsyento (20–100). Pinapanatili ng 100 ang sariling opacity ng face</string>
+    <string name="setting_wear_typography_tracking_description">Dagdag na espasyo sa pagitan ng mga letra, sa hundredths ng isang em (−5 hanggang 20). Pinapanatili ng 0 ang sariling spacing ng font</string>
+    <string name="setting_wear_color_modifier">Tono</string>
+    <string name="setting_wear_color_modifier_description">I-adjust ang buong palette nang hindi binabago kung paano ito hinango — gumagana sa bawat color treatment</string>
+    <string name="setting_wear_color_hue_shift">Paglipat ng kulay</string>
+    <string name="setting_wear_color_hue_shift_description">Iniikot ang album palette sa color wheel, sa degrees (0–359). Pinapanatili ng bawat treatment ang main color nito sa sariling hue ng album, kaya ito ang nagpapabago rito. Ginagamit ng 0 ang album color nang ganoon mismo; hindi kailanman sini-shift ang fixed Normal color.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Wala</item>
+        <item>Matingkad</item>
+        <item>Pastel</item>
+        <item>Mainit</item>
+        <item>Malamig</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Edge arc (kaliwa)</item>
+        <item>Edge arc (matangkad)</item>
+        <item>Edge arc (kanan)</item>
+        <item>Edge arc (itaas)</item>
+        <item>Edge arc (ibaba)</item>
+        <item>Buong ring</item>
+        <item>Halo sa gitna</item>
+        <item>Pahalang na meter</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Singsing sa gilid</item>
+        <item>Edge ring (manipis)</item>
+        <item>Edge ring (makapal)</item>
+        <item>Timeline</item>
+        <item>Hati-hating timeline</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metadata muna</item>
+        <item>Arc</item>
+        <item>Hero</item>
+        <item>Grid</item>
+        <item>Mga row na may label</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Solid</item>
+        <item>Putol-putol</item>
+        <item>Mga tuldok</item>
+        <item>Hairline</item>
+        <item>Comet</item>
+        <item>60 tuldok ng relo</item>
+        <item>60 marka ng relo</item>
+        <item>Mga segment ng 12 oras</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Simple</item>
+        <item>Glass na pill</item>
+        <item>Expressive na pill</item>
+        <item>Material na pill</item>
+        <item>Puting pill</item>
+        <item>Napakalaki</item>
+        <item>Posisyon / kabuuan</item>
+        <item>Puting glass</item>
+        <item>Translucent na album</item>
+        <item>Kumikinang na album</item>
+        <item>Outline</item>
+        <item>Solid na tema</item>
+        <item>Solid na album</item>
+        <item>Micro</item>
+        <item>Shadow (walang chrome)</item>
+        <item>Salungguhit</item>
+        <item>Manipis na outline</item>
+        <item>Napakalaking kulay ng album</item>
+        <item>Mono</item>
+        <item>Madilim na tonal</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Mga naka-configure na pindutan</item>
+        <item>Mula sa kasalukuyang media app</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Sundin ang panel style</item>
+        <item>Blur ng album (acrylic)</item>
+        <item>Solid na itim</item>
+        <item>Solid na kulay ng album</item>
+        <item>Glass</item>
+        <item>Gradient ng album</item>
+        <item>Duotone ng album</item>
+        <item>Prism</item>
+        <item>Likidong glass</item>
+        <item>Expressive na blur</item>
+        <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Maliwanag</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>Mataas na Contrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Mga segment</item>
+        <item>Aurora</item>
+        <item>Tinta</item>
+        <item>Groove</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Compact</item>
+        <item>Normal</item>
+        <item>Matangkad</item>
+        <item>Sobrang tangkad</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Maliwanag</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>Mataas na Contrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Cover</item>
+            <item>Blur ng cover</item>
+        <item>Tonal na cover</item>
+        <item>Parisukat na cover</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Glass</item>
+        <item>Puting Glass</item>
+        <item>Tonal na Glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Maliwanag</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Outline na Puting Glass</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>Mataas na Contrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Ghost (walang chrome)</item>
+        <item>Hamog</item>
+        <item>Tinta</item>
+        <item>Tuldok</item>
+        <item>Slab</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Panatilihing aktibo ang app pagkatapos mag-pause</string>
+    <string name="setting_wear_paused_hold_description">Kung gaano katagal mananatiling maaabot ang watch app mula sa watch face pagkatapos mong mag-pause, para makapag-resume ka sa pag-angat ng pulsuhan sa halip na buksan ito muli. Pinananatiling tumatakbo ng mas mahahabang setting ang background service.</string>
+    <string name="wear_paused_hold_off">Huwag panatilihin</string>
+    <string name="wear_paused_hold_5">5 minuto</string>
+    <string name="wear_paused_hold_15">15 minuto</string>
+    <string name="wear_paused_hold_30">30 minuto</string>
+    <string name="wear_paused_hold_60">1 oras</string>
+    <string name="wear_paused_hold_always">Hanggang matapos ang playback</string>
+
+    <string name="setting_wear_idle_button_action">Button kapag walang tumutugtog</string>
+    <string name="setting_wear_idle_auto_open">Buksan kapag walang tumutugtog</string>
+    <string name="setting_wear_idle_auto_open_description">Diretsong pumupunta sa screen na ito kapag binuksan mo ang watch app nang walang musikang tumutugtog.</string>
+    <string name="wear_idle_action_resume">Ipagpatuloy ang huling app</string>
+    <string name="wear_idle_action_shortcuts">Mga playlist shortcut</string>
+    <string name="wear_idle_action_menu">Menu ng mga action</string>
+    <string name="wear_idle_action_search">Maghanap</string>
+    <string name="wear_idle_action_queue">Pinatugtog kamakailan</string>
+    <string name="wear_idle_action_none">Walang button</string>
+    <string name="wear_idle_auto_open_none">Manatili sa player</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">I-browse ang library</string>
+    <string name="library_up">Bumalik</string>
+    <string name="error_library_unavailable">Walang naba-browse na library ang app na ito</string>
+    <string name="error_library_empty">Wala rito</string>
+    <string name="error_library_no_player">Magpatugtog muna ng kahit ano</string>
+
+    <string name="setting_wear_carousel_card_shape">Hugis ng carousel card</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Bilugan</item>
+        <item>Parisukat</item>
+        <item>Squircle</item>
+        <item>Bilog</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Gamitin ang font sa lahat</string>
+    <string name="setting_wear_font_all_screens_description">Inilalapat ang napiling font sa menus, queue at Quick actions, hindi lang sa player. Maaaring mas mahirap basahin sa lists ang display at handwritten fonts.</string>
+
+    <string name="setting_wear_clock_font">Typeface ng clock</string>
+    <string name="wear_clock_font_follow">Sundin ang track font</string>
+    <string name="setting_wear_lyrics_font">Typeface ng lyrics</string>
+    <string name="setting_wear_lyrics_font_description">Typeface para sa mga salita ng kanta, sa lyrics screen at Verse face. Susunod sa track typeface maliban kung pumili ka rito.</string>
+    <string name="wear_lyrics_font_follow">Sundin ang track typeface</string>
+    <string name="setting_wear_clock_font_weight">Weight ng clock</string>
+    <string name="setting_wear_clock_font_italic">Italic na clock</string>
+    <string name="setting_wear_clock_font_scale">Laki ng clock</string>
+    <string name="setting_wear_clock_font_tracking">Letter spacing ng clock</string>
+    <string name="setting_wear_clock_adaptive_contrast">I-adapt ang kulay ng clock para sa contrast</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Liliwanagan o didiliman ang clock kapag masyadong malapit ang album color sa artwork sa likod nito, habang pinananatili ang hue. Nalalapat lang habang naka-set sa Album color ang clock color.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Condensed all-caps display — parang poster, kasya ang mahahabang title</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">High-contrast editorial serif — parang magazine</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Technical geometric sans na may kakaibang detalye</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Squarish sci-fi display — bold at futuristic</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Handwritten script — casual at personal</string>
+    <string name="setting_wear_track_time_mode">Display ng oras ng track</string>
+    <string name="setting_wear_track_time_mode_description">Kung kailan ipinapakita ang posisyon ng track (hal. 1:23 / 3:45) sa now-playing screen.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Palagi</item>
+        <item>Habang tumutugtog lang</item>
+        <item>Habang naka-pause lang</item>
+        <item>Hindi kailanman</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Curve ng mini buttons</string>
+    <string name="setting_screen_buttons_curve_description">Piliin ang curvature style ng mini buttons: flat, arc, soft, curved.</string>
+    <string name="setting_screen_buttons_shape">Hugis ng mini buttons</string>
+    <string name="setting_screen_buttons_shape_description">Piliin ang hugis at layout format ng mini buttons.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pill (Default)</item>
+        <item>Bilog</item>
+        <item>Parisukat</item>
+        <item>Bilugang Parisukat (Banayad)</item>
+        <item>Bilugang Parisukat (Katamtaman)</item>
+        <item>Squircle</item>
+        <item>Dahon</item>
+        <item>Patak</item>
+        <item>Pill (Malapad, Maliit)</item>
+        <item>Pill (Malapad, Katamtaman)</item>
+        <item>Pill (Malapad, Malaki)</item>
+        <item>Pill (Malapad, Napakalaki)</item>
+        <item>Bilugang Parihaba (Maliit)</item>
+        <item>Bilugang Parihaba (Katamtaman)</item>
+        <item>Bilugang Parihaba (Malaki)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Patag</item>
+        <item>Arc</item>
+        <item>Banayad na curve</item>
+        <item>Banayad na kurba</item>
+        <item>Katamtamang kurba</item>
+        <item>Kurbado</item>
+        <item>Matinding kurba</item>
+        <item>Ikalat hanggang gilid</item>
+        <item>Kaliwang gilid</item>
+        <item>Kanang gilid</item>
+        <item>Parehong gilid</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Default na background</item>
+        <item>Glass (pantay)</item>
+        <item>Glass (maliwanag)</item>
+        <item>Translucent na Album</item>
+        <item>Translucent Album Exp</item>
+        <item>Kumikinang na Album</item>
+        <item>Glow Exp</item>
+        <item>Solid na Tema</item>
+        <item>Solid na Album</item>
+        <item>Solid Exp Album</item>
+        <item>Outline</item>
+        <item>Outline Exp Album</item>
+        <item>Icon lang (transparent)</item>
+        <item>Icon Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Neutral</item>
+        <item>Kulay ng album</item>
+        <item>Pasadyang kulay</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Buong cover</item>
+        <item>Malabong background</item>
+        <item>Frosted na mga gilid</item>
+        <item>Square (matutulis na sulok)</item>
+        <item>Square (malalambot na sulok)</item>
+        <item>Parisukat (bilugang sulok)</item>
+        <item>Black &amp; white</item>
+        <item>Blurred black &amp; white</item>
+        <item>Expressive na blur</item>
+        <item>Expressive</item>
+        <item>Tonal na gradient ng Material</item>
+        <item>Poster na cover</item>
+        <item>Studio na gradient</item>
+        <item>Radial glow ng Vinyl</item>
+        <item>Glow ng Halo</item>
+        <item>Mga ribbon ng Aurora</item>
+        <item>Gradient ng Spectrum</item>
+        <item>Sweep ng Corona</item>
+        <item>Fade ng dapithapon</item>
+        <item>Bloom</item>
+        <item>Fade ng abot-tanaw</item>
+        <item>Glow ng baga</item>
+        <item>Itim na Eclipse AMOLED</item>
+        <item>Nakatago (solid na itim)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Naka-disable</item>
+        <item>Ipakita ang music watchface icon (para lang sa Wear 3.0)</item>
+        <item>Buksan ang Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Timeout bago isara</string>
+    <string name="setting_close_timeout_description">Awtomatikong magsasara ang Svartifoss kapag walang musikang tumutugtog nang <![CDATA[<b>%1$s seconds</b>]]>. Disabled ang feature kapag naka-set sa 0 segundo ang timeout. Tandaan na para makatipid sa baterya, maaaring hindi palaging eksakto ang opsyong ito at maaaring ma-delay ang pagsasara nang hanggang isang minuto.</string>
+    <string name="setting_wear_close_on_idle">Isara sa \"Walang tumutugtog\"</string>
+    <string name="setting_wear_close_on_idle_description">Awtomatikong isinasara ang watch app mga isang minuto pagkatapos makarating sa idle na \"Walang tumutugtog\" screen, para hindi ito manatili roon. Hiwalay ito sa close timeout sa itaas, na para sa naka-pause na track.</string>
+    <string name="category_notifications">Popup ng notification</string>
+    <string name="setting_enable_notifications">Ipakita ang notification popup</string>
+    <string name="setting_enable_notifications_description">Kailangan ng feature na ito ng isa pang app para pamahalaan ang notifications (Vibration Center for Wear).
+
+Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng popup ng notification text para mabilis mong masilip ang notification nang hindi umaalis sa Svartifoss.</string>
+    <string name="setting_notification_timeout">Timeout ng notification popup</string>
+    <string name="setting_notification_timeout_description">Awtomatikong magsasara ang notification popup pagkatapos ng <![CDATA[<b>%1$s seconds</b>]]>. Maglagay ng 0 para i-disable ang auto-close.</string>
+    <string name="app_required">Kailangan ang app</string>
+    <string name="vibration_center_required_description">Para magamit ang feature na ito, kailangan mong mag-install ng isa pang (libreng) app: Vibration Center for Wear.</string>
+    <string name="open_play_store">Buksan ang Play Store</string>
+    <string name="error_no_notification_service_support">Paumanhin, mukhang hindi sinusuportahan ng device mo ang notification services</string>
+    <string name="setting_always_select_center_action">Palaging piliin ang center action</string>
+    <string name="setting_always_select_center_action_description">Kapag enabled, ang pag-tap sa action list ay palaging pipili sa center (highlighted) option, anuman ang option na tinap mo.</string>
+    <string name="change_icon">Palitan ang icon</string>
+    <string name="please_wait">Pakihintay</string>
+
+    <string name="error_playlist_not_supported">Hindi suportado ng media app na ito</string>
+    <string name="error_search_no_results">Walang resultang nakita</string>
+    <string name="seconds_to_skip">Mga segundong lalaktawan:</string>
+    <string name="seconds_to_reverse">Mga segundong ibabalik:</string>
+
+    <string name="setting_dynamic_accent_color">Dynamic na accent color</string>
+    <string name="setting_dynamic_accent_color_description">Kapag enabled, awtomatikong umaangkop ang accent color (SeekBar, active queue item) sa dominanteng kulay ng kasalukuyang album art.</string>
+    <string name="setting_desaturated_color">Desaturated na kulay</string>
+    <string name="setting_desaturated_color_description">Ina-adjust ang saturation at brightness ng nakuhang kulay para matiyak ang mataas na readability at contrast ayon sa aktibong theme.</string>
+
+    <string name="queue_header">Queue ng playback</string>
+    <string name="queue_unavailable">Hindi available ang queue</string>
+
+    <string name="setting_custom_accent_color">Kulay ng accent</string>
+    <string name="setting_custom_accent_color_description">Pumili ng custom na accent color para sa app interface</string>
+    <string name="setting_mini_player">Mini player</string>
+    <string name="setting_mini_player_description">Nagpapakita ng persistent na now-playing bar sa ibabaw ng bottom navigation tuwing aktibo ang media. Enabled bilang default; i-off para mabawi ang espasyong iyon.</string>
+    <string name="color_picker_title">Piliin ang accent color</string>
+    <string name="color_picker_reset">I-reset</string>
+    <string name="color_picker_apply">Ilapat</string>
+    <string name="color_picker_default">Default</string>
+    <string name="color_picker_invalid">Invalid na color code</string>
+    <string name="color_picker_current">Kasalukuyan: %s</string>
+
+    <string name="drawer_version_format">Bersyon %1$s</string>
+    <string name="drawer_tagline">Companion App para sa Wear OS</string>
+    <string name="drawer_about_heading">Tungkol dito</string>
+    <string name="drawer_about_summary">Hinahayaan ka ng Svartifoss na kontrolin ang musika sa phone mula sa Wear OS watch mo — gamit ang ganap na nako-customize na remote na iniangkop sa device mo.</string>
+    <string name="drawer_name_heading">Ang pangalan</string>
+    <string name="drawer_name_meaning">Ang Svartifoss ay nangangahulugang “Black Falls” sa Icelandic — ipinangalan ito sa talon sa Vatnajökull National Park, kung saan ang madidilim na basalt column ay pumapalibot sa makitid na bagsak ng tubig. Tulad ng tubig sa bato, dumadaloy ang musika sa app.</string>
+    <string name="drawer_sync_heading">Sync</string>
+    <string name="drawer_sync_summary">Dito sa phone kino-configure ang watch settings at awtomatikong sini-sync sa naka-pair mong relo.</string>
+    <string name="drawer_support_heading">Suporta</string>
+    <string name="drawer_support_summary">Libre at open source ang Svartifoss — ilibre mo ako ng kape kung kapaki-pakinabang ito sa iyo :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">I-download ang cover art</string>
+    <string name="album_art_saved">Na-save ang cover art sa gallery</string>
+    <string name="album_art_save_error">Hindi na-save ang cover art</string>
+
+    <string name="action_play_liked_songs">I-play ang liked songs (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">I-play ang liked songs (Spotify)</string>
+    <string name="action_play_soundcloud_likes">I-play ang liked tracks (SoundCloud)</string>
+    <string name="action_my_playlists">Mga streaming shortcut</string>
+    <string name="action_play_specific_playlist">Buksan ang streaming shortcut</string>
+    <string name="action_choose_or_add_streaming_shortcut">Pumili o magdagdag ng streaming shortcut</string>
+    <string name="action_show_streaming_library">Ipakita ang lahat ng naka-save na shortcut</string>
+    <string name="playlist_shortcut_pick_title">Pumili ng shortcut</string>
+    <string name="playlist_shortcut_pick_empty">Wala pang naka-save na streaming shortcut — magdagdag sa ibaba, pagkatapos ay i-tap ito para piliin</string>
+    <string name="playlist_shortcuts_empty">Wala pang streaming shortcut — idagdag ang mga ito sa settings ng phone app</string>
+    <string name="setting_playlist_shortcuts">Mga streaming shortcut</string>
+    <string name="setting_playlist_shortcuts_description">Buksan mula sa relo ang share links sa YouTube Music, Spotify at iba pang streaming apps</string>
+    <string name="setting_shortcut_artwork">Kunin online ang artwork ng shortcut</string>
+    <string name="setting_shortcut_artwork_description">Mag-download ng thumbnail para sa bawat naka-save na shortcut mula sa service, na ipinapakita sa phone list, watch menu at mga nakatalagang button. Isang beses lang kinukuha ang bawat thumbnail; public share link lang ang ipinapadala. Off bilang default.</string>
+    <string name="setting_queue_local_artwork">Queue covers mula sa library mo</string>
+    <string name="setting_queue_local_artwork_description">Nagpa-publish ang mga local music player ng queue covers bilang library references. Magbigay ng media access para maipakita ang mga ito sa watch queue. Walang internet access na kasama.</string>
+    <string name="setting_queue_local_artwork_granted">Ibinigay ang media access — ipapakita ang local queue covers</string>
+    <string name="setting_queue_local_artwork_denied">Tinanggihan ang media access. I-enable ito sa Android settings para ipakita ang local queue covers.</string>
+    <string name="setting_queue_remote_artwork">Kunin online ang queue covers</string>
+    <string name="setting_queue_remote_artwork_short_description">Nagpa-publish ang streaming apps (YouTube Music clients, Echo Music…) ng queue covers bilang links, hindi images, kaya dina-download at kina-cache ito. I-off para panatilihing ganap na offline ang queue — walang cover na ipapakita ang mga row na iyon.</string>
+    <string name="setting_queue_remote_artwork_description">Nagpa-publish ang streaming players ng queue covers bilang links sa halip na images. I-download ang bawat isa nang isang beses at i-cache sa phone na ito para ipakita sa watch queue. Cover URL lang na inilathala na ng player ang hinihingi — walang account o personal data. On bilang default; i-off para panatilihing ganap na offline ang queue.</string>
+    <string name="watch_streaming_shortcuts_empty">Magdagdag ng tracks, albums o playlists para sa Quick Actions at watch menu</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d naka-save na shortcut · Available sa Quick Actions at watch menu</item>
+        <item quantity="other">%1$d naka-save na shortcuts · Available sa Quick Actions at watch menu</item>
+    </plurals>
+    <string name="category_music_apps">Music apps at services</string>
+    <string name="category_apps_content">Lyrics at metadata</string>
+    <string name="category_streaming_services">Mga streaming shortcut</string>
+    <string name="category_queue_artwork">Artwork ng queue</string>
+    <string name="category_system_access">Android access at notifications</string>
+    <string name="setting_apps_integrations">Suportadong music services</string>
+    <string name="setting_apps_integrations_description">Gumagana ang links sa YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music at SoundCloud. Walang kailangang account access.</string>
+    <string name="setting_apps_integrations_none">Walang natukoy na suportadong app. Maaari pa ring magbukas ang shortcuts sa browser o ibang compatible na app.</string>
+    <string name="setting_apps_integrations_installed">%1$d sa %2$d ang natukoy: %3$s</string>
+    <string name="setting_streaming_open_mode">Buksan ang streaming links gamit ang</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Natukoy na streaming app</item>
+        <item>Default ng Android</item>
+        <item>Magtanong bawat pagkakataon</item>
+    </string-array>
+    <string name="setting_persistent_notification">Pamahalaan ang \"Aktibo ang Svartifoss\" notification</string>
+    <string name="setting_persistent_notification_description">Binubuksan ang Android settings ng notification na ito — i-mute, itago sa lock screen, o ayusin pa. Hindi ito maaaring tuluyang i-off: nangangailangan ang Android ng tuloy-tuloy na notification habang tumatakbo ang background service na nakikipag-ugnayan sa relo mo.</string>
+    <string name="setting_notification_access">Access sa media notification</string>
+    <string name="setting_notification_access_enabled">Allowed · I-tap para tingnan ang Android settings</string>
+    <string name="setting_notification_access_disabled">Not allowed · Kailangan para sa notification media actions at automatic launch filters</string>
+    <string name="setting_notification_access_unavailable">Hindi available ang notification access settings sa device na ito</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d naka-save na shortcut · I-tap para pamahalaan o mag-import ng links</item>
+        <item quantity="other">%1$d naka-save na shortcuts · I-tap para pamahalaan o mag-import ng links</item>
+    </plurals>
+    <string name="category_privacy">Pribasiya</string>
+    <string name="setting_privacy_policy">Patakaran sa pribasiya</string>
+    <string name="setting_privacy_policy_description">Tingnan kung anong data ang ginagamit ng Svartifoss at kung aling online services ang opsyonal.</string>
+    <string name="setting_crash_reporting">Magpadala ng crash reports</string>
+    <string name="setting_crash_reporting_description">Magpadala ng Firebase Crashlytics diagnostics para makatulong sa pag-ayos ng failures. Enabled bilang default; i-off anumang oras.</string>
+    <string name="setting_announcements">Mga notification ng anunsyo</string>
+    <string name="setting_announcements_description">Paminsan-minsang notifications mula sa developer — bagong releases, mahahalagang abiso. Ipinapadala sa Firebase Cloud Messaging; walang account o user list na kasama. Enabled bilang default; i-off anumang oras.</string>
+    <string name="announcement_notification_channel">Mga anunsyo</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">I-share ang playlist, album o track direkta sa Svartifoss, mag-paste ng kinopyang link, o magdagdag nang manu-mano. Inuutusan ng relo ang phone na buksan ito; walang kailangang service login.</string>
+    <string name="back">Bumalik</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Musika mo, isang tap lang</string>
+    <string name="playlist_shortcuts_yours">Mga shortcut mo</string>
+    <string name="playlist_shortcuts_empty_hint">Magdagdag ng shared track, album o playlist link para maging available ito sa relo mo.</string>
+    <string name="playlist_shortcuts_add">Magdagdag ng shortcut</string>
+    <string name="playlist_shortcuts_paste">I-paste ang link</string>
+    <string name="playlist_shortcuts_reload_covers">I-reload ang covers</string>
+    <string name="playlist_shortcuts_reloading_covers">Nire-reload ang covers…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Na-reload ang covers</string>
+    <string name="playlist_shortcuts_edit">I-edit ang shortcut</string>
+    <string name="playlist_shortcut_save">I-save ang shortcut</string>
+    <string name="playlist_shortcut_editor_hint">Mag-paste ng isang link. Awtomatikong tinutukoy ng Svartifoss ang app at content type nito.</string>
+    <string name="playlist_shortcut_detection_waiting">Naghihintay ng streaming link</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Suportado ang Spotify, YouTube Music, Apple Music, TIDAL, Deezer at iba pa.</string>
+    <string name="playlist_shortcut_detected_format">Natukoy: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Pangalan</string>
+    <string name="playlist_shortcut_link_hint">Share link o app URI</string>
+    <string name="playlist_shortcut_shuffle">I-play nang shuffled (YouTube Music lang)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Link</string>
+    <string name="playlist_type_track">Track</string>
+    <string name="playlist_type_playlist">Playlist</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">Artist</string>
+    <string name="playlist_type_show">Show</string>
+    <string name="playlist_type_episode">Episode</string>
+    <string name="playlist_type_mix">Mix</string>
+    <string name="playlist_badge_shuffle">Shuffle</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Wala pang idinagdag na streaming shortcut</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d ang naka-save</item>
+        <item quantity="other">%1$d ang naka-save</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Nakaayos na streaming shortcuts. Pindutin at hawakan para i-drag, gamitin ang Move up o Move down accessibility actions, o pindutin ang Ctrl+Up/Down sa keyboard.</string>
+    <string name="playlist_shortcut_more_options">Higit pang opsyon para sa %1$s</string>
+    <string name="playlist_shortcut_menu_edit">I-edit</string>
+    <string name="playlist_shortcut_menu_open">Buksan ngayon</string>
+    <string name="playlist_shortcut_menu_copy">Kopyahin ang link</string>
+    <string name="playlist_shortcut_menu_duplicate">Gumawa ng kopya</string>
+    <string name="playlist_shortcut_menu_share">I-share</string>
+    <string name="playlist_shortcut_menu_delete">Tanggalin</string>
+    <string name="playlist_shortcut_open_failed">Walang app na makakabukas ng link na ito</string>
+    <string name="streaming_shortcut_choose_app">Buksan ang streaming link gamit ang</string>
+    <string name="playlist_shortcut_link_copied">Nakopya ang link</string>
+    <string name="playlist_shortcut_import_invalid">Walang valid na streaming link ang shared text</string>
+    <string name="playlist_shortcut_clipboard_invalid">Walang valid na streaming link ang clipboard</string>
+    <string name="playlist_shortcut_name_required">Maglagay ng pangalan ng shortcut</string>
+    <string name="playlist_shortcut_link_invalid">Maglagay ng valid na web link o app URI</string>
+    <string name="playlist_shortcut_service_invalid">Mag-paste ng valid na link para matukoy ang service nito</string>
+    <string name="playlist_shortcut_service_generic">Compatible link · Android ang pipili ng app</string>
+    <string name="playlist_shortcut_service_installed">Naka-install ang %1$s · Handa nang buksan sa app nito</string>
+    <string name="playlist_shortcut_service_not_installed">Hindi naka-install ang %1$s · Maaaring gumamit ng browser o compatible na app</string>
+    <string name="playlist_shortcut_copy_name">Kopya ng %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">Kopya %2$d ng %1$s</string>
+    <string name="playlist_shortcut_duplicated">Nagawa ang %1$s</string>
+    <string name="playlist_shortcut_share_title">I-share ang streaming shortcut</string>
+    <string name="playlist_shortcut_share_failed">Walang app na available para i-share ang shortcut na ito</string>
+    <string name="playlist_shortcut_deleted">Tinanggal ang %1$s</string>
+    <string name="playlist_shortcut_undo">I-undo</string>
+
+    <string name="action_play_liked_songs_shuffled">I-play ang liked songs nang shuffled (YT Music)</string>
+    <string name="action_search_history">History ng paghahanap</string>
+    <string name="search_history_empty">Wala pang recent search</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Mga update</string>
+    <string name="setting_update_check">I-notify tungkol sa bagong bersyon</string>
+    <string name="setting_update_check_description">Tinitingnan ang GitHub para sa bagong release humigit-kumulang isang beses sa isang araw at nagpapakita ng notification</string>
+    <string name="setting_update_prereleases">Isama ang pre-releases</string>
+    <string name="setting_update_prereleases_description">Ma-notify rin tungkol sa beta versions</string>
+    <string name="setting_update_check_now">Tingnan ang updates ngayon</string>
+    <string name="setting_update_check_now_description">Ipinapakita ang pinakabagong bersyon at hinahayaan kang i-update ang relo sa Bluetooth</string>
+    <string name="update_screen_title">Mga update</string>
+    <string name="update_cover_content_description">Svartifoss, ang talon na pinagkunan ng pangalan ng app</string>
+    <string name="update_notification_channel">Mga update ng app</string>
+    <string name="update_available_title">Available ang Svartifoss %1$s</string>
+    <string name="update_notification_text">I-tap para mag-update</string>
+    <string name="update_available_action">Available ang update</string>
+    <string name="update_installed_phone">Phone: %1$s</string>
+    <string name="update_installed_versions">Phone: %1$s · Watch: %2$s</string>
+    <string name="update_watch_version_unknown">hindi alam</string>
+    <string name="update_checking">Tinitingnan ang updates…</string>
+    <string name="update_check_failed">Hindi matingnan ang updates. Tingnan ang koneksyon at subukan ulit.</string>
+    <string name="update_available_line">Bagong bersyon: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(pre-release)</string>
+    <string name="update_up_to_date">Nasa pinakabagong bersyon ka (%1$s)</string>
+    <string name="update_no_wear_asset">Walang watch APK na maipapadala ang release na ito.</string>
+    <string name="update_watch_hint">Dina-download ng “Update watch” ang bagong watch app at ipinapadala sa Bluetooth — ikaw ang nagko-confirm ng install sa mismong relo, walang cable o Wear Installer na kailangan.</string>
+    <string name="update_downloading">Nagda-download… %1$d%%</string>
+    <string name="update_connecting_watch">Kumokonekta sa relo…</string>
+    <string name="update_transferring">Ipinapadala sa relo… %1$d%%</string>
+    <string name="update_confirm_on_watch">Naipadala! May lumabas na notification sa relo — i-tap iyon doon para i-install.</string>
+    <string name="update_no_watch">Walang nakakonektang relo.</string>
+    <string name="update_push_failed">Nabigong ipadala ang update sa relo. Subukan ulit.</string>
+    <string name="update_watch_button">I-update ang relo</string>
+    <string name="update_open_release_button">Buksan ang release page</string>
+    <string name="update_watch_behind">Nasa %1$s pa rin ang relo mo — ipadala ang update sa ibaba.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Panatilihing naka-sync ang phone at watch apps</string>
+    <string name="update_state_checking">Tinitingnan ang updates…</string>
+    <string name="update_state_current">Up to date ka</string>
+    <string name="update_state_current_sub">Pinakabagong release ang tumatakbo, %1$s</string>
+    <string name="update_state_available">Available ang update</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Hindi matingnan ang updates</string>
+    <string name="update_state_failed_sub">Tingnan ang koneksyon at subukan ulit</string>
+    <string name="update_device_phone">Phone</string>
+    <string name="update_device_watch">Relo</string>
+    <string name="update_versions_header">Naka-install</string>
+    <string name="update_whats_new">Ano ang bago</string>
+    <string name="update_phone_button">I-update ang phone</string>
+    <string name="update_installing">Binubuksan ang installer…</string>
+    <string name="update_install_permission_needed">Payagan ang pag-install ng apps mula sa Svartifoss, pagkatapos ay i-tap muli ang Update phone.</string>
+    <string name="update_phone_failed">Nabigong i-download ang phone update. Subukan ulit.</string>
+    <string name="update_install_notification_title">Update ng Svartifoss</string>
+    <string name="update_install_notification_tap">I-tap para i-install ang bagong bersyon</string>
+    <string name="update_install_notification_failed">Nabigo ang install. Payagan ang installs mula sa Svartifoss sa Settings at subukan ulit.</string>
+    <string name="setting_wear_album_accent_source">Pinagmulan ng album accent</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Balansyado</item>
+        <item>Pinaka-vibrant</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Naka-off</item>
+        <item>Banayad</item>
+        <item>Pamantayan</item>
+        <item>Matapang</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Accent floor</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Track</string>
+    <string name="preview_metadata_genre">Genre</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Taon</string>
+    <string name="preview_metadata_format">Format</string>
+    <string name="preview_metadata_bitrate">Bitrate</string>
+    <string name="preview_metadata_position">Posisyon</string>
+    <string name="preview_metadata_output">Output</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Mga detalye ng album</string>
+    <string name="setting_wear_metadata_core_description">Album, album artist, posisyon sa record at haba.</string>
+    <string name="setting_wear_metadata_release">Mga detalye ng release</string>
+    <string name="setting_wear_metadata_release_description">Genre, taon, release date at label.</string>
+    <string name="setting_wear_metadata_credits">Mga credit</string>
+    <string name="setting_wear_metadata_credits_description">Composer, writer at author, kung inilalathala ng player ang mga ito.</string>
+    <string name="setting_wear_metadata_technical">Mga detalye ng file</string>
+    <string name="setting_wear_metadata_technical_description">Format, bitrate, sample rate, channels at size. Local tracks lang.</string>
+    <string name="setting_split_panel">Hating panel</string>
+    <string name="setting_split_panel_description">Kung ano ang pumupuno sa ibabang kalahati ng Split face. Ipinagpapatuloy ng blurred artwork ang parehong cover sa likod ng text; solid colour ang hitsura ng notification card.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Malabong artwork</item>
+        <item>Solid na kulay</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Mga detalye ng playback</string>
+    <string name="setting_wear_metadata_playback_description">Posisyon hanggang millisecond, bilis, audio output, at kung saan sini-stream o pinapatugtog ang tunog — kasama ang address ng track. Ito ang isang block na maaaring punan ng streaming track kapag walang file na mailalarawan.</string>
+    <string name="setting_wear_metadata_identifiers">Mga identifier</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC at catalogue ids. Off bilang default — kapaki-pakinabang kapag kailangan mo, ingay kapag hindi.</string>
+    <string name="setting_metadata_lookup">Hanapin online ang mga detalye ng track</string>
+    <string name="setting_metadata_lookup_description">Pinupunan ang hindi inilathala ng tumutugtog na app — ISRC, label, release date — mula sa MusicBrainz, isang libreng public database. Off bilang default. Gumagana ang Metadata watch face kahit wala ito; nagdadagdag lang ito ng rows. Walang ipinapadala maliban kung i-on mo ito at piliin ang face na iyon, at track name at artist lang ang ipinapadala.</string>
+</resources>

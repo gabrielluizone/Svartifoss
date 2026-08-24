@@ -1398,6 +1398,7 @@ class MainActivity : WearCompanionWatchActivity(),
             // weight-matching styledClassicTypeface applies to every other font - see flexTypeface.
             binding.textTitle.typeface = flexTypeface(this, titleTypography, flexAxes)
             binding.textArtist.typeface = flexTypeface(this, artistTypography, flexAxes)
+            applyQuickPanelFont()
             return
         }
         val base = watchFontTypeface(this, effectiveKey)
@@ -1416,7 +1417,7 @@ class MainActivity : WearCompanionWatchActivity(),
      */
     /** Null means "leave the layout's own typeface", i.e. the switch is off. */
     private fun quickPanelTypeface(): android.graphics.Typeface? =
-            if (Preferences.getBoolean(preferences, MiscPreferences.WEAR_FONT_ALL_SCREENS)) {
+            if (faceBool(MiscPreferences.WEAR_FONT_ALL_SCREENS)) {
                 watchFontTypeface(this, wearFontKey)
             } else {
                 null

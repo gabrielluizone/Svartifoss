@@ -1,0 +1,1992 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS bu cihazda desteklenmiyor</string>
+    <string name="setting_no_wearable_api_banner_description">Bu cihaz, Svartifoss’un saatle iletişim kurmak için ihtiyaç duyduğu Google Play Hizmetleri Wear OS bileşenini sağlamıyor. Eşleştirme yardımcı olmaz — telefon uygulaması burada bir saate ulaşamaz. Aşağıdaki tüm ayarlar yine de kaydedilir ve Svartifoss’u destekleyen bir cihaza yüklerseniz uygulanır.</string>
+    <string name="setting_no_watch_banner">Bağlı saat yok</string>
+    <string name="setting_no_watch_banner_description">Bu ayarlar Wear OS saatinizle eşitlenir; bu yüzden bir saat eşleştirilip bağlanana kadar görünür biçimde uygulanmaz. Yine de aşağıdaki her şeyi şimdiden yapılandırabilirsiniz.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Görünüm</string>
+    <string name="setting_theme">Tema</string>
+    <string name="theme_light">Bembeyaz</string>
+    <string name="theme_dark">Tam Siyah</string>
+    <string name="theme_system">Sistemi izle</string>
+    <string name="setting_language">Dil</string>
+    <string name="language_system">Sistemi izle</string>
+    <string name="language_change_watch_notice">Eşitlendiğinde saat de bu dili kullanır.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Geliştirici</string>
+    <string name="dev_mode_unlocked">Geliştirici modu etkin ✦</string>
+    <string name="dev_mode_clicks_remaining">Geliştirici modunu açmak için %1$d dokunuş daha</string>
+    <string name="dev_disable_mode">Geliştirici modunu devre dışı bırak</string>
+    <string name="dev_disable_mode_description">Bu bölümü yeniden gizlemek için — geri getirmek üzere \"Yüklü sürüm\" öğesine yedi kez dokunun</string>
+    <string name="dev_mode_disabled">Geliştirici modu devre dışı</string>
+    <string name="dev_build_info">Derleme bilgileri</string>
+    <string name="dev_sync_watch">Saat ayarlarını zorla eşitle</string>
+    <string name="dev_sync_watch_description">Tüm mevcut ayarları eşleştirilmiş saate hemen gönder</string>
+    <string name="dev_sync_watch_done">Ayarlar saatle eşitlendi</string>
+    <string name="dev_copy_debug_info">Hata ayıklama bilgilerini kopyala</string>
+    <string name="dev_copy_debug_info_description">Derleme ve cihaz ayrıntılarını panoya kopyala</string>
+    <string name="dev_show_archived">Arşivlenmiş seçenekleri göster</string>
+    <string name="dev_show_archived_description">Bilinen sorunlar nedeniyle arşivlenmiş saat düzenlerini ve ayarlarını göster</string>
+    <string name="dev_copy_debug_info_done">Hata ayıklama bilgileri kopyalandı</string>
+    <string name="dev_open_update_screen">Güncelleme ekranını aç</string>
+    <string name="dev_open_update_screen_description">Gerçek bir sürüm beklemeden Güncellemeler ekranını (kapak başlığı, sürüm notları düzeni) önizle</string>
+    <string name="dev_watch_layout_bounds">Saat düzen sınırlarını göster</string>
+    <string name="dev_watch_layout_bounds_description">Saatte görünen oynatıcı öğelerinin ve dokunma bölgelerinin ana hatlarını göster. Yalnızca tanılama katmanı.</string>
+    <string name="dev_watch_player_info">Saat oynatıcı bilgilerini göster</string>
+    <string name="dev_watch_player_info_description">Etkin yüzü, oynatma durumunu, ilerlemeyi ve işleme bilgilerini saatin üzerinde göster.</string>
+    <string name="pref_reset_default">Varsayılana sıfırla</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Gizli şelaleyi buldunuz.
+
+Svartifoss — siyah bazalt sütunları
+İzlanda’daki bir şelaleyi çerçeveler;
+müziğin taştan geçen su gibi
+aktığını hatırlatır.
+
+♪ Özenle yapıldı. ♪</string>
+    <string name="easter_egg_ok">Kapat</string>
+
+    <string name="nav_watch_face">Saat</string>
+    <string name="watch_face_header">Saat görünümü</string>
+    <string name="nav_controls">Kontroller</string>
+    <string name="nav_actions">Eylemler</string>
+    <string name="nav_settings">Ayarlar</string>
+
+    <string name="controls_header">Kontroller</string>
+    <string name="controls_state_playing">Müzik çalıyor</string>
+    <string name="controls_state_stopped">Oynatma yok</string>
+    <string name="controls_playing_description">Müzik çalarken her girişin ne yapacağını seçin. Bu yapılandırma, oynatma olmayan durumdan bağımsızdır.</string>
+    <string name="controls_stopped_description">Oynatma başlamadan önce veya durduktan sonra her girişin ne yapacağını seçin. Bu yapılandırma, çalma durumundan bağımsızdır.</string>
+
+    <string name="watch_live_preview">Canlı saat önizlemesi</string>
+    <string name="watch_preview_description">Seçilen saat yüzeyinin canlı önizlemesi. Değişiklikler, saatte denemeden önce burada görünür.</string>
+    <string name="watch_section_style">Oynatıcı</string>
+    <string name="watch_section_style_description">Oynatıcı düzenini ve başlığın, sürenin ve ilerlemenin nasıl davranacağını seçin.</string>
+    <string name="watch_section_background">Arka plan</string>
+    <string name="watch_section_background_description">Albüm görselini, bulanıklığı, solmayı ve oynatıcının arkasındaki okunabilirliği kontrol edin.</string>
+    <string name="watch_section_colors">Renkler</string>
+    <string name="watch_section_colors_description">Temel, ilerleme ve albüm vurgu renklerini ayarlayın; ardından başlık, sanatçı, saat, ses ve panel renklerini ince ayarlayın.</string>
+    <string name="watch_section_typography">Metin</string>
+    <string name="watch_section_typography_description">Yazı tiplerini seçin; başlık, sanatçı, saat, uygulama simgesi, ikincil ekranlar ve Flex metnini ayarlayın.</string>
+    <string name="watch_section_aod">Her zaman açık</string>
+    <string name="watch_section_aod_description">Düşük güç ekranını yapılandırın ve ortam görünümünü önizlemede görün.</string>
+    <string name="watch_section_panels">Paneller</string>
+    <string name="watch_section_panels_description">Ses, arama, hızlı panel ve kuyruğu biçimlendirin; bir satıra odaklanmak önizlemede o yüzeyi açar.</string>
+    <string name="watch_section_mini_buttons">Mini düğmeler</string>
+    <string name="watch_section_mini_buttons_description">İsteğe bağlı kısayol satırını biçimlendirin. Eylemlerini Kontroller bölümünde atamak için aşağıdaki “Mini düğmeler”e dokunun.</string>
+    <string name="watch_overview_description">Neyi özelleştirmek istediğinizi seçin. Önizleme ve kaydedilmiş tema her alanda etkin kalır.</string>
+    <string name="watch_back_to_overview">Saat alanlarına dön</string>
+
+    <string name="settings_section_general">Genel</string>
+    <string name="settings_section_general_description">Uygulama teması, vurgu rengi ve güncelleme tercihleri.</string>
+    <string name="settings_section_watch">Davranış</string>
+    <string name="settings_section_watch_description">Saatinizde tepe düğmesi, dokunma, dokunsal geri bildirim ve eylem menüsü davranışı.</string>
+    <string name="settings_section_automation">Otomasyon</string>
+    <string name="settings_section_automation_description">Svartifoss’un ne zaman otomatik açılıp kapanacağını seçin.</string>
+    <string name="settings_section_apps">Uygulamalar</string>
+    <string name="settings_section_apps_description">Şarkı sözleri ve meta verileri bulun; yayın kısayollarını, kuyruk görsellerini ve Android erişimini yönetin.</string>
+    <string name="settings_section_data">Veriler ve destek</string>
+    <string name="settings_section_data_description">Yapılandırmanızı yedekleyin, sürümü veya tanılamaları kontrol edin ya da yardım alın.</string>
+    <string name="settings_overview_description">Bir alan seçin. İlgili seçenekler bir arada kalır; arama ise sizi doğrudan herhangi bir ayara götürebilir.</string>
+    <string name="settings_back_to_overview">Ayar alanlarına dön</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Svartifoss nasıl kullanılır</string>
+    <string name="tutorial_intro">Svartifoss, saatinizi telefonunuzda çalan müzik için bir uzaktan kumandaya dönüştürür. Bileğinizden yapabileceğiniz her şey burada.</string>
+
+    <string name="tutorial_taps_title">Ekran bölgelerine dokunun</string>
+    <string name="tutorial_taps_desc">Saat ekranı dört bölgeye ayrılır — üst, alt, sol ve sağ. Bir bölgeye dokunmak ona atadığınız eylemi çalıştırır. Varsayılan olarak sol bölge oynatır veya duraklatır, sağ bölge sonraki parçaya geçer, üst ve alt bölgeler sesi değiştirir.</string>
+
+    <string name="tutorial_quick_panel_title">Hızlı eylemler paneli</string>
+    <string name="tutorial_quick_panel_desc">Şu anda çalan ekranın ortasına çift dokunarak dört yuvalı bir panel açın — üç yuvarlak düğme ve altlarında bir geniş satır. Değiştirilmezse yuvalar, çalan uygulamanın kendi bildirimine koyduğu düğmeleri yansıtır; böylece gerçek beğenme, karıştırma ve tekrarlama kontrollerini kullanırsınız. Telefonda Eylemler bölümünden bir yuvaya istediğiniz eylemi atayın veya gizlemek için “Yok” seçeneğini belirleyin.</string>
+    <string name="tutorial_gestures_title">Tek, çift ve uzun basma</string>
+    <string name="tutorial_gestures_desc">Dört kenar bölgesinin her biri ayrı tek, çift ve uzun basma eylemlerini destekler. Merkeze tek dokunma da yapılandırılabilir; çift dokunma her zaman Hızlı eylemleri açarken uzun basma, Ayarlar → Davranış seçimine göre yüz seçiciyi, kuyruğu veya hiçbir şeyi açar.</string>
+
+    <string name="tutorial_buttons_title">Fiziksel düğmeler</string>
+    <string name="tutorial_buttons_desc">Saatinizde yan düğmeler varsa bunlara da tek, çift ve uzun basma eylemleri atayabilirsiniz. Ekran kapalıyken bile çalışmaya devam ederler.</string>
+
+    <string name="tutorial_rotary_title">Döner tepe düğmesi</string>
+    <string name="tutorial_rotary_desc">Ayarlar → Davranış → Döner tepe düğmesi / çerçeve altında döner tepe düğmesinin veya çerçevenin sesi değiştirmesini, parça içinde gezinmesini ya da hiçbir şey yapmamasını seçin. Tepe dönüşlerini düğme olarak bildiren saatlerde bunları bunun yerine Kontroller bölümünde atayın.</string>
+
+    <string name="tutorial_swipe_up_title">Yukarı, aşağı, sola ve sağa kaydırma</string>
+    <string name="tutorial_swipe_up_desc">Şu anda çalan ekranda yukarı, aşağı veya sola kaydırmanın her biri herhangi bir şeyi açacak şekilde yapılandırılabilir — eylemler menüsü, oynatma kuyruğu, parça atlama, çalma listeleriniz ve daha fazlası. Kontroller bölümünde Müzik çalıyor veya Oynatma yok durumunu seçerek her birini yapılandırın. Varsayılan olarak yukarı kaydırmak eylemler menüsünü açar; diğerleri siz atayana kadar hiçbir şey yapmaz. Sağa kaydırma değiştirilmez — uygulamadan çıkmak için evrensel Wear OS hareketidir.</string>
+    <string name="tutorial_shortcuts_title">Yayın kısayolları</string>
+    <string name="tutorial_shortcuts_desc">Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music veya SoundCloud’dan bir parça, albüm, miks ya da çalma listesi bağlantısını kaydedin; ardından herhangi bir düğmeye, harekete veya panel yuvasına atayın. En hızlı yol, bağlantıyı yayın uygulamasından doğrudan Svartifoss ile paylaşmaktır; kopyalanmış bir bağlantıyı yapıştırabilir veya elle de girebilirsiniz. Hesap ya da oturum açma gerekmez — saat telefondan oynatmayı başlatmasını ister, böylece kısayol yalnızca uygulamayı açmak yerine içeriği çalar.</string>
+    <string name="tutorial_yt_music_title">YouTube Music kısayolları</string>
+    <string name="tutorial_yt_music_desc">Telefona dokunmadan müziğinize doğrudan geçmek için “Beğenilen şarkıları çal”, “Beğenilen şarkıları karışık çal” veya “Çalma listelerim” seçeneklerinden birini herhangi bir düğmeye, harekete ya da kaydırmaya atayın. “Arama geçmişi” saatteki son aramalarınızı hatırlar — silmek için birine basılı tutun.</string>
+
+    <string name="tutorial_exit_title">Çıkmak için kaydırın</string>
+    <string name="tutorial_exit_desc">Oynatıcıdan çıkmak için sol kenardan kaydırın. Çıkarken oynatma otomatik olarak duraklatılabilir — Ayarlar’dan etkinleştirin.</string>
+
+    <string name="tutorial_tile_title">Hızlı kontrol Tile’ı</string>
+    <string name="tutorial_tile_desc">Uygulamayı açmadan anında oynatmak, duraklatmak ve atlamak için saat yüzünde yana kaydırarak Svartifoss Tile’ına geçin.</string>
+
+    <string name="tutorial_complication_title">Saat yüzü komplikasyonu</string>
+    <string name="tutorial_complication_desc">Geçerli kapağı bir bakışta görmek için saat yüzünüze Svartifoss albüm görseli komplikasyonunu ekleyin. Oynatıcıyı açmak için dokunun.</string>
+
+    <string name="tutorial_system_title">Sistem medya kontrolleri</string>
+    <string name="tutorial_system_desc">Geçerli parça saatin kendi medya kontrollerinde ve son uygulamalarında da görünür; böylece oynatmayı oradan da kontrol edebilirsiniz.</string>
+
+    <string name="tutorial_tip">İpucu: Kontroller’de her iki durumu yapılandırın, ardından menüyü Eylemler’de düzenleyin.</string>
+
+    <string name="navigation_drawer_open">Gezinme çekmecesini aç</string>
+    <string name="navigation_drawer_close">Gezinme çekmecesini kapat</string>
+
+    <string name="action_settings">Ayarlar</string>
+    <string name="action_pause">Duraklat</string>
+    <string name="action_play">Oynat</string>
+    <string name="action_skip_prev">Önceki parçaya geç</string>
+    <string name="action_skip_next">Sonraki parçaya geç</string>
+    <string name="action_play_pause">Oynat / Duraklat</string>
+    <string name="action_stop">Durdur</string>
+    <string name="action_restart">Parçayı yeniden başlat</string>
+    <string name="action_mute">Sesi kapat / Aç</string>
+    <string name="action_skip_seconds">%1$d saniye ileri sar</string>
+    <string name="action_reverse_seconds">%1$d saniye geri sar</string>
+    <string name="action_like">Beğen</string>
+    <string name="action_shuffle">Karıştır</string>
+    <string name="action_repeat">Tekrarla</string>
+    <string name="action_repeat_one">Birini tekrarla</string>
+    <string name="action_search">Müzik ara</string>
+    <string name="action_open_lyrics">Şarkı sözleri</string>
+    <string name="group_playback_controls">Oynatma kontrolleri</string>
+    <string name="group_streaming_shortcuts">Parçalar, albümler ve çalma listeleri</string>
+    <string name="pick_action">Eylem seç</string>
+    <string name="action_search_hint">Bu listede ara</string>
+    <string name="action_search_empty">Bu aramayla eşleşen eylem yok.</string>
+    <string name="action_opens_more">Birden fazla seçenek</string>
+    <string name="action_volume_up">Sesi artır</string>
+    <string name="volume_down">Sesi azalt</string>
+    <string name="group_volume_controls">Ses kontrolleri</string>
+    <string name="no_watch_detected">Saat algılanmadı</string>
+    <string name="connection_instructions">Bağlantıyı başlatmak için saatte Svartifoss’u açın</string>
+    <string name="playing_controls">Çalarken kullanılan kontroller</string>
+    <string name="stopped_controls">Oynatma yokken kullanılan kontroller</string>
+    <string name="actions_menu">Eylemler menüsü</string>
+    <string name="actions_intro">Saatinizdeki iki eylem yüzeyini oynatma kontrolleri, uygulamalar veya kaydedilmiş parçalar, albümler ve çalma listeleriyle yapılandırın. Hızlı panel kompakt kalır; aşağıdaki menü daha uzun sıralı bir liste tutabilir.</string>
+    <string name="actions_quick_panel_section">Hızlı panel</string>
+    <string name="actions_watch_menu_section">Saatteki menü</string>
+    <plurals name="actions_list_summary">
+        <item quantity="other">%1$d eylem · Düzenlemek için dokunun · Yeniden sıralamak için basılı tutup sürükleyin</item>
+    </plurals>
+    <string name="actions_reorder_description">Sıralı eylem menüsü. Sürüklemek için dokunup basılı tutun, Yukarı taşı veya Aşağı taşı erişilebilirlik eylemlerini kullanın ya da klavyede Ctrl+Yukarı/Aşağı tuşlarına basın.</string>
+    <string name="actions_move_up">Yukarı taşı</string>
+    <string name="actions_move_down">Aşağı taşı</string>
+    <string name="actions_moved_to_position">%1$s, %3$d konumdan %2$d konumuna taşındı.</string>
+    <string name="actions_empty">Henüz eylem yok. İlkini oluşturmak için ekle düğmesini kullanın.</string>
+    <string name="actions_add">Eylem ekle</string>
+    <string name="on_screen_buttons">DOKUNMA BÖLGELERİ</string>
+    <string name="physical_buttons">FİZİKSEL DÜĞMELER</string>
+    <string name="physical_buttons_disconnected">Fiziksel düğmelerini yapılandırmak için saatinizi bağlayın ve Svartifoss’u açın. Dokunma bölgeleri, kaydırmalar ve mini düğmeler şimdiden kullanılabilir.</string>
+    <string name="physical_buttons_unavailable">Bu saat yapılandırılabilir fiziksel düğme bildirmedi.</string>
+    <string name="control_assignment_tap">Dokunma: %1$s</string>
+    <string name="control_assignment_hold">Basılı tutma: %1$s</string>
+    <string name="control_assignment_both">Dokunma: %1$s · Basılı tutma: %2$s</string>
+    <string name="tap_a_zone_to_configure">Bir eylem atamak için saatte bir bölgeye dokunun</string>
+    <string name="touch_zone_top">Üst bölge</string>
+    <string name="touch_zone_bottom">Alt bölge</string>
+    <string name="touch_zone_left">Sol bölge</string>
+    <string name="touch_zone_right">Sağ bölge</string>
+    <string name="touch_zone_center">Merkeze dokunma</string>
+    <string name="touch_zone_action">%1$s: %2$s. Yapılandırmak için dokunun.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">KAYDIRMA HAREKETLERİ</string>
+    <string name="tap_a_swipe_to_configure">Ne açacağını seçmek için bir yöne dokunun</string>
+    <string name="swipe_gesture_up">Yukarı kaydır</string>
+    <string name="swipe_gesture_down">Aşağı kaydır</string>
+    <string name="swipe_gesture_left">Sola kaydır</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Yukarı</string>
+    <string name="swipe_gesture_label_down">Aşağı</string>
+    <string name="swipe_gesture_label_left">Sol</string>
+
+    <string name="screen_buttons">MİNİ DÜĞMELER</string>
+    <string name="tap_a_screen_button_to_configure">Saat ekranının altına yakın en fazla üç görünür düğme — eylem atamak için bir yuvaya dokunun</string>
+    <string name="screen_button_1">Mini düğme 1 (sol)</string>
+    <string name="screen_button_2">Mini düğme 2 (orta)</string>
+    <string name="screen_button_3">Mini düğme 3 (sağ)</string>
+    <string name="screen_button_label_1">Düğme 1</string>
+    <string name="screen_button_label_2">Düğme 2</string>
+    <string name="screen_button_label_3">Düğme 3</string>
+    <string name="no_action">Eylem yok</string>
+    <string name="gesture_single_press">Tek basma</string>
+    <string name="gesture_double_press">Çift basma</string>
+    <string name="gesture_long_press">Uzun basma</string>
+    <string name="gesture_swipe_action">Eylem</string>
+    <string name="center_button_quick_panel_note">Merkeze çift dokunmak her zaman Hızlı eylemleri açar. Uzun basmak Ayarlar → Davranış altındaki seçimi çalıştırır. Burada merkeze dokunmayı atadığınızda bu iki hareket değişmez.</string>
+    <string name="start_playback">Oynatmayı başlat</string>
+    <string name="uninstalled_app">Kaldırılmış uygulama</string>
+
+    <string name="play_app">%1$s oynat</string>
+    <string name="tasker_task">Tasker Görevi</string>
+    <string name="icon_selection_title">Simge seçimi</string>
+    <string name="icon_selection_gallery">Galeriden</string>
+    <string name="icon_selection_no_icon_pack">Bu özellik, eyleminiz için
+        yüklü bir simge paketinden özel simge seçmenizi sağlar.
+
+Ne yazık ki yüklü bir simge paketiniz yok gibi görünüyor.</string>
+    <string name="icon_selection_no_storage_permission">Bu özellik, eyleminiz için
+        yüklü bir simge paketinden özel simge seçmenizi sağlar.
+
+Bazı simge paketleri uygulamaların depolama iznine sahip olmasını gerektirir. Bu özelliği kullanmak için izin vermeniz gerekir.</string>
+    <string name="delete">Sil</string>
+    <string name="action_text">Eylem metni</string>
+    <string name="swap_action">Eylemi değiştir</string>
+    <string name="open_actions_menu">Eylemler menüsünü aç</string>
+    <string name="open_playlist_menu">Geçerli çalma listesini göster</string>
+    <string name="misc_settings">Çeşitli ayarlar</string>
+
+    <string name="category_backup">Yedekleme</string>
+    <string name="export_config">Yapılandırmayı dışa aktar</string>
+    <string name="export_config_description">Düğme eşlemelerinizi, eylem listenizi ve saat ayarlarınızı bir dosyaya kaydedin</string>
+    <string name="import_config">Yapılandırmayı içe aktar</string>
+    <string name="import_config_description">Düğme eşlemelerini, eylem listesini ve saat ayarlarını bir dosyadan geri yükleyin</string>
+    <string name="export_config_done">Yapılandırma dışa aktarıldı</string>
+    <string name="export_config_failed">Yapılandırma dışa aktarılamadı</string>
+    <string name="import_config_done_title">İçe aktarma başarılı</string>
+    <string name="import_config_done_message">İçe aktarılan yapılandırmayı uygulamak için Svartifoss’un yeniden başlatılması gerekiyor.</string>
+    <string name="import_config_failed">Yapılandırma içe aktarılamadı — dosya geçersiz veya uyumsuz bir sürümden olabilir</string>
+    <string name="action_restart_now">Şimdi yeniden başlat</string>
+
+    <string name="category_about">Hakkında</string>
+    <string name="category_music_screen">Müzik ekranı</string>
+    <string name="category_watch_screen">Saat ekranı</string>
+    <string name="category_mini_buttons">Mini düğmeler</string>
+    <string name="category_screen_face">Oynatıcı görünümü</string>
+    <string name="category_wf_screen_behavior">Ekran davranışı</string>
+    <string name="category_wf_player_progress">İlerleme, arama ve süre</string>
+    <string name="category_album_background">Albüm arka planı</string>
+    <string name="category_music_colors">Müzikten renkler</string>
+    <string name="category_wf_typography_font">Yazı tipi</string>
+    <string name="category_wf_typography_title">Başlık</string>
+    <string name="category_wf_typography_artist">Sanatçı</string>
+    <string name="category_wf_typography_icon">Uygulama simgesi</string>
+    <string name="category_wf_typography_flex">Google Sans Flex eksenleri</string>
+    <string name="category_wf_metadata">Meta veri yüzü içeriği</string>
+    <string name="category_wf_typography_secondary">Diğer ekranlardaki metin</string>
+    <string name="category_wf_colors_title">Başlık renkleri</string>
+    <string name="category_wf_colors_artist">Sanatçı renkleri</string>
+    <string name="category_wf_colors_clock">Saat renkleri</string>
+    <string name="setting_wear_font_flex_hint_title">Bu kontroller hakkında</string>
+    <string name="setting_wear_flex_axes_hint">Bu ayarlar özellikle Google Sans Flex’i ince ayarlar — kullanmak için yukarıdan bu yazı tipini seçin. Yukarıdaki başlık ve sanatçı kalınlığı/italik ayarları bu yazı tipinin kendi ağırlık (wght) ve eğim (slnt) eksenlerini zaten ayarlar; aşağıdaki dört kontrol tüm yüze uygulanır.</string>
+    <string name="setting_wear_font_flex_width">Genişlik</string>
+    <string name="setting_wear_font_flex_width_description">Yatay esneme; sıkışıktan genişe (25–151). 100 yazı tipinin normal genişliğidir.</string>
+    <string name="setting_wear_font_flex_optical_size">Optik boyut</string>
+    <string name="setting_wear_font_flex_optical_size_description">Metnin etkin boyutuna göre çizgi ayrıntısını ayarlar (6–144). Düşük değerler küçük metne, yüksek değerler büyük ekran metnine uygundur.</string>
+    <string name="setting_wear_font_flex_grade">Derece</string>
+    <string name="setting_wear_font_flex_grade_description">Düzeni değiştirmeden ağırlığı hafifçe kaydırır (0–100) — koyu ekranda kontrastı ince biçimde güçlendirir.</string>
+    <string name="setting_wear_font_flex_roundness">Yuvarlaklık</string>
+    <string name="setting_wear_font_flex_roundness_description">Daha sıcak bir görünüm için çizgi uçlarını keskin (0) ile tamamen yuvarlak (100) arasında harmanlar.</string>
+    <string name="preview_sample_title">Şarkı başlığı</string>
+    <string name="preview_sample_artist">Sanatçı adı</string>
+    <string name="preview_sample_next_title">Sonraki şarkı</string>
+    <string name="preview_playback_stopped">Durduruldu</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">önceki satır</string>
+    <string name="preview_verse_current">şu anda çalan satır</string>
+    <string name="preview_verse_next">ve sonraki</string>
+    <string name="preview_chat_today">Bugün</string>
+    <string name="category_gestures">Hareketler ve giriş</string>
+    <string name="category_watch_navigation">Gezinme ve kısayollar</string>
+    <string name="category_rotary_input">Döner giriş ve ince ayar</string>
+    <string name="category_watch_feedback">Geri bildirim ve çıkış davranışı</string>
+    <string name="category_watch_display">Saat ekranı</string>
+    <string name="setting_wear_keep_screen_on">Ekranı açık tut</string>
+    <string name="setting_wear_keep_screen_on_description">Bir Svartifoss ekranı açıkken, etkinlik zaman aşımı dolduğunda saat ekranının kapanmasını engeller. Bileğinizi indirmek yine saati karartır — bu hareket sisteme aittir. Daha fazla pil kullanır. Şarkı sözleri ekranı bu ayardan bağımsız olarak her zaman açık kalır.</string>
+    <string name="setting_lyrics_enabled">Şarkı sözlerini çevrimiçi ara</string>
+    <string name="setting_lyrics_enabled_description">Saatte şarkı sözleri ekranını açtığınızda telefonun LRCLIB’den senkronize sözleri almasına izin verin. Parça adı, sanatçı ve süre gönderilir; başka hiçbir şey gönderilmez ve diske hiçbir şey kaydedilmez. Bunu kapatırsanız şarkı sözleri ekranı aramaların devre dışı olduğunu bildirir.</string>
+    <string name="setting_overlay_blur_radius">Katman bulanıklığı</string>
+    <string name="setting_overlay_blur_radius_description">Ses/arama halkaları ve hızlı eylemler panelinin arkasındaki buzlu zeminin bulanıklık gücü (px) — albüm görseli arka plan bulanıklığından bağımsızdır</string>
+    <string name="category_action_list">Eylem Listesi</string>
+    <string name="category_automation">Otomasyon</string>
+    <string name="category_idle">Hiçbir şey çalmıyorken</string>
+    <string name="installed_version">Yüklü sürüm</string>
+    <string name="get_support">Destek al</string>
+    <string name="get_support_description">Destek için uygulama günlüklerini geliştiriciye gönder</string>
+    <string name="contact_developer">Geliştiriciyle iletişim kur</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — iletişim</string>
+    <string name="contact_developer_chooser">E-posta gönder</string>
+    <string name="contact_developer_no_client">Yüklü e-posta uygulaması yok. Adres panoya kopyalandı.</string>
+    <string name="about_developer_title">Geliştirici hakkında</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss kişisel bir proje olarak başladı — Music Center for Wear’ı günümüzün olanaklarıyla güncellemek istedim; tek amacım onu her gün kendim kullanabilmekti. Sonuç yeterince iyi olunca herkesle paylaşmaya karar verdim. Bu benim ilk uygulamam ve yaptığınız bir şeyin başka insanlar için de yararlı olduğunu görmek gerçekten eşsiz bir his.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Açık kaynak lisansları</string>
+    <string name="setting_always_show_time">Saati her zaman göster</string>
+    <string name="setting_always_show_time_off_description">Geçerli saat yalnızca ortam modunda gösterilir</string>
+    <string name="setting_always_show_time_on_description">Geçerli saat her zaman gösterilir. Üst eylem simgesi görünmez (yerine saat gelir), ancak eylem normal biçimde çalışmaya devam eder.</string>
+    <string name="tap_to_force_stop">Kontrolleri durdurmak için dokunun</string>
+    <string name="notification_action_stop">Durdur</string>
+    <string name="notification_action_force_stop">Zorla durdur</string>
+    <string name="error_notification_access">Bildirim erişimi yok. Telefonu kontrol edin.</string>
+    <string name="error_notifications">Hata bildirimleri</string>
+    <string name="notification_access_notification_title">Svartifoss’un bildirim erişimine ihtiyacı var</string>
+    <string name="notification_access_notification_title_description">Sorunu düzeltmek için bu bildirime dokunun ve Svartifoss’u kontrol edin</string>
+    <string name="error_service_not_enabled">Bildirim erişimi gerekli</string>
+    <string name="error_service_not_enabled_description">Müziği saatinizden kontrol etmek için Svartifoss’un bildirim erişimine ihtiyacı vardır — Android, hangi uygulamanın çaldığını bu yolla görmesine ve ona oynat, duraklat ve atla komutları göndermesine izin verir.
+
+Svartifoss bildirimlerinizin içeriğini asla okumaz. Bu izni yalnızca etkin medya oturumunu bulmak için kullanır.
+
+“Ayarları Aç”a dokunun, ardından bildirim erişimi altında Svartifoss’u açın.</string>
+    <string name="action_open_settings">Ayarları Aç</string>
+    <string name="settings_search_title">Ayarlarda ara</string>
+    <string name="settings_search_hint">Ayarlarda ara</string>
+    <string name="settings_search_clear">Aramayı temizle</string>
+    <string name="settings_search_prompt">Ayarlar ve Saat görünümü içindeki tüm ayarlarda ada göre arayın.</string>
+    <string name="settings_search_no_results">Eşleşen ayar yok.</string>
+    <string name="settings_search_prerequisite">Bu seçenek başka bir seçime bağlıdır. Görünmesi için burada gösterilen ayarı değiştirin.</string>
+    <string name="setting_numeric_range_error">%1$d ile %2$d arasında bir değer girin.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">İzin vermek için dokunun — bunu yapana kadar oynatma kontrolü devre dışı kalır</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Svartifoss’u saatinize yükleyin</string>
+    <string name="no_watch_app_description">Svartifoss, eşleştirilmiş Wear OS saatinizde saat uygulamasını bulamadı. Telefon ve saat uygulamaları birlikte çalışır — saat uygulaması olmadan oynatmayı bileğinizden kontrol edemezsiniz.
+
+Svartifoss Play Store’da değildir — saat uygulaması ayrı olarak yandan yüklenir (ör. Wear Installer ile). GitHub sürümleri sayfasını açıp saat APK’sını almak için “Sürümleri görüntüle”ye dokunun. Yeni yüklediyseniz eşitlemenin tamamlanması için bir dakika bekleyin.</string>
+    <string name="no_watch_app_button">Sürümleri görüntüle</string>
+    <string name="required_permission">Gerekli izin</string>
+    <string name="setting_pause_on_swipe_exit">Kaydırarak çıkarken oynatmayı duraklat</string>
+    <string name="setting_pause_on_swipe_exit_description">Saatte sola kaydırma hareketiyle Svartifoss’tan çıkarken tüm oynatmayı otomatik olarak duraklatır.
+
+Güç düğmesiyle çıkış bundan etkilenmez ve hiçbir zaman otomatik duraklatma yapmaz.</string>
+    <string name="setting_rotating_crown_off_period">Döner giriş ekran açılma gecikmesi</string>
+    <string name="setting_rotating_crown_off_period_description">Döner girişler (örneğin döner tepe düğmeleri) bazı cihazlarda aşırı hassas olabilir. Yanlışlıkla ses değişmesini önlemek için ekranı açtıktan sonra <![CDATA[<b>%1$s milisaniye</b>]]> boyunca döner giriş devre dışı bırakılır.</string>
+    <string name="setting_rotary_seek">Döner tepe düğmesiyle ara</string>
+    <string name="setting_rotary_seek_description">Etkinleştirildiğinde tepe düğmesini döndürmek sesi değiştirmek yerine geçerli parça içinde gezinir. Ses, ekrandaki veya fiziksel düğmelerle değiştirilmeye devam edebilir.</string>
+    <string name="setting_wear_rotary_action">Döner tepe düğmesi / çerçeve</string>
+    <string name="wear_rotary_action_volume">Sesi değiştir</string>
+    <string name="wear_rotary_action_seek">Parça içinde ara</string>
+    <string name="wear_rotary_action_off">Hiçbir şey yapma</string>
+    <string name="setting_rotating_sensitivity">Döner giriş hassasiyeti</string>
+    <string name="setting_rotating_sensitivity_description">Döner giriş hassasiyeti. Daha yüksek sayı, döner tepe düğmesinin aynı hareketinin sesi daha fazla artıracağı anlamına gelir. Geçerli değer: <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Ortam modunda fiziksel düğme çift tıklamasını devre dışı bırak</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Bazı saatlerde hatalı düğmeler vardır ve ortam modunda fiziksel düğmeye tek tıklama bazen çift tıklama olarak kaydedilir.
+
+Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bırakmak için bu seçeneği açabilirsiniz (örneğin iki kez tıklamak yalnızca tek tıklama eylemini çalıştırır). Saat etkinken düğmeye iki kez tıklamak bundan etkilenmez.</string>
+    <string name="setting_haptic_feedback">Dokunsal geri bildirim</string>
+    <string name="setting_haptic_feedback_description">Düğmelere basarken saati titreştir.</string>
+    <string name="setting_auto_start">Svartifoss’u otomatik aç</string>
+    <string name="setting_auto_start_description">Telefonda müzik çalmaya başladığında saatte Svartifoss’u otomatik olarak aç.</string>
+    <string name="setting_auto_start_apps_blacklist">Otomatik başlatılan uygulamalar</string>
+    <string name="setting_auto_start_apps_blacklist_description">Svartifoss’u otomatik başlatabilen medya uygulamalarının listesi</string>
+    <string name="setting_dim_album_art">Oynatıcı gölgelendirmesi</string>
+    <string name="setting_dim_album_art_description">Görsel ile oynatıcı kontrolleri arasına kullanıcı tarafından seçilen bir gölge işlemi ekleyin.</string>
+    <string name="setting_album_art_style">Albüm görseli stili</string>
+    <string name="setting_album_art_style_description">Saatte şu anda çalan arka planın nasıl görüneceğini seçin.</string>
+    <string name="setting_album_art_blur_radius">Bulanıklık yoğunluğu</string>
+    <string name="setting_album_art_blur_radius_description">Seçilen arka plan bulanıklık kullandığında tam ekran bulanıklığın gücü. Geçerli değer: <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Karartma gücü</string>
+    <string name="setting_album_art_dim_strength_description">Metin okunabilirliği için albüm görselinin ne kadar karartılacağı. Geçerli değer: <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Gölgelendirme stili</string>
+    <string name="setting_player_shading_intensity">Gölgelendirme yoğunluğu</string>
+    <string name="setting_player_shading_intensity_description">Gölgelendirmenin arka planı ne kadar karartacağı. 100%% tam güçtür; ek kontrast için daha yükseğe çıkın (150%%’ye kadar). Geçerli değer: <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Bu görünümü tüm yüzlere uygula</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Bu yüzün görünüm ayarlarını diğer tüm yüzlere kopyala</string>
+    <string name="apply_appearance_confirm_title">Tüm yüzlere uygulansın mı?</string>
+    <string name="apply_appearance_confirm_message">Bu işlem diğer tüm yüzlerin görünüm ayarlarının üzerine geçerli olanı yazar. Davranış ayarlarınızı değiştirmez.</string>
+    <string name="apply_appearance_confirm_button">Uygula</string>
+    <string name="apply_appearance_done">Tüm yüzlere uygulandı</string>
+    <string name="category_wf_layout_actions">Düzen</string>
+    <string name="setting_reset_appearance">Bu düzeni sıfırla</string>
+    <string name="setting_reset_appearance_description">Bu yüzün görünümünü özgün varsayılanlarına geri döndür</string>
+    <string name="reset_appearance_confirm_title">Bu düzen sıfırlansın mı?</string>
+    <string name="reset_appearance_confirm_message">Bu yüzün görünüm ayarları varsayılanlarına döner. Davranış ayarlarınız ve diğer yüzler etkilenmez.</string>
+    <string name="reset_appearance_confirm_button">Sıfırla</string>
+    <string name="reset_appearance_done">Düzen varsayılanlara sıfırlandı</string>
+    <string name="setting_reset_all_faces">Tüm yüzleri varsayılana sıfırla</string>
+    <string name="setting_reset_all_faces_description">Her yerleşik yüzün görünümünü özgün varsayılanlarına geri döndür</string>
+    <string name="reset_all_faces_confirm_title">Tüm yüzler sıfırlansın mı?</string>
+    <string name="reset_all_faces_confirm_message">Her yerleşik yüzün görünümü özgün varsayılanlarına döner ve etkin özel tema kapatılır. Kaydedilmiş özel temalarınız, davranış ayarlarınız ve seçtiğiniz yüz korunur.</string>
+    <string name="reset_all_faces_confirm_button">Tümünü sıfırla</string>
+    <string name="reset_all_faces_done">Tüm yüzler varsayılanlara sıfırlandı</string>
+    <string name="face_reset_migration_title">Saat görünümünüzü güncelleyin</string>
+    <string name="face_reset_migration_message">Tüm saat yüzlerinin tek bir görünüm ayarı kümesini paylaştığı eski bir sürümden güncellediniz. Artık her yüz kendi ayarlarını hatırlıyor; bu nedenle eski ayarlarınız doğrudan özelleştirmediğiniz yüzlerde uyumsuz görünebilir. Tüm yüzleri yeni varsayılanlarına sıfırlamanızı veya tamamen temiz bir başlangıç için uygulama verilerini silmenizi öneririz.</string>
+    <string name="face_reset_migration_reset_button">Tüm yüzleri sıfırla</string>
+    <string name="face_reset_migration_clear_data_button">Uygulama verilerini temizle</string>
+    <string name="setting_player_shading_color">Gölgelendirme rengi</string>
+    <string name="setting_wear_shading_custom_color">Özel gölgelendirme rengi</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Siyah</item>
+        <item>Albüm vurgusu</item>
+        <item>Doygunluğu azaltılmış albüm</item>
+        <item>Özel renk</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Oynatıcı temasını izle</item>
+        <item>Kenar vinyeti</item>
+        <item>Kenar vinyeti (Güçlü)</item>
+        <item>Kenar vinyeti (Çok güçlü)</item>
+        <item>Alt köşe</item>
+        <item>Alt solma</item>
+        <item>Taban ve tavan</item>
+        <item>Tam ekran filtresi</item>
+        <item>Albüm renk kaplaması</item>
+        <item>İki renkli albüm gradyanı</item>
+        <item>Yan perdeler</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Ortam modu albüm görseli opaklığı</string>
+    <string name="setting_ambient_album_art_opacity_description">Albüm görselinin ortam modunda ne kadar görünür kalacağı. Geçerli değer: <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Ses/arama katmanı zaman aşımı</string>
+    <string name="setting_volume_overlay_timeout_description">Ses ve arama katmanlarının ayarlamadan sonra ekranda ne kadar kalacağı. Geçerli değer: <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Döner tepe ölü bölgesi</string>
+    <string name="setting_rotary_deadzone_description">Ses veya arama değişiklikleri uygulanmadan önce gereken en az tepe hareketi. Yanlışlıkla ayarlamaları önlemeye yardımcı olur. Geçerli değer: <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Wear deneyimi</string>
+    <string name="setting_swipe_gestures_hint">Kaydırma hareketleri</string>
+    <string name="setting_swipe_gestures_hint_description">Yukarı/aşağı/sola kaydırmaların her biri herhangi bir eylemi açabilir. Bunları Müzik çalıyor veya Oynatma yok için yapılandırmak üzere buraya dokunun. Sağa kaydırma uygulamadan çıkmak için ayrılmış olarak kalır.</string>
+    <string name="setting_screen_buttons_hint">Mini düğmeler</string>
+    <string name="setting_screen_buttons_hint_description">Her birinde dokunma ve uzun basma eylemleri bulunan en fazla üç görünür düğme. Bunları Müzik çalıyor veya Oynatma yok için yapılandırmak üzere buraya dokunun.</string>
+    <string name="dev_screen_buttons_offset">Mini düğmelerin konumu</string>
+    <string name="dev_screen_buttons_offset_description">Saat ekranının altı ile mini düğmeler arasındaki tercih edilen dp uzaklığı (varsayılan 42). Satır, uzun başlıklardan kendi kendine uzaklaşmaya devam eder.</string>
+    <string name="setting_screen_buttons_tilt">Düğme eğimi</string>
+    <string name="setting_screen_buttons_tilt_description">Yan düğmelerin ekran eğrisini ne kadar takip edeceği. 0 = düz satır; 100 = eğik simgelerle tam yay yükselişi.</string>
+    <string name="setting_screen_buttons_bg">Mini düğmelerin arka planı</string>
+    <string name="setting_screen_buttons_opacity">Mini düğmelerin opaklığı</string>
+    <string name="setting_screen_buttons_opacity_description">Tüm mini düğme grubunun opaklığı (0–100%%). Geçerli değer: <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Hızlı eylemler paneli</string>
+    <string name="quick_panel_link_summary">Açmak için saat ekranının ortasına çift dokunun. Eylemler’de dört yuvasını ayarlamak için buraya dokunun.</string>
+    <string name="quick_panel_config_hint">Bunlar, saat ekranının ortasına çift dokunarak açılan paneldeki düğmelerdir. Eylemini seçmek için bir satıra dokunun (“Yok” gizler); varsayılanı geri yüklemek için uzun basın.</string>
+    <string name="quick_panel_slot_1">Düğme 1</string>
+    <string name="quick_panel_slot_2">Düğme 2</string>
+    <string name="quick_panel_slot_3">Düğme 3</string>
+    <string name="quick_panel_slot_long">Uzun düğme</string>
+    <string name="quick_panel_slot_default">%1$s (varsayılan)</string>
+    <string name="quick_panel_slot_hidden">Gizli</string>
+    <string name="quick_panel_default_like">Beğen</string>
+    <string name="quick_panel_default_shuffle">Karıştır</string>
+    <string name="quick_panel_default_repeat">Tekrarla</string>
+    <string name="quick_panel_default_up_next">Sıradaki</string>
+    <string name="setting_wear_center_long_press_queue">Kuyruk için merkeze uzun bas</string>
+    <string name="setting_wear_center_long_press_queue_description">Oynatma kuyruğunu açmak için şu anda çalan ekranın ortasına uzun basın.</string>
+    <string name="setting_wear_center_long_press">Merkeze uzun basma</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Saat yüzünü değiştir</item>
+        <item>Kuyruğu aç</item>
+        <item>Hiçbir şey</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Temel düzen</string>
+    <string name="setting_wear_screen_face_description">Bu temanın kullandığı yapıyı seçin. Kaydedilmiş temalar bu düzeni kendi yazı tipi, renk, bulanıklık, gölgelendirme, AOD ve panelleriyle birleştirebilir.</string>
+    <string name="setting_wear_show_track_title">Şarkı başlığını göster</string>
+    <string name="setting_wear_show_track_title_description">Oynatıcıda geçerli şarkının adını göster</string>
+    <string name="setting_wear_show_track_artist">Sanatçı adını göster</string>
+    <string name="setting_wear_show_track_artist_description">Oynatıcıda geçerli sanatçıyı göster</string>
+    <string name="setting_wear_show_source_icon">Çalan uygulamanın simgesini göster</string>
+    <string name="setting_wear_show_source_icon_description">Şu anda çalan uygulamanın simgesini sanatçının yanında göster. Medya bildirimindeki simgeyi kullanır. Kapalıyken simge saate hiçbir zaman gönderilmez.</string>
+    <string name="setting_wear_player_controls_visible">Oynatıcı kontrollerini göster</string>
+    <string name="setting_wear_player_controls_visible_description">Dokunma hedeflerini devre dışı bırakmadan Klasik, Poster, Stüdyo ve diğer yapılandırılabilir düzenlerdeki yerleşik düğmeleri gösterin veya gizleyin</string>
+    <string name="setting_wear_quadrant_tap_flash">Dokununca simgeyi parlat</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Bir köşe bölgesinin eylemi çalıştığında simgesini kısa süre tam parlaklıkta parlatın — özellikle simgenin normalde görünmediği ve hangi eylemin çalıştığına dair geri bildirim vermediği Gizli ekran temasında kullanışlıdır.</string>
+    <string name="setting_wear_internal_progress_visible">Düzen ilerleme göstergesi</string>
+    <string name="setting_wear_internal_progress_visible_description">Bu düzene tasarlanmış ek ilerleme göstergesini göster. Etkileyici ve Material oynat düğmesi halkaları kontrollerinin parçasıdır ve kullanılabilir kalır.</string>
+    <string name="setting_wear_edge_progress_visible">Kenar ilerleme yayını göster</string>
+    <string name="setting_wear_edge_progress_visible_description">Yalnızca ekranın çevresindeki görsel yayı gizler. Kenardan arama bağımsız bir seçenek olarak kalır.</string>
+    <string name="setting_wear_edge_seek_enabled">Ekran kenarından ara</string>
+    <string name="setting_wear_edge_seek_enabled_description">Yay gizli olsa bile kesin bir noktaya atlamak için ekran kenarına dokunun veya boyunca sürükleyin</string>
+    <string name="setting_wear_screen_theme">Kontrol stili</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Dengeli</string>
+    <string name="wear_screen_theme_default_description">Standart hiyerarşi ve kontrol boyutları.</string>
+    <string name="wear_screen_theme_minimal">Minimal</string>
+    <string name="wear_screen_theme_minimal_description">Her eylemi görünür ve kullanılabilir tutarken daha küçük, daha sakin kontroller kullanır.</string>
+    <string name="wear_screen_theme_compact">Kompakt</string>
+    <string name="wear_screen_theme_compact_description">Eylemlerinizi değiştirmeden daha sıkı bir kontrol görünümü kullanır.</string>
+    <string name="wear_screen_theme_cinema">Sinema</string>
+    <string name="wear_screen_theme_cinema_description">Görseli değiştirmeden kontrolleri yumuşatır.</string>
+    <string name="wear_screen_theme_vivid">Canlı</string>
+    <string name="wear_screen_theme_vivid_description">Daha büyük ve daha belirgin kontroller kullanır.</string>
+    <string name="wear_screen_theme_contrast">Yüksek kontrast</string>
+    <string name="wear_screen_theme_contrast_description">Daha kolay okunması için daha büyük kontroller kullanır.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Kompakt ve biraz karartılmış kontroller kullanır. Arka planı kendisi karartmaz — bunun için arka plan ayarlarını kullanın.</string>
+    <string name="wear_screen_theme_hidden">Gizli</string>
+    <string name="wear_screen_theme_hidden_description">Tüm kontrol simgelerini tamamen gizler. Dokunma hedefleri etkin ve tam işlevsel kalır.</string>
+    <string name="setting_wear_font">Yazı tipi</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Uygulamanın varsayılan yazı tipi.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Ayarlanabilir genişlik, optik boyut, derece ve yuvarlaklığa sahip değişken bir Google Sans sürümü — aşağıdaki eksen kontrollerini açar.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Android’in klasik sistem yazı tipi.</string>
+    <string name="wear_font_rounded">Yuvarlak</string>
+    <string name="wear_font_rounded_description">Yumuşak yuvarlatılmış uçlara sahip samimi modern harf biçimleri.</string>
+    <string name="wear_font_sans_light">Modern Hafif</string>
+    <string name="wear_font_sans_light_description">Daha hafif görsel ağırlığa sahip temiz, ferah bir sans-serif.</string>
+    <string name="wear_font_sans_thin">Ultra İnce</string>
+    <string name="wear_font_sans_thin_description">Minimalist bir oynatıcı için ekstra hafif ekran stili.</string>
+    <string name="wear_font_sans_medium">Modern Orta</string>
+    <string name="wear_font_sans_medium_description">Daha güçlü, kompakt çizgilere sahip net bir sans-serif.</string>
+    <string name="wear_font_sans_black">Ağır</string>
+    <string name="wear_font_sans_black_description">En yüksek görsel etki için kalın bir ekran ailesi.</string>
+    <string name="wear_font_small_caps">Küçük Büyük Harfler</string>
+    <string name="wear_font_small_caps_description">Editoryal bir his veren kompakt büyük harf biçimleri.</string>
+    <string name="wear_font_casual">Rahat</string>
+    <string name="wear_font_casual_description">Eğlenceli, el yazısı tarzında bir sistem ailesi.</string>
+    <string name="wear_font_typewriter">Daktilo (Arşivlendi)</string>
+    <string name="wear_font_typewriter_description">Retro daktilo görünümü (Mom’s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Circular ruhunda ücretsiz (OFL) bir alternatif olan yuvarlak geometrik sans.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Proxima Nova ruhunda ücretsiz (OFL) bir alternatif olan temiz geometrik sans.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Optima ruhunda ücretsiz (OFL) bir alternatif olan zarif hümanist roman.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Daha yumuşak bir daktilo stili (Love Letter Typewriter) — normalde “Lain” temalı parçalar için ayrılmıştır.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Klasik bir serif yazı tipi.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">Belirgin editoryal/terminal görünümlü sabit genişlikli serif harfler.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Sabit genişlikli, teknik görünüm.</string>
+    <string name="wear_font_condensed">Daraltılmış</string>
+    <string name="wear_font_condensed_description">Daha fazla metin sığdıran daha dar harf biçimleri.</string>
+    <string name="wear_font_condensed_light">Daraltılmış Hafif</string>
+    <string name="wear_font_condensed_light_description">Uzun başlıklar için dar, daha hafif bir aile.</string>
+    <string name="wear_font_condensed_medium">Daraltılmış Orta</string>
+    <string name="wear_font_condensed_medium_description">Daha güçlü çizgilere ve mükemmel okunabilirliğe sahip dar bir aile.</string>
+    <string name="wear_font_cursive">El yazısı</string>
+    <string name="wear_font_cursive_description">Dekoratif bir yazı tipi.</string>
+    <string name="setting_wear_dynamic_accent">Saatte dinamik vurgu</string>
+    <string name="setting_wear_dynamic_accent_description">Albüm tabanlı saat renklerini geçerli kapak görseline uyarlar. Kapalıyken Albüm rengi seçimleri temanın sabit vurgu rengini kullanır.</string>
+    <string name="setting_wear_album_art_fade">Albüm görseli solma geçişi</string>
+    <string name="setting_wear_album_art_fade_description">Parça değiştiğinde albüm görselini yumuşakça soldur.</string>
+    <string name="setting_wear_title_text_mode">Başlık metni davranışı</string>
+    <string name="setting_wear_title_text_mode_description">Şu anda çalan başlık sığmadığında nasıl davranacağını belirler: Otomatik; küçültme, satır kaydırma ve kaydırmayı birleştirir; diğer seçenekler tek bir davranışı zorunlu kılar.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Otomatik (küçült, sonra satıra kaydır, sonra kaydır)</item>
+        <item>Kaydır (marquee)</item>
+        <item>İki satıra kaydır</item>
+        <item>Üç satıra kaydır</item>
+        <item>Beş satıra kaydır</item>
+        <item>Sabit (tek satır, kaydırma veya küçültme yok)</item>
+        <item>Sığacak kadar küçült</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Sanatçı metni rengi</string>
+    <string name="setting_wear_artist_custom_color">Özel sanatçı rengi</string>
+    <string name="setting_wear_artist_custom_color_description">Normal işlemeyle kullanılan sanatçı rengini seçin</string>
+    <string name="setting_wear_artist_desaturated">Doygunluğu azaltılmış sanatçı rengi</string>
+    <string name="setting_wear_artist_desaturated_description">Albüm tabanlı sanatçı metni rengini yumuşatır — yalnızca “Sanatçı metni rengi” Albüm rengi olarak ayarlandığında geçerlidir</string>
+
+    <string name="setting_wear_progress_color">İlerleme çubuğu rengi</string>
+    <string name="setting_wear_progress_custom_color">Özel ilerleme çubuğu rengi</string>
+    <string name="setting_wear_progress_custom_color_description">Normal işlemeyle kullanılan ilerleme ve arama rengini seçin</string>
+    <string name="setting_wear_progress_desaturated">Doygunluğu azaltılmış ilerleme çubuğu rengi</string>
+    <string name="setting_wear_progress_desaturated_description">Albüm tabanlı ilerleme çubuğu rengini yumuşatır — yalnızca “İlerleme çubuğu rengi” Albüm rengi olarak ayarlandığında geçerlidir</string>
+
+    <string name="setting_wear_volume_color">Ses çubuğu rengi</string>
+    <string name="setting_wear_volume_custom_color">Özel ses rengi</string>
+    <string name="setting_wear_volume_custom_color_description">Normal işlemeyle kullanılan ses rengini seçin</string>
+    <string name="setting_wear_quick_panel_color">Hızlı Eylemler rengi</string>
+    <string name="setting_wear_quick_panel_custom_color">Özel Hızlı Eylemler rengi</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Normal işlemeyle kullanılan Hızlı Eylemler rengini seçin</string>
+    <string name="setting_wear_shading_custom_color_description">Gölgelendirme gradyanını renklendiren rengi seçin</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Nötr (sabit tema rengi)</item>
+        <item>Albüm rengi</item>
+        <item>Özel renk</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Klasik</item>
+        <item>Etkileyici</item>
+        <item>Vinil</item>
+        <item>Poster</item>
+        <item>Stüdyo</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spektrum</item>
+        <item>Material</item>
+        <item>Sürükleyici</item>
+        <item>Derinlik</item>
+        <item>Karusel</item>
+        <item>Sohbet</item>
+        <item>Bölünmüş</item>
+        <item>Not</item>
+        <item>Dize</item>
+        <item>Meta veriler</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Etkileyici arama</string>
+    <string name="setting_wear_expressive_seek_mode_description">Etkileyici yüzde parçayı dokunarak nasıl tarayacağınızı belirler. Merkez halka, oynat düğmesinin çevresindeki halkayı sürüklenebilir yapar; Kenar halkası ayrıca Klasik çerçeve halkasını gösterir; Yok seçeneği aramayı yalnızca döner tepe düğmesine bırakır.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Merkez halka</item>
+        <item>Kenar halkası</item>
+        <item>Yok</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Her zaman açık ekran</string>
+    <string name="setting_wear_aod_style">Her zaman açık stili</string>
+    <string name="setting_wear_aod_style_description">Saat ortam modundayken şu anda çalan ekranın nasıl görüneceği. Yüzü izle seçilen yüzle eşleşir; Minimal, en uzun pil ömrü için saf siyah üzerinde yalnızca karartılmış metin gösterir.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Yüzü izle</item>
+        <item>Klasik</item>
+        <item>Etkileyici (çerçeveli)</item>
+        <item>Material (çerçeveli)</item>
+        <item>AMOLED kontrolleri</item>
+        <item>Krono (büyük saat)</item>
+        <item>Poster</item>
+        <item>Stüdyo</item>
+        <item>Sürükleyici</item>
+        <item>Karusel</item>
+        <item>Sohbet</item>
+        <item>Bölünmüş</item>
+        <item>Not</item>
+        <item>Dize</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Her zaman açık rengi</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Beyaz</item>
+        <item>Albüm rengi</item>
+        <item>Özel renk</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Beyaz</item>
+        <item>Dinamik (saatin altındaki alana göre)</item>
+        <item>Albüm rengi</item>
+        <item>Özel renk</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Panel stilini izle</item>
+        <item>Şeffaf (arka plan yok)</item>
+        <item>Albüm vurgusu</item>
+        <item>Yarı saydam</item>
+        <item>Beyaz</item>
+        <item>Buzlu beyaz</item>
+        <item>Siyah</item>
+        <item>Dinamik (albüm tonu)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Sıradaki kapsülü arka planı</string>
+    <string name="setting_wear_show_up_next_pill">Oynatıcıda Sıradaki kapsülü</string>
+    <string name="setting_wear_show_up_next_pill_description">Şu anda çalan ekranın altında bir Sıradaki kapsülü gösterir. Mini düğme satırının kaplayacağı alanı doldurur; bu yüzden yalnızca o satır görünmüyorken görünür.</string>
+    <string name="category_wf_clock">Saat</string>
+    <string name="setting_wear_clock_color">Saat rengi</string>
+    <string name="setting_wear_clock_custom_color">Özel saat rengi</string>
+    <string name="setting_wear_clock_custom_color_description">Saat rengi Özel renk olarak ayarlandığında kullanılacak saat rengini seçmek için dokunun</string>
+    <string name="setting_wear_clock_opacity">Saat opaklığı</string>
+    <string name="setting_wear_clock_opacity_description">Her zaman gösterilen saatin opaklığı (10–100%%). Geçerli değer: <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Özel her zaman açık rengi</string>
+    <string name="setting_wear_aod_custom_color_description">“Her zaman açık rengi” Özel renk olarak ayarlandığında her zaman açık metin, kontroller ve saat için kullanılacak rengi seçmek üzere dokunun</string>
+    <string name="setting_wear_aod_intensity">Her zaman açık parlaklığı</string>
+    <string name="setting_wear_aod_intensity_description">Her zaman açık ekranın işleme parlaklığı (20–100%%). Daha düşük değer daha karanlıktır ve daha az pil kullanır. Geçerli değer: <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Her zaman açık ekranda oynatma düğmeleri</string>
+    <string name="setting_wear_aod_show_transport_description">Desteklenen görsel her zaman açık stillerinde çerçeveli önceki/oynat/sonraki düğmelerini gösterir. Ekran karartılmışken dokunulamazlar, ancak bir dokunuş saati parmağınız zaten düğmenin üzerindeyken uyandırır.</string>
+    <string name="setting_wear_aod_show_progress">Her zaman açık ekranda ilerleme halkası</string>
+    <string name="setting_wear_aod_show_progress_description">Ortam modunda oynat düğmesinin çevresindeki ilerleme halkasını göster — konum burada yaklaşık dakikada bir yenilenir</string>
+    <string name="setting_wear_aod_show_pills">Her zaman açık ekranda Sıradaki</string>
+    <string name="setting_wear_aod_show_pills_description">Görsel her zaman açık stillerinin altında sabit çerçeveli bir Sıradaki kapsülü göster</string>
+    <string name="category_wf_gestures">Ekran hareketleri</string>
+    <string name="setting_wear_mini_buttons_mode">Mini düğmeleri göster</string>
+    <string name="setting_wear_gestures_mode">Ekran hareketleri</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Her zaman</item>
+        <item>Yalnızca çalarken</item>
+        <item>Yalnızca duraklatıldığında</item>
+        <item>Asla</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Her zaman açık ekranda albüm görseli</string>
+    <string name="setting_wear_aod_show_art_description">Karartılmış albüm görselini ortam modunda görünür tut. Kapatmak saf siyah bir arka plan gösterir; AMOLED ekranlarda belirgin ölçüde daha fazla pil tasarrufu sağlar.</string>
+    <string name="setting_wear_aod_art_treatment">Her zaman açık albüm görseli stili</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Yumuşak bulanıklık</item>
+        <item>Net kapak</item>
+        <item>Tek renk bulanıklık</item>
+        <item>Oynatıcı görsel işlemesini izle</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Her zaman açık ekranda saat</string>
+    <string name="setting_wear_aod_show_clock_description">Saat ortam modundayken saati göster</string>
+    <string name="setting_wear_aod_show_track_info">Her zaman açık ekranda parça bilgisi</string>
+    <string name="setting_wear_aod_show_track_info_description">Ortam modunda parça başlığını ve sanatçıyı göster</string>
+
+    <string name="category_overlays_queue">Katmanlar ve kuyruk</string>
+    <string name="category_wf_panel_shared">Paylaşılan panel görünümü</string>
+    <string name="category_wf_panel_volume">Ses paneli</string>
+    <string name="category_wf_panel_seek">İlerleme ve arama paneli</string>
+    <string name="category_wf_panel_quick">Hızlı eylemler paneli</string>
+    <string name="category_wf_panel_queue">Kuyruk ve listeler</string>
+    <string name="category_wf_panel_effects">Panel efektleri</string>
+    <string name="setting_wear_overlay_backdrop_style">Panel arka planı</string>
+    <string name="setting_wear_volume_style">Ses stili</string>
+    <string name="setting_wear_volume_layout">Ses düzeni</string>
+    <string name="setting_wear_quick_panel_style">Hızlı panel stili</string>
+    <string name="setting_wear_quick_panel_layout">Hızlı panel düzeni</string>
+    <string name="setting_wear_quick_panel_source">Hızlı eylemler</string>
+    <string name="setting_wear_quick_panel_source_description">Yapılandırılmış düğmelerinizi veya o anda çalan uygulamanın sağladığı eylemleri seçin.</string>
+    <string name="quick_panel_open_note_title">Paneli açma</string>
+    <string name="quick_panel_open_note_description">Saatte hızlı eylemler panelini açmak için şu anda çalan ekranın ortasına çift dokunun.</string>
+    <string name="preview_current_app_action">Geçerli uygulama eylemi</string>
+    <string name="preview_notification_controls">Medya bildiriminden simge</string>
+    <string name="setting_wear_queue_style">Kuyruk stili</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Kısayol kapaklarını arka plan olarak kullan</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Kuyruk stili bir Kapak çeşidiyken, getirilmiş kısayol kapağına (parça, çalma listesi, sanatçı…) sahip hızlı panel eylem satırı da Sıradaki gibi kapsülünü bu görselle doldurur. Getirilmiş kapağı olmayan kısayollar (yalnızca uygulama simgesi) etkilenmez.</string>
+    <string name="setting_wear_list_row_size">Liste kapsülü boyutu</string>
+    <string name="setting_wear_list_row_size_description">Kuyruk, menüler ve hızlı paneldeki tam genişlikli satırların yüksekliği.</string>
+    <string name="setting_wear_progress_gradient">Paleti halkaya karıştır</string>
+    <string name="setting_wear_progress_gradient_description">Çok tonlu renk işlemesinde (Tamamlayıcı, Üçlü, Benzer, Duotone) düz halka üç rengin tümü arasında geçiş yapar. Albüm paletini diğer her yerde korurken tek renkli halka için bunu kapatın.</string>
+    <string name="setting_wear_progress_style">İlerleme halkası stili</string>
+    <string name="setting_wear_seek_style">Arama ve ses göstergesi stili</string>
+    <string name="setting_wear_seek_layout">Arama paneli düzeni</string>
+    <string name="setting_wear_color_treatment">Saat renk işlemesi</string>
+    <string name="setting_wear_normal_color">Normal renk</string>
+    <string name="setting_wear_normal_color_description">Normal modda başlık vurguları, ilerleme, ses, paneller ve mini düğme kaplaması için kullanılan tek rengi seçin</string>
+    <string name="setting_wear_normal_color_multi">Renk paleti kullan</string>
+    <string name="setting_wear_normal_color_multi_description">Açıkken ekran bir ana renk ve iki destek tonunu kullanır. Kapalıyken her yerde tek bir renk kullanılır — albümün kendi rengi veya seçtiğiniz renk.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normal (seçilen renk)</item>
+        <item>Doygunluğu azaltılmış (yumuşak albüm rengi)</item>
+        <item>Etkileyici (tam albüm paleti)</item>
+        <item>Tamamlayıcı (albüm + karşıt)</item>
+        <item>Üçlü (üç albüm tonu)</item>
+        <item>Benzer (komşu tonlar)</item>
+        <item>Tek renk (bir ton, üç değer)</item>
+        <item>Duotone (iki albüm rengi)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Saat işlemesini izle</item>
+        <item>Normal (seçilen renk)</item>
+        <item>Doygunluğu azaltılmış (yumuşak albüm rengi)</item>
+        <item>Etkileyici (tam albüm paleti)</item>
+        <item>Tamamlayıcı (albüm + karşıt)</item>
+        <item>Üçlü (üç albüm tonu)</item>
+        <item>Benzer (komşu tonlar)</item>
+        <item>Tek renk (bir ton, üç değer)</item>
+        <item>Duotone (iki albüm rengi)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Başlık kalınlığı</string>
+    <string name="setting_wear_title_font_italic">İtalik başlık</string>
+    <string name="setting_wear_title_font_scale">Başlık boyutu</string>
+    <string name="setting_wear_title_font_opacity">Başlık opaklığı</string>
+    <string name="setting_wear_title_font_tracking">Başlık harf aralığı</string>
+    <string name="setting_wear_title_color">Başlık metni rengi</string>
+    <string name="setting_wear_title_custom_color">Özel başlık rengi</string>
+    <string name="wear_title_color_face_default">Yüz varsayılanı (tasarlandığı gibi)</string>
+    <string name="setting_wear_title_adaptive_contrast">Kontrast için başlık rengini uyarla</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Başlık rengi arkasındaki görsele çok yakın olduğunda tonunu koruyarak başlığı açar veya koyulaştırır. Başlık yüz varsayılanını kullanırken etkisi yoktur.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Kontrast için sanatçı rengini uyarla</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Albüm rengi arkasındaki görsele çok yakın olduğunda tonunu koruyarak sanatçı satırını açar veya koyulaştırır. Tüm kapağı değil, yalnızca satırın bulunduğu şeridi ölçer.</string>
+    <string name="setting_wear_artist_font_weight">Sanatçı kalınlığı</string>
+    <string name="setting_wear_artist_font_italic">İtalik sanatçı</string>
+    <string name="setting_wear_artist_font_scale">Sanatçı boyutu</string>
+    <string name="setting_wear_artist_font_opacity">Sanatçı opaklığı</string>
+    <string name="setting_wear_artist_font_tracking">Sanatçı harf aralığı</string>
+    <string name="setting_wear_source_icon_scale">Uygulama simgesi boyutu</string>
+    <string name="setting_wear_source_icon_opacity">Uygulama simgesi opaklığı</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 yüzün normal ağırlığıdır; daha yüksek değer daha kalındır. Google Sans Flex için bu, yazı tipinin kendi ağırlık eksenidir</string>
+    <string name="setting_wear_typography_scale_description">Yüzün kendi boyutunun yüzdesi (70–140). 100 her düzenin tasarlanmış boyutunu korur</string>
+    <string name="setting_wear_typography_opacity_description">Yüzde (20–100). 100 yüzün kendi opaklığını korur</string>
+    <string name="setting_wear_typography_tracking_description">Harfler arasındaki ek boşluk, em’in yüzde biri cinsinden (−5 ila 20). 0 yazı tipinin kendi aralığını korur</string>
+    <string name="setting_wear_color_modifier">Ton</string>
+    <string name="setting_wear_color_modifier_description">Nasıl türetildiğini değiştirmeden tüm paleti ayarlar — her renk işlemesiyle çalışır</string>
+    <string name="setting_wear_color_hue_shift">Renk kaydırma</string>
+    <string name="setting_wear_color_hue_shift_description">Albüm paletini renk çemberinde derece cinsinden döndürür (0–359). Her işleme ana rengini albümün kendi tonunda tuttuğundan, onu değiştiren ayar budur. 0 albüm rengini olduğu gibi kullanır; sabit Normal renk hiçbir zaman kaydırılmaz.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Yok</item>
+        <item>Canlı</item>
+        <item>Pastel</item>
+        <item>Sıcak</item>
+        <item>Soğuk</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Kenar yayı (sol)</item>
+        <item>Kenar yayı (uzun)</item>
+        <item>Kenar yayı (sağ)</item>
+        <item>Kenar yayı (üst)</item>
+        <item>Kenar yayı (alt)</item>
+        <item>Tam halka</item>
+        <item>Merkez halo</item>
+        <item>Yatay ölçer</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Kenar halkası</item>
+        <item>Kenar halkası (ince)</item>
+        <item>Kenar halkası (kalın)</item>
+        <item>Zaman çizelgesi</item>
+        <item>Bölümlü zaman çizelgesi</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Önce meta veriler</item>
+        <item>Yay</item>
+        <item>Hero</item>
+        <item>Izgara</item>
+        <item>Etiketli satırlar</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Düz</item>
+        <item>Kesikli</item>
+        <item>Noktalar</item>
+        <item>İnce çizgi</item>
+        <item>Kuyruklu yıldız</item>
+        <item>60 saat noktası</item>
+        <item>60 saat çizgisi</item>
+        <item>12 saatlik bölümler</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Sade</item>
+        <item>Cam kapsül</item>
+        <item>Etkileyici kapsül</item>
+        <item>Material kapsül</item>
+        <item>Beyaz kapsül</item>
+        <item>Dev</item>
+        <item>Konum / toplam</item>
+        <item>Beyaz cam</item>
+        <item>Yarı saydam albüm</item>
+        <item>Albüm parıltısı</item>
+        <item>Çerçeve</item>
+        <item>Düz tema</item>
+        <item>Düz albüm</item>
+        <item>Mikro</item>
+        <item>Gölge (kaplama yok)</item>
+        <item>Alt çizgi</item>
+        <item>İnce çizgili çerçeve</item>
+        <item>Dev albüm rengi</item>
+        <item>Mono</item>
+        <item>Koyu tonal</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Yapılandırılmış düğmeler</item>
+        <item>Geçerli medya uygulamasından</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Panel stilini izle</item>
+        <item>Albüm bulanıklığı (akrilik)</item>
+        <item>Düz siyah</item>
+        <item>Düz albüm rengi</item>
+        <item>Cam</item>
+        <item>Albüm gradyanı</item>
+        <item>Albüm duotone</item>
+        <item>Prizma</item>
+        <item>Sıvı cam</item>
+        <item>Etkileyici bulanıklık</item>
+        <item>Etkileyici</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Cam</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Açık</item>
+        <item>Gradyan</item>
+        <item>Mono</item>
+        <item>Çerçeve</item>
+        <item>Duotone</item>
+        <item>Prizma</item>
+        <item>Yüksek Kontrast</item>
+        <item>Terminal</item>
+        <item>Buz</item>
+        <item>Bölümler</item>
+        <item>Aurora</item>
+        <item>Mürekkep</item>
+        <item>Oluk</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Kompakt</item>
+        <item>Normal</item>
+        <item>Uzun</item>
+        <item>Ekstra uzun</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Cam</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Açık</item>
+        <item>Gradyan</item>
+        <item>Mono</item>
+        <item>Çerçeve</item>
+        <item>Duotone</item>
+        <item>Prizma</item>
+        <item>Yüksek Kontrast</item>
+        <item>Terminal</item>
+        <item>Buz</item>
+        <item>Kapak</item>
+            <item>Kapak Bulanıklığı</item>
+        <item>Kapak Tonal</item>
+        <item>Kare Kapak</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Cam</item>
+        <item>Beyaz Cam</item>
+        <item>Tonal Cam</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Açık</item>
+        <item>Gradyan</item>
+        <item>Mono</item>
+        <item>Çerçeve</item>
+        <item>Beyaz Cam Çerçeve</item>
+        <item>Duotone</item>
+        <item>Prizma</item>
+        <item>Yüksek Kontrast</item>
+        <item>Terminal</item>
+        <item>Buz</item>
+        <item>Hayalet (kaplama yok)</item>
+        <item>Sis</item>
+        <item>Mürekkep</item>
+        <item>Nokta</item>
+        <item>Plaka</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Duraklattıktan sonra uygulamayı etkin tut</string>
+    <string name="setting_wear_paused_hold_description">Duraklattıktan sonra saat uygulamasının saat yüzünden ne kadar süre erişilebilir kalacağını belirler; böylece yeniden açmak yerine bileğinizi kaldırarak devam edebilirsiniz. Daha uzun ayarlar arka plan hizmetini çalışır durumda tutar.</string>
+    <string name="wear_paused_hold_off">Etkin tutma</string>
+    <string name="wear_paused_hold_5">5 dakika</string>
+    <string name="wear_paused_hold_15">15 dakika</string>
+    <string name="wear_paused_hold_30">30 dakika</string>
+    <string name="wear_paused_hold_60">1 saat</string>
+    <string name="wear_paused_hold_always">Oynatma bitene kadar</string>
+
+    <string name="setting_wear_idle_button_action">Hiçbir şey çalmıyor düğmesi</string>
+    <string name="setting_wear_idle_auto_open">Hiçbir şey çalmıyorken aç</string>
+    <string name="setting_wear_idle_auto_open_description">Müzik çalmıyorken saat uygulamasını açtığınızda doğrudan bu ekrana gider.</string>
+    <string name="wear_idle_action_resume">Son uygulamaya devam et</string>
+    <string name="wear_idle_action_shortcuts">Çalma listesi kısayolları</string>
+    <string name="wear_idle_action_menu">Eylem menüsü</string>
+    <string name="wear_idle_action_search">Ara</string>
+    <string name="wear_idle_action_queue">Son çalınanlar</string>
+    <string name="wear_idle_action_none">Düğme yok</string>
+    <string name="wear_idle_auto_open_none">Oynatıcıda kal</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Kitaplığa göz at</string>
+    <string name="library_up">Geri</string>
+    <string name="error_library_unavailable">Bu uygulamanın göz atılabilir kitaplığı yok</string>
+    <string name="error_library_empty">Burada hiçbir şey yok</string>
+    <string name="error_library_no_player">Önce bir şey çalmaya başlayın</string>
+
+    <string name="setting_wear_carousel_card_shape">Karusel kart şekli</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Yuvarlak</item>
+        <item>Kare</item>
+        <item>Squircle</item>
+        <item>Daire</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Yazı tipini her yerde kullan</string>
+    <string name="setting_wear_font_all_screens_description">Seçilen yazı tipini yalnızca oynatıcıya değil, menülere, kuyruğa ve Hızlı eylemlere de uygular. Ekran ve el yazısı yazı tipleri listelerde daha zor okunabilir.</string>
+
+    <string name="setting_wear_clock_font">Saat yazı tipi</string>
+    <string name="wear_clock_font_follow">Parça yazı tipini izle</string>
+    <string name="setting_wear_lyrics_font">Şarkı sözleri yazı tipi</string>
+    <string name="setting_wear_lyrics_font_description">Şarkı sözleri ekranı ve Dize yüzündeki sözler için yazı tipi. Burada bir tane seçmezseniz parça yazı tipini izler.</string>
+    <string name="wear_lyrics_font_follow">Parça yazı tipini izle</string>
+    <string name="setting_wear_clock_font_weight">Saat kalınlığı</string>
+    <string name="setting_wear_clock_font_italic">İtalik saat</string>
+    <string name="setting_wear_clock_font_scale">Saat boyutu</string>
+    <string name="setting_wear_clock_font_tracking">Saat harf aralığı</string>
+    <string name="setting_wear_clock_adaptive_contrast">Kontrast için saat rengini uyarla</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Albüm rengi arkasındaki görsele çok yakın olduğunda tonunu koruyarak saati açar veya koyulaştırır. Yalnızca saat rengi Albüm rengi olarak ayarlandığında geçerlidir.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Daraltılmış tümü büyük harf ekranı — poster benzeri, uzun başlıklara uyar</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Yüksek kontrastlı editoryal serif — dergi hissi</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Alışılmadık ayrıntılara sahip teknik geometrik sans</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Karemsi bilimkurgu ekranı — cesur ve fütüristik</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">El yazısı — rahat ve kişisel</string>
+    <string name="setting_wear_track_time_mode">Parça süresi gösterimi</string>
+    <string name="setting_wear_track_time_mode_description">Parça konumunun (ör. 1:23 / 3:45) şu anda çalan ekranda ne zaman gösterileceği.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Her zaman</item>
+        <item>Yalnızca çalarken</item>
+        <item>Yalnızca duraklatıldığında</item>
+        <item>Asla</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Mini düğme eğrisi</string>
+    <string name="setting_screen_buttons_curve_description">Mini düğmeler için eğrilik stilini seçin: düz, yay, yumuşak, kavisli.</string>
+    <string name="setting_screen_buttons_shape">Mini düğme şekli</string>
+    <string name="setting_screen_buttons_shape_description">Mini düğmelerin şekil ve düzen biçimini seçin.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Kapsül (Varsayılan)</item>
+        <item>Daire</item>
+        <item>Kare</item>
+        <item>Yuvarlatılmış Kare (Yumuşak)</item>
+        <item>Yuvarlatılmış Kare (Orta)</item>
+        <item>Squircle</item>
+        <item>Yaprak</item>
+        <item>Damla</item>
+        <item>Kapsül (Geniş Küçük)</item>
+        <item>Kapsül (Geniş Orta)</item>
+        <item>Kapsül (Geniş Büyük)</item>
+        <item>Kapsül (Geniş Ekstra Büyük)</item>
+        <item>Yuvarlatılmış Dikdörtgen (Küçük)</item>
+        <item>Yuvarlatılmış Dikdörtgen (Orta)</item>
+        <item>Yuvarlatılmış Dikdörtgen (Büyük)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Düz</item>
+        <item>Yay</item>
+        <item>Hafif eğri</item>
+        <item>Yumuşak eğri</item>
+        <item>Orta eğri</item>
+        <item>Kavisli</item>
+        <item>Aşırı eğri</item>
+        <item>Kenarlara yay</item>
+        <item>Sol kenar</item>
+        <item>Sağ kenar</item>
+        <item>İki kenar</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Varsayılan arka plan</item>
+        <item>Cam (eşit)</item>
+        <item>Cam (açık)</item>
+        <item>Yarı Saydam Albüm</item>
+        <item>Yarı Saydam Albüm Etkileyici</item>
+        <item>Albüm Parıltısı</item>
+        <item>Etkileyici Parıltı</item>
+        <item>Düz Tema</item>
+        <item>Düz Albüm</item>
+        <item>Düz Etkileyici Albüm</item>
+        <item>Çerçeve</item>
+        <item>Etkileyici Albüm Çerçevesi</item>
+        <item>Yalnızca simge (şeffaf)</item>
+        <item>Etkileyici Simge</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Nötr</item>
+        <item>Albüm rengi</item>
+        <item>Özel renk</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Tam kapak</item>
+        <item>Bulanık arka plan</item>
+        <item>Buzlu kenarlar</item>
+        <item>Kare (keskin köşeler)</item>
+        <item>Kare (yumuşak köşeler)</item>
+        <item>Kare (yuvarlatılmış köşeler)</item>
+        <item>Siyah ve beyaz</item>
+        <item>Bulanık siyah ve beyaz</item>
+        <item>Etkileyici bulanıklık</item>
+        <item>Etkileyici</item>
+        <item>Material tonal gradyan</item>
+        <item>Poster kapağı</item>
+        <item>Stüdyo gradyanı</item>
+        <item>Vinil radyal parıltı</item>
+        <item>Halo parıltısı</item>
+        <item>Aurora şeritleri</item>
+        <item>Spektrum gradyanı</item>
+        <item>Corona geçişi</item>
+        <item>Alacakaranlık solması</item>
+        <item>Çiçeklenme</item>
+        <item>Ufuk solması</item>
+        <item>Kor parıltısı</item>
+        <item>Eclipse AMOLED siyah</item>
+        <item>Gizli (düz siyah)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Devre dışı</item>
+        <item>Müzik saat yüzü simgesini göster (yalnızca Wear 3.0)</item>
+        <item>Svartifoss’u aç</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Kapanma zaman aşımı</string>
+    <string name="setting_close_timeout_description">Müzik <![CDATA[<b>%1$s saniye</b>]]> boyunca çalmazsa Svartifoss otomatik olarak kapanır. Zaman aşımı 0 saniye olduğunda özellik devre dışıdır. Pil tasarrufu için bu seçeneğin zaman zaman tam hassas olmayabileceğini ve kapanmayı bir dakikaya kadar geciktirebileceğini unutmayın.</string>
+    <string name="setting_wear_close_on_idle">“Hiçbir şey çalmıyor” ekranında kapat</string>
+    <string name="setting_wear_close_on_idle_description">Saat uygulaması boşta “Hiçbir şey çalmıyor” ekranına ulaştıktan yaklaşık bir dakika sonra otomatik kapanır; böylece orada açık kalmaz. Yukarıdaki kapanma zaman aşımından bağımsızdır; o ayar duraklatılmış parçayı kapsar.</string>
+    <string name="category_notifications">Bildirim açılır penceresi</string>
+    <string name="setting_enable_notifications">Bildirim açılır penceresini göster</string>
+    <string name="setting_enable_notifications_description">Bu özellik bildirimleri yönetmek için başka bir uygulama gerektirir (Vibration Center for Wear).
+
+Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır pencerede gösterir; böylece Svartifoss’tan ayrılmadan bildirime hızlıca bakabilirsiniz.</string>
+    <string name="setting_notification_timeout">Bildirim açılır penceresi zaman aşımı</string>
+    <string name="setting_notification_timeout_description">Bildirim açılır penceresi <![CDATA[<b>%1$s saniye</b>]]> sonra otomatik kapanır. Otomatik kapanmayı devre dışı bırakmak için 0 girin.</string>
+    <string name="app_required">Uygulama gerekli</string>
+    <string name="vibration_center_required_description">Bu özelliği kullanmak için başka bir (ücretsiz) uygulama yüklemeniz gerekir: Vibration Center for Wear.</string>
+    <string name="open_play_store">Play Store’u aç</string>
+    <string name="error_no_notification_service_support">Üzgünüz, cihazınız bildirim hizmetlerini desteklemiyor gibi görünüyor</string>
+    <string name="setting_always_select_center_action">Her zaman merkez eylemi seç</string>
+    <string name="setting_always_select_center_action_description">Etkinleştirildiğinde eylem listesine dokunmak, hangi seçeneğe dokunduğunuza bakılmaksızın her zaman merkezdeki (vurgulanmış) seçeneği seçer.</string>
+    <string name="change_icon">Simgeyi değiştir</string>
+    <string name="please_wait">Lütfen bekleyin</string>
+
+    <string name="error_playlist_not_supported">Bu medya uygulaması tarafından desteklenmiyor</string>
+    <string name="error_search_no_results">Sonuç bulunamadı</string>
+    <string name="seconds_to_skip">Atlanacak saniye:</string>
+    <string name="seconds_to_reverse">Geri sarılacak saniye:</string>
+
+    <string name="setting_dynamic_accent_color">Dinamik vurgu rengi</string>
+    <string name="setting_dynamic_accent_color_description">Etkinleştirildiğinde vurgu rengi (SeekBar, etkin kuyruk öğesi) geçerli albüm görselinin baskın rengine otomatik olarak uyum sağlar.</string>
+    <string name="setting_desaturated_color">Doygunluğu azaltılmış renk</string>
+    <string name="setting_desaturated_color_description">Etkin temaya göre yüksek okunabilirlik ve kontrast sağlamak için çıkarılan rengin doygunluğunu ve parlaklığını ayarlar.</string>
+
+    <string name="queue_header">Oynatma kuyruğu</string>
+    <string name="queue_unavailable">Kuyruk kullanılamıyor</string>
+
+    <string name="setting_custom_accent_color">Vurgu rengi</string>
+    <string name="setting_custom_accent_color_description">Uygulama arayüzü için özel bir vurgu rengi seçin</string>
+    <string name="setting_mini_player">Mini oynatıcı</string>
+    <string name="setting_mini_player_description">Medya etkin olduğunda alt gezinmenin üzerinde kalıcı bir şu anda çalan çubuğu gösterir. Varsayılan olarak etkindir; bu alanı geri kazanmak için kapatın.</string>
+    <string name="color_picker_title">Vurgu rengini seç</string>
+    <string name="color_picker_reset">Sıfırla</string>
+    <string name="color_picker_apply">Uygula</string>
+    <string name="color_picker_default">Varsayılan</string>
+    <string name="color_picker_invalid">Geçersiz renk kodu</string>
+    <string name="color_picker_current">Geçerli: %s</string>
+
+    <string name="drawer_version_format">Sürüm %1$s</string>
+    <string name="drawer_tagline">Wear OS için yardımcı uygulama</string>
+    <string name="drawer_about_heading">Hakkında</string>
+    <string name="drawer_about_summary">Svartifoss, telefonunuzdaki müziği Wear OS saatinizden kontrol etmenizi sağlar — cihazınıza göre tamamen özelleştirilebilir bir uzaktan kumandayla.</string>
+    <string name="drawer_name_heading">Adı</string>
+    <string name="drawer_name_meaning">Svartifoss İzlandaca “Kara Şelale” anlamına gelir — adını Vatnajökull Millî Parkı’ndaki, koyu bazalt sütunların dar bir şelaleyi çerçevelediği şelaleden alır. Taşın üzerinden akan su gibi, müzik de uygulamanın içinden akar.</string>
+    <string name="drawer_sync_heading">Eşitleme</string>
+    <string name="drawer_sync_summary">Saat ayarları burada telefonda yapılandırılır ve eşleştirilmiş saatinizle otomatik olarak eşitlenir.</string>
+    <string name="drawer_support_heading">Destek</string>
+    <string name="drawer_support_summary">Svartifoss ücretsiz ve açık kaynaklıdır — işinize yarıyorsa bana bir kahve ısmarlayın :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Kapak görselini indir</string>
+    <string name="album_art_saved">Kapak görseli galeriye kaydedildi</string>
+    <string name="album_art_save_error">Kapak görseli kaydedilemedi</string>
+
+    <string name="action_play_liked_songs">Beğenilen şarkıları çal (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Beğenilen şarkıları çal (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Beğenilen parçaları çal (SoundCloud)</string>
+    <string name="action_my_playlists">Yayın kısayolları</string>
+    <string name="action_play_specific_playlist">Yayın kısayolunu aç</string>
+    <string name="action_choose_or_add_streaming_shortcut">Bir yayın kısayolu seç veya ekle</string>
+    <string name="action_show_streaming_library">Tüm kaydedilmiş kısayolları göster</string>
+    <string name="playlist_shortcut_pick_title">Kısayol seç</string>
+    <string name="playlist_shortcut_pick_empty">Henüz yayın kısayolu kaydedilmedi — aşağıdan bir tane ekleyin, sonra seçmek için dokunun</string>
+    <string name="playlist_shortcuts_empty">Henüz yayın kısayolu yok — telefon uygulamasının ayarlarından ekleyin</string>
+    <string name="setting_playlist_shortcuts">Yayın kısayolları</string>
+    <string name="setting_playlist_shortcuts_description">Saatten paylaşım bağlantılarını YouTube Music, Spotify ve diğer yayın uygulamalarında aç</string>
+    <string name="setting_shortcut_artwork">Kısayol görselini çevrimiçi getir</string>
+    <string name="setting_shortcut_artwork_description">Her kaydedilmiş kısayol için hizmetten bir küçük resim indirin; telefon listesinde, saat menüsünde ve atanmış düğmelerde gösterilir. Her küçük resim bir kez getirilir; yalnızca herkese açık paylaşım bağlantısı gönderilir. Varsayılan olarak kapalıdır.</string>
+    <string name="setting_queue_local_artwork">Kitaplığınızdan kuyruk kapakları</string>
+    <string name="setting_queue_local_artwork_description">Yerel müzik oynatıcıları kuyruk kapaklarını kitaplık başvuruları olarak yayımlar. Saat kuyruğunda gösterilebilmeleri için medya erişimi verin. İnternet erişimi kullanılmaz.</string>
+    <string name="setting_queue_local_artwork_granted">Medya erişimi verildi — yerel kuyruk kapakları gösterilecek</string>
+    <string name="setting_queue_local_artwork_denied">Medya erişimi reddedildi. Yerel kuyruk kapaklarını göstermek için Android ayarlarından etkinleştirin.</string>
+    <string name="setting_queue_remote_artwork">Kuyruk kapaklarını çevrimiçi getir</string>
+    <string name="setting_queue_remote_artwork_short_description">Yayın uygulamaları (YouTube Music istemcileri, Echo Music…) kuyruk kapaklarını görüntü değil bağlantı olarak yayımlar; bu seçenek bunları indirip önbelleğe alır. Kuyruğu tamamen çevrimdışı tutmak için kapatın — bu satırlar o zaman hiç kapak göstermez.</string>
+    <string name="setting_queue_remote_artwork_description">Yayın oynatıcıları kuyruk kapaklarını görüntü yerine bağlantı olarak yayımlar. Saat kuyruğunda göstermek için her birini bir kez indirip bu telefonda önbelleğe alın. Yalnızca oynatıcının zaten yayımladığı kapak URL’si istenir — hesap veya kişisel veri yoktur. Varsayılan olarak açıktır; kuyruğu tamamen çevrimdışı tutmak için kapatın.</string>
+    <string name="watch_streaming_shortcuts_empty">Hızlı Eylemler ve saat menüsü için parçalar, albümler veya çalma listeleri ekle</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="other">%1$d kaydedilmiş kısayol · Hızlı Eylemler’de ve saat menüsünde kullanılabilir</item>
+    </plurals>
+    <string name="category_music_apps">Müzik uygulamaları ve hizmetleri</string>
+    <string name="category_apps_content">Şarkı sözleri ve meta veriler</string>
+    <string name="category_streaming_services">Yayın kısayolları</string>
+    <string name="category_queue_artwork">Kuyruk görselleri</string>
+    <string name="category_system_access">Android erişimi ve bildirimler</string>
+    <string name="setting_apps_integrations">Desteklenen müzik hizmetleri</string>
+    <string name="setting_apps_integrations_description">Bağlantılar YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music ve SoundCloud ile çalışır. Hesap erişimi gerekmez.</string>
+    <string name="setting_apps_integrations_none">Desteklenen uygulama algılanmadı. Kısayollar yine de tarayıcıda veya başka uyumlu bir uygulamada açılabilir.</string>
+    <string name="setting_apps_integrations_installed">%2$d içinden %1$d algılandı: %3$s</string>
+    <string name="setting_streaming_open_mode">Yayın bağlantılarını şununla aç</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Algılanan yayın uygulaması</item>
+        <item>Android varsayılanı</item>
+        <item>Her seferinde sor</item>
+    </string-array>
+    <string name="setting_persistent_notification">“Svartifoss etkin” bildirimini yönet</string>
+    <string name="setting_persistent_notification_description">Bu bildirimin Android ayarlarını açar — sessize alın, kilit ekranından gizleyin veya başka şekilde ayarlayın. Tamamen kapatılamaz: Android, saatinizle iletişim kuran arka plan hizmeti çalışırken sürekli bildirim ister.</string>
+    <string name="setting_notification_access">Medya bildirimi erişimi</string>
+    <string name="setting_notification_access_enabled">İzin verildi · Android ayarlarını gözden geçirmek için dokunun</string>
+    <string name="setting_notification_access_disabled">İzin verilmedi · Bildirim medya eylemleri ve otomatik başlatma filtreleri için gerekli</string>
+    <string name="setting_notification_access_unavailable">Bildirim erişimi ayarları bu cihazda kullanılamıyor</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="other">%1$d kaydedilmiş kısayol · Bağlantıları yönetmek veya içe aktarmak için dokunun</item>
+    </plurals>
+    <string name="category_privacy">Gizlilik</string>
+    <string name="setting_privacy_policy">Gizlilik politikası</string>
+    <string name="setting_privacy_policy_description">Svartifoss’un hangi verileri kullandığını ve hangi çevrimiçi hizmetlerin isteğe bağlı olduğunu görün.</string>
+    <string name="setting_crash_reporting">Çökme raporlarını gönder</string>
+    <string name="setting_crash_reporting_description">Hataları düzeltmeye yardımcı olmak için Firebase Crashlytics tanılamalarını gönderin. Varsayılan olarak etkindir; istediğiniz zaman kapatabilirsiniz.</string>
+    <string name="setting_announcements">Duyuru bildirimleri</string>
+    <string name="setting_announcements_description">Geliştiriciden ara sıra gelen bildirimler — yeni sürümler, önemli duyurular. Firebase Cloud Messaging aracılığıyla gönderilir; hesap veya kullanıcı listesi kullanılmaz. Varsayılan olarak etkindir; istediğiniz zaman kapatabilirsiniz.</string>
+    <string name="announcement_notification_channel">Duyurular</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Bir çalma listesini, albümü veya parçayı doğrudan Svartifoss ile paylaşın, kopyalanmış bir bağlantıyı yapıştırın ya da elle ekleyin. Saat telefondan açmasını ister; hizmete giriş gerekmez.</string>
+    <string name="back">Geri</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Müziğiniz tek dokunuş uzağınızda</string>
+    <string name="playlist_shortcuts_yours">Kısayollarınız</string>
+    <string name="playlist_shortcuts_empty_hint">Saatinizde kullanılabilir hâle getirmek için paylaşılan bir parça, albüm veya çalma listesi bağlantısı ekleyin.</string>
+    <string name="playlist_shortcuts_add">Kısayol ekle</string>
+    <string name="playlist_shortcuts_paste">Bağlantıyı yapıştır</string>
+    <string name="playlist_shortcuts_reload_covers">Kapakları yeniden yükle</string>
+    <string name="playlist_shortcuts_reloading_covers">Kapaklar yeniden yükleniyor…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Kapaklar yeniden yüklendi</string>
+    <string name="playlist_shortcuts_edit">Kısayolu düzenle</string>
+    <string name="playlist_shortcut_save">Kısayolu kaydet</string>
+    <string name="playlist_shortcut_editor_hint">Tek bir bağlantı yapıştırın. Svartifoss uygulamayı ve içerik türünü otomatik belirler.</string>
+    <string name="playlist_shortcut_detection_waiting">Yayın bağlantısı bekleniyor</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer ve daha fazlası desteklenir.</string>
+    <string name="playlist_shortcut_detected_format">Algılandı: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Ad</string>
+    <string name="playlist_shortcut_link_hint">Paylaşım bağlantısı veya uygulama URI’si</string>
+    <string name="playlist_shortcut_shuffle">Karışık çal (yalnızca YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Bağlantı</string>
+    <string name="playlist_type_track">Parça</string>
+    <string name="playlist_type_playlist">Çalma listesi</string>
+    <string name="playlist_type_album">Albüm</string>
+    <string name="playlist_type_artist">Sanatçı</string>
+    <string name="playlist_type_show">Program</string>
+    <string name="playlist_type_episode">Bölüm</string>
+    <string name="playlist_type_mix">Miks</string>
+    <string name="playlist_badge_shuffle">Karıştır</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Henüz yayın kısayolu eklenmedi</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="other">%1$d kaydedildi</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Sıralı yayın kısayolları. Sürüklemek için dokunup basılı tutun, Yukarı taşı veya Aşağı taşı erişilebilirlik eylemlerini kullanın ya da klavyede Ctrl+Yukarı/Aşağı tuşlarına basın.</string>
+    <string name="playlist_shortcut_more_options">%1$s için daha fazla seçenek</string>
+    <string name="playlist_shortcut_menu_edit">Düzenle</string>
+    <string name="playlist_shortcut_menu_open">Şimdi aç</string>
+    <string name="playlist_shortcut_menu_copy">Bağlantıyı kopyala</string>
+    <string name="playlist_shortcut_menu_duplicate">Çoğalt</string>
+    <string name="playlist_shortcut_menu_share">Paylaş</string>
+    <string name="playlist_shortcut_menu_delete">Sil</string>
+    <string name="playlist_shortcut_open_failed">Bu bağlantıyı açabilecek uygulama yok</string>
+    <string name="streaming_shortcut_choose_app">Yayın bağlantısını şununla aç</string>
+    <string name="playlist_shortcut_link_copied">Bağlantı kopyalandı</string>
+    <string name="playlist_shortcut_import_invalid">Paylaşılan metin geçerli bir yayın bağlantısı içermiyor</string>
+    <string name="playlist_shortcut_clipboard_invalid">Panoda geçerli bir yayın bağlantısı yok</string>
+    <string name="playlist_shortcut_name_required">Bir kısayol adı girin</string>
+    <string name="playlist_shortcut_link_invalid">Geçerli bir web bağlantısı veya uygulama URI’si girin</string>
+    <string name="playlist_shortcut_service_invalid">Hizmeti algılamak için geçerli bir bağlantı yapıştırın</string>
+    <string name="playlist_shortcut_service_generic">Uyumlu bağlantı · Android bir uygulama seçecek</string>
+    <string name="playlist_shortcut_service_installed">%1$s yüklü · Uygulamasında açılmaya hazır</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s yüklü değil · Tarayıcı veya uyumlu uygulama kullanılabilir</string>
+    <string name="playlist_shortcut_copy_name">%1$s kopyası</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s kopyası %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s oluşturuldu</string>
+    <string name="playlist_shortcut_share_title">Yayın kısayolunu paylaş</string>
+    <string name="playlist_shortcut_share_failed">Bu kısayolu paylaşabilecek uygulama yok</string>
+    <string name="playlist_shortcut_deleted">%1$s silindi</string>
+    <string name="playlist_shortcut_undo">Geri al</string>
+
+    <string name="action_play_liked_songs_shuffled">Beğenilen şarkıları karışık çal (YT Music)</string>
+    <string name="action_search_history">Arama geçmişi</string>
+    <string name="search_history_empty">Henüz yakın tarihli arama yok</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Güncellemeler</string>
+    <string name="setting_update_check">Yeni sürümleri bildir</string>
+    <string name="setting_update_check_description">Yaklaşık günde bir kez GitHub’da yeni sürümleri kontrol eder ve bildirim gösterir</string>
+    <string name="setting_update_prereleases">Ön sürümleri dahil et</string>
+    <string name="setting_update_prereleases_description">Beta sürümler hakkında da bildirim al</string>
+    <string name="setting_update_check_now">Güncellemeleri şimdi kontrol et</string>
+    <string name="setting_update_check_now_description">En son sürümü gösterir ve saati Bluetooth üzerinden güncellemenizi sağlar</string>
+    <string name="update_screen_title">Güncellemeler</string>
+    <string name="update_cover_content_description">Uygulamaya adını veren şelale Svartifoss</string>
+    <string name="update_notification_channel">Uygulama güncellemeleri</string>
+    <string name="update_available_title">Svartifoss %1$s kullanıma hazır</string>
+    <string name="update_notification_text">Güncellemek için dokunun</string>
+    <string name="update_available_action">Güncelleme mevcut</string>
+    <string name="update_installed_phone">Telefon: %1$s</string>
+    <string name="update_installed_versions">Telefon: %1$s · Saat: %2$s</string>
+    <string name="update_watch_version_unknown">bilinmiyor</string>
+    <string name="update_checking">Güncellemeler denetleniyor…</string>
+    <string name="update_check_failed">Güncellemeler denetlenemedi. Bağlantınızı kontrol edip yeniden deneyin.</string>
+    <string name="update_available_line">Yeni sürüm: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(ön sürüm)</string>
+    <string name="update_up_to_date">En son sürümdesiniz (%1$s)</string>
+    <string name="update_no_wear_asset">Bu sürümde gönderilecek saat APK’sı yok.</string>
+    <string name="update_watch_hint">“Saati güncelle” yeni saat uygulamasını indirir ve Bluetooth üzerinden gönderir — kurulumu saatin üzerinde onaylarsınız; kabloya veya Wear Installer’a gerek yoktur.</string>
+    <string name="update_downloading">İndiriliyor… %1$d%%</string>
+    <string name="update_connecting_watch">Saate bağlanılıyor…</string>
+    <string name="update_transferring">Saate gönderiliyor… %1$d%%</string>
+    <string name="update_confirm_on_watch">Gönderildi! Saatte bir bildirim göründü — yüklemek için saatte ona dokunun.</string>
+    <string name="update_no_watch">Bağlı saat yok.</string>
+    <string name="update_push_failed">Güncelleme saate gönderilemedi. Yeniden deneyin.</string>
+    <string name="update_watch_button">Saati güncelle</string>
+    <string name="update_open_release_button">Sürüm sayfasını aç</string>
+    <string name="update_watch_behind">Saatiniz hâlâ %1$s sürümünde — aşağıdan güncellemeyi gönderin.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Telefon ve saat uygulamalarını eşit tut</string>
+    <string name="update_state_checking">Güncellemeler denetleniyor…</string>
+    <string name="update_state_current">Güncelsiniz</string>
+    <string name="update_state_current_sub">En son sürüm çalışıyor: %1$s</string>
+    <string name="update_state_available">Güncelleme mevcut</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Güncellemeler denetlenemedi</string>
+    <string name="update_state_failed_sub">Bağlantınızı kontrol edip yeniden deneyin</string>
+    <string name="update_device_phone">Telefon</string>
+    <string name="update_device_watch">Saat</string>
+    <string name="update_versions_header">Yüklü</string>
+    <string name="update_whats_new">Yenilikler</string>
+    <string name="update_phone_button">Telefonu güncelle</string>
+    <string name="update_installing">Yükleyici açılıyor…</string>
+    <string name="update_install_permission_needed">Svartifoss’tan uygulama yüklemeye izin verin, ardından Telefonu güncelle’ye yeniden dokunun.</string>
+    <string name="update_phone_failed">Telefon güncellemesi indirilemedi. Yeniden deneyin.</string>
+    <string name="update_install_notification_title">Svartifoss güncellemesi</string>
+    <string name="update_install_notification_tap">Yeni sürümü yüklemek için dokunun</string>
+    <string name="update_install_notification_failed">Yükleme başarısız. Ayarlar’da Svartifoss’tan yüklemelere izin verip yeniden deneyin.</string>
+    <string name="setting_wear_album_accent_source">Albüm vurgu kaynağı</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Dengeli</item>
+        <item>En canlı</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Kapalı</item>
+        <item>Yumuşak</item>
+        <item>Standart</item>
+        <item>Kalın</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Vurgu tabanı</string>
+    <string name="preview_metadata_album">Albüm</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Parça</string>
+    <string name="preview_metadata_genre">Tür</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Yıl</string>
+    <string name="preview_metadata_format">Biçim</string>
+    <string name="preview_metadata_bitrate">Bit hızı</string>
+    <string name="preview_metadata_position">Konum</string>
+    <string name="preview_metadata_output">Çıkış</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Albüm ayrıntıları</string>
+    <string name="setting_wear_metadata_core_description">Albüm, albüm sanatçısı, kayıttaki konum ve süre.</string>
+    <string name="setting_wear_metadata_release">Yayın ayrıntıları</string>
+    <string name="setting_wear_metadata_release_description">Tür, yıl, yayın tarihi ve plak şirketi.</string>
+    <string name="setting_wear_metadata_credits">Katkıda bulunanlar</string>
+    <string name="setting_wear_metadata_credits_description">Oynatıcının yayımladığı durumlarda besteci, söz yazarı ve yazar.</string>
+    <string name="setting_wear_metadata_technical">Dosya ayrıntıları</string>
+    <string name="setting_wear_metadata_technical_description">Biçim, bit hızı, örnekleme hızı, kanallar ve boyut. Yalnızca yerel parçalar.</string>
+    <string name="setting_split_panel">Bölünmüş panel</string>
+    <string name="setting_split_panel_description">Bölünmüş yüzün alt yarısını neyin dolduracağı. Bulanık görsel aynı kapağı metnin arkasında sürdürür; düz renk ise bildirim kartı görünümüdür.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Bulanık görsel</item>
+        <item>Düz renk</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Oynatma ayrıntıları</string>
+    <string name="setting_wear_metadata_playback_description">Milisaniyeye kadar konum, hız, ses çıkışı ve sesin nereden yayınlandığı veya çalındığı — parçanın adresi dahil. Açıklanacak dosya olmadığında bir yayın parçasının doldurabileceği tek blok.</string>
+    <string name="setting_wear_metadata_identifiers">Tanımlayıcılar</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC ve katalog kimlikleri. Varsayılan olarak kapalıdır — gerektiğinde yararlı, gerekmediğinde gereksizdir.</string>
+    <string name="setting_metadata_lookup">Parça ayrıntılarını çevrimiçi ara</string>
+    <string name="setting_metadata_lookup_description">Çalan uygulamanın yayımlamadığı bilgileri — ISRC, plak şirketi, yayın tarihi — ücretsiz açık bir veritabanı olan MusicBrainz’den tamamlar. Varsayılan olarak kapalıdır. Meta veriler saat yüzü onsuz da çalışır; bu yalnızca ek satırlar ekler. Siz bunu açıp o yüzü seçmedikçe hiçbir şey gönderilmez; yalnızca parça adı ve sanatçı gönderilir.</string>
+</resources>

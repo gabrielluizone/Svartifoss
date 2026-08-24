@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Práve sa prehráva a ovládanie médií</string>
+    <string name="complication_album_art_label">Obal práve prehrávaného</string>
+    <string name="complication_no_music">Nič sa neprehráva</string>
+    <string name="tile_nothing_playing">Nič sa neprehráva</string>
+    <string name="tile_open_app">Otvoriť Svartifoss</string>
+    <string name="tile_rewind_10">Pretočiť o 10 sekúnd späť</string>
+    <string name="tile_forward_10">Preskočiť o 10 sekúnd</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Vaše streamovacie skratky na jedno ťuknutie</string>
+    <string name="shortcuts_tile_title">Skratky</string>
+    <string name="shortcuts_tile_empty">Zatiaľ žiadne skratky</string>
+    <string name="shortcuts_tile_more">Viac v aplikácii</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Nič sa neprehráva</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Prehrajte niečo v telefóne</string>
+    <string name="idle_hint_resume">Ťuknutím pokračujte v poslednej aplikácii</string>
+    <string name="idle_hint_shortcuts">Ťuknutím otvoríte skratky</string>
+    <string name="idle_hint_menu">Ťuknutím otvoríte ponuku</string>
+    <string name="idle_hint_search">Ťuknutím vyhľadáte</string>
+    <string name="idle_hint_queue">Ťuknutím otvoríte nedávno prehrávané</string>
+    <string name="idle_resume">Pokračovať v prehrávaní</string>
+    <string name="idle_action_shortcuts">Otvoriť skratky</string>
+    <string name="idle_action_menu">Otvoriť ponuku</string>
+    <string name="idle_action_search">Hľadať</string>
+    <string name="idle_action_queue">Otvoriť nedávno prehrávané</string>
+
+    <string name="no_phone">Telefón nie je pripojený</string>
+    <string name="playback_stopped">Zastavené</string>
+    <string name="error">CHYBA</string>
+    <string name="error_play_services">Chyba služieb Google Play</string>
+    <string name="button">Tlačidlo</string>
+    <string name="back_button">Späť</string>
+    <string name="turn_bezel_cw">Otočiť lunetu v smere hodinových ručičiek</string>
+    <string name="turn_bezel_ccw">Otočiť lunetu proti smeru hodinových ručičiek</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Páči sa mi</string>
+    <string name="quick_action_shuffle">Náhodne</string>
+    <string name="quick_action_repeat">Opakovať</string>
+    <string name="quick_action_repeat_all">Opakovať všetko</string>
+    <string name="quick_action_repeat_one">Opakovať jednu</string>
+    <string name="quick_action_up_next">Nasleduje</string>
+    <string name="quick_actions_unavailable">Aktuálna aplikácia nemá žiadne rýchle akcie</string>
+    <string name="voice_search_prompt">Hľadať hudbu</string>
+    <string name="queue_empty">Nie je dostupný žiadny rad</string>
+    <string name="queue_now_playing">Práve sa prehráva</string>
+    <string name="queue_load_more">Načítať ďalšie</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Nedávno prehrané</string>
+    <string name="queue_history_fallback_reason">Táto aplikácia nezdieľa svoj rad</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Dnes</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Ciferník</string>
+    <string name="face_picker_offline">Telefón nie je pripojený — tento ciferník sa použije na hodinkách, ale telefón si ponechá nastavenie</string>
+    <string name="face_picker_section_builtin">Vstavané ciferníky</string>
+    <string name="face_picker_section_custom">Moje témy</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Založené na %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Ako používať</string>
+    <string name="hint_edges">Ťuknite hore, dole, vľavo alebo vpravo — každá zóna spustí priradenú akciu</string>
+    <string name="hint_center">Stred — prehrávanie/pozastavenie\nDvojité ťuknutie — rýchle akcie\nDlhé podržanie — výber ciferníka (konfigurovateľné)</string>
+    <string name="hint_swipe_up">Potiahnite nahor — ponuka akcií\nDole alebo vľavo — priradené akcie\nDoprava od okraja — ukončiť</string>
+    <string name="hint_crown">Korunka — hlasitosť alebo posúvanie\nBočné tlačidlá — priradené akcie\nVšetko prispôsobíte v častiach Ovládanie a Hodinky v telefóne</string>
+    <string name="hint_next">Ďalej</string>
+    <string name="hint_dismiss">Hotovo</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Prehrať</string>
+    <string name="action_name_pause">Pozastaviť</string>
+    <string name="action_name_skip_prev">Predchádzajúca skladba</string>
+    <string name="action_name_skip_next">Nasledujúca skladba</string>
+    <string name="action_name_volume_up">Zvýšiť hlasitosť</string>
+    <string name="action_name_volume_down">Znížiť hlasitosť</string>
+    <string name="action_name_open_menu">Otvoriť ponuku</string>
+    <string name="action_name_skip_30">Preskočiť o 30 sekúnd</string>
+    <string name="action_name_reverse_30">Pretočiť o 30 sekúnd späť</string>
+    <string name="action_name_play_pause">Prehrať/Pozastaviť</string>
+    <string name="action_name_stop">Zastaviť</string>
+    <string name="action_name_restart">Reštartovať skladbu</string>
+    <string name="action_name_seek">Posúvať v skladbe</string>
+    <string name="action_name_mute">Stlmiť</string>
+    <string name="action_name_search">Hľadať</string>
+    <string name="action_name_custom">Vlastná akcia</string>
+    <string name="state_on">Zapnuté</string>
+    <string name="state_off">Vypnuté</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Aktualizácie aplikácie</string>
+    <string name="update_install_title">Aktualizácia Svartifoss</string>
+    <string name="update_install_tap">Klepnutím nainštalovať novú verziu</string>
+    <string name="update_install_failed">Inštalácia zlyhala. V nastaveniach hodiniek povoľte inštalácie zo Svartifoss a skúste to znova z telefónu.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Prehrať odtiaľto</string>
+    <string name="lyrics_none">Pre túto skladbu sa nenašiel text</string>
+    <string name="lyrics_failed">Text sa nepodarilo načítať. Skontrolujte pripojenie telefónu.</string>
+    <string name="lyrics_disabled">Vyhľadávanie textov je vypnuté v nastaveniach telefónu</string>
+    <string name="lyrics_no_track">Nič sa neprehráva</string>
+    <string name="metadata_none">Pre túto skladbu nie sú žiadne podrobnosti</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Interpret albumu</string>
+    <string name="metadata_track">Skladba</string>
+    <string name="metadata_duration">Dĺžka</string>
+    <string name="metadata_genre">Žáner</string>
+    <string name="metadata_year">Rok</string>
+    <string name="metadata_released">Vydané</string>
+    <string name="metadata_label">Vydavateľstvo</string>
+    <string name="metadata_country">Krajina</string>
+    <string name="metadata_composer">Skladateľ</string>
+    <string name="metadata_writer">Autor textu</string>
+    <string name="metadata_author">Autor</string>
+    <string name="metadata_codec">Formát</string>
+    <string name="metadata_bitrate">Bitrate</string>
+    <string name="metadata_sample_rate">Vzorkovacia frekvencia</string>
+    <string name="metadata_channels">Kanály</string>
+    <string name="metadata_file_size">Veľkosť</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID vydania</string>
+    <string name="metadata_compilation">Kompilácia</string>
+    <string name="metadata_value_yes">Áno</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Pozícia</string>
+    <string name="metadata_speed">Rýchlosť</string>
+    <string name="metadata_output">Výstup</string>
+    <string name="metadata_output_speaker">Reproduktor telefónu</string>
+    <string name="metadata_output_wired">Slúchadlá</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB zvuk</string>
+    <string name="metadata_output_remote">Prenášanie</string>
+    <string name="metadata_origin">Zdroj</string>
+    <string name="metadata_origin_stream">Stream</string>
+    <string name="metadata_origin_local">Súbor v telefóne</string>
+    <string name="metadata_host">Hostiteľ</string>
+    <string name="metadata_file">Súbor</string>
+    <string name="metadata_download">Stiahnuť</string>
+    <string name="metadata_download_no">Nestiahnuté</string>
+    <string name="metadata_download_running">Sťahovanie</string>
+    <string name="metadata_download_yes">Stiahnuté</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">O aplikácii</string>
+    <string name="metadata_source">Prehráva sa v</string>
+</resources>

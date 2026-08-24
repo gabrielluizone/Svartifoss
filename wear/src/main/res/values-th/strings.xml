@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">กำลังเล่นและการควบคุมสื่อ</string>
+    <string name="complication_album_art_label">ปกที่กำลังเล่น</string>
+    <string name="complication_no_music">ไม่มีสิ่งใดกำลังเล่น</string>
+    <string name="tile_nothing_playing">ไม่มีสิ่งใดกำลังเล่น</string>
+    <string name="tile_open_app">เปิด Svartifoss</string>
+    <string name="tile_rewind_10">ย้อนกลับ 10 วินาที</string>
+    <string name="tile_forward_10">ข้าม 10 วินาที</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">ทางลัดสตรีมมิงของคุณ แตะครั้งเดียวก็ถึง</string>
+    <string name="shortcuts_tile_title">ทางลัด</string>
+    <string name="shortcuts_tile_empty">ยังไม่มีทางลัด</string>
+    <string name="shortcuts_tile_more">เพิ่มเติมในแอป</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">ไม่มีสิ่งใดกำลังเล่น</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">เล่นบางอย่างบนโทรศัพท์ของคุณ</string>
+    <string name="idle_hint_resume">แตะเพื่อเล่นต่อจากแอปล่าสุด</string>
+    <string name="idle_hint_shortcuts">แตะเพื่อเปิดทางลัด</string>
+    <string name="idle_hint_menu">แตะเพื่อเปิดเมนู</string>
+    <string name="idle_hint_search">แตะเพื่อค้นหา</string>
+    <string name="idle_hint_queue">แตะเพื่อดูรายการที่เล่นล่าสุด</string>
+    <string name="idle_resume">เล่นต่อ</string>
+    <string name="idle_action_shortcuts">เปิดทางลัด</string>
+    <string name="idle_action_menu">เปิดเมนู</string>
+    <string name="idle_action_search">ค้นหา</string>
+    <string name="idle_action_queue">เปิดรายการที่เล่นล่าสุด</string>
+
+    <string name="no_phone">ไม่ได้เชื่อมต่อโทรศัพท์</string>
+    <string name="playback_stopped">หยุดแล้ว</string>
+    <string name="error">ข้อผิดพลาด</string>
+    <string name="error_play_services">ข้อผิดพลาดของบริการ Google Play</string>
+    <string name="button">ปุ่ม</string>
+    <string name="back_button">ย้อนกลับ</string>
+    <string name="turn_bezel_cw">หมุนขอบตามเข็มนาฬิกา</string>
+    <string name="turn_bezel_ccw">หมุนขอบทวนเข็มนาฬิกา</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">ถูกใจ</string>
+    <string name="quick_action_shuffle">สุ่ม</string>
+    <string name="quick_action_repeat">เล่นซ้ำ</string>
+    <string name="quick_action_repeat_all">เล่นซ้ำทั้งหมด</string>
+    <string name="quick_action_repeat_one">เล่นซ้ำหนึ่งเพลง</string>
+    <string name="quick_action_up_next">ถัดไป</string>
+    <string name="quick_actions_unavailable">แอปปัจจุบันไม่มีการทำงานด่วน</string>
+    <string name="voice_search_prompt">ค้นหาเพลง</string>
+    <string name="queue_empty">ไม่มีคิวที่ใช้ได้</string>
+    <string name="queue_now_playing">กำลังเล่น</string>
+    <string name="queue_load_more">โหลดเพิ่มเติม</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">เล่นล่าสุด</string>
+    <string name="queue_history_fallback_reason">แอปนี้ไม่แชร์คิว</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">วันนี้</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">หน้าปัดนาฬิกา</string>
+    <string name="face_picker_offline">ไม่ได้เชื่อมต่อโทรศัพท์ — หน้าปัดนี้จะใช้กับนาฬิกา แต่โทรศัพท์จะคงการตั้งค่าไว้</string>
+    <string name="face_picker_section_builtin">หน้าปัดในตัว</string>
+    <string name="face_picker_section_custom">ธีมของฉัน</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">อิงจาก %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">วิธีใช้</string>
+    <string name="hint_edges">แตะด้านบน ล่าง ซ้าย หรือขวา — แต่ละโซนจะเรียกการทำงานที่กำหนดไว้</string>
+    <string name="hint_center">ตรงกลาง — เล่น/หยุดชั่วคราว\nแตะสองครั้ง — การทำงานด่วน\nกดค้าง — ตัวเลือกหน้าปัด (กำหนดได้)</string>
+    <string name="hint_swipe_up">ปัดขึ้น — เมนูการทำงาน\nลงหรือซ้าย — การทำงานที่กำหนด\nปัดขวาจากขอบ — ออก</string>
+    <string name="hint_crown">เม็ดมะยม — ระดับเสียงหรือเลื่อนตำแหน่ง\nปุ่มด้านข้าง — การทำงานที่กำหนด\nปรับแต่งทุกอย่างในส่วนการควบคุมและนาฬิกาบนโทรศัพท์</string>
+    <string name="hint_next">ถัดไป</string>
+    <string name="hint_dismiss">เสร็จสิ้น</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">เล่น</string>
+    <string name="action_name_pause">หยุดชั่วคราว</string>
+    <string name="action_name_skip_prev">เพลงก่อนหน้า</string>
+    <string name="action_name_skip_next">เพลงถัดไป</string>
+    <string name="action_name_volume_up">เพิ่มระดับเสียง</string>
+    <string name="action_name_volume_down">ลดระดับเสียง</string>
+    <string name="action_name_open_menu">เปิดเมนู</string>
+    <string name="action_name_skip_30">ข้าม 30 วินาที</string>
+    <string name="action_name_reverse_30">ย้อนกลับ 30 วินาที</string>
+    <string name="action_name_play_pause">เล่น/หยุดชั่วคราว</string>
+    <string name="action_name_stop">หยุด</string>
+    <string name="action_name_restart">เริ่มเพลงใหม่</string>
+    <string name="action_name_seek">เลื่อนตำแหน่งในเพลง</string>
+    <string name="action_name_mute">ปิดเสียง</string>
+    <string name="action_name_search">ค้นหา</string>
+    <string name="action_name_custom">การทำงานกำหนดเอง</string>
+    <string name="state_on">เปิด</string>
+    <string name="state_off">ปิด</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">อัปเดตแอป</string>
+    <string name="update_install_title">อัปเดต Svartifoss</string>
+    <string name="update_install_tap">แตะเพื่อติดตั้งเวอร์ชันใหม่</string>
+    <string name="update_install_failed">ติดตั้งไม่สำเร็จ อนุญาตการติดตั้งจาก Svartifoss ในการตั้งค่านาฬิกา แล้วลองอีกครั้งจากโทรศัพท์</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">เล่นจากตรงนี้</string>
+    <string name="lyrics_none">ไม่พบเนื้อเพลงสำหรับเพลงนี้</string>
+    <string name="lyrics_failed">ดึงเนื้อเพลงไม่ได้ โปรดตรวจสอบการเชื่อมต่อของโทรศัพท์</string>
+    <string name="lyrics_disabled">การค้นหาเนื้อเพลงปิดอยู่ในการตั้งค่าโทรศัพท์</string>
+    <string name="lyrics_no_track">ไม่มีสิ่งใดกำลังเล่น</string>
+    <string name="metadata_none">ไม่มีรายละเอียดสำหรับเพลงนี้</string>
+    <string name="metadata_album">อัลบั้ม</string>
+    <string name="metadata_album_artist">ศิลปินอัลบั้ม</string>
+    <string name="metadata_track">แทร็ก</string>
+    <string name="metadata_duration">ความยาว</string>
+    <string name="metadata_genre">แนวเพลง</string>
+    <string name="metadata_year">ปี</string>
+    <string name="metadata_released">เผยแพร่</string>
+    <string name="metadata_label">ค่ายเพลง</string>
+    <string name="metadata_country">ประเทศ</string>
+    <string name="metadata_composer">ผู้ประพันธ์เพลง</string>
+    <string name="metadata_writer">ผู้เขียนเพลง</string>
+    <string name="metadata_author">ผู้เขียน</string>
+    <string name="metadata_codec">รูปแบบ</string>
+    <string name="metadata_bitrate">บิตเรต</string>
+    <string name="metadata_sample_rate">อัตราสุ่มตัวอย่าง</string>
+    <string name="metadata_channels">ช่องสัญญาณ</string>
+    <string name="metadata_file_size">ขนาด</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">รหัสรีลีส</string>
+    <string name="metadata_compilation">อัลบั้มรวม</string>
+    <string name="metadata_value_yes">ใช่</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">ตำแหน่ง</string>
+    <string name="metadata_speed">ความเร็ว</string>
+    <string name="metadata_output">เอาต์พุต</string>
+    <string name="metadata_output_speaker">ลำโพงโทรศัพท์</string>
+    <string name="metadata_output_wired">หูฟัง</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">เสียง USB</string>
+    <string name="metadata_output_remote">แคสต์</string>
+    <string name="metadata_origin">แหล่งที่มา</string>
+    <string name="metadata_origin_stream">สตรีม</string>
+    <string name="metadata_origin_local">ไฟล์บนโทรศัพท์</string>
+    <string name="metadata_host">โฮสต์</string>
+    <string name="metadata_file">ไฟล์</string>
+    <string name="metadata_download">ดาวน์โหลด</string>
+    <string name="metadata_download_no">ยังไม่ได้ดาวน์โหลด</string>
+    <string name="metadata_download_running">กำลังดาวน์โหลด</string>
+    <string name="metadata_download_yes">ดาวน์โหลดแล้ว</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">เกี่ยวกับ</string>
+    <string name="metadata_source">กำลังเล่นใน</string>
+</resources>

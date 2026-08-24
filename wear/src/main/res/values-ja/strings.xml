@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">再生中とメディアコントロール</string>
+    <string name="complication_album_art_label">再生中のカバー</string>
+    <string name="complication_no_music">何も再生されていません</string>
+    <string name="tile_nothing_playing">何も再生されていません</string>
+    <string name="tile_open_app">Svartifoss を開く</string>
+    <string name="tile_rewind_10">10秒巻き戻す</string>
+    <string name="tile_forward_10">10秒スキップ</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">ストリーミングショートカットにワンタップでアクセス</string>
+    <string name="shortcuts_tile_title">ショートカット</string>
+    <string name="shortcuts_tile_empty">ショートカットはまだありません</string>
+    <string name="shortcuts_tile_more">アプリでもっと見る</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">何も再生されていません</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">スマートフォンで何か再生してください</string>
+    <string name="idle_hint_resume">タップして最後のアプリを再開</string>
+    <string name="idle_hint_shortcuts">タップしてショートカットを開く</string>
+    <string name="idle_hint_menu">タップしてメニューを開く</string>
+    <string name="idle_hint_search">タップして検索</string>
+    <string name="idle_hint_queue">タップして最近再生した項目を開く</string>
+    <string name="idle_resume">再生を再開</string>
+    <string name="idle_action_shortcuts">ショートカットを開く</string>
+    <string name="idle_action_menu">メニューを開く</string>
+    <string name="idle_action_search">検索</string>
+    <string name="idle_action_queue">最近再生した項目を開く</string>
+
+    <string name="no_phone">スマートフォンが接続されていません</string>
+    <string name="playback_stopped">停止中</string>
+    <string name="error">エラー</string>
+    <string name="error_play_services">Play 開発者サービスのエラー</string>
+    <string name="button">ボタン</string>
+    <string name="back_button">戻る</string>
+    <string name="turn_bezel_cw">ベゼルを時計回りに回す</string>
+    <string name="turn_bezel_ccw">ベゼルを反時計回りに回す</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">いいね</string>
+    <string name="quick_action_shuffle">シャッフル</string>
+    <string name="quick_action_repeat">リピート</string>
+    <string name="quick_action_repeat_all">すべてリピート</string>
+    <string name="quick_action_repeat_one">1曲リピート</string>
+    <string name="quick_action_up_next">次の曲</string>
+    <string name="quick_actions_unavailable">現在のアプリにはクイックアクションがありません</string>
+    <string name="voice_search_prompt">音楽を検索</string>
+    <string name="queue_empty">利用できるキューがありません</string>
+    <string name="queue_now_playing">再生中</string>
+    <string name="queue_load_more">さらに読み込む</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">最近再生した項目</string>
+    <string name="queue_history_fallback_reason">このアプリはキューを共有していません</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">今日</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">ウォッチフェイス</string>
+    <string name="face_picker_offline">スマートフォン未接続 — このフェイスはウォッチに適用されますが、スマートフォン側の設定は保持されます</string>
+    <string name="face_picker_section_builtin">組み込みフェイス</string>
+    <string name="face_picker_section_custom">マイテーマ</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">%1$s ベース</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">使い方</string>
+    <string name="hint_edges">上・下・左・右をタップ — 各ゾーンで割り当てたアクションを実行</string>
+    <string name="hint_center">中央 — 再生/一時停止\nダブルタップ — クイックアクション\n長押し — フェイス選択（設定可能）</string>
+    <string name="hint_swipe_up">上にスワイプ — アクションメニュー\n下または左 — 割り当てたアクション\n右端から右へ — 終了</string>
+    <string name="hint_crown">クラウン — 音量またはシーク\nサイドボタン — 割り当てたアクション\nスマートフォンの「コントロール」と「ウォッチ」ですべてカスタマイズ</string>
+    <string name="hint_next">次へ</string>
+    <string name="hint_dismiss">完了</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">再生</string>
+    <string name="action_name_pause">一時停止</string>
+    <string name="action_name_skip_prev">前の曲</string>
+    <string name="action_name_skip_next">次の曲</string>
+    <string name="action_name_volume_up">音量を上げる</string>
+    <string name="action_name_volume_down">音量を下げる</string>
+    <string name="action_name_open_menu">メニューを開く</string>
+    <string name="action_name_skip_30">30秒スキップ</string>
+    <string name="action_name_reverse_30">30秒巻き戻す</string>
+    <string name="action_name_play_pause">再生/一時停止</string>
+    <string name="action_name_stop">停止</string>
+    <string name="action_name_restart">曲を最初から再生</string>
+    <string name="action_name_seek">トラック内をシーク</string>
+    <string name="action_name_mute">ミュート</string>
+    <string name="action_name_search">検索</string>
+    <string name="action_name_custom">カスタムアクション</string>
+    <string name="state_on">オン</string>
+    <string name="state_off">オフ</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">アプリのアップデート</string>
+    <string name="update_install_title">Svartifoss アップデート</string>
+    <string name="update_install_tap">タップして新しいバージョンをインストール</string>
+    <string name="update_install_failed">インストールに失敗しました。ウォッチの設定で Svartifoss からのインストールを許可し、スマートフォンからもう一度お試しください。</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">ここから再生</string>
+    <string name="lyrics_none">このトラックの歌詞が見つかりませんでした</string>
+    <string name="lyrics_failed">歌詞を取得できませんでした。スマートフォンの接続を確認してください。</string>
+    <string name="lyrics_disabled">スマートフォンの設定で歌詞検索がオフになっています</string>
+    <string name="lyrics_no_track">何も再生されていません</string>
+    <string name="metadata_none">このトラックの詳細情報はありません</string>
+    <string name="metadata_album">アルバム</string>
+    <string name="metadata_album_artist">アルバムアーティスト</string>
+    <string name="metadata_track">トラック</string>
+    <string name="metadata_duration">長さ</string>
+    <string name="metadata_genre">ジャンル</string>
+    <string name="metadata_year">年</string>
+    <string name="metadata_released">リリース日</string>
+    <string name="metadata_label">レーベル</string>
+    <string name="metadata_country">国</string>
+    <string name="metadata_composer">作曲者</string>
+    <string name="metadata_writer">作詞者</string>
+    <string name="metadata_author">作者</string>
+    <string name="metadata_codec">フォーマット</string>
+    <string name="metadata_bitrate">ビットレート</string>
+    <string name="metadata_sample_rate">サンプルレート</string>
+    <string name="metadata_channels">チャンネル</string>
+    <string name="metadata_file_size">サイズ</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">リリース ID</string>
+    <string name="metadata_compilation">コンピレーション</string>
+    <string name="metadata_value_yes">はい</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">位置</string>
+    <string name="metadata_speed">速度</string>
+    <string name="metadata_output">出力</string>
+    <string name="metadata_output_speaker">スマートフォンのスピーカー</string>
+    <string name="metadata_output_wired">ヘッドホン</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB オーディオ</string>
+    <string name="metadata_output_remote">キャスト</string>
+    <string name="metadata_origin">ソース</string>
+    <string name="metadata_origin_stream">ストリーム</string>
+    <string name="metadata_origin_local">スマートフォン上のファイル</string>
+    <string name="metadata_host">ホスト</string>
+    <string name="metadata_file">ファイル</string>
+    <string name="metadata_download">ダウンロード</string>
+    <string name="metadata_download_no">未ダウンロード</string>
+    <string name="metadata_download_running">ダウンロード中</string>
+    <string name="metadata_download_yes">ダウンロード済み</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">情報</string>
+    <string name="metadata_source">再生先</string>
+</resources>

@@ -26,6 +26,7 @@ import javax.inject.Inject
 class CustomIconStorage @Inject constructor(private val context: Context,
                                             @GlobalConfig private val configLazy: Lazy<ActionConfig>) {
     companion object {
+        private const val ICON_STORE_DIR = "icon_store"
         private const val PREF_NAME = "custom_icon_storage"
         private const val PREF_KEY_NUM_SAVES = "num_saves"
 
@@ -50,7 +51,7 @@ class CustomIconStorage @Inject constructor(private val context: Context,
          * Existing installs are migrated lazily without deleting the legacy copy immediately;
          * the normal garbage collector removes it only after every referenced URI was resolved. */
         internal fun resolveStoredIconFile(filesDir: File, uri: Uri): File {
-            val folder = File(filesDir, "icon_store").apply { mkdirs() }
+            val folder = File(filesDir, ICON_STORE_DIR).apply { mkdirs() }
             val target = File(folder, hashedFileName(uri))
             if (!target.exists()) {
                 val legacy = File(folder, legacyFileName(uri))
@@ -64,9 +65,12 @@ class CustomIconStorage @Inject constructor(private val context: Context,
             }
             return target
         }
+
+        /** Folder included by [ConfigBackup] alongside the action configs that reference it. */
+        internal fun backupDirectory(context: Context): File = File(context.filesDir, ICON_STORE_DIR)
     }
 
-    private val storageFolder = File(context.filesDir, "icon_store")
+    private val storageFolder = backupDirectory(context)
     private val metaPreferences: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     private val memoryIconStore = object : LruCache<Uri, Bitmap>(MAX_MEMORY_LRU_STORE_SIZE_BYTES) {

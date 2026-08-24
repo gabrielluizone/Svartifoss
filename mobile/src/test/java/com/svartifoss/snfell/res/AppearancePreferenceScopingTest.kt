@@ -26,9 +26,6 @@ class AppearancePreferenceScopingTest {
         val DELIBERATELY_GLOBAL = setOf(
                 // The face selector - scoping it by face would be circular.
                 "wear_screen_face",
-                // Applies the chosen font to the menu, queue and chrome. Those are not faces, so
-                // there is no per-face value to hold.
-                "wear_font_all_screens",
                 // Drives a phone-side binding (whether notification media actions are mirrored),
                 // which has no per-face notion.
                 "wear_quick_panel_source",

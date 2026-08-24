@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Quản lý chủ đề</string>
+    <string name="watch_theme_builtin_subtitle">Chủ đề tích hợp sẵn · Bố cục %1$s</string>
+    <string name="watch_theme_custom_subtitle">Chủ đề tùy chỉnh · Bố cục %1$s</string>
+    <string name="watch_theme_unknown_name">Chủ đề không xác định</string>
+
+    <string name="watch_themes_title">Chủ đề đồng hồ</string>
+    <string name="watch_theme_active_label">CHỦ ĐỀ ĐANG ÁP DỤNG</string>
+    <string name="watch_theme_active_layout">Bố cục: %1$s</string>
+    <string name="watch_theme_preview_description">Xem trước chủ đề hiện đang được áp dụng cho đồng hồ</string>
+    <string name="watch_theme_create">Tạo chủ đề</string>
+    <string name="watch_theme_create_title">Tạo chủ đề mới</string>
+    <string name="watch_theme_rename_title">Đổi tên chủ đề</string>
+    <string name="watch_theme_name">Tên chủ đề</string>
+    <string name="watch_theme_base_layout">Bố cục cơ sở</string>
+    <string name="watch_theme_default_name">Chủ đề %1$s của tôi</string>
+    <string name="watch_theme_generic_name">Chủ đề</string>
+    <string name="watch_theme_copy_name">Bản sao của %1$s</string>
+    <string name="watch_theme_built_in_section">Chủ đề tích hợp sẵn</string>
+    <string name="watch_theme_custom_section">Chủ đề của tôi</string>
+    <string name="watch_theme_applied">ĐÃ ÁP DỤNG</string>
+    <string name="watch_theme_apply_success">Đã áp dụng %1$s cho đồng hồ của bạn</string>
+    <string name="watch_theme_apply_error">Không thể áp dụng chủ đề này</string>
+    <string name="watch_theme_more_options">Thêm tùy chọn chủ đề</string>
+    <string name="watch_theme_list_description">Chủ đề đồng hồ tích hợp sẵn và tùy chỉnh</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Nhấn để áp dụng.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Đang được áp dụng.</string>
+    <string name="watch_theme_rename">Đổi tên</string>
+    <string name="watch_theme_customize">Tùy chỉnh</string>
+    <string name="watch_theme_duplicate">Nhân bản</string>
+    <string name="watch_theme_delete">Xóa</string>
+    <string name="watch_theme_delete_title">Xóa “%1$s”?</string>
+    <string name="watch_theme_delete_message">Chủ đề đã lưu này và các thiết lập của nó sẽ bị xóa vĩnh viễn.</string>
+    <string name="watch_theme_deleted">Đã xóa chủ đề</string>
+    <string name="watch_theme_duplicated">Đã tạo “%1$s”</string>
+    <string name="watch_theme_limit_reached">Bạn có thể lưu tối đa 24 chủ đề tùy chỉnh. Hãy xóa một chủ đề trước khi tạo chủ đề mới.</string>
+    <string name="watch_theme_name_required">Nhập tên chủ đề</string>
+    <string name="watch_theme_name_duplicate">Đã có chủ đề khác dùng tên này</string>
+
+    <string name="watch_theme_face_classic">Classic</string>
+    <string name="watch_theme_face_expressive">Expressive</string>
+    <string name="watch_theme_face_vinyl">Vinyl</string>
+    <string name="watch_theme_face_poster">Poster</string>
+    <string name="watch_theme_face_studio">Studio</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Spectrum</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Immersive</string>
+    <string name="watch_theme_face_depth">Chiều sâu</string>
+    <string name="watch_theme_face_carousel">Băng chuyền</string>
+    <string name="watch_theme_face_chat">Chat</string>
+    <string name="watch_theme_face_split">Split</string>
+    <string name="watch_theme_face_note">Note</string>
+    <string name="watch_theme_face_verse">Ca từ</string>
+    <string name="watch_theme_face_metadata">Metadata</string>
+</resources>

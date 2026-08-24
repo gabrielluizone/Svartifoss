@@ -1,0 +1,1967 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">このデバイスでは Wear OS はサポートされていません</string>
+    <string name="setting_no_wearable_api_banner_description">このデバイスには、Svartifoss がウォッチと通信するために必要な Google Play 開発者サービスの Wear OS コンポーネントがありません。ペアリングしても解決しません。この端末ではスマートフォンアプリからウォッチに接続できません。以下の設定はすべて保存され、対応デバイスに Svartifoss をインストールすると適用されます。</string>
+    <string name="setting_no_watch_banner">ウォッチが接続されていません</string>
+    <string name="setting_no_watch_banner_description">これらの設定は Wear OS ウォッチに同期されるため、ペアリングして接続するまでは見た目には反映されません。ただし、以下の項目はすべて今すぐ設定できます。</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">外観</string>
+    <string name="setting_theme">テーマ</string>
+    <string name="theme_light">クリアホワイト</string>
+    <string name="theme_dark">ジャストブラック</string>
+    <string name="theme_system">システムに従う</string>
+    <string name="setting_language">言語</string>
+    <string name="language_system">システムに従う</string>
+    <string name="language_change_watch_notice">同期されると、ウォッチでもこの言語が使用されます。</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">開発者</string>
+    <string name="dev_mode_unlocked">開発者モードが有効になりました ✦</string>
+    <string name="dev_mode_clicks_remaining">開発者モードを解除するにはあと %1$d 回タップ</string>
+    <string name="dev_disable_mode">開発者モードを無効にする</string>
+    <string name="dev_disable_mode_description">このセクションを再び非表示にするには、「インストール済みバージョン」を7回タップすると再表示できます</string>
+    <string name="dev_mode_disabled">開発者モードが無効になりました</string>
+    <string name="dev_build_info">ビルド情報</string>
+    <string name="dev_sync_watch">ウォッチ設定を強制同期</string>
+    <string name="dev_sync_watch_description">現在のすべての設定をペアリング済みウォッチへすぐに送信します</string>
+    <string name="dev_sync_watch_done">設定をウォッチに同期しました</string>
+    <string name="dev_copy_debug_info">デバッグ情報をコピー</string>
+    <string name="dev_copy_debug_info_description">ビルドとデバイスの詳細をクリップボードにコピーします</string>
+    <string name="dev_show_archived">アーカイブ済みオプションを表示</string>
+    <string name="dev_show_archived_description">既知の問題によりアーカイブされたウォッチレイアウトと設定を表示します</string>
+    <string name="dev_copy_debug_info_done">デバッグ情報をコピーしました</string>
+    <string name="dev_open_update_screen">アップデート画面を開く</string>
+    <string name="dev_open_update_screen_description">実際のリリースを待たずにアップデート画面（カバーバナー、リリースノートのレイアウト）をプレビューします</string>
+    <string name="dev_watch_layout_bounds">ウォッチレイアウト境界を表示</string>
+    <string name="dev_watch_layout_bounds_description">ウォッチ上のプレーヤー要素とタッチ領域の輪郭を表示します。診断用オーバーレイのみです。</string>
+    <string name="dev_watch_player_info">ウォッチのプレーヤー情報を表示</string>
+    <string name="dev_watch_player_info_description">アクティブなフェイス、再生状態、進行状況、レンダリング情報をウォッチ上に重ねて表示します。</string>
+    <string name="pref_reset_default">デフォルトにリセット</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">隠された滝を見つけました。\n\nSvartifoss — 黒い玄武岩の柱が\nアイスランドの滝を縁取り、\n音楽が石を抜ける水のように\n流れることを思い出させます。\n\n♪ 心を込めて作りました。 ♪</string>
+    <string name="easter_egg_ok">閉じる</string>
+
+    <string name="nav_watch_face">ウォッチ</string>
+    <string name="watch_face_header">ウォッチの外観</string>
+    <string name="nav_controls">コントロール</string>
+    <string name="nav_actions">アクション</string>
+    <string name="nav_settings">設定</string>
+
+    <string name="controls_header">コントロール</string>
+    <string name="controls_state_playing">音楽を再生中</string>
+    <string name="controls_state_stopped">再生なし</string>
+    <string name="controls_playing_description">音楽の再生中に各入力で行う操作を選択します。この設定は、再生していない状態の設定とは独立しています。</string>
+    <string name="controls_stopped_description">再生開始前または停止後に各入力で行う操作を選択します。この設定は、再生中の状態の設定とは独立しています。</string>
+
+    <string name="watch_live_preview">ウォッチのライブプレビュー</string>
+    <string name="watch_preview_description">選択したウォッチ画面のライブプレビューです。ウォッチで試す前に変更内容をここで確認できます。</string>
+    <string name="watch_section_style">プレーヤー</string>
+    <string name="watch_section_style_description">プレーヤーのレイアウトと、タイトル、時間、進行状況の表示方法を選択します。</string>
+    <string name="watch_section_background">背景</string>
+    <string name="watch_section_background_description">プレーヤー背面のアルバムアート、ぼかし、フェード、読みやすさを調整します。</string>
+    <string name="watch_section_colors">カラー</string>
+    <string name="watch_section_colors_description">基本色、進行状況、アルバムのアクセントを設定し、タイトル、アーティスト、時計、音量、パネルの色を調整します。</string>
+    <string name="watch_section_typography">テキスト</string>
+    <string name="watch_section_typography_description">フォントを選択し、タイトル、アーティスト、時計、アプリアイコン、セカンダリ画面、Flex テキストを調整します。</string>
+    <string name="watch_section_aod">常時表示</string>
+    <string name="watch_section_aod_description">低電力画面を設定し、プレビューでアンビエント表示を確認します。</string>
+    <string name="watch_section_panels">パネル</string>
+    <string name="watch_section_panels_description">音量、シーク、クイックパネル、キューのスタイルを設定します。行にフォーカスすると、その画面がプレビューで開きます。</string>
+    <string name="watch_section_mini_buttons">ミニボタン</string>
+    <string name="watch_section_mini_buttons_description">オプションのショートカット行のスタイルを設定します。下の「ミニボタン」をタップすると、コントロールでアクションを割り当てられます。</string>
+    <string name="watch_overview_description">カスタマイズする項目を選びます。プレビューと保存済みテーマは、どの領域でも有効なままです。</string>
+    <string name="watch_back_to_overview">ウォッチ領域に戻る</string>
+
+    <string name="settings_section_general">一般</string>
+    <string name="settings_section_general_description">アプリテーマ、アクセントカラー、アップデート設定。</string>
+    <string name="settings_section_watch">動作</string>
+    <string name="settings_section_watch_description">ウォッチのクラウン、タッチ、触覚フィードバック、アクションメニューの動作。</string>
+    <string name="settings_section_automation">自動化</string>
+    <string name="settings_section_automation_description">Svartifoss を自動的に開閉するタイミングを選択します。</string>
+    <string name="settings_section_apps">アプリ</string>
+    <string name="settings_section_apps_description">歌詞とメタデータ、ストリーミングショートカット、キューのアートワーク、Android アクセスを設定します。</string>
+    <string name="settings_section_data">データ &amp; サポート</string>
+    <string name="settings_section_data_description">設定をバックアップし、バージョンや診断を確認したり、ヘルプを利用したりします。</string>
+    <string name="settings_overview_description">領域を選択します。関連するオプションはまとめて表示されますが、検索から任意の設定へ直接移動することもできます。</string>
+    <string name="settings_back_to_overview">設定領域に戻る</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Svartifoss の使い方</string>
+    <string name="tutorial_intro">Svartifoss は、スマートフォンで再生している音楽をウォッチから操作できるリモコンにします。手首からできることをすべて紹介します。</string>
+
+    <string name="tutorial_taps_title">画面ゾーンをタップ</string>
+    <string name="tutorial_taps_desc">ウォッチ画面は上、下、左、右の4つのゾーンに分かれています。ゾーンをタップすると、割り当てたアクションが実行されます。デフォルトでは、左が再生/一時停止、右が次の曲へスキップ、上と下が音量変更です。</string>
+
+    <string name="tutorial_quick_panel_title">クイックアクションパネル</string>
+    <string name="tutorial_quick_panel_desc">再生中画面の中央をダブルタップすると、4つのスロット（丸ボタン3つと、その下の横長の行）を持つパネルが開きます。未設定のスロットは、再生アプリが通知に表示するボタンをそのまま反映するため、本来の「いいね」、シャッフル、リピート操作を利用できます。スマートフォンの「アクション」で任意のアクションを割り当てるか、「なし」にして非表示にできます。</string>
+    <string name="tutorial_gestures_title">シングル、ダブル &amp; 長押し</string>
+    <string name="tutorial_gestures_desc">4つの端のゾーンでは、それぞれシングル、ダブル、長押しに別々のアクションを設定できます。中央のシングルタップも設定可能です。ダブルタップは常にクイックアクションを開き、長押しは「設定 → 動作」の内容に応じてフェイス選択、キュー、または何もしない動作になります。</string>
+
+    <string name="tutorial_buttons_title">物理ボタン</string>
+    <string name="tutorial_buttons_desc">ウォッチにサイドボタンがある場合、シングル、ダブル、長押しのアクションも割り当てられます。画面がオフでも機能します。</string>
+
+    <string name="tutorial_rotary_title">回転クラウン</string>
+    <string name="tutorial_rotary_desc">「設定 → 動作 → 回転クラウン / ベゼル」で、回転クラウンまたはベゼルが音量を変更するか、曲内をシークするか、何もしないかを選択します。クラウン回転をボタンとして公開するウォッチでは、代わりに「コントロール」で割り当ててください。</string>
+
+    <string name="tutorial_swipe_up_title">上、下、左 &amp; 右にスワイプ</string>
+    <string name="tutorial_swipe_up_desc">再生中画面で上、下、左へのスワイプには、それぞれアクションメニュー、再生キュー、曲スキップ、プレイリストなど任意の動作を設定できます。「コントロール」で「音楽を再生中」または「再生なし」を選び、それぞれ設定してください。デフォルトでは上スワイプがアクションメニューを開き、他は割り当てるまで何もしません。右スワイプは変更されません。これはアプリを終了する Wear OS 共通のジェスチャーです。</string>
+    <string name="tutorial_shortcuts_title">ストリーミングショートカット</string>
+    <string name="tutorial_shortcuts_desc">Spotify、YouTube Music、Apple Music、TIDAL、Deezer、Amazon Music、SoundCloud の曲、アルバム、ミックス、プレイリストへのリンクを保存し、任意のボタン、ジェスチャー、パネルスロットに割り当てられます。最も簡単なのは、ストリーミングアプリから Svartifoss にリンクを直接共有する方法です。コピーしたリンクを貼り付けたり、手入力もできます。アカウントやログインは不要です。ウォッチがスマートフォンに再生開始を依頼するため、ショートカットはアプリを開くだけでなく実際に再生します。</string>
+    <string name="tutorial_yt_music_title">YouTube Music ショートカット</string>
+    <string name="tutorial_yt_music_desc">「高評価した曲を再生」、「高評価した曲をシャッフル再生」、「マイプレイリスト」を任意のボタン、ジェスチャー、スワイプに割り当てれば、スマートフォンに触れずにすぐ音楽へ移動できます。「検索履歴」はウォッチでの最近の検索を保存します。項目を長押しすると削除できます。</string>
+
+    <string name="tutorial_exit_title">スワイプして終了</string>
+    <string name="tutorial_exit_desc">左端からスワイプしてプレーヤーを終了します。終了時に自動で再生を一時停止することもできます。「設定」で有効にしてください。</string>
+
+    <string name="tutorial_tile_title">クイックコントロール Tile</string>
+    <string name="tutorial_tile_desc">ウォッチフェイスを横にスワイプして Svartifoss の Tile を表示すれば、アプリを開かずにすぐ再生、一時停止、スキップできます。</string>
+
+    <string name="tutorial_complication_title">ウォッチフェイスのコンプリケーション</string>
+    <string name="tutorial_complication_desc">Svartifoss のアルバムアートコンプリケーションをウォッチフェイスに追加すると、現在のカバーをひと目で確認できます。タップするとプレーヤーが開きます。</string>
+
+    <string name="tutorial_system_title">システムのメディアコントロール</string>
+    <string name="tutorial_system_desc">現在の曲はウォッチ標準のメディアコントロールと最近のアプリにも表示されるため、そこから再生を操作することもできます。</string>
+
+    <string name="tutorial_tip">ヒント: 「コントロール」で両方の状態を設定し、「アクション」でメニューを整理してください。</string>
+
+    <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
+    <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
+
+    <string name="action_settings">設定</string>
+    <string name="action_pause">一時停止</string>
+    <string name="action_play">再生</string>
+    <string name="action_skip_prev">前の曲へ</string>
+    <string name="action_skip_next">次の曲へ</string>
+    <string name="action_play_pause">再生 / 一時停止</string>
+    <string name="action_stop">停止</string>
+    <string name="action_restart">曲を最初から再生</string>
+    <string name="action_mute">ミュート / ミュート解除</string>
+    <string name="action_skip_seconds">%1$d 秒進む</string>
+    <string name="action_reverse_seconds">%1$d 秒戻る</string>
+    <string name="action_like">いいね</string>
+    <string name="action_shuffle">シャッフル</string>
+    <string name="action_repeat">リピート</string>
+    <string name="action_repeat_one">1曲リピート</string>
+    <string name="action_search">音楽を検索</string>
+    <string name="action_open_lyrics">歌詞</string>
+    <string name="group_playback_controls">再生コントロール</string>
+    <string name="group_streaming_shortcuts">曲、アルバム &amp; プレイリスト</string>
+    <string name="pick_action">アクションを選択</string>
+    <string name="action_search_hint">このリストを検索</string>
+    <string name="action_search_empty">この検索に一致するアクションはありません。</string>
+    <string name="action_opens_more">複数のオプション</string>
+    <string name="action_volume_up">音量を上げる</string>
+    <string name="volume_down">音量を下げる</string>
+    <string name="group_volume_controls">音量コントロール</string>
+    <string name="no_watch_detected">ウォッチが検出されません</string>
+    <string name="connection_instructions">接続を開始するにはウォッチで Svartifoss を開いてください</string>
+    <string name="playing_controls">再生中のコントロール</string>
+    <string name="stopped_controls">再生なし時のコントロール</string>
+    <string name="actions_menu">アクションメニュー</string>
+    <string name="actions_intro">ウォッチの両方のアクション画面に、再生コントロール、アプリ、保存済みの曲、アルバム、プレイリストを設定できます。クイックパネルはコンパクトなまま、下のメニューには長い並び順付きリストを設定できます。</string>
+    <string name="actions_quick_panel_section">クイックパネル</string>
+    <string name="actions_watch_menu_section">ウォッチのメニュー</string>
+    <plurals name="actions_list_summary">
+        <item quantity="other">%1$d 件のアクション · タップして編集 · 長押ししてドラッグで並べ替え</item>
+    </plurals>
+    <string name="actions_reorder_description">順序付きアクションメニュー。長押ししてドラッグするか、アクセシビリティの「上へ移動」「下へ移動」を使うか、キーボードで Ctrl+Up/Down を押してください。</string>
+    <string name="actions_move_up">上へ移動</string>
+    <string name="actions_move_down">下へ移動</string>
+    <string name="actions_moved_to_position">%1$s を %3$d 件中 %2$d 番目に移動しました。</string>
+    <string name="actions_empty">まだアクションがありません。追加ボタンで最初のアクションを作成してください。</string>
+    <string name="actions_add">アクションを追加</string>
+    <string name="on_screen_buttons">タッチゾーン</string>
+    <string name="physical_buttons">物理ボタン</string>
+    <string name="physical_buttons_disconnected">物理ボタンを設定するには、ウォッチで Svartifoss に接続して開いてください。タッチゾーン、スワイプ、ミニボタンは今すぐ利用できます。</string>
+    <string name="physical_buttons_unavailable">このウォッチから設定可能な物理ボタンは報告されませんでした。</string>
+    <string name="control_assignment_tap">タップ: %1$s</string>
+    <string name="control_assignment_hold">長押し: %1$s</string>
+    <string name="control_assignment_both">タップ: %1$s · 長押し: %2$s</string>
+    <string name="tap_a_zone_to_configure">アクションを割り当てるにはウォッチのゾーンをタップ</string>
+    <string name="touch_zone_top">上ゾーン</string>
+    <string name="touch_zone_bottom">下ゾーン</string>
+    <string name="touch_zone_left">左ゾーン</string>
+    <string name="touch_zone_right">右ゾーン</string>
+    <string name="touch_zone_center">中央タップ</string>
+    <string name="touch_zone_action">%1$s: %2$s。タップして設定。</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">スワイプジェスチャー</string>
+    <string name="tap_a_swipe_to_configure">方向をタップして開く内容を選択</string>
+    <string name="swipe_gesture_up">上にスワイプ</string>
+    <string name="swipe_gesture_down">下にスワイプ</string>
+    <string name="swipe_gesture_left">左にスワイプ</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">上</string>
+    <string name="swipe_gesture_label_down">下</string>
+    <string name="swipe_gesture_label_left">左</string>
+
+    <string name="screen_buttons">ミニボタン</string>
+    <string name="tap_a_screen_button_to_configure">ウォッチ画面下部付近に最大3つのボタンを表示できます。スロットをタップしてアクションを割り当てます</string>
+    <string name="screen_button_1">ミニボタン1（左）</string>
+    <string name="screen_button_2">ミニボタン2（中央）</string>
+    <string name="screen_button_3">ミニボタン3（右）</string>
+    <string name="screen_button_label_1">ボタン1</string>
+    <string name="screen_button_label_2">ボタン2</string>
+    <string name="screen_button_label_3">ボタン3</string>
+    <string name="no_action">アクションなし</string>
+    <string name="gesture_single_press">シングル押し</string>
+    <string name="gesture_double_press">ダブル押し</string>
+    <string name="gesture_long_press">長押し</string>
+    <string name="gesture_swipe_action">アクション</string>
+    <string name="center_button_quick_panel_note">中央をダブルタップすると常にクイックアクションが開きます。長押しでは「設定 → 動作」で選んだ項目が実行されます。ここで中央タップを割り当てても、どちらのジェスチャーも変わりません。</string>
+    <string name="start_playback">再生を開始</string>
+    <string name="uninstalled_app">アンインストール済みアプリ</string>
+
+    <string name="play_app">%1$s を再生</string>
+    <string name="tasker_task">Tasker タスク</string>
+    <string name="icon_selection_title">アイコン選択</string>
+    <string name="icon_selection_gallery">ギャラリーから</string>
+    <string name="icon_selection_no_icon_pack">この機能では、インストール済みのアイコンパックからアクション用のカスタムアイコンを選べます。\n\n残念ながら、アイコンパックがインストールされていないようです。</string>
+    <string name="icon_selection_no_storage_permission">この機能では、インストール済みのアイコンパックからアクション用のカスタムアイコンを選べます。\n\n一部のアイコンパックではアプリにストレージ権限が必要です。この機能を使うには許可してください。</string>
+    <string name="delete">削除</string>
+    <string name="action_text">アクションテキスト</string>
+    <string name="swap_action">アクションを入れ替え</string>
+    <string name="open_actions_menu">アクションメニューを開く</string>
+    <string name="open_playlist_menu">現在のプレイリストを表示</string>
+    <string name="misc_settings">その他の設定</string>
+
+    <string name="category_backup">バックアップ</string>
+    <string name="export_config">設定をエクスポート</string>
+    <string name="export_config_description">ボタン割り当て、アクションリスト、ウォッチ設定をファイルに保存します</string>
+    <string name="import_config">設定をインポート</string>
+    <string name="import_config_description">ボタン割り当て、アクションリスト、ウォッチ設定をファイルから復元します</string>
+    <string name="export_config_done">設定をエクスポートしました</string>
+    <string name="export_config_failed">設定をエクスポートできませんでした</string>
+    <string name="import_config_done_title">インポートに成功しました</string>
+    <string name="import_config_done_message">インポートした設定を適用するには Svartifoss の再起動が必要です。</string>
+    <string name="import_config_failed">設定をインポートできませんでした。ファイルが無効か、互換性のないバージョンの可能性があります</string>
+    <string name="action_restart_now">今すぐ再起動</string>
+
+    <string name="category_about">情報</string>
+    <string name="category_music_screen">音楽画面</string>
+    <string name="category_watch_screen">ウォッチ画面</string>
+    <string name="category_mini_buttons">ミニボタン</string>
+    <string name="category_screen_face">プレーヤーの外観</string>
+    <string name="category_wf_screen_behavior">画面の動作</string>
+    <string name="category_wf_player_progress">進行状況、シーク &amp; 時間</string>
+    <string name="category_album_background">アルバム背景</string>
+    <string name="category_music_colors">音楽からのカラー</string>
+    <string name="category_wf_typography_font">書体</string>
+    <string name="category_wf_typography_title">タイトル</string>
+    <string name="category_wf_typography_artist">アーティスト</string>
+    <string name="category_wf_typography_icon">アプリアイコン</string>
+    <string name="category_wf_typography_flex">Google Sans Flex 軸</string>
+    <string name="category_wf_metadata">Metadata フェイスの内容</string>
+    <string name="category_wf_typography_secondary">他の画面のテキスト</string>
+    <string name="category_wf_colors_title">タイトルの色</string>
+    <string name="category_wf_colors_artist">アーティストの色</string>
+    <string name="category_wf_colors_clock">時計の色</string>
+    <string name="setting_wear_font_flex_hint_title">これらのコントロールについて</string>
+    <string name="setting_wear_flex_axes_hint">これらは Google Sans Flex 専用の微調整です。使用するには上でこのフォントを選択してください。上のタイトルとアーティストのウェイト/イタリック設定ですでにこのフォント固有のウェイト（wght）と傾き（slnt）軸が設定されています。下の4つのコントロールはフェイス全体に適用されます。</string>
+    <string name="setting_wear_font_flex_width">幅</string>
+    <string name="setting_wear_font_flex_width_description">水平方向の伸縮。コンデンスからエクスパンドまで（25～151）。100 がフォントの標準幅です。</string>
+    <string name="setting_wear_font_flex_optical_size">オプティカルサイズ</string>
+    <string name="setting_wear_font_flex_optical_size_description">テキストの実効サイズに合わせてストロークの細部を調整します（6～144）。小さい値は小さな文字、高い値は大きな表示文字に適しています。</string>
+    <string name="setting_wear_font_flex_grade">グレード</string>
+    <string name="setting_wear_font_flex_grade_description">レイアウトを変えずにウェイトをわずかに動かします（0～100）。暗い画面でコントラストを少し強める控えめな方法です。</string>
+    <string name="setting_wear_font_flex_roundness">丸み</string>
+    <string name="setting_wear_font_flex_roundness_description">ストローク終端をシャープ（0）から完全な丸（100）までブレンドし、より親しみやすい印象にします。</string>
+    <string name="preview_sample_title">曲名</string>
+    <string name="preview_sample_artist">アーティスト名</string>
+    <string name="preview_sample_next_title">次の曲</string>
+    <string name="preview_playback_stopped">停止中</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">前の行</string>
+    <string name="preview_verse_current">現在再生中の行</string>
+    <string name="preview_verse_next">その次の行</string>
+    <string name="preview_chat_today">今日</string>
+    <string name="category_gestures">ジェスチャー &amp; 入力</string>
+    <string name="category_watch_navigation">ナビゲーション &amp; ショートカット</string>
+    <string name="category_rotary_input">回転入力 &amp; 調整</string>
+    <string name="category_watch_feedback">フィードバック &amp; 終了動作</string>
+    <string name="category_watch_display">ウォッチ画面</string>
+    <string name="setting_wear_keep_screen_on">画面をオンのままにする</string>
+    <string name="setting_wear_keep_screen_on_description">Svartifoss の画面が開いている間、非アクティブタイムアウトでウォッチ画面が消えないようにします。手首を下げるとウォッチは暗くなります。このジェスチャーはシステム側の動作です。バッテリー消費が増えます。歌詞画面はこの設定に関係なく常にオンのままです。</string>
+    <string name="setting_lyrics_enabled">オンラインで歌詞を検索</string>
+    <string name="setting_lyrics_enabled_description">ウォッチで歌詞画面を開いたとき、スマートフォンが LRCLIB から同期歌詞を取得できるようにします。送信されるのは曲名、アーティスト、長さだけで、それ以外は送られず、ディスクにも保存されません。オフにすると、歌詞画面には検索が無効であることが表示されます。</string>
+    <string name="setting_overlay_blur_radius">オーバーレイぼかし</string>
+    <string name="setting_overlay_blur_radius_description">音量/シークリングとクイックアクションパネルの背後にあるすりガラス背景のぼかし強度（px）。アルバムアート背景のぼかしとは独立しています</string>
+    <string name="category_action_list">アクションリスト</string>
+    <string name="category_automation">自動化</string>
+    <string name="category_idle">何も再生していないとき</string>
+    <string name="installed_version">インストール済みバージョン</string>
+    <string name="get_support">サポートを受ける</string>
+    <string name="get_support_description">サポートのためアプリケーションログを開発者に送信します</string>
+    <string name="contact_developer">開発者に連絡</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — お問い合わせ</string>
+    <string name="contact_developer_chooser">メールを送信</string>
+    <string name="contact_developer_no_client">メールアプリがインストールされていません。アドレスをクリップボードにコピーしました。</string>
+    <string name="about_developer_title">開発者について</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss は個人的なプロジェクトとして始まりました。Music Center for Wear を現在できることに合わせて最新化し、自分が毎日使えるようにしたかっただけです。十分うまく仕上がったので、みんなと共有することにしました。これは私にとって初めてのアプリで、自分が作ったものが他の人にも役立っているのを見るのは格別です。</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">オープンソースライセンス</string>
+    <string name="setting_always_show_time">常に時刻を表示</string>
+    <string name="setting_always_show_time_off_description">現在時刻はアンビエントモードでのみ表示されます</string>
+    <string name="setting_always_show_time_on_description">現在時刻を常に表示します。上部のアクションアイコンは表示されず時計に置き換わりますが、アクション自体は通常どおり機能します。</string>
+    <string name="tap_to_force_stop">タップしてコントロールを停止</string>
+    <string name="notification_action_stop">停止</string>
+    <string name="notification_action_force_stop">強制停止</string>
+    <string name="error_notification_access">通知へのアクセス権がありません。スマートフォンを確認してください。</string>
+    <string name="error_notifications">エラー通知</string>
+    <string name="notification_access_notification_title">Svartifoss には通知へのアクセス権が必要です</string>
+    <string name="notification_access_notification_title_description">この通知をタップし、Svartifoss を確認して問題を修正してください</string>
+    <string name="error_service_not_enabled">通知へのアクセスが必要です</string>
+    <string name="error_service_not_enabled_description">ウォッチから音楽を操作するには、Svartifoss に通知へのアクセス権が必要です。Android はこの権限を使って、どのアプリが再生中かを確認し、再生、一時停止、スキップのコマンドを送れるようにします。\n\nSvartifoss が通知の内容を読むことはありません。この権限はアクティブなメディアセッションを見つけるためにのみ使われます。\n\n「設定を開く」をタップし、通知へのアクセスで Svartifoss をオンにしてください。</string>
+    <string name="action_open_settings">設定を開く</string>
+    <string name="settings_search_title">設定を検索</string>
+    <string name="settings_search_hint">設定を検索</string>
+    <string name="settings_search_clear">検索をクリア</string>
+    <string name="settings_search_prompt">「設定」と「ウォッチの外観」にあるすべての設定を名前で検索します。</string>
+    <string name="settings_search_no_results">一致する設定はありません。</string>
+    <string name="settings_search_prerequisite">このオプションは別の選択内容に依存します。ここに表示されている設定を調整すると表示されます。</string>
+    <string name="setting_numeric_range_error">%1$d から %2$d の値を入力してください。</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">タップして許可してください。許可するまで再生コントロールは無効です</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">ウォッチに Svartifoss をインストール</string>
+    <string name="no_watch_app_description">ペアリング済みの Wear OS ウォッチで Svartifoss のウォッチアプリが見つかりませんでした。スマートフォンとウォッチのアプリは連携して動作するため、ウォッチアプリがないと手首から再生を操作できません。\n\nSvartifoss は Play ストアにはありません。ウォッチアプリは別途サイドロードします（例: Wear Installer）。「リリースを見る」をタップして GitHub のリリースページを開き、ウォッチ APK を取得してください。インストールしたばかりの場合は、同期が完了するまで1分ほど待ってください。</string>
+    <string name="no_watch_app_button">リリースを見る</string>
+    <string name="required_permission">必要な権限</string>
+    <string name="setting_pause_on_swipe_exit">スワイプ終了時に再生を一時停止</string>
+    <string name="setting_pause_on_swipe_exit_description">ウォッチで左スワイプして Svartifoss を終了すると、再生中の内容を自動的に一時停止します。\n\n電源ボタンから終了した場合は影響せず、自動一時停止もしません。</string>
+    <string name="setting_rotating_crown_off_period">回転入力の画面オン遅延</string>
+    <string name="setting_rotating_crown_off_period_description">回転入力（回転クラウンなど）は一部のデバイスで敏感すぎる場合があります。誤った音量変更を防ぐため、画面をオンにしてから <![CDATA[<b>%1$s ミリ秒</b>]]> は回転入力が無効になります。</string>
+    <string name="setting_rotary_seek">回転クラウンでシーク</string>
+    <string name="setting_rotary_seek_description">有効にすると、クラウンを回して音量を変える代わりに現在の曲内をスクラブします。音量は画面上または物理ボタンで引き続き変更できます。</string>
+    <string name="setting_wear_rotary_action">回転クラウン / ベゼル</string>
+    <string name="wear_rotary_action_volume">音量を変更</string>
+    <string name="wear_rotary_action_seek">曲内をシーク</string>
+    <string name="wear_rotary_action_off">何もしない</string>
+    <string name="setting_rotating_sensitivity">回転入力の感度</string>
+    <string name="setting_rotating_sensitivity_description">回転入力の感度。数値が高いほど、同じようにクラウンを回したときの音量変化が大きくなります。現在は <![CDATA[<b>%1$s%%</b>]]> に設定されています。</string>
+    <string name="setting_disable_ambient_physical_double_click">アンビエントで物理ボタンのダブルクリックを無効にする</string>
+    <string name="setting_disable_ambient_physical_double_click_description">一部のウォッチではボタンに不具合があり、アンビエントモードで物理ボタンを1回押しただけなのにダブルクリックとして登録されることがあります。\n\nこの問題がある場合、このオプションを有効にするとアンビエントモードでダブルクリックを完全に無効にできます（例: 2回クリックしてもシングルクリックのアクションだけが実行されます）。ウォッチがアクティブなときのダブルクリックには影響しません。</string>
+    <string name="setting_haptic_feedback">触覚フィードバック</string>
+    <string name="setting_haptic_feedback_description">ボタンを押したときにウォッチを振動させます。</string>
+    <string name="setting_auto_start">Svartifoss を自動的に開く</string>
+    <string name="setting_auto_start_description">スマートフォンで音楽の再生が始まったら、ウォッチで Svartifoss を自動的に開きます。</string>
+    <string name="setting_auto_start_apps_blacklist">自動起動するアプリ</string>
+    <string name="setting_auto_start_apps_blacklist_description">Svartifoss を自動起動できるメディアアプリの一覧</string>
+    <string name="setting_dim_album_art">プレーヤーのシェーディング</string>
+    <string name="setting_dim_album_art_description">アートワークとプレーヤー操作の間に、ユーザーが選んだ影の効果を追加します。</string>
+    <string name="setting_album_art_style">アルバムアートのスタイル</string>
+    <string name="setting_album_art_style_description">ウォッチの再生中画面の背景表示を選びます。</string>
+    <string name="setting_album_art_blur_radius">ぼかしの強さ</string>
+    <string name="setting_album_art_blur_radius_description">選択した背景でぼかしを使用するときの全画面ぼかしの強さです。現在 <![CDATA[<b>%1$s px</b>]]> です。</string>
+    <string name="setting_album_art_dim_strength">暗さの強さ</string>
+    <string name="setting_album_art_dim_strength_description">文字を読みやすくするためにアルバムアートを暗くする強さです。現在 <![CDATA[<b>%1$s%%</b>]]> です。</string>
+    <string name="setting_player_shading_style">シェーディングのスタイル</string>
+    <string name="setting_player_shading_intensity">シェーディングの強さ</string>
+    <string name="setting_player_shading_intensity_description">シェーディングで背景を暗くする強さです。100%% が最大強度で、より高くするとコントラストをさらに上げられます（最大 150%%）。現在 <![CDATA[<b>%1$s%%</b>]]> です。</string>
+    <string name="setting_apply_appearance_to_all_faces">この外観をすべてのフェイスに適用</string>
+    <string name="setting_apply_appearance_to_all_faces_description">このフェイスの外観設定をほかのすべてのフェイスにコピーします</string>
+    <string name="apply_appearance_confirm_title">すべてのフェイスに適用しますか？</string>
+    <string name="apply_appearance_confirm_message">現在のフェイスの外観設定で、ほかのすべてのフェイスの設定を上書きします。動作設定は変更されません。</string>
+    <string name="apply_appearance_confirm_button">適用</string>
+    <string name="apply_appearance_done">すべてのフェイスに適用しました</string>
+    <string name="category_wf_layout_actions">レイアウト</string>
+    <string name="setting_reset_appearance">このレイアウトをリセット</string>
+    <string name="setting_reset_appearance_description">このフェイスの外観を元の既定値に戻します</string>
+    <string name="reset_appearance_confirm_title">このレイアウトをリセットしますか？</string>
+    <string name="reset_appearance_confirm_message">このフェイスの外観設定が既定値に戻ります。動作設定やほかのフェイスには影響しません。</string>
+    <string name="reset_appearance_confirm_button">リセット</string>
+    <string name="reset_appearance_done">レイアウトを既定値にリセットしました</string>
+    <string name="setting_reset_all_faces">すべてのフェイスを既定値にリセット</string>
+    <string name="setting_reset_all_faces_description">すべての内蔵フェイスの外観を元の既定値に戻します</string>
+    <string name="reset_all_faces_confirm_title">すべてのフェイスをリセットしますか？</string>
+    <string name="reset_all_faces_confirm_message">すべての内蔵フェイスの外観が元の既定値に戻り、有効なカスタムテーマはオフになります。保存済みのカスタムテーマ、動作設定、選択中のフェイスは保持されます。</string>
+    <string name="reset_all_faces_confirm_button">すべてリセット</string>
+    <string name="reset_all_faces_done">すべてのフェイスを既定値にリセットしました</string>
+    <string name="face_reset_migration_title">ウォッチの外観を更新</string>
+    <string name="face_reset_migration_message">すべてのウォッチフェイスで同じ外観設定を共有していた古いバージョンから更新されました。現在は各フェイスが独自の設定を記憶するため、直接カスタマイズしていないフェイスでは以前の設定が不自然に見えることがあります。すべてのフェイスを新しい既定値にリセットするか、完全に初期状態から始める場合はアプリのデータを消去することをおすすめします。</string>
+    <string name="face_reset_migration_reset_button">すべてのフェイスをリセット</string>
+    <string name="face_reset_migration_clear_data_button">アプリデータを消去</string>
+    <string name="setting_player_shading_color">シェーディングの色</string>
+    <string name="setting_wear_shading_custom_color">カスタムシェーディング色</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>黒</item>
+        <item>アルバムのアクセント</item>
+        <item>彩度を下げたアルバム色</item>
+        <item>カスタムカラー</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>プレーヤーのテーマに従う</item>
+        <item>エッジビネット</item>
+        <item>エッジビネット（強）</item>
+        <item>エッジビネット（非常に強い）</item>
+        <item>下部コーナー</item>
+        <item>下部フェード</item>
+        <item>下限と上限</item>
+        <item>全画面フィルター</item>
+        <item>アルバムカラーウォッシュ</item>
+        <item>2色アルバムグラデーション</item>
+        <item>サイドカーテン</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">アンビエント時のアルバムアートの不透明度</string>
+    <string name="setting_ambient_album_art_opacity_description">アンビエントモードでアルバムアートをどの程度表示するかを設定します。現在 <![CDATA[<b>%1$s%%</b>]]> です。</string>
+    <string name="setting_volume_overlay_timeout">音量/シークオーバーレイのタイムアウト</string>
+    <string name="setting_volume_overlay_timeout_description">音量や再生位置を調整した後、オーバーレイを画面に表示しておく時間です。現在 <![CDATA[<b>%1$s ms</b>]]> です。</string>
+    <string name="setting_rotary_deadzone">回転入力のデッドゾーン</string>
+    <string name="setting_rotary_deadzone_description">音量や再生位置の変更を適用するために必要なクラウンの最小移動量です。誤操作を防ぐのに役立ちます。現在 <![CDATA[<b>%1$s</b>]]> です。</string>
+
+    <string name="category_wear_experience">Wear の操作感</string>
+    <string name="setting_swipe_gestures_hint">スワイプジェスチャー</string>
+    <string name="setting_swipe_gestures_hint_description">上/下/左へのスワイプには、それぞれ任意のアクションを設定できます。ここをタップして「音楽再生中」と「再生なし」の動作を設定します。右スワイプはアプリ終了専用です。</string>
+    <string name="setting_screen_buttons_hint">ミニボタン</string>
+    <string name="setting_screen_buttons_hint_description">最大3個のボタンを表示でき、それぞれにタップと長押しのアクションを設定できます。ここをタップして「音楽再生中」と「再生なし」の動作を設定します。</string>
+    <string name="dev_screen_buttons_offset">ミニボタンの位置</string>
+    <string name="dev_screen_buttons_offset_description">ウォッチ画面の下端とミニボタンの間の推奨距離（dp、既定値42）。長いタイトルを避けるため、ボタン列は自動的に位置調整されます。</string>
+    <string name="setting_screen_buttons_tilt">ボタンの傾き</string>
+    <string name="setting_screen_buttons_tilt_description">サイドボタンを画面のカーブに沿わせる度合いです。0 = 直線、100 = アイコンを傾けた完全な弧。</string>
+    <string name="setting_screen_buttons_bg">ミニボタンの背景</string>
+    <string name="setting_screen_buttons_opacity">ミニボタンの不透明度</string>
+    <string name="setting_screen_buttons_opacity_description">ミニボタングループ全体の不透明度（0～100%%）。現在 <![CDATA[<b>%1$s%%</b>]]> です。</string>
+    <string name="quick_panel_row_title">クイックアクションパネル</string>
+    <string name="quick_panel_link_summary">ウォッチ画面中央をダブルタップすると開きます。ここをタップして「アクション」で4つのスロットを設定します。</string>
+    <string name="quick_panel_config_hint">ウォッチ画面中央をダブルタップして開くパネルのボタンです。行をタップしてアクションを選びます（「なし」で非表示）。長押しすると既定値に戻ります。</string>
+    <string name="quick_panel_slot_1">ボタン1</string>
+    <string name="quick_panel_slot_2">ボタン2</string>
+    <string name="quick_panel_slot_3">ボタン3</string>
+    <string name="quick_panel_slot_long">長いボタン</string>
+    <string name="quick_panel_slot_default">%1$s（既定）</string>
+    <string name="quick_panel_slot_hidden">非表示</string>
+    <string name="quick_panel_default_like">いいね</string>
+    <string name="quick_panel_default_shuffle">シャッフル</string>
+    <string name="quick_panel_default_repeat">リピート</string>
+    <string name="quick_panel_default_up_next">次の曲</string>
+    <string name="setting_wear_center_long_press_queue">中央を長押ししてキューを開く</string>
+    <string name="setting_wear_center_long_press_queue_description">再生中画面の中央を長押しして再生キューを開きます。</string>
+    <string name="setting_wear_center_long_press">中央を長押し</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>ウォッチフェイスを変更</item>
+        <item>キューを開く</item>
+        <item>なし</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">基本レイアウト</string>
+    <string name="setting_wear_screen_face_description">このテーマで使う構造を選びます。保存したテーマでは、このレイアウトに独自のフォント、色、ぼかし、シェーディング、AOD、パネルを組み合わせられます。</string>
+    <string name="setting_wear_show_track_title">曲名を表示</string>
+    <string name="setting_wear_show_track_title_description">プレーヤーに現在の曲名を表示します</string>
+    <string name="setting_wear_show_track_artist">アーティスト名を表示</string>
+    <string name="setting_wear_show_track_artist_description">プレーヤーに現在のアーティストを表示します</string>
+    <string name="setting_wear_show_source_icon">再生中アプリのアイコンを表示</string>
+    <string name="setting_wear_show_source_icon_description">アーティスト名の横に、現在再生中のアプリのアイコンを表示します。メディア通知のアイコンを使用します。オフの場合、アイコンはウォッチに送信されません。</string>
+    <string name="setting_wear_player_controls_visible">プレーヤー操作を表示</string>
+    <string name="setting_wear_player_controls_visible_description">Classic、Poster、Studio などの設定可能なレイアウトで、タッチ領域を無効にせず内蔵ボタンの表示/非表示を切り替えます</string>
+    <string name="setting_wear_quadrant_tap_flash">タップ時にアイコンを点滅</string>
+    <string name="setting_wear_quadrant_tap_flash_description">コーナーゾーンのアクション実行時、そのアイコンを一瞬だけ最大輝度で点滅させます。特に Hidden 画面テーマでは、通常アイコンが見えないため、どのアクションが実行されたかを確認するのに便利です。</string>
+    <string name="setting_wear_internal_progress_visible">レイアウトの進行状況インジケーター</string>
+    <string name="setting_wear_internal_progress_visible_description">このレイアウト専用に設計された追加の進行状況インジケーターを表示します。Expressive と Material の再生ボタンリングは操作部の一部なので引き続き使用できます。</string>
+    <string name="setting_wear_edge_progress_visible">画面端の進行状況アークを表示</string>
+    <string name="setting_wear_edge_progress_visible_description">画面周囲の視覚的なアークだけを非表示にします。画面端からのシークは別の設定です。</string>
+    <string name="setting_wear_edge_seek_enabled">画面端からシーク</string>
+    <string name="setting_wear_edge_seek_enabled_description">画面端をタップまたはドラッグして正確な位置へ移動します。アークが非表示でも使えます</string>
+    <string name="setting_wear_screen_theme">コントロールのスタイル</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">バランス</string>
+    <string name="wear_screen_theme_default_description">標準的な階層とコントロールサイズ。</string>
+    <string name="wear_screen_theme_minimal">ミニマル</string>
+    <string name="wear_screen_theme_minimal_description">すべてのアクションを表示して使える状態のまま、コントロールを小さく控えめにします。</string>
+    <string name="wear_screen_theme_compact">コンパクト</string>
+    <string name="wear_screen_theme_compact_description">アクションを変えずに、より詰めたコントロール表示にします。</string>
+    <string name="wear_screen_theme_cinema">シネマ</string>
+    <string name="wear_screen_theme_cinema_description">アートワークはそのままに、コントロールを柔らかな印象にします。</string>
+    <string name="wear_screen_theme_vivid">ビビッド</string>
+    <string name="wear_screen_theme_vivid_description">より大きく目立つコントロールを使用します。</string>
+    <string name="wear_screen_theme_contrast">高コントラスト</string>
+    <string name="wear_screen_theme_contrast_description">読みやすさを高めるため、より大きなコントロールを使用します。</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">コンパクトで少し暗めのコントロールを使用します。背景自体は暗くしません。必要に応じて背景設定を使用してください。</string>
+    <string name="wear_screen_theme_hidden">非表示</string>
+    <string name="wear_screen_theme_hidden_description">すべてのコントロールアイコンを完全に非表示にします。タッチ領域は有効なままで、すべての操作を使用できます。</string>
+    <string name="setting_wear_font">書体</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">アプリの既定の書体。</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">幅、光学サイズ、グレード、丸みを調整できる Google Sans の可変版です。下の軸コントロールを利用できます。</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Android のクラシックなシステム書体です。</string>
+    <string name="wear_font_rounded">丸み</string>
+    <string name="wear_font_rounded_description">端が柔らかく丸められた、親しみやすいモダンな字形です。</string>
+    <string name="wear_font_sans_light">モダン・ライト</string>
+    <string name="wear_font_sans_light_description">軽やかな見た目の、すっきりとした開放的なサンセリフです。</string>
+    <string name="wear_font_sans_thin">極細</string>
+    <string name="wear_font_sans_thin_description">ミニマルなプレーヤー向けの超軽量ディスプレイスタイルです。</string>
+    <string name="wear_font_sans_medium">モダン・ミディアム</string>
+    <string name="wear_font_sans_medium_description">より力強くコンパクトな線を持つ、シャープなサンセリフです。</string>
+    <string name="wear_font_sans_black">ヘビー</string>
+    <string name="wear_font_sans_black_description">最大限の視覚的インパクトを持つ太字ディスプレイファミリーです。</string>
+    <string name="wear_font_small_caps">スモールキャップ</string>
+    <string name="wear_font_small_caps_description">編集的な雰囲気を持つ、コンパクトな大文字風の字形です。</string>
+    <string name="wear_font_casual">カジュアル</string>
+    <string name="wear_font_casual_description">遊び心のある手書き風システムフォントファミリーです。</string>
+    <string name="wear_font_typewriter">タイプライター（アーカイブ）</string>
+    <string name="wear_font_typewriter_description">レトロなタイプライター風（Mom\'s Typewriter）。</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">丸みのある幾何学的サンセリフで、Circular の雰囲気を持つ無料（OFL）の代替書体です。</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">クリーンな幾何学的サンセリフで、Proxima Nova の雰囲気を持つ無料（OFL）の代替書体です。</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">エレガントなヒューマニスト系ローマン体で、Optima の雰囲気を持つ無料（OFL）の代替書体です。</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">より柔らかなタイプライター風（Love Letter Typewriter）— 通常は「Lain」テーマの楽曲専用です。</string>
+    <string name="wear_font_serif">セリフ</string>
+    <string name="wear_font_serif_description">クラシックなセリフ書体です。</string>
+    <string name="wear_font_serif_monospace">セリフ・モノ</string>
+    <string name="wear_font_serif_monospace_description">固定幅のセリフ文字で、独特の編集・端末風の外観です。</string>
+    <string name="wear_font_monospace">モノスペース</string>
+    <string name="wear_font_monospace_description">固定幅の技術的な外観です。</string>
+    <string name="wear_font_condensed">コンデンス</string>
+    <string name="wear_font_condensed_description">より多くのテキストを収められる細身の字形です。</string>
+    <string name="wear_font_condensed_light">コンデンス・ライト</string>
+    <string name="wear_font_condensed_light_description">長いタイトル向けの、細身で軽やかなフォントファミリーです。</string>
+    <string name="wear_font_condensed_medium">コンデンス・ミディアム</string>
+    <string name="wear_font_condensed_medium_description">より力強い線と優れた可読性を備えた細身のファミリーです。</string>
+    <string name="wear_font_cursive">筆記体</string>
+    <string name="wear_font_cursive_description">装飾的なスクリプト書体です。</string>
+    <string name="setting_wear_dynamic_accent">ウォッチで動的アクセント</string>
+    <string name="setting_wear_dynamic_accent_description">アルバム由来のウォッチカラーを現在のカバーアートに合わせます。オフの場合、「アルバムカラー」の選択肢は静的なテーマのアクセント色を使用します。</string>
+    <string name="setting_wear_album_art_fade">アルバムアートのフェード切り替え</string>
+    <string name="setting_wear_album_art_fade_description">曲が変わったとき、アルバムアートを滑らかにフェード切り替えします。</string>
+    <string name="setting_wear_title_text_mode">タイトルテキストの動作</string>
+    <string name="setting_wear_title_text_mode_description">再生中のタイトルが収まらない場合の動作を設定します。「自動」は縮小、折り返し、スクロールを組み合わせ、その他の選択肢では1つの動作だけを使用します。</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>自動（縮小→折り返し→スクロール）</item>
+        <item>スクロール（マーキー）</item>
+        <item>2行に折り返す</item>
+        <item>3行に折り返す</item>
+        <item>5行に折り返す</item>
+        <item>固定（1行、スクロール・縮小なし）</item>
+        <item>収まるように縮小</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">アーティスト文字色</string>
+    <string name="setting_wear_artist_custom_color">アーティストのカスタム色</string>
+    <string name="setting_wear_artist_custom_color_description">「通常」処理で使用するアーティスト色を選択します</string>
+    <string name="setting_wear_artist_desaturated">彩度を抑えたアーティスト色</string>
+    <string name="setting_wear_artist_desaturated_description">アルバム由来のアーティスト文字色を柔らかくします。「アーティスト文字色」が「アルバムカラー」の場合にのみ適用されます</string>
+
+    <string name="setting_wear_progress_color">プログレスバーの色</string>
+    <string name="setting_wear_progress_custom_color">プログレスバーのカスタム色</string>
+    <string name="setting_wear_progress_custom_color_description">「通常」処理で使用する進捗・シーク色を選択します</string>
+    <string name="setting_wear_progress_desaturated">彩度を抑えたプログレスバー色</string>
+    <string name="setting_wear_progress_desaturated_description">アルバム由来のプログレスバー色を柔らかくします。「プログレスバーの色」が「アルバムカラー」の場合にのみ適用されます</string>
+
+    <string name="setting_wear_volume_color">音量バーの色</string>
+    <string name="setting_wear_volume_custom_color">音量のカスタム色</string>
+    <string name="setting_wear_volume_custom_color_description">「通常」処理で使用する音量色を選択します</string>
+    <string name="setting_wear_quick_panel_color">クイックアクションの色</string>
+    <string name="setting_wear_quick_panel_custom_color">クイックアクションのカスタム色</string>
+    <string name="setting_wear_quick_panel_custom_color_description">「通常」処理で使用するクイックアクション色を選択します</string>
+    <string name="setting_wear_shading_custom_color_description">シェーディンググラデーションに色味を付ける色を選択します</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>ニュートラル（固定テーマ色）</item>
+        <item>アルバムカラー</item>
+        <item>カスタムカラー</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>クラシック</item>
+        <item>エクスプレッシブ</item>
+        <item>ビニール</item>
+        <item>ポスター</item>
+        <item>スタジオ</item>
+        <item>ハロー</item>
+        <item>オーロラ</item>
+        <item>エクリプス AMOLED</item>
+        <item>スペクトラム</item>
+        <item>Material</item>
+        <item>没入型</item>
+        <item>奥行き</item>
+        <item>カルーセル</item>
+        <item>チャット</item>
+        <item>分割</item>
+        <item>ノート</item>
+        <item>歌詞</item>
+        <item>メタデータ</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">表現豊かなシーク</string>
+    <string name="setting_wear_expressive_seek_mode_description">Expressive フェイスでタッチ操作により曲をスクラブする方法を設定します。「中央リング」は再生ボタンの周囲のリングをドラッグ可能にし、「エッジリング」はさらに Classic のベゼルリングも表示します。「なし」ではロータリークラウンのみでシークします。</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>中央リング</item>
+        <item>エッジリング</item>
+        <item>なし</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">常時表示ディスプレイ</string>
+    <string name="setting_wear_aod_style">常時表示スタイル</string>
+    <string name="setting_wear_aod_style_description">ウォッチがアンビエントモードのときの再生画面の外観を設定します。「フェイスに従う」は選択中のフェイスに合わせ、「ミニマル」は純黒背景に暗いテキストだけを表示してバッテリー寿命を最大化します。</string>
+    <string-array name="wear_aod_style_entries">
+        <item>フェイスに従う</item>
+        <item>クラシック</item>
+        <item>エクスプレッシブ（アウトライン）</item>
+        <item>Material（アウトライン）</item>
+        <item>AMOLED コントロール</item>
+        <item>クロノ（大きな時計）</item>
+        <item>ポスター</item>
+        <item>スタジオ</item>
+        <item>没入型</item>
+        <item>カルーセル</item>
+        <item>チャット</item>
+        <item>分割</item>
+        <item>ノート</item>
+        <item>歌詞</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">常時表示の色</string>
+    <string-array name="wear_aod_color_entries">
+        <item>白</item>
+        <item>アルバムカラー</item>
+        <item>カスタムカラー</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>白</item>
+        <item>動的（時計下の領域による）</item>
+        <item>アルバムカラー</item>
+        <item>カスタムカラー</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>パネルスタイルに従う</item>
+        <item>透明（背景なし）</item>
+        <item>アルバムのアクセント</item>
+        <item>半透明</item>
+        <item>白</item>
+        <item>フロストホワイト</item>
+        <item>黒</item>
+        <item>動的（アルバムトーン）</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">「次へ」ピルの背景</string>
+    <string name="setting_wear_show_up_next_pill">プレーヤーに「次へ」ピルを表示</string>
+    <string name="setting_wear_show_up_next_pill_description">再生画面の下部に「次へ」ピルを表示します。ミニボタン行が占める領域を使用するため、その行が表示されていないときだけ表示されます。</string>
+    <string name="category_wf_clock">時計</string>
+    <string name="setting_wear_clock_color">時計の色</string>
+    <string name="setting_wear_clock_custom_color">時計のカスタム色</string>
+    <string name="setting_wear_clock_custom_color_description">「時計の色」が「カスタム色」のときに使用する色をタップして選択します</string>
+    <string name="setting_wear_clock_opacity">時計の不透明度</string>
+    <string name="setting_wear_clock_opacity_description">常に表示される時計の不透明度（10～100%%）を設定します。現在は <![CDATA[<b>%1$s%%</b>]]> です。</string>
+    <string name="setting_wear_aod_custom_color">常時表示のカスタム色</string>
+    <string name="setting_wear_aod_custom_color_description">「常時表示の色」が「カスタム色」のとき、常時表示のテキスト、コントロール、時計に使用する色をタップして選択します</string>
+    <string name="setting_wear_aod_intensity">常時表示の明るさ</string>
+    <string name="setting_wear_aod_intensity_description">常時表示ディスプレイの明るさ（20～100%%）を設定します。低いほど暗くなり、バッテリー消費が少なくなります。現在は <![CDATA[<b>%1$s%%</b>]]> です。</string>
+    <string name="setting_wear_aod_show_transport">常時表示でトランスポートボタン</string>
+    <string name="setting_wear_aod_show_transport_description">対応するビジュアル常時表示スタイルで、枠線付きの前へ／再生／次へボタンを表示します。画面が暗い間はタップできませんが、タップするとウォッチが起動し、指の下にあるボタンがそのまま反応できます。</string>
+    <string name="setting_wear_aod_show_progress">常時表示でプログレスリング</string>
+    <string name="setting_wear_aod_show_progress_description">アンビエントモードで再生ボタンの周囲にプログレスリングを表示します。ここでは位置がおよそ1分に1回だけ更新されます</string>
+    <string name="setting_wear_aod_show_pills">常時表示で「次へ」</string>
+    <string name="setting_wear_aod_show_pills_description">ビジュアル常時表示スタイルの下部に、静的な枠線付き「次へ」ピルを表示します</string>
+    <string name="category_wf_gestures">画面ジェスチャー</string>
+    <string name="setting_wear_mini_buttons_mode">ミニボタンを表示</string>
+    <string name="setting_wear_gestures_mode">画面ジェスチャー</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>常に</item>
+        <item>再生中のみ</item>
+        <item>一時停止中のみ</item>
+        <item>しない</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">常時表示でアルバムアート</string>
+    <string name="setting_wear_aod_show_art_description">アンビエントモードでも暗くしたアルバムアートを表示し続けます。オフにすると純黒の背景になり、AMOLED 画面ではバッテリーをより大きく節約できます。</string>
+    <string name="setting_wear_aod_art_treatment">常時表示のアルバムアートスタイル</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>ソフトぼかし</item>
+        <item>クリアなカバー</item>
+        <item>モノクロぼかし</item>
+        <item>プレーヤーのアートワーク処理に従う</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">常時表示で時計</string>
+    <string name="setting_wear_aod_show_clock_description">ウォッチがアンビエントモードのときに時計を表示します</string>
+    <string name="setting_wear_aod_show_track_info">常時表示でトラック情報</string>
+    <string name="setting_wear_aod_show_track_info_description">アンビエントモードで曲名とアーティストを表示します</string>
+
+    <string name="category_overlays_queue">オーバーレイとキュー</string>
+    <string name="category_wf_panel_shared">共通パネルの外観</string>
+    <string name="category_wf_panel_volume">音量パネル</string>
+    <string name="category_wf_panel_seek">進捗とシークパネル</string>
+    <string name="category_wf_panel_quick">クイックアクションパネル</string>
+    <string name="category_wf_panel_queue">キューとリスト</string>
+    <string name="category_wf_panel_effects">パネル効果</string>
+    <string name="setting_wear_overlay_backdrop_style">パネル背景</string>
+    <string name="setting_wear_volume_style">音量スタイル</string>
+    <string name="setting_wear_volume_layout">音量レイアウト</string>
+    <string name="setting_wear_quick_panel_style">クイックパネルのスタイル</string>
+    <string name="setting_wear_quick_panel_layout">クイックパネルのレイアウト</string>
+    <string name="setting_wear_quick_panel_source">クイックアクション</string>
+    <string name="setting_wear_quick_panel_source_description">設定したボタン、または現在再生中のアプリが提供するアクションを選択します。</string>
+    <string name="quick_panel_open_note_title">パネルを開く</string>
+    <string name="quick_panel_open_note_description">再生画面の中央をダブルタップすると、ウォッチでクイックアクションパネルが開きます。</string>
+    <string name="preview_current_app_action">現在のアプリのアクション</string>
+    <string name="preview_notification_controls">メディア通知のアイコン</string>
+    <string name="setting_wear_queue_style">キューのスタイル</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">ショートカットのカバーを背景として使用</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">キュースタイルがカバーバリアントの場合、取得済みのショートカットカバー（曲、プレイリスト、アーティストなど）を持つクイックパネルのアクション行でも、「次へ」と同様にそのアートでピルを塗りつぶします。取得済みカバーがないショートカット（通常のアプリアイコン）は影響を受けません。</string>
+    <string name="setting_wear_list_row_size">リストのピルサイズ</string>
+    <string name="setting_wear_list_row_size_description">キュー、メニュー、クイックパネルにある全幅行の高さです。</string>
+    <string name="setting_wear_progress_gradient">パレットをリングにブレンド</string>
+    <string name="setting_wear_progress_gradient_description">複数色のカラートリートメント（補色、トライアド、類似色、デュオトーン）では、単色リングが3色すべてを通ってフェードします。アルバムパレットを他の場所では維持しつつ、リングだけを単色にするにはオフにします。</string>
+    <string name="setting_wear_progress_style">プログレスリングのスタイル</string>
+    <string name="setting_wear_seek_style">シークと音量の表示スタイル</string>
+    <string name="setting_wear_seek_layout">シークパネルのレイアウト</string>
+    <string name="setting_wear_color_treatment">ウォッチのカラートリートメント</string>
+    <string name="setting_wear_normal_color">通常色</string>
+    <string name="setting_wear_normal_color_description">通常モードでタイトルのアクセント、進捗、音量、パネル、ミニボタンの装飾に使用する単一色を選択します</string>
+    <string name="setting_wear_normal_color_multi">カラーパレットを使用</string>
+    <string name="setting_wear_normal_color_multi_description">オンにすると、画面はメインカラーと2つの補助色を使用します。オフでは、アルバム固有の色または選択した色の1色だけをすべての場所で使用します。</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>通常（選択した色）</item>
+        <item>彩度を下げる（柔らかなアルバム色）</item>
+        <item>エクスプレッシブ（アルバム全体のパレット）</item>
+        <item>補色（アルバム色＋反対色）</item>
+        <item>トライアド（アルバムの3色相）</item>
+        <item>類似色（隣接する色相）</item>
+        <item>モノクロ（1色相、3トーン）</item>
+        <item>デュオトーン（アルバム2色）</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>ウォッチの処理に従う</item>
+        <item>通常（選択した色）</item>
+        <item>彩度を下げる（柔らかなアルバム色）</item>
+        <item>エクスプレッシブ（アルバム全体のパレット）</item>
+        <item>補色（アルバム色＋反対色）</item>
+        <item>トライアド（アルバムの3色相）</item>
+        <item>類似色（隣接する色相）</item>
+        <item>モノクロ（1色相、3トーン）</item>
+        <item>デュオトーン（アルバム2色）</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">タイトルの太さ</string>
+    <string name="setting_wear_title_font_italic">タイトルを斜体にする</string>
+    <string name="setting_wear_title_font_scale">タイトルサイズ</string>
+    <string name="setting_wear_title_font_opacity">タイトルの不透明度</string>
+    <string name="setting_wear_title_font_tracking">タイトルの文字間隔</string>
+    <string name="setting_wear_title_color">タイトル文字色</string>
+    <string name="setting_wear_title_custom_color">タイトルのカスタム色</string>
+    <string name="wear_title_color_face_default">フェイスの既定（デザインどおり）</string>
+    <string name="setting_wear_title_adaptive_contrast">コントラストに合わせてタイトル色を調整</string>
+    <string name="setting_wear_title_adaptive_contrast_description">タイトル色が背後のアートワークに近すぎる場合、色相を保ちながら明るくまたは暗くして読みやすくします。タイトルがフェイスの既定色を使用している間は効果がありません。</string>
+    <string name="setting_wear_artist_adaptive_contrast">コントラストに合わせてアーティスト色を調整</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">アルバム色が背後のアートワークに近すぎる場合、色相を保ちながらアーティスト行を明るくまたは暗くします。カバー全体ではなく、その行がある帯だけを測定します。</string>
+    <string name="setting_wear_artist_font_weight">アーティストの太さ</string>
+    <string name="setting_wear_artist_font_italic">アーティストを斜体にする</string>
+    <string name="setting_wear_artist_font_scale">アーティストサイズ</string>
+    <string name="setting_wear_artist_font_opacity">アーティストの不透明度</string>
+    <string name="setting_wear_artist_font_tracking">アーティストの文字間隔</string>
+    <string name="setting_wear_source_icon_scale">アプリアイコンのサイズ</string>
+    <string name="setting_wear_source_icon_opacity">アプリアイコンの不透明度</string>
+    <string name="setting_wear_typography_weight_description">1～1000。400 がフェイスの標準の太さで、数値が高いほど太くなります。Google Sans Flex では、この値がフォント固有のウェイト軸になります</string>
+    <string name="setting_wear_typography_scale_description">フェイス固有サイズに対する割合（70～140）。100 で各レイアウトの設計サイズを維持します</string>
+    <string name="setting_wear_typography_opacity_description">割合（20～100）。100 でフェイス固有の不透明度を維持します</string>
+    <string name="setting_wear_typography_tracking_description">文字間に追加するスペース（em の100分の1、−5～20）。0 でフォント固有の字間を維持します</string>
+    <string name="setting_wear_color_modifier">トーン</string>
+    <string name="setting_wear_color_modifier_description">パレットの生成方法は変えずに全体を調整します。すべてのカラートリートメントで機能します</string>
+    <string name="setting_wear_color_hue_shift">色相シフト</string>
+    <string name="setting_wear_color_hue_shift_description">アルバムパレットを色相環上で回転させます（0～359度）。どのトリートメントでも主色はアルバム固有の色相に固定されるため、これで変化を付けます。0 ではアルバム色をそのまま使用し、固定の「通常」色はシフトされません。</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>なし</item>
+        <item>鮮やか</item>
+        <item>パステル</item>
+        <item>暖色</item>
+        <item>寒色</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>エッジアーク（左）</item>
+        <item>エッジアーク（縦長）</item>
+        <item>エッジアーク（右）</item>
+        <item>エッジアーク（上）</item>
+        <item>エッジアーク（下）</item>
+        <item>フルリング</item>
+        <item>中央ハロー</item>
+        <item>水平メーター</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>エッジリング</item>
+        <item>エッジリング（細）</item>
+        <item>エッジリング（太）</item>
+        <item>タイムライン</item>
+        <item>セグメントタイムライン</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>メタデータ優先</item>
+        <item>アーク</item>
+        <item>ヒーロー</item>
+        <item>グリッド</item>
+        <item>ラベル付き行</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>ソリッド</item>
+        <item>破線</item>
+        <item>ドット</item>
+        <item>極細線</item>
+        <item>コメット</item>
+        <item>時計の60ドット</item>
+        <item>時計の60目盛り</item>
+        <item>12時間セグメント</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>プレーン</item>
+        <item>ガラスピル</item>
+        <item>エクスプレッシブピル</item>
+        <item>Material ピル</item>
+        <item>ホワイトピル</item>
+        <item>巨大</item>
+        <item>位置 / 合計</item>
+        <item>ガラスホワイト</item>
+        <item>半透明アルバム</item>
+        <item>グローアルバム</item>
+        <item>アウトライン</item>
+        <item>ソリッドテーマ</item>
+        <item>ソリッドアルバム</item>
+        <item>マイクロ</item>
+        <item>シャドウ（装飾なし）</item>
+        <item>下線</item>
+        <item>極細アウトライン</item>
+        <item>巨大なアルバムカラー</item>
+        <item>モノ</item>
+        <item>ダークトーン</item>
+        <item>ターミナル</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>設定済みボタン</item>
+        <item>現在のメディアアプリから</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>パネルスタイルに従う</item>
+        <item>アルバムぼかし（アクリル）</item>
+        <item>ソリッドブラック</item>
+        <item>ソリッドアルバムカラー</item>
+        <item>ガラス</item>
+        <item>アルバムグラデーション</item>
+        <item>アルバムデュオトーン</item>
+        <item>プリズム</item>
+        <item>リキッドガラス</item>
+        <item>エクスプレッシブぼかし</item>
+        <item>エクスプレッシブ</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>ガラス</item>
+        <item>ミニマル（AMOLED）</item>
+        <item>Material</item>
+        <item>トーン</item>
+        <item>ネオン</item>
+        <item>ライト</item>
+        <item>グラデーション</item>
+        <item>モノ</item>
+        <item>アウトライン</item>
+        <item>デュオトーン</item>
+        <item>プリズム</item>
+        <item>ハイコントラスト</item>
+        <item>ターミナル</item>
+        <item>フロスト</item>
+        <item>セグメント</item>
+        <item>オーロラ</item>
+        <item>インク</item>
+        <item>グルーヴ</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>コンパクト</item>
+        <item>標準</item>
+        <item>縦長</item>
+        <item>超縦長</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>ガラス</item>
+        <item>ミニマル（AMOLED）</item>
+        <item>Material</item>
+        <item>トーン</item>
+        <item>ネオン</item>
+        <item>ライト</item>
+        <item>グラデーション</item>
+        <item>モノ</item>
+        <item>アウトライン</item>
+        <item>デュオトーン</item>
+        <item>プリズム</item>
+        <item>ハイコントラスト</item>
+        <item>ターミナル</item>
+        <item>フロスト</item>
+        <item>カバー</item>
+            <item>カバーぼかし</item>
+        <item>カバートーン</item>
+        <item>正方形カバー</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>ガラス</item>
+        <item>ガラスホワイト</item>
+        <item>トーンガラス</item>
+        <item>ミニマル（AMOLED）</item>
+        <item>Material</item>
+        <item>トーン</item>
+        <item>ネオン</item>
+        <item>ライト</item>
+        <item>グラデーション</item>
+        <item>モノ</item>
+        <item>アウトライン</item>
+        <item>アウトライン・ガラスホワイト</item>
+        <item>デュオトーン</item>
+        <item>プリズム</item>
+        <item>ハイコントラスト</item>
+        <item>ターミナル</item>
+        <item>フロスト</item>
+        <item>ゴースト（装飾なし）</item>
+        <item>ミスト</item>
+        <item>インク</item>
+        <item>ドット</item>
+        <item>スラブ</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">一時停止後もアプリをアクティブに保つ</string>
+    <string name="setting_wear_paused_hold_description">一時停止した後、ウォッチフェイスからアプリに戻れる時間を設定します。再度開かずに手首を上げるだけで再開できます。長い設定ほどバックグラウンドサービスが長く動作します。</string>
+    <string name="wear_paused_hold_off">保持しない</string>
+    <string name="wear_paused_hold_5">5分</string>
+    <string name="wear_paused_hold_15">15分</string>
+    <string name="wear_paused_hold_30">30分</string>
+    <string name="wear_paused_hold_60">1時間</string>
+    <string name="wear_paused_hold_always">再生が終わるまで</string>
+
+    <string name="setting_wear_idle_button_action">何も再生していないときのボタン</string>
+    <string name="setting_wear_idle_auto_open">何も再生していないときに開く</string>
+    <string name="setting_wear_idle_auto_open_description">音楽が再生されていない状態でウォッチアプリを開いたとき、この画面へ直接移動します。</string>
+    <string name="wear_idle_action_resume">最後のアプリを再開</string>
+    <string name="wear_idle_action_shortcuts">プレイリストのショートカット</string>
+    <string name="wear_idle_action_menu">アクションメニュー</string>
+    <string name="wear_idle_action_search">検索</string>
+    <string name="wear_idle_action_queue">最近再生した項目</string>
+    <string name="wear_idle_action_none">ボタンなし</string>
+    <string name="wear_idle_auto_open_none">プレーヤーに留まる</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">ライブラリを閲覧</string>
+    <string name="library_up">戻る</string>
+    <string name="error_library_unavailable">このアプリには閲覧可能なライブラリがありません</string>
+    <string name="error_library_empty">ここには何もありません</string>
+    <string name="error_library_no_player">まず何かを再生してください</string>
+
+    <string name="setting_wear_carousel_card_shape">カルーセルカードの形</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>丸み</item>
+        <item>正方形</item>
+        <item>スクワークル</item>
+        <item>円</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">フォントをすべてに使用</string>
+    <string name="setting_wear_font_all_screens_description">選択したフォントをプレーヤーだけでなく、メニュー、キュー、クイックアクションにも適用します。ディスプレイ系や手書き系フォントはリストでは読みにくい場合があります。</string>
+
+    <string name="setting_wear_clock_font">時計の書体</string>
+    <string name="wear_clock_font_follow">トラックのフォントに従う</string>
+    <string name="setting_wear_lyrics_font">歌詞の書体</string>
+    <string name="setting_wear_lyrics_font_description">歌詞画面と Verse フェイスで曲の言葉に使う書体です。ここで別のものを選ばない限り、トラックの書体に従います。</string>
+    <string name="wear_lyrics_font_follow">トラックの書体に従う</string>
+    <string name="setting_wear_clock_font_weight">時計の太さ</string>
+    <string name="setting_wear_clock_font_italic">時計を斜体にする</string>
+    <string name="setting_wear_clock_font_scale">時計サイズ</string>
+    <string name="setting_wear_clock_font_tracking">時計の文字間隔</string>
+    <string name="setting_wear_clock_adaptive_contrast">コントラストに合わせて時計色を調整</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">アルバム色が背後のアートワークに近すぎる場合、色相を保ちながら時計を明るくまたは暗くします。「時計の色」が「アルバムカラー」のときだけ適用されます。</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">長いタイトルにも収まりやすい、ポスター風のコンデンス全大文字ディスプレイ</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">高コントラストのエディトリアル系セリフ — 雑誌のような雰囲気</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">個性的なディテールを持つ技術的な幾何学サンセリフ</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">角張ったSF風ディスプレイ — 太く未来的</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">手書きスクリプト — カジュアルで個性的</string>
+    <string name="setting_wear_track_time_mode">トラック時間の表示</string>
+    <string name="setting_wear_track_time_mode_description">再生画面でトラック位置（例: 1:23 / 3:45）を表示するタイミングです。</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>常に</item>
+        <item>再生中のみ</item>
+        <item>一時停止中のみ</item>
+        <item>しない</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">ミニボタンのカーブ</string>
+    <string name="setting_screen_buttons_curve_description">ミニボタンの曲率スタイルを選択します: フラット、アーク、ソフト、カーブ。</string>
+    <string name="setting_screen_buttons_shape">ミニボタンの形</string>
+    <string name="setting_screen_buttons_shape_description">ミニボタンの形状とレイアウト形式を選択します。</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>ピル（デフォルト）</item>
+        <item>円</item>
+        <item>正方形</item>
+        <item>角丸正方形（ソフト）</item>
+        <item>角丸正方形（中）</item>
+        <item>スクワークル</item>
+        <item>リーフ</item>
+        <item>ドロップ</item>
+        <item>ピル（ワイド・小）</item>
+        <item>ピル（ワイド・中）</item>
+        <item>ピル（ワイド・大）</item>
+        <item>ピル（ワイド・特大）</item>
+        <item>角丸長方形（小）</item>
+        <item>角丸長方形（中）</item>
+        <item>角丸長方形（大）</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>フラット</item>
+        <item>アーク</item>
+        <item>緩やかなカーブ</item>
+        <item>ソフトカーブ</item>
+        <item>中程度のカーブ</item>
+        <item>カーブ</item>
+        <item>極端なカーブ</item>
+        <item>端まで広げる</item>
+        <item>左端</item>
+        <item>右端</item>
+        <item>両端</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>背景のデフォルト</item>
+        <item>ガラス（均一）</item>
+        <item>ガラス（ライト）</item>
+        <item>半透明アルバム</item>
+        <item>半透明アルバム Exp</item>
+        <item>グローアルバム</item>
+        <item>グロー Exp</item>
+        <item>ソリッドテーマ</item>
+        <item>ソリッドアルバム</item>
+        <item>ソリッド Exp アルバム</item>
+        <item>アウトライン</item>
+        <item>アウトライン Exp アルバム</item>
+        <item>アイコンのみ（透明）</item>
+        <item>アイコン Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>ニュートラル</item>
+        <item>アルバムカラー</item>
+        <item>カスタムカラー</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>フルカバー</item>
+        <item>ぼかし背景</item>
+        <item>フロストエッジ</item>
+        <item>正方形（角）</item>
+        <item>正方形（ソフト角）</item>
+        <item>正方形（角丸）</item>
+        <item>白黒</item>
+        <item>ぼかし白黒</item>
+        <item>エクスプレッシブぼかし</item>
+        <item>エクスプレッシブ</item>
+        <item>Material トーングラデーション</item>
+        <item>ポスターカバー</item>
+        <item>スタジオグラデーション</item>
+        <item>ビニール放射グロー</item>
+        <item>ハローグロー</item>
+        <item>オーロラリボン</item>
+        <item>スペクトラムグラデーション</item>
+        <item>コロナスイープ</item>
+        <item>夕暮れフェード</item>
+        <item>ブルーム</item>
+        <item>地平線フェード</item>
+        <item>残り火グロー</item>
+        <item>エクリプス AMOLED ブラック</item>
+        <item>非表示（ソリッドブラック）</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>無効</item>
+        <item>音楽ウォッチフェイスのアイコンを表示（Wear 3.0 のみ）</item>
+        <item>Svartifoss を開く</item>
+    </string-array>
+
+    <string name="setting_close_timeout">終了タイムアウト</string>
+    <string name="setting_close_timeout_description">音楽が <![CDATA[<b>%1$s 秒</b>]]> 再生されていないと、Svartifoss は自動的に終了します。タイムアウトを 0 秒に設定すると無効になります。バッテリー節約のため、このオプションは必ずしも正確ではなく、終了が最大1分ほど遅れることがあります。</string>
+    <string name="setting_wear_close_on_idle">「何も再生していません」で終了</string>
+    <string name="setting_wear_close_on_idle_description">アイドル状態の「何も再生していません」画面に到達してから約1分後にウォッチアプリを自動終了し、その画面に残り続けないようにします。上の終了タイムアウトとは独立しており、そちらは一時停止中のトラックを対象とします。</string>
+    <string name="category_notifications">通知ポップアップ</string>
+    <string name="setting_enable_notifications">通知ポップアップを表示</string>
+    <string name="setting_enable_notifications_description">この機能には、通知を管理する別のアプリ（Vibration Center for Wear）が必要です。\n\nVibration Center がウォッチを振動させるたびに、Svartifoss が通知テキストのポップアップを表示するため、Svartifoss を離れずに通知をすばやく確認できます。</string>
+    <string name="setting_notification_timeout">通知ポップアップのタイムアウト</string>
+    <string name="setting_notification_timeout_description">通知ポップアップは <![CDATA[<b>%1$s 秒</b>]]> 後に自動的に閉じます。自動終了を無効にするには 0 を入力します。</string>
+    <string name="app_required">必要なアプリ</string>
+    <string name="vibration_center_required_description">この機能を使うには、別の（無料）アプリ Vibration Center for Wear をインストールする必要があります。</string>
+    <string name="open_play_store">Play ストアを開く</string>
+    <string name="error_no_notification_service_support">申し訳ありません。このデバイスは通知サービスに対応していないようです</string>
+    <string name="setting_always_select_center_action">常に中央のアクションを選択</string>
+    <string name="setting_always_select_center_action_description">有効にすると、アクションリストをタップしたとき、実際にタップした項目に関係なく中央の（強調表示された）オプションが常に選択されます。</string>
+    <string name="change_icon">アイコンを変更</string>
+    <string name="please_wait">お待ちください</string>
+
+    <string name="error_playlist_not_supported">このメディアアプリではサポートされていません</string>
+    <string name="error_search_no_results">結果が見つかりません</string>
+    <string name="seconds_to_skip">スキップする秒数:</string>
+    <string name="seconds_to_reverse">戻す秒数:</string>
+
+    <string name="setting_dynamic_accent_color">動的アクセントカラー</string>
+    <string name="setting_dynamic_accent_color_description">有効にすると、アクセントカラー（シークバー、アクティブなキュー項目）が現在のアルバムアートの主要色に自動的に適応します。</string>
+    <string name="setting_desaturated_color">彩度を抑えた色</string>
+    <string name="setting_desaturated_color_description">抽出した色の彩度と明るさを調整し、使用中のテーマに応じて高い可読性とコントラストを確保します。</string>
+
+    <string name="queue_header">再生キュー</string>
+    <string name="queue_unavailable">キューを利用できません</string>
+
+    <string name="setting_custom_accent_color">アクセントカラー</string>
+    <string name="setting_custom_accent_color_description">アプリのインターフェースに使用するカスタムアクセントカラーを選択します</string>
+    <string name="setting_mini_player">ミニプレーヤー</string>
+    <string name="setting_mini_player_description">メディアがアクティブな間、下部ナビゲーションの上に常設の再生中バーを表示します。既定で有効です。スペースを取り戻したい場合はオフにしてください。</string>
+    <string name="color_picker_title">アクセントカラーを選択</string>
+    <string name="color_picker_reset">リセット</string>
+    <string name="color_picker_apply">適用</string>
+    <string name="color_picker_default">既定</string>
+    <string name="color_picker_invalid">無効なカラーコード</string>
+    <string name="color_picker_current">現在: %s</string>
+
+    <string name="drawer_version_format">バージョン %1$s</string>
+    <string name="drawer_tagline">Wear OS 用コンパニオンアプリ</string>
+    <string name="drawer_about_heading">情報</string>
+    <string name="drawer_about_summary">Svartifoss を使えば、Wear OS ウォッチからスマートフォンの音楽を操作できます。デバイスに合わせて完全にカスタマイズできるリモコンです。</string>
+    <string name="drawer_name_heading">名前について</string>
+    <string name="drawer_name_meaning">Svartifoss はアイスランド語で「黒い滝」を意味します。ヴァトナヨークトル国立公園にある滝にちなんだ名前で、暗い玄武岩の柱が細い水流を囲んでいます。石の上を流れる水のように、音楽がアプリを流れます。</string>
+    <string name="drawer_sync_heading">同期</string>
+    <string name="drawer_sync_summary">ウォッチの設定はスマートフォン側で行い、ペアリング済みのウォッチへ自動的に同期されます。</string>
+    <string name="drawer_support_heading">サポート</string>
+    <string name="drawer_support_summary">Svartifoss は無料のオープンソースです。役に立ったらコーヒーを1杯おごってください :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">カバーアートをダウンロード</string>
+    <string name="album_art_saved">カバーアートをギャラリーに保存しました</string>
+    <string name="album_art_save_error">カバーアートを保存できませんでした</string>
+
+    <string name="action_play_liked_songs">高評価した曲を再生（YT Music）</string>
+    <string name="action_play_spotify_liked_songs">高評価した曲を再生（Spotify）</string>
+    <string name="action_play_soundcloud_likes">高評価したトラックを再生（SoundCloud）</string>
+    <string name="action_my_playlists">ストリーミングショートカット</string>
+    <string name="action_play_specific_playlist">ストリーミングショートカットを開く</string>
+    <string name="action_choose_or_add_streaming_shortcut">ストリーミングショートカットを選択または追加</string>
+    <string name="action_show_streaming_library">保存したショートカットをすべて表示</string>
+    <string name="playlist_shortcut_pick_title">ショートカットを選択</string>
+    <string name="playlist_shortcut_pick_empty">ストリーミングショートカットはまだ保存されていません。下から追加し、タップして選択してください</string>
+    <string name="playlist_shortcuts_empty">ストリーミングショートカットはまだありません。スマートフォンアプリの設定から追加してください</string>
+    <string name="setting_playlist_shortcuts">ストリーミングショートカット</string>
+    <string name="setting_playlist_shortcuts_description">ウォッチの共有リンクを YouTube Music、Spotify、その他のストリーミングアプリで開きます</string>
+    <string name="setting_shortcut_artwork">ショートカットのアートワークをオンラインで取得</string>
+    <string name="setting_shortcut_artwork_description">保存した各ショートカットについて、サービスからサムネイルをダウンロードし、スマートフォンの一覧、ウォッチメニュー、割り当てたボタンに表示します。各サムネイルは1回だけ取得され、送信されるのは公開共有リンクだけです。既定ではオフです。</string>
+    <string name="setting_queue_local_artwork">ライブラリからのキューカバー</string>
+    <string name="setting_queue_local_artwork_description">ローカル音楽プレーヤーは、キューのカバーをライブラリ参照として公開します。メディアアクセスを許可すると、ウォッチのキューに表示できます。インターネット接続は使用しません。</string>
+    <string name="setting_queue_local_artwork_granted">メディアアクセスを許可済み — ローカルキューのカバーを表示します</string>
+    <string name="setting_queue_local_artwork_denied">メディアアクセスが拒否されました。ローカルキューのカバーを表示するには Android 設定で有効にしてください。</string>
+    <string name="setting_queue_remote_artwork">キューのカバーをオンラインで取得</string>
+    <string name="setting_queue_remote_artwork_short_description">ストリーミングアプリ（YouTube Music クライアント、Echo Music など）は、キューのカバーを画像ではなくリンクとして公開するため、これをダウンロードしてキャッシュします。キューを完全にオフラインに保つにはオフにしてください。その場合、それらの行にはカバーが表示されません。</string>
+    <string name="setting_queue_remote_artwork_description">ストリーミングプレーヤーはキューのカバーを画像ではなくリンクとして公開します。各カバーを1回だけダウンロードしてこのスマートフォンにキャッシュし、ウォッチのキューに表示します。要求されるのはプレーヤーがすでに公開しているカバー URL だけで、アカウントや個人データは使用しません。既定でオンです。キューを完全にオフラインに保つにはオフにしてください。</string>
+    <string name="watch_streaming_shortcuts_empty">クイックアクションとウォッチメニュー用に曲、アルバム、プレイリストを追加</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="other">保存済みショートカット %1$d 件 · クイックアクションとウォッチメニューで利用可能</item>
+    </plurals>
+    <string name="category_music_apps">音楽アプリとサービス</string>
+    <string name="category_apps_content">歌詞とメタデータ</string>
+    <string name="category_streaming_services">ストリーミングショートカット</string>
+    <string name="category_queue_artwork">キューのアートワーク</string>
+    <string name="category_system_access">Android のアクセス権と通知</string>
+    <string name="setting_apps_integrations">対応している音楽サービス</string>
+    <string name="setting_apps_integrations_description">リンクは YouTube Music、Spotify、Deezer、TIDAL、Apple Music、Amazon Music、SoundCloud で動作します。アカウントへのアクセスは必要ありません。</string>
+    <string name="setting_apps_integrations_none">対応アプリが検出されませんでした。ショートカットは引き続きブラウザや他の互換アプリで開けます。</string>
+    <string name="setting_apps_integrations_installed">%2$d 件中 %1$d 件を検出: %3$s</string>
+    <string name="setting_streaming_open_mode">ストリーミングリンクを開くアプリ</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>検出されたストリーミングアプリ</item>
+        <item>Android のデフォルト</item>
+        <item>毎回確認</item>
+    </string-array>
+    <string name="setting_persistent_notification">「Svartifoss がアクティブ」通知を管理</string>
+    <string name="setting_persistent_notification_description">この通知の Android 設定を開きます。ミュート、ロック画面から非表示、その他の調整ができます。完全には無効にできません。ウォッチと通信するバックグラウンドサービスの実行中、Android は継続通知を必須としています。</string>
+    <string name="setting_notification_access">メディア通知へのアクセス</string>
+    <string name="setting_notification_access_enabled">許可済み · タップして Android 設定を確認</string>
+    <string name="setting_notification_access_disabled">未許可 · 通知内のメディアアクションと自動起動フィルターに必要です</string>
+    <string name="setting_notification_access_unavailable">このデバイスでは通知アクセス設定を利用できません</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="other">保存済みショートカット %1$d 件 · タップして管理またはリンクをインポート</item>
+    </plurals>
+    <string name="category_privacy">プライバシー</string>
+    <string name="setting_privacy_policy">プライバシーポリシー</string>
+    <string name="setting_privacy_policy_description">Svartifoss が使用するデータと、任意で利用できるオンラインサービスを確認します。</string>
+    <string name="setting_crash_reporting">クラッシュレポートを送信</string>
+    <string name="setting_crash_reporting_description">不具合の修正に役立てるため Firebase Crashlytics の診断情報を送信します。既定で有効ですが、いつでもオフにできます。</string>
+    <string name="setting_announcements">お知らせ通知</string>
+    <string name="setting_announcements_description">開発者からの時折のお知らせ — 新しいリリースや重要な通知です。Firebase Cloud Messaging 経由で送信され、アカウントやユーザー一覧は使用しません。既定で有効ですが、いつでもオフにできます。</string>
+    <string name="announcement_notification_channel">お知らせ</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">プレイリスト、アルバム、トラックを Svartifoss に直接共有するか、コピーしたリンクを貼り付けるか、手動で追加できます。ウォッチはスマートフォンにリンクを開くよう依頼するだけで、サービスへのログインは不要です。</string>
+    <string name="back">戻る</string>
+    <string name="playlist_shortcuts_beta_badge">ベータ</string>
+    <string name="playlist_shortcuts_intro_title">あなたの音楽へ、ワンタップで</string>
+    <string name="playlist_shortcuts_yours">あなたのショートカット</string>
+    <string name="playlist_shortcuts_empty_hint">共有された曲、アルバム、プレイリストのリンクを追加して、ウォッチで利用できるようにします。</string>
+    <string name="playlist_shortcuts_add">ショートカットを追加</string>
+    <string name="playlist_shortcuts_paste">リンクを貼り付け</string>
+    <string name="playlist_shortcuts_reload_covers">カバーを再読み込み</string>
+    <string name="playlist_shortcuts_reloading_covers">カバーを再読み込み中…</string>
+    <string name="playlist_shortcuts_covers_reloaded">カバーを再読み込みしました</string>
+    <string name="playlist_shortcuts_edit">ショートカットを編集</string>
+    <string name="playlist_shortcut_save">ショートカットを保存</string>
+    <string name="playlist_shortcut_editor_hint">リンクを1つ貼り付けます。Svartifoss がアプリとコンテンツの種類を自動的に識別します。</string>
+    <string name="playlist_shortcut_detection_waiting">ストリーミングリンクを待機中</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify、YouTube Music、Apple Music、TIDAL、Deezer などに対応しています。</string>
+    <string name="playlist_shortcut_detected_format">検出: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">名前</string>
+    <string name="playlist_shortcut_link_hint">共有リンクまたはアプリ URI</string>
+    <string name="playlist_shortcut_shuffle">シャッフル再生（YouTube Music のみ）</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">リンク</string>
+    <string name="playlist_type_track">トラック</string>
+    <string name="playlist_type_playlist">プレイリスト</string>
+    <string name="playlist_type_album">アルバム</string>
+    <string name="playlist_type_artist">アーティスト</string>
+    <string name="playlist_type_show">番組</string>
+    <string name="playlist_type_episode">エピソード</string>
+    <string name="playlist_type_mix">ミックス</string>
+    <string name="playlist_badge_shuffle">シャッフル</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">ストリーミングショートカットはまだ追加されていません</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="other">%1$d 件保存済み</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">並べ替え可能なストリーミングショートカットです。長押ししてドラッグするか、「上へ移動」「下へ移動」のアクセシビリティアクションを使うか、キーボードで Ctrl+上/下を押してください。</string>
+    <string name="playlist_shortcut_more_options">%1$s のその他のオプション</string>
+    <string name="playlist_shortcut_menu_edit">編集</string>
+    <string name="playlist_shortcut_menu_open">今すぐ開く</string>
+    <string name="playlist_shortcut_menu_copy">リンクをコピー</string>
+    <string name="playlist_shortcut_menu_duplicate">複製</string>
+    <string name="playlist_shortcut_menu_share">共有</string>
+    <string name="playlist_shortcut_menu_delete">削除</string>
+    <string name="playlist_shortcut_open_failed">このリンクを開けるアプリがありません</string>
+    <string name="streaming_shortcut_choose_app">ストリーミングリンクを開くアプリ</string>
+    <string name="playlist_shortcut_link_copied">リンクをコピーしました</string>
+    <string name="playlist_shortcut_import_invalid">共有されたテキストに有効なストリーミングリンクが含まれていません</string>
+    <string name="playlist_shortcut_clipboard_invalid">クリップボードに有効なストリーミングリンクがありません</string>
+    <string name="playlist_shortcut_name_required">ショートカット名を入力してください</string>
+    <string name="playlist_shortcut_link_invalid">有効なウェブリンクまたはアプリ URI を入力してください</string>
+    <string name="playlist_shortcut_service_invalid">サービスを検出するには有効なリンクを貼り付けてください</string>
+    <string name="playlist_shortcut_service_generic">互換リンク · Android がアプリを選択します</string>
+    <string name="playlist_shortcut_service_installed">%1$s インストール済み · アプリで開く準備完了</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s は未インストール · ブラウザまたは互換アプリを使用できます</string>
+    <string name="playlist_shortcut_copy_name">%1$s のコピー</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s のコピー %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s を作成しました</string>
+    <string name="playlist_shortcut_share_title">ストリーミングショートカットを共有</string>
+    <string name="playlist_shortcut_share_failed">このショートカットを共有できるアプリがありません</string>
+    <string name="playlist_shortcut_deleted">%1$s を削除しました</string>
+    <string name="playlist_shortcut_undo">元に戻す</string>
+
+    <string name="action_play_liked_songs_shuffled">高評価した曲をシャッフル再生（YT Music）</string>
+    <string name="action_search_history">検索履歴</string>
+    <string name="search_history_empty">最近の検索はまだありません</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">アップデート</string>
+    <string name="setting_update_check">新しいバージョンを通知</string>
+    <string name="setting_update_check_description">約1日1回 GitHub で新しいリリースを確認し、通知を表示します</string>
+    <string name="setting_update_prereleases">プレリリースを含める</string>
+    <string name="setting_update_prereleases_description">ベータ版についても通知します</string>
+    <string name="setting_update_check_now">今すぐアップデートを確認</string>
+    <string name="setting_update_check_now_description">最新バージョンを表示し、Bluetooth 経由でウォッチを更新できます</string>
+    <string name="update_screen_title">アップデート</string>
+    <string name="update_cover_content_description">アプリ名の由来となった滝、Svartifoss</string>
+    <string name="update_notification_channel">アプリのアップデート</string>
+    <string name="update_available_title">Svartifoss %1$s が利用可能です</string>
+    <string name="update_notification_text">タップしてアップデート</string>
+    <string name="update_available_action">アップデートがあります</string>
+    <string name="update_installed_phone">スマートフォン: %1$s</string>
+    <string name="update_installed_versions">スマートフォン: %1$s · ウォッチ: %2$s</string>
+    <string name="update_watch_version_unknown">不明</string>
+    <string name="update_checking">アップデートを確認しています…</string>
+    <string name="update_check_failed">アップデートを確認できませんでした。接続を確認して、もう一度お試しください。</string>
+    <string name="update_available_line">新しいバージョン: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">（プレリリース）</string>
+    <string name="update_up_to_date">最新バージョン (%1$s) を使用しています</string>
+    <string name="update_no_wear_asset">このリリースには送信できるウォッチ APK がありません。</string>
+    <string name="update_watch_hint">「ウォッチをアップデート」は新しいウォッチアプリをダウンロードし、Bluetooth で送信します。インストールはウォッチ側で確認します。ケーブルや Wear Installer は不要です。</string>
+    <string name="update_downloading">ダウンロード中… %1$d%%</string>
+    <string name="update_connecting_watch">ウォッチに接続しています…</string>
+    <string name="update_transferring">ウォッチに送信中… %1$d%%</string>
+    <string name="update_confirm_on_watch">送信しました！ウォッチに通知が表示されました。ウォッチ側でタップしてインストールしてください。</string>
+    <string name="update_no_watch">接続されているウォッチがありません。</string>
+    <string name="update_push_failed">ウォッチへのアップデート送信に失敗しました。もう一度お試しください。</string>
+    <string name="update_watch_button">ウォッチをアップデート</string>
+    <string name="update_open_release_button">リリースページを開く</string>
+    <string name="update_watch_behind">ウォッチはまだ %1$s です。下からアップデートを送信してください。</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">スマートフォンとウォッチのアプリを同期させる</string>
+    <string name="update_state_checking">アップデートを確認しています…</string>
+    <string name="update_state_current">最新です</string>
+    <string name="update_state_current_sub">最新リリース %1$s を実行中</string>
+    <string name="update_state_available">アップデートがあります</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">アップデートを確認できませんでした</string>
+    <string name="update_state_failed_sub">接続を確認して、もう一度お試しください</string>
+    <string name="update_device_phone">スマートフォン</string>
+    <string name="update_device_watch">ウォッチ</string>
+    <string name="update_versions_header">インストール済み</string>
+    <string name="update_whats_new">新機能</string>
+    <string name="update_phone_button">スマートフォンをアップデート</string>
+    <string name="update_installing">インストーラーを開いています…</string>
+    <string name="update_install_permission_needed">Svartifoss からのアプリのインストールを許可してから、もう一度「スマートフォンをアップデート」をタップしてください。</string>
+    <string name="update_phone_failed">スマートフォン用アップデートのダウンロードに失敗しました。もう一度お試しください。</string>
+    <string name="update_install_notification_title">Svartifoss アップデート</string>
+    <string name="update_install_notification_tap">タップして新しいバージョンをインストール</string>
+    <string name="update_install_notification_failed">インストールに失敗しました。設定で Svartifoss からのインストールを許可して、もう一度お試しください。</string>
+    <string name="setting_wear_album_accent_source">アルバムのアクセント元</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>バランス</item>
+        <item>最も鮮やか</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>オフ</item>
+        <item>ソフト</item>
+        <item>標準</item>
+        <item>太字</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">アクセントの下限</string>
+    <string name="preview_metadata_album">アルバム</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">トラック</string>
+    <string name="preview_metadata_genre">ジャンル</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">年</string>
+    <string name="preview_metadata_format">フォーマット</string>
+    <string name="preview_metadata_bitrate">ビットレート</string>
+    <string name="preview_metadata_position">位置</string>
+    <string name="preview_metadata_output">出力</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">アルバムの詳細</string>
+    <string name="setting_wear_metadata_core_description">アルバム、アルバムアーティスト、ディスク上の位置、再生時間。</string>
+    <string name="setting_wear_metadata_release">リリースの詳細</string>
+    <string name="setting_wear_metadata_release_description">ジャンル、年、リリース日、レーベル。</string>
+    <string name="setting_wear_metadata_credits">クレジット</string>
+    <string name="setting_wear_metadata_credits_description">プレーヤーが公開している場合の作曲者、作詞者、著者。</string>
+    <string name="setting_wear_metadata_technical">ファイルの詳細</string>
+    <string name="setting_wear_metadata_technical_description">フォーマット、ビットレート、サンプルレート、チャンネル、サイズ。ローカルトラックのみ。</string>
+    <string name="setting_split_panel">分割パネル</string>
+    <string name="setting_split_panel_description">Split フェイスの下半分に表示する内容。ぼかしたアートワークはテキストの背後に同じカバーを続け、単色は通知カード風の見た目です。</string>
+    <string-array name="wear_split_panel_entries">
+        <item>ぼかしたアートワーク</item>
+        <item>単色</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">再生の詳細</string>
+    <string name="setting_wear_metadata_playback_description">ミリ秒単位の位置、速度、音声出力、音声のストリーミング元または再生元（トラックのアドレスを含む）。説明できるファイルがないストリーミングトラックでも埋められる情報ブロックです。</string>
+    <string name="setting_wear_metadata_identifiers">識別子</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC とカタログ ID。デフォルトではオフ。必要なときには便利ですが、不要なら情報量が増えるだけです。</string>
+    <string name="setting_metadata_lookup">トラックの詳細をオンラインで検索</string>
+    <string name="setting_metadata_lookup_description">再生アプリが公開しなかった ISRC、レーベル、リリース日などを、無料の公開データベース MusicBrainz から補完します。デフォルトではオフです。Metadata ウォッチフェイスはこれなしでも動作し、これは行を追加するだけです。オンにしてそのフェイスを選択しない限り何も送信されず、送信されるのはトラック名とアーティストだけです。</string>
+</resources>

@@ -1,0 +1,1967 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS tidak disokong pada peranti ini</string>
+    <string name="setting_no_wearable_api_banner_description">Peranti ini tidak menyediakan komponen Wear OS Perkhidmatan Google Play yang diperlukan oleh Svartifoss untuk berkomunikasi dengan jam tangan. Penggandingan tidak akan membantu — aplikasi telefon tidak dapat mencapai jam tangan dari peranti ini. Semua tetapan di bawah masih disimpan dan akan digunakan jika anda memasang Svartifoss pada peranti yang menyokongnya.</string>
+    <string name="setting_no_watch_banner">Tiada jam tangan disambungkan</string>
+    <string name="setting_no_watch_banner_description">Tetapan ini disegerakkan ke jam tangan Wear OS anda, jadi kesannya tidak akan kelihatan sehingga jam tangan dipasangkan dan disambungkan — namun semua yang di bawah masih boleh anda konfigurasikan sekarang.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Penampilan</string>
+    <string name="setting_theme">Tema</string>
+    <string name="theme_light">Putih Jelas</string>
+    <string name="theme_dark">Hitam Pekat</string>
+    <string name="theme_system">Ikut Sistem</string>
+    <string name="setting_language">Bahasa</string>
+    <string name="language_system">Ikut Sistem</string>
+    <string name="language_change_watch_notice">Jam tangan juga akan menggunakan bahasa ini selepas disegerakkan.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Pembangun</string>
+    <string name="dev_mode_unlocked">Mod pembangun didayakan ✦</string>
+    <string name="dev_mode_clicks_remaining">%1$d ketikan lagi untuk membuka kunci mod pembangun</string>
+    <string name="dev_disable_mode">Lumpuhkan mod pembangun</string>
+    <string name="dev_disable_mode_description">Sembunyikan bahagian ini semula — ketik \"Versi dipasang\" tujuh kali untuk memaparkannya kembali</string>
+    <string name="dev_mode_disabled">Mod pembangun dilumpuhkan</string>
+    <string name="dev_build_info">Maklumat binaan</string>
+    <string name="dev_sync_watch">Paksa segerak tetapan jam tangan</string>
+    <string name="dev_sync_watch_description">Hantar semua tetapan semasa ke jam tangan yang dipasangkan dengan serta-merta</string>
+    <string name="dev_sync_watch_done">Tetapan disegerakkan ke jam tangan</string>
+    <string name="dev_copy_debug_info">Salin maklumat nyahpepijat</string>
+    <string name="dev_copy_debug_info_description">Salin butiran binaan dan peranti ke papan klip</string>
+    <string name="dev_show_archived">Tunjukkan pilihan diarkibkan</string>
+    <string name="dev_show_archived_description">Tunjukkan susun atur jam tangan dan tetapan yang diarkibkan kerana isu yang diketahui</string>
+    <string name="dev_copy_debug_info_done">Maklumat nyahpepijat disalin</string>
+    <string name="dev_open_update_screen">Buka skrin kemas kini</string>
+    <string name="dev_open_update_screen_description">Pratonton skrin Kemas Kini (sepanduk muka depan, susun atur nota keluaran) tanpa menunggu keluaran sebenar</string>
+    <string name="dev_watch_layout_bounds">Tunjukkan sempadan susun atur jam tangan</string>
+    <string name="dev_watch_layout_bounds_description">Gariskan elemen pemain yang kelihatan dan kawasan sentuhan pada jam tangan. Tindihan diagnostik sahaja.</string>
+    <string name="dev_watch_player_info">Tunjukkan maklumat pemain pada jam tangan</string>
+    <string name="dev_watch_player_info_description">Tindihkan muka aktif, keadaan main balik, kemajuan dan maklumat pemaparan pada jam tangan.</string>
+    <string name="pref_reset_default">Tetapkan semula ke lalai</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Anda menemui air terjun tersembunyi.\n\nSvartifoss — tiang basalt hitam\nyang membingkai air terjun di Iceland,\nmengingatkan bahawa muzik mengalir\nseperti air melalui batu.\n\n♪ Dibina dengan penuh teliti. ♪</string>
+    <string name="easter_egg_ok">Tutup</string>
+
+    <string name="nav_watch_face">Jam tangan</string>
+    <string name="watch_face_header">Penampilan jam tangan</string>
+    <string name="nav_controls">Kawalan</string>
+    <string name="nav_actions">Tindakan</string>
+    <string name="nav_settings">Tetapan</string>
+
+    <string name="controls_header">Kawalan</string>
+    <string name="controls_state_playing">Muzik sedang dimainkan</string>
+    <string name="controls_state_stopped">Tiada main balik</string>
+    <string name="controls_playing_description">Pilih tindakan setiap input semasa muzik dimainkan. Persediaan ini berasingan daripada keadaan tanpa main balik.</string>
+    <string name="controls_stopped_description">Pilih tindakan setiap input sebelum main balik bermula atau selepas ia berhenti. Persediaan ini berasingan daripada keadaan sedang dimainkan.</string>
+
+    <string name="watch_live_preview">Pratonton langsung jam tangan</string>
+    <string name="watch_preview_description">Pratonton langsung permukaan jam tangan yang dipilih. Perubahan muncul di sini sebelum anda mencubanya pada jam tangan.</string>
+    <string name="watch_section_style">Pemain</string>
+    <string name="watch_section_style_description">Pilih susun atur pemain serta cara tajuk, masa dan kemajuannya dipaparkan.</string>
+    <string name="watch_section_background">Latar belakang</string>
+    <string name="watch_section_background_description">Kawal seni album, kabur, pudar dan kebolehbacaan di belakang pemain.</string>
+    <string name="watch_section_colors">Warna</string>
+    <string name="watch_section_colors_description">Tetapkan warna asas, kemajuan dan aksen album, kemudian laraskan warna tajuk, artis, jam, kelantangan dan panel.</string>
+    <string name="watch_section_typography">Teks</string>
+    <string name="watch_section_typography_description">Pilih fon dan laraskan tajuk, artis, jam, ikon aplikasi, skrin sekunder serta teks Flex.</string>
+    <string name="watch_section_aod">Sentiasa hidup</string>
+    <string name="watch_section_aod_description">Konfigurasikan skrin kuasa rendah dan lihat penampilan ambiennya dalam pratonton.</string>
+    <string name="watch_section_panels">Panel</string>
+    <string name="watch_section_panels_description">Gayakan kelantangan, carian, panel pantas dan baris gilir; memfokuskan baris membuka permukaan itu dalam pratonton.</string>
+    <string name="watch_section_mini_buttons">Butang mini</string>
+    <string name="watch_section_mini_buttons_description">Gayakan baris pintasan pilihan. Ketik “Butang mini” di bawah untuk menetapkan tindakannya dalam Kawalan.</string>
+    <string name="watch_overview_description">Pilih perkara yang ingin disesuaikan. Pratonton dan tema yang disimpan kekal aktif di semua bahagian.</string>
+    <string name="watch_back_to_overview">Kembali ke bahagian Jam tangan</string>
+
+    <string name="settings_section_general">Umum</string>
+    <string name="settings_section_general_description">Tema aplikasi, warna aksen dan pilihan kemas kini.</string>
+    <string name="settings_section_watch">Tingkah laku</string>
+    <string name="settings_section_watch_description">Tingkah laku mahkota, sentuhan, haptik dan menu tindakan pada jam tangan.</string>
+    <string name="settings_section_automation">Automasi</string>
+    <string name="settings_section_automation_description">Pilih bila Svartifoss dibuka dan ditutup secara automatik.</string>
+    <string name="settings_section_apps">Aplikasi</string>
+    <string name="settings_section_apps_description">Cari lirik dan metadata, pintasan penstriman, karya seni baris gilir dan akses Android.</string>
+    <string name="settings_section_data">Data &amp; sokongan</string>
+    <string name="settings_section_data_description">Sandarkan persediaan anda, semak versi dan diagnostik atau dapatkan bantuan.</string>
+    <string name="settings_overview_description">Pilih bahagian. Pilihan berkaitan kekal bersama, manakala carian masih boleh membawa anda terus ke mana-mana tetapan.</string>
+    <string name="settings_back_to_overview">Kembali ke bahagian tetapan</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Cara menggunakan Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss menjadikan jam tangan anda alat kawalan jauh untuk muzik yang dimainkan pada telefon. Inilah semua yang boleh anda lakukan dari pergelangan tangan.</string>
+
+    <string name="tutorial_taps_title">Ketik zon skrin</string>
+    <string name="tutorial_taps_desc">Skrin jam tangan dibahagikan kepada empat zon — atas, bawah, kiri dan kanan. Mengetik zon menjalankan tindakan yang anda tetapkan kepadanya. Secara lalai, zon kiri memainkan atau menjeda, zon kanan melangkau ke trek seterusnya, manakala zon atas dan bawah mengubah kelantangan.</string>
+
+    <string name="tutorial_quick_panel_title">Panel tindakan pantas</string>
+    <string name="tutorial_quick_panel_desc">Ketik dua kali bahagian tengah skrin sedang dimainkan untuk membuka panel empat slot — tiga butang bulat dan satu baris lebar di bawahnya. Jika dibiarkan, slot mencerminkan butang yang aplikasi pemain letakkan dalam pemberitahuannya sendiri, jadi anda mendapat kawalan suka, rawak dan ulang sebenar aplikasi itu. Tetapkan sebarang tindakan pada slot, atau tetapkan kepada \"Tiada\" untuk menyembunyikannya, di bawah Tindakan pada telefon.</string>
+    <string name="tutorial_gestures_title">Tekan sekali, dua kali &amp; lama</string>
+    <string name="tutorial_gestures_desc">Empat zon tepi masing-masing menyokong tindakan tekan sekali, dua kali dan lama yang berasingan. Ketikan sekali di tengah juga boleh dikonfigurasikan; ketikan dua kali sentiasa membuka Tindakan pantas, manakala tekan lama membuka pemilih muka, baris gilir atau tidak melakukan apa-apa mengikut Tetapan → Tingkah laku.</string>
+
+    <string name="tutorial_buttons_title">Butang fizikal</string>
+    <string name="tutorial_buttons_desc">Jika jam tangan mempunyai butang sisi, anda juga boleh menetapkan tindakan tekan sekali, dua kali dan lama. Ia terus berfungsi walaupun skrin dimatikan.</string>
+
+    <string name="tutorial_rotary_title">Mahkota berputar</string>
+    <string name="tutorial_rotary_desc">Pilih di bawah Tetapan → Tingkah laku → Mahkota berputar / bezel sama ada mahkota atau bezel mengubah kelantangan, mencari dalam trek atau tidak melakukan apa-apa. Pada jam tangan yang mendedahkan putaran mahkota sebagai butang, tetapkan dalam Kawalan sebaliknya.</string>
+
+    <string name="tutorial_swipe_up_title">Leret ke atas, bawah, kiri &amp; kanan</string>
+    <string name="tutorial_swipe_up_desc">Leret ke atas, bawah atau kiri pada skrin sedang dimainkan boleh masing-masing dikonfigurasikan untuk membuka apa sahaja — menu tindakan, baris gilir main balik, melangkau trek, senarai main anda dan banyak lagi. Konfigurasikan setiap satu dalam Kawalan dengan memilih Muzik sedang dimainkan atau Tiada main balik. Secara lalai, leret ke atas membuka menu tindakan dan yang lain tidak melakukan apa-apa sehingga anda menetapkannya. Leret ke kanan dibiarkan — itu ialah gerak isyarat Wear OS sejagat untuk keluar daripada aplikasi.</string>
+    <string name="tutorial_shortcuts_title">Pintasan penstriman</string>
+    <string name="tutorial_shortcuts_desc">Simpan pautan ke trek, album, campuran atau senarai main daripada Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music atau SoundCloud, kemudian tetapkannya pada mana-mana butang, gerak isyarat atau slot panel. Cara terpantas ialah berkongsi pautan terus ke Svartifoss daripada aplikasi penstriman; anda juga boleh menampal pautan yang disalin atau menaipnya. Akaun atau log masuk tidak diperlukan — jam tangan meminta telefon memulakan main balik, jadi pintasan benar-benar memainkan kandungan dan bukannya sekadar membuka aplikasi.</string>
+    <string name="tutorial_yt_music_title">Pintasan YouTube Music</string>
+    <string name="tutorial_yt_music_desc">Tetapkan \"Mainkan lagu yang disukai\", \"Mainkan lagu yang disukai secara rawak\" atau \"Senarai main saya\" pada mana-mana butang, gerak isyarat atau leretan untuk terus ke muzik anda tanpa menyentuh telefon. \"Sejarah carian\" mengingati carian terkini pada jam tangan — tekan dan tahan satu untuk memadamkannya.</string>
+
+    <string name="tutorial_exit_title">Leret untuk keluar</string>
+    <string name="tutorial_exit_desc">Leret dari tepi kiri untuk keluar daripada pemain. Ia boleh menjeda main balik secara automatik apabila anda keluar — dayakan dalam Tetapan.</string>
+
+    <string name="tutorial_tile_title">Tile kawalan pantas</string>
+    <string name="tutorial_tile_desc">Leret muka jam tangan ke sisi ke Tile Svartifoss untuk memainkan, menjeda dan melangkau serta-merta tanpa membuka aplikasi.</string>
+
+    <string name="tutorial_complication_title">Komplikasi muka jam</string>
+    <string name="tutorial_complication_desc">Tambahkan komplikasi seni album Svartifoss pada muka jam untuk melihat kulit semasa sepintas lalu. Ketik untuk membuka pemain.</string>
+
+    <string name="tutorial_system_title">Kawalan media sistem</string>
+    <string name="tutorial_system_desc">Trek semasa juga muncul dalam kawalan media jam tangan dan aplikasi terkini, jadi anda boleh mengawal main balik dari situ juga.</string>
+
+    <string name="tutorial_tip">Petua: konfigurasikan kedua-dua keadaan dalam Kawalan, kemudian susun menu dalam Tindakan.</string>
+
+    <string name="navigation_drawer_open">Buka laci navigasi</string>
+    <string name="navigation_drawer_close">Tutup laci navigasi</string>
+
+    <string name="action_settings">Tetapan</string>
+    <string name="action_pause">Jeda</string>
+    <string name="action_play">Main</string>
+    <string name="action_skip_prev">Sebelumnya</string>
+    <string name="action_skip_next">Seterusnya</string>
+    <string name="action_play_pause">Main / Jeda</string>
+    <string name="action_stop">Henti</string>
+    <string name="action_restart">Mulakan semula trek</string>
+    <string name="action_mute">Senyap / Nyahsenyap</string>
+    <string name="action_skip_seconds">Langkau %1$d saat</string>
+    <string name="action_reverse_seconds">Undur %1$d saat</string>
+    <string name="action_like">Suka</string>
+    <string name="action_shuffle">Rawak</string>
+    <string name="action_repeat">Ulang</string>
+    <string name="action_repeat_one">Ulang satu</string>
+    <string name="action_search">Cari muzik</string>
+    <string name="action_open_lyrics">Lirik</string>
+    <string name="group_playback_controls">Kawalan main balik</string>
+    <string name="group_streaming_shortcuts">Trek, album &amp; senarai main</string>
+    <string name="pick_action">Pilih tindakan</string>
+    <string name="action_search_hint">Cari senarai ini</string>
+    <string name="action_search_empty">Tiada tindakan sepadan dengan carian ini.</string>
+    <string name="action_opens_more">Berbilang pilihan</string>
+    <string name="action_volume_up">Naikkan kelantangan</string>
+    <string name="volume_down">Kurangkan kelantangan</string>
+    <string name="group_volume_controls">Kawalan kelantangan</string>
+    <string name="no_watch_detected">Jam tangan tidak dikesan</string>
+    <string name="connection_instructions">Buka Svartifoss pada jam tangan untuk memulakan sambungan</string>
+    <string name="playing_controls">Kawalan semasa dimainkan</string>
+    <string name="stopped_controls">Kawalan tanpa main balik</string>
+    <string name="actions_menu">Menu tindakan</string>
+    <string name="actions_intro">Konfigurasikan kedua-dua permukaan tindakan pada jam tangan dengan kawalan main balik, aplikasi atau trek, album dan senarai main yang disimpan. Panel pantas kekal padat; menu di bawah boleh memuatkan senarai tersusun yang lebih panjang.</string>
+    <string name="actions_quick_panel_section">Panel pantas</string>
+    <string name="actions_watch_menu_section">Menu pada jam tangan</string>
+    <plurals name="actions_list_summary">
+        <item quantity="other">%1$d tindakan · Ketik untuk edit · Tekan lama dan seret untuk susun semula</item>
+    </plurals>
+    <string name="actions_reorder_description">Menu tindakan tersusun. Sentuh dan tahan untuk menyeret, gunakan tindakan kebolehcapaian Alih ke atas atau Alih ke bawah, atau tekan Ctrl+Up/Down pada papan kekunci.</string>
+    <string name="actions_move_up">Alih ke atas</string>
+    <string name="actions_move_down">Alih ke bawah</string>
+    <string name="actions_moved_to_position">%1$s dialihkan ke kedudukan %2$d daripada %3$d.</string>
+    <string name="actions_empty">Belum ada tindakan. Gunakan butang tambah untuk mencipta yang pertama.</string>
+    <string name="actions_add">Tambah tindakan</string>
+    <string name="on_screen_buttons">ZON SENTUHAN</string>
+    <string name="physical_buttons">BUTANG FIZIKAL</string>
+    <string name="physical_buttons_disconnected">Sambung dan buka Svartifoss pada jam tangan untuk mengkonfigurasikan butang fizikalnya. Zon sentuhan, leretan dan butang mini tersedia sekarang.</string>
+    <string name="physical_buttons_unavailable">Jam tangan ini tidak melaporkan sebarang butang fizikal yang boleh dikonfigurasikan.</string>
+    <string name="control_assignment_tap">Ketik: %1$s</string>
+    <string name="control_assignment_hold">Tahan: %1$s</string>
+    <string name="control_assignment_both">Ketik: %1$s · Tahan: %2$s</string>
+    <string name="tap_a_zone_to_configure">Ketik zon pada jam tangan untuk menetapkan tindakan</string>
+    <string name="touch_zone_top">Zon atas</string>
+    <string name="touch_zone_bottom">Zon bawah</string>
+    <string name="touch_zone_left">Zon kiri</string>
+    <string name="touch_zone_right">Zon kanan</string>
+    <string name="touch_zone_center">Ketik tengah</string>
+    <string name="touch_zone_action">%1$s: %2$s. Ketik untuk konfigurasi.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">GERAK ISYARAT LERET</string>
+    <string name="tap_a_swipe_to_configure">Ketik arah untuk memilih perkara yang dibuka</string>
+    <string name="swipe_gesture_up">Leret ke atas</string>
+    <string name="swipe_gesture_down">Leret ke bawah</string>
+    <string name="swipe_gesture_left">Leret ke kiri</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Atas</string>
+    <string name="swipe_gesture_label_down">Bawah</string>
+    <string name="swipe_gesture_label_left">Kiri</string>
+
+    <string name="screen_buttons">BUTANG MINI</string>
+    <string name="tap_a_screen_button_to_configure">Sehingga tiga butang kelihatan berhampiran bahagian bawah skrin jam tangan — ketik slot untuk menetapkan tindakan</string>
+    <string name="screen_button_1">Butang mini 1 (kiri)</string>
+    <string name="screen_button_2">Butang mini 2 (tengah)</string>
+    <string name="screen_button_3">Butang mini 3 (kanan)</string>
+    <string name="screen_button_label_1">Butang 1</string>
+    <string name="screen_button_label_2">Butang 2</string>
+    <string name="screen_button_label_3">Butang 3</string>
+    <string name="no_action">Tiada tindakan</string>
+    <string name="gesture_single_press">Tekan sekali</string>
+    <string name="gesture_double_press">Tekan dua kali</string>
+    <string name="gesture_long_press">Tekan lama</string>
+    <string name="gesture_swipe_action">Tindakan</string>
+    <string name="center_button_quick_panel_note">Ketikan dua kali di tengah sentiasa membuka Tindakan pantas. Tekan lama menjalankan pilihan di bawah Tetapan → Tingkah laku. Kedua-dua gerak isyarat tidak berubah apabila anda menetapkan ketikan tengah di sini.</string>
+    <string name="start_playback">Mulakan main balik</string>
+    <string name="uninstalled_app">Aplikasi dinyahpasang</string>
+
+    <string name="play_app">Mainkan %1$s</string>
+    <string name="tasker_task">Tugas Tasker</string>
+    <string name="icon_selection_title">Pemilihan ikon</string>
+    <string name="icon_selection_gallery">Daripada galeri</string>
+    <string name="icon_selection_no_icon_pack">Ciri ini membolehkan anda memilih ikon tersuai untuk tindakan daripada pek ikon yang dipasang.\n\nMalangnya, nampaknya anda tidak mempunyai sebarang pek ikon yang dipasang.</string>
+    <string name="icon_selection_no_storage_permission">Ciri ini membolehkan anda memilih ikon tersuai untuk tindakan daripada pek ikon yang dipasang.\n\nSesetengah pek ikon memerlukan aplikasi mempunyai kebenaran storan. Anda perlu membenarkannya untuk menggunakan ciri ini.</string>
+    <string name="delete">Padam</string>
+    <string name="action_text">Teks tindakan</string>
+    <string name="swap_action">Tukar tindakan</string>
+    <string name="open_actions_menu">Buka menu tindakan</string>
+    <string name="open_playlist_menu">Tunjukkan senarai main semasa</string>
+    <string name="misc_settings">Tetapan lain</string>
+
+    <string name="category_backup">Sandaran</string>
+    <string name="export_config">Eksport konfigurasi</string>
+    <string name="export_config_description">Simpan pemetaan butang, senarai tindakan dan tetapan jam tangan ke fail</string>
+    <string name="import_config">Import konfigurasi</string>
+    <string name="import_config_description">Pulihkan pemetaan butang, senarai tindakan dan tetapan jam tangan daripada fail</string>
+    <string name="export_config_done">Konfigurasi dieksport</string>
+    <string name="export_config_failed">Tidak dapat mengeksport konfigurasi</string>
+    <string name="import_config_done_title">Import berjaya</string>
+    <string name="import_config_done_message">Svartifoss perlu dimulakan semula untuk menggunakan konfigurasi yang diimport.</string>
+    <string name="import_config_failed">Tidak dapat mengimport konfigurasi — fail mungkin tidak sah atau daripada versi yang tidak serasi</string>
+    <string name="action_restart_now">Mulakan semula sekarang</string>
+
+    <string name="category_about">Perihal</string>
+    <string name="category_music_screen">Skrin muzik</string>
+    <string name="category_watch_screen">Skrin jam tangan</string>
+    <string name="category_mini_buttons">Butang mini</string>
+    <string name="category_screen_face">Penampilan pemain</string>
+    <string name="category_wf_screen_behavior">Tingkah laku skrin</string>
+    <string name="category_wf_player_progress">Kemajuan, carian &amp; masa</string>
+    <string name="category_album_background">Latar album</string>
+    <string name="category_music_colors">Warna daripada muzik</string>
+    <string name="category_wf_typography_font">Jenis huruf</string>
+    <string name="category_wf_typography_title">Tajuk</string>
+    <string name="category_wf_typography_artist">Artis</string>
+    <string name="category_wf_typography_icon">Ikon aplikasi</string>
+    <string name="category_wf_typography_flex">Paksi Google Sans Flex</string>
+    <string name="category_wf_metadata">Kandungan muka Metadata</string>
+    <string name="category_wf_typography_secondary">Teks pada skrin lain</string>
+    <string name="category_wf_colors_title">Warna tajuk</string>
+    <string name="category_wf_colors_artist">Warna artis</string>
+    <string name="category_wf_colors_clock">Warna jam</string>
+    <string name="setting_wear_font_flex_hint_title">Perihal kawalan ini</string>
+    <string name="setting_wear_flex_axes_hint">Kawalan ini menala Google Sans Flex secara khusus — pilih fon itu di atas untuk menggunakannya. Berat/italik tajuk dan artis di atas sudah menetapkan paksi berat (wght) dan condong (slnt) fon ini; empat kawalan di bawah digunakan pada seluruh muka.</string>
+    <string name="setting_wear_font_flex_width">Lebar</string>
+    <string name="setting_wear_font_flex_width_description">Regangan mendatar, daripada mampat hingga luas (25–151). 100 ialah lebar biasa fon.</string>
+    <string name="setting_wear_font_flex_optical_size">Saiz optik</string>
+    <string name="setting_wear_font_flex_optical_size_description">Melaraskan perincian strok mengikut saiz efektif teks (6–144). Nilai rendah sesuai untuk teks kecil; nilai tinggi untuk teks paparan besar.</string>
+    <string name="setting_wear_font_flex_grade">Gred</string>
+    <string name="setting_wear_font_flex_grade_description">Mengubah berat sedikit tanpa menukar susun atur (0–100) — cara halus untuk meningkatkan kontras pada skrin gelap.</string>
+    <string name="setting_wear_font_flex_roundness">Kebulatan</string>
+    <string name="setting_wear_font_flex_roundness_description">Mengadun hujung strok daripada tajam (0) hingga bulat sepenuhnya (100) untuk rasa yang lebih mesra.</string>
+    <string name="preview_sample_title">Tajuk lagu</string>
+    <string name="preview_sample_artist">Nama artis</string>
+    <string name="preview_sample_next_title">Lagu seterusnya</string>
+    <string name="preview_playback_stopped">Dihentikan</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">baris sebelumnya</string>
+    <string name="preview_verse_current">baris yang sedang dimainkan</string>
+    <string name="preview_verse_next">dan baris selepasnya</string>
+    <string name="preview_chat_today">Hari ini</string>
+    <string name="category_gestures">Gerak isyarat &amp; input</string>
+    <string name="category_watch_navigation">Navigasi &amp; pintasan</string>
+    <string name="category_rotary_input">Input berputar &amp; penalaan</string>
+    <string name="category_watch_feedback">Maklum balas &amp; tingkah laku keluar</string>
+    <string name="category_watch_display">Skrin jam tangan</string>
+    <string name="setting_wear_keep_screen_on">Kekalkan skrin hidup</string>
+    <string name="setting_wear_keep_screen_on_description">Menghalang skrin jam tangan menjadi kosong akibat tamat masa tidak aktif selagi skrin Svartifoss dibuka. Menurunkan pergelangan tangan masih memalapkan jam — gerak isyarat itu dikawal sistem. Menggunakan lebih banyak bateri. Skrin lirik sentiasa kekal hidup tanpa mengira tetapan ini.</string>
+    <string name="setting_lyrics_enabled">Cari lirik dalam talian</string>
+    <string name="setting_lyrics_enabled_description">Benarkan telefon mendapatkan lirik disegerakkan daripada LRCLIB apabila anda membuka skrin lirik pada jam tangan. Hanya nama trek, artis dan tempoh dihantar; tiada yang lain dan tiada apa-apa disimpan pada cakera. Jika dimatikan, skrin lirik akan melaporkan bahawa carian dinyahdayakan.</string>
+    <string name="setting_overlay_blur_radius">Kabur tindihan</string>
+    <string name="setting_overlay_blur_radius_description">Kekuatan kabur (px) latar berkaca beku di belakang gelang kelantangan/carian dan panel Tindakan pantas — bebas daripada kabur latar seni album</string>
+    <string name="category_action_list">Senarai tindakan</string>
+    <string name="category_automation">Automasi</string>
+    <string name="category_idle">Apabila tiada apa-apa dimainkan</string>
+    <string name="installed_version">Versi dipasang</string>
+    <string name="get_support">Dapatkan sokongan</string>
+    <string name="get_support_description">Hantar log aplikasi kepada pembangun untuk sokongan</string>
+    <string name="contact_developer">Hubungi pembangun</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — hubungan</string>
+    <string name="contact_developer_chooser">Hantar e-mel</string>
+    <string name="contact_developer_no_client">Tiada aplikasi e-mel dipasang. Alamat disalin ke papan klip.</string>
+    <string name="about_developer_title">Perihal pembangun</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss bermula sebagai projek peribadi — saya mahu mengemas kini Music Center for Wear mengikut apa yang boleh dilakukan hari ini, supaya saya sendiri boleh menggunakannya setiap hari. Hasilnya cukup baik sehingga saya memutuskan untuk berkongsi dengan semua orang. Ini aplikasi pertama saya, dan tiada apa yang sama seperti melihat sesuatu yang anda bina ternyata berguna kepada orang lain juga.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Lesen sumber terbuka</string>
+    <string name="setting_always_show_time">Sentiasa tunjuk masa</string>
+    <string name="setting_always_show_time_off_description">Masa semasa hanya akan dipaparkan dalam mod ambien</string>
+    <string name="setting_always_show_time_on_description">Masa semasa akan sentiasa dipaparkan. Ikon tindakan atas tidak akan kelihatan (digantikan oleh jam), tetapi tindakan masih berfungsi seperti biasa.</string>
+    <string name="tap_to_force_stop">Ketik untuk hentikan kawalan</string>
+    <string name="notification_action_stop">Henti</string>
+    <string name="notification_action_force_stop">Paksa henti</string>
+    <string name="error_notification_access">Tiada akses pemberitahuan. Semak telefon.</string>
+    <string name="error_notifications">Pemberitahuan ralat</string>
+    <string name="notification_access_notification_title">Svartifoss memerlukan akses pemberitahuan</string>
+    <string name="notification_access_notification_title_description">Ketik pemberitahuan ini dan semak Svartifoss untuk membetulkan isu</string>
+    <string name="error_service_not_enabled">Akses pemberitahuan diperlukan</string>
+    <string name="error_service_not_enabled_description">Untuk mengawal muzik dari jam tangan, Svartifoss memerlukan akses pemberitahuan — begitulah Android membenarkannya melihat aplikasi yang memainkan media dan menghantar arahan main, jeda dan langkau.\n\nSvartifoss tidak pernah membaca kandungan pemberitahuan anda. Kebenaran ini hanya digunakan untuk mencari sesi media aktif.\n\nKetik \"Buka Tetapan\", kemudian hidupkan Svartifoss di bawah akses pemberitahuan.</string>
+    <string name="action_open_settings">Buka Tetapan</string>
+    <string name="settings_search_title">Cari tetapan</string>
+    <string name="settings_search_hint">Cari tetapan</string>
+    <string name="settings_search_clear">Kosongkan carian</string>
+    <string name="settings_search_prompt">Cari setiap tetapan merentas Tetapan dan Penampilan jam tangan mengikut nama.</string>
+    <string name="settings_search_no_results">Tiada tetapan sepadan.</string>
+    <string name="settings_search_prerequisite">Pilihan ini bergantung pada pilihan lain. Laraskan tetapan yang ditunjukkan di sini untuk memaparkannya.</string>
+    <string name="setting_numeric_range_error">Masukkan nilai dari %1$d hingga %2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">Ketik untuk berikannya — kawalan main balik kekal tidak aktif sehingga anda melakukannya</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Pasang Svartifoss pada jam tangan</string>
+    <string name="no_watch_app_description">Svartifoss tidak menemui aplikasi jam tangannya pada jam Wear OS yang dipasangkan. Aplikasi telefon dan jam tangan berfungsi bersama — tanpa aplikasi jam tangan, kawalan main balik dari pergelangan tangan tidak akan berfungsi.\n\nSvartifoss tiada di Play Store — aplikasi jam tangan dipasang secara sideload berasingan (cth. dengan Wear Installer). Ketik \"Lihat keluaran\" untuk membuka halaman keluaran GitHub dan dapatkan APK jam tangan. Jika baru memasangnya, tunggu kira-kira seminit sehingga penyegerakan selesai.</string>
+    <string name="no_watch_app_button">Lihat keluaran</string>
+    <string name="required_permission">Kebenaran diperlukan</string>
+    <string name="setting_pause_on_swipe_exit">Jeda main balik apabila keluar dengan leretan</string>
+    <string name="setting_pause_on_swipe_exit_description">Jeda sebarang main balik secara automatik apabila keluar daripada Svartifoss pada jam tangan melalui gerak leret kiri.\n\nKeluar melalui butang kuasa tidak terjejas dan tidak akan menjeda secara automatik.</string>
+    <string name="setting_rotating_crown_off_period">Kelewatan input berputar selepas skrin hidup</string>
+    <string name="setting_rotating_crown_off_period_description">Input berputar (contohnya mahkota berputar) boleh terlalu sensitif pada sesetengah peranti. Untuk mengelakkan perubahan kelantangan tidak sengaja, input berputar akan dinyahdayakan selama <![CDATA[<b>%1$s milisaat</b>]]> selepas anda menghidupkan skrin.</string>
+    <string name="setting_rotary_seek">Cari dengan mahkota berputar</string>
+    <string name="setting_rotary_seek_description">Apabila didayakan, memutar mahkota akan mencari dalam trek semasa dan bukannya mengubah kelantangan. Kelantangan masih boleh diubah dengan butang pada skrin atau fizikal.</string>
+    <string name="setting_wear_rotary_action">Mahkota / bezel berputar</string>
+    <string name="wear_rotary_action_volume">Ubah kelantangan</string>
+    <string name="wear_rotary_action_seek">Cari dalam trek</string>
+    <string name="wear_rotary_action_off">Jangan buat apa-apa</string>
+    <string name="setting_rotating_sensitivity">Kepekaan input berputar</string>
+    <string name="setting_rotating_sensitivity_description">Kepekaan input berputar. Nombor lebih tinggi bermakna putaran mahkota yang sama akan menaikkan kelantangan lebih banyak. Kini ditetapkan kepada <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Nyahdayakan klik dua kali butang fizikal dalam mod ambien</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Sesetengah jam tangan mempunyai butang bermasalah yang kadangkala mendaftarkan satu klik butang fizikal dalam mod ambien sebagai klik dua kali.\n\nJika anda mengalaminya, dayakan pilihan ini untuk menyahdayakan klik dua kali sepenuhnya dalam mod ambien (cth. klik dua kali hanya akan mengaktifkan tindakan klik sekali). Klik dua kali apabila jam tangan aktif tidak terjejas.</string>
+    <string name="setting_haptic_feedback">Maklum balas haptik</string>
+    <string name="setting_haptic_feedback_description">Getarkan jam tangan apabila butang ditekan.</string>
+    <string name="setting_auto_start">Buka Svartifoss secara automatik</string>
+    <string name="setting_auto_start_description">Buka Svartifoss pada jam tangan secara automatik apabila muzik mula dimainkan pada telefon.</string>
+    <string name="setting_auto_start_apps_blacklist">Aplikasi mula automatik</string>
+    <string name="setting_auto_start_apps_blacklist_description">Senarai aplikasi media yang boleh memulakan Svartifoss secara automatik</string>
+    <string name="setting_dim_album_art">Lorekan pemain</string>
+    <string name="setting_dim_album_art_description">Tambah kesan bayang yang dipilih pengguna antara karya seni dan kawalan pemain.</string>
+    <string name="setting_album_art_style">Gaya seni album</string>
+    <string name="setting_album_art_style_description">Pilih rupa latar belakang Sedang Dimainkan pada jam tangan.</string>
+    <string name="setting_album_art_blur_radius">Keamatan kabur</string>
+    <string name="setting_album_art_blur_radius_description">Kekuatan kabur skrin penuh apabila latar belakang yang dipilih menggunakan kesan kabur. Kini <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Keamatan malap</string>
+    <string name="setting_album_art_dim_strength_description">Tahap seni album digelapkan untuk kebolehbacaan teks. Kini <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Gaya lorekan</string>
+    <string name="setting_player_shading_intensity">Keamatan lorekan</string>
+    <string name="setting_player_shading_intensity_description">Tahap lorekan menggelapkan latar belakang. 100%% ialah kekuatan penuh; naikkan lebih tinggi untuk kontras tambahan (hingga 150%%). Kini <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Gunakan rupa ini pada semua muka jam</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Salin tetapan rupa muka jam ini ke semua muka jam lain</string>
+    <string name="apply_appearance_confirm_title">Gunakan pada semua muka jam?</string>
+    <string name="apply_appearance_confirm_message">Ini akan menulis ganti tetapan rupa semua muka jam lain dengan tetapan semasa. Tetapan tingkah laku tidak akan berubah.</string>
+    <string name="apply_appearance_confirm_button">Gunakan</string>
+    <string name="apply_appearance_done">Digunakan pada semua muka jam</string>
+    <string name="category_wf_layout_actions">Susun atur</string>
+    <string name="setting_reset_appearance">Tetapkan semula susun atur ini</string>
+    <string name="setting_reset_appearance_description">Pulihkan rupa muka jam ini kepada lalai asal</string>
+    <string name="reset_appearance_confirm_title">Tetapkan semula susun atur ini?</string>
+    <string name="reset_appearance_confirm_message">Tetapan rupa muka jam ini kembali kepada lalai. Tetapan tingkah laku dan muka jam lain tidak terjejas.</string>
+    <string name="reset_appearance_confirm_button">Tetapkan semula</string>
+    <string name="reset_appearance_done">Susun atur ditetapkan semula kepada lalai</string>
+    <string name="setting_reset_all_faces">Tetapkan semula semua muka jam kepada lalai</string>
+    <string name="setting_reset_all_faces_description">Pulihkan rupa setiap muka jam terbina dalam kepada lalai asal</string>
+    <string name="reset_all_faces_confirm_title">Tetapkan semula semua muka jam?</string>
+    <string name="reset_all_faces_confirm_message">Rupa semua muka jam terbina dalam kembali kepada lalai asal dan mana-mana tema tersuai aktif akan dimatikan. Tema tersuai yang disimpan, tetapan tingkah laku dan muka jam yang dipilih akan dikekalkan.</string>
+    <string name="reset_all_faces_confirm_button">Tetapkan semula semua</string>
+    <string name="reset_all_faces_done">Semua muka jam ditetapkan semula kepada lalai</string>
+    <string name="face_reset_migration_title">Kemas kini rupa jam tangan anda</string>
+    <string name="face_reset_migration_message">Anda mengemas kini daripada versi lama yang semua muka jamnya berkongsi satu set tetapan rupa. Kini setiap muka jam mengingati tetapan sendiri, jadi tetapan lama mungkin kelihatan tidak sepadan pada muka jam yang tidak pernah anda sesuaikan secara langsung. Kami mengesyorkan menetapkan semula semua muka jam kepada lalai baharu, atau mengosongkan data aplikasi untuk bermula sepenuhnya dari awal.</string>
+    <string name="face_reset_migration_reset_button">Tetapkan semula semua muka jam</string>
+    <string name="face_reset_migration_clear_data_button">Kosongkan data aplikasi</string>
+    <string name="setting_player_shading_color">Warna lorekan</string>
+    <string name="setting_wear_shading_custom_color">Warna lorekan tersuai</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Hitam</item>
+        <item>Aksen album</item>
+        <item>Album dinyahtepu</item>
+        <item>Warna tersuai</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Ikut tema pemain</item>
+        <item>Vignet tepi</item>
+        <item>Vignet tepi (kuat)</item>
+        <item>Vignet tepi (sangat kuat)</item>
+        <item>Sudut bawah</item>
+        <item>Pudar bawah</item>
+        <item>Had bawah dan atas</item>
+        <item>Penapis skrin penuh</item>
+        <item>Sapuan warna album</item>
+        <item>Kecerunan album dua warna</item>
+        <item>Tirai sisi</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Kelegapan seni album dalam mod ambien</string>
+    <string name="setting_ambient_album_art_opacity_description">Tahap keterlihatan seni album dalam mod ambien. Kini <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Masa tamat tindanan kelantangan/carian</string>
+    <string name="setting_volume_overlay_timeout_description">Tempoh tindanan kelantangan dan carian kekal pada skrin selepas pelarasan. Kini <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Zon mati putaran</string>
+    <string name="setting_rotary_deadzone_description">Pergerakan minimum mahkota sebelum perubahan kelantangan atau carian digunakan. Membantu mencegah pelarasan tidak sengaja. Kini <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Pengalaman Wear</string>
+    <string name="setting_swipe_gestures_hint">Gerak isyarat leret</string>
+    <string name="setting_swipe_gestures_hint_description">Leret ke atas/bawah/kiri boleh membuka sebarang tindakan. Ketik di sini untuk mengkonfigurasinya bagi Muzik dimainkan atau Tiada main balik. Leret ke kanan kekal dikhaskan untuk keluar daripada aplikasi.</string>
+    <string name="setting_screen_buttons_hint">Butang mini</string>
+    <string name="setting_screen_buttons_hint_description">Sehingga tiga butang kelihatan, setiap satu dengan tindakan ketik dan tekan lama. Ketik di sini untuk mengkonfigurasinya bagi Muzik dimainkan atau Tiada main balik.</string>
+    <string name="dev_screen_buttons_offset">Kedudukan butang mini</string>
+    <string name="dev_screen_buttons_offset_description">Jarak pilihan dalam dp antara bahagian bawah skrin jam tangan dan butang mini (lalai 42). Baris masih melaras kedudukan sendiri secara automatik untuk mengelak tajuk panjang.</string>
+    <string name="setting_screen_buttons_tilt">Kecondongan butang</string>
+    <string name="setting_screen_buttons_tilt_description">Sejauh mana butang sisi mengikut lengkung skrin. 0 = baris lurus; 100 = lengkung penuh dengan ikon condong.</string>
+    <string name="setting_screen_buttons_bg">Latar belakang butang mini</string>
+    <string name="setting_screen_buttons_opacity">Kelegapan butang mini</string>
+    <string name="setting_screen_buttons_opacity_description">Kelegapan keseluruhan kumpulan butang mini (0–100%%). Kini <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Panel tindakan pantas</string>
+    <string name="quick_panel_link_summary">Ketik dua kali di tengah skrin jam tangan untuk membukanya. Ketik di sini untuk menyediakan empat slotnya dalam Tindakan.</string>
+    <string name="quick_panel_config_hint">Ini ialah butang pada panel yang dibuka dengan mengetik dua kali di tengah skrin jam tangan. Ketik baris untuk memilih tindakan (\"Tiada\" menyembunyikannya); tekan lama untuk memulihkan lalai.</string>
+    <string name="quick_panel_slot_1">Butang 1</string>
+    <string name="quick_panel_slot_2">Butang 2</string>
+    <string name="quick_panel_slot_3">Butang 3</string>
+    <string name="quick_panel_slot_long">Butang panjang</string>
+    <string name="quick_panel_slot_default">%1$s (lalai)</string>
+    <string name="quick_panel_slot_hidden">Tersembunyi</string>
+    <string name="quick_panel_default_like">Suka</string>
+    <string name="quick_panel_default_shuffle">Rawak</string>
+    <string name="quick_panel_default_repeat">Ulang</string>
+    <string name="quick_panel_default_up_next">Seterusnya</string>
+    <string name="setting_wear_center_long_press_queue">Tekan lama tengah untuk buka baris gilir</string>
+    <string name="setting_wear_center_long_press_queue_description">Tekan lama bahagian tengah skrin Sedang Dimainkan untuk membuka baris gilir main balik.</string>
+    <string name="setting_wear_center_long_press">Tekan lama tengah</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Tukar muka jam</item>
+        <item>Buka baris gilir</item>
+        <item>Tiada</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Susun atur asas</string>
+    <string name="setting_wear_screen_face_description">Pilih struktur yang digunakan oleh tema ini. Tema disimpan boleh menggabungkan susun atur ini dengan fon, warna, kabur, lorekan, AOD dan panelnya sendiri.</string>
+    <string name="setting_wear_show_track_title">Tunjukkan tajuk lagu</string>
+    <string name="setting_wear_show_track_title_description">Paparkan nama lagu semasa pada pemain</string>
+    <string name="setting_wear_show_track_artist">Tunjukkan nama artis</string>
+    <string name="setting_wear_show_track_artist_description">Paparkan artis semasa pada pemain</string>
+    <string name="setting_wear_show_source_icon">Tunjukkan ikon aplikasi yang memainkan media</string>
+    <string name="setting_wear_show_source_icon_description">Paparkan ikon aplikasi yang memainkan media di sebelah artis. Menggunakan ikon daripada pemberitahuan medianya. Apabila dimatikan, ikon tidak pernah dihantar ke jam tangan.</string>
+    <string name="setting_wear_player_controls_visible">Tunjukkan kawalan pemain</string>
+    <string name="setting_wear_player_controls_visible_description">Tunjukkan atau sembunyikan butang terbina dalam pada susun atur Classic, Poster, Studio dan susun atur boleh dikonfigurasi lain tanpa menyahdayakan kawasan sentuhnya</string>
+    <string name="setting_wear_quadrant_tap_flash">Kelipkan ikon apabila diketuk</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Apabila tindakan zon sudut dicetuskan, ikonnya berkelip seketika pada kecerahan penuh — sangat berguna pada tema skrin Hidden, tempat ikon biasanya tidak kelihatan dan tiada pengesahan tindakan yang baru dijalankan.</string>
+    <string name="setting_wear_internal_progress_visible">Penunjuk kemajuan susun atur</string>
+    <string name="setting_wear_internal_progress_visible_description">Tunjukkan penunjuk kemajuan tambahan yang direka untuk susun atur ini. Gelang butang main Expressive dan Material ialah sebahagian daripada kawalannya dan kekal tersedia.</string>
+    <string name="setting_wear_edge_progress_visible">Tunjukkan arka kemajuan tepi</string>
+    <string name="setting_wear_edge_progress_visible_description">Sembunyikan hanya arka visual di sekeliling skrin. Carian dari tepi kekal sebagai pilihan berasingan.</string>
+    <string name="setting_wear_edge_seek_enabled">Cari dari tepi skrin</string>
+    <string name="setting_wear_edge_seek_enabled_description">Ketik atau seret sepanjang tepi skrin untuk melompat ke titik tepat, walaupun arkanya disembunyikan</string>
+    <string name="setting_wear_screen_theme">Gaya kawalan</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Seimbang</string>
+    <string name="wear_screen_theme_default_description">Hierarki dan saiz kawalan standard.</string>
+    <string name="wear_screen_theme_minimal">Minimum</string>
+    <string name="wear_screen_theme_minimal_description">Menggunakan kawalan yang lebih kecil dan ringkas sambil memastikan setiap tindakan kekal kelihatan dan boleh digunakan.</string>
+    <string name="wear_screen_theme_compact">Padat</string>
+    <string name="wear_screen_theme_compact_description">Menggunakan paparan kawalan yang lebih rapat tanpa mengubah tindakan anda.</string>
+    <string name="wear_screen_theme_cinema">Sinema</string>
+    <string name="wear_screen_theme_cinema_description">Melembutkan kawalan tanpa mengubah karya seni.</string>
+    <string name="wear_screen_theme_vivid">Terang</string>
+    <string name="wear_screen_theme_vivid_description">Menggunakan kawalan yang lebih besar dan menonjol.</string>
+    <string name="wear_screen_theme_contrast">Kontras tinggi</string>
+    <string name="wear_screen_theme_contrast_description">Menggunakan kawalan yang lebih besar untuk bacaan lebih mudah.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Menggunakan kawalan padat yang sedikit dimalapkan. Ia tidak menggelapkan latar belakang itu sendiri — gunakan tetapan latar belakang untuk itu.</string>
+    <string name="wear_screen_theme_hidden">Tersembunyi</string>
+    <string name="wear_screen_theme_hidden_description">Menyembunyikan semua ikon kawalan sepenuhnya. Kawasan sentuh kekal aktif dan berfungsi sepenuhnya.</string>
+    <string name="setting_wear_font">Jenis huruf</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Muka taip lalai aplikasi.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Versi berubah Google Sans dengan lebar, saiz optik, gred dan kebulatan boleh laras — membuka kawalan paksi di bawah.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Muka taip sistem klasik Android.</string>
+    <string name="wear_font_rounded">Bulat</string>
+    <string name="wear_font_rounded_description">Bentuk huruf moden yang mesra dengan hujung yang dibulatkan lembut.</string>
+    <string name="wear_font_sans_light">Moden ringan</string>
+    <string name="wear_font_sans_light_description">Sans-serif yang bersih dan lapang dengan berat visual yang lebih ringan.</string>
+    <string name="wear_font_sans_thin">Ultra nipis</string>
+    <string name="wear_font_sans_thin_description">Gaya paparan ekstra ringan untuk pemain minimalis.</string>
+    <string name="wear_font_sans_medium">Moden sederhana</string>
+    <string name="wear_font_sans_medium_description">Sans-serif yang tajam dengan strok yang lebih kuat dan padat.</string>
+    <string name="wear_font_sans_black">Tebal</string>
+    <string name="wear_font_sans_black_description">Keluarga paparan tebal dengan impak visual maksimum.</string>
+    <string name="wear_font_small_caps">Huruf besar kecil</string>
+    <string name="wear_font_small_caps_description">Bentuk padat seperti huruf besar dengan gaya editorial.</string>
+    <string name="wear_font_casual">Santai</string>
+    <string name="wear_font_casual_description">Keluarga fon sistem tulisan tangan yang ceria.</string>
+    <string name="wear_font_typewriter">Mesin taip (diarkibkan)</string>
+    <string name="wear_font_typewriter_description">Rupa mesin taip retro (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Sans-serif geometri bulat, alternatif percuma (OFL) dalam gaya Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Sans-serif geometri yang bersih, alternatif percuma (OFL) dalam gaya Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Muka taip roman humanis yang elegan, alternatif percuma (OFL) dalam gaya Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Gaya mesin taip yang lebih lembut (Love Letter Typewriter) — biasanya dikhaskan untuk trek bertema \"Lain\".</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Muka taip serif klasik.</string>
+    <string name="wear_font_serif_monospace">Serif mono</string>
+    <string name="wear_font_serif_monospace_description">Huruf serif lebar tetap dengan rupa editorial/terminal yang tersendiri.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Rupa teknikal lebar tetap.</string>
+    <string name="wear_font_condensed">Padat</string>
+    <string name="wear_font_condensed_description">Bentuk huruf lebih sempit yang memuatkan lebih banyak teks.</string>
+    <string name="wear_font_condensed_light">Padat ringan</string>
+    <string name="wear_font_condensed_light_description">Keluarga fon yang sempit dan lebih ringan untuk tajuk panjang.</string>
+    <string name="wear_font_condensed_medium">Padat sederhana</string>
+    <string name="wear_font_condensed_medium_description">Keluarga fon sempit dengan strok lebih kuat dan kebolehbacaan yang sangat baik.</string>
+    <string name="wear_font_cursive">Kursif</string>
+    <string name="wear_font_cursive_description">Muka taip skrip hiasan.</string>
+    <string name="setting_wear_dynamic_accent">Aksen dinamik pada jam</string>
+    <string name="setting_wear_dynamic_accent_description">Sesuaikan warna jam berasaskan album dengan seni kulit semasa. Apabila dimatikan, pilihan Warna album menggunakan warna aksen tema statik.</string>
+    <string name="setting_wear_album_art_fade">Peralihan pudar seni album</string>
+    <string name="setting_wear_album_art_fade_description">Pudarkan seni album dengan lancar apabila trek berubah.</string>
+    <string name="setting_wear_title_text_mode">Tingkah laku teks tajuk</string>
+    <string name="setting_wear_title_text_mode_description">Menentukan cara tajuk sedang dimainkan bertindak apabila tidak muat: Automatik menggabungkan pengecilan, pembalutan dan penatalan; pilihan lain menggunakan satu tingkah laku sahaja.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automatik (kecilkan, kemudian balut, kemudian tatal)</item>
+        <item>Tatal (marquee)</item>
+        <item>Balut kepada dua baris</item>
+        <item>Balut kepada tiga baris</item>
+        <item>Balut kepada lima baris</item>
+        <item>Statik (satu baris, tiada tatal atau pengecilan)</item>
+        <item>Kecilkan agar muat</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Warna teks artis</string>
+    <string name="setting_wear_artist_custom_color">Warna artis tersuai</string>
+    <string name="setting_wear_artist_custom_color_description">Pilih warna artis yang digunakan dengan pemprosesan Normal</string>
+    <string name="setting_wear_artist_desaturated">Warna artis kurang tepu</string>
+    <string name="setting_wear_artist_desaturated_description">Lembutkan warna teks artis berasaskan album — hanya digunakan apabila \"Warna teks artis\" ditetapkan kepada Warna album</string>
+
+    <string name="setting_wear_progress_color">Warna bar kemajuan</string>
+    <string name="setting_wear_progress_custom_color">Warna bar kemajuan tersuai</string>
+    <string name="setting_wear_progress_custom_color_description">Pilih warna kemajuan dan carian yang digunakan dengan pemprosesan Normal</string>
+    <string name="setting_wear_progress_desaturated">Warna bar kemajuan kurang tepu</string>
+    <string name="setting_wear_progress_desaturated_description">Lembutkan warna bar kemajuan berasaskan album — hanya digunakan apabila \"Warna bar kemajuan\" ditetapkan kepada Warna album</string>
+
+    <string name="setting_wear_volume_color">Warna bar kelantangan</string>
+    <string name="setting_wear_volume_custom_color">Warna kelantangan tersuai</string>
+    <string name="setting_wear_volume_custom_color_description">Pilih warna kelantangan yang digunakan dengan pemprosesan Normal</string>
+    <string name="setting_wear_quick_panel_color">Warna Tindakan Pantas</string>
+    <string name="setting_wear_quick_panel_custom_color">Warna Tindakan Pantas tersuai</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Pilih warna Tindakan Pantas yang digunakan dengan pemprosesan Normal</string>
+    <string name="setting_wear_shading_custom_color_description">Pilih warna yang mewarnakan kecerunan lorekan</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Neutral (warna tema statik)</item>
+        <item>Warna album</item>
+        <item>Warna tersuai</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Klasik</item>
+        <item>Ekspresif</item>
+        <item>Vinil</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spektrum</item>
+        <item>Material</item>
+        <item>Imersif</item>
+        <item>Kedalaman</item>
+        <item>Karusel</item>
+        <item>Sembang</item>
+        <item>Berpecah</item>
+        <item>Nota</item>
+        <item>Rangkap</item>
+        <item>Metadata</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Carian Ekspresif</string>
+    <string name="setting_wear_expressive_seek_mode_description">Menentukan cara menyental trek melalui sentuhan pada muka Expressive. Gelang tengah menjadikan gelang di sekeliling butang main boleh diseret; Gelang tepi turut memaparkan gelang bezel Classic; Tiada menyerahkan carian kepada crown berputar sahaja.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Cincin tengah</item>
+        <item>Cincin tepi</item>
+        <item>Tiada</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Paparan sentiasa hidup</string>
+    <string name="setting_wear_aod_style">Gaya paparan sentiasa hidup</string>
+    <string name="setting_wear_aod_style_description">Menentukan rupa skrin sedang dimainkan semasa jam dalam mod ambien. Ikut muka sepadan dengan muka yang dipilih; Minimal hanya memaparkan teks malap pada hitam tulen untuk hayat bateri paling lama.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Ikut muka jam</item>
+        <item>Klasik</item>
+        <item>Ekspresif (garis luar)</item>
+        <item>Material (garis luar)</item>
+        <item>Kawalan AMOLED</item>
+        <item>Chrono (jam besar)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Imersif</item>
+        <item>Karusel</item>
+        <item>Sembang</item>
+        <item>Berpecah</item>
+        <item>Nota</item>
+        <item>Rangkap</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Warna paparan sentiasa hidup</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Putih</item>
+        <item>Warna album</item>
+        <item>Warna tersuai</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Putih</item>
+        <item>Dinamik (mengikut kawasan di bawah jam)</item>
+        <item>Warna album</item>
+        <item>Warna tersuai</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Ikut gaya panel</item>
+        <item>Lutsinar (tiada latar belakang)</item>
+        <item>Aksen album</item>
+        <item>Separa lut sinar</item>
+        <item>Putih</item>
+        <item>Putih beku</item>
+        <item>Hitam</item>
+        <item>Dinamik (tona album)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Latar pil Seterusnya</string>
+    <string name="setting_wear_show_up_next_pill">Pil Seterusnya pada pemain</string>
+    <string name="setting_wear_show_up_next_pill_description">Tunjukkan pil Seterusnya di bahagian bawah skrin sedang dimainkan. Ia menggunakan ruang baris butang mini, jadi hanya muncul apabila baris itu tidak dipaparkan.</string>
+    <string name="category_wf_clock">Jam</string>
+    <string name="setting_wear_clock_color">Warna jam</string>
+    <string name="setting_wear_clock_custom_color">Warna jam tersuai</string>
+    <string name="setting_wear_clock_custom_color_description">Ketik untuk memilih warna jam yang digunakan apabila Warna jam ditetapkan kepada Warna tersuai</string>
+    <string name="setting_wear_clock_opacity">Kelegapan jam</string>
+    <string name="setting_wear_clock_opacity_description">Menentukan kelegapan jam yang sentiasa dipaparkan (10–100%%). Kini <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Warna paparan sentiasa hidup tersuai</string>
+    <string name="setting_wear_aod_custom_color_description">Ketik untuk memilih warna bagi teks, kawalan dan jam paparan sentiasa hidup apabila \"Warna paparan sentiasa hidup\" ditetapkan kepada Warna tersuai</string>
+    <string name="setting_wear_aod_intensity">Kecerahan paparan sentiasa hidup</string>
+    <string name="setting_wear_aod_intensity_description">Menentukan kecerahan paparan sentiasa hidup (20–100%%). Nilai lebih rendah lebih malap dan menggunakan kurang bateri. Kini <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Butang pengangkutan pada paparan sentiasa hidup</string>
+    <string name="setting_wear_aod_show_transport_description">Tunjukkan butang sebelumnya/main/seterusnya berbingkai dalam gaya visual paparan sentiasa hidup yang disokong. Ia tidak boleh diketuk ketika skrin malap, tetapi ketukan membangunkan jam dengan butang sudah berada di bawah jari anda.</string>
+    <string name="setting_wear_aod_show_progress">Gelang kemajuan pada paparan sentiasa hidup</string>
+    <string name="setting_wear_aod_show_progress_description">Tunjukkan gelang kemajuan di sekeliling butang main dalam mod ambien — kedudukan hanya dikemas kini kira-kira sekali seminit di situ</string>
+    <string name="setting_wear_aod_show_pills">Seterusnya pada paparan sentiasa hidup</string>
+    <string name="setting_wear_aod_show_pills_description">Tunjukkan pil Seterusnya statik berbingkai di bahagian bawah gaya visual paparan sentiasa hidup</string>
+    <string name="category_wf_gestures">Gerak isyarat skrin</string>
+    <string name="setting_wear_mini_buttons_mode">Tunjukkan butang mini</string>
+    <string name="setting_wear_gestures_mode">Gerak isyarat skrin</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Sentiasa</item>
+        <item>Hanya semasa dimainkan</item>
+        <item>Hanya semasa dijeda</item>
+        <item>Tidak pernah</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Seni album pada paparan sentiasa hidup</string>
+    <string name="setting_wear_aod_show_art_description">Kekalkan seni album yang dimalapkan kelihatan dalam mod ambien. Mematikannya memaparkan latar hitam tulen, yang menjimatkan bateri dengan ketara pada skrin AMOLED.</string>
+    <string name="setting_wear_aod_art_treatment">Gaya seni album paparan sentiasa hidup</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Kabur lembut</item>
+        <item>Kulit album jelas</item>
+        <item>Kabur monokrom</item>
+        <item>Ikut rawatan karya seni pemain</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Jam pada paparan sentiasa hidup</string>
+    <string name="setting_wear_aod_show_clock_description">Paparkan jam apabila jam tangan berada dalam mod ambien</string>
+    <string name="setting_wear_aod_show_track_info">Maklumat trek pada paparan sentiasa hidup</string>
+    <string name="setting_wear_aod_show_track_info_description">Tunjukkan tajuk trek dan artis dalam mod ambien</string>
+
+    <string name="category_overlays_queue">Lapisan &amp; giliran</string>
+    <string name="category_wf_panel_shared">Rupa panel dikongsi</string>
+    <string name="category_wf_panel_volume">Panel kelantangan</string>
+    <string name="category_wf_panel_seek">Panel kemajuan &amp; carian</string>
+    <string name="category_wf_panel_quick">Panel tindakan pantas</string>
+    <string name="category_wf_panel_queue">Giliran &amp; senarai</string>
+    <string name="category_wf_panel_effects">Kesan panel</string>
+    <string name="setting_wear_overlay_backdrop_style">Latar panel</string>
+    <string name="setting_wear_volume_style">Gaya kelantangan</string>
+    <string name="setting_wear_volume_layout">Susun atur kelantangan</string>
+    <string name="setting_wear_quick_panel_style">Gaya panel pantas</string>
+    <string name="setting_wear_quick_panel_layout">Susun atur panel pantas</string>
+    <string name="setting_wear_quick_panel_source">Tindakan Pantas</string>
+    <string name="setting_wear_quick_panel_source_description">Pilih butang yang dikonfigurasikan atau tindakan yang disediakan oleh aplikasi yang sedang memainkan media.</string>
+    <string name="quick_panel_open_note_title">Membuka panel</string>
+    <string name="quick_panel_open_note_description">Ketik dua kali bahagian tengah skrin sedang dimainkan untuk membuka panel Tindakan Pantas pada jam.</string>
+    <string name="preview_current_app_action">Tindakan aplikasi semasa</string>
+    <string name="preview_notification_controls">Ikon daripada pemberitahuan media</string>
+    <string name="setting_wear_queue_style">Gaya giliran</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Gunakan kulit pintasan sebagai latar</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Apabila Gaya giliran ialah varian kulit, baris tindakan panel pantas dengan kulit pintasan yang telah diperoleh (trek, senarai main, artis…) turut mengisi pilnya dengan seni tersebut, seperti Seterusnya. Pintasan tanpa kulit yang diperoleh (ikon aplikasi biasa) tidak terjejas.</string>
+    <string name="setting_wear_list_row_size">Saiz pil senarai</string>
+    <string name="setting_wear_list_row_size_description">Ketinggian baris lebar penuh dalam giliran, menu dan panel pantas.</string>
+    <string name="setting_wear_progress_gradient">Adun palet ke dalam gelang</string>
+    <string name="setting_wear_progress_gradient_description">Dengan rawatan warna berbilang rona (Pelengkap, Triadik, Analog, Duotone), gelang pepejal memudar melalui ketiga-tiga warna. Matikan untuk gelang satu warna sambil mengekalkan palet album di tempat lain.</string>
+    <string name="setting_wear_progress_style">Gaya gelang kemajuan</string>
+    <string name="setting_wear_seek_style">Gaya bacaan carian &amp; kelantangan</string>
+    <string name="setting_wear_seek_layout">Susun atur panel carian</string>
+    <string name="setting_wear_color_treatment">Rawatan warna jam</string>
+    <string name="setting_wear_normal_color">Warna normal</string>
+    <string name="setting_wear_normal_color_description">Pilih satu warna yang digunakan dalam mod Normal untuk aksen tajuk, kemajuan, kelantangan, panel dan kemasan butang mini</string>
+    <string name="setting_wear_normal_color_multi">Gunakan palet warna</string>
+    <string name="setting_wear_normal_color_multi_description">Apabila dihidupkan, skrin menggunakan warna utama bersama dua tona sokongan. Apabila dimatikan, satu warna sahaja digunakan di mana-mana — warna album sendiri atau warna yang anda pilih.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normal (warna dipilih)</item>
+        <item>Dinyahtepu (warna album lembut)</item>
+        <item>Ekspresif (palet album penuh)</item>
+        <item>Pelengkap (album + warna bertentangan)</item>
+        <item>Triadik (tiga rona album)</item>
+        <item>Analog (rona bersebelahan)</item>
+        <item>Monokrom (satu rona, tiga tona)</item>
+        <item>Duotona (dua warna album)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Ikut rawatan jam</item>
+        <item>Normal (warna dipilih)</item>
+        <item>Dinyahtepu (warna album lembut)</item>
+        <item>Ekspresif (palet album penuh)</item>
+        <item>Pelengkap (album + warna bertentangan)</item>
+        <item>Triadik (tiga rona album)</item>
+        <item>Analog (rona bersebelahan)</item>
+        <item>Monokrom (satu rona, tiga tona)</item>
+        <item>Duotona (dua warna album)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Ketebalan tajuk</string>
+    <string name="setting_wear_title_font_italic">Tajuk condong</string>
+    <string name="setting_wear_title_font_scale">Saiz tajuk</string>
+    <string name="setting_wear_title_font_opacity">Kelegapan tajuk</string>
+    <string name="setting_wear_title_font_tracking">Jarak huruf tajuk</string>
+    <string name="setting_wear_title_color">Warna teks tajuk</string>
+    <string name="setting_wear_title_custom_color">Warna tajuk tersuai</string>
+    <string name="wear_title_color_face_default">Lalai muka (seperti direka)</string>
+    <string name="setting_wear_title_adaptive_contrast">Sesuaikan warna tajuk untuk kontras</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Mencerahkan atau menggelapkan tajuk apabila warnanya terlalu hampir dengan karya seni di belakangnya, sambil mengekalkan rona. Tiada kesan selagi tajuk menggunakan warna lalai muka.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Sesuaikan warna artis untuk kontras</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Mencerahkan atau menggelapkan baris artis apabila warna album terlalu hampir dengan karya seni di belakangnya, sambil mengekalkan rona. Hanya jalur tempat baris itu berada diukur, bukan keseluruhan kulit.</string>
+    <string name="setting_wear_artist_font_weight">Ketebalan artis</string>
+    <string name="setting_wear_artist_font_italic">Artis condong</string>
+    <string name="setting_wear_artist_font_scale">Saiz artis</string>
+    <string name="setting_wear_artist_font_opacity">Kelegapan artis</string>
+    <string name="setting_wear_artist_font_tracking">Jarak huruf artis</string>
+    <string name="setting_wear_source_icon_scale">Saiz ikon aplikasi</string>
+    <string name="setting_wear_source_icon_opacity">Kelegapan ikon aplikasi</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 ialah ketebalan biasa muka; nilai lebih tinggi lebih tebal. Untuk Google Sans Flex, ini ialah paksi berat fon itu sendiri</string>
+    <string name="setting_wear_typography_scale_description">Peratus daripada saiz asal muka (70–140). 100 mengekalkan saiz reka bentuk setiap susun atur</string>
+    <string name="setting_wear_typography_opacity_description">Peratus (20–100). 100 mengekalkan kelegapan asal muka</string>
+    <string name="setting_wear_typography_tracking_description">Ruang tambahan antara huruf, dalam perseratus em (−5 hingga 20). 0 mengekalkan jarak asal fon</string>
+    <string name="setting_wear_color_modifier">Nada</string>
+    <string name="setting_wear_color_modifier_description">Laraskan keseluruhan palet tanpa mengubah cara ia diterbitkan — berfungsi dengan setiap rawatan warna</string>
+    <string name="setting_wear_color_hue_shift">Anjakan warna</string>
+    <string name="setting_wear_color_hue_shift_description">Memutarkan palet album di sekeliling roda warna, dalam darjah (0–359). Setiap rawatan mengekalkan warna utama pada rona asal album, jadi inilah yang mengubahnya. 0 menggunakan warna album sebagaimana adanya; warna Normal tetap tidak pernah dialihkan.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Tiada</item>
+        <item>Ceria</item>
+        <item>Pastel</item>
+        <item>Hangat</item>
+        <item>Sejuk</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Arka tepi (kiri)</item>
+        <item>Arka tepi (tinggi)</item>
+        <item>Arka tepi (kanan)</item>
+        <item>Arka tepi (atas)</item>
+        <item>Arka tepi (bawah)</item>
+        <item>Cincin penuh</item>
+        <item>Halo tengah</item>
+        <item>Meter mendatar</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Cincin tepi</item>
+        <item>Cincin tepi (nipis)</item>
+        <item>Cincin tepi (tebal)</item>
+        <item>Garis masa</item>
+        <item>Garis masa bersegmen</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metadata dahulu</item>
+        <item>Arka</item>
+        <item>Hero</item>
+        <item>Grid</item>
+        <item>Baris berlabel</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Padu</item>
+        <item>Putus-putus</item>
+        <item>Titik</item>
+        <item>Garis halus</item>
+        <item>Komet</item>
+        <item>60 titik jam</item>
+        <item>60 tanda jam</item>
+        <item>Segmen 12 jam</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Ringkas</item>
+        <item>Pil kaca</item>
+        <item>Pil ekspresif</item>
+        <item>Pil Material</item>
+        <item>Pil putih</item>
+        <item>Gergasi</item>
+        <item>Kedudukan / jumlah</item>
+        <item>Kaca putih</item>
+        <item>Album lut sinar</item>
+        <item>Kilauan album</item>
+        <item>Garis luar</item>
+        <item>Tema padu</item>
+        <item>Album padu</item>
+        <item>Mikro</item>
+        <item>Bayang (tanpa bingkai)</item>
+        <item>Garis bawah</item>
+        <item>Garis luar halus</item>
+        <item>Warna album gergasi</item>
+        <item>Mono</item>
+        <item>Tona gelap</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Butang dikonfigurasi</item>
+        <item>Daripada aplikasi media semasa</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Ikut gaya panel</item>
+        <item>Kabur album (akrilik)</item>
+        <item>Hitam padu</item>
+        <item>Warna album padu</item>
+        <item>Kaca</item>
+        <item>Kecerunan album</item>
+        <item>Duotona album</item>
+        <item>Prisma</item>
+        <item>Kaca cecair</item>
+        <item>Kabur ekspresif</item>
+        <item>Ekspresif</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Kaca</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tona</item>
+        <item>Neon</item>
+        <item>Cerah</item>
+        <item>Kecerunan</item>
+        <item>Mono</item>
+        <item>Garis luar</item>
+        <item>Duotona</item>
+        <item>Prisma</item>
+        <item>Kontras tinggi</item>
+        <item>Terminal</item>
+        <item>Fros</item>
+        <item>Segmen</item>
+        <item>Aurora</item>
+        <item>Dakwat</item>
+        <item>Alur</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Padat</item>
+        <item>Biasa</item>
+        <item>Tinggi</item>
+        <item>Sangat tinggi</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Kaca</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tona</item>
+        <item>Neon</item>
+        <item>Cerah</item>
+        <item>Kecerunan</item>
+        <item>Mono</item>
+        <item>Garis luar</item>
+        <item>Duotona</item>
+        <item>Prisma</item>
+        <item>Kontras tinggi</item>
+        <item>Terminal</item>
+        <item>Fros</item>
+        <item>Kulit</item>
+            <item>Kabur kulit</item>
+        <item>Kulit tona</item>
+        <item>Kulit segi empat</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Kaca</item>
+        <item>Kaca putih</item>
+        <item>Kaca tona</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tona</item>
+        <item>Neon</item>
+        <item>Cerah</item>
+        <item>Kecerunan</item>
+        <item>Mono</item>
+        <item>Garis luar</item>
+        <item>Garis luar kaca putih</item>
+        <item>Duotona</item>
+        <item>Prisma</item>
+        <item>Kontras tinggi</item>
+        <item>Terminal</item>
+        <item>Fros</item>
+        <item>Hantu (tanpa bingkai)</item>
+        <item>Kabus</item>
+        <item>Dakwat</item>
+        <item>Titik</item>
+        <item>Papak</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Kekalkan aplikasi aktif selepas jeda</string>
+    <string name="setting_wear_paused_hold_description">Menentukan berapa lama aplikasi jam kekal boleh dicapai dari muka jam selepas anda menjeda, supaya anda boleh menyambung dengan mengangkat pergelangan tangan tanpa membuka semula. Tetapan lebih lama mengekalkan perkhidmatan latar berjalan.</string>
+    <string name="wear_paused_hold_off">Jangan kekalkan</string>
+    <string name="wear_paused_hold_5">5 minit</string>
+    <string name="wear_paused_hold_15">15 minit</string>
+    <string name="wear_paused_hold_30">30 minit</string>
+    <string name="wear_paused_hold_60">1 jam</string>
+    <string name="wear_paused_hold_always">Sehingga main balik tamat</string>
+
+    <string name="setting_wear_idle_button_action">Butang apabila tiada apa-apa dimainkan</string>
+    <string name="setting_wear_idle_auto_open">Buka apabila tiada apa-apa dimainkan</string>
+    <string name="setting_wear_idle_auto_open_description">Terus ke skrin ini apabila anda membuka aplikasi jam tanpa muzik dimainkan.</string>
+    <string name="wear_idle_action_resume">Sambung aplikasi terakhir</string>
+    <string name="wear_idle_action_shortcuts">Pintasan senarai main</string>
+    <string name="wear_idle_action_menu">Menu tindakan</string>
+    <string name="wear_idle_action_search">Cari</string>
+    <string name="wear_idle_action_queue">Dimainkan baru-baru ini</string>
+    <string name="wear_idle_action_none">Tiada butang</string>
+    <string name="wear_idle_auto_open_none">Kekal pada pemain</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Semak imbas pustaka</string>
+    <string name="library_up">Kembali</string>
+    <string name="error_library_unavailable">Aplikasi ini tiada pustaka yang boleh disemak imbas</string>
+    <string name="error_library_empty">Tiada apa-apa di sini</string>
+    <string name="error_library_no_player">Mulakan sesuatu dahulu</string>
+
+    <string name="setting_wear_carousel_card_shape">Bentuk kad karusel</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Bulat</item>
+        <item>Segi empat sama</item>
+        <item>Segi empat bulat</item>
+        <item>Bulatan</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Gunakan fon di mana-mana</string>
+    <string name="setting_wear_font_all_screens_description">Menggunakan fon yang dipilih pada menu, giliran dan Tindakan Pantas, bukan hanya pemain. Fon paparan dan tulisan tangan mungkin lebih sukar dibaca dalam senarai.</string>
+
+    <string name="setting_wear_clock_font">Muka taip jam</string>
+    <string name="wear_clock_font_follow">Ikut fon trek</string>
+    <string name="setting_wear_lyrics_font">Muka taip lirik</string>
+    <string name="setting_wear_lyrics_font_description">Muka taip untuk perkataan lagu pada skrin lirik dan muka Verse. Mengikut muka taip trek melainkan anda memilih satu di sini.</string>
+    <string name="wear_lyrics_font_follow">Ikut muka taip trek</string>
+    <string name="setting_wear_clock_font_weight">Ketebalan jam</string>
+    <string name="setting_wear_clock_font_italic">Jam condong</string>
+    <string name="setting_wear_clock_font_scale">Saiz jam</string>
+    <string name="setting_wear_clock_font_tracking">Jarak huruf jam</string>
+    <string name="setting_wear_clock_adaptive_contrast">Sesuaikan warna jam untuk kontras</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Mencerahkan atau menggelapkan jam apabila warna album terlalu hampir dengan karya seni di belakangnya, sambil mengekalkan rona. Hanya digunakan apabila Warna jam ditetapkan kepada Warna album.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Paparan huruf besar semua yang padat — gaya poster, muat tajuk panjang</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Serif editorial kontras tinggi — gaya majalah</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Sans-serif geometri teknikal dengan perincian unik</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Paparan sci-fi bersegi — tebal dan futuristik</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Skrip tulisan tangan — santai dan peribadi</string>
+    <string name="setting_wear_track_time_mode">Paparan masa trek</string>
+    <string name="setting_wear_track_time_mode_description">Menentukan bila kedudukan trek (cth. 1:23 / 3:45) dipaparkan pada skrin sedang dimainkan.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Sentiasa</item>
+        <item>Hanya semasa dimainkan</item>
+        <item>Hanya semasa dijeda</item>
+        <item>Tidak pernah</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Lengkung butang mini</string>
+    <string name="setting_screen_buttons_curve_description">Pilih gaya lengkungan untuk butang mini: rata, arka, lembut, melengkung.</string>
+    <string name="setting_screen_buttons_shape">Bentuk butang mini</string>
+    <string name="setting_screen_buttons_shape_description">Pilih bentuk dan format susun atur butang mini.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pil (lalai)</item>
+        <item>Bulatan</item>
+        <item>Segi empat sama</item>
+        <item>Segi empat bulat (lembut)</item>
+        <item>Segi empat bulat (sederhana)</item>
+        <item>Segi empat bulat</item>
+        <item>Daun</item>
+        <item>Titis</item>
+        <item>Pil (lebar kecil)</item>
+        <item>Pil (lebar sederhana)</item>
+        <item>Pil (lebar besar)</item>
+        <item>Pil (lebar sangat besar)</item>
+        <item>Segi empat tepat bulat (kecil)</item>
+        <item>Segi empat tepat bulat (sederhana)</item>
+        <item>Segi empat tepat bulat (besar)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Rata</item>
+        <item>Arka</item>
+        <item>Lengkung lembut</item>
+        <item>Lengkung lembut</item>
+        <item>Lengkung sederhana</item>
+        <item>Melengkung</item>
+        <item>Lengkung ekstrem</item>
+        <item>Bentang ke tepi</item>
+        <item>Tepi kiri</item>
+        <item>Tepi kanan</item>
+        <item>Kedua-dua tepi</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Latar belakang lalai</item>
+        <item>Kaca (seragam)</item>
+        <item>Kaca (cerah)</item>
+        <item>Album lut sinar</item>
+        <item>Album lut sinar Exp</item>
+        <item>Kilauan album</item>
+        <item>Kilauan Exp</item>
+        <item>Tema padu</item>
+        <item>Album padu</item>
+        <item>Album padu Exp</item>
+        <item>Garis luar</item>
+        <item>Garis luar album Exp</item>
+        <item>Ikon sahaja (lutsinar)</item>
+        <item>Ikon Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Neutral</item>
+        <item>Warna album</item>
+        <item>Warna tersuai</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Kulit penuh</item>
+        <item>Latar belakang kabur</item>
+        <item>Tepi berfros</item>
+        <item>Segi empat (bucu tajam)</item>
+        <item>Segi empat (bucu lembut)</item>
+        <item>Segi empat (bucu bulat)</item>
+        <item>Hitam &amp; putih</item>
+        <item>Hitam putih kabur</item>
+        <item>Kabur ekspresif</item>
+        <item>Ekspresif</item>
+        <item>Kecerunan tona Material</item>
+        <item>Kulit poster</item>
+        <item>Kecerunan studio</item>
+        <item>Kilauan jejari vinil</item>
+        <item>Kilauan halo</item>
+        <item>Reben aurora</item>
+        <item>Kecerunan spektrum</item>
+        <item>Sapuan korona</item>
+        <item>Pudar senja</item>
+        <item>Kembang</item>
+        <item>Pudar ufuk</item>
+        <item>Kilauan bara</item>
+        <item>Hitam Eclipse AMOLED</item>
+        <item>Tersembunyi (hitam padu)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Dilumpuhkan</item>
+        <item>Tunjukkan ikon muka jam muzik (Wear 3.0 sahaja)</item>
+        <item>Buka Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Tamat masa tutup</string>
+    <string name="setting_close_timeout_description">Svartifoss akan menutup sendiri secara automatik apabila tiada muzik dimainkan selama <![CDATA[<b>%1$s saat</b>]]>. Ciri ini dilumpuhkan apabila tamat masa ditetapkan kepada 0 saat. Untuk menjimatkan bateri, pilihan ini mungkin kadangkala kurang tepat dan penutupan boleh tertunda sehingga sekitar seminit.</string>
+    <string name="setting_wear_close_on_idle">Tutup pada \"Tiada apa-apa dimainkan\"</string>
+    <string name="setting_wear_close_on_idle_description">Menutup aplikasi jam secara automatik kira-kira seminit selepas ia sampai ke skrin melahu \"Tiada apa-apa dimainkan\", supaya ia tidak kekal di situ. Bebas daripada tamat masa tutup di atas, yang meliputi trek dijeda.</string>
+    <string name="category_notifications">Pop timbul pemberitahuan</string>
+    <string name="setting_enable_notifications">Tunjukkan pop timbul pemberitahuan</string>
+    <string name="setting_enable_notifications_description">Ciri ini memerlukan aplikasi lain untuk mengurus pemberitahuan (Vibration Center for Wear).\n\nSetiap kali Vibration Center menggetarkan jam, Svartifoss akan memaparkan pop timbul teks pemberitahuan, membolehkan anda melihatnya dengan cepat tanpa meninggalkan Svartifoss.</string>
+    <string name="setting_notification_timeout">Tamat masa pop timbul pemberitahuan</string>
+    <string name="setting_notification_timeout_description">Pop timbul pemberitahuan akan ditutup secara automatik selepas <![CDATA[<b>%1$s saat</b>]]>. Masukkan 0 untuk melumpuhkan tutup automatik.</string>
+    <string name="app_required">Aplikasi diperlukan</string>
+    <string name="vibration_center_required_description">Untuk menggunakan ciri ini, anda perlu memasang aplikasi lain yang percuma: Vibration Center for Wear.</string>
+    <string name="open_play_store">Buka Play Store</string>
+    <string name="error_no_notification_service_support">Maaf, peranti anda nampaknya tidak menyokong perkhidmatan pemberitahuan</string>
+    <string name="setting_always_select_center_action">Sentiasa pilih tindakan tengah</string>
+    <string name="setting_always_select_center_action_description">Apabila didayakan, mengetik senarai tindakan akan sentiasa memilih pilihan tengah (diserlahkan), tanpa mengira pilihan yang anda ketik.</string>
+    <string name="change_icon">Tukar ikon</string>
+    <string name="please_wait">Sila tunggu</string>
+
+    <string name="error_playlist_not_supported">Tidak disokong oleh aplikasi media ini</string>
+    <string name="error_search_no_results">Tiada hasil ditemui</string>
+    <string name="seconds_to_skip">Saat untuk dilangkau:</string>
+    <string name="seconds_to_reverse">Saat untuk diundur:</string>
+
+    <string name="setting_dynamic_accent_color">Warna aksen dinamik</string>
+    <string name="setting_dynamic_accent_color_description">Apabila didayakan, warna aksen (bar carian, item giliran aktif) menyesuaikan diri secara automatik dengan warna dominan seni album semasa.</string>
+    <string name="setting_desaturated_color">Warna kurang tepu</string>
+    <string name="setting_desaturated_color_description">Melaraskan ketepuan dan kecerahan warna yang diekstrak untuk menjamin kebolehbacaan dan kontras tinggi bergantung pada tema aktif.</string>
+
+    <string name="queue_header">Giliran main balik</string>
+    <string name="queue_unavailable">Giliran tidak tersedia</string>
+
+    <string name="setting_custom_accent_color">Warna aksen</string>
+    <string name="setting_custom_accent_color_description">Pilih warna aksen tersuai untuk antara muka aplikasi</string>
+    <string name="setting_mini_player">Pemain mini</string>
+    <string name="setting_mini_player_description">Menunjukkan bar sedang dimainkan yang kekal di atas navigasi bawah apabila media aktif. Didayakan secara lalai; matikan untuk mendapatkan semula ruang itu.</string>
+    <string name="color_picker_title">Pilih warna aksen</string>
+    <string name="color_picker_reset">Tetapkan semula</string>
+    <string name="color_picker_apply">Gunakan</string>
+    <string name="color_picker_default">Lalai</string>
+    <string name="color_picker_invalid">Kod warna tidak sah</string>
+    <string name="color_picker_current">Semasa: %s</string>
+
+    <string name="drawer_version_format">Versi %1$s</string>
+    <string name="drawer_tagline">Aplikasi pendamping untuk Wear OS</string>
+    <string name="drawer_about_heading">Perihal</string>
+    <string name="drawer_about_summary">Svartifoss membolehkan anda mengawal muzik pada telefon dari jam Wear OS — dengan alat kawalan jauh yang boleh disesuaikan sepenuhnya untuk peranti anda.</string>
+    <string name="drawer_name_heading">Nama</string>
+    <string name="drawer_name_meaning">Svartifoss bermaksud “Air Terjun Hitam” dalam bahasa Iceland — dinamakan sempena air terjun di Taman Negara Vatnajökull, tempat tiang basalt gelap membingkai aliran air terjun yang sempit. Seperti air mengalir di atas batu, muzik mengalir melalui aplikasi.</string>
+    <string name="drawer_sync_heading">Segerak</string>
+    <string name="drawer_sync_summary">Tetapan jam dikonfigurasikan di sini pada telefon dan disegerakkan secara automatik ke jam yang dipasangkan.</string>
+    <string name="drawer_support_heading">Sokongan</string>
+    <string name="drawer_support_summary">Svartifoss adalah percuma dan sumber terbuka — belanja saya kopi jika ia berguna untuk anda :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Muat turun seni kulit</string>
+    <string name="album_art_saved">Seni kulit disimpan ke galeri</string>
+    <string name="album_art_save_error">Gagal menyimpan seni kulit</string>
+
+    <string name="action_play_liked_songs">Mainkan lagu disukai (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Mainkan lagu disukai (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Mainkan trek disukai (SoundCloud)</string>
+    <string name="action_my_playlists">Pintasan penstriman</string>
+    <string name="action_play_specific_playlist">Buka pintasan penstriman</string>
+    <string name="action_choose_or_add_streaming_shortcut">Pilih atau tambah pintasan penstriman</string>
+    <string name="action_show_streaming_library">Tunjukkan semua pintasan disimpan</string>
+    <string name="playlist_shortcut_pick_title">Pilih pintasan</string>
+    <string name="playlist_shortcut_pick_empty">Belum ada pintasan penstriman disimpan — tambah satu di bawah, kemudian ketik untuk memilihnya</string>
+    <string name="playlist_shortcuts_empty">Belum ada pintasan penstriman — tambahkannya dalam tetapan aplikasi telefon</string>
+    <string name="setting_playlist_shortcuts">Pintasan penstriman</string>
+    <string name="setting_playlist_shortcuts_description">Buka pautan kongsi dari jam dalam YouTube Music, Spotify dan aplikasi penstriman lain</string>
+    <string name="setting_shortcut_artwork">Dapatkan karya seni pintasan dalam talian</string>
+    <string name="setting_shortcut_artwork_description">Muat turun imej kecil daripada perkhidmatan untuk setiap pintasan disimpan, ditunjukkan pada senarai telefon, menu jam dan butang yang ditetapkan. Setiap imej kecil diperoleh sekali sahaja; hanya pautan kongsi awam dihantar. Dimatikan secara lalai.</string>
+    <string name="setting_queue_local_artwork">Kulit giliran daripada pustaka anda</string>
+    <string name="setting_queue_local_artwork_description">Pemain muzik tempatan menerbitkan kulit giliran sebagai rujukan pustaka. Berikan akses media supaya ia boleh dipaparkan dalam giliran jam. Tiada akses internet terlibat.</string>
+    <string name="setting_queue_local_artwork_granted">Akses media diberikan — kulit giliran tempatan akan dipaparkan</string>
+    <string name="setting_queue_local_artwork_denied">Akses media ditolak. Dayakannya dalam tetapan Android untuk memaparkan kulit giliran tempatan.</string>
+    <string name="setting_queue_remote_artwork">Dapatkan kulit giliran dalam talian</string>
+    <string name="setting_queue_remote_artwork_short_description">Aplikasi penstriman (klien YouTube Music, Echo Music…) menerbitkan kulit giliran sebagai pautan, bukan imej, jadi pilihan ini memuat turun dan menyimpannya dalam cache. Matikan untuk mengekalkan giliran sepenuhnya luar talian — baris tersebut tidak akan memaparkan kulit langsung.</string>
+    <string name="setting_queue_remote_artwork_description">Pemain penstriman menerbitkan kulit giliran sebagai pautan dan bukannya imej. Setiap satu dimuat turun sekali dan dicache pada telefon ini untuk dipaparkan dalam giliran jam. Hanya URL kulit yang telah diterbitkan oleh pemain diminta — tiada akaun atau data peribadi. Dihidupkan secara lalai; matikan untuk mengekalkan giliran sepenuhnya luar talian.</string>
+    <string name="watch_streaming_shortcuts_empty">Tambah trek, album atau senarai main untuk Tindakan Pantas dan menu jam</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="other">%1$d pintasan disimpan · Tersedia dalam Tindakan Pantas dan menu jam</item>
+    </plurals>
+    <string name="category_music_apps">Aplikasi &amp; perkhidmatan muzik</string>
+    <string name="category_apps_content">Lirik &amp; metadata</string>
+    <string name="category_streaming_services">Pintasan penstriman</string>
+    <string name="category_queue_artwork">Karya seni giliran</string>
+    <string name="category_system_access">Akses Android &amp; pemberitahuan</string>
+    <string name="setting_apps_integrations">Perkhidmatan muzik disokong</string>
+    <string name="setting_apps_integrations_description">Pautan berfungsi dengan YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music dan SoundCloud. Akses akaun tidak diperlukan.</string>
+    <string name="setting_apps_integrations_none">Tiada aplikasi disokong dikesan. Pintasan masih boleh dibuka dalam pelayar atau aplikasi serasi lain.</string>
+    <string name="setting_apps_integrations_installed">%1$d daripada %2$d dikesan: %3$s</string>
+    <string name="setting_streaming_open_mode">Buka pautan penstriman dengan</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Aplikasi penstriman dikesan</item>
+        <item>Lalai Android</item>
+        <item>Tanya setiap kali</item>
+    </string-array>
+    <string name="setting_persistent_notification">Urus pemberitahuan \"Svartifoss aktif\"</string>
+    <string name="setting_persistent_notification_description">Membuka tetapan Android untuk pemberitahuan ini — senyapkannya, sembunyikan daripada skrin kunci atau laraskan dengan cara lain. Ia tidak boleh dimatikan sepenuhnya: Android memerlukan pemberitahuan berterusan semasa perkhidmatan latar yang berkomunikasi dengan jam sedang berjalan.</string>
+    <string name="setting_notification_access">Akses pemberitahuan media</string>
+    <string name="setting_notification_access_enabled">Dibenarkan · Ketik untuk semak tetapan Android</string>
+    <string name="setting_notification_access_disabled">Tidak dibenarkan · Diperlukan untuk tindakan media pemberitahuan dan penapis pelancaran automatik</string>
+    <string name="setting_notification_access_unavailable">Tetapan akses pemberitahuan tidak tersedia pada peranti ini</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="other">%1$d pintasan disimpan · Ketik untuk urus atau import pautan</item>
+    </plurals>
+    <string name="category_privacy">Privasi</string>
+    <string name="setting_privacy_policy">Dasar privasi</string>
+    <string name="setting_privacy_policy_description">Lihat data yang digunakan oleh Svartifoss dan perkhidmatan dalam talian yang bersifat pilihan.</string>
+    <string name="setting_crash_reporting">Hantar laporan ranap</string>
+    <string name="setting_crash_reporting_description">Hantar diagnostik Firebase Crashlytics untuk membantu membaiki kegagalan. Dihidupkan secara lalai; boleh dimatikan pada bila-bila masa.</string>
+    <string name="setting_announcements">Pemberitahuan pengumuman</string>
+    <string name="setting_announcements_description">Pemberitahuan sekali-sekala daripada pembangun — keluaran baharu dan notis penting. Dihantar melalui Firebase Cloud Messaging; tiada akaun atau senarai pengguna terlibat. Dihidupkan secara lalai; boleh dimatikan pada bila-bila masa.</string>
+    <string name="announcement_notification_channel">Pengumuman</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Kongsi senarai main, album atau trek terus ke Svartifoss, tampal pautan yang disalin atau tambah secara manual. Jam hanya meminta telefon membukanya; log masuk perkhidmatan tidak diperlukan.</string>
+    <string name="back">Kembali</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Muzik anda, satu ketikan sahaja</string>
+    <string name="playlist_shortcuts_yours">Pintasan anda</string>
+    <string name="playlist_shortcuts_empty_hint">Tambah pautan trek, album atau senarai main yang dikongsi supaya tersedia pada jam anda.</string>
+    <string name="playlist_shortcuts_add">Tambah pintasan</string>
+    <string name="playlist_shortcuts_paste">Tampal pautan</string>
+    <string name="playlist_shortcuts_reload_covers">Muat semula kulit</string>
+    <string name="playlist_shortcuts_reloading_covers">Memuat semula kulit…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Kulit dimuat semula</string>
+    <string name="playlist_shortcuts_edit">Edit pintasan</string>
+    <string name="playlist_shortcut_save">Simpan pintasan</string>
+    <string name="playlist_shortcut_editor_hint">Tampal satu pautan. Svartifoss mengenal pasti aplikasi dan jenis kandungannya secara automatik.</string>
+    <string name="playlist_shortcut_detection_waiting">Menunggu pautan penstriman</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer dan banyak lagi disokong.</string>
+    <string name="playlist_shortcut_detected_format">Dikesan: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Nama</string>
+    <string name="playlist_shortcut_link_hint">Pautan kongsi atau URI aplikasi</string>
+    <string name="playlist_shortcut_shuffle">Main secara rawak (YouTube Music sahaja)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Pautan</string>
+    <string name="playlist_type_track">Trek</string>
+    <string name="playlist_type_playlist">Senarai main</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">Artis</string>
+    <string name="playlist_type_show">Rancangan</string>
+    <string name="playlist_type_episode">Episod</string>
+    <string name="playlist_type_mix">Campuran</string>
+    <string name="playlist_badge_shuffle">Rawak</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Belum ada pintasan penstriman ditambah</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="other">%1$d disimpan</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Pintasan penstriman tersusun. Ketik dan tahan untuk menyeret, gunakan tindakan kebolehcapaian Alih ke atas atau Alih ke bawah, atau tekan Ctrl+Atas/Bawah pada papan kekunci.</string>
+    <string name="playlist_shortcut_more_options">Lagi pilihan untuk %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Edit</string>
+    <string name="playlist_shortcut_menu_open">Buka sekarang</string>
+    <string name="playlist_shortcut_menu_copy">Salin pautan</string>
+    <string name="playlist_shortcut_menu_duplicate">Gandakan</string>
+    <string name="playlist_shortcut_menu_share">Kongsi</string>
+    <string name="playlist_shortcut_menu_delete">Padam</string>
+    <string name="playlist_shortcut_open_failed">Tiada aplikasi boleh membuka pautan ini</string>
+    <string name="streaming_shortcut_choose_app">Buka pautan penstriman dengan</string>
+    <string name="playlist_shortcut_link_copied">Pautan disalin</string>
+    <string name="playlist_shortcut_import_invalid">Teks yang dikongsi tidak mengandungi pautan penstriman yang sah</string>
+    <string name="playlist_shortcut_clipboard_invalid">Papan klip tidak mengandungi pautan penstriman yang sah</string>
+    <string name="playlist_shortcut_name_required">Masukkan nama pintasan</string>
+    <string name="playlist_shortcut_link_invalid">Masukkan pautan web atau URI aplikasi yang sah</string>
+    <string name="playlist_shortcut_service_invalid">Tampal pautan yang sah untuk mengesan perkhidmatannya</string>
+    <string name="playlist_shortcut_service_generic">Pautan serasi · Android akan memilih aplikasi</string>
+    <string name="playlist_shortcut_service_installed">%1$s dipasang · Sedia dibuka dalam aplikasinya</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s tidak dipasang · Pelayar atau aplikasi serasi boleh digunakan</string>
+    <string name="playlist_shortcut_copy_name">Salinan %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">Salinan %1$s %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s dicipta</string>
+    <string name="playlist_shortcut_share_title">Kongsi pintasan penstriman</string>
+    <string name="playlist_shortcut_share_failed">Tiada aplikasi tersedia untuk berkongsi pintasan ini</string>
+    <string name="playlist_shortcut_deleted">%1$s dipadam</string>
+    <string name="playlist_shortcut_undo">Buat asal</string>
+
+    <string name="action_play_liked_songs_shuffled">Mainkan lagu disukai secara rawak (YT Music)</string>
+    <string name="action_search_history">Sejarah carian</string>
+    <string name="search_history_empty">Belum ada carian terkini</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Kemas kini</string>
+    <string name="setting_update_check">Maklumkan tentang versi baharu</string>
+    <string name="setting_update_check_description">Menyemak GitHub untuk keluaran baharu kira-kira sekali sehari dan memaparkan pemberitahuan</string>
+    <string name="setting_update_prereleases">Sertakan pra-keluaran</string>
+    <string name="setting_update_prereleases_description">Turut maklumkan tentang versi beta</string>
+    <string name="setting_update_check_now">Semak kemas kini sekarang</string>
+    <string name="setting_update_check_now_description">Menunjukkan versi terkini dan membolehkan anda mengemas kini jam melalui Bluetooth</string>
+    <string name="update_screen_title">Kemas kini</string>
+    <string name="update_cover_content_description">Svartifoss, air terjun yang menjadi nama aplikasi</string>
+    <string name="update_notification_channel">Kemas kini aplikasi</string>
+    <string name="update_available_title">Svartifoss %1$s tersedia</string>
+    <string name="update_notification_text">Ketik untuk kemas kini</string>
+    <string name="update_available_action">Kemas kini tersedia</string>
+    <string name="update_installed_phone">Telefon: %1$s</string>
+    <string name="update_installed_versions">Telefon: %1$s · Jam: %2$s</string>
+    <string name="update_watch_version_unknown">tidak diketahui</string>
+    <string name="update_checking">Sedang menyemak kemas kini…</string>
+    <string name="update_check_failed">Tidak dapat menyemak kemas kini. Semak sambungan anda dan cuba lagi.</string>
+    <string name="update_available_line">Versi baharu: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(prakeluaran)</string>
+    <string name="update_up_to_date">Anda menggunakan versi terkini (%1$s)</string>
+    <string name="update_no_wear_asset">Keluaran ini tiada APK jam untuk dihantar.</string>
+    <string name="update_watch_hint">“Kemas kini jam” memuat turun aplikasi jam baharu dan menghantarnya melalui Bluetooth — anda mengesahkan pemasangan pada jam itu sendiri, tanpa kabel atau Wear Installer.</string>
+    <string name="update_downloading">Memuat turun… %1$d%%</string>
+    <string name="update_connecting_watch">Menyambung ke jam…</string>
+    <string name="update_transferring">Menghantar ke jam… %1$d%%</string>
+    <string name="update_confirm_on_watch">Dihantar! Pemberitahuan muncul pada jam — ketik padanya di jam untuk memasang.</string>
+    <string name="update_no_watch">Tiada jam disambungkan.</string>
+    <string name="update_push_failed">Gagal menghantar kemas kini ke jam. Cuba lagi.</string>
+    <string name="update_watch_button">Kemas kini jam</string>
+    <string name="update_open_release_button">Buka halaman keluaran</string>
+    <string name="update_watch_behind">Jam anda masih menggunakan %1$s — hantar kemas kini di bawah kepadanya.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Pastikan aplikasi telefon dan jam segerak</string>
+    <string name="update_state_checking">Sedang menyemak kemas kini…</string>
+    <string name="update_state_current">Semuanya terkini</string>
+    <string name="update_state_current_sub">Menjalankan keluaran terkini, %1$s</string>
+    <string name="update_state_available">Kemas kini tersedia</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Tidak dapat menyemak kemas kini</string>
+    <string name="update_state_failed_sub">Semak sambungan anda dan cuba lagi</string>
+    <string name="update_device_phone">Telefon</string>
+    <string name="update_device_watch">Jam tangan</string>
+    <string name="update_versions_header">Dipasang</string>
+    <string name="update_whats_new">Apa yang baharu</string>
+    <string name="update_phone_button">Kemas kini telefon</string>
+    <string name="update_installing">Membuka pemasang…</string>
+    <string name="update_install_permission_needed">Benarkan pemasangan aplikasi daripada Svartifoss, kemudian ketik Kemas kini telefon sekali lagi.</string>
+    <string name="update_phone_failed">Muat turun kemas kini telefon gagal. Cuba lagi.</string>
+    <string name="update_install_notification_title">Kemas kini Svartifoss</string>
+    <string name="update_install_notification_tap">Ketik untuk memasang versi baharu</string>
+    <string name="update_install_notification_failed">Pemasangan gagal. Benarkan pemasangan daripada Svartifoss dalam Tetapan dan cuba lagi.</string>
+    <string name="setting_wear_album_accent_source">Sumber aksen album</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Seimbang</item>
+        <item>Paling terang</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Mati</item>
+        <item>Lembut</item>
+        <item>Standard</item>
+        <item>Tebal</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Had minimum aksen</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Trek</string>
+    <string name="preview_metadata_genre">Genre</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Tahun</string>
+    <string name="preview_metadata_format">Format</string>
+    <string name="preview_metadata_bitrate">Kadar bit</string>
+    <string name="preview_metadata_position">Kedudukan</string>
+    <string name="preview_metadata_output">Output</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Butiran album</string>
+    <string name="setting_wear_metadata_core_description">Album, artis album, kedudukan pada rekod dan tempoh.</string>
+    <string name="setting_wear_metadata_release">Butiran keluaran</string>
+    <string name="setting_wear_metadata_release_description">Genre, tahun, tarikh keluaran dan label.</string>
+    <string name="setting_wear_metadata_credits">Kredit</string>
+    <string name="setting_wear_metadata_credits_description">Komposer, penulis dan pengarang apabila pemain menerbitkannya.</string>
+    <string name="setting_wear_metadata_technical">Butiran fail</string>
+    <string name="setting_wear_metadata_technical_description">Format, kadar bit, kadar sampel, saluran dan saiz. Trek setempat sahaja.</string>
+    <string name="setting_split_panel">Panel berpecah</string>
+    <string name="setting_split_panel_description">Apa yang memenuhi separuh bawah muka Split. Karya seni kabur meneruskan kulit album yang sama di belakang teks; warna pejal menyerupai kad pemberitahuan.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Karya seni kabur</item>
+        <item>Warna padu</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Butiran main balik</string>
+    <string name="setting_wear_metadata_playback_description">Kedudukan hingga milisaat, kelajuan, output audio serta dari mana bunyi distrim atau dimainkan — termasuk alamat trek. Blok yang boleh diisi oleh trek penstriman apabila tiada fail untuk dihuraikan.</string>
+    <string name="setting_wear_metadata_identifiers">Pengecam</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC dan ID katalog. Dimatikan secara lalai — berguna apabila diperlukan, gangguan apabila tidak.</string>
+    <string name="setting_metadata_lookup">Cari butiran trek dalam talian</string>
+    <string name="setting_metadata_lookup_description">Melengkapkan maklumat yang tidak diterbitkan oleh aplikasi pemain — ISRC, label, tarikh keluaran — daripada MusicBrainz, pangkalan data awam percuma. Dimatikan secara lalai. Muka jam Metadata berfungsi tanpanya; pilihan ini hanya menambah baris. Tiada apa-apa dihantar melainkan anda menghidupkannya dan memilih muka itu, dan hanya nama trek serta artis dihantar.</string>
+</resources>

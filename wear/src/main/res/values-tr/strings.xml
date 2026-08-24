@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Çalan parça ve medya kontrolleri</string>
+    <string name="complication_album_art_label">Çalan parçanın kapağı</string>
+    <string name="complication_no_music">Hiçbir şey çalmıyor</string>
+    <string name="tile_nothing_playing">Hiçbir şey çalmıyor</string>
+    <string name="tile_open_app">Svartifoss\'u aç</string>
+    <string name="tile_rewind_10">10 saniye geri sar</string>
+    <string name="tile_forward_10">10 saniye ileri sar</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Yayın kısayolların tek dokunuş uzağında</string>
+    <string name="shortcuts_tile_title">Kısayollar</string>
+    <string name="shortcuts_tile_empty">Henüz kısayol yok</string>
+    <string name="shortcuts_tile_more">Uygulamada daha fazlası</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Hiçbir şey çalmıyor</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Telefonunda bir şeyler çal</string>
+    <string name="idle_hint_resume">Son uygulamayı sürdürmek için dokun</string>
+    <string name="idle_hint_shortcuts">Kısayolların için dokun</string>
+    <string name="idle_hint_menu">Menüyü açmak için dokun</string>
+    <string name="idle_hint_search">Aramak için dokun</string>
+    <string name="idle_hint_queue">Son çalınanlar için dokun</string>
+    <string name="idle_resume">Oynatmayı sürdür</string>
+    <string name="idle_action_shortcuts">Kısayolları aç</string>
+    <string name="idle_action_menu">Menüyü aç</string>
+    <string name="idle_action_search">Ara</string>
+    <string name="idle_action_queue">Son çalınanları aç</string>
+
+    <string name="no_phone">Telefon bağlı değil</string>
+    <string name="playback_stopped">Durduruldu</string>
+    <string name="error">HATA</string>
+    <string name="error_play_services">Play Hizmetleri hatası</string>
+    <string name="button">Düğme</string>
+    <string name="back_button">Geri</string>
+    <string name="turn_bezel_cw">Çerçeveyi saat yönünde çevir</string>
+    <string name="turn_bezel_ccw">Çerçeveyi saat yönünün tersine çevir</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Beğen</string>
+    <string name="quick_action_shuffle">Karıştır</string>
+    <string name="quick_action_repeat">Tekrarla</string>
+    <string name="quick_action_repeat_all">Tümünü tekrarla</string>
+    <string name="quick_action_repeat_one">Tek parçayı tekrarla</string>
+    <string name="quick_action_up_next">Sırada</string>
+    <string name="quick_actions_unavailable">Şu anki uygulamanın hızlı işlemi yok</string>
+    <string name="voice_search_prompt">Müzik ara</string>
+    <string name="queue_empty">Sırada içerik yok</string>
+    <string name="queue_now_playing">Şu an çalıyor</string>
+    <string name="queue_load_more">Daha fazla yükle</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Son çalınanlar</string>
+    <string name="queue_history_fallback_reason">Bu uygulama sırasını paylaşmıyor</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Bugün</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Kadran</string>
+    <string name="face_picker_offline">Telefon bağlı değil — bu kadran saatte uygulanır, ancak ayar telefonda tutulur</string>
+    <string name="face_picker_section_builtin">Yerleşik kadranlar</string>
+    <string name="face_picker_section_custom">Temalarım</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">%1$s temel alınarak</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Nasıl kullanılır</string>
+    <string name="hint_edges">Üst, alt, sol veya sağa dokun — her bölge kendi atanmış eylemini çalıştırır</string>
+    <string name="hint_center">Orta — oynat/duraklat\nÇift dokunuş — hızlı işlemler\nUzun basış — kadran seçici (yapılandırılabilir)</string>
+    <string name="hint_swipe_up">Yukarı kaydır — işlemler menüsü\nAşağı veya sol — atanmış eylemler\nKenardan sağa — çıkış</string>
+    <string name="hint_crown">Taç — ses veya sarma\nYan düğmeler — atanmış eylemler\nHer şeyi telefonunda Kontroller ve Saat bölümlerinden özelleştir</string>
+    <string name="hint_next">İleri</string>
+    <string name="hint_dismiss">Bitti</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Oynat</string>
+    <string name="action_name_pause">Duraklat</string>
+    <string name="action_name_skip_prev">Önceki parça</string>
+    <string name="action_name_skip_next">Sonraki parça</string>
+    <string name="action_name_volume_up">Sesi yükselt</string>
+    <string name="action_name_volume_down">Sesi kıs</string>
+    <string name="action_name_open_menu">Menüyü aç</string>
+    <string name="action_name_skip_30">30 saniye ileri sar</string>
+    <string name="action_name_reverse_30">30 saniye geri sar</string>
+    <string name="action_name_play_pause">Oynat/Duraklat</string>
+    <string name="action_name_stop">Durdur</string>
+    <string name="action_name_restart">Parçayı yeniden başlat</string>
+    <string name="action_name_seek">Parça içinde sar</string>
+    <string name="action_name_mute">Sessize al</string>
+    <string name="action_name_search">Ara</string>
+    <string name="action_name_custom">Özel eylem</string>
+    <string name="state_on">Açık</string>
+    <string name="state_off">Kapalı</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Uygulama güncellemeleri</string>
+    <string name="update_install_title">Svartifoss güncellemesi</string>
+    <string name="update_install_tap">Yeni sürümü yüklemek için dokun</string>
+    <string name="update_install_failed">Yükleme başarısız oldu. Saat ayarlarından Svartifoss\'a yükleme izni ver ve telefondan tekrar dene.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Buradan oynat</string>
+    <string name="lyrics_none">Bu parça için söz bulunamadı</string>
+    <string name="lyrics_failed">Söz getirilemedi. Telefonunun bağlantısını kontrol et.</string>
+    <string name="lyrics_disabled">Söz arama, telefon ayarlarında kapalı</string>
+    <string name="lyrics_no_track">Hiçbir şey çalmıyor</string>
+    <string name="metadata_none">Bu parça için ayrıntı yok</string>
+    <string name="metadata_album">Albüm</string>
+    <string name="metadata_album_artist">Albüm sanatçısı</string>
+    <string name="metadata_track">Parça</string>
+    <string name="metadata_duration">Süre</string>
+    <string name="metadata_genre">Tür</string>
+    <string name="metadata_year">Yıl</string>
+    <string name="metadata_released">Yayınlanma</string>
+    <string name="metadata_label">Plak şirketi</string>
+    <string name="metadata_country">Ülke</string>
+    <string name="metadata_composer">Besteci</string>
+    <string name="metadata_writer">Söz yazarı</string>
+    <string name="metadata_author">Yazar</string>
+    <string name="metadata_codec">Biçim</string>
+    <string name="metadata_bitrate">Bit hızı</string>
+    <string name="metadata_sample_rate">Örnekleme hızı</string>
+    <string name="metadata_channels">Kanallar</string>
+    <string name="metadata_file_size">Boyut</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Yayın kimliği</string>
+    <string name="metadata_compilation">Derleme</string>
+    <string name="metadata_value_yes">Evet</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Konum</string>
+    <string name="metadata_speed">Hız</string>
+    <string name="metadata_output">Çıkış</string>
+    <string name="metadata_output_speaker">Telefon hoparlörü</string>
+    <string name="metadata_output_wired">Kulaklık</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB ses</string>
+    <string name="metadata_output_remote">Yayınlama</string>
+    <string name="metadata_origin">Kaynak</string>
+    <string name="metadata_origin_stream">Akış</string>
+    <string name="metadata_origin_local">Telefondaki dosya</string>
+    <string name="metadata_host">Sunucu</string>
+    <string name="metadata_file">Dosya</string>
+    <string name="metadata_download">İndirme</string>
+    <string name="metadata_download_no">İndirilmedi</string>
+    <string name="metadata_download_running">İndiriliyor</string>
+    <string name="metadata_download_yes">İndirildi</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Hakkında</string>
+    <string name="metadata_source">Şurada çalıyor</string>
+</resources>

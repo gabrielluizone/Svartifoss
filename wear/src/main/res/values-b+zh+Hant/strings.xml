@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">正在播放與媒體控制</string>
+    <string name="complication_album_art_label">正在播放封面</string>
+    <string name="complication_no_music">目前沒有播放內容</string>
+    <string name="tile_nothing_playing">目前沒有播放內容</string>
+    <string name="tile_open_app">開啟 Svartifoss</string>
+    <string name="tile_rewind_10">倒轉 10 秒</string>
+    <string name="tile_forward_10">快轉 10 秒</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">一點即可開啟你的串流捷徑</string>
+    <string name="shortcuts_tile_title">捷徑</string>
+    <string name="shortcuts_tile_empty">尚無捷徑</string>
+    <string name="shortcuts_tile_more">在應用程式中查看更多</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">目前沒有播放內容</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">請在手機上播放內容</string>
+    <string name="idle_hint_resume">輕觸以繼續上次的應用程式</string>
+    <string name="idle_hint_shortcuts">輕觸以開啟捷徑</string>
+    <string name="idle_hint_menu">輕觸以開啟選單</string>
+    <string name="idle_hint_search">輕觸以搜尋</string>
+    <string name="idle_hint_queue">輕觸以查看最近播放</string>
+    <string name="idle_resume">繼續播放</string>
+    <string name="idle_action_shortcuts">開啟捷徑</string>
+    <string name="idle_action_menu">開啟選單</string>
+    <string name="idle_action_search">搜尋</string>
+    <string name="idle_action_queue">開啟最近播放</string>
+
+    <string name="no_phone">手機未連線</string>
+    <string name="playback_stopped">已停止</string>
+    <string name="error">錯誤</string>
+    <string name="error_play_services">Google Play 服務錯誤</string>
+    <string name="button">按鈕</string>
+    <string name="back_button">返回</string>
+    <string name="turn_bezel_cw">順時針旋轉錶圈</string>
+    <string name="turn_bezel_ccw">逆時針旋轉錶圈</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">喜歡</string>
+    <string name="quick_action_shuffle">隨機播放</string>
+    <string name="quick_action_repeat">重複播放</string>
+    <string name="quick_action_repeat_all">全部重複播放</string>
+    <string name="quick_action_repeat_one">單曲循環</string>
+    <string name="quick_action_up_next">接下來播放</string>
+    <string name="quick_actions_unavailable">目前的應用程式沒有快速動作</string>
+    <string name="voice_search_prompt">搜尋音樂</string>
+    <string name="queue_empty">沒有可用的佇列</string>
+    <string name="queue_now_playing">正在播放</string>
+    <string name="queue_load_more">載入更多</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">最近播放</string>
+    <string name="queue_history_fallback_reason">此應用程式未分享播放佇列</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">今天</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">錶面</string>
+    <string name="face_picker_offline">手機未連線 — 此錶面會套用至手錶，但手機會保留原設定</string>
+    <string name="face_picker_section_builtin">內建錶面</string>
+    <string name="face_picker_section_custom">我的主題</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">以 %1$s 為基礎</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">使用方式</string>
+    <string name="hint_edges">輕觸上、下、左或右 — 每個區域會執行指定的動作</string>
+    <string name="hint_center">中央 — 播放/暫停\n輕觸兩下 — 快速動作\n長按 — 錶面選擇器（可設定）</string>
+    <string name="hint_swipe_up">向上滑動 — 動作選單\n向下或向左 — 指定動作\n從右側邊緣向右滑 — 離開</string>
+    <string name="hint_crown">錶冠 — 音量或搜尋\n側邊按鈕 — 指定動作\n在手機的「控制」與「手錶」中自訂所有項目</string>
+    <string name="hint_next">下一步</string>
+    <string name="hint_dismiss">完成</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">播放</string>
+    <string name="action_name_pause">暫停</string>
+    <string name="action_name_skip_prev">上一首</string>
+    <string name="action_name_skip_next">下一首</string>
+    <string name="action_name_volume_up">提高音量</string>
+    <string name="action_name_volume_down">降低音量</string>
+    <string name="action_name_open_menu">開啟選單</string>
+    <string name="action_name_skip_30">快轉 30 秒</string>
+    <string name="action_name_reverse_30">倒轉 30 秒</string>
+    <string name="action_name_play_pause">播放/暫停</string>
+    <string name="action_name_stop">停止</string>
+    <string name="action_name_restart">重新播放曲目</string>
+    <string name="action_name_seek">在曲目中搜尋</string>
+    <string name="action_name_mute">靜音</string>
+    <string name="action_name_search">搜尋</string>
+    <string name="action_name_custom">自訂動作</string>
+    <string name="state_on">開啟</string>
+    <string name="state_off">關閉</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">應用程式更新</string>
+    <string name="update_install_title">Svartifoss 更新</string>
+    <string name="update_install_tap">輕觸以安裝新版本</string>
+    <string name="update_install_failed">安裝失敗。請在手錶設定中允許從 Svartifoss 安裝，然後再從手機重試。</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">從這裡播放</string>
+    <string name="lyrics_none">找不到此曲目的歌詞</string>
+    <string name="lyrics_failed">無法取得歌詞。請檢查手機的連線。</string>
+    <string name="lyrics_disabled">手機設定中已關閉歌詞查詢</string>
+    <string name="lyrics_no_track">目前沒有播放內容</string>
+    <string name="metadata_none">此曲目沒有詳細資訊</string>
+    <string name="metadata_album">專輯</string>
+    <string name="metadata_album_artist">專輯演出者</string>
+    <string name="metadata_track">曲目</string>
+    <string name="metadata_duration">長度</string>
+    <string name="metadata_genre">曲風</string>
+    <string name="metadata_year">年份</string>
+    <string name="metadata_released">發行日期</string>
+    <string name="metadata_label">唱片公司</string>
+    <string name="metadata_country">國家</string>
+    <string name="metadata_composer">作曲者</string>
+    <string name="metadata_writer">作詞者</string>
+    <string name="metadata_author">作者</string>
+    <string name="metadata_codec">格式</string>
+    <string name="metadata_bitrate">位元率</string>
+    <string name="metadata_sample_rate">取樣率</string>
+    <string name="metadata_channels">聲道</string>
+    <string name="metadata_file_size">大小</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">發行 ID</string>
+    <string name="metadata_compilation">合輯</string>
+    <string name="metadata_value_yes">是</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">位置</string>
+    <string name="metadata_speed">速度</string>
+    <string name="metadata_output">輸出</string>
+    <string name="metadata_output_speaker">手機喇叭</string>
+    <string name="metadata_output_wired">耳機</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB 音訊</string>
+    <string name="metadata_output_remote">投放</string>
+    <string name="metadata_origin">來源</string>
+    <string name="metadata_origin_stream">串流</string>
+    <string name="metadata_origin_local">手機上的檔案</string>
+    <string name="metadata_host">主機</string>
+    <string name="metadata_file">檔案</string>
+    <string name="metadata_download">下載</string>
+    <string name="metadata_download_no">未下載</string>
+    <string name="metadata_download_running">正在下載</string>
+    <string name="metadata_download_yes">已下載</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">關於</string>
+    <string name="metadata_source">播放位置</string>
+</resources>

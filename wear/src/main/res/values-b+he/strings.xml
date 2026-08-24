@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">מתנגן כעת ופקדי מדיה</string>
+    <string name="complication_album_art_label">עטיפת המתנגן כעת</string>
+    <string name="complication_no_music">לא מתנגן דבר</string>
+    <string name="tile_nothing_playing">לא מתנגן דבר</string>
+    <string name="tile_open_app">פתיחת Svartifoss</string>
+    <string name="tile_rewind_10">חזרה 10 שניות</string>
+    <string name="tile_forward_10">דילוג 10 שניות</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">קיצורי הסטרימינג שלך, במרחק הקשה אחת</string>
+    <string name="shortcuts_tile_title">קיצורי דרך</string>
+    <string name="shortcuts_tile_empty">אין עדיין קיצורי דרך</string>
+    <string name="shortcuts_tile_more">עוד באפליקציה</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">לא מתנגן דבר</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">הפעל משהו בטלפון</string>
+    <string name="idle_hint_resume">הקש כדי להמשיך באפליקציה האחרונה</string>
+    <string name="idle_hint_shortcuts">הקש לפתיחת קיצורי הדרך</string>
+    <string name="idle_hint_menu">הקש לפתיחת התפריט</string>
+    <string name="idle_hint_search">הקש לחיפוש</string>
+    <string name="idle_hint_queue">הקש לפריטים שהושמעו לאחרונה</string>
+    <string name="idle_resume">המשך הפעלה</string>
+    <string name="idle_action_shortcuts">פתיחת קיצורי דרך</string>
+    <string name="idle_action_menu">פתיחת תפריט</string>
+    <string name="idle_action_search">חיפוש</string>
+    <string name="idle_action_queue">פתיחת פריטים שהושמעו לאחרונה</string>
+
+    <string name="no_phone">הטלפון לא מחובר</string>
+    <string name="playback_stopped">נעצר</string>
+    <string name="error">שגיאה</string>
+    <string name="error_play_services">שגיאת שירותי Google Play</string>
+    <string name="button">כפתור</string>
+    <string name="back_button">חזרה</string>
+    <string name="turn_bezel_cw">סובב את המסגרת עם כיוון השעון</string>
+    <string name="turn_bezel_ccw">סובב את המסגרת נגד כיוון השעון</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">אהבתי</string>
+    <string name="quick_action_shuffle">ערבוב</string>
+    <string name="quick_action_repeat">חזרה</string>
+    <string name="quick_action_repeat_all">חזרה על הכול</string>
+    <string name="quick_action_repeat_one">חזור על אחד</string>
+    <string name="quick_action_up_next">הבא בתור</string>
+    <string name="quick_actions_unavailable">לאפליקציה הנוכחית אין פעולות מהירות</string>
+    <string name="voice_search_prompt">חפש מוזיקה</string>
+    <string name="queue_empty">אין תור זמין</string>
+    <string name="queue_now_playing">מתנגן כעת</string>
+    <string name="queue_load_more">טעינת עוד</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">הושמע לאחרונה</string>
+    <string name="queue_history_fallback_reason">האפליקציה הזו לא משתפת את התור שלה</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">היום</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">פני שעון</string>
+    <string name="face_picker_offline">הטלפון לא מחובר — פני השעון האלה יוחלו בשעון, אבל הטלפון ישמור את ההגדרה</string>
+    <string name="face_picker_section_builtin">פני שעון מובנים</string>
+    <string name="face_picker_section_custom">ערכות הנושא שלי</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">מבוסס על %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">כיצד להשתמש</string>
+    <string name="hint_edges">הקש למעלה, למטה, שמאלה או ימינה — כל אזור מפעיל את הפעולה שהוקצתה לו</string>
+    <string name="hint_center">מרכז — הפעלה/השהיה\nהקשה כפולה — פעולות מהירות\nלחיצה ארוכה — בורר פני שעון (ניתן להגדרה)</string>
+    <string name="hint_swipe_up">החלק למעלה — תפריט פעולות\nלמטה או שמאלה — פעולות שהוקצו\nימינה מהקצה — יציאה</string>
+    <string name="hint_crown">כתר — עוצמת קול או דילוג\nכפתורי צד — פעולות שהוקצו\nהתאם הכול בפקדים ובשעון בטלפון</string>
+    <string name="hint_next">הבא</string>
+    <string name="hint_dismiss">סיום</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">נגן</string>
+    <string name="action_name_pause">השהה</string>
+    <string name="action_name_skip_prev">הרצועה הקודמת</string>
+    <string name="action_name_skip_next">הרצועה הבאה</string>
+    <string name="action_name_volume_up">הגברת עוצמת הקול</string>
+    <string name="action_name_volume_down">הנמכת עוצמת הקול</string>
+    <string name="action_name_open_menu">פתיחת תפריט</string>
+    <string name="action_name_skip_30">דילוג 30 שניות</string>
+    <string name="action_name_reverse_30">חזרה 30 שניות</string>
+    <string name="action_name_play_pause">הפעלה/השהיה</string>
+    <string name="action_name_stop">עצור</string>
+    <string name="action_name_restart">התחל רצועה מחדש</string>
+    <string name="action_name_seek">דילוג בתוך הרצועה</string>
+    <string name="action_name_mute">השתקה</string>
+    <string name="action_name_search">חיפוש</string>
+    <string name="action_name_custom">פעולה מותאמת</string>
+    <string name="state_on">מופעל</string>
+    <string name="state_off">כבוי</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">עדכוני אפליקציה</string>
+    <string name="update_install_title">עדכון Svartifoss</string>
+    <string name="update_install_tap">הקש להתקנת הגרסה החדשה</string>
+    <string name="update_install_failed">ההתקנה נכשלה. אפשר התקנות מ-Svartifoss בהגדרות השעון ונסה שוב מהטלפון.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">הפעל מכאן</string>
+    <string name="lyrics_none">לא נמצאו מילים לרצועה הזו</string>
+    <string name="lyrics_failed">לא ניתן להביא את המילים. בדוק את חיבור הטלפון.</string>
+    <string name="lyrics_disabled">חיפוש מילים כבוי בהגדרות הטלפון</string>
+    <string name="lyrics_no_track">לא מתנגן דבר</string>
+    <string name="metadata_none">אין פרטים לרצועה הזו</string>
+    <string name="metadata_album">אלבום</string>
+    <string name="metadata_album_artist">אמן האלבום</string>
+    <string name="metadata_track">רצועה</string>
+    <string name="metadata_duration">משך</string>
+    <string name="metadata_genre">ז׳אנר</string>
+    <string name="metadata_year">שנה</string>
+    <string name="metadata_released">יצא לאור</string>
+    <string name="metadata_label">חברת תקליטים</string>
+    <string name="metadata_country">מדינה</string>
+    <string name="metadata_composer">מלחין</string>
+    <string name="metadata_writer">כותב</string>
+    <string name="metadata_author">מחבר</string>
+    <string name="metadata_codec">פורמט</string>
+    <string name="metadata_bitrate">קצב סיביות</string>
+    <string name="metadata_sample_rate">קצב דגימה</string>
+    <string name="metadata_channels">ערוצים</string>
+    <string name="metadata_file_size">גודל</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">מזהה הוצאה</string>
+    <string name="metadata_compilation">אוסף</string>
+    <string name="metadata_value_yes">כן</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">מיקום</string>
+    <string name="metadata_speed">מהירות</string>
+    <string name="metadata_output">פלט</string>
+    <string name="metadata_output_speaker">רמקול הטלפון</string>
+    <string name="metadata_output_wired">אוזניות</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">שמע USB</string>
+    <string name="metadata_output_remote">הזרמה</string>
+    <string name="metadata_origin">מקור</string>
+    <string name="metadata_origin_stream">זרם</string>
+    <string name="metadata_origin_local">קובץ בטלפון</string>
+    <string name="metadata_host">מארח</string>
+    <string name="metadata_file">קובץ</string>
+    <string name="metadata_download">הורדה</string>
+    <string name="metadata_download_no">לא הורד</string>
+    <string name="metadata_download_running">מוריד</string>
+    <string name="metadata_download_yes">הורד</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">אודות</string>
+    <string name="metadata_source">מתנגן ב-</string>
+</resources>

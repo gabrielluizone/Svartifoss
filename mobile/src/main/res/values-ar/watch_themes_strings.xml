@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">إدارة السمات</string>
+    <string name="watch_theme_builtin_subtitle">سمة مضمّنة · تخطيط %1$s</string>
+    <string name="watch_theme_custom_subtitle">سمة مخصّصة · تخطيط %1$s</string>
+    <string name="watch_theme_unknown_name">سمة غير معروفة</string>
+
+    <string name="watch_themes_title">سمات الساعة</string>
+    <string name="watch_theme_active_label">السمة المطبّقة</string>
+    <string name="watch_theme_active_layout">التخطيط: %1$s</string>
+    <string name="watch_theme_preview_description">معاينة للسمة المطبّقة حاليًا على الساعة</string>
+    <string name="watch_theme_create">إنشاء سمة</string>
+    <string name="watch_theme_create_title">إنشاء سمة جديدة</string>
+    <string name="watch_theme_rename_title">إعادة تسمية السمة</string>
+    <string name="watch_theme_name">اسم السمة</string>
+    <string name="watch_theme_base_layout">التخطيط الأساسي</string>
+    <string name="watch_theme_default_name">سمة %1$s الخاصة بي</string>
+    <string name="watch_theme_generic_name">سمة</string>
+    <string name="watch_theme_copy_name">نسخة من %1$s</string>
+    <string name="watch_theme_built_in_section">سمات مضمّنة</string>
+    <string name="watch_theme_custom_section">سماتي</string>
+    <string name="watch_theme_applied">مطبّقة</string>
+    <string name="watch_theme_apply_success">تم تطبيق %1$s على ساعتك</string>
+    <string name="watch_theme_apply_error">تعذّر تطبيق هذه السمة</string>
+    <string name="watch_theme_more_options">المزيد من خيارات السمة</string>
+    <string name="watch_theme_list_description">سمات الساعة المضمّنة والمخصّصة</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. انقر للتطبيق.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. مطبّقة حاليًا.</string>
+    <string name="watch_theme_rename">إعادة تسمية</string>
+    <string name="watch_theme_customize">تخصيص</string>
+    <string name="watch_theme_duplicate">تكرار</string>
+    <string name="watch_theme_delete">حذف</string>
+    <string name="watch_theme_delete_title">حذف «%1$s»؟</string>
+    <string name="watch_theme_delete_message">ستتم إزالة هذه السمة المحفوظة وإعداداتها نهائيًا.</string>
+    <string name="watch_theme_deleted">تم حذف السمة</string>
+    <string name="watch_theme_duplicated">تم إنشاء «%1$s»</string>
+    <string name="watch_theme_limit_reached">يمكنك حفظ ما يصل إلى 24 سمة مخصّصة. احذف واحدة قبل إنشاء أخرى.</string>
+    <string name="watch_theme_name_required">أدخل اسمًا للسمة</string>
+    <string name="watch_theme_name_duplicate">توجد سمة بهذا الاسم بالفعل</string>
+
+    <string name="watch_theme_face_classic">كلاسيكي</string>
+    <string name="watch_theme_face_expressive">تعبيري</string>
+    <string name="watch_theme_face_vinyl">فينيل</string>
+    <string name="watch_theme_face_poster">ملصق</string>
+    <string name="watch_theme_face_studio">استوديو</string>
+    <string name="watch_theme_face_halo">هالة</string>
+    <string name="watch_theme_face_aurora">شفق قطبي</string>
+    <string name="watch_theme_face_eclipse">كسوف AMOLED</string>
+    <string name="watch_theme_face_spectrum">طيف</string>
+    <string name="watch_theme_face_material">مادي</string>
+    <string name="watch_theme_face_immersive">غامر</string>
+    <string name="watch_theme_face_depth">عمق</string>
+    <string name="watch_theme_face_carousel">دوّار</string>
+    <string name="watch_theme_face_chat">دردشة</string>
+    <string name="watch_theme_face_split">منقسم</string>
+    <string name="watch_theme_face_note">ملاحظة</string>
+    <string name="watch_theme_face_verse">بيت شعري</string>
+    <string name="watch_theme_face_metadata">بيانات وصفية</string>
+</resources>

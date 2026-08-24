@@ -10,7 +10,6 @@ import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
-import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
@@ -309,8 +308,8 @@ fun watchFontFamily(key: String?): FontFamily = when (key) {
 val LocalWatchUiFontFamily = staticCompositionLocalOf { GoogleSansFamily }
 
 /**
- * Resolves what [LocalWatchUiFontFamily] should provide: the user's chosen font when they asked
- * for it app-wide, otherwise Google Sans.
+ * Resolves what [LocalWatchUiFontFamily] should provide: the active theme's chosen font when it
+ * opts into the surrounding watch surfaces, otherwise Google Sans.
  *
  * The choice is read through the face scope because [MiscPreferences.WEAR_FONT] is a per-face
  * key - the menu and queue are not faces, so they follow whichever face is currently active,
@@ -318,11 +317,13 @@ val LocalWatchUiFontFamily = staticCompositionLocalOf { GoogleSansFamily }
  */
 fun watchUiFontFamily(preferences: SharedPreferences?): FontFamily {
     if (preferences == null) return GoogleSansFamily
-    if (!Preferences.getBoolean(preferences, MiscPreferences.WEAR_FONT_ALL_SCREENS)) {
+    val appearanceContext = ThemeAppearance.resolve(preferences)
+    if (!FaceScopedPreferences.getBoolean(
+                    preferences, MiscPreferences.WEAR_FONT_ALL_SCREENS, appearanceContext)) {
         return GoogleSansFamily
     }
     return watchFontFamily(FaceScopedPreferences.getString(
-            preferences, MiscPreferences.WEAR_FONT, ThemeAppearance.resolve(preferences)))
+            preferences, MiscPreferences.WEAR_FONT, appearanceContext))
 }
 
 /** [watchFontFamily]'s [Typeface] counterpart for the View-based classic face - keep the key set

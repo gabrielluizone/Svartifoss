@@ -58,6 +58,7 @@ class ScopedAppearanceRegistryTest {
         val defined = FaceScopedPreferences.SCOPED_DEFINITIONS.mapTo(HashSet()) { it.key }
         listOf(
                 MiscPreferences.WEAR_FONT.key,
+                MiscPreferences.WEAR_FONT_ALL_SCREENS.key,
                 MiscPreferences.WEAR_CLOCK_FONT.key,
                 MiscPreferences.WEAR_LYRICS_FONT.key
         ).forEach { key ->

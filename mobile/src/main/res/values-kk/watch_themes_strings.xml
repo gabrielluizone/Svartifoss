@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Тақырыптарды басқару</string>
+    <string name="watch_theme_builtin_subtitle">Кірістірілген тақырып · %1$s орналасуы</string>
+    <string name="watch_theme_custom_subtitle">Арнаулы тақырып · %1$s орналасуы</string>
+    <string name="watch_theme_unknown_name">Белгісіз тақырып</string>
+
+    <string name="watch_themes_title">Сағат тақырыптары</string>
+    <string name="watch_theme_active_label">ҚОЛДАНЫЛҒАН ТАҚЫРЫП</string>
+    <string name="watch_theme_active_layout">Орналасу: %1$s</string>
+    <string name="watch_theme_preview_description">Сағатқа қазір қолданылған тақырыпты алдын ала қарау</string>
+    <string name="watch_theme_create">Тақырып жасау</string>
+    <string name="watch_theme_create_title">Жаңа тақырып жасау</string>
+    <string name="watch_theme_rename_title">Тақырып атауын өзгерту</string>
+    <string name="watch_theme_name">Тақырып атауы</string>
+    <string name="watch_theme_base_layout">Негізгі орналасу</string>
+    <string name="watch_theme_default_name">Менің %1$s тақырыбым</string>
+    <string name="watch_theme_generic_name">Тақырып</string>
+    <string name="watch_theme_copy_name">%1$s көшірмесі</string>
+    <string name="watch_theme_built_in_section">Кірістірілген тақырыптар</string>
+    <string name="watch_theme_custom_section">Менің тақырыптарым</string>
+    <string name="watch_theme_applied">ҚОЛДАНЫЛДЫ</string>
+    <string name="watch_theme_apply_success">%1$s сағатыңызға қолданылды</string>
+    <string name="watch_theme_apply_error">Бұл тақырыпты қолдану мүмкін болмады</string>
+    <string name="watch_theme_more_options">Тақырыптың қосымша параметрлері</string>
+    <string name="watch_theme_list_description">Кірістірілген және арнаулы сағат тақырыптары</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Қолдану үшін түртіңіз.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Қазір қолданылған.</string>
+    <string name="watch_theme_rename">Атауын өзгерту</string>
+    <string name="watch_theme_customize">Баптау</string>
+    <string name="watch_theme_duplicate">Көшірмесін жасау</string>
+    <string name="watch_theme_delete">Жою</string>
+    <string name="watch_theme_delete_title">«%1$s» жойылсын ба?</string>
+    <string name="watch_theme_delete_message">Бұл сақталған тақырып пен оның баптаулары біржола жойылады.</string>
+    <string name="watch_theme_deleted">Тақырып жойылды</string>
+    <string name="watch_theme_duplicated">«%1$s» жасалды</string>
+    <string name="watch_theme_limit_reached">24-ке дейін арнаулы тақырып сақтауға болады. Жаңасын жасамас бұрын біреуін жойыңыз.</string>
+    <string name="watch_theme_name_required">Тақырып атауын енгізіңіз</string>
+    <string name="watch_theme_name_duplicate">Мұндай атауы бар тақырып бұрыннан бар</string>
+
+    <string name="watch_theme_face_classic">Классикалық</string>
+    <string name="watch_theme_face_expressive">Экспрессивті</string>
+    <string name="watch_theme_face_vinyl">Винил</string>
+    <string name="watch_theme_face_poster">Постер</string>
+    <string name="watch_theme_face_studio">Студия</string>
+    <string name="watch_theme_face_halo">Гало</string>
+    <string name="watch_theme_face_aurora">Аврора</string>
+    <string name="watch_theme_face_eclipse">AMOLED тұтылуы</string>
+    <string name="watch_theme_face_spectrum">Спектр</string>
+    <string name="watch_theme_face_material">Материал</string>
+    <string name="watch_theme_face_immersive">Иммерсивті</string>
+    <string name="watch_theme_face_depth">Тереңдік</string>
+    <string name="watch_theme_face_carousel">Карусель</string>
+    <string name="watch_theme_face_chat">Чат</string>
+    <string name="watch_theme_face_split">Бөлінген</string>
+    <string name="watch_theme_face_note">Жазба</string>
+    <string name="watch_theme_face_verse">Өлең</string>
+    <string name="watch_theme_face_metadata">Метадеректер</string>
+</resources>

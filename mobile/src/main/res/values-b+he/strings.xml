@@ -1,0 +1,1975 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS אינו נתמך במכשיר זה</string>
+    <string name="setting_no_wearable_api_banner_description">במכשיר הזה אין את רכיב Wear OS של שירותי Google Play ש-Svartifoss צריך כדי לתקשר עם שעון. צימוד לא יעזור — אפליקציית הטלפון לא יכולה להגיע לשעון מהמכשיר הזה. כל ההגדרות שלמטה עדיין נשמרות ויוחלו אם תתקין את Svartifoss במכשיר שתומך בכך.</string>
+    <string name="setting_no_watch_banner">אין שעון מחובר</string>
+    <string name="setting_no_watch_banner_description">ההגדרות האלה מסתנכרנות עם שעון ה-Wear OS שלך, ולכן לא תראה את השפעתן עד שהוא יצומד ויתחבר — אבל אפשר להגדיר כבר עכשיו את כל מה שמופיע למטה.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">מראה</string>
+    <string name="setting_theme">ערכת נושא</string>
+    <string name="theme_light">לבן נקי</string>
+    <string name="theme_dark">שחור מוחלט</string>
+    <string name="theme_system">לפי המערכת</string>
+    <string name="setting_language">שפה</string>
+    <string name="language_system">לפי המערכת</string>
+    <string name="language_change_watch_notice">לאחר הסנכרון גם השעון ישתמש בשפה הזו.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">מפתח</string>
+    <string name="dev_mode_unlocked">מצב מפתח הופעל ✦</string>
+    <string name="dev_mode_clicks_remaining">עוד %1$d הקשות כדי לפתוח את מצב המפתח</string>
+    <string name="dev_disable_mode">השבת מצב מפתח</string>
+    <string name="dev_disable_mode_description">הסתר שוב את החלק הזה — הקש שבע פעמים על \"גרסה מותקנת\" כדי להחזיר אותו</string>
+    <string name="dev_mode_disabled">מצב מפתח הושבת</string>
+    <string name="dev_build_info">פרטי גרסה</string>
+    <string name="dev_sync_watch">כפה סנכרון של הגדרות השעון</string>
+    <string name="dev_sync_watch_description">שלח מיד את כל ההגדרות הנוכחיות לשעון המצומד</string>
+    <string name="dev_sync_watch_done">ההגדרות סונכרנו לשעון</string>
+    <string name="dev_copy_debug_info">העתק פרטי ניפוי שגיאות</string>
+    <string name="dev_copy_debug_info_description">העתק פרטי גרסה ומכשיר ללוח</string>
+    <string name="dev_show_archived">הצג אפשרויות בארכיון</string>
+    <string name="dev_show_archived_description">חשוף פריסות והגדרות שעון שנשמרו בארכיון בגלל בעיות ידועות</string>
+    <string name="dev_copy_debug_info_done">פרטי ניפוי השגיאות הועתקו</string>
+    <string name="dev_open_update_screen">פתח את מסך העדכונים</string>
+    <string name="dev_open_update_screen_description">תצוגה מקדימה של מסך העדכונים (כרזת כיסוי, פריסת הערות גרסה) בלי להמתין לגרסה אמיתית</string>
+    <string name="dev_watch_layout_bounds">הצג גבולות פריסת השעון</string>
+    <string name="dev_watch_layout_bounds_description">סמן את רכיבי הנגן הנראים ואת אזורי המגע בשעון. שכבת אבחון בלבד.</string>
+    <string name="dev_watch_player_info">הצג מידע על הנגן בשעון</string>
+    <string name="dev_watch_player_info_description">הצג כשכבה על השעון את פני השעון הפעילים, מצב הניגון, ההתקדמות ופרטי הרינדור.</string>
+    <string name="pref_reset_default">אפס לברירת המחדל</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">מצאת את המפל הנסתר.\n\nSvartifoss — עמודי בזלת שחורים\nהמקיפים מפל באיסלנד,\nתזכורת לכך שמוזיקה זורמת\nכמו מים דרך אבן.\n\n♪ נבנה באהבה. ♪</string>
+    <string name="easter_egg_ok">סגור</string>
+
+    <string name="nav_watch_face">שעון</string>
+    <string name="watch_face_header">מראה השעון</string>
+    <string name="nav_controls">פקדים</string>
+    <string name="nav_actions">פעולות</string>
+    <string name="nav_settings">הגדרות</string>
+
+    <string name="controls_header">פקדים</string>
+    <string name="controls_state_playing">מוזיקה מתנגנת</string>
+    <string name="controls_state_stopped">אין ניגון</string>
+    <string name="controls_playing_description">בחר מה עושה כל קלט בזמן שמוזיקה מתנגנת. הגדרה זו נפרדת מהמצב שבו אין ניגון.</string>
+    <string name="controls_stopped_description">בחר מה עושה כל קלט לפני תחילת הניגון או לאחר שהוא נפסק. הגדרה זו נפרדת ממצב הניגון.</string>
+
+    <string name="watch_live_preview">תצוגה מקדימה חיה של השעון</string>
+    <string name="watch_preview_description">תצוגה מקדימה חיה של משטח השעון שנבחר. השינויים מופיעים כאן לפני שתנסה אותם בשעון.</string>
+    <string name="watch_section_style">נגן</string>
+    <string name="watch_section_style_description">בחר את פריסת הנגן ואת אופן הצגת הכותרת, הזמן וההתקדמות.</string>
+    <string name="watch_section_background">רקע</string>
+    <string name="watch_section_background_description">שלוט בעטיפת האלבום, בטשטוש, בעמעום ובקריאות מאחורי הנגן.</string>
+    <string name="watch_section_colors">צבעים</string>
+    <string name="watch_section_colors_description">הגדר צבעי בסיס, התקדמות והדגשות אלבום, ולאחר מכן כוונן את צבעי הכותרת, האמן, השעון, עוצמת הקול והחלוניות.</string>
+    <string name="watch_section_typography">טקסט</string>
+    <string name="watch_section_typography_description">בחר גופנים וכוונן כותרת, אמן, שעון, סמל אפליקציה, מסכים משניים וטקסט Flex.</string>
+    <string name="watch_section_aod">תצוגה תמידית</string>
+    <string name="watch_section_aod_description">הגדר את המסך החסכוני בחשמל וצפה במראה הסביבתי שלו בתצוגה המקדימה.</string>
+    <string name="watch_section_panels">חלוניות</string>
+    <string name="watch_section_panels_description">עצב את עוצמת הקול, הדילוג, החלונית המהירה והתור; מיקוד בשורה פותח את המשטח הזה בתצוגה המקדימה.</string>
+    <string name="watch_section_mini_buttons">כפתורים קטנים</string>
+    <string name="watch_section_mini_buttons_description">עצב את שורת קיצורי הדרך האופציונלית. הקש על “כפתורים קטנים” למטה כדי להקצות את הפעולות שלהם בפקדים.</string>
+    <string name="watch_overview_description">בחר מה ברצונך להתאים. התצוגה המקדימה וערכת הנושא השמורה נשארות פעילות בכל האזורים.</string>
+    <string name="watch_back_to_overview">חזרה לאזורי השעון</string>
+
+    <string name="settings_section_general">כללי</string>
+    <string name="settings_section_general_description">ערכת נושא של האפליקציה, צבע הדגשה והעדפות עדכון.</string>
+    <string name="settings_section_watch">התנהגות</string>
+    <string name="settings_section_watch_description">התנהגות הכתר, המגע, המשוב ההפטי ותפריט הפעולות בשעון.</string>
+    <string name="settings_section_automation">אוטומציה</string>
+    <string name="settings_section_automation_description">בחר מתי Svartifoss ייפתח וייסגר אוטומטית.</string>
+    <string name="settings_section_apps">אפליקציות</string>
+    <string name="settings_section_apps_description">מצא מילים ומטא-נתונים, קיצורי דרך לשירותי סטרימינג, עטיפות תור וגישה ל-Android.</string>
+    <string name="settings_section_data">נתונים ותמיכה</string>
+    <string name="settings_section_data_description">גבה את ההגדרות, בדוק את הגרסה והאבחון או קבל עזרה.</string>
+    <string name="settings_overview_description">בחר אזור. אפשרויות קשורות נשארות יחד, והחיפוש עדיין יכול להביא אותך ישירות לכל הגדרה.</string>
+    <string name="settings_back_to_overview">חזרה לאזורי ההגדרות</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">כיצד להשתמש ב-Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss הופך את השעון שלך לשלט רחוק למוזיקה שמתנגנת בטלפון. הנה כל מה שאפשר לעשות מפרק כף היד.</string>
+
+    <string name="tutorial_taps_title">הקש על אזורי המסך</string>
+    <string name="tutorial_taps_desc">מסך השעון מחולק לארבעה אזורים — עליון, תחתון, שמאלי וימני. הקשה על אזור מפעילה את הפעולה שהקצית לו. כברירת מחדל האזור השמאלי מנגן או משהה, הימני מדלג לרצועה הבאה, והעליון והתחתון משנים את עוצמת הקול.</string>
+
+    <string name="tutorial_quick_panel_title">חלונית פעולות מהירות</string>
+    <string name="tutorial_quick_panel_desc">הקש פעמיים במרכז מסך \"מתנגן כעת\" כדי לפתוח חלונית עם ארבעה תאים — שלושה כפתורים עגולים ושורה רחבה אחת מתחתיהם. אם לא משנים אותם, התאים משקפים את הכפתורים שאפליקציית הניגון מציגה בהתראה שלה, כך שמתקבלים פקדי הלייק, הערבוב והחזרה האמיתיים שלה. הקצה כל פעולה לתא, או הגדר אותו ל\"ללא\" כדי להסתירו, תחת פעולות בטלפון.</string>
+    <string name="tutorial_gestures_title">לחיצה יחידה, כפולה וארוכה</string>
+    <string name="tutorial_gestures_desc">כל אחד מארבעת אזורי הקצה תומך בפעולות נפרדות ללחיצה יחידה, כפולה וארוכה. גם הקשה יחידה במרכז ניתנת להגדרה; הקשה כפולה תמיד פותחת פעולות מהירות, ולחיצה ארוכה פותחת את בורר פני השעון, את התור או לא עושה דבר בהתאם להגדרות → התנהגות.</string>
+
+    <string name="tutorial_buttons_title">כפתורים פיזיים</string>
+    <string name="tutorial_buttons_desc">אם לשעון יש כפתורי צד, אפשר להקצות גם להם פעולות ללחיצה יחידה, כפולה וארוכה. הם ממשיכים לפעול גם כשהמסך כבוי.</string>
+
+    <string name="tutorial_rotary_title">כתר מסתובב</string>
+    <string name="tutorial_rotary_desc">בחר תחת הגדרות → התנהגות → כתר מסתובב / מסגרת אם סיבוב הכתר או המסגרת ישנה עוצמת קול, ידלג בתוך הרצועה או לא יעשה דבר. בשעונים שמציגים סיבובי כתר ככפתורים, הקצה אותם במקום זאת בפקדים.</string>
+
+    <string name="tutorial_swipe_up_title">החלק למעלה, למטה, שמאלה וימינה</string>
+    <string name="tutorial_swipe_up_desc">אפשר להגדיר בנפרד החלקה למעלה, למטה או שמאלה במסך \"מתנגן כעת\" לפתיחת כל דבר — תפריט הפעולות, תור הניגון, דילוג על רצועות, רשימות ההשמעה שלך ועוד. הגדר כל אחת בפקדים ובחר \"מוזיקה מתנגנת\" או \"אין ניגון\". כברירת מחדל החלקה למעלה פותחת את תפריט הפעולות, והאחרות לא עושות דבר עד שתגדיר אותן. החלקה ימינה נשארת ללא שינוי — זו המחווה האוניברסלית של Wear OS ליציאה מהאפליקציה.</string>
+    <string name="tutorial_shortcuts_title">קיצורי דרך לסטרימינג</string>
+    <string name="tutorial_shortcuts_desc">שמור קישור לרצועה, אלבום, מיקס או רשימת השמעה מ-Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music או SoundCloud, ואז הקצה אותו לכל כפתור, מחווה או תא בחלונית. הדרך המהירה ביותר היא לשתף את הקישור ישירות אל Svartifoss מאפליקציית הסטרימינג; אפשר גם להדביק קישור שהועתק או להקליד אותו. אין צורך בחשבון או בכניסה — השעון מבקש מהטלפון להתחיל לנגן, כך שהקיצור מנגן בפועל במקום רק לפתוח את האפליקציה.</string>
+    <string name="tutorial_yt_music_title">קיצורי YouTube Music</string>
+    <string name="tutorial_yt_music_desc">הקצה \"נגן שירים שאהבתי\", \"נגן שירים שאהבתי בערבוב\" או \"רשימות ההשמעה שלי\" לכל כפתור, מחווה או החלקה כדי לעבור ישר למוזיקה שלך בלי לגעת בטלפון. \"היסטוריית חיפוש\" זוכרת את החיפושים האחרונים בשעון — לחץ לחיצה ארוכה על פריט כדי למחוק אותו.</string>
+
+    <string name="tutorial_exit_title">החלק כדי לצאת</string>
+    <string name="tutorial_exit_desc">החלק מהקצה השמאלי כדי לצאת מהנגן. אפשר להשהות את הניגון אוטומטית בעת היציאה — הפעל זאת בהגדרות.</string>
+
+    <string name="tutorial_tile_title">Tile לשליטה מהירה</string>
+    <string name="tutorial_tile_desc">החלק את פני השעון הצדה אל ה-Tile של Svartifoss כדי לנגן, להשהות ולדלג מיד בלי לפתוח את האפליקציה.</string>
+
+    <string name="tutorial_complication_title">סיבוך בפני השעון</string>
+    <string name="tutorial_complication_desc">הוסף את סיבוך עטיפת האלבום של Svartifoss לפני השעון כדי לראות את העטיפה הנוכחית במבט אחד. הקש עליו כדי לפתוח את הנגן.</string>
+
+    <string name="tutorial_system_title">פקדי מדיה של המערכת</string>
+    <string name="tutorial_system_desc">הרצועה הנוכחית מופיעה גם בפקדי המדיה המובנים של השעון ובאפליקציות האחרונות, כך שאפשר לשלוט בניגון גם משם.</string>
+
+    <string name="tutorial_tip">טיפ: הגדר את שני המצבים בפקדים ולאחר מכן סדר את התפריט בפעולות.</string>
+
+    <string name="navigation_drawer_open">פתח מגירת ניווט</string>
+    <string name="navigation_drawer_close">סגור מגירת ניווט</string>
+
+    <string name="action_settings">הגדרות</string>
+    <string name="action_pause">השהה</string>
+    <string name="action_play">נגן</string>
+    <string name="action_skip_prev">הקודם</string>
+    <string name="action_skip_next">הבא</string>
+    <string name="action_play_pause">נגן / השהה</string>
+    <string name="action_stop">עצור</string>
+    <string name="action_restart">התחל רצועה מחדש</string>
+    <string name="action_mute">השתק / בטל השתקה</string>
+    <string name="action_skip_seconds">דלג %1$d שניות</string>
+    <string name="action_reverse_seconds">חזור %1$d שניות</string>
+    <string name="action_like">אהבתי</string>
+    <string name="action_shuffle">ערבוב</string>
+    <string name="action_repeat">חזרה</string>
+    <string name="action_repeat_one">חזור על אחד</string>
+    <string name="action_search">חפש מוזיקה</string>
+    <string name="action_open_lyrics">מילים</string>
+    <string name="group_playback_controls">פקדי ניגון</string>
+    <string name="group_streaming_shortcuts">רצועות, אלבומים ורשימות השמעה</string>
+    <string name="pick_action">בחר פעולה</string>
+    <string name="action_search_hint">חפש ברשימה זו</string>
+    <string name="action_search_empty">אין פעולות התואמות לחיפוש הזה.</string>
+    <string name="action_opens_more">אפשרויות מרובות</string>
+    <string name="action_volume_up">הגבר עוצמה</string>
+    <string name="volume_down">הנמך עוצמה</string>
+    <string name="group_volume_controls">פקדי עוצמת קול</string>
+    <string name="no_watch_detected">לא זוהה שעון</string>
+    <string name="connection_instructions">פתח את Svartifoss בשעון כדי להתחיל בחיבור</string>
+    <string name="playing_controls">פקדים בזמן ניגון</string>
+    <string name="stopped_controls">פקדים כשאין ניגון</string>
+    <string name="actions_menu">תפריט פעולות</string>
+    <string name="actions_intro">הגדר את שני משטחי הפעולות בשעון עם פקדי ניגון, אפליקציות או רצועות, אלבומים ורשימות השמעה שמורים. החלונית המהירה נשארת קומפקטית; התפריט למטה יכול להכיל רשימה מסודרת ארוכה יותר.</string>
+    <string name="actions_quick_panel_section">חלונית מהירה</string>
+    <string name="actions_watch_menu_section">תפריט בשעון</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d פעולה · הקש לעריכה · לחץ לחיצה ארוכה וגרור לשינוי הסדר</item>
+        <item quantity="two">%1$d פעולות · הקש לעריכה · לחץ לחיצה ארוכה וגרור לשינוי הסדר</item>
+        <item quantity="other">%1$d פעולות · הקש לעריכה · לחץ לחיצה ארוכה וגרור לשינוי הסדר</item>
+    </plurals>
+    <string name="actions_reorder_description">תפריט פעולות מסודר. גע והחזק כדי לגרור, השתמש בפעולות הנגישות \"העבר למעלה\" או \"העבר למטה\", או לחץ Ctrl+Up/Down במקלדת.</string>
+    <string name="actions_move_up">העבר למעלה</string>
+    <string name="actions_move_down">העבר למטה</string>
+    <string name="actions_moved_to_position">%1$s הועבר למיקום %2$d מתוך %3$d.</string>
+    <string name="actions_empty">אין עדיין פעולות. השתמש בכפתור ההוספה כדי ליצור את הראשונה.</string>
+    <string name="actions_add">הוסף פעולה</string>
+    <string name="on_screen_buttons">אזורי מגע</string>
+    <string name="physical_buttons">כפתורים פיזיים</string>
+    <string name="physical_buttons_disconnected">התחבר ופתח את Svartifoss בשעון כדי להגדיר את הכפתורים הפיזיים שלו. אזורי מגע, החלקות וכפתורים קטנים זמינים כבר עכשיו.</string>
+    <string name="physical_buttons_unavailable">השעון הזה לא דיווח על כפתורים פיזיים שניתנים להגדרה.</string>
+    <string name="control_assignment_tap">הקשה: %1$s</string>
+    <string name="control_assignment_hold">לחיצה ארוכה: %1$s</string>
+    <string name="control_assignment_both">הקשה: %1$s · לחיצה ארוכה: %2$s</string>
+    <string name="tap_a_zone_to_configure">הקש על אזור בשעון כדי להקצות פעולה</string>
+    <string name="touch_zone_top">אזור עליון</string>
+    <string name="touch_zone_bottom">אזור תחתון</string>
+    <string name="touch_zone_left">אזור שמאלי</string>
+    <string name="touch_zone_right">אזור ימני</string>
+    <string name="touch_zone_center">הקשה במרכז</string>
+    <string name="touch_zone_action">%1$s: %2$s. הקש להגדרה.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">מחוות החלקה</string>
+    <string name="tap_a_swipe_to_configure">הקש על כיוון כדי לבחור מה הוא יפתח</string>
+    <string name="swipe_gesture_up">החלק למעלה</string>
+    <string name="swipe_gesture_down">החלק למטה</string>
+    <string name="swipe_gesture_left">החלק שמאלה</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">למעלה</string>
+    <string name="swipe_gesture_label_down">למטה</string>
+    <string name="swipe_gesture_label_left">שמאל</string>
+
+    <string name="screen_buttons">כפתורים קטנים</string>
+    <string name="tap_a_screen_button_to_configure">עד שלושה כפתורים נראים ליד תחתית מסך השעון — הקש על תא כדי להקצות פעולה</string>
+    <string name="screen_button_1">כפתור קטן 1 (שמאל)</string>
+    <string name="screen_button_2">כפתור קטן 2 (אמצע)</string>
+    <string name="screen_button_3">כפתור קטן 3 (ימין)</string>
+    <string name="screen_button_label_1">כפתור 1</string>
+    <string name="screen_button_label_2">כפתור 2</string>
+    <string name="screen_button_label_3">כפתור 3</string>
+    <string name="no_action">ללא פעולה</string>
+    <string name="gesture_single_press">לחיצה יחידה</string>
+    <string name="gesture_double_press">לחיצה כפולה</string>
+    <string name="gesture_long_press">לחיצה ארוכה</string>
+    <string name="gesture_swipe_action">פעולה</string>
+    <string name="center_button_quick_panel_note">הקשה כפולה במרכז תמיד פותחת פעולות מהירות. לחיצה ארוכה מפעילה את הבחירה תחת הגדרות → התנהגות. אף אחת מהמחוות אינה משתנה כשמקצים כאן את ההקשה במרכז.</string>
+    <string name="start_playback">התחל ניגון</string>
+    <string name="uninstalled_app">אפליקציה שהוסרה</string>
+
+    <string name="play_app">נגן %1$s</string>
+    <string name="tasker_task">משימת Tasker</string>
+    <string name="icon_selection_title">בחירת סמל</string>
+    <string name="icon_selection_gallery">מהגלריה</string>
+    <string name="icon_selection_no_icon_pack">תכונה זו מאפשרת לבחור סמל מותאם אישית לפעולה מתוך חבילת סמלים מותקנת.\n\nלצערנו נראה שאין לך חבילות סמלים מותקנות.</string>
+    <string name="icon_selection_no_storage_permission">תכונה זו מאפשרת לבחור סמל מותאם אישית לפעולה מתוך חבילת סמלים מותקנת.\n\nחבילות סמלים מסוימות דורשות הרשאת אחסון לאפליקציה. יש לאפשר אותה כדי להשתמש בתכונה זו.</string>
+    <string name="delete">מחק</string>
+    <string name="action_text">טקסט הפעולה</string>
+    <string name="swap_action">החלף פעולה</string>
+    <string name="open_actions_menu">פתח תפריט פעולות</string>
+    <string name="open_playlist_menu">הצג רשימת השמעה נוכחית</string>
+    <string name="misc_settings">הגדרות שונות</string>
+
+    <string name="category_backup">גיבוי</string>
+    <string name="export_config">ייצא תצורה</string>
+    <string name="export_config_description">שמור מיפויי כפתורים, רשימת פעולות והגדרות שעון לקובץ</string>
+    <string name="import_config">ייבא תצורה</string>
+    <string name="import_config_description">שחזר מיפויי כפתורים, רשימת פעולות והגדרות שעון מקובץ</string>
+    <string name="export_config_done">התצורה יוצאה</string>
+    <string name="export_config_failed">לא ניתן לייצא את התצורה</string>
+    <string name="import_config_done_title">הייבוא הצליח</string>
+    <string name="import_config_done_message">יש להפעיל מחדש את Svartifoss כדי להחיל את התצורה שיובאה.</string>
+    <string name="import_config_failed">לא ניתן לייבא את התצורה — ייתכן שהקובץ לא תקין או מגרסה לא תואמת</string>
+    <string name="action_restart_now">הפעל מחדש עכשיו</string>
+
+    <string name="category_about">אודות</string>
+    <string name="category_music_screen">מסך מוזיקה</string>
+    <string name="category_watch_screen">מסך השעון</string>
+    <string name="category_mini_buttons">כפתורים קטנים</string>
+    <string name="category_screen_face">מראה הנגן</string>
+    <string name="category_wf_screen_behavior">התנהגות המסך</string>
+    <string name="category_wf_player_progress">התקדמות, דילוג וזמן</string>
+    <string name="category_album_background">רקע אלבום</string>
+    <string name="category_music_colors">צבעים מהמוזיקה</string>
+    <string name="category_wf_typography_font">גופן</string>
+    <string name="category_wf_typography_title">כותרת</string>
+    <string name="category_wf_typography_artist">אמן</string>
+    <string name="category_wf_typography_icon">סמל אפליקציה</string>
+    <string name="category_wf_typography_flex">צירי Google Sans Flex</string>
+    <string name="category_wf_metadata">תוכן פני Metadata</string>
+    <string name="category_wf_typography_secondary">טקסט במסכים אחרים</string>
+    <string name="category_wf_colors_title">צבעי כותרת</string>
+    <string name="category_wf_colors_artist">צבעי אמן</string>
+    <string name="category_wf_colors_clock">צבעי שעון</string>
+    <string name="setting_wear_font_flex_hint_title">על הפקדים האלה</string>
+    <string name="setting_wear_flex_axes_hint">הפקדים האלה מכווננים במיוחד את Google Sans Flex — בחר אותו למעלה כדי להשתמש בהם. הגדרות המשקל/נטוי של הכותרת והאמן למעלה כבר קובעות את צירי המשקל (wght) וההטיה (slnt) של הגופן; ארבעת הפקדים למטה חלים על כל פני השעון.</string>
+    <string name="setting_wear_font_flex_width">רוחב</string>
+    <string name="setting_wear_font_flex_width_description">מתיחה אופקית, מצר למורחב (25–151). 100 הוא הרוחב הרגיל של הגופן.</string>
+    <string name="setting_wear_font_flex_optical_size">גודל אופטי</string>
+    <string name="setting_wear_font_flex_optical_size_description">מתאים את פרטי הקו לגודל האפקטיבי של הטקסט (6–144). ערכים נמוכים מתאימים לטקסט קטן; גבוהים לטקסט תצוגה גדול.</string>
+    <string name="setting_wear_font_flex_grade">דרגה</string>
+    <string name="setting_wear_font_flex_grade_description">משנה מעט את המשקל בלי לשנות את הפריסה (0–100) — דרך עדינה לחזק ניגודיות במסך כהה.</string>
+    <string name="setting_wear_font_flex_roundness">עגלגלות</string>
+    <string name="setting_wear_font_flex_roundness_description">מערבב קצות קווים מחדים (0) לעגולים לגמרי (100) למראה ידידותי יותר.</string>
+    <string name="preview_sample_title">שם השיר</string>
+    <string name="preview_sample_artist">שם האמן</string>
+    <string name="preview_sample_next_title">השיר הבא</string>
+    <string name="preview_playback_stopped">נעצר</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">השורה שלפני</string>
+    <string name="preview_verse_current">השורה שמתנגנת עכשיו</string>
+    <string name="preview_verse_next">וזו שאחריה</string>
+    <string name="preview_chat_today">היום</string>
+    <string name="category_gestures">מחוות וקלט</string>
+    <string name="category_watch_navigation">ניווט וקיצורים</string>
+    <string name="category_rotary_input">קלט סיבובי וכיוון</string>
+    <string name="category_watch_feedback">משוב והתנהגות יציאה</string>
+    <string name="category_watch_display">מסך השעון</string>
+    <string name="setting_wear_keep_screen_on">השאר את המסך דולק</string>
+    <string name="setting_wear_keep_screen_on_description">מונע ממסך השעון להיכבות בעקבות פסק זמן של חוסר פעילות כל עוד מסך Svartifoss פתוח. הורדת פרק היד עדיין מעמעמת את השעון — המחווה הזו שייכת למערכת. צורך יותר סוללה. מסך המילים נשאר תמיד דולק ללא קשר להגדרה הזו.</string>
+    <string name="setting_lyrics_enabled">חפש מילים באינטרנט</string>
+    <string name="setting_lyrics_enabled_description">אפשר לטלפון להביא מילים מסונכרנות מ-LRCLIB כשפותחים את מסך המילים בשעון. נשלחים רק שם הרצועה, האמן והאורך; שום דבר נוסף ושום דבר לא נשמר בדיסק. אם מכבים, מסך המילים ידווח שהחיפוש מושבת.</string>
+    <string name="setting_overlay_blur_radius">טשטוש שכבה</string>
+    <string name="setting_overlay_blur_radius_description">עוצמת הטשטוש (px) של הרקע המטושטש מאחורי טבעות עוצמת הקול/הדילוג וחלונית הפעולות המהירות — בנפרד מטשטוש רקע עטיפת האלבום</string>
+    <string name="category_action_list">רשימת פעולות</string>
+    <string name="category_automation">אוטומציה</string>
+    <string name="category_idle">כששום דבר לא מתנגן</string>
+    <string name="installed_version">גרסה מותקנת</string>
+    <string name="get_support">קבל תמיכה</string>
+    <string name="get_support_description">שלח יומני אפליקציה למפתח לצורך תמיכה</string>
+    <string name="contact_developer">צור קשר עם המפתח</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — יצירת קשר</string>
+    <string name="contact_developer_chooser">שלח דוא\"ל</string>
+    <string name="contact_developer_no_client">אין אפליקציית דוא\"ל מותקנת. הכתובת הועתקה ללוח.</string>
+    <string name="about_developer_title">על המפתח</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss התחיל כפרויקט אישי — רציתי לעדכן את Music Center for Wear למה שאפשרי היום, רק כדי שאוכל להשתמש בו בעצמי בכל יום. התוצאה הייתה טובה מספיק והחלטתי לשתף אותה עם כולם. זו האפליקציה הראשונה שלי, ואין הרבה דברים שמשתווים לתחושה של לראות משהו שבנית הופך שימושי גם לאנשים אחרים.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">רישיונות קוד פתוח</string>
+    <string name="setting_always_show_time">הצג תמיד את השעה</string>
+    <string name="setting_always_show_time_off_description">השעה הנוכחית תוצג רק במצב סביבתי</string>
+    <string name="setting_always_show_time_on_description">השעה הנוכחית תוצג תמיד. סמל הפעולה העליון לא ייראה (השעון יחליף אותו), אך הפעולה עצמה תמשיך לפעול כרגיל.</string>
+    <string name="tap_to_force_stop">הקש כדי לעצור את הפקדים</string>
+    <string name="notification_action_stop">עצור</string>
+    <string name="notification_action_force_stop">כפה עצירה</string>
+    <string name="error_notification_access">אין גישה להתראות. בדוק את הטלפון.</string>
+    <string name="error_notifications">התראות שגיאה</string>
+    <string name="notification_access_notification_title">Svartifoss זקוק לגישה להתראות</string>
+    <string name="notification_access_notification_title_description">הקש על ההתראה ובדוק את Svartifoss כדי לתקן את הבעיה</string>
+    <string name="error_service_not_enabled">נדרשת גישה להתראות</string>
+    <string name="error_service_not_enabled_description">כדי לשלוט במוזיקה מהשעון, Svartifoss זקוק לגישה להתראות — כך Android מאפשר לו לראות איזו אפליקציה מנגנת ולשלוח לה פקודות ניגון, השהיה ודילוג.\n\nSvartifoss לעולם אינו קורא את תוכן ההתראות שלך. הוא משתמש בהרשאה הזו רק כדי למצוא את סשן המדיה הפעיל.\n\nהקש \"פתח הגדרות\", ואז הפעל את Svartifoss תחת גישה להתראות.</string>
+    <string name="action_open_settings">פתח הגדרות</string>
+    <string name="settings_search_title">חפש בהגדרות</string>
+    <string name="settings_search_hint">חפש בהגדרות</string>
+    <string name="settings_search_clear">נקה חיפוש</string>
+    <string name="settings_search_prompt">חפש לפי שם בכל הגדרה תחת הגדרות ומראה השעון.</string>
+    <string name="settings_search_no_results">אין הגדרה תואמת.</string>
+    <string name="settings_search_prerequisite">האפשרות הזו תלויה בבחירה אחרת. שנה את ההגדרה שמוצגת כאן כדי לחשוף אותה.</string>
+    <string name="setting_numeric_range_error">הזן ערך בין %1$d ל-%2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">הקש כדי להעניק — פקדי הניגון יישארו לא פעילים עד שתעשה זאת</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">התקן את Svartifoss בשעון</string>
+    <string name="no_watch_app_description">Svartifoss לא מצא את אפליקציית השעון שלו בשעון Wear OS המצומד. אפליקציות הטלפון והשעון פועלות יחד — בלי אפליקציית השעון, השליטה בניגון מפרק כף היד לא תעבוד.\n\nSvartifoss אינו נמצא בחנות Play — את אפליקציית השעון מתקינים בנפרד ב-sideload (למשל עם Wear Installer). הקש \"הצג גרסאות\" כדי לפתוח את דף הגרסאות ב-GitHub ולהוריד את APK השעון. אם זה עתה התקנת אותה, המתן כדקה לסיום הסנכרון.</string>
+    <string name="no_watch_app_button">הצג גרסאות</string>
+    <string name="required_permission">הרשאה נדרשת</string>
+    <string name="setting_pause_on_swipe_exit">השהה ניגון ביציאה בהחלקה</string>
+    <string name="setting_pause_on_swipe_exit_description">השהה אוטומטית כל ניגון בעת יציאה מ-Svartifoss בשעון באמצעות החלקה שמאלה.\n\nיציאה באמצעות כפתור ההפעלה אינה מושפעת ולעולם לא תגרום להשהיה אוטומטית.</string>
+    <string name="setting_rotating_crown_off_period">השהיית קלט סיבובי לאחר הדלקת המסך</string>
+    <string name="setting_rotating_crown_off_period_description">קלטים סיבוביים (למשל כתרים מסתובבים) עלולים להיות רגישים מדי במכשירים מסוימים. כדי למנוע שינויי עוצמה מקריים, הקלט הסיבובי יושבת למשך <![CDATA[<b>%1$s אלפיות שנייה</b>]]> לאחר הדלקת המסך.</string>
+    <string name="setting_rotary_seek">דלג באמצעות הכתר</string>
+    <string name="setting_rotary_seek_description">כאשר מופעל, סיבוב הכתר מדלג בתוך הרצועה הנוכחית במקום לשנות עוצמת קול. עדיין אפשר לשנות עוצמה בעזרת כפתורים על המסך או כפתורים פיזיים.</string>
+    <string name="setting_wear_rotary_action">כתר / מסגרת מסתובבים</string>
+    <string name="wear_rotary_action_volume">שנה עוצמת קול</string>
+    <string name="wear_rotary_action_seek">דלג בתוך הרצועה</string>
+    <string name="wear_rotary_action_off">אל תעשה דבר</string>
+    <string name="setting_rotating_sensitivity">רגישות קלט סיבובי</string>
+    <string name="setting_rotating_sensitivity_description">רגישות הקלט הסיבובי. מספר גבוה יותר פירושו שסיבוב זהה של הכתר יגדיל את עוצמת הקול יותר. מוגדר כעת ל-<![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">השבת לחיצה כפולה על כפתור פיזי במצב סביבתי</string>
+    <string name="setting_disable_ambient_physical_double_click_description">בחלק מהשעונים יש כפתורים בעייתיים שבהם לחיצה יחידה על כפתור פיזי במצב סביבתי נרשמת לעיתים כלחיצה כפולה.\n\nאם זה קורה, אפשר להפעיל אפשרות זו כדי להשבית לחלוטין לחיצות כפולות במצב סביבתי (למשל שתי לחיצות יפעילו רק את פעולת הלחיצה היחידה). לחיצה כפולה כשהשעון פעיל אינה מושפעת.</string>
+    <string name="setting_haptic_feedback">משוב הפטי</string>
+    <string name="setting_haptic_feedback_description">רטוט השעון בעת לחיצה על כפתורים.</string>
+    <string name="setting_auto_start">פתח את Svartifoss אוטומטית</string>
+    <string name="setting_auto_start_description">פתח את Svartifoss בשעון אוטומטית כשהפעלת מוזיקה מתחילה בטלפון.</string>
+    <string name="setting_auto_start_apps_blacklist">אפליקציות להפעלה אוטומטית</string>
+    <string name="setting_auto_start_apps_blacklist_description">רשימת אפליקציות מדיה שיכולות להפעיל את Svartifoss אוטומטית</string>
+    <string name="setting_dim_album_art">הצללת הנגן</string>
+    <string name="setting_dim_album_art_description">הוסף אפקט צל שנבחר על ידי המשתמש בין העטיפה לפקדי הנגן.</string>
+    <string name="setting_album_art_style">סגנון עטיפת אלבום</string>
+    <string name="setting_album_art_style_description">בחר כיצד ייראה רקע \"מתנגן כעת\" בשעון.</string>
+    <string name="setting_album_art_blur_radius">עוצמת הטשטוש</string>
+    <string name="setting_album_art_blur_radius_description">עוצמת הטשטוש במסך מלא כאשר הרקע שנבחר משתמש בטשטוש. כרגע <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">עוצמת ההכהיה</string>
+    <string name="setting_album_art_dim_strength_description">מידת ההכהיה של עטיפת האלבום לשיפור קריאות הטקסט. כרגע <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">סגנון הצללה</string>
+    <string name="setting_player_shading_intensity">עוצמת ההצללה</string>
+    <string name="setting_player_shading_intensity_description">מידת ההכהיה של הרקע באמצעות ההצללה. 100%% היא עוצמה מלאה; ערך גבוה יותר מוסיף ניגודיות (עד 150%%). כרגע <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">החל את המראה הזה על כל התצוגות</string>
+    <string name="setting_apply_appearance_to_all_faces_description">העתק את הגדרות המראה של תצוגה זו לכל התצוגות האחרות</string>
+    <string name="apply_appearance_confirm_title">להחיל על כל התצוגות?</string>
+    <string name="apply_appearance_confirm_message">פעולה זו תחליף את הגדרות המראה של כל התצוגות האחרות באלו של התצוגה הנוכחית. הגדרות ההתנהגות לא ישתנו.</string>
+    <string name="apply_appearance_confirm_button">החל</string>
+    <string name="apply_appearance_done">הוחל על כל התצוגות</string>
+    <string name="category_wf_layout_actions">פריסה</string>
+    <string name="setting_reset_appearance">אפס פריסה זו</string>
+    <string name="setting_reset_appearance_description">שחזר את מראה התצוגה הזו לברירות המחדל המקוריות</string>
+    <string name="reset_appearance_confirm_title">לאפס פריסה זו?</string>
+    <string name="reset_appearance_confirm_message">הגדרות המראה של תצוגה זו יחזרו לברירות המחדל. הגדרות ההתנהגות ותצוגות אחרות לא יושפעו.</string>
+    <string name="reset_appearance_confirm_button">אפס</string>
+    <string name="reset_appearance_done">הפריסה אופסה לברירת המחדל</string>
+    <string name="setting_reset_all_faces">אפס את כל התצוגות לברירת המחדל</string>
+    <string name="setting_reset_all_faces_description">שחזר את המראה של כל התצוגות המובנות לברירות המחדל המקוריות</string>
+    <string name="reset_all_faces_confirm_title">לאפס את כל התצוגות?</string>
+    <string name="reset_all_faces_confirm_message">המראה של כל התצוגות המובנות יחזור לברירות המחדל המקוריות וכל ערכת נושא מותאמת אישית פעילה תכובה. ערכות נושא מותאמות אישית שמורות, הגדרות התנהגות והתצוגה שנבחרה יישמרו.</string>
+    <string name="reset_all_faces_confirm_button">אפס הכול</string>
+    <string name="reset_all_faces_done">כל התצוגות אופסו לברירת המחדל</string>
+    <string name="face_reset_migration_title">עדכן את מראה השעון</string>
+    <string name="face_reset_migration_message">עדכנת מגרסה ישנה שבה כל תצוגות השעון חלקו אותה קבוצת הגדרות מראה. כעת כל תצוגה זוכרת את ההגדרות שלה, ולכן ההגדרות הישנות עלולות להיראות לא מתאימות בתצוגות שלא התאמת ישירות. מומלץ לאפס את כל התצוגות לברירות המחדל החדשות, או לנקות את נתוני האפליקציה להתחלה חדשה לחלוטין.</string>
+    <string name="face_reset_migration_reset_button">אפס את כל התצוגות</string>
+    <string name="face_reset_migration_clear_data_button">נקה נתוני אפליקציה</string>
+    <string name="setting_player_shading_color">צבע הצללה</string>
+    <string name="setting_wear_shading_custom_color">צבע הצללה מותאם אישית</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>שחור</item>
+        <item>צבע הדגשה מהאלבום</item>
+        <item>אלבום דהוי</item>
+        <item>צבע מותאם אישית</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>לפי ערכת הנושא של הנגן</item>
+        <item>הצללת קצוות</item>
+        <item>הצללת קצוות (חזקה)</item>
+        <item>הצללת קצוות (כבדה)</item>
+        <item>פינה תחתונה</item>
+        <item>דעיכה בתחתית</item>
+        <item>רצפה ותקרה</item>
+        <item>מסנן מסך מלא</item>
+        <item>שטיפת צבע מהאלבום</item>
+        <item>מעבר דו-צבעי מהאלבום</item>
+        <item>וילונות צד</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">אטימות עטיפת אלבום במצב סביבתי</string>
+    <string name="setting_ambient_album_art_opacity_description">קובע עד כמה עטיפת האלבום נשארת גלויה במצב סביבתי. כרגע <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">זמן קצוב לשכבת עוצמה/דילוג</string>
+    <string name="setting_volume_overlay_timeout_description">משך הזמן ששכבות עוצמת הקול והדילוג נשארות על המסך לאחר שינוי. כרגע <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">אזור מת לקלט סיבובי</string>
+    <string name="setting_rotary_deadzone_description">תנועת הכתר המינימלית לפני ששינוי עוצמה או דילוג נכנס לתוקף. מסייע במניעת שינויים מקריים. כרגע <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">חוויית Wear</string>
+    <string name="setting_swipe_gestures_hint">מחוות החלקה</string>
+    <string name="setting_swipe_gestures_hint_description">החלקה למעלה/למטה/שמאלה יכולה לפתוח כל פעולה. הקש כאן כדי להגדיר אותן עבור \"מוזיקה מתנגנת\" או \"אין השמעה\". החלקה ימינה שמורה ליציאה מהאפליקציה.</string>
+    <string name="setting_screen_buttons_hint">כפתורים קטנים</string>
+    <string name="setting_screen_buttons_hint_description">עד שלושה כפתורים גלויים, לכל אחד פעולת הקשה ולחיצה ארוכה. הקש כאן כדי להגדיר אותם עבור \"מוזיקה מתנגנת\" או \"אין השמעה\".</string>
+    <string name="dev_screen_buttons_offset">מיקום הכפתורים הקטנים</string>
+    <string name="dev_screen_buttons_offset_description">המרחק המועדף ב-dp בין תחתית מסך השעון לכפתורים הקטנים (ברירת מחדל 42). השורה עדיין מתרחקת אוטומטית מכותרות ארוכות.</string>
+    <string name="setting_screen_buttons_tilt">הטיית הכפתורים</string>
+    <string name="setting_screen_buttons_tilt_description">מידת ההתאמה של הכפתורים הצדדיים לקימור המסך. 0 = שורה ישרה; 100 = קשת מלאה עם סמלים מוטים.</string>
+    <string name="setting_screen_buttons_bg">רקע הכפתורים הקטנים</string>
+    <string name="setting_screen_buttons_opacity">אטימות הכפתורים הקטנים</string>
+    <string name="setting_screen_buttons_opacity_description">אטימות כל קבוצת הכפתורים הקטנים (0–100%%). כרגע <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">חלונית פעולות מהירות</string>
+    <string name="quick_panel_link_summary">הקש פעמיים על מרכז מסך השעון כדי לפתוח. הקש כאן כדי להגדיר את ארבעת המקומות ב\"פעולות\".</string>
+    <string name="quick_panel_config_hint">אלה הכפתורים בלוח שנפתח בהקשה כפולה על מרכז מסך השעון. הקש על שורה כדי לבחור פעולה (\"ללא\" מסתיר אותה); לחיצה ארוכה משחזרת את ברירת המחדל.</string>
+    <string name="quick_panel_slot_1">כפתור 1</string>
+    <string name="quick_panel_slot_2">כפתור 2</string>
+    <string name="quick_panel_slot_3">כפתור 3</string>
+    <string name="quick_panel_slot_long">כפתור ארוך</string>
+    <string name="quick_panel_slot_default">%1$s (ברירת מחדל)</string>
+    <string name="quick_panel_slot_hidden">מוסתר</string>
+    <string name="quick_panel_default_like">אהבתי</string>
+    <string name="quick_panel_default_shuffle">ערבוב</string>
+    <string name="quick_panel_default_repeat">חזרה</string>
+    <string name="quick_panel_default_up_next">הבא בתור</string>
+    <string name="setting_wear_center_long_press_queue">לחיצה ארוכה במרכז פותחת את התור</string>
+    <string name="setting_wear_center_long_press_queue_description">לחץ לחיצה ארוכה על מרכז מסך \"מתנגן כעת\" כדי לפתוח את תור ההשמעה.</string>
+    <string name="setting_wear_center_long_press">לחיצה ארוכה במרכז</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>החלף פני שעון</item>
+        <item>פתח את התור</item>
+        <item>כלום</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">פריסת בסיס</string>
+    <string name="setting_wear_screen_face_description">בחר את המבנה שבו ערכת נושא זו משתמשת. ערכות נושא שמורות יכולות לשלב את הפריסה הזו עם גופן, צבעים, טשטוש, הצללה, AOD ולוחות משלהן.</string>
+    <string name="setting_wear_show_track_title">הצג את שם השיר</string>
+    <string name="setting_wear_show_track_title_description">הצג את שם השיר הנוכחי בנגן</string>
+    <string name="setting_wear_show_track_artist">הצג את שם האמן</string>
+    <string name="setting_wear_show_track_artist_description">הצג את האמן הנוכחי בנגן</string>
+    <string name="setting_wear_show_source_icon">הצג את סמל האפליקציה המנגנת</string>
+    <string name="setting_wear_show_source_icon_description">הצג לצד האמן את סמל האפליקציה שמנגנת כעת. נעשה שימוש בסמל מהתראת המדיה שלה. כאשר כבוי, הסמל לעולם לא נשלח לשעון.</string>
+    <string name="setting_wear_player_controls_visible">הצג פקדי נגן</string>
+    <string name="setting_wear_player_controls_visible_description">הצג או הסתר כפתורים מובנים בפריסות Classic, Poster, Studio ובפריסות ניתנות להגדרה אחרות, בלי להשבית את אזורי המגע שלהן</string>
+    <string name="setting_wear_quadrant_tap_flash">הבהב סמל בהקשה</string>
+    <string name="setting_wear_quadrant_tap_flash_description">כאשר פעולה באזור פינה מופעלת, הסמל שלה יהבהב לזמן קצר בבהירות מלאה — שימושי במיוחד בערכת המסך Hidden, שבה הסמל אינו נראה בדרך כלל ולכן אין אישור איזו פעולה הופעלה.</string>
+    <string name="setting_wear_internal_progress_visible">מחוון התקדמות של הפריסה</string>
+    <string name="setting_wear_internal_progress_visible_description">הצג את מחוון ההתקדמות הנוסף שתוכנן לפריסה זו. טבעות לחצן ההפעלה של Expressive ו-Material הן חלק מהפקדים ונשארות זמינות.</string>
+    <string name="setting_wear_edge_progress_visible">הצג קשת התקדמות בקצה</string>
+    <string name="setting_wear_edge_progress_visible_description">הסתר רק את הקשת החזותית סביב המסך. דילוג מהקצה נשאר אפשרות נפרדת.</string>
+    <string name="setting_wear_edge_seek_enabled">דילוג מקצה המסך</string>
+    <string name="setting_wear_edge_seek_enabled_description">הקש או גרור לאורך קצה המסך כדי לדלג לנקודה מדויקת, גם כאשר הקשת מוסתרת</string>
+    <string name="setting_wear_screen_theme">סגנון פקדים</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">מאוזן</string>
+    <string name="wear_screen_theme_default_description">היררכיה וגדלים רגילים של פקדים.</string>
+    <string name="wear_screen_theme_minimal">מינימלי</string>
+    <string name="wear_screen_theme_minimal_description">משתמש בפקדים קטנים ושקטים יותר, תוך שמירה על כל הפעולות גלויות ושימושיות.</string>
+    <string name="wear_screen_theme_compact">קומפקטי</string>
+    <string name="wear_screen_theme_compact_description">משתמש במראה פקדים צפוף יותר בלי לשנות את הפעולות שלך.</string>
+    <string name="wear_screen_theme_cinema">קולנועי</string>
+    <string name="wear_screen_theme_cinema_description">מרכך את הפקדים בלי לשנות את העטיפה.</string>
+    <string name="wear_screen_theme_vivid">חי</string>
+    <string name="wear_screen_theme_vivid_description">משתמש בפקדים גדולים ובולטים יותר.</string>
+    <string name="wear_screen_theme_contrast">ניגודיות גבוהה</string>
+    <string name="wear_screen_theme_contrast_description">משתמש בפקדים גדולים יותר לקריאה קלה יותר.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">משתמש בפקדים קומפקטיים ומעט מעומעמים. הוא לא מחשיך את הרקע עצמו — לשם כך השתמש בהגדרות הרקע.</string>
+    <string name="wear_screen_theme_hidden">מוסתר</string>
+    <string name="wear_screen_theme_hidden_description">מסתיר לחלוטין את כל סמלי הפקדים. אזורי המגע נשארים פעילים ומתפקדים במלואם.</string>
+    <string name="setting_wear_font">גופן</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">גופן ברירת המחדל של האפליקציה.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">גרסה משתנה של Google Sans עם רוחב, גודל אופטי, דרגה ועיגול ניתנים לכוונון — פותחת את בקרי הצירים שלמטה.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">גופן המערכת הקלאסי של Android.</string>
+    <string name="wear_font_rounded">מעוגל</string>
+    <string name="wear_font_rounded_description">צורות אות מודרניות ונעימות עם קצוות מעוגלים בעדינות.</string>
+    <string name="wear_font_sans_light">מודרני דק</string>
+    <string name="wear_font_sans_light_description">גופן סנס־סריפ נקי ואוורירי עם משקל חזותי קל יותר.</string>
+    <string name="wear_font_sans_thin">דק במיוחד</string>
+    <string name="wear_font_sans_thin_description">סגנון תצוגה קל במיוחד לנגן מינימליסטי.</string>
+    <string name="wear_font_sans_medium">מודרני בינוני</string>
+    <string name="wear_font_sans_medium_description">גופן סנס־סריפ חד עם קווים חזקים וקומפקטיים יותר.</string>
+    <string name="wear_font_sans_black">כבד</string>
+    <string name="wear_font_sans_black_description">משפחת תצוגה מודגשת עם השפעה חזותית מרבית.</string>
+    <string name="wear_font_small_caps">אותיות רישיות קטנות</string>
+    <string name="wear_font_small_caps_description">צורות קומפקטיות דמויות אותיות רישיות עם תחושה מערכתית.</string>
+    <string name="wear_font_casual">קליל</string>
+    <string name="wear_font_casual_description">משפחת גופני מערכת בכתב יד שובב.</string>
+    <string name="wear_font_typewriter">מכונת כתיבה (בארכיון)</string>
+    <string name="wear_font_typewriter_description">מראה רטרו של מכונת כתיבה (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">גופן סנס־סריפ גאומטרי מעוגל, חלופה חינמית (OFL) ברוח Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">גופן סנס־סריפ גאומטרי נקי, חלופה חינמית (OFL) ברוח Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">גופן רומי הומניסטי אלגנטי, חלופה חינמית (OFL) ברוח Optima.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">סגנון מכונת כתיבה רך יותר (Love Letter Typewriter) — שמור בדרך כלל לרצועות בנושא \"Lain\".</string>
+    <string name="wear_font_serif">סריפ</string>
+    <string name="wear_font_serif_description">גופן סריפ קלאסי.</string>
+    <string name="wear_font_serif_monospace">סריפ מונו</string>
+    <string name="wear_font_serif_monospace_description">אותיות סריפ ברוחב קבוע עם מראה מערכתי/מסופי ייחודי.</string>
+    <string name="wear_font_monospace">רוחב קבוע</string>
+    <string name="wear_font_monospace_description">מראה טכני ברוחב קבוע.</string>
+    <string name="wear_font_condensed">צר</string>
+    <string name="wear_font_condensed_description">צורות אות צרות יותר שמאפשרות להכניס יותר טקסט.</string>
+    <string name="wear_font_condensed_light">צר דק</string>
+    <string name="wear_font_condensed_light_description">משפחת גופנים צרה וקלה יותר לכותרות ארוכות.</string>
+    <string name="wear_font_condensed_medium">צר בינוני</string>
+    <string name="wear_font_condensed_medium_description">משפחה צרה עם קווים חזקים יותר וקריאות מצוינת.</string>
+    <string name="wear_font_cursive">כתב יד</string>
+    <string name="wear_font_cursive_description">גופן כתב דקורטיבי.</string>
+    <string name="setting_wear_dynamic_accent">צבע הדגשה דינמי בשעון</string>
+    <string name="setting_wear_dynamic_accent_description">התאם צבעי שעון המבוססים על האלבום לעטיפה הנוכחית. כאשר כבוי, בחירות צבע האלבום משתמשות בצבע ההדגשה הסטטי של ערכת הנושא.</string>
+    <string name="setting_wear_album_art_fade">מעבר עמעום של עטיפת האלבום</string>
+    <string name="setting_wear_album_art_fade_description">עמעם בצורה חלקה את עטיפת האלבום כשהרצועה מתחלפת.</string>
+    <string name="setting_wear_title_text_mode">התנהגות טקסט הכותרת</string>
+    <string name="setting_wear_title_text_mode_description">קובע כיצד כותרת ההשמעה מתנהגת כשהיא לא נכנסת: אוטומטי משלב הקטנה, גלישה וגלילה; האפשרויות האחרות משתמשות בהתנהגות אחת בלבד.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>אוטומטי (כווץ, אחר כך גלוש שורה, ואז גלול)</item>
+        <item>גלילה (טקסט נע)</item>
+        <item>גלוש לשתי שורות</item>
+        <item>גלוש לשלוש שורות</item>
+        <item>גלוש לחמש שורות</item>
+        <item>סטטי (שורה אחת, ללא גלילה או כיווץ)</item>
+        <item>כווץ להתאמה</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">צבע טקסט האמן</string>
+    <string name="setting_wear_artist_custom_color">צבע אמן מותאם אישית</string>
+    <string name="setting_wear_artist_custom_color_description">בחר את צבע האמן לשימוש בעיבוד רגיל</string>
+    <string name="setting_wear_artist_desaturated">צבע אמן מופחת רוויה</string>
+    <string name="setting_wear_artist_desaturated_description">רכך את צבע טקסט האמן המבוסס על האלבום — חל רק כאשר \"צבע טקסט האמן\" מוגדר לצבע אלבום</string>
+
+    <string name="setting_wear_progress_color">צבע סרגל ההתקדמות</string>
+    <string name="setting_wear_progress_custom_color">צבע מותאם אישית לסרגל ההתקדמות</string>
+    <string name="setting_wear_progress_custom_color_description">בחר את צבע ההתקדמות והחיפוש לשימוש בעיבוד רגיל</string>
+    <string name="setting_wear_progress_desaturated">צבע סרגל התקדמות מופחת רוויה</string>
+    <string name="setting_wear_progress_desaturated_description">רכך את צבע סרגל ההתקדמות המבוסס על האלבום — חל רק כאשר \"צבע סרגל ההתקדמות\" מוגדר לצבע אלבום</string>
+
+    <string name="setting_wear_volume_color">צבע סרגל עוצמת הקול</string>
+    <string name="setting_wear_volume_custom_color">צבע עוצמת קול מותאם אישית</string>
+    <string name="setting_wear_volume_custom_color_description">בחר את צבע עוצמת הקול לשימוש בעיבוד רגיל</string>
+    <string name="setting_wear_quick_panel_color">צבע פעולות מהירות</string>
+    <string name="setting_wear_quick_panel_custom_color">צבע פעולות מהירות מותאם אישית</string>
+    <string name="setting_wear_quick_panel_custom_color_description">בחר את צבע הפעולות המהירות לשימוש בעיבוד רגיל</string>
+    <string name="setting_wear_shading_custom_color_description">בחר את הצבע שמגוון את מעבר ההצללה</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>ניטרלי (צבע ערכת נושא קבוע)</item>
+        <item>צבע אלבום</item>
+        <item>צבע מותאם אישית</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>קלאסי</item>
+        <item>אקספרסיבי</item>
+        <item>ויניל</item>
+        <item>פוסטר</item>
+        <item>סטודיו</item>
+        <item>הילה</item>
+        <item>זוהר קוטבי</item>
+        <item>Eclipse AMOLED</item>
+        <item>ספקטרום</item>
+        <item>Material</item>
+        <item>סוחף</item>
+        <item>עומק</item>
+        <item>קרוסלה</item>
+        <item>צ׳אט</item>
+        <item>מפוצל</item>
+        <item>תו</item>
+        <item>בית</item>
+        <item>מטא-נתונים</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">חיפוש אקספרסיבי</string>
+    <string name="setting_wear_expressive_seek_mode_description">קובע כיצד לדפדף ברצועה במגע בתצוגת Expressive. טבעת מרכזית הופכת את הטבעת סביב כפתור ההפעלה לניתנת לגרירה; טבעת קצה מציגה גם את טבעת המסגרת Classic; ללא משאיר את החיפוש לכתר הסיבובי בלבד.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>טבעת מרכזית</item>
+        <item>טבעת קצה</item>
+        <item>ללא</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">תצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_style">סגנון תצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_style_description">קובע כיצד נראה מסך ההשמעה כשהשעון במצב סביבה. עקוב אחר התצוגה מתאים לתצוגה שנבחרה; מינימלי מציג רק טקסט מעומעם על שחור מלא לחיי הסוללה הארוכים ביותר.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>לפי פני השעון</item>
+        <item>קלאסי</item>
+        <item>אקספרסיבי (מתאר)</item>
+        <item>Material (מתאר)</item>
+        <item>פקדי AMOLED</item>
+        <item>Chrono (שעון גדול)</item>
+        <item>פוסטר</item>
+        <item>סטודיו</item>
+        <item>סוחף</item>
+        <item>קרוסלה</item>
+        <item>צ׳אט</item>
+        <item>מפוצל</item>
+        <item>תו</item>
+        <item>בית</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">צבע תצוגה פעילה תמיד</string>
+    <string-array name="wear_aod_color_entries">
+        <item>לבן</item>
+        <item>צבע אלבום</item>
+        <item>צבע מותאם אישית</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>לבן</item>
+        <item>דינמי (לפי האזור שמתחת לשעון)</item>
+        <item>צבע אלבום</item>
+        <item>צבע מותאם אישית</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>לפי סגנון הלוח</item>
+        <item>שקוף (ללא רקע)</item>
+        <item>צבע הדגשה מהאלבום</item>
+        <item>שקוף למחצה</item>
+        <item>לבן</item>
+        <item>לבן חלבי</item>
+        <item>שחור</item>
+        <item>דינמי (גוון אלבום)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">רקע גלולת הבא בתור</string>
+    <string name="setting_wear_show_up_next_pill">גלולת הבא בתור בנגן</string>
+    <string name="setting_wear_show_up_next_pill_description">הצג גלולת הבא בתור בתחתית מסך ההשמעה. היא ממלאת את המקום ששורת הכפתורים הקטנים הייתה תופסת, ולכן מופיעה רק כשהשורה אינה מוצגת.</string>
+    <string name="category_wf_clock">שעון</string>
+    <string name="setting_wear_clock_color">צבע השעון</string>
+    <string name="setting_wear_clock_custom_color">צבע שעון מותאם אישית</string>
+    <string name="setting_wear_clock_custom_color_description">הקש כדי לבחור את צבע השעון לשימוש כאשר צבע השעון מוגדר לצבע מותאם אישית</string>
+    <string name="setting_wear_clock_opacity">אטימות השעון</string>
+    <string name="setting_wear_clock_opacity_description">קובע את אטימות השעון שמוצג תמיד (10–100%%). כרגע <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">צבע מותאם אישית לתצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_custom_color_description">הקש כדי לבחור את הצבע לטקסט, פקדים ושעון בתצוגה פעילה תמיד כאשר \"צבע תצוגה פעילה תמיד\" מוגדר לצבע מותאם אישית</string>
+    <string name="setting_wear_aod_intensity">בהירות תצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_intensity_description">קובע את בהירות התצוגה הפעילה תמיד (20–100%%). ערך נמוך יותר כהה יותר וצורך פחות סוללה. כרגע <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">כפתורי תחבורה בתצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_show_transport_description">הצג את כפתורי הקודם/הפעלה/הבא עם קווי מתאר בסגנונות חזותיים נתמכים של תצוגה פעילה תמיד. אי אפשר להקיש עליהם כשהמסך מעומעם, אך הקשה מעירה את השעון כשהכפתור כבר נמצא מתחת לאצבע.</string>
+    <string name="setting_wear_aod_show_progress">טבעת התקדמות בתצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_show_progress_description">הצג את טבעת ההתקדמות סביב כפתור ההפעלה במצב סביבה — המיקום מתרענן שם רק בערך פעם בדקה</string>
+    <string name="setting_wear_aod_show_pills">הבא בתור בתצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_show_pills_description">הצג גלולת הבא בתור סטטית עם קו מתאר בתחתית הסגנונות החזותיים של תצוגה פעילה תמיד</string>
+    <string name="category_wf_gestures">מחוות מסך</string>
+    <string name="setting_wear_mini_buttons_mode">הצג כפתורים קטנים</string>
+    <string name="setting_wear_gestures_mode">מחוות מסך</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>תמיד</item>
+        <item>רק בזמן נגינה</item>
+        <item>רק בזמן השהיה</item>
+        <item>אף פעם</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">עטיפת אלבום בתצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_show_art_description">השאר את עטיפת האלבום המעומעמת גלויה במצב סביבה. כיבוי מציג רקע שחור מלא, שחוסך באופן ניכר יותר סוללה במסכי AMOLED.</string>
+    <string name="setting_wear_aod_art_treatment">סגנון עטיפת אלבום בתצוגה פעילה תמיד</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>טשטוש רך</item>
+        <item>עטיפה ברורה</item>
+        <item>טשטוש מונוכרומטי</item>
+        <item>לפי עיבוד עטיפת הנגן</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">שעון בתצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_show_clock_description">הצג את השעון כאשר השעון החכם במצב סביבה</string>
+    <string name="setting_wear_aod_show_track_info">פרטי רצועה בתצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_show_track_info_description">הצג את שם הרצועה והאמן במצב סביבה</string>
+
+    <string name="category_overlays_queue">שכבות ותור</string>
+    <string name="category_wf_panel_shared">מראה לוחות משותף</string>
+    <string name="category_wf_panel_volume">לוח עוצמת קול</string>
+    <string name="category_wf_panel_seek">לוח התקדמות וחיפוש</string>
+    <string name="category_wf_panel_quick">חלונית פעולות מהירות</string>
+    <string name="category_wf_panel_queue">תור ורשימות</string>
+    <string name="category_wf_panel_effects">אפקטי לוח</string>
+    <string name="setting_wear_overlay_backdrop_style">רקע לוח</string>
+    <string name="setting_wear_volume_style">סגנון עוצמת קול</string>
+    <string name="setting_wear_volume_layout">פריסת עוצמת קול</string>
+    <string name="setting_wear_quick_panel_style">סגנון לוח מהיר</string>
+    <string name="setting_wear_quick_panel_layout">פריסת לוח מהיר</string>
+    <string name="setting_wear_quick_panel_source">פעולות מהירות</string>
+    <string name="setting_wear_quick_panel_source_description">בחר את הכפתורים שהגדרת, או פעולות שמספקת האפליקציה שמנגנת כעת.</string>
+    <string name="quick_panel_open_note_title">פתיחת הלוח</string>
+    <string name="quick_panel_open_note_description">הקש פעמיים במרכז מסך ההשמעה כדי לפתוח את לוח הפעולות המהירות בשעון.</string>
+    <string name="preview_current_app_action">פעולת האפליקציה הנוכחית</string>
+    <string name="preview_notification_controls">סמל מהתראת מדיה</string>
+    <string name="setting_wear_queue_style">סגנון תור</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">השתמש בעטיפות קיצורי דרך כרקע</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">כאשר סגנון התור הוא גרסת עטיפה, שורת פעולה בלוח המהיר עם עטיפת קיצור דרך שנשלפה (רצועה, רשימת השמעה, אמן…) ממלאת גם את הגלולה באותה תמונה, כמו הבא בתור. קיצורים ללא עטיפה שנשלפה (סמל אפליקציה רגיל) אינם מושפעים.</string>
+    <string name="setting_wear_list_row_size">גודל גלולת רשימה</string>
+    <string name="setting_wear_list_row_size_description">גובה השורות ברוחב מלא בתור, בתפריטים ובלוח המהיר.</string>
+    <string name="setting_wear_progress_gradient">מזג את הפלטה לתוך הטבעת</string>
+    <string name="setting_wear_progress_gradient_description">בעיבוד צבע רב־גוני (משלים, משולש, אנלוגי, דו־גוני) הטבעת המלאה עוברת בהדרגה דרך כל שלושת הצבעים. כבה כדי לקבל טבעת בצבע יחיד תוך שמירת פלטת האלבום בכל מקום אחר.</string>
+    <string name="setting_wear_progress_style">סגנון טבעת התקדמות</string>
+    <string name="setting_wear_seek_style">סגנון תצוגת חיפוש ועוצמת קול</string>
+    <string name="setting_wear_seek_layout">פריסת לוח חיפוש</string>
+    <string name="setting_wear_color_treatment">עיבוד צבעי השעון</string>
+    <string name="setting_wear_normal_color">צבע רגיל</string>
+    <string name="setting_wear_normal_color_description">בחר צבע יחיד המשמש במצב רגיל להדגשות הכותרת, התקדמות, עוצמת קול, לוחות ועיטורי כפתורים קטנים</string>
+    <string name="setting_wear_normal_color_multi">השתמש בפלטת צבעים</string>
+    <string name="setting_wear_normal_color_multi_description">כאשר מופעל, המסך משתמש בצבע ראשי ועוד שני גוונים תומכים. כאשר כבוי, נעשה שימוש בצבע יחיד בכל מקום — צבע האלבום עצמו או הצבע שבחרת.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>רגיל (הצבע שנבחר)</item>
+        <item>דהוי (צבע אלבום רך)</item>
+        <item>אקספרסיבי (פלטת אלבום מלאה)</item>
+        <item>משלים (אלבום + צבע נגדי)</item>
+        <item>טריאדי (שלושה גווני אלבום)</item>
+        <item>אנלוגי (גוונים סמוכים)</item>
+        <item>מונוכרומטי (גוון אחד, שלושה טונים)</item>
+        <item>דו-גוני (שני צבעי אלבום)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>לפי עיבוד השעון</item>
+        <item>רגיל (הצבע שנבחר)</item>
+        <item>דהוי (צבע אלבום רך)</item>
+        <item>אקספרסיבי (פלטת אלבום מלאה)</item>
+        <item>משלים (אלבום + צבע נגדי)</item>
+        <item>טריאדי (שלושה גווני אלבום)</item>
+        <item>אנלוגי (גוונים סמוכים)</item>
+        <item>מונוכרומטי (גוון אחד, שלושה טונים)</item>
+        <item>דו-גוני (שני צבעי אלבום)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">משקל כותרת</string>
+    <string name="setting_wear_title_font_italic">כותרת נטויה</string>
+    <string name="setting_wear_title_font_scale">גודל כותרת</string>
+    <string name="setting_wear_title_font_opacity">אטימות כותרת</string>
+    <string name="setting_wear_title_font_tracking">ריווח אותיות בכותרת</string>
+    <string name="setting_wear_title_color">צבע טקסט הכותרת</string>
+    <string name="setting_wear_title_custom_color">צבע כותרת מותאם אישית</string>
+    <string name="wear_title_color_face_default">ברירת מחדל של התצוגה (כפי שתוכנן)</string>
+    <string name="setting_wear_title_adaptive_contrast">התאם צבע כותרת לניגודיות</string>
+    <string name="setting_wear_title_adaptive_contrast_description">מבהיר או מחשיך את הכותרת כאשר הצבע שלה קרוב מדי לתמונה שמאחוריה, תוך שמירת הגוון. אין השפעה כל עוד הכותרת משתמשת בברירת המחדל של התצוגה.</string>
+    <string name="setting_wear_artist_adaptive_contrast">התאם צבע אמן לניגודיות</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">מבהיר או מחשיך את שורת האמן כאשר צבע האלבום קרוב מדי לתמונה שמאחוריה, תוך שמירת הגוון. נמדדת רק הרצועה שעליה נמצאת השורה, לא כל העטיפה.</string>
+    <string name="setting_wear_artist_font_weight">משקל אמן</string>
+    <string name="setting_wear_artist_font_italic">אמן נטוי</string>
+    <string name="setting_wear_artist_font_scale">גודל אמן</string>
+    <string name="setting_wear_artist_font_opacity">אטימות אמן</string>
+    <string name="setting_wear_artist_font_tracking">ריווח אותיות אמן</string>
+    <string name="setting_wear_source_icon_scale">גודל סמל אפליקציה</string>
+    <string name="setting_wear_source_icon_opacity">אטימות סמל אפליקציה</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 הוא המשקל הרגיל של התצוגה; ערך גבוה יותר הוא מודגש יותר. ב-Google Sans Flex זהו ציר המשקל של הגופן עצמו</string>
+    <string name="setting_wear_typography_scale_description">אחוז מהגודל המקורי של התצוגה (70–140). 100 שומר על הגודל שתוכנן לכל פריסה</string>
+    <string name="setting_wear_typography_opacity_description">אחוז (20–100). 100 שומר על האטימות המקורית של התצוגה</string>
+    <string name="setting_wear_typography_tracking_description">מרווח נוסף בין אותיות, במאיות em (−5 עד 20). 0 שומר על ריווח הגופן המקורי</string>
+    <string name="setting_wear_color_modifier">גוון</string>
+    <string name="setting_wear_color_modifier_description">התאם את כל הפלטה בלי לשנות את אופן יצירתה — עובד עם כל עיבוד צבע</string>
+    <string name="setting_wear_color_hue_shift">הסטת צבע</string>
+    <string name="setting_wear_color_hue_shift_description">מסובב את פלטת האלבום סביב גלגל הצבעים, במעלות (0–359). כל עיבוד שומר את הצבע הראשי על הגוון המקורי של האלבום, ולכן זה מה שמשנה אותו. 0 משתמש בצבע האלבום כפי שהוא; צבע רגיל קבוע לעולם אינו מוזז.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>ללא</item>
+        <item>תוסס</item>
+        <item>פסטל</item>
+        <item>חם</item>
+        <item>קריר</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>קשת קצה (שמאל)</item>
+        <item>קשת קצה (גבוהה)</item>
+        <item>קשת קצה (ימין)</item>
+        <item>קשת קצה (למעלה)</item>
+        <item>קשת קצה (למטה)</item>
+        <item>טבעת מלאה</item>
+        <item>הילה מרכזית</item>
+        <item>מד אופקי</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>טבעת קצה</item>
+        <item>טבעת קצה (דקה)</item>
+        <item>טבעת קצה (עבה)</item>
+        <item>ציר זמן</item>
+        <item>ציר זמן מקוטע</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>מטא-נתונים תחילה</item>
+        <item>קשת</item>
+        <item>ראשי</item>
+        <item>רשת</item>
+        <item>שורות עם תוויות</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>מלא</item>
+        <item>מקווקו</item>
+        <item>נקודות</item>
+        <item>קו דק</item>
+        <item>שביט</item>
+        <item>60 נקודות שעון</item>
+        <item>60 סימוני שעון</item>
+        <item>מקטעי 12 שעות</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>פשוט</item>
+        <item>גלולת זכוכית</item>
+        <item>גלולה אקספרסיבית</item>
+        <item>גלולת Material</item>
+        <item>גלולה לבנה</item>
+        <item>ענק</item>
+        <item>מיקום / סה״כ</item>
+        <item>זכוכית לבנה</item>
+        <item>אלבום שקוף למחצה</item>
+        <item>זוהר אלבום</item>
+        <item>קו מתאר</item>
+        <item>ערכת נושא מלאה</item>
+        <item>אלבום מלא</item>
+        <item>מיקרו</item>
+        <item>צל (ללא מסגרת)</item>
+        <item>קו תחתון</item>
+        <item>קו מתאר דק</item>
+        <item>צבע אלבום ענק</item>
+        <item>מונו</item>
+        <item>טונאלי כהה</item>
+        <item>מסוף</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>כפתורים מוגדרים</item>
+        <item>מאפליקציית המדיה הנוכחית</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>לפי סגנון הלוח</item>
+        <item>טשטוש אלבום (אקרילי)</item>
+        <item>שחור מלא</item>
+        <item>צבע אלבום מלא</item>
+        <item>זכוכית</item>
+        <item>מעבר צבעי אלבום</item>
+        <item>דו-גוני אלבום</item>
+        <item>מנסרה</item>
+        <item>זכוכית נוזלית</item>
+        <item>טשטוש אקספרסיבי</item>
+        <item>אקספרסיבי</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>זכוכית</item>
+        <item>מינימלי (AMOLED)</item>
+        <item>Material</item>
+        <item>טונאלי</item>
+        <item>ניאון</item>
+        <item>בהיר</item>
+        <item>מעבר צבעים</item>
+        <item>מונו</item>
+        <item>קו מתאר</item>
+        <item>דו-גוני</item>
+        <item>מנסרה</item>
+        <item>ניגודיות גבוהה</item>
+        <item>מסוף</item>
+        <item>כפור</item>
+        <item>מקטעים</item>
+        <item>זוהר קוטבי</item>
+        <item>דיו</item>
+        <item>חריץ</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>קומפקטי</item>
+        <item>רגיל</item>
+        <item>גבוה</item>
+        <item>גבוה במיוחד</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>זכוכית</item>
+        <item>מינימלי (AMOLED)</item>
+        <item>Material</item>
+        <item>טונאלי</item>
+        <item>ניאון</item>
+        <item>בהיר</item>
+        <item>מעבר צבעים</item>
+        <item>מונו</item>
+        <item>קו מתאר</item>
+        <item>דו-גוני</item>
+        <item>מנסרה</item>
+        <item>ניגודיות גבוהה</item>
+        <item>מסוף</item>
+        <item>כפור</item>
+        <item>עטיפה</item>
+            <item>טשטוש עטיפה</item>
+        <item>עטיפה טונאלית</item>
+        <item>עטיפה מרובעת</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>זכוכית</item>
+        <item>זכוכית לבנה</item>
+        <item>זכוכית טונאלית</item>
+        <item>מינימלי (AMOLED)</item>
+        <item>Material</item>
+        <item>טונאלי</item>
+        <item>ניאון</item>
+        <item>בהיר</item>
+        <item>מעבר צבעים</item>
+        <item>מונו</item>
+        <item>קו מתאר</item>
+        <item>מתאר זכוכית לבנה</item>
+        <item>דו-גוני</item>
+        <item>מנסרה</item>
+        <item>ניגודיות גבוהה</item>
+        <item>מסוף</item>
+        <item>כפור</item>
+        <item>רוח רפאים (ללא מסגרת)</item>
+        <item>ערפל</item>
+        <item>דיו</item>
+        <item>נקודה</item>
+        <item>לוח</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">השאר את האפליקציה פעילה לאחר השהיה</string>
+    <string name="setting_wear_paused_hold_description">קובע כמה זמן לאחר השהיה אפליקציית השעון נשארת נגישה מתצוגת השעון, כך שאפשר להמשיך בהרמת פרק כף היד במקום לפתוח מחדש. הגדרות ארוכות יותר משאירות שירות רקע פועל.</string>
+    <string name="wear_paused_hold_off">אל תשאיר פעיל</string>
+    <string name="wear_paused_hold_5">5 דקות</string>
+    <string name="wear_paused_hold_15">15 דקות</string>
+    <string name="wear_paused_hold_30">30 דקות</string>
+    <string name="wear_paused_hold_60">שעה אחת</string>
+    <string name="wear_paused_hold_always">עד שההשמעה מסתיימת</string>
+
+    <string name="setting_wear_idle_button_action">כפתור כששום דבר לא מתנגן</string>
+    <string name="setting_wear_idle_auto_open">פתח כששום דבר לא מתנגן</string>
+    <string name="setting_wear_idle_auto_open_description">עובר ישר למסך הזה כשפותחים את אפליקציית השעון בלי מוזיקה שמתנגנת.</string>
+    <string name="wear_idle_action_resume">המשך את האפליקציה האחרונה</string>
+    <string name="wear_idle_action_shortcuts">קיצורי רשימות השמעה</string>
+    <string name="wear_idle_action_menu">תפריט פעולות</string>
+    <string name="wear_idle_action_search">חיפוש</string>
+    <string name="wear_idle_action_queue">הושמע לאחרונה</string>
+    <string name="wear_idle_action_none">ללא כפתור</string>
+    <string name="wear_idle_auto_open_none">הישאר בנגן</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">עיין בספרייה</string>
+    <string name="library_up">חזרה</string>
+    <string name="error_library_unavailable">לאפליקציה הזו אין ספרייה שניתן לעיין בה</string>
+    <string name="error_library_empty">אין כאן כלום</string>
+    <string name="error_library_no_player">התחל להשמיע משהו קודם</string>
+
+    <string name="setting_wear_carousel_card_shape">צורת כרטיס קרוסלה</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>מעוגל</item>
+        <item>ריבוע</item>
+        <item>ריבוע מעוגל</item>
+        <item>עיגול</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">השתמש בגופן בכל מקום</string>
+    <string name="setting_wear_font_all_screens_description">מחיל את הגופן שנבחר על תפריטים, התור ופעולות מהירות, לא רק על הנגן. גופני תצוגה וכתב יד עשויים להיות קשים יותר לקריאה ברשימות.</string>
+
+    <string name="setting_wear_clock_font">גופן השעון</string>
+    <string name="wear_clock_font_follow">עקוב אחר גופן הרצועה</string>
+    <string name="setting_wear_lyrics_font">גופן מילים</string>
+    <string name="setting_wear_lyrics_font_description">הגופן למילות השיר במסך המילים ובתצוגת Verse. עוקב אחר גופן הרצועה אלא אם תבחר כאן אחר.</string>
+    <string name="wear_lyrics_font_follow">עקוב אחר גופן הרצועה</string>
+    <string name="setting_wear_clock_font_weight">משקל השעון</string>
+    <string name="setting_wear_clock_font_italic">שעון נטוי</string>
+    <string name="setting_wear_clock_font_scale">גודל השעון</string>
+    <string name="setting_wear_clock_font_tracking">ריווח אותיות השעון</string>
+    <string name="setting_wear_clock_adaptive_contrast">התאם צבע שעון לניגודיות</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">מבהיר או מחשיך את השעון כאשר צבע האלבום קרוב מדי לתמונה שמאחוריו, תוך שמירת הגוון. חל רק כאשר צבע השעון מוגדר לצבע אלבום.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">תצוגה צרה באותיות רישיות — בסגנון פוסטר, מתאימה לכותרות ארוכות</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">סריפ מערכתי בניגודיות גבוהה — תחושת מגזין</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">סנס־סריפ גאומטרי טכני עם פרטים משונים</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">תצוגת מדע בדיוני מרובעת — מודגשת ועתידנית</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">כתב יד — קליל ואישי</string>
+    <string name="setting_wear_track_time_mode">תצוגת זמן רצועה</string>
+    <string name="setting_wear_track_time_mode_description">קובע מתי מיקום הרצועה (למשל 1:23 / 3:45) מוצג במסך ההשמעה.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>תמיד</item>
+        <item>רק בזמן נגינה</item>
+        <item>רק בזמן השהיה</item>
+        <item>אף פעם</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">קימור כפתורים קטנים</string>
+    <string name="setting_screen_buttons_curve_description">בחר את סגנון הקימור לכפתורים קטנים: שטוח, קשת, רך, מעוקל.</string>
+    <string name="setting_screen_buttons_shape">צורת כפתורים קטנים</string>
+    <string name="setting_screen_buttons_shape_description">בחר את הצורה ואת פורמט הפריסה של הכפתורים הקטנים.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>גלולה (ברירת מחדל)</item>
+        <item>עיגול</item>
+        <item>ריבוע</item>
+        <item>ריבוע מעוגל (רך)</item>
+        <item>ריבוע מעוגל (בינוני)</item>
+        <item>ריבוע מעוגל</item>
+        <item>עלה</item>
+        <item>טיפה</item>
+        <item>גלולה (רחבה קטנה)</item>
+        <item>גלולה (רחבה בינונית)</item>
+        <item>גלולה (רחבה גדולה)</item>
+        <item>גלולה (רחבה גדולה במיוחד)</item>
+        <item>מלבן מעוגל (קטן)</item>
+        <item>מלבן מעוגל (בינוני)</item>
+        <item>מלבן מעוגל (גדול)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>שטוח</item>
+        <item>קשת</item>
+        <item>עקומה עדינה</item>
+        <item>עקומה רכה</item>
+        <item>עקומה בינונית</item>
+        <item>מעוקל</item>
+        <item>עקומה קיצונית</item>
+        <item>פריסה עד הקצוות</item>
+        <item>קצה שמאלי</item>
+        <item>קצה ימני</item>
+        <item>שני הקצוות</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>ברירת מחדל לרקע</item>
+        <item>זכוכית (אחידה)</item>
+        <item>זכוכית (בהירה)</item>
+        <item>אלבום שקוף למחצה</item>
+        <item>אלבום שקוף למחצה Exp</item>
+        <item>זוהר אלבום</item>
+        <item>זוהר Exp</item>
+        <item>ערכת נושא מלאה</item>
+        <item>אלבום מלא</item>
+        <item>אלבום מלא Exp</item>
+        <item>קו מתאר</item>
+        <item>אלבום מתאר Exp</item>
+        <item>סמל בלבד (שקוף)</item>
+        <item>סמל Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>ניטרלי</item>
+        <item>צבע אלבום</item>
+        <item>צבע מותאם אישית</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>עטיפה מלאה</item>
+        <item>רקע מטושטש</item>
+        <item>קצוות חלביים</item>
+        <item>ריבוע (פינות חדות)</item>
+        <item>ריבוע (פינות רכות)</item>
+        <item>ריבוע (פינות מעוגלות)</item>
+        <item>שחור &amp; לבן</item>
+        <item>שחור-לבן מטושטש</item>
+        <item>טשטוש אקספרסיבי</item>
+        <item>אקספרסיבי</item>
+        <item>מעבר טונאלי Material</item>
+        <item>עטיפת פוסטר</item>
+        <item>מעבר סטודיו</item>
+        <item>זוהר רדיאלי של תקליט</item>
+        <item>זוהר הילה</item>
+        <item>סרטי זוהר קוטבי</item>
+        <item>מעבר ספקטרום</item>
+        <item>סריקת קורונה</item>
+        <item>דעיכת דמדומים</item>
+        <item>פריחה</item>
+        <item>דעיכת אופק</item>
+        <item>זוהר גחלים</item>
+        <item>Eclipse AMOLED שחור</item>
+        <item>מוסתר (שחור מלא)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>מושבת</item>
+        <item>הצגת סמל פני שעון מוזיקה (רק Wear 3.0)</item>
+        <item>פתיחת Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">פסק זמן לסגירה</string>
+    <string name="setting_close_timeout_description">Svartifoss תיסגר אוטומטית כאשר לא מתנגנת מוזיקה במשך <![CDATA[<b>%1$s שניות</b>]]>. התכונה מושבתת כאשר פסק הזמן מוגדר ל-0 שניות. כדי לחסוך בסוללה, האפשרות לא תמיד מדויקת וייתכן שהסגירה תתעכב עד כדקה.</string>
+    <string name="setting_wear_close_on_idle">סגור ב\"שום דבר לא מתנגן\"</string>
+    <string name="setting_wear_close_on_idle_description">סוגר אוטומטית את אפליקציית השעון כדקה לאחר שהיא מגיעה למסך הסרק \"שום דבר לא מתנגן\", כדי שלא תישאר שם. בלתי תלוי בפסק זמן הסגירה שלמעלה, שמתייחס לרצועה מושהית.</string>
+    <string name="category_notifications">חלונית התראה</string>
+    <string name="setting_enable_notifications">הצג חלונית התראה</string>
+    <string name="setting_enable_notifications_description">תכונה זו דורשת אפליקציה נוספת לניהול התראות (Vibration Center for Wear).\n\nבכל פעם ש-Vibration Center מרעיד את השעון, Svartifoss יציג חלונית עם טקסט ההתראה, כך שתוכל להציץ בה במהירות בלי לצאת מ-Svartifoss.</string>
+    <string name="setting_notification_timeout">פסק זמן לחלונית התראה</string>
+    <string name="setting_notification_timeout_description">חלונית ההתראה תיסגר אוטומטית לאחר <![CDATA[<b>%1$s שניות</b>]]>. הזן 0 כדי לבטל סגירה אוטומטית.</string>
+    <string name="app_required">נדרשת אפליקציה</string>
+    <string name="vibration_center_required_description">כדי להשתמש בתכונה זו, יש להתקין אפליקציה נוספת (חינמית): Vibration Center for Wear.</string>
+    <string name="open_play_store">פתח את Play Store</string>
+    <string name="error_no_notification_service_support">מצטערים, נראה שהמכשיר שלך אינו תומך בשירותי התראות</string>
+    <string name="setting_always_select_center_action">בחר תמיד את הפעולה המרכזית</string>
+    <string name="setting_always_select_center_action_description">כאשר מופעל, הקשה על רשימת הפעולות תמיד תבחר באפשרות המרכזית (המודגשת), בלי קשר לאפשרות שעליה הקשת.</string>
+    <string name="change_icon">שנה סמל</string>
+    <string name="please_wait">נא להמתין</string>
+
+    <string name="error_playlist_not_supported">לא נתמך על ידי אפליקציית המדיה הזו</string>
+    <string name="error_search_no_results">לא נמצאו תוצאות</string>
+    <string name="seconds_to_skip">שניות לדילוג:</string>
+    <string name="seconds_to_reverse">שניות לחזרה:</string>
+
+    <string name="setting_dynamic_accent_color">צבע הדגשה דינמי</string>
+    <string name="setting_dynamic_accent_color_description">כאשר מופעל, צבע ההדגשה (סרגל חיפוש, פריט תור פעיל) מותאם אוטומטית לצבע הדומיננטי של עטיפת האלבום הנוכחית.</string>
+    <string name="setting_desaturated_color">צבע מופחת רוויה</string>
+    <string name="setting_desaturated_color_description">מתאים את הרוויה והבהירות של הצבע שחולץ כדי להבטיח קריאות וניגודיות גבוהות בהתאם לערכת הנושא הפעילה.</string>
+
+    <string name="queue_header">תור השמעה</string>
+    <string name="queue_unavailable">התור אינו זמין</string>
+
+    <string name="setting_custom_accent_color">צבע הדגשה</string>
+    <string name="setting_custom_accent_color_description">בחר צבע הדגשה מותאם אישית לממשק האפליקציה</string>
+    <string name="setting_mini_player">נגן קטן</string>
+    <string name="setting_mini_player_description">מציג סרגל השמעה קבוע מעל הניווט התחתון כל עוד מדיה פעילה. מופעל כברירת מחדל; כבה כדי לפנות את המקום.</string>
+    <string name="color_picker_title">בחר צבע הדגשה</string>
+    <string name="color_picker_reset">אפס</string>
+    <string name="color_picker_apply">החל</string>
+    <string name="color_picker_default">ברירת מחדל</string>
+    <string name="color_picker_invalid">קוד צבע לא תקין</string>
+    <string name="color_picker_current">נוכחי: %s</string>
+
+    <string name="drawer_version_format">גרסה %1$s</string>
+    <string name="drawer_tagline">אפליקציה נלווית ל-Wear OS</string>
+    <string name="drawer_about_heading">אודות</string>
+    <string name="drawer_about_summary">Svartifoss מאפשרת לשלוט במוזיקה בטלפון משעון Wear OS — באמצעות שלט שניתן להתאים אישית לחלוטין למכשיר שלך.</string>
+    <string name="drawer_name_heading">השם</string>
+    <string name="drawer_name_meaning">Svartifoss פירושו \"המפלים השחורים\" באיסלנדית — על שם המפל בפארק הלאומי Vatnajökull, שבו עמודי בזלת כהים ממסגרים מפל צר. כמו מים על אבן, המוזיקה זורמת דרך האפליקציה.</string>
+    <string name="drawer_sync_heading">סנכרון</string>
+    <string name="drawer_sync_summary">הגדרות השעון מוגדרות כאן בטלפון ומסונכרנות אוטומטית לשעון המותאם.</string>
+    <string name="drawer_support_heading">תמיכה</string>
+    <string name="drawer_support_summary">Svartifoss חינמית וקוד פתוח — אם היא שימושית לך, אפשר להזמין אותי לקפה :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">הורד עטיפה</string>
+    <string name="album_art_saved">העטיפה נשמרה בגלריה</string>
+    <string name="album_art_save_error">שמירת העטיפה נכשלה</string>
+
+    <string name="action_play_liked_songs">נגן שירים שאהבתי (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">נגן שירים שאהבתי (Spotify)</string>
+    <string name="action_play_soundcloud_likes">נגן רצועות שאהבתי (SoundCloud)</string>
+    <string name="action_my_playlists">קיצורי דרך לסטרימינג</string>
+    <string name="action_play_specific_playlist">פתח קיצור דרך לסטרימינג</string>
+    <string name="action_choose_or_add_streaming_shortcut">בחר או הוסף קיצור דרך לסטרימינג</string>
+    <string name="action_show_streaming_library">הצג את כל קיצורי הדרך השמורים</string>
+    <string name="playlist_shortcut_pick_title">בחר קיצור דרך</string>
+    <string name="playlist_shortcut_pick_empty">עדיין לא נשמרו קיצורי דרך לסטרימינג — הוסף אחד למטה ואז הקש עליו כדי לבחור</string>
+    <string name="playlist_shortcuts_empty">עדיין אין קיצורי דרך לסטרימינג — הוסף אותם בהגדרות האפליקציה בטלפון</string>
+    <string name="setting_playlist_shortcuts">קיצורי דרך לסטרימינג</string>
+    <string name="setting_playlist_shortcuts_description">פתח קישורי שיתוף מהשעון ב-YouTube Music, Spotify ובאפליקציות סטרימינג אחרות</string>
+    <string name="setting_shortcut_artwork">שלוף תמונת קיצור דרך באינטרנט</string>
+    <string name="setting_shortcut_artwork_description">מוריד תמונה ממוזערת מהשירות לכל קיצור דרך שמור ומציג אותה ברשימה בטלפון, בתפריט השעון ובכפתורים שהוקצו. כל תמונה נשלפת פעם אחת בלבד; רק קישור השיתוף הציבורי נשלח. כבוי כברירת מחדל.</string>
+    <string name="setting_queue_local_artwork">עטיפות תור מהספרייה שלך</string>
+    <string name="setting_queue_local_artwork_description">נגני מוזיקה מקומיים מפרסמים עטיפות תור כהפניות לספרייה. הענק גישה למדיה כדי שניתן יהיה להציג אותן בתור בשעון. אין שימוש באינטרנט.</string>
+    <string name="setting_queue_local_artwork_granted">הגישה למדיה אושרה — עטיפות תור מקומיות יוצגו</string>
+    <string name="setting_queue_local_artwork_denied">הגישה למדיה נדחתה. הפעל אותה בהגדרות Android כדי להציג עטיפות תור מקומיות.</string>
+    <string name="setting_queue_remote_artwork">שלוף עטיפות תור באינטרנט</string>
+    <string name="setting_queue_remote_artwork_short_description">אפליקציות סטרימינג (לקוחות YouTube Music, Echo Music…) מפרסמות עטיפות תור כקישורים ולא כתמונות, ולכן האפשרות מורידה ושומרת אותן במטמון. כבה כדי להשאיר את התור אופליין לחלוטין — שורות אלה לא יציגו עטיפה כלל.</string>
+    <string name="setting_queue_remote_artwork_description">נגני סטרימינג מפרסמים עטיפות תור כקישורים ולא כתמונות. כל עטיפה מורדת פעם אחת ונשמרת במטמון בטלפון הזה כדי להציג אותה בתור בשעון. נדרש רק URL העטיפה שהנגן כבר פרסם — ללא חשבון או מידע אישי. מופעל כברירת מחדל; כבה כדי להשאיר את התור אופליין לחלוטין.</string>
+    <string name="watch_streaming_shortcuts_empty">הוסף רצועות, אלבומים או רשימות השמעה לפעולות מהירות ולתפריט השעון</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d קיצור דרך שמור · זמין בפעולות מהירות ובתפריט השעון</item>
+        <item quantity="two">%1$d קיצורי דרך שמורים · זמינים בפעולות מהירות ובתפריט השעון</item>
+        <item quantity="other">%1$d קיצורי דרך שמורים · זמינים בפעולות מהירות ובתפריט השעון</item>
+    </plurals>
+    <string name="category_music_apps">אפליקציות ושירותי מוזיקה</string>
+    <string name="category_apps_content">מילים ומטא-נתונים</string>
+    <string name="category_streaming_services">קיצורי דרך לסטרימינג</string>
+    <string name="category_queue_artwork">תמונות תור</string>
+    <string name="category_system_access">גישה והרשאות Android</string>
+    <string name="setting_apps_integrations">שירותי מוזיקה נתמכים</string>
+    <string name="setting_apps_integrations_description">הקישורים פועלים עם YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music ו-SoundCloud. אין צורך בגישה לחשבון.</string>
+    <string name="setting_apps_integrations_none">לא זוהתה אפליקציה נתמכת. קיצורי הדרך עדיין יכולים להיפתח בדפדפן או באפליקציה תואמת אחרת.</string>
+    <string name="setting_apps_integrations_installed">זוהו %1$d מתוך %2$d: %3$s</string>
+    <string name="setting_streaming_open_mode">פתח קישורי סטרימינג באמצעות</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>אפליקציית סטרימינג שזוהתה</item>
+        <item>ברירת המחדל של Android</item>
+        <item>לשאול בכל פעם</item>
+    </string-array>
+    <string name="setting_persistent_notification">נהל את ההתראה \"Svartifoss פעילה\"</string>
+    <string name="setting_persistent_notification_description">פותח את הגדרות Android של ההתראה הזו — ניתן להשתיק, להסתיר ממסך הנעילה או לשנות אותה אחרת. אי אפשר לכבות אותה לחלוטין: Android דורש התראה מתמשכת בזמן ששירות הרקע שמדבר עם השעון פועל.</string>
+    <string name="setting_notification_access">גישה להתראות מדיה</string>
+    <string name="setting_notification_access_enabled">מותר · הקש כדי לבדוק את הגדרות Android</string>
+    <string name="setting_notification_access_disabled">לא מותר · נדרש לפעולות מדיה בהתראות ולמסנני הפעלה אוטומטית</string>
+    <string name="setting_notification_access_unavailable">הגדרות הגישה להתראות אינן זמינות במכשיר זה</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d קיצור דרך שמור · הקש לניהול או לייבוא קישורים</item>
+        <item quantity="two">%1$d קיצורי דרך שמורים · הקש לניהול או לייבוא קישורים</item>
+        <item quantity="other">%1$d קיצורי דרך שמורים · הקש לניהול או לייבוא קישורים</item>
+    </plurals>
+    <string name="category_privacy">פרטיות</string>
+    <string name="setting_privacy_policy">מדיניות פרטיות</string>
+    <string name="setting_privacy_policy_description">ראה באילו נתונים Svartifoss משתמשת ואילו שירותים מקוונים הם אופציונליים.</string>
+    <string name="setting_crash_reporting">שלח דוחות קריסה</string>
+    <string name="setting_crash_reporting_description">שלח אבחונים של Firebase Crashlytics כדי לסייע בתיקון תקלות. מופעל כברירת מחדל; ניתן לכבות בכל עת.</string>
+    <string name="setting_announcements">התראות הכרזה</string>
+    <string name="setting_announcements_description">התראות מזדמנות מהמפתח — גרסאות חדשות והודעות חשובות. נשלחות דרך Firebase Cloud Messaging; אין חשבון או רשימת משתמשים. מופעל כברירת מחדל; ניתן לכבות בכל עת.</string>
+    <string name="announcement_notification_channel">הכרזות</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">שתף רשימת השמעה, אלבום או רצועה ישירות ל-Svartifoss, הדבק קישור שהועתק או הוסף ידנית. השעון רק מבקש מהטלפון לפתוח אותו; אין צורך להתחבר לשירות.</string>
+    <string name="back">חזרה</string>
+    <string name="playlist_shortcuts_beta_badge">בטא</string>
+    <string name="playlist_shortcuts_intro_title">המוזיקה שלך, בהקשה אחת</string>
+    <string name="playlist_shortcuts_yours">קיצורי הדרך שלך</string>
+    <string name="playlist_shortcuts_empty_hint">הוסף קישור משותף לרצועה, אלבום או רשימת השמעה כדי שיהיה זמין בשעון.</string>
+    <string name="playlist_shortcuts_add">הוסף קיצור דרך</string>
+    <string name="playlist_shortcuts_paste">הדבק קישור</string>
+    <string name="playlist_shortcuts_reload_covers">טען עטיפות מחדש</string>
+    <string name="playlist_shortcuts_reloading_covers">טוען עטיפות מחדש…</string>
+    <string name="playlist_shortcuts_covers_reloaded">העטיפות נטענו מחדש</string>
+    <string name="playlist_shortcuts_edit">ערוך קיצור דרך</string>
+    <string name="playlist_shortcut_save">שמור קיצור דרך</string>
+    <string name="playlist_shortcut_editor_hint">הדבק קישור אחד. Svartifoss מזהה אוטומטית את האפליקציה ואת סוג התוכן.</string>
+    <string name="playlist_shortcut_detection_waiting">ממתין לקישור סטרימינג</string>
+    <string name="playlist_shortcut_detection_waiting_hint">יש תמיכה ב-Spotify, YouTube Music, Apple Music, TIDAL, Deezer ועוד.</string>
+    <string name="playlist_shortcut_detected_format">זוהה: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">שם</string>
+    <string name="playlist_shortcut_link_hint">קישור שיתוף או URI של אפליקציה</string>
+    <string name="playlist_shortcut_shuffle">נגן בסדר אקראי (YouTube Music בלבד)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">קישור</string>
+    <string name="playlist_type_track">רצועה</string>
+    <string name="playlist_type_playlist">רשימת השמעה</string>
+    <string name="playlist_type_album">אלבום</string>
+    <string name="playlist_type_artist">אמן</string>
+    <string name="playlist_type_show">תוכנית</string>
+    <string name="playlist_type_episode">פרק</string>
+    <string name="playlist_type_mix">מיקס</string>
+    <string name="playlist_badge_shuffle">ערבוב</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">עדיין לא נוספו קיצורי דרך לסטרימינג</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d נשמר</item>
+        <item quantity="two">%1$d נשמרו</item>
+        <item quantity="other">%1$d נשמרו</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">קיצורי סטרימינג מסודרים. גע והחזק כדי לגרור, השתמש בפעולות הנגישות העבר למעלה או העבר למטה, או לחץ Ctrl+מעלה/מטה במקלדת.</string>
+    <string name="playlist_shortcut_more_options">אפשרויות נוספות עבור %1$s</string>
+    <string name="playlist_shortcut_menu_edit">ערוך</string>
+    <string name="playlist_shortcut_menu_open">פתח עכשיו</string>
+    <string name="playlist_shortcut_menu_copy">העתק קישור</string>
+    <string name="playlist_shortcut_menu_duplicate">שכפל</string>
+    <string name="playlist_shortcut_menu_share">שתף</string>
+    <string name="playlist_shortcut_menu_delete">מחק</string>
+    <string name="playlist_shortcut_open_failed">אין אפליקציה שיכולה לפתוח את הקישור הזה</string>
+    <string name="streaming_shortcut_choose_app">פתח קישור סטרימינג באמצעות</string>
+    <string name="playlist_shortcut_link_copied">הקישור הועתק</string>
+    <string name="playlist_shortcut_import_invalid">הטקסט ששותף אינו מכיל קישור סטרימינג תקין</string>
+    <string name="playlist_shortcut_clipboard_invalid">לוח העריכה אינו מכיל קישור סטרימינג תקין</string>
+    <string name="playlist_shortcut_name_required">הזן שם לקיצור הדרך</string>
+    <string name="playlist_shortcut_link_invalid">הזן קישור אינטרנט או URI תקין של אפליקציה</string>
+    <string name="playlist_shortcut_service_invalid">הדבק קישור תקין כדי לזהות את השירות</string>
+    <string name="playlist_shortcut_service_generic">קישור תואם · Android יבחר אפליקציה</string>
+    <string name="playlist_shortcut_service_installed">%1$s מותקן · מוכן לפתיחה באפליקציה שלו</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s אינו מותקן · ניתן להשתמש בדפדפן או באפליקציה תואמת</string>
+    <string name="playlist_shortcut_copy_name">עותק של %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">עותק %1$s %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s נוצר</string>
+    <string name="playlist_shortcut_share_title">שתף קיצור דרך לסטרימינג</string>
+    <string name="playlist_shortcut_share_failed">אין אפליקציה זמינה לשיתוף קיצור הדרך הזה</string>
+    <string name="playlist_shortcut_deleted">%1$s נמחק</string>
+    <string name="playlist_shortcut_undo">בטל</string>
+
+    <string name="action_play_liked_songs_shuffled">נגן שירים שאהבתי באקראי (YT Music)</string>
+    <string name="action_search_history">היסטוריית חיפוש</string>
+    <string name="search_history_empty">עדיין אין חיפושים אחרונים</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">עדכונים</string>
+    <string name="setting_update_check">הודע על גרסאות חדשות</string>
+    <string name="setting_update_check_description">בודק ב-GitHub גרסאות חדשות בערך פעם ביום ומציג התראה</string>
+    <string name="setting_update_prereleases">כלול גרסאות קדם־הפצה</string>
+    <string name="setting_update_prereleases_description">קבל התראות גם על גרסאות בטא</string>
+    <string name="setting_update_check_now">בדוק עדכונים עכשיו</string>
+    <string name="setting_update_check_now_description">מציג את הגרסה העדכנית ומאפשר לעדכן את השעון דרך Bluetooth</string>
+    <string name="update_screen_title">עדכונים</string>
+    <string name="update_cover_content_description">Svartifoss, המפל שעל שמו נקראת האפליקציה</string>
+    <string name="update_notification_channel">עדכוני אפליקציה</string>
+    <string name="update_available_title">Svartifoss %1$s זמין</string>
+    <string name="update_notification_text">הקש לעדכון</string>
+    <string name="update_available_action">יש עדכון זמין</string>
+    <string name="update_installed_phone">טלפון: %1$s</string>
+    <string name="update_installed_versions">טלפון: %1$s · שעון: %2$s</string>
+    <string name="update_watch_version_unknown">לא ידוע</string>
+    <string name="update_checking">בודק עדכונים…</string>
+    <string name="update_check_failed">לא ניתן לבדוק עדכונים. בדוק את החיבור ונסה שוב.</string>
+    <string name="update_available_line">גרסה חדשה: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(גרסה מוקדמת)</string>
+    <string name="update_up_to_date">מותקנת אצלך הגרסה העדכנית (%1$s)</string>
+    <string name="update_no_wear_asset">אין בגרסה זו APK לשעון שניתן לשלוח.</string>
+    <string name="update_watch_hint">„עדכון השעון” מוריד את אפליקציית השעון החדשה ושולח אותה דרך Bluetooth — את ההתקנה מאשרים בשעון עצמו, ללא כבל או Wear Installer.</string>
+    <string name="update_downloading">מוריד… %1$d%%</string>
+    <string name="update_connecting_watch">מתחבר לשעון…</string>
+    <string name="update_transferring">שולח לשעון… %1$d%%</string>
+    <string name="update_confirm_on_watch">נשלח! הופיעה התראה בשעון — הקש עליה בשעון כדי להתקין.</string>
+    <string name="update_no_watch">אין שעון מחובר.</string>
+    <string name="update_push_failed">שליחת העדכון לשעון נכשלה. נסה שוב.</string>
+    <string name="update_watch_button">עדכן את השעון</string>
+    <string name="update_open_release_button">פתח את דף הגרסה</string>
+    <string name="update_watch_behind">השעון עדיין בגרסה %1$s — שלח אליו את העדכון למטה.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">שמור על אפליקציות הטלפון והשעון מסונכרנות</string>
+    <string name="update_state_checking">בודק עדכונים…</string>
+    <string name="update_state_current">הכול מעודכן</string>
+    <string name="update_state_current_sub">פועלת הגרסה העדכנית, %1$s</string>
+    <string name="update_state_available">יש עדכון זמין</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">לא ניתן לבדוק עדכונים</string>
+    <string name="update_state_failed_sub">בדוק את החיבור ונסה שוב</string>
+    <string name="update_device_phone">טלפון</string>
+    <string name="update_device_watch">שעון</string>
+    <string name="update_versions_header">מותקן</string>
+    <string name="update_whats_new">מה חדש</string>
+    <string name="update_phone_button">עדכן את הטלפון</string>
+    <string name="update_installing">פותח את תוכנית ההתקנה…</string>
+    <string name="update_install_permission_needed">אפשר התקנת אפליקציות מ-Svartifoss, ואז הקש שוב על „עדכן את הטלפון”.</string>
+    <string name="update_phone_failed">הורדת עדכון הטלפון נכשלה. נסה שוב.</string>
+    <string name="update_install_notification_title">עדכון Svartifoss</string>
+    <string name="update_install_notification_tap">הקש להתקנת הגרסה החדשה</string>
+    <string name="update_install_notification_failed">ההתקנה נכשלה. אפשר התקנות מ-Svartifoss בהגדרות ונסה שוב.</string>
+    <string name="setting_wear_album_accent_source">מקור צבע הדגשה מהאלבום</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>מאוזן</item>
+        <item>הכי חי</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>כבוי</item>
+        <item>רך</item>
+        <item>רגיל</item>
+        <item>מודגש</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">סף תחתון לצבע הדגשה</string>
+    <string name="preview_metadata_album">אלבום</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">רצועה</string>
+    <string name="preview_metadata_genre">ז׳אנר</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">שנה</string>
+    <string name="preview_metadata_format">פורמט</string>
+    <string name="preview_metadata_bitrate">קצב סיביות</string>
+    <string name="preview_metadata_position">מיקום</string>
+    <string name="preview_metadata_output">פלט</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">פרטי אלבום</string>
+    <string name="setting_wear_metadata_core_description">אלבום, אמן האלבום, מיקום בתקליט ואורך.</string>
+    <string name="setting_wear_metadata_release">פרטי הוצאה</string>
+    <string name="setting_wear_metadata_release_description">ז׳אנר, שנה, תאריך יציאה וחברת תקליטים.</string>
+    <string name="setting_wear_metadata_credits">קרדיטים</string>
+    <string name="setting_wear_metadata_credits_description">מלחין, כותב ומחבר, כאשר הנגן מפרסם אותם.</string>
+    <string name="setting_wear_metadata_technical">פרטי קובץ</string>
+    <string name="setting_wear_metadata_technical_description">פורמט, קצב סיביות, קצב דגימה, ערוצים וגודל. לרצועות מקומיות בלבד.</string>
+    <string name="setting_split_panel">לוח מפוצל</string>
+    <string name="setting_split_panel_description">מה ממלא את החצי התחתון של פני השעון Split. עטיפה מטושטשת ממשיכה את אותה עטיפה מאחורי הטקסט; צבע אחיד נותן מראה של כרטיס התראה.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>תמונת עטיפה מטושטשת</item>
+        <item>צבע אחיד</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">פרטי הפעלה</string>
+    <string name="setting_wear_metadata_playback_description">מיקום עד רמת אלפית השנייה, מהירות, פלט שמע, ומקור ההזרמה או ההפעלה של הצליל — כולל כתובת הרצועה. זהו בלוק שיכול להתמלא גם ברצועה מוזרמת כשאין קובץ לתאר.</string>
+    <string name="setting_wear_metadata_identifiers">מזהים</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC ומזהי קטלוג. כבוי כברירת מחדל — שימושי כשצריך, רעש כשלא.</string>
+    <string name="setting_metadata_lookup">חפש פרטי רצועה באינטרנט</string>
+    <string name="setting_metadata_lookup_description">משלים פרטים שאפליקציית הניגון לא פרסמה — ISRC, חברת תקליטים, תאריך יציאה — מ-MusicBrainz, מסד נתונים ציבורי וחינמי. כבוי כברירת מחדל. פני השעון Metadata עובדים גם בלעדיו; האפשרות רק מוסיפה שורות. דבר לא נשלח אלא אם מפעילים אותה ובוחרים בפנים האלה, וגם אז נשלחים רק שם הרצועה והאמן.</string>
+</resources>

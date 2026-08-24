@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Sedang dimainkan dan kawalan media</string>
+    <string name="complication_album_art_label">Kulit sedang dimainkan</string>
+    <string name="complication_no_music">Tiada apa-apa sedang dimainkan</string>
+    <string name="tile_nothing_playing">Tiada apa-apa sedang dimainkan</string>
+    <string name="tile_open_app">Buka Svartifoss</string>
+    <string name="tile_rewind_10">Undur 10 saat</string>
+    <string name="tile_forward_10">Langkau 10 saat</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Pintasan penstriman anda, hanya satu ketikan</string>
+    <string name="shortcuts_tile_title">Pintasan</string>
+    <string name="shortcuts_tile_empty">Belum ada pintasan</string>
+    <string name="shortcuts_tile_more">Lagi dalam aplikasi</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Tiada apa-apa sedang dimainkan</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Mainkan sesuatu pada telefon anda</string>
+    <string name="idle_hint_resume">Ketik untuk sambung aplikasi terakhir</string>
+    <string name="idle_hint_shortcuts">Ketik untuk pintasan anda</string>
+    <string name="idle_hint_menu">Ketik untuk buka menu</string>
+    <string name="idle_hint_search">Ketik untuk cari</string>
+    <string name="idle_hint_queue">Ketik untuk yang dimainkan baru-baru ini</string>
+    <string name="idle_resume">Sambung main</string>
+    <string name="idle_action_shortcuts">Buka pintasan</string>
+    <string name="idle_action_menu">Buka menu</string>
+    <string name="idle_action_search">Cari</string>
+    <string name="idle_action_queue">Buka yang dimainkan baru-baru ini</string>
+
+    <string name="no_phone">Telefon tidak disambungkan</string>
+    <string name="playback_stopped">Dihentikan</string>
+    <string name="error">RALAT</string>
+    <string name="error_play_services">Ralat Perkhidmatan Google Play</string>
+    <string name="button">Butang</string>
+    <string name="back_button">Kembali</string>
+    <string name="turn_bezel_cw">Putar bezel mengikut arah jam</string>
+    <string name="turn_bezel_ccw">Putar bezel lawan arah jam</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Suka</string>
+    <string name="quick_action_shuffle">Rawak</string>
+    <string name="quick_action_repeat">Ulang</string>
+    <string name="quick_action_repeat_all">Ulang semua</string>
+    <string name="quick_action_repeat_one">Ulang satu</string>
+    <string name="quick_action_up_next">Seterusnya</string>
+    <string name="quick_actions_unavailable">Aplikasi semasa tiada Tindakan Pantas</string>
+    <string name="voice_search_prompt">Cari muzik</string>
+    <string name="queue_empty">Tiada baris gilir tersedia</string>
+    <string name="queue_now_playing">Sedang dimainkan</string>
+    <string name="queue_load_more">Muatkan lagi</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Dimainkan baru-baru ini</string>
+    <string name="queue_history_fallback_reason">Aplikasi ini tidak berkongsi baris gilirnya</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Hari ini</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Muka jam</string>
+    <string name="face_picker_offline">Telefon tidak disambungkan — muka jam ini akan digunakan pada jam, tetapi telefon mengekalkan tetapan</string>
+    <string name="face_picker_section_builtin">Muka jam terbina dalam</string>
+    <string name="face_picker_section_custom">Tema saya</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Berdasarkan %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Cara guna</string>
+    <string name="hint_edges">Ketik atas, bawah, kiri atau kanan — setiap zon menjalankan tindakan yang ditetapkan</string>
+    <string name="hint_center">Tengah — main/jeda\nKetik dua kali — Tindakan Pantas\nTekan lama — pemilih muka jam (boleh dikonfigurasi)</string>
+    <string name="hint_swipe_up">Leret ke atas — menu tindakan\nBawah atau kiri — tindakan ditetapkan\nKanan dari tepi — keluar</string>
+    <string name="hint_crown">Crown — kelantangan atau carian\nButang sisi — tindakan ditetapkan\nSesuaikan semuanya dalam Kawalan dan Jam pada telefon anda</string>
+    <string name="hint_next">Seterusnya</string>
+    <string name="hint_dismiss">Selesai</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Main</string>
+    <string name="action_name_pause">Jeda</string>
+    <string name="action_name_skip_prev">Trek sebelumnya</string>
+    <string name="action_name_skip_next">Trek seterusnya</string>
+    <string name="action_name_volume_up">Naikkan kelantangan</string>
+    <string name="action_name_volume_down">Turunkan kelantangan</string>
+    <string name="action_name_open_menu">Buka menu</string>
+    <string name="action_name_skip_30">Langkau 30 saat</string>
+    <string name="action_name_reverse_30">Undur 30 saat</string>
+    <string name="action_name_play_pause">Main/Jeda</string>
+    <string name="action_name_stop">Henti</string>
+    <string name="action_name_restart">Mulakan semula trek</string>
+    <string name="action_name_seek">Cari dalam trek</string>
+    <string name="action_name_mute">Senyap</string>
+    <string name="action_name_search">Cari</string>
+    <string name="action_name_custom">Tindakan tersuai</string>
+    <string name="state_on">Hidup</string>
+    <string name="state_off">Mati</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Kemas kini aplikasi</string>
+    <string name="update_install_title">Kemas kini Svartifoss</string>
+    <string name="update_install_tap">Ketik untuk memasang versi baharu</string>
+    <string name="update_install_failed">Pemasangan gagal. Benarkan pemasangan daripada Svartifoss dalam tetapan jam dan cuba lagi daripada telefon.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Main dari sini</string>
+    <string name="lyrics_none">Tiada lirik ditemui untuk trek ini</string>
+    <string name="lyrics_failed">Tidak dapat mendapatkan lirik. Periksa sambungan telefon anda.</string>
+    <string name="lyrics_disabled">Carian lirik dimatikan dalam tetapan telefon</string>
+    <string name="lyrics_no_track">Tiada apa-apa sedang dimainkan</string>
+    <string name="metadata_none">Tiada butiran untuk trek ini</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Artis album</string>
+    <string name="metadata_track">Trek</string>
+    <string name="metadata_duration">Tempoh</string>
+    <string name="metadata_genre">Genre</string>
+    <string name="metadata_year">Tahun</string>
+    <string name="metadata_released">Dikeluarkan</string>
+    <string name="metadata_label">Label</string>
+    <string name="metadata_country">Negara</string>
+    <string name="metadata_composer">Komposer</string>
+    <string name="metadata_writer">Penulis</string>
+    <string name="metadata_author">Pengarang</string>
+    <string name="metadata_codec">Format</string>
+    <string name="metadata_bitrate">Kadar bit</string>
+    <string name="metadata_sample_rate">Kadar sampel</string>
+    <string name="metadata_channels">Saluran</string>
+    <string name="metadata_file_size">Saiz</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID keluaran</string>
+    <string name="metadata_compilation">Kompilasi</string>
+    <string name="metadata_value_yes">Ya</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Kedudukan</string>
+    <string name="metadata_speed">Kelajuan</string>
+    <string name="metadata_output">Output</string>
+    <string name="metadata_output_speaker">Pembesar suara telefon</string>
+    <string name="metadata_output_wired">Fon kepala</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">Audio USB</string>
+    <string name="metadata_output_remote">Penghantaran</string>
+    <string name="metadata_origin">Sumber</string>
+    <string name="metadata_origin_stream">Strim</string>
+    <string name="metadata_origin_local">Fail pada telefon</string>
+    <string name="metadata_host">Hos</string>
+    <string name="metadata_file">Fail</string>
+    <string name="metadata_download">Muat turun</string>
+    <string name="metadata_download_no">Belum dimuat turun</string>
+    <string name="metadata_download_running">Sedang memuat turun</string>
+    <string name="metadata_download_yes">Dimuat turun</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Perihal</string>
+    <string name="metadata_source">Dimainkan dalam</string>
+</resources>

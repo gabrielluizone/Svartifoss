@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Teraz odtwarzane i sterowanie multimediami</string>
+    <string name="complication_album_art_label">Okładka teraz odtwarzanego utworu</string>
+    <string name="complication_no_music">Nic nie jest odtwarzane</string>
+    <string name="tile_nothing_playing">Nic nie jest odtwarzane</string>
+    <string name="tile_open_app">Otwórz Svartifoss</string>
+    <string name="tile_rewind_10">Cofnij o 10 sekund</string>
+    <string name="tile_forward_10">Pomiń 10 sekund</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Twoje skróty streamingowe na jedno dotknięcie</string>
+    <string name="shortcuts_tile_title">Skróty</string>
+    <string name="shortcuts_tile_empty">Brak skrótów</string>
+    <string name="shortcuts_tile_more">Więcej w aplikacji</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Nic nie jest odtwarzane</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Odtwórz coś na telefonie</string>
+    <string name="idle_hint_resume">Dotknij, aby wznowić ostatnią aplikację</string>
+    <string name="idle_hint_shortcuts">Dotknij, aby otworzyć skróty</string>
+    <string name="idle_hint_menu">Dotknij, aby otworzyć menu</string>
+    <string name="idle_hint_search">Dotknij, aby wyszukać</string>
+    <string name="idle_hint_queue">Dotknij, aby otworzyć ostatnio odtwarzane</string>
+    <string name="idle_resume">Wznów odtwarzanie</string>
+    <string name="idle_action_shortcuts">Otwórz skróty</string>
+    <string name="idle_action_menu">Otwórz menu</string>
+    <string name="idle_action_search">Szukaj</string>
+    <string name="idle_action_queue">Otwórz ostatnio odtwarzane</string>
+
+    <string name="no_phone">Telefon nie jest połączony</string>
+    <string name="playback_stopped">Zatrzymano</string>
+    <string name="error">BŁĄD</string>
+    <string name="error_play_services">Błąd Usług Google Play</string>
+    <string name="button">Przycisk</string>
+    <string name="back_button">Wstecz</string>
+    <string name="turn_bezel_cw">Obróć pierścień zgodnie z ruchem wskazówek zegara</string>
+    <string name="turn_bezel_ccw">Obróć pierścień przeciwnie do ruchu wskazówek zegara</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Lubię to</string>
+    <string name="quick_action_shuffle">Losowo</string>
+    <string name="quick_action_repeat">Powtarzaj</string>
+    <string name="quick_action_repeat_all">Powtarzaj wszystko</string>
+    <string name="quick_action_repeat_one">Powtarzaj jeden</string>
+    <string name="quick_action_up_next">Następne</string>
+    <string name="quick_actions_unavailable">Bieżąca aplikacja nie ma szybkich akcji</string>
+    <string name="voice_search_prompt">Szukaj muzyki</string>
+    <string name="queue_empty">Brak dostępnej kolejki</string>
+    <string name="queue_now_playing">Teraz odtwarzane</string>
+    <string name="queue_load_more">Wczytaj więcej</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Ostatnio odtwarzane</string>
+    <string name="queue_history_fallback_reason">Ta aplikacja nie udostępnia swojej kolejki</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Dzisiaj</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Tarcza zegarka</string>
+    <string name="face_picker_offline">Telefon nie jest połączony — ta tarcza zostanie zastosowana na zegarku, ale telefon zachowa ustawienie</string>
+    <string name="face_picker_section_builtin">Wbudowane tarcze</string>
+    <string name="face_picker_section_custom">Moje motywy</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Na podstawie %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Jak używać</string>
+    <string name="hint_edges">Dotknij góry, dołu, lewej lub prawej strony — każda strefa uruchamia przypisaną akcję</string>
+    <string name="hint_center">Środek — odtwarzanie/pauza\nPodwójne dotknięcie — szybkie akcje\nDługie przytrzymanie — wybór tarczy (konfigurowalne)</string>
+    <string name="hint_swipe_up">Przesuń w górę — menu akcji\nW dół lub w lewo — przypisane akcje\nW prawo od krawędzi — wyjście</string>
+    <string name="hint_crown">Koronka — głośność lub przewijanie\nPrzyciski boczne — przypisane akcje\nDostosuj wszystko w sekcjach Sterowanie i Zegarek na telefonie</string>
+    <string name="hint_next">Dalej</string>
+    <string name="hint_dismiss">Gotowe</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Odtwórz</string>
+    <string name="action_name_pause">Pauza</string>
+    <string name="action_name_skip_prev">Poprzedni utwór</string>
+    <string name="action_name_skip_next">Następny utwór</string>
+    <string name="action_name_volume_up">Zwiększ głośność</string>
+    <string name="action_name_volume_down">Zmniejsz głośność</string>
+    <string name="action_name_open_menu">Otwórz menu</string>
+    <string name="action_name_skip_30">Pomiń 30 sekund</string>
+    <string name="action_name_reverse_30">Cofnij o 30 sekund</string>
+    <string name="action_name_play_pause">Odtwarzaj/Pauza</string>
+    <string name="action_name_stop">Zatrzymaj</string>
+    <string name="action_name_restart">Uruchom utwór od początku</string>
+    <string name="action_name_seek">Przewijaj utwór</string>
+    <string name="action_name_mute">Wycisz</string>
+    <string name="action_name_search">Szukaj</string>
+    <string name="action_name_custom">Akcja niestandardowa</string>
+    <string name="state_on">Włączone</string>
+    <string name="state_off">Wyłączone</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Aktualizacje aplikacji</string>
+    <string name="update_install_title">Aktualizacja Svartifoss</string>
+    <string name="update_install_tap">Dotknij, aby zainstalować nową wersję</string>
+    <string name="update_install_failed">Instalacja nie powiodła się. Zezwól na instalowanie z Svartifoss w ustawieniach zegarka i spróbuj ponownie z telefonu.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Odtwarzaj od tego miejsca</string>
+    <string name="lyrics_none">Nie znaleziono tekstu tego utworu</string>
+    <string name="lyrics_failed">Nie udało się pobrać tekstu. Sprawdź połączenie telefonu.</string>
+    <string name="lyrics_disabled">Wyszukiwanie tekstów jest wyłączone w ustawieniach telefonu</string>
+    <string name="lyrics_no_track">Nic nie jest odtwarzane</string>
+    <string name="metadata_none">Brak szczegółów dla tego utworu</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Wykonawca albumu</string>
+    <string name="metadata_track">Utwór</string>
+    <string name="metadata_duration">Długość</string>
+    <string name="metadata_genre">Gatunek</string>
+    <string name="metadata_year">Rok</string>
+    <string name="metadata_released">Wydano</string>
+    <string name="metadata_label">Wytwórnia</string>
+    <string name="metadata_country">Kraj</string>
+    <string name="metadata_composer">Kompozytor</string>
+    <string name="metadata_writer">Autor tekstu</string>
+    <string name="metadata_author">Autor</string>
+    <string name="metadata_codec">Format</string>
+    <string name="metadata_bitrate">Przepływność</string>
+    <string name="metadata_sample_rate">Częstotliwość próbkowania</string>
+    <string name="metadata_channels">Kanały</string>
+    <string name="metadata_file_size">Rozmiar</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Identyfikator wydania</string>
+    <string name="metadata_compilation">Kompilacja</string>
+    <string name="metadata_value_yes">Tak</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Pozycja</string>
+    <string name="metadata_speed">Prędkość</string>
+    <string name="metadata_output">Wyjście</string>
+    <string name="metadata_output_speaker">Głośnik telefonu</string>
+    <string name="metadata_output_wired">Słuchawki</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">Dźwięk USB</string>
+    <string name="metadata_output_remote">Przesyłanie</string>
+    <string name="metadata_origin">Źródło</string>
+    <string name="metadata_origin_stream">Strumień</string>
+    <string name="metadata_origin_local">Plik na telefonie</string>
+    <string name="metadata_host">Host</string>
+    <string name="metadata_file">Plik</string>
+    <string name="metadata_download">Pobierz</string>
+    <string name="metadata_download_no">Nie pobrano</string>
+    <string name="metadata_download_running">Pobieranie</string>
+    <string name="metadata_download_yes">Pobrano</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">O aplikacji</string>
+    <string name="metadata_source">Odtwarzanie w</string>
+</resources>

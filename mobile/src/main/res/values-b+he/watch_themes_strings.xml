@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">ניהול ערכות נושא</string>
+    <string name="watch_theme_builtin_subtitle">ערכת נושא מובנית · פריסת %1$s</string>
+    <string name="watch_theme_custom_subtitle">ערכת נושא מותאמת · פריסת %1$s</string>
+    <string name="watch_theme_unknown_name">ערכת נושא לא ידועה</string>
+
+    <string name="watch_themes_title">ערכות נושא לשעון</string>
+    <string name="watch_theme_active_label">ערכת נושא שהוחלה</string>
+    <string name="watch_theme_active_layout">פריסה: %1$s</string>
+    <string name="watch_theme_preview_description">תצוגה מקדימה של ערכת הנושא שמוחלת כעת על השעון</string>
+    <string name="watch_theme_create">יצירת ערכת נושא</string>
+    <string name="watch_theme_create_title">יצירת ערכת נושא חדשה</string>
+    <string name="watch_theme_rename_title">שינוי שם ערכת נושא</string>
+    <string name="watch_theme_name">שם ערכת הנושא</string>
+    <string name="watch_theme_base_layout">פריסת בסיס</string>
+    <string name="watch_theme_default_name">ערכת %1$s שלי</string>
+    <string name="watch_theme_generic_name">ערכת נושא</string>
+    <string name="watch_theme_copy_name">עותק של %1$s</string>
+    <string name="watch_theme_built_in_section">ערכות נושא מובנות</string>
+    <string name="watch_theme_custom_section">ערכות הנושא שלי</string>
+    <string name="watch_theme_applied">הוחל</string>
+    <string name="watch_theme_apply_success">%1$s הוחל על השעון שלך</string>
+    <string name="watch_theme_apply_error">לא ניתן להחיל את ערכת הנושא הזו</string>
+    <string name="watch_theme_more_options">אפשרויות נוספות לערכת הנושא</string>
+    <string name="watch_theme_list_description">ערכות נושא מובנות ומותאמות לשעון</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. הקש להחלה.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. מוחל כעת.</string>
+    <string name="watch_theme_rename">שינוי שם</string>
+    <string name="watch_theme_customize">התאמה אישית</string>
+    <string name="watch_theme_duplicate">שכפל</string>
+    <string name="watch_theme_delete">מחק</string>
+    <string name="watch_theme_delete_title">למחוק את “%1$s”?</string>
+    <string name="watch_theme_delete_message">ערכת הנושא השמורה הזו וההגדרות שלה יוסרו לצמיתות.</string>
+    <string name="watch_theme_deleted">ערכת הנושא נמחקה</string>
+    <string name="watch_theme_duplicated">“%1$s” נוצרה</string>
+    <string name="watch_theme_limit_reached">אפשר לשמור עד 24 ערכות נושא מותאמות. יש למחוק אחת לפני יצירת ערכה חדשה.</string>
+    <string name="watch_theme_name_required">יש להזין שם לערכת הנושא</string>
+    <string name="watch_theme_name_duplicate">ערכת נושא בשם הזה כבר קיימת</string>
+
+    <string name="watch_theme_face_classic">קלאסי</string>
+    <string name="watch_theme_face_expressive">אקספרסיבי</string>
+    <string name="watch_theme_face_vinyl">ויניל</string>
+    <string name="watch_theme_face_poster">פוסטר</string>
+    <string name="watch_theme_face_studio">סטודיו</string>
+    <string name="watch_theme_face_halo">הילה</string>
+    <string name="watch_theme_face_aurora">זוהר קוטבי</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">ספקטרום</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">סוחף</string>
+    <string name="watch_theme_face_depth">עומק</string>
+    <string name="watch_theme_face_carousel">קרוסלה</string>
+    <string name="watch_theme_face_chat">צ׳אט</string>
+    <string name="watch_theme_face_split">מפוצל</string>
+    <string name="watch_theme_face_note">תו</string>
+    <string name="watch_theme_face_verse">בית</string>
+    <string name="watch_theme_face_metadata">מטא-נתונים</string>
+</resources>

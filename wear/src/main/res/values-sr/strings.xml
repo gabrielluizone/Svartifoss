@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Тренутно се репродукује и контроле медија</string>
+    <string name="complication_album_art_label">Омот тренутне репродукције</string>
+    <string name="complication_no_music">Ништа се не репродукује</string>
+    <string name="tile_nothing_playing">Ништа се не репродукује</string>
+    <string name="tile_open_app">Отвори Svartifoss</string>
+    <string name="tile_rewind_10">Премотај 10 секунди уназад</string>
+    <string name="tile_forward_10">Прескочи 10 секунди</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Ваше пречице за стримовање, на један додир</string>
+    <string name="shortcuts_tile_title">Пречице</string>
+    <string name="shortcuts_tile_empty">Још нема пречица</string>
+    <string name="shortcuts_tile_more">Још у апликацији</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Ништа се не репродукује</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Пустите нешто на телефону</string>
+    <string name="idle_hint_resume">Додирните за наставак у последњој апликацији</string>
+    <string name="idle_hint_shortcuts">Додирните за пречице</string>
+    <string name="idle_hint_menu">Додирните да отворите мени</string>
+    <string name="idle_hint_search">Додирните за претрагу</string>
+    <string name="idle_hint_queue">Додирните за недавно репродуковано</string>
+    <string name="idle_resume">Настави репродукцију</string>
+    <string name="idle_action_shortcuts">Отвори пречице</string>
+    <string name="idle_action_menu">Отвори мени</string>
+    <string name="idle_action_search">Претрага</string>
+    <string name="idle_action_queue">Отвори недавно репродуковано</string>
+
+    <string name="no_phone">Телефон није повезан</string>
+    <string name="playback_stopped">Заустављено</string>
+    <string name="error">ГРЕШКА</string>
+    <string name="error_play_services">Грешка Google Play услуга</string>
+    <string name="button">Дугме</string>
+    <string name="back_button">Назад</string>
+    <string name="turn_bezel_cw">Окрени оквир у смеру казаљке на сату</string>
+    <string name="turn_bezel_ccw">Окрени оквир супротно смеру казаљке на сату</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Свиђа ми се</string>
+    <string name="quick_action_shuffle">Насумично</string>
+    <string name="quick_action_repeat">Понављај</string>
+    <string name="quick_action_repeat_all">Понови све</string>
+    <string name="quick_action_repeat_one">Понављај једну</string>
+    <string name="quick_action_up_next">Следеће</string>
+    <string name="quick_actions_unavailable">Тренутна апликација нема брзе радње</string>
+    <string name="voice_search_prompt">Претражи музику</string>
+    <string name="queue_empty">Нема доступног реда</string>
+    <string name="queue_now_playing">Тренутно се репродукује</string>
+    <string name="queue_load_more">Учитај још</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Недавно репродуковано</string>
+    <string name="queue_history_fallback_reason">Ова апликација не дели свој ред</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Данас</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Бројчаник</string>
+    <string name="face_picker_offline">Телефон није повезан — овај бројчаник ће се применити на сату, али телефон ће задржати подешавање</string>
+    <string name="face_picker_section_builtin">Уграђени бројчаници</string>
+    <string name="face_picker_section_custom">Моје теме</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Засновано на %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Како се користи</string>
+    <string name="hint_edges">Додирните горе, доле, лево или десно — свака зона покреће додељену радњу</string>
+    <string name="hint_center">Центар — репродукција/пауза\nДвоструки додир — брзе радње\nДуги притисак — избор бројчаника (подесиво)</string>
+    <string name="hint_swipe_up">Превуците нагоре — мени радњи\nДоле или лево — додељене радње\nДесно од ивице — излаз</string>
+    <string name="hint_crown">Круница — јачина звука или премотавање\nБочна дугмад — додељене радње\nПрилагодите све у Контролама и Сату на телефону</string>
+    <string name="hint_next">Даље</string>
+    <string name="hint_dismiss">Готово</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Пусти</string>
+    <string name="action_name_pause">Паузирај</string>
+    <string name="action_name_skip_prev">Претходна нумера</string>
+    <string name="action_name_skip_next">Следећа нумера</string>
+    <string name="action_name_volume_up">Појачај звук</string>
+    <string name="action_name_volume_down">Смањи звук</string>
+    <string name="action_name_open_menu">Отвори мени</string>
+    <string name="action_name_skip_30">Прескочи 30 секунди</string>
+    <string name="action_name_reverse_30">Премотај 30 секунди уназад</string>
+    <string name="action_name_play_pause">Репродукција/Пауза</string>
+    <string name="action_name_stop">Заустави</string>
+    <string name="action_name_restart">Пусти нумеру испочетка</string>
+    <string name="action_name_seek">Премотавај нумеру</string>
+    <string name="action_name_mute">Искључи звук</string>
+    <string name="action_name_search">Претрага</string>
+    <string name="action_name_custom">Прилагођена радња</string>
+    <string name="state_on">Укључено</string>
+    <string name="state_off">Искључено</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Ажурирања апликације</string>
+    <string name="update_install_title">Svartifoss ажурирање</string>
+    <string name="update_install_tap">Додирните за инсталирање нове верзије</string>
+    <string name="update_install_failed">Инсталација није успела. Дозволите инсталације из Svartifoss-а у подешавањима сата и покушајте поново са телефона.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Пусти одавде</string>
+    <string name="lyrics_none">Није пронађен текст за ову нумеру</string>
+    <string name="lyrics_failed">Није могуће преузети текст. Проверите везу телефона.</string>
+    <string name="lyrics_disabled">Претрага текста је искључена у подешавањима телефона</string>
+    <string name="lyrics_no_track">Ништа се не репродукује</string>
+    <string name="metadata_none">Нема детаља за ову нумеру</string>
+    <string name="metadata_album">Албум</string>
+    <string name="metadata_album_artist">Извођач албума</string>
+    <string name="metadata_track">Нумера</string>
+    <string name="metadata_duration">Трајање</string>
+    <string name="metadata_genre">Жанр</string>
+    <string name="metadata_year">Година</string>
+    <string name="metadata_released">Објављено</string>
+    <string name="metadata_label">Издавач</string>
+    <string name="metadata_country">Земља</string>
+    <string name="metadata_composer">Композитор</string>
+    <string name="metadata_writer">Аутор текста</string>
+    <string name="metadata_author">Аутор</string>
+    <string name="metadata_codec">Формат</string>
+    <string name="metadata_bitrate">Битрејт</string>
+    <string name="metadata_sample_rate">Фреквенција узорковања</string>
+    <string name="metadata_channels">Канали</string>
+    <string name="metadata_file_size">Величина</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID издања</string>
+    <string name="metadata_compilation">Компилација</string>
+    <string name="metadata_value_yes">Да</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Позиција</string>
+    <string name="metadata_speed">Брзина</string>
+    <string name="metadata_output">Излаз</string>
+    <string name="metadata_output_speaker">Звучник телефона</string>
+    <string name="metadata_output_wired">Слушалице</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB звук</string>
+    <string name="metadata_output_remote">Пребацивање</string>
+    <string name="metadata_origin">Извор</string>
+    <string name="metadata_origin_stream">Стрим</string>
+    <string name="metadata_origin_local">Датотека на телефону</string>
+    <string name="metadata_host">Хост</string>
+    <string name="metadata_file">Датотека</string>
+    <string name="metadata_download">Преузми</string>
+    <string name="metadata_download_no">Није преузето</string>
+    <string name="metadata_download_running">Преузимање</string>
+    <string name="metadata_download_yes">Преузето</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">О апликацији</string>
+    <string name="metadata_source">Репродукује се у</string>
+</resources>

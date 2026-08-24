@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Керування темами</string>
+    <string name="watch_theme_builtin_subtitle">Вбудована тема · Макет %1$s</string>
+    <string name="watch_theme_custom_subtitle">Власна тема · Макет %1$s</string>
+    <string name="watch_theme_unknown_name">Невідома тема</string>
+
+    <string name="watch_themes_title">Теми годинника</string>
+    <string name="watch_theme_active_label">ЗАСТОСОВАНА ТЕМА</string>
+    <string name="watch_theme_active_layout">Макет: %1$s</string>
+    <string name="watch_theme_preview_description">Попередній перегляд теми, що зараз застосована на годиннику</string>
+    <string name="watch_theme_create">Створити тему</string>
+    <string name="watch_theme_create_title">Створити нову тему</string>
+    <string name="watch_theme_rename_title">Перейменувати тему</string>
+    <string name="watch_theme_name">Назва теми</string>
+    <string name="watch_theme_base_layout">Базовий макет</string>
+    <string name="watch_theme_default_name">Моя тема %1$s</string>
+    <string name="watch_theme_generic_name">Тема</string>
+    <string name="watch_theme_copy_name">Копія %1$s</string>
+    <string name="watch_theme_built_in_section">Вбудовані теми</string>
+    <string name="watch_theme_custom_section">Мої теми</string>
+    <string name="watch_theme_applied">ЗАСТОСОВАНО</string>
+    <string name="watch_theme_apply_success">%1$s застосовано на годиннику</string>
+    <string name="watch_theme_apply_error">Не вдалося застосувати цю тему</string>
+    <string name="watch_theme_more_options">Додаткові параметри теми</string>
+    <string name="watch_theme_list_description">Вбудовані та власні теми годинника</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Торкніться, щоб застосувати.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Зараз застосовано.</string>
+    <string name="watch_theme_rename">Перейменувати</string>
+    <string name="watch_theme_customize">Налаштувати</string>
+    <string name="watch_theme_duplicate">Дублювати</string>
+    <string name="watch_theme_delete">Видалити</string>
+    <string name="watch_theme_delete_title">Видалити «%1$s»?</string>
+    <string name="watch_theme_delete_message">Цю збережену тему та її налаштування буде видалено назавжди.</string>
+    <string name="watch_theme_deleted">Тему видалено</string>
+    <string name="watch_theme_duplicated">Створено «%1$s»</string>
+    <string name="watch_theme_limit_reached">Можна зберегти до 24 власних тем. Перед створенням нової видаліть одну.</string>
+    <string name="watch_theme_name_required">Введіть назву теми</string>
+    <string name="watch_theme_name_duplicate">Тема з такою назвою вже існує</string>
+
+    <string name="watch_theme_face_classic">Класичний</string>
+    <string name="watch_theme_face_expressive">Виразний</string>
+    <string name="watch_theme_face_vinyl">Вініл</string>
+    <string name="watch_theme_face_poster">Постер</string>
+    <string name="watch_theme_face_studio">Студія</string>
+    <string name="watch_theme_face_halo">Ореол</string>
+    <string name="watch_theme_face_aurora">Аврора</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Спектр</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Імерсивний</string>
+    <string name="watch_theme_face_depth">Глибина</string>
+    <string name="watch_theme_face_carousel">Карусель</string>
+    <string name="watch_theme_face_chat">Чат</string>
+    <string name="watch_theme_face_split">Розділений</string>
+    <string name="watch_theme_face_note">Нота</string>
+    <string name="watch_theme_face_verse">Куплет</string>
+    <string name="watch_theme_face_metadata">Метадані</string>
+</resources>

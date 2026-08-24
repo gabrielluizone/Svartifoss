@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Most játszott és médiavezérlők</string>
+    <string name="complication_album_art_label">Most játszott borító</string>
+    <string name="complication_no_music">Nincs lejátszás</string>
+    <string name="tile_nothing_playing">Nincs lejátszás</string>
+    <string name="tile_open_app">Svartifoss megnyitása</string>
+    <string name="tile_rewind_10">Visszatekerés 10 másodperccel</string>
+    <string name="tile_forward_10">Ugrás előre 10 másodperccel</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Streaming parancsikonjai egy érintésre</string>
+    <string name="shortcuts_tile_title">Parancsikonok</string>
+    <string name="shortcuts_tile_empty">Még nincsenek parancsikonok</string>
+    <string name="shortcuts_tile_more">Továbbiak az alkalmazásban</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Nincs lejátszás</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Indítson el valamit a telefonján</string>
+    <string name="idle_hint_resume">Koppintson az utolsó alkalmazás folytatásához</string>
+    <string name="idle_hint_shortcuts">Koppintson a parancsikonjaihoz</string>
+    <string name="idle_hint_menu">Koppintson a menü megnyitásához</string>
+    <string name="idle_hint_search">Koppintson a kereséshez</string>
+    <string name="idle_hint_queue">Koppintson a legutóbb lejátszottakhoz</string>
+    <string name="idle_resume">Lejátszás folytatása</string>
+    <string name="idle_action_shortcuts">Parancsikonok megnyitása</string>
+    <string name="idle_action_menu">Menü megnyitása</string>
+    <string name="idle_action_search">Keresés</string>
+    <string name="idle_action_queue">Legutóbb lejátszottak megnyitása</string>
+
+    <string name="no_phone">Nincs csatlakoztatott telefon</string>
+    <string name="playback_stopped">Leállítva</string>
+    <string name="error">HIBA</string>
+    <string name="error_play_services">Play Services-hiba</string>
+    <string name="button">Gomb</string>
+    <string name="back_button">Vissza</string>
+    <string name="turn_bezel_cw">Lünetta forgatása az óramutató járásával megegyezően</string>
+    <string name="turn_bezel_ccw">Lünetta forgatása az óramutató járásával ellentétesen</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Kedvelés</string>
+    <string name="quick_action_shuffle">Véletlen sorrend</string>
+    <string name="quick_action_repeat">Ismétlés</string>
+    <string name="quick_action_repeat_all">Összes ismétlése</string>
+    <string name="quick_action_repeat_one">Egy ismétlése</string>
+    <string name="quick_action_up_next">Következik</string>
+    <string name="quick_actions_unavailable">A jelenlegi alkalmazásnak nincsenek gyorsműveletei</string>
+    <string name="voice_search_prompt">Zene keresése</string>
+    <string name="queue_empty">Nincs elérhető lejátszási sor</string>
+    <string name="queue_now_playing">Most játszott</string>
+    <string name="queue_load_more">Továbbiak betöltése</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Legutóbb lejátszott</string>
+    <string name="queue_history_fallback_reason">Ez az alkalmazás nem osztja meg a lejátszási sorát</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Ma</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Óralap</string>
+    <string name="face_picker_offline">A telefon nincs csatlakoztatva — ez az óralap az órán alkalmazódik, de a telefon megtartja a beállítást</string>
+    <string name="face_picker_section_builtin">Beépített óralapok</string>
+    <string name="face_picker_section_custom">Saját témák</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">%1$s alapján</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Használat</string>
+    <string name="hint_edges">Koppintson felül, alul, balra vagy jobbra — minden zóna a hozzárendelt műveletet hajtja végre</string>
+    <string name="hint_center">Közép — lejátszás/szünet
+Dupla koppintás — gyorsműveletek
+Hosszú nyomás — óralapválasztó (beállítható)</string>
+    <string name="hint_swipe_up">Felfelé húzás — műveletmenü
+Le vagy balra — hozzárendelt műveletek
+Jobbra a széltől — kilépés</string>
+    <string name="hint_crown">Korona — hangerő vagy tekerés
+Oldalsó gombok — hozzárendelt műveletek
+Mindent személyre szabhat a telefon Vezérlők és Óra részében</string>
+    <string name="hint_next">Következő</string>
+    <string name="hint_dismiss">Kész</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Lejátszás</string>
+    <string name="action_name_pause">Szünet</string>
+    <string name="action_name_skip_prev">Előző szám</string>
+    <string name="action_name_skip_next">Következő szám</string>
+    <string name="action_name_volume_up">Hangerő növelése</string>
+    <string name="action_name_volume_down">Hangerő csökkentése</string>
+    <string name="action_name_open_menu">Menü megnyitása</string>
+    <string name="action_name_skip_30">Ugrás előre 30 másodperccel</string>
+    <string name="action_name_reverse_30">Visszatekerés 30 másodperccel</string>
+    <string name="action_name_play_pause">Lejátszás/Szünet</string>
+    <string name="action_name_stop">Leállítás</string>
+    <string name="action_name_restart">Szám újraindítása</string>
+    <string name="action_name_seek">Tekerés a számban</string>
+    <string name="action_name_mute">Némítás</string>
+    <string name="action_name_search">Keresés</string>
+    <string name="action_name_custom">Egyéni művelet</string>
+    <string name="state_on">Be</string>
+    <string name="state_off">Ki</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Alkalmazásfrissítések</string>
+    <string name="update_install_title">Svartifoss-frissítés</string>
+    <string name="update_install_tap">Koppintson az új verzió telepítéséhez</string>
+    <string name="update_install_failed">A telepítés sikertelen. Engedélyezze a Svartifossból történő telepítést az óra beállításaiban, majd próbálja újra a telefonról.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Lejátszás innen</string>
+    <string name="lyrics_none">Ehhez a számhoz nem található dalszöveg</string>
+    <string name="lyrics_failed">A dalszöveg nem tölthető le. Ellenőrizze a telefon internetkapcsolatát.</string>
+    <string name="lyrics_disabled">A dalszöveg-keresés ki van kapcsolva a telefon beállításaiban</string>
+    <string name="lyrics_no_track">Nincs lejátszás</string>
+    <string name="metadata_none">Nincsenek részletek ehhez a számhoz</string>
+    <string name="metadata_album">Album</string>
+    <string name="metadata_album_artist">Album előadója</string>
+    <string name="metadata_track">Szám</string>
+    <string name="metadata_duration">Hossz</string>
+    <string name="metadata_genre">Műfaj</string>
+    <string name="metadata_year">Év</string>
+    <string name="metadata_released">Megjelenés</string>
+    <string name="metadata_label">Kiadó</string>
+    <string name="metadata_country">Ország</string>
+    <string name="metadata_composer">Zeneszerző</string>
+    <string name="metadata_writer">Szövegíró</string>
+    <string name="metadata_author">Szerző</string>
+    <string name="metadata_codec">Formátum</string>
+    <string name="metadata_bitrate">Bitráta</string>
+    <string name="metadata_sample_rate">Mintavételi frekvencia</string>
+    <string name="metadata_channels">Csatornák</string>
+    <string name="metadata_file_size">Méret</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Kiadásazonosító</string>
+    <string name="metadata_compilation">Válogatás</string>
+    <string name="metadata_value_yes">Igen</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Pozíció</string>
+    <string name="metadata_speed">Sebesség</string>
+    <string name="metadata_output">Kimenet</string>
+    <string name="metadata_output_speaker">Telefon hangszórója</string>
+    <string name="metadata_output_wired">Fejhallgató</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB-hang</string>
+    <string name="metadata_output_remote">Átküldés</string>
+    <string name="metadata_origin">Forrás</string>
+    <string name="metadata_origin_stream">Stream</string>
+    <string name="metadata_origin_local">Fájl a telefonon</string>
+    <string name="metadata_host">Kiszolgáló</string>
+    <string name="metadata_file">Fájl</string>
+    <string name="metadata_download">Letöltés</string>
+    <string name="metadata_download_no">Nincs letöltve</string>
+    <string name="metadata_download_running">Letöltés folyamatban</string>
+    <string name="metadata_download_yes">Letöltve</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Névjegy</string>
+    <string name="metadata_source">Lejátszás itt:</string>
+</resources>

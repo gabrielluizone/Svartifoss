@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">จัดการธีม</string>
+    <string name="watch_theme_builtin_subtitle">ธีมในตัว · เลย์เอาต์ %1$s</string>
+    <string name="watch_theme_custom_subtitle">ธีมกำหนดเอง · เลย์เอาต์ %1$s</string>
+    <string name="watch_theme_unknown_name">ธีมที่ไม่รู้จัก</string>
+
+    <string name="watch_themes_title">ธีมนาฬิกา</string>
+    <string name="watch_theme_active_label">ธีมที่ใช้แล้ว</string>
+    <string name="watch_theme_active_layout">เลย์เอาต์: %1$s</string>
+    <string name="watch_theme_preview_description">ตัวอย่างธีมที่กำลังใช้กับนาฬิกา</string>
+    <string name="watch_theme_create">สร้างธีม</string>
+    <string name="watch_theme_create_title">สร้างธีมใหม่</string>
+    <string name="watch_theme_rename_title">เปลี่ยนชื่อธีม</string>
+    <string name="watch_theme_name">ชื่อธีม</string>
+    <string name="watch_theme_base_layout">เค้าโครงพื้นฐาน</string>
+    <string name="watch_theme_default_name">ธีม %1$s ของฉัน</string>
+    <string name="watch_theme_generic_name">ธีม</string>
+    <string name="watch_theme_copy_name">สำเนา %1$s</string>
+    <string name="watch_theme_built_in_section">ธีมในตัว</string>
+    <string name="watch_theme_custom_section">ธีมของฉัน</string>
+    <string name="watch_theme_applied">ใช้แล้ว</string>
+    <string name="watch_theme_apply_success">ใช้ %1$s กับนาฬิกาแล้ว</string>
+    <string name="watch_theme_apply_error">ใช้ธีมนี้ไม่ได้</string>
+    <string name="watch_theme_more_options">ตัวเลือกธีมเพิ่มเติม</string>
+    <string name="watch_theme_list_description">ธีมนาฬิกาแบบในตัวและกำหนดเอง</string>
+    <string name="watch_theme_row_description">%1$s %2$s แตะเพื่อใช้</string>
+    <string name="watch_theme_row_description_applied">%1$s %2$s ใช้อยู่ในขณะนี้</string>
+    <string name="watch_theme_rename">เปลี่ยนชื่อ</string>
+    <string name="watch_theme_customize">ปรับแต่ง</string>
+    <string name="watch_theme_duplicate">ทำสำเนา</string>
+    <string name="watch_theme_delete">ลบ</string>
+    <string name="watch_theme_delete_title">ลบ “%1$s” หรือไม่</string>
+    <string name="watch_theme_delete_message">ธีมที่บันทึกไว้นี้และการตั้งค่าจะถูกลบอย่างถาวร</string>
+    <string name="watch_theme_deleted">ลบธีมแล้ว</string>
+    <string name="watch_theme_duplicated">สร้าง “%1$s” แล้ว</string>
+    <string name="watch_theme_limit_reached">บันทึกธีมกำหนดเองได้สูงสุด 24 ธีม โปรดลบหนึ่งธีมก่อนสร้างธีมใหม่</string>
+    <string name="watch_theme_name_required">ป้อนชื่อธีม</string>
+    <string name="watch_theme_name_duplicate">มีธีมชื่อนี้อยู่แล้ว</string>
+
+    <string name="watch_theme_face_classic">คลาสสิก</string>
+    <string name="watch_theme_face_expressive">เอ็กซ์เพรสซีฟ</string>
+    <string name="watch_theme_face_vinyl">ไวนิล</string>
+    <string name="watch_theme_face_poster">โปสเตอร์</string>
+    <string name="watch_theme_face_studio">สตูดิโอ</string>
+    <string name="watch_theme_face_halo">ฮาโล</string>
+    <string name="watch_theme_face_aurora">ออโรรา</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">สเปกตรัม</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">ดื่มด่ำ</string>
+    <string name="watch_theme_face_depth">ความลึก</string>
+    <string name="watch_theme_face_carousel">ภาพสไลด์</string>
+    <string name="watch_theme_face_chat">แชท</string>
+    <string name="watch_theme_face_split">แบ่ง</string>
+    <string name="watch_theme_face_note">โน้ต</string>
+    <string name="watch_theme_face_verse">ท่อนเพลง</string>
+    <string name="watch_theme_face_metadata">ข้อมูลเมตา</string>
+</resources>

@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Nyt soi ja mediaohjaimet</string>
+    <string name="complication_album_art_label">Nyt soi -kansi</string>
+    <string name="complication_no_music">Mitään ei toisteta</string>
+    <string name="tile_nothing_playing">Mitään ei toisteta</string>
+    <string name="tile_open_app">Avaa Svartifoss</string>
+    <string name="tile_rewind_10">Kelaa 10 sekuntia taaksepäin</string>
+    <string name="tile_forward_10">Siirry 10 sekuntia eteenpäin</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Suoratoiston pikakuvakkeesi yhden napautuksen päässä</string>
+    <string name="shortcuts_tile_title">Pikakuvakkeet</string>
+    <string name="shortcuts_tile_empty">Ei pikakuvakkeita vielä</string>
+    <string name="shortcuts_tile_more">Lisää sovelluksessa</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Mitään ei toisteta</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Toista jotain puhelimellasi</string>
+    <string name="idle_hint_resume">Jatka viimeisimmässä sovelluksessa napauttamalla</string>
+    <string name="idle_hint_shortcuts">Avaa pikakuvakkeet napauttamalla</string>
+    <string name="idle_hint_menu">Avaa valikko napauttamalla</string>
+    <string name="idle_hint_search">Hae napauttamalla</string>
+    <string name="idle_hint_queue">Avaa viimeksi toistetut napauttamalla</string>
+    <string name="idle_resume">Jatka toistoa</string>
+    <string name="idle_action_shortcuts">Avaa pikakuvakkeet</string>
+    <string name="idle_action_menu">Avaa valikko</string>
+    <string name="idle_action_search">Haku</string>
+    <string name="idle_action_queue">Avaa viimeksi toistetut</string>
+
+    <string name="no_phone">Puhelinta ei ole yhdistetty</string>
+    <string name="playback_stopped">Pysäytetty</string>
+    <string name="error">VIRHE</string>
+    <string name="error_play_services">Google Play Palvelut -virhe</string>
+    <string name="button">Painike</string>
+    <string name="back_button">Takaisin</string>
+    <string name="turn_bezel_cw">Kierrä kehystä myötäpäivään</string>
+    <string name="turn_bezel_ccw">Kierrä kehystä vastapäivään</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Tykkää</string>
+    <string name="quick_action_shuffle">Sekoita</string>
+    <string name="quick_action_repeat">Toista uudelleen</string>
+    <string name="quick_action_repeat_all">Toista kaikki</string>
+    <string name="quick_action_repeat_one">Toista yksi</string>
+    <string name="quick_action_up_next">Seuraavaksi</string>
+    <string name="quick_actions_unavailable">Nykyisessä sovelluksessa ei ole pikatoimintoja</string>
+    <string name="voice_search_prompt">Hae musiikkia</string>
+    <string name="queue_empty">Jonoa ei ole saatavilla</string>
+    <string name="queue_now_playing">Nyt soi</string>
+    <string name="queue_load_more">Lataa lisää</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Viimeksi toistetut</string>
+    <string name="queue_history_fallback_reason">Tämä sovellus ei jaa jonoaan</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Tänään</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Kellotaulu</string>
+    <string name="face_picker_offline">Puhelinta ei ole yhdistetty — tämä kellotaulu otetaan käyttöön kellossa, mutta puhelin säilyttää asetuksen</string>
+    <string name="face_picker_section_builtin">Sisäänrakennetut kellotaulut</string>
+    <string name="face_picker_section_custom">Omat teemat</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Perustuu: %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Käyttöohje</string>
+    <string name="hint_edges">Napauta ylhäältä, alhaalta, vasemmalta tai oikealta — kukin alue suorittaa sille määritetyn toiminnon</string>
+    <string name="hint_center">Keskellä — toisto/tauko\nKaksoisnapautus — pikatoiminnot\nPitkä painallus — kellotaulun valitsin (määritettävissä)</string>
+    <string name="hint_swipe_up">Pyyhkäise ylös — toimintovalikko\nAlas tai vasemmalle — määritetyt toiminnot\nOikealle reunasta — poistu</string>
+    <string name="hint_crown">Kruunu — äänenvoimakkuus tai siirtyminen\nSivupainikkeet — määritetyt toiminnot\nMukauta kaikki puhelimen Ohjaimet- ja Kello-osioissa</string>
+    <string name="hint_next">Seuraava</string>
+    <string name="hint_dismiss">Valmis</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Toista</string>
+    <string name="action_name_pause">Keskeytä</string>
+    <string name="action_name_skip_prev">Edellinen kappale</string>
+    <string name="action_name_skip_next">Seuraava kappale</string>
+    <string name="action_name_volume_up">Lisää äänenvoimakkuutta</string>
+    <string name="action_name_volume_down">Vähennä äänenvoimakkuutta</string>
+    <string name="action_name_open_menu">Avaa valikko</string>
+    <string name="action_name_skip_30">Siirry 30 sekuntia eteenpäin</string>
+    <string name="action_name_reverse_30">Kelaa 30 sekuntia taaksepäin</string>
+    <string name="action_name_play_pause">Toisto/Tauko</string>
+    <string name="action_name_stop">Pysäytä</string>
+    <string name="action_name_restart">Aloita kappale alusta</string>
+    <string name="action_name_seek">Siirry kappaleessa</string>
+    <string name="action_name_mute">Mykistä</string>
+    <string name="action_name_search">Haku</string>
+    <string name="action_name_custom">Mukautettu toiminto</string>
+    <string name="state_on">Päällä</string>
+    <string name="state_off">Pois</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Sovelluspäivitykset</string>
+    <string name="update_install_title">Svartifoss-päivitys</string>
+    <string name="update_install_tap">Asenna uusi versio napauttamalla</string>
+    <string name="update_install_failed">Asennus epäonnistui. Salli asennukset Svartifossista kellon asetuksissa ja yritä uudelleen puhelimesta.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Toista tästä</string>
+    <string name="lyrics_none">Tälle kappaleelle ei löytynyt sanoituksia</string>
+    <string name="lyrics_failed">Sanoituksia ei voitu hakea. Tarkista puhelimen yhteys.</string>
+    <string name="lyrics_disabled">Sanoitusten haku on poistettu käytöstä puhelimen asetuksissa</string>
+    <string name="lyrics_no_track">Mitään ei toisteta</string>
+    <string name="metadata_none">Tälle kappaleelle ei ole tietoja</string>
+    <string name="metadata_album">Albumi</string>
+    <string name="metadata_album_artist">Albumin esittäjä</string>
+    <string name="metadata_track">Kappale</string>
+    <string name="metadata_duration">Kesto</string>
+    <string name="metadata_genre">Tyylilaji</string>
+    <string name="metadata_year">Vuosi</string>
+    <string name="metadata_released">Julkaistu</string>
+    <string name="metadata_label">Levy-yhtiö</string>
+    <string name="metadata_country">Maa</string>
+    <string name="metadata_composer">Säveltäjä</string>
+    <string name="metadata_writer">Sanoittaja</string>
+    <string name="metadata_author">Tekijä</string>
+    <string name="metadata_codec">Muoto</string>
+    <string name="metadata_bitrate">Bittinopeus</string>
+    <string name="metadata_sample_rate">Näytteenottotaajuus</string>
+    <string name="metadata_channels">Kanavat</string>
+    <string name="metadata_file_size">Koko</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">Julkaisutunnus</string>
+    <string name="metadata_compilation">Kokoelma</string>
+    <string name="metadata_value_yes">Kyllä</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Sijainti</string>
+    <string name="metadata_speed">Nopeus</string>
+    <string name="metadata_output">Ulostulo</string>
+    <string name="metadata_output_speaker">Puhelimen kaiutin</string>
+    <string name="metadata_output_wired">Kuulokkeet</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB-ääni</string>
+    <string name="metadata_output_remote">Suoratoisto</string>
+    <string name="metadata_origin">Lähde</string>
+    <string name="metadata_origin_stream">Suoratoisto</string>
+    <string name="metadata_origin_local">Tiedosto puhelimessa</string>
+    <string name="metadata_host">Isäntä</string>
+    <string name="metadata_file">Tiedosto</string>
+    <string name="metadata_download">Lataa</string>
+    <string name="metadata_download_no">Ei ladattu</string>
+    <string name="metadata_download_running">Ladataan</string>
+    <string name="metadata_download_yes">Ladattu</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Tietoja</string>
+    <string name="metadata_source">Toistetaan kohteessa</string>
+</resources>

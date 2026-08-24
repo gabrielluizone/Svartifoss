@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">এখন চলছে ও মিডিয়া নিয়ন্ত্রণ</string>
+    <string name="complication_album_art_label">এখন চলার কভার</string>
+    <string name="complication_no_music">কিছু চলছে না</string>
+    <string name="tile_nothing_playing">কিছু চলছে না</string>
+    <string name="tile_open_app">Svartifoss খুলুন</string>
+    <string name="tile_rewind_10">১০ সেকেন্ড পেছনে</string>
+    <string name="tile_forward_10">১০ সেকেন্ড এগিয়ে</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">আপনার স্ট্রিমিং শর্টকাট, এক ট্যাপ দূরে</string>
+    <string name="shortcuts_tile_title">শর্টকাট</string>
+    <string name="shortcuts_tile_empty">এখনও কোনো শর্টকাট নেই</string>
+    <string name="shortcuts_tile_more">অ্যাপে আরও দেখুন</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">কিছু চলছে না</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">ফোনে কিছু চালান</string>
+    <string name="idle_hint_resume">শেষ অ্যাপ চালু করতে ট্যাপ করুন</string>
+    <string name="idle_hint_shortcuts">শর্টকাট খুলতে ট্যাপ করুন</string>
+    <string name="idle_hint_menu">মেনু খুলতে ট্যাপ করুন</string>
+    <string name="idle_hint_search">সার্চ করতে ট্যাপ করুন</string>
+    <string name="idle_hint_queue">সম্প্রতি চালানো দেখতে ট্যাপ করুন</string>
+    <string name="idle_resume">প্লেব্যাক চালিয়ে যান</string>
+    <string name="idle_action_shortcuts">শর্টকাট খুলুন</string>
+    <string name="idle_action_menu">মেনু খুলুন</string>
+    <string name="idle_action_search">অনুসন্ধান</string>
+    <string name="idle_action_queue">সম্প্রতি চালানো খুলুন</string>
+
+    <string name="no_phone">ফোন সংযুক্ত নেই</string>
+    <string name="playback_stopped">বন্ধ</string>
+    <string name="error">ত্রুটি</string>
+    <string name="error_play_services">Google Play Services ত্রুটি</string>
+    <string name="button">বোতাম</string>
+    <string name="back_button">পেছনে</string>
+    <string name="turn_bezel_cw">বেজেল ঘড়ির কাঁটার দিকে ঘোরান</string>
+    <string name="turn_bezel_ccw">বেজেল ঘড়ির কাঁটার বিপরীতে ঘোরান</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">লাইক</string>
+    <string name="quick_action_shuffle">শাফল</string>
+    <string name="quick_action_repeat">রিপিট</string>
+    <string name="quick_action_repeat_all">সব পুনরাবৃত্তি</string>
+    <string name="quick_action_repeat_one">একটি রিপিট</string>
+    <string name="quick_action_up_next">পরবর্তী</string>
+    <string name="quick_actions_unavailable">বর্তমান অ্যাপে কোনো কুইক অ্যাকশন নেই</string>
+    <string name="voice_search_prompt">সঙ্গীত খুঁজুন</string>
+    <string name="queue_empty">কোনো কিউ উপলভ্য নেই</string>
+    <string name="queue_now_playing">এখন চলছে</string>
+    <string name="queue_load_more">আরও লোড করুন</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">সম্প্রতি চালানো</string>
+    <string name="queue_history_fallback_reason">এই অ্যাপ তার কিউ শেয়ার করে না</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">আজ</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">ওয়াচফেস</string>
+    <string name="face_picker_offline">ফোন সংযুক্ত নেই — এই ওয়াচফেস ঘড়িতে প্রয়োগ হবে, তবে ফোন সেটিংটি ধরে রাখবে</string>
+    <string name="face_picker_section_builtin">বিল্ট-ইন ওয়াচফেস</string>
+    <string name="face_picker_section_custom">আমার থিম</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">%1$s-এর ভিত্তিতে</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">কীভাবে ব্যবহার করবেন</string>
+    <string name="hint_edges">উপরে, নিচে, বামে বা ডানে ট্যাপ করুন — প্রতিটি জোন তার নির্ধারিত অ্যাকশন চালায়</string>
+    <string name="hint_center">মাঝখান — প্লে/পজ\nডাবল-ট্যাপ — কুইক অ্যাকশন\nদীর্ঘক্ষণ চাপ — ওয়াচফেস পিকার (কনফিগারযোগ্য)</string>
+    <string name="hint_swipe_up">উপরে সোয়াইপ — অ্যাকশন মেনু\nনিচে বা বামে — নির্ধারিত অ্যাকশন\nপ্রান্ত থেকে ডানে — বের হন</string>
+    <string name="hint_crown">ক্রাউন — ভলিউম বা সিক\nপাশের বোতাম — নির্ধারিত অ্যাকশন\nফোনের Controls ও Watch থেকে সবকিছু কাস্টমাইজ করুন</string>
+    <string name="hint_next">পরবর্তী</string>
+    <string name="hint_dismiss">সম্পন্ন</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">প্লে</string>
+    <string name="action_name_pause">পজ</string>
+    <string name="action_name_skip_prev">আগের ট্র্যাক</string>
+    <string name="action_name_skip_next">পরের ট্র্যাক</string>
+    <string name="action_name_volume_up">ভলিউম বাড়ান</string>
+    <string name="action_name_volume_down">ভলিউম কমান</string>
+    <string name="action_name_open_menu">মেনু খুলুন</string>
+    <string name="action_name_skip_30">৩০ সেকেন্ড এগিয়ে</string>
+    <string name="action_name_reverse_30">৩০ সেকেন্ড পেছনে</string>
+    <string name="action_name_play_pause">প্লে/পজ</string>
+    <string name="action_name_stop">বন্ধ</string>
+    <string name="action_name_restart">ট্র্যাক আবার শুরু করুন</string>
+    <string name="action_name_seek">ট্র্যাকের মধ্যে সিক করুন</string>
+    <string name="action_name_mute">মিউট</string>
+    <string name="action_name_search">অনুসন্ধান</string>
+    <string name="action_name_custom">কাস্টম অ্যাকশন</string>
+    <string name="state_on">চালু</string>
+    <string name="state_off">বন্ধ</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">অ্যাপ আপডেট</string>
+    <string name="update_install_title">Svartifoss আপডেট</string>
+    <string name="update_install_tap">নতুন সংস্করণ ইনস্টল করতে ট্যাপ করুন</string>
+    <string name="update_install_failed">ইনস্টল ব্যর্থ হয়েছে। ঘড়ির সেটিংসে Svartifoss থেকে ইনস্টল করার অনুমতি দিন, তারপর ফোন থেকে আবার চেষ্টা করুন।</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">এখান থেকে চালান</string>
+    <string name="lyrics_none">এই ট্র্যাকের কোনো লিরিক পাওয়া যায়নি</string>
+    <string name="lyrics_failed">লিরিক আনা যায়নি। ফোনের সংযোগ পরীক্ষা করুন।</string>
+    <string name="lyrics_disabled">ফোনের সেটিংসে লিরিক খোঁজা বন্ধ আছে</string>
+    <string name="lyrics_no_track">কিছু চলছে না</string>
+    <string name="metadata_none">এই ট্র্যাকের কোনো বিস্তারিত তথ্য নেই</string>
+    <string name="metadata_album">অ্যালবাম</string>
+    <string name="metadata_album_artist">অ্যালবাম শিল্পী</string>
+    <string name="metadata_track">ট্র্যাক</string>
+    <string name="metadata_duration">দৈর্ঘ্য</string>
+    <string name="metadata_genre">ধরন</string>
+    <string name="metadata_year">বছর</string>
+    <string name="metadata_released">প্রকাশিত</string>
+    <string name="metadata_label">লেবেল</string>
+    <string name="metadata_country">দেশ</string>
+    <string name="metadata_composer">সুরকার</string>
+    <string name="metadata_writer">গীতিকার</string>
+    <string name="metadata_author">লেখক</string>
+    <string name="metadata_codec">ফরম্যাট</string>
+    <string name="metadata_bitrate">বিটরেট</string>
+    <string name="metadata_sample_rate">স্যাম্পল রেট</string>
+    <string name="metadata_channels">চ্যানেল</string>
+    <string name="metadata_file_size">আকার</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">রিলিজ ID</string>
+    <string name="metadata_compilation">সংকলন</string>
+    <string name="metadata_value_yes">হ্যাঁ</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">অবস্থান</string>
+    <string name="metadata_speed">গতি</string>
+    <string name="metadata_output">আউটপুট</string>
+    <string name="metadata_output_speaker">ফোনের স্পিকার</string>
+    <string name="metadata_output_wired">হেডফোন</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB অডিও</string>
+    <string name="metadata_output_remote">কাস্টিং</string>
+    <string name="metadata_origin">উৎস</string>
+    <string name="metadata_origin_stream">স্ট্রিম</string>
+    <string name="metadata_origin_local">ফোনের ফাইল</string>
+    <string name="metadata_host">হোস্ট</string>
+    <string name="metadata_file">ফাইল</string>
+    <string name="metadata_download">ডাউনলোড</string>
+    <string name="metadata_download_no">ডাউনলোড হয়নি</string>
+    <string name="metadata_download_running">ডাউনলোড হচ্ছে</string>
+    <string name="metadata_download_yes">ডাউনলোড করা হয়েছে</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">সম্পর্কে</string>
+    <string name="metadata_source">চলছে এখানে</string>
+</resources>

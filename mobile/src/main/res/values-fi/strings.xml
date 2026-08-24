@@ -1,0 +1,1971 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS ei ole tuettu tällä laitteella</string>
+    <string name="setting_no_wearable_api_banner_description">Tässä laitteessa ei ole Google Play Palveluiden Wear OS -komponenttia, jota Svartifoss tarvitsee kellon kanssa viestimiseen. Parittaminen ei auta — puhelinsovellus ei voi tavoittaa kelloa tällä laitteella. Kaikki alla olevat asetukset tallennetaan silti ja otetaan käyttöön, jos asennat Svartifossin laitteeseen, joka tukee sitä.</string>
+    <string name="setting_no_watch_banner">Kelloa ei ole yhdistetty</string>
+    <string name="setting_no_watch_banner_description">Nämä asetukset synkronoidaan Wear OS -kelloosi, joten ne eivät näy ennen kuin kello on paritettu ja yhdistetty — mutta voit määrittää kaikki alla olevat asetukset jo nyt.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Ulkoasu</string>
+    <string name="setting_theme">Teema</string>
+    <string name="theme_light">Kirkas valkoinen</string>
+    <string name="theme_dark">Täysmusta</string>
+    <string name="theme_system">Noudata järjestelmää</string>
+    <string name="setting_language">Kieli</string>
+    <string name="language_system">Noudata järjestelmää</string>
+    <string name="language_change_watch_notice">Synkronoinnin jälkeen myös kello käyttää tätä kieltä.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Kehittäjä</string>
+    <string name="dev_mode_unlocked">Kehittäjätila käytössä ✦</string>
+    <string name="dev_mode_clicks_remaining">Vielä %1$d napautusta kehittäjätilan avaamiseen</string>
+    <string name="dev_disable_mode">Poista kehittäjätila käytöstä</string>
+    <string name="dev_disable_mode_description">Piilota tämä osio uudelleen — napauta \"Asennettu versio\" seitsemän kertaa saadaksesi sen takaisin</string>
+    <string name="dev_mode_disabled">Kehittäjätila poistettu käytöstä</string>
+    <string name="dev_build_info">Koontitiedot</string>
+    <string name="dev_sync_watch">Pakota kellon asetusten synkronointi</string>
+    <string name="dev_sync_watch_description">Lähetä kaikki nykyiset asetukset heti paritettuun kelloon</string>
+    <string name="dev_sync_watch_done">Asetukset synkronoitu kelloon</string>
+    <string name="dev_copy_debug_info">Kopioi virheenkorjaustiedot</string>
+    <string name="dev_copy_debug_info_description">Kopioi koonti- ja laitetiedot leikepöydälle</string>
+    <string name="dev_show_archived">Näytä arkistoidut asetukset</string>
+    <string name="dev_show_archived_description">Näytä tunnettujen ongelmien vuoksi arkistoidut kellon asettelut ja asetukset</string>
+    <string name="dev_copy_debug_info_done">Virheenkorjaustiedot kopioitu</string>
+    <string name="dev_open_update_screen">Avaa päivitysnäyttö</string>
+    <string name="dev_open_update_screen_description">Esikatsele Päivitykset-näyttöä (kansibanneri ja julkaisutietojen asettelu) odottamatta oikeaa julkaisua</string>
+    <string name="dev_watch_layout_bounds">Näytä kellon asettelun rajat</string>
+    <string name="dev_watch_layout_bounds_description">Rajaa kellon näkyvät soitinelementit ja kosketusalueet. Vain diagnostiikkapeite.</string>
+    <string name="dev_watch_player_info">Näytä kellon soittimen tiedot</string>
+    <string name="dev_watch_player_info_description">Näytä kellon päällä aktiivinen kellotaulu, toistotila, edistyminen ja renderöintitiedot.</string>
+    <string name="pref_reset_default">Palauta oletusarvo</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Löysit piilotetun vesiputouksen.\n\nSvartifoss — mustat basalttipylväät\nkehystävät putousta Islannissa,\nmuistuttaen, että musiikki virtaa\nkuin vesi kiven läpi.\n\n♪ Tehty huolella. ♪</string>
+    <string name="easter_egg_ok">Sulje</string>
+
+    <string name="nav_watch_face">Kello</string>
+    <string name="watch_face_header">Kellon ulkoasu</string>
+    <string name="nav_controls">Ohjaimet</string>
+    <string name="nav_actions">Toiminnot</string>
+    <string name="nav_settings">Asetukset</string>
+
+    <string name="controls_header">Ohjaimet</string>
+    <string name="controls_state_playing">Musiikki soi</string>
+    <string name="controls_state_stopped">Ei toistoa</string>
+    <string name="controls_playing_description">Valitse, mitä kukin syöte tekee musiikin soidessa. Tämä määritys on riippumaton tilasta, jossa toistoa ei ole.</string>
+    <string name="controls_stopped_description">Valitse, mitä kukin syöte tekee ennen toiston alkamista tai sen päätyttyä. Tämä määritys on riippumaton toistotilasta.</string>
+
+    <string name="watch_live_preview">Kellon reaaliaikainen esikatselu</string>
+    <string name="watch_preview_description">Valitun kellonäkymän reaaliaikainen esikatselu. Muutokset näkyvät täällä ennen kuin kokeilet niitä kellossa.</string>
+    <string name="watch_section_style">Soitin</string>
+    <string name="watch_section_style_description">Valitse soittimen asettelu sekä otsikon, ajan ja edistymisen toiminta.</string>
+    <string name="watch_section_background">Tausta</string>
+    <string name="watch_section_background_description">Hallitse albumikuvaa, sumennusta, häivytystä ja luettavuutta soittimen taustalla.</string>
+    <string name="watch_section_colors">Värit</string>
+    <string name="watch_section_colors_description">Aseta perus-, edistymis- ja albumikorostukset ja säädä sitten otsikon, esittäjän, kellon, äänenvoimakkuuden ja paneelien värejä.</string>
+    <string name="watch_section_typography">Teksti</string>
+    <string name="watch_section_typography_description">Valitse fontit ja säädä otsikkoa, esittäjää, kelloa, sovelluskuvaketta, toissijaisia näyttöjä ja Flex-tekstiä.</string>
+    <string name="watch_section_aod">Aina päällä</string>
+    <string name="watch_section_aod_description">Määritä virransäästönäyttö ja tarkista sen ambient-ulkoasu esikatselussa.</string>
+    <string name="watch_section_panels">Paneelit</string>
+    <string name="watch_section_panels_description">Muotoile äänenvoimakkuus, haku, pikapaneeli ja jono; rivin kohdistaminen avaa kyseisen näkymän esikatselussa.</string>
+    <string name="watch_section_mini_buttons">Minipainikkeet</string>
+    <string name="watch_section_mini_buttons_description">Muotoile valinnainen pikavalintarivi. Napauta alla “Minipainikkeet” ja määritä niiden toiminnot Ohjaimet-osiossa.</string>
+    <string name="watch_overview_description">Valitse, mitä haluat mukauttaa. Esikatselu ja tallennettu teema pysyvät käytössä kaikilla alueilla.</string>
+    <string name="watch_back_to_overview">Takaisin kellon alueisiin</string>
+
+    <string name="settings_section_general">Yleiset</string>
+    <string name="settings_section_general_description">Sovelluksen teema, korostusväri ja päivitysasetukset.</string>
+    <string name="settings_section_watch">Toiminta</string>
+    <string name="settings_section_watch_description">Kruunun, kosketuksen, haptisen palautteen ja toimintovalikon toiminta kellossa.</string>
+    <string name="settings_section_automation">Automaatio</string>
+    <string name="settings_section_automation_description">Valitse, milloin Svartifoss avautuu ja sulkeutuu automaattisesti.</string>
+    <string name="settings_section_apps">Sovellukset</string>
+    <string name="settings_section_apps_description">Etsi sanoituksia ja metatietoja, suoratoiston pikavalintoja, jonon kuvitusta ja Android-käyttöoikeuksia.</string>
+    <string name="settings_section_data">Tiedot ja tuki</string>
+    <string name="settings_section_data_description">Varmuuskopioi määrityksesi, tarkista versio ja diagnostiikka tai hae apua.</string>
+    <string name="settings_overview_description">Valitse alue. Aiheeseen liittyvät asetukset pysyvät yhdessä, mutta haku voi silti viedä sinut suoraan mihin tahansa asetukseen.</string>
+    <string name="settings_back_to_overview">Takaisin asetusalueisiin</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Svartifossin käyttö</string>
+    <string name="tutorial_intro">Svartifoss tekee kellostasi kaukosäätimen puhelimessa soivalle musiikille. Tässä kaikki, mitä voit tehdä ranteestasi.</string>
+
+    <string name="tutorial_taps_title">Napauta näytön alueita</string>
+    <string name="tutorial_taps_desc">Kellon näyttö on jaettu neljään alueeseen — ylös, alas, vasemmalle ja oikealle. Alueen napautus suorittaa sille määritetyn toiminnon. Oletuksena vasen alue toistaa tai keskeyttää, oikea siirtyy seuraavaan kappaleeseen ja ylä- ja ala-alue muuttavat äänenvoimakkuutta.</string>
+
+    <string name="tutorial_quick_panel_title">Pikatoimintopaneeli</string>
+    <string name="tutorial_quick_panel_desc">Kaksoisnapauta Nyt soi -näytön keskiosaa avataksesi neljän paikan paneelin — kolme pyöreää painiketta ja yksi leveä rivi niiden alla. Jos paikkoja ei muuteta, ne peilaavat toistosovelluksen oman ilmoituksen painikkeita, joten saat käyttöön sen aidot tykkäys-, sekoitus- ja toistotoiminnot. Määritä paikalle haluamasi toiminto tai piilota se valitsemalla \"Ei mitään\" puhelimen Toiminnot-osiossa.</string>
+    <string name="tutorial_gestures_title">Yksi, kaksi &amp; pitkä painallus</string>
+    <string name="tutorial_gestures_desc">Neljä reuna-aluetta tukevat kukin erillisiä yhden, kahden ja pitkän painalluksen toimintoja. Myös keskikohdan yksittäinen napautus voidaan määrittää; kaksoisnapautus avaa aina Pikatoiminnot, ja pitkä painallus avaa kellotauluvalitsimen, jonon tai ei tee mitään asetuksen Asetukset → Toiminta mukaan.</string>
+
+    <string name="tutorial_buttons_title">Fyysiset painikkeet</string>
+    <string name="tutorial_buttons_desc">Jos kellossasi on sivupainikkeita, voit määrittää niille myös yhden, kahden ja pitkän painalluksen toiminnot. Ne toimivat myös näytön ollessa pois päältä.</string>
+
+    <string name="tutorial_rotary_title">Pyörivä kruunu</string>
+    <string name="tutorial_rotary_desc">Valitse kohdasta Asetukset → Toiminta → Pyörivä kruunu / kehys, muuttaako kruunu tai kehys äänenvoimakkuutta, siirtyykö kappaleessa vai eikö tee mitään. Kelloissa, jotka ilmoittavat kruunun kierrot painikkeina, määritä ne sen sijaan Ohjaimet-osiossa.</string>
+
+    <string name="tutorial_swipe_up_title">Pyyhkäise ylös, alas, vasemmalle &amp; oikealle</string>
+    <string name="tutorial_swipe_up_desc">Pyyhkäisy ylös, alas tai vasemmalle Nyt soi -näytössä voidaan kukin määrittää avaamaan mitä tahansa — toimintovalikko, toistojono, kappaleen ohitus, soittolistasi ja muuta. Määritä ne Ohjaimet-osiossa valitsemalla Musiikki soi tai Ei toistoa. Oletuksena pyyhkäisy ylös avaa toimintovalikon, eivätkä muut tee mitään ennen määritystä. Pyyhkäisy oikealle jätetään ennalleen — se on Wear OS:n yleinen ele sovelluksesta poistumiseen.</string>
+    <string name="tutorial_shortcuts_title">Suoratoiston pikavalinnat</string>
+    <string name="tutorial_shortcuts_desc">Tallenna linkki kappaleeseen, albumiin, miksaukseen tai soittolistaan Spotifyssa, YouTube Musicissa, Apple Musicissa, TIDALissa, Deezerissä, Amazon Musicissa tai SoundCloudissa ja määritä se sitten mille tahansa painikkeelle, eleelle tai paneelipaikalle. Nopein tapa on jakaa linkki suoraan Svartifossiin suoratoistosovelluksesta; voit myös liittää kopioidun linkin tai kirjoittaa sen. Tiliä tai kirjautumista ei tarvita — kello pyytää puhelinta aloittamaan toiston, joten pikavalinta todella toistaa sisällön pelkän sovelluksen avaamisen sijaan.</string>
+    <string name="tutorial_yt_music_title">YouTube Music -pikavalinnat</string>
+    <string name="tutorial_yt_music_desc">Määritä \"Toista tykätyt kappaleet\", \"Toista tykätyt kappaleet sekoitettuna\" tai \"Omat soittolistat\" mille tahansa painikkeelle, eleelle tai pyyhkäisylle, jotta pääset suoraan musiikkiisi koskematta puhelimeen. \"Hakuhistoria\" muistaa viimeisimmät kellolla tehdyt haut — poista haku painamalla sitä pitkään.</string>
+
+    <string name="tutorial_exit_title">Pyyhkäise poistuaksesi</string>
+    <string name="tutorial_exit_desc">Pyyhkäise vasemmasta reunasta poistuaksesi soittimesta. Toisto voidaan keskeyttää automaattisesti poistuttaessa — ota toiminto käyttöön Asetuksissa.</string>
+
+    <string name="tutorial_tile_title">Pikaohjaus-Tile</string>
+    <string name="tutorial_tile_desc">Pyyhkäise kellotaulua sivuttain Svartifoss-Tileen ja toista, keskeytä tai ohita heti avaamatta sovellusta.</string>
+
+    <string name="tutorial_complication_title">Kellotaulun komplikaatio</string>
+    <string name="tutorial_complication_desc">Lisää Svartifossin albumikuvan komplikaatio kellotauluun nähdäksesi nykyisen kansikuvan yhdellä silmäyksellä. Avaa soitin napauttamalla sitä.</string>
+
+    <string name="tutorial_system_title">Järjestelmän mediaohjaimet</string>
+    <string name="tutorial_system_desc">Nykyinen kappale näkyy myös kellon omissa mediaohjaimissa ja viimeaikaisissa sovelluksissa, joten voit ohjata toistoa myös sieltä.</string>
+
+    <string name="tutorial_tip">Vinkki: määritä molemmat tilat Ohjaimet-osiossa ja järjestä sitten valikko Toiminnot-osiossa.</string>
+
+    <string name="navigation_drawer_open">Avaa navigointilaatikko</string>
+    <string name="navigation_drawer_close">Sulje navigointilaatikko</string>
+
+    <string name="action_settings">Asetukset</string>
+    <string name="action_pause">Keskeytä</string>
+    <string name="action_play">Toista</string>
+    <string name="action_skip_prev">Edellinen</string>
+    <string name="action_skip_next">Seuraava</string>
+    <string name="action_play_pause">Toista / Keskeytä</string>
+    <string name="action_stop">Pysäytä</string>
+    <string name="action_restart">Aloita kappale alusta</string>
+    <string name="action_mute">Mykistä / Poista mykistys</string>
+    <string name="action_skip_seconds">Siirry %1$d sekuntia eteenpäin</string>
+    <string name="action_reverse_seconds">Siirry %1$d sekuntia taaksepäin</string>
+    <string name="action_like">Tykkää</string>
+    <string name="action_shuffle">Sekoita</string>
+    <string name="action_repeat">Toista uudelleen</string>
+    <string name="action_repeat_one">Toista yksi</string>
+    <string name="action_search">Hae musiikkia</string>
+    <string name="action_open_lyrics">Sanoitukset</string>
+    <string name="group_playback_controls">Toiston ohjaimet</string>
+    <string name="group_streaming_shortcuts">Kappaleet, albumit &amp; soittolistat</string>
+    <string name="pick_action">Valitse toiminto</string>
+    <string name="action_search_hint">Hae tästä luettelosta</string>
+    <string name="action_search_empty">Hakua vastaavia toimintoja ei ole.</string>
+    <string name="action_opens_more">Useita vaihtoehtoja</string>
+    <string name="action_volume_up">Lisää äänenvoimakkuutta</string>
+    <string name="volume_down">Vähennä äänenvoimakkuutta</string>
+    <string name="group_volume_controls">Äänenvoimakkuuden ohjaimet</string>
+    <string name="no_watch_detected">Kelloa ei havaittu</string>
+    <string name="connection_instructions">Avaa Svartifoss kellossa yhteyden aloittamiseksi</string>
+    <string name="playing_controls">Ohjaimet toiston aikana</string>
+    <string name="stopped_controls">Ohjaimet ilman toistoa</string>
+    <string name="actions_menu">Toimintovalikko</string>
+    <string name="actions_intro">Määritä kellon molemmat toimintopinnat toisto-ohjaimilla, sovelluksilla tai tallennetuilla kappaleilla, albumeilla ja soittolistoilla. Pikapaneeli pysyy tiiviinä; alla oleva valikko voi sisältää pidemmän järjestetyn luettelon.</string>
+    <string name="actions_quick_panel_section">Pikapaneeli</string>
+    <string name="actions_watch_menu_section">Valikko kellossa</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d toiminto · Muokkaa napauttamalla · Järjestä uudelleen pitämällä ja vetämällä</item>
+        <item quantity="other">%1$d toimintoa · Muokkaa napauttamalla · Järjestä uudelleen pitämällä ja vetämällä</item>
+    </plurals>
+    <string name="actions_reorder_description">Järjestetty toimintovalikko. Paina pitkään ja vedä, käytä saavutettavuustoimintoja Siirrä ylös tai Siirrä alas tai paina näppäimistöllä Ctrl+Up/Down.</string>
+    <string name="actions_move_up">Siirrä ylös</string>
+    <string name="actions_move_down">Siirrä alas</string>
+    <string name="actions_moved_to_position">%1$s siirrettiin kohtaan %2$d/%3$d.</string>
+    <string name="actions_empty">Ei vielä toimintoja. Luo ensimmäinen lisäyspainikkeella.</string>
+    <string name="actions_add">Lisää toiminto</string>
+    <string name="on_screen_buttons">KOSKETUSALUEET</string>
+    <string name="physical_buttons">FYYSISET PAINIKKEET</string>
+    <string name="physical_buttons_disconnected">Yhdistä ja avaa Svartifoss kellossa määrittääksesi sen fyysiset painikkeet. Kosketusalueet, pyyhkäisyt ja minipainikkeet ovat käytettävissä jo nyt.</string>
+    <string name="physical_buttons_unavailable">Tämä kello ei ilmoittanut määritettävissä olevista fyysisistä painikkeista.</string>
+    <string name="control_assignment_tap">Napautus: %1$s</string>
+    <string name="control_assignment_hold">Pitkä painallus: %1$s</string>
+    <string name="control_assignment_both">Napautus: %1$s · Pitkä painallus: %2$s</string>
+    <string name="tap_a_zone_to_configure">Määritä toiminto napauttamalla kellon aluetta</string>
+    <string name="touch_zone_top">Yläalue</string>
+    <string name="touch_zone_bottom">Ala-alue</string>
+    <string name="touch_zone_left">Vasen alue</string>
+    <string name="touch_zone_right">Oikea alue</string>
+    <string name="touch_zone_center">Keskikohdan napautus</string>
+    <string name="touch_zone_action">%1$s: %2$s. Määritä napauttamalla.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">PYYHKÄISYELEET</string>
+    <string name="tap_a_swipe_to_configure">Valitse avattava kohde napauttamalla suuntaa</string>
+    <string name="swipe_gesture_up">Pyyhkäise ylös</string>
+    <string name="swipe_gesture_down">Pyyhkäise alas</string>
+    <string name="swipe_gesture_left">Pyyhkäise vasemmalle</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Ylös</string>
+    <string name="swipe_gesture_label_down">Alas</string>
+    <string name="swipe_gesture_label_left">Vasen</string>
+
+    <string name="screen_buttons">MINIPAINIKKEET</string>
+    <string name="tap_a_screen_button_to_configure">Enintään kolme näkyvää painiketta kellon näytön alaosassa — määritä toiminto napauttamalla paikkaa</string>
+    <string name="screen_button_1">Minipainike 1 (vasen)</string>
+    <string name="screen_button_2">Minipainike 2 (keskellä)</string>
+    <string name="screen_button_3">Minipainike 3 (oikea)</string>
+    <string name="screen_button_label_1">Painike 1</string>
+    <string name="screen_button_label_2">Painike 2</string>
+    <string name="screen_button_label_3">Painike 3</string>
+    <string name="no_action">Ei toimintoa</string>
+    <string name="gesture_single_press">Yksi painallus</string>
+    <string name="gesture_double_press">Kaksoispainallus</string>
+    <string name="gesture_long_press">Pitkä painallus</string>
+    <string name="gesture_swipe_action">Toiminto</string>
+    <string name="center_button_quick_panel_note">Keskikohdan kaksoisnapautus avaa aina Pikatoiminnot. Pitkä painallus suorittaa Asetukset → Toiminta -kohdan valinnan. Kumpikaan ele ei muutu, kun määrität keskikohdan napautuksen täällä.</string>
+    <string name="start_playback">Aloita toisto</string>
+    <string name="uninstalled_app">Poistettu sovellus</string>
+
+    <string name="play_app">Toista %1$s</string>
+    <string name="tasker_task">Tasker-tehtävä</string>
+    <string name="icon_selection_title">Kuvakkeen valinta</string>
+    <string name="icon_selection_gallery">Galleriasta</string>
+    <string name="icon_selection_no_icon_pack">Tämän toiminnon avulla voit valita toiminnollesi mukautetun kuvakkeen asennetusta kuvakepaketista.\n\nValitettavasti näyttää siltä, ettei kuvakepaketteja ole asennettu.</string>
+    <string name="icon_selection_no_storage_permission">Tämän toiminnon avulla voit valita toiminnollesi mukautetun kuvakkeen asennetusta kuvakepaketista.\n\nJotkin kuvakepaketit edellyttävät sovellukselta tallennustilan käyttöoikeutta. Sinun on sallittava se käyttääksesi tätä toimintoa.</string>
+    <string name="delete">Poista</string>
+    <string name="action_text">Toiminnon teksti</string>
+    <string name="swap_action">Vaihda toiminto</string>
+    <string name="open_actions_menu">Avaa toimintovalikko</string>
+    <string name="open_playlist_menu">Näytä nykyinen soittolista</string>
+    <string name="misc_settings">Muut asetukset</string>
+
+    <string name="category_backup">Varmuuskopio</string>
+    <string name="export_config">Vie määritykset</string>
+    <string name="export_config_description">Tallenna painikemääritykset, toimintoluettelo ja kellon asetukset tiedostoon</string>
+    <string name="import_config">Tuo määritykset</string>
+    <string name="import_config_description">Palauta painikemääritykset, toimintoluettelo ja kellon asetukset tiedostosta</string>
+    <string name="export_config_done">Määritykset viety</string>
+    <string name="export_config_failed">Määrityksiä ei voitu viedä</string>
+    <string name="import_config_done_title">Tuonti onnistui</string>
+    <string name="import_config_done_message">Svartifoss on käynnistettävä uudelleen tuotujen asetusten käyttöön ottamiseksi.</string>
+    <string name="import_config_failed">Määrityksiä ei voitu tuoda — tiedosto voi olla virheellinen tai yhteensopimattomasta versiosta</string>
+    <string name="action_restart_now">Käynnistä uudelleen nyt</string>
+
+    <string name="category_about">Tietoja</string>
+    <string name="category_music_screen">Musiikkinäyttö</string>
+    <string name="category_watch_screen">Kellon näyttö</string>
+    <string name="category_mini_buttons">Minipainikkeet</string>
+    <string name="category_screen_face">Soittimen ulkoasu</string>
+    <string name="category_wf_screen_behavior">Näytön toiminta</string>
+    <string name="category_wf_player_progress">Edistyminen, haku &amp; aika</string>
+    <string name="category_album_background">Albumin tausta</string>
+    <string name="category_music_colors">Värit musiikista</string>
+    <string name="category_wf_typography_font">Kirjasintyyppi</string>
+    <string name="category_wf_typography_title">Otsikko</string>
+    <string name="category_wf_typography_artist">Esittäjä</string>
+    <string name="category_wf_typography_icon">Sovelluskuvake</string>
+    <string name="category_wf_typography_flex">Google Sans Flex -akselit</string>
+    <string name="category_wf_metadata">Metadata-kellotaulun sisältö</string>
+    <string name="category_wf_typography_secondary">Teksti muilla näytöillä</string>
+    <string name="category_wf_colors_title">Otsikon värit</string>
+    <string name="category_wf_colors_artist">Esittäjän värit</string>
+    <string name="category_wf_colors_clock">Kellon värit</string>
+    <string name="setting_wear_font_flex_hint_title">Tietoja näistä ohjaimista</string>
+    <string name="setting_wear_flex_axes_hint">Nämä hienosäätävät erityisesti Google Sans Flexiä — valitse fontti yllä käyttääksesi niitä. Otsikon ja esittäjän lihavuus/kursivointi yllä asettaa jo fontin omat lihavuus- (wght) ja kallistusakselit (slnt); alla olevat neljä säädintä koskevat koko kellotaulua.</string>
+    <string name="setting_wear_font_flex_width">Leveys</string>
+    <string name="setting_wear_font_flex_width_description">Vaakasuuntainen venytys kapeasta laajennettuun (25–151). 100 on fontin normaali leveys.</string>
+    <string name="setting_wear_font_flex_optical_size">Optinen koko</string>
+    <string name="setting_wear_font_flex_optical_size_description">Säätää viivan yksityiskohtia tekstin tehollisen koon mukaan (6–144). Pienemmät arvot sopivat pienelle tekstille, suuremmat suurelle näyttötekstille.</string>
+    <string name="setting_wear_font_flex_grade">Grad</string>
+    <string name="setting_wear_font_flex_grade_description">Siirtää lihavuutta hieman muuttamatta asettelua (0–100) — hienovarainen tapa lisätä kontrastia tummalla näytöllä.</string>
+    <string name="setting_wear_font_flex_roundness">Pyöreys</string>
+    <string name="setting_wear_font_flex_roundness_description">Sekoittaa viivojen päät terävistä (0) täysin pyöristetyiksi (100) ystävällisemmän ilmeen saamiseksi.</string>
+    <string name="preview_sample_title">Kappaleen nimi</string>
+    <string name="preview_sample_artist">Esittäjän nimi</string>
+    <string name="preview_sample_next_title">Seuraava kappale</string>
+    <string name="preview_playback_stopped">Pysäytetty</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">edellinen rivi</string>
+    <string name="preview_verse_current">nyt soiva rivi</string>
+    <string name="preview_verse_next">ja sitä seuraava</string>
+    <string name="preview_chat_today">Tänään</string>
+    <string name="category_gestures">Eleet &amp; syöte</string>
+    <string name="category_watch_navigation">Navigointi &amp; pikavalinnat</string>
+    <string name="category_rotary_input">Pyörivä syöte &amp; säätö</string>
+    <string name="category_watch_feedback">Palaute &amp; poistumistoiminta</string>
+    <string name="category_watch_display">Kellon näyttö</string>
+    <string name="setting_wear_keep_screen_on">Pidä näyttö päällä</string>
+    <string name="setting_wear_keep_screen_on_description">Estää kellon näyttöä sammumasta käyttämättömyyden aikakatkaisulla, kun Svartifoss-näyttö on auki. Ranteen laskeminen himmentää kellon edelleen — se ele kuuluu järjestelmälle. Kuluttaa enemmän akkua. Sanoitusnäyttö pysyy aina päällä tästä asetuksesta riippumatta.</string>
+    <string name="setting_lyrics_enabled">Hae sanoituksia verkosta</string>
+    <string name="setting_lyrics_enabled_description">Anna puhelimen hakea synkronoidut sanoitukset LRCLIBistä, kun avaat sanoitusnäytön kellossa. Vain kappaleen nimi, esittäjä ja pituus lähetetään; ei mitään muuta, eikä mitään tallenneta levylle. Jos poistat toiminnon käytöstä, sanoitusnäyttö ilmoittaa hakujen olevan poissa käytöstä.</string>
+    <string name="setting_overlay_blur_radius">Peittokuvan sumennus</string>
+    <string name="setting_overlay_blur_radius_description">Äänenvoimakkuus-/hakurenkaiden ja Pikatoiminnot-paneelin takana olevan huurretun taustan sumennuksen voimakkuus (px) — riippumaton albumikuvan taustan sumennuksesta</string>
+    <string name="category_action_list">Toimintoluettelo</string>
+    <string name="category_automation">Automaatio</string>
+    <string name="category_idle">Kun mitään ei toisteta</string>
+    <string name="installed_version">Asennettu versio</string>
+    <string name="get_support">Hanki tukea</string>
+    <string name="get_support_description">Lähetä sovelluslokit kehittäjälle tukea varten</string>
+    <string name="contact_developer">Ota yhteyttä kehittäjään</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — yhteydenotto</string>
+    <string name="contact_developer_chooser">Lähetä sähköposti</string>
+    <string name="contact_developer_no_client">Sähköpostisovellusta ei ole asennettu. Osoite kopioitiin leikepöydälle.</string>
+    <string name="about_developer_title">Tietoja kehittäjästä</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss alkoi henkilökohtaisena projektina — halusin päivittää Music Center for Wearin vastaamaan tämän päivän mahdollisuuksia, jotta voisin itse käyttää sitä joka päivä. Siitä tuli niin hyvä, että päätin jakaa sen kaikille. Tämä on ensimmäinen sovellukseni, eikä mikään oikein vastaa sitä tunnetta, kun näkee oman tekemänsä olevan hyödyllinen myös muille.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Avoimen lähdekoodin lisenssit</string>
+    <string name="setting_always_show_time">Näytä aika aina</string>
+    <string name="setting_always_show_time_off_description">Nykyinen aika näytetään vain ambient-tilassa</string>
+    <string name="setting_always_show_time_on_description">Nykyinen aika näytetään aina. Ylätoiminnon kuvake ei näy (kello korvaa sen), mutta toiminto toimii edelleen normaalisti.</string>
+    <string name="tap_to_force_stop">Pysäytä ohjaimet napauttamalla</string>
+    <string name="notification_action_stop">Pysäytä</string>
+    <string name="notification_action_force_stop">Pakota pysäytys</string>
+    <string name="error_notification_access">Ei ilmoitusten käyttöoikeutta. Tarkista puhelin.</string>
+    <string name="error_notifications">Virheilmoitukset</string>
+    <string name="notification_access_notification_title">Svartifoss tarvitsee ilmoitusten käyttöoikeuden</string>
+    <string name="notification_access_notification_title_description">Korjaa ongelma napauttamalla tätä ilmoitusta ja tarkistamalla Svartifoss</string>
+    <string name="error_service_not_enabled">Ilmoitusten käyttöoikeus tarvitaan</string>
+    <string name="error_service_not_enabled_description">Jotta voit hallita musiikkia kellosta, Svartifoss tarvitsee ilmoitusten käyttöoikeuden — näin Android antaa sen nähdä, mikä sovellus toistaa, ja lähettää toisto-, tauko- ja ohituskomentoja.\n\nSvartifoss ei koskaan lue ilmoitustesi sisältöä. Se käyttää tätä lupaa vain aktiivisen mediaistunnon löytämiseen.\n\nNapauta \"Avaa asetukset\" ja ota sitten Svartifoss käyttöön ilmoitusten käyttöoikeuksissa.</string>
+    <string name="action_open_settings">Avaa asetukset</string>
+    <string name="settings_search_title">Hae asetuksista</string>
+    <string name="settings_search_hint">Hae asetuksista</string>
+    <string name="settings_search_clear">Tyhjennä haku</string>
+    <string name="settings_search_prompt">Hae nimellä kaikista asetuksista Asetukset- ja Kellon ulkoasu -osioissa.</string>
+    <string name="settings_search_no_results">Vastaavaa asetusta ei ole.</string>
+    <string name="settings_search_prerequisite">Tämä vaihtoehto riippuu toisesta valinnasta. Muuta tässä näkyvää asetusta saadaksesi sen näkyviin.</string>
+    <string name="setting_numeric_range_error">Anna arvo väliltä %1$d–%2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">Myönnä lupa napauttamalla — toiston hallinta pysyy poissa käytöstä siihen asti</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Asenna Svartifoss kelloon</string>
+    <string name="no_watch_app_description">Svartifoss ei löytänyt kellosovellustaan paritetusta Wear OS -kellosta. Puhelin- ja kellosovellukset toimivat yhdessä — ilman kellosovellusta toistoa ei voi hallita ranteesta.\n\nSvartifoss ei ole Play Kaupassa — kellosovellus sivuladataan erikseen (esim. Wear Installerilla). Avaa GitHubin julkaisusivu napauttamalla \"Näytä julkaisut\" ja lataa kellon APK. Jos asensit sen juuri, odota noin minuutti synkronoinnin valmistumista.</string>
+    <string name="no_watch_app_button">Näytä julkaisut</string>
+    <string name="required_permission">Vaadittu lupa</string>
+    <string name="setting_pause_on_swipe_exit">Keskeytä toisto pyyhkäisypoistumisessa</string>
+    <string name="setting_pause_on_swipe_exit_description">Keskeytä automaattisesti kaikki toisto, kun poistut Svartifossista kellossa pyyhkäisemällä vasemmalle.\n\nVirtapainikkeella poistuminen ei vaikuta tähän eikä koskaan keskeytä automaattisesti.</string>
+    <string name="setting_rotating_crown_off_period">Pyörivän syötteen viive näytön käynnistyessä</string>
+    <string name="setting_rotating_crown_off_period_description">Pyörivä syöte (esim. pyörivät kruunut) voi olla joissakin laitteissa liian herkkä. Tahattomien äänenvoimakkuusmuutosten estämiseksi pyörivä syöte poistetaan käytöstä <![CDATA[<b>%1$s millisekunniksi</b>]]> näytön käynnistämisen jälkeen.</string>
+    <string name="setting_rotary_seek">Hae pyörivällä kruunulla</string>
+    <string name="setting_rotary_seek_description">Kun käytössä, kruunun pyörittäminen siirtyy nykyisessä kappaleessa äänenvoimakkuuden muuttamisen sijaan. Äänenvoimakkuutta voi edelleen muuttaa näytön tai fyysisillä painikkeilla.</string>
+    <string name="setting_wear_rotary_action">Pyörivä kruunu / kehys</string>
+    <string name="wear_rotary_action_volume">Muuta äänenvoimakkuutta</string>
+    <string name="wear_rotary_action_seek">Siirry kappaleessa</string>
+    <string name="wear_rotary_action_off">Älä tee mitään</string>
+    <string name="setting_rotating_sensitivity">Pyörivän syötteen herkkyys</string>
+    <string name="setting_rotating_sensitivity_description">Pyörivän syötteen herkkyys. Suurempi luku tarkoittaa, että samanlainen kruunun liike muuttaa äänenvoimakkuutta enemmän. Nykyinen asetus on <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Poista fyysisen painikkeen kaksoisnapsautus ambient-tilassa käytöstä</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Joissakin kelloissa painikkeet toimivat virheellisesti niin, että fyysisen painikkeen yksittäinen napsautus ambient-tilassa rekisteröityy joskus kaksoisnapsautukseksi.\n\nJos tätä tapahtuu, voit ottaa tämän asetuksen käyttöön ja poistaa kaksoisnapsautukset kokonaan käytöstä ambient-tilassa (esim. kaksi napsautusta suorittaa vain yhden napsautuksen toiminnon). Kellon ollessa aktiivinen kaksoisnapsautukseen ei vaikuteta.</string>
+    <string name="setting_haptic_feedback">Haptinen palaute</string>
+    <string name="setting_haptic_feedback_description">Värisytä kelloa painikkeita painettaessa.</string>
+    <string name="setting_auto_start">Avaa Svartifoss automaattisesti</string>
+    <string name="setting_auto_start_description">Avaa Svartifoss kellossa automaattisesti, kun musiikin toisto alkaa puhelimessa.</string>
+    <string name="setting_auto_start_apps_blacklist">Automaattisesti käynnistyvät sovellukset</string>
+    <string name="setting_auto_start_apps_blacklist_description">Luettelo mediasovelluksista, jotka voivat käynnistää Svartifossin automaattisesti</string>
+    <string name="setting_dim_album_art">Soittimen varjostus</string>
+    <string name="setting_dim_album_art_description">Lisää käyttäjän valitsema varjostus kuvituksen ja soittimen ohjainten väliin.</string>
+    <string name="setting_album_art_style">Albumikuvan tyyli</string>
+    <string name="setting_album_art_style_description">Valitse, miltä Nyt soi -näkymän tausta näyttää kellossa.</string>
+    <string name="setting_album_art_blur_radius">Sumennuksen voimakkuus</string>
+    <string name="setting_album_art_blur_radius_description">Koko näytön sumennuksen voimakkuus, kun valittu tausta käyttää sumennusta. Tällä hetkellä <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Tummennuksen voimakkuus</string>
+    <string name="setting_album_art_dim_strength_description">Kuinka paljon albumikuvaa tummennetaan tekstin luettavuuden parantamiseksi. Tällä hetkellä <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Varjostustyyli</string>
+    <string name="setting_player_shading_intensity">Varjostuksen voimakkuus</string>
+    <string name="setting_player_shading_intensity_description">Kuinka voimakkaasti varjostus tummentaa taustaa. 100%% on täysi voimakkuus; suurempi arvo lisää kontrastia (enintään 150%%). Tällä hetkellä <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Käytä tätä ulkoasua kaikkiin kellotauluihin</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Kopioi tämän kellotaulun ulkoasuasetukset kaikkiin muihin kellotauluihin</string>
+    <string name="apply_appearance_confirm_title">Käytetäänkö kaikissa kellotauluissa?</string>
+    <string name="apply_appearance_confirm_message">Tämä korvaa kaikkien muiden kellotaulujen ulkoasuasetukset nykyisen asetuksilla. Toiminta-asetuksia ei muuteta.</string>
+    <string name="apply_appearance_confirm_button">Käytä</string>
+    <string name="apply_appearance_done">Käytetty kaikissa kellotauluissa</string>
+    <string name="category_wf_layout_actions">Asettelu</string>
+    <string name="setting_reset_appearance">Palauta tämä asettelu</string>
+    <string name="setting_reset_appearance_description">Palauta tämän kellotaulun ulkoasu alkuperäisiin oletuksiin</string>
+    <string name="reset_appearance_confirm_title">Palautetaanko tämä asettelu?</string>
+    <string name="reset_appearance_confirm_message">Tämän kellotaulun ulkoasuasetukset palautuvat oletuksiin. Toiminta-asetuksiin tai muihin kellotauluihin ei vaikuteta.</string>
+    <string name="reset_appearance_confirm_button">Palauta</string>
+    <string name="reset_appearance_done">Asettelu palautettu oletuksiin</string>
+    <string name="setting_reset_all_faces">Palauta kaikki kellotaulut oletuksiin</string>
+    <string name="setting_reset_all_faces_description">Palauta kaikkien sisäänrakennettujen kellotaulujen ulkoasu alkuperäisiin oletuksiin</string>
+    <string name="reset_all_faces_confirm_title">Palautetaanko kaikki kellotaulut?</string>
+    <string name="reset_all_faces_confirm_message">Kaikkien sisäänrakennettujen kellotaulujen ulkoasu palautuu alkuperäisiin oletuksiin ja aktiivinen mukautettu teema poistetaan käytöstä. Tallennetut mukautetut teemat, toiminta-asetukset ja valittu kellotaulu säilyvät.</string>
+    <string name="reset_all_faces_confirm_button">Palauta kaikki</string>
+    <string name="reset_all_faces_done">Kaikki kellotaulut palautettu oletuksiin</string>
+    <string name="face_reset_migration_title">Päivitä kellosi ulkoasu</string>
+    <string name="face_reset_migration_message">Päivitit vanhemmasta versiosta, jossa kaikki kellotaulut käyttivät samoja ulkoasuasetuksia. Nyt jokainen kellotaulu muistaa omat asetuksensa, joten vanhat asetukset voivat näyttää vääriltä kellotauluissa, joita et ole muokannut erikseen. Suosittelemme palauttamaan kaikki kellotaulut uusiin oletuksiin tai tyhjentämään sovelluksen tiedot täysin puhdasta aloitusta varten.</string>
+    <string name="face_reset_migration_reset_button">Palauta kaikki kellotaulut</string>
+    <string name="face_reset_migration_clear_data_button">Tyhjennä sovelluksen tiedot</string>
+    <string name="setting_player_shading_color">Varjostuksen väri</string>
+    <string name="setting_wear_shading_custom_color">Mukautettu varjostusväri</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Musta</item>
+        <item>Albumin korostusväri</item>
+        <item>Desaturoitu albumi</item>
+        <item>Mukautettu väri</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Seuraa soittimen teemaa</item>
+        <item>Reunavinjentti</item>
+        <item>Reunavinjentti (voimakas)</item>
+        <item>Reunavinjentti (erittäin voimakas)</item>
+        <item>Alakulma</item>
+        <item>Alareunan häivytys</item>
+        <item>Ala- ja yläraja</item>
+        <item>Koko näytön suodatin</item>
+        <item>Albumin väripesu</item>
+        <item>Kaksivärinen albumiliukuväri</item>
+        <item>Sivuverhot</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Albumikuvan peittävyys ambient-tilassa</string>
+    <string name="setting_ambient_album_art_opacity_description">Kuinka näkyvänä albumikuva säilyy ambient-tilassa. Tällä hetkellä <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Äänenvoimakkuus-/siirtopeitteen aikakatkaisu</string>
+    <string name="setting_volume_overlay_timeout_description">Kuinka kauan äänenvoimakkuus- ja siirtopeitteet pysyvät näytössä säädön jälkeen. Tällä hetkellä <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Pyörityksen kuollut alue</string>
+    <string name="setting_rotary_deadzone_description">Kruunun vähimmäisliike ennen äänenvoimakkuuden tai siirron muutoksen käyttöönottoa. Auttaa estämään tahattomia säätöjä. Tällä hetkellä <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Wear-käyttökokemus</string>
+    <string name="setting_swipe_gestures_hint">Pyyhkäisyeleet</string>
+    <string name="setting_swipe_gestures_hint_description">Pyyhkäisy ylös/alas/vasemmalle voi kukin avata minkä tahansa toiminnon. Napauta tästä määrittääksesi ne tiloille Musiikki soi tai Ei toistoa. Pyyhkäisy oikealle on varattu sovelluksesta poistumiseen.</string>
+    <string name="setting_screen_buttons_hint">Minipainikkeet</string>
+    <string name="setting_screen_buttons_hint_description">Enintään kolme näkyvää painiketta, joista jokaiselle voi määrittää napautus- ja pitkä painallus -toiminnot. Napauta tästä määrittääksesi ne tiloille Musiikki soi tai Ei toistoa.</string>
+    <string name="dev_screen_buttons_offset">Minipainikkeiden sijainti</string>
+    <string name="dev_screen_buttons_offset_description">Haluttu etäisyys dp-yksikköinä kellon näytön alareunan ja minipainikkeiden välillä (oletus 42). Rivi siirtyy silti automaattisesti pois pitkien nimien tieltä.</string>
+    <string name="setting_screen_buttons_tilt">Painikkeiden kallistus</string>
+    <string name="setting_screen_buttons_tilt_description">Kuinka paljon sivupainikkeet seuraavat näytön kaarta. 0 = suora rivi; 100 = täysi kaari kallistetuilla kuvakkeilla.</string>
+    <string name="setting_screen_buttons_bg">Minipainikkeiden tausta</string>
+    <string name="setting_screen_buttons_opacity">Minipainikkeiden peittävyys</string>
+    <string name="setting_screen_buttons_opacity_description">Koko minipainikeryhmän peittävyys (0–100%%). Tällä hetkellä <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Pikatoimintopaneeli</string>
+    <string name="quick_panel_link_summary">Avaa kaksoisnapauttamalla kellon näytön keskikohtaa. Napauta tästä määrittääksesi sen neljä paikkaa Toiminnot-kohdassa.</string>
+    <string name="quick_panel_config_hint">Nämä ovat painikkeet paneelissa, joka avautuu kaksoisnapauttamalla kellon näytön keskikohtaa. Valitse toiminto napauttamalla riviä (\"Ei mitään\" piilottaa sen); palauta oletus pitkällä painalluksella.</string>
+    <string name="quick_panel_slot_1">Painike 1</string>
+    <string name="quick_panel_slot_2">Painike 2</string>
+    <string name="quick_panel_slot_3">Painike 3</string>
+    <string name="quick_panel_slot_long">Pitkä painike</string>
+    <string name="quick_panel_slot_default">%1$s (oletus)</string>
+    <string name="quick_panel_slot_hidden">Piilotettu</string>
+    <string name="quick_panel_default_like">Tykkää</string>
+    <string name="quick_panel_default_shuffle">Sekoita</string>
+    <string name="quick_panel_default_repeat">Toista uudelleen</string>
+    <string name="quick_panel_default_up_next">Seuraavaksi</string>
+    <string name="setting_wear_center_long_press_queue">Avaa jono painamalla keskikohtaa pitkään</string>
+    <string name="setting_wear_center_long_press_queue_description">Avaa toistojono painamalla Nyt soi -näytön keskikohtaa pitkään.</string>
+    <string name="setting_wear_center_long_press">Keskikohdan pitkä painallus</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Vaihda kellotaulua</item>
+        <item>Avaa jono</item>
+        <item>Ei mitään</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Perusasettelu</string>
+    <string name="setting_wear_screen_face_description">Valitse tämän teeman käyttämä rakenne. Tallennetut teemat voivat yhdistää tämän asettelun omiin fontteihin, väreihin, sumennukseen, varjostukseen, AOD:hen ja paneeleihin.</string>
+    <string name="setting_wear_show_track_title">Näytä kappaleen nimi</string>
+    <string name="setting_wear_show_track_title_description">Näytä nykyisen kappaleen nimi soittimessa</string>
+    <string name="setting_wear_show_track_artist">Näytä esittäjän nimi</string>
+    <string name="setting_wear_show_track_artist_description">Näytä nykyinen esittäjä soittimessa</string>
+    <string name="setting_wear_show_source_icon">Näytä toistavan sovelluksen kuvake</string>
+    <string name="setting_wear_show_source_icon_description">Näytä esittäjän vieressä parhaillaan toistavan sovelluksen kuvake. Kuvake otetaan sovelluksen mediailmoituksesta. Kun asetus on pois käytöstä, kuvaketta ei lähetetä kelloon.</string>
+    <string name="setting_wear_player_controls_visible">Näytä soittimen ohjaimet</string>
+    <string name="setting_wear_player_controls_visible_description">Näytä tai piilota sisäänrakennetut painikkeet Classic-, Poster-, Studio- ja muissa määritettävissä asetteluissa poistamatta niiden kosketusalueita käytöstä</string>
+    <string name="setting_wear_quadrant_tap_flash">Väläytä kuvaketta napautettaessa</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Kun kulma-alueen toiminto käynnistyy, sen kuvake välähtää hetkeksi täydellä kirkkaudella. Tämä on erityisen hyödyllistä Hidden-näyttöteemassa, jossa kuvake on muuten näkymätön eikä kerro, mikä toiminto juuri suoritettiin.</string>
+    <string name="setting_wear_internal_progress_visible">Asettelun edistymisilmaisin</string>
+    <string name="setting_wear_internal_progress_visible_description">Näytä tätä asettelua varten suunniteltu lisäedistymisilmaisin. Expressive- ja Material-toistopainikkeiden renkaat ovat osa niiden ohjaimia ja pysyvät käytettävissä.</string>
+    <string name="setting_wear_edge_progress_visible">Näytä reunan edistymiskaari</string>
+    <string name="setting_wear_edge_progress_visible_description">Piilota vain näytön ympärillä näkyvä kaari. Reunasta siirtäminen on edelleen erillinen asetus.</string>
+    <string name="setting_wear_edge_seek_enabled">Siirrä näytön reunasta</string>
+    <string name="setting_wear_edge_seek_enabled_description">Napauta tai vedä näytön reunaa pitkin siirtyäksesi täsmälliseen kohtaan, vaikka kaari olisi piilotettu</string>
+    <string name="setting_wear_screen_theme">Ohjainten tyyli</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Tasapainoinen</string>
+    <string name="wear_screen_theme_default_description">Tavallinen hierarkia ja ohjainten koot.</string>
+    <string name="wear_screen_theme_minimal">Pelkkistetty</string>
+    <string name="wear_screen_theme_minimal_description">Käyttää pienempiä ja hillitympiä ohjaimia pitäen kaikki toiminnot näkyvissä ja käytettävissä.</string>
+    <string name="wear_screen_theme_compact">Kompakti</string>
+    <string name="wear_screen_theme_compact_description">Käyttää tiiviimpää ohjaintyyliä muuttamatta toimintojasi.</string>
+    <string name="wear_screen_theme_cinema">Elokuvamainen</string>
+    <string name="wear_screen_theme_cinema_description">Pehmentää ohjainten ilmettä muuttamatta kuvitusta.</string>
+    <string name="wear_screen_theme_vivid">Värikäs</string>
+    <string name="wear_screen_theme_vivid_description">Käyttää suurempia ja näkyvämpiä ohjaimia.</string>
+    <string name="wear_screen_theme_contrast">Suuri kontrasti</string>
+    <string name="wear_screen_theme_contrast_description">Käyttää suurempia ohjaimia helpompaa luettavuutta varten.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Käyttää kompakteja, hieman himmennettyjä ohjaimia. Se ei tummenna itse taustaa — käytä siihen tausta-asetuksia.</string>
+    <string name="wear_screen_theme_hidden">Piilotettu</string>
+    <string name="wear_screen_theme_hidden_description">Piilottaa kaikki ohjainkuvakkeet kokonaan. Kosketusalueet pysyvät aktiivisina ja täysin toimivina.</string>
+    <string name="setting_wear_font">Kirjasintyyppi</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Sovelluksen oletuskirjasin.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Google Sansin muuttuva versio, jossa voi säätää leveyttä, optista kokoa, vahvuutta ja pyöreyttä — avaa alla olevat akselisäädöt.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Androidin klassinen järjestelmäkirjasin.</string>
+    <string name="wear_font_rounded">Pyöristetty</string>
+    <string name="wear_font_rounded_description">Ystävälliset modernit kirjainmuodot pehmeästi pyöristetyin päättein.</string>
+    <string name="wear_font_sans_light">Moderni kevyt</string>
+    <string name="wear_font_sans_light_description">Selkeä ja ilmava sans-serif, jonka visuaalinen paino on kevyempi.</string>
+    <string name="wear_font_sans_thin">Erittäin ohut</string>
+    <string name="wear_font_sans_thin_description">Erittäin kevyt näyttötyyli minimalistiseen soittimeen.</string>
+    <string name="wear_font_sans_medium">Moderni keskivahva</string>
+    <string name="wear_font_sans_medium_description">Terävä sans-serif vahvemmilla ja tiiviimmillä viivoilla.</string>
+    <string name="wear_font_sans_black">Paksu</string>
+    <string name="wear_font_sans_black_description">Lihavoitu näyttöfonttiperhe, jolla on maksimaalinen visuaalinen vaikutus.</string>
+    <string name="wear_font_small_caps">Kapiteelit</string>
+    <string name="wear_font_small_caps_description">Kompaktit versaalimaiset muodot toimituksellisella tuntumalla.</string>
+    <string name="wear_font_casual">Rento</string>
+    <string name="wear_font_casual_description">Leikkisä käsinkirjoitettu järjestelmäfonttiperhe.</string>
+    <string name="wear_font_typewriter">Kirjoituskone (arkistoitu)</string>
+    <string name="wear_font_typewriter_description">Retrohenkinen kirjoituskoneilme (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Pyöristetty geometrinen sans-serif, ilmainen (OFL) vaihtoehto Circularin hengessä.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Selkeä geometrinen sans-serif, ilmainen (OFL) vaihtoehto Proxima Novan hengessä.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Tyylikäs humanistinen roman-kirjasin, ilmainen (OFL) vaihtoehto Optiman hengessä.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Pehmeämpi kirjoitokonetyyli (Love Letter Typewriter) — yleensä varattu \"Lain\"-teemaisille kappaleille.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Klassinen serif-kirjasin.</string>
+    <string name="wear_font_serif_monospace">Serif-mono</string>
+    <string name="wear_font_serif_monospace_description">Tasalevyiset serif-kirjaimet, joilla on omaleimainen toimituksellinen/pääteikkunamainen ilme.</string>
+    <string name="wear_font_monospace">Tasalevyinen</string>
+    <string name="wear_font_monospace_description">Tasalevyinen, tekninen ilme.</string>
+    <string name="wear_font_condensed">Tiivistetty</string>
+    <string name="wear_font_condensed_description">Kapeammat kirjainmuodot, joihin mahtuu enemmän tekstiä.</string>
+    <string name="wear_font_condensed_light">Tiivistetty kevyt</string>
+    <string name="wear_font_condensed_light_description">Kapea ja kevyempi fonttiperhe pitkiin otsikoihin.</string>
+    <string name="wear_font_condensed_medium">Tiivistetty keskivahva</string>
+    <string name="wear_font_condensed_medium_description">Kapea fonttiperhe vahvemmilla viivoilla ja erinomaisella luettavuudella.</string>
+    <string name="wear_font_cursive">Kursiivi</string>
+    <string name="wear_font_cursive_description">Koristeellinen kaunokirjoitustyyppi.</string>
+    <string name="setting_wear_dynamic_accent">Dynaaminen korostusväri kellossa</string>
+    <string name="setting_wear_dynamic_accent_description">Sovita albumiin perustuvat kellon värit nykyiseen kansikuvaan. Kun asetus on pois päältä, Albumin väri -valinnat käyttävät teeman staattista korostusväriä.</string>
+    <string name="setting_wear_album_art_fade">Albumikuvan häivytyssiirtymä</string>
+    <string name="setting_wear_album_art_fade_description">Häivytä albumikuva pehmeästi kappaleen vaihtuessa.</string>
+    <string name="setting_wear_title_text_mode">Otsikkotekstin toiminta</string>
+    <string name="setting_wear_title_text_mode_description">Määrittää, miten toistettavan kappaleen nimi toimii, kun se ei mahdu: Automaattinen yhdistää pienennyksen, rivityksen ja vierityksen; muut vaihtoehdot käyttävät vain yhtä toimintatapaa.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Automaattinen (pienennä, rivitä, vieritä)</item>
+        <item>Vieritä (marquee)</item>
+        <item>Rivitä kahdelle riville</item>
+        <item>Rivitä kolmelle riville</item>
+        <item>Rivitä viidelle riville</item>
+        <item>Staattinen (yksi rivi, ei vieritystä tai pienennystä)</item>
+        <item>Pienennä sopivaksi</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Esittäjän tekstin väri</string>
+    <string name="setting_wear_artist_custom_color">Esittäjän mukautettu väri</string>
+    <string name="setting_wear_artist_custom_color_description">Valitse Normaali-käsittelyssä käytettävä esittäjän väri</string>
+    <string name="setting_wear_artist_desaturated">Vähäkylläinen esittäjän väri</string>
+    <string name="setting_wear_artist_desaturated_description">Pehmennä albumiin perustuvaa esittäjän tekstiväriä — koskee vain, kun \"Esittäjän tekstin väri\" on asetettu Albumin väriksi</string>
+
+    <string name="setting_wear_progress_color">Edistymispalkin väri</string>
+    <string name="setting_wear_progress_custom_color">Edistymispalkin mukautettu väri</string>
+    <string name="setting_wear_progress_custom_color_description">Valitse Normaali-käsittelyssä käytettävä edistymisen ja haun väri</string>
+    <string name="setting_wear_progress_desaturated">Vähäkylläinen edistymispalkin väri</string>
+    <string name="setting_wear_progress_desaturated_description">Pehmennä albumiin perustuvaa edistymispalkin väriä — koskee vain, kun \"Edistymispalkin väri\" on asetettu Albumin väriksi</string>
+
+    <string name="setting_wear_volume_color">Äänenvoimakkuuspalkin väri</string>
+    <string name="setting_wear_volume_custom_color">Äänenvoimakkuuden mukautettu väri</string>
+    <string name="setting_wear_volume_custom_color_description">Valitse Normaali-käsittelyssä käytettävä äänenvoimakkuuden väri</string>
+    <string name="setting_wear_quick_panel_color">Pikatoimintojen väri</string>
+    <string name="setting_wear_quick_panel_custom_color">Pikatoimintojen mukautettu väri</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Valitse Normaali-käsittelyssä käytettävä pikatoimintojen väri</string>
+    <string name="setting_wear_shading_custom_color_description">Valitse väri, jolla varjostuksen liukuväri sävytetään</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Neutraali (kiinteä teemaväri)</item>
+        <item>Albumin väri</item>
+        <item>Mukautettu väri</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Klassinen</item>
+        <item>Ilmeikäs</item>
+        <item>Vinyyli</item>
+        <item>Juliste</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Revontulet</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spektri</item>
+        <item>Material</item>
+        <item>Immersiivinen</item>
+        <item>Syvyys</item>
+        <item>Karuselli</item>
+        <item>Keskustelu</item>
+        <item>Jaettu</item>
+        <item>Nuotti</item>
+        <item>Säkeistö</item>
+        <item>Metatiedot</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Ilmeikäs haku</string>
+    <string name="setting_wear_expressive_seek_mode_description">Määrittää, miten kappaletta kelataan kosketuksella Expressive-näkymässä. Keskirengas tekee toistopainikkeen ympärillä olevasta renkaasta vedettävän; Reunarengas näyttää lisäksi Classic-kehysrenkaan; Ei mitään jättää haun vain kiertokruunulle.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Keskirengas</item>
+        <item>Reunarengas</item>
+        <item>Ei mitään</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Aina päällä -näyttö</string>
+    <string name="setting_wear_aod_style">Aina päällä -tyyli</string>
+    <string name="setting_wear_aod_style_description">Määrittää toistonäkymän ulkoasun kellon ollessa ympäristötilassa. Seuraa näkymää vastaa valittua näkymää; Minimaalinen näyttää vain himmennetyn tekstin täysin mustalla taustalla pisintä akunkestoa varten.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Seuraa kellotaulua</item>
+        <item>Klassinen</item>
+        <item>Ilmeikäs (ääriviiva)</item>
+        <item>Material (ääriviiva)</item>
+        <item>AMOLED-ohjaimet</item>
+        <item>Chrono (iso kello)</item>
+        <item>Juliste</item>
+        <item>Studio</item>
+        <item>Immersiivinen</item>
+        <item>Karuselli</item>
+        <item>Keskustelu</item>
+        <item>Jaettu</item>
+        <item>Nuotti</item>
+        <item>Säkeistö</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Aina päällä -näytön väri</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Valkoinen</item>
+        <item>Albumin väri</item>
+        <item>Mukautettu väri</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Valkoinen</item>
+        <item>Dynaaminen (kellon alla olevan alueen mukaan)</item>
+        <item>Albumin väri</item>
+        <item>Mukautettu väri</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Seuraa paneelin tyyliä</item>
+        <item>Läpinäkyvä (ei taustaa)</item>
+        <item>Albumin korostusväri</item>
+        <item>Läpikuultava</item>
+        <item>Valkoinen</item>
+        <item>Huurrettu valkoinen</item>
+        <item>Musta</item>
+        <item>Dynaaminen (albumin sävy)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Seuraavaksi-pillerin tausta</string>
+    <string name="setting_wear_show_up_next_pill">Seuraavaksi-pilleri soittimessa</string>
+    <string name="setting_wear_show_up_next_pill_description">Näytä Seuraavaksi-pilleri toistonäkymän alareunassa. Se käyttää minipainikerivin tilan, joten se näkyy vain, kun kyseinen rivi ei ole näkyvissä.</string>
+    <string name="category_wf_clock">Kello</string>
+    <string name="setting_wear_clock_color">Kellon väri</string>
+    <string name="setting_wear_clock_custom_color">Kellon mukautettu väri</string>
+    <string name="setting_wear_clock_custom_color_description">Napauta ja valitse kellon väri, jota käytetään, kun Kellon väri on asetettu Mukautetuksi väriksi</string>
+    <string name="setting_wear_clock_opacity">Kellon peittävyys</string>
+    <string name="setting_wear_clock_opacity_description">Määrittää aina näkyvän kellon peittävyyden (10–100%%). Nyt <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Aina päällä -näytön mukautettu väri</string>
+    <string name="setting_wear_aod_custom_color_description">Napauta ja valitse aina päällä -tekstin, ohjainten ja kellon väri, kun \"Aina päällä -näytön väri\" on asetettu Mukautetuksi väriksi</string>
+    <string name="setting_wear_aod_intensity">Aina päällä -näytön kirkkaus</string>
+    <string name="setting_wear_aod_intensity_description">Määrittää aina päällä -näytön kirkkauden (20–100%%). Pienempi arvo on himmeämpi ja kuluttaa vähemmän akkua. Nyt <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Toistopainikkeet aina päällä -näytössä</string>
+    <string name="setting_wear_aod_show_transport_description">Näytä ääriviivalliset edellinen/toista/seuraava-painikkeet tuetuissa visuaalisissa aina päällä -tyyleissä. Niitä ei voi napauttaa näytön ollessa himmennetty, mutta napautus herättää kellon siten, että painike on jo sormen alla.</string>
+    <string name="setting_wear_aod_show_progress">Edistymisrengas aina päällä -näytössä</string>
+    <string name="setting_wear_aod_show_progress_description">Näytä edistymisrengas toistopainikkeen ympärillä ympäristötilassa — sijainti päivittyy siellä vain noin kerran minuutissa</string>
+    <string name="setting_wear_aod_show_pills">Seuraavaksi aina päällä -näytössä</string>
+    <string name="setting_wear_aod_show_pills_description">Näytä staattinen ääriviivallinen Seuraavaksi-pilleri visuaalisten aina päällä -tyylien alareunassa</string>
+    <string name="category_wf_gestures">Näyttöeleet</string>
+    <string name="setting_wear_mini_buttons_mode">Näytä minipainikkeet</string>
+    <string name="setting_wear_gestures_mode">Näyttöeleet</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Aina</item>
+        <item>Vain toiston aikana</item>
+        <item>Vain tauolla</item>
+        <item>Ei koskaan</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Albumikuva aina päällä -näytössä</string>
+    <string name="setting_wear_aod_show_art_description">Pidä himmennetty albumikuva näkyvissä ympäristötilassa. Kun asetus poistetaan käytöstä, tausta on täysin musta, mikä säästää AMOLED-näytöillä selvästi enemmän akkua.</string>
+    <string name="setting_wear_aod_art_treatment">Aina päällä -albumikuvan tyyli</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Pehmeä sumennus</item>
+        <item>Selkeä kansi</item>
+        <item>Yksivärinen sumennus</item>
+        <item>Seuraa soittimen kansikuvakäsittelyä</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Kello aina päällä -näytössä</string>
+    <string name="setting_wear_aod_show_clock_description">Näytä kello, kun älykello on ympäristötilassa</string>
+    <string name="setting_wear_aod_show_track_info">Kappaletiedot aina päällä -näytössä</string>
+    <string name="setting_wear_aod_show_track_info_description">Näytä kappaleen nimi ja esittäjä ympäristötilassa</string>
+
+    <string name="category_overlays_queue">Peittokuvat ja jono</string>
+    <string name="category_wf_panel_shared">Jaettujen paneelien ulkoasu</string>
+    <string name="category_wf_panel_volume">Äänenvoimakkuuspaneeli</string>
+    <string name="category_wf_panel_seek">Edistymis- ja hakupaneeli</string>
+    <string name="category_wf_panel_quick">Pikatoimintopaneeli</string>
+    <string name="category_wf_panel_queue">Jono ja luettelot</string>
+    <string name="category_wf_panel_effects">Paneelitehosteet</string>
+    <string name="setting_wear_overlay_backdrop_style">Paneelin tausta</string>
+    <string name="setting_wear_volume_style">Äänenvoimakkuustyyli</string>
+    <string name="setting_wear_volume_layout">Äänenvoimakkuusasettelu</string>
+    <string name="setting_wear_quick_panel_style">Pikapaneelin tyyli</string>
+    <string name="setting_wear_quick_panel_layout">Pikapaneelin asettelu</string>
+    <string name="setting_wear_quick_panel_source">Pikatoiminnot</string>
+    <string name="setting_wear_quick_panel_source_description">Valitse määrittämäsi painikkeet tai parhaillaan toistavan sovelluksen tarjoamat toiminnot.</string>
+    <string name="quick_panel_open_note_title">Paneelin avaaminen</string>
+    <string name="quick_panel_open_note_description">Kaksoisnapauta toistonäkymän keskiosaa avataksesi kellon pikatoimintopaneelin.</string>
+    <string name="preview_current_app_action">Nykyisen sovelluksen toiminto</string>
+    <string name="preview_notification_controls">Kuvake mediailmoituksesta</string>
+    <string name="setting_wear_queue_style">Jonon tyyli</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Käytä pikavalintojen kansia taustana</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Kun Jonon tyyli on kansiversio, pikapaneelin toimintorivi, jolla on haettu pikavalinnan kansi (kappale, soittolista, esittäjä…), täyttää myös pillerinsä kyseisellä kuvalla Seuraavaksi-toiminnon tavoin. Pikavalintoihin ilman haettua kantta (tavallinen sovelluskuvake) tämä ei vaikuta.</string>
+    <string name="setting_wear_list_row_size">Luettelopillerin koko</string>
+    <string name="setting_wear_list_row_size_description">Jonon, valikoiden ja pikapaneelin täysleveiden rivien korkeus.</string>
+    <string name="setting_wear_progress_gradient">Sekoita paletti renkaaseen</string>
+    <string name="setting_wear_progress_gradient_description">Monisävyisessä värikäsittelyssä (Täydentävä, Triadinen, Analoginen, Duotone) yhtenäinen rengas liukuu kaikkien kolmen värin läpi. Poista käytöstä, jos haluat yksivärisen renkaan mutta säilyttää albumipaletin muualla.</string>
+    <string name="setting_wear_progress_style">Edistymisrenkaan tyyli</string>
+    <string name="setting_wear_seek_style">Haun ja äänenvoimakkuuden lukematyyli</string>
+    <string name="setting_wear_seek_layout">Hakupaneelin asettelu</string>
+    <string name="setting_wear_color_treatment">Kellon värikäsittely</string>
+    <string name="setting_wear_normal_color">Normaali väri</string>
+    <string name="setting_wear_normal_color_description">Valitse yksi väri, jota käytetään Normaali-tilassa otsikon korostuksiin, edistymiseen, äänenvoimakkuuteen, paneeleihin ja minipainikkeiden kehyksiin</string>
+    <string name="setting_wear_normal_color_multi">Käytä väripalettia</string>
+    <string name="setting_wear_normal_color_multi_description">Kun käytössä, näyttö käyttää pääväriä ja kahta tukisävyä. Pois käytöstä kaikkialla käytetään yhtä väriä — albumin omaa väriä tai valitsemaasi.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Normaali (valittu väri)</item>
+        <item>Desaturoitu (pehmeä albumiväri)</item>
+        <item>Ilmeikäs (koko albumipaletti)</item>
+        <item>Vastaväri (albumi + vastaväri)</item>
+        <item>Triadinen (kolme albumisävyä)</item>
+        <item>Analoginen (vierekkäiset sävyt)</item>
+        <item>Yksivärinen (yksi sävy, kolme astetta)</item>
+        <item>Duotone (kaksi albumiväriä)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Seuraa kellon käsittelyä</item>
+        <item>Normaali (valittu väri)</item>
+        <item>Desaturoitu (pehmeä albumiväri)</item>
+        <item>Ilmeikäs (koko albumipaletti)</item>
+        <item>Vastaväri (albumi + vastaväri)</item>
+        <item>Triadinen (kolme albumisävyä)</item>
+        <item>Analoginen (vierekkäiset sävyt)</item>
+        <item>Yksivärinen (yksi sävy, kolme astetta)</item>
+        <item>Duotone (kaksi albumiväriä)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Otsikon vahvuus</string>
+    <string name="setting_wear_title_font_italic">Kursivoitu otsikko</string>
+    <string name="setting_wear_title_font_scale">Otsikon koko</string>
+    <string name="setting_wear_title_font_opacity">Otsikon peittävyys</string>
+    <string name="setting_wear_title_font_tracking">Otsikon kirjainväli</string>
+    <string name="setting_wear_title_color">Otsikkotekstin väri</string>
+    <string name="setting_wear_title_custom_color">Otsikon mukautettu väri</string>
+    <string name="wear_title_color_face_default">Näkymän oletus (suunnitellusti)</string>
+    <string name="setting_wear_title_adaptive_contrast">Sovita otsikon väri kontrastiin</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Kirkastaa tai tummentaa otsikkoa, jos sen väri on liian lähellä taustalla olevaa kuvaa, sävy säilyttäen. Ei vaikuta, kun otsikko käyttää näkymän oletusta.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Sovita esittäjän väri kontrastiin</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Kirkastaa tai tummentaa esittäjäriviä, jos albumin väri on liian lähellä taustalla olevaa kuvaa, sävy säilyttäen. Mittaa vain rivin alla olevan kaistan, ei koko kantta.</string>
+    <string name="setting_wear_artist_font_weight">Esittäjän vahvuus</string>
+    <string name="setting_wear_artist_font_italic">Kursivoitu esittäjä</string>
+    <string name="setting_wear_artist_font_scale">Esittäjän koko</string>
+    <string name="setting_wear_artist_font_opacity">Esittäjän peittävyys</string>
+    <string name="setting_wear_artist_font_tracking">Esittäjän kirjainväli</string>
+    <string name="setting_wear_source_icon_scale">Sovelluskuvakkeen koko</string>
+    <string name="setting_wear_source_icon_opacity">Sovelluskuvakkeen peittävyys</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 on näkymän normaali vahvuus; suurempi arvo on lihavampi. Google Sans Flexissä tämä on fontin oma painoakseli</string>
+    <string name="setting_wear_typography_scale_description">Prosenttiosuus näkymän omasta koosta (70–140). 100 säilyttää jokaisen asettelun suunnitellun koon</string>
+    <string name="setting_wear_typography_opacity_description">Prosentti (20–100). 100 säilyttää näkymän oman peittävyyden</string>
+    <string name="setting_wear_typography_tracking_description">Lisäväli kirjainten välissä em-yksikön sadasosina (−5–20). 0 säilyttää fontin oman välistyksen</string>
+    <string name="setting_wear_color_modifier">Sävy</string>
+    <string name="setting_wear_color_modifier_description">Säädä koko palettia muuttamatta sen muodostamistapaa — toimii kaikilla värikäsittelyillä</string>
+    <string name="setting_wear_color_hue_shift">Värisiirto</string>
+    <string name="setting_wear_color_hue_shift_description">Kiertää albumipalettia väripyörällä asteina (0–359). Jokainen käsittely pitää päävärin albumin omassa sävyssä, joten tämä asetus muuttaa sitä. 0 käyttää albumiväriä sellaisenaan; kiinteää Normaali-väriä ei koskaan siirretä.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Ei mitään</item>
+        <item>Elävä</item>
+        <item>Pastelli</item>
+        <item>Lämmin</item>
+        <item>Viileä</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Reunakaari (vasen)</item>
+        <item>Reunakaari (korkea)</item>
+        <item>Reunakaari (oikea)</item>
+        <item>Reunakaari (ylä)</item>
+        <item>Reunakaari (ala)</item>
+        <item>Täysi rengas</item>
+        <item>Keskihalo</item>
+        <item>Vaakamittari</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Reunarengas</item>
+        <item>Reunarengas (ohut)</item>
+        <item>Reunarengas (paksu)</item>
+        <item>Aikajana</item>
+        <item>Segmentoitu aikajana</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metatiedot ensin</item>
+        <item>Kaari</item>
+        <item>Hero</item>
+        <item>Ruudukko</item>
+        <item>Nimetyt rivit</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Yhtenäinen</item>
+        <item>Katkoviiva</item>
+        <item>Pisteet</item>
+        <item>Hiuksenohut</item>
+        <item>Komeetta</item>
+        <item>60 kellopistettä</item>
+        <item>60 kellomerkkiä</item>
+        <item>12 tunnin segmentit</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Pelkkä</item>
+        <item>Lasipilleri</item>
+        <item>Ilmeikäs pilleri</item>
+        <item>Material-pilleri</item>
+        <item>Valkoinen pilleri</item>
+        <item>Jättimäinen</item>
+        <item>Sijainti / yhteensä</item>
+        <item>Valkoinen lasi</item>
+        <item>Läpikuultava albumi</item>
+        <item>Albumin hehku</item>
+        <item>Ääriviiva</item>
+        <item>Yhtenäinen teema</item>
+        <item>Yhtenäinen albumi</item>
+        <item>Mikro</item>
+        <item>Varjo (ei kehystä)</item>
+        <item>Alleviivaus</item>
+        <item>Hiuksenohut ääriviiva</item>
+        <item>Jättimäinen albumiväri</item>
+        <item>Mono</item>
+        <item>Tumma tonaalinen</item>
+        <item>Pääte</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Määritetyt painikkeet</item>
+        <item>Nykyisestä mediasovelluksesta</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Seuraa paneelin tyyliä</item>
+        <item>Albumin sumennus (akryyli)</item>
+        <item>Tasainen musta</item>
+        <item>Tasainen albumiväri</item>
+        <item>Lasi</item>
+        <item>Albumin liukuväri</item>
+        <item>Albumin duotone</item>
+        <item>Prisma</item>
+        <item>Nestemäinen lasi</item>
+        <item>Ilmeikäs sumennus</item>
+        <item>Ilmeikäs</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Lasi</item>
+        <item>Minimaalinen (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonaalinen</item>
+        <item>Neon</item>
+        <item>Vaalea</item>
+        <item>Liukuväri</item>
+        <item>Mono</item>
+        <item>Ääriviiva</item>
+        <item>Duotone</item>
+        <item>Prisma</item>
+        <item>Suuri kontrasti</item>
+        <item>Pääte</item>
+        <item>Huuru</item>
+        <item>Segmentit</item>
+        <item>Revontulet</item>
+        <item>Muste</item>
+        <item>Ura</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Kompakti</item>
+        <item>Normaali</item>
+        <item>Korkea</item>
+        <item>Erittäin korkea</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Lasi</item>
+        <item>Minimaalinen (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonaalinen</item>
+        <item>Neon</item>
+        <item>Vaalea</item>
+        <item>Liukuväri</item>
+        <item>Mono</item>
+        <item>Ääriviiva</item>
+        <item>Duotone</item>
+        <item>Prisma</item>
+        <item>Suuri kontrasti</item>
+        <item>Pääte</item>
+        <item>Huuru</item>
+        <item>Kansi</item>
+            <item>Kannen sumennus</item>
+        <item>Tonaalinen kansi</item>
+        <item>Neliökansi</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Lasi</item>
+        <item>Valkoinen lasi</item>
+        <item>Tonaalinen lasi</item>
+        <item>Minimaalinen (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonaalinen</item>
+        <item>Neon</item>
+        <item>Vaalea</item>
+        <item>Liukuväri</item>
+        <item>Mono</item>
+        <item>Ääriviiva</item>
+        <item>Ääriviiva, valkoinen lasi</item>
+        <item>Duotone</item>
+        <item>Prisma</item>
+        <item>Suuri kontrasti</item>
+        <item>Pääte</item>
+        <item>Huuru</item>
+        <item>Haamu (ei kehystä)</item>
+        <item>Usva</item>
+        <item>Muste</item>
+        <item>Piste</item>
+        <item>Laatta</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Pidä sovellus aktiivisena tauon jälkeen</string>
+    <string name="setting_wear_paused_hold_description">Määrittää, kuinka kauan tauon jälkeen kellosovellus on saavutettavissa kellotaulusta, jotta voit jatkaa nostamalla rannetta sen sijaan, että avaat sovelluksen uudelleen. Pidemmät asetukset pitävät taustapalvelua käynnissä.</string>
+    <string name="wear_paused_hold_off">Älä pidä aktiivisena</string>
+    <string name="wear_paused_hold_5">5 minuuttia</string>
+    <string name="wear_paused_hold_15">15 minuuttia</string>
+    <string name="wear_paused_hold_30">30 minuuttia</string>
+    <string name="wear_paused_hold_60">1 tunti</string>
+    <string name="wear_paused_hold_always">Kunnes toisto päättyy</string>
+
+    <string name="setting_wear_idle_button_action">Painike, kun mitään ei toisteta</string>
+    <string name="setting_wear_idle_auto_open">Avaa, kun mitään ei toisteta</string>
+    <string name="setting_wear_idle_auto_open_description">Siirtyy suoraan tähän näkymään, kun avaat kellosovelluksen eikä musiikkia toisteta.</string>
+    <string name="wear_idle_action_resume">Jatka viimeistä sovellusta</string>
+    <string name="wear_idle_action_shortcuts">Soittolistojen pikavalinnat</string>
+    <string name="wear_idle_action_menu">Toimintovalikko</string>
+    <string name="wear_idle_action_search">Haku</string>
+    <string name="wear_idle_action_queue">Viimeksi toistetut</string>
+    <string name="wear_idle_action_none">Ei painiketta</string>
+    <string name="wear_idle_auto_open_none">Pysy soittimessa</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Selaa kirjastoa</string>
+    <string name="library_up">Takaisin</string>
+    <string name="error_library_unavailable">Tällä sovelluksella ei ole selattavaa kirjastoa</string>
+    <string name="error_library_empty">Täällä ei ole mitään</string>
+    <string name="error_library_no_player">Aloita ensin jonkin toisto</string>
+
+    <string name="setting_wear_carousel_card_shape">Karusellikortin muoto</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Pyöristetty</item>
+        <item>Neliö</item>
+        <item>Pyöristetty neliö</item>
+        <item>Ympyrä</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Käytä fonttia kaikkialla</string>
+    <string name="setting_wear_font_all_screens_description">Käyttää valittua fonttia soittimen lisäksi valikoissa, jonossa ja pikatoiminnoissa. Näyttö- ja käsinkirjoitusfontteja voi olla vaikeampi lukea luetteloissa.</string>
+
+    <string name="setting_wear_clock_font">Kellon kirjasin</string>
+    <string name="wear_clock_font_follow">Seuraa kappaleen fonttia</string>
+    <string name="setting_wear_lyrics_font">Sanoitusten kirjasin</string>
+    <string name="setting_wear_lyrics_font_description">Laulun sanojen kirjasin sanoitusnäkymässä ja Verse-näkymässä. Seuraa kappaleen kirjasinta, ellet valitse tässä muuta.</string>
+    <string name="wear_lyrics_font_follow">Seuraa kappaleen kirjasinta</string>
+    <string name="setting_wear_clock_font_weight">Kellon vahvuus</string>
+    <string name="setting_wear_clock_font_italic">Kursivoitu kello</string>
+    <string name="setting_wear_clock_font_scale">Kellon koko</string>
+    <string name="setting_wear_clock_font_tracking">Kellon kirjainväli</string>
+    <string name="setting_wear_clock_adaptive_contrast">Sovita kellon väri kontrastiin</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Kirkastaa tai tummentaa kelloa, jos albumin väri on liian lähellä taustalla olevaa kuvaa, sävy säilyttäen. Koskee vain, kun Kellon väri on asetettu Albumin väriksi.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Tiivistetty versaalinäyttöfontti — julistemainen, sopii pitkiin otsikoihin</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Korkean kontrastin toimituksellinen serif — aikakauslehtitunnelma</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Tekninen geometrinen sans-serif omaperäisillä yksityiskohdilla</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Kulmikas scifi-näyttöfontti — rohkea ja futuristinen</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Käsinkirjoitettu kaunokirjoitus — rento ja henkilökohtainen</string>
+    <string name="setting_wear_track_time_mode">Kappaleajan näyttö</string>
+    <string name="setting_wear_track_time_mode_description">Määrittää, milloin kappaleen sijainti (esim. 1:23 / 3:45) näkyy toistonäkymässä.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Aina</item>
+        <item>Vain toiston aikana</item>
+        <item>Vain tauolla</item>
+        <item>Ei koskaan</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Minipainikkeiden kaarevuus</string>
+    <string name="setting_screen_buttons_curve_description">Valitse minipainikkeiden kaarevuustyyli: tasainen, kaari, pehmeä, kaareva.</string>
+    <string name="setting_screen_buttons_shape">Minipainikkeiden muoto</string>
+    <string name="setting_screen_buttons_shape_description">Valitse minipainikkeiden muoto ja asettelumuoto.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pilleri (oletus)</item>
+        <item>Ympyrä</item>
+        <item>Neliö</item>
+        <item>Pyöristetty neliö (pehmeä)</item>
+        <item>Pyöristetty neliö (keskitaso)</item>
+        <item>Pyöristetty neliö</item>
+        <item>Lehti</item>
+        <item>Pisara</item>
+        <item>Pilleri (leveä pieni)</item>
+        <item>Pilleri (leveä keskikokoinen)</item>
+        <item>Pilleri (leveä suuri)</item>
+        <item>Pilleri (leveä erittäin suuri)</item>
+        <item>Pyöristetty suorakulmio (pieni)</item>
+        <item>Pyöristetty suorakulmio (keskikokoinen)</item>
+        <item>Pyöristetty suorakulmio (suuri)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Tasainen</item>
+        <item>Kaari</item>
+        <item>Loiva kaari</item>
+        <item>Pehmeä kaari</item>
+        <item>Keskivahva kaari</item>
+        <item>Kaareva</item>
+        <item>Erittäin voimakas kaari</item>
+        <item>Levitä reunoille</item>
+        <item>Vasen reuna</item>
+        <item>Oikea reuna</item>
+        <item>Molemmat reunat</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Taustan oletus</item>
+        <item>Lasi (tasainen)</item>
+        <item>Lasi (vaalea)</item>
+        <item>Läpikuultava albumi</item>
+        <item>Läpikuultava albumi Exp</item>
+        <item>Albumin hehku</item>
+        <item>Hehku Exp</item>
+        <item>Yhtenäinen teema</item>
+        <item>Yhtenäinen albumi</item>
+        <item>Yhtenäinen Exp-albumi</item>
+        <item>Ääriviiva</item>
+        <item>Ääriviiva Exp-albumi</item>
+        <item>Vain kuvake (läpinäkyvä)</item>
+        <item>Kuvake Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Neutraali</item>
+        <item>Albumin väri</item>
+        <item>Mukautettu väri</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Täysi kansi</item>
+        <item>Sumennettu tausta</item>
+        <item>Huurteiset reunat</item>
+        <item>Neliö (terävät kulmat)</item>
+        <item>Neliö (pehmeät kulmat)</item>
+        <item>Neliö (pyöristetyt kulmat)</item>
+        <item>Musta &amp; valkoinen</item>
+        <item>Sumennettu mustavalkoinen</item>
+        <item>Ilmeikäs sumennus</item>
+        <item>Ilmeikäs</item>
+        <item>Material-tonaalinen liukuväri</item>
+        <item>Julistekansi</item>
+        <item>Studioliukuväri</item>
+        <item>Vinyylin säteittäinen hehku</item>
+        <item>Halosäde</item>
+        <item>Revontulinauhat</item>
+        <item>Spektriliukuväri</item>
+        <item>Koronapyyhkäisy</item>
+        <item>Hämärähäivytys</item>
+        <item>Kukinta</item>
+        <item>Horisonttihäivytys</item>
+        <item>Hiilloksen hehku</item>
+        <item>Eclipse AMOLED -musta</item>
+        <item>Piilotettu (tasainen musta)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Poistettu käytöstä</item>
+        <item>Näytä musiikkikellotaulun kuvake (vain Wear 3.0)</item>
+        <item>Avaa Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Sulkemisen aikakatkaisu</string>
+    <string name="setting_close_timeout_description">Svartifoss sulkeutuu automaattisesti, kun musiikkia ei ole toistettu <![CDATA[<b>%1$s sekuntiin</b>]]>. Toiminto poistuu käytöstä, kun aikakatkaisuksi asetetaan 0 sekuntia. Akun säästämiseksi asetus ei aina ole täysin tarkka, ja sulkeminen voi viivästyä jopa noin minuutin.</string>
+    <string name="setting_wear_close_on_idle">Sulje \"Mitään ei toisteta\" -tilassa</string>
+    <string name="setting_wear_close_on_idle_description">Sulkee kellosovelluksen automaattisesti noin minuutin kuluttua siitä, kun se siirtyy \"Mitään ei toisteta\" -lepotilaan, jotta sovellus ei jää siihen. Tämä on riippumaton yllä olevasta sulkemisen aikakatkaisusta, joka koskee tauotettua kappaletta.</string>
+    <string name="category_notifications">Ilmoitusponnahdus</string>
+    <string name="setting_enable_notifications">Näytä ilmoitusponnahdus</string>
+    <string name="setting_enable_notifications_description">Tämä toiminto vaatii toisen sovelluksen ilmoitusten hallintaan (Vibration Center for Wear).\n\nAina kun Vibration Center värisyttää kelloa, Svartifoss näyttää ilmoitustekstin ponnahdusikkunassa, joten voit vilkaista ilmoitusta nopeasti poistumatta Svartifossista.</string>
+    <string name="setting_notification_timeout">Ilmoitusponnahduksen aikakatkaisu</string>
+    <string name="setting_notification_timeout_description">Ilmoitusponnahdus sulkeutuu automaattisesti <![CDATA[<b>%1$s sekunnin</b>]]> kuluttua. Syötä 0 poistaaksesi automaattisen sulkemisen käytöstä.</string>
+    <string name="app_required">Sovellus vaaditaan</string>
+    <string name="vibration_center_required_description">Tämän toiminnon käyttöön tarvitaan toinen (ilmainen) sovellus: Vibration Center for Wear.</string>
+    <string name="open_play_store">Avaa Play Kauppa</string>
+    <string name="error_no_notification_service_support">Valitettavasti laitteesi ei näytä tukevan ilmoituspalveluja</string>
+    <string name="setting_always_select_center_action">Valitse aina keskimmäinen toiminto</string>
+    <string name="setting_always_select_center_action_description">Kun käytössä, toimintoluettelon napautus valitsee aina keskimmäisen (korostetun) vaihtoehdon riippumatta siitä, mitä vaihtoehtoa napautit.</string>
+    <string name="change_icon">Vaihda kuvake</string>
+    <string name="please_wait">Odota hetki</string>
+
+    <string name="error_playlist_not_supported">Tämä mediasovellus ei tue toimintoa</string>
+    <string name="error_search_no_results">Tuloksia ei löytynyt</string>
+    <string name="seconds_to_skip">Ohitettavat sekunnit:</string>
+    <string name="seconds_to_reverse">Taaksepäin siirrettävät sekunnit:</string>
+
+    <string name="setting_dynamic_accent_color">Dynaaminen korostusväri</string>
+    <string name="setting_dynamic_accent_color_description">Kun käytössä, korostusväri (hakupalkki, aktiivinen jonokohde) mukautuu automaattisesti nykyisen albumikuvan hallitsevaan väriin.</string>
+    <string name="setting_desaturated_color">Vähäkylläinen väri</string>
+    <string name="setting_desaturated_color_description">Säätää poimitun värin kylläisyyttä ja kirkkautta varmistaakseen hyvän luettavuuden ja kontrastin käytössä olevan teeman mukaan.</string>
+
+    <string name="queue_header">Toistojono</string>
+    <string name="queue_unavailable">Jono ei ole käytettävissä</string>
+
+    <string name="setting_custom_accent_color">Korostusväri</string>
+    <string name="setting_custom_accent_color_description">Valitse sovelluksen käyttöliittymän mukautettu korostusväri</string>
+    <string name="setting_mini_player">Minisoitin</string>
+    <string name="setting_mini_player_description">Näyttää pysyvän toistopalkin alanavigoinnin yläpuolella aina, kun media on aktiivinen. Oletuksena käytössä; poista käytöstä saadaksesi tilan takaisin.</string>
+    <string name="color_picker_title">Valitse korostusväri</string>
+    <string name="color_picker_reset">Palauta</string>
+    <string name="color_picker_apply">Käytä</string>
+    <string name="color_picker_default">Oletus</string>
+    <string name="color_picker_invalid">Virheellinen värikoodi</string>
+    <string name="color_picker_current">Nykyinen: %s</string>
+
+    <string name="drawer_version_format">Versio %1$s</string>
+    <string name="drawer_tagline">Kumppanisovellus Wear OS:lle</string>
+    <string name="drawer_about_heading">Tietoja</string>
+    <string name="drawer_about_summary">Svartifossilla voit hallita puhelimen musiikkia Wear OS -kellosta täysin muokattavalla, laitteellesi sovitetulla kauko-ohjaimella.</string>
+    <string name="drawer_name_heading">Nimi</string>
+    <string name="drawer_name_meaning">Svartifoss tarkoittaa islanniksi \"mustaa putousta\" — nimi tulee Vatnajökullin kansallispuiston vesiputouksesta, jossa tummat basalttipylväät kehystävät kapeaa putousta. Kuten vesi virtaa kiven yli, musiikki virtaa sovelluksen läpi.</string>
+    <string name="drawer_sync_heading">Synkronointi</string>
+    <string name="drawer_sync_summary">Kellon asetukset määritetään täällä puhelimessa ja synkronoidaan automaattisesti paritettuun kelloon.</string>
+    <string name="drawer_support_heading">Tuki</string>
+    <string name="drawer_support_summary">Svartifoss on ilmainen ja avoimen lähdekoodin sovellus — tarjoa minulle kahvi, jos siitä on sinulle hyötyä :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Lataa kansikuva</string>
+    <string name="album_art_saved">Kansikuva tallennettu galleriaan</string>
+    <string name="album_art_save_error">Kansikuvan tallennus epäonnistui</string>
+
+    <string name="action_play_liked_songs">Toista tykätyt kappaleet (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Toista tykätyt kappaleet (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Toista tykätyt kappaleet (SoundCloud)</string>
+    <string name="action_my_playlists">Suoratoiston pikavalinnat</string>
+    <string name="action_play_specific_playlist">Avaa suoratoiston pikavalinta</string>
+    <string name="action_choose_or_add_streaming_shortcut">Valitse tai lisää suoratoiston pikavalinta</string>
+    <string name="action_show_streaming_library">Näytä kaikki tallennetut pikavalinnat</string>
+    <string name="playlist_shortcut_pick_title">Valitse pikavalinta</string>
+    <string name="playlist_shortcut_pick_empty">Suoratoiston pikavalintoja ei ole vielä tallennettu — lisää yksi alle ja valitse se napauttamalla</string>
+    <string name="playlist_shortcuts_empty">Suoratoiston pikavalintoja ei vielä ole — lisää ne puhelinsovelluksen asetuksissa</string>
+    <string name="setting_playlist_shortcuts">Suoratoiston pikavalinnat</string>
+    <string name="setting_playlist_shortcuts_description">Avaa kellon jakolinkit YouTube Musicissa, Spotifyssa ja muissa suoratoistosovelluksissa</string>
+    <string name="setting_shortcut_artwork">Hae pikavalintojen kuvat verkosta</string>
+    <string name="setting_shortcut_artwork_description">Lataa palvelusta pikkukuvan jokaiselle tallennetulle pikavalinnalle ja näyttää sen puhelimen luettelossa, kellon valikossa ja määritetyissä painikkeissa. Kukin pikkukuva haetaan vain kerran; vain julkinen jakolinkki lähetetään. Oletuksena pois käytöstä.</string>
+    <string name="setting_queue_local_artwork">Jonon kannet kirjastosta</string>
+    <string name="setting_queue_local_artwork_description">Paikalliset musiikkisoittimet julkaisevat jonon kannet kirjastoviitteinä. Myönnä mediakäyttöoikeus, jotta ne voidaan näyttää kellon jonossa. Internet-yhteyttä ei käytetä.</string>
+    <string name="setting_queue_local_artwork_granted">Mediakäyttö sallittu — paikallisen jonon kannet näytetään</string>
+    <string name="setting_queue_local_artwork_denied">Mediakäyttö evätty. Ota se käyttöön Android-asetuksissa näyttääksesi paikallisen jonon kannet.</string>
+    <string name="setting_queue_remote_artwork">Hae jonon kannet verkosta</string>
+    <string name="setting_queue_remote_artwork_short_description">Suoratoistosovellukset (YouTube Music -asiakkaat, Echo Music…) julkaisevat jonon kannet linkkeinä kuvien sijaan, joten tämä asetus lataa ja välimuistittaa ne. Poista käytöstä pitääksesi jonon täysin offline-tilassa — tällöin näillä riveillä ei näy kantta lainkaan.</string>
+    <string name="setting_queue_remote_artwork_description">Suoratoistosoittimet julkaisevat jonon kannet linkkeinä kuvien sijaan. Kukin kansi ladataan kerran ja välimuistitetaan tälle puhelimelle kellon jonossa näyttämistä varten. Vain soittimen jo julkaisema kansi-URL pyydetään — ei tiliä eikä henkilötietoja. Oletuksena käytössä; poista käytöstä pitääksesi jonon täysin offline-tilassa.</string>
+    <string name="watch_streaming_shortcuts_empty">Lisää kappaleita, albumeita tai soittolistoja pikatoimintoihin ja kellon valikkoon</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d tallennettu pikakuvake · Käytettävissä pikatoiminnoissa ja kellovalikossa</item>
+        <item quantity="other">%1$d tallennettua pikakuvaketta · Käytettävissä pikatoiminnoissa ja kellovalikossa</item>
+    </plurals>
+    <string name="category_music_apps">Musiikkisovellukset ja -palvelut</string>
+    <string name="category_apps_content">Sanoitukset ja metatiedot</string>
+    <string name="category_streaming_services">Suoratoiston pikavalinnat</string>
+    <string name="category_queue_artwork">Jonon kuvitus</string>
+    <string name="category_system_access">Android-käyttöoikeudet ja ilmoitukset</string>
+    <string name="setting_apps_integrations">Tuetut musiikkipalvelut</string>
+    <string name="setting_apps_integrations_description">Linkit toimivat YouTube Musicissa, Spotifyssa, Deezerissä, TIDALissa, Apple Musicissa, Amazon Musicissa ja SoundCloudissa. Tilin käyttöoikeutta ei tarvita.</string>
+    <string name="setting_apps_integrations_none">Tuettua sovellusta ei havaittu. Pikavalinnat voidaan silti avata selaimessa tai toisessa yhteensopivassa sovelluksessa.</string>
+    <string name="setting_apps_integrations_installed">Havaittu %1$d / %2$d: %3$s</string>
+    <string name="setting_streaming_open_mode">Avaa suoratoistolinkit sovelluksella</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Tunnistettu suoratoistosovellus</item>
+        <item>Androidin oletus</item>
+        <item>Kysy joka kerta</item>
+    </string-array>
+    <string name="setting_persistent_notification">Hallitse \"Svartifoss aktiivinen\" -ilmoitusta</string>
+    <string name="setting_persistent_notification_description">Avaa tämän ilmoituksen Android-asetukset — voit mykistää sen, piilottaa lukitusnäytöltä tai säätää muuten. Sitä ei voi poistaa kokonaan käytöstä: Android vaatii jatkuvan ilmoituksen, kun kellon kanssa viestivä taustapalvelu on käynnissä.</string>
+    <string name="setting_notification_access">Mediailmoitusten käyttöoikeus</string>
+    <string name="setting_notification_access_enabled">Sallittu · Napauta tarkistaaksesi Android-asetukset</string>
+    <string name="setting_notification_access_disabled">Ei sallittu · Tarvitaan ilmoitusten mediatoimintoihin ja automaattisiin käynnistyssuodattimiin</string>
+    <string name="setting_notification_access_unavailable">Ilmoitusten käyttöoikeusasetukset eivät ole käytettävissä tällä laitteella</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d tallennettu pikakuvake · Hallitse tai tuo linkkejä napauttamalla</item>
+        <item quantity="other">%1$d tallennettua pikakuvaketta · Hallitse tai tuo linkkejä napauttamalla</item>
+    </plurals>
+    <string name="category_privacy">Tietosuoja</string>
+    <string name="setting_privacy_policy">Tietosuojakäytäntö</string>
+    <string name="setting_privacy_policy_description">Katso, mitä tietoja Svartifoss käyttää ja mitkä verkkopalvelut ovat valinnaisia.</string>
+    <string name="setting_crash_reporting">Lähetä kaatumisraportit</string>
+    <string name="setting_crash_reporting_description">Lähetä Firebase Crashlytics -diagnostiikkaa vikojen korjaamisen tueksi. Oletuksena käytössä; voit poistaa käytöstä milloin tahansa.</string>
+    <string name="setting_announcements">Tiedoteilmoitukset</string>
+    <string name="setting_announcements_description">Satunnaisia ilmoituksia kehittäjältä — uusia julkaisuja ja tärkeitä tiedotteita. Lähetetään Firebase Cloud Messagingin kautta; tiliä tai käyttäjäluetteloa ei ole. Oletuksena käytössä; voit poistaa käytöstä milloin tahansa.</string>
+    <string name="announcement_notification_channel">Tiedotteet</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Jaa soittolista, albumi tai kappale suoraan Svartifossille, liitä kopioitu linkki tai lisää se käsin. Kello vain pyytää puhelinta avaamaan linkin; palveluun kirjautumista ei tarvita.</string>
+    <string name="back">Takaisin</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">Musiikkisi yhden napautuksen päässä</string>
+    <string name="playlist_shortcuts_yours">Pikavalintasi</string>
+    <string name="playlist_shortcuts_empty_hint">Lisää jaettu kappale-, albumi- tai soittolistalinkki, jotta se on käytettävissä kellossa.</string>
+    <string name="playlist_shortcuts_add">Lisää pikavalinta</string>
+    <string name="playlist_shortcuts_paste">Liitä linkki</string>
+    <string name="playlist_shortcuts_reload_covers">Lataa kannet uudelleen</string>
+    <string name="playlist_shortcuts_reloading_covers">Ladataan kansia uudelleen…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Kannet ladattu uudelleen</string>
+    <string name="playlist_shortcuts_edit">Muokkaa pikavalintaa</string>
+    <string name="playlist_shortcut_save">Tallenna pikavalinta</string>
+    <string name="playlist_shortcut_editor_hint">Liitä yksi linkki. Svartifoss tunnistaa sovelluksen ja sisältötyypin automaattisesti.</string>
+    <string name="playlist_shortcut_detection_waiting">Odotetaan suoratoistolinkkiä</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer ja muut ovat tuettuja.</string>
+    <string name="playlist_shortcut_detected_format">Tunnistettu: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Nimi</string>
+    <string name="playlist_shortcut_link_hint">Jakolinkki tai sovelluksen URI</string>
+    <string name="playlist_shortcut_shuffle">Toista satunnaisesti (vain YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Linkki</string>
+    <string name="playlist_type_track">Kappale</string>
+    <string name="playlist_type_playlist">Soittolista</string>
+    <string name="playlist_type_album">Albumi</string>
+    <string name="playlist_type_artist">Esittäjä</string>
+    <string name="playlist_type_show">Ohjelma</string>
+    <string name="playlist_type_episode">Jakso</string>
+    <string name="playlist_type_mix">Miksaus</string>
+    <string name="playlist_badge_shuffle">Sekoita</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Suoratoiston pikavalintoja ei ole vielä lisätty</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">Tallennettu: %1$d</item>
+        <item quantity="other">Tallennettu: %1$d</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Järjestettävät suoratoiston pikavalinnat. Kosketa pitkään ja vedä, käytä saavutettavuustoimintoja Siirrä ylös tai Siirrä alas tai paina näppäimistöllä Ctrl+Ylös/Alas.</string>
+    <string name="playlist_shortcut_more_options">Lisää vaihtoehtoja: %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Muokkaa</string>
+    <string name="playlist_shortcut_menu_open">Avaa nyt</string>
+    <string name="playlist_shortcut_menu_copy">Kopioi linkki</string>
+    <string name="playlist_shortcut_menu_duplicate">Monista</string>
+    <string name="playlist_shortcut_menu_share">Jaa</string>
+    <string name="playlist_shortcut_menu_delete">Poista</string>
+    <string name="playlist_shortcut_open_failed">Mikään sovellus ei voi avata tätä linkkiä</string>
+    <string name="streaming_shortcut_choose_app">Avaa suoratoistolinkki sovelluksella</string>
+    <string name="playlist_shortcut_link_copied">Linkki kopioitu</string>
+    <string name="playlist_shortcut_import_invalid">Jaettu teksti ei sisällä kelvollista suoratoistolinkkiä</string>
+    <string name="playlist_shortcut_clipboard_invalid">Leikepöytä ei sisällä kelvollista suoratoistolinkkiä</string>
+    <string name="playlist_shortcut_name_required">Anna pikavalinnalle nimi</string>
+    <string name="playlist_shortcut_link_invalid">Anna kelvollinen verkkolinkki tai sovelluksen URI</string>
+    <string name="playlist_shortcut_service_invalid">Liitä kelvollinen linkki palvelun tunnistamiseksi</string>
+    <string name="playlist_shortcut_service_generic">Yhteensopiva linkki · Android valitsee sovelluksen</string>
+    <string name="playlist_shortcut_service_installed">%1$s asennettu · Valmis avattavaksi sovelluksessa</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s ei ole asennettu · Selainta tai yhteensopivaa sovellusta voidaan käyttää</string>
+    <string name="playlist_shortcut_copy_name">%1$s-kopio</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s-kopio %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s luotu</string>
+    <string name="playlist_shortcut_share_title">Jaa suoratoiston pikavalinta</string>
+    <string name="playlist_shortcut_share_failed">Tämän pikavalinnan jakamiseen ei ole sovellusta</string>
+    <string name="playlist_shortcut_deleted">%1$s poistettu</string>
+    <string name="playlist_shortcut_undo">Kumoa</string>
+
+    <string name="action_play_liked_songs_shuffled">Toista tykätyt kappaleet satunnaisesti (YT Music)</string>
+    <string name="action_search_history">Hakuhistoria</string>
+    <string name="search_history_empty">Ei vielä viimeaikaisia hakuja</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Päivitykset</string>
+    <string name="setting_update_check">Ilmoita uusista versioista</string>
+    <string name="setting_update_check_description">Tarkistaa GitHubista uudet julkaisut noin kerran päivässä ja näyttää ilmoituksen</string>
+    <string name="setting_update_prereleases">Sisällytä esijulkaisut</string>
+    <string name="setting_update_prereleases_description">Ilmoita myös beetaversioista</string>
+    <string name="setting_update_check_now">Tarkista päivitykset nyt</string>
+    <string name="setting_update_check_now_description">Näyttää uusimman version ja antaa päivittää kellon Bluetoothin kautta</string>
+    <string name="update_screen_title">Päivitykset</string>
+    <string name="update_cover_content_description">Svartifoss, vesiputous jonka mukaan sovellus on nimetty</string>
+    <string name="update_notification_channel">Sovelluspäivitykset</string>
+    <string name="update_available_title">Svartifoss %1$s on saatavilla</string>
+    <string name="update_notification_text">Päivitä napauttamalla</string>
+    <string name="update_available_action">Päivitys saatavilla</string>
+    <string name="update_installed_phone">Puhelin: %1$s</string>
+    <string name="update_installed_versions">Puhelin: %1$s · Kello: %2$s</string>
+    <string name="update_watch_version_unknown">tuntematon</string>
+    <string name="update_checking">Tarkistetaan päivityksiä…</string>
+    <string name="update_check_failed">Päivityksiä ei voitu tarkistaa. Tarkista yhteys ja yritä uudelleen.</string>
+    <string name="update_available_line">Uusi versio: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(esijulkaisu)</string>
+    <string name="update_up_to_date">Käytössäsi on uusin versio (%1$s)</string>
+    <string name="update_no_wear_asset">Tässä julkaisussa ei ole lähetettävää kellon APK:ta.</string>
+    <string name="update_watch_hint">”Päivitä kello” lataa uuden kellosovelluksen ja lähettää sen Bluetoothin kautta — vahvistat asennuksen itse kellossa ilman kaapelia tai Wear Installeria.</string>
+    <string name="update_downloading">Ladataan… %1$d%%</string>
+    <string name="update_connecting_watch">Yhdistetään kelloon…</string>
+    <string name="update_transferring">Lähetetään kelloon… %1$d%%</string>
+    <string name="update_confirm_on_watch">Lähetetty! Kelloon ilmestyi ilmoitus — napauta sitä kellossa asentaaksesi.</string>
+    <string name="update_no_watch">Kelloa ei ole yhdistetty.</string>
+    <string name="update_push_failed">Päivityksen lähettäminen kelloon epäonnistui. Yritä uudelleen.</string>
+    <string name="update_watch_button">Päivitä kello</string>
+    <string name="update_open_release_button">Avaa julkaisusivu</string>
+    <string name="update_watch_behind">Kellossasi on edelleen %1$s — lähetä sille päivitys alta.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Pidä puhelin- ja kellosovellukset synkronoituina</string>
+    <string name="update_state_checking">Tarkistetaan päivityksiä…</string>
+    <string name="update_state_current">Kaikki on ajan tasalla</string>
+    <string name="update_state_current_sub">Käytössä on uusin julkaisu, %1$s</string>
+    <string name="update_state_available">Päivitys saatavilla</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Päivityksiä ei voitu tarkistaa</string>
+    <string name="update_state_failed_sub">Tarkista yhteys ja yritä uudelleen</string>
+    <string name="update_device_phone">Puhelin</string>
+    <string name="update_device_watch">Kello</string>
+    <string name="update_versions_header">Asennettu</string>
+    <string name="update_whats_new">Uutta</string>
+    <string name="update_phone_button">Päivitä puhelin</string>
+    <string name="update_installing">Avataan asennusohjelmaa…</string>
+    <string name="update_install_permission_needed">Salli sovellusten asentaminen Svartifossista ja napauta sitten Päivitä puhelin uudelleen.</string>
+    <string name="update_phone_failed">Puhelinpäivityksen lataaminen epäonnistui. Yritä uudelleen.</string>
+    <string name="update_install_notification_title">Svartifoss-päivitys</string>
+    <string name="update_install_notification_tap">Asenna uusi versio napauttamalla</string>
+    <string name="update_install_notification_failed">Asennus epäonnistui. Salli Svartifossista tehtävät asennukset asetuksissa ja yritä uudelleen.</string>
+    <string name="setting_wear_album_accent_source">Albumin korostusvärin lähde</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Tasapainoinen</item>
+        <item>Värikkäin</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Pois</item>
+        <item>Pehmeä</item>
+        <item>Vakio</item>
+        <item>Lihavoitu</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Korostusvärin alaraja</string>
+    <string name="preview_metadata_album">Albumi</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Kappale</string>
+    <string name="preview_metadata_genre">Tyylilaji</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Vuosi</string>
+    <string name="preview_metadata_format">Muoto</string>
+    <string name="preview_metadata_bitrate">Bittinopeus</string>
+    <string name="preview_metadata_position">Sijainti</string>
+    <string name="preview_metadata_output">Ulostulo</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Albumin tiedot</string>
+    <string name="setting_wear_metadata_core_description">Albumi, albumin esittäjä, sijainti levyllä ja kesto.</string>
+    <string name="setting_wear_metadata_release">Julkaisun tiedot</string>
+    <string name="setting_wear_metadata_release_description">Tyylilaji, vuosi, julkaisupäivä ja levy-yhtiö.</string>
+    <string name="setting_wear_metadata_credits">Tekijätiedot</string>
+    <string name="setting_wear_metadata_credits_description">Säveltäjä, sanoittaja ja tekijä, jos soitin julkaisee ne.</string>
+    <string name="setting_wear_metadata_technical">Tiedoston tiedot</string>
+    <string name="setting_wear_metadata_technical_description">Muoto, bittinopeus, näytteenottotaajuus, kanavat ja koko. Vain paikalliset kappaleet.</string>
+    <string name="setting_split_panel">Jaettu paneeli</string>
+    <string name="setting_split_panel_description">Mikä täyttää Split-kellotaulun alaosan. Sumennettu kansikuva jatkaa samaa kuvaa tekstin takana; yksivärinen muistuttaa ilmoituskorttia.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Sumennettu kuvitus</item>
+        <item>Tasainen väri</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Toiston tiedot</string>
+    <string name="setting_wear_metadata_playback_description">Sijainti millisekunnin tarkkuudella, nopeus, äänilähtö sekä mistä ääntä suoratoistetaan tai toistetaan — mukaan lukien kappaleen osoite. Lohko, jonka suoratoistettu kappale voi täyttää, kun kuvattavaa tiedostoa ei ole.</string>
+    <string name="setting_wear_metadata_identifiers">Tunnisteet</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC- ja luettelotunnisteet. Oletuksena pois käytöstä — hyödyllisiä tarvittaessa, muuten turhaa tietoa.</string>
+    <string name="setting_metadata_lookup">Hae kappaleen tiedot verkosta</string>
+    <string name="setting_metadata_lookup_description">Täydentää tiedot, joita toistosovellus ei julkaissut — ISRC:n, levy-yhtiön, julkaisupäivän — MusicBrainzista, ilmaisesta julkisesta tietokannasta. Oletuksena pois käytöstä. Metadata-kellotaulu toimii ilmankin; tämä lisää vain rivejä. Mitään ei lähetetä, ellet ota tätä käyttöön ja valitse kyseistä kellotaulua, ja silloinkin lähetetään vain kappaleen nimi ja esittäjä.</string>
+</resources>

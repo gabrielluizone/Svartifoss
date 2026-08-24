@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Gérer les thèmes</string>
+    <string name="watch_theme_builtin_subtitle">Thème intégré · Disposition %1$s</string>
+    <string name="watch_theme_custom_subtitle">Thème personnalisé · Disposition %1$s</string>
+    <string name="watch_theme_unknown_name">Thème inconnu</string>
+
+    <string name="watch_themes_title">Thèmes de la montre</string>
+    <string name="watch_theme_active_label">THÈME APPLIQUÉ</string>
+    <string name="watch_theme_active_layout">Disposition : %1$s</string>
+    <string name="watch_theme_preview_description">Aperçu du thème actuellement appliqué à la montre</string>
+    <string name="watch_theme_create">Créer un thème</string>
+    <string name="watch_theme_create_title">Créer un nouveau thème</string>
+    <string name="watch_theme_rename_title">Renommer le thème</string>
+    <string name="watch_theme_name">Nom du thème</string>
+    <string name="watch_theme_base_layout">Disposition de base</string>
+    <string name="watch_theme_default_name">Mon thème %1$s</string>
+    <string name="watch_theme_generic_name">Thème</string>
+    <string name="watch_theme_copy_name">Copie de %1$s</string>
+    <string name="watch_theme_built_in_section">Thèmes intégrés</string>
+    <string name="watch_theme_custom_section">Mes thèmes</string>
+    <string name="watch_theme_applied">APPLIQUÉ</string>
+    <string name="watch_theme_apply_success">%1$s appliqué à votre montre</string>
+    <string name="watch_theme_apply_error">Impossible d’appliquer ce thème</string>
+    <string name="watch_theme_more_options">Plus d’options de thème</string>
+    <string name="watch_theme_list_description">Thèmes intégrés et personnalisés pour la montre</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Touchez pour appliquer.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Actuellement appliqué.</string>
+    <string name="watch_theme_rename">Renommer</string>
+    <string name="watch_theme_customize">Personnaliser</string>
+    <string name="watch_theme_duplicate">Dupliquer</string>
+    <string name="watch_theme_delete">Supprimer</string>
+    <string name="watch_theme_delete_title">Supprimer « %1$s » ?</string>
+    <string name="watch_theme_delete_message">Ce thème enregistré et ses paramètres seront définitivement supprimés.</string>
+    <string name="watch_theme_deleted">Thème supprimé</string>
+    <string name="watch_theme_duplicated">« %1$s » créé</string>
+    <string name="watch_theme_limit_reached">Vous pouvez enregistrer jusqu’à 24 thèmes personnalisés. Supprimez-en un avant d’en créer un autre.</string>
+    <string name="watch_theme_name_required">Saisissez un nom de thème</string>
+    <string name="watch_theme_name_duplicate">Un thème portant ce nom existe déjà</string>
+
+    <string name="watch_theme_face_classic">Classique</string>
+    <string name="watch_theme_face_expressive">Expressif</string>
+    <string name="watch_theme_face_vinyl">Vinyle</string>
+    <string name="watch_theme_face_poster">Affiche</string>
+    <string name="watch_theme_face_studio">Studio</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Spectre</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Immersif</string>
+    <string name="watch_theme_face_depth">Profondeur</string>
+    <string name="watch_theme_face_carousel">Carrousel</string>
+    <string name="watch_theme_face_chat">Chat</string>
+    <string name="watch_theme_face_split">Scindé</string>
+    <string name="watch_theme_face_note">Note</string>
+    <string name="watch_theme_face_verse">Vers</string>
+    <string name="watch_theme_face_metadata">Métadonnées</string>
+</resources>

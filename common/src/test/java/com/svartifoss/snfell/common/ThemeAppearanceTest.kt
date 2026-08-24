@@ -127,6 +127,20 @@ class ThemeAppearanceTest {
                 prefs, SimplePreferenceDefinition("intRaw", 0), context))
     }
 
+    @Test
+    fun `font all screens choice is independent for each built in theme`() {
+        val prefs = MapPreferences(mapOf(
+                "wear_font_all_screens@classic" to true,
+                "wear_font_all_screens@poster" to false))
+
+        assertTrue(FaceScopedPreferences.getBoolean(
+                prefs, MiscPreferences.WEAR_FONT_ALL_SCREENS,
+                AppearanceContext.BuiltIn("classic")))
+        assertFalse(FaceScopedPreferences.getBoolean(
+                prefs, MiscPreferences.WEAR_FONT_ALL_SCREENS,
+                AppearanceContext.BuiltIn("poster")))
+    }
+
     private class MapPreferences(values: Map<String, Any>) : SharedPreferences {
         private val data = values.toMap()
 

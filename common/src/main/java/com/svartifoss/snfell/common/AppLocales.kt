@@ -26,7 +26,7 @@ object AppLocales {
     /** BCP-47 tags the app ships translations for. Order is the order shown in the picker. */
     val SUPPORTED: List<String> = listOf(
             "en", "pt-BR", "pt-PT", "de", "es", "it", "nl", "ru", "el", "ro", "id", "fa", "zh-Hans",
-            "is")
+            "is", "fr", "tr", "vi", "cs", "sv", "nb", "hu", "ar", "hi", "fil", "kk", "ja", "ko", "pl", "zh-Hant", "uk", "th", "he", "da", "fi", "sk", "bg", "sr", "hr", "ms", "bn")
 
     /**
      * The [Locale] for a stored preference value, or null to follow the system.

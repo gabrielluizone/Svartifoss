@@ -1,0 +1,1992 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Бұл құрылғыда Wear OS қолдау көрсетілмейді</string>
+    <string name="setting_no_wearable_api_banner_description">Бұл құрылғыда Svartifoss-қа сағатпен байланысу үшін қажет Google Play Services Wear OS компоненті жоқ. Жұптау көмектеспейді — бұл жерде телефон қолданбасы сағатқа жете алмайды. Төмендегі барлық баптау бәрібір сақталады және Svartifoss-ты қолдайтын құрылғыға орнатсаңыз, қолданылады.</string>
+    <string name="setting_no_watch_banner">Сағат қосылмаған</string>
+    <string name="setting_no_watch_banner_description">Бұл баптаулар Wear OS сағатыңызбен синхрондалады, сондықтан сағат жұпталып, қосылғанша олардың әсері көрінбейді — бірақ төмендегінің бәрін қазір де баптай аласыз.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Сыртқы көрініс</string>
+    <string name="setting_theme">Тақырып</string>
+    <string name="theme_light">Таза ақ</string>
+    <string name="theme_dark">Қап-қара</string>
+    <string name="theme_system">Жүйеге сай</string>
+    <string name="setting_language">Тіл</string>
+    <string name="language_system">Жүйеге сай</string>
+    <string name="language_change_watch_notice">Синхрондалғаннан кейін сағат та осы тілді қолданады.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Әзірлеуші</string>
+    <string name="dev_mode_unlocked">Әзірлеуші режимі қосылды ✦</string>
+    <string name="dev_mode_clicks_remaining">Әзірлеуші режимін ашу үшін тағы %1$d рет түртіңіз</string>
+    <string name="dev_disable_mode">Әзірлеуші режимін өшіру</string>
+    <string name="dev_disable_mode_description">Бұл бөлімді қайта жасыру — оны қайтару үшін \"Орнатылған нұсқа\" тармағын жеті рет түртіңіз</string>
+    <string name="dev_mode_disabled">Әзірлеуші режимі өшірілді</string>
+    <string name="dev_build_info">Құрастыру ақпараты</string>
+    <string name="dev_sync_watch">Сағат баптауларын мәжбүрлі синхрондау</string>
+    <string name="dev_sync_watch_description">Барлық ағымдағы баптауды жұпталған сағатқа дереу жіберу</string>
+    <string name="dev_sync_watch_done">Баптаулар сағатпен синхрондалды</string>
+    <string name="dev_copy_debug_info">Жөндеу ақпаратын көшіру</string>
+    <string name="dev_copy_debug_info_description">Құрастыру және құрылғы мәліметтерін алмасу буферіне көшіру</string>
+    <string name="dev_show_archived">Мұрағатталған параметрлерді көрсету</string>
+    <string name="dev_show_archived_description">Белгілі мәселелерге байланысты мұрағатталған сағат орналасулары мен баптауларын көрсету</string>
+    <string name="dev_copy_debug_info_done">Жөндеу ақпараты көшірілді</string>
+    <string name="dev_open_update_screen">Жаңарту экранын ашу</string>
+    <string name="dev_open_update_screen_description">Нақты релизді күтпей-ақ Updates экранын (мұқаба баннері, релиз ескертпелерінің орналасуы) алдын ала қарау</string>
+    <string name="dev_watch_layout_bounds">Сағат орналасуының шекараларын көрсету</string>
+    <string name="dev_watch_layout_bounds_description">Сағаттағы көрінетін ойнатқыш элементтері мен түрту аймақтарының шекарасын көрсету. Тек диагностикалық қабат.</string>
+    <string name="dev_watch_player_info">Сағат ойнатқышы туралы ақпаратты көрсету</string>
+    <string name="dev_watch_player_info_description">Сағатта белсенді циферблат, ойнату күйі, прогресс және бейнелеу ақпаратын қабаттап көрсету.</string>
+    <string name="pref_reset_default">Әдепкіге қайтару</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Сіз жасырын сарқыраманы таптыңыз.
+
+Svartifoss — Исландиядағы сарқыраманы
+қоршаған қара базальт бағандары,
+музыканың тас арасымен аққан судай
+ағатынын еске салады.
+
+♪ Ықыласпен жасалды. ♪</string>
+    <string name="easter_egg_ok">Жабу</string>
+
+    <string name="nav_watch_face">Сағат</string>
+    <string name="watch_face_header">Сағат көрінісі</string>
+    <string name="nav_controls">Басқару элементтері</string>
+    <string name="nav_actions">Әрекеттер</string>
+    <string name="nav_settings">Баптаулар</string>
+
+    <string name="controls_header">Басқару элементтері</string>
+    <string name="controls_state_playing">Музыка ойнатылуда</string>
+    <string name="controls_state_stopped">Ойнату жоқ</string>
+    <string name="controls_playing_description">Музыка ойнатылған кезде әр енгізу әрекетінің не істейтінін таңдаңыз. Бұл баптау ойнату жоқ күйінен тәуелсіз.</string>
+    <string name="controls_stopped_description">Ойнату басталғанға дейін немесе тоқтағаннан кейін әр енгізу әрекетінің не істейтінін таңдаңыз. Бұл баптау ойнату күйінен тәуелсіз.</string>
+
+    <string name="watch_live_preview">Сағаттың тікелей алдын ала көрінісі</string>
+    <string name="watch_preview_description">Таңдалған сағат бетінің тікелей алдын ала көрінісі. Өзгерістерді сағатта сынамас бұрын осы жерден көресіз.</string>
+    <string name="watch_section_style">Ойнатқыш</string>
+    <string name="watch_section_style_description">Ойнатқыш орналасуын және атау, уақыт пен прогрестің әрекетін таңдаңыз.</string>
+    <string name="watch_section_background">Фон</string>
+    <string name="watch_section_background_description">Ойнатқыш артындағы альбом суретін, бұлыңғырлауды, өшуді және оқылымдылықты басқарыңыз.</string>
+    <string name="watch_section_colors">Түстер</string>
+    <string name="watch_section_colors_description">Негізгі, прогресс және альбом екпіндерін орнатыңыз, содан кейін атау, орындаушы, сағат, дыбыс және панель түстерін реттеңіз.</string>
+    <string name="watch_section_typography">Мәтін</string>
+    <string name="watch_section_typography_description">Қаріптерді таңдап, атау, орындаушы, сағат, қолданба белгішесі, қосымша экрандар және Flex мәтінін реттеңіз.</string>
+    <string name="watch_section_aod">Әрдайым қосулы</string>
+    <string name="watch_section_aod_description">Қуаты аз экранды баптап, оның қоршаған режимдегі көрінісін алдын ала қараңыз.</string>
+    <string name="watch_section_panels">Панельдер</string>
+    <string name="watch_section_panels_description">Дыбыс, іздеу, жылдам панель және кезек стилін реттеңіз; жолға фокус түскенде сол бет алдын ала қарауда ашылады.</string>
+    <string name="watch_section_mini_buttons">Шағын түймелер</string>
+    <string name="watch_section_mini_buttons_description">Қосымша жарлық жолының стилін реттеңіз. Оның әрекеттерін Controls бөлімінде тағайындау үшін төмендегі «Шағын түймелер» тармағын түртіңіз.</string>
+    <string name="watch_overview_description">Нені баптағыңыз келетінін таңдаңыз. Алдын ала көрініс пен сақталған тақырып барлық аймақта белсенді болып қалады.</string>
+    <string name="watch_back_to_overview">Сағат аймақтарына оралу</string>
+
+    <string name="settings_section_general">Жалпы</string>
+    <string name="settings_section_general_description">Қолданба тақырыбы, екпін түсі және жаңарту параметрлері.</string>
+    <string name="settings_section_watch">Әрекет</string>
+    <string name="settings_section_watch_description">Сағатыңыздағы тәж, түрту, діріл және әрекеттер мәзірінің жұмысы.</string>
+    <string name="settings_section_automation">Автоматтандыру</string>
+    <string name="settings_section_automation_description">Svartifoss қашан автоматты түрде ашылып-жабылатынын таңдаңыз.</string>
+    <string name="settings_section_apps">Қолданбалар</string>
+    <string name="settings_section_apps_description">Ән мәтіні мен метадеректерді іздеу, стриминг жарлықтары, кезек суреттері және Android рұқсаты.</string>
+    <string name="settings_section_data">Деректер және қолдау</string>
+    <string name="settings_section_data_description">Баптауды сақтық көшірмеге сақтаңыз, нұсқа мен диагностиканы тексеріңіз немесе көмек алыңыз.</string>
+    <string name="settings_overview_description">Аймақты таңдаңыз. Өзара байланысты параметрлер бірге сақталады, ал іздеу кез келген баптауға тікелей апара алады.</string>
+    <string name="settings_back_to_overview">Баптау аймақтарына оралу</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Svartifoss қолдану жолы</string>
+    <string name="tutorial_intro">Svartifoss сағатыңызды телефоныңызда ойнап тұрған музыканың қашықтан басқару құралына айналдырады. Білегіңізден істей алатынның бәрі осында.</string>
+
+    <string name="tutorial_taps_title">Экран аймақтарын түртіңіз</string>
+    <string name="tutorial_taps_desc">Сағат экраны төрт аймаққа бөлінген — жоғары, төмен, сол және оң. Аймақты түрткенде оған тағайындалған әрекет орындалады. Әдепкіде сол жақ аймақ ойнатады не кідіртеді, оң жақ келесі трекке өткізеді, ал жоғары және төмен аймақтар дыбыс деңгейін өзгертеді.</string>
+
+    <string name="tutorial_quick_panel_title">Жылдам әрекеттер панелі</string>
+    <string name="tutorial_quick_panel_desc">Қазір ойнатылып жатқан экранның ортасын екі рет түртіп, төрт ұялы панельді ашыңыз — үш дөңгелек түйме және төменде бір кең жол. Өзгертпесеңіз, ұялар ойнатып тұрған қолданба хабарландыруында көрсететін түймелерді қайталайды, сондықтан оның нақты ұнату, араластыру және қайталау басқаруларына қол жеткізесіз. Ұяға кез келген әрекетті тағайындаңыз немесе жасыру үшін телефондағы Actions бөлімінде \"Ешқайсысы\" деп орнатыңыз.</string>
+    <string name="tutorial_gestures_title">Бір рет, екі рет және ұзақ басу</string>
+    <string name="tutorial_gestures_desc">Төрт шеткі аймақтың әрқайсысы бөлек бір рет, екі рет және ұзақ басу әрекеттерін қолдайды. Ортаның бір рет түртуін де баптауға болады; екі рет түрту әрдайым Quick actions ашады, ал ұзақ басу Settings → Behavior параметріне сәйкес циферблат таңдағышын, кезекті немесе ештеңені ашады.</string>
+
+    <string name="tutorial_buttons_title">Физикалық түймелер</string>
+    <string name="tutorial_buttons_desc">Сағатыңызда бүйірлік түймелер болса, оларға да бір рет, екі рет және ұзақ басу әрекеттерін тағайындай аласыз. Олар экран өшіп тұрғанда да жұмыс істейді.</string>
+
+    <string name="tutorial_rotary_title">Айналмалы тәж</string>
+    <string name="tutorial_rotary_desc">Settings → Behavior → Rotary crown / bezel бөлімінен айналмалы тәж немесе жиек дыбысты өзгертетінін, трек бойынша жылжитынын не ештеңе істемейтінін таңдаңыз. Тәж айналымын түйме ретінде беретін сағаттарда оларды оның орнына Controls бөлімінде тағайындаңыз.</string>
+
+    <string name="tutorial_swipe_up_title">Жоғары, төмен, солға және оңға сырғыту</string>
+    <string name="tutorial_swipe_up_desc">Қазір ойнатылып жатқан экранда жоғары, төмен немесе солға сырғытудың әрқайсысын кез келген нәрсені ашуға баптауға болады — әрекеттер мәзірі, ойнату кезегі, тректерді өткізу, ойнату тізімдері және т.б. Әрқайсысын Controls бөлімінде баптап, Music playing немесе No playback таңдаңыз. Әдепкіде жоғары сырғыту әрекеттер мәзірін ашады, ал басқалары тағайындалмайынша ештеңе істемейді. Оңға сырғыту өзгеріссіз қалады — бұл қолданбадан шығуға арналған әмбебап Wear OS қимылы.</string>
+    <string name="tutorial_shortcuts_title">Стриминг жарлықтары</string>
+    <string name="tutorial_shortcuts_desc">Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music немесе SoundCloud ішінен трек, альбом, микс не ойнату тізімінің сілтемесін сақтап, оны кез келген түйме, қимыл немесе панель ұясына тағайындаңыз. Ең жылдам жолы — стриминг қолданбасынан сілтемені тікелей Svartifoss-қа бөлісу; көшірілген сілтемені қоюға немесе қолмен теруге де болады. Тіркелгі не кіру қажет емес — сағат телефоннан ойнатуды бастауды сұрайды, сондықтан жарлық қолданбаны жай ашып қана қоймай, музыканы ойнатады.</string>
+    <string name="tutorial_yt_music_title">YouTube Music жарлықтары</string>
+    <string name="tutorial_yt_music_desc">Телефонға тимей-ақ музыкаңызға бірден өту үшін \"Ұнатқан әндерді ойнату\", \"Ұнатқан әндерді араластырып ойнату\" немесе \"Менің ойнату тізімдерім\" әрекетін кез келген түйме, қимыл не сырғытуға тағайындаңыз. \"Іздеу тарихы\" сағаттағы соңғы іздеулеріңізді есте сақтайды — біреуін жою үшін басып тұрыңыз.</string>
+
+    <string name="tutorial_exit_title">Шығу үшін сырғыту</string>
+    <string name="tutorial_exit_desc">Ойнатқыштан шығу үшін сол жақ шеттен сырғытыңыз. Шыққанда ойнатуды автоматты түрде кідірте алады — оны Settings ішінде қосыңыз.</string>
+
+    <string name="tutorial_tile_title">Жылдам басқару Tile</string>
+    <string name="tutorial_tile_desc">Қолданбаны ашпай-ақ ойнату, кідірту және өткізу үшін циферблаттан жанға қарай Svartifoss tile бетіне сырғытыңыз.</string>
+
+    <string name="tutorial_complication_title">Сағат циферблатының complication элементі</string>
+    <string name="tutorial_complication_desc">Ағымдағы мұқабаны бір қарағанда көру үшін циферблатқа Svartifoss альбом суреті complication элементін қосыңыз. Ойнатқышты ашу үшін түртіңіз.</string>
+
+    <string name="tutorial_system_title">Жүйелік медиа басқарулары</string>
+    <string name="tutorial_system_desc">Ағымдағы трек сағатыңыздың жеке медиа басқаруларында және соңғы қолданбаларында да көрінеді, сондықтан ойнатуды сол жерден де басқара аласыз.</string>
+
+    <string name="tutorial_tip">Кеңес: Controls бөлімінде екі күйді де баптап, кейін Actions бөлімінде мәзірді реттеңіз.</string>
+
+    <string name="navigation_drawer_open">Навигация тартпасын ашу</string>
+    <string name="navigation_drawer_close">Навигация тартпасын жабу</string>
+
+    <string name="action_settings">Баптаулар</string>
+    <string name="action_pause">Кідірту</string>
+    <string name="action_play">Ойнату</string>
+    <string name="action_skip_prev">Алдыңғыға өту</string>
+    <string name="action_skip_next">Келесіге өту</string>
+    <string name="action_play_pause">Ойнату / Кідірту</string>
+    <string name="action_stop">Тоқтату</string>
+    <string name="action_restart">Тректі қайта бастау</string>
+    <string name="action_mute">Дыбысты өшіру / қосу</string>
+    <string name="action_skip_seconds">%1$d секунд алға өткізу</string>
+    <string name="action_reverse_seconds">%1$d секунд артқа қайтару</string>
+    <string name="action_like">Ұнату</string>
+    <string name="action_shuffle">Араластырып ойнату</string>
+    <string name="action_repeat">Қайталау</string>
+    <string name="action_repeat_one">Біреуін қайталау</string>
+    <string name="action_search">Музыка іздеу</string>
+    <string name="action_open_lyrics">Ән мәтіні</string>
+    <string name="group_playback_controls">Ойнатуды басқару</string>
+    <string name="group_streaming_shortcuts">Тректер, альбомдар және ойнату тізімдері</string>
+    <string name="pick_action">Әрекетті таңдау</string>
+    <string name="action_search_hint">Осы тізімнен іздеу</string>
+    <string name="action_search_empty">Бұл іздеуге сәйкес әрекет жоқ.</string>
+    <string name="action_opens_more">Бірнеше параметр</string>
+    <string name="action_volume_up">Дыбысты күшейту</string>
+    <string name="volume_down">Дыбысты азайту</string>
+    <string name="group_volume_controls">Дыбысты басқару</string>
+    <string name="no_watch_detected">Сағат табылмады</string>
+    <string name="connection_instructions">Қосылымды бастау үшін сағатта Svartifoss қолданбасын ашыңыз</string>
+    <string name="playing_controls">Ойнату кезіндегі басқарулар</string>
+    <string name="stopped_controls">Ойнату жоқ кездегі басқарулар</string>
+    <string name="actions_menu">Әрекеттер мәзірі</string>
+    <string name="actions_intro">Сағатыңыздағы екі әрекет бетін ойнату басқарулары, қолданбалар немесе сақталған тректер, альбомдар және ойнату тізімдерімен баптаңыз. Жылдам панель ықшам болып қалады; төмендегі мәзірде ұзағырақ реттелген тізім болуы мүмкін.</string>
+    <string name="actions_quick_panel_section">Жылдам панель</string>
+    <string name="actions_watch_menu_section">Сағаттағы мәзір</string>
+    <plurals name="actions_list_summary">
+        <item quantity="other">%1$d әрекет · Өңдеу үшін түртіңіз · Ретін өзгерту үшін басып тұрып сүйреңіз</item>
+    </plurals>
+    <string name="actions_reorder_description">Реттелген әрекеттер мәзірі. Сүйреу үшін басып тұрыңыз, Move up немесе Move down арнайы мүмкіндіктер әрекеттерін пайдаланыңыз не пернетақтада Ctrl+Up/Down басыңыз.</string>
+    <string name="actions_move_up">Жоғары жылжыту</string>
+    <string name="actions_move_down">Төмен жылжыту</string>
+    <string name="actions_moved_to_position">%1$s %3$d ішіндегі %2$d орынға жылжытылды.</string>
+    <string name="actions_empty">Әзірге әрекет жоқ. Біріншісін жасау үшін қосу түймесін пайдаланыңыз.</string>
+    <string name="actions_add">Әрекет қосу</string>
+    <string name="on_screen_buttons">ТҮРТУ АЙМАҚТАРЫ</string>
+    <string name="physical_buttons">ФИЗИКАЛЫҚ ТҮЙМЕЛЕР</string>
+    <string name="physical_buttons_disconnected">Физикалық түймелерді баптау үшін сағатты қосып, онда Svartifoss қолданбасын ашыңыз. Түрту аймақтары, сырғытулар және шағын түймелер қазір қолжетімді.</string>
+    <string name="physical_buttons_unavailable">Бұл сағат баптауға болатын физикалық түймелер туралы хабарламады.</string>
+    <string name="control_assignment_tap">Түрту: %1$s</string>
+    <string name="control_assignment_hold">Ұстап тұру: %1$s</string>
+    <string name="control_assignment_both">Түрту: %1$s · Ұстап тұру: %2$s</string>
+    <string name="tap_a_zone_to_configure">Әрекет тағайындау үшін сағаттағы аймақты түртіңіз</string>
+    <string name="touch_zone_top">Жоғарғы аймақ</string>
+    <string name="touch_zone_bottom">Төменгі аймақ</string>
+    <string name="touch_zone_left">Сол жақ аймақ</string>
+    <string name="touch_zone_right">Оң жақ аймақ</string>
+    <string name="touch_zone_center">Ортаны түрту</string>
+    <string name="touch_zone_action">%1$s: %2$s. Баптау үшін түртіңіз.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">СЫРҒЫТУ ҚИМЫЛДАРЫ</string>
+    <string name="tap_a_swipe_to_configure">Нені ашатынын таңдау үшін бағытты түртіңіз</string>
+    <string name="swipe_gesture_up">Жоғары сырғыту</string>
+    <string name="swipe_gesture_down">Төмен сырғыту</string>
+    <string name="swipe_gesture_left">Солға сырғыту</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Жоғары</string>
+    <string name="swipe_gesture_label_down">Төмен</string>
+    <string name="swipe_gesture_label_left">Солға</string>
+
+    <string name="screen_buttons">ШАҒЫН ТҮЙМЕЛЕР</string>
+    <string name="tap_a_screen_button_to_configure">Сағат экранының төменгі жағына жақын үш көрінетін түймеге дейін — әрекет тағайындау үшін ұяны түртіңіз</string>
+    <string name="screen_button_1">Шағын түйме 1 (сол)</string>
+    <string name="screen_button_2">Шағын түйме 2 (орта)</string>
+    <string name="screen_button_3">Шағын түйме 3 (оң)</string>
+    <string name="screen_button_label_1">Түйме 1</string>
+    <string name="screen_button_label_2">Түйме 2</string>
+    <string name="screen_button_label_3">Түйме 3</string>
+    <string name="no_action">Әрекет жоқ</string>
+    <string name="gesture_single_press">Бір рет басу</string>
+    <string name="gesture_double_press">Екі рет басу</string>
+    <string name="gesture_long_press">Ұзақ басу</string>
+    <string name="gesture_swipe_action">Әрекет</string>
+    <string name="center_button_quick_panel_note">Ортаны екі рет түрту әрдайым Quick actions ашады. Ұзақ басу Settings → Behavior ішіндегі таңдауды орындайды. Мұнда ортаны түрту әрекетін тағайындағанда бұл қимылдардың ешқайсысы өзгермейді.</string>
+    <string name="start_playback">Ойнатуды бастау</string>
+    <string name="uninstalled_app">Жойылған қолданба</string>
+
+    <string name="play_app">%1$s ойнату</string>
+    <string name="tasker_task">Tasker тапсырмасы</string>
+    <string name="icon_selection_title">Белгіше таңдау</string>
+    <string name="icon_selection_gallery">Галереядан</string>
+    <string name="icon_selection_no_icon_pack">Бұл мүмкіндік әрекетіңізге арнаулы белгішені
+        орнатылған белгішелер бумасынан таңдауға мүмкіндік береді.
+
+Өкінішке қарай, сізде ешбір белгіше бумасы орнатылмаған сияқты.</string>
+    <string name="icon_selection_no_storage_permission">Бұл мүмкіндік әрекетіңізге арнаулы белгішені
+        орнатылған белгішелер бумасынан таңдауға мүмкіндік береді.
+
+Кейбір белгішелер бумасы қолданбалардан сақтау орнына рұқсат сұрайды. Бұл мүмкіндікті пайдалану үшін рұқсат беруіңіз керек.</string>
+    <string name="delete">Жою</string>
+    <string name="action_text">Әрекет мәтіні</string>
+    <string name="swap_action">Әрекетті ауыстыру</string>
+    <string name="open_actions_menu">Әрекеттер мәзірін ашу</string>
+    <string name="open_playlist_menu">Ағымдағы ойнату тізімін көрсету</string>
+    <string name="misc_settings">Басқа баптаулар</string>
+
+    <string name="category_backup">Сақтық көшірме</string>
+    <string name="export_config">Конфигурацияны экспорттау</string>
+    <string name="export_config_description">Түйме тағайындауларын, әрекеттер тізімін және сағат баптауларын файлға сақтау</string>
+    <string name="import_config">Конфигурацияны импорттау</string>
+    <string name="import_config_description">Түйме тағайындауларын, әрекеттер тізімін және сағат баптауларын файлдан қалпына келтіру</string>
+    <string name="export_config_done">Конфигурация экспортталды</string>
+    <string name="export_config_failed">Конфигурацияны экспорттау мүмкін болмады</string>
+    <string name="import_config_done_title">Импорт сәтті аяқталды</string>
+    <string name="import_config_done_message">Импортталған конфигурацияны қолдану үшін Svartifoss қайта іске қосылуы керек.</string>
+    <string name="import_config_failed">Конфигурацияны импорттау мүмкін болмады — файл жарамсыз немесе үйлесімсіз нұсқадан болуы мүмкін</string>
+    <string name="action_restart_now">Қазір қайта іске қосу</string>
+
+    <string name="category_about">Ақпарат</string>
+    <string name="category_music_screen">Музыка экраны</string>
+    <string name="category_watch_screen">Сағат экраны</string>
+    <string name="category_mini_buttons">Шағын түймелер</string>
+    <string name="category_screen_face">Ойнатқыш көрінісі</string>
+    <string name="category_wf_screen_behavior">Экран әрекеті</string>
+    <string name="category_wf_player_progress">Прогресс, іздеу және уақыт</string>
+    <string name="category_album_background">Альбом фоны</string>
+    <string name="category_music_colors">Музыкадан алынған түстер</string>
+    <string name="category_wf_typography_font">Қаріп гарнитурасы</string>
+    <string name="category_wf_typography_title">Атау</string>
+    <string name="category_wf_typography_artist">Орындаушы</string>
+    <string name="category_wf_typography_icon">Қолданба белгішесі</string>
+    <string name="category_wf_typography_flex">Google Sans Flex осьтері</string>
+    <string name="category_wf_metadata">Метадеректер циферблатының мазмұны</string>
+    <string name="category_wf_typography_secondary">Басқа экрандардағы мәтін</string>
+    <string name="category_wf_colors_title">Атау түстері</string>
+    <string name="category_wf_colors_artist">Орындаушы түстері</string>
+    <string name="category_wf_colors_clock">Сағат түстері</string>
+    <string name="setting_wear_font_flex_hint_title">Бұл басқарулар туралы</string>
+    <string name="setting_wear_flex_axes_hint">Бұлар Google Sans Flex қарпін дәл реттейді — пайдалану үшін оны жоғарыдан таңдаңыз. Жоғарыдағы атау мен орындаушының қалыңдығы/көлбеулігі осы қаріптің weight (wght) және slant (slnt) осьтерін орнатып қойған; төмендегі төрт басқару бүкіл циферблатқа қолданылады.</string>
+    <string name="setting_wear_font_flex_width">Ені</string>
+    <string name="setting_wear_font_flex_width_description">Көлденең созылу, ықшамнан кеңейтілгенге дейін (25–151). 100 — қаріптің қалыпты ені.</string>
+    <string name="setting_wear_font_flex_optical_size">Оптикалық өлшем</string>
+    <string name="setting_wear_font_flex_optical_size_description">Мәтіннің тиімді өлшеміне (6–144) қарай сызық бөлшектерін реттейді. Төмен мәндер шағын мәтінге, жоғары мәндер үлкен дисплей мәтініне қолайлы.</string>
+    <string name="setting_wear_font_flex_grade">Grade</string>
+    <string name="setting_wear_font_flex_grade_description">Орналасуды өзгертпей қалыңдықты аздап өзгертеді (0–100) — қараңғы экрандағы контрастты сәл арттыру тәсілі.</string>
+    <string name="setting_wear_font_flex_roundness">Дөңгелектік</string>
+    <string name="setting_wear_font_flex_roundness_description">Сызық ұштарын өткірден (0) толық дөңгелекке (100) дейін араластырып, жұмсақ көрініс береді.</string>
+    <string name="preview_sample_title">Ән атауы</string>
+    <string name="preview_sample_artist">Орындаушы аты</string>
+    <string name="preview_sample_next_title">Келесі ән</string>
+    <string name="preview_playback_stopped">Тоқтатылды</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">алдыңғы жол</string>
+    <string name="preview_verse_current">қазір ойналып жатқан жол</string>
+    <string name="preview_verse_next">және одан кейінгісі</string>
+    <string name="preview_chat_today">Бүгін</string>
+    <string name="category_gestures">Қимылдар және енгізу</string>
+    <string name="category_watch_navigation">Навигация және жарлықтар</string>
+    <string name="category_rotary_input">Айналмалы енгізу және реттеу</string>
+    <string name="category_watch_feedback">Кері байланыс және шығу әрекеті</string>
+    <string name="category_watch_display">Сағат экраны</string>
+    <string name="setting_wear_keep_screen_on">Экранды қосулы ұстау</string>
+    <string name="setting_wear_keep_screen_on_description">Svartifoss экраны ашық кезде әрекетсіздік тайм-аутынан сағат экранының өшуіне жол бермейді. Білекті түсіргенде сағат бәрібір күңгірттенеді — бұл жүйелік қимыл. Батареяны көбірек жұмсайды. Бұл баптауға қарамастан ән мәтіні экраны әрдайым қосулы қалады.</string>
+    <string name="setting_lyrics_enabled">Ән мәтінін интернеттен іздеу</string>
+    <string name="setting_lyrics_enabled_description">Сағатта ән мәтіні экранын ашқанда телефонға LRCLIB ішінен синхрондалған мәтінді алуға мүмкіндік береді. Трек атауы, орындаушы және ұзақтығы жіберіледі; басқа ештеңе жіберілмейді және дискіге сақталмайды. Өшірсеңіз, ән мәтіні экраны іздеу өшірілгенін хабарлайды.</string>
+    <string name="setting_overlay_blur_radius">Қабаттың бұлыңғырлығы</string>
+    <string name="setting_overlay_blur_radius_description">Дыбыс/іздеу сақиналары мен жылдам әрекеттер панелінің артындағы күңгірт фонның бұлыңғырлау күші (px) — альбом суреті фонының бұлыңғырлығынан тәуелсіз</string>
+    <string name="category_action_list">Әрекеттер тізімі</string>
+    <string name="category_automation">Автоматтандыру</string>
+    <string name="category_idle">Ештеңе ойнатылмағанда</string>
+    <string name="installed_version">Орнатылған нұсқа</string>
+    <string name="get_support">Қолдау алу</string>
+    <string name="get_support_description">Қолдау үшін қолданба журналдарын әзірлеушіге жіберу</string>
+    <string name="contact_developer">Әзірлеушімен байланысу</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — байланыс</string>
+    <string name="contact_developer_chooser">Электрондық пошта жіберу</string>
+    <string name="contact_developer_no_client">Электрондық пошта қолданбасы орнатылмаған. Мекенжай алмасу буферіне көшірілді.</string>
+    <string name="about_developer_title">Әзірлеуші туралы</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss жеке жоба ретінде басталды — Music Center for Wear қолданбасын бүгінгі мүмкіндіктерге сай жаңартып, оны күн сайын өзім қолданғым келді. Нәтижесі жеткілікті жақсы болған соң, оны бәрімен бөлісуді шештім. Бұл менің алғашқы қолданбам, әрі өзің жасаған нәрсенің басқа адамдарға да пайдалы болғанын көрудің сезімі ерекше.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Ашық бастапқы код лицензиялары</string>
+    <string name="setting_always_show_time">Уақытты әрдайым көрсету</string>
+    <string name="setting_always_show_time_off_description">Ағымдағы уақыт тек қоршаған режимде көрсетіледі</string>
+    <string name="setting_always_show_time_on_description">Ағымдағы уақыт әрдайым көрсетіледі. Жоғарғы әрекет белгішесі көрінбейді (оның орнына сағат тұрады), бірақ әрекет қалыпты жұмысын жалғастырады.</string>
+    <string name="tap_to_force_stop">Басқаруларды тоқтату үшін түртіңіз</string>
+    <string name="notification_action_stop">Тоқтату</string>
+    <string name="notification_action_force_stop">Мәжбүрлі тоқтату</string>
+    <string name="error_notification_access">Хабарландыруларға рұқсат жоқ. Телефонды тексеріңіз.</string>
+    <string name="error_notifications">Қате хабарландырулары</string>
+    <string name="notification_access_notification_title">Svartifoss-қа хабарландыруларға қолжетімділік қажет</string>
+    <string name="notification_access_notification_title_description">Мәселені түзету үшін осы хабарландыруды түртіп, Svartifoss таңдаңыз</string>
+    <string name="error_service_not_enabled">Хабарландыруларға қолжетімділік қажет</string>
+    <string name="error_service_not_enabled_description">Музыканы сағаттан басқару үшін Svartifoss-қа хабарландыруларға қолжетімділік қажет — Android осы арқылы қай қолданба ойнатып тұрғанын көруге және оған ойнату, кідірту және өткізу пәрмендерін жіберуге мүмкіндік береді.
+
+Svartifoss хабарландыруларыңыздың мазмұнын ешқашан оқымайды. Бұл рұқсат тек белсенді медиа сеансты табу үшін қолданылады.
+
+\"Баптауларды ашу\" түймесін түртіп, хабарландыруларға қолжетімділік бөлімінде Svartifoss-ты қосыңыз.</string>
+    <string name="action_open_settings">Баптауларды ашу</string>
+    <string name="settings_search_title">Баптаулардан іздеу</string>
+    <string name="settings_search_hint">Баптаулардан іздеу</string>
+    <string name="settings_search_clear">Іздеуді тазалау</string>
+    <string name="settings_search_prompt">Settings және Watch appearance ішіндегі барлық баптауды атауы бойынша іздеу.</string>
+    <string name="settings_search_no_results">Сәйкес баптау табылмады.</string>
+    <string name="settings_search_prerequisite">Бұл параметр басқа таңдауға байланысты. Оны көрсету үшін осы жерде көрсетілген баптауды өзгертіңіз.</string>
+    <string name="setting_numeric_range_error">%1$d мен %2$d аралығындағы мәнді енгізіңіз.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">Рұқсат беру үшін түртіңіз — берілгенше ойнатуды басқару белсенді емес</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Сағатыңызға Svartifoss орнатыңыз</string>
+    <string name="no_watch_app_description">Svartifoss жұпталған Wear OS сағатыңыздан өзінің сағат қолданбасын таба алмады. Телефон мен сағат қолданбалары бірге жұмыс істейді — сағат қолданбасынсыз білектен ойнатуды басқару жұмыс істемейді.
+
+Svartifoss Play Store дүкенінде жоқ — сағат қолданбасы бөлек sideload арқылы орнатылады (мысалы, Wear Installer көмегімен). GitHub releases бетін ашып, сағат APK файлын алу үшін \"Релиздерді көру\" түймесін түртіңіз. Егер жаңа ғана орнатсаңыз, синхрондалуына бір минут беріңіз.</string>
+    <string name="no_watch_app_button">Релиздерді көру</string>
+    <string name="required_permission">Қажетті рұқсат</string>
+    <string name="setting_pause_on_swipe_exit">Сырғытып шыққанда ойнатуды кідірту</string>
+    <string name="setting_pause_on_swipe_exit_description">Сағаттағы Svartifoss қолданбасынан солға сырғыту арқылы шыққанда кез келген ойнатуды автоматты түрде кідірту.
+
+Қуат түймесі арқылы шығуға әсер етпейді және ол ешқашан автоматты кідіртпейді.</string>
+    <string name="setting_rotating_crown_off_period">Экран қосылғаннан кейінгі айналмалы енгізу кідірісі</string>
+    <string name="setting_rotating_crown_off_period_description">Кейбір құрылғыларда айналмалы енгізу (мысалы, айналмалы тәж) тым сезімтал болуы мүмкін. Кездейсоқ дыбыс өзгерістерінің алдын алу үшін экранды қосқаннан кейін <![CDATA[<b>%1$s milliseconds</b>]]> бойы айналмалы енгізу өшіріледі.</string>
+    <string name="setting_rotary_seek">Айналмалы тәжбен трек бойынша жылжу</string>
+    <string name="setting_rotary_seek_description">Қосылғанда тәжді айналдыру дыбыс деңгейін өзгертудің орнына ағымдағы трек бойынша жылжытады. Дыбысты экрандағы немесе физикалық түймелермен өзгертуге болады.</string>
+    <string name="setting_wear_rotary_action">Айналмалы тәж / жиек</string>
+    <string name="wear_rotary_action_volume">Дыбыс деңгейін өзгерту</string>
+    <string name="wear_rotary_action_seek">Трек бойынша жылжу</string>
+    <string name="wear_rotary_action_off">Ештеңе істемеу</string>
+    <string name="setting_rotating_sensitivity">Айналмалы енгізу сезімталдығы</string>
+    <string name="setting_rotating_sensitivity_description">Айналмалы енгізу сезімталдығы. Сан неғұрлым жоғары болса, тәжді дәл сондай бұру дыбыс деңгейін соғұрлым көбірек арттырады. Қазіргі мәні <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Қоршаған режимде физикалық түйменің екі рет басылуын өшіру</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Кейбір сағаттарда ақаулы түймелер бар: қоршаған режимде физикалық түймені бір рет басу кейде екі рет басу ретінде тіркеледі.
+
+Мұндай жағдай болса, қоршаған режимде екі рет басуды толығымен өшіру үшін осы параметрді қосуға болады (мысалы, екі рет басқанда тек бір рет басу әрекеті орындалады). Сағат белсенді кезде түймені екі рет басуға әсер етпейді.</string>
+    <string name="setting_haptic_feedback">Діріл кері байланысы</string>
+    <string name="setting_haptic_feedback_description">Түймелерді басқанда сағатты дірілдету.</string>
+    <string name="setting_auto_start">Svartifoss-ты автоматты түрде ашу</string>
+    <string name="setting_auto_start_description">Телефонда музыка ойнату басталғанда сағатта Svartifoss-ты автоматты түрде ашу.</string>
+    <string name="setting_auto_start_apps_blacklist">Автоматты іске қосылатын қолданбалар</string>
+    <string name="setting_auto_start_apps_blacklist_description">Svartifoss-ты автоматты түрде іске қоса алатын медиа қолданбалар тізімі</string>
+    <string name="setting_dim_album_art">Ойнатқыш көлеңкесі</string>
+    <string name="setting_dim_album_art_description">Сурет пен ойнатқыш басқаруларының арасына пайдаланушы таңдаған көлеңке әсерін қосу.</string>
+    <string name="setting_album_art_style">Альбом суретінің стилі</string>
+    <string name="setting_album_art_style_description">Сағаттағы қазір ойнатылып жатқан фонның көрінісін таңдаңыз.</string>
+    <string name="setting_album_art_blur_radius">Бұлыңғырлау қарқындылығы</string>
+    <string name="setting_album_art_blur_radius_description">Таңдалған фон бұлыңғырлауды қолданғанда толық экран бұлыңғырлығының күші. Қазір <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Күңгірттеу күші</string>
+    <string name="setting_album_art_dim_strength_description">Мәтінді жақсы оқу үшін альбом суреті қаншалықты күңгірттеледі. Қазір <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Көлеңке стилі</string>
+    <string name="setting_player_shading_intensity">Көлеңке қарқындылығы</string>
+    <string name="setting_player_shading_intensity_description">Көлеңке фонды қаншалықты күңгірттейді. 100%% — толық күш; қосымша контраст үшін жоғарырақ қойыңыз (150%% дейін). Қазір <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Бұл көріністі барлық циферблатқа қолдану</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Осы циферблаттың көрініс баптауларын барлық басқа циферблатқа көшіру</string>
+    <string name="apply_appearance_confirm_title">Барлық циферблатқа қолданылсын ба?</string>
+    <string name="apply_appearance_confirm_message">Бұл барлық басқа циферблаттың көрініс баптауларын ағымдағысымен ауыстырады. Әрекет баптаулары өзгермейді.</string>
+    <string name="apply_appearance_confirm_button">Қолдану</string>
+    <string name="apply_appearance_done">Барлық циферблатқа қолданылды</string>
+    <string name="category_wf_layout_actions">Орналасу</string>
+    <string name="setting_reset_appearance">Осы орналасуды қалпына келтіру</string>
+    <string name="setting_reset_appearance_description">Осы циферблаттың көрінісін бастапқы әдепкі мәндеріне қайтару</string>
+    <string name="reset_appearance_confirm_title">Осы орналасу қалпына келтірілсін бе?</string>
+    <string name="reset_appearance_confirm_message">Осы циферблаттың көрініс баптаулары әдепкіге қайтады. Әрекет баптаулары мен басқа циферблаттар әсер етпейді.</string>
+    <string name="reset_appearance_confirm_button">Қалпына келтіру</string>
+    <string name="reset_appearance_done">Орналасу әдепкіге қайтарылды</string>
+    <string name="setting_reset_all_faces">Барлық циферблатты әдепкіге қайтару</string>
+    <string name="setting_reset_all_faces_description">Әр кірістірілген циферблаттың көрінісін бастапқы әдепкі мәндеріне қайтару</string>
+    <string name="reset_all_faces_confirm_title">Барлық циферблат қалпына келтірілсін бе?</string>
+    <string name="reset_all_faces_confirm_message">Әр кірістірілген циферблаттың көрінісі бастапқы әдепкіге оралады және белсенді арнаулы тақырып өшіріледі. Сақталған арнаулы тақырыптарыңыз, әрекет баптаулары және таңдалған циферблат сақталады.</string>
+    <string name="reset_all_faces_confirm_button">Барлығын қалпына келтіру</string>
+    <string name="reset_all_faces_done">Барлық циферблат әдепкіге қайтарылды</string>
+    <string name="face_reset_migration_title">Сағат көрінісін жаңарту</string>
+    <string name="face_reset_migration_message">Сіз барлық сағат циферблаты бір көрініс баптауларын ортақ пайдаланған ескі нұсқадан жаңарттыңыз. Енді әр циферблат өз баптауын есте сақтайды, сондықтан ескі баптаулар тікелей өзгертпеген циферблаттарда сәйкес келмеуі мүмкін. Барлық циферблатты жаңа әдепкі мәндеріне қайтаруды немесе мүлде жаңадан бастау үшін қолданба деректерін тазалауды ұсынамыз.</string>
+    <string name="face_reset_migration_reset_button">Барлық циферблатты қалпына келтіру</string>
+    <string name="face_reset_migration_clear_data_button">Қолданба деректерін тазалау</string>
+    <string name="setting_player_shading_color">Көлеңке түсі</string>
+    <string name="setting_wear_shading_custom_color">Арнаулы көлеңке түсі</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Қара</item>
+        <item>Альбом екпіні</item>
+        <item>Қанықтығы төмен альбом</item>
+        <item>Арнаулы түс</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Ойнатқыш тақырыбын қолдану</item>
+        <item>Жиек виньеткасы</item>
+        <item>Жиек виньеткасы (Күшті)</item>
+        <item>Жиек виньеткасы (Қалың)</item>
+        <item>Төменгі бұрыш</item>
+        <item>Төменгі өшу</item>
+        <item>Еден және төбе</item>
+        <item>Толық экран сүзгісі</item>
+        <item>Альбом түсімен бояу</item>
+        <item>Екі түсті альбом градиенті</item>
+        <item>Бүйір перделер</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Қоршаған режимдегі альбом суретінің мөлдірлігі</string>
+    <string name="setting_ambient_album_art_opacity_description">Қоршаған режимде альбом суреті қаншалықты көрініп тұрады. Қазір <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Дыбыс/іздеу қабатының тайм-ауты</string>
+    <string name="setting_volume_overlay_timeout_description">Реттегеннен кейін дыбыс және іздеу қабаттары экранда қанша уақыт қалады. Қазір <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Айналмалы өлі аймақ</string>
+    <string name="setting_rotary_deadzone_description">Дыбыс немесе іздеу өзгерістері қолданылғанға дейінгі тәждің ең аз қозғалысы. Кездейсоқ өзгерістердің алдын алады. Қазір <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Wear тәжірибесі</string>
+    <string name="setting_swipe_gestures_hint">Сырғыту қимылдары</string>
+    <string name="setting_swipe_gestures_hint_description">Жоғары/төмен/солға сырғытудың әрқайсысы кез келген әрекетті аша алады. Music playing немесе No playback үшін баптау үшін осы жерді түртіңіз. Оңға сырғыту қолданбадан шығуға арналған болып қалады.</string>
+    <string name="setting_screen_buttons_hint">Шағын түймелер</string>
+    <string name="setting_screen_buttons_hint_description">Үшке дейін көрінетін түйме, әрқайсысында түрту және ұзақ басу әрекеттері бар. Music playing немесе No playback үшін баптау үшін осы жерді түртіңіз.</string>
+    <string name="dev_screen_buttons_offset">Шағын түймелер орны</string>
+    <string name="dev_screen_buttons_offset_description">Сағат экранының төменгі жағы мен шағын түймелер арасындағы dp бірлігіндегі қалаулы қашықтық (әдепкі 42). Ұзын атаулар болса, жол өздігінен ығысады.</string>
+    <string name="setting_screen_buttons_tilt">Түйме көлбеулігі</string>
+    <string name="setting_screen_buttons_tilt_description">Бүйірлік түймелер экран иілуін қаншалықты қайталайды. 0 = түзу жол; 100 = көлбеу белгішелері бар толық доға.</string>
+    <string name="setting_screen_buttons_bg">Шағын түймелер фоны</string>
+    <string name="setting_screen_buttons_opacity">Шағын түймелер мөлдірлігі</string>
+    <string name="setting_screen_buttons_opacity_description">Бүкіл шағын түймелер тобының мөлдірлігі (0–100%%). Қазір <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Жылдам әрекеттер панелі</string>
+    <string name="quick_panel_link_summary">Ашу үшін сағат экранының ортасын екі рет түртіңіз. Actions ішінде төрт ұясын баптау үшін осы жерді түртіңіз.</string>
+    <string name="quick_panel_config_hint">Бұл — сағат экранының ортасын екі рет түрткенде ашылатын панель түймелері. Әрекетін таңдау үшін жолды түртіңіз (\"Ешқайсысы\" оны жасырады); әдепкіні қайтару үшін ұзақ басыңыз.</string>
+    <string name="quick_panel_slot_1">Түйме 1</string>
+    <string name="quick_panel_slot_2">Түйме 2</string>
+    <string name="quick_panel_slot_3">Түйме 3</string>
+    <string name="quick_panel_slot_long">Ұзын түйме</string>
+    <string name="quick_panel_slot_default">%1$s (әдепкі)</string>
+    <string name="quick_panel_slot_hidden">Жасырын</string>
+    <string name="quick_panel_default_like">Ұнату</string>
+    <string name="quick_panel_default_shuffle">Араластырып ойнату</string>
+    <string name="quick_panel_default_repeat">Қайталау</string>
+    <string name="quick_panel_default_up_next">Келесі</string>
+    <string name="setting_wear_center_long_press_queue">Кезек үшін ортаны ұзақ басу</string>
+    <string name="setting_wear_center_long_press_queue_description">Ойнату кезегін ашу үшін қазір ойнатылып жатқан экранның ортасын ұзақ басыңыз.</string>
+    <string name="setting_wear_center_long_press">Ортаны ұзақ басу</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Сағат циферблатын өзгерту</item>
+        <item>Кезекті ашу</item>
+        <item>Ештеңе</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Негізгі орналасу</string>
+    <string name="setting_wear_screen_face_description">Осы тақырып қолданатын құрылымды таңдаңыз. Сақталған тақырыптар бұл орналасуды өз қаріптері, түстері, бұлыңғырлығы, көлеңкесі, AOD және панельдерімен біріктіре алады.</string>
+    <string name="setting_wear_show_track_title">Ән атауын көрсету</string>
+    <string name="setting_wear_show_track_title_description">Ойнатқышта ағымдағы ән атауын көрсету</string>
+    <string name="setting_wear_show_track_artist">Орындаушы атын көрсету</string>
+    <string name="setting_wear_show_track_artist_description">Ойнатқышта ағымдағы орындаушыны көрсету</string>
+    <string name="setting_wear_show_source_icon">Ойнатып жатқан қолданба белгішесін көрсету</string>
+    <string name="setting_wear_show_source_icon_description">Орындаушының жанында қазір ойнатып жатқан қолданба белгішесін көрсету. Оның медиа хабарландыруындағы белгіше қолданылады. Өшірілсе, белгіше сағатқа ешқашан жіберілмейді.</string>
+    <string name="setting_wear_player_controls_visible">Ойнатқыш басқаруларын көрсету</string>
+    <string name="setting_wear_player_controls_visible_description">Classic, Poster, Studio және басқа бапталатын орналасулардағы кірістірілген түймелерді түрту аймақтарын өшірмей көрсету немесе жасыру</string>
+    <string name="setting_wear_quadrant_tap_flash">Түрткенде белгішені жыпылықтату</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Бұрыш аймағының әрекеті орындалғанда белгішесін қысқа уақыт толық жарықтықпен көрсету — әсіресе Hidden экран тақырыбында пайдалы, себебі онда белгіше көрінбейді және қай әрекет орындалғанын растау жоқ.</string>
+    <string name="setting_wear_internal_progress_visible">Орналасу прогресінің индикаторы</string>
+    <string name="setting_wear_internal_progress_visible_description">Осы орналасуға арналған қосымша прогресс индикаторын көрсету. Expressive және Material ойнату түймесінің сақиналары олардың басқаруларының бөлігі және қолжетімді болып қалады.</string>
+    <string name="setting_wear_edge_progress_visible">Жиек прогресс доғасын көрсету</string>
+    <string name="setting_wear_edge_progress_visible_description">Экран айналасындағы көрінетін доғаны ғана жасыру. Жиектен іздеу бөлек параметр болып қалады.</string>
+    <string name="setting_wear_edge_seek_enabled">Экран жиегінен трек бойынша жылжу</string>
+    <string name="setting_wear_edge_seek_enabled_description">Доға жасырын болса да, дәл нүктеге өту үшін экран жиегін түртіңіз немесе бойымен сүйреңіз</string>
+    <string name="setting_wear_screen_theme">Басқару стилі</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Теңгерімді</string>
+    <string name="wear_screen_theme_default_description">Стандартты иерархия және басқару өлшемдері.</string>
+    <string name="wear_screen_theme_minimal">Минимал</string>
+    <string name="wear_screen_theme_minimal_description">Барлық әрекетті көрінетін және қолдануға жарамды күйде сақтай отырып, кішірек әрі бәсең басқаруларды қолданады.</string>
+    <string name="wear_screen_theme_compact">Ықшам</string>
+    <string name="wear_screen_theme_compact_description">Әрекеттеріңізді өзгертпей, тығыз басқару стилін қолданады.</string>
+    <string name="wear_screen_theme_cinema">Кино</string>
+    <string name="wear_screen_theme_cinema_description">Суретті өзгертпей басқаруларды жұмсартады.</string>
+    <string name="wear_screen_theme_vivid">Жарқын</string>
+    <string name="wear_screen_theme_vivid_description">Үлкенірек әрі айқын басқаруларды қолданады.</string>
+    <string name="wear_screen_theme_contrast">Жоғары контраст</string>
+    <string name="wear_screen_theme_contrast_description">Оңай оқу үшін үлкенірек басқаруларды қолданады.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Ықшам, сәл күңгірт басқаруларды қолданады. Фонның өзін күңгірттемейді — ол үшін фон баптауларын пайдаланыңыз.</string>
+    <string name="wear_screen_theme_hidden">Жасырын</string>
+    <string name="wear_screen_theme_hidden_description">Барлық басқару белгішесін толығымен жасырады. Түрту аймақтары белсенді және толық жұмыс істейді.</string>
+    <string name="setting_wear_font">Қаріп гарнитурасы</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Қолданбаның әдепкі қаріп гарнитурасы.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Ені, оптикалық өлшемі, grade және дөңгелектігі реттелетін Google Sans айнымалы нұсқасы — төмендегі ось басқаруларын ашады.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Android жүйесінің классикалық қаріп гарнитурасы.</string>
+    <string name="wear_font_rounded">Дөңгелектелген</string>
+    <string name="wear_font_rounded_description">Жұмсақ дөңгелек ұштары бар заманауи әрі жылы әріп пішіндері.</string>
+    <string name="wear_font_sans_light">Заманауи жеңіл</string>
+    <string name="wear_font_sans_light_description">Көрнекі салмағы жеңіл, таза әрі кең sans-serif.</string>
+    <string name="wear_font_sans_thin">Өте жіңішке</string>
+    <string name="wear_font_sans_thin_description">Минимал ойнатқышқа арналған өте жеңіл дисплей стилі.</string>
+    <string name="wear_font_sans_medium">Заманауи орташа</string>
+    <string name="wear_font_sans_medium_description">Күштірек, ықшам штрихтары бар анық sans-serif.</string>
+    <string name="wear_font_sans_black">Қалың</string>
+    <string name="wear_font_sans_black_description">Ең жоғары визуалды әсері бар қалың дисплей қарпі.</string>
+    <string name="wear_font_small_caps">Шағын бас әріптер</string>
+    <string name="wear_font_small_caps_description">Редакциялық әсері бар ықшам бас әріп пішіндері.</string>
+    <string name="wear_font_casual">Еркін</string>
+    <string name="wear_font_casual_description">Ойыншыл қолжазба жүйелік қарпі.</string>
+    <string name="wear_font_typewriter">Баспа машинасы (мұрағатталған)</string>
+    <string name="wear_font_typewriter_description">Ретро баспа машинасы көрінісі (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Circular рухындағы тегін (OFL) балама — дөңгелек геометриялық sans.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Proxima Nova рухындағы тегін (OFL) балама — таза геометриялық sans.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Optima рухындағы тегін (OFL) балама — әсем humanist roman.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Жұмсағырақ баспа машинасы стилі (Love Letter Typewriter) — әдетте \"Lain\" тақырыбындағы тректерге арналған.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Классикалық serif қаріп гарнитурасы.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">Ерекше редакциялық/терминал көрінісі бар ені бірдей serif әріптер.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">Ені бірдей, техникалық көрініс.</string>
+    <string name="wear_font_condensed">Ықшамдалған</string>
+    <string name="wear_font_condensed_description">Көбірек мәтін сыйғызатын тар әріп пішіндері.</string>
+    <string name="wear_font_condensed_light">Ықшамдалған жеңіл</string>
+    <string name="wear_font_condensed_light_description">Ұзын атауларға арналған тар, жеңіл қаріп.</string>
+    <string name="wear_font_condensed_medium">Ықшамдалған орташа</string>
+    <string name="wear_font_condensed_medium_description">Күштірек штрихтары және тамаша оқылымдылығы бар тар қаріп.</string>
+    <string name="wear_font_cursive">Курсив</string>
+    <string name="wear_font_cursive_description">Сәндік жазба қаріп.</string>
+    <string name="setting_wear_dynamic_accent">Сағаттағы динамикалық екпін</string>
+    <string name="setting_wear_dynamic_accent_description">Альбомға негізделген сағат түстерін ағымдағы мұқаба суретіне бейімдеу. Өшірілсе, Album color таңдаулары тақырыптың тұрақты екпін түсін пайдаланады.</string>
+    <string name="setting_wear_album_art_fade">Альбом суретінің біртіндеп ауысуы</string>
+    <string name="setting_wear_album_art_fade_description">Трек өзгергенде альбом суретін бірқалыпты өшіру арқылы ауыстыру.</string>
+    <string name="setting_wear_title_text_mode">Атау мәтінінің әрекеті</string>
+    <string name="setting_wear_title_text_mode_description">Қазір ойнатылып жатқан атау сыймай қалғанда қалай әрекет етеді: Automatic кішірейту, жолға бөлу және айналдыруды біріктіреді; басқа параметрлер бір ғана әрекетті қолданады.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Автоматты (кішірейту, кейін жолға бөлу, кейін айналдыру)</item>
+        <item>Айналдыру (marquee)</item>
+        <item>Екі жолға бөлу</item>
+        <item>Үш жолға бөлу</item>
+        <item>Бес жолға бөлу</item>
+        <item>Тұрақты (бір жол, айналдыру не кішірейту жоқ)</item>
+        <item>Сыйғанша кішірейту</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Орындаушы мәтінінің түсі</string>
+    <string name="setting_wear_artist_custom_color">Орындаушының арнаулы түсі</string>
+    <string name="setting_wear_artist_custom_color_description">Normal өңдеуінде қолданылатын орындаушы түсін таңдаңыз</string>
+    <string name="setting_wear_artist_desaturated">Қанықтығы төмен орындаушы түсі</string>
+    <string name="setting_wear_artist_desaturated_description">Альбомға негізделген орындаушы мәтінінің түсін жұмсарту — тек \"Орындаушы мәтінінің түсі\" Album color мәніне қойылғанда қолданылады</string>
+
+    <string name="setting_wear_progress_color">Прогресс жолағының түсі</string>
+    <string name="setting_wear_progress_custom_color">Прогресс жолағының арнаулы түсі</string>
+    <string name="setting_wear_progress_custom_color_description">Normal өңдеуінде қолданылатын прогресс және іздеу түсін таңдаңыз</string>
+    <string name="setting_wear_progress_desaturated">Қанықтығы төмен прогресс түсі</string>
+    <string name="setting_wear_progress_desaturated_description">Альбомға негізделген прогресс жолағының түсін жұмсарту — тек \"Прогресс жолағының түсі\" Album color мәніне қойылғанда қолданылады</string>
+
+    <string name="setting_wear_volume_color">Дыбыс жолағының түсі</string>
+    <string name="setting_wear_volume_custom_color">Дыбыстың арнаулы түсі</string>
+    <string name="setting_wear_volume_custom_color_description">Normal өңдеуінде қолданылатын дыбыс түсін таңдаңыз</string>
+    <string name="setting_wear_quick_panel_color">Quick Actions түсі</string>
+    <string name="setting_wear_quick_panel_custom_color">Quick Actions арнаулы түсі</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Normal өңдеуінде қолданылатын Quick Actions түсін таңдаңыз</string>
+    <string name="setting_wear_shading_custom_color_description">Көлеңке градиентін бояйтын түсті таңдаңыз</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Бейтарап (тұрақты тақырып түсі)</item>
+        <item>Альбом түсі</item>
+        <item>Арнаулы түс</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Классикалық</item>
+        <item>Экспрессивті</item>
+        <item>Винил</item>
+        <item>Постер</item>
+        <item>Студия</item>
+        <item>Гало</item>
+        <item>Аврора</item>
+        <item>AMOLED тұтылуы</item>
+        <item>Спектр</item>
+        <item>Материал</item>
+        <item>Иммерсивті</item>
+        <item>Тереңдік</item>
+        <item>Карусель</item>
+        <item>Чат</item>
+        <item>Бөлінген</item>
+        <item>Жазба</item>
+        <item>Өлең</item>
+        <item>Метадеректер</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Expressive іздеу</string>
+    <string name="setting_wear_expressive_seek_mode_description">Expressive циферблатында тректі түрту арқылы қалай жылжыту керек. Central ring ойнату түймесінің айналасындағы сақинаны сүйреуге мүмкіндік береді; Edge ring Classic жиек сақинасын да көрсетеді; None іздеуді тек айналмалы тәжге қалдырады.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Орталық сақина</item>
+        <item>Жиек сақинасы</item>
+        <item>Ешқайсысы</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Әрдайым қосулы дисплей</string>
+    <string name="setting_wear_aod_style">Әрдайым қосулы стиль</string>
+    <string name="setting_wear_aod_style_description">Сағат қоршаған режимде болғанда қазір ойнатылып жатқан экранның көрінісі. Follow face таңдалған циферблатқа сәйкес келеді; Minimal батареяның ең ұзақ жұмысы үшін таза қара фонда тек күңгірт мәтінді көрсетеді.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Циферблатты қолдану</item>
+        <item>Классикалық</item>
+        <item>Expressive (жиектелген)</item>
+        <item>Material (жиектелген)</item>
+        <item>AMOLED басқарулары</item>
+        <item>Chrono (үлкен сағат)</item>
+        <item>Постер</item>
+        <item>Студия</item>
+        <item>Иммерсивті</item>
+        <item>Карусель</item>
+        <item>Чат</item>
+        <item>Бөлінген</item>
+        <item>Жазба</item>
+        <item>Өлең</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Әрдайым қосулы түс</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Ақ</item>
+        <item>Альбом түсі</item>
+        <item>Арнаулы түс</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Ақ</item>
+        <item>Динамикалық (сағат астындағы аймақ бойынша)</item>
+        <item>Альбом түсі</item>
+        <item>Арнаулы түс</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Панель стилін қолдану</item>
+        <item>Мөлдір (фон жоқ)</item>
+        <item>Альбом екпіні</item>
+        <item>Жартылай мөлдір</item>
+        <item>Ақ</item>
+        <item>Күңгірт ақ</item>
+        <item>Қара</item>
+        <item>Динамикалық (альбом реңкі)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Up Next жапсырмасының фоны</string>
+    <string name="setting_wear_show_up_next_pill">Ойнатқыштағы Up Next жапсырмасы</string>
+    <string name="setting_wear_show_up_next_pill_description">Қазір ойнатылып жатқан экранның төменгі жағында Up Next жапсырмасын көрсету. Ол шағын түймелер жолы алатын орынды толтырады, сондықтан сол жол көрінбегенде ғана шығады.</string>
+    <string name="category_wf_clock">Сағат</string>
+    <string name="setting_wear_clock_color">Сағат түсі</string>
+    <string name="setting_wear_clock_custom_color">Сағаттың арнаулы түсі</string>
+    <string name="setting_wear_clock_custom_color_description">Clock color параметрі Custom color мәніне қойылғанда қолданылатын сағат түсін таңдау үшін түртіңіз</string>
+    <string name="setting_wear_clock_opacity">Сағат мөлдірлігі</string>
+    <string name="setting_wear_clock_opacity_description">Әрдайым көрсетілетін сағаттың мөлдірлігі (10–100%%). Қазір <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Әрдайым қосулы арнаулы түс</string>
+    <string name="setting_wear_aod_custom_color_description">\"Always-on color\" Custom color мәніне қойылғанда әрдайым қосулы мәтін, басқару және сағат үшін қолданылатын түсті таңдау үшін түртіңіз</string>
+    <string name="setting_wear_aod_intensity">Әрдайым қосулы жарықтық</string>
+    <string name="setting_wear_aod_intensity_description">Әрдайым қосулы дисплейдің жарықтығы (20–100%%). Төмен мән күңгірттеу және батареяны азырақ жұмсайды. Қазір <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Әрдайым қосулы дисплейдегі тасымалдау түймелері</string>
+    <string name="setting_wear_aod_show_transport_description">Қолдау көрсетілетін визуалды әрдайым қосулы стильдерде жиектелген алдыңғы/ойнату/келесі түймелерін көрсету. Экран күңгірт кезде оларды түртуге болмайды, бірақ түрту сағатты оятады және түйме саусағыңыздың астында дайын тұрады.</string>
+    <string name="setting_wear_aod_show_progress">Әрдайым қосулы дисплейдегі прогресс сақинасы</string>
+    <string name="setting_wear_aod_show_progress_description">Қоршаған режимде ойнату түймесінің айналасында прогресс сақинасын көрсету — ондағы орын шамамен минутына бір рет жаңарады</string>
+    <string name="setting_wear_aod_show_pills">Әрдайым қосулы дисплейдегі Up Next</string>
+    <string name="setting_wear_aod_show_pills_description">Визуалды әрдайым қосулы стильдердің төменгі жағында статикалық жиектелген Up Next жапсырмасын көрсету</string>
+    <string name="category_wf_gestures">Экран қимылдары</string>
+    <string name="setting_wear_mini_buttons_mode">Шағын түймелерді көрсету</string>
+    <string name="setting_wear_gestures_mode">Экран қимылдары</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Әрдайым</item>
+        <item>Тек ойнату кезінде</item>
+        <item>Тек кідіртілгенде</item>
+        <item>Ешқашан</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Әрдайым қосулы дисплейдегі альбом суреті</string>
+    <string name="setting_wear_aod_show_art_description">Қоршаған режимде күңгірт альбом суретін көрінетін күйде сақтау. Өшірсеңіз, таза қара фон көрсетіледі, бұл AMOLED экрандарында батареяны айтарлықтай үнемдейді.</string>
+    <string name="setting_wear_aod_art_treatment">Әрдайым қосулы альбом суретінің стилі</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Жұмсақ бұлыңғырлау</item>
+        <item>Анық мұқаба</item>
+        <item>Монохром бұлыңғырлау</item>
+        <item>Ойнатқыш суретін өңдеуді қолдану</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Әрдайым қосулы дисплейдегі сағат</string>
+    <string name="setting_wear_aod_show_clock_description">Сағат қоршаған режимде болғанда сағатты көрсету</string>
+    <string name="setting_wear_aod_show_track_info">Әрдайым қосулы дисплейдегі трек ақпараты</string>
+    <string name="setting_wear_aod_show_track_info_description">Қоршаған режимде трек атауы мен орындаушыны көрсету</string>
+
+    <string name="category_overlays_queue">Қабаттар және кезек</string>
+    <string name="category_wf_panel_shared">Ортақ панель көрінісі</string>
+    <string name="category_wf_panel_volume">Дыбыс панелі</string>
+    <string name="category_wf_panel_seek">Прогресс және іздеу панелі</string>
+    <string name="category_wf_panel_quick">Жылдам әрекеттер панелі</string>
+    <string name="category_wf_panel_queue">Кезек және тізімдер</string>
+    <string name="category_wf_panel_effects">Панель әсерлері</string>
+    <string name="setting_wear_overlay_backdrop_style">Панель фоны</string>
+    <string name="setting_wear_volume_style">Дыбыс стилі</string>
+    <string name="setting_wear_volume_layout">Дыбыс орналасуы</string>
+    <string name="setting_wear_quick_panel_style">Жылдам панель стилі</string>
+    <string name="setting_wear_quick_panel_layout">Жылдам панель орналасуы</string>
+    <string name="setting_wear_quick_panel_source">Жылдам әрекеттер</string>
+    <string name="setting_wear_quick_panel_source_description">Бапталған түймелеріңізді немесе қазір ойнатып жатқан қолданба ұсынған әрекеттерді таңдаңыз.</string>
+    <string name="quick_panel_open_note_title">Панельді ашу</string>
+    <string name="quick_panel_open_note_description">Сағаттағы жылдам әрекеттер панелін ашу үшін қазір ойнатылып жатқан экранның ортасын екі рет түртіңіз.</string>
+    <string name="preview_current_app_action">Ағымдағы қолданба әрекеті</string>
+    <string name="preview_notification_controls">Медиа хабарландыру белгішесі</string>
+    <string name="setting_wear_queue_style">Кезек стилі</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Жарлық мұқабаларын фон ретінде пайдалану</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Queue style Cover нұсқасы болғанда, алынған жарлық мұқабасы (трек, ойнату тізімі, орындаушы…) бар жылдам панель әрекет жолы да Up Next сияқты жапсырмасын сол суретпен толтырады. Мұқабасы алынбаған жарлықтар (жай қолданба белгішесі) әсер етпейді.</string>
+    <string name="setting_wear_list_row_size">Тізім жапсырмасының өлшемі</string>
+    <string name="setting_wear_list_row_size_description">Кезек, мәзірлер және жылдам панельдегі толық ені бар жолдардың биіктігі.</string>
+    <string name="setting_wear_progress_gradient">Палитраны сақинаға араластыру</string>
+    <string name="setting_wear_progress_gradient_description">Көп реңкті түс өңдеуінде (Complementary, Triadic, Analogous, Duotone) тұтас сақина үш түстің барлығына біртіндеп ауысады. Альбом палитрасын басқа жерде сақтай отырып, бір түсті сақина үшін мұны өшіріңіз.</string>
+    <string name="setting_wear_progress_style">Прогресс сақинасының стилі</string>
+    <string name="setting_wear_seek_style">Іздеу және дыбыс көрсеткішінің стилі</string>
+    <string name="setting_wear_seek_layout">Іздеу панелінің орналасуы</string>
+    <string name="setting_wear_color_treatment">Сағат түсін өңдеу</string>
+    <string name="setting_wear_normal_color">Қалыпты түс</string>
+    <string name="setting_wear_normal_color_description">Normal режимінде атау екпіні, прогресс, дыбыс, панельдер және шағын түйме жиектері үшін қолданылатын бір түсті таңдаңыз</string>
+    <string name="setting_wear_normal_color_multi">Түстер палитрасын пайдалану</string>
+    <string name="setting_wear_normal_color_multi_description">Қосулы болса, экран негізгі түс пен екі қосымша реңкті қолданады. Өшірулі болса, барлық жерде бір ғана түс қолданылады — альбомның өз түсі немесе сіз таңдаған түс.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Қалыпты (таңдалған түс)</item>
+        <item>Қанықтығы төмен (жұмсақ альбом түсі)</item>
+        <item>Expressive (толық альбом палитрасы)</item>
+        <item>Қосымша (альбом + қарама-қарсы)</item>
+        <item>Үштік (үш альбом реңкі)</item>
+        <item>Ұқсас (көршілес реңктер)</item>
+        <item>Монохром (бір реңк, үш тон)</item>
+        <item>Дуотон (екі альбом түсі)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Сағат өңдеуін қолдану</item>
+        <item>Қалыпты (таңдалған түс)</item>
+        <item>Қанықтығы төмен (жұмсақ альбом түсі)</item>
+        <item>Expressive (толық альбом палитрасы)</item>
+        <item>Қосымша (альбом + қарама-қарсы)</item>
+        <item>Үштік (үш альбом реңкі)</item>
+        <item>Ұқсас (көршілес реңктер)</item>
+        <item>Монохром (бір реңк, үш тон)</item>
+        <item>Дуотон (екі альбом түсі)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Атау қалыңдығы</string>
+    <string name="setting_wear_title_font_italic">Көлбеу атау</string>
+    <string name="setting_wear_title_font_scale">Атау өлшемі</string>
+    <string name="setting_wear_title_font_opacity">Атау мөлдірлігі</string>
+    <string name="setting_wear_title_font_tracking">Атау әріптерінің аралығы</string>
+    <string name="setting_wear_title_color">Атау мәтінінің түсі</string>
+    <string name="setting_wear_title_custom_color">Атаудың арнаулы түсі</string>
+    <string name="wear_title_color_face_default">Циферблат әдепкісі (дизайн бойынша)</string>
+    <string name="setting_wear_title_adaptive_contrast">Контраст үшін атау түсін бейімдеу</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Атау түсі артындағы суретке тым жақын болса, реңкін сақтай отырып оны ашық немесе күңгірт етеді. Атау циферблаттың әдепкі түсінде болса, әсер етпейді.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Контраст үшін орындаушы түсін бейімдеу</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Альбом түсі артындағы суретке тым жақын болса, орындаушы жолының реңкін сақтай отырып оны ашық немесе күңгірт етеді. Бүкіл мұқабаны емес, жол орналасқан жолағын ғана өлшейді.</string>
+    <string name="setting_wear_artist_font_weight">Орындаушы қалыңдығы</string>
+    <string name="setting_wear_artist_font_italic">Көлбеу орындаушы</string>
+    <string name="setting_wear_artist_font_scale">Орындаушы өлшемі</string>
+    <string name="setting_wear_artist_font_opacity">Орындаушы мөлдірлігі</string>
+    <string name="setting_wear_artist_font_tracking">Орындаушы әріптерінің аралығы</string>
+    <string name="setting_wear_source_icon_scale">Қолданба белгішесінің өлшемі</string>
+    <string name="setting_wear_source_icon_opacity">Қолданба белгішесінің мөлдірлігі</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 — циферблаттың қалыпты қалыңдығы; жоғарысы қалыңырақ. Google Sans Flex үшін бұл қаріптің өз weight осі</string>
+    <string name="setting_wear_typography_scale_description">Циферблаттың өз өлшемінің пайызы (70–140). 100 әр орналасудың жобаланған өлшемін сақтайды</string>
+    <string name="setting_wear_typography_opacity_description">Пайыз (20–100). 100 циферблаттың өз мөлдірлігін сақтайды</string>
+    <string name="setting_wear_typography_tracking_description">Әріптер арасындағы қосымша бос орын, em-нің жүзден бір бөлігінде (−5-тен 20-ға дейін). 0 қаріптің өз аралығын сақтайды</string>
+    <string name="setting_wear_color_modifier">Реңк</string>
+    <string name="setting_wear_color_modifier_description">Палитраның қалай алынатынын өзгертпей түгел реттеңіз — барлық түс өңдеуімен жұмыс істейді</string>
+    <string name="setting_wear_color_hue_shift">Түс ығысуы</string>
+    <string name="setting_wear_color_hue_shift_description">Альбом палитрасын түс шеңбері бойымен градуспен (0–359) бұрады. Әр өңдеу негізгі түсін альбомның өз реңкінде ұстайды, сондықтан оны осы параметр өзгертеді. 0 альбом түсін сол күйінде пайдаланады; тұрақты Normal түс ешқашан ығыспайды.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Ешқайсысы</item>
+        <item>Жарқын</item>
+        <item>Пастель</item>
+        <item>Жылы</item>
+        <item>Салқын</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Жиек доғасы (сол)</item>
+        <item>Жиек доғасы (биік)</item>
+        <item>Жиек доғасы (оң)</item>
+        <item>Жиек доғасы (жоғары)</item>
+        <item>Жиек доғасы (төмен)</item>
+        <item>Толық сақина</item>
+        <item>Орталық гало</item>
+        <item>Көлденең өлшегіш</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Жиек сақинасы</item>
+        <item>Жиек сақинасы (жіңішке)</item>
+        <item>Жиек сақинасы (қалың)</item>
+        <item>Уақыт шкаласы</item>
+        <item>Сегменттелген уақыт шкаласы</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Алдымен метадеректер</item>
+        <item>Доға</item>
+        <item>Негізгі</item>
+        <item>Тор</item>
+        <item>Белгіленген жолдар</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Тұтас</item>
+        <item>Үзік</item>
+        <item>Нүктелер</item>
+        <item>Жіңішке сызық</item>
+        <item>Комета</item>
+        <item>60 сағат нүктесі</item>
+        <item>60 сағат белгісі</item>
+        <item>12 сағат сегменттері</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Қарапайым</item>
+        <item>Шыны жапсырма</item>
+        <item>Expressive жапсырма</item>
+        <item>Material жапсырма</item>
+        <item>Ақ жапсырма</item>
+        <item>Алып</item>
+        <item>Орын / барлығы</item>
+        <item>Ақ шыны</item>
+        <item>Жартылай мөлдір альбом</item>
+        <item>Альбом жарқылы</item>
+        <item>Жиек</item>
+        <item>Тұтас тақырып</item>
+        <item>Тұтас альбом</item>
+        <item>Микро</item>
+        <item>Көлеңке (жиексіз)</item>
+        <item>Асты сызылған</item>
+        <item>Жіңішке жиек</item>
+        <item>Алып альбом түсі</item>
+        <item>Моно</item>
+        <item>Қараңғы тондық</item>
+        <item>Терминал</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Бапталған түймелер</item>
+        <item>Ағымдағы медиа қолданбадан</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Панель стилін қолдану</item>
+        <item>Альбом бұлыңғырлығы (акрил)</item>
+        <item>Тұтас қара</item>
+        <item>Тұтас альбом түсі</item>
+        <item>Шыны</item>
+        <item>Альбом градиенті</item>
+        <item>Альбом дуотоны</item>
+        <item>Призма</item>
+        <item>Сұйық шыны</item>
+        <item>Expressive бұлыңғырлығы</item>
+        <item>Экспрессивті</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Шыны</item>
+        <item>Минимал (AMOLED)</item>
+        <item>Материал</item>
+        <item>Тондық</item>
+        <item>Неон</item>
+        <item>Ашық</item>
+        <item>Градиент</item>
+        <item>Моно</item>
+        <item>Жиек</item>
+        <item>Дуотон</item>
+        <item>Призма</item>
+        <item>Жоғары контраст</item>
+        <item>Терминал</item>
+        <item>Қырау</item>
+        <item>Сегменттер</item>
+        <item>Аврора</item>
+        <item>Сия</item>
+        <item>Ойық</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Ықшам</item>
+        <item>Қалыпты</item>
+        <item>Биік</item>
+        <item>Өте биік</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Шыны</item>
+        <item>Минимал (AMOLED)</item>
+        <item>Материал</item>
+        <item>Тондық</item>
+        <item>Неон</item>
+        <item>Ашық</item>
+        <item>Градиент</item>
+        <item>Моно</item>
+        <item>Жиек</item>
+        <item>Дуотон</item>
+        <item>Призма</item>
+        <item>Жоғары контраст</item>
+        <item>Терминал</item>
+        <item>Қырау</item>
+        <item>Мұқаба</item>
+            <item>Мұқаба бұлыңғырлығы</item>
+        <item>Мұқаба тондық</item>
+        <item>Шаршы мұқаба</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Шыны</item>
+        <item>Ақ шыны</item>
+        <item>Тондық шыны</item>
+        <item>Минимал (AMOLED)</item>
+        <item>Материал</item>
+        <item>Тондық</item>
+        <item>Неон</item>
+        <item>Ашық</item>
+        <item>Градиент</item>
+        <item>Моно</item>
+        <item>Жиек</item>
+        <item>Ақ шыны жиек</item>
+        <item>Дуотон</item>
+        <item>Призма</item>
+        <item>Жоғары контраст</item>
+        <item>Терминал</item>
+        <item>Қырау</item>
+        <item>Елес (жиексіз)</item>
+        <item>Тұман</item>
+        <item>Сия</item>
+        <item>Нүкте</item>
+        <item>Плита</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Кідірткеннен кейін қолданбаны белсенді ұстау</string>
+    <string name="setting_wear_paused_hold_description">Кідірткеннен кейін вахт қолданбасы циферблаттан қанша уақыт қолжетімді қалады, осылайша қайта ашпай-ақ білегіңізді көтеріп жалғастыра аласыз. Ұзағырақ баптаулар фондық қызметті жұмыс істетіп қояды.</string>
+    <string name="wear_paused_hold_off">Ұстамау</string>
+    <string name="wear_paused_hold_5">5 минут</string>
+    <string name="wear_paused_hold_15">15 минут</string>
+    <string name="wear_paused_hold_30">30 минут</string>
+    <string name="wear_paused_hold_60">1 сағат</string>
+    <string name="wear_paused_hold_always">Ойнату аяқталғанша</string>
+
+    <string name="setting_wear_idle_button_action">Ештеңе ойнатылмай тұрғандағы түйме</string>
+    <string name="setting_wear_idle_auto_open">Ештеңе ойнатылмағанда ашу</string>
+    <string name="setting_wear_idle_auto_open_description">Музыка ойнатылмай тұрғанда сағат қолданбасын ашсаңыз, бірден осы экранға өтеді.</string>
+    <string name="wear_idle_action_resume">Соңғы қолданбаны жалғастыру</string>
+    <string name="wear_idle_action_shortcuts">Ойнату тізімі жарлықтары</string>
+    <string name="wear_idle_action_menu">Әрекеттер мәзірі</string>
+    <string name="wear_idle_action_search">Іздеу</string>
+    <string name="wear_idle_action_queue">Жуырда ойнатылған</string>
+    <string name="wear_idle_action_none">Түйме жоқ</string>
+    <string name="wear_idle_auto_open_none">Ойнатқышта қалу</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Кітапхананы шолу</string>
+    <string name="library_up">Артқа</string>
+    <string name="error_library_unavailable">Бұл қолданбада шолуға болатын кітапхана жоқ</string>
+    <string name="error_library_empty">Мұнда ештеңе жоқ</string>
+    <string name="error_library_no_player">Алдымен бірдеңе ойнатыңыз</string>
+
+    <string name="setting_wear_carousel_card_shape">Карусель картасының пішіні</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Дөңгелектелген</item>
+        <item>Шаршы</item>
+        <item>Жұмыр шаршы</item>
+        <item>Шеңбер</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Қаріпті барлық жерде пайдалану</string>
+    <string name="setting_wear_font_all_screens_description">Таңдалған қаріпті тек ойнатқышқа емес, мәзірлерге, кезекке және Quick actions бөліміне де қолданады. Дисплей және қолжазба қаріптерін тізімде оқу қиындауы мүмкін.</string>
+
+    <string name="setting_wear_clock_font">Сағат қарпі</string>
+    <string name="wear_clock_font_follow">Трек қарпын қолдану</string>
+    <string name="setting_wear_lyrics_font">Ән мәтінінің қарпі</string>
+    <string name="setting_wear_lyrics_font_description">Ән сөздеріне арналған қаріп, ән мәтіні экранында және Verse циферблатында. Мұнда басқа қаріп таңдамасаңыз, трек қарпын қолданады.</string>
+    <string name="wear_lyrics_font_follow">Трек қарпын қолдану</string>
+    <string name="setting_wear_clock_font_weight">Сағат қалыңдығы</string>
+    <string name="setting_wear_clock_font_italic">Көлбеу сағат</string>
+    <string name="setting_wear_clock_font_scale">Сағат өлшемі</string>
+    <string name="setting_wear_clock_font_tracking">Сағат әріптерінің аралығы</string>
+    <string name="setting_wear_clock_adaptive_contrast">Контраст үшін сағат түсін бейімдеу</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Альбом түсі артындағы суретке тым жақын болса, реңкін сақтай отырып сағатты ашық немесе күңгірт етеді. Тек сағат түсі Album color мәніне қойылғанда қолданылады.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Ықшамдалған бас әріпті дисплей — постер секілді, ұзын атауларға сыйымды</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Жоғары контрастты редакциялық serif — журнал әсері</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Ерекше бөлшектері бар техникалық геометриялық sans</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Шаршы sci-fi дисплей — батыл және футуристік</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Қолжазба стиль — еркін және жеке</string>
+    <string name="setting_wear_track_time_mode">Трек уақытын көрсету</string>
+    <string name="setting_wear_track_time_mode_description">Қазір ойнатылып жатқан экранда трек орны (мысалы, 1:23 / 3:45) қашан көрсетілетіні.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Әрдайым</item>
+        <item>Тек ойнату кезінде</item>
+        <item>Тек кідіртілгенде</item>
+        <item>Ешқашан</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Шағын түймелер иілімі</string>
+    <string name="setting_screen_buttons_curve_description">Шағын түймелер иілу стилін таңдаңыз: жазық, доға, жұмсақ, иілген.</string>
+    <string name="setting_screen_buttons_shape">Шағын түймелер пішіні</string>
+    <string name="setting_screen_buttons_shape_description">Шағын түймелердің пішіні мен орналасу форматын таңдаңыз.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Жапсырма (Әдепкі)</item>
+        <item>Шеңбер</item>
+        <item>Шаршы</item>
+        <item>Дөңгелек шаршы (Жұмсақ)</item>
+        <item>Дөңгелек шаршы (Орташа)</item>
+        <item>Жұмыр шаршы</item>
+        <item>Жапырақ</item>
+        <item>Тамшы</item>
+        <item>Жапсырма (Кең шағын)</item>
+        <item>Жапсырма (Кең орташа)</item>
+        <item>Жапсырма (Кең үлкен)</item>
+        <item>Жапсырма (Кең өте үлкен)</item>
+        <item>Дөңгелек тіктөртбұрыш (Шағын)</item>
+        <item>Дөңгелек тіктөртбұрыш (Орташа)</item>
+        <item>Дөңгелек тіктөртбұрыш (Үлкен)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Жазық</item>
+        <item>Доға</item>
+        <item>Жеңіл иілім</item>
+        <item>Жұмсақ иілім</item>
+        <item>Орташа иілім</item>
+        <item>Иілген</item>
+        <item>Қатты иілген</item>
+        <item>Жиектерге дейін тарату</item>
+        <item>Сол жақ жиек</item>
+        <item>Оң жақ жиек</item>
+        <item>Екі жиек</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Әдепкі фон</item>
+        <item>Шыны (біркелкі)</item>
+        <item>Шыны (ашық)</item>
+        <item>Жартылай мөлдір альбом</item>
+        <item>Жартылай мөлдір Exp альбом</item>
+        <item>Альбом жарқылы</item>
+        <item>Exp жарқылы</item>
+        <item>Тұтас тақырып</item>
+        <item>Тұтас альбом</item>
+        <item>Тұтас Exp альбом</item>
+        <item>Жиек</item>
+        <item>Exp альбом жиегі</item>
+        <item>Тек белгіше (мөлдір)</item>
+        <item>Exp белгішесі</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Бейтарап</item>
+        <item>Альбом түсі</item>
+        <item>Арнаулы түс</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Толық мұқаба</item>
+        <item>Бұлыңғыр фон</item>
+        <item>Күңгірт жиектер</item>
+        <item>Шаршы (өткір бұрыштар)</item>
+        <item>Шаршы (жұмсақ бұрыштар)</item>
+        <item>Шаршы (дөңгелек бұрыштар)</item>
+        <item>Қара және ақ</item>
+        <item>Бұлыңғыр қара және ақ</item>
+        <item>Expressive бұлыңғырлығы</item>
+        <item>Экспрессивті</item>
+        <item>Material тондық градиент</item>
+        <item>Poster мұқабасы</item>
+        <item>Studio градиенті</item>
+        <item>Vinyl радиалды жарқылы</item>
+        <item>Halo жарқылы</item>
+        <item>Aurora таспалары</item>
+        <item>Spectrum градиенті</item>
+        <item>Corona сыпыруы</item>
+        <item>Ымырт өшуі</item>
+        <item>Гүлдеу</item>
+        <item>Көкжиек өшуі</item>
+        <item>Шоқ жарқылы</item>
+        <item>Eclipse AMOLED қара</item>
+        <item>Жасырын (тұтас қара)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Өшірулі</item>
+        <item>Музыка циферблатының белгішесін көрсету (тек Wear 3.0)</item>
+        <item>Svartifoss қолданбасын ашу</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Жабылу тайм-ауты</string>
+    <string name="setting_close_timeout_description"><![CDATA[<b>%1$s seconds</b>]]> бойы музыка ойнатылмаса, Svartifoss автоматты түрде жабылады. Тайм-аут 0 секундқа қойылғанда мүмкіндік өшіріледі. Батареяны үнемдеу үшін бұл параметр кейде дәл болмауы мүмкін және жабылу бір минутқа дейін кешігуі ықтимал.</string>
+    <string name="setting_wear_close_on_idle">\"Ештеңе ойнатылмайды\" кезінде жабу</string>
+    <string name="setting_wear_close_on_idle_description">Сағат қолданбасы бос \"Ештеңе ойнатылмайды\" экранына келгеннен шамамен бір минут кейін автоматты түрде жабылады, сондықтан ол онда қалып қоймайды. Бұл жоғарыдағы жабылу тайм-аутынан тәуелсіз; ол кідіртілген трекке арналған.</string>
+    <string name="category_notifications">Хабарландыру қалқымасы</string>
+    <string name="setting_enable_notifications">Хабарландыру қалқымасын көрсету</string>
+    <string name="setting_enable_notifications_description">Бұл мүмкіндікке хабарландыруларды басқару үшін басқа қолданба (Vibration Center for Wear) қажет.
+
+Vibration Center сағатты дірілдеткен сайын, Svartifoss хабарландыру мәтінінің қалқымасын көрсетеді, сондықтан Svartifoss-тан шықпай-ақ хабарландыруды тез қарай аласыз.</string>
+    <string name="setting_notification_timeout">Хабарландыру қалқымасының тайм-ауты</string>
+    <string name="setting_notification_timeout_description">Хабарландыру қалқымасы <![CDATA[<b>%1$s seconds</b>]]> кейін автоматты түрде жабылады. Автоматты жабуды өшіру үшін 0 енгізіңіз.</string>
+    <string name="app_required">Қолданба қажет</string>
+    <string name="vibration_center_required_description">Бұл мүмкіндікті пайдалану үшін басқа (тегін) қолданбаны орнату керек: Vibration Center for Wear.</string>
+    <string name="open_play_store">Play Store ашу</string>
+    <string name="error_no_notification_service_support">Кешіріңіз, құрылғыңыз хабарландыру қызметтерін қолдамайтын сияқты</string>
+    <string name="setting_always_select_center_action">Әрдайым ортаңғы әрекетті таңдау</string>
+    <string name="setting_always_select_center_action_description">Қосылғанда әрекеттер тізімін түрту әрдайым ортаңғы (белгіленген) параметрді таңдайды, қай параметрді түрткеніңізге қарамастан.</string>
+    <string name="change_icon">Белгішені өзгерту</string>
+    <string name="please_wait">Күте тұрыңыз</string>
+
+    <string name="error_playlist_not_supported">Бұл медиа қолданба қолдамайды</string>
+    <string name="error_search_no_results">Нәтиже табылмады</string>
+    <string name="seconds_to_skip">Алға өткізу секундтары:</string>
+    <string name="seconds_to_reverse">Артқа қайтару секундтары:</string>
+
+    <string name="setting_dynamic_accent_color">Динамикалық екпін түсі</string>
+    <string name="setting_dynamic_accent_color_description">Қосылғанда екпін түсі (SeekBar, белсенді кезек элементі) ағымдағы альбом суретінің басым түсіне автоматты бейімделеді.</string>
+    <string name="setting_desaturated_color">Қанықтығы төмен түс</string>
+    <string name="setting_desaturated_color_description">Белсенді тақырыпқа қарай жоғары оқылымдылық пен контрастты қамтамасыз ету үшін алынған түстің қанықтығы мен жарықтығын реттейді.</string>
+
+    <string name="queue_header">Ойнату кезегі</string>
+    <string name="queue_unavailable">Кезек қолжетімсіз</string>
+
+    <string name="setting_custom_accent_color">Екпін түсі</string>
+    <string name="setting_custom_accent_color_description">Қолданба интерфейсіне арнаулы екпін түсін таңдаңыз</string>
+    <string name="setting_mini_player">Шағын ойнатқыш</string>
+    <string name="setting_mini_player_description">Медиа белсенді кезде төменгі навигацияның үстінде тұрақты қазір ойнатылып жатқан жолақты көрсетеді. Әдепкіде қосулы; орынды қайтару үшін өшіріңіз.</string>
+    <string name="color_picker_title">Екпін түсін таңдау</string>
+    <string name="color_picker_reset">Қалпына келтіру</string>
+    <string name="color_picker_apply">Қолдану</string>
+    <string name="color_picker_default">Әдепкі</string>
+    <string name="color_picker_invalid">Жарамсыз түс коды</string>
+    <string name="color_picker_current">Ағымдағы: %s</string>
+
+    <string name="drawer_version_format">Нұсқа %1$s</string>
+    <string name="drawer_tagline">Wear OS үшін серіктес қолданба</string>
+    <string name="drawer_about_heading">Ақпарат</string>
+    <string name="drawer_about_summary">Svartifoss Wear OS сағатыңыздан телефоныңыздағы музыканы басқаруға мүмкіндік береді — құрылғыңызға бейімделген толық бапталатын қашықтан басқару арқылы.</string>
+    <string name="drawer_name_heading">Атауы</string>
+    <string name="drawer_name_meaning">Svartifoss исланд тілінде “Black Falls” дегенді білдіреді — атауы Vatnajökull ұлттық паркіндегі қара базальт бағандары тар сарқыраманы қоршаған жерден алынған. Тас үстімен аққан судай, музыка қолданба арқылы ағады.</string>
+    <string name="drawer_sync_heading">Синхрондау</string>
+    <string name="drawer_sync_summary">Сағат баптаулары осы жерде телефонда конфигурацияланып, жұпталған сағатыңызға автоматты синхрондалады.</string>
+    <string name="drawer_support_heading">Қолдау</string>
+    <string name="drawer_support_summary">Svartifoss тегін және ашық бастапқы кодты — пайдалы болса, маған бір кофе алып беріңіз :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Мұқаба суретін жүктеп алу</string>
+    <string name="album_art_saved">Мұқаба суреті галереяға сақталды</string>
+    <string name="album_art_save_error">Мұқаба суретін сақтау сәтсіз аяқталды</string>
+
+    <string name="action_play_liked_songs">Ұнатқан әндерді ойнату (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Ұнатқан әндерді ойнату (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Ұнатқан тректерді ойнату (SoundCloud)</string>
+    <string name="action_my_playlists">Стриминг жарлықтары</string>
+    <string name="action_play_specific_playlist">Стриминг жарлығын ашу</string>
+    <string name="action_choose_or_add_streaming_shortcut">Стриминг жарлығын таңдау немесе қосу</string>
+    <string name="action_show_streaming_library">Барлық сақталған жарлықты көрсету</string>
+    <string name="playlist_shortcut_pick_title">Жарлықты таңдау</string>
+    <string name="playlist_shortcut_pick_empty">Әзірге стриминг жарлығы сақталмаған — төменде біреуін қосып, таңдау үшін түртіңіз</string>
+    <string name="playlist_shortcuts_empty">Әзірге стриминг жарлығы жоқ — оларды телефон қолданбасының баптауларында қосыңыз</string>
+    <string name="setting_playlist_shortcuts">Стриминг жарлықтары</string>
+    <string name="setting_playlist_shortcuts_description">Сағаттан YouTube Music, Spotify және басқа стриминг қолданбаларындағы бөлісу сілтемелерін ашу</string>
+    <string name="setting_shortcut_artwork">Жарлық суретін интернеттен алу</string>
+    <string name="setting_shortcut_artwork_description">Қызметтен әр сақталған жарлыққа нобай жүктеңіз; ол телефон тізімінде, сағат мәзірінде және тағайындалған түймелерде көрсетіледі. Әр нобай бір рет алынады; тек жалпыға ашық бөлісу сілтемесі жіберіледі. Әдепкіде өшірулі.</string>
+    <string name="setting_queue_local_artwork">Кітапханаңыздан кезек мұқабалары</string>
+    <string name="setting_queue_local_artwork_description">Жергілікті музыка ойнатқыштары кезек мұқабаларын кітапхана сілтемелері ретінде жариялайды. Сағат кезегінде көрсету үшін медиаға рұқсат беріңіз. Интернетке қатынау қолданылмайды.</string>
+    <string name="setting_queue_local_artwork_granted">Медиаға рұқсат берілді — жергілікті кезек мұқабалары көрсетіледі</string>
+    <string name="setting_queue_local_artwork_denied">Медиаға рұқсат берілмеді. Жергілікті кезек мұқабаларын көрсету үшін Android баптауларында қосыңыз.</string>
+    <string name="setting_queue_remote_artwork">Кезек мұқабаларын интернеттен алу</string>
+    <string name="setting_queue_remote_artwork_short_description">Стриминг қолданбалары (YouTube Music клиенттері, Echo Music…) кезек мұқабаларын сурет емес, сілтеме ретінде жариялайды, сондықтан бұл оларды жүктеп, кэшке сақтайды. Кезекті толық офлайн ұстау үшін өшіріңіз — онда бұл жолдар мұқабаны мүлде көрсетпейді.</string>
+    <string name="setting_queue_remote_artwork_description">Стриминг ойнатқыштары кезек мұқабаларын сурет емес, сілтеме ретінде жариялайды. Сағат кезегінде көрсету үшін әрқайсысын бір рет жүктеп, осы телефонда кэштеңіз. Тек ойнатқыш жариялаған мұқаба URL сұралады — тіркелгі не жеке дерек жоқ. Әдепкіде қосулы; кезекті толық офлайн ұстау үшін өшіріңіз.</string>
+    <string name="watch_streaming_shortcuts_empty">Quick Actions және сағат мәзіріне тректер, альбомдар немесе ойнату тізімдерін қосыңыз</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="other">%1$d сақталған жарлық · Quick Actions және сағат мәзірінде қолжетімді</item>
+    </plurals>
+    <string name="category_music_apps">Музыка қолданбалары және қызметтер</string>
+    <string name="category_apps_content">Ән мәтіні және метадеректер</string>
+    <string name="category_streaming_services">Стриминг жарлықтары</string>
+    <string name="category_queue_artwork">Кезек суреттері</string>
+    <string name="category_system_access">Android рұқсаттары және хабарландырулар</string>
+    <string name="setting_apps_integrations">Қолдау көрсетілетін музыка қызметтері</string>
+    <string name="setting_apps_integrations_description">Сілтемелер YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music және SoundCloud-пен жұмыс істейді. Тіркелгіге рұқсат қажет емес.</string>
+    <string name="setting_apps_integrations_none">Қолдау көрсетілетін қолданба табылмады. Жарлықтар браузерде немесе басқа үйлесімді қолданбада ашыла алады.</string>
+    <string name="setting_apps_integrations_installed">%2$d ішінен %1$d табылды: %3$s</string>
+    <string name="setting_streaming_open_mode">Стриминг сілтемелерін мынамен ашу</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Анықталған стриминг қолданбасы</item>
+        <item>Android әдепкісі</item>
+        <item>Әр жолы сұрау</item>
+    </string-array>
+    <string name="setting_persistent_notification">\"Svartifoss белсенді\" хабарландыруын басқару</string>
+    <string name="setting_persistent_notification_description">Осы хабарландырудың Android баптауларын ашады — дыбысын өшіруге, құлып экранынан жасыруға немесе басқаша реттеуге болады. Толығымен өшіруге болмайды: сағатыңызбен сөйлесетін фондық қызмет жұмыс істеп тұрғанда Android тұрақты хабарландыруды талап етеді.</string>
+    <string name="setting_notification_access">Медиа хабарландыруларына рұқсат</string>
+    <string name="setting_notification_access_enabled">Рұқсат етілген · Android баптауларын қарау үшін түртіңіз</string>
+    <string name="setting_notification_access_disabled">Рұқсат етілмеген · Хабарландыру медиа әрекеттері және автоматты іске қосу сүзгілері үшін қажет</string>
+    <string name="setting_notification_access_unavailable">Бұл құрылғыда хабарландыруларға рұқсат баптаулары қолжетімсіз</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="other">%1$d сақталған жарлық · Сілтемелерді басқару немесе импорттау үшін түртіңіз</item>
+    </plurals>
+    <string name="category_privacy">Құпиялық</string>
+    <string name="setting_privacy_policy">Құпиялық саясаты</string>
+    <string name="setting_privacy_policy_description">Svartifoss қандай деректерді пайдаланатынын және қай онлайн қызметтер міндетті емес екенін қараңыз.</string>
+    <string name="setting_crash_reporting">Апат есептерін жіберу</string>
+    <string name="setting_crash_reporting_description">Ақауларды түзетуге көмектесу үшін Firebase Crashlytics диагностикасын жіберу. Әдепкіде қосулы; кез келген уақытта өшіруге болады.</string>
+    <string name="setting_announcements">Хабарландыру хабарлары</string>
+    <string name="setting_announcements_description">Әзірлеушіден анда-санда келетін хабарландырулар — жаңа релиздер, маңызды ескертулер. Firebase Cloud Messaging арқылы жіберіледі; тіркелгі не пайдаланушылар тізімі жоқ. Әдепкіде қосулы; кез келген уақытта өшіруге болады.</string>
+    <string name="announcement_notification_channel">Хабарлар</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Ойнату тізімін, альбомды немесе тректі тікелей Svartifoss-қа бөлісіңіз, көшірілген сілтемені қойыңыз не қолмен қосыңыз. Сағат телефоннан оны ашуды сұрайды; қызметке кіру қажет емес.</string>
+    <string name="back">Артқа</string>
+    <string name="playlist_shortcuts_beta_badge">БЕТА</string>
+    <string name="playlist_shortcuts_intro_title">Музыкаңыз — бір түртім жерде</string>
+    <string name="playlist_shortcuts_yours">Жарлықтарыңыз</string>
+    <string name="playlist_shortcuts_empty_hint">Сағатыңызда қолжетімді ету үшін бөлісілген трек, альбом немесе ойнату тізімі сілтемесін қосыңыз.</string>
+    <string name="playlist_shortcuts_add">Жарлық қосу</string>
+    <string name="playlist_shortcuts_paste">Сілтемені қою</string>
+    <string name="playlist_shortcuts_reload_covers">Мұқабаларды қайта жүктеу</string>
+    <string name="playlist_shortcuts_reloading_covers">Мұқабалар қайта жүктелуде…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Мұқабалар қайта жүктелді</string>
+    <string name="playlist_shortcuts_edit">Жарлықты өңдеу</string>
+    <string name="playlist_shortcut_save">Жарлықты сақтау</string>
+    <string name="playlist_shortcut_editor_hint">Бір сілтемені қойыңыз. Svartifoss оның қолданбасы мен мазмұн түрін автоматты анықтайды.</string>
+    <string name="playlist_shortcut_detection_waiting">Стриминг сілтемесі күтілуде</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer және басқалары қолдау көрсетіледі.</string>
+    <string name="playlist_shortcut_detected_format">Анықталды: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Атауы</string>
+    <string name="playlist_shortcut_link_hint">Бөлісу сілтемесі немесе қолданба URI</string>
+    <string name="playlist_shortcut_shuffle">Араластырып ойнату (тек YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Сілтеме</string>
+    <string name="playlist_type_track">Трек</string>
+    <string name="playlist_type_playlist">Ойнату тізімі</string>
+    <string name="playlist_type_album">Альбом</string>
+    <string name="playlist_type_artist">Орындаушы</string>
+    <string name="playlist_type_show">Шоу</string>
+    <string name="playlist_type_episode">Эпизод</string>
+    <string name="playlist_type_mix">Микс</string>
+    <string name="playlist_badge_shuffle">Араластырып ойнату</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Әзірге стриминг жарлығы қосылмаған</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="other">%1$d сақталды</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Реттелген стриминг жарлықтары. Сүйреу үшін басып тұрыңыз, Move up немесе Move down арнайы мүмкіндіктер әрекеттерін пайдаланыңыз не пернетақтада Ctrl+Up/Down басыңыз.</string>
+    <string name="playlist_shortcut_more_options">%1$s үшін қосымша параметрлер</string>
+    <string name="playlist_shortcut_menu_edit">Өңдеу</string>
+    <string name="playlist_shortcut_menu_open">Қазір ашу</string>
+    <string name="playlist_shortcut_menu_copy">Сілтемені көшіру</string>
+    <string name="playlist_shortcut_menu_duplicate">Көшірмесін жасау</string>
+    <string name="playlist_shortcut_menu_share">Бөлісу</string>
+    <string name="playlist_shortcut_menu_delete">Жою</string>
+    <string name="playlist_shortcut_open_failed">Бұл сілтемені ешбір қолданба аша алмайды</string>
+    <string name="streaming_shortcut_choose_app">Стриминг сілтемесін мынамен ашу</string>
+    <string name="playlist_shortcut_link_copied">Сілтеме көшірілді</string>
+    <string name="playlist_shortcut_import_invalid">Бөлісілген мәтінде жарамды стриминг сілтемесі жоқ</string>
+    <string name="playlist_shortcut_clipboard_invalid">Алмасу буферінде жарамды стриминг сілтемесі жоқ</string>
+    <string name="playlist_shortcut_name_required">Жарлық атауын енгізіңіз</string>
+    <string name="playlist_shortcut_link_invalid">Жарамды веб-сілтеме немесе қолданба URI енгізіңіз</string>
+    <string name="playlist_shortcut_service_invalid">Қызметін анықтау үшін жарамды сілтемені қойыңыз</string>
+    <string name="playlist_shortcut_service_generic">Үйлесімді сілтеме · Android қолданбаны таңдайды</string>
+    <string name="playlist_shortcut_service_installed">%1$s орнатылған · Өз қолданбасында ашуға дайын</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s орнатылмаған · Браузер немесе үйлесімді қолданба пайдалануға болады</string>
+    <string name="playlist_shortcut_copy_name">%1$s көшірмесі</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s көшірмесі %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s жасалды</string>
+    <string name="playlist_shortcut_share_title">Стриминг жарлығын бөлісу</string>
+    <string name="playlist_shortcut_share_failed">Бұл жарлықты бөлісуге арналған қолданба жоқ</string>
+    <string name="playlist_shortcut_deleted">%1$s жойылды</string>
+    <string name="playlist_shortcut_undo">Болдырмау</string>
+
+    <string name="action_play_liked_songs_shuffled">Ұнатқан әндерді араластырып ойнату (YT Music)</string>
+    <string name="action_search_history">Іздеу тарихы</string>
+    <string name="search_history_empty">Әзірге соңғы іздеулер жоқ</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Жаңартулар</string>
+    <string name="setting_update_check">Жаңа нұсқалар туралы хабарлау</string>
+    <string name="setting_update_check_description">GitHub-та жаңа релиздерді шамамен күніне бір рет тексеріп, хабарландыру көрсетеді</string>
+    <string name="setting_update_prereleases">Алдын ала релиздерді қосу</string>
+    <string name="setting_update_prereleases_description">Бета нұсқалары туралы да хабар алу</string>
+    <string name="setting_update_check_now">Жаңартуларды қазір тексеру</string>
+    <string name="setting_update_check_now_description">Соңғы нұсқаны көрсетіп, сағатты Bluetooth арқылы жаңартуға мүмкіндік береді</string>
+    <string name="update_screen_title">Жаңартулар</string>
+    <string name="update_cover_content_description">Svartifoss, қолданба аты берілген сарқырама</string>
+    <string name="update_notification_channel">Қолданба жаңартулары</string>
+    <string name="update_available_title">Svartifoss %1$s қолжетімді</string>
+    <string name="update_notification_text">Жаңарту үшін түртіңіз</string>
+    <string name="update_available_action">Жаңарту қолжетімді</string>
+    <string name="update_installed_phone">Телефон: %1$s</string>
+    <string name="update_installed_versions">Телефон: %1$s · Сағат: %2$s</string>
+    <string name="update_watch_version_unknown">белгісіз</string>
+    <string name="update_checking">Жаңартулар тексерілуде…</string>
+    <string name="update_check_failed">Жаңартуларды тексеру мүмкін болмады. Байланысты тексеріп, қайталап көріңіз.</string>
+    <string name="update_available_line">Жаңа нұсқа: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(алдын ала релиз)</string>
+    <string name="update_up_to_date">Сізде соңғы нұсқа орнатылған (%1$s)</string>
+    <string name="update_no_wear_asset">Бұл релизде жіберілетін сағат APK файлы жоқ.</string>
+    <string name="update_watch_hint">“Сағатты жаңарту” жаңа сағат қолданбасын жүктеп, Bluetooth арқылы жібереді — орнатуды сағаттың өзінде растайсыз, кабель не Wear Installer қажет емес.</string>
+    <string name="update_downloading">Жүктелуде… %1$d%%</string>
+    <string name="update_connecting_watch">Сағатқа қосылуда…</string>
+    <string name="update_transferring">Сағатқа жіберілуде… %1$d%%</string>
+    <string name="update_confirm_on_watch">Жіберілді! Сағатта хабарландыру пайда болды — орнату үшін сонда түртіңіз.</string>
+    <string name="update_no_watch">Сағат қосылмаған.</string>
+    <string name="update_push_failed">Жаңартуды сағатқа жіберу сәтсіз аяқталды. Қайталап көріңіз.</string>
+    <string name="update_watch_button">Сағатты жаңарту</string>
+    <string name="update_open_release_button">Релиз бетін ашу</string>
+    <string name="update_watch_behind">Сағатыңыз әлі %1$s нұсқасында — төменнен жаңартуды жіберіңіз.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Телефон мен сағат қолданбаларын синхронда ұстау</string>
+    <string name="update_state_checking">Жаңартулар тексерілуде…</string>
+    <string name="update_state_current">Соңғы нұсқа орнатылған</string>
+    <string name="update_state_current_sub">Соңғы релиз жұмыс істеп тұр, %1$s</string>
+    <string name="update_state_available">Жаңарту қолжетімді</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Жаңартуларды тексеру мүмкін болмады</string>
+    <string name="update_state_failed_sub">Байланысты тексеріп, қайталап көріңіз</string>
+    <string name="update_device_phone">Телефон</string>
+    <string name="update_device_watch">Сағат</string>
+    <string name="update_versions_header">Орнатылған</string>
+    <string name="update_whats_new">Жаңалықтар</string>
+    <string name="update_phone_button">Телефонды жаңарту</string>
+    <string name="update_installing">Орнатушы ашылуда…</string>
+    <string name="update_install_permission_needed">Svartifoss арқылы қолданба орнатуға рұқсат беріп, «Телефонды жаңарту» түймесін қайта түртіңіз.</string>
+    <string name="update_phone_failed">Телефон жаңартуын жүктеу сәтсіз аяқталды. Қайталап көріңіз.</string>
+    <string name="update_install_notification_title">Svartifoss жаңартуы</string>
+    <string name="update_install_notification_tap">Жаңа нұсқаны орнату үшін түртіңіз</string>
+    <string name="update_install_notification_failed">Орнату сәтсіз аяқталды. Settings ішінде Svartifoss арқылы орнатуға рұқсат беріп, қайталап көріңіз.</string>
+    <string name="setting_wear_album_accent_source">Альбом екпінінің көзі</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Теңгерімді</item>
+        <item>Ең жарқын</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Өшірулі</item>
+        <item>Жұмсақ</item>
+        <item>Стандартты</item>
+        <item>Қалың</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Екпіннің төменгі шегі</string>
+    <string name="preview_metadata_album">Альбом</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Трек</string>
+    <string name="preview_metadata_genre">Жанр</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Жыл</string>
+    <string name="preview_metadata_format">Пішім</string>
+    <string name="preview_metadata_bitrate">Битрейт</string>
+    <string name="preview_metadata_position">Орын</string>
+    <string name="preview_metadata_output">Шығыс</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Альбом мәліметтері</string>
+    <string name="setting_wear_metadata_core_description">Альбом, альбом орындаушысы, жазбадағы орны және ұзақтығы.</string>
+    <string name="setting_wear_metadata_release">Релиз мәліметтері</string>
+    <string name="setting_wear_metadata_release_description">Жанр, жыл, шығарылған күн және лейбл.</string>
+    <string name="setting_wear_metadata_credits">Авторлар</string>
+    <string name="setting_wear_metadata_credits_description">Композитор, ән авторы және автор — ойнатқыш жариялаған жағдайда.</string>
+    <string name="setting_wear_metadata_technical">Файл мәліметтері</string>
+    <string name="setting_wear_metadata_technical_description">Пішім, битрейт, дискреттеу жиілігі, арналар және өлшем. Тек жергілікті тректер.</string>
+    <string name="setting_split_panel">Бөлінген панель</string>
+    <string name="setting_split_panel_description">Split циферблатының төменгі жартысын не толтырады. Бұлыңғыр сурет мәтін артында сол мұқабаны жалғастырады; тұтас түс хабарландыру картасы тәрізді көрініс береді.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Бұлыңғыр сурет</item>
+        <item>Тұтас түс</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Ойнату мәліметтері</string>
+    <string name="setting_wear_metadata_playback_description">Миллисекундқа дейінгі орын, жылдамдық, аудио шығыс және дыбыстың қайдан ағынмен не жергілікті ойнатылып жатқаны — трек мекенжайын қоса. Сипаттайтын файл болмағанда стриминг трек толтыра алатын жалғыз блок.</string>
+    <string name="setting_wear_metadata_identifiers">Идентификаторлар</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC және каталог ID. Әдепкіде өшірулі — керек кезде пайдалы, керек емес кезде артық ақпарат.</string>
+    <string name="setting_metadata_lookup">Трек мәліметтерін интернеттен іздеу</string>
+    <string name="setting_metadata_lookup_description">Ойнатып жатқан қолданба жарияламағанды толтырады — ISRC, лейбл, релиз күні — тегін қоғамдық дерекқор MusicBrainz арқылы. Әдепкіде өшірулі. Metadata сағат циферблаты онсыз да жұмыс істейді; бұл тек жолдар қосады. Мұны қосып, сол циферблатты таңдамайынша ештеңе жіберілмейді; сонда да тек трек атауы мен орындаушы жіберіледі.</string>
+</resources>

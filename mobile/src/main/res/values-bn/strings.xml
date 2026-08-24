@@ -1,0 +1,1971 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">এই ডিভাইসে Wear OS সমর্থিত নয়</string>
+    <string name="setting_no_wearable_api_banner_description">এই ডিভাইসে Google Play Services-এর Wear OS কম্পোনেন্ট নেই, যা Svartifoss-এর ঘড়ির সঙ্গে যোগাযোগ করতে প্রয়োজন। পেয়ার করলেও কাজ হবে না—এই ফোন অ্যাপ থেকে ঘড়িতে পৌঁছানো যায় না। নিচের সব সেটিং তবু সংরক্ষিত থাকবে এবং সমর্থিত ডিভাইসে Svartifoss ইনস্টল করলে প্রয়োগ হবে।</string>
+    <string name="setting_no_watch_banner">কোনো ঘড়ি সংযুক্ত নেই</string>
+    <string name="setting_no_watch_banner_description">এই সেটিংগুলো আপনার Wear OS ঘড়িতে সিঙ্ক হয়, তাই ঘড়ি পেয়ার ও সংযুক্ত না হওয়া পর্যন্ত দৃশ্যত প্রয়োগ হবে না—তবে নিচের সবকিছু এখনই কনফিগার করতে পারবেন।</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">চেহারা</string>
+    <string name="setting_theme">থিম</string>
+    <string name="theme_light">উজ্জ্বল সাদা</string>
+    <string name="theme_dark">খাঁটি কালো</string>
+    <string name="theme_system">সিস্টেম অনুসরণ করুন</string>
+    <string name="setting_language">ভাষা</string>
+    <string name="language_system">সিস্টেম অনুসরণ করুন</string>
+    <string name="language_change_watch_notice">সিঙ্ক হওয়ার পর ঘড়িতেও এই ভাষা ব্যবহার হবে।</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">ডেভেলপার</string>
+    <string name="dev_mode_unlocked">ডেভেলপার মোড চালু হয়েছে ✦</string>
+    <string name="dev_mode_clicks_remaining">ডেভেলপার মোড আনলক করতে আরও %1$d বার ট্যাপ করুন</string>
+    <string name="dev_disable_mode">ডেভেলপার মোড বন্ধ করুন</string>
+    <string name="dev_disable_mode_description">এই বিভাগটি আবার লুকান—ফিরিয়ে আনতে \"ইনস্টল করা সংস্করণ\" সাতবার ট্যাপ করুন</string>
+    <string name="dev_mode_disabled">ডেভেলপার মোড বন্ধ হয়েছে</string>
+    <string name="dev_build_info">বিল্ড তথ্য</string>
+    <string name="dev_sync_watch">ঘড়ির সেটিং জোর করে সিঙ্ক করুন</string>
+    <string name="dev_sync_watch_description">বর্তমান সব সেটিং সঙ্গে সঙ্গে পেয়ার করা ঘড়িতে পাঠান</string>
+    <string name="dev_sync_watch_done">সেটিং ঘড়িতে সিঙ্ক হয়েছে</string>
+    <string name="dev_copy_debug_info">ডিবাগ তথ্য কপি করুন</string>
+    <string name="dev_copy_debug_info_description">বিল্ড ও ডিভাইসের বিবরণ ক্লিপবোর্ডে কপি করুন</string>
+    <string name="dev_show_archived">আর্কাইভ করা অপশন দেখান</string>
+    <string name="dev_show_archived_description">জানা সমস্যার কারণে আর্কাইভ করা ঘড়ির লেআউট ও সেটিং দেখান</string>
+    <string name="dev_copy_debug_info_done">ডিবাগ তথ্য কপি হয়েছে</string>
+    <string name="dev_open_update_screen">আপডেট স্ক্রিন খুলুন</string>
+    <string name="dev_open_update_screen_description">বাস্তব রিলিজের জন্য অপেক্ষা না করে আপডেট স্ক্রিন (কভার ব্যানার, রিলিজ নোট লেআউট) প্রিভিউ করুন</string>
+    <string name="dev_watch_layout_bounds">ঘড়ির লেআউট সীমা দেখান</string>
+    <string name="dev_watch_layout_bounds_description">ঘড়িতে দৃশ্যমান প্লেয়ার উপাদান ও স্পর্শ অঞ্চলগুলোর সীমারেখা দেখান। শুধু ডায়াগনস্টিক ওভারলে।</string>
+    <string name="dev_watch_player_info">ঘড়ির প্লেয়ার তথ্য দেখান</string>
+    <string name="dev_watch_player_info_description">ঘড়িতে সক্রিয় ফেস, প্লেব্যাক অবস্থা, অগ্রগতি ও রেন্ডারিং তথ্য ওভারলে করুন।</string>
+    <string name="pref_reset_default">ডিফল্টে রিসেট করুন</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">আপনি লুকানো জলপ্রপাতটি খুঁজে পেয়েছেন।\n\nSvartifoss — কালো ব্যাসল্ট স্তম্ভ\nআইসল্যান্ডের এক জলপ্রপাতকে ঘিরে,\nমনে করিয়ে দেয় যে সঙ্গীত বয়ে চলে\nপাথরের ভেতর দিয়ে জলের মতো।\n\n♪ যত্ন নিয়ে তৈরি। ♪</string>
+    <string name="easter_egg_ok">বন্ধ করুন</string>
+
+    <string name="nav_watch_face">ঘড়ি</string>
+    <string name="watch_face_header">ঘড়ির চেহারা</string>
+    <string name="nav_controls">নিয়ন্ত্রণ</string>
+    <string name="nav_actions">অ্যাকশন</string>
+    <string name="nav_settings">সেটিংস</string>
+
+    <string name="controls_header">নিয়ন্ত্রণ</string>
+    <string name="controls_state_playing">সঙ্গীত চলছে</string>
+    <string name="controls_state_stopped">প্লেব্যাক নেই</string>
+    <string name="controls_playing_description">সঙ্গীত চলাকালে প্রতিটি ইনপুট কী করবে তা বেছে নিন। এই সেটআপটি কোনো প্লেব্যাক না থাকা অবস্থার সেটআপ থেকে আলাদা।</string>
+    <string name="controls_stopped_description">প্লেব্যাক শুরু হওয়ার আগে বা বন্ধ হওয়ার পরে প্রতিটি ইনপুট কী করবে তা বেছে নিন। এই সেটআপটি চলমান প্লেব্যাক অবস্থার সেটআপ থেকে আলাদা।</string>
+
+    <string name="watch_live_preview">ঘড়ির লাইভ প্রিভিউ</string>
+    <string name="watch_preview_description">নির্বাচিত ঘড়ির পৃষ্ঠের লাইভ প্রিভিউ। ঘড়িতে চেষ্টা করার আগেই পরিবর্তনগুলো এখানে দেখা যাবে।</string>
+    <string name="watch_section_style">প্লেয়ার</string>
+    <string name="watch_section_style_description">প্লেয়ারের লেআউট এবং এর শিরোনাম, সময় ও অগ্রগতি কীভাবে আচরণ করবে তা বেছে নিন।</string>
+    <string name="watch_section_background">পটভূমি</string>
+    <string name="watch_section_background_description">প্লেয়ারের পেছনে অ্যালবাম আর্ট, ব্লার, ফেড ও পাঠযোগ্যতা নিয়ন্ত্রণ করুন।</string>
+    <string name="watch_section_colors">রং</string>
+    <string name="watch_section_colors_description">বেস, অগ্রগতি ও অ্যালবাম অ্যাকসেন্ট সেট করুন, তারপর শিরোনাম, শিল্পী, ঘড়ি, ভলিউম ও প্যানেলের রং সমন্বয় করুন।</string>
+    <string name="watch_section_typography">টেক্সট</string>
+    <string name="watch_section_typography_description">ফন্ট বেছে নিয়ে শিরোনাম, শিল্পী, ঘড়ি, অ্যাপ আইকন, সেকেন্ডারি স্ক্রিন ও Flex টেক্সট সমন্বয় করুন।</string>
+    <string name="watch_section_aod">সর্বদা চালু</string>
+    <string name="watch_section_aod_description">কম-শক্তির স্ক্রিন কনফিগার করুন এবং প্রিভিউতে এর অ্যাম্বিয়েন্ট চেহারা দেখুন।</string>
+    <string name="watch_section_panels">প্যানেল</string>
+    <string name="watch_section_panels_description">ভলিউম, সিক, কুইক প্যানেল ও কিউয়ের স্টাইল ঠিক করুন; কোনো সারিতে ফোকাস করলে সেই পৃষ্ঠটি প্রিভিউতে খুলবে।</string>
+    <string name="watch_section_mini_buttons">মিনি বাটন</string>
+    <string name="watch_section_mini_buttons_description">ঐচ্ছিক শর্টকাট সারির স্টাইল ঠিক করুন। নিচের “মিনি বাটন” ট্যাপ করে নিয়ন্ত্রণে এর অ্যাকশন নির্ধারণ করুন।</string>
+    <string name="watch_overview_description">কী কাস্টমাইজ করতে চান তা বেছে নিন। প্রিভিউ ও সংরক্ষিত থিম প্রতিটি এলাকায় সক্রিয় থাকবে।</string>
+    <string name="watch_back_to_overview">ঘড়ির এলাকায় ফিরে যান</string>
+
+    <string name="settings_section_general">সাধারণ</string>
+    <string name="settings_section_general_description">অ্যাপ থিম, অ্যাকসেন্ট রং ও আপডেট পছন্দ।</string>
+    <string name="settings_section_watch">আচরণ</string>
+    <string name="settings_section_watch_description">ঘড়ির ক্রাউন, স্পর্শ, হ্যাপটিক ও অ্যাকশন-মেনুর আচরণ।</string>
+    <string name="settings_section_automation">অটোমেশন</string>
+    <string name="settings_section_automation_description">Svartifoss কখন স্বয়ংক্রিয়ভাবে খুলবে ও বন্ধ হবে তা বেছে নিন।</string>
+    <string name="settings_section_apps">অ্যাপ</string>
+    <string name="settings_section_apps_description">লিরিক্স ও মেটাডেটা, স্ট্রিমিং শর্টকাট, কিউ আর্টওয়ার্ক এবং Android অ্যাক্সেস খুঁজুন।</string>
+    <string name="settings_section_data">ডেটা ও সহায়তা</string>
+    <string name="settings_section_data_description">আপনার সেটআপ ব্যাকআপ করুন, সংস্করণ ও ডায়াগনস্টিক পরীক্ষা করুন বা সহায়তা নিন।</string>
+    <string name="settings_overview_description">একটি এলাকা বেছে নিন। সম্পর্কিত অপশন একসঙ্গে থাকবে, আর সার্চ আপনাকে সরাসরি যেকোনো সেটিংয়ে নিয়ে যেতে পারবে।</string>
+    <string name="settings_back_to_overview">সেটিংস এলাকায় ফিরে যান</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Svartifoss কীভাবে ব্যবহার করবেন</string>
+    <string name="tutorial_intro">Svartifoss আপনার ঘড়িকে ফোনে চলা সঙ্গীতের রিমোট কন্ট্রোলে পরিণত করে। কবজি থেকেই যা যা করতে পারবেন তা এখানে রয়েছে।</string>
+
+    <string name="tutorial_taps_title">স্ক্রিনের অঞ্চল ট্যাপ করুন</string>
+    <string name="tutorial_taps_desc">ঘড়ির স্ক্রিন চারটি অঞ্চলে ভাগ করা—উপরে, নিচে, বামে ও ডানে। কোনো অঞ্চল ট্যাপ করলে সেখানে নির্ধারিত অ্যাকশন চলে। ডিফল্টভাবে বাম অঞ্চল প্লে বা পজ করে, ডান অঞ্চল পরের ট্র্যাকে যায়, আর উপরের ও নিচের অঞ্চল ভলিউম বদলায়।</string>
+
+    <string name="tutorial_quick_panel_title">কুইক অ্যাকশন প্যানেল</string>
+    <string name="tutorial_quick_panel_desc">নাও-প্লেয়িং স্ক্রিনের মাঝখানে ডাবল-ট্যাপ করলে চারটি স্লটের প্যানেল খুলবে—তিনটি গোল বাটন এবং নিচে একটি চওড়া সারি। কিছু না বদলালে স্লটগুলো প্লেয়িং অ্যাপের নিজস্ব নোটিফিকেশনের বাটন অনুকরণ করে, তাই তার আসল লাইক, শাফল ও রিপিট নিয়ন্ত্রণ পাবেন। ফোনের অ্যাকশন বিভাগে কোনো স্লটে যেকোনো অ্যাকশন দিন, বা লুকাতে \"কিছু নয়\" সেট করুন।</string>
+    <string name="tutorial_gestures_title">একবার, দুবার ও দীর্ঘক্ষণ চাপ</string>
+    <string name="tutorial_gestures_desc">চারটি প্রান্তের অঞ্চলেই একবার, দুবার ও দীর্ঘক্ষণ চাপের জন্য আলাদা অ্যাকশন থাকে। মাঝখানে একবার ট্যাপও কনফিগার করা যায়; ডাবল-ট্যাপ সবসময় কুইক অ্যাকশন খুলবে, আর দীর্ঘক্ষণ চাপ সেটিংস → আচরণ অনুযায়ী ফেস পিকার, কিউ বা কিছুই না খুলবে।</string>
+
+    <string name="tutorial_buttons_title">ফিজিক্যাল বাটন</string>
+    <string name="tutorial_buttons_desc">আপনার ঘড়িতে সাইড বাটন থাকলে সেগুলোতেও একবার, দুবার ও দীর্ঘক্ষণ চাপের অ্যাকশন নির্ধারণ করতে পারবেন। স্ক্রিন বন্ধ থাকলেও এগুলো কাজ করে।</string>
+
+    <string name="tutorial_rotary_title">ঘূর্ণায়মান ক্রাউন</string>
+    <string name="tutorial_rotary_desc">সেটিংস → আচরণ → ঘূর্ণায়মান ক্রাউন / বেজেল থেকে বেছে নিন ক্রাউন বা বেজেল ঘোরালে ভলিউম বদলাবে, ট্র্যাকের মধ্যে সিক করবে, নাকি কিছুই করবে না। যেসব ঘড়িতে ক্রাউন ঘোরানোকে বাটন হিসেবে দেখায়, সেখানে নিয়ন্ত্রণ বিভাগে সেটি নির্ধারণ করুন।</string>
+
+    <string name="tutorial_swipe_up_title">উপরে, নিচে, বামে ও ডানে সোয়াইপ</string>
+    <string name="tutorial_swipe_up_desc">নাও-প্লেয়িং স্ক্রিনে উপরে, নিচে বা বামে সোয়াইপ আলাদাভাবে যেকোনো কিছু খুলতে কনফিগার করা যায়—অ্যাকশন মেনু, প্লেব্যাক কিউ, ট্র্যাক স্কিপ, আপনার প্লেলিস্ট ইত্যাদি। নিয়ন্ত্রণে গিয়ে সঙ্গীত চলছে বা প্লেব্যাক নেই বেছে প্রতিটি সেট করুন। ডিফল্টভাবে উপরে সোয়াইপ অ্যাকশন মেনু খোলে, অন্যগুলো নির্ধারণ না করা পর্যন্ত কিছুই করে না। ডানে সোয়াইপ অপরিবর্তিত থাকে—এটাই অ্যাপ থেকে বের হওয়ার Wear OS-এর সার্বজনীন জেসচার।</string>
+    <string name="tutorial_shortcuts_title">স্ট্রিমিং শর্টকাট</string>
+    <string name="tutorial_shortcuts_desc">Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music বা SoundCloud থেকে ট্র্যাক, অ্যালবাম, মিক্স বা প্লেলিস্টের লিংক সংরক্ষণ করুন, তারপর যেকোনো বাটন, জেসচার বা প্যানেল স্লটে নির্ধারণ করুন। দ্রুততম উপায় হলো স্ট্রিমিং অ্যাপ থেকে সরাসরি Svartifoss-এ লিংক শেয়ার করা; কপি করা লিংক পেস্ট বা টাইপও করতে পারেন। অ্যাকাউন্ট বা লগইন দরকার নেই—ঘড়ি ফোনকে প্লেব্যাক শুরু করতে বলে, তাই শর্টকাট শুধু অ্যাপ খোলে না, আসলেই চালায়।</string>
+    <string name="tutorial_yt_music_title">YouTube Music শর্টকাট</string>
+    <string name="tutorial_yt_music_desc">পছন্দ করা গান চালান, \"পছন্দ করা গান শাফল করে চালান\" বা \"আমার প্লেলিস্ট\" যেকোনো বাটন, জেসচার বা সোয়াইপে নির্ধারণ করুন, ফোন না ছুঁয়েই সরাসরি আপনার সঙ্গীতে যেতে। \"সার্চ ইতিহাস\" ঘড়ির সাম্প্রতিক সার্চ মনে রাখে—মুছতে কোনোটি চেপে ধরে রাখুন।</string>
+
+    <string name="tutorial_exit_title">বের হতে সোয়াইপ করুন</string>
+    <string name="tutorial_exit_desc">প্লেয়ার ছাড়তে বাম প্রান্ত থেকে সোয়াইপ করুন। বের হওয়ার সময় এটি স্বয়ংক্রিয়ভাবে প্লেব্যাক পজ করতে পারে—সেটিংসে চালু করুন।</string>
+
+    <string name="tutorial_tile_title">কুইক-কন্ট্রোল Tile</string>
+    <string name="tutorial_tile_desc">ঘড়ির ফেস পাশের দিকে সোয়াইপ করে Svartifoss Tile-এ যান; অ্যাপ না খুলেই সঙ্গে সঙ্গে প্লে, পজ ও স্কিপ করুন।</string>
+
+    <string name="tutorial_complication_title">ঘড়ির ফেস কমপ্লিকেশন</string>
+    <string name="tutorial_complication_desc">বর্তমান কভার এক নজরে দেখতে ঘড়ির ফেসে Svartifoss অ্যালবাম আর্ট কমপ্লিকেশন যোগ করুন। প্লেয়ার খুলতে এটিতে ট্যাপ করুন।</string>
+
+    <string name="tutorial_system_title">সিস্টেম মিডিয়া নিয়ন্ত্রণ</string>
+    <string name="tutorial_system_desc">বর্তমান ট্র্যাক ঘড়ির নিজস্ব মিডিয়া কন্ট্রোল ও সাম্প্রতিক অ্যাপেও দেখা যায়, তাই সেখান থেকেও প্লেব্যাক নিয়ন্ত্রণ করতে পারবেন।</string>
+
+    <string name="tutorial_tip">টিপ: নিয়ন্ত্রণে দুই অবস্থাই কনফিগার করুন, তারপর অ্যাকশনে মেনু সাজান।</string>
+
+    <string name="navigation_drawer_open">নেভিগেশন ড্রয়ার খুলুন</string>
+    <string name="navigation_drawer_close">নেভিগেশন ড্রয়ার বন্ধ করুন</string>
+
+    <string name="action_settings">সেটিংস</string>
+    <string name="action_pause">পজ</string>
+    <string name="action_play">প্লে</string>
+    <string name="action_skip_prev">আগের ট্র্যাক</string>
+    <string name="action_skip_next">পরের ট্র্যাক</string>
+    <string name="action_play_pause">প্লে / পজ</string>
+    <string name="action_stop">বন্ধ</string>
+    <string name="action_restart">ট্র্যাক আবার শুরু করুন</string>
+    <string name="action_mute">মিউট / আনমিউট</string>
+    <string name="action_skip_seconds">%1$d সেকেন্ড এগিয়ে যান</string>
+    <string name="action_reverse_seconds">%1$d সেকেন্ড পিছিয়ে যান</string>
+    <string name="action_like">লাইক</string>
+    <string name="action_shuffle">শাফল</string>
+    <string name="action_repeat">রিপিট</string>
+    <string name="action_repeat_one">একটি রিপিট</string>
+    <string name="action_search">সঙ্গীত খুঁজুন</string>
+    <string name="action_open_lyrics">লিরিক্স</string>
+    <string name="group_playback_controls">প্লেব্যাক নিয়ন্ত্রণ</string>
+    <string name="group_streaming_shortcuts">ট্র্যাক, অ্যালবাম ও প্লেলিস্ট</string>
+    <string name="pick_action">অ্যাকশন বেছে নিন</string>
+    <string name="action_search_hint">এই তালিকা খুঁজুন</string>
+    <string name="action_search_empty">এই সার্চের সঙ্গে কোনো অ্যাকশন মেলেনি।</string>
+    <string name="action_opens_more">একাধিক অপশন</string>
+    <string name="action_volume_up">ভলিউম বাড়ান</string>
+    <string name="volume_down">ভলিউম কমান</string>
+    <string name="group_volume_controls">ভলিউম নিয়ন্ত্রণ</string>
+    <string name="no_watch_detected">কোনো ঘড়ি শনাক্ত হয়নি</string>
+    <string name="connection_instructions">সংযোগ শুরু করতে ঘড়িতে Svartifoss খুলুন</string>
+    <string name="playing_controls">চলার সময় নিয়ন্ত্রণ</string>
+    <string name="stopped_controls">প্লেব্যাক না থাকলে নিয়ন্ত্রণ</string>
+    <string name="actions_menu">অ্যাকশন মেনু</string>
+    <string name="actions_intro">ঘড়ির উভয় অ্যাকশন পৃষ্ঠে প্লেব্যাক নিয়ন্ত্রণ, অ্যাপ বা সংরক্ষিত ট্র্যাক, অ্যালবাম ও প্লেলিস্ট কনফিগার করুন। কুইক প্যানেল সংক্ষিপ্ত থাকে; নিচের মেনুতে দীর্ঘ সাজানো তালিকা রাখা যায়।</string>
+    <string name="actions_quick_panel_section">কুইক প্যানেল</string>
+    <string name="actions_watch_menu_section">ঘড়ির মেনু</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$dটি অ্যাকশন · সম্পাদনা করতে ট্যাপ করুন · পুনর্বিন্যাস করতে ধরে টেনে আনুন</item>
+        <item quantity="other">%1$dটি অ্যাকশন · সম্পাদনা করতে ট্যাপ করুন · পুনর্বিন্যাস করতে ধরে টেনে আনুন</item>
+    </plurals>
+    <string name="actions_reorder_description">সাজানো অ্যাকশন মেনু। টেনে নিতে চেপে ধরে রাখুন, অ্যাক্সেসিবিলিটির উপরে সরান বা নিচে সরান ব্যবহার করুন, অথবা কিবোর্ডে Ctrl+Up/Down চাপুন।</string>
+    <string name="actions_move_up">উপরে সরান</string>
+    <string name="actions_move_down">নিচে সরান</string>
+    <string name="actions_moved_to_position">%1$s-কে %3$dটির মধ্যে %2$d নম্বর অবস্থানে সরানো হয়েছে।</string>
+    <string name="actions_empty">এখনও কোনো অ্যাকশন নেই। প্রথমটি তৈরি করতে যোগ বাটন ব্যবহার করুন।</string>
+    <string name="actions_add">অ্যাকশন যোগ করুন</string>
+    <string name="on_screen_buttons">স্পর্শ অঞ্চল</string>
+    <string name="physical_buttons">ফিজিক্যাল বাটন</string>
+    <string name="physical_buttons_disconnected">ফিজিক্যাল বাটন কনফিগার করতে ঘড়িতে Svartifoss সংযুক্ত করে খুলুন। স্পর্শ অঞ্চল, সোয়াইপ ও মিনি বাটন এখনই ব্যবহারযোগ্য।</string>
+    <string name="physical_buttons_unavailable">এই ঘড়ি কোনো কনফিগারযোগ্য ফিজিক্যাল বাটন জানায়নি।</string>
+    <string name="control_assignment_tap">ট্যাপ: %1$s</string>
+    <string name="control_assignment_hold">চেপে ধরা: %1$s</string>
+    <string name="control_assignment_both">ট্যাপ: %1$s · চেপে ধরা: %2$s</string>
+    <string name="tap_a_zone_to_configure">অ্যাকশন নির্ধারণ করতে ঘড়ির কোনো অঞ্চল ট্যাপ করুন</string>
+    <string name="touch_zone_top">উপরের অঞ্চল</string>
+    <string name="touch_zone_bottom">নিচের অঞ্চল</string>
+    <string name="touch_zone_left">বাম অঞ্চল</string>
+    <string name="touch_zone_right">ডান অঞ্চল</string>
+    <string name="touch_zone_center">মাঝখানে ট্যাপ</string>
+    <string name="touch_zone_action">%1$s: %2$s। কনফিগার করতে ট্যাপ করুন।</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">সোয়াইপ জেসচার</string>
+    <string name="tap_a_swipe_to_configure">কী খুলবে তা বেছে নিতে একটি দিক ট্যাপ করুন</string>
+    <string name="swipe_gesture_up">উপরে সোয়াইপ</string>
+    <string name="swipe_gesture_down">নিচে সোয়াইপ</string>
+    <string name="swipe_gesture_left">বামে সোয়াইপ</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">উপরে</string>
+    <string name="swipe_gesture_label_down">নিচে</string>
+    <string name="swipe_gesture_label_left">বাম</string>
+
+    <string name="screen_buttons">মিনি বাটন</string>
+    <string name="tap_a_screen_button_to_configure">ঘড়ির স্ক্রিনের নিচের দিকে সর্বোচ্চ তিনটি দৃশ্যমান বাটন—অ্যাকশন দিতে স্লট ট্যাপ করুন</string>
+    <string name="screen_button_1">মিনি বাটন ১ (বাম)</string>
+    <string name="screen_button_2">মিনি বাটন ২ (মাঝে)</string>
+    <string name="screen_button_3">মিনি বাটন ৩ (ডান)</string>
+    <string name="screen_button_label_1">বাটন ১</string>
+    <string name="screen_button_label_2">বাটন ২</string>
+    <string name="screen_button_label_3">বাটন ৩</string>
+    <string name="no_action">কোনো অ্যাকশন নয়</string>
+    <string name="gesture_single_press">একবার চাপ</string>
+    <string name="gesture_double_press">দুবার চাপ</string>
+    <string name="gesture_long_press">দীর্ঘক্ষণ চাপ</string>
+    <string name="gesture_swipe_action">অ্যাকশন</string>
+    <string name="center_button_quick_panel_note">মাঝখানে ডাবল-ট্যাপ সবসময় কুইক অ্যাকশন খোলে। দীর্ঘক্ষণ চাপ সেটিংস → আচরণ-এর পছন্দটি চালায়। এখানে মাঝখানের ট্যাপ নির্ধারণ করলেও কোনো জেসচার বদলায় না।</string>
+    <string name="start_playback">প্লেব্যাক শুরু করুন</string>
+    <string name="uninstalled_app">আনইনস্টল করা অ্যাপ</string>
+
+    <string name="play_app">%1$s চালান</string>
+    <string name="tasker_task">Tasker টাস্ক</string>
+    <string name="icon_selection_title">আইকন নির্বাচন</string>
+    <string name="icon_selection_gallery">গ্যালারি থেকে</string>
+    <string name="icon_selection_no_icon_pack">এই ফিচার দিয়ে ইনস্টল করা আইকন প্যাক থেকে আপনার অ্যাকশনের জন্য কাস্টম আইকন বেছে নিতে পারবেন।\n\nদুঃখিত, মনে হচ্ছে কোনো আইকন প্যাক ইনস্টল করা নেই।</string>
+    <string name="icon_selection_no_storage_permission">এই ফিচার দিয়ে ইনস্টল করা আইকন প্যাক থেকে আপনার অ্যাকশনের জন্য কাস্টম আইকন বেছে নিতে পারবেন।\n\nকিছু আইকন প্যাকের জন্য অ্যাপকে স্টোরেজ অনুমতি দিতে হয়। এই ফিচার ব্যবহার করতে অনুমতি দিতে হবে।</string>
+    <string name="delete">মুছুন</string>
+    <string name="action_text">অ্যাকশন টেক্সট</string>
+    <string name="swap_action">অ্যাকশন বদলান</string>
+    <string name="open_actions_menu">অ্যাকশন মেনু খুলুন</string>
+    <string name="open_playlist_menu">বর্তমান প্লেলিস্ট দেখান</string>
+    <string name="misc_settings">অন্যান্য সেটিংস</string>
+
+    <string name="category_backup">ব্যাকআপ</string>
+    <string name="export_config">কনফিগারেশন এক্সপোর্ট করুন</string>
+    <string name="export_config_description">বাটন ম্যাপিং, অ্যাকশন তালিকা ও ঘড়ির সেটিং একটি ফাইলে সংরক্ষণ করুন</string>
+    <string name="import_config">কনফিগারেশন ইমপোর্ট করুন</string>
+    <string name="import_config_description">একটি ফাইল থেকে বাটন ম্যাপিং, অ্যাকশন তালিকা ও ঘড়ির সেটিং পুনরুদ্ধার করুন</string>
+    <string name="export_config_done">কনফিগারেশন এক্সপোর্ট হয়েছে</string>
+    <string name="export_config_failed">কনফিগারেশন এক্সপোর্ট করা যায়নি</string>
+    <string name="import_config_done_title">ইমপোর্ট সফল</string>
+    <string name="import_config_done_message">ইমপোর্ট করা কনফিগারেশন প্রয়োগ করতে Svartifoss পুনরায় চালু করতে হবে।</string>
+    <string name="import_config_failed">কনফিগারেশন ইমপোর্ট করা যায়নি—ফাইলটি অবৈধ বা অসামঞ্জস্যপূর্ণ সংস্করণের হতে পারে</string>
+    <string name="action_restart_now">এখনই পুনরায় চালু করুন</string>
+
+    <string name="category_about">সম্পর্কে</string>
+    <string name="category_music_screen">সঙ্গীত স্ক্রিন</string>
+    <string name="category_watch_screen">ঘড়ির স্ক্রিন</string>
+    <string name="category_mini_buttons">মিনি বাটন</string>
+    <string name="category_screen_face">প্লেয়ারের চেহারা</string>
+    <string name="category_wf_screen_behavior">স্ক্রিনের আচরণ</string>
+    <string name="category_wf_player_progress">অগ্রগতি, সিক ও সময়</string>
+    <string name="category_album_background">অ্যালবাম পটভূমি</string>
+    <string name="category_music_colors">সঙ্গীত থেকে রং</string>
+    <string name="category_wf_typography_font">টাইপফেস</string>
+    <string name="category_wf_typography_title">শিরোনাম</string>
+    <string name="category_wf_typography_artist">শিল্পী</string>
+    <string name="category_wf_typography_icon">অ্যাপ আইকন</string>
+    <string name="category_wf_typography_flex">Google Sans Flex অক্ষ</string>
+    <string name="category_wf_metadata">Metadata ফেসের কনটেন্ট</string>
+    <string name="category_wf_typography_secondary">অন্যান্য স্ক্রিনের টেক্সট</string>
+    <string name="category_wf_colors_title">শিরোনামের রং</string>
+    <string name="category_wf_colors_artist">শিল্পীর রং</string>
+    <string name="category_wf_colors_clock">ঘড়ির রং</string>
+    <string name="setting_wear_font_flex_hint_title">এই নিয়ন্ত্রণগুলো সম্পর্কে</string>
+    <string name="setting_wear_flex_axes_hint">এগুলো বিশেষভাবে Google Sans Flex সূক্ষ্মভাবে সমন্বয় করে—ব্যবহার করতে উপরে এই ফন্টটি বেছে নিন। উপরের শিরোনাম ও শিল্পীর ওজন/ইটালিক ইতিমধ্যে ফন্টটির নিজস্ব ওজন (wght) ও ঢাল (slnt) অক্ষ সেট করে; নিচের চারটি নিয়ন্ত্রণ পুরো ফেসে প্রযোজ্য।</string>
+    <string name="setting_wear_font_flex_width">প্রস্থ</string>
+    <string name="setting_wear_font_flex_width_description">অনুভূমিক প্রসারণ, সংকুচিত থেকে বিস্তৃত (25–151)। 100 হলো ফন্টের স্বাভাবিক প্রস্থ।</string>
+    <string name="setting_wear_font_flex_optical_size">অপটিক্যাল সাইজ</string>
+    <string name="setting_wear_font_flex_optical_size_description">টেক্সটের কার্যকর আকার অনুযায়ী স্ট্রোকের বিস্তারিত সমন্বয় করে (6–144)। কম মান ছোট টেক্সটের জন্য, বেশি মান বড় ডিসপ্লে টেক্সটের জন্য উপযোগী।</string>
+    <string name="setting_wear_font_flex_grade">গ্রেড</string>
+    <string name="setting_wear_font_flex_grade_description">লেআউট না বদলে ওজন সামান্য সরায় (0–100)—অন্ধকার স্ক্রিনে কনট্রাস্ট সূক্ষ্মভাবে বাড়ানোর উপায়।</string>
+    <string name="setting_wear_font_flex_roundness">গোলাকৃতি</string>
+    <string name="setting_wear_font_flex_roundness_description">স্ট্রোকের প্রান্ত ধারালো (0) থেকে পুরো গোল (100) পর্যন্ত মিশিয়ে আরও বন্ধুসুলভ অনুভূতি দেয়।</string>
+    <string name="preview_sample_title">গানের শিরোনাম</string>
+    <string name="preview_sample_artist">শিল্পীর নাম</string>
+    <string name="preview_sample_next_title">পরের গান</string>
+    <string name="preview_playback_stopped">বন্ধ</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">আগের লাইন</string>
+    <string name="preview_verse_current">এখন যে লাইনটি চলছে</string>
+    <string name="preview_verse_next">এবং তার পরেরটি</string>
+    <string name="preview_chat_today">আজ</string>
+    <string name="category_gestures">জেসচার ও ইনপুট</string>
+    <string name="category_watch_navigation">নেভিগেশন ও শর্টকাট</string>
+    <string name="category_rotary_input">ঘূর্ণন ইনপুট ও টিউনিং</string>
+    <string name="category_watch_feedback">ফিডব্যাক ও বের হওয়ার আচরণ</string>
+    <string name="category_watch_display">ঘড়ির স্ক্রিন</string>
+    <string name="setting_wear_keep_screen_on">স্ক্রিন চালু রাখুন</string>
+    <string name="setting_wear_keep_screen_on_description">Svartifoss স্ক্রিন খোলা থাকলে নিষ্ক্রিয়তার সময়সীমায় ঘড়ির স্ক্রিন বন্ধ হওয়া ঠেকায়। কবজি নামালে ঘড়ি তবুও ম্লান হবে—এই জেসচার সিস্টেমের। বেশি ব্যাটারি ব্যবহার করে। এই সেটিং যাই হোক, লিরিক্স স্ক্রিন সবসময় চালু থাকে।</string>
+    <string name="setting_lyrics_enabled">অনলাইনে লিরিক্স খুঁজুন</string>
+    <string name="setting_lyrics_enabled_description">ঘড়িতে লিরিক্স স্ক্রিন খুললে ফোনকে LRCLIB থেকে সিঙ্ক করা লিরিক্স আনতে দিন। শুধু ট্র্যাকের নাম, শিল্পী ও দৈর্ঘ্য পাঠানো হয়; আর কিছু নয় এবং ডিস্কে কিছু সংরক্ষিত হয় না। বন্ধ করলে লিরিক্স স্ক্রিন জানাবে যে অনুসন্ধান নিষ্ক্রিয়।</string>
+    <string name="setting_overlay_blur_radius">ওভারলে ব্লার</string>
+    <string name="setting_overlay_blur_radius_description">ভলিউম/সিক রিং ও কুইক অ্যাকশন প্যানেলের পেছনের ফ্রস্টেড ব্যাকড্রপের ব্লার শক্তি (px)—অ্যালবাম আর্ট পটভূমির ব্লার থেকে স্বাধীন</string>
+    <string name="category_action_list">অ্যাকশন তালিকা</string>
+    <string name="category_automation">অটোমেশন</string>
+    <string name="category_idle">কিছু না চললে</string>
+    <string name="installed_version">ইনস্টল করা সংস্করণ</string>
+    <string name="get_support">সহায়তা নিন</string>
+    <string name="get_support_description">সহায়তার জন্য অ্যাপ্লিকেশন লগ ডেভেলপারকে পাঠান</string>
+    <string name="contact_developer">ডেভেলপারের সঙ্গে যোগাযোগ করুন</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — যোগাযোগ</string>
+    <string name="contact_developer_chooser">ইমেইল পাঠান</string>
+    <string name="contact_developer_no_client">কোনো ইমেইল অ্যাপ ইনস্টল নেই। ঠিকানা ক্লিপবোর্ডে কপি করা হয়েছে।</string>
+    <string name="about_developer_title">ডেভেলপার সম্পর্কে</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss ব্যক্তিগত প্রকল্প হিসেবে শুরু হয়েছিল—আমি Music Center for Wear-কে আজকের সম্ভাবনার সঙ্গে আধুনিক করতে চেয়েছিলাম, যাতে নিজে প্রতিদিন ব্যবহার করতে পারি। ফল এত ভালো হয়েছিল যে সবার সঙ্গে ভাগ করার সিদ্ধান্ত নিয়েছি। এটি আমার প্রথম অ্যাপ, আর নিজের তৈরি কিছু অন্য মানুষেরও কাজে লাগছে—এমন অনুভূতির তুলনা নেই।</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">ওপেন সোর্স লাইসেন্স</string>
+    <string name="setting_always_show_time">সবসময় সময় দেখান</string>
+    <string name="setting_always_show_time_off_description">বর্তমান সময় শুধু অ্যাম্বিয়েন্ট মোডে দেখানো হবে</string>
+    <string name="setting_always_show_time_on_description">বর্তমান সময় সবসময় দেখানো হবে। উপরের অ্যাকশন আইকন দৃশ্যমান থাকবে না (ঘড়ি দিয়ে বদলে যাবে), তবে অ্যাকশন স্বাভাবিকভাবেই কাজ করবে।</string>
+    <string name="tap_to_force_stop">নিয়ন্ত্রণ বন্ধ করতে ট্যাপ করুন</string>
+    <string name="notification_action_stop">বন্ধ</string>
+    <string name="notification_action_force_stop">জোর করে বন্ধ করুন</string>
+    <string name="error_notification_access">নোটিফিকেশন অ্যাক্সেস নেই। ফোন পরীক্ষা করুন।</string>
+    <string name="error_notifications">ত্রুটি নোটিফিকেশন</string>
+    <string name="notification_access_notification_title">Svartifoss-এর নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
+    <string name="notification_access_notification_title_description">এই নোটিফিকেশন ট্যাপ করে সমস্যা ঠিক করতে Svartifoss পরীক্ষা করুন</string>
+    <string name="error_service_not_enabled">নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
+    <string name="error_service_not_enabled_description">ঘড়ি থেকে সঙ্গীত নিয়ন্ত্রণ করতে Svartifoss-এর নোটিফিকেশন অ্যাক্সেস দরকার—এভাবেই Android তাকে কোন অ্যাপ চলছে তা দেখতে এবং প্লে, পজ ও স্কিপ কমান্ড পাঠাতে দেয়।\n\nSvartifoss কখনো আপনার নোটিফিকেশনের বিষয়বস্তু পড়ে না। এই অনুমতি শুধু সক্রিয় মিডিয়া সেশন খুঁজতে ব্যবহৃত হয়।\n\n\"সেটিংস খুলুন\" ট্যাপ করুন, তারপর নোটিফিকেশন অ্যাক্সেসে Svartifoss চালু করুন।</string>
+    <string name="action_open_settings">সেটিংস খুলুন</string>
+    <string name="settings_search_title">সেটিংস খুঁজুন</string>
+    <string name="settings_search_hint">সেটিংস খুঁজুন</string>
+    <string name="settings_search_clear">সার্চ মুছুন</string>
+    <string name="settings_search_prompt">সেটিংস ও ঘড়ির চেহারার প্রতিটি সেটিং নাম দিয়ে খুঁজুন।</string>
+    <string name="settings_search_no_results">মিলে এমন সেটিং নেই।</string>
+    <string name="settings_search_prerequisite">এই অপশনটি অন্য একটি পছন্দের ওপর নির্ভর করে। দেখাতে এখানে থাকা সেটিংটি সমন্বয় করুন।</string>
+    <string name="setting_numeric_range_error">%1$d থেকে %2$d-এর মধ্যে একটি মান লিখুন।</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">অনুমতি দিতে ট্যাপ করুন—ততক্ষণ প্লেব্যাক নিয়ন্ত্রণ নিষ্ক্রিয় থাকবে</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">ঘড়িতে Svartifoss ইনস্টল করুন</string>
+    <string name="no_watch_app_description">Svartifoss আপনার পেয়ার করা Wear OS ঘড়িতে তার ঘড়ি অ্যাপ খুঁজে পায়নি। ফোন ও ঘড়ির অ্যাপ একসঙ্গে কাজ করে—ঘড়ির অ্যাপ ছাড়া কবজি থেকে প্লেব্যাক নিয়ন্ত্রণ কাজ করবে না।\n\nSvartifoss Play Store-এ নেই—ঘড়ির অ্যাপ আলাদাভাবে sideload করতে হয় (যেমন Wear Installer দিয়ে)। GitHub releases পৃষ্ঠা খুলে ঘড়ির APK পেতে \"রিলিজ দেখুন\" ট্যাপ করুন। এখনই ইনস্টল করলে সিঙ্ক শেষ হতে প্রায় এক মিনিট দিন।</string>
+    <string name="no_watch_app_button">রিলিজ দেখুন</string>
+    <string name="required_permission">প্রয়োজনীয় অনুমতি</string>
+    <string name="setting_pause_on_swipe_exit">সোয়াইপ করে বের হলে প্লেব্যাক পজ করুন</string>
+    <string name="setting_pause_on_swipe_exit_description">ঘড়িতে বামে সোয়াইপ করে Svartifoss থেকে বের হলে যেকোনো প্লেব্যাক স্বয়ংক্রিয়ভাবে পজ করুন।\n\nপাওয়ার বাটন দিয়ে বের হলে প্রভাব পড়বে না এবং কখনো অটো-পজ হবে না।</string>
+    <string name="setting_rotating_crown_off_period">স্ক্রিন চালুর পর ঘূর্ণন ইনপুট বিলম্ব</string>
+    <string name="setting_rotating_crown_off_period_description">ঘূর্ণন ইনপুট (যেমন ঘূর্ণায়মান ক্রাউন) কিছু ডিভাইসে অতিরিক্ত সংবেদনশীল হতে পারে। অনিচ্ছাকৃত ভলিউম বদল ঠেকাতে স্ক্রিন চালু করার পর <![CDATA[<b>%1$s মিলিসেকেন্ড</b>]]> পর্যন্ত ঘূর্ণন ইনপুট নিষ্ক্রিয় থাকবে।</string>
+    <string name="setting_rotary_seek">ঘূর্ণায়মান ক্রাউন দিয়ে সিক</string>
+    <string name="setting_rotary_seek_description">চালু থাকলে ক্রাউন ঘোরানো ভলিউম না বদলে বর্তমান ট্র্যাকের মধ্যে স্ক্রাব করবে। ভলিউম স্ক্রিনের বা ফিজিক্যাল বাটন দিয়ে বদলানো যাবে।</string>
+    <string name="setting_wear_rotary_action">ঘূর্ণায়মান ক্রাউন / বেজেল</string>
+    <string name="wear_rotary_action_volume">ভলিউম বদলান</string>
+    <string name="wear_rotary_action_seek">ট্র্যাকের মধ্যে সিক করুন</string>
+    <string name="wear_rotary_action_off">কিছুই করবেন না</string>
+    <string name="setting_rotating_sensitivity">ঘূর্ণন ইনপুট সংবেদনশীলতা</string>
+    <string name="setting_rotating_sensitivity_description">ঘূর্ণন ইনপুটের সংবেদনশীলতা। সংখ্যা বেশি হলে একইভাবে ক্রাউন ঘোরালে ভলিউম আরও বেশি বাড়বে। বর্তমানে <![CDATA[<b>%1$s%%</b>]]> সেট করা আছে।</string>
+    <string name="setting_disable_ambient_physical_double_click">অ্যাম্বিয়েন্টে ফিজিক্যাল বাটনের ডাবল-ক্লিক বন্ধ করুন</string>
+    <string name="setting_disable_ambient_physical_double_click_description">কিছু ঘড়িতে বাটনের সমস্যা আছে যেখানে অ্যাম্বিয়েন্ট মোডে ফিজিক্যাল বাটন একবার ক্লিক কখনো ডাবল-ক্লিক হিসেবে ধরা পড়ে।\n\nএটি হলে এই অপশন চালু করে অ্যাম্বিয়েন্ট মোডে ডাবল-ক্লিক পুরোপুরি বন্ধ করতে পারেন (যেমন দুবার ক্লিকেও শুধু সিঙ্গেল-ক্লিক অ্যাকশন চলবে)। ঘড়ি সক্রিয় থাকলে ডাবল-ক্লিকে প্রভাব পড়বে না।</string>
+    <string name="setting_haptic_feedback">হ্যাপটিক ফিডব্যাক</string>
+    <string name="setting_haptic_feedback_description">বাটন চাপলে ঘড়ি ভাইব্রেট করুন।</string>
+    <string name="setting_auto_start">Svartifoss স্বয়ংক্রিয়ভাবে খুলুন</string>
+    <string name="setting_auto_start_description">ফোনে মিউজিক প্লেব্যাক শুরু হলে ঘড়িতে Svartifoss স্বয়ংক্রিয়ভাবে খুলুন।</string>
+    <string name="setting_auto_start_apps_blacklist">স্বয়ংক্রিয়ভাবে চালু হওয়া অ্যাপ</string>
+    <string name="setting_auto_start_apps_blacklist_description">যেসব মিডিয়া অ্যাপ Svartifoss স্বয়ংক্রিয়ভাবে চালু করতে পারে তাদের তালিকা</string>
+    <string name="setting_dim_album_art">প্লেয়ারের শেডিং</string>
+    <string name="setting_dim_album_art_description">আর্টওয়ার্ক ও প্লেয়ার কন্ট্রোলের মাঝে ব্যবহারকারীর নির্বাচিত শ্যাডো ইফেক্ট যোগ করুন।</string>
+    <string name="setting_album_art_style">অ্যালবাম আর্টের স্টাইল</string>
+    <string name="setting_album_art_style_description">ঘড়িতে “এখন চলছে” ব্যাকগ্রাউন্ড কেমন দেখাবে তা বেছে নিন।</string>
+    <string name="setting_album_art_blur_radius">ব্লারের তীব্রতা</string>
+    <string name="setting_album_art_blur_radius_description">নির্বাচিত ব্যাকগ্রাউন্ডে ব্লার ব্যবহার হলে পূর্ণস্ক্রিন ব্লারের তীব্রতা। বর্তমানে <![CDATA[<b>%1$s px</b>]]>।</string>
+    <string name="setting_album_art_dim_strength">ডিম করার তীব্রতা</string>
+    <string name="setting_album_art_dim_strength_description">টেক্সট পড়তে সুবিধার জন্য অ্যালবাম আর্ট কতটা অন্ধকার হবে। বর্তমানে <![CDATA[<b>%1$s%%</b>]]>।</string>
+    <string name="setting_player_shading_style">শেডিং স্টাইল</string>
+    <string name="setting_player_shading_intensity">শেডিংয়ের তীব্রতা</string>
+    <string name="setting_player_shading_intensity_description">শেডিং ব্যাকগ্রাউন্ড কতটা অন্ধকার করবে। 100%% পূর্ণ তীব্রতা; অতিরিক্ত কনট্রাস্টের জন্য আরও বাড়াতে পারেন (সর্বোচ্চ 150%%)। বর্তমানে <![CDATA[<b>%1$s%%</b>]]>।</string>
+    <string name="setting_apply_appearance_to_all_faces">এই লুক সব ওয়াচ ফেসে প্রয়োগ করুন</string>
+    <string name="setting_apply_appearance_to_all_faces_description">এই ওয়াচ ফেসের চেহারার সেটিংস অন্য সব ফেসে কপি করুন</string>
+    <string name="apply_appearance_confirm_title">সব ওয়াচ ফেসে প্রয়োগ করবেন?</string>
+    <string name="apply_appearance_confirm_message">এটি বর্তমান ফেসের সেটিংস দিয়ে অন্য সব ফেসের চেহারার সেটিংস ওভাররাইট করবে। আচরণগত সেটিংস বদলাবে না।</string>
+    <string name="apply_appearance_confirm_button">প্রয়োগ করুন</string>
+    <string name="apply_appearance_done">সব ওয়াচ ফেসে প্রয়োগ হয়েছে</string>
+    <string name="category_wf_layout_actions">লেআউট</string>
+    <string name="setting_reset_appearance">এই লেআউট রিসেট করুন</string>
+    <string name="setting_reset_appearance_description">এই ওয়াচ ফেসের চেহারা মূল ডিফল্টে ফিরিয়ে দিন</string>
+    <string name="reset_appearance_confirm_title">এই লেআউট রিসেট করবেন?</string>
+    <string name="reset_appearance_confirm_message">এই ওয়াচ ফেসের চেহারার সেটিংস ডিফল্টে ফিরবে। আচরণগত সেটিংস ও অন্য ফেসগুলো প্রভাবিত হবে না।</string>
+    <string name="reset_appearance_confirm_button">রিসেট</string>
+    <string name="reset_appearance_done">লেআউট ডিফল্টে রিসেট হয়েছে</string>
+    <string name="setting_reset_all_faces">সব ওয়াচ ফেস ডিফল্টে রিসেট করুন</string>
+    <string name="setting_reset_all_faces_description">সব বিল্ট-ইন ওয়াচ ফেসের চেহারা মূল ডিফল্টে ফিরিয়ে দিন</string>
+    <string name="reset_all_faces_confirm_title">সব ওয়াচ ফেস রিসেট করবেন?</string>
+    <string name="reset_all_faces_confirm_message">সব বিল্ট-ইন ওয়াচ ফেসের চেহারা মূল ডিফল্টে ফিরবে এবং সক্রিয় কাস্টম থিম বন্ধ হবে। সংরক্ষিত কাস্টম থিম, আচরণগত সেটিংস ও নির্বাচিত ফেস অক্ষুণ্ণ থাকবে।</string>
+    <string name="reset_all_faces_confirm_button">সব রিসেট করুন</string>
+    <string name="reset_all_faces_done">সব ওয়াচ ফেস ডিফল্টে রিসেট হয়েছে</string>
+    <string name="face_reset_migration_title">আপনার ঘড়ির চেহারা আপডেট করুন</string>
+    <string name="face_reset_migration_message">আপনি এমন একটি পুরোনো সংস্করণ থেকে আপডেট করেছেন যেখানে সব ওয়াচ ফেস একই চেহারার সেটিংস ব্যবহার করত। এখন প্রতিটি ফেস নিজস্ব সেটিংস মনে রাখে, তাই যেসব ফেস আপনি সরাসরি কাস্টমাইজ করেননি সেখানে পুরোনো সেটিংস বেমানান দেখাতে পারে। সব ফেসকে নতুন ডিফল্টে রিসেট করা, অথবা একেবারে নতুনভাবে শুরু করতে অ্যাপের ডেটা মুছে ফেলার পরামর্শ দিচ্ছি।</string>
+    <string name="face_reset_migration_reset_button">সব ওয়াচ ফেস রিসেট করুন</string>
+    <string name="face_reset_migration_clear_data_button">অ্যাপ ডেটা মুছুন</string>
+    <string name="setting_player_shading_color">শেডিংয়ের রং</string>
+    <string name="setting_wear_shading_custom_color">কাস্টম শেডিং রং</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>কালো</item>
+        <item>অ্যালবাম অ্যাকসেন্ট</item>
+        <item>ডিস্যাচুরেটেড অ্যালবাম</item>
+        <item>কাস্টম রঙ</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>প্লেয়ারের থিম অনুসরণ করুন</item>
+        <item>প্রান্ত ভিনিয়েট</item>
+        <item>প্রান্ত ভিনিয়েট (গাঢ়)</item>
+        <item>প্রান্ত ভিনিয়েট (অতি গাঢ়)</item>
+        <item>নিচের কোণ</item>
+        <item>নিচের ফেড</item>
+        <item>নিম্ন ও ঊর্ধ্বসীমা</item>
+        <item>পূর্ণস্ক্রিন ফিল্টার</item>
+        <item>অ্যালবাম কালার ওয়াশ</item>
+        <item>দুই রঙের অ্যালবাম গ্রেডিয়েন্ট</item>
+        <item>পাশের পর্দা</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">অ্যাম্বিয়েন্ট মোডে অ্যালবাম আর্টের অপাসিটি</string>
+    <string name="setting_ambient_album_art_opacity_description">অ্যাম্বিয়েন্ট মোডে অ্যালবাম আর্ট কতটা দৃশ্যমান থাকবে। বর্তমানে <![CDATA[<b>%1$s%%</b>]]>।</string>
+    <string name="setting_volume_overlay_timeout">ভলিউম/সিক ওভারলে টাইমআউট</string>
+    <string name="setting_volume_overlay_timeout_description">ভলিউম বা সিক সামঞ্জস্যের পর ওভারলে কতক্ষণ স্ক্রিনে থাকবে। বর্তমানে <![CDATA[<b>%1$s ms</b>]]>।</string>
+    <string name="setting_rotary_deadzone">রোটারি ডেড জোন</string>
+    <string name="setting_rotary_deadzone_description">ভলিউম বা সিক পরিবর্তন প্রয়োগের আগে ক্রাউনের ন্যূনতম নড়াচড়া। অনিচ্ছাকৃত পরিবর্তন ঠেকাতে সাহায্য করে। বর্তমানে <![CDATA[<b>%1$s</b>]]>।</string>
+
+    <string name="category_wear_experience">Wear অভিজ্ঞতা</string>
+    <string name="setting_swipe_gestures_hint">সোয়াইপ জেসচার</string>
+    <string name="setting_swipe_gestures_hint_description">উপরে/নিচে/বামে সোয়াইপে আলাদা করে যেকোনো অ্যাকশন খোলা যায়। “মিউজিক চলছে” বা “কোনো প্লেব্যাক নেই” অবস্থার জন্য সেট করতে এখানে ট্যাপ করুন। ডানে সোয়াইপ অ্যাপ থেকে বের হওয়ার জন্য সংরক্ষিত।</string>
+    <string name="setting_screen_buttons_hint">মিনি বাটন</string>
+    <string name="setting_screen_buttons_hint_description">সর্বোচ্চ তিনটি দৃশ্যমান বাটন, প্রতিটির জন্য ট্যাপ ও দীর্ঘ-চাপ অ্যাকশন। “মিউজিক চলছে” বা “কোনো প্লেব্যাক নেই” অবস্থার জন্য সেট করতে এখানে ট্যাপ করুন।</string>
+    <string name="dev_screen_buttons_offset">মিনি বাটনের অবস্থান</string>
+    <string name="dev_screen_buttons_offset_description">ঘড়ির স্ক্রিনের নিচ ও মিনি বাটনের মধ্যে পছন্দের দূরত্ব dp-তে (ডিফল্ট 42)। দীর্ঘ শিরোনাম এড়াতে সারিটি নিজে থেকেই অবস্থান সামঞ্জস্য করে।</string>
+    <string name="setting_screen_buttons_tilt">বাটনের কাত</string>
+    <string name="setting_screen_buttons_tilt_description">পাশের বাটন স্ক্রিনের বাঁক কতটা অনুসরণ করবে। 0 = সোজা সারি; 100 = কাত আইকনসহ পূর্ণ আর্ক।</string>
+    <string name="setting_screen_buttons_bg">মিনি বাটনের ব্যাকগ্রাউন্ড</string>
+    <string name="setting_screen_buttons_opacity">মিনি বাটনের অপাসিটি</string>
+    <string name="setting_screen_buttons_opacity_description">পুরো মিনি-বাটন গ্রুপের অপাসিটি (0–100%%)। বর্তমানে <![CDATA[<b>%1$s%%</b>]]>।</string>
+    <string name="quick_panel_row_title">কুইক অ্যাকশন প্যানেল</string>
+    <string name="quick_panel_link_summary">ঘড়ির স্ক্রিনের মাঝখানে ডাবল-ট্যাপ করে খুলুন। Actions-এ এর চারটি স্লট সেট করতে এখানে ট্যাপ করুন।</string>
+    <string name="quick_panel_config_hint">এগুলো ঘড়ির স্ক্রিনের মাঝখানে ডাবল-ট্যাপ করলে খোলা প্যানেলের বাটন। অ্যাকশন বাছতে একটি সারি ট্যাপ করুন (\"কিছু নয়\" লুকিয়ে দেয়); ডিফল্ট ফিরিয়ে আনতে দীর্ঘ-চাপ দিন।</string>
+    <string name="quick_panel_slot_1">বাটন ১</string>
+    <string name="quick_panel_slot_2">বাটন ২</string>
+    <string name="quick_panel_slot_3">বাটন ৩</string>
+    <string name="quick_panel_slot_long">লম্বা বাটন</string>
+    <string name="quick_panel_slot_default">%1$s (ডিফল্ট)</string>
+    <string name="quick_panel_slot_hidden">লুকানো</string>
+    <string name="quick_panel_default_like">লাইক</string>
+    <string name="quick_panel_default_shuffle">শাফল</string>
+    <string name="quick_panel_default_repeat">রিপিট</string>
+    <string name="quick_panel_default_up_next">পরবর্তী</string>
+    <string name="setting_wear_center_long_press_queue">কিউ খুলতে মাঝখানে দীর্ঘ-চাপ দিন</string>
+    <string name="setting_wear_center_long_press_queue_description">প্লেব্যাক কিউ খুলতে “এখন চলছে” স্ক্রিনের মাঝখানে দীর্ঘ-চাপ দিন।</string>
+    <string name="setting_wear_center_long_press">মাঝখানে দীর্ঘ-চাপ</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>ওয়াচ ফেস পরিবর্তন করুন</item>
+        <item>কিউ খুলুন</item>
+        <item>কিছুই নয়</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">বেস লেআউট</string>
+    <string name="setting_wear_screen_face_description">এই থিম যে কাঠামো ব্যবহার করবে তা বেছে নিন। সংরক্ষিত থিম এই লেআউটের সাথে নিজস্ব ফন্ট, রং, ব্লার, শেডিং, AOD ও প্যানেল মিলিয়ে নিতে পারে।</string>
+    <string name="setting_wear_show_track_title">গানের নাম দেখান</string>
+    <string name="setting_wear_show_track_title_description">প্লেয়ারে বর্তমান গানের নাম দেখান</string>
+    <string name="setting_wear_show_track_artist">শিল্পীর নাম দেখান</string>
+    <string name="setting_wear_show_track_artist_description">প্লেয়ারে বর্তমান শিল্পী দেখান</string>
+    <string name="setting_wear_show_source_icon">যে অ্যাপ চলছে তার আইকন দেখান</string>
+    <string name="setting_wear_show_source_icon_description">শিল্পীর পাশে বর্তমানে যে অ্যাপ চলছে তার আইকন দেখান। এটি মিডিয়া নোটিফিকেশনের আইকন ব্যবহার করে। বন্ধ থাকলে আইকন কখনো ঘড়িতে পাঠানো হয় না।</string>
+    <string name="setting_wear_player_controls_visible">প্লেয়ার কন্ট্রোল দেখান</string>
+    <string name="setting_wear_player_controls_visible_description">Classic, Poster, Studio ও অন্যান্য কনফিগারযোগ্য লেআউটে টাচ টার্গেট বন্ধ না করেই বিল্ট-ইন বাটন দেখান বা লুকান</string>
+    <string name="setting_wear_quadrant_tap_flash">ট্যাপ করলে আইকন ফ্ল্যাশ করুন</string>
+    <string name="setting_wear_quadrant_tap_flash_description">কোনো কোণার জোনের অ্যাকশন চললে তার আইকন অল্প সময়ের জন্য পূর্ণ উজ্জ্বলতায় ফ্ল্যাশ করবে—বিশেষ করে Hidden স্ক্রিন থিমে উপকারী, যেখানে আইকন সাধারণত অদৃশ্য থাকে এবং কোন অ্যাকশন চলল তার নিশ্চিতকরণ থাকে না।</string>
+    <string name="setting_wear_internal_progress_visible">লেআউট প্রগ্রেস ইন্ডিকেটর</string>
+    <string name="setting_wear_internal_progress_visible_description">এই লেআউটের জন্য ডিজাইন করা অতিরিক্ত প্রগ্রেস ইন্ডিকেটর দেখান। Expressive ও Material প্লে-বাটন রিং তাদের কন্ট্রোলের অংশ, তাই সেগুলো ব্যবহারযোগ্য থাকবে।</string>
+    <string name="setting_wear_edge_progress_visible">স্ক্রিনের প্রান্তে প্রগ্রেস আর্ক দেখান</string>
+    <string name="setting_wear_edge_progress_visible_description">স্ক্রিনের চারপাশের শুধু দৃশ্যমান আর্ক লুকান। প্রান্ত থেকে সিক করা আলাদা একটি অপশন।</string>
+    <string name="setting_wear_edge_seek_enabled">স্ক্রিনের প্রান্ত থেকে সিক</string>
+    <string name="setting_wear_edge_seek_enabled_description">স্ক্রিনের প্রান্তে ট্যাপ বা ড্র্যাগ করে নির্দিষ্ট স্থানে যান, আর্ক লুকানো থাকলেও</string>
+    <string name="setting_wear_screen_theme">কন্ট্রোল স্টাইল</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">ভারসাম্যপূর্ণ</string>
+    <string name="wear_screen_theme_default_description">স্ট্যান্ডার্ড হায়ারার্কি ও কন্ট্রোল সাইজ।</string>
+    <string name="wear_screen_theme_minimal">মিনিমাল</string>
+    <string name="wear_screen_theme_minimal_description">সব অ্যাকশন দৃশ্যমান ও ব্যবহারযোগ্য রেখে ছোট, কম চোখে পড়া কন্ট্রোল ব্যবহার করে।</string>
+    <string name="wear_screen_theme_compact">কমপ্যাক্ট</string>
+    <string name="wear_screen_theme_compact_description">আপনার অ্যাকশন না বদলে আরও ঘন কন্ট্রোল লেআউট ব্যবহার করে।</string>
+    <string name="wear_screen_theme_cinema">সিনেমা</string>
+    <string name="wear_screen_theme_cinema_description">আর্টওয়ার্ক না বদলে কন্ট্রোলগুলোকে নরম দেখায়।</string>
+    <string name="wear_screen_theme_vivid">উজ্জ্বল</string>
+    <string name="wear_screen_theme_vivid_description">আরও বড় ও চোখে পড়া কন্ট্রোল ব্যবহার করে।</string>
+    <string name="wear_screen_theme_contrast">উচ্চ কনট্রাস্ট</string>
+    <string name="wear_screen_theme_contrast_description">সহজে পড়ার জন্য আরও বড় কন্ট্রোল ব্যবহার করে।</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">কমপ্যাক্ট, সামান্য ডিম করা কন্ট্রোল ব্যবহার করে। এটি নিজে ব্যাকগ্রাউন্ড অন্ধকার করে না—তার জন্য ব্যাকগ্রাউন্ড সেটিংস ব্যবহার করুন।</string>
+    <string name="wear_screen_theme_hidden">লুকানো</string>
+    <string name="wear_screen_theme_hidden_description">সব কন্ট্রোল আইকন পুরোপুরি লুকায়। টাচ টার্গেট সক্রিয় ও সম্পূর্ণ কার্যকর থাকে।</string>
+    <string name="setting_wear_font">টাইপফেস</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">অ্যাপের ডিফল্ট টাইপফেস।</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Google Sans-এর পরিবর্তনশীল সংস্করণ, যেখানে প্রস্থ, অপটিক্যাল সাইজ, গ্রেড ও গোলাকৃতি সমন্বয় করা যায় — নিচের অক্ষ নিয়ন্ত্রণগুলো চালু করে।</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Android-এর ক্লাসিক সিস্টেম টাইপফেস।</string>
+    <string name="wear_font_rounded">গোলাকার</string>
+    <string name="wear_font_rounded_description">নরম গোলাকার প্রান্তসহ বন্ধুত্বপূর্ণ আধুনিক অক্ষররূপ।</string>
+    <string name="wear_font_sans_light">মডার্ন লাইট</string>
+    <string name="wear_font_sans_light_description">পরিষ্কার, খোলামেলা স্যান্স-সেরিফ যার দৃশ্যমান ওজন তুলনামূলক হালকা।</string>
+    <string name="wear_font_sans_thin">অতি পাতলা</string>
+    <string name="wear_font_sans_thin_description">মিনিমাল প্লেয়ারের জন্য অতিরিক্ত হালকা ডিসপ্লে স্টাইল।</string>
+    <string name="wear_font_sans_medium">মডার্ন মিডিয়াম</string>
+    <string name="wear_font_sans_medium_description">আরও শক্তিশালী, কমপ্যাক্ট স্ট্রোকসহ তীক্ষ্ণ স্যান্স-সেরিফ।</string>
+    <string name="wear_font_sans_black">ভারী</string>
+    <string name="wear_font_sans_black_description">সর্বোচ্চ দৃশ্যমান প্রভাবের জন্য মোটা ডিসপ্লে ফন্ট পরিবার।</string>
+    <string name="wear_font_small_caps">স্মল ক্যাপস</string>
+    <string name="wear_font_small_caps_description">সম্পাদকীয় আবহের কমপ্যাক্ট বড়-হাতের অক্ষরের মতো রূপ।</string>
+    <string name="wear_font_casual">ক্যাজুয়াল</string>
+    <string name="wear_font_casual_description">খেলাচ্ছলে হাতে লেখা সিস্টেম ফন্ট পরিবার।</string>
+    <string name="wear_font_typewriter">টাইপরাইটার (আর্কাইভড)</string>
+    <string name="wear_font_typewriter_description">রেট্রো টাইপরাইটার লুক (Mom\'s Typewriter)।</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">গোলাকার জ্যামিতিক স্যান্স-সেরিফ, Circular-এর ধাঁচে বিনামূল্যের (OFL) বিকল্প।</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">পরিষ্কার জ্যামিতিক স্যান্স-সেরিফ, Proxima Nova-এর ধাঁচে বিনামূল্যের (OFL) বিকল্প।</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">মার্জিত মানবতাবাদী রোমান ফন্ট, Optima-এর ধাঁচে বিনামূল্যের (OFL) বিকল্প।</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">আরও কোমল টাইপরাইটার স্টাইল (Love Letter Typewriter) — সাধারণত \"Lain\"-থিমের ট্র্যাকের জন্য সংরক্ষিত।</string>
+    <string name="wear_font_serif">সেরিফ</string>
+    <string name="wear_font_serif_description">ক্লাসিক সেরিফ টাইপফেস।</string>
+    <string name="wear_font_serif_monospace">সেরিফ মোনো</string>
+    <string name="wear_font_serif_monospace_description">নির্দিষ্ট প্রস্থের সেরিফ অক্ষর, স্বতন্ত্র সম্পাদকীয়/টার্মিনাল চেহারাসহ।</string>
+    <string name="wear_font_monospace">মনোস্পেস</string>
+    <string name="wear_font_monospace_description">নির্দিষ্ট প্রস্থের প্রযুক্তিগত চেহারা।</string>
+    <string name="wear_font_condensed">কনডেন্সড</string>
+    <string name="wear_font_condensed_description">আরও বেশি লেখা ধরার জন্য সরু অক্ষররূপ।</string>
+    <string name="wear_font_condensed_light">কনডেন্সড লাইট</string>
+    <string name="wear_font_condensed_light_description">দীর্ঘ শিরোনামের জন্য সরু ও হালকা ফন্ট পরিবার।</string>
+    <string name="wear_font_condensed_medium">কনডেন্সড মিডিয়াম</string>
+    <string name="wear_font_condensed_medium_description">আরও শক্তিশালী স্ট্রোক ও চমৎকার পাঠযোগ্যতাসহ সরু ফন্ট পরিবার।</string>
+    <string name="wear_font_cursive">কার্সিভ</string>
+    <string name="wear_font_cursive_description">সাজসজ্জামূলক স্ক্রিপ্ট টাইপফেস।</string>
+    <string name="setting_wear_dynamic_accent">ঘড়িতে ডায়নামিক অ্যাকসেন্ট</string>
+    <string name="setting_wear_dynamic_accent_description">অ্যালবামভিত্তিক ঘড়ির রং বর্তমান কভার আর্টের সঙ্গে মানিয়ে নিন। বন্ধ থাকলে অ্যালবাম রঙের বিকল্পগুলো স্থির থিম অ্যাকসেন্ট ব্যবহার করে।</string>
+    <string name="setting_wear_album_art_fade">অ্যালবাম আর্ট ফেড ট্রানজিশন</string>
+    <string name="setting_wear_album_art_fade_description">ট্র্যাক বদলালে অ্যালবাম আর্ট মসৃণভাবে ফেড করুন।</string>
+    <string name="setting_wear_title_text_mode">শিরোনাম টেক্সটের আচরণ</string>
+    <string name="setting_wear_title_text_mode_description">চলতি গানের শিরোনাম না ধরলে কীভাবে আচরণ করবে: স্বয়ংক্রিয় মোডে ছোট করা, লাইন ভাঙা ও স্ক্রলিং মিলিয়ে ব্যবহার হয়; অন্য বিকল্পগুলো একটি আচরণই ব্যবহার করে।</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>স্বয়ংক্রিয় (ছোট করুন, তারপর লাইন ভাঙুন, তারপর স্ক্রল)</item>
+        <item>স্ক্রল (মার্কি)</item>
+        <item>দুই লাইনে ভাঙুন</item>
+        <item>তিন লাইনে ভাঙুন</item>
+        <item>পাঁচ লাইনে ভাঙুন</item>
+        <item>স্থির (এক লাইন, স্ক্রল বা ছোট করা নয়)</item>
+        <item>ফিট করতে ছোট করুন</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">শিল্পীর টেক্সটের রং</string>
+    <string name="setting_wear_artist_custom_color">শিল্পীর কাস্টম রং</string>
+    <string name="setting_wear_artist_custom_color_description">স্বাভাবিক ট্রিটমেন্টে ব্যবহৃত শিল্পীর রং বেছে নিন</string>
+    <string name="setting_wear_artist_desaturated">কম স্যাচুরেটেড শিল্পীর রং</string>
+    <string name="setting_wear_artist_desaturated_description">অ্যালবামভিত্তিক শিল্পীর টেক্সটের রং নরম করুন — শুধু তখনই প্রযোজ্য যখন \"শিল্পীর টেক্সটের রং\" অ্যালবাম রঙে সেট করা থাকে</string>
+
+    <string name="setting_wear_progress_color">প্রগ্রেস বারের রং</string>
+    <string name="setting_wear_progress_custom_color">প্রগ্রেস বারের কাস্টম রং</string>
+    <string name="setting_wear_progress_custom_color_description">স্বাভাবিক ট্রিটমেন্টে ব্যবহৃত অগ্রগতি ও সিক রং বেছে নিন</string>
+    <string name="setting_wear_progress_desaturated">কম স্যাচুরেটেড প্রগ্রেস বারের রং</string>
+    <string name="setting_wear_progress_desaturated_description">অ্যালবামভিত্তিক প্রগ্রেস বারের রং নরম করুন — শুধু তখনই প্রযোজ্য যখন \"প্রগ্রেস বারের রং\" অ্যালবাম রঙে সেট করা থাকে</string>
+
+    <string name="setting_wear_volume_color">ভলিউম বারের রং</string>
+    <string name="setting_wear_volume_custom_color">ভলিউমের কাস্টম রং</string>
+    <string name="setting_wear_volume_custom_color_description">স্বাভাবিক ট্রিটমেন্টে ব্যবহৃত ভলিউমের রং বেছে নিন</string>
+    <string name="setting_wear_quick_panel_color">কুইক অ্যাকশনের রং</string>
+    <string name="setting_wear_quick_panel_custom_color">কুইক অ্যাকশনের কাস্টম রং</string>
+    <string name="setting_wear_quick_panel_custom_color_description">স্বাভাবিক ট্রিটমেন্টে ব্যবহৃত কুইক অ্যাকশনের রং বেছে নিন</string>
+    <string name="setting_wear_shading_custom_color_description">শেডিং গ্রেডিয়েন্টে টিন্ট দেওয়ার রং বেছে নিন</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>নিরপেক্ষ (স্থির থিম রঙ)</item>
+        <item>অ্যালবাম রঙ</item>
+        <item>কাস্টম রঙ</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>ক্লাসিক</item>
+        <item>এক্সপ্রেসিভ</item>
+        <item>ভিনাইল</item>
+        <item>পোস্টার</item>
+        <item>স্টুডিও</item>
+        <item>হ্যালো</item>
+        <item>অরোরা</item>
+        <item>Eclipse AMOLED</item>
+        <item>স্পেকট্রাম</item>
+        <item>Material</item>
+        <item>ইমার্সিভ</item>
+        <item>গভীরতা</item>
+        <item>ক্যারোসেল</item>
+        <item>চ্যাট</item>
+        <item>বিভক্ত</item>
+        <item>নোট</item>
+        <item>পংক্তি</item>
+        <item>মেটাডেটা</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">এক্সপ্রেসিভ সিক</string>
+    <string name="setting_wear_expressive_seek_mode_description">Expressive ফেসে স্পর্শ করে ট্র্যাক স্ক্রাব করার পদ্ধতি। সেন্ট্রাল রিং প্লে বোতামের চারপাশের রিং টেনে নেওয়া যায়; এজ রিং Classic বেজেল রিংও দেখায়; কিছুই নয় হলে শুধু রোটারি ক্রাউন দিয়ে সিক করা যায়।</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>কেন্দ্রীয় রিং</item>
+        <item>প্রান্ত রিং</item>
+        <item>কোনোটিই নয়</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">অলওয়েজ-অন ডিসপ্লে</string>
+    <string name="setting_wear_aod_style">অলওয়েজ-অন স্টাইল</string>
+    <string name="setting_wear_aod_style_description">ঘড়ি অ্যাম্বিয়েন্ট মোডে থাকলে নাও-প্লেয়িং স্ক্রিন কেমন দেখাবে। ফলো ফেস নির্বাচিত ফেসের সঙ্গে মেলে; মিনিমাল সর্বোচ্চ ব্যাটারি লাইফের জন্য খাঁটি কালো পটভূমিতে শুধু ম্লান লেখা দেখায়।</string>
+    <string-array name="wear_aod_style_entries">
+        <item>ওয়াচ ফেস অনুসরণ করুন</item>
+        <item>ক্লাসিক</item>
+        <item>এক্সপ্রেসিভ (আউটলাইন)</item>
+        <item>Material (আউটলাইন)</item>
+        <item>AMOLED কন্ট্রোল</item>
+        <item>Chrono (বড় ঘড়ি)</item>
+        <item>পোস্টার</item>
+        <item>স্টুডিও</item>
+        <item>ইমার্সিভ</item>
+        <item>ক্যারোসেল</item>
+        <item>চ্যাট</item>
+        <item>বিভক্ত</item>
+        <item>নোট</item>
+        <item>পংক্তি</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">অলওয়েজ-অন রং</string>
+    <string-array name="wear_aod_color_entries">
+        <item>সাদা</item>
+        <item>অ্যালবাম রঙ</item>
+        <item>কাস্টম রঙ</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>সাদা</item>
+        <item>ডায়নামিক (ঘড়ির নিচের এলাকার ভিত্তিতে)</item>
+        <item>অ্যালবাম রঙ</item>
+        <item>কাস্টম রঙ</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>প্যানেল স্টাইল অনুসরণ করুন</item>
+        <item>স্বচ্ছ (পটভূমি নেই)</item>
+        <item>অ্যালবাম অ্যাকসেন্ট</item>
+        <item>অর্ধস্বচ্ছ</item>
+        <item>সাদা</item>
+        <item>ফ্রস্টেড সাদা</item>
+        <item>কালো</item>
+        <item>ডায়নামিক (অ্যালবাম টোন)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">আপ নেক্সট পিলের পটভূমি</string>
+    <string name="setting_wear_show_up_next_pill">প্লেয়ারে আপ নেক্সট পিল</string>
+    <string name="setting_wear_show_up_next_pill_description">নাও-প্লেয়িং স্ক্রিনের নিচে আপ নেক্সট পিল দেখান। এটি মিনি-বাটন সারির জায়গা নেয়, তাই ওই সারি না দেখালেই এটি দেখা যায়।</string>
+    <string name="category_wf_clock">ঘড়ি</string>
+    <string name="setting_wear_clock_color">ঘড়ির রং</string>
+    <string name="setting_wear_clock_custom_color">ঘড়ির কাস্টম রং</string>
+    <string name="setting_wear_clock_custom_color_description">ঘড়ির রং কাস্টম রঙে সেট থাকলে ব্যবহারের জন্য ঘড়ির রং বেছে নিতে ট্যাপ করুন</string>
+    <string name="setting_wear_clock_opacity">ঘড়ির অস্বচ্ছতা</string>
+    <string name="setting_wear_clock_opacity_description">সবসময় দেখানো ঘড়ির অস্বচ্ছতা (10–100%%) নির্ধারণ করে। বর্তমানে <![CDATA[<b>%1$s%%</b>]]>।</string>
+    <string name="setting_wear_aod_custom_color">অলওয়েজ-অন কাস্টম রং</string>
+    <string name="setting_wear_aod_custom_color_description">অলওয়েজ-অন রং কাস্টম রঙে সেট থাকলে অলওয়েজ-অন লেখা, কন্ট্রোল ও ঘড়ির জন্য ব্যবহৃত রং বেছে নিতে ট্যাপ করুন</string>
+    <string name="setting_wear_aod_intensity">অলওয়েজ-অন উজ্জ্বলতা</string>
+    <string name="setting_wear_aod_intensity_description">অলওয়েজ-অন ডিসপ্লের উজ্জ্বলতা (20–100%%) নির্ধারণ করে। কম মানে বেশি ম্লান ও কম ব্যাটারি ব্যবহার। বর্তমানে <![CDATA[<b>%1$s%%</b>]]>।</string>
+    <string name="setting_wear_aod_show_transport">অলওয়েজ-অন ডিসপ্লেতে প্লেব্যাক বোতাম</string>
+    <string name="setting_wear_aod_show_transport_description">সমর্থিত ভিজ্যুয়াল অলওয়েজ-অন স্টাইলে আউটলাইন করা পূর্ববর্তী/প্লে/পরবর্তী বোতাম দেখান। স্ক্রিন ম্লান থাকলে এগুলো ট্যাপ করা যায় না, তবে ট্যাপ করলে ঘড়ি জেগে ওঠে এবং বোতামটি ইতিমধ্যেই আঙুলের নিচে থাকে।</string>
+    <string name="setting_wear_aod_show_progress">অলওয়েজ-অন ডিসপ্লেতে প্রগ্রেস রিং</string>
+    <string name="setting_wear_aod_show_progress_description">অ্যাম্বিয়েন্ট মোডে প্লে বোতামের চারপাশে প্রগ্রেস রিং দেখান — সেখানে অবস্থান প্রায় মিনিটে একবারই আপডেট হয়</string>
+    <string name="setting_wear_aod_show_pills">অলওয়েজ-অন ডিসপ্লেতে আপ নেক্সট</string>
+    <string name="setting_wear_aod_show_pills_description">ভিজ্যুয়াল অলওয়েজ-অন স্টাইলের নিচে স্থির আউটলাইন আপ নেক্সট পিল দেখান</string>
+    <string name="category_wf_gestures">স্ক্রিন জেসচার</string>
+    <string name="setting_wear_mini_buttons_mode">মিনি বোতাম দেখান</string>
+    <string name="setting_wear_gestures_mode">স্ক্রিন জেসচার</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>সবসময়</item>
+        <item>শুধু বাজানোর সময়</item>
+        <item>শুধু বিরতির সময়</item>
+        <item>কখনও নয়</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">অলওয়েজ-অন ডিসপ্লেতে অ্যালবাম আর্ট</string>
+    <string name="setting_wear_aod_show_art_description">অ্যাম্বিয়েন্ট মোডেও ম্লান অ্যালবাম আর্ট দৃশ্যমান রাখুন। বন্ধ করলে খাঁটি কালো পটভূমি দেখায়, যা AMOLED স্ক্রিনে উল্লেখযোগ্যভাবে বেশি ব্যাটারি সাশ্রয় করে।</string>
+    <string name="setting_wear_aod_art_treatment">অলওয়েজ-অন অ্যালবাম আর্ট স্টাইল</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>নরম ব্লার</item>
+        <item>পরিষ্কার কভার</item>
+        <item>মনোক্রোম ব্লার</item>
+        <item>প্লেয়ারের আর্টওয়ার্ক ট্রিটমেন্ট অনুসরণ করুন</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">অলওয়েজ-অন ডিসপ্লেতে ঘড়ি</string>
+    <string name="setting_wear_aod_show_clock_description">ঘড়ি অ্যাম্বিয়েন্ট মোডে থাকলে সময় দেখান</string>
+    <string name="setting_wear_aod_show_track_info">অলওয়েজ-অন ডিসপ্লেতে ট্র্যাক তথ্য</string>
+    <string name="setting_wear_aod_show_track_info_description">অ্যাম্বিয়েন্ট মোডে ট্র্যাকের শিরোনাম ও শিল্পী দেখান</string>
+
+    <string name="category_overlays_queue">ওভারলে ও কিউ</string>
+    <string name="category_wf_panel_shared">শেয়ার্ড প্যানেলের চেহারা</string>
+    <string name="category_wf_panel_volume">ভলিউম প্যানেল</string>
+    <string name="category_wf_panel_seek">অগ্রগতি ও সিক প্যানেল</string>
+    <string name="category_wf_panel_quick">কুইক অ্যাকশন প্যানেল</string>
+    <string name="category_wf_panel_queue">কিউ ও তালিকা</string>
+    <string name="category_wf_panel_effects">প্যানেল ইফেক্ট</string>
+    <string name="setting_wear_overlay_backdrop_style">প্যানেলের পটভূমি</string>
+    <string name="setting_wear_volume_style">ভলিউম স্টাইল</string>
+    <string name="setting_wear_volume_layout">ভলিউম লেআউট</string>
+    <string name="setting_wear_quick_panel_style">কুইক প্যানেল স্টাইল</string>
+    <string name="setting_wear_quick_panel_layout">কুইক প্যানেল লেআউট</string>
+    <string name="setting_wear_quick_panel_source">কুইক অ্যাকশন</string>
+    <string name="setting_wear_quick_panel_source_description">আপনার কনফিগার করা বোতাম, অথবা বর্তমানে চলমান অ্যাপের দেওয়া অ্যাকশন বেছে নিন।</string>
+    <string name="quick_panel_open_note_title">প্যানেল খোলা</string>
+    <string name="quick_panel_open_note_description">ঘড়িতে কুইক অ্যাকশন প্যানেল খুলতে নাও-প্লেয়িং স্ক্রিনের মাঝখানে ডাবল-ট্যাপ করুন।</string>
+    <string name="preview_current_app_action">বর্তমান অ্যাপের অ্যাকশন</string>
+    <string name="preview_notification_controls">মিডিয়া নোটিফিকেশনের আইকন</string>
+    <string name="setting_wear_queue_style">কিউ স্টাইল</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">শর্টকাট কভারকে পটভূমি হিসেবে ব্যবহার করুন</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">কিউ স্টাইল কভার ভ্যারিয়েন্ট হলে, আনা শর্টকাট কভার (ট্র্যাক, প্লেলিস্ট, শিল্পী…) থাকা কুইক-প্যানেল অ্যাকশন সারিও আপ নেক্সটের মতো সেই আর্ট দিয়ে পিল ভরবে। আনা কভার না থাকা শর্টকাট (সাধারণ অ্যাপ আইকন) অপরিবর্তিত থাকবে।</string>
+    <string name="setting_wear_list_row_size">লিস্ট পিলের আকার</string>
+    <string name="setting_wear_list_row_size_description">কিউ, মেনু ও কুইক প্যানেলের পূর্ণ-প্রস্থ সারিগুলোর উচ্চতা।</string>
+    <string name="setting_wear_progress_gradient">প্যালেটকে রিংয়ে মিশিয়ে দিন</string>
+    <string name="setting_wear_progress_gradient_description">বহু-রঙের কালার ট্রিটমেন্টে (কমপ্লিমেন্টারি, ট্রায়াডিক, অ্যানালগাস, ডুয়োটোন) সলিড রিং তিনটি রঙের মধ্য দিয়ে ফেড করে। অন্য সব জায়গায় অ্যালবাম প্যালেট রেখে শুধু রিং এক রঙে রাখতে এটি বন্ধ করুন।</string>
+    <string name="setting_wear_progress_style">প্রগ্রেস রিং স্টাইল</string>
+    <string name="setting_wear_seek_style">সিক ও ভলিউম রিডআউট স্টাইল</string>
+    <string name="setting_wear_seek_layout">সিক প্যানেল লেআউট</string>
+    <string name="setting_wear_color_treatment">ঘড়ির কালার ট্রিটমেন্ট</string>
+    <string name="setting_wear_normal_color">স্বাভাবিক রং</string>
+    <string name="setting_wear_normal_color_description">স্বাভাবিক মোডে শিরোনামের অ্যাকসেন্ট, অগ্রগতি, ভলিউম, প্যানেল ও মিনি-বাটনের সাজসজ্জায় ব্যবহৃত একক রং বেছে নিন</string>
+    <string name="setting_wear_normal_color_multi">রঙের প্যালেট ব্যবহার করুন</string>
+    <string name="setting_wear_normal_color_multi_description">চালু থাকলে স্ক্রিনে একটি প্রধান রং ও দুটি সহায়ক টোন ব্যবহৃত হয়। বন্ধ থাকলে সর্বত্র একটিই রং ব্যবহৃত হয় — অ্যালবামের নিজস্ব রং বা আপনার বেছে নেওয়া রং।</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>স্বাভাবিক (নির্বাচিত রঙ)</item>
+        <item>ডিস্যাচুরেটেড (নরম অ্যালবাম রঙ)</item>
+        <item>এক্সপ্রেসিভ (পূর্ণ অ্যালবাম প্যালেট)</item>
+        <item>পরিপূরক (অ্যালবাম + বিপরীত রঙ)</item>
+        <item>ট্রায়াডিক (তিন অ্যালবাম হিউ)</item>
+        <item>অ্যানালগাস (পাশাপাশি হিউ)</item>
+        <item>মনোক্রোম (এক হিউ, তিন টোন)</item>
+        <item>ডুয়োটোন (দুই অ্যালবাম রঙ)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>ঘড়ির ট্রিটমেন্ট অনুসরণ করুন</item>
+        <item>স্বাভাবিক (নির্বাচিত রঙ)</item>
+        <item>ডিস্যাচুরেটেড (নরম অ্যালবাম রঙ)</item>
+        <item>এক্সপ্রেসিভ (পূর্ণ অ্যালবাম প্যালেট)</item>
+        <item>পরিপূরক (অ্যালবাম + বিপরীত রঙ)</item>
+        <item>ট্রায়াডিক (তিন অ্যালবাম হিউ)</item>
+        <item>অ্যানালগাস (পাশাপাশি হিউ)</item>
+        <item>মনোক্রোম (এক হিউ, তিন টোন)</item>
+        <item>ডুয়োটোন (দুই অ্যালবাম রঙ)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">শিরোনামের ওজন</string>
+    <string name="setting_wear_title_font_italic">ইটালিক শিরোনাম</string>
+    <string name="setting_wear_title_font_scale">শিরোনামের আকার</string>
+    <string name="setting_wear_title_font_opacity">শিরোনামের অস্বচ্ছতা</string>
+    <string name="setting_wear_title_font_tracking">শিরোনামের অক্ষর ব্যবধান</string>
+    <string name="setting_wear_title_color">শিরোনাম টেক্সটের রং</string>
+    <string name="setting_wear_title_custom_color">শিরোনামের কাস্টম রং</string>
+    <string name="wear_title_color_face_default">ফেস ডিফল্ট (ডিজাইন অনুযায়ী)</string>
+    <string name="setting_wear_title_adaptive_contrast">কনট্রাস্টের জন্য শিরোনামের রং মানিয়ে নিন</string>
+    <string name="setting_wear_title_adaptive_contrast_description">শিরোনামের রং পেছনের আর্টওয়ার্কের খুব কাছাকাছি হলে রঙের হিউ ঠিক রেখে সেটিকে উজ্জ্বল বা গাঢ় করে। শিরোনাম ফেস ডিফল্ট ব্যবহার করলে এর কোনো প্রভাব নেই।</string>
+    <string name="setting_wear_artist_adaptive_contrast">কনট্রাস্টের জন্য শিল্পীর রং মানিয়ে নিন</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">অ্যালবামের রং পেছনের আর্টওয়ার্কের খুব কাছাকাছি হলে হিউ রেখে শিল্পীর লাইন উজ্জ্বল বা গাঢ় করে। পুরো কভার নয়, শুধু লাইনটি যেখানে আছে সেই স্ট্রিপ মাপা হয়।</string>
+    <string name="setting_wear_artist_font_weight">শিল্পীর ওজন</string>
+    <string name="setting_wear_artist_font_italic">ইটালিক শিল্পী</string>
+    <string name="setting_wear_artist_font_scale">শিল্পীর আকার</string>
+    <string name="setting_wear_artist_font_opacity">শিল্পীর অস্বচ্ছতা</string>
+    <string name="setting_wear_artist_font_tracking">শিল্পীর অক্ষর ব্যবধান</string>
+    <string name="setting_wear_source_icon_scale">অ্যাপ আইকনের আকার</string>
+    <string name="setting_wear_source_icon_opacity">অ্যাপ আইকনের অস্বচ্ছতা</string>
+    <string name="setting_wear_typography_weight_description">1–1000। 400 হলো ফেসের স্বাভাবিক ওজন; বেশি মানে আরও মোটা। Google Sans Flex-এর ক্ষেত্রে এটি ফন্টটির নিজস্ব ওজন অক্ষ</string>
+    <string name="setting_wear_typography_scale_description">ফেসের নিজস্ব আকারের শতাংশ (70–140)। 100 প্রতিটি লেআউটের ডিজাইন করা আকার বজায় রাখে</string>
+    <string name="setting_wear_typography_opacity_description">শতাংশ (20–100)। 100 ফেসের নিজস্ব অস্বচ্ছতা বজায় রাখে</string>
+    <string name="setting_wear_typography_tracking_description">অক্ষরের মধ্যে অতিরিক্ত ফাঁক, em-এর শতভাগে (−5 থেকে 20)। 0 ফন্টের নিজস্ব স্পেসিং বজায় রাখে</string>
+    <string name="setting_wear_color_modifier">টোন</string>
+    <string name="setting_wear_color_modifier_description">প্যালেট কীভাবে তৈরি হয় তা না বদলে পুরো প্যালেট সামঞ্জস্য করুন — সব কালার ট্রিটমেন্টে কাজ করে</string>
+    <string name="setting_wear_color_hue_shift">রঙের শিফট</string>
+    <string name="setting_wear_color_hue_shift_description">অ্যালবাম প্যালেটকে কালার হুইলে ডিগ্রিতে (0–359) ঘোরায়। প্রতিটি ট্রিটমেন্ট প্রধান রংকে অ্যালবামের নিজস্ব হিউতে রাখে, তাই এই সেটিং সেটিই বদলায়। 0 অ্যালবামের রং অপরিবর্তিত রাখে; স্থির স্বাভাবিক রং কখনও শিফট হয় না।</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>কোনোটিই নয়</item>
+        <item>উজ্জ্বল</item>
+        <item>প্যাস্টেল</item>
+        <item>উষ্ণ</item>
+        <item>শীতল</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>প্রান্ত আর্ক (বাম)</item>
+        <item>প্রান্ত আর্ক (লম্বা)</item>
+        <item>প্রান্ত আর্ক (ডান)</item>
+        <item>প্রান্ত আর্ক (উপরে)</item>
+        <item>প্রান্ত আর্ক (নিচে)</item>
+        <item>পূর্ণ রিং</item>
+        <item>কেন্দ্রীয় হ্যালো</item>
+        <item>অনুভূমিক মিটার</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>প্রান্ত রিং</item>
+        <item>প্রান্ত রিং (পাতলা)</item>
+        <item>প্রান্ত রিং (মোটা)</item>
+        <item>টাইমলাইন</item>
+        <item>বিভক্ত টাইমলাইন</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>মেটাডেটা আগে</item>
+        <item>আর্ক</item>
+        <item>হিরো</item>
+        <item>গ্রিড</item>
+        <item>লেবেলযুক্ত সারি</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>সলিড</item>
+        <item>ড্যাশযুক্ত</item>
+        <item>বিন্দু</item>
+        <item>অতি সরু রেখা</item>
+        <item>ধূমকেতু</item>
+        <item>ঘড়ির ৬০টি বিন্দু</item>
+        <item>ঘড়ির ৬০টি টিক</item>
+        <item>১২ ঘণ্টার সেগমেন্ট</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>সাধারণ</item>
+        <item>কাচের পিল</item>
+        <item>এক্সপ্রেসিভ পিল</item>
+        <item>Material পিল</item>
+        <item>সাদা পিল</item>
+        <item>বিশাল</item>
+        <item>অবস্থান / মোট</item>
+        <item>সাদা কাচ</item>
+        <item>স্বচ্ছ অ্যালবাম</item>
+        <item>অ্যালবাম গ্লো</item>
+        <item>আউটলাইন</item>
+        <item>সলিড থিম</item>
+        <item>সলিড অ্যালবাম</item>
+        <item>মাইক্রো</item>
+        <item>ছায়া (ফ্রেম ছাড়া)</item>
+        <item>আন্ডারলাইন</item>
+        <item>অতি সরু আউটলাইন</item>
+        <item>বিশাল অ্যালবাম রং</item>
+        <item>মনো</item>
+        <item>ডার্ক টোনাল</item>
+        <item>টার্মিনাল</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>কনফিগার করা বোতাম</item>
+        <item>বর্তমান মিডিয়া অ্যাপ থেকে</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>প্যানেল স্টাইল অনুসরণ করুন</item>
+        <item>অ্যালবাম ব্লার (অ্যাক্রিলিক)</item>
+        <item>সলিড কালো</item>
+        <item>সলিড অ্যালবাম রং</item>
+        <item>কাচ</item>
+        <item>অ্যালবাম গ্রেডিয়েন্ট</item>
+        <item>অ্যালবাম ডুয়োটোন</item>
+        <item>প্রিজম</item>
+        <item>লিকুইড গ্লাস</item>
+        <item>এক্সপ্রেসিভ ব্লার</item>
+        <item>এক্সপ্রেসিভ</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>কাচ</item>
+        <item>মিনিমাল (AMOLED)</item>
+        <item>Material</item>
+        <item>টোনাল</item>
+        <item>নিয়ন</item>
+        <item>হালকা</item>
+        <item>গ্রেডিয়েন্ট</item>
+        <item>মনো</item>
+        <item>আউটলাইন</item>
+        <item>ডুয়োটোন</item>
+        <item>প্রিজম</item>
+        <item>উচ্চ কনট্রাস্ট</item>
+        <item>টার্মিনাল</item>
+        <item>ফ্রস্ট</item>
+        <item>সেগমেন্ট</item>
+        <item>অরোরা</item>
+        <item>কালি</item>
+        <item>খাঁজ</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>কমপ্যাক্ট</item>
+        <item>স্বাভাবিক</item>
+        <item>লম্বা</item>
+        <item>অতিরিক্ত লম্বা</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>কাচ</item>
+        <item>মিনিমাল (AMOLED)</item>
+        <item>Material</item>
+        <item>টোনাল</item>
+        <item>নিয়ন</item>
+        <item>হালকা</item>
+        <item>গ্রেডিয়েন্ট</item>
+        <item>মনো</item>
+        <item>আউটলাইন</item>
+        <item>ডুয়োটোন</item>
+        <item>প্রিজম</item>
+        <item>উচ্চ কনট্রাস্ট</item>
+        <item>টার্মিনাল</item>
+        <item>ফ্রস্ট</item>
+        <item>কভার</item>
+            <item>কভার ব্লার</item>
+        <item>কভার টোনাল</item>
+        <item>বর্গাকার কভার</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>কাচ</item>
+        <item>সাদা কাচ</item>
+        <item>টোনাল কাচ</item>
+        <item>মিনিমাল (AMOLED)</item>
+        <item>Material</item>
+        <item>টোনাল</item>
+        <item>নিয়ন</item>
+        <item>হালকা</item>
+        <item>গ্রেডিয়েন্ট</item>
+        <item>মনো</item>
+        <item>আউটলাইন</item>
+        <item>সাদা কাচের আউটলাইন</item>
+        <item>ডুয়োটোন</item>
+        <item>প্রিজম</item>
+        <item>উচ্চ কনট্রাস্ট</item>
+        <item>টার্মিনাল</item>
+        <item>ফ্রস্ট</item>
+        <item>ঘোস্ট (ফ্রেম ছাড়া)</item>
+        <item>কুয়াশা</item>
+        <item>কালি</item>
+        <item>বিন্দু</item>
+        <item>স্ল্যাব</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">পজ করার পরও অ্যাপ সক্রিয় রাখুন</string>
+    <string name="setting_wear_paused_hold_description">পজ করার পর কতক্ষণ ঘড়ির অ্যাপ ওয়াচ ফেস থেকে পৌঁছানো যাবে তা নির্ধারণ করে, যাতে আবার খুলতে না হয়ে কবজি তুলেই চালিয়ে যেতে পারেন। বেশি সময়ের সেটিং ব্যাকগ্রাউন্ড সার্ভিস দীর্ঘক্ষণ চালু রাখে।</string>
+    <string name="wear_paused_hold_off">রাখবেন না</string>
+    <string name="wear_paused_hold_5">৫ মিনিট</string>
+    <string name="wear_paused_hold_15">১৫ মিনিট</string>
+    <string name="wear_paused_hold_30">৩০ মিনিট</string>
+    <string name="wear_paused_hold_60">১ ঘণ্টা</string>
+    <string name="wear_paused_hold_always">প্লেব্যাক শেষ হওয়া পর্যন্ত</string>
+
+    <string name="setting_wear_idle_button_action">কিছু না চললে বোতাম</string>
+    <string name="setting_wear_idle_auto_open">কিছু না চললে খুলুন</string>
+    <string name="setting_wear_idle_auto_open_description">কোনো গান না চললে ঘড়ির অ্যাপ খুলে সরাসরি এই স্ক্রিনে যায়।</string>
+    <string name="wear_idle_action_resume">শেষ অ্যাপ আবার চালান</string>
+    <string name="wear_idle_action_shortcuts">প্লেলিস্ট শর্টকাট</string>
+    <string name="wear_idle_action_menu">অ্যাকশন মেনু</string>
+    <string name="wear_idle_action_search">অনুসন্ধান</string>
+    <string name="wear_idle_action_queue">সম্প্রতি চালানো</string>
+    <string name="wear_idle_action_none">কোনো বোতাম নেই</string>
+    <string name="wear_idle_auto_open_none">প্লেয়ারেই থাকুন</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">লাইব্রেরি ব্রাউজ করুন</string>
+    <string name="library_up">পেছনে</string>
+    <string name="error_library_unavailable">এই অ্যাপে ব্রাউজ করার মতো লাইব্রেরি নেই</string>
+    <string name="error_library_empty">এখানে কিছু নেই</string>
+    <string name="error_library_no_player">আগে কিছু চালান</string>
+
+    <string name="setting_wear_carousel_card_shape">ক্যারোসেল কার্ডের আকৃতি</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>গোলাকার</item>
+        <item>বর্গাকার</item>
+        <item>গোলাকার বর্গ</item>
+        <item>বৃত্ত</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">সব জায়গায় ফন্ট ব্যবহার করুন</string>
+    <string name="setting_wear_font_all_screens_description">নির্বাচিত ফন্ট শুধু প্লেয়ার নয়, মেনু, কিউ ও কুইক অ্যাকশনেও প্রয়োগ করে। ডিসপ্লে ও হাতে লেখা ফন্ট তালিকায় পড়তে কঠিন হতে পারে।</string>
+
+    <string name="setting_wear_clock_font">ঘড়ির টাইপফেস</string>
+    <string name="wear_clock_font_follow">ট্র্যাকের ফন্ট অনুসরণ করুন</string>
+    <string name="setting_wear_lyrics_font">লিরিক্স টাইপফেস</string>
+    <string name="setting_wear_lyrics_font_description">লিরিক্স স্ক্রিন ও Verse ফেসে গানের কথার টাইপফেস। এখানে অন্য কিছু না বেছে নিলে ট্র্যাকের টাইপফেস অনুসরণ করে।</string>
+    <string name="wear_lyrics_font_follow">ট্র্যাকের টাইপফেস অনুসরণ করুন</string>
+    <string name="setting_wear_clock_font_weight">ঘড়ির ওজন</string>
+    <string name="setting_wear_clock_font_italic">ইটালিক ঘড়ি</string>
+    <string name="setting_wear_clock_font_scale">ঘড়ির আকার</string>
+    <string name="setting_wear_clock_font_tracking">ঘড়ির অক্ষর ব্যবধান</string>
+    <string name="setting_wear_clock_adaptive_contrast">কনট্রাস্টের জন্য ঘড়ির রং মানিয়ে নিন</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">অ্যালবামের রং পেছনের আর্টওয়ার্কের খুব কাছাকাছি হলে হিউ ঠিক রেখে ঘড়িকে উজ্জ্বল বা গাঢ় করে। শুধু তখনই প্রযোজ্য যখন ঘড়ির রং অ্যালবাম রঙে সেট করা থাকে।</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">কনডেন্সড অল-ক্যাপস ডিসপ্লে — পোস্টারের মতো, দীর্ঘ শিরোনাম ধরে</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">উচ্চ-কনট্রাস্ট সম্পাদকীয় সেরিফ — ম্যাগাজিনের অনুভূতি</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">অদ্ভুত বিবরণসহ প্রযুক্তিগত জ্যামিতিক স্যান্স-সেরিফ</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">চৌকো সাই-ফাই ডিসপ্লে — মোটা ও ভবিষ্যতধর্মী</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">হাতে লেখা স্ক্রিপ্ট — ক্যাজুয়াল ও ব্যক্তিগত</string>
+    <string name="setting_wear_track_time_mode">ট্র্যাক সময় প্রদর্শন</string>
+    <string name="setting_wear_track_time_mode_description">নাও-প্লেয়িং স্ক্রিনে ট্র্যাকের অবস্থান (যেমন 1:23 / 3:45) কখন দেখানো হবে।</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>সবসময়</item>
+        <item>শুধু বাজানোর সময়</item>
+        <item>শুধু বিরতির সময়</item>
+        <item>কখনও নয়</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">মিনি বোতামের কার্ভ</string>
+    <string name="setting_screen_buttons_curve_description">মিনি বোতামের বাঁক বেছে নিন: ফ্ল্যাট, আর্ক, সফট, কার্ভড।</string>
+    <string name="setting_screen_buttons_shape">মিনি বোতামের আকৃতি</string>
+    <string name="setting_screen_buttons_shape_description">মিনি বোতামের আকৃতি ও লেআউট ফরম্যাট বেছে নিন।</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>পিল (ডিফল্ট)</item>
+        <item>বৃত্ত</item>
+        <item>বর্গাকার</item>
+        <item>গোলাকার বর্গ (নরম)</item>
+        <item>গোলাকার বর্গ (মাঝারি)</item>
+        <item>গোলাকার বর্গ</item>
+        <item>পাতা</item>
+        <item>ফোঁটা</item>
+        <item>পিল (চওড়া ছোট)</item>
+        <item>পিল (চওড়া মাঝারি)</item>
+        <item>পিল (চওড়া বড়)</item>
+        <item>পিল (চওড়া অতিরিক্ত বড়)</item>
+        <item>গোলাকার আয়তক্ষেত্র (ছোট)</item>
+        <item>গোলাকার আয়তক্ষেত্র (মাঝারি)</item>
+        <item>গোলাকার আয়তক্ষেত্র (বড়)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>সমতল</item>
+        <item>আর্ক</item>
+        <item>মৃদু বাঁক</item>
+        <item>নরম বাঁক</item>
+        <item>মাঝারি বাঁক</item>
+        <item>বাঁকানো</item>
+        <item>চরম বাঁক</item>
+        <item>প্রান্ত পর্যন্ত ছড়িয়ে দিন</item>
+        <item>বাম প্রান্ত</item>
+        <item>ডান প্রান্ত</item>
+        <item>দুই প্রান্ত</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>ডিফল্ট ব্যাকগ্রাউন্ড</item>
+        <item>কাচ (সমান)</item>
+        <item>কাচ (হালকা)</item>
+        <item>স্বচ্ছ অ্যালবাম</item>
+        <item>স্বচ্ছ অ্যালবাম Exp</item>
+        <item>অ্যালবাম গ্লো</item>
+        <item>গ্লো Exp</item>
+        <item>সলিড থিম</item>
+        <item>সলিড অ্যালবাম</item>
+        <item>সলিড Exp অ্যালবাম</item>
+        <item>আউটলাইন</item>
+        <item>আউটলাইন Exp অ্যালবাম</item>
+        <item>শুধু আইকন (স্বচ্ছ)</item>
+        <item>আইকন Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>নিরপেক্ষ</item>
+        <item>অ্যালবাম রঙ</item>
+        <item>কাস্টম রঙ</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>পূর্ণ কভার</item>
+        <item>ঝাপসা ব্যাকগ্রাউন্ড</item>
+        <item>ফ্রস্টেড প্রান্ত</item>
+        <item>বর্গাকার (তীক্ষ্ণ কোণ)</item>
+        <item>বর্গাকার (নরম কোণ)</item>
+        <item>বর্গাকার (গোলাকার কোণ)</item>
+        <item>সাদা &amp; কালো</item>
+        <item>ঝাপসা সাদা-কালো</item>
+        <item>এক্সপ্রেসিভ ব্লার</item>
+        <item>এক্সপ্রেসিভ</item>
+        <item>Material টোনাল গ্রেডিয়েন্ট</item>
+        <item>পোস্টার কভার</item>
+        <item>স্টুডিও গ্রেডিয়েন্ট</item>
+        <item>ভিনাইল রেডিয়াল গ্লো</item>
+        <item>হ্যালো গ্লো</item>
+        <item>অরোরা রিবন</item>
+        <item>স্পেকট্রাম গ্রেডিয়েন্ট</item>
+        <item>করোনা সুইপ</item>
+        <item>গোধূলি ফেড</item>
+        <item>ব্লুম</item>
+        <item>দিগন্ত ফেড</item>
+        <item>অঙ্গার গ্লো</item>
+        <item>Eclipse AMOLED কালো</item>
+        <item>লুকানো (সলিড কালো)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>নিষ্ক্রিয়</item>
+        <item>মিউজিক ওয়াচফেস আইকন দেখান (শুধু Wear 3.0)</item>
+        <item>Svartifoss খুলুন</item>
+    </string-array>
+
+    <string name="setting_close_timeout">বন্ধের টাইমআউট</string>
+    <string name="setting_close_timeout_description"><![CDATA[<b>%1$s সেকেন্ড</b>]]> কোনো গান না চললে Svartifoss স্বয়ংক্রিয়ভাবে বন্ধ হবে। টাইমআউট 0 সেকেন্ড করলে ফিচারটি বন্ধ থাকে। ব্যাটারি বাঁচাতে এই সময় সবসময় নিখুঁত নাও হতে পারে এবং বন্ধ হতে প্রায় এক মিনিট পর্যন্ত দেরি হতে পারে।</string>
+    <string name="setting_wear_close_on_idle">কিছু চলছে না অবস্থায় বন্ধ করুন</string>
+    <string name="setting_wear_close_on_idle_description">নিষ্ক্রিয় \"কিছু চলছে না\" স্ক্রিনে পৌঁছানোর প্রায় এক মিনিট পর ঘড়ির অ্যাপ স্বয়ংক্রিয়ভাবে বন্ধ করে, যাতে সেটি সেখানে পড়ে না থাকে। উপরের বন্ধের টাইমআউট থেকে এটি আলাদা; সেটি পজ করা ট্র্যাকের জন্য।</string>
+    <string name="category_notifications">নোটিফিকেশন পপআপ</string>
+    <string name="setting_enable_notifications">নোটিফিকেশন পপআপ দেখান</string>
+    <string name="setting_enable_notifications_description">এই ফিচারের জন্য নোটিফিকেশন পরিচালনা করতে আরেকটি অ্যাপ (Vibration Center for Wear) প্রয়োজন।\n\nVibration Center যখনই ঘড়ি ভাইব্রেট করে, Svartifoss নোটিফিকেশনের লেখা পপআপে দেখাবে, ফলে Svartifoss না ছেড়েই দ্রুত নোটিফিকেশন দেখে নিতে পারবেন।</string>
+    <string name="setting_notification_timeout">নোটিফিকেশন পপআপ টাইমআউট</string>
+    <string name="setting_notification_timeout_description">নোটিফিকেশন পপআপ <![CDATA[<b>%1$s সেকেন্ড</b>]]> পরে স্বয়ংক্রিয়ভাবে বন্ধ হবে। অটো-ক্লোজ বন্ধ করতে 0 লিখুন।</string>
+    <string name="app_required">অ্যাপ প্রয়োজন</string>
+    <string name="vibration_center_required_description">এই ফিচার ব্যবহার করতে আরেকটি বিনামূল্যের অ্যাপ ইনস্টল করতে হবে: Vibration Center for Wear।</string>
+    <string name="open_play_store">Play Store খুলুন</string>
+    <string name="error_no_notification_service_support">দুঃখিত, আপনার ডিভাইস নোটিফিকেশন সার্ভিস সমর্থন করে না বলে মনে হচ্ছে</string>
+    <string name="setting_always_select_center_action">সবসময় মাঝের অ্যাকশন বেছে নিন</string>
+    <string name="setting_always_select_center_action_description">চালু থাকলে অ্যাকশন তালিকায় ট্যাপ করলে আপনি যেটিই ট্যাপ করুন, মাঝের (হাইলাইট করা) অপশনই সবসময় নির্বাচিত হবে।</string>
+    <string name="change_icon">আইকন পরিবর্তন করুন</string>
+    <string name="please_wait">অনুগ্রহ করে অপেক্ষা করুন</string>
+
+    <string name="error_playlist_not_supported">এই মিডিয়া অ্যাপ এটি সমর্থন করে না</string>
+    <string name="error_search_no_results">কোনো ফলাফল পাওয়া যায়নি</string>
+    <string name="seconds_to_skip">স্কিপ করার সেকেন্ড:</string>
+    <string name="seconds_to_reverse">পেছনে যাওয়ার সেকেন্ড:</string>
+
+    <string name="setting_dynamic_accent_color">ডায়নামিক অ্যাকসেন্ট রং</string>
+    <string name="setting_dynamic_accent_color_description">চালু থাকলে অ্যাকসেন্ট রং (সিকবার, সক্রিয় কিউ আইটেম) বর্তমান অ্যালবাম আর্টের প্রধান রঙের সঙ্গে স্বয়ংক্রিয়ভাবে মানিয়ে নেয়।</string>
+    <string name="setting_desaturated_color">কম স্যাচুরেটেড রং</string>
+    <string name="setting_desaturated_color_description">সক্রিয় থিম অনুযায়ী ভালো পাঠযোগ্যতা ও কনট্রাস্ট নিশ্চিত করতে তোলা রঙের স্যাচুরেশন ও উজ্জ্বলতা সামঞ্জস্য করে।</string>
+
+    <string name="queue_header">প্লেব্যাক কিউ</string>
+    <string name="queue_unavailable">কিউ উপলভ্য নয়</string>
+
+    <string name="setting_custom_accent_color">অ্যাকসেন্ট রং</string>
+    <string name="setting_custom_accent_color_description">অ্যাপ ইন্টারফেসের জন্য কাস্টম অ্যাকসেন্ট রং বেছে নিন</string>
+    <string name="setting_mini_player">মিনি প্লেয়ার</string>
+    <string name="setting_mini_player_description">মিডিয়া সক্রিয় থাকলে নিচের নেভিগেশনের ওপরে স্থায়ী নাও-প্লেয়িং বার দেখায়। ডিফল্টভাবে চালু; জায়গা ফেরত পেতে বন্ধ করুন।</string>
+    <string name="color_picker_title">অ্যাকসেন্ট রং বেছে নিন</string>
+    <string name="color_picker_reset">রিসেট</string>
+    <string name="color_picker_apply">প্রয়োগ করুন</string>
+    <string name="color_picker_default">ডিফল্ট</string>
+    <string name="color_picker_invalid">অবৈধ রঙের কোড</string>
+    <string name="color_picker_current">বর্তমান: %s</string>
+
+    <string name="drawer_version_format">ভার্সন %1$s</string>
+    <string name="drawer_tagline">Wear OS-এর কম্প্যানিয়ন অ্যাপ</string>
+    <string name="drawer_about_heading">সম্পর্কে</string>
+    <string name="drawer_about_summary">Svartifoss দিয়ে Wear OS ঘড়ি থেকে ফোনের গান নিয়ন্ত্রণ করতে পারেন — আপনার ডিভাইস অনুযায়ী সম্পূর্ণ কাস্টমাইজযোগ্য রিমোটসহ।</string>
+    <string name="drawer_name_heading">নাম</string>
+    <string name="drawer_name_meaning">Svartifoss আইসল্যান্ডীয় ভাষায় “কালো জলপ্রপাত” — Vatnajökull জাতীয় উদ্যানের সেই জলপ্রপাতের নাম থেকে নেওয়া, যেখানে গাঢ় ব্যাসাল্ট স্তম্ভ সরু জলধারাকে ঘিরে রেখেছে। পাথরের ওপর দিয়ে জলের মতোই, সঙ্গীত অ্যাপের মধ্য দিয়ে প্রবাহিত হয়।</string>
+    <string name="drawer_sync_heading">সিঙ্ক</string>
+    <string name="drawer_sync_summary">ঘড়ির সেটিংস ফোনে এখানে কনফিগার করা হয় এবং জোড়া ঘড়িতে স্বয়ংক্রিয়ভাবে সিঙ্ক হয়।</string>
+    <string name="drawer_support_heading">সহায়তা</string>
+    <string name="drawer_support_summary">Svartifoss বিনামূল্যে ও ওপেন সোর্স — কাজে লাগলে আমাকে এক কাপ কফি কিনে দিতে পারেন :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">কভার আর্ট ডাউনলোড করুন</string>
+    <string name="album_art_saved">কভার আর্ট গ্যালারিতে সংরক্ষিত হয়েছে</string>
+    <string name="album_art_save_error">কভার আর্ট সংরক্ষণ করা যায়নি</string>
+
+    <string name="action_play_liked_songs">পছন্দ করা গান চালান (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">পছন্দ করা গান চালান (Spotify)</string>
+    <string name="action_play_soundcloud_likes">পছন্দ করা ট্র্যাক চালান (SoundCloud)</string>
+    <string name="action_my_playlists">স্ট্রিমিং শর্টকাট</string>
+    <string name="action_play_specific_playlist">স্ট্রিমিং শর্টকাট খুলুন</string>
+    <string name="action_choose_or_add_streaming_shortcut">স্ট্রিমিং শর্টকাট বেছে নিন বা যোগ করুন</string>
+    <string name="action_show_streaming_library">সব সংরক্ষিত শর্টকাট দেখান</string>
+    <string name="playlist_shortcut_pick_title">শর্টকাট বেছে নিন</string>
+    <string name="playlist_shortcut_pick_empty">এখনও কোনো স্ট্রিমিং শর্টকাট সংরক্ষিত নেই — নিচে একটি যোগ করুন, তারপর ট্যাপ করে বেছে নিন</string>
+    <string name="playlist_shortcuts_empty">এখনও কোনো স্ট্রিমিং শর্টকাট নেই — ফোন অ্যাপের সেটিংসে যোগ করুন</string>
+    <string name="setting_playlist_shortcuts">স্ট্রিমিং শর্টকাট</string>
+    <string name="setting_playlist_shortcuts_description">ঘড়ি থেকে শেয়ার করা লিংক YouTube Music, Spotify ও অন্যান্য স্ট্রিমিং অ্যাপে খুলুন</string>
+    <string name="setting_shortcut_artwork">শর্টকাট আর্টওয়ার্ক অনলাইনে আনুন</string>
+    <string name="setting_shortcut_artwork_description">প্রতিটি সংরক্ষিত শর্টকাটের জন্য সার্ভিস থেকে থাম্বনেইল ডাউনলোড করে ফোনের তালিকা, ঘড়ির মেনু ও নির্ধারিত বোতামে দেখায়। প্রতিটি থাম্বনেইল একবারই আনা হয়; শুধু পাবলিক শেয়ার লিংক পাঠানো হয়। ডিফল্টভাবে বন্ধ।</string>
+    <string name="setting_queue_local_artwork">লাইব্রেরি থেকে কিউ কভার</string>
+    <string name="setting_queue_local_artwork_description">লোকাল মিউজিক প্লেয়ার কিউ কভারকে লাইব্রেরি রেফারেন্স হিসেবে প্রকাশ করে। মিডিয়া অ্যাকসেস দিন যাতে ঘড়ির কিউতে দেখানো যায়। ইন্টারনেট ব্যবহৃত হয় না।</string>
+    <string name="setting_queue_local_artwork_granted">মিডিয়া অ্যাকসেস দেওয়া হয়েছে — লোকাল কিউ কভার দেখানো হবে</string>
+    <string name="setting_queue_local_artwork_denied">মিডিয়া অ্যাকসেস প্রত্যাখ্যাত। লোকাল কিউ কভার দেখাতে Android সেটিংসে এটি চালু করুন।</string>
+    <string name="setting_queue_remote_artwork">কিউ কভার অনলাইনে আনুন</string>
+    <string name="setting_queue_remote_artwork_short_description">স্ট্রিমিং অ্যাপ (YouTube Music ক্লায়েন্ট, Echo Music…) কিউ কভারকে ছবির বদলে লিংক হিসেবে প্রকাশ করে, তাই এগুলো ডাউনলোড ও ক্যাশ করা হয়। কিউ সম্পূর্ণ অফলাইনে রাখতে বন্ধ করুন — তখন ওই সারিগুলো কোনো কভারই দেখাবে না।</string>
+    <string name="setting_queue_remote_artwork_description">স্ট্রিমিং প্লেয়ার কিউ কভারকে ছবির বদলে লিংক হিসেবে প্রকাশ করে। প্রতিটি একবার ডাউনলোড করে এই ফোনে ক্যাশ করা হয়, যাতে ঘড়ির কিউতে দেখানো যায়। শুধু প্লেয়ার আগে থেকেই প্রকাশ করা কভার URL চাওয়া হয় — কোনো অ্যাকাউন্ট বা ব্যক্তিগত ডেটা নয়। ডিফল্টভাবে চালু; কিউ পুরো অফলাইনে রাখতে বন্ধ করুন।</string>
+    <string name="watch_streaming_shortcuts_empty">কুইক অ্যাকশন ও ঘড়ির মেনুর জন্য ট্র্যাক, অ্যালবাম বা প্লেলিস্ট যোগ করুন</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$dটি সংরক্ষিত শর্টকাট · কুইক অ্যাকশন ও ঘড়ির মেনুতে পাওয়া যাবে</item>
+        <item quantity="other">%1$dটি সংরক্ষিত শর্টকাট · কুইক অ্যাকশন ও ঘড়ির মেনুতে পাওয়া যাবে</item>
+    </plurals>
+    <string name="category_music_apps">মিউজিক অ্যাপ ও সার্ভিস</string>
+    <string name="category_apps_content">লিরিক্স ও মেটাডেটা</string>
+    <string name="category_streaming_services">স্ট্রিমিং শর্টকাট</string>
+    <string name="category_queue_artwork">কিউ আর্টওয়ার্ক</string>
+    <string name="category_system_access">Android অ্যাকসেস ও নোটিফিকেশন</string>
+    <string name="setting_apps_integrations">সমর্থিত মিউজিক সার্ভিস</string>
+    <string name="setting_apps_integrations_description">লিংক YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music ও SoundCloud-এ কাজ করে। অ্যাকাউন্ট অ্যাকসেস প্রয়োজন নেই।</string>
+    <string name="setting_apps_integrations_none">কোনো সমর্থিত অ্যাপ পাওয়া যায়নি। শর্টকাট তবুও ব্রাউজার বা অন্য সামঞ্জস্যপূর্ণ অ্যাপে খুলতে পারে।</string>
+    <string name="setting_apps_integrations_installed">%2$dটির মধ্যে %1$dটি শনাক্ত: %3$s</string>
+    <string name="setting_streaming_open_mode">স্ট্রিমিং লিংক খুলুন</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>শনাক্ত স্ট্রিমিং অ্যাপ</item>
+        <item>Android ডিফল্ট</item>
+        <item>প্রতিবার জিজ্ঞাসা করুন</item>
+    </string-array>
+    <string name="setting_persistent_notification">Svartifoss সক্রিয় নোটিফিকেশন পরিচালনা করুন</string>
+    <string name="setting_persistent_notification_description">এই নোটিফিকেশনের Android সেটিংস খোলে — মিউট, লক স্ক্রিন থেকে লুকানো বা অন্যভাবে সামঞ্জস্য করা যায়। পুরোপুরি বন্ধ করা যায় না: ঘড়ির সঙ্গে যোগাযোগকারী ব্যাকগ্রাউন্ড সার্ভিস চললে Android চলমান নোটিফিকেশন বাধ্যতামূলক করে।</string>
+    <string name="setting_notification_access">মিডিয়া নোটিফিকেশন অ্যাকসেস</string>
+    <string name="setting_notification_access_enabled">অনুমোদিত · Android সেটিংস দেখতে ট্যাপ করুন</string>
+    <string name="setting_notification_access_disabled">অনুমোদিত নয় · নোটিফিকেশনের মিডিয়া অ্যাকশন ও স্বয়ংক্রিয় চালু ফিল্টারের জন্য প্রয়োজন</string>
+    <string name="setting_notification_access_unavailable">এই ডিভাইসে নোটিফিকেশন অ্যাকসেস সেটিংস উপলভ্য নয়</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$dটি সংরক্ষিত শর্টকাট · পরিচালনা বা লিংক ইমপোর্ট করতে ট্যাপ করুন</item>
+        <item quantity="other">%1$dটি সংরক্ষিত শর্টকাট · পরিচালনা বা লিংক ইমপোর্ট করতে ট্যাপ করুন</item>
+    </plurals>
+    <string name="category_privacy">গোপনীয়তা</string>
+    <string name="setting_privacy_policy">গোপনীয়তা নীতি</string>
+    <string name="setting_privacy_policy_description">Svartifoss কী ডেটা ব্যবহার করে এবং কোন অনলাইন সার্ভিস ঐচ্ছিক তা দেখুন।</string>
+    <string name="setting_crash_reporting">ক্র্যাশ রিপোর্ট পাঠান</string>
+    <string name="setting_crash_reporting_description">ব্যর্থতা ঠিক করতে সাহায্য করার জন্য Firebase Crashlytics ডায়াগনস্টিক পাঠান। ডিফল্টভাবে চালু; যেকোনো সময় বন্ধ করা যায়।</string>
+    <string name="setting_announcements">ঘোষণার নোটিফিকেশন</string>
+    <string name="setting_announcements_description">ডেভেলপারের মাঝে মাঝে নোটিফিকেশন — নতুন রিলিজ ও গুরুত্বপূর্ণ ঘোষণা। Firebase Cloud Messaging দিয়ে পাঠানো হয়; কোনো অ্যাকাউন্ট বা ব্যবহারকারী তালিকা নেই। ডিফল্টভাবে চালু; যেকোনো সময় বন্ধ করা যায়।</string>
+    <string name="announcement_notification_channel">ঘোষণা</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">প্লেলিস্ট, অ্যালবাম বা ট্র্যাক সরাসরি Svartifoss-এ শেয়ার করুন, কপি করা লিংক পেস্ট করুন বা হাতে যোগ করুন। ঘড়ি শুধু ফোনকে লিংক খুলতে বলে; সার্ভিসে লগইন প্রয়োজন নেই।</string>
+    <string name="back">পেছনে</string>
+    <string name="playlist_shortcuts_beta_badge">বেটা</string>
+    <string name="playlist_shortcuts_intro_title">আপনার গান, এক ট্যাপ দূরে</string>
+    <string name="playlist_shortcuts_yours">আপনার শর্টকাট</string>
+    <string name="playlist_shortcuts_empty_hint">শেয়ার করা ট্র্যাক, অ্যালবাম বা প্লেলিস্ট লিংক যোগ করুন যাতে ঘড়িতে পাওয়া যায়।</string>
+    <string name="playlist_shortcuts_add">শর্টকাট যোগ করুন</string>
+    <string name="playlist_shortcuts_paste">লিংক পেস্ট করুন</string>
+    <string name="playlist_shortcuts_reload_covers">কভার পুনরায় লোড করুন</string>
+    <string name="playlist_shortcuts_reloading_covers">কভার পুনরায় লোড হচ্ছে…</string>
+    <string name="playlist_shortcuts_covers_reloaded">কভার পুনরায় লোড হয়েছে</string>
+    <string name="playlist_shortcuts_edit">শর্টকাট সম্পাদনা করুন</string>
+    <string name="playlist_shortcut_save">শর্টকাট সংরক্ষণ করুন</string>
+    <string name="playlist_shortcut_editor_hint">একটি লিংক পেস্ট করুন। Svartifoss স্বয়ংক্রিয়ভাবে অ্যাপ ও কনটেন্টের ধরন শনাক্ত করবে।</string>
+    <string name="playlist_shortcut_detection_waiting">স্ট্রিমিং লিংকের অপেক্ষায়</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer এবং আরও অনেক কিছু সমর্থিত।</string>
+    <string name="playlist_shortcut_detected_format">শনাক্ত: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">নাম</string>
+    <string name="playlist_shortcut_link_hint">শেয়ার লিংক বা অ্যাপ URI</string>
+    <string name="playlist_shortcut_shuffle">শাফল করে চালান (শুধু YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">লিংক</string>
+    <string name="playlist_type_track">ট্র্যাক</string>
+    <string name="playlist_type_playlist">প্লেলিস্ট</string>
+    <string name="playlist_type_album">অ্যালবাম</string>
+    <string name="playlist_type_artist">শিল্পী</string>
+    <string name="playlist_type_show">শো</string>
+    <string name="playlist_type_episode">এপিসোড</string>
+    <string name="playlist_type_mix">মিক্স</string>
+    <string name="playlist_badge_shuffle">শাফল</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">এখনও কোনো স্ট্রিমিং শর্টকাট যোগ করা হয়নি</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$dটি সংরক্ষিত</item>
+        <item quantity="other">%1$dটি সংরক্ষিত</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">ক্রমবদ্ধ স্ট্রিমিং শর্টকাট। টেনে নিতে টাচ করে ধরে রাখুন, Move up বা Move down অ্যাকসেসিবিলিটি অ্যাকশন ব্যবহার করুন, অথবা কীবোর্ডে Ctrl+Up/Down চাপুন।</string>
+    <string name="playlist_shortcut_more_options">%1$s-এর আরও অপশন</string>
+    <string name="playlist_shortcut_menu_edit">সম্পাদনা</string>
+    <string name="playlist_shortcut_menu_open">এখন খুলুন</string>
+    <string name="playlist_shortcut_menu_copy">লিংক কপি করুন</string>
+    <string name="playlist_shortcut_menu_duplicate">ডুপ্লিকেট</string>
+    <string name="playlist_shortcut_menu_share">শেয়ার</string>
+    <string name="playlist_shortcut_menu_delete">মুছুন</string>
+    <string name="playlist_shortcut_open_failed">কোনো অ্যাপ এই লিংক খুলতে পারে না</string>
+    <string name="streaming_shortcut_choose_app">স্ট্রিমিং লিংক খুলুন</string>
+    <string name="playlist_shortcut_link_copied">লিংক কপি হয়েছে</string>
+    <string name="playlist_shortcut_import_invalid">শেয়ার করা লেখায় বৈধ স্ট্রিমিং লিংক নেই</string>
+    <string name="playlist_shortcut_clipboard_invalid">ক্লিপবোর্ডে বৈধ স্ট্রিমিং লিংক নেই</string>
+    <string name="playlist_shortcut_name_required">শর্টকাটের নাম লিখুন</string>
+    <string name="playlist_shortcut_link_invalid">বৈধ ওয়েব লিংক বা অ্যাপ URI লিখুন</string>
+    <string name="playlist_shortcut_service_invalid">সার্ভিস শনাক্ত করতে বৈধ লিংক পেস্ট করুন</string>
+    <string name="playlist_shortcut_service_generic">সামঞ্জস্যপূর্ণ লিংক · Android একটি অ্যাপ বেছে নেবে</string>
+    <string name="playlist_shortcut_service_installed">%1$s ইনস্টল করা · অ্যাপে খুলতে প্রস্তুত</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s ইনস্টল নেই · ব্রাউজার বা সামঞ্জস্যপূর্ণ অ্যাপ ব্যবহার করা যেতে পারে</string>
+    <string name="playlist_shortcut_copy_name">%1$s কপি</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s কপি %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s তৈরি হয়েছে</string>
+    <string name="playlist_shortcut_share_title">স্ট্রিমিং শর্টকাট শেয়ার করুন</string>
+    <string name="playlist_shortcut_share_failed">এই শর্টকাট শেয়ার করার জন্য কোনো অ্যাপ নেই</string>
+    <string name="playlist_shortcut_deleted">%1$s মুছে ফেলা হয়েছে</string>
+    <string name="playlist_shortcut_undo">পূর্বাবস্থা</string>
+
+    <string name="action_play_liked_songs_shuffled">পছন্দ করা গান শাফল করে চালান (YT Music)</string>
+    <string name="action_search_history">সার্চ ইতিহাস</string>
+    <string name="search_history_empty">এখনও সাম্প্রতিক কোনো সার্চ নেই</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">আপডেট</string>
+    <string name="setting_update_check">নতুন ভার্সনের নোটিফিকেশন</string>
+    <string name="setting_update_check_description">প্রায় দিনে একবার GitHub-এ নতুন রিলিজ আছে কি না দেখে এবং নোটিফিকেশন দেখায়</string>
+    <string name="setting_update_prereleases">প্রি-রিলিজ অন্তর্ভুক্ত করুন</string>
+    <string name="setting_update_prereleases_description">বেটা ভার্সন সম্পর্কেও নোটিফিকেশন পান</string>
+    <string name="setting_update_check_now">এখনই আপডেট পরীক্ষা করুন</string>
+    <string name="setting_update_check_now_description">সর্বশেষ সংস্করণ দেখায় এবং Bluetooth-এর মাধ্যমে ঘড়ি আপডেট করতে দেয়</string>
+    <string name="update_screen_title">আপডেট</string>
+    <string name="update_cover_content_description">Svartifoss, যে জলপ্রপাতের নামে অ্যাপটির নামকরণ করা হয়েছে</string>
+    <string name="update_notification_channel">অ্যাপ আপডেট</string>
+    <string name="update_available_title">Svartifoss %1$s উপলভ্য</string>
+    <string name="update_notification_text">আপডেট করতে ট্যাপ করুন</string>
+    <string name="update_available_action">আপডেট উপলভ্য</string>
+    <string name="update_installed_phone">ফোন: %1$s</string>
+    <string name="update_installed_versions">ফোন: %1$s · ঘড়ি: %2$s</string>
+    <string name="update_watch_version_unknown">অজানা</string>
+    <string name="update_checking">আপডেট পরীক্ষা করা হচ্ছে…</string>
+    <string name="update_check_failed">আপডেট পরীক্ষা করা যায়নি। সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।</string>
+    <string name="update_available_line">নতুন সংস্করণ: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(প্রাক-রিলিজ)</string>
+    <string name="update_up_to_date">আপনি সর্বশেষ সংস্করণ (%1$s) ব্যবহার করছেন</string>
+    <string name="update_no_wear_asset">এই রিলিজে পাঠানোর মতো ঘড়ির APK নেই।</string>
+    <string name="update_watch_hint">“ঘড়ি আপডেট করুন” নতুন ঘড়ি অ্যাপ ডাউনলোড করে Bluetooth-এর মাধ্যমে পাঠায় — ইনস্টলেশন ঘড়িতেই নিশ্চিত করবেন, কোনো কেবল বা Wear Installer লাগবে না।</string>
+    <string name="update_downloading">ডাউনলোড হচ্ছে… %1$d%%</string>
+    <string name="update_connecting_watch">ঘড়ির সাথে সংযোগ করা হচ্ছে…</string>
+    <string name="update_transferring">ঘড়িতে পাঠানো হচ্ছে… %1$d%%</string>
+    <string name="update_confirm_on_watch">পাঠানো হয়েছে! ঘড়িতে একটি বিজ্ঞপ্তি এসেছে — ইনস্টল করতে ঘড়িতেই সেটি ট্যাপ করুন।</string>
+    <string name="update_no_watch">কোনো ঘড়ি সংযুক্ত নেই।</string>
+    <string name="update_push_failed">ঘড়িতে আপডেট পাঠানো ব্যর্থ হয়েছে। আবার চেষ্টা করুন।</string>
+    <string name="update_watch_button">ঘড়ি আপডেট করুন</string>
+    <string name="update_open_release_button">রিলিজ পৃষ্ঠা খুলুন</string>
+    <string name="update_watch_behind">আপনার ঘড়িতে এখনও %1$s আছে — নিচ থেকে আপডেটটি পাঠান।</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">ফোন ও ঘড়ির অ্যাপ একই সংস্করণে রাখুন</string>
+    <string name="update_state_checking">আপডেট পরীক্ষা করা হচ্ছে…</string>
+    <string name="update_state_current">সবকিছু হালনাগাদ</string>
+    <string name="update_state_current_sub">সর্বশেষ রিলিজ %1$s চলছে</string>
+    <string name="update_state_available">আপডেট উপলভ্য</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">আপডেট পরীক্ষা করা যায়নি</string>
+    <string name="update_state_failed_sub">সংযোগ পরীক্ষা করে আবার চেষ্টা করুন</string>
+    <string name="update_device_phone">ফোন</string>
+    <string name="update_device_watch">ঘড়ি</string>
+    <string name="update_versions_header">ইনস্টল করা</string>
+    <string name="update_whats_new">নতুন কী</string>
+    <string name="update_phone_button">ফোন আপডেট করুন</string>
+    <string name="update_installing">ইনস্টলার খোলা হচ্ছে…</string>
+    <string name="update_install_permission_needed">Svartifoss থেকে অ্যাপ ইনস্টল করার অনুমতি দিন, তারপর আবার ফোন আপডেট করুন ট্যাপ করুন।</string>
+    <string name="update_phone_failed">ফোনের আপডেট ডাউনলোড ব্যর্থ হয়েছে। আবার চেষ্টা করুন।</string>
+    <string name="update_install_notification_title">Svartifoss আপডেট</string>
+    <string name="update_install_notification_tap">নতুন সংস্করণ ইনস্টল করতে ট্যাপ করুন</string>
+    <string name="update_install_notification_failed">ইনস্টল ব্যর্থ হয়েছে। সেটিংসে Svartifoss থেকে ইনস্টল করার অনুমতি দিয়ে আবার চেষ্টা করুন।</string>
+    <string name="setting_wear_album_accent_source">অ্যালবাম অ্যাকসেন্টের উৎস</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>ভারসাম্যপূর্ণ</item>
+        <item>সবচেয়ে উজ্জ্বল</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>বন্ধ</item>
+        <item>নরম</item>
+        <item>স্ট্যান্ডার্ড</item>
+        <item>বোল্ড</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">অ্যাকসেন্টের নিম্নসীমা</string>
+    <string name="preview_metadata_album">অ্যালবাম</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">ট্র্যাক</string>
+    <string name="preview_metadata_genre">ধরন</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">বছর</string>
+    <string name="preview_metadata_format">ফরম্যাট</string>
+    <string name="preview_metadata_bitrate">বিটরেট</string>
+    <string name="preview_metadata_position">অবস্থান</string>
+    <string name="preview_metadata_output">আউটপুট</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">অ্যালবামের বিবরণ</string>
+    <string name="setting_wear_metadata_core_description">অ্যালবাম, অ্যালবাম শিল্পী, রেকর্ডে অবস্থান ও দৈর্ঘ্য।</string>
+    <string name="setting_wear_metadata_release">রিলিজের বিবরণ</string>
+    <string name="setting_wear_metadata_release_description">ধরন, বছর, প্রকাশের তারিখ ও লেবেল।</string>
+    <string name="setting_wear_metadata_credits">কৃতিত্ব</string>
+    <string name="setting_wear_metadata_credits_description">প্লেয়ার প্রকাশ করলে সুরকার, গীতিকার ও লেখক।</string>
+    <string name="setting_wear_metadata_technical">ফাইলের বিবরণ</string>
+    <string name="setting_wear_metadata_technical_description">ফরম্যাট, বিটরেট, স্যাম্পল রেট, চ্যানেল ও আকার। শুধু লোকাল ট্র্যাক।</string>
+    <string name="setting_split_panel">বিভক্ত প্যানেল</string>
+    <string name="setting_split_panel_description">Split ওয়াচ ফেসের নিচের অর্ধেক কী দিয়ে পূরণ হবে। ঝাপসা কভার টেক্সটের পেছনে একই কভার চালিয়ে যায়; সলিড রঙ নোটিফিকেশন কার্ডের মতো দেখায়।</string>
+    <string-array name="wear_split_panel_entries">
+        <item>ঝাপসা আর্টওয়ার্ক</item>
+        <item>সলিড রং</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">প্লেব্যাকের বিবরণ</string>
+    <string name="setting_wear_metadata_playback_description">মিলিসেকেন্ড পর্যন্ত অবস্থান, গতি, অডিও আউটপুট এবং শব্দ কোথা থেকে স্ট্রিম বা বাজছে — ট্র্যাকের ঠিকানাসহ। বর্ণনা করার মতো ফাইল না থাকলেও স্ট্রিমিং ট্র্যাক যে তথ্য ব্লকটি পূরণ করতে পারে।</string>
+    <string name="setting_wear_metadata_identifiers">শনাক্তকারী</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC ও ক্যাটালগ আইডি। ডিফল্টে বন্ধ — প্রয়োজন হলে কাজে লাগে, না হলে অপ্রয়োজনীয় তথ্য।</string>
+    <string name="setting_metadata_lookup">অনলাইনে ট্র্যাকের বিবরণ খুঁজুন</string>
+    <string name="setting_metadata_lookup_description">প্লেয়ার অ্যাপ যে তথ্য প্রকাশ করেনি — ISRC, লেবেল, রিলিজের তারিখ — সেগুলো বিনামূল্যের পাবলিক ডেটাবেস MusicBrainz থেকে পূরণ করে। ডিফল্টে বন্ধ। Metadata ওয়াচ ফেস এটি ছাড়াও চলে; এটি শুধু অতিরিক্ত সারি যোগ করে। আপনি এটি চালু করে ওই ফেস নির্বাচন না করা পর্যন্ত কিছুই পাঠানো হয় না, আর পাঠানো হলেও শুধু ট্র্যাকের নাম ও শিল্পীর নাম পাঠানো হয়।</string>
+</resources>

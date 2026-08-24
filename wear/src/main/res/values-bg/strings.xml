@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name_short" translatable="false">Svartifoss</string>
+
+    <!-- Quick-control Tile -->
+    <string name="tile_label" translatable="false">Svartifoss</string>
+    <string name="tile_description">Сега се възпроизвежда и медийни контроли</string>
+    <string name="complication_album_art_label">Обложка на текущото възпроизвеждане</string>
+    <string name="complication_no_music">Нищо не се възпроизвежда</string>
+    <string name="tile_nothing_playing">Нищо не се възпроизвежда</string>
+    <string name="tile_open_app">Отваряне на Svartifoss</string>
+    <string name="tile_rewind_10">Назад с 10 секунди</string>
+    <string name="tile_forward_10">Напред с 10 секунди</string>
+
+    <!-- Streaming-shortcuts Tile -->
+    <string name="shortcuts_tile_label" translatable="false">Svartifoss</string>
+    <string name="shortcuts_tile_description">Вашите преки пъти за стрийминг на едно докосване</string>
+    <string name="shortcuts_tile_title">Преки пъти</string>
+    <string name="shortcuts_tile_empty">Все още няма преки пътища</string>
+    <string name="shortcuts_tile_more">Още в приложението</string>
+
+    <!-- Idle (nothing-playing) state on the now-playing screen -->
+    <string name="idle_nothing_playing">Нищо не се възпроизвежда</string>
+    <!-- Superseded by idle_hint_resume, which is a *new* key on purpose: this one is translated
+         into 12 locales as "play something on your phone", which stopped being the instruction
+         the moment the idle screen grew its own resume button. Reusing the key would have left
+         every non-English watch telling users to go and pick up their phone. -->
+    <string name="idle_hint">Пуснете нещо на телефона си</string>
+    <string name="idle_hint_resume">Докоснете, за да продължите последното приложение</string>
+    <string name="idle_hint_shortcuts">Докоснете за преките си пътища</string>
+    <string name="idle_hint_menu">Докоснете, за да отворите менюто</string>
+    <string name="idle_hint_search">Докоснете за търсене</string>
+    <string name="idle_hint_queue">Докоснете за наскоро възпроизвежданите</string>
+    <string name="idle_resume">Продължаване на възпроизвеждането</string>
+    <string name="idle_action_shortcuts">Отваряне на преки пътища</string>
+    <string name="idle_action_menu">Отваряне на менюто</string>
+    <string name="idle_action_search">Търсене</string>
+    <string name="idle_action_queue">Отваряне на наскоро възпроизвежданите</string>
+
+    <string name="no_phone">Телефонът не е свързан</string>
+    <string name="playback_stopped">Спряно</string>
+    <string name="error">ГРЕШКА</string>
+    <string name="error_play_services">Грешка в услугите Google Play</string>
+    <string name="button">Бутон</string>
+    <string name="back_button">Назад</string>
+    <string name="turn_bezel_cw">Завъртане на безела по часовниковата стрелка</string>
+    <string name="turn_bezel_ccw">Завъртане на безела обратно на часовниковата стрелка</string>
+    <string name="playback_time_format" translatable="false">%1$s / %2$s</string>
+    <string name="volume_percent_format" translatable="false">%1$d%%</string>
+    <string name="quick_action_like">Харесване</string>
+    <string name="quick_action_shuffle">Разбъркване</string>
+    <string name="quick_action_repeat">Повторение</string>
+    <string name="quick_action_repeat_all">Повтаряне на всички</string>
+    <string name="quick_action_repeat_one">Повтори една</string>
+    <string name="quick_action_up_next">Следва</string>
+    <string name="quick_actions_unavailable">Текущото приложение няма бързи действия</string>
+    <string name="voice_search_prompt">Търсене на музика</string>
+    <string name="queue_empty">Няма налична опашка</string>
+    <string name="queue_now_playing">Сега се възпроизвежда</string>
+    <string name="queue_load_more">Зареждане на още</string>
+    <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
+         falls back to the locally remembered recently-played list. These are tracks that already
+         played, so the screen has to say so rather than passing them off as what is coming up. -->
+    <string name="queue_history_fallback">Наскоро възпроизвеждани</string>
+    <string name="queue_history_fallback_reason">Това приложение не споделя опашката си</string>
+    <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
+    <string name="chat_face_today">Днес</string>
+
+    <!-- On-watch face picker (long press the centre of the player). Face names are product names
+         and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
+    <string name="face_picker_title">Циферблат</string>
+    <string name="face_picker_offline">Телефонът не е свързан — този циферблат ще се приложи на часовника, но телефонът ще запази настройката</string>
+    <string name="face_picker_section_builtin">Вградени циферблати</string>
+    <string name="face_picker_section_custom">Моите теми</string>
+    <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
+    <string name="face_picker_custom_base">Базиран на %1$s</string>
+    <string name="face_name_classic" translatable="false">Classic</string>
+    <string name="face_name_expressive" translatable="false">Expressive</string>
+    <string name="face_name_vinyl" translatable="false">Vinyl</string>
+    <string name="face_name_poster" translatable="false">Poster</string>
+    <string name="face_name_studio" translatable="false">Studio</string>
+    <string name="face_name_halo" translatable="false">Halo</string>
+    <string name="face_name_aurora" translatable="false">Aurora</string>
+    <string name="face_name_eclipse" translatable="false">Eclipse AMOLED</string>
+    <string name="face_name_spectrum" translatable="false">Spectrum</string>
+    <string name="face_name_material" translatable="false">Material</string>
+    <string name="face_name_immersive" translatable="false">Immersive</string>
+    <string name="face_name_depth" translatable="false">Depth</string>
+    <string name="face_name_carousel" translatable="false">Carousel</string>
+    <string name="face_name_chat" translatable="false">Chat</string>
+    <string name="face_name_split" translatable="false">Split</string>
+    <string name="face_name_note" translatable="false">Note</string>
+    <string name="face_name_verse" translatable="false">Verse</string>
+    <string name="face_name_metadata" translatable="false">Metadata</string>
+
+    <!-- One-time gesture hints overlay shown on first launch -->
+    <string name="hint_title">Как се използва</string>
+    <string name="hint_edges">Докоснете горе, долу, вляво или вдясно — всяка зона изпълнява зададеното ѝ действие</string>
+    <string name="hint_center">Център — пускане/пауза\nДвойно докосване — бързи действия\nПродължително натискане — избор на циферблат (настройваемо)</string>
+    <string name="hint_swipe_up">Плъзнете нагоре — меню с действия\nНадолу или наляво — зададени действия\nНадясно от ръба — изход</string>
+    <string name="hint_crown">Коронка — сила на звука или превъртане\nСтранични бутони — зададени действия\nПерсонализирайте всичко в Контроли и Часовник на телефона</string>
+    <string name="hint_next">Напред</string>
+    <string name="hint_dismiss">Готово</string>
+
+    <!-- Accessibility names for the standard actions (the button config protobuf only carries
+         the action's key, never a display title - see StandardActionTitles). -->
+    <string name="action_name_play">Пускане</string>
+    <string name="action_name_pause">Пауза</string>
+    <string name="action_name_skip_prev">Предишна песен</string>
+    <string name="action_name_skip_next">Следваща песен</string>
+    <string name="action_name_volume_up">Увеличаване на звука</string>
+    <string name="action_name_volume_down">Намаляване на звука</string>
+    <string name="action_name_open_menu">Отваряне на менюто</string>
+    <string name="action_name_skip_30">Напред с 30 секунди</string>
+    <string name="action_name_reverse_30">Назад с 30 секунди</string>
+    <string name="action_name_play_pause">Пускане/Пауза</string>
+    <string name="action_name_stop">Спиране</string>
+    <string name="action_name_restart">Рестартиране на песента</string>
+    <string name="action_name_seek">Превъртане в песента</string>
+    <string name="action_name_mute">Заглушаване</string>
+    <string name="action_name_search">Търсене</string>
+    <string name="action_name_custom">Персонализирано действие</string>
+    <string name="state_on">Включено</string>
+    <string name="state_off">Изключено</string>
+
+    <!-- Watch self-update (APK pushed from the phone) -->
+    <string name="update_notification_channel">Актуализации на приложението</string>
+    <string name="update_install_title">Актуализация на Svartifoss</string>
+    <string name="update_install_tap">Докоснете, за да инсталирате новата версия</string>
+    <string name="update_install_failed">Инсталирането не бе успешно. Разрешете инсталиране от Svartifoss в настройките на часовника и опитайте отново от телефона.</string>
+
+    <!-- Synced lyrics screen. "No lyrics" and "could not fetch" are deliberately different
+         messages: telling someone their song has no lyrics when the phone was merely offline is
+         a lie they cannot see through. -->
+    <!-- TalkBack label for tapping a lyric line to jump playback there. -->
+    <string name="lyrics_seek_to_line">Пускане оттук</string>
+    <string name="lyrics_none">Не е намерен текст за тази песен</string>
+    <string name="lyrics_failed">Текстът не можа да бъде зареден. Проверете връзката на телефона.</string>
+    <string name="lyrics_disabled">Търсенето на текстове е изключено в настройките на телефона</string>
+    <string name="lyrics_no_track">Нищо не се възпроизвежда</string>
+    <string name="metadata_none">Няма подробности за тази песен</string>
+    <string name="metadata_album">Албум</string>
+    <string name="metadata_album_artist">Изпълнител на албума</string>
+    <string name="metadata_track">Песен</string>
+    <string name="metadata_duration">Продължителност</string>
+    <string name="metadata_genre">Жанр</string>
+    <string name="metadata_year">Година</string>
+    <string name="metadata_released">Издадено</string>
+    <string name="metadata_label">Издател</string>
+    <string name="metadata_country">Държава</string>
+    <string name="metadata_composer">Композитор</string>
+    <string name="metadata_writer">Автор на текста</string>
+    <string name="metadata_author">Автор</string>
+    <string name="metadata_codec">Формат</string>
+    <string name="metadata_bitrate">Битрейт</string>
+    <string name="metadata_sample_rate">Честота на дискретизация</string>
+    <string name="metadata_channels">Канали</string>
+    <string name="metadata_file_size">Размер</string>
+    <string name="metadata_isrc">ISRC</string>
+    <string name="metadata_recording_id">MBID</string>
+    <string name="metadata_release_id">ID на изданието</string>
+    <string name="metadata_compilation">Компилация</string>
+    <string name="metadata_value_yes">Да</string>
+
+    <!-- The Playback block: how this is being played, rather than what is playing. -->
+    <string name="metadata_position">Позиция</string>
+    <string name="metadata_speed">Скорост</string>
+    <string name="metadata_output">Изход</string>
+    <string name="metadata_output_speaker">Високоговорител на телефона</string>
+    <string name="metadata_output_wired">Слушалки</string>
+    <string name="metadata_output_bluetooth">Bluetooth</string>
+    <string name="metadata_output_usb">USB аудио</string>
+    <string name="metadata_output_remote">Предаване</string>
+    <string name="metadata_origin">Източник</string>
+    <string name="metadata_origin_stream">Поток</string>
+    <string name="metadata_origin_local">Файл на телефона</string>
+    <string name="metadata_host">Хост</string>
+    <string name="metadata_file">Файл</string>
+    <string name="metadata_download">Изтегляне</string>
+    <string name="metadata_download_no">Не е изтеглено</string>
+    <string name="metadata_download_running">Изтегляне</string>
+    <string name="metadata_download_yes">Изтеглено</string>
+    <string name="metadata_url">URL</string>
+
+    <string name="metadata_about">Относно</string>
+    <string name="metadata_source">Възпроизвежда се в</string>
+</resources>

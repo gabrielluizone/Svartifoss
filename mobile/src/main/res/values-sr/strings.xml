@@ -1,0 +1,1975 @@
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+
+    <string name="setting_no_wearable_api_banner">Wear OS није подржан на овом уређају</string>
+    <string name="setting_no_wearable_api_banner_description">Овај уређај нема Wear OS компоненту Google Play услуга која је потребна Svartifoss-у за комуникацију са сатом. Упаривање неће помоћи — апликација на телефону овде не може да приступи сату. Сва подешавања испод се ипак чувају и примениће се ако инсталирате Svartifoss на уређај који то подржава.</string>
+    <string name="setting_no_watch_banner">Ниједан сат није повезан</string>
+    <string name="setting_no_watch_banner_description">Ова подешавања се синхронизују са вашим Wear OS сатом, па се њихов ефекат неће видети док сат не буде упарен и повезан — али све испод можете да подесите већ сада.</string>
+
+    <!-- Appearance -->
+    <string name="category_appearance">Изглед</string>
+    <string name="setting_theme">Тема</string>
+    <string name="theme_light">Чисто бела</string>
+    <string name="theme_dark">Потпуно црна</string>
+    <string name="theme_system">Прати систем</string>
+    <string name="setting_language">Језик</string>
+    <string name="language_system">Прати систем</string>
+    <string name="language_change_watch_notice">Када се синхронизује, и сат ће користити овај језик.</string>
+
+    <!-- Developer mode -->
+    <string name="category_developer">Програмер</string>
+    <string name="dev_mode_unlocked">Режим програмера је омогућен ✦</string>
+    <string name="dev_mode_clicks_remaining">Још %1$d додира за откључавање режима програмера</string>
+    <string name="dev_disable_mode">Онемогући режим програмера</string>
+    <string name="dev_disable_mode_description">Поново сакриј овај одељак — додирните „Инсталирана верзија“ седам пута да бисте га вратили</string>
+    <string name="dev_mode_disabled">Режим програмера је онемогућен</string>
+    <string name="dev_build_info">Информације о изради</string>
+    <string name="dev_sync_watch">Принудно синхронизуј подешавања сата</string>
+    <string name="dev_sync_watch_description">Одмах пошаљи сва тренутна подешавања на упарени сат</string>
+    <string name="dev_sync_watch_done">Подешавања су синхронизована са сатом</string>
+    <string name="dev_copy_debug_info">Копирај информације за отклањање грешака</string>
+    <string name="dev_copy_debug_info_description">Копирај детаље о изради и уређају у оставу</string>
+    <string name="dev_show_archived">Прикажи архивиране опције</string>
+    <string name="dev_show_archived_description">Прикажи распореде сата и подешавања архивирана због познатих проблема</string>
+    <string name="dev_copy_debug_info_done">Информације за отклањање грешака су копиране</string>
+    <string name="dev_open_update_screen">Отвори екран за ажурирање</string>
+    <string name="dev_open_update_screen_description">Прегледај екран Ажурирања (насловни банер, распоред белешки о издању) без чекања стварног издања</string>
+    <string name="dev_watch_layout_bounds">Прикажи границе распореда сата</string>
+    <string name="dev_watch_layout_bounds_description">Оивичи видљиве елементе плејера и области додира на сату. Само дијагностички слој.</string>
+    <string name="dev_watch_player_info">Прикажи информације о плејеру на сату</string>
+    <string name="dev_watch_player_info_description">Прикажи преко екрана сата активни изглед, стање репродукције, напредак и информације о исцртавању.</string>
+    <string name="pref_reset_default">Врати на подразумевано</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">Пронашли сте скривени водопад.\n\nSvartifoss — црни базалтни стубови\nкоји уоквирују водопад на Исланду,\nподсећање да музика тече\nкао вода кроз камен.\n\n♪ Направљено с пажњом. ♪</string>
+    <string name="easter_egg_ok">Затвори</string>
+
+    <string name="nav_watch_face">Сат</string>
+    <string name="watch_face_header">Изглед сата</string>
+    <string name="nav_controls">Контроле</string>
+    <string name="nav_actions">Радње</string>
+    <string name="nav_settings">Подешавања</string>
+
+    <string name="controls_header">Контроле</string>
+    <string name="controls_state_playing">Музика се репродукује</string>
+    <string name="controls_state_stopped">Нема репродукције</string>
+    <string name="controls_playing_description">Изаберите шта сваки унос ради док се музика репродукује. Ово подешавање је независно од стања без репродукције.</string>
+    <string name="controls_stopped_description">Изаберите шта сваки унос ради пре почетка репродукције или након њеног заустављања. Ово подешавање је независно од стања репродукције.</string>
+
+    <string name="watch_live_preview">Живи преглед сата</string>
+    <string name="watch_preview_description">Живи преглед изабране површине сата. Промене се овде приказују пре него што их испробате на сату.</string>
+    <string name="watch_section_style">Плејер</string>
+    <string name="watch_section_style_description">Изаберите распоред плејера и начин на који се понашају наслов, време и напредак.</string>
+    <string name="watch_section_background">Позадина</string>
+    <string name="watch_section_background_description">Подесите омот албума, замућење, затамњење и читљивост иза плејера.</string>
+    <string name="watch_section_colors">Боје</string>
+    <string name="watch_section_colors_description">Подесите основне боје, напредак и акценте албума, а затим дотерајте боје наслова, извођача, сата, јачине звука и панела.</string>
+    <string name="watch_section_typography">Текст</string>
+    <string name="watch_section_typography_description">Изаберите фонтове и дотерајте наслов, извођача, сат, икону апликације, секундарне екране и Flex текст.</string>
+    <string name="watch_section_aod">Увек укључен</string>
+    <string name="watch_section_aod_description">Подесите екран ниске потрошње и погледајте његов амбијентални изглед у прегледу.</string>
+    <string name="watch_section_panels">Панели</string>
+    <string name="watch_section_panels_description">Стилизујте јачину звука, премотавање, брзи панел и ред; фокусирање реда отвара ту површину у прегледу.</string>
+    <string name="watch_section_mini_buttons">Мини дугмад</string>
+    <string name="watch_section_mini_buttons_description">Стилизујте опционални ред пречица. Додирните „Мини дугмад“ испод да бисте им доделили радње у Контролама.</string>
+    <string name="watch_overview_description">Изаберите шта желите да прилагодите. Преглед и сачувана тема остају активни у свим областима.</string>
+    <string name="watch_back_to_overview">Назад на области сата</string>
+
+    <string name="settings_section_general">Опште</string>
+    <string name="settings_section_general_description">Тема апликације, акцентна боја и подешавања ажурирања.</string>
+    <string name="settings_section_watch">Понашање</string>
+    <string name="settings_section_watch_description">Понашање крунице, додира, хаптике и менија радњи на сату.</string>
+    <string name="settings_section_automation">Аутоматизација</string>
+    <string name="settings_section_automation_description">Изаберите када се Svartifoss аутоматски отвара и затвара.</string>
+    <string name="settings_section_apps">Апликације</string>
+    <string name="settings_section_apps_description">Пронађите текстове и метаподатке, пречице за стримовање, слике реда и Android приступ.</string>
+    <string name="settings_section_data">Подаци и подршка</string>
+    <string name="settings_section_data_description">Направите резервну копију подешавања, проверите верзију и дијагностику или потражите помоћ.</string>
+    <string name="settings_overview_description">Изаберите област. Повезане опције остају на окупу, а претрага вас и даље може одвести директно до било ког подешавања.</string>
+    <string name="settings_back_to_overview">Назад на области подешавања</string>
+
+    <!-- Guide / tutorial tab -->
+    <string name="tutorial_header">Како се користи Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss претвара ваш сат у даљински управљач за музику која се репродукује на телефону. Ево свега што можете да радите са зглоба.</string>
+
+    <string name="tutorial_taps_title">Додирните зоне екрана</string>
+    <string name="tutorial_taps_desc">Екран сата је подељен на четири зоне — горњу, доњу, леву и десну. Додир зоне покреће радњу коју сте јој доделили. Подразумевано лева зона пушта или паузира, десна прелази на следећу нумеру, а горња и доња мењају јачину звука.</string>
+
+    <string name="tutorial_quick_panel_title">Панел брзих радњи</string>
+    <string name="tutorial_quick_panel_desc">Двапут додирните средину екрана тренутне репродукције да бисте отворили панел са четири места — три округла дугмета и једним широким редом испод. Ако их не мењате, места пресликавају дугмад која апликација за репродукцију приказује у свом обавештењу, па добијате њене стварне контроле за свиђање, насумично и понављање. Доделите било коју радњу месту или поставите „Ништа“ да га сакријете, у одељку Радње на телефону.</string>
+    <string name="tutorial_gestures_title">Један, двоструки и дуги притисак</string>
+    <string name="tutorial_gestures_desc">Свака од четири ивичне зоне подржава засебне радње за један, двоструки и дуги притисак. Један додир центра такође може да се подеси; двоструки додир увек отвара Брзе радње, док дуги притисак отвара избор изгледа, ред или не ради ништа, у складу са Подешавања → Понашање.</string>
+
+    <string name="tutorial_buttons_title">Физичка дугмад</string>
+    <string name="tutorial_buttons_desc">Ако ваш сат има бочна дугмад, можете им доделити и радње за један, двоструки и дуги притисак. Она раде чак и када је екран искључен.</string>
+
+    <string name="tutorial_rotary_title">Ротирајућа круница</string>
+    <string name="tutorial_rotary_desc">У Подешавања → Понашање → Ротирајућа круница / оквир изаберите да ли круница или оквир мењају јачину звука, премотавају нумеру или не раде ништа. На сатовима који окретање крунице излажу као дугмад, доделите их уместо тога у Контролама.</string>
+
+    <string name="tutorial_swipe_up_title">Превуците нагоре, надоле, лево и десно</string>
+    <string name="tutorial_swipe_up_desc">Превлачење нагоре, надоле или лево на екрану тренутне репродукције може засебно да се подеси да отвара било шта — мени радњи, ред за репродукцију, прескакање нумера, ваше плејлисте и друго. Свако подесите у Контролама, бирајући Музика се репродукује или Нема репродукције. Подразумевано превлачење нагоре отвара мени радњи, а остала не раде ништа док их не доделите. Превлачење десно остаје непромењено — то је универзални Wear OS гест за излазак из апликације.</string>
+    <string name="tutorial_shortcuts_title">Пречице за стримовање</string>
+    <string name="tutorial_shortcuts_desc">Сачувајте везу до нумере, албума, микса или плејлисте са Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music или SoundCloud и доделите је било ком дугмету, гесту или месту на панелу. Најбрже је да везу поделите директно у Svartifoss из апликације за стримовање; можете и да налепите копирану везу или је укуцате. Налог или пријава нису потребни — сат тражи од телефона да започне репродукцију, па пречица стварно пушта садржај уместо да само отвори апликацију.</string>
+    <string name="tutorial_yt_music_title">YouTube Music пречице</string>
+    <string name="tutorial_yt_music_desc">Доделите „Пусти песме које ми се свиђају“, „Пусти песме које ми се свиђају насумично“ или „Моје плејлисте“ било ком дугмету, гесту или превлачењу да бисте одмах дошли до музике без додиривања телефона. „Историја претраге“ памти недавне претраге на сату — притисните и задржите ставку да бисте је обрисали.</string>
+
+    <string name="tutorial_exit_title">Превуците за излаз</string>
+    <string name="tutorial_exit_desc">Превуците од леве ивице да бисте напустили плејер. При изласку може аутоматски да паузира репродукцију — омогућите то у Подешавањима.</string>
+
+    <string name="tutorial_tile_title">Tile за брзу контролу</string>
+    <string name="tutorial_tile_desc">Превуците бројчаник у страну до Svartifoss Tile-а за тренутно пуштање, паузу и прескакање без отварања апликације.</string>
+
+    <string name="tutorial_complication_title">Компликација бројчаника</string>
+    <string name="tutorial_complication_desc">Додајте Svartifoss компликацију омота албума на бројчаник да бисте на први поглед видели тренутни омот. Додирните је да отворите плејер.</string>
+
+    <string name="tutorial_system_title">Системске контроле медија</string>
+    <string name="tutorial_system_desc">Тренутна нумера се приказује и у уграђеним медијским контролама и недавним апликацијама сата, па репродукцијом можете управљати и одатле.</string>
+
+    <string name="tutorial_tip">Савет: подесите оба стања у Контролама, а затим организујте мени у Радњама.</string>
+
+    <string name="navigation_drawer_open">Отвори навигациону фиоку</string>
+    <string name="navigation_drawer_close">Затвори навигациону фиоку</string>
+
+    <string name="action_settings">Подешавања</string>
+    <string name="action_pause">Паузирај</string>
+    <string name="action_play">Пусти</string>
+    <string name="action_skip_prev">Претходна нумера</string>
+    <string name="action_skip_next">Следећа нумера</string>
+    <string name="action_play_pause">Пусти / Паузирај</string>
+    <string name="action_stop">Заустави</string>
+    <string name="action_restart">Пусти нумеру испочетка</string>
+    <string name="action_mute">Утишај / Укључи звук</string>
+    <string name="action_skip_seconds">Прескочи %1$d секунди</string>
+    <string name="action_reverse_seconds">Врати %1$d секунди</string>
+    <string name="action_like">Свиђа ми се</string>
+    <string name="action_shuffle">Насумично</string>
+    <string name="action_repeat">Понављај</string>
+    <string name="action_repeat_one">Понављај једну</string>
+    <string name="action_search">Претражи музику</string>
+    <string name="action_open_lyrics">Текст песме</string>
+    <string name="group_playback_controls">Контроле репродукције</string>
+    <string name="group_streaming_shortcuts">Нумере, албуми и плејлисте</string>
+    <string name="pick_action">Изабери радњу</string>
+    <string name="action_search_hint">Претражи ову листу</string>
+    <string name="action_search_empty">Нема радњи које одговарају овој претрази.</string>
+    <string name="action_opens_more">Више опција</string>
+    <string name="action_volume_up">Појачај звук</string>
+    <string name="volume_down">Смањи звук</string>
+    <string name="group_volume_controls">Контроле јачине звука</string>
+    <string name="no_watch_detected">Сат није откривен</string>
+    <string name="connection_instructions">Отворите Svartifoss на сату да бисте започели повезивање</string>
+    <string name="playing_controls">Контроле током репродукције</string>
+    <string name="stopped_controls">Контроле без репродукције</string>
+    <string name="actions_menu">Мени радњи</string>
+    <string name="actions_intro">Подесите обе површине радњи на сату помоћу контрола репродукције, апликација или сачуваних нумера, албума и плејлиста. Брзи панел остаје компактан; мени испод може да садржи дужу уређену листу.</string>
+    <string name="actions_quick_panel_section">Брзи панел</string>
+    <string name="actions_watch_menu_section">Мени на сату</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d радња · Додирните за измену · Задржите и превуците за промену редоследа</item>
+        <item quantity="few">%1$d радње · Додирните за измену · Задржите и превуците за промену редоследа</item>
+        <item quantity="other">%1$d радњи · Додирните за измену · Задржите и превуците за промену редоследа</item>
+    </plurals>
+    <string name="actions_reorder_description">Уређени мени радњи. Додирните и задржите за превлачење, користите радње приступачности Помери нагоре или Помери надоле или притисните Ctrl+Up/Down на тастатури.</string>
+    <string name="actions_move_up">Помери нагоре</string>
+    <string name="actions_move_down">Помери надоле</string>
+    <string name="actions_moved_to_position">%1$s је премештено на позицију %2$d од %3$d.</string>
+    <string name="actions_empty">Још нема радњи. Дугметом за додавање направите прву.</string>
+    <string name="actions_add">Додај радњу</string>
+    <string name="on_screen_buttons">ЗОНЕ ДОДИРА</string>
+    <string name="physical_buttons">ФИЗИЧКА ДУГМАД</string>
+    <string name="physical_buttons_disconnected">Повежите и отворите Svartifoss на сату да бисте подесили физичка дугмад. Зоне додира, превлачења и мини дугмад су доступни већ сада.</string>
+    <string name="physical_buttons_unavailable">Овај сат није пријавио физичка дугмад која могу да се подесе.</string>
+    <string name="control_assignment_tap">Додир: %1$s</string>
+    <string name="control_assignment_hold">Задржавање: %1$s</string>
+    <string name="control_assignment_both">Додир: %1$s · Задржавање: %2$s</string>
+    <string name="tap_a_zone_to_configure">Додирните зону на сату да бисте доделили радњу</string>
+    <string name="touch_zone_top">Горња зона</string>
+    <string name="touch_zone_bottom">Доња зона</string>
+    <string name="touch_zone_left">Лева зона</string>
+    <string name="touch_zone_right">Десна зона</string>
+    <string name="touch_zone_center">Додир центра</string>
+    <string name="touch_zone_action">%1$s: %2$s. Додирните за подешавање.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+
+    <string name="swipe_gestures">ГЕСТОВИ ПРЕВЛАЧЕЊА</string>
+    <string name="tap_a_swipe_to_configure">Додирните смер да бисте изабрали шта отвара</string>
+    <string name="swipe_gesture_up">Превуци нагоре</string>
+    <string name="swipe_gesture_down">Превуци надоле</string>
+    <string name="swipe_gesture_left">Превуци лево</string>
+    <!-- Short captions shown under each tile's icon (see item_swipe_gesture.xml) - once an
+         action is assigned the icon itself no longer indicates which direction/slot it is. -->
+    <string name="swipe_gesture_label_up">Горе</string>
+    <string name="swipe_gesture_label_down">Доле</string>
+    <string name="swipe_gesture_label_left">Лево</string>
+
+    <string name="screen_buttons">МИНИ ДУГМАД</string>
+    <string name="tap_a_screen_button_to_configure">До три видљива дугмета при дну екрана сата — додирните место да бисте доделили радњу</string>
+    <string name="screen_button_1">Мини дугме 1 (лево)</string>
+    <string name="screen_button_2">Мини дугме 2 (средина)</string>
+    <string name="screen_button_3">Мини дугме 3 (десно)</string>
+    <string name="screen_button_label_1">Дугме 1</string>
+    <string name="screen_button_label_2">Дугме 2</string>
+    <string name="screen_button_label_3">Дугме 3</string>
+    <string name="no_action">Без радње</string>
+    <string name="gesture_single_press">Један притисак</string>
+    <string name="gesture_double_press">Двоструки притисак</string>
+    <string name="gesture_long_press">Дуги притисак</string>
+    <string name="gesture_swipe_action">Радња</string>
+    <string name="center_button_quick_panel_note">Двоструки додир центра увек отвара Брзе радње. Дуги притисак покреће избор из Подешавања → Понашање. Ниједан гест се не мења када овде доделите додир центра.</string>
+    <string name="start_playback">Покрени репродукцију</string>
+    <string name="uninstalled_app">Деинсталирана апликација</string>
+
+    <string name="play_app">Пусти %1$s</string>
+    <string name="tasker_task">Tasker задатак</string>
+    <string name="icon_selection_title">Избор иконе</string>
+    <string name="icon_selection_gallery">Из галерије</string>
+    <string name="icon_selection_no_icon_pack">Ова функција вам омогућава да изаберете прилагођену икону за радњу из инсталираног пакета икона.\n\nНажалост, изгледа да немате инсталиране пакете икона.</string>
+    <string name="icon_selection_no_storage_permission">Ова функција вам омогућава да изаберете прилагођену икону за радњу из инсталираног пакета икона.\n\nНеки пакети икона захтевају дозволу апликације за складиште. Мораћете да је дозволите да бисте користили ову функцију.</string>
+    <string name="delete">Обриши</string>
+    <string name="action_text">Текст радње</string>
+    <string name="swap_action">Замени радњу</string>
+    <string name="open_actions_menu">Отвори мени радњи</string>
+    <string name="open_playlist_menu">Прикажи тренутну плејлисту</string>
+    <string name="misc_settings">Остала подешавања</string>
+
+    <string name="category_backup">Резервна копија</string>
+    <string name="export_config">Извези конфигурацију</string>
+    <string name="export_config_description">Сачувај мапирања дугмади, листу радњи и подешавања сата у датотеку</string>
+    <string name="import_config">Увези конфигурацију</string>
+    <string name="import_config_description">Врати мапирања дугмади, листу радњи и подешавања сата из датотеке</string>
+    <string name="export_config_done">Конфигурација је извезена</string>
+    <string name="export_config_failed">Конфигурација није могла да се извезе</string>
+    <string name="import_config_done_title">Увоз је успешан</string>
+    <string name="import_config_done_message">Svartifoss мора поново да се покрене да би применио увезену конфигурацију.</string>
+    <string name="import_config_failed">Конфигурација није могла да се увезе — датотека је можда неисправна или из некомпатибилне верзије</string>
+    <string name="action_restart_now">Поново покрени сада</string>
+
+    <string name="category_about">О апликацији</string>
+    <string name="category_music_screen">Екран музике</string>
+    <string name="category_watch_screen">Екран сата</string>
+    <string name="category_mini_buttons">Мини дугмад</string>
+    <string name="category_screen_face">Изглед плејера</string>
+    <string name="category_wf_screen_behavior">Понашање екрана</string>
+    <string name="category_wf_player_progress">Напредак, премотавање и време</string>
+    <string name="category_album_background">Позадина албума</string>
+    <string name="category_music_colors">Боје из музике</string>
+    <string name="category_wf_typography_font">Типографија</string>
+    <string name="category_wf_typography_title">Наслов</string>
+    <string name="category_wf_typography_artist">Извођач</string>
+    <string name="category_wf_typography_icon">Икона апликације</string>
+    <string name="category_wf_typography_flex">Google Sans Flex осе</string>
+    <string name="category_wf_metadata">Садржај Metadata изгледа</string>
+    <string name="category_wf_typography_secondary">Текст на другим екранима</string>
+    <string name="category_wf_colors_title">Боје наслова</string>
+    <string name="category_wf_colors_artist">Боје извођача</string>
+    <string name="category_wf_colors_clock">Боје сата</string>
+    <string name="setting_wear_font_flex_hint_title">О овим контролама</string>
+    <string name="setting_wear_flex_axes_hint">Ове контроле посебно дотерују Google Sans Flex — изаберите га изнад да бисте их користили. Подешавања дебљине/курзива наслова и извођача изнад већ задају сопствене осе дебљине (wght) и нагиба (slnt) овог фонта; четири контроле испод важе за цео изглед.</string>
+    <string name="setting_wear_font_flex_width">Ширина</string>
+    <string name="setting_wear_font_flex_width_description">Хоризонтално растезање од суженог до проширеног (25–151). 100 је нормална ширина фонта.</string>
+    <string name="setting_wear_font_flex_optical_size">Оптичка величина</string>
+    <string name="setting_wear_font_flex_optical_size_description">Прилагођава детаље потеза ефективној величини текста (6–144). Ниже вредности одговарају малом тексту, више великом приказном тексту.</string>
+    <string name="setting_wear_font_flex_grade">Градација</string>
+    <string name="setting_wear_font_flex_grade_description">Благо помера дебљину без промене распореда (0–100) — суптилан начин да се појача контраст на тамном екрану.</string>
+    <string name="setting_wear_font_flex_roundness">Заобљеност</string>
+    <string name="setting_wear_font_flex_roundness_description">Меша завршетке потеза од оштрих (0) до потпуно заобљених (100) за пријатнији изглед.</string>
+    <string name="preview_sample_title">Наслов песме</string>
+    <string name="preview_sample_artist">Име извођача</string>
+    <string name="preview_sample_next_title">Следећа песма</string>
+    <string name="preview_playback_stopped">Заустављено</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">ред пре</string>
+    <string name="preview_verse_current">ред који се сада репродукује</string>
+    <string name="preview_verse_next">и ред после њега</string>
+    <string name="preview_chat_today">Данас</string>
+    <string name="category_gestures">Гестови и унос</string>
+    <string name="category_watch_navigation">Навигација и пречице</string>
+    <string name="category_rotary_input">Ротациони унос и подешавање</string>
+    <string name="category_watch_feedback">Повратне информације и понашање при изласку</string>
+    <string name="category_watch_display">Екран сата</string>
+    <string name="setting_wear_keep_screen_on">Држи екран укључен</string>
+    <string name="setting_wear_keep_screen_on_description">Спречава да се екран сата угаси због неактивности док је отворен Svartifoss екран. Спуштање зглоба и даље затамњује сат — тим гестом управља систем. Троши више батерије. Екран текста песме увек остаје укључен без обзира на ово подешавање.</string>
+    <string name="setting_lyrics_enabled">Пронађи текст песме онлајн</string>
+    <string name="setting_lyrics_enabled_description">Омогућава телефону да преузме синхронизовани текст песме са LRCLIB када отворите екран текста на сату. Шаљу се само назив нумере, извођач и трајање; ништа друго и ништа се не чува на диску. Ако искључите, екран текста ће приказати да је претрага онемогућена.</string>
+    <string name="setting_overlay_blur_radius">Замућење преклапања</string>
+    <string name="setting_overlay_blur_radius_description">Јачина замућења (px) мат позадине иза прстенова јачине звука/премотавања и панела Брзих радњи — независно од замућења позадине омота албума</string>
+    <string name="category_action_list">Листа радњи</string>
+    <string name="category_automation">Аутоматизација</string>
+    <string name="category_idle">Када се ништа не репродукује</string>
+    <string name="installed_version">Инсталирана верзија</string>
+    <string name="get_support">Затражи подршку</string>
+    <string name="get_support_description">Пошаљи евиденције апликације програмеру ради подршке</string>
+    <string name="contact_developer">Контактирај програмера</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — контакт</string>
+    <string name="contact_developer_chooser">Пошаљи е-пошту</string>
+    <string name="contact_developer_no_client">Није инсталирана апликација за е-пошту. Адреса је копирана у оставу.</string>
+    <string name="about_developer_title">О програмеру</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
+    <string name="about_developer_dialog_message">Svartifoss је почео као лични пројекат — желео сам да осавременим Music Center for Wear према ономе што је данас могуће, само да бих га и сам користио сваког дана. Испало је довољно добро да сам одлучио да га поделим са свима. Ово је моја прва апликација и мало шта је као осећај када видите да је нешто што сте направили корисно и другим људима.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
+    <string name="licenses">Лиценце отвореног кода</string>
+    <string name="setting_always_show_time">Увек приказуј време</string>
+    <string name="setting_always_show_time_off_description">Тренутно време ће бити приказано само у амбијенталном режиму</string>
+    <string name="setting_always_show_time_on_description">Тренутно време ће увек бити приказано. Горња икона радње неће бити видљива (замениће је сат), али ће радња и даље нормално функционисати.</string>
+    <string name="tap_to_force_stop">Додирните да зауставите контроле</string>
+    <string name="notification_action_stop">Заустави</string>
+    <string name="notification_action_force_stop">Принудно заустави</string>
+    <string name="error_notification_access">Нема приступа обавештењима. Проверите телефон.</string>
+    <string name="error_notifications">Обавештења о грешкама</string>
+    <string name="notification_access_notification_title">Svartifoss-у је потребан приступ обавештењима</string>
+    <string name="notification_access_notification_title_description">Додирните ово обавештење и проверите Svartifoss да бисте решили проблем</string>
+    <string name="error_service_not_enabled">Потребан је приступ обавештењима</string>
+    <string name="error_service_not_enabled_description">Да бисте управљали музиком са сата, Svartifoss-у је потребан приступ обавештењима — тако Android омогућава да види која апликација репродукује и шаље команде за пуштање, паузу и прескакање.\n\nSvartifoss никада не чита садржај ваших обавештења. Ову дозволу користи само да пронађе активну медијску сесију.\n\nДодирните \"Отвори подешавања\", затим укључите Svartifoss у приступу обавештењима.</string>
+    <string name="action_open_settings">Отвори подешавања</string>
+    <string name="settings_search_title">Претражи подешавања</string>
+    <string name="settings_search_hint">Претражи подешавања</string>
+    <string name="settings_search_clear">Обриши претрагу</string>
+    <string name="settings_search_prompt">Претражите по имену свако подешавање у Подешавањима и Изгледу сата.</string>
+    <string name="settings_search_no_results">Нема подешавања које одговара.</string>
+    <string name="settings_search_prerequisite">Ова опција зависи од другог избора. Подесите овде приказано подешавање да бисте је открили.</string>
+    <string name="setting_numeric_range_error">Унесите вредност од %1$d до %2$d.</string>
+    <!-- Legacy two-level breadcrumb retained for translated resource compatibility. -->
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <!-- Search result path: tab, overview section, then preference category. -->
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">Додирните да одобрите — контрола репродукције остаје неактивна док то не урадите</string>
+
+    <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity):
+         app-module strings win over the library\'s, so these replace the outdated, typo\'d
+         (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
+    <string name="no_watch_app_title">Инсталирајте Svartifoss на сат</string>
+    <string name="no_watch_app_description">Svartifoss није пронашао своју апликацију за сат на упареном Wear OS сату. Апликације телефона и сата раде заједно — без апликације на сату управљање репродукцијом са зглоба неће радити.\n\nSvartifoss није у Play продавници — апликација за сат се засебно инсталира sideload-ом (нпр. помоћу Wear Installer). Додирните \"Прикажи издања\" да отворите GitHub страницу издања и преузмете APK за сат. Ако сте је управо инсталирали, сачекајте око минут да се синхронизација заврши.</string>
+    <string name="no_watch_app_button">Прикажи издања</string>
+    <string name="required_permission">Потребна дозвола</string>
+    <string name="setting_pause_on_swipe_exit">Паузирај при изласку превлачењем</string>
+    <string name="setting_pause_on_swipe_exit_description">Аутоматски паузирајте сваку репродукцију при изласку из Svartifoss-а на сату гестом превлачења улево.\n\nИзлазак преко дугмета за напајање није обухваћен и никада неће аутоматски паузирати.</string>
+    <string name="setting_rotating_crown_off_period">Кашњење ротационог уноса после укључивања екрана</string>
+    <string name="setting_rotating_crown_off_period_description">Ротациони уноси (нпр. крунице) могу бити преосетљиви на неким уређајима. Да би се спречиле случајне промене јачине звука, ротациони унос ће бити онемогућен <![CDATA[<b>%1$s милисекунди</b>]]> након укључивања екрана.</string>
+    <string name="setting_rotary_seek">Премотавај ротирајућом круницом</string>
+    <string name="setting_rotary_seek_description">Када је омогућено, окретање крунице премотава тренутну нумеру уместо промене јачине звука. Јачина звука се и даље може мењати дугмадима на екрану или физичким дугмадима.</string>
+    <string name="setting_wear_rotary_action">Ротирајућа круница / оквир</string>
+    <string name="wear_rotary_action_volume">Промени јачину звука</string>
+    <string name="wear_rotary_action_seek">Премотавај нумеру</string>
+    <string name="wear_rotary_action_off">Не ради ништа</string>
+    <string name="setting_rotating_sensitivity">Осетљивост ротационог уноса</string>
+    <string name="setting_rotating_sensitivity_description">Осетљивост ротационог уноса. Већи број значи да ће исти покрет крунице више повећати јачину звука. Тренутно је постављено на <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Онемогући двоструки клик физичког дугмета у амбијенталном режиму</string>
+    <string name="setting_disable_ambient_physical_double_click_description">Неки сатови имају неисправна дугмад где се један клик физичког дугмета у амбијенталном режиму понекад региструје као двоструки.\n\nАко вам се то дешава, укључите ову опцију да потпуно онемогућите двоструке кликове у амбијенталном режиму (нпр. два клика ће активирати само радњу једног клика). Двоструки клик када је сат активан није обухваћен.</string>
+    <string name="setting_haptic_feedback">Хаптички одзив</string>
+    <string name="setting_haptic_feedback_description">Вибрирај сат при притиску на дугмад.</string>
+    <string name="setting_auto_start">Аутоматски отвори Svartifoss</string>
+    <string name="setting_auto_start_description">Аутоматски отвори Svartifoss на сату када на телефону почне репродукција музике.</string>
+    <string name="setting_auto_start_apps_blacklist">Апликације за аутоматско покретање</string>
+    <string name="setting_auto_start_apps_blacklist_description">Листа медијских апликација које могу аутоматски да покрену Svartifoss</string>
+    <string name="setting_dim_album_art">Сенчење плејера</string>
+    <string name="setting_dim_album_art_description">Додај кориснички изабран ефекат сенке између омота и контрола плејера.</string>
+    <string name="setting_album_art_style">Стил омота албума</string>
+    <string name="setting_album_art_style_description">Изаберите како изгледа позадина „Тренутно се репродукује“ на сату.</string>
+    <string name="setting_album_art_blur_radius">Јачина замућења</string>
+    <string name="setting_album_art_blur_radius_description">Јачина замућења целог екрана када изабрана позадина користи замућење. Тренутно <![CDATA[<b>%1$s px</b>]]>.</string>
+    <string name="setting_album_art_dim_strength">Јачина затамњења</string>
+    <string name="setting_album_art_dim_strength_description">Колико се омот албума затамњује ради боље читљивости текста. Тренутно <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_player_shading_style">Стил сенчења</string>
+    <string name="setting_player_shading_intensity">Јачина сенчења</string>
+    <string name="setting_player_shading_intensity_description">Колико јако сенчење затамњује позадину. 100%% је пуна јачина; повећајте вредност за додатни контраст (до 150%%). Тренутно <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_apply_appearance_to_all_faces">Примени овај изглед на све бројчанике</string>
+    <string name="setting_apply_appearance_to_all_faces_description">Копирај подешавања изгледа овог бројчаника на све остале</string>
+    <string name="apply_appearance_confirm_title">Применити на све бројчанике?</string>
+    <string name="apply_appearance_confirm_message">Ово ће преписати подешавања изгледа свих осталих бројчаника тренутним. Подешавања понашања се неће променити.</string>
+    <string name="apply_appearance_confirm_button">Примени</string>
+    <string name="apply_appearance_done">Примењено на све бројчанике</string>
+    <string name="category_wf_layout_actions">Распоред</string>
+    <string name="setting_reset_appearance">Ресетуј овај распоред</string>
+    <string name="setting_reset_appearance_description">Врати изглед овог бројчаника на првобитне подразумеване вредности</string>
+    <string name="reset_appearance_confirm_title">Ресетовати овај распоред?</string>
+    <string name="reset_appearance_confirm_message">Подешавања изгледа овог бројчаника ће се вратити на подразумеване вредности. Подешавања понашања и остали бројчаници неће бити погођени.</string>
+    <string name="reset_appearance_confirm_button">Ресетуј</string>
+    <string name="reset_appearance_done">Распоред је ресетован на подразумевано</string>
+    <string name="setting_reset_all_faces">Ресетуј све бројчанике на подразумевано</string>
+    <string name="setting_reset_all_faces_description">Врати изглед свих уграђених бројчаника на првобитне подразумеване вредности</string>
+    <string name="reset_all_faces_confirm_title">Ресетовати све бројчанике?</string>
+    <string name="reset_all_faces_confirm_message">Изглед свих уграђених бројчаника ће се вратити на првобитне подразумеване вредности, а активна прилагођена тема ће бити искључена. Сачуване прилагођене теме, подешавања понашања и изабрани бројчаник остају сачувани.</string>
+    <string name="reset_all_faces_confirm_button">Ресетуј све</string>
+    <string name="reset_all_faces_done">Сви бројчаници су ресетовани на подразумевано</string>
+    <string name="face_reset_migration_title">Ажурирајте изглед сата</string>
+    <string name="face_reset_migration_message">Ажурирали сте са старије верзије у којој су сви бројчаници делили један скуп подешавања изгледа. Сада сваки бројчаник памти своја подешавања, па стара подешавања могу изгледати неусклађено на бројчаницима које нисте директно прилагођавали. Препоручујемо да све бројчанике ресетујете на нове подразумеване вредности или да обришете податке апликације за потпуно нов почетак.</string>
+    <string name="face_reset_migration_reset_button">Ресетуј све бројчанике</string>
+    <string name="face_reset_migration_clear_data_button">Обриши податке апликације</string>
+    <string name="setting_player_shading_color">Боја сенчења</string>
+    <string name="setting_wear_shading_custom_color">Прилагођена боја сенчења</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>Црна</item>
+        <item>Акценат албума</item>
+        <item>Незасићен албум</item>
+        <item>Прилагођена боја</item>
+    </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Прати тему плејера</item>
+        <item>Вињета по ивици</item>
+        <item>Вињета по ивици (јака)</item>
+        <item>Вињета по ивици (веома јака)</item>
+        <item>Доњи угао</item>
+        <item>Доње претапање</item>
+        <item>Доња и горња граница</item>
+        <item>Филтер преко целог екрана</item>
+        <item>Прелив боје албума</item>
+        <item>Двобојни градијент албума</item>
+        <item>Бочне завесе</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Непрозирност омота албума у амбијенталном режиму</string>
+    <string name="setting_ambient_album_art_opacity_description">Колико је омот албума видљив у амбијенталном режиму. Тренутно <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_volume_overlay_timeout">Време приказа преклопа јачине звука/премотавања</string>
+    <string name="setting_volume_overlay_timeout_description">Колико дуго преклопи јачине звука и премотавања остају на екрану после подешавања. Тренутно <![CDATA[<b>%1$s ms</b>]]>.</string>
+    <string name="setting_rotary_deadzone">Мртва зона ротације</string>
+    <string name="setting_rotary_deadzone_description">Минимални покрет крунице пре него што се примени промена јачине звука или премотавања. Помаже да се спрече случајна подешавања. Тренутно <![CDATA[<b>%1$s</b>]]>.</string>
+
+    <string name="category_wear_experience">Wear искуство</string>
+    <string name="setting_swipe_gestures_hint">Покрети превлачења</string>
+    <string name="setting_swipe_gestures_hint_description">Превлачење нагоре/надоле/улево може да отвори било коју радњу. Додирните овде да их подесите за стање „Музика се репродукује“ или „Нема репродукције“. Превлачење удесно остаје резервисано за излаз из апликације.</string>
+    <string name="setting_screen_buttons_hint">Мини дугмад</string>
+    <string name="setting_screen_buttons_hint_description">До три видљива дугмета, свако са радњом додира и дугог притиска. Додирните овде да их подесите за „Музика се репродукује“ или „Нема репродукције“.</string>
+    <string name="dev_screen_buttons_offset">Положај мини дугмади</string>
+    <string name="dev_screen_buttons_offset_description">Жељено растојање у dp између дна екрана сата и мини дугмади (подразумевано 42). Ред се и даље аутоматски помера да избегне дуге наслове.</string>
+    <string name="setting_screen_buttons_tilt">Нагиб дугмади</string>
+    <string name="setting_screen_buttons_tilt_description">Колико бочна дугмад прате кривину екрана. 0 = прав ред; 100 = пун лук са нагнутим иконама.</string>
+    <string name="setting_screen_buttons_bg">Позадина мини дугмади</string>
+    <string name="setting_screen_buttons_opacity">Непрозирност мини дугмади</string>
+    <string name="setting_screen_buttons_opacity_description">Непрозирност целе групе мини дугмади (0–100%%). Тренутно <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="quick_panel_row_title">Панел брзих радњи</string>
+    <string name="quick_panel_link_summary">Отворите двоструким додиром средине екрана сата. Додирните овде да подесите његова четири места у Радњама.</string>
+    <string name="quick_panel_config_hint">Ово су дугмад на панелу који се отвара двоструким додиром средине екрана сата. Додирните ред да изаберете радњу („Ништа“ је сакрива); дугим притиском вратите подразумевано.</string>
+    <string name="quick_panel_slot_1">Дугме 1</string>
+    <string name="quick_panel_slot_2">Дугме 2</string>
+    <string name="quick_panel_slot_3">Дугме 3</string>
+    <string name="quick_panel_slot_long">Дуго дугме</string>
+    <string name="quick_panel_slot_default">%1$s (подразумевано)</string>
+    <string name="quick_panel_slot_hidden">Сакривено</string>
+    <string name="quick_panel_default_like">Свиђа ми се</string>
+    <string name="quick_panel_default_shuffle">Насумично</string>
+    <string name="quick_panel_default_repeat">Понављај</string>
+    <string name="quick_panel_default_up_next">Следеће</string>
+    <string name="setting_wear_center_long_press_queue">Дуго притисните средину за отварање реда</string>
+    <string name="setting_wear_center_long_press_queue_description">Дуго притисните средину екрана „Тренутно се репродукује“ да отворите ред репродукције.</string>
+    <string name="setting_wear_center_long_press">Дуги притисак средине</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Промени лице сата</item>
+        <item>Отвори ред</item>
+        <item>Ништа</item>
+    </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Основни распоред</string>
+    <string name="setting_wear_screen_face_description">Изаберите структуру коју ова тема користи. Сачуване теме могу да комбинују овај распоред са сопственим фонтом, бојама, замућењем, сенчењем, AOD-ом и панелима.</string>
+    <string name="setting_wear_show_track_title">Прикажи назив песме</string>
+    <string name="setting_wear_show_track_title_description">Прикажи назив тренутне песме у плејеру</string>
+    <string name="setting_wear_show_track_artist">Прикажи име извођача</string>
+    <string name="setting_wear_show_track_artist_description">Прикажи тренутног извођача у плејеру</string>
+    <string name="setting_wear_show_source_icon">Прикажи икону апликације која репродукује</string>
+    <string name="setting_wear_show_source_icon_description">Прикажи поред извођача икону апликације која тренутно репродукује. Користи се икона из њеног медијског обавештења. Када је искључено, икона се никада не шаље на сат.</string>
+    <string name="setting_wear_player_controls_visible">Прикажи контроле плејера</string>
+    <string name="setting_wear_player_controls_visible_description">Прикажи или сакриј уграђену дугмад у распоредима Classic, Poster, Studio и другим подесивим распоредима без онемогућавања њихових зона додира</string>
+    <string name="setting_wear_quadrant_tap_flash">Бљесни икону при додиру</string>
+    <string name="setting_wear_quadrant_tap_flash_description">Када се покрене радња угаоне зоне, њена икона кратко бљесне пуном осветљеношћу — нарочито корисно у теми Hidden, где је икона иначе невидљива и нема потврде која је радња управо извршена.</string>
+    <string name="setting_wear_internal_progress_visible">Индикатор напретка распореда</string>
+    <string name="setting_wear_internal_progress_visible_description">Прикажи додатни индикатор напретка дизајниран за овај распоред. Прстенови дугмета за репродукцију у Expressive и Material део су контрола и остају доступни.</string>
+    <string name="setting_wear_edge_progress_visible">Прикажи лук напретка на ивици</string>
+    <string name="setting_wear_edge_progress_visible_description">Сакриј само визуелни лук око екрана. Премотавање са ивице остаје независна опција.</string>
+    <string name="setting_wear_edge_seek_enabled">Премотавај са ивице екрана</string>
+    <string name="setting_wear_edge_seek_enabled_description">Додирните или превуците дуж ивице екрана да пређете на тачну позицију, чак и када је лук сакривен</string>
+    <string name="setting_wear_screen_theme">Стил контрола</string>
+    <!-- Generic "name · description" summary for any DescribedListPreference. -->
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">Уравнотежено</string>
+    <string name="wear_screen_theme_default_description">Стандардна хијерархија и величине контрола.</string>
+    <string name="wear_screen_theme_minimal">Минимално</string>
+    <string name="wear_screen_theme_minimal_description">Користи мање, ненаметљивије контроле, а све радње остају видљиве и употребљиве.</string>
+    <string name="wear_screen_theme_compact">Компактно</string>
+    <string name="wear_screen_theme_compact_description">Користи збијенији изглед контрола без промене ваших радњи.</string>
+    <string name="wear_screen_theme_cinema">Биоскоп</string>
+    <string name="wear_screen_theme_cinema_description">Ублажава изглед контрола без промене омота.</string>
+    <string name="wear_screen_theme_vivid">Живописно</string>
+    <string name="wear_screen_theme_vivid_description">Користи веће и упадљивије контроле.</string>
+    <string name="wear_screen_theme_contrast">Висок контраст</string>
+    <string name="wear_screen_theme_contrast_description">Користи веће контроле ради лакшег читања.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">Користи компактне, благо затамњене контроле. Не затамњује саму позадину — за то користите подешавања позадине.</string>
+    <string name="wear_screen_theme_hidden">Сакривено</string>
+    <string name="wear_screen_theme_hidden_description">Потпуно сакрива све иконе контрола. Зоне додира остају активне и потпуно функционалне.</string>
+    <string name="setting_wear_font">Типографија</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Подразумевани фонт апликације.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">Променљива верзија Google Sans-а са подесивом ширином, оптичком величином, тежином и заобљеношћу — откључава контроле оса испод.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Класични системски фонт Android-а.</string>
+    <string name="wear_font_rounded">Заобљено</string>
+    <string name="wear_font_rounded_description">Пријатни модерни облици слова са благо заобљеним завршецима.</string>
+    <string name="wear_font_sans_light">Модерни лагани</string>
+    <string name="wear_font_sans_light_description">Чист, прозрачан sans-serif са лакшом визуелном тежином.</string>
+    <string name="wear_font_sans_thin">Ултра танки</string>
+    <string name="wear_font_sans_thin_description">Изузетно лаган стил приказа за минималистички плејер.</string>
+    <string name="wear_font_sans_medium">Модерни средњи</string>
+    <string name="wear_font_sans_medium_description">Оштар sans-serif са снажнијим, компактним потезима.</string>
+    <string name="wear_font_sans_black">Тешки</string>
+    <string name="wear_font_sans_black_description">Подебљана фамилија за приказ са максималним визуелним утицајем.</string>
+    <string name="wear_font_small_caps">Мала велика слова</string>
+    <string name="wear_font_small_caps_description">Компактни облици налик великим словима са уредничким утиском.</string>
+    <string name="wear_font_casual">Опуштени</string>
+    <string name="wear_font_casual_description">Разиграна рукописна системска фамилија фонтова.</string>
+    <string name="wear_font_typewriter">Писаћа машина (архивирано)</string>
+    <string name="wear_font_typewriter_description">Ретро изглед писаће машине (Mom\'s Typewriter).</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Заобљени геометријски sans-serif, бесплатна (OFL) алтернатива у духу Circular-а.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Чист геометријски sans-serif, бесплатна (OFL) алтернатива у духу Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Елегантни хуманистички roman фонт, бесплатна (OFL) алтернатива у духу Optima-е.</string>
+    <string name="wear_font_love_letter">Wired</string>
+    <string name="wear_font_love_letter_description">Мекши стил писаће машине (Love Letter Typewriter) — обично резервисан за нумере са темом „Lain“.</string>
+    <string name="wear_font_serif">Сериф</string>
+    <string name="wear_font_serif_description">Класични серифни фонт.</string>
+    <string name="wear_font_serif_monospace">Сериф моно</string>
+    <string name="wear_font_serif_monospace_description">Серифна слова фиксне ширине са препознатљивим уредничким/терминалским изгледом.</string>
+    <string name="wear_font_monospace">Моноспејс</string>
+    <string name="wear_font_monospace_description">Технички изглед фиксне ширине.</string>
+    <string name="wear_font_condensed">Сужени</string>
+    <string name="wear_font_condensed_description">Ужи облици слова који примају више текста.</string>
+    <string name="wear_font_condensed_light">Сужени лагани</string>
+    <string name="wear_font_condensed_light_description">Ужа, лакша фамилија фонтова за дугачке наслове.</string>
+    <string name="wear_font_condensed_medium">Сужени средњи</string>
+    <string name="wear_font_condensed_medium_description">Ужа фамилија са снажнијим потезима и одличном читљивошћу.</string>
+    <string name="wear_font_cursive">Курзивни</string>
+    <string name="wear_font_cursive_description">Декоративни рукописни фонт.</string>
+    <string name="setting_wear_dynamic_accent">Динамички акценат на сату</string>
+    <string name="setting_wear_dynamic_accent_description">Прилагођава боје сата засноване на албуму тренутном омоту. Када је искључено, избори Боја албума користе статичку акцентну боју теме.</string>
+    <string name="setting_wear_album_art_fade">Прелаз омота блеђењем</string>
+    <string name="setting_wear_album_art_fade_description">Глатко претапа омот албума када се нумера промени.</string>
+    <string name="setting_wear_title_text_mode">Понашање текста наслова</string>
+    <string name="setting_wear_title_text_mode_description">Одређује како се наслов тренутне нумере понаша када не стаје: Аутоматски комбинује смањивање, преламање и померање; остале опције користе само једно понашање.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>Аутоматски (смањи, па преломи, па померај)</item>
+        <item>Померање (marquee)</item>
+        <item>Преломи у два реда</item>
+        <item>Преломи у три реда</item>
+        <item>Преломи у пет редова</item>
+        <item>Статично (један ред, без померања или смањивања)</item>
+        <item>Смањи да стане</item>
+    </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string name="setting_wear_artist_color">Боја текста извођача</string>
+    <string name="setting_wear_artist_custom_color">Прилагођена боја извођача</string>
+    <string name="setting_wear_artist_custom_color_description">Изаберите боју извођача која се користи са Нормалном обрадом</string>
+    <string name="setting_wear_artist_desaturated">Десатурисана боја извођача</string>
+    <string name="setting_wear_artist_desaturated_description">Ублажи боју текста извођача засновану на албуму — важи само када је „Боја текста извођача“ подешена на Боја албума</string>
+
+    <string name="setting_wear_progress_color">Боја траке напретка</string>
+    <string name="setting_wear_progress_custom_color">Прилагођена боја траке напретка</string>
+    <string name="setting_wear_progress_custom_color_description">Изаберите боју напретка и премотавања која се користи са Нормалном обрадом</string>
+    <string name="setting_wear_progress_desaturated">Десатурисана боја траке напретка</string>
+    <string name="setting_wear_progress_desaturated_description">Ублажи боју траке напретка засновану на албуму — важи само када је „Боја траке напретка“ подешена на Боја албума</string>
+
+    <string name="setting_wear_volume_color">Боја траке јачине звука</string>
+    <string name="setting_wear_volume_custom_color">Прилагођена боја јачине звука</string>
+    <string name="setting_wear_volume_custom_color_description">Изаберите боју јачине звука која се користи са Нормалном обрадом</string>
+    <string name="setting_wear_quick_panel_color">Боја брзих радњи</string>
+    <string name="setting_wear_quick_panel_custom_color">Прилагођена боја брзих радњи</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Изаберите боју брзих радњи која се користи са Нормалном обрадом</string>
+    <string name="setting_wear_shading_custom_color_description">Изаберите боју која нијансира градијент сенчења</string>
+
+    <string-array name="wear_accent_color_entries">
+        <item>Неутрално (статична боја теме)</item>
+        <item>Боја албума</item>
+        <item>Прилагођена боја</item>
+    </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="wear_screen_face_entries">
+        <item>Класично</item>
+        <item>Експресивно</item>
+        <item>Винил</item>
+        <item>Постер</item>
+        <item>Студио</item>
+        <item>Ореол</item>
+        <item>Аурора</item>
+        <item>Eclipse AMOLED</item>
+        <item>Спектар</item>
+        <item>Material</item>
+        <item>Имерзивно</item>
+        <item>Дубина</item>
+        <item>Вртешка</item>
+        <item>Ћаскање</item>
+        <item>Подељено</item>
+        <item>Нота</item>
+        <item>Стих</item>
+        <item>Метаподаци</item>
+    </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
+
+    <string name="setting_wear_expressive_seek_mode">Експресивно премотавање</string>
+    <string name="setting_wear_expressive_seek_mode_description">Одређује како се нумера премотава додиром на Expressive приказу. Централни прстен омогућава превлачење прстена око дугмета за репродукцију; Ивични прстен приказује и Classic прстен оквира; Ништа оставља премотавање само ротационој круници.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>Централни прстен</item>
+        <item>Прстен по ивици</item>
+        <item>Нема</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="category_wear_aod">Увек укључен екран</string>
+    <string name="setting_wear_aod_style">Стил увек укљученог екрана</string>
+    <string name="setting_wear_aod_style_description">Одређује изглед екрана за репродукцију када је сат у амбијенталном режиму. Прати лице одговара изабраном лицу; Минимално приказује само затамњен текст на чистој црној позадини ради најдужег трајања батерије.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Прати лице</item>
+        <item>Класично</item>
+        <item>Експресивно (оквир)</item>
+        <item>Material (оквир)</item>
+        <item>AMOLED контроле</item>
+        <item>Chrono (велики сат)</item>
+        <item>Постер</item>
+        <item>Студио</item>
+        <item>Имерзивно</item>
+        <item>Вртешка</item>
+        <item>Ћаскање</item>
+        <item>Подељено</item>
+        <item>Нота</item>
+        <item>Стих</item>
+    </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Боја увек укљученог екрана</string>
+    <string-array name="wear_aod_color_entries">
+        <item>Бела</item>
+        <item>Боја албума</item>
+        <item>Прилагођена боја</item>
+    </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>Бела</item>
+        <item>Динамички (према области испод сата)</item>
+        <item>Боја албума</item>
+        <item>Прилагођена боја</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Прати стил панела</item>
+        <item>Провидно (без позадине)</item>
+        <item>Акценат албума</item>
+        <item>Полупровидно</item>
+        <item>Бела</item>
+        <item>Матирано бело</item>
+        <item>Црна</item>
+        <item>Динамички (тон албума)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Позадина пилуле Следеће</string>
+    <string name="setting_wear_show_up_next_pill">Пилула Следеће на плејеру</string>
+    <string name="setting_wear_show_up_next_pill_description">Прикажи пилулу Следеће на дну екрана за репродукцију. Она заузима простор реда мини дугмади, па се појављује само када тај ред није приказан.</string>
+    <string name="category_wf_clock">Сат</string>
+    <string name="setting_wear_clock_color">Боја сата</string>
+    <string name="setting_wear_clock_custom_color">Прилагођена боја сата</string>
+    <string name="setting_wear_clock_custom_color_description">Додирните да изаберете боју сата која се користи када је Боја сата подешена на Прилагођену боју</string>
+    <string name="setting_wear_clock_opacity">Непровидност сата</string>
+    <string name="setting_wear_clock_opacity_description">Одређује непровидност сата који је увек приказан (10–100%%). Тренутно <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_custom_color">Прилагођена боја увек укљученог екрана</string>
+    <string name="setting_wear_aod_custom_color_description">Додирните да изаберете боју текста, контрола и сата на увек укљученом екрану када је „Боја увек укљученог екрана“ подешена на Прилагођену боју</string>
+    <string name="setting_wear_aod_intensity">Осветљеност увек укљученог екрана</string>
+    <string name="setting_wear_aod_intensity_description">Одређује осветљеност увек укљученог екрана (20–100%%). Нижа вредност је тамнија и троши мање батерије. Тренутно <![CDATA[<b>%1$s%%</b>]]>.</string>
+    <string name="setting_wear_aod_show_transport">Дугмад за репродукцију на увек укљученом екрану</string>
+    <string name="setting_wear_aod_show_transport_description">Прикажи контурна дугмад претходно/репродукција/следеће у подржаним визуелним стиловима увек укљученог екрана. Не могу се додирнути док је екран затамњен, али додир буди сат са дугметом већ испод прста.</string>
+    <string name="setting_wear_aod_show_progress">Прстен напретка на увек укљученом екрану</string>
+    <string name="setting_wear_aod_show_progress_description">Прикажи прстен напретка око дугмета за репродукцију у амбијенталном режиму — положај се тамо освежава само отприлике једном у минуту</string>
+    <string name="setting_wear_aod_show_pills">Следеће на увек укљученом екрану</string>
+    <string name="setting_wear_aod_show_pills_description">Прикажи статичну контурну пилулу Следеће на дну визуелних стилова увек укљученог екрана</string>
+    <string name="category_wf_gestures">Покрети на екрану</string>
+    <string name="setting_wear_mini_buttons_mode">Прикажи мини дугмад</string>
+    <string name="setting_wear_gestures_mode">Покрети на екрану</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>Увек</item>
+        <item>Само током репродукције</item>
+        <item>Само током паузе</item>
+        <item>Никад</item>
+    </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Омот албума на увек укљученом екрану</string>
+    <string name="setting_wear_aod_show_art_description">Задржава затамњени омот албума видљивим у амбијенталном режиму. Искључивање приказује чисто црну позадину, што приметно више штеди батерију на AMOLED екранима.</string>
+    <string name="setting_wear_aod_art_treatment">Стил омота албума на увек укљученом екрану</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Меко замућење</item>
+        <item>Јасан омот</item>
+        <item>Монохроматско замућење</item>
+        <item>Прати обраду омота плејера</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Сат на увек укљученом екрану</string>
+    <string name="setting_wear_aod_show_clock_description">Прикажи сат када је паметни сат у амбијенталном режиму</string>
+    <string name="setting_wear_aod_show_track_info">Информације о нумери на увек укљученом екрану</string>
+    <string name="setting_wear_aod_show_track_info_description">Прикажи назив нумере и извођача у амбијенталном режиму</string>
+
+    <string name="category_overlays_queue">Преклапања и ред</string>
+    <string name="category_wf_panel_shared">Заједнички изглед панела</string>
+    <string name="category_wf_panel_volume">Панел јачине звука</string>
+    <string name="category_wf_panel_seek">Панел напретка и премотавања</string>
+    <string name="category_wf_panel_quick">Панел брзих радњи</string>
+    <string name="category_wf_panel_queue">Ред и листе</string>
+    <string name="category_wf_panel_effects">Ефекти панела</string>
+    <string name="setting_wear_overlay_backdrop_style">Позадина панела</string>
+    <string name="setting_wear_volume_style">Стил јачине звука</string>
+    <string name="setting_wear_volume_layout">Распоред јачине звука</string>
+    <string name="setting_wear_quick_panel_style">Стил брзог панела</string>
+    <string name="setting_wear_quick_panel_layout">Распоред брзог панела</string>
+    <string name="setting_wear_quick_panel_source">Брзе радње</string>
+    <string name="setting_wear_quick_panel_source_description">Изаберите подешену дугмад или радње које пружа апликација која тренутно репродукује.</string>
+    <string name="quick_panel_open_note_title">Отварање панела</string>
+    <string name="quick_panel_open_note_description">Двапут додирните средину екрана за репродукцију да бисте отворили панел брзих радњи на сату.</string>
+    <string name="preview_current_app_action">Радња тренутне апликације</string>
+    <string name="preview_notification_controls">Икона из медијског обавештења</string>
+    <string name="setting_wear_queue_style">Стил реда</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Користи омоте пречица као позадину</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Када је Стил реда варијанта са омотом, ред радње у брзом панелу са преузетим омотом пречице (нумера, плејлиста, извођач…) такође попуњава своју пилулу тим омотом, као Следеће. Пречице без преузетог омота (обична икона апликације) нису погођене.</string>
+    <string name="setting_wear_list_row_size">Величина пилуле листе</string>
+    <string name="setting_wear_list_row_size_description">Висина редова пуне ширине у реду, менијима и брзом панелу.</string>
+    <string name="setting_wear_progress_gradient">Умешај палету у прстен</string>
+    <string name="setting_wear_progress_gradient_description">Код вишебојне обраде (Комплементарна, Тријадна, Аналогна, Дуотон) пуни прстен прелази кроз све три боје. Искључите за једнобојни прстен, а палету албума задржите свуда другде.</string>
+    <string name="setting_wear_progress_style">Стил прстена напретка</string>
+    <string name="setting_wear_seek_style">Стил приказа премотавања и јачине звука</string>
+    <string name="setting_wear_seek_layout">Распоред панела премотавања</string>
+    <string name="setting_wear_color_treatment">Обрада боја сата</string>
+    <string name="setting_wear_normal_color">Нормална боја</string>
+    <string name="setting_wear_normal_color_description">Изаберите једну боју која се у Нормалном режиму користи за акценте наслова, напредак, јачину звука, панеле и украсе мини дугмади</string>
+    <string name="setting_wear_normal_color_multi">Користи палету боја</string>
+    <string name="setting_wear_normal_color_multi_description">Када је укључено, екран користи главну боју и два помоћна тона. Када је искључено, свуда се користи једна боја — боја самог албума или она коју сте изабрали.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>Нормално (изабрана боја)</item>
+        <item>Незасићено (мека боја албума)</item>
+        <item>Експресивно (цела палета албума)</item>
+        <item>Комплементарно (албум + супротна)</item>
+        <item>Тријадно (три нијансе албума)</item>
+        <item>Аналогно (суседне нијансе)</item>
+        <item>Монохроматски (једна нијанса, три тона)</item>
+        <item>Двотонско (две боје албума)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>Прати обраду сата</item>
+        <item>Нормално (изабрана боја)</item>
+        <item>Незасићено (мека боја албума)</item>
+        <item>Експресивно (цела палета албума)</item>
+        <item>Комплементарно (албум + супротна)</item>
+        <item>Тријадно (три нијансе албума)</item>
+        <item>Аналогно (суседне нијансе)</item>
+        <item>Монохроматски (једна нијанса, три тона)</item>
+        <item>Двотонско (две боје албума)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">Тежина наслова</string>
+    <string name="setting_wear_title_font_italic">Курзивни наслов</string>
+    <string name="setting_wear_title_font_scale">Величина наслова</string>
+    <string name="setting_wear_title_font_opacity">Непровидност наслова</string>
+    <string name="setting_wear_title_font_tracking">Размак слова наслова</string>
+    <string name="setting_wear_title_color">Боја текста наслова</string>
+    <string name="setting_wear_title_custom_color">Прилагођена боја наслова</string>
+    <string name="wear_title_color_face_default">Подразумевано за лице (како је дизајнирано)</string>
+    <string name="setting_wear_title_adaptive_contrast">Прилагоди боју наслова контрасту</string>
+    <string name="setting_wear_title_adaptive_contrast_description">Посветљује или затамњује наслов када је његова боја превише слична слици иза њега, уз очување нијансе. Нема ефекта док наслов користи подразумевану боју лица.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Прилагоди боју извођача контрасту</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Посветљује или затамњује ред извођача када је боја албума превише слична слици иза њега, уз очување нијансе. Мери само траку на којој је ред, не цео омот.</string>
+    <string name="setting_wear_artist_font_weight">Тежина извођача</string>
+    <string name="setting_wear_artist_font_italic">Курзивни извођач</string>
+    <string name="setting_wear_artist_font_scale">Величина извођача</string>
+    <string name="setting_wear_artist_font_opacity">Непровидност извођача</string>
+    <string name="setting_wear_artist_font_tracking">Размак слова извођача</string>
+    <string name="setting_wear_source_icon_scale">Величина иконе апликације</string>
+    <string name="setting_wear_source_icon_opacity">Непровидност иконе апликације</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 је нормална тежина лица; већа вредност је подебљанија. За Google Sans Flex ово је сопствена ос тежине фонта</string>
+    <string name="setting_wear_typography_scale_description">Проценат сопствене величине лица (70–140). 100 задржава пројектовану величину сваког распореда</string>
+    <string name="setting_wear_typography_opacity_description">Проценат (20–100). 100 задржава сопствену непровидност лица</string>
+    <string name="setting_wear_typography_tracking_description">Додатни размак између слова, у стотинкама em (−5 до 20). 0 задржава сопствени размак фонта</string>
+    <string name="setting_wear_color_modifier">Тон</string>
+    <string name="setting_wear_color_modifier_description">Подеси целу палету без промене начина на који је изведена — ради са сваком обрадом боја</string>
+    <string name="setting_wear_color_hue_shift">Померање боје</string>
+    <string name="setting_wear_color_hue_shift_description">Ротира палету албума око круга боја у степенима (0–359). Свака обрада задржава главну боју на сопственој нијанси албума, па је ово оно што је мења. 0 користи боју албума каква јесте; фиксна Нормална боја се никада не помера.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>Нема</item>
+        <item>Живописно</item>
+        <item>Пастелно</item>
+        <item>Топло</item>
+        <item>Хладно</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Лук по ивици (лево)</item>
+        <item>Лук по ивици (висок)</item>
+        <item>Лук по ивици (десно)</item>
+        <item>Лук по ивици (горе)</item>
+        <item>Лук по ивици (доле)</item>
+        <item>Пун прстен</item>
+        <item>Централни ореол</item>
+        <item>Хоризонтални мерач</item>
+    </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>Прстен по ивици</item>
+        <item>Прстен по ивици (танак)</item>
+        <item>Прстен по ивици (дебео)</item>
+        <item>Временска линија</item>
+        <item>Сегментисана временска линија</item>
+    </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Метаподаци прво</item>
+        <item>Лук</item>
+        <item>Главни</item>
+        <item>Мрежа</item>
+        <item>Редови са ознакама</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Пуно</item>
+        <item>Испрекидано</item>
+        <item>Тачке</item>
+        <item>Танка линија</item>
+        <item>Комета</item>
+        <item>60 тачака сата</item>
+        <item>60 ознака сата</item>
+        <item>12-часовни сегменти</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Једноставно</item>
+        <item>Стаклена капсула</item>
+        <item>Експресивна капсула</item>
+        <item>Material капсула</item>
+        <item>Бела капсула</item>
+        <item>Огромно</item>
+        <item>Позиција / укупно</item>
+        <item>Бело стакло</item>
+        <item>Полупровидан албум</item>
+        <item>Сјај албума</item>
+        <item>Обрис</item>
+        <item>Пуна тема</item>
+        <item>Пун албум</item>
+        <item>Микро</item>
+        <item>Сенка (без оквира)</item>
+        <item>Подвлачење</item>
+        <item>Танак обрис</item>
+        <item>Огромна боја албума</item>
+        <item>Моно</item>
+        <item>Тамни тонални</item>
+        <item>Терминал</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>Подешена дугмад</item>
+        <item>Из тренутне медијске апликације</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Прати стил панела</item>
+        <item>Замућење албума (акрил)</item>
+        <item>Пуна црна</item>
+        <item>Пуна боја албума</item>
+        <item>Стакло</item>
+        <item>Градијент албума</item>
+        <item>Дуотон албума</item>
+        <item>Призма</item>
+        <item>Течно стакло</item>
+        <item>Експресивно замућење</item>
+        <item>Експресивно</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Стакло</item>
+        <item>Минимално (AMOLED)</item>
+        <item>Material</item>
+        <item>Тонално</item>
+        <item>Неон</item>
+        <item>Светло</item>
+        <item>Градијент</item>
+        <item>Моно</item>
+        <item>Обрис</item>
+        <item>Дуотон</item>
+        <item>Призма</item>
+        <item>Висок контраст</item>
+        <item>Терминал</item>
+        <item>Мраз</item>
+        <item>Сегменти</item>
+        <item>Аурора</item>
+        <item>Мастило</item>
+        <item>Жлеб</item>
+    </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Компактно</item>
+        <item>Нормално</item>
+        <item>Високо</item>
+        <item>Изузетно високо</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
+    </string-array>
+
+    <string-array name="wear_overlay_style_entries">
+        <item>Стакло</item>
+        <item>Минимално (AMOLED)</item>
+        <item>Material</item>
+        <item>Тонално</item>
+        <item>Неон</item>
+        <item>Светло</item>
+        <item>Градијент</item>
+        <item>Моно</item>
+        <item>Обрис</item>
+        <item>Дуотон</item>
+        <item>Призма</item>
+        <item>Висок контраст</item>
+        <item>Терминал</item>
+        <item>Мраз</item>
+        <item>Омот</item>
+            <item>Замућен омот</item>
+        <item>Тонални омот</item>
+        <item>Квадратни омот</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Стакло</item>
+        <item>Бело стакло</item>
+        <item>Тонално стакло</item>
+        <item>Минимално (AMOLED)</item>
+        <item>Material</item>
+        <item>Тонално</item>
+        <item>Неон</item>
+        <item>Светло</item>
+        <item>Градијент</item>
+        <item>Моно</item>
+        <item>Обрис</item>
+        <item>Обрис белог стакла</item>
+        <item>Дуотон</item>
+        <item>Призма</item>
+        <item>Висок контраст</item>
+        <item>Терминал</item>
+        <item>Мраз</item>
+        <item>Дух (без оквира)</item>
+        <item>Магла</item>
+        <item>Мастило</item>
+        <item>Тачка</item>
+        <item>Плоча</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
+
+    <string name="setting_wear_paused_hold">Задржи апликацију активном после паузе</string>
+    <string name="setting_wear_paused_hold_description">Одређује колико дуго после паузе апликација на сату остаје доступна са лица сата, тако да можете наставити подизањем зглоба уместо поновног отварања. Дужа подешавања држе позадинску услугу активном.</string>
+    <string name="wear_paused_hold_off">Не задржавај</string>
+    <string name="wear_paused_hold_5">5 минута</string>
+    <string name="wear_paused_hold_15">15 минута</string>
+    <string name="wear_paused_hold_30">30 минута</string>
+    <string name="wear_paused_hold_60">1 сат</string>
+    <string name="wear_paused_hold_always">Док се репродукција не заврши</string>
+
+    <string name="setting_wear_idle_button_action">Дугме када се ништа не репродукује</string>
+    <string name="setting_wear_idle_auto_open">Отвори када се ништа не репродукује</string>
+    <string name="setting_wear_idle_auto_open_description">Одмах прелази на овај екран када отворите апликацију на сату без музике која се репродукује.</string>
+    <string name="wear_idle_action_resume">Настави последњу апликацију</string>
+    <string name="wear_idle_action_shortcuts">Пречице плејлиста</string>
+    <string name="wear_idle_action_menu">Мени радњи</string>
+    <string name="wear_idle_action_search">Претрага</string>
+    <string name="wear_idle_action_queue">Недавно репродуковано</string>
+    <string name="wear_idle_action_none">Без дугмета</string>
+    <string name="wear_idle_auto_open_none">Остани на плејеру</string>
+
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_typewriter</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_typewriter_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+    </string-array>
+
+    <string name="action_open_library">Прегледај библиотеку</string>
+    <string name="library_up">Назад</string>
+    <string name="error_library_unavailable">Ова апликација нема библиотеку која се може прегледати</string>
+    <string name="error_library_empty">Овде нема ничега</string>
+    <string name="error_library_no_player">Прво покрените нешто</string>
+
+    <string name="setting_wear_carousel_card_shape">Облик картице вртешке</string>
+    <string-array name="wear_carousel_card_shape_entries">
+        <item>Заобљено</item>
+        <item>Квадрат</item>
+        <item>Заобљени квадрат</item>
+        <item>Круг</item>
+    </string-array>
+
+    <string name="setting_wear_font_all_screens">Користи фонт свуда</string>
+    <string name="setting_wear_font_all_screens_description">Примењује изабрани фонт на меније, ред и Брзе радње, не само на плејер. Дисплеј и рукописни фонтови могу бити тежи за читање у листама.</string>
+
+    <string name="setting_wear_clock_font">Фонт сата</string>
+    <string name="wear_clock_font_follow">Прати фонт нумере</string>
+    <string name="setting_wear_lyrics_font">Фонт текста песме</string>
+    <string name="setting_wear_lyrics_font_description">Фонт за речи песме на екрану текста и Verse лицу. Прати фонт нумере осим ако овде не изаберете други.</string>
+    <string name="wear_lyrics_font_follow">Прати фонт нумере</string>
+    <string name="setting_wear_clock_font_weight">Тежина сата</string>
+    <string name="setting_wear_clock_font_italic">Курзивни сат</string>
+    <string name="setting_wear_clock_font_scale">Величина сата</string>
+    <string name="setting_wear_clock_font_tracking">Размак слова сата</string>
+    <string name="setting_wear_clock_adaptive_contrast">Прилагоди боју сата контрасту</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Посветљује или затамњује сат када је боја албума превише слична слици иза њега, уз очување нијансе. Важи само када је Боја сата подешена на Боја албума.</string>
+
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Сужени дисплеј СВИМ ВЕЛИКИМ СЛОВИМА — постерски изглед, стаје у дугачке наслове</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Уреднички сериф високог контраста — часописни утисак</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Технички геометријски sans-serif са необичним детаљима</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Коцкасти sci-fi дисплеј — подебљан и футуристички</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Рукописни фонт — опуштен и личан</string>
+    <string name="setting_wear_track_time_mode">Приказ времена нумере</string>
+    <string name="setting_wear_track_time_mode_description">Одређује када се позиција нумере (нпр. 1:23 / 3:45) приказује на екрану за репродукцију.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>Увек</item>
+        <item>Само током репродукције</item>
+        <item>Само током паузе</item>
+        <item>Никад</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
+
+
+    <string name="setting_screen_buttons_curve">Закривљеност мини дугмади</string>
+    <string name="setting_screen_buttons_curve_description">Изаберите стил закривљености мини дугмади: равно, лук, меко, закривљено.</string>
+    <string name="setting_screen_buttons_shape">Облик мини дугмади</string>
+    <string name="setting_screen_buttons_shape_description">Изаберите облик и формат распореда мини дугмади.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Капсула (подразумевано)</item>
+        <item>Круг</item>
+        <item>Квадрат</item>
+        <item>Заобљени квадрат (мек)</item>
+        <item>Заобљени квадрат (средњи)</item>
+        <item>Заобљени квадрат</item>
+        <item>Лист</item>
+        <item>Кап</item>
+        <item>Капсула (широка мала)</item>
+        <item>Капсула (широка средња)</item>
+        <item>Капсула (широка велика)</item>
+        <item>Капсула (широка изузетно велика)</item>
+        <item>Заобљени правоугаоник (мали)</item>
+        <item>Заобљени правоугаоник (средњи)</item>
+        <item>Заобљени правоугаоник (велики)</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>Равно</item>
+        <item>Лук</item>
+        <item>Блага кривина</item>
+        <item>Мека кривина</item>
+        <item>Средња кривина</item>
+        <item>Закривљено</item>
+        <item>Екстремна кривина</item>
+        <item>Рашири до ивица</item>
+        <item>Лева ивица</item>
+        <item>Десна ивица</item>
+        <item>Обе ивице</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>Подразумевана позадина</item>
+        <item>Стакло (уједначено)</item>
+        <item>Стакло (светло)</item>
+        <item>Полупровидан албум</item>
+        <item>Полупровидан албум Exp</item>
+        <item>Сјај албума</item>
+        <item>Сјај Exp</item>
+        <item>Пуна тема</item>
+        <item>Пун албум</item>
+        <item>Пун Exp албум</item>
+        <item>Обрис</item>
+        <item>Обрис Exp албума</item>
+        <item>Само икона (провидна)</item>
+        <item>Икона Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
+
+    <string-array name="screen_buttons_color_entries">
+        <item>Неутрално</item>
+        <item>Боја албума</item>
+        <item>Прилагођена боја</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="album_art_style_entries">
+        <item>Пун омот</item>
+        <item>Замућена позадина</item>
+        <item>Залеђене ивице</item>
+        <item>Квадрат (оштри углови)</item>
+        <item>Квадрат (меки углови)</item>
+        <item>Квадрат (заобљени углови)</item>
+        <item>Црно &amp; бело</item>
+        <item>Замућено црно-бело</item>
+        <item>Експресивно замућење</item>
+        <item>Експресивно</item>
+        <item>Material тонални градијент</item>
+        <item>Постер омот</item>
+        <item>Студијски градијент</item>
+        <item>Радијални сјај винила</item>
+        <item>Сјај ореола</item>
+        <item>Траке ауроре</item>
+        <item>Спектрални градијент</item>
+        <item>Прелаз короне</item>
+        <item>Прелив сумрака</item>
+        <item>Цветање</item>
+        <item>Прелив хоризонта</item>
+        <item>Сјај жара</item>
+        <item>Eclipse AMOLED црно</item>
+        <item>Скривено (пуна црна)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Only languages the app is actually translated into. Must stay in step with
+         AppLocales.SUPPORTED and the values-<code> resource folders. -->
+    <string-array name="app_language_entries">
+        <item>@string/language_system</item>
+        <item>English</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Русский</item>
+        <item>Ελληνικά</item>
+        <item>Română</item>
+        <item>Bahasa Indonesia</item>
+        <item>فارسی</item>
+        <item>简体中文</item>
+        <item>Íslenska</item>
+        <item>Français</item>
+        <item>Türkçe</item>
+        <item>Tiếng Việt</item>
+        <item>Čeština</item>
+        <item>Svenska</item>
+        <item>Norsk</item>
+        <item>Magyar</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>Filipino</item>
+        <item>Қазақша</item>
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>Polski</item>
+        <item>繁體中文</item>
+        <item>Українська</item>
+        <item>ไทย</item>
+        <item>עברית</item>
+        <item>Dansk</item>
+        <item>Suomi</item>
+        <item>Slovenčina</item>
+        <item>Български</item>
+        <item>Српски</item>
+        <item>Hrvatski</item>
+        <item>Bahasa Melayu</item>
+        <item>বাংলা</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
+        <item>fr</item>
+        <item>tr</item>
+        <item>vi</item>
+        <item>cs</item>
+        <item>sv</item>
+        <item>nb</item>
+        <item>hu</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>fil</item>
+        <item>kk</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pl</item>
+        <item>zh-Hant</item>
+        <item>uk</item>
+        <item>th</item>
+        <item>he</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>sk</item>
+        <item>bg</item>
+        <item>sr</item>
+        <item>hr</item>
+        <item>ms</item>
+        <item>bn</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+
+    <string-array name="auto_start_modes_descriptions">
+        <item>Онемогућено</item>
+        <item>Прикажи икону музичког бројчаника (само Wear 3.0)</item>
+        <item>Отвори Svartifoss</item>
+    </string-array>
+
+    <string name="setting_close_timeout">Време до затварања</string>
+    <string name="setting_close_timeout_description">Svartifoss ће се аутоматски затворити када се музика не репродукује <![CDATA[<b>%1$s секунди</b>]]>. Функција је искључена када је време постављено на 0 секунди. Ради уштеде батерије, ова опција понекад није потпуно прецизна и затварање може каснити до око једног минута.</string>
+    <string name="setting_wear_close_on_idle">Затвори на „Ништа се не репродукује“</string>
+    <string name="setting_wear_close_on_idle_description">Аутоматски затвара апликацију на сату око минут након што стигне до неактивног екрана „Ништа се не репродукује“, како се не би задржавала тамо. Независно је од времена за затварање изнад, које важи за паузирану нумеру.</string>
+    <string name="category_notifications">Искачуће обавештење</string>
+    <string name="setting_enable_notifications">Прикажи искачуће обавештење</string>
+    <string name="setting_enable_notifications_description">Ова функција захтева другу апликацију за управљање обавештењима (Vibration Center for Wear).\n\nКад год Vibration Center завибрира сат, Svartifoss ће приказати искачући текст обавештења, тако да можете брзо да га погледате без напуштања Svartifoss-а.</string>
+    <string name="setting_notification_timeout">Време искачућег обавештења</string>
+    <string name="setting_notification_timeout_description">Искачуће обавештење ће се аутоматски затворити после <![CDATA[<b>%1$s секунди</b>]]>. Унесите 0 да искључите аутоматско затварање.</string>
+    <string name="app_required">Потребна апликација</string>
+    <string name="vibration_center_required_description">Да бисте користили ову функцију, морате да инсталирате другу бесплатну апликацију: Vibration Center for Wear.</string>
+    <string name="open_play_store">Отвори Play продавницу</string>
+    <string name="error_no_notification_service_support">Жао нам је, изгледа да ваш уређај не подржава услуге обавештења</string>
+    <string name="setting_always_select_center_action">Увек изабери централну радњу</string>
+    <string name="setting_always_select_center_action_description">Када је укључено, додир листе радњи увек бира централну (истакнуту) опцију, без обзира коју сте опцију додирнули.</string>
+    <string name="change_icon">Промени икону</string>
+    <string name="please_wait">Сачекајте</string>
+
+    <string name="error_playlist_not_supported">Ова медијска апликација не подржава</string>
+    <string name="error_search_no_results">Нема резултата</string>
+    <string name="seconds_to_skip">Секунди за прескакање:</string>
+    <string name="seconds_to_reverse">Секунди за враћање:</string>
+
+    <string name="setting_dynamic_accent_color">Динамичка акцентна боја</string>
+    <string name="setting_dynamic_accent_color_description">Када је укључено, акцентна боја (трака за премотавање, активна ставка реда) аутоматски се прилагођава доминантној боји тренутног омота.</string>
+    <string name="setting_desaturated_color">Десатурисана боја</string>
+    <string name="setting_desaturated_color_description">Подешава засићеност и осветљеност издвојене боје како би обезбедио високу читљивост и контраст у зависности од активне теме.</string>
+
+    <string name="queue_header">Ред репродукције</string>
+    <string name="queue_unavailable">Ред није доступан</string>
+
+    <string name="setting_custom_accent_color">Акцентна боја</string>
+    <string name="setting_custom_accent_color_description">Изаберите прилагођену акцентну боју за интерфејс апликације</string>
+    <string name="setting_mini_player">Мини плејер</string>
+    <string name="setting_mini_player_description">Приказује сталну траку тренутне репродукције изнад доње навигације када је медиј активан. Подразумевано је укључено; искључите да ослободите простор.</string>
+    <string name="color_picker_title">Изабери акцентну боју</string>
+    <string name="color_picker_reset">Ресетуј</string>
+    <string name="color_picker_apply">Примени</string>
+    <string name="color_picker_default">Подразумевано</string>
+    <string name="color_picker_invalid">Неважећи код боје</string>
+    <string name="color_picker_current">Тренутно: %s</string>
+
+    <string name="drawer_version_format">Верзија %1$s</string>
+    <string name="drawer_tagline">Пратећа апликација за Wear OS</string>
+    <string name="drawer_about_heading">О апликацији</string>
+    <string name="drawer_about_summary">Svartifoss вам омогућава да управљате музиком на телефону са Wear OS сата — помоћу потпуно прилагодљивог даљинског управљача за ваш уређај.</string>
+    <string name="drawer_name_heading">Име</string>
+    <string name="drawer_name_meaning">Svartifoss на исландском значи „Црни водопад“ — назван по водопаду у Националном парку Vatnajökull, где тамни базалтни стубови уоквирују уску каскаду. Као вода преко камена, музика тече кроз апликацију.</string>
+    <string name="drawer_sync_heading">Синхронизација</string>
+    <string name="drawer_sync_summary">Подешавања сата се конфигуришу овде на телефону и аутоматски синхронизују са упареним сатом.</string>
+    <string name="drawer_support_heading">Подршка</string>
+    <string name="drawer_support_summary">Svartifoss је бесплатан и отвореног кода — частите ме кафом ако вам је користан :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Преузми омот</string>
+    <string name="album_art_saved">Омот је сачуван у галерији</string>
+    <string name="album_art_save_error">Чување омота није успело</string>
+
+    <string name="action_play_liked_songs">Пусти лајковане песме (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Пусти лајковане песме (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Пусти лајковане нумере (SoundCloud)</string>
+    <string name="action_my_playlists">Пречице за стримовање</string>
+    <string name="action_play_specific_playlist">Отвори пречицу за стриминг</string>
+    <string name="action_choose_or_add_streaming_shortcut">Изабери или додај пречицу за стриминг</string>
+    <string name="action_show_streaming_library">Прикажи све сачуване пречице</string>
+    <string name="playlist_shortcut_pick_title">Изабери пречицу</string>
+    <string name="playlist_shortcut_pick_empty">Још нема сачуваних пречица за стриминг — додајте једну испод, па је додирните да је изаберете</string>
+    <string name="playlist_shortcuts_empty">Још нема пречица за стриминг — додајте их у подешавањима апликације на телефону</string>
+    <string name="setting_playlist_shortcuts">Пречице за стримовање</string>
+    <string name="setting_playlist_shortcuts_description">Отварај дељене линкове са сата у YouTube Music, Spotify и другим апликацијама за стриминг</string>
+    <string name="setting_shortcut_artwork">Преузимај слике пречица онлајн</string>
+    <string name="setting_shortcut_artwork_description">Преузима сличицу са услуге за сваку сачувану пречицу и приказује је у листи на телефону, менију сата и на додељеним дугмадима. Свака сличица се преузима само једном; шаље се само јавни линк за дељење. Подразумевано искључено.</string>
+    <string name="setting_queue_local_artwork">Омоти реда из библиотеке</string>
+    <string name="setting_queue_local_artwork_description">Локални музички плејери објављују омоте реда као референце библиотеке. Дозволите приступ медијима да би могли да се прикажу у реду на сату. Интернет се не користи.</string>
+    <string name="setting_queue_local_artwork_granted">Приступ медијима је дозвољен — локални омоти реда ће се приказивати</string>
+    <string name="setting_queue_local_artwork_denied">Приступ медијима је одбијен. Омогућите га у Android подешавањима да би се приказивали локални омоти реда.</string>
+    <string name="setting_queue_remote_artwork">Преузимај омоте реда онлајн</string>
+    <string name="setting_queue_remote_artwork_short_description">Апликације за стриминг (YouTube Music клијенти, Echo Music…) објављују омоте реда као линкове, не слике, па их ова опција преузима и кешира. Искључите да би ред остао потпуно офлајн — ти редови онда неће приказивати омот.</string>
+    <string name="setting_queue_remote_artwork_description">Плејери за стриминг објављују омоте реда као линкове уместо слика. Сваки се једном преузима и кешира на овом телефону да би се приказао у реду на сату. Захтева се само URL омота који је плејер већ објавио — без налога или личних података. Подразумевано укључено; искључите да би ред остао потпуно офлајн.</string>
+    <string name="watch_streaming_shortcuts_empty">Додај нумере, албуме или плејлисте за Брзе радње и мени сата</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d сачувана пречица · Доступна у брзим радњама и менију сата</item>
+        <item quantity="few">%1$d сачуване пречице · Доступне у брзим радњама и менију сата</item>
+        <item quantity="other">%1$d сачуваних пречица · Доступне у брзим радњама и менију сата</item>
+    </plurals>
+    <string name="category_music_apps">Музичке апликације и услуге</string>
+    <string name="category_apps_content">Текстови и метаподаци</string>
+    <string name="category_streaming_services">Пречице за стримовање</string>
+    <string name="category_queue_artwork">Слике реда</string>
+    <string name="category_system_access">Android приступ и обавештења</string>
+    <string name="setting_apps_integrations">Подржане музичке услуге</string>
+    <string name="setting_apps_integrations_description">Линкови раде са YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music и SoundCloud. Приступ налогу није потребан.</string>
+    <string name="setting_apps_integrations_none">Није откривена подржана апликација. Пречице и даље могу да се отворе у прегледачу или другој компатибилној апликацији.</string>
+    <string name="setting_apps_integrations_installed">Откривено %1$d од %2$d: %3$s</string>
+    <string name="setting_streaming_open_mode">Отварај линкове за стриминг помоћу</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>Откривена апликација за стримовање</item>
+        <item>Android подразумевано</item>
+        <item>Питај сваки пут</item>
+    </string-array>
+    <string name="setting_persistent_notification">Управљај обавештењем „Svartifoss је активан“</string>
+    <string name="setting_persistent_notification_description">Отвара Android подешавања за ово обавештење — можете га утишати, сакрити са закључаног екрана или другачије прилагодити. Не може се потпуно искључити: Android захтева стално обавештење док ради позадинска услуга која комуницира са сатом.</string>
+    <string name="setting_notification_access">Приступ медијским обавештењима</string>
+    <string name="setting_notification_access_enabled">Дозвољено · Додирните да прегледате Android подешавања</string>
+    <string name="setting_notification_access_disabled">Није дозвољено · Потребно за медијске радње у обавештењима и филтере аутоматског покретања</string>
+    <string name="setting_notification_access_unavailable">Подешавања приступа обавештењима нису доступна на овом уређају</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d сачувана пречица · Додирните за управљање или увоз веза</item>
+        <item quantity="few">%1$d сачуване пречице · Додирните за управљање или увоз веза</item>
+        <item quantity="other">%1$d сачуваних пречица · Додирните за управљање или увоз веза</item>
+    </plurals>
+    <string name="category_privacy">Приватност</string>
+    <string name="setting_privacy_policy">Политика приватности</string>
+    <string name="setting_privacy_policy_description">Погледајте које податке Svartifoss користи и које онлајн услуге су опционе.</string>
+    <string name="setting_crash_reporting">Шаљи извештаје о паду</string>
+    <string name="setting_crash_reporting_description">Шаље Firebase Crashlytics дијагностику ради лакшег исправљања грешака. Подразумевано укључено; може се искључити у било ком тренутку.</string>
+    <string name="setting_announcements">Обавештења о најавама</string>
+    <string name="setting_announcements_description">Повремена обавештења од програмера — нова издања и важне најаве. Шаљу се преко Firebase Cloud Messaging-а; нема налога нити листе корисника. Подразумевано укључено; може се искључити у било ком тренутку.</string>
+    <string name="announcement_notification_channel">Најаве</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Поделите плејлисту, албум или нумеру директно са Svartifoss-ом, налепите копирани линк или га додајте ручно. Сат само тражи од телефона да га отвори; пријављивање на услугу није потребно.</string>
+    <string name="back">Назад</string>
+    <string name="playlist_shortcuts_beta_badge">БЕТА</string>
+    <string name="playlist_shortcuts_intro_title">Ваша музика на један додир</string>
+    <string name="playlist_shortcuts_yours">Ваше пречице</string>
+    <string name="playlist_shortcuts_empty_hint">Додајте дељени линк до нумере, албума или плејлисте да би био доступан на сату.</string>
+    <string name="playlist_shortcuts_add">Додај пречицу</string>
+    <string name="playlist_shortcuts_paste">Налепи линк</string>
+    <string name="playlist_shortcuts_reload_covers">Поново учитај омоте</string>
+    <string name="playlist_shortcuts_reloading_covers">Поново учитавање омота…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Омоти су поново учитани</string>
+    <string name="playlist_shortcuts_edit">Уреди пречицу</string>
+    <string name="playlist_shortcut_save">Сачувај пречицу</string>
+    <string name="playlist_shortcut_editor_hint">Налепите један линк. Svartifoss аутоматски препознаје апликацију и тип садржаја.</string>
+    <string name="playlist_shortcut_detection_waiting">Чека се линк за стриминг</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Подржани су Spotify, YouTube Music, Apple Music, TIDAL, Deezer и други.</string>
+    <string name="playlist_shortcut_detected_format">Откривено: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">Назив</string>
+    <string name="playlist_shortcut_link_hint">Линк за дељење или URI апликације</string>
+    <string name="playlist_shortcut_shuffle">Пусти насумично (само YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Линк</string>
+    <string name="playlist_type_track">Нумера</string>
+    <string name="playlist_type_playlist">Плејлиста</string>
+    <string name="playlist_type_album">Албум</string>
+    <string name="playlist_type_artist">Извођач</string>
+    <string name="playlist_type_show">Емисија</string>
+    <string name="playlist_type_episode">Епизода</string>
+    <string name="playlist_type_mix">Микс</string>
+    <string name="playlist_badge_shuffle">Насумично</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Још нису додате пречице за стриминг</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">Сачувано: %1$d</item>
+        <item quantity="few">Сачувано: %1$d</item>
+        <item quantity="other">Сачувано: %1$d</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">Уређене пречице за стриминг. Додирните и задржите за превлачење, користите радње приступачности Помери нагоре или Помери надоле, или притисните Ctrl+Горе/Доле на тастатури.</string>
+    <string name="playlist_shortcut_more_options">Још опција за %1$s</string>
+    <string name="playlist_shortcut_menu_edit">Уреди</string>
+    <string name="playlist_shortcut_menu_open">Отвори сада</string>
+    <string name="playlist_shortcut_menu_copy">Копирај линк</string>
+    <string name="playlist_shortcut_menu_duplicate">Дуплирај</string>
+    <string name="playlist_shortcut_menu_share">Подели</string>
+    <string name="playlist_shortcut_menu_delete">Обриши</string>
+    <string name="playlist_shortcut_open_failed">Ниједна апликација не може да отвори овај линк</string>
+    <string name="streaming_shortcut_choose_app">Отвори линк за стриминг помоћу</string>
+    <string name="playlist_shortcut_link_copied">Линк је копиран</string>
+    <string name="playlist_shortcut_import_invalid">Дељени текст не садржи важећи линк за стриминг</string>
+    <string name="playlist_shortcut_clipboard_invalid">Клипборд не садржи важећи линк за стриминг</string>
+    <string name="playlist_shortcut_name_required">Унесите назив пречице</string>
+    <string name="playlist_shortcut_link_invalid">Унесите важећи веб линк или URI апликације</string>
+    <string name="playlist_shortcut_service_invalid">Налепите важећи линк да би се открила услуга</string>
+    <string name="playlist_shortcut_service_generic">Компатибилан линк · Android ће изабрати апликацију</string>
+    <string name="playlist_shortcut_service_installed">%1$s је инсталиран · Спремно за отварање у апликацији</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s није инсталиран · Може се користити прегледач или компатибилна апликација</string>
+    <string name="playlist_shortcut_copy_name">Копија %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">Копија %1$s %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s је направљен</string>
+    <string name="playlist_shortcut_share_title">Подели пречицу за стриминг</string>
+    <string name="playlist_shortcut_share_failed">Нема доступне апликације за дељење ове пречице</string>
+    <string name="playlist_shortcut_deleted">%1$s је обрисан</string>
+    <string name="playlist_shortcut_undo">Опозови</string>
+
+    <string name="action_play_liked_songs_shuffled">Пусти лајковане песме насумично (YT Music)</string>
+    <string name="action_search_history">Историја претраге</string>
+    <string name="search_history_empty">Још нема недавних претрага</string>
+
+    <!-- Updates (sideload update checker + watch push-install) -->
+    <string name="category_updates">Ажурирања</string>
+    <string name="setting_update_check">Обавести о новим верзијама</string>
+    <string name="setting_update_check_description">Проверава GitHub за нова издања отприлике једном дневно и приказује обавештење</string>
+    <string name="setting_update_prereleases">Укључи предиздања</string>
+    <string name="setting_update_prereleases_description">Обавести и о бета верзијама</string>
+    <string name="setting_update_check_now">Провери ажурирања сада</string>
+    <string name="setting_update_check_now_description">Приказује најновију верзију и омогућава ажурирање сата преко Bluetooth-а</string>
+    <string name="update_screen_title">Ажурирања</string>
+    <string name="update_cover_content_description">Svartifoss, водопад по коме је апликација добила име</string>
+    <string name="update_notification_channel">Ажурирања апликације</string>
+    <string name="update_available_title">Доступан је Svartifoss %1$s</string>
+    <string name="update_notification_text">Додирни за ажурирање</string>
+    <string name="update_available_action">Доступно ажурирање</string>
+    <string name="update_installed_phone">Телефон: %1$s</string>
+    <string name="update_installed_versions">Телефон: %1$s · Сат: %2$s</string>
+    <string name="update_watch_version_unknown">непознато</string>
+    <string name="update_checking">Провера ажурирања…</string>
+    <string name="update_check_failed">Није могуће проверити ажурирања. Проверите везу и покушајте поново.</string>
+    <string name="update_available_line">Нова верзија: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(предиздање)</string>
+    <string name="update_up_to_date">Користите најновију верзију (%1$s)</string>
+    <string name="update_no_wear_asset">Ово издање нема APK за сат који може да се пошаље.</string>
+    <string name="update_watch_hint">„Ажурирај сат“ преузима нову апликацију за сат и шаље је преко Bluetooth-а — инсталацију потврђујете на самом сату, без кабла или Wear Installer-а.</string>
+    <string name="update_downloading">Преузимање… %1$d%%</string>
+    <string name="update_connecting_watch">Повезивање са сатом…</string>
+    <string name="update_transferring">Слање на сат… %1$d%%</string>
+    <string name="update_confirm_on_watch">Послато! На сату се појавило обавештење — додирните га на сату да инсталирате.</string>
+    <string name="update_no_watch">Нема повезаног сата.</string>
+    <string name="update_push_failed">Слање ажурирања на сат није успело. Покушајте поново.</string>
+    <string name="update_watch_button">Ажурирај сат</string>
+    <string name="update_open_release_button">Отвори страницу издања</string>
+    <string name="update_watch_behind">Ваш сат је још увек на %1$s — пошаљите му ажурирање испод.</string>
+
+    <!-- Redesigned Updates screen -->
+    <string name="update_subtitle">Одржавајте апликације телефона и сата синхронизованим</string>
+    <string name="update_state_checking">Провера ажурирања…</string>
+    <string name="update_state_current">Све је ажурно</string>
+    <string name="update_state_current_sub">Користи се најновије издање, %1$s</string>
+    <string name="update_state_available">Доступно ажурирање</string>
+    <string name="update_state_available_sub">%1$s · %2$s</string>
+    <string name="update_state_failed">Није могуће проверити ажурирања</string>
+    <string name="update_state_failed_sub">Проверите везу и покушајте поново</string>
+    <string name="update_device_phone">Телефон</string>
+    <string name="update_device_watch">Сат</string>
+    <string name="update_versions_header">Инсталирано</string>
+    <string name="update_whats_new">Шта је ново</string>
+    <string name="update_phone_button">Ажурирај телефон</string>
+    <string name="update_installing">Отварање инсталатера…</string>
+    <string name="update_install_permission_needed">Дозволите инсталирање апликација из Svartifoss-а, па поново додирните „Ажурирај телефон“.</string>
+    <string name="update_phone_failed">Преузимање ажурирања за телефон није успело. Покушајте поново.</string>
+    <string name="update_install_notification_title">Svartifoss ажурирање</string>
+    <string name="update_install_notification_tap">Додирните за инсталирање нове верзије</string>
+    <string name="update_install_notification_failed">Инсталација није успела. Дозволите инсталације из Svartifoss-а у Подешавањима и покушајте поново.</string>
+    <string name="setting_wear_album_accent_source">Извор акцентне боје албума</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>Уравнотежено</item>
+        <item>Најживље</item>
+    </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>Искључено</item>
+        <item>Меко</item>
+        <item>Стандардно</item>
+        <item>Подебљано</item>
+    </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Доња граница акцента</string>
+    <string name="preview_metadata_album">Албум</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Нумера</string>
+    <string name="preview_metadata_genre">Жанр</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Година</string>
+    <string name="preview_metadata_format">Формат</string>
+    <string name="preview_metadata_bitrate">Битрејт</string>
+    <string name="preview_metadata_position">Позиција</string>
+    <string name="preview_metadata_output">Излаз</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Детаљи албума</string>
+    <string name="setting_wear_metadata_core_description">Албум, извођач албума, позиција на издању и трајање.</string>
+    <string name="setting_wear_metadata_release">Детаљи издања</string>
+    <string name="setting_wear_metadata_release_description">Жанр, година, датум издања и издавачка кућа.</string>
+    <string name="setting_wear_metadata_credits">Заслуге</string>
+    <string name="setting_wear_metadata_credits_description">Композитор, текстописац и аутор, када их плејер објављује.</string>
+    <string name="setting_wear_metadata_technical">Детаљи датотеке</string>
+    <string name="setting_wear_metadata_technical_description">Формат, битрејт, брзина узорковања, канали и величина. Само локалне нумере.</string>
+    <string name="setting_split_panel">Подељени панел</string>
+    <string name="setting_split_panel_description">Шта испуњава доњу половину Split лица. Замућени омот наставља исту слику иза текста; пуна боја даје изглед картице обавештења.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Замућена слика</item>
+        <item>Пуна боја</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Детаљи репродукције</string>
+    <string name="setting_wear_metadata_playback_description">Позиција до милисекунде, брзина, аудио излаз и одакле се звук стримује или репродукује — укључујући адресу нумере. Блок који стримована нумера може да попуни када нема датотеке за опис.</string>
+    <string name="setting_wear_metadata_identifiers">Идентификатори</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC и каталошки ID-еви. Подразумевано искључено — корисно када вам требају, сувишно када не.</string>
+    <string name="setting_metadata_lookup">Потражи детаље нумере на мрежи</string>
+    <string name="setting_metadata_lookup_description">Попуњава податке које апликација за репродукцију није објавила — ISRC, издавачку кућу, датум издања — из MusicBrainz-а, бесплатне јавне базе. Подразумевано искључено. Metadata лице ради и без овога; ово само додаје редове. Ништа се не шаље док ово не укључите и изаберете то лице, а шаљу се само назив нумере и извођач.</string>
+</resources>

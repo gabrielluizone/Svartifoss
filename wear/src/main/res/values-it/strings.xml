@@ -101,7 +101,7 @@
     <string name="lyrics_no_track">Nessuna riproduzione in corso</string>
     <string name="metadata_none">Nessun dettaglio per questo brano</string>
     <string name="metadata_album">Album</string>
-    <string name="metadata_album_artist">Artista dell'album</string>
+    <string name="metadata_album_artist">Artista dell\'album</string>
     <string name="metadata_track">Traccia</string>
     <string name="metadata_duration">Durata</string>
     <string name="metadata_genre">Genere</string>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">管理主題</string>
+    <string name="watch_theme_builtin_subtitle">內建主題 · %1$s 版面配置</string>
+    <string name="watch_theme_custom_subtitle">自訂主題 · %1$s 版面配置</string>
+    <string name="watch_theme_unknown_name">未知主題</string>
+
+    <string name="watch_themes_title">手錶主題</string>
+    <string name="watch_theme_active_label">已套用主題</string>
+    <string name="watch_theme_active_layout">版面配置：%1$s</string>
+    <string name="watch_theme_preview_description">預覽目前套用至手錶的主題</string>
+    <string name="watch_theme_create">建立主題</string>
+    <string name="watch_theme_create_title">建立新主題</string>
+    <string name="watch_theme_rename_title">重新命名主題</string>
+    <string name="watch_theme_name">主題名稱</string>
+    <string name="watch_theme_base_layout">基礎版面配置</string>
+    <string name="watch_theme_default_name">我的 %1$s 主題</string>
+    <string name="watch_theme_generic_name">主題</string>
+    <string name="watch_theme_copy_name">%1$s 副本</string>
+    <string name="watch_theme_built_in_section">內建主題</string>
+    <string name="watch_theme_custom_section">我的主題</string>
+    <string name="watch_theme_applied">已套用</string>
+    <string name="watch_theme_apply_success">已將 %1$s 套用至手錶</string>
+    <string name="watch_theme_apply_error">無法套用此主題</string>
+    <string name="watch_theme_more_options">更多主題選項</string>
+    <string name="watch_theme_list_description">內建與自訂手錶主題</string>
+    <string name="watch_theme_row_description">%1$s。%2$s。輕觸以套用。</string>
+    <string name="watch_theme_row_description_applied">%1$s。%2$s。目前已套用。</string>
+    <string name="watch_theme_rename">重新命名</string>
+    <string name="watch_theme_customize">自訂</string>
+    <string name="watch_theme_duplicate">複製</string>
+    <string name="watch_theme_delete">刪除</string>
+    <string name="watch_theme_delete_title">要刪除「%1$s」嗎？</string>
+    <string name="watch_theme_delete_message">這個已儲存的主題及其設定將永久移除。</string>
+    <string name="watch_theme_deleted">已刪除主題</string>
+    <string name="watch_theme_duplicated">已建立「%1$s」</string>
+    <string name="watch_theme_limit_reached">最多可儲存 24 個自訂主題。建立新的主題前請先刪除一個。</string>
+    <string name="watch_theme_name_required">輸入主題名稱</string>
+    <string name="watch_theme_name_duplicate">已有相同名稱的主題</string>
+
+    <string name="watch_theme_face_classic">經典</string>
+    <string name="watch_theme_face_expressive">表現式</string>
+    <string name="watch_theme_face_vinyl">黑膠</string>
+    <string name="watch_theme_face_poster">海報</string>
+    <string name="watch_theme_face_studio">錄音室</string>
+    <string name="watch_theme_face_halo">光環</string>
+    <string name="watch_theme_face_aurora">極光</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">光譜</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">沉浸式</string>
+    <string name="watch_theme_face_depth">景深</string>
+    <string name="watch_theme_face_carousel">輪播</string>
+    <string name="watch_theme_face_chat">聊天</string>
+    <string name="watch_theme_face_split">分割</string>
+    <string name="watch_theme_face_note">音符</string>
+    <string name="watch_theme_face_verse">歌詞</string>
+    <string name="watch_theme_face_metadata">中繼資料</string>
+</resources>

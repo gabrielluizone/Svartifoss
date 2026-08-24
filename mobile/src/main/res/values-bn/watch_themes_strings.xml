@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">থিম পরিচালনা করুন</string>
+    <string name="watch_theme_builtin_subtitle">বিল্ট-ইন থিম · %1$s লেআউট</string>
+    <string name="watch_theme_custom_subtitle">কাস্টম থিম · %1$s লেআউট</string>
+    <string name="watch_theme_unknown_name">অজানা থিম</string>
+
+    <string name="watch_themes_title">ঘড়ির থিম</string>
+    <string name="watch_theme_active_label">প্রয়োগ করা থিম</string>
+    <string name="watch_theme_active_layout">লেআউট: %1$s</string>
+    <string name="watch_theme_preview_description">ঘড়িতে বর্তমানে প্রয়োগ করা থিমের প্রিভিউ</string>
+    <string name="watch_theme_create">থিম তৈরি করুন</string>
+    <string name="watch_theme_create_title">নতুন থিম তৈরি করুন</string>
+    <string name="watch_theme_rename_title">থিমের নাম পরিবর্তন করুন</string>
+    <string name="watch_theme_name">থিমের নাম</string>
+    <string name="watch_theme_base_layout">বেস লেআউট</string>
+    <string name="watch_theme_default_name">আমার %1$s থিম</string>
+    <string name="watch_theme_generic_name">থিম</string>
+    <string name="watch_theme_copy_name">%1$s কপি</string>
+    <string name="watch_theme_built_in_section">বিল্ট-ইন থিম</string>
+    <string name="watch_theme_custom_section">আমার থিম</string>
+    <string name="watch_theme_applied">প্রয়োগ করা হয়েছে</string>
+    <string name="watch_theme_apply_success">%1$s আপনার ঘড়িতে প্রয়োগ করা হয়েছে</string>
+    <string name="watch_theme_apply_error">এই থিম প্রয়োগ করা যায়নি</string>
+    <string name="watch_theme_more_options">আরও থিম অপশন</string>
+    <string name="watch_theme_list_description">বিল্ট-ইন ও কাস্টম ঘড়ির থিম</string>
+    <string name="watch_theme_row_description">%1$s। %2$s। প্রয়োগ করতে ট্যাপ করুন।</string>
+    <string name="watch_theme_row_description_applied">%1$s। %2$s। বর্তমানে প্রয়োগ করা।</string>
+    <string name="watch_theme_rename">নাম পরিবর্তন করুন</string>
+    <string name="watch_theme_customize">কাস্টমাইজ করুন</string>
+    <string name="watch_theme_duplicate">ডুপ্লিকেট</string>
+    <string name="watch_theme_delete">মুছুন</string>
+    <string name="watch_theme_delete_title">“%1$s” মুছবেন?</string>
+    <string name="watch_theme_delete_message">এই সংরক্ষিত থিম ও এর সেটিং স্থায়ীভাবে মুছে ফেলা হবে।</string>
+    <string name="watch_theme_deleted">থিম মুছে ফেলা হয়েছে</string>
+    <string name="watch_theme_duplicated">“%1$s” তৈরি হয়েছে</string>
+    <string name="watch_theme_limit_reached">আপনি সর্বোচ্চ ২৪টি কাস্টম থিম সংরক্ষণ করতে পারেন। নতুন একটি তৈরির আগে একটি মুছুন।</string>
+    <string name="watch_theme_name_required">থিমের নাম লিখুন</string>
+    <string name="watch_theme_name_duplicate">এই নামে একটি থিম ইতিমধ্যে আছে</string>
+
+    <string name="watch_theme_face_classic">ক্লাসিক</string>
+    <string name="watch_theme_face_expressive">এক্সপ্রেসিভ</string>
+    <string name="watch_theme_face_vinyl">ভিনাইল</string>
+    <string name="watch_theme_face_poster">পোস্টার</string>
+    <string name="watch_theme_face_studio">স্টুডিও</string>
+    <string name="watch_theme_face_halo">হ্যালো</string>
+    <string name="watch_theme_face_aurora">অরোরা</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">স্পেকট্রাম</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">ইমার্সিভ</string>
+    <string name="watch_theme_face_depth">গভীরতা</string>
+    <string name="watch_theme_face_carousel">ক্যারোসেল</string>
+    <string name="watch_theme_face_chat">চ্যাট</string>
+    <string name="watch_theme_face_split">বিভক্ত</string>
+    <string name="watch_theme_face_note">নোট</string>
+    <string name="watch_theme_face_verse">পংক্তি</string>
+    <string name="watch_theme_face_metadata">মেটাডেটা</string>
+</resources>

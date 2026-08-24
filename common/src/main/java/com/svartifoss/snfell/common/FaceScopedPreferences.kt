@@ -155,6 +155,9 @@ object FaceScopedPreferences {
             "wear_edge_seek_enabled",
             "wear_expressive_seek_mode",
             "wear_font",
+            // Queue, menus and Quick actions are opened from a face, so whether they inherit its
+            // typeface belongs to that face/theme too. A legacy global value remains the fallback.
+            "wear_font_all_screens",
             "wear_carousel_card_shape",
             "wear_internal_progress_visible",
             "wear_overlay_backdrop_style",

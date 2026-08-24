@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Watch-tab entry point, also consumed by WatchFaceFragment's active-theme card. -->
+    <string name="watch_theme_manage">Spravovať témy</string>
+    <string name="watch_theme_builtin_subtitle">Vstavaná téma · Rozloženie %1$s</string>
+    <string name="watch_theme_custom_subtitle">Vlastná téma · Rozloženie %1$s</string>
+    <string name="watch_theme_unknown_name">Neznáma téma</string>
+
+    <string name="watch_themes_title">Témy hodiniek</string>
+    <string name="watch_theme_active_label">POUŽITÁ TÉMA</string>
+    <string name="watch_theme_active_layout">Rozloženie: %1$s</string>
+    <string name="watch_theme_preview_description">Náhľad témy, ktorá je aktuálne použitá na hodinkách</string>
+    <string name="watch_theme_create">Vytvoriť tému</string>
+    <string name="watch_theme_create_title">Vytvoriť novú tému</string>
+    <string name="watch_theme_rename_title">Premenovať tému</string>
+    <string name="watch_theme_name">Názov témy</string>
+    <string name="watch_theme_base_layout">Základné rozloženie</string>
+    <string name="watch_theme_default_name">Moja téma %1$s</string>
+    <string name="watch_theme_generic_name">Motív</string>
+    <string name="watch_theme_copy_name">Kópia %1$s</string>
+    <string name="watch_theme_built_in_section">Vstavané témy</string>
+    <string name="watch_theme_custom_section">Moje témy</string>
+    <string name="watch_theme_applied">POUŽITÉ</string>
+    <string name="watch_theme_apply_success">%1$s bolo použité na vašich hodinkách</string>
+    <string name="watch_theme_apply_error">Túto tému sa nepodarilo použiť</string>
+    <string name="watch_theme_more_options">Ďalšie možnosti témy</string>
+    <string name="watch_theme_list_description">Vstavané a vlastné témy hodiniek</string>
+    <string name="watch_theme_row_description">%1$s. %2$s. Ťuknutím použijete.</string>
+    <string name="watch_theme_row_description_applied">%1$s. %2$s. Aktuálne použité.</string>
+    <string name="watch_theme_rename">Premenovať</string>
+    <string name="watch_theme_customize">Prispôsobiť</string>
+    <string name="watch_theme_duplicate">Duplikovať</string>
+    <string name="watch_theme_delete">Odstrániť</string>
+    <string name="watch_theme_delete_title">Odstrániť „%1$s“?</string>
+    <string name="watch_theme_delete_message">Táto uložená téma a jej nastavenia budú natrvalo odstránené.</string>
+    <string name="watch_theme_deleted">Téma odstránená</string>
+    <string name="watch_theme_duplicated">Vytvorené „%1$s“</string>
+    <string name="watch_theme_limit_reached">Môžete uložiť najviac 24 vlastných tém. Pred vytvorením ďalšej jednu odstráňte.</string>
+    <string name="watch_theme_name_required">Zadajte názov témy</string>
+    <string name="watch_theme_name_duplicate">Téma s týmto názvom už existuje</string>
+
+    <string name="watch_theme_face_classic">Klasický</string>
+    <string name="watch_theme_face_expressive">Expresívny</string>
+    <string name="watch_theme_face_vinyl">Vinyl</string>
+    <string name="watch_theme_face_poster">Plagát</string>
+    <string name="watch_theme_face_studio">Štúdio</string>
+    <string name="watch_theme_face_halo">Halo</string>
+    <string name="watch_theme_face_aurora">Aurora</string>
+    <string name="watch_theme_face_eclipse">Eclipse AMOLED</string>
+    <string name="watch_theme_face_spectrum">Spektrum</string>
+    <string name="watch_theme_face_material">Material</string>
+    <string name="watch_theme_face_immersive">Pohlcujúci</string>
+    <string name="watch_theme_face_depth">Hĺbka</string>
+    <string name="watch_theme_face_carousel">Kolotoč</string>
+    <string name="watch_theme_face_chat">Chat</string>
+    <string name="watch_theme_face_split">Rozdelené</string>
+    <string name="watch_theme_face_note">Nota</string>
+    <string name="watch_theme_face_verse">Verš</string>
+    <string name="watch_theme_face_metadata">Metadáta</string>
+</resources>
