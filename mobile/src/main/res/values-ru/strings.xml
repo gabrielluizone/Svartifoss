@@ -135,6 +135,7 @@
     <string name="action_repeat">Повтор</string>
     <string name="action_repeat_one">Повтор одного</string>
     <string name="action_search">Поиск музыки</string>
+    <string name="action_open_lyrics">Текст песни</string>
     <string name="group_playback_controls">Управление воспроизведением</string>
     <string name="group_streaming_shortcuts">Треки, альбомы и плейлисты</string>
     <string name="pick_action">Выбрать действие</string>
@@ -240,6 +241,12 @@
     <string name="preview_sample_artist">Имя исполнителя</string>
     <string name="preview_sample_next_title">Следующая песня</string>
     <string name="preview_playback_stopped">Остановлено</string>
+    <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
+         also the one thing a user needs to understand before picking the face: which row is the
+         line being sung. -->
+    <string name="preview_verse_previous">предыдущая строка</string>
+    <string name="preview_verse_current">строка, которая играет сейчас</string>
+    <string name="preview_verse_next">и следующая</string>
     <string name="category_gestures">Жесты и ввод</string>
     <string name="setting_overlay_blur_radius">Размытие оверлея</string>
     <string name="setting_overlay_blur_radius_description">Сила размытия (px) матового фона за кольцами громкости/перемотки и панелью быстрых действий — не зависит от размытия фона обложки альбома</string>
@@ -249,11 +256,16 @@
     <string name="get_support">Получить поддержку</string>
     <string name="get_support_description">Отправить журналы приложения разработчику для поддержки</string>
     <string name="contact_developer">Связаться с разработчиком</string>
+    <string name="contact_developer_email" translatable="false">gabrielsvafoss@gmail.com</string>
     <string name="contact_developer_subject">Svartifoss %1$s — обращение</string>
     <string name="contact_developer_chooser">Отправить письмо</string>
     <string name="contact_developer_no_client">Почтовое приложение не установлено. Адрес скопирован в буфер обмена.</string>
     <string name="about_developer_title">О разработчике</string>
+    <string name="about_developer_summary" translatable="false">Strive and Be of Good Cheer</string>
+    <string name="about_developer_dialog_title" translatable="false">Gabriel Luiz</string>
     <string name="about_developer_dialog_message">Svartifoss начинался как личный проект — я хотел обновить Music Center for Wear до возможностей сегодняшнего дня, просто чтобы пользоваться им самому каждый день. Получилось достаточно хорошо, чтобы решить поделиться им со всеми. Это моё первое приложение, и нет ничего лучше, чем увидеть, что созданное тобой оказалось полезным и для других людей.</string>
+    <string name="about_developer_github" translatable="false">GitHub</string>
+    <string name="about_developer_handle" translatable="false">@gabrielluizone</string>
     <string name="licenses">Лицензии открытого исходного кода</string>
     <string name="setting_always_show_time">Всегда показывать время</string>
     <string name="setting_always_show_time_off_description">Текущее время будет отображаться только в спящем режиме</string>
@@ -328,6 +340,12 @@
         <item>Приглушённый альбом</item>
         <item>Свой цвет</item>
     </string-array>
+    <string-array name="wear_shading_color_mode_values" translatable="false">
+        <item>black</item>
+        <item>album</item>
+        <item>desaturated</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="player_shading_style_entries">
         <item>Как в теме плеера</item>
         <item>Виньетка по краям</item>
@@ -340,6 +358,19 @@
         <item>Заливка цветом альбома</item>
         <item>Двухцветный градиент альбома</item>
         <item>Боковые шторки</item>
+    </string-array>
+    <string-array name="player_shading_style_values" translatable="false">
+        <item>follow</item>
+        <item>edge_vignette</item>
+        <item>edge_vignette_strong</item>
+        <item>edge_vignette_heavy</item>
+        <item>bottom_corner</item>
+        <item>bottom_fade</item>
+        <item>floor_ceiling</item>
+        <item>full_filter</item>
+        <item>album_tint</item>
+        <item>duotone</item>
+        <item>side_curtains</item>
     </string-array>
     <string name="setting_ambient_album_art_opacity">Прозрачность обложки в спящем режиме</string>
     <string name="setting_ambient_album_art_opacity_description">Насколько видна обложка альбома в спящем режиме. Сейчас <![CDATA[<b>%1$s%%</b>]]>.</string>
@@ -469,6 +500,15 @@
         <item>Статичный (одна строка, без прокрутки или уменьшения)</item>
         <item>Уменьшить до размера</item>
     </string-array>
+    <string-array name="wear_title_text_mode_values">
+        <item>smart</item>
+        <item>marquee</item>
+        <item>wrap</item>
+        <item>wrap3</item>
+        <item>wrap5</item>
+        <item>static</item>
+        <item>shrink</item>
+    </string-array>
 
     <string name="setting_wear_artist_color">Цвет текста исполнителя</string>
     <string name="setting_wear_artist_custom_color">Свой цвет исполнителя</string>
@@ -495,6 +535,11 @@
         <item>Цвет альбома</item>
         <item>Свой цвет</item>
     </string-array>
+    <string-array name="wear_accent_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
 
     <string-array name="wear_screen_face_entries">
         <item>Classic</item>
@@ -516,6 +561,26 @@
         <item>Куплет</item>
         <item>Метаданные</item>
     </string-array>
+    <string-array name="wear_screen_face_values">
+        <item>classic</item>
+        <item>expressive</item>
+        <item>vinyl</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>eclipse</item>
+        <item>spectrum</item>
+        <item>material</item>
+        <item>immersive</item>
+        <item>depth</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+        <item>metadata</item>
+    </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Перемотка Expressive</string>
     <string name="setting_wear_expressive_seek_mode_description">Как перематывать трек касанием на циферблате Expressive. Центральное кольцо делает кольцо вокруг кнопки воспроизведения перетаскиваемым; Краевое кольцо также показывает кольцо безеля Classic; Нет оставляет перемотку только заводной головке.</string>
@@ -523,6 +588,11 @@
         <item>Центральное кольцо</item>
         <item>Краевое кольцо</item>
         <item>Нет</item>
+    </string-array>
+    <string-array name="wear_expressive_seek_mode_values">
+        <item>central</item>
+        <item>edge</item>
+        <item>none</item>
     </string-array>
 
     <string name="category_wear_aod">Экран всегда-включён</string>
@@ -544,17 +614,44 @@
         <item>Заметка</item>
         <item>Куплет</item>
     </string-array>
+    <string-array name="wear_aod_style_values">
+        <item>follow</item>
+        <item>classic</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>eclipse</item>
+        <item>chrono</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>immersive</item>
+        <item>carousel</item>
+        <item>chat</item>
+        <item>split</item>
+        <item>note</item>
+        <item>verse</item>
+    </string-array>
     <string name="setting_wear_aod_color">Цвет всегда-включён</string>
     <string-array name="wear_aod_color_entries">
         <item>Белый</item>
         <item>Цвет альбома</item>
         <item>Свой цвет</item>
     </string-array>
+    <string-array name="wear_aod_color_values">
+        <item>white</item>
+        <item>album</item>
+        <item>custom</item>
+    </string-array>
     <string-array name="wear_clock_color_entries">
         <item>Белый</item>
         <item>Динамический (по области под часами)</item>
         <item>Цвет альбома</item>
         <item>Свой цвет</item>
+    </string-array>
+    <string-array name="wear_clock_color_values">
+        <item>white</item>
+        <item>dynamic</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
     <string-array name="wear_up_next_pill_entries">
         <item>Как в стиле панели</item>
@@ -565,6 +662,16 @@
         <item>Матовый белый</item>
         <item>Чёрный</item>
         <item>Динамический (тон альбома)</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_values">
+        <item>follow</item>
+        <item>transparent</item>
+        <item>accent</item>
+        <item>translucent</item>
+        <item>white</item>
+        <item>white_blur</item>
+        <item>black</item>
+        <item>dynamic</item>
     </string-array>
     <string name="setting_wear_up_next_pill">Фон плашки «Далее»</string>
     <string name="setting_wear_show_up_next_pill">Плашка «Далее» на плеере</string>
@@ -594,6 +701,12 @@
         <item>Только на паузе</item>
         <item>Никогда</item>
     </string-array>
+    <string-array name="wear_activity_visibility_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
+    </string-array>
     <string name="setting_wear_aod_show_art">Обложка альбома на экране всегда-включён</string>
     <string name="setting_wear_aod_show_art_description">Оставлять приглушённую обложку альбома видимой в спящем режиме. Отключение показывает чисто чёрный фон, что заметно экономит батарею на AMOLED-экранах.</string>
     <string name="setting_wear_aod_art_treatment">Стиль обложки альбома всегда-включён</string>
@@ -602,6 +715,12 @@
         <item>Чёткая обложка</item>
         <item>Монохромное размытие</item>
         <item>Как в обработке обложки плеера</item>
+    </string-array>
+    <string-array name="wear_aod_art_treatment_values">
+        <item>blur</item>
+        <item>clear</item>
+        <item>monochrome_blur</item>
+        <item>follow</item>
     </string-array>
     <string name="setting_wear_aod_show_clock">Часы на экране всегда-включён</string>
     <string name="setting_wear_aod_show_clock_description">Отображать часы, когда часы в спящем режиме</string>
@@ -652,6 +771,27 @@
         <item>Монохромная (один оттенок, три тона)</item>
         <item>Дуотон (два цвета альбома)</item>
     </string-array>
+    <string-array name="wear_component_color_treatment_values">
+        <item>follow</item>
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
+    <string-array name="wear_color_treatment_values">
+        <item>normal</item>
+        <item>desaturated</item>
+        <item>expressive</item>
+        <item>complementary</item>
+        <item>triadic</item>
+        <item>analogous</item>
+        <item>monochrome</item>
+        <item>duotone</item>
+    </string-array>
     <string-array name="wear_volume_layout_entries">
         <item>Дуга по краю (слева)</item>
         <item>Дуга по краю (высокая)</item>
@@ -662,6 +802,16 @@
         <item>Центральный ореол</item>
         <item>Горизонтальный измеритель</item>
     </string-array>
+    <string-array name="wear_volume_layout_values">
+        <item>edge</item>
+        <item>edge_tall</item>
+        <item>edge_right</item>
+        <item>edge_top</item>
+        <item>edge_bottom</item>
+        <item>ring</item>
+        <item>halo</item>
+        <item>meter</item>
+    </string-array>
     <string-array name="wear_seek_layout_entries">
         <item>Краевое кольцо</item>
         <item>Краевое кольцо (тонкое)</item>
@@ -669,12 +819,29 @@
         <item>Временная шкала</item>
         <item>Сегментированная временная шкала</item>
     </string-array>
+    <string-array name="wear_seek_layout_values">
+        <item>edge</item>
+        <item>edge_thin</item>
+        <item>edge_thick</item>
+        <item>timeline</item>
+        <item>segments</item>
+    </string-array>
     <string-array name="wear_quick_panel_layout_entries">
         <item>Сначала метаданные</item>
         <item>Дуга</item>
         <item>Hero</item>
         <item>Сетка</item>
         <item>Строки с подписями</item>
+    </string-array>
+    <!-- "actions_first" and "compact" were removed: both were only reorderings of the metadata-first
+         stack and read almost identically to it. A stored value of either now resolves to the
+         default row arrangement, i.e. metadata first. -->
+    <string-array name="wear_quick_panel_layout_values">
+        <item>stacked</item>
+        <item>arc</item>
+        <item>hero</item>
+        <item>grid</item>
+        <item>rows</item>
     </string-array>
     <string-array name="wear_progress_style_entries">
         <item>Сплошной</item>
@@ -685,6 +852,16 @@
         <item>60 точек часов</item>
         <item>60 засечек часов</item>
         <item>12-часовые сегменты</item>
+    </string-array>
+    <string-array name="wear_progress_style_values">
+        <item>solid</item>
+        <item>dashed</item>
+        <item>dots</item>
+        <item>hairline</item>
+        <item>comet</item>
+        <item>watch_dots_60</item>
+        <item>watch_ticks_60</item>
+        <item>hour_segments_12</item>
     </string-array>
     <string-array name="wear_seek_style_entries">
         <item>Простой</item>
@@ -713,6 +890,33 @@
         <item>Настроенные кнопки</item>
         <item>Из текущего медиаприложения</item>
     </string-array>
+    <string-array name="wear_quick_panel_source_values">
+        <item>manual</item>
+        <item>session</item>
+    </string-array>
+    <string-array name="wear_seek_style_values">
+        <item>plain</item>
+        <item>pill</item>
+        <item>expressive</item>
+        <item>material</item>
+        <item>white</item>
+        <item>giant</item>
+        <item>split</item>
+        <item>glass_white</item>
+        <item>translucent_album</item>
+        <item>glow_album</item>
+        <item>outline</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>micro</item>
+        <item>shadow</item>
+        <item>underline</item>
+        <item>hairline</item>
+        <item>giant_album</item>
+        <item>mono</item>
+        <item>tonal_dark</item>
+        <item>terminal</item>
+    </string-array>
     <string-array name="wear_overlay_backdrop_entries">
         <item>Как в стиле панели</item>
         <item>Размытие альбома (акрил)</item>
@@ -725,6 +929,19 @@
         <item>Жидкое стекло</item>
         <item>Размытие Expressive</item>
         <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_values">
+        <item>follow</item>
+        <item>acrylic</item>
+        <item>black</item>
+        <item>album</item>
+        <item>glass</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>liquid_glass</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
     </string-array>
     <string-array name="wear_volume_style_entries">
         <item>Стекло</item>
@@ -746,11 +963,37 @@
         <item>Чернила</item>
         <item>Канавка</item>
     </string-array>
+    <string-array name="wear_volume_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>segments</item>
+        <item>aurora</item>
+        <item>ink</item>
+        <item>groove</item>
+    </string-array>
     <string-array name="wear_list_row_size_entries">
         <item>Компактный</item>
         <item>Обычный</item>
         <item>Высокий</item>
         <item>Очень высокий</item>
+    </string-array>
+    <string-array name="wear_list_row_size_values">
+        <item>compact</item>
+        <item>normal</item>
+        <item>tall</item>
+        <item>xtall</item>
     </string-array>
 
     <string-array name="wear_overlay_style_entries">
@@ -772,6 +1015,26 @@
         <item>Размытая обложка</item>
         <item>Обложка Тональная</item>
         <item>Квадратная обложка</item>
+    </string-array>
+    <string-array name="wear_overlay_style_values">
+        <item>glass</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>cover</item>
+            <item>cover_blur</item>
+        <item>cover_tonal</item>
+        <item>cover_square</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_entries">
@@ -798,6 +1061,30 @@
         <item>Точка</item>
         <item>Плита</item>
     </string-array>
+    <string-array name="wear_quick_panel_style_values">
+        <item>glass</item>
+        <item>glass_white</item>
+        <item>glass_tonal</item>
+        <item>minimal</item>
+        <item>material</item>
+        <item>tonal</item>
+        <item>neon</item>
+        <item>light</item>
+        <item>gradient</item>
+        <item>mono</item>
+        <item>outline</item>
+        <item>outline_glass_white</item>
+        <item>duotone</item>
+        <item>prism</item>
+        <item>contrast</item>
+        <item>terminal</item>
+        <item>frost</item>
+        <item>ghost</item>
+        <item>mist</item>
+        <item>ink</item>
+        <item>dot</item>
+        <item>slab</item>
+    </string-array>
 
     <string name="setting_wear_track_time_mode">Отображение времени трека</string>
     <string name="setting_wear_track_time_mode_description">Когда позиция трека (например, 1:23 / 3:45) отображается на экране воспроизведения.</string>
@@ -806,6 +1093,12 @@
         <item>Только во время воспроизведения</item>
         <item>Только на паузе</item>
         <item>Никогда</item>
+    </string-array>
+    <string-array name="wear_track_time_mode_values">
+        <item>always</item>
+        <item>playing</item>
+        <item>paused</item>
+        <item>never</item>
     </string-array>
 
     <string name="setting_screen_buttons_curve">Изгиб мини-кнопок</string>
@@ -829,6 +1122,23 @@
         <item>Скруглённый прямоугольник (средний)</item>
         <item>Скруглённый прямоугольник (большой)</item>
     </string-array>
+    <string-array name="screen_buttons_shape_values">
+        <item>pill</item>
+        <item>circle</item>
+        <item>square</item>
+        <item>rounded_square_soft</item>
+        <item>rounded_square_medium</item>
+        <item>squircle</item>
+        <item>leaf</item>
+        <item>drop</item>
+        <item>pill_wide_small</item>
+        <item>pill_wide_medium</item>
+        <item>pill_wide_large</item>
+        <item>pill_wide_xlarge</item>
+        <item>rounded_rect_small</item>
+        <item>rounded_rect_medium</item>
+        <item>rounded_rect_large</item>
+    </string-array>
     <string-array name="screen_buttons_curve_entries">
         <item>Плоский</item>
         <item>Дуга</item>
@@ -841,6 +1151,19 @@
         <item>Левый край</item>
         <item>Правый край</item>
         <item>Оба края</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_values">
+        <item>flat</item>
+        <item>arc</item>
+        <item>curved_gentle</item>
+        <item>curved_soft</item>
+        <item>curved_medium</item>
+        <item>curved</item>
+        <item>curved_extreme</item>
+        <item>spread</item>
+        <item>side_left</item>
+        <item>side_right</item>
+        <item>side_split</item>
     </string-array>
     <string-array name="screen_buttons_bg_entries">
         <item>Фон по умолчанию</item>
@@ -858,11 +1181,32 @@
         <item>Только значок (прозрачный)</item>
         <item>Значок Exp</item>
     </string-array>
+    <string-array name="screen_buttons_bg_values">
+        <item>glass</item>
+        <item>uniform_glass</item>
+        <item>uniform_glass_light</item>
+        <item>translucent_album</item>
+        <item>translucent_album_exp</item>
+        <item>glow_album</item>
+        <item>glow_exp</item>
+        <item>solid_theme</item>
+        <item>solid_album</item>
+        <item>solid_exp_album</item>
+        <item>outline</item>
+        <item>outline_exp_album</item>
+        <item>transparent</item>
+        <item>icon_exp</item>
+    </string-array>
 
     <string-array name="screen_buttons_color_entries">
         <item>Нейтральный</item>
         <item>Цвет альбома</item>
         <item>Свой цвет</item>
+    </string-array>
+    <string-array name="screen_buttons_color_values">
+        <item>neutral</item>
+        <item>album</item>
+        <item>custom</item>
     </string-array>
 
     <string-array name="album_art_style_entries">
@@ -890,6 +1234,32 @@
         <item>Свечение углей</item>
         <item>Eclipse AMOLED чёрный</item>
         <item>Скрытый (сплошной чёрный)</item>
+    </string-array>
+    <string-array name="album_art_style_values">
+        <item>cover</item>
+        <item>blur</item>
+        <item>frosted</item>
+        <item>square_sharp</item>
+        <item>square_soft</item>
+        <item>square</item>
+        <item>bw</item>
+        <item>blur_bw</item>
+        <item>expressive</item>
+        <item>expressive_no_blur</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>vinyl</item>
+        <item>halo</item>
+        <item>aurora</item>
+        <item>spectrum</item>
+        <item>corona</item>
+        <item>dusk</item>
+        <item>bloom</item>
+        <item>horizon</item>
+        <item>ember</item>
+        <item>eclipse</item>
+        <item>hidden</item>
     </string-array>
 
     <string name="setting_close_timeout">Тайм-аут закрытия</string>
@@ -1129,6 +1499,10 @@
         <item>Сбалансированный</item>
         <item>Самый насыщенный</item>
     </string-array>
+    <string-array name="wear_album_accent_source_values">
+        <item>balanced</item>
+        <item>vibrant</item>
+    </string-array>
 
     <string name="watch_section_typography">Текст</string>
     <string name="watch_section_typography_description">Выберите шрифты и настройте текст названия, исполнителя, часов, значка приложения, дополнительных экранов и Flex.</string>
@@ -1229,6 +1603,9 @@
     <string name="setting_wear_font_all_screens_description">Применяет выбранный шрифт к меню, очереди и быстрым действиям, а не только к проигрывателю. Декоративные и рукописные шрифты могут хуже читаться в списках.</string>
     <string name="setting_wear_clock_font">Шрифт часов</string>
     <string name="wear_clock_font_follow">Как у шрифта трека</string>
+    <string name="setting_wear_lyrics_font">Шрифт текста песни</string>
+    <string name="setting_wear_lyrics_font_description">Шрифт для текста песен, на экране текста и в оформлении «Куплет». Совпадает со шрифтом трека, если вы не выберете другой здесь.</string>
+    <string name="wear_lyrics_font_follow">Как у шрифта трека</string>
     <string name="setting_wear_clock_font_weight">Насыщенность часов</string>
     <string name="setting_wear_clock_font_italic">Курсив часов</string>
     <string name="setting_wear_clock_font_scale">Размер часов</string>
@@ -1263,12 +1640,24 @@
         <item>Открыть очередь</item>
         <item>Ничего</item>
     </string-array>
+    <string-array name="wear_center_long_press_values" translatable="false">
+        <item>faces</item>
+        <item>queue</item>
+        <item>none</item>
+    </string-array>
     <string-array name="wear_color_modifier_entries">
         <item>Нет</item>
         <item>Насыщенный</item>
         <item>Пастельный</item>
         <item>Тёплый</item>
         <item>Холодный</item>
+    </string-array>
+    <string-array name="wear_color_modifier_values">
+        <item>none</item>
+        <item>vibrant</item>
+        <item>pastel</item>
+        <item>warm</item>
+        <item>cool</item>
     </string-array>
     <string-array name="wear_paused_hold_entries">
         <item>@string/wear_paused_hold_off</item>
@@ -1379,6 +1768,11 @@
         <item>@string/theme_dark</item>
         <item>@string/theme_system</item>
     </string-array>
+    <string-array name="theme_entry_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
     <string-array name="app_language_entries">
         <item>@string/language_system</item>
         <item>English</item>
@@ -1395,6 +1789,23 @@
         <item>فارسی</item>
         <item>简体中文</item>
         <item>Íslenska</item>
+    </string-array>
+    <string-array name="app_language_values">
+        <item>system</item>
+        <item>en</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>de</item>
+        <item>es</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>ru</item>
+        <item>el</item>
+        <item>ro</item>
+        <item>id</item>
+        <item>fa</item>
+        <item>zh-Hans</item>
+        <item>is</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -1414,6 +1825,48 @@
         <item>Обычное</item>
         <item>Насыщенное</item>
     </string-array>
+    <string-array name="wear_accent_floor_values">
+        <item>off</item>
+        <item>soft</item>
+        <item>standard</item>
+        <item>bold</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Подложка акцента</string>
+    <string name="preview_metadata_album">Альбом</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Трек</string>
+    <string name="preview_metadata_genre">Жанр</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">Год</string>
+    <string name="preview_metadata_format">Формат</string>
+    <string name="preview_metadata_bitrate">Битрейт</string>
+    <string name="preview_metadata_position">Позиция</string>
+    <string name="preview_metadata_output">Вывод звука</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Сведения об альбоме</string>
+    <string name="setting_wear_metadata_core_description">Альбом, исполнитель альбома, позиция на альбоме и длительность.</string>
+    <string name="setting_wear_metadata_release">Сведения о выпуске</string>
+    <string name="setting_wear_metadata_release_description">Жанр, год, дата выхода и лейбл.</string>
+    <string name="setting_wear_metadata_credits">Авторы</string>
+    <string name="setting_wear_metadata_credits_description">Композитор, автор текста и автор, если плеер их публикует.</string>
+    <string name="setting_wear_metadata_technical">Сведения о файле</string>
+    <string name="setting_wear_metadata_technical_description">Формат, битрейт, частота дискретизации, каналы и размер. Только для локальных треков.</string>
+    <string name="setting_split_panel">Панель Split</string>
+    <string name="setting_split_panel_description">Что заполняет нижнюю половину оформления Split. Размытая обложка продолжает ту же обложку за текстом; сплошной цвет — это вид карточки уведомления.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Размытая обложка</item>
+        <item>Сплошной цвет</item>
+    </string-array>
+    <string-array name="wear_split_panel_values" translatable="false">
+        <item>blur</item>
+        <item>solid</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Сведения о воспроизведении</string>
+    <string name="setting_wear_metadata_playback_description">Позиция с точностью до миллисекунды, скорость, вывод звука и откуда идёт трансляция или воспроизведение — включая адрес трека. Единственный блок, который может заполнить транслируемый трек, когда нет файла для описания.</string>
+    <string name="setting_wear_metadata_identifiers">Идентификаторы</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC и каталожные номера. По умолчанию отключено — полезно, когда нужно, лишнее, когда нет.</string>
+    <string name="setting_metadata_lookup">Искать сведения о треке онлайн</string>
+    <string name="setting_metadata_lookup_description">Дополняет то, что не опубликовало приложение воспроизведения — ISRC, лейбл, дата выхода — из MusicBrainz, бесплатной публичной базы данных. По умолчанию отключено. Оформление «Метаданные» работает и без этого; это лишь добавляет строки. Ничего не отправляется, пока вы не включите это и не выберете это оформление, и тогда — только название трека и исполнитель.</string>
     <!-- Information architecture and navigation -->
     <string name="watch_overview_description">Выберите, что хотите настроить. Предпросмотр и сохранённая тема остаются активными во всех разделах.</string>
     <string name="watch_back_to_overview">Назад к разделам часов</string>
@@ -1434,6 +1887,11 @@
     <string name="category_watch_navigation">Навигация и ярлыки</string>
     <string name="category_rotary_input">Вращение и точная настройка</string>
     <string name="category_watch_feedback">Отклик и поведение при выходе</string>
+    <string name="category_watch_display">Экран часов</string>
+    <string name="setting_wear_keep_screen_on">Не выключать экран</string>
+    <string name="setting_wear_keep_screen_on_description">Не даёт экрану часов гаснуть из-за бездействия, пока открыт экран Svartifoss. Опускание запястья всё равно приглушает часы — этот жест принадлежит системе. Расходует больше заряда батареи. Экран текста песни всегда остаётся включённым, независимо от этой настройки.</string>
+    <string name="setting_lyrics_enabled">Искать текст песни онлайн</string>
+    <string name="setting_lyrics_enabled_description">Позволяет телефону получать синхронизированный текст песни с LRCLIB, когда вы открываете экран текста на часах. Отправляются только название трека, исполнитель и длительность; больше ничего, и ничего не сохраняется на устройстве. Отключите это, и экран текста песни сообщит, что поиск отключён.</string>
     <string name="settings_search_prerequisite">Этот параметр зависит от другого выбора. Измените показанную здесь настройку, чтобы отобразить его.</string>
     <string name="setting_numeric_range_error">Введите значение от %1$d до %2$d.</string>
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
