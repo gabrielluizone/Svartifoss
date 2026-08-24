@@ -54,4 +54,6 @@
     <string name="watch_theme_face_chat">گفتگو</string>
     <string name="watch_theme_face_split">دو‌تکه</string>
     <string name="watch_theme_face_note">یادداشت</string>
+    <string name="watch_theme_face_verse">بند</string>
+    <string name="watch_theme_face_metadata">فراداده</string>
 </resources>
