@@ -9,6 +9,7 @@
     <string name="watch_theme_active_layout">布局：%1$s</string>
     <string name="watch_theme_preview_description">当前应用于手表的主题预览</string>
     <string name="watch_theme_create">创建主题</string>
+    <string name="watch_theme_browse_community">浏览社区主题</string>
     <string name="watch_theme_create_title">创建新主题</string>
     <string name="watch_theme_rename_title">重命名主题</string>
     <string name="watch_theme_name">主题名称</string>
@@ -36,6 +37,25 @@
     <string name="watch_theme_limit_reached">你最多可以保存 24 个自定义主题。请先删除一个再创建新的。</string>
     <string name="watch_theme_name_required">请输入主题名称</string>
     <string name="watch_theme_name_duplicate">已存在同名主题</string>
+    <string name="online_themes_title">社区主题</string>
+    <string name="online_theme_intro">发现社区创作的外观。打开此图库会下载其公开目录。</string>
+    <string name="online_theme_refresh">刷新社区主题</string>
+    <string name="online_theme_list_description">社区创作的手表主题</string>
+    <string name="online_theme_byline">由 %1$s 创作 · %2$s 布局</string>
+    <string name="online_theme_row_description">%1$s，由 %2$s 创作。%3$s 布局。</string>
+    <string name="online_theme_apply">添加并应用</string>
+    <string name="online_theme_loading">正在加载社区主题…</string>
+    <string name="online_theme_loading_preview">正在加载预览…</string>
+    <string name="online_theme_empty">暂无可用的社区主题。</string>
+    <string name="online_theme_load_error">无法加载社区主题。请检查网络连接后重试。</string>
+    <string name="online_theme_retry">重试</string>
+    <string name="online_theme_installed">在“我的主题”中</string>
+    <string name="online_theme_apply_success">已将 %1$s 添加到“我的主题”并应用到你的手表</string>
+    <string name="online_theme_preview_error">无法加载主题详情。请检查网络连接后重试。</string>
+    <string name="online_theme_update_available">有可用更新</string>
+    <string name="online_theme_requires_app_version">需要 SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">此主题会使手表设置过大，无法同步。请重置未使用表盘的设置后重试。</string>
+
     <string name="watch_theme_face_classic">Classic</string>
     <string name="watch_theme_face_expressive">Expressive</string>
     <string name="watch_theme_face_vinyl">Vinyl</string>

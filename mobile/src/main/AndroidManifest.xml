@@ -168,6 +168,18 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
+            android:name=".view.watchface.theme.OnlineThemesActivity"
+            android:exported="false"
+            android:label="@string/online_themes_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".view.watchface.theme.SubmitCommunityThemeActivity"
+            android:exported="false"
+            android:label="@string/community_theme_submit_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".view.settings.PlaylistShortcutsActivity"
             android:exported="true"
             android:launchMode="singleTop"

@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">লেআউট: %1$s</string>
     <string name="watch_theme_preview_description">ঘড়িতে বর্তমানে প্রয়োগ করা থিমের প্রিভিউ</string>
     <string name="watch_theme_create">থিম তৈরি করুন</string>
+    <string name="watch_theme_browse_community">কমিউনিটি থিম দেখুন</string>
     <string name="watch_theme_create_title">নতুন থিম তৈরি করুন</string>
     <string name="watch_theme_rename_title">থিমের নাম পরিবর্তন করুন</string>
     <string name="watch_theme_name">থিমের নাম</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">আপনি সর্বোচ্চ ২৪টি কাস্টম থিম সংরক্ষণ করতে পারেন। নতুন একটি তৈরির আগে একটি মুছুন।</string>
     <string name="watch_theme_name_required">থিমের নাম লিখুন</string>
     <string name="watch_theme_name_duplicate">এই নামে একটি থিম ইতিমধ্যে আছে</string>
+
+    <string name="online_themes_title">কমিউনিটি থিম</string>
+    <string name="online_theme_intro">কমিউনিটির তৈরি লুক আবিষ্কার করুন। এই গ্যালারি খুললে এর সর্বজনীন ক্যাটালগ ডাউনলোড হবে।</string>
+    <string name="online_theme_refresh">কমিউনিটি থিম রিফ্রেশ করুন</string>
+    <string name="online_theme_list_description">কমিউনিটির তৈরি ঘড়ির থিম</string>
+    <string name="online_theme_byline">%1$s-এর তৈরি · %2$s লেআউট</string>
+    <string name="online_theme_row_description">%1$s, %2$s-এর তৈরি। %3$s লেআউট।</string>
+    <string name="online_theme_apply">যোগ করুন এবং প্রয়োগ করুন</string>
+    <string name="online_theme_loading">কমিউনিটি থিম লোড হচ্ছে…</string>
+    <string name="online_theme_loading_preview">পূর্বদৃশ্য লোড হচ্ছে…</string>
+    <string name="online_theme_empty">এখনও কোনো কমিউনিটি থিম উপলভ্য নেই।</string>
+    <string name="online_theme_load_error">কমিউনিটি থিম লোড করা যায়নি। সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।</string>
+    <string name="online_theme_retry">আবার চেষ্টা করুন</string>
+    <string name="online_theme_installed">আমার থিমে</string>
+    <string name="online_theme_apply_success">%1$s আমার থিমে যোগ করা হয়েছে এবং আপনার ঘড়িতে প্রয়োগ করা হয়েছে</string>
+    <string name="online_theme_preview_error">থিমের বিবরণ লোড করা যায়নি। সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।</string>
+    <string name="online_theme_update_available">আপডেট উপলভ্য</string>
+    <string name="online_theme_requires_app_version">SVARTIFOSS %1$s প্রয়োজন</string>
+    <string name="online_theme_sync_limit">এই থিমটি আপনার ঘড়ির সেটিংসকে সিঙ্ক করার জন্য খুব বড় করে তুলবে। অব্যবহৃত ফেসের সেটিংস রিসেট করে আবার চেষ্টা করুন।</string>
 
     <string name="watch_theme_face_classic">ক্লাসিক</string>
     <string name="watch_theme_face_expressive">এক্সপ্রেসিভ</string>

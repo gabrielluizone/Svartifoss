@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">레이아웃: %1$s</string>
     <string name="watch_theme_preview_description">현재 시계에 적용된 테마 미리보기</string>
     <string name="watch_theme_create">테마 만들기</string>
+    <string name="watch_theme_browse_community">커뮤니티 테마 둘러보기</string>
     <string name="watch_theme_create_title">새 테마 만들기</string>
     <string name="watch_theme_rename_title">테마 이름 바꾸기</string>
     <string name="watch_theme_name">테마 이름</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">사용자 지정 테마는 최대 24개까지 저장할 수 있습니다. 새로 만들기 전에 하나를 삭제하세요.</string>
     <string name="watch_theme_name_required">테마 이름 입력</string>
     <string name="watch_theme_name_duplicate">같은 이름의 테마가 이미 있습니다</string>
+
+    <string name="online_themes_title">커뮤니티 테마</string>
+    <string name="online_theme_intro">커뮤니티가 만든 디자인을 살펴보세요. 이 갤러리를 열면 공개 카탈로그를 다운로드합니다.</string>
+    <string name="online_theme_refresh">커뮤니티 테마 새로고침</string>
+    <string name="online_theme_list_description">커뮤니티에서 만든 워치 테마</string>
+    <string name="online_theme_byline">%1$s 제작 · %2$s 레이아웃</string>
+    <string name="online_theme_row_description">%1$s, %2$s 제작. %3$s 레이아웃.</string>
+    <string name="online_theme_apply">추가하고 적용</string>
+    <string name="online_theme_loading">커뮤니티 테마를 불러오는 중…</string>
+    <string name="online_theme_loading_preview">미리보기를 불러오는 중…</string>
+    <string name="online_theme_empty">아직 사용할 수 있는 커뮤니티 테마가 없습니다.</string>
+    <string name="online_theme_load_error">커뮤니티 테마를 불러올 수 없습니다. 연결을 확인하고 다시 시도하세요.</string>
+    <string name="online_theme_retry">다시 시도</string>
+    <string name="online_theme_installed">내 테마에 있음</string>
+    <string name="online_theme_apply_success">%1$s을(를) 내 테마에 추가하고 시계에 적용했습니다</string>
+    <string name="online_theme_preview_error">테마 세부정보를 불러올 수 없습니다. 연결을 확인하고 다시 시도하세요.</string>
+    <string name="online_theme_update_available">업데이트 사용 가능</string>
+    <string name="online_theme_requires_app_version">SVARTIFOSS %1$s 필요</string>
+    <string name="online_theme_sync_limit">이 테마를 적용하면 시계 설정이 너무 커서 동기화할 수 없습니다. 사용하지 않는 워치 페이스 설정을 재설정한 후 다시 시도하세요.</string>
 
     <string name="watch_theme_face_classic">클래식</string>
     <string name="watch_theme_face_expressive">익스프레시브</string>

@@ -4,14 +4,28 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.WATCH_SNAPSHOT_GUARD_BYTES
+import com.svartifoss.snfell.estimateWatchPreferenceSnapshotBytes
+import com.svartifoss.snfell.shouldSyncWatchPreference
 import com.svartifoss.snfell.common.AppearanceContext
+import com.svartifoss.snfell.common.ArchivedFaces
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.Collections
 import java.util.UUID
+
+/** The maximum accepted length for either a local or public theme name. */
+private const val MAX_THEME_NAME_LENGTH = 48
+
+/** Public profile strings are deliberately capped before they cross the network boundary. */
+internal const val MAX_PUBLIC_SETTING_TEXT_LENGTH = 128
+
+/** Leaves ample room below the Wear Data Layer's 100 KiB per-item ceiling. */
+private const val MAX_PUBLIC_MATERIALIZED_BYTES = 24 * 1024
 
 /** One phone-local, user-named watch appearance. Only the active profile is projected into the
  * fixed [ThemeAppearance.CUSTOM_SCOPE], keeping the Wear preference payload bounded. */
@@ -22,7 +36,22 @@ data class WatchThemeProfile(
         val createdAt: Long,
         val updatedAt: Long,
         val revision: Int,
-        val settings: Map<String, WatchThemeValue>
+        val settings: Map<String, WatchThemeValue>,
+        /**
+         * The immutable identity of a gallery theme this local profile was installed from.
+         *
+         * [id] is deliberately the **local** profile id, not this id. Keeping the two namespaces
+         * separate prevents a public catalogue id from colliding with (or replacing) a user's own
+         * profile, while [revision] lets a later gallery update be detected without treating local
+         * edits as a new published revision.
+         */
+        val publishedTheme: PublishedThemeSource? = null
+)
+
+/** Stable identity of a theme published in the community gallery. */
+data class PublishedThemeSource(
+        val id: String,
+        val revision: Int
 )
 
 /** Explicit type tags make the library resilient to future preference-schema changes. */
@@ -32,7 +61,170 @@ sealed class WatchThemeValue {
     data class Number(val value: Int) : WatchThemeValue()
 }
 
+/**
+ * A newly allocated, upload-ready public representation of one local theme.
+ *
+ * [serializedProfile] is intentionally the source of truth for upload. It contains a fresh public
+ * id and never contains the local library id or [PublishedThemeSource] provenance. [settings] is
+ * the same complete, typed snapshot so the submission layer can calculate its policy digest
+ * without reparsing JSON. [profileJson] returns a new mutable object on each call, preventing a
+ * caller from changing the serialized upload body by accident.
+ */
+data class CommunityThemeSubmissionDraft(
+        val id: String,
+        val name: String,
+        val baseFace: String,
+        val settings: Map<String, WatchThemeValue>,
+        val serializedProfile: String
+) {
+    fun profileJson(): JSONObject = JSONObject(serializedProfile)
+}
+
+/** Explicit outcome of preparing a locally saved theme for the community submission queue. */
+sealed class CommunityThemeSubmissionDraftResult {
+    data class Ready(val draft: CommunityThemeSubmissionDraft) : CommunityThemeSubmissionDraftResult()
+    object ProfileNotFound : CommunityThemeSubmissionDraftResult()
+    object PublishedThemeCannotBeSubmitted : CommunityThemeSubmissionDraftResult()
+    object InvalidPublicName : CommunityThemeSubmissionDraftResult()
+    object InvalidProfile : CommunityThemeSubmissionDraftResult()
+    object ProfileTooLarge : CommunityThemeSubmissionDraftResult()
+}
+
 class WatchThemeLimitReachedException : IllegalStateException()
+
+/** Outcome of installing and applying one parsed community-gallery profile. */
+sealed class PublishedThemeInstallResult {
+    /**
+     * The locally stored profile that is now active.
+     *
+     * When [alreadyInstalled] is true, its existing local settings were applied verbatim; a fresh
+     * download never overwrites edits the user made after installing it. [updateAvailable] is
+     * surfaced now so a later update UI can offer an explicit replacement/copy choice.
+     */
+    data class Applied(
+            val profile: WatchThemeProfile,
+            val alreadyInstalled: Boolean,
+            val updateAvailable: Boolean
+    ) : PublishedThemeInstallResult()
+
+    /** A new gallery theme cannot be saved until the user frees one of the local 24 slots. */
+    object LibraryFull : PublishedThemeInstallResult()
+
+    /** Applying the complete snapshot would exceed the safe phone-to-watch transport budget. */
+    object WatchSyncTooLarge : PublishedThemeInstallResult()
+
+    /** The candidate was not produced by [WatchThemeRepository.parsePublishedProfile]. */
+    object InvalidProfile : PublishedThemeInstallResult()
+
+    /** Materializing the complete custom snapshot into default preferences failed. */
+    object ApplyFailed : PublishedThemeInstallResult()
+}
+
+private fun valueMatchesDefinition(value: WatchThemeValue?, default: Any): Boolean = when (default) {
+    is String -> value is WatchThemeValue.Text
+    is Boolean -> value is WatchThemeValue.Flag
+    is Int -> value is WatchThemeValue.Number
+    else -> false
+}
+
+private fun valueToJson(value: WatchThemeValue): JSONObject = when (value) {
+    is WatchThemeValue.Text -> JSONObject().put("type", "string").put("value", value.value)
+    is WatchThemeValue.Flag -> JSONObject().put("type", "boolean").put("value", value.value)
+    is WatchThemeValue.Number -> JSONObject().put("type", "int").put("value", value.value)
+}
+
+private fun immutableThemeSettings(
+        values: Map<String, WatchThemeValue>
+): Map<String, WatchThemeValue> = Collections.unmodifiableMap(LinkedHashMap(values))
+
+/**
+ * Pure half of [WatchThemeRepository.prepareCommunityThemeSubmission]. Keeping it Android-free
+ * makes the public wire contract directly testable; the repository remains the only production
+ * entry point that resolves a profile id from the persisted library.
+ */
+internal object CommunityThemeSubmissionDraftFactory {
+
+    fun build(
+            source: WatchThemeProfile,
+            publicName: String,
+            publicId: String,
+            nowMillis: Long,
+            constraints: CommunityThemeConstraints? = null
+    ): CommunityThemeSubmissionDraftResult {
+        if (source.publishedTheme != null) {
+            return CommunityThemeSubmissionDraftResult.PublishedThemeCannotBeSubmitted
+        }
+        if (!isCanonicalUuid(source.id)) return CommunityThemeSubmissionDraftResult.InvalidProfile
+        if (source.baseFace !in ThemeAppearance.ALLOWED_BASE_FACES ||
+                source.baseFace in ArchivedFaces.KEYS) {
+            return CommunityThemeSubmissionDraftResult.InvalidProfile
+        }
+        val normalizedName = normalizePublicName(publicName)
+                ?: return CommunityThemeSubmissionDraftResult.InvalidPublicName
+        if (!isCanonicalUuid(publicId)) return CommunityThemeSubmissionDraftResult.InvalidProfile
+
+        val definitions = FaceScopedPreferences.SCOPED_DEFINITIONS
+        val definitionKeys = FaceScopedPreferences.SCOPED_DEFINITIONS_BY_KEY.keys
+        // A public submission is deliberately a complete snapshot. Filling a corrupted or stale
+        // local profile with defaults here would turn a storage error into a theme the user never
+        // actually designed; only the *network import* has that migration behaviour.
+        if (source.settings.keys != definitionKeys || source.settings.size != definitions.size) {
+            return CommunityThemeSubmissionDraftResult.InvalidProfile
+        }
+        val completeSettings = LinkedHashMap<String, WatchThemeValue>(definitions.size)
+        for (definition in definitions) {
+            val value = source.settings[definition.key]
+                    ?: return CommunityThemeSubmissionDraftResult.InvalidProfile
+            if (!valueMatchesDefinition(value, definition.defaultValue) ||
+                    (value is WatchThemeValue.Text &&
+                            value.value.length > MAX_PUBLIC_SETTING_TEXT_LENGTH) ||
+                    (constraints != null && !constraints.accepts(definition.key, value))) {
+                return CommunityThemeSubmissionDraftResult.InvalidProfile
+            }
+            completeSettings[definition.key] = value
+        }
+
+        val timestamp = nowMillis.coerceAtLeast(0L)
+        val profile = JSONObject().apply {
+            put("schemaVersion", WatchThemeRepository.LIBRARY_SCHEMA)
+            put("id", publicId)
+            put("name", normalizedName)
+            put("baseFace", source.baseFace)
+            put("createdAt", timestamp)
+            put("updatedAt", timestamp)
+            put("revision", 1)
+            put("settings", JSONObject().apply {
+                completeSettings.forEach { (key, value) ->
+                    put(key, valueToJson(value))
+                }
+            })
+        }
+        val serialized = profile.toString()
+        if (serialized.toByteArray(Charsets.UTF_8).size > MAX_PUBLIC_MATERIALIZED_BYTES) {
+            return CommunityThemeSubmissionDraftResult.ProfileTooLarge
+        }
+        return CommunityThemeSubmissionDraftResult.Ready(
+                CommunityThemeSubmissionDraft(
+                        id = publicId,
+                        name = normalizedName,
+                        baseFace = source.baseFace,
+                        settings = immutableThemeSettings(completeSettings),
+                        serializedProfile = serialized))
+    }
+
+    private fun normalizePublicName(raw: String): String? {
+        if (raw.any(Character::isISOControl)) return null
+        val normalized = raw.trim().replace(Regex("\\s+"), " ")
+        if (normalized.any(Character::isISOControl)) return null
+        return normalized.takeIf { it.isNotBlank() && it.length <= MAX_THEME_NAME_LENGTH }
+    }
+
+    private fun isCanonicalUuid(raw: String): Boolean = try {
+        UUID.fromString(raw).toString() == raw
+    } catch (_: IllegalArgumentException) {
+        false
+    }
+}
 
 /**
  * Versioned custom-theme library. It deliberately uses a named SharedPreferences file: the
@@ -47,7 +239,12 @@ class WatchThemeRepository(context: Context) {
         const val LIBRARY_SCHEMA = 1
         private const val LIBRARY_PREFS = "watch_theme_library"
         private const val LIBRARY_JSON = "library_json"
-        private const val MAX_NAME_LENGTH = 48
+        private const val LEGACY_PHASE_ONE_CINEMA_ID = "09ea139e-8e25-443d-a065-09e8d10da102"
+        private const val MAX_NAME_LENGTH = MAX_THEME_NAME_LENGTH
+        /** Public theme values are materialized into the phone→watch preference snapshot. */
+        private const val MAX_PUBLISHED_SETTING_TEXT_LENGTH = MAX_PUBLIC_SETTING_TEXT_LENGTH
+        /** Leaves ample room below the Wear Data Layer's 100 KiB per-item ceiling. */
+        private const val MAX_PUBLISHED_MATERIALIZED_BYTES = MAX_PUBLIC_MATERIALIZED_BYTES
 
         private val FACE_NAME_RESOURCES = mapOf(
                 "classic" to R.string.watch_theme_face_classic,
@@ -78,6 +275,10 @@ class WatchThemeRepository(context: Context) {
 
     private val appContext = context.applicationContext
     private val libraryPrefs = appContext.getSharedPreferences(LIBRARY_PREFS, Context.MODE_PRIVATE)
+    /** A missing/corrupt semantic contract disables public import/submission rather than widening it. */
+    private val communityThemeConstraints: CommunityThemeConstraints? by lazy {
+        CommunityThemeConstraints.load(appContext)
+    }
 
     val profiles: List<WatchThemeProfile>
         @Synchronized get() = loadState().profiles
@@ -89,6 +290,149 @@ class WatchThemeRepository(context: Context) {
     fun activeProfile(defaultPrefs: SharedPreferences): WatchThemeProfile? {
         val active = ThemeAppearance.resolve(defaultPrefs) as? AppearanceContext.Custom ?: return null
         return loadState().profiles.firstOrNull { it.id == active.themeId }
+    }
+
+    /**
+     * Builds a fresh, public submission body from one persisted user-owned profile.
+     *
+     * The caller supplies only a local profile id and its desired public name. The stored profile
+     * is re-read here so a stale UI object cannot smuggle another profile's values, and a theme
+     * installed from the gallery is never allowed to become a new public submission. The returned
+     * id is newly allocated for the community queue; the local id and optional source provenance
+     * never leave this method.
+     */
+    @Synchronized
+    fun prepareCommunityThemeSubmission(
+            profileId: String,
+            publicName: String
+    ): CommunityThemeSubmissionDraftResult {
+        val source = loadState().profiles.firstOrNull { it.id == profileId }
+                ?: return CommunityThemeSubmissionDraftResult.ProfileNotFound
+        val constraints = communityThemeConstraints
+                ?: return CommunityThemeSubmissionDraftResult.InvalidProfile
+        val prepared = CommunityThemeSubmissionDraftFactory.build(
+                source = source,
+                publicName = publicName,
+                publicId = newPublicSubmissionId(source.id),
+                nowMillis = System.currentTimeMillis(),
+                constraints = constraints)
+        val draft = (prepared as? CommunityThemeSubmissionDraftResult.Ready)?.draft
+                ?: return prepared
+
+        // Use the same strict public parser and shipped-default normalization as downloaded
+        // gallery content. Besides guarding future edits to the serializer, this proves the body
+        // handed to Firebase can subsequently be published and installed by this app unchanged.
+        val parsed = try {
+            parsePublishedProfile(draft.profileJson())
+        } catch (_: JSONException) {
+            null
+        } ?: return CommunityThemeSubmissionDraftResult.InvalidProfile
+        if (parsed.id != draft.id ||
+                parsed.name != draft.name ||
+                parsed.baseFace != draft.baseFace ||
+                parsed.revision != 1 ||
+                parsed.settings != draft.settings ||
+                parsed.publishedTheme != PublishedThemeSource(draft.id, 1)) {
+            return CommunityThemeSubmissionDraftResult.InvalidProfile
+        }
+        return CommunityThemeSubmissionDraftResult.Ready(
+                draft.copy(settings = immutableThemeSettings(parsed.settings)))
+    }
+
+    /**
+     * Converts one published `profileToJson`-shaped object into a complete local candidate.
+     *
+     * The JSON's UUID and revision are retained as [WatchThemeProfile.publishedTheme], not as a
+     * local profile id. A known setting must use its exact type tag; missing current-version
+     * settings are completed from the built-in base layout. In particular, a published profile
+     * never inherits an individual's current preferences.
+     */
+    @Synchronized
+    fun parsePublishedProfile(json: JSONObject): WatchThemeProfile? =
+            parsePublishedProfile(json, allowLegacyReadOnly = false)
+
+    /**
+     * Reads the one immutable Phase-1 compatibility profile that predates the canonical public
+     * vocabulary. This is intentionally separate from [parsePublishedProfile]: the legacy value
+     * never reaches a new submission, a public digest, or a normal gallery candidate.
+     */
+    @Synchronized
+    internal fun parseTrustedLegacyPhaseOneProfile(json: JSONObject): WatchThemeProfile? =
+            parsePublishedProfile(json, allowLegacyReadOnly = true)
+
+    private fun parsePublishedProfile(
+            json: JSONObject,
+            allowLegacyReadOnly: Boolean
+    ): WatchThemeProfile? {
+        val parsed = parseProfile(json) ?: return null
+        if (allowLegacyReadOnly && !isTrustedLegacyPhaseOneProfile(parsed)) return null
+        val strictSettings = parsePublishedSettings(
+                json.optJSONObject("settings"),
+                allowLegacyReadOnly) ?: return null
+        // Backups retain archived faces for existing users, but the public gallery must never
+        // publish a theme that current pickers deliberately hide.
+        if (parsed.baseFace in ArchivedFaces.KEYS) return null
+        val source = PublishedThemeSource(parsed.id, parsed.revision)
+        return normalizePublishedProfile(parsed.copy(
+                settings = strictSettings,
+                publishedTheme = source),
+                allowLegacyReadOnly)
+    }
+
+    /**
+     * Installs [profile] under a new local UUID and immediately applies it.
+     *
+     * Re-selecting an already installed gallery id applies the saved local copy instead, preserving
+     * all edits made in the Watch editor. The capacity check happens before any default-preference
+     * write, so a full library can never leave an active `custom_active` snapshot that has no
+     * matching stored profile.
+     */
+    @Synchronized
+    fun installAndApplyPublishedProfile(
+            defaultPrefs: SharedPreferences,
+            profile: WatchThemeProfile
+    ): PublishedThemeInstallResult {
+        val source = normalizePublishedThemeSource(profile.publishedTheme)
+                ?: return PublishedThemeInstallResult.InvalidProfile
+        if (normalizeUuid(profile.id) != source.id) {
+            return PublishedThemeInstallResult.InvalidProfile
+        }
+        val normalized = normalizePublishedProfile(
+                profile.copy(publishedTheme = source),
+                allowLegacyReadOnly = isTrustedLegacyPhaseOneProfile(profile))
+                ?: return PublishedThemeInstallResult.InvalidProfile
+        val state = loadState()
+        val existing = state.profiles.firstOrNull { it.publishedTheme?.id == source.id }
+        val profileToApply = existing ?: normalized
+        if (!fitsWatchSyncSnapshot(defaultPrefs, profileToApply)) {
+            return PublishedThemeInstallResult.WatchSyncTooLarge
+        }
+        if (existing != null) {
+            val installedRevision = existing.publishedTheme?.revision ?: 0
+            return if (applyProfile(defaultPrefs, existing)) {
+                PublishedThemeInstallResult.Applied(
+                        profile = existing,
+                        alreadyInstalled = true,
+                        updateAvailable = source.revision > installedRevision)
+            } else {
+                PublishedThemeInstallResult.ApplyFailed
+            }
+        }
+        if (state.profiles.size >= MAX_PROFILES) {
+            return PublishedThemeInstallResult.LibraryFull
+        }
+
+        val installed = normalized.copy(
+                id = newLocalProfileId(state.profiles),
+                publishedTheme = source)
+        return if (applyProfile(defaultPrefs, installed)) {
+            PublishedThemeInstallResult.Applied(
+                    profile = installed,
+                    alreadyInstalled = false,
+                    updateAvailable = false)
+        } else {
+            PublishedThemeInstallResult.ApplyFailed
+        }
     }
 
     /** Creates a complete snapshot from the selected built-in base without activating it. */
@@ -129,7 +473,10 @@ class WatchThemeRepository(context: Context) {
                 createdAt = now,
                 updatedAt = now,
                 revision = 1,
-                settings = source.settings.toMap())
+                settings = source.settings.toMap(),
+                // A duplicate is a user-owned fork. It must not be silently overwritten by a
+                // future update of the gallery theme it started from.
+                publishedTheme = null)
         saveState(state.copy(profiles = state.profiles + copy))
         return copy
     }
@@ -197,7 +544,11 @@ class WatchThemeRepository(context: Context) {
     @Synchronized
     fun applyProfile(defaultPrefs: SharedPreferences, profile: WatchThemeProfile): Boolean {
         val state = loadState()
-        val stored = state.profiles.firstOrNull { it.id == profile.id } ?: profile
+        val existing = state.profiles.firstOrNull { it.id == profile.id }
+        // A profile that is not in the library would become an active-but-uneditable snapshot if
+        // we materialized it at capacity. Reject it before touching default preferences instead.
+        if (existing == null && state.profiles.size >= MAX_PROFILES) return false
+        val stored = existing ?: profile
         val normalized = normalizeProfile(stored, defaultPrefs) ?: return false
         val materialRevision = nextMaterializedRevision(defaultPrefs, normalized.revision)
         val editor = defaultPrefs.edit()
@@ -222,10 +573,8 @@ class WatchThemeRepository(context: Context) {
         val existingIndex = state.profiles.indexOfFirst { it.id == normalized.id }
         val profiles = if (existingIndex >= 0) {
             state.profiles.toMutableList().apply { set(existingIndex, normalized) }
-        } else if (state.profiles.size < MAX_PROFILES) {
-            state.profiles + normalized
         } else {
-            state.profiles
+            state.profiles + normalized
         }
         saveState(LibraryState(profiles, normalized.id))
         return true
@@ -345,14 +694,175 @@ class WatchThemeRepository(context: Context) {
                 createdAt = profile.createdAt.coerceAtLeast(0L),
                 updatedAt = profile.updatedAt.coerceAtLeast(profile.createdAt.coerceAtLeast(0L)),
                 revision = profile.revision.coerceAtLeast(1),
-                settings = complete)
+                settings = complete,
+                // Bad/old source metadata must never make an otherwise-valid backup profile
+                // unreadable. Losing only the optional update link is the safe degradation.
+                publishedTheme = normalizePublishedThemeSource(profile.publishedTheme))
     }
 
-    private fun valueMatchesDefinition(value: WatchThemeValue?, default: Any): Boolean = when (default) {
-        is String -> value is WatchThemeValue.Text
-        is Boolean -> value is WatchThemeValue.Flag
-        is Int -> value is WatchThemeValue.Number
-        else -> false
+    /**
+     * Public gallery profiles must be reproducible on every phone. Unlike a config import, a
+     * missing value therefore falls back to the base face's shipped default rather than a value
+     * resolved from the user's existing preference file. That also keeps the gallery miniature
+     * and the installed profile identical when a hand-authored Phase-1 profile specifies only
+     * the settings that make its look distinct.
+     */
+    private fun normalizePublishedProfile(
+            profile: WatchThemeProfile,
+            allowLegacyReadOnly: Boolean = false
+    ): WatchThemeProfile? {
+        val constraints = communityThemeConstraints ?: return null
+        val id = normalizeUuid(profile.id) ?: return null
+        val base = profile.baseFace.takeIf { it in ThemeAppearance.ALLOWED_BASE_FACES }
+                ?: return null
+        if (base in ArchivedFaces.KEYS) return null
+        val definitions = FaceScopedPreferences.SCOPED_DEFINITIONS
+        if (profile.settings.keys.any { it !in FaceScopedPreferences.SCOPED_DEFINITIONS_BY_KEY }) {
+            return null
+        }
+        val complete = definitions.associate { definition ->
+            val candidate = profile.settings[definition.key]
+            val value = if (candidate != null) {
+                if (!valueMatchesDefinition(candidate, definition.defaultValue) ||
+                        (candidate is WatchThemeValue.Text &&
+                                candidate.value.length > MAX_PUBLISHED_SETTING_TEXT_LENGTH) ||
+                        !constraints.accepts(
+                                definition.key,
+                                candidate,
+                                allowLegacyReadOnly)) {
+                    return null
+                }
+                candidate
+            } else {
+                publishedBaseDefault(base, definition.defaultValue, definition.key)
+            }
+            // Defaults are also part of the public originality baseline. A drift between Android
+            // defaults and the canonical contract must reject the profile instead of making a
+            // supposedly zero-change theme publishable under a different interpretation.
+            if (!constraints.accepts(
+                            definition.key,
+                            value,
+                            allowLegacyReadOnly && candidate != null)) {
+                return null
+            }
+            definition.key to value
+        }
+        val normalized = profile.copy(
+                id = id,
+                name = normalizeName(profile.name),
+                baseFace = base,
+                createdAt = profile.createdAt.coerceAtLeast(0L),
+                updatedAt = profile.updatedAt.coerceAtLeast(profile.createdAt.coerceAtLeast(0L)),
+                revision = profile.revision.coerceAtLeast(1),
+                settings = complete,
+                publishedTheme = normalizePublishedThemeSource(profile.publishedTheme))
+        // The complete snapshot is what reaches the watch. Reject oversized input before any
+        // default preference is written, rather than letting a Data Layer item fail forever.
+        return normalized.takeIf(::fitsPublishedSnapshot)
+    }
+
+    /** Converts the static base-face default into the typed value stored in a complete profile. */
+    private fun publishedBaseDefault(
+            baseFace: String,
+            defaultValue: Any,
+            key: String
+    ): WatchThemeValue {
+        val faceValue = FaceScopedPreferences.perFaceDefault(baseFace, key)
+        return when (defaultValue) {
+            is String -> WatchThemeValue.Text(faceValue ?: defaultValue)
+            is Boolean -> WatchThemeValue.Flag(faceValue?.toBooleanStrictOrNull() ?: defaultValue)
+            is Int -> WatchThemeValue.Number(faceValue?.toIntOrNull() ?: defaultValue)
+            else -> error("Unsupported theme value for $key")
+        }
+    }
+
+    /**
+     * Public JSON is intentionally stricter than a user backup. Android's `optInt`/`optBoolean`
+     * coerce malformed JSON (including a text value into zero), which is helpful for old backups
+     * but unsafe at a network boundary. Each known key needs the exact tag and JSON value type.
+     */
+    private fun parsePublishedSettings(
+            settingsObject: JSONObject?,
+            allowLegacyReadOnly: Boolean
+    ): Map<String, WatchThemeValue>? {
+        val constraints = communityThemeConstraints ?: return null
+        settingsObject ?: return null
+        if (settingsObject.length() > FaceScopedPreferences.SCOPED_DEFINITIONS.size) return null
+        val settings = LinkedHashMap<String, WatchThemeValue>()
+        val keys = settingsObject.keys()
+        while (keys.hasNext()) {
+            val key = keys.next()
+            val definition = FaceScopedPreferences.SCOPED_DEFINITIONS_BY_KEY[key] ?: return null
+            val value = parseStrictPublishedValue(
+                    key,
+                    settingsObject.optJSONObject(key),
+                    definition.defaultValue,
+                    constraints,
+                    allowLegacyReadOnly) ?: return null
+            settings[key] = value
+        }
+        return settings
+    }
+
+    private fun parseStrictPublishedValue(
+            key: String,
+            json: JSONObject?,
+            defaultValue: Any,
+            constraints: CommunityThemeConstraints,
+            allowLegacyReadOnly: Boolean
+    ): WatchThemeValue? {
+        json ?: return null
+        val type = json.opt("type") as? String ?: return null
+        if (!json.has("value")) return null
+        val value = json.opt("value")
+        val parsed = when (defaultValue) {
+            is String -> (value as? String)
+                    ?.takeIf { type == "string" && it.length <= MAX_PUBLISHED_SETTING_TEXT_LENGTH }
+                    ?.let(WatchThemeValue::Text)
+            is Boolean -> (value as? Boolean)
+                    ?.takeIf { type == "boolean" }
+                    ?.let(WatchThemeValue::Flag)
+            is Int -> (value as? Int)
+                    ?.takeIf { type == "int" }
+                    ?.let(WatchThemeValue::Number)
+            else -> null
+        }
+        return parsed?.takeIf { constraints.accepts(key, it, allowLegacyReadOnly) }
+    }
+
+    private fun fitsPublishedSnapshot(profile: WatchThemeProfile): Boolean =
+            profileToJson(profile).toString().toByteArray(Charsets.UTF_8).size <=
+                    MAX_PUBLISHED_MATERIALIZED_BYTES
+
+    /**
+     * A gallery profile joins, rather than replaces, other face-scoped settings already synced to
+     * the watch. Estimate the final snapshot before committing default preferences so a download
+     * can never report success while creating a Data Layer payload the watch cannot receive.
+     */
+    private fun fitsWatchSyncSnapshot(
+            defaultPrefs: SharedPreferences,
+            profile: WatchThemeProfile
+    ): Boolean {
+        val projected = defaultPrefs.all
+                .filterKeys(::shouldSyncWatchPreference)
+                .toMutableMap()
+        profile.settings.forEach { (key, value) ->
+            projected[FaceScopedPreferences.scopedKey(key, ThemeAppearance.CUSTOM_SCOPE)] =
+                    materializedThemeValue(value)
+        }
+        projected[MiscPreferences.WEAR_SCREEN_FACE.key] = profile.baseFace
+        projected[MiscPreferences.WEAR_ACTIVE_CUSTOM_THEME_ID.key] = profile.id
+        projected[MiscPreferences.WEAR_CUSTOM_THEME_SCHEMA.key] =
+                ThemeAppearance.CURRENT_SCHEMA.toString()
+        projected[MiscPreferences.WEAR_CUSTOM_THEME_REVISION.key] = profile.revision.toString()
+        projected[MiscPreferences.WEAR_CUSTOM_THEME_COMPLETE.key] = true
+        return estimateWatchPreferenceSnapshotBytes(projected) < WATCH_SNAPSHOT_GUARD_BYTES
+    }
+
+    private fun materializedThemeValue(value: WatchThemeValue): Any = when (value) {
+        is WatchThemeValue.Text -> value.value
+        is WatchThemeValue.Flag -> value.value
+        is WatchThemeValue.Number -> value.value.toString()
     }
 
     private fun putThemeValue(editor: SharedPreferences.Editor, key: String, value: WatchThemeValue) {
@@ -407,6 +917,45 @@ class WatchThemeRepository(context: Context) {
         null
     }
 
+    private fun normalizePublishedThemeSource(
+            source: PublishedThemeSource?
+    ): PublishedThemeSource? {
+        source ?: return null
+        val id = normalizeUuid(source.id) ?: return null
+        if (source.revision < 1) return null
+        return PublishedThemeSource(id, source.revision)
+    }
+
+    /**
+     * The one hand-authored Phase-1 Pages profile published before the public vocabulary became
+     * canonical. Its Cinema value remains readable only through [parseTrustedLegacyPhaseOneProfile]
+     * and only for this immutable public identity; local backups keep using the normal tolerant
+     * preference migration path instead.
+     */
+    private fun isTrustedLegacyPhaseOneProfile(profile: WatchThemeProfile): Boolean =
+            profile.id == LEGACY_PHASE_ONE_CINEMA_ID &&
+                    profile.baseFace == "poster" &&
+                    profile.revision == 1
+
+    /** Public ids never become local primary keys; also avoid the vanishingly unlikely UUID clash. */
+    private fun newLocalProfileId(profiles: List<WatchThemeProfile>): String {
+        val used = profiles.mapTo(HashSet()) { it.id }
+        var id: String
+        do {
+            id = UUID.randomUUID().toString()
+        } while (id in used)
+        return id
+    }
+
+    /** Public submissions deliberately use a different UUID namespace from the local library. */
+    private fun newPublicSubmissionId(localId: String): String {
+        var id: String
+        do {
+            id = UUID.randomUUID().toString()
+        } while (id == localId)
+        return id
+    }
+
     private data class LibraryState(
             val profiles: List<WatchThemeProfile>,
             val activeProfileId: String?
@@ -456,23 +1005,23 @@ class WatchThemeRepository(context: Context) {
                 state.profiles.take(MAX_PROFILES).forEach { put(profileToJson(it)) }
             })
 
-    private fun profileToJson(profile: WatchThemeProfile): JSONObject = JSONObject()
-            .put("id", profile.id)
-            .put("name", profile.name)
-            .put("baseFace", profile.baseFace)
-            .put("createdAt", profile.createdAt)
-            .put("updatedAt", profile.updatedAt)
-            .put("revision", profile.revision)
-            .put("settings", JSONObject().apply {
-                profile.settings.forEach { (key, value) ->
-                    put(key, valueToJson(value))
-                }
-            })
-
-    private fun valueToJson(value: WatchThemeValue): JSONObject = when (value) {
-        is WatchThemeValue.Text -> JSONObject().put("type", "string").put("value", value.value)
-        is WatchThemeValue.Flag -> JSONObject().put("type", "boolean").put("value", value.value)
-        is WatchThemeValue.Number -> JSONObject().put("type", "int").put("value", value.value)
+    private fun profileToJson(profile: WatchThemeProfile): JSONObject = JSONObject().apply {
+        put("id", profile.id)
+        put("name", profile.name)
+        put("baseFace", profile.baseFace)
+        put("createdAt", profile.createdAt)
+        put("updatedAt", profile.updatedAt)
+        put("revision", profile.revision)
+        put("settings", JSONObject().apply {
+            profile.settings.forEach { (key, value) ->
+                put(key, valueToJson(value))
+            }
+        })
+        profile.publishedTheme?.let { source ->
+            put("publishedTheme", JSONObject()
+                    .put("id", source.id)
+                    .put("revision", source.revision))
+        }
     }
 
     private fun parseState(json: JSONObject, defaults: SharedPreferences?): LibraryState {
@@ -513,7 +1062,16 @@ class WatchThemeRepository(context: Context) {
                 createdAt = json.optLong("createdAt", 0L).coerceAtLeast(0L),
                 updatedAt = json.optLong("updatedAt", 0L).coerceAtLeast(0L),
                 revision = json.optInt("revision", 1).coerceAtLeast(1),
-                settings = settings)
+                settings = settings,
+                publishedTheme = parsePublishedThemeSource(json.optJSONObject("publishedTheme")))
+    }
+
+    private fun parsePublishedThemeSource(json: JSONObject?): PublishedThemeSource? {
+        json ?: return null
+        val id = normalizeUuid(json.optString("id")) ?: return null
+        if (!json.has("revision")) return null
+        val revision = json.optInt("revision", 0)
+        return if (revision >= 1) PublishedThemeSource(id, revision) else null
     }
 
     private fun parseValue(json: JSONObject?): WatchThemeValue? = when (json?.optString("type")) {

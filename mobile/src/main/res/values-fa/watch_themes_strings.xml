@@ -10,6 +10,7 @@
     <string name="watch_theme_active_layout">چیدمان: %1$s</string>
     <string name="watch_theme_preview_description">پیش‌نمایش تمی که هم‌اکنون روی ساعت اعمال شده است</string>
     <string name="watch_theme_create">ایجاد تم</string>
+    <string name="watch_theme_browse_community">مرور تم‌های انجمن</string>
     <string name="watch_theme_create_title">ایجاد یک تم جدید</string>
     <string name="watch_theme_rename_title">تغییر نام تم</string>
     <string name="watch_theme_name">نام تم</string>
@@ -37,6 +38,25 @@
     <string name="watch_theme_limit_reached">می‌توانید تا ۲۴ تم سفارشی ذخیره کنید. پیش از ایجاد تم دیگری، یکی را حذف کنید.</string>
     <string name="watch_theme_name_required">نامی برای تم وارد کنید</string>
     <string name="watch_theme_name_duplicate">تمی با این نام از قبل وجود دارد</string>
+
+    <string name="online_themes_title">تم‌های انجمن</string>
+    <string name="online_theme_intro">ظاهرهای ساخته‌شده توسط انجمن را کشف کنید. با باز کردن این گالری، فهرست عمومی آن دانلود می‌شود.</string>
+    <string name="online_theme_refresh">به‌روزرسانی تم‌های انجمن</string>
+    <string name="online_theme_list_description">تم‌های ساعت ساخته‌شده توسط انجمن</string>
+    <string name="online_theme_byline">توسط %1$s · چیدمان %2$s</string>
+    <string name="online_theme_row_description">%1$s توسط %2$s. چیدمان %3$s.</string>
+    <string name="online_theme_apply">افزودن و اعمال</string>
+    <string name="online_theme_loading">در حال بارگیری تم‌های انجمن…</string>
+    <string name="online_theme_loading_preview">در حال بارگیری پیش‌نمایش…</string>
+    <string name="online_theme_empty">هنوز تمی از انجمن در دسترس نیست.</string>
+    <string name="online_theme_load_error">بارگیری تم‌های انجمن ممکن نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="online_theme_retry">دوباره تلاش کنید</string>
+    <string name="online_theme_installed">در تم‌های من</string>
+    <string name="online_theme_apply_success">%1$s به تم‌های من افزوده و روی ساعت شما اعمال شد</string>
+    <string name="online_theme_preview_error">جزئیات تم بارگیری نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="online_theme_update_available">به‌روزرسانی در دسترس است</string>
+    <string name="online_theme_requires_app_version">SVARTIFOSS %1$s لازم است</string>
+    <string name="online_theme_sync_limit">این تم تنظیمات ساعت شما را برای همگام‌سازی بیش از حد بزرگ می‌کند. تنظیمات واچ‌فیس‌های استفاده‌نشده را بازنشانی کنید و دوباره تلاش کنید.</string>
 
     <string name="watch_theme_face_classic">کلاسیک</string>
     <string name="watch_theme_face_expressive">اکسپرسیو</string>

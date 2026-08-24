@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Layout: %1$s</string>
     <string name="watch_theme_preview_description">Preview of the theme currently applied to the watch</string>
     <string name="watch_theme_create">Create theme</string>
+    <string name="watch_theme_browse_community">Browse community themes</string>
     <string name="watch_theme_create_title">Create a new theme</string>
     <string name="watch_theme_rename_title">Rename theme</string>
     <string name="watch_theme_name">Theme name</string>
@@ -31,6 +32,7 @@
     <string name="watch_theme_customize">Customize</string>
     <string name="watch_theme_duplicate">Duplicate</string>
     <string name="watch_theme_delete">Delete</string>
+    <string name="watch_theme_submit_community">Submit to community</string>
     <string name="watch_theme_delete_title">Delete “%1$s”?</string>
     <string name="watch_theme_delete_message">This saved theme and its settings will be permanently removed.</string>
     <string name="watch_theme_deleted">Theme deleted</string>
@@ -38,6 +40,44 @@
     <string name="watch_theme_limit_reached">You can save up to 24 custom themes. Delete one before creating another.</string>
     <string name="watch_theme_name_required">Enter a theme name</string>
     <string name="watch_theme_name_duplicate">A theme with this name already exists</string>
+
+    <string name="online_themes_title">Community themes</string>
+    <string name="online_theme_intro">Discover looks made by the community. Opening this gallery downloads its public catalogue.</string>
+    <string name="online_theme_refresh">Refresh community themes</string>
+    <string name="online_theme_list_description">Community-created watch themes</string>
+    <string name="online_theme_byline">By %1$s · %2$s layout</string>
+    <string name="online_theme_row_description">%1$s by %2$s. %3$s layout.</string>
+    <string name="online_theme_apply">Add and apply</string>
+    <string name="online_theme_loading">Loading community themes…</string>
+    <string name="online_theme_loading_preview">Loading preview…</string>
+    <string name="online_theme_empty">No community themes are available yet.</string>
+    <string name="online_theme_load_error">Couldn’t load community themes. Check your connection and try again.</string>
+    <string name="online_theme_retry">Try again</string>
+    <string name="online_theme_installed">IN MY THEMES</string>
+    <string name="online_theme_apply_success">%1$s was added to My themes and applied to your watch</string>
+    <string name="online_theme_preview_error">Couldn’t load theme details. Check your connection and try again.</string>
+    <string name="online_theme_sync_limit">This theme would make your watch settings too large to sync. Reset unused face settings and try again.</string>
+    <string name="online_theme_update_available">UPDATE AVAILABLE</string>
+    <string name="online_theme_requires_app_version">REQUIRES SVARTIFOSS %1$s</string>
+
+    <string name="community_theme_submit_title">Submit theme</string>
+    <string name="community_theme_submit_preview_description">Preview of the theme being submitted</string>
+    <string name="community_theme_submit_intro">It will be reviewed before it appears in Community themes.</string>
+    <string name="community_theme_submit_public_name">Public theme name</string>
+    <string name="community_theme_submit_author">Author pseudonym</string>
+    <string name="community_theme_submit_author_helper">This name is public if the theme is approved.</string>
+    <string name="community_theme_submit_privacy">Signing in identifies the submission to Svartifoss, but your Google name and email are not published. The public name and pseudonym above may be published after review.</string>
+    <string name="community_theme_submit_button">Sign in and submit</string>
+    <string name="community_theme_submit_progress">Submitting your theme…</string>
+    <string name="community_theme_submit_name_required">Enter a public theme name.</string>
+    <string name="community_theme_submit_author_required">Enter an author pseudonym.</string>
+    <string name="community_theme_submit_originality">This theme changes %1$d applicable visual settings. At least %2$d are needed before it can be reviewed.</string>
+    <string name="community_theme_submit_invalid">This saved theme cannot be submitted. Return to My themes and try again.</string>
+    <string name="community_theme_submit_sign_in_cancelled">Google sign-in was cancelled. Your theme was not submitted.</string>
+    <string name="community_theme_submit_error">Couldn’t submit this theme. Check your connection and try again.</string>
+    <string name="community_theme_submit_preview_error">Couldn’t prepare the review preview. Try again.</string>
+    <string name="community_theme_submit_success_title">Submitted for review</string>
+    <string name="community_theme_submit_success_message">Your theme is waiting for review. It is not public yet.</string>
 
     <string name="watch_theme_face_classic">Classic</string>
     <string name="watch_theme_face_expressive">Expressive</string>

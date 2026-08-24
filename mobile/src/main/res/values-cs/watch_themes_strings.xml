@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Rozložení: %1$s</string>
     <string name="watch_theme_preview_description">Náhled motivu aktuálně použitého na hodinkách</string>
     <string name="watch_theme_create">Vytvořit motiv</string>
+    <string name="watch_theme_browse_community">Procházet komunitní motivy</string>
     <string name="watch_theme_create_title">Vytvořit nový motiv</string>
     <string name="watch_theme_rename_title">Přejmenovat motiv</string>
     <string name="watch_theme_name">Název motivu</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Můžete uložit až 24 vlastních motivů. Před vytvořením dalšího jeden smažte.</string>
     <string name="watch_theme_name_required">Zadejte název motivu</string>
     <string name="watch_theme_name_duplicate">Motiv s tímto názvem už existuje</string>
+
+    <string name="online_themes_title">Komunitní motivy</string>
+    <string name="online_theme_intro">Objevte vzhledy vytvořené komunitou. Otevřením této galerie se stáhne její veřejný katalog.</string>
+    <string name="online_theme_refresh">Obnovit komunitní motivy</string>
+    <string name="online_theme_list_description">Komunitou vytvořené motivy hodinek</string>
+    <string name="online_theme_byline">Od %1$s · rozvržení %2$s</string>
+    <string name="online_theme_row_description">%1$s od %2$s. Rozvržení %3$s.</string>
+    <string name="online_theme_apply">Přidat a použít</string>
+    <string name="online_theme_loading">Načítání komunitních motivů…</string>
+    <string name="online_theme_loading_preview">Načítání náhledu…</string>
+    <string name="online_theme_empty">Zatím nejsou k dispozici žádné komunitní motivy.</string>
+    <string name="online_theme_load_error">Komunitní motivy se nepodařilo načíst. Zkontrolujte připojení a zkuste to znovu.</string>
+    <string name="online_theme_retry">Zkusit znovu</string>
+    <string name="online_theme_installed">V MÝCH MOTIVECH</string>
+    <string name="online_theme_apply_success">%1$s byl přidán do Mých motivů a použit na vašich hodinkách</string>
+    <string name="online_theme_preview_error">Podrobnosti motivu se nepodařilo načíst. Zkontrolujte připojení a zkuste to znovu.</string>
+    <string name="online_theme_update_available">K DISPOZICI JE AKTUALIZACE</string>
+    <string name="online_theme_requires_app_version">VYŽADUJE SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Tento motiv by způsobil, že nastavení hodinek bude příliš velké pro synchronizaci. Resetujte nastavení nepoužívaných ciferníků a zkuste to znovu.</string>
 
     <string name="watch_theme_face_classic">Klasický</string>
     <string name="watch_theme_face_expressive">Expresivní</string>

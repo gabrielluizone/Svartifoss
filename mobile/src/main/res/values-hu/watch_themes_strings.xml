@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Elrendezés: %1$s</string>
     <string name="watch_theme_preview_description">Az órán jelenleg alkalmazott téma előnézete</string>
     <string name="watch_theme_create">Téma létrehozása</string>
+    <string name="watch_theme_browse_community">Közösségi témák böngészése</string>
     <string name="watch_theme_create_title">Új téma létrehozása</string>
     <string name="watch_theme_rename_title">Téma átnevezése</string>
     <string name="watch_theme_name">Téma neve</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Legfeljebb 24 egyéni témát menthet. Új létrehozása előtt töröljön egyet.</string>
     <string name="watch_theme_name_required">Adja meg a téma nevét</string>
     <string name="watch_theme_name_duplicate">Már létezik ilyen nevű téma</string>
+
+    <string name="online_themes_title">Közösségi témák</string>
+    <string name="online_theme_intro">Fedezze fel a közösség által készített megjelenéseket. A galéria megnyitásakor letöltődik a nyilvános katalógusa.</string>
+    <string name="online_theme_refresh">Közösségi témák frissítése</string>
+    <string name="online_theme_list_description">A közösség által készített óraí témák</string>
+    <string name="online_theme_byline">Készítette: %1$s · %2$s elrendezés</string>
+    <string name="online_theme_row_description">%1$s készítette: %2$s. %3$s elrendezés.</string>
+    <string name="online_theme_apply">Hozzáadás és alkalmazás</string>
+    <string name="online_theme_loading">Közösségi témák betöltése…</string>
+    <string name="online_theme_loading_preview">Előnézet betöltése…</string>
+    <string name="online_theme_empty">Még nem érhetők el közösségi témák.</string>
+    <string name="online_theme_load_error">Nem sikerült betölteni a közösségi témákat. Ellenőrizze a kapcsolatot, és próbálja újra.</string>
+    <string name="online_theme_retry">Próbálja újra</string>
+    <string name="online_theme_installed">A SAJÁT TÉMÁKBAN</string>
+    <string name="online_theme_apply_success">%1$s hozzáadva a Saját témákhoz, és alkalmazva az óráján</string>
+    <string name="online_theme_preview_error">Nem sikerült betölteni a téma részleteit. Ellenőrizze a kapcsolatot, és próbálja újra.</string>
+    <string name="online_theme_update_available">FRISSÍTÉS ELÉRHETŐ</string>
+    <string name="online_theme_requires_app_version">SVARTIFOSS %1$s SZÜKSÉGES</string>
+    <string name="online_theme_sync_limit">Ez a téma túl nagyra növelné az óra beállításait a szinkronizáláshoz. Állítsa vissza a nem használt óralapok beállításait, majd próbálja újra.</string>
 
     <string name="watch_theme_face_classic">Klasszikus</string>
     <string name="watch_theme_face_expressive">Kifejező</string>

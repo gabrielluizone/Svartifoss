@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">פריסה: %1$s</string>
     <string name="watch_theme_preview_description">תצוגה מקדימה של ערכת הנושא שמוחלת כעת על השעון</string>
     <string name="watch_theme_create">יצירת ערכת נושא</string>
+    <string name="watch_theme_browse_community">עיון בערכות נושא מהקהילה</string>
     <string name="watch_theme_create_title">יצירת ערכת נושא חדשה</string>
     <string name="watch_theme_rename_title">שינוי שם ערכת נושא</string>
     <string name="watch_theme_name">שם ערכת הנושא</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">אפשר לשמור עד 24 ערכות נושא מותאמות. יש למחוק אחת לפני יצירת ערכה חדשה.</string>
     <string name="watch_theme_name_required">יש להזין שם לערכת הנושא</string>
     <string name="watch_theme_name_duplicate">ערכת נושא בשם הזה כבר קיימת</string>
+
+    <string name="online_themes_title">ערכות נושא מהקהילה</string>
+    <string name="online_theme_intro">גלו עיצובים שנוצרו בידי הקהילה. פתיחת גלריה זו מורידה את הקטלוג הציבורי שלה.</string>
+    <string name="online_theme_refresh">רענון ערכות נושא מהקהילה</string>
+    <string name="online_theme_list_description">ערכות נושא לשעון שנוצרו בידי הקהילה</string>
+    <string name="online_theme_byline">מאת %1$s · פריסת %2$s</string>
+    <string name="online_theme_row_description">%1$s מאת %2$s. פריסת %3$s.</string>
+    <string name="online_theme_apply">הוספה והחלה</string>
+    <string name="online_theme_loading">טוען ערכות נושא מהקהילה…</string>
+    <string name="online_theme_loading_preview">טוען תצוגה מקדימה…</string>
+    <string name="online_theme_empty">אין עדיין ערכות נושא מהקהילה זמינות.</string>
+    <string name="online_theme_load_error">לא ניתן לטעון ערכות נושא מהקהילה. בדקו את החיבור ונסו שוב.</string>
+    <string name="online_theme_retry">נסו שוב</string>
+    <string name="online_theme_installed">ב"ערכות הנושא שלי"</string>
+    <string name="online_theme_apply_success">%1$s נוספה ל"ערכות הנושא שלי" והוחלה על השעון שלך</string>
+    <string name="online_theme_preview_error">לא ניתן לטעון את פרטי ערכת הנושא. בדקו את החיבור ונסו שוב.</string>
+    <string name="online_theme_update_available">עדכון זמין</string>
+    <string name="online_theme_requires_app_version">נדרשת גרסת SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">ערכת הנושא הזו תהפוך את הגדרות השעון לגדולות מדי לסנכרון. אפסו הגדרות של לוחות שעון שאינם בשימוש ונסו שוב.</string>
 
     <string name="watch_theme_face_classic">קלאסי</string>
     <string name="watch_theme_face_expressive">אקספרסיבי</string>

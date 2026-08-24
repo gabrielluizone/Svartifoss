@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "5de63f5e-d61e-426a-9269-27d9e3ddd24a",
+  "name": "Signal / Noise",
+  "author": "Svartifoss",
+  "baseFace": "metadata",
+  "createdAt": 1787594181000,
+  "updatedAt": 1787594181000,
+  "revision": 1,
+  "minimumAppVersion": "3.3",
+  "publishedAt": "2026-08-24T00:00:00Z",
+  "settings": {
+    "wear_color_treatment": { "type": "string", "value": "monochrome" },
+    "wear_screen_theme": { "type": "string", "value": "contrast" },
+    "wear_metadata_show_core": { "type": "boolean", "value": true },
+    "wear_metadata_show_release": { "type": "boolean", "value": true },
+    "wear_metadata_show_credits": { "type": "boolean", "value": false },
+    "wear_metadata_show_technical": { "type": "boolean", "value": true },
+    "wear_title_font_weight": { "type": "int", "value": 700 },
+    "wear_title_font_scale": { "type": "int", "value": 110 }
+  }
+}

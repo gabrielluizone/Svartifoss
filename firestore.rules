@@ -1,0 +1,234 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    /*
+     * A candidate is immutable from every Firebase client. Moderation and publication must use a
+     * trusted publisher; an author cannot turn a pending submission into an approved or published
+     * one. The only browser-side exception is the separate moderator allowlist documented below:
+     * its members may make exactly one pending -> approved/rejected decision, never publish.
+     *
+     * The profile stays as JSON text instead of an unbounded nested map. Firestore rules enforce
+     * the transport envelope and its size; the trusted publication path must still parse it with
+     * WatchThemeRepository.parsePublishedProfile and recompute settingsDigest before publishing.
+     */
+    match /themeIntake/{themeId} {
+      allow create: if signedIn()
+          && validNewThemeIntake(themeId)
+          && validSubmissionQuotaForTheme(themeId);
+      allow get, list: if signedIn() &&
+          (isCommunityThemeModerator() ||
+            (resource.data.ownerUid == request.auth.uid && resource.data.status == "pending"));
+      allow update: if signedIn() && isCommunityThemeModerator() && validModeratorDecision();
+
+      // Deliberately omitted: clients cannot delete or publish an intake item.
+    }
+
+    /*
+     * This private per-user document makes an intake create rate-limited at the rules boundary.
+     * Its lastSubmissionId must point to the exact intake document created in the same atomic
+     * transaction (verified with getAfter below), so an APK cannot advance or reset this clock by
+     * itself. It is never readable by another user and cannot be listed.
+     */
+    match /communityThemeSubmissionQuota/{uid} {
+      allow get: if signedIn() && uid == request.auth.uid;
+      allow create: if signedIn() && uid == request.auth.uid && validNewSubmissionQuota();
+      allow update: if signedIn() && uid == request.auth.uid && validUpdatedSubmissionQuota();
+
+      // Deliberately omitted: a quota can neither be listed nor deleted by a client.
+    }
+
+    // Explicit fail-closed fallback for every other collection and subcollection.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    /*
+     * Firestore's server/Admin SDK bypasses rules and is the only way to create this allowlist.
+     * The Firebase Console also uses administrative credentials, so the project owner can create
+     * `communityThemeModerators/<their Firebase Auth UID>` without ever exposing moderator power
+     * to the APK or a public page. The document's contents are irrelevant; its existence is the
+     * explicit access grant. It has no client read/write rule.
+     */
+    function isCommunityThemeModerator() {
+      return exists(
+        /databases/$(database)/documents/communityThemeModerators/$(request.auth.uid)
+      );
+    }
+
+    function validModeratorDecision() {
+      let before = resource.data;
+      let after = request.resource.data;
+      return before.ownerUid != request.auth.uid
+          && before.status == "pending"
+          && after.status in ["approved", "rejected"]
+          && after.reviewedBy is string
+          && after.reviewedBy == request.auth.uid
+          && after.reviewedAt is timestamp
+          && after.reviewedAt == request.time
+          && after.diff(before).affectedKeys().hasOnly([
+            "status",
+            "reviewedBy",
+            "reviewedAt"
+          ]);
+    }
+
+    function validNewThemeIntake(themeId) {
+      let data = request.resource.data;
+      return validThemeId(themeId)
+          && data.keys().hasOnly([
+            "ownerUid",
+            "status",
+            "submissionSchemaVersion",
+            "name",
+            "author",
+            "baseFace",
+            "profileSchemaVersion",
+            "revision",
+            "profileJson",
+            "settingsDigest",
+            "moderationPreviewWebpBase64",
+            "clientVersion",
+            "createdAt"
+          ])
+          && data.keys().hasAll([
+            "ownerUid",
+            "status",
+            "submissionSchemaVersion",
+            "name",
+            "author",
+            "baseFace",
+            "profileSchemaVersion",
+            "revision",
+            "profileJson",
+            "settingsDigest",
+            "moderationPreviewWebpBase64",
+            "clientVersion",
+            "createdAt"
+          ])
+          && data.ownerUid is string
+          && data.ownerUid == request.auth.uid
+          && data.status == "pending"
+          && data.submissionSchemaVersion is int
+          && data.submissionSchemaVersion == 1
+          && validShortText(data.name, 48)
+          && validShortText(data.author, 48)
+          && data.baseFace is string
+          && data.baseFace in [
+            "classic",
+            "expressive",
+            "poster",
+            "studio",
+            "material",
+            "immersive",
+            "carousel",
+            "chat",
+            "split",
+            "note",
+            "verse",
+            "metadata"
+          ]
+          && data.profileSchemaVersion is int
+          && data.profileSchemaVersion == 1
+          && data.revision is int
+          && data.revision == 1
+          && data.profileJson is string
+          && data.profileJson.size() >= 2
+          && data.profileJson.size() <= 24576
+          && data.settingsDigest is string
+          && data.settingsDigest.matches('^sha256:[0-9a-f]{64}$')
+          && data.moderationPreviewWebpBase64 is string
+          && data.moderationPreviewWebpBase64.size() >= 4
+          && data.moderationPreviewWebpBase64.size() <= 65536
+          && data.moderationPreviewWebpBase64.matches('^[A-Za-z0-9+/]+={0,2}$')
+          && validShortText(data.clientVersion, 64)
+          && data.createdAt is timestamp
+          && data.createdAt == request.time;
+    }
+
+    function validThemeId(themeId) {
+      return themeId.matches(
+        '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
+      );
+    }
+
+    function validShortText(value, maximumLength) {
+      return value is string && value.size() >= 1 && value.size() <= maximumLength;
+    }
+
+    function validSubmissionQuotaForTheme(themeId) {
+      let after = getAfter(
+        /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
+      ).data;
+      return after.lastSubmissionId == themeId
+          && (exists(
+                /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
+              )
+              ? validUpdatedSubmissionQuota()
+              : validNewSubmissionQuota());
+    }
+
+    function validNewSubmissionQuota() {
+      let after = getAfter(
+        /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
+      ).data;
+      return validSubmissionQuotaShape(after)
+          && after.submissionCount == 1
+          && quotaTargetsCurrentIntake(after);
+    }
+
+    function validUpdatedSubmissionQuota() {
+      let before = get(
+        /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
+      ).data;
+      let after = getAfter(
+        /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
+      ).data;
+      return validSubmissionQuotaShape(after)
+          && after.ownerUid == before.ownerUid
+          && after.submissionCount == before.submissionCount + 1
+          && request.time >= before.lastSubmissionAt + duration.value(24, 'h')
+          && quotaTargetsCurrentIntake(after);
+    }
+
+    function validSubmissionQuotaShape(data) {
+      return data.keys().hasOnly([
+            "ownerUid",
+            "submissionCount",
+            "lastSubmissionAt",
+            "lastSubmissionId"
+          ])
+          && data.keys().hasAll([
+            "ownerUid",
+            "submissionCount",
+            "lastSubmissionAt",
+            "lastSubmissionId"
+          ])
+          && data.ownerUid is string
+          && data.ownerUid == request.auth.uid
+          && data.submissionCount is int
+          && data.submissionCount >= 1
+          && data.lastSubmissionAt is timestamp
+          && data.lastSubmissionAt == request.time
+          && data.lastSubmissionId is string
+          && validThemeId(data.lastSubmissionId);
+    }
+
+    function quotaTargetsCurrentIntake(quota) {
+      let submissionId = quota.lastSubmissionId;
+      let intake = getAfter(
+        /databases/$(database)/documents/themeIntake/$(submissionId)
+      ).data;
+      return !exists(
+            /databases/$(database)/documents/themeIntake/$(submissionId)
+          )
+          && intake.ownerUid == request.auth.uid
+          && intake.status == "pending"
+          && intake.createdAt == request.time;
+    }
+  }
+}

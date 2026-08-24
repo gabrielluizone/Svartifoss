@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Layout: %1$s</string>
     <string name="watch_theme_preview_description">Forhåndsvisning af det tema, der aktuelt er anvendt på uret</string>
     <string name="watch_theme_create">Opret tema</string>
+    <string name="watch_theme_browse_community">Gennemse fællesskabstemaer</string>
     <string name="watch_theme_create_title">Opret et nyt tema</string>
     <string name="watch_theme_rename_title">Omdøb tema</string>
     <string name="watch_theme_name">Temanavn</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Du kan gemme op til 24 tilpassede temaer. Slet ét, før du opretter et nyt.</string>
     <string name="watch_theme_name_required">Indtast et temanavn</string>
     <string name="watch_theme_name_duplicate">Et tema med dette navn findes allerede</string>
+
+    <string name="online_themes_title">Fællesskabstemaer</string>
+    <string name="online_theme_intro">Opdag udseender skabt af fællesskabet. Når du åbner dette galleri, downloades dets offentlige katalog.</string>
+    <string name="online_theme_refresh">Opdater fællesskabstemaer</string>
+    <string name="online_theme_list_description">Fællesskabsskabte urtemaer</string>
+    <string name="online_theme_byline">Af %1$s · layoutet %2$s</string>
+    <string name="online_theme_row_description">%1$s af %2$s. Layoutet %3$s.</string>
+    <string name="online_theme_apply">Tilføj og anvend</string>
+    <string name="online_theme_loading">Indlæser fællesskabstemaer…</string>
+    <string name="online_theme_loading_preview">Indlæser eksempel…</string>
+    <string name="online_theme_empty">Der er endnu ingen fællesskabstemaer tilgængelige.</string>
+    <string name="online_theme_load_error">Fællesskabstemaer kunne ikke indlæses. Kontrollér forbindelsen, og prøv igen.</string>
+    <string name="online_theme_retry">Prøv igen</string>
+    <string name="online_theme_installed">I MINE TEMAER</string>
+    <string name="online_theme_apply_success">%1$s blev føjet til Mine temaer og anvendt på dit ur</string>
+    <string name="online_theme_preview_error">Temadetaljer kunne ikke indlæses. Kontrollér forbindelsen, og prøv igen.</string>
+    <string name="online_theme_update_available">OPDATERING TILGÆNGELIG</string>
+    <string name="online_theme_requires_app_version">KRÆVER SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Dette tema vil gøre dine urindstillinger for store til at synkronisere. Nulstil indstillingerne for ubrugte urskiver, og prøv igen.</string>
 
     <string name="watch_theme_face_classic">Klassisk</string>
     <string name="watch_theme_face_expressive">Ekspressiv</string>

@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Layout: %1$s</string>
     <string name="watch_theme_preview_description">Preview ng theme na kasalukuyang naka-apply sa relo</string>
     <string name="watch_theme_create">Gumawa ng theme</string>
+    <string name="watch_theme_browse_community">Mag-browse ng mga theme ng komunidad</string>
     <string name="watch_theme_create_title">Gumawa ng bagong theme</string>
     <string name="watch_theme_rename_title">Palitan ang pangalan ng theme</string>
     <string name="watch_theme_name">Pangalan ng theme</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Maaari kang mag-save ng hanggang 24 custom na theme. Magtanggal muna ng isa bago gumawa ng panibago.</string>
     <string name="watch_theme_name_required">Maglagay ng pangalan ng theme</string>
     <string name="watch_theme_name_duplicate">May theme nang may ganitong pangalan</string>
+
+    <string name="online_themes_title">Mga theme ng komunidad</string>
+    <string name="online_theme_intro">Tuklasin ang mga itsurang ginawa ng komunidad. Ida-download ng pagbubukas sa gallery na ito ang pampublikong katalogo nito.</string>
+    <string name="online_theme_refresh">I-refresh ang mga theme ng komunidad</string>
+    <string name="online_theme_list_description">Mga watch theme na ginawa ng komunidad</string>
+    <string name="online_theme_byline">Ni %1$s · %2$s layout</string>
+    <string name="online_theme_row_description">%1$s ni %2$s. %3$s layout.</string>
+    <string name="online_theme_apply">Idagdag at i-apply</string>
+    <string name="online_theme_loading">Naglo-load ng mga theme ng komunidad…</string>
+    <string name="online_theme_loading_preview">Naglo-load ng preview…</string>
+    <string name="online_theme_empty">Wala pang available na theme ng komunidad.</string>
+    <string name="online_theme_load_error">Hindi ma-load ang mga theme ng komunidad. Suriin ang koneksyon at subukang muli.</string>
+    <string name="online_theme_retry">Subukan muli</string>
+    <string name="online_theme_installed">NASA MGA THEME KO</string>
+    <string name="online_theme_apply_success">Idinagdag ang %1$s sa Mga theme ko at na-apply sa relo mo</string>
+    <string name="online_theme_preview_error">Hindi ma-load ang mga detalye ng theme. Suriin ang koneksyon at subukang muli.</string>
+    <string name="online_theme_update_available">MAY AVAILABLE NA UPDATE</string>
+    <string name="online_theme_requires_app_version">KAILANGAN ANG SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Gagawing masyadong malaki ng theme na ito ang mga setting ng relo mo para ma-sync. I-reset ang mga setting ng hindi ginagamit na face at subukang muli.</string>
 
     <string name="watch_theme_face_classic">Classic</string>
     <string name="watch_theme_face_expressive">Expressive</string>

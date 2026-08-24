@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "09ea139e-8e25-443d-a065-09e8d10da102",
+  "name": "Afterglow Poster",
+  "author": "Svartifoss",
+  "baseFace": "poster",
+  "createdAt": 1787594181000,
+  "updatedAt": 1787594181000,
+  "revision": 1,
+  "minimumAppVersion": "3.3",
+  "publishedAt": "2026-08-24T00:00:00Z",
+  "settings": {
+    "wear_color_treatment": { "type": "string", "value": "duotone" },
+    "wear_color_modifier": { "type": "string", "value": "warm" },
+    "wear_color_hue_shift": { "type": "int", "value": 24 },
+    "wear_screen_theme": { "type": "string", "value": "cinema" },
+    "wear_clock_color_mode": { "type": "string", "value": "album" },
+    "album_art_dim_strength": { "type": "int", "value": 105 },
+    "wear_progress_gradient": { "type": "boolean", "value": true }
+  }
+}

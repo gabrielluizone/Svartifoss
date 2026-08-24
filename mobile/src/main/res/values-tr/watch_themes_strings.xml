@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Düzen: %1$s</string>
     <string name="watch_theme_preview_description">Şu anda saate uygulanan temanın önizlemesi</string>
     <string name="watch_theme_create">Tema oluştur</string>
+    <string name="watch_theme_browse_community">Topluluk temalarına göz at</string>
     <string name="watch_theme_create_title">Yeni tema oluştur</string>
     <string name="watch_theme_rename_title">Temayı yeniden adlandır</string>
     <string name="watch_theme_name">Tema adı</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">En fazla 24 özel tema kaydedebilirsiniz. Yenisini oluşturmadan önce birini silin.</string>
     <string name="watch_theme_name_required">Bir tema adı girin</string>
     <string name="watch_theme_name_duplicate">Bu adla bir tema zaten var</string>
+
+    <string name="online_themes_title">Topluluk temaları</string>
+    <string name="online_theme_intro">Topluluğun oluşturduğu görünümleri keşfedin. Bu galeriyi açmak herkese açık kataloğunu indirir.</string>
+    <string name="online_theme_refresh">Topluluk temalarını yenile</string>
+    <string name="online_theme_list_description">Topluluk tarafından oluşturulan saat temaları</string>
+    <string name="online_theme_byline">%1$s tarafından · %2$s düzeni</string>
+    <string name="online_theme_row_description">%1$s, %2$s tarafından. %3$s düzeni.</string>
+    <string name="online_theme_apply">Ekle ve uygula</string>
+    <string name="online_theme_loading">Topluluk temaları yükleniyor…</string>
+    <string name="online_theme_loading_preview">Önizleme yükleniyor…</string>
+    <string name="online_theme_empty">Henüz kullanılabilir topluluk teması yok.</string>
+    <string name="online_theme_load_error">Topluluk temaları yüklenemedi. Bağlantınızı kontrol edin ve tekrar deneyin.</string>
+    <string name="online_theme_retry">Tekrar dene</string>
+    <string name="online_theme_installed">TEMALARIMDA</string>
+    <string name="online_theme_apply_success">%1$s, Temalarıma eklendi ve saatinize uygulandı</string>
+    <string name="online_theme_preview_error">Tema ayrıntıları yüklenemedi. Bağlantınızı kontrol edin ve tekrar deneyin.</string>
+    <string name="online_theme_update_available">GÜNCELLEME MEVCUT</string>
+    <string name="online_theme_requires_app_version">SVARTIFOSS %1$s GEREKİR</string>
+    <string name="online_theme_sync_limit">Bu tema, saat ayarlarınızı senkronizasyon için fazla büyük hâle getirir. Kullanılmayan kadranların ayarlarını sıfırlayıp tekrar deneyin.</string>
 
     <string name="watch_theme_face_classic">Klasik</string>
     <string name="watch_theme_face_expressive">Expressive</string>

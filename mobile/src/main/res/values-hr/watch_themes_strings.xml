@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Raspored: %1$s</string>
     <string name="watch_theme_preview_description">Pregled teme koja je trenutačno primijenjena na satu</string>
     <string name="watch_theme_create">Izradi temu</string>
+    <string name="watch_theme_browse_community">Pregledajte teme zajednice</string>
     <string name="watch_theme_create_title">Izradi novu temu</string>
     <string name="watch_theme_rename_title">Preimenuj temu</string>
     <string name="watch_theme_name">Naziv teme</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Možete spremiti do 24 prilagođene teme. Izbrišite jednu prije izrade nove.</string>
     <string name="watch_theme_name_required">Unesite naziv teme</string>
     <string name="watch_theme_name_duplicate">Tema s ovim nazivom već postoji</string>
+
+    <string name="online_themes_title">Teme zajednice</string>
+    <string name="online_theme_intro">Otkrijte izglede koje je izradila zajednica. Otvaranjem ove galerije preuzima se njezin javni katalog.</string>
+    <string name="online_theme_refresh">Osvježi teme zajednice</string>
+    <string name="online_theme_list_description">Teme sata koje je izradila zajednica</string>
+    <string name="online_theme_byline">Autor: %1$s · raspored %2$s</string>
+    <string name="online_theme_row_description">%1$s autora %2$s. Raspored %3$s.</string>
+    <string name="online_theme_apply">Dodaj i primijeni</string>
+    <string name="online_theme_loading">Učitavanje tema zajednice…</string>
+    <string name="online_theme_loading_preview">Učitavanje pretpregleda…</string>
+    <string name="online_theme_empty">Još nema dostupnih tema zajednice.</string>
+    <string name="online_theme_load_error">Teme zajednice nije moguće učitati. Provjerite vezu i pokušajte ponovno.</string>
+    <string name="online_theme_retry">Pokušajte ponovno</string>
+    <string name="online_theme_installed">U MOJIM TEMAMA</string>
+    <string name="online_theme_apply_success">%1$s je dodana u Moje teme i primijenjena na vaš sat</string>
+    <string name="online_theme_preview_error">Pojedinosti teme nije moguće učitati. Provjerite vezu i pokušajte ponovno.</string>
+    <string name="online_theme_update_available">DOSTUPNO JE AŽURIRANJE</string>
+    <string name="online_theme_requires_app_version">ZAHTIJEVA SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Ova bi tema učinila postavke vašeg sata prevelikima za sinkronizaciju. Resetirajte postavke nekorištenih brojčanika i pokušajte ponovno.</string>
 
     <string name="watch_theme_face_classic">Klasično</string>
     <string name="watch_theme_face_expressive">Ekspresivno</string>

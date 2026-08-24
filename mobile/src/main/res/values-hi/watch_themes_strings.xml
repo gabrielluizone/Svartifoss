@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">लेआउट: %1$s</string>
     <string name="watch_theme_preview_description">घड़ी पर अभी लागू थीम का पूर्वावलोकन</string>
     <string name="watch_theme_create">थीम बनाएँ</string>
+    <string name="watch_theme_browse_community">कम्युनिटी थीम ब्राउज़ करें</string>
     <string name="watch_theme_create_title">नई थीम बनाएँ</string>
     <string name="watch_theme_rename_title">थीम का नाम बदलें</string>
     <string name="watch_theme_name">थीम का नाम</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">आप अधिकतम 24 कस्टम थीम सहेज सकते हैं। दूसरी बनाने से पहले एक हटाएँ।</string>
     <string name="watch_theme_name_required">थीम का नाम दर्ज करें</string>
     <string name="watch_theme_name_duplicate">इस नाम की थीम पहले से मौजूद है</string>
+
+    <string name="online_themes_title">कम्युनिटी थीम</string>
+    <string name="online_theme_intro">कम्युनिटी द्वारा बनाए गए लुक खोजें। इस गैलरी को खोलने पर इसका सार्वजनिक कैटलॉग डाउनलोड होता है।</string>
+    <string name="online_theme_refresh">कम्युनिटी थीम रीफ़्रेश करें</string>
+    <string name="online_theme_list_description">कम्युनिटी द्वारा बनाई गई घड़ी की थीम</string>
+    <string name="online_theme_byline">%1$s द्वारा · %2$s लेआउट</string>
+    <string name="online_theme_row_description">%1$s, %2$s द्वारा। %3$s लेआउट।</string>
+    <string name="online_theme_apply">जोड़ें और लागू करें</string>
+    <string name="online_theme_loading">कम्युनिटी थीम लोड हो रही हैं…</string>
+    <string name="online_theme_loading_preview">पूर्वावलोकन लोड हो रहा है…</string>
+    <string name="online_theme_empty">अभी कोई कम्युनिटी थीम उपलब्ध नहीं है।</string>
+    <string name="online_theme_load_error">कम्युनिटी थीम लोड नहीं हो सकीं। अपना कनेक्शन जांचें और फिर कोशिश करें।</string>
+    <string name="online_theme_retry">फिर कोशिश करें</string>
+    <string name="online_theme_installed">मेरी थीम में</string>
+    <string name="online_theme_apply_success">%1$s को मेरी थीम में जोड़ा गया और आपकी घड़ी पर लागू किया गया</string>
+    <string name="online_theme_preview_error">थीम का विवरण लोड नहीं हो सका। अपना कनेक्शन जांचें और फिर कोशिश करें।</string>
+    <string name="online_theme_update_available">अपडेट उपलब्ध है</string>
+    <string name="online_theme_requires_app_version">SVARTIFOSS %1$s आवश्यक है</string>
+    <string name="online_theme_sync_limit">इस थीम से आपकी घड़ी की सेटिंग सिंक करने के लिए बहुत बड़ी हो जाएँगी। इस्तेमाल न किए गए वॉच फ़ेस की सेटिंग रीसेट करें और फिर कोशिश करें।</string>
 
     <string name="watch_theme_face_classic">क्लासिक</string>
     <string name="watch_theme_face_expressive">एक्सप्रेसिव</string>

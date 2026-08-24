@@ -10,6 +10,7 @@
     <string name="watch_theme_active_layout">Aspect: %1$s</string>
     <string name="watch_theme_preview_description">Previzualizare a temei aplicate în prezent ceasului</string>
     <string name="watch_theme_create">Creează temă</string>
+    <string name="watch_theme_browse_community">Răsfoiește temele comunității</string>
     <string name="watch_theme_create_title">Creează o temă nouă</string>
     <string name="watch_theme_rename_title">Redenumește tema</string>
     <string name="watch_theme_name">Nume temă</string>
@@ -37,6 +38,25 @@
     <string name="watch_theme_limit_reached">Puteți salva până la 24 de teme personalizate. Ștergeți una înainte de a crea alta.</string>
     <string name="watch_theme_name_required">Introduceți un nume pentru temă</string>
     <string name="watch_theme_name_duplicate">Există deja o temă cu acest nume</string>
+
+    <string name="online_themes_title">Teme ale comunității</string>
+    <string name="online_theme_intro">Descoperă aspecte create de comunitate. Deschiderea acestei galerii descarcă catalogul său public.</string>
+    <string name="online_theme_refresh">Reîmprospătează temele comunității</string>
+    <string name="online_theme_list_description">Teme de ceas create de comunitate</string>
+    <string name="online_theme_byline">De %1$s · aspect %2$s</string>
+    <string name="online_theme_row_description">%1$s de %2$s. Aspect %3$s.</string>
+    <string name="online_theme_apply">Adaugă și aplică</string>
+    <string name="online_theme_loading">Se încarcă temele comunității…</string>
+    <string name="online_theme_loading_preview">Se încarcă previzualizarea…</string>
+    <string name="online_theme_empty">Încă nu sunt disponibile teme ale comunității.</string>
+    <string name="online_theme_load_error">Temele comunității nu au putut fi încărcate. Verifică conexiunea și încearcă din nou.</string>
+    <string name="online_theme_retry">Încearcă din nou</string>
+    <string name="online_theme_installed">ÎN TEMELE MELE</string>
+    <string name="online_theme_apply_success">%1$s a fost adăugat la Temele mele și aplicat pe ceas</string>
+    <string name="online_theme_preview_error">Nu s-au putut încărca detaliile temei. Verifică conexiunea și încearcă din nou.</string>
+    <string name="online_theme_update_available">ACTUALIZARE DISPONIBILĂ</string>
+    <string name="online_theme_requires_app_version">NECESITĂ SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Această temă ar face setările ceasului prea mari pentru sincronizare. Resetează setările fețelor de ceas nefolosite și încearcă din nou.</string>
 
     <string name="watch_theme_face_classic">Clasic</string>
     <string name="watch_theme_face_expressive">Expresiv</string>

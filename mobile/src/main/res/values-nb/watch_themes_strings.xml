@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Oppsett: %1$s</string>
     <string name="watch_theme_preview_description">Forhåndsvisning av temaet som for øyeblikket brukes på klokken</string>
     <string name="watch_theme_create">Opprett tema</string>
+    <string name="watch_theme_browse_community">Bla gjennom fellesskapstemaer</string>
     <string name="watch_theme_create_title">Opprett et nytt tema</string>
     <string name="watch_theme_rename_title">Gi tema nytt navn</string>
     <string name="watch_theme_name">Temanavn</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Du kan lagre opptil 24 egendefinerte temaer. Slett ett før du oppretter et nytt.</string>
     <string name="watch_theme_name_required">Skriv inn et temanavn</string>
     <string name="watch_theme_name_duplicate">Et tema med dette navnet finnes allerede</string>
+
+    <string name="online_themes_title">Fellesskapstemaer</string>
+    <string name="online_theme_intro">Oppdag utseender laget av fellesskapet. Når du åpner dette galleriet, lastes den offentlige katalogen ned.</string>
+    <string name="online_theme_refresh">Oppdater fellesskapstemaer</string>
+    <string name="online_theme_list_description">Klokketemaer laget av fellesskapet</string>
+    <string name="online_theme_byline">Av %1$s · %2$s-oppsett</string>
+    <string name="online_theme_row_description">%1$s av %2$s. %3$s-oppsett.</string>
+    <string name="online_theme_apply">Legg til og bruk</string>
+    <string name="online_theme_loading">Laster inn fellesskapstemaer…</string>
+    <string name="online_theme_loading_preview">Laster inn forhåndsvisning…</string>
+    <string name="online_theme_empty">Ingen fellesskapstemaer er tilgjengelige ennå.</string>
+    <string name="online_theme_load_error">Kunne ikke laste inn fellesskapstemaer. Kontroller tilkoblingen og prøv igjen.</string>
+    <string name="online_theme_retry">Prøv igjen</string>
+    <string name="online_theme_installed">I MINE TEMAER</string>
+    <string name="online_theme_apply_success">%1$s ble lagt til i Mine temaer og brukt på klokken din</string>
+    <string name="online_theme_preview_error">Kunne ikke laste inn temadetaljer. Kontroller tilkoblingen og prøv igjen.</string>
+    <string name="online_theme_update_available">OPPDATERING TILGJENGELIG</string>
+    <string name="online_theme_requires_app_version">KREVER SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Dette temaet vil gjøre klokkeinnstillingene dine for store til å synkronisere. Tilbakestill innstillingene for ubrukte urskiver og prøv igjen.</string>
 
     <string name="watch_theme_face_classic">Klassisk</string>
     <string name="watch_theme_face_expressive">Uttrykksfull</string>

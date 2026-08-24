@@ -30,6 +30,8 @@ import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
 import timber.log.Timber
 import com.svartifoss.snfell.view.settings.WatchFontCatalog
+import com.svartifoss.snfell.view.watchface.theme.WatchThemeProfile
+import com.svartifoss.snfell.view.watchface.theme.WatchThemeValue
 import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -116,6 +118,8 @@ class WatchPreviewView @JvmOverloads constructor(
         const val WATCH_DP = 192f
         const val SAMPLE_PROGRESS = 0.35f
         const val SAMPLE_VOLUME = 0.65f
+        /** A deliberately non-personal time for the Firestore moderation thumbnail. */
+        const val MODERATION_PREVIEW_CLOCK = "10:09"
 
         const val TERMINAL_GREEN = 0xFF33FF66.toInt()
         const val MATERIAL_SURFACE = 0xFF2A2A2A.toInt()
@@ -201,6 +205,22 @@ class WatchPreviewView @JvmOverloads constructor(
     private var sampleOverlayArtBlurred: Bitmap? = null
     private var sampleAlternateArt: Bitmap? = null
     private var sampleAlternateArtBlurred: Bitmap? = null
+
+    /**
+     * An in-memory profile supplied by the online gallery. It deliberately never materializes into
+     * the default preference file: gallery cards may render many profiles before the user decides
+     * to install one. While present, [readPreferenceSnapshot] reads only this profile's appearance
+     * values (falling back to built-in defaults for a malformed/incomplete input) and all media
+     * accessors use the bundled sample track rather than the user's current playback.
+     */
+    private var themeProfile: WatchThemeProfile? = null
+
+    /**
+     * When set, replaces the device clock everywhere it appears in this preview. This exists only
+     * for the uploaded moderation thumbnail: its pixels must not reveal the author's local time
+     * or 12/24-hour preference.
+     */
+    private var moderationPreviewMode = false
 
     // --- Live now-playing data (see setNowPlaying()/setPlayback()) ---
     private var nowPlayingSource: Bitmap? = null
@@ -503,6 +523,36 @@ class WatchPreviewView @JvmOverloads constructor(
         refresh()
     }
 
+    /**
+     * Previews a complete theme profile without applying it or writing any default preferences.
+     *
+     * This is the gallery entry point: it isolates the supplied settings from the user's active
+     * appearance and deliberately uses the bundled sample art/title/playback state, so browsing
+     * does not reveal or depend on the currently playing track. [clearThemeProfile] restores the
+     * normal default-preference and live-media preview.
+     */
+    fun setThemeProfile(profile: WatchThemeProfile) {
+        themeProfile = profile
+        candidateActive = false
+        candidateKey = null
+        candidateValue = null
+        focusedPreference = null
+        surface = PreviewSurface.PLAYER
+        readPreferenceSnapshot()
+    }
+
+    /** Enables the non-personal, fixed clock and animation phase used in a moderation thumbnail. */
+    fun setModerationPreviewMode(enabled: Boolean) {
+        moderationPreviewMode = enabled
+        invalidate()
+    }
+
+    /** Clears a profile supplied through [setThemeProfile] and returns to the active preferences. */
+    fun clearThemeProfile() {
+        themeProfile = null
+        refresh()
+    }
+
     /** Selects the representative surface for a whole Watch tab section. */
     fun showSection(section: String) {
         candidateActive = false
@@ -590,16 +640,22 @@ class WatchPreviewView @JvmOverloads constructor(
         val previousAlbumBlur = albumBlurRadius
         val previousOverlayBlur = overlayBlurRadius
 
-        val persistedContext = ThemeAppearance.resolve(prefs)
-        face = ThemeAppearance.normalizeBaseFace(
-                candidateFor("wear_screen_face")?.toString() ?: persistedContext.baseFace)
-        appearanceScope = if (FaceScopedPreferences.scopeFor(persistedContext) ==
-                ThemeAppearance.CUSTOM_SCOPE) {
-            ThemeAppearance.CUSTOM_SCOPE
+        val suppliedProfile = themeProfile
+        if (suppliedProfile != null) {
+            face = ThemeAppearance.normalizeBaseFace(suppliedProfile.baseFace)
+            appearanceScope = ThemeAppearance.CUSTOM_SCOPE
         } else {
-            // While the layout dialog is open, its candidate should preview the candidate's own
-            // built-in namespace before Android commits wear_screen_face.
-            face
+            val persistedContext = ThemeAppearance.resolve(prefs)
+            face = ThemeAppearance.normalizeBaseFace(
+                    candidateFor("wear_screen_face")?.toString() ?: persistedContext.baseFace)
+            appearanceScope = if (FaceScopedPreferences.scopeFor(persistedContext) ==
+                    ThemeAppearance.CUSTOM_SCOPE) {
+                ThemeAppearance.CUSTOM_SCOPE
+            } else {
+                // While the layout dialog is open, its candidate should preview the candidate's own
+                // built-in namespace before Android commits wear_screen_face.
+                face
+            }
         }
         expressiveSeekMode = readString("wear_expressive_seek_mode", "central")
         playerControlsVisible = readBoolean("wear_classic_icons_visible", true)
@@ -627,9 +683,17 @@ class WatchPreviewView @JvmOverloads constructor(
         // Mirror the watch: numeric percentage is the live source; a legacy named level migrates
         // in only when the user never touched the numeric slider (see resolveShadingMultiplier).
         val hasNumericShading = candidateFor("album_art_dim_strength") != null ||
-                prefs.contains(effectiveKey("album_art_dim_strength"))
+                if (suppliedProfile != null) {
+                    suppliedProfile.settings["album_art_dim_strength"] is WatchThemeValue.Number
+                } else {
+                    prefs.contains(effectiveKey("album_art_dim_strength"))
+                }
         val hasNamedShading = candidateFor("wear_player_shading_intensity") != null ||
-                prefs.contains(effectiveKey("wear_player_shading_intensity"))
+                if (suppliedProfile != null) {
+                    suppliedProfile.settings["wear_player_shading_intensity"] is WatchThemeValue.Text
+                } else {
+                    prefs.contains(effectiveKey("wear_player_shading_intensity"))
+                }
         val shadingPercent = if (!hasNumericShading && hasNamedShading) {
             PlayerShadingIntensity.percentFor(readString("wear_player_shading_intensity", "balanced"))
         } else {
@@ -751,7 +815,7 @@ class WatchPreviewView @JvmOverloads constructor(
         // The live accent is extracted once per bitmap, so a changed accent *source* would
         // otherwise not show until the track changed - the preview would keep reporting the colour
         // the previous source picked, which is exactly the setting the user is watching.
-        if (albumAccentSource != liveAccentSource) {
+        if (suppliedProfile == null && albumAccentSource != liveAccentSource) {
             extractLiveAccent(liveArt ?: nowPlayingSource)
         }
         invalidate()
@@ -806,10 +870,11 @@ class WatchPreviewView @JvmOverloads constructor(
         if (focusedPreference == "wear_track_time_mode") {
             return trackTimeMode != "paused"
         }
-        return livePlaying ?: true
+        return if (themeProfile != null) true else livePlaying ?: true
     }
 
     private fun progressFraction(): Float = if (
+            themeProfile == null &&
             (surface == PreviewSurface.PLAYER ||
                     surface == PreviewSurface.MINI_BUTTONS ||
                     surface == PreviewSurface.AOD) && liveDurationMs > 0
@@ -819,7 +884,7 @@ class WatchPreviewView @JvmOverloads constructor(
         SAMPLE_PROGRESS
     }
 
-    private fun timeText(): String = if (liveDurationMs > 0) {
+    private fun timeText(): String = if (themeProfile == null && liveDurationMs > 0) {
         "${formatTime(livePositionMs.coerceAtLeast(0))} / ${formatTime(liveDurationMs)}"
     } else {
         "1:07 / 3:12"
@@ -926,6 +991,25 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun candidateFor(key: String): Any? =
             if (candidateActive && candidateKey == key) candidateValue else null
 
+    /** The complete supplied profile wins over the active default preferences, but dialog
+     * candidates still win over both so the existing preference editor remains live-previewable. */
+    private fun profileValue(key: String): WatchThemeValue? = themeProfile?.settings?.get(key)
+
+    /** Gallery profiles are intentionally rendered against the same deterministic sample media
+     * regardless of whether this View was previously fed a real media session. */
+    private fun displayedArt(): Bitmap? =
+            if (themeProfile != null) sampleArt else liveArt ?: sampleArt
+
+    private fun displayedBlurredArt(): Bitmap? =
+            if (themeProfile != null) sampleArtBlurred else liveArtBlurred ?: sampleArtBlurred
+
+    private fun displayedOverlayBlurredArt(): Bitmap? =
+            if (themeProfile != null) sampleOverlayArtBlurred
+            else liveOverlayArtBlurred ?: sampleOverlayArtBlurred
+
+    private fun displayedSourceArt(): Bitmap? =
+            if (themeProfile != null) sampleArt else nowPlayingSource ?: sampleArt
+
     /** Appearance keys are stored scoped per face ("<baseKey>@<face>"). Resolves the key actually
      *  present for the current [face]: the scoped entry if set, else the scoped key itself when a
      *  per-face default exists (so [scopedDefault] below wins over any pre-existing *global*
@@ -933,6 +1017,9 @@ class WatchPreviewView @JvmOverloads constructor(
      *  else the scoped key again (both absent -> the supplied default is used). Non-scoped keys
      *  pass through untouched. */
     private fun effectiveKey(baseKey: String): String {
+        // Profile preview never reaches into the user's active namespace. The readers below
+        // consume [profileValue] directly; this branch also protects any future contains() caller.
+        if (themeProfile != null) return baseKey
         if (!FaceScopedPreferences.isScoped(baseKey)) return baseKey
         val scoped = FaceScopedPreferences.scopedKey(baseKey, appearanceScope)
         // A custom snapshot must never inherit a mutable base preset or a legacy global. Missing
@@ -979,6 +1066,9 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun readString(key: String, default: String): String {
         candidateFor(key)?.let { return it.toString() }
         val resolvedDefault = scopedDefault(key, default)
+        if (themeProfile != null) {
+            return (profileValue(key) as? WatchThemeValue.Text)?.value ?: resolvedDefault
+        }
         val readKey = effectiveKey(key)
         return try {
             prefs.getString(readKey, resolvedDefault) ?: resolvedDefault
@@ -996,6 +1086,9 @@ class WatchPreviewView @JvmOverloads constructor(
             }
         }
         val resolvedDefault = scopedDefaultBoolean(key, default)
+        if (themeProfile != null) {
+            return (profileValue(key) as? WatchThemeValue.Flag)?.value ?: resolvedDefault
+        }
         val readKey = effectiveKey(key)
         return try {
             prefs.getBoolean(readKey, resolvedDefault)
@@ -1013,6 +1106,9 @@ class WatchPreviewView @JvmOverloads constructor(
             }
         }
         val resolvedDefault = scopedDefaultInt(key, default)
+        if (themeProfile != null) {
+            return (profileValue(key) as? WatchThemeValue.Number)?.value ?: resolvedDefault
+        }
         val readKey = effectiveKey(key)
         return try {
             prefs.getInt(readKey, resolvedDefault)
@@ -1107,7 +1203,7 @@ class WatchPreviewView @JvmOverloads constructor(
      * preference sync.
      */
     private fun frostedPreviewArt(): Bitmap? {
-        val base = liveArt ?: sampleArt ?: return null
+        val base = displayedArt() ?: return null
         if (frostedPreviewSource === base && frostedPreviewRadius == albumBlurRadius) {
             frostedPreviewArt?.takeIf { !it.isRecycled }?.let { return it }
         }
@@ -1146,7 +1242,8 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun parseHexOrNull(hex: String): Int? =
             if (hex.isBlank()) null else try { Color.parseColor(hex) } catch (ignored: Exception) { null }
 
-    private fun rawAlbumAccent(): Int = liveAccent ?: SAMPLE_ALBUM_ACCENT
+    private fun rawAlbumAccent(): Int =
+            if (themeProfile != null) SAMPLE_ALBUM_ACCENT else liveAccent ?: SAMPLE_ALBUM_ACCENT
 
     /**
      * The face-wide palette, mirroring `MainActivity.applyAccentColor` on the watch. Both sides
@@ -1197,7 +1294,11 @@ class WatchPreviewView @JvmOverloads constructor(
 
     private fun displayTitle(): String {
         if (!showTrackTitle) return ""
-        val title = nowPlayingTitle ?: context.getString(R.string.preview_sample_title)
+        val title = if (themeProfile != null) {
+            context.getString(R.string.preview_sample_title)
+        } else {
+            nowPlayingTitle ?: context.getString(R.string.preview_sample_title)
+        }
         return if (focusedPreference == "wear_title_text_mode") {
             "$title · $title · $title"
         } else {
@@ -1206,7 +1307,11 @@ class WatchPreviewView @JvmOverloads constructor(
     }
 
     private fun displayArtist(): String = if (showTrackArtist) {
-        nowPlayingArtist ?: context.getString(R.string.preview_sample_artist)
+        if (themeProfile != null) {
+            context.getString(R.string.preview_sample_artist)
+        } else {
+            nowPlayingArtist ?: context.getString(R.string.preview_sample_artist)
+        }
     } else {
         ""
     }
@@ -1229,7 +1334,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val gap = availWidth * 0.4f
         val period = textWidth + gap
         val speedPxPerSecond = availWidth / 4f
-        val phase = (SystemClock.uptimeMillis() % 3_600_000L) / 1000f * speedPxPerSecond % period
+        val phase = (previewAnimationTimeMillis() % 3_600_000L) / 1000f * speedPxPerSecond % period
 
         val left = cx - availWidth / 2f
         canvas.save()
@@ -1454,16 +1559,16 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun resolveTertiaryTint(mode: String, custom: String, legacyDesaturated: Boolean): Int =
             surfaceTriad(mode, custom, legacyDesaturated).tertiary
 
-    private fun rawSecondaryAccent(): Int = if (liveAccent != null) {
-        liveSecondaryAccent ?: sameHueTone(liveAccent!!, .42f)
-    } else {
-        SAMPLE_ALBUM_SECONDARY
+    private fun rawSecondaryAccent(): Int = when {
+        themeProfile != null -> SAMPLE_ALBUM_SECONDARY
+        liveAccent != null -> liveSecondaryAccent ?: sameHueTone(liveAccent!!, .42f)
+        else -> SAMPLE_ALBUM_SECONDARY
     }
 
-    private fun rawTertiaryAccent(): Int = if (liveAccent != null) {
-        liveTertiaryAccent ?: sameHueTone(liveAccent!!, .68f)
-    } else {
-        SAMPLE_ALBUM_TERTIARY
+    private fun rawTertiaryAccent(): Int = when {
+        themeProfile != null -> SAMPLE_ALBUM_TERTIARY
+        liveAccent != null -> liveTertiaryAccent ?: sameHueTone(liveAccent!!, .68f)
+        else -> SAMPLE_ALBUM_TERTIARY
     }
 
     /** The raw (untreated) album accent triple currently driving this preview, with the same
@@ -1548,7 +1653,7 @@ class WatchPreviewView @JvmOverloads constructor(
             topFraction: Float,
             bottomFraction: Float
     ): Float? {
-        val art = liveArt ?: sampleArt ?: return null
+        val art = displayedArt() ?: return null
         val w = art.width
         val h = art.height
         if (w <= 0 || h <= 0) return null
@@ -1758,19 +1863,19 @@ class WatchPreviewView @JvmOverloads constructor(
                 val second = if (blurred) sampleAlternateArtBlurred else sampleAlternateArt
                 drawFadeDemonstration(canvas, first, second, geometry.bounds, grayscale)
             } else if (backgroundStyle.squareCornerRadiusFraction != null) {
-                drawArtwork(canvas, liveArtBlurred ?: sampleArtBlurred, geometry.bounds, 255, grayscale = false)
+                drawArtwork(canvas, displayedBlurredArt(), geometry.bounds, 255, grayscale = false)
                 // The true original source, not liveArt - that copy is already center-cropped to
                 // a square for every other style's use, which would silently defeat the "never
                 // crop" point of this one for any source that isn't already square.
                 drawSquareInsetArtwork(
-                        canvas, nowPlayingSource ?: sampleArt, geometry.bounds,
+                        canvas, displayedSourceArt(), geometry.bounds,
                         backgroundStyle.squareCornerRadiusFraction ?: 0.10f
                 )
             } else {
                 val art = when {
                     backgroundStyle.frostedEdges -> frostedPreviewArt()
-                    blurred -> liveArtBlurred ?: sampleArtBlurred
-                    else -> liveArt ?: sampleArt
+                    blurred -> displayedBlurredArt()
+                    else -> displayedArt()
                 }
                 drawArtwork(canvas, art, geometry.bounds, 255, grayscale)
             }
@@ -2173,7 +2278,7 @@ class WatchPreviewView @JvmOverloads constructor(
             grayscale: Boolean
     ) {
         val halfCycle = 1800L
-        val cycle = SystemClock.uptimeMillis() % (halfCycle * 2L)
+        val cycle = previewAnimationTimeMillis() % (halfCycle * 2L)
         val reverse = cycle >= halfCycle
         val local = cycle % halfCycle
         val transition = if (albumArtFade) {
@@ -2290,9 +2395,9 @@ class WatchPreviewView @JvmOverloads constructor(
             drawArtwork(
                     canvas,
                     if (artwork.blurred) {
-                        liveArtBlurred ?: sampleArtBlurred
+                        displayedBlurredArt()
                     } else {
-                        liveArt ?: sampleArt
+                        displayedArt()
                     },
                     geometry.bounds,
                     ambientArtOpacity * 255 / 100,
@@ -2320,9 +2425,7 @@ class WatchPreviewView @JvmOverloads constructor(
             baseline: Float,
             dp: (Float) -> Float
     ) {
-        val pattern = if (android.text.format.DateFormat.is24HourFormat(context)) "HH:mm" else "h:mm"
-        val time = java.text.SimpleDateFormat(pattern, java.util.Locale.getDefault())
-                .format(java.util.Date())
+        val time = previewClockText()
         textPaint.style = Paint.Style.FILL
         textPaint.typeface = fontRegular
         textPaint.textAlign = Paint.Align.CENTER
@@ -2338,9 +2441,7 @@ class WatchPreviewView @JvmOverloads constructor(
         // the artist (with the app glyph), as a centred column on black.
         textPaint.textAlign = Paint.Align.CENTER
         if (aodShowClock) {
-            val pattern = if (android.text.format.DateFormat.is24HourFormat(context)) "HH:mm" else "h:mm"
-            val time = java.text.SimpleDateFormat(pattern, java.util.Locale.getDefault())
-                    .format(java.util.Date())
+            val time = previewClockText()
             textPaint.style = Paint.Style.FILL
             textPaint.typeface = clockTypeface()
             textPaint.textSize = dp(40f)
@@ -2989,7 +3090,7 @@ class WatchPreviewView @JvmOverloads constructor(
         if (forceBlur || style == "glass" || style == "frost") {
             drawArtwork(
                     canvas,
-                    liveOverlayArtBlurred ?: sampleOverlayArtBlurred,
+                    displayedOverlayBlurredArt(),
                     geometry.bounds,
                     255
             )
@@ -3045,7 +3146,7 @@ class WatchPreviewView @JvmOverloads constructor(
         if (backdrop.usesAlbumBlur) {
             drawArtwork(
                     canvas,
-                    liveOverlayArtBlurred ?: sampleOverlayArtBlurred,
+                    displayedOverlayBlurredArt(),
                     geometry.bounds,
                     255
             )
@@ -3053,7 +3154,7 @@ class WatchPreviewView @JvmOverloads constructor(
             // The one backdrop that composes over the *sharp* cover. On the watch this comes for
             // free from the player's album-art View sitting under the overlay group; the preview
             // has no layer stack, so it draws the same bitmap here explicitly.
-            drawArtwork(canvas, liveArt ?: sampleArt, geometry.bounds, 255)
+            drawArtwork(canvas, displayedArt(), geometry.bounds, 255)
         }
 
         fillPaint.shader = null
@@ -4193,7 +4294,7 @@ class WatchPreviewView @JvmOverloads constructor(
      *  same horizontal scrim the watch uses (see QueueScreen.coverScrim) so the title stays
      *  readable over arbitrary artwork. */
     private fun drawQueueCover(canvas: Canvas, rect: RectF, corner: Float) {
-        val art = liveArt ?: sampleArt ?: return
+        val art = displayedArt() ?: return
         val save = canvas.save()
         val clip = Path().apply { addRoundRect(rect, corner, corner, Path.Direction.CW) }
         canvas.clipPath(clip)
@@ -5004,17 +5105,27 @@ class WatchPreviewView @JvmOverloads constructor(
                 (Color.alpha(resolved) * alpha).toInt().coerceIn(0, 255)
         )
         textPaint.textSize = dp(clockTypographySpec.scaled(13f))
-        // Real wall-clock time, like the watch (which follows the system 12/24h setting and
-        // never appends AM/PM). Minute precision is enough - the preview redraws often enough
-        // while playing, and a stale minute at rest is harmless.
-        val pattern = if (android.text.format.DateFormat.is24HourFormat(context)) "HH:mm" else "h:mm"
-        val time = java.text.SimpleDateFormat(pattern, java.util.Locale.getDefault())
-                .format(java.util.Date())
+        val time = previewClockText()
         canvas.drawText(time, x, y, textPaint)
         // textPaint is shared across the whole preview; leaving the clock's tracking on it would
         // silently space out whatever draws next.
         textPaint.letterSpacing = 0f
     }
+
+    /**
+     * Uses the real wall clock for an interactive preview, except for the isolated moderation
+     * thumbnail where a fixed value prevents personal device state from leaving the phone.
+     */
+    private fun previewClockText(): String {
+        if (moderationPreviewMode) return MODERATION_PREVIEW_CLOCK
+        val pattern = if (android.text.format.DateFormat.is24HourFormat(context)) "HH:mm" else "h:mm"
+        return java.text.SimpleDateFormat(pattern, java.util.Locale.getDefault())
+                .format(java.util.Date())
+    }
+
+    /** The moderation bitmap must not vary with a device's current animation phase. */
+    private fun previewAnimationTimeMillis(): Long =
+            if (moderationPreviewMode) 0L else SystemClock.uptimeMillis()
 
     private data class PreviewMiniGeometry(
             val compact: Boolean,
@@ -5770,7 +5881,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
         drawPlayerShading(canvas, geometry.bounds, cx, cy, radius)
 
-        val art = liveArt ?: sampleArt
+        val art = displayedArt()
         val shape = CarouselCardShape.fromPreference(carouselCardShape)
         val railCenterY = screenTop + screen * CAROUSEL_RAIL_CENTER
 
@@ -5996,7 +6107,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val avatarRect = RectF(
                 bubbleLeft + dp(6f), (bubbleTop + bubbleBottom) / 2f - avatarSize / 2f,
                 bubbleLeft + dp(6f) + avatarSize, (bubbleTop + bubbleBottom) / 2f + avatarSize / 2f)
-        val art = liveArt ?: sampleArt
+        val art = displayedArt()
         canvas.save()
         canvas.clipPath(Path().apply { addOval(avatarRect, Path.Direction.CW) })
         if (art != null) {
@@ -6313,7 +6424,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
         // Cover, small on purpose: this is the one face where the artwork is the caption and the
         // table is the subject.
-        val art = liveArt ?: sampleArt
+        val art = displayedArt()
         if (art != null) {
             val side = screen * .17f
             val rect = RectF(cx - side / 2f, y, cx + side / 2f, y + side)
@@ -6369,10 +6480,10 @@ class WatchPreviewView @JvmOverloads constructor(
      */
     private fun previewMetadataRows(): List<Pair<String, String>> {
         val rows = mutableListOf<Pair<String, String>>()
-        val appearance = ThemeAppearance.resolve(prefs)
-        fun group(group: TrackMetadataFields.Group): Boolean =
-                FaceScopedPreferences.getBoolean(
-                        prefs, MiscPreferences.metadataGroupPreference(group), appearance)
+        fun group(group: TrackMetadataFields.Group): Boolean {
+            val definition = MiscPreferences.metadataGroupPreference(group)
+            return readBoolean(definition.key, definition.defaultValue)
+        }
         if (group(TrackMetadataFields.Group.CORE)) {
             rows.add(resources.getString(R.string.preview_metadata_album) to
                     resources.getString(R.string.preview_metadata_album_value))
@@ -6437,7 +6548,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val lineHeight = dp(19f)
         val blockHeight = discSize + blockGap + lineHeight
         val discCy = cy - blockHeight / 2f + discSize / 2f
-        val art = liveArt ?: sampleArt
+        val art = displayedArt()
         val discRect = RectF(
                 cx - discSize / 2f, discCy - discSize / 2f,
                 cx + discSize / 2f, discCy + discSize / 2f)
@@ -6540,7 +6651,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val screenRect = RectF(cx - radius, screenTop, cx + radius, cy + radius)
         val coverRect = RectF(cx - radius, screenTop, cx + radius, seamY)
         val panelRect = RectF(cx - radius, seamY, cx + radius, cy + radius)
-        val art = liveArt ?: sampleArt
+        val art = displayedArt()
         val artVisible = art != null && !PlayerBackgroundStyle.fromPreference(artStyle).hidesArtwork
 
         if (splitPanel == SplitPanelStyle.BLUR && artVisible) {
@@ -6562,7 +6673,7 @@ class WatchPreviewView @JvmOverloads constructor(
             canvas.drawRect(panelRect, fillPaint)
             drawArtwork(
                     canvas,
-                    liveArtBlurred ?: sampleArtBlurred ?: art,
+                    displayedBlurredArt() ?: art,
                     screenRect,
                     SPLIT_PANEL_ART_ALPHA)
             canvas.restore()
@@ -6761,7 +6872,7 @@ class WatchPreviewView @JvmOverloads constructor(
             val hidden = selectedBackground.hidesArtwork
             val blurred = selectedBackground.blurredArtwork
             val grayscale = selectedBackground.grayscaleArtwork
-            val art = if (hidden) null else if (blurred) (liveArtBlurred ?: sampleArtBlurred) else (liveArt ?: sampleArt)
+            val art = if (hidden) null else if (blurred) displayedBlurredArt() else displayedArt()
             if (art != null) drawArtwork(canvas, art, rect, 255, grayscale) else {
                 fillPaint.shader = LinearGradient(rect.left, rect.top, rect.right, rect.bottom,
                         intArrayOf(primary, secondary, tertiary), null, Shader.TileMode.CLAMP)
@@ -7352,14 +7463,26 @@ class WatchPreviewView @JvmOverloads constructor(
                 val barW = fieldW / (bars * 1.72f)
                 val gap = (fieldW - bars * barW) / (bars - 1)
                 val fraction = progressFraction()
+                val spectrumTitle = if (themeProfile != null) {
+                    context.getString(R.string.preview_sample_title)
+                } else {
+                    nowPlayingTitle ?: context.getString(R.string.preview_sample_title)
+                }
+                val spectrumArtist = if (themeProfile != null) {
+                    context.getString(R.string.preview_sample_artist)
+                } else {
+                    nowPlayingArtist ?: context.getString(R.string.preview_sample_artist)
+                }
+                val spectrumDuration = if (themeProfile != null) {
+                    192_000L
+                } else {
+                    liveDurationMs.takeIf { it > 0L } ?: 192_000L
+                }
                 val spectrumSeed = spectrumPreviewTrackSeed(
-                        nowPlayingTitle ?: context.getString(R.string.preview_sample_title),
-                        nowPlayingArtist ?: context.getString(R.string.preview_sample_artist),
-                        liveDurationMs.takeIf { it > 0L } ?: 192_000L
-                )
-                val spectrumPhase = if (isPlayingShown()) {
+                        spectrumTitle, spectrumArtist, spectrumDuration)
+                val spectrumPhase = if (themeProfile == null && isPlayingShown()) {
                     transientAnimationActive = true
-                    (SystemClock.uptimeMillis() % 120_000L) / 1_000f
+                    (previewAnimationTimeMillis() % 120_000L) / 1_000f
                 } else {
                     0f
                 }

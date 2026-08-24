@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Layout: %1$s</string>
     <string name="watch_theme_preview_description">Prévia do tema atualmente aplicado ao relógio</string>
     <string name="watch_theme_create">Criar tema</string>
+    <string name="watch_theme_browse_community">Explorar temas da comunidade</string>
     <string name="watch_theme_create_title">Criar um novo tema</string>
     <string name="watch_theme_rename_title">Renomear tema</string>
     <string name="watch_theme_name">Nome do tema</string>
@@ -38,6 +39,45 @@
     <string name="watch_theme_limit_reached">Você pode salvar até 24 temas personalizados. Exclua um antes de criar outro.</string>
     <string name="watch_theme_name_required">Digite um nome para o tema</string>
     <string name="watch_theme_name_duplicate">Já existe um tema com este nome</string>
+
+    <string name="online_themes_title">Temas da comunidade</string>
+    <string name="online_theme_intro">Descubra visuais criados pela comunidade. Abrir esta galeria baixa seu catálogo público.</string>
+    <string name="online_theme_refresh">Atualizar temas da comunidade</string>
+    <string name="online_theme_list_description">Temas de relógio criados pela comunidade</string>
+    <string name="online_theme_byline">Por %1$s · Layout %2$s</string>
+    <string name="online_theme_row_description">%1$s por %2$s. Layout %3$s.</string>
+    <string name="online_theme_apply">Adicionar e aplicar</string>
+    <string name="online_theme_loading">Carregando temas da comunidade…</string>
+    <string name="online_theme_loading_preview">Carregando prévia…</string>
+    <string name="online_theme_empty">Ainda não há temas da comunidade disponíveis.</string>
+    <string name="online_theme_load_error">Não foi possível carregar os temas da comunidade. Verifique sua conexão e tente novamente.</string>
+    <string name="online_theme_retry">Tentar novamente</string>
+    <string name="online_theme_installed">EM MEUS TEMAS</string>
+    <string name="online_theme_apply_success">%1$s foi adicionado a Meus temas e aplicado ao relógio</string>
+    <string name="online_theme_preview_error">Não foi possível carregar os detalhes do tema. Verifique sua conexão e tente novamente.</string>
+    <string name="online_theme_sync_limit">Este tema deixaria as configurações do relógio grandes demais para sincronizar. Redefina configurações de layouts não usados e tente novamente.</string>
+    <string name="online_theme_update_available">ATUALIZAÇÃO DISPONÍVEL</string>
+    <string name="online_theme_requires_app_version">REQUER SVARTIFOSS %1$s</string>
+
+    <string name="watch_theme_submit_community">Enviar para a comunidade</string>
+    <string name="community_theme_submit_title">Enviar tema</string>
+    <string name="community_theme_submit_preview_description">Prévia do tema que será enviado</string>
+    <string name="community_theme_submit_intro">Ele será revisado antes de aparecer nos temas da comunidade.</string>
+    <string name="community_theme_submit_public_name">Nome público do tema</string>
+    <string name="community_theme_submit_author">Pseudônimo do autor</string>
+    <string name="community_theme_submit_author_helper">Este nome será público se o tema for aprovado.</string>
+    <string name="community_theme_submit_privacy">O login identifica o envio para o Svartifoss, mas seu nome e e-mail do Google não são publicados. O nome público e o pseudônimo acima poderão ser publicados após a revisão.</string>
+    <string name="community_theme_submit_button">Entrar e enviar</string>
+    <string name="community_theme_submit_progress">Enviando seu tema…</string>
+    <string name="community_theme_submit_name_required">Informe um nome público para o tema.</string>
+    <string name="community_theme_submit_author_required">Informe um pseudônimo de autor.</string>
+    <string name="community_theme_submit_originality">Este tema altera %1$d configurações visuais aplicáveis. São necessárias pelo menos %2$d para a revisão.</string>
+    <string name="community_theme_submit_invalid">Este tema salvo não pode ser enviado. Volte aos Meus temas e tente novamente.</string>
+    <string name="community_theme_submit_sign_in_cancelled">O login do Google foi cancelado. Seu tema não foi enviado.</string>
+    <string name="community_theme_submit_error">Não foi possível enviar este tema. Verifique a conexão e tente novamente.</string>
+    <string name="community_theme_submit_preview_error">Não foi possível preparar a prévia para revisão. Tente novamente.</string>
+    <string name="community_theme_submit_success_title">Enviado para revisão</string>
+    <string name="community_theme_submit_success_message">Seu tema está aguardando revisão. Ele ainda não é público.</string>
 
     <string name="watch_theme_face_classic">Clássico</string>
     <string name="watch_theme_face_expressive">Expressivo</string>

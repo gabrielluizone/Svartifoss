@@ -102,6 +102,14 @@ the fork.
 - A **Watch** tab with a live miniature that previews exactly how the
   now-playing screen will look — mirroring the track currently playing on the
   phone — as you tweak the appearance, including your saved custom themes.
+- **Community themes**: an opt-in public gallery of looks, each rendered
+  locally against the built-in sample track before you add it to your own theme
+  library. Browsing requires no account. You can explicitly submit a
+  user-owned local theme for review; only then does Google Sign-In identify the
+  pending submission, and an approved gallery entry uses its chosen public name
+  and pseudonym rather than Google account information. The current local
+  preflight requires 12 applicable visual setting changes; likes and theme updates
+  are not implemented yet. See the [privacy policy](docs/privacy-policy.md).
 - Custom icon picker and color picker for personalizing actions.
 - A redesigned **Streaming shortcuts** screen: live link inspection,
   share/clipboard input, drag reordering, Open now / Copy link / Undo after
@@ -130,15 +138,17 @@ the fork.
 ### Under the hood
 
 - All phone ⟷ watch communication happens over the local Wearable Data Layer
-  connection — no account or app server is involved. The internet is touched
-  only by the optional update check (a small anonymous request to the GitHub
-  API, off-switch in Settings), by Firebase diagnostics that help development,
-  by occasional developer announcement notifications sent via Firebase
-  Cloud Messaging (topic-based, no account or server of ours), and — only if
-  you opt in — by the shortcut-artwork fetch, which goes straight to the
-  streaming service itself. Crash reporting, announcement notifications and
-  shortcut artwork are each independently toggleable under Settings → Data &
-  support → Privacy or Apps.
+  connection — no account is needed for it or for the community gallery. The
+  internet is touched by the optional update check (a small anonymous request
+  to the GitHub API), by the community-theme catalogue only when you explicitly
+  open that gallery, and by Google Firebase Authentication/Firestore only when
+  you explicitly submit a theme for review. It is also used by Firebase
+  diagnostics that help development, occasional developer announcement
+  notifications sent via Firebase Cloud Messaging (topic-based), and — only if
+  you opt in — the shortcut-artwork fetch, which goes straight to the streaming
+  service itself. Crash reporting, announcement notifications and shortcut
+  artwork are each independently toggleable under Settings → Data & support →
+  Privacy or Apps.
 - Works with any app that publishes a standard Android media session; extra
   features like like/shuffle/repeat and search rely on optional media-session
   extensions some apps expose (availability varies by app).

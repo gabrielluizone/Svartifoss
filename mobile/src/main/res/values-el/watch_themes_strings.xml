@@ -10,6 +10,7 @@
     <string name="watch_theme_active_layout">Διάταξη: %1$s</string>
     <string name="watch_theme_preview_description">Προεπισκόπηση του θέματος που εφαρμόζεται αυτή τη στιγμή στο ρολόι</string>
     <string name="watch_theme_create">Δημιουργία θέματος</string>
+    <string name="watch_theme_browse_community">Περιήγηση σε θέματα κοινότητας</string>
     <string name="watch_theme_create_title">Δημιουργία νέου θέματος</string>
     <string name="watch_theme_rename_title">Μετονομασία θέματος</string>
     <string name="watch_theme_name">Όνομα θέματος</string>
@@ -37,6 +38,25 @@
     <string name="watch_theme_limit_reached">Μπορείτε να αποθηκεύσετε έως 24 προσαρμοσμένα θέματα. Διαγράψτε ένα πριν δημιουργήσετε άλλο.</string>
     <string name="watch_theme_name_required">Εισαγάγετε όνομα θέματος</string>
     <string name="watch_theme_name_duplicate">Υπάρχει ήδη θέμα με αυτό το όνομα</string>
+
+    <string name="online_themes_title">Θέματα κοινότητας</string>
+    <string name="online_theme_intro">Ανακαλύψτε εμφανίσεις που δημιούργησε η κοινότητα. Το άνοιγμα αυτής της συλλογής κατεβάζει τον δημόσιο κατάλογό της.</string>
+    <string name="online_theme_refresh">Ανανέωση θεμάτων κοινότητας</string>
+    <string name="online_theme_list_description">Θέματα ρολογιού που δημιούργησε η κοινότητα</string>
+    <string name="online_theme_byline">Από %1$s · διάταξη %2$s</string>
+    <string name="online_theme_row_description">%1$s από %2$s. Διάταξη %3$s.</string>
+    <string name="online_theme_apply">Προσθήκη και εφαρμογή</string>
+    <string name="online_theme_loading">Φόρτωση θεμάτων κοινότητας…</string>
+    <string name="online_theme_loading_preview">Φόρτωση προεπισκόπησης…</string>
+    <string name="online_theme_empty">Δεν υπάρχουν ακόμη διαθέσιμα θέματα κοινότητας.</string>
+    <string name="online_theme_load_error">Δεν ήταν δυνατή η φόρτωση θεμάτων κοινότητας. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
+    <string name="online_theme_retry">Δοκιμάστε ξανά</string>
+    <string name="online_theme_installed">ΣΤΑ ΘΕΜΑΤΑ ΜΟΥ</string>
+    <string name="online_theme_apply_success">Το %1$s προστέθηκε στα Θέματά μου και εφαρμόστηκε στο ρολόι σας</string>
+    <string name="online_theme_preview_error">Δεν ήταν δυνατή η φόρτωση των λεπτομερειών του θέματος. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
+    <string name="online_theme_update_available">ΔΙΑΘΕΣΙΜΗ ΕΝΗΜΕΡΩΣΗ</string>
+    <string name="online_theme_requires_app_version">ΑΠΑΙΤΕΙΤΑΙ SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Αυτό το θέμα θα έκανε τις ρυθμίσεις του ρολογιού σας πολύ μεγάλες για συγχρονισμό. Επαναφέρετε τις ρυθμίσεις αχρησιμοποίητων προσόψεων και δοκιμάστε ξανά.</string>
 
     <string name="watch_theme_face_classic">Κλασικό</string>
     <string name="watch_theme_face_expressive">Εκφραστικό</string>

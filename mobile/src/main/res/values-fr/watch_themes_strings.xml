@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Disposition : %1$s</string>
     <string name="watch_theme_preview_description">Aperçu du thème actuellement appliqué à la montre</string>
     <string name="watch_theme_create">Créer un thème</string>
+    <string name="watch_theme_browse_community">Parcourir les thèmes de la communauté</string>
     <string name="watch_theme_create_title">Créer un nouveau thème</string>
     <string name="watch_theme_rename_title">Renommer le thème</string>
     <string name="watch_theme_name">Nom du thème</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Vous pouvez enregistrer jusqu’à 24 thèmes personnalisés. Supprimez-en un avant d’en créer un autre.</string>
     <string name="watch_theme_name_required">Saisissez un nom de thème</string>
     <string name="watch_theme_name_duplicate">Un thème portant ce nom existe déjà</string>
+
+    <string name="online_themes_title">Thèmes de la communauté</string>
+    <string name="online_theme_intro">Découvrez des styles créés par la communauté. L’ouverture de cette galerie télécharge son catalogue public.</string>
+    <string name="online_theme_refresh">Actualiser les thèmes de la communauté</string>
+    <string name="online_theme_list_description">Thèmes de montre créés par la communauté</string>
+    <string name="online_theme_byline">Par %1$s · disposition %2$s</string>
+    <string name="online_theme_row_description">%1$s par %2$s. Disposition %3$s.</string>
+    <string name="online_theme_apply">Ajouter et appliquer</string>
+    <string name="online_theme_loading">Chargement des thèmes de la communauté…</string>
+    <string name="online_theme_loading_preview">Chargement de l’aperçu…</string>
+    <string name="online_theme_empty">Aucun thème de la communauté n’est encore disponible.</string>
+    <string name="online_theme_load_error">Impossible de charger les thèmes de la communauté. Vérifiez votre connexion et réessayez.</string>
+    <string name="online_theme_retry">Réessayer</string>
+    <string name="online_theme_installed">DANS MES THÈMES</string>
+    <string name="online_theme_apply_success">%1$s a été ajouté à Mes thèmes et appliqué à votre montre</string>
+    <string name="online_theme_preview_error">Impossible de charger les détails du thème. Vérifiez votre connexion et réessayez.</string>
+    <string name="online_theme_update_available">MISE À JOUR DISPONIBLE</string>
+    <string name="online_theme_requires_app_version">NÉCESSITE SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Ce thème rendrait les paramètres de votre montre trop volumineux pour la synchronisation. Réinitialisez les paramètres des cadrans inutilisés et réessayez.</string>
 
     <string name="watch_theme_face_classic">Classique</string>
     <string name="watch_theme_face_expressive">Expressif</string>

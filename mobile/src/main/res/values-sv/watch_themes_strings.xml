@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Layout: %1$s</string>
     <string name="watch_theme_preview_description">Förhandsvisning av temat som för närvarande används på klockan</string>
     <string name="watch_theme_create">Skapa tema</string>
+    <string name="watch_theme_browse_community">Bläddra bland communityteman</string>
     <string name="watch_theme_create_title">Skapa ett nytt tema</string>
     <string name="watch_theme_rename_title">Byt namn på tema</string>
     <string name="watch_theme_name">Temanamn</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Du kan spara upp till 24 anpassade teman. Ta bort ett innan du skapar ett nytt.</string>
     <string name="watch_theme_name_required">Ange ett temanamn</string>
     <string name="watch_theme_name_duplicate">Det finns redan ett tema med det här namnet</string>
+
+    <string name="online_themes_title">Communityteman</string>
+    <string name="online_theme_intro">Upptäck utseenden skapade av communityn. När du öppnar det här galleriet laddas dess offentliga katalog ned.</string>
+    <string name="online_theme_refresh">Uppdatera communityteman</string>
+    <string name="online_theme_list_description">Klockteman skapade av communityn</string>
+    <string name="online_theme_byline">Av %1$s · layouten %2$s</string>
+    <string name="online_theme_row_description">%1$s av %2$s. Layouten %3$s.</string>
+    <string name="online_theme_apply">Lägg till och använd</string>
+    <string name="online_theme_loading">Läser in communityteman…</string>
+    <string name="online_theme_loading_preview">Läser in förhandsvisning…</string>
+    <string name="online_theme_empty">Det finns inga communityteman ännu.</string>
+    <string name="online_theme_load_error">Det gick inte att läsa in communityteman. Kontrollera anslutningen och försök igen.</string>
+    <string name="online_theme_retry">Försök igen</string>
+    <string name="online_theme_installed">I MINA TEMAN</string>
+    <string name="online_theme_apply_success">%1$s lades till i Mina teman och användes på din klocka</string>
+    <string name="online_theme_preview_error">Det gick inte att läsa in temainformationen. Kontrollera anslutningen och försök igen.</string>
+    <string name="online_theme_update_available">UPPDATERING TILLGÄNGLIG</string>
+    <string name="online_theme_requires_app_version">KRÄVER SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Det här temat skulle göra dina klockinställningar för stora för synkronisering. Återställ inställningarna för oanvända urtavlor och försök igen.</string>
 
     <string name="watch_theme_face_classic">Klassisk</string>
     <string name="watch_theme_face_expressive">Uttrycksfull</string>

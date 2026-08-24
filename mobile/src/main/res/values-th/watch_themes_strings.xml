@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">เลย์เอาต์: %1$s</string>
     <string name="watch_theme_preview_description">ตัวอย่างธีมที่กำลังใช้กับนาฬิกา</string>
     <string name="watch_theme_create">สร้างธีม</string>
+    <string name="watch_theme_browse_community">เรียกดูธีมจากชุมชน</string>
     <string name="watch_theme_create_title">สร้างธีมใหม่</string>
     <string name="watch_theme_rename_title">เปลี่ยนชื่อธีม</string>
     <string name="watch_theme_name">ชื่อธีม</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">บันทึกธีมกำหนดเองได้สูงสุด 24 ธีม โปรดลบหนึ่งธีมก่อนสร้างธีมใหม่</string>
     <string name="watch_theme_name_required">ป้อนชื่อธีม</string>
     <string name="watch_theme_name_duplicate">มีธีมชื่อนี้อยู่แล้ว</string>
+
+    <string name="online_themes_title">ธีมจากชุมชน</string>
+    <string name="online_theme_intro">ค้นหารูปแบบที่สร้างโดยชุมชน การเปิดแกลเลอรีนี้จะดาวน์โหลดแคตตาล็อกสาธารณะ</string>
+    <string name="online_theme_refresh">รีเฟรชธีมจากชุมชน</string>
+    <string name="online_theme_list_description">ธีมนาฬิกาที่สร้างโดยชุมชน</string>
+    <string name="online_theme_byline">โดย %1$s · เลย์เอาต์ %2$s</string>
+    <string name="online_theme_row_description">%1$s โดย %2$s เลย์เอาต์ %3$s</string>
+    <string name="online_theme_apply">เพิ่มและใช้</string>
+    <string name="online_theme_loading">กำลังโหลดธีมจากชุมชน…</string>
+    <string name="online_theme_loading_preview">กำลังโหลดตัวอย่าง…</string>
+    <string name="online_theme_empty">ยังไม่มีธีมจากชุมชนให้ใช้</string>
+    <string name="online_theme_load_error">โหลดธีมจากชุมชนไม่ได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
+    <string name="online_theme_retry">ลองอีกครั้ง</string>
+    <string name="online_theme_installed">อยู่ในธีมของฉัน</string>
+    <string name="online_theme_apply_success">เพิ่ม %1$s ลงในธีมของฉันและใช้กับนาฬิกาแล้ว</string>
+    <string name="online_theme_preview_error">โหลดรายละเอียดธีมไม่ได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
+    <string name="online_theme_update_available">มีการอัปเดต</string>
+    <string name="online_theme_requires_app_version">ต้องใช้ SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">ธีมนี้จะทำให้การตั้งค่านาฬิกาของคุณมีขนาดใหญ่เกินกว่าจะซิงค์ได้ รีเซ็ตการตั้งค่าหน้าปัดที่ไม่ได้ใช้แล้วลองอีกครั้ง</string>
 
     <string name="watch_theme_face_classic">คลาสสิก</string>
     <string name="watch_theme_face_expressive">เอ็กซ์เพรสซีฟ</string>

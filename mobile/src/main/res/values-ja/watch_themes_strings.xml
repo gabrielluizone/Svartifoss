@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">レイアウト: %1$s</string>
     <string name="watch_theme_preview_description">現在ウォッチに適用されているテーマのプレビュー</string>
     <string name="watch_theme_create">テーマを作成</string>
+    <string name="watch_theme_browse_community">コミュニティテーマを閲覧</string>
     <string name="watch_theme_create_title">新しいテーマを作成</string>
     <string name="watch_theme_rename_title">テーマ名を変更</string>
     <string name="watch_theme_name">テーマ名</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">カスタムテーマは最大24個まで保存できます。新しく作成する前に1つ削除してください。</string>
     <string name="watch_theme_name_required">テーマ名を入力</string>
     <string name="watch_theme_name_duplicate">同じ名前のテーマがすでに存在します</string>
+
+    <string name="online_themes_title">コミュニティテーマ</string>
+    <string name="online_theme_intro">コミュニティが作成したデザインを見つけましょう。このギャラリーを開くと、公開カタログがダウンロードされます。</string>
+    <string name="online_theme_refresh">コミュニティテーマを更新</string>
+    <string name="online_theme_list_description">コミュニティ作成のウォッチテーマ</string>
+    <string name="online_theme_byline">%1$s 作 · %2$s レイアウト</string>
+    <string name="online_theme_row_description">%1$s（%2$s 作）。%3$s レイアウト。</string>
+    <string name="online_theme_apply">追加して適用</string>
+    <string name="online_theme_loading">コミュニティテーマを読み込んでいます…</string>
+    <string name="online_theme_loading_preview">プレビューを読み込んでいます…</string>
+    <string name="online_theme_empty">利用可能なコミュニティテーマはまだありません。</string>
+    <string name="online_theme_load_error">コミュニティテーマを読み込めませんでした。接続を確認して、もう一度お試しください。</string>
+    <string name="online_theme_retry">再試行</string>
+    <string name="online_theme_installed">マイテーマに追加済み</string>
+    <string name="online_theme_apply_success">%1$s をマイテーマに追加し、ウォッチに適用しました</string>
+    <string name="online_theme_preview_error">テーマの詳細を読み込めませんでした。接続を確認して、もう一度お試しください。</string>
+    <string name="online_theme_update_available">アップデートを利用できます</string>
+    <string name="online_theme_requires_app_version">SVARTIFOSS %1$s が必要です</string>
+    <string name="online_theme_sync_limit">このテーマにより、同期するにはウォッチの設定が大きすぎます。未使用の文字盤設定をリセットして、もう一度お試しください。</string>
 
     <string name="watch_theme_face_classic">クラシック</string>
     <string name="watch_theme_face_expressive">エクスプレッシブ</string>

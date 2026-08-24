@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Reka letak: %1$s</string>
     <string name="watch_theme_preview_description">Pratonton tema yang sedang digunakan pada jam</string>
     <string name="watch_theme_create">Cipta tema</string>
+    <string name="watch_theme_browse_community">Semak imbas tema komuniti</string>
     <string name="watch_theme_create_title">Cipta tema baharu</string>
     <string name="watch_theme_rename_title">Namakan semula tema</string>
     <string name="watch_theme_name">Nama tema</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Anda boleh menyimpan sehingga 24 tema tersuai. Padam satu sebelum mencipta yang baharu.</string>
     <string name="watch_theme_name_required">Masukkan nama tema</string>
     <string name="watch_theme_name_duplicate">Tema dengan nama ini sudah wujud</string>
+
+    <string name="online_themes_title">Tema komuniti</string>
+    <string name="online_theme_intro">Temui gaya yang dicipta oleh komuniti. Membuka galeri ini memuat turun katalog awamnya.</string>
+    <string name="online_theme_refresh">Segarkan tema komuniti</string>
+    <string name="online_theme_list_description">Tema jam tangan ciptaan komuniti</string>
+    <string name="online_theme_byline">Oleh %1$s · reka letak %2$s</string>
+    <string name="online_theme_row_description">%1$s oleh %2$s. Reka letak %3$s.</string>
+    <string name="online_theme_apply">Tambah dan gunakan</string>
+    <string name="online_theme_loading">Memuatkan tema komuniti…</string>
+    <string name="online_theme_loading_preview">Memuatkan pratonton…</string>
+    <string name="online_theme_empty">Belum ada tema komuniti yang tersedia.</string>
+    <string name="online_theme_load_error">Tidak dapat memuatkan tema komuniti. Semak sambungan anda dan cuba lagi.</string>
+    <string name="online_theme_retry">Cuba lagi</string>
+    <string name="online_theme_installed">DALAM TEMA SAYA</string>
+    <string name="online_theme_apply_success">%1$s telah ditambahkan pada Tema saya dan digunakan pada jam tangan anda</string>
+    <string name="online_theme_preview_error">Tidak dapat memuatkan butiran tema. Semak sambungan anda dan cuba lagi.</string>
+    <string name="online_theme_update_available">KEMAS KINI TERSEDIA</string>
+    <string name="online_theme_requires_app_version">MEMERLUKAN SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Tema ini akan menjadikan tetapan jam tangan anda terlalu besar untuk disegerakkan. Tetapkan semula tetapan muka jam yang tidak digunakan dan cuba lagi.</string>
 
     <string name="watch_theme_face_classic">Klasik</string>
     <string name="watch_theme_face_expressive">Ekspresif</string>

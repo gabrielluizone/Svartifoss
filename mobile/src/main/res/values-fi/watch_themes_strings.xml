@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Asettelu: %1$s</string>
     <string name="watch_theme_preview_description">Esikatselu kellossa tällä hetkellä käytössä olevasta teemasta</string>
     <string name="watch_theme_create">Luo teema</string>
+    <string name="watch_theme_browse_community">Selaa yhteisöteemoja</string>
     <string name="watch_theme_create_title">Luo uusi teema</string>
     <string name="watch_theme_rename_title">Nimeä teema uudelleen</string>
     <string name="watch_theme_name">Teeman nimi</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Voit tallentaa enintään 24 mukautettua teemaa. Poista yksi ennen uuden luomista.</string>
     <string name="watch_theme_name_required">Anna teeman nimi</string>
     <string name="watch_theme_name_duplicate">Samanniminen teema on jo olemassa</string>
+
+    <string name="online_themes_title">Yhteisöteemat</string>
+    <string name="online_theme_intro">Löydä yhteisön luomia ulkoasuja. Gallerian avaaminen lataa sen julkisen luettelon.</string>
+    <string name="online_theme_refresh">Päivitä yhteisöteemat</string>
+    <string name="online_theme_list_description">Yhteisön luomat kelloteemat</string>
+    <string name="online_theme_byline">Tekijä %1$s · %2$s-asettelu</string>
+    <string name="online_theme_row_description">%1$s, tekijä %2$s. %3$s-asettelu.</string>
+    <string name="online_theme_apply">Lisää ja käytä</string>
+    <string name="online_theme_loading">Ladataan yhteisöteemoja…</string>
+    <string name="online_theme_loading_preview">Ladataan esikatselua…</string>
+    <string name="online_theme_empty">Yhteisöteemoja ei ole vielä saatavilla.</string>
+    <string name="online_theme_load_error">Yhteisöteemojen lataaminen epäonnistui. Tarkista yhteytesi ja yritä uudelleen.</string>
+    <string name="online_theme_retry">Yritä uudelleen</string>
+    <string name="online_theme_installed">OMISSA TEEMOISSA</string>
+    <string name="online_theme_apply_success">%1$s lisättiin Omiin teemoihin ja otettiin käyttöön kellossasi</string>
+    <string name="online_theme_preview_error">Teeman tietoja ei voitu ladata. Tarkista yhteytesi ja yritä uudelleen.</string>
+    <string name="online_theme_update_available">PÄIVITYS SAATAVILLA</string>
+    <string name="online_theme_requires_app_version">VAATII SVARTIFOSSIN VERSION %1$s</string>
+    <string name="online_theme_sync_limit">Tämä teema tekisi kellosi asetuksista liian suuret synkronointia varten. Nollaa käyttämättömien kellotaulujen asetukset ja yritä uudelleen.</string>
 
     <string name="watch_theme_face_classic">Klassinen</string>
     <string name="watch_theme_face_expressive">Ilmeikäs</string>

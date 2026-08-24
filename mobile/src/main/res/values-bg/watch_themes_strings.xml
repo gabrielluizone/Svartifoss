@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Оформление: %1$s</string>
     <string name="watch_theme_preview_description">Преглед на темата, приложена в момента на часовника</string>
     <string name="watch_theme_create">Създаване на тема</string>
+    <string name="watch_theme_browse_community">Разгледайте темите на общността</string>
     <string name="watch_theme_create_title">Създаване на нова тема</string>
     <string name="watch_theme_rename_title">Преименуване на тема</string>
     <string name="watch_theme_name">Име на тема</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Можете да запазите до 24 персонализирани теми. Изтрийте една, преди да създадете нова.</string>
     <string name="watch_theme_name_required">Въведете име на тема</string>
     <string name="watch_theme_name_duplicate">Вече съществува тема с това име</string>
+
+    <string name="online_themes_title">Теми на общността</string>
+    <string name="online_theme_intro">Открийте визии, създадени от общността. Отварянето на тази галерия изтегля публичния ѝ каталог.</string>
+    <string name="online_theme_refresh">Обновяване на темите на общността</string>
+    <string name="online_theme_list_description">Създадени от общността теми за часовника</string>
+    <string name="online_theme_byline">От %1$s · оформление %2$s</string>
+    <string name="online_theme_row_description">%1$s от %2$s. Оформление %3$s.</string>
+    <string name="online_theme_apply">Добавяне и прилагане</string>
+    <string name="online_theme_loading">Зареждат се темите на общността…</string>
+    <string name="online_theme_loading_preview">Зарежда се визуализация…</string>
+    <string name="online_theme_empty">Все още няма налични теми на общността.</string>
+    <string name="online_theme_load_error">Темите на общността не можаха да се заредят. Проверете връзката си и опитайте отново.</string>
+    <string name="online_theme_retry">Опитайте отново</string>
+    <string name="online_theme_installed">В МОИТЕ ТЕМИ</string>
+    <string name="online_theme_apply_success">%1$s беше добавена към Моите теми и приложена към часовника ви</string>
+    <string name="online_theme_preview_error">Не можаха да се заредят подробностите за темата. Проверете връзката си и опитайте отново.</string>
+    <string name="online_theme_update_available">НАЛИЧНА Е АКТУАЛИЗАЦИЯ</string>
+    <string name="online_theme_requires_app_version">ИЗИСКВА SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Тази тема ще направи настройките на часовника ви твърде големи за синхронизиране. Нулирайте настройките на неизползваните циферблати и опитайте отново.</string>
 
     <string name="watch_theme_face_classic">Класически</string>
     <string name="watch_theme_face_expressive">Експресивен</string>

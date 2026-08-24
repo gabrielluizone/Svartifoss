@@ -1,24 +1,30 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 23-08-2026**
+**Last updated: 24-08-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
 information the app accesses, what it stores, and what — if anything — leaves
 your device.
 
-The short version: **Svartifoss does not have user accounts, does not run its
-own servers, and does not sell or share your data with advertisers.** The
-phone and watch talk to each other directly over your local Bluetooth/Wi-Fi
-connection. Optional update checks contact GitHub, and the phone app includes
-Google Firebase Crashlytics and Analytics for diagnostics, plus Firebase
-Cloud Messaging for occasional developer announcements. Crash reporting and
-announcement notifications are both enabled by default and can each be
-disabled at any time — see [Crash reports](#crash-reports) and
-[Announcement notifications](#announcement-notifications) below. A separate,
+The short version: **Svartifoss does not require an account for playback,
+watch control, or Community-theme browsing; does not operate its own backend
+server; and does not sell or share your data with advertisers.** The phone and
+watch talk to each other directly over your local Bluetooth/Wi-Fi connection.
+Optional update checks and the opt-in Community themes gallery contact GitHub
+Pages. If you explicitly submit one of your themes, Google Firebase
+Authentication processes the Google credential needed to identify that
+submission and Google Cloud Firestore keeps a private moderation record; your
+Google account name and email are not published. The phone app also includes
+Google Firebase Crashlytics and
+Analytics for diagnostics, plus Firebase Cloud Messaging for occasional
+developer announcements. Crash reporting and announcement notifications are
+both enabled by default and can each be disabled at any time — see [Crash
+reports](#crash-reports) and [Announcement
+notifications](#announcement-notifications) below. A separate,
 **off-by-default** setting can also fetch cover art for your saved playlist
-shortcuts directly from the streaming service — see
-[Streaming shortcut artwork](#streaming-shortcut-artwork-optional) below.
+shortcuts directly from the streaming service — see [Streaming shortcut
+artwork](#streaming-shortcut-artwork-optional) below.
 
 ## What the app needs access to, and why
 
@@ -55,19 +61,23 @@ all.
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
 | Music and audio (Android 13+) / Storage (older versions)     | Only used to read album covers for entries in the playback queue, when the music app publishes them as references into your music library rather than as images. Requested from Settings → Apps, never at startup, and only ever read locally — nothing is uploaded. Decline it and the queue simply shows blank thumbnails. On very old Android versions the same legacy Storage permission also covers saving the current album art to your gallery, which only happens if you tap that option. |
-| Internet                                                     | Used for optional update checks, the Firebase diagnostics described below, looking up song lyrics when you open the lyrics screen on the watch, and — only if you turn them on — fetching shortcut artwork from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.                         |
+| Internet                                                     | Used for optional update checks, the opt-in Community themes gallery, and — only after you explicitly choose to submit a theme — Google Sign-In/Firebase Authentication and Firestore. It is also used for the Firebase diagnostics described below, looking up song lyrics when you open the lyrics screen on the watch, and — only if you turn them on — fetching shortcut artwork from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.                         |
 
 ## What's stored locally on your phone
 
-The following stays only in the app's private storage on your phone. It is
-never uploaded anywhere by us:
+The following normally stays only in the app's private storage on your phone.
+An exception is a theme you expressly submit to the Community-themes moderation
+queue, described below.
 
 - Your button/gesture configuration (what each button, tap zone, or gesture
   does).
 - Your search history and playlist shortcuts, if you use those features.
 - A short local history of recently played tracks, used as a fallback when an
   app doesn't expose a real playback queue.
-- Your app preferences (theme, colors, timeouts, etc.).
+- Your private theme library and other app preferences (theme, colors,
+  timeouts, etc.). A profile leaves the device only if you select it for an
+  explicit Community-theme submission.
+- A disposable cache of the public Community themes catalogue and theme files after you open that gallery. It contains only the public JSON served from this project's GitHub Pages site, is not included in configuration backups, and can be cleared with Android's app-cache controls.
 
 Uninstalling the app removes all of this data. If you use the app's
 Export Config feature, that file is saved wherever you choose to save it
@@ -125,6 +135,84 @@ permission still applies on top of this setting.
 This uses Google's Firebase infrastructure, governed by
 [Google's Privacy Policy](https://policies.google.com/privacy) and
 [Firebase's data processing terms](https://firebase.google.com/support/privacy).
+
+## Community themes
+
+### Browsing and installing
+
+Opening **Community themes** from the Watch themes screen requests a public
+catalogue and, as needed for a preview or installation, public theme JSON files
+from this project's [GitHub Pages](https://gabrielluizone.github.io/Svartifoss/)
+site. Nothing is requested until you open that screen. Browsing does not start
+Google Sign-In or write to Firebase, and does not send your playback, library,
+saved themes, account details, or a device identifier. The request identifies
+the app only with a generic Svartifoss user-agent, while GitHub necessarily
+receives ordinary web-request information such as your IP address under its own
+privacy terms.
+
+The app renders every gallery preview locally using its bundled sample track,
+never the song you are currently listening to. A theme is only added to **My
+themes** after you tap **Add and apply**. The downloaded catalogue/profile files
+are cached in the app's disposable cache for faster later browsing; they are
+public content and are not part of a configuration backup.
+
+### Submitting a theme
+
+Submitting is separate from browsing. It starts only after you choose **Submit
+to community** for a private, user-owned saved theme and then tap **Sign in and
+submit**. Before opening Google Sign-In, the app creates and checks a fresh
+public profile locally. The current preflight requires at least **12** setting
+values to differ from the selected base face; this is an eligibility filter,
+not a promise that the theme will be approved.
+
+At that explicit point, Firebase Authentication processes the Google
+credential and account information needed to authenticate you, then issues a
+Firebase Auth UID. Svartifoss stores that UID — rather than your Google account
+name or email — in the Firestore submission document as the ownership
+identifier (`ownerUid`). It does not show your Google account name or email to
+gallery visitors or publish them. Instead, you choose the public theme name and
+author pseudonym yourself.
+
+Firestore receives one immutable **pending** submission record. Its submitted
+content includes the fresh public theme ID; the complete typed profile JSON and
+its settings digest; the public theme name and author pseudonym; the base face,
+revision, client version, and Firestore server timestamp. It also includes a
+fixed-sample 200×200 WebP review preview rendered from Svartifoss's built-in
+sample track, not your current playback, album art, or media metadata. A
+configured moderator can later add only an approval or rejection decision,
+their reviewer UID, and a server timestamp; neither the author nor a moderator
+can edit the submitted theme content through the app.
+
+Firestore also keeps a separate private quota record tied to your Firebase Auth
+UID. It records the submission count, most recent submission ID, and server
+timestamp solely to enforce no more than one Community-theme submission per
+account every 24 hours. It is not public.
+
+Google processes Authentication and Firestore data under
+[Google's Privacy Policy](https://policies.google.com/privacy) and
+[Firebase's data processing terms](https://firebase.google.com/support/privacy).
+
+### Moderation, publication, and removal requests
+
+The pending record is private to its owner and configured moderators. Approval
+does not make a theme public immediately. When an approved submission is
+published, the trusted publisher validates it again and commits the public
+profile JSON, public theme name, and author pseudonym to this project's Git
+repository; GitHub Pages then serves those public files in the catalogue. The
+Firebase Auth UID and Google account name/email are not copied to the public
+repository or catalogue.
+
+Version 3.3 does not implement likes, comments, theme-update submissions, a
+submission-history screen, or self-service deletion of a Firebase Auth record
+or submitted theme. Uninstalling the app removes its local data but does not
+retract a submission already stored in Firestore.
+
+To request a takedown of a pending submission, removal of a current public
+listing, or help identifying a community-theme record, email the address in
+[Contact](#contact). Include the public theme name, pseudonym, and approximate
+submission date if you can. Requests are handled manually. Removing a current
+listing cannot erase information already committed to Git history or copied
+into forks, clones, caches, or third-party archives.
 
 ## Streaming shortcut artwork (optional)
 
@@ -257,7 +345,9 @@ does not control these separate automatic Analytics events.
 
 ## What we don't do
 
-- We don't require or offer any account/login.
+- We don't require an account to use playback controls or browse Community
+  themes. An optional Google sign-in is offered only after an explicit
+  Community-theme submission action.
 - We don't run our own backend server that your data passes through.
 - We don't sell, rent, or share your data with advertisers or data brokers.
 - We don't show ads.
@@ -283,5 +373,5 @@ location with a new "Last updated" date.
 
 ## Contact
 
-Questions about this policy or your data can be sent to:
-**gabrielsvafoss@gmail.com**
+Questions about this policy or your data, including a Community-theme takedown
+or removal request, can be sent to: **gabrielsvafoss@gmail.com**

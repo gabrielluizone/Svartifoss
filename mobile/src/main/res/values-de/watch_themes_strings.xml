@@ -10,6 +10,7 @@
     <string name="watch_theme_active_layout">Layout: %1$s</string>
     <string name="watch_theme_preview_description">Vorschau des aktuell auf die Uhr angewendeten Themes</string>
     <string name="watch_theme_create">Theme erstellen</string>
+    <string name="watch_theme_browse_community">Community-Themes durchsuchen</string>
     <string name="watch_theme_create_title">Neues Theme erstellen</string>
     <string name="watch_theme_rename_title">Theme umbenennen</string>
     <string name="watch_theme_name">Theme-Name</string>
@@ -37,6 +38,25 @@
     <string name="watch_theme_limit_reached">Du kannst bis zu 24 benutzerdefinierte Themes speichern. Lösche eines, bevor du ein weiteres erstellst.</string>
     <string name="watch_theme_name_required">Gib einen Theme-Namen ein</string>
     <string name="watch_theme_name_duplicate">Ein Theme mit diesem Namen existiert bereits</string>
+
+    <string name="online_themes_title">Community-Themes</string>
+    <string name="online_theme_intro">Entdecke von der Community erstellte Designs. Beim Öffnen dieser Galerie wird ihr öffentlicher Katalog heruntergeladen.</string>
+    <string name="online_theme_refresh">Community-Themes aktualisieren</string>
+    <string name="online_theme_list_description">Von der Community erstellte Watch-Themes</string>
+    <string name="online_theme_byline">Von %1$s · %2$s-Layout</string>
+    <string name="online_theme_row_description">%1$s von %2$s. %3$s-Layout.</string>
+    <string name="online_theme_apply">Hinzufügen und anwenden</string>
+    <string name="online_theme_loading">Community-Themes werden geladen…</string>
+    <string name="online_theme_loading_preview">Vorschau wird geladen…</string>
+    <string name="online_theme_empty">Noch keine Community-Themes verfügbar.</string>
+    <string name="online_theme_load_error">Community-Themes konnten nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.</string>
+    <string name="online_theme_retry">Erneut versuchen</string>
+    <string name="online_theme_installed">IN MEINEN THEMES</string>
+    <string name="online_theme_apply_success">%1$s wurde zu „Meine Themes“ hinzugefügt und auf deine Uhr angewendet</string>
+    <string name="online_theme_preview_error">Themadetails konnten nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.</string>
+    <string name="online_theme_update_available">UPDATE VERFÜGBAR</string>
+    <string name="online_theme_requires_app_version">ERFORDERT SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Dieses Theme würde deine Uhr-Einstellungen zu groß für die Synchronisierung machen. Setze ungenutzte Zifferblatt-Einstellungen zurück und versuche es erneut.</string>
 
     <string name="watch_theme_face_classic">Classic</string>
     <string name="watch_theme_face_expressive">Expressive</string>

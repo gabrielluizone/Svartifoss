@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Bố cục: %1$s</string>
     <string name="watch_theme_preview_description">Xem trước chủ đề hiện đang được áp dụng cho đồng hồ</string>
     <string name="watch_theme_create">Tạo chủ đề</string>
+    <string name="watch_theme_browse_community">Duyệt chủ đề cộng đồng</string>
     <string name="watch_theme_create_title">Tạo chủ đề mới</string>
     <string name="watch_theme_rename_title">Đổi tên chủ đề</string>
     <string name="watch_theme_name">Tên chủ đề</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Bạn có thể lưu tối đa 24 chủ đề tùy chỉnh. Hãy xóa một chủ đề trước khi tạo chủ đề mới.</string>
     <string name="watch_theme_name_required">Nhập tên chủ đề</string>
     <string name="watch_theme_name_duplicate">Đã có chủ đề khác dùng tên này</string>
+
+    <string name="online_themes_title">Chủ đề cộng đồng</string>
+    <string name="online_theme_intro">Khám phá các giao diện do cộng đồng tạo. Việc mở thư viện này sẽ tải xuống danh mục công khai của thư viện.</string>
+    <string name="online_theme_refresh">Làm mới chủ đề cộng đồng</string>
+    <string name="online_theme_list_description">Chủ đề đồng hồ do cộng đồng tạo</string>
+    <string name="online_theme_byline">Bởi %1$s · Bố cục %2$s</string>
+    <string name="online_theme_row_description">%1$s bởi %2$s. Bố cục %3$s.</string>
+    <string name="online_theme_apply">Thêm và áp dụng</string>
+    <string name="online_theme_loading">Đang tải chủ đề cộng đồng…</string>
+    <string name="online_theme_loading_preview">Đang tải bản xem trước…</string>
+    <string name="online_theme_empty">Chưa có chủ đề cộng đồng nào.</string>
+    <string name="online_theme_load_error">Không thể tải chủ đề cộng đồng. Hãy kiểm tra kết nối rồi thử lại.</string>
+    <string name="online_theme_retry">Thử lại</string>
+    <string name="online_theme_installed">TRONG CHỦ ĐỀ CỦA TÔI</string>
+    <string name="online_theme_apply_success">Đã thêm %1$s vào Chủ đề của tôi và áp dụng cho đồng hồ của bạn</string>
+    <string name="online_theme_preview_error">Không thể tải chi tiết chủ đề. Hãy kiểm tra kết nối rồi thử lại.</string>
+    <string name="online_theme_update_available">CÓ BẢN CẬP NHẬT</string>
+    <string name="online_theme_requires_app_version">YÊU CẦU SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Chủ đề này sẽ làm cài đặt đồng hồ của bạn quá lớn để đồng bộ. Hãy đặt lại cài đặt mặt đồng hồ không dùng rồi thử lại.</string>
 
     <string name="watch_theme_face_classic">Classic</string>
     <string name="watch_theme_face_expressive">Expressive</string>

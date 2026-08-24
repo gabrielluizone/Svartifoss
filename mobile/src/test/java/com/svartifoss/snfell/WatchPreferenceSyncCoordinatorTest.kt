@@ -1,5 +1,6 @@
 package com.svartifoss.snfell
 
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -34,5 +35,14 @@ class WatchPreferenceSyncCoordinatorTest {
         assertFalse(shouldSyncWatchPreference("track_history"))
         assertFalse(shouldSyncWatchPreference("search_history"))
         assertFalse(shouldSyncWatchPreference("playlist_shortcuts"))
+    }
+
+    @Test
+    fun `snapshot budget measures utf8 rather than unicode code units`() {
+        // `é` occupies two UTF-8 bytes and the musical-symbol emoji four. Public theme text must
+        // be counted this way; String.length() would understate both values.
+        assertEquals(
+                20,
+                estimateWatchPreferenceSnapshotBytes(mapOf("é" to "🎵")))
     }
 }

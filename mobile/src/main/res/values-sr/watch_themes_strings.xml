@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Распоред: %1$s</string>
     <string name="watch_theme_preview_description">Преглед теме која је тренутно примењена на сату</string>
     <string name="watch_theme_create">Направи тему</string>
+    <string name="watch_theme_browse_community">Прегледајте теме заједнице</string>
     <string name="watch_theme_create_title">Направи нову тему</string>
     <string name="watch_theme_rename_title">Преименуј тему</string>
     <string name="watch_theme_name">Назив теме</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Можете да сачувате до 24 прилагођене теме. Избришите једну пре него што направите нову.</string>
     <string name="watch_theme_name_required">Унесите назив теме</string>
     <string name="watch_theme_name_duplicate">Тема са овим називом већ постоји</string>
+
+    <string name="online_themes_title">Теме заједнице</string>
+    <string name="online_theme_intro">Откријте изгледе које је креирала заједница. Отварањем ове галерије преузима се њен јавни каталог.</string>
+    <string name="online_theme_refresh">Освежи теме заједнице</string>
+    <string name="online_theme_list_description">Теме сата које је креирала заједница</string>
+    <string name="online_theme_byline">Аутор: %1$s · распоред %2$s</string>
+    <string name="online_theme_row_description">%1$s, аутор %2$s. Распоред %3$s.</string>
+    <string name="online_theme_apply">Додај и примени</string>
+    <string name="online_theme_loading">Учитавање тема заједнице…</string>
+    <string name="online_theme_loading_preview">Учитавање прегледа…</string>
+    <string name="online_theme_empty">Још нема доступних тема заједнице.</string>
+    <string name="online_theme_load_error">Није могуће учитати теме заједнице. Проверите везу и покушајте поново.</string>
+    <string name="online_theme_retry">Покушај поново</string>
+    <string name="online_theme_installed">У МОЈИМ ТЕМАМА</string>
+    <string name="online_theme_apply_success">%1$s је додата у Моје теме и примењена на ваш сат</string>
+    <string name="online_theme_preview_error">Није могуће учитати детаље теме. Проверите везу и покушајте поново.</string>
+    <string name="online_theme_update_available">АЖУРИРАЊЕ ЈЕ ДОСТУПНО</string>
+    <string name="online_theme_requires_app_version">ЗАХТЕВА SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Ова тема би учинила подешавања вашег сата превеликим за синхронизацију. Ресетујте подешавања некоришћених бројчаника и покушајте поново.</string>
 
     <string name="watch_theme_face_classic">Класично</string>
     <string name="watch_theme_face_expressive">Експресивно</string>

@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3
+
+### Added
+
+- **Community themes.** The Watch themes screen now opens an opt-in gallery of publicly published looks. Browse and preview each theme on the phone against the same built-in sample track, then add it to **My themes** and apply it in one tap. The gallery is served as static JSON from this repository; it needs no account, never contacts a server until you open it, and a theme you customize after installing remains your own local copy.
+- **Submit a Community theme.** A theme you created locally can be sent for review with Google Sign-In, a public theme name and a chosen author pseudonym; your Google name and email are not published. The submission needs at least twelve applicable visual changes, is rate-limited to one per account each 24 hours, and becomes public only after a separate moderator review and trusted publication check.
+
 ## 3.2
 
 ### Added

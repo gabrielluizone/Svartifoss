@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">版面配置：%1$s</string>
     <string name="watch_theme_preview_description">預覽目前套用至手錶的主題</string>
     <string name="watch_theme_create">建立主題</string>
+    <string name="watch_theme_browse_community">瀏覽社群主題</string>
     <string name="watch_theme_create_title">建立新主題</string>
     <string name="watch_theme_rename_title">重新命名主題</string>
     <string name="watch_theme_name">主題名稱</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">最多可儲存 24 個自訂主題。建立新的主題前請先刪除一個。</string>
     <string name="watch_theme_name_required">輸入主題名稱</string>
     <string name="watch_theme_name_duplicate">已有相同名稱的主題</string>
+
+    <string name="online_themes_title">社群主題</string>
+    <string name="online_theme_intro">探索由社群打造的外觀。開啟此圖庫會下載其公開目錄。</string>
+    <string name="online_theme_refresh">重新整理社群主題</string>
+    <string name="online_theme_list_description">社群建立的手錶主題</string>
+    <string name="online_theme_byline">由 %1$s 製作 · %2$s 版面配置</string>
+    <string name="online_theme_row_description">%1$s，由 %2$s 製作。%3$s 版面配置。</string>
+    <string name="online_theme_apply">新增並套用</string>
+    <string name="online_theme_loading">正在載入社群主題…</string>
+    <string name="online_theme_loading_preview">正在載入預覽…</string>
+    <string name="online_theme_empty">目前尚無可用的社群主題。</string>
+    <string name="online_theme_load_error">無法載入社群主題。請檢查網路連線後再試一次。</string>
+    <string name="online_theme_retry">再試一次</string>
+    <string name="online_theme_installed">在「我的主題」中</string>
+    <string name="online_theme_apply_success">已將 %1$s 新增至「我的主題」並套用到手錶</string>
+    <string name="online_theme_preview_error">無法載入主題詳細資料。請檢查網路連線後再試一次。</string>
+    <string name="online_theme_update_available">有可用更新</string>
+    <string name="online_theme_requires_app_version">需要 SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">此主題會使手錶設定過大而無法同步。請重設未使用錶面的設定後再試一次。</string>
 
     <string name="watch_theme_face_classic">經典</string>
     <string name="watch_theme_face_expressive">表現式</string>

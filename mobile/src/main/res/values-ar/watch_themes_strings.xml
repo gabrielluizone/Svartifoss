@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">التخطيط: %1$s</string>
     <string name="watch_theme_preview_description">معاينة للسمة المطبّقة حاليًا على الساعة</string>
     <string name="watch_theme_create">إنشاء سمة</string>
+    <string name="watch_theme_browse_community">استعراض سمات المجتمع</string>
     <string name="watch_theme_create_title">إنشاء سمة جديدة</string>
     <string name="watch_theme_rename_title">إعادة تسمية السمة</string>
     <string name="watch_theme_name">اسم السمة</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">يمكنك حفظ ما يصل إلى 24 سمة مخصّصة. احذف واحدة قبل إنشاء أخرى.</string>
     <string name="watch_theme_name_required">أدخل اسمًا للسمة</string>
     <string name="watch_theme_name_duplicate">توجد سمة بهذا الاسم بالفعل</string>
+
+    <string name="online_themes_title">سمات المجتمع</string>
+    <string name="online_theme_intro">اكتشف تصميمات أنشأها المجتمع. يؤدي فتح هذا المعرض إلى تنزيل كتالوجه العام.</string>
+    <string name="online_theme_refresh">تحديث سمات المجتمع</string>
+    <string name="online_theme_list_description">سمات ساعة أنشأها المجتمع</string>
+    <string name="online_theme_byline">بواسطة %1$s · تخطيط %2$s</string>
+    <string name="online_theme_row_description">%1$s بواسطة %2$s. تخطيط %3$s.</string>
+    <string name="online_theme_apply">أضف وطبّق</string>
+    <string name="online_theme_loading">جارٍ تحميل سمات المجتمع…</string>
+    <string name="online_theme_loading_preview">جارٍ تحميل المعاينة…</string>
+    <string name="online_theme_empty">لا تتوفر سمات مجتمع بعد.</string>
+    <string name="online_theme_load_error">تعذّر تحميل سمات المجتمع. تحقّق من اتصالك وحاول مرة أخرى.</string>
+    <string name="online_theme_retry">حاول مرة أخرى</string>
+    <string name="online_theme_installed">ضمن سماتي</string>
+    <string name="online_theme_apply_success">تمت إضافة %1$s إلى سماتي وتطبيقها على ساعتك</string>
+    <string name="online_theme_preview_error">تعذّر تحميل تفاصيل السمة. تحقّق من اتصالك وحاول مرة أخرى.</string>
+    <string name="online_theme_update_available">تحديث متاح</string>
+    <string name="online_theme_requires_app_version">يتطلب SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">ستجعل هذه السمة إعدادات ساعتك كبيرة جدًا للمزامنة. أعد ضبط إعدادات الواجهات غير المستخدمة وحاول مرة أخرى.</string>
 
     <string name="watch_theme_face_classic">كلاسيكي</string>
     <string name="watch_theme_face_expressive">تعبيري</string>

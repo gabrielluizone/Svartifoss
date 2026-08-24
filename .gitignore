@@ -31,6 +31,10 @@ Thumbs.db
 
 mobile/google-services.json
 
+# Local Firestore-rules test dependencies and emulator diagnostics.
+/firebase/node_modules/
+/firebase/*-debug.log
+
 # Ignore build protobuf files
 /common/src/main/java/com/matejdro/wearmusiccenter/proto
 

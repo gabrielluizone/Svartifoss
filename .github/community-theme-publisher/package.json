@@ -1,0 +1,16 @@
+{
+  "name": "svartifoss-community-theme-publisher",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test publisher.test.mjs defaults-parity.test.mjs",
+    "dry-run": "node publisher.mjs"
+  },
+  "dependencies": {
+    "firebase-admin": "13.6.0"
+  }
+}

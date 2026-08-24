@@ -53,16 +53,19 @@ kotlin {
 }
 
 protobuf {
-    plugins {
-        javalite {
-            def dependency = libs.google.protobuf.liteGen.get()
-            artifact = "${dependency.module}:${dependency.versionConstraint}"
-        }
+    protoc {
+        def dependency = libs.google.protobuf.protoc.get()
+        artifact = "${dependency.module}:${dependency.versionConstraint}"
     }
     generateProtoTasks {
         all().each { task ->
-            task.plugins {
-                javalite { }
+            task.builtins {
+                // Since protobuf 3.8 the Java Lite generator is built into protoc.
+                // Keep generated code compatible with the javalite runtime brought
+                // in by Firestore and avoid the obsolete protobuf-lite artifact.
+                java {
+                    option "lite"
+                }
             }
         }
     }

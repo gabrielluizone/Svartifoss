@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Rozloženie: %1$s</string>
     <string name="watch_theme_preview_description">Náhľad témy, ktorá je aktuálne použitá na hodinkách</string>
     <string name="watch_theme_create">Vytvoriť tému</string>
+    <string name="watch_theme_browse_community">Prehľadávať komunitné motívy</string>
     <string name="watch_theme_create_title">Vytvoriť novú tému</string>
     <string name="watch_theme_rename_title">Premenovať tému</string>
     <string name="watch_theme_name">Názov témy</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Môžete uložiť najviac 24 vlastných tém. Pred vytvorením ďalšej jednu odstráňte.</string>
     <string name="watch_theme_name_required">Zadajte názov témy</string>
     <string name="watch_theme_name_duplicate">Téma s týmto názvom už existuje</string>
+
+    <string name="online_themes_title">Komunitné motívy</string>
+    <string name="online_theme_intro">Objavte vzhľady vytvorené komunitou. Otvorením tejto galérie sa stiahne jej verejný katalóg.</string>
+    <string name="online_theme_refresh">Obnoviť komunitné motívy</string>
+    <string name="online_theme_list_description">Komunitou vytvorené motívy hodiniek</string>
+    <string name="online_theme_byline">Od %1$s · rozloženie %2$s</string>
+    <string name="online_theme_row_description">%1$s od %2$s. Rozloženie %3$s.</string>
+    <string name="online_theme_apply">Pridať a použiť</string>
+    <string name="online_theme_loading">Načítavajú sa komunitné motívy…</string>
+    <string name="online_theme_loading_preview">Načítava sa ukážka…</string>
+    <string name="online_theme_empty">Zatiaľ nie sú k dispozícii žiadne komunitné motívy.</string>
+    <string name="online_theme_load_error">Komunitné motívy sa nepodarilo načítať. Skontrolujte pripojenie a skúste to znova.</string>
+    <string name="online_theme_retry">Skúsiť znova</string>
+    <string name="online_theme_installed">V MOJICH MOTÍVOCH</string>
+    <string name="online_theme_apply_success">%1$s bol pridaný do Mojich motívov a použitý na vašich hodinkách</string>
+    <string name="online_theme_preview_error">Nepodarilo sa načítať podrobnosti motívu. Skontrolujte pripojenie a skúste to znova.</string>
+    <string name="online_theme_update_available">K DISPOZÍCII JE AKTUALIZÁCIA</string>
+    <string name="online_theme_requires_app_version">VYŽADUJE SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Táto téma by spôsobila, že nastavenia hodiniek budú príliš veľké na synchronizáciu. Obnovte nastavenia nepoužívaných ciferníkov a skúste to znova.</string>
 
     <string name="watch_theme_face_classic">Klasický</string>
     <string name="watch_theme_face_expressive">Expresívny</string>

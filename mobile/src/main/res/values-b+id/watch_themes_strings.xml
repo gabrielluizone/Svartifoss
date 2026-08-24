@@ -9,6 +9,7 @@
     <string name="watch_theme_active_layout">Tata letak: %1$s</string>
     <string name="watch_theme_preview_description">Pratinjau tema yang sedang diterapkan pada jam tangan</string>
     <string name="watch_theme_create">Buat tema</string>
+    <string name="watch_theme_browse_community">Jelajahi tema komunitas</string>
     <string name="watch_theme_create_title">Buat tema baru</string>
     <string name="watch_theme_rename_title">Ganti nama tema</string>
     <string name="watch_theme_name">Nama tema</string>
@@ -36,6 +37,25 @@
     <string name="watch_theme_limit_reached">Kamu dapat menyimpan hingga 24 tema khusus. Hapus salah satu sebelum membuat yang baru.</string>
     <string name="watch_theme_name_required">Masukkan nama tema</string>
     <string name="watch_theme_name_duplicate">Tema dengan nama ini sudah ada</string>
+    <string name="online_themes_title">Tema komunitas</string>
+    <string name="online_theme_intro">Temukan tampilan yang dibuat komunitas. Membuka galeri ini mengunduh katalog publiknya.</string>
+    <string name="online_theme_refresh">Muat ulang tema komunitas</string>
+    <string name="online_theme_list_description">Tema jam tangan buatan komunitas</string>
+    <string name="online_theme_byline">Oleh %1$s · tata letak %2$s</string>
+    <string name="online_theme_row_description">%1$s oleh %2$s. Tata letak %3$s.</string>
+    <string name="online_theme_apply">Tambahkan dan terapkan</string>
+    <string name="online_theme_loading">Memuat tema komunitas…</string>
+    <string name="online_theme_loading_preview">Memuat pratinjau…</string>
+    <string name="online_theme_empty">Belum ada tema komunitas yang tersedia.</string>
+    <string name="online_theme_load_error">Tidak dapat memuat tema komunitas. Periksa koneksi Anda dan coba lagi.</string>
+    <string name="online_theme_retry">Coba lagi</string>
+    <string name="online_theme_installed">DI TEMA SAYA</string>
+    <string name="online_theme_apply_success">%1$s ditambahkan ke Tema saya dan diterapkan ke jam tangan Anda</string>
+    <string name="online_theme_preview_error">Tidak dapat memuat detail tema. Periksa koneksi Anda dan coba lagi.</string>
+    <string name="online_theme_update_available">PEMBARUAN TERSEDIA</string>
+    <string name="online_theme_requires_app_version">MEMERLUKAN SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Tema ini akan membuat pengaturan jam tangan Anda terlalu besar untuk disinkronkan. Setel ulang pengaturan tampilan jam yang tidak digunakan, lalu coba lagi.</string>
+
     <string name="watch_theme_face_classic">Classic</string>
     <string name="watch_theme_face_expressive">Expressive</string>
     <string name="watch_theme_face_vinyl">Vinyl</string>

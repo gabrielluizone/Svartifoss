@@ -13,8 +13,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 35
         compileSdk 36
-        versionCode 60
-        versionName "3.2"
+        versionCode 61
+        versionName "3.3"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
         multiDexEnabled true
@@ -70,6 +70,9 @@ dependencies {
     implementation libs.androidx.core
     implementation libs.androidx.lifecycle.service
     implementation libs.androidx.lifecycle.viewmodel
+    implementation libs.androidx.lifecycle.runtime
+    implementation libs.androidx.credentials
+    implementation libs.androidx.credentials.playServicesAuth
     implementation libs.androidx.media
     implementation libs.androidx.palette
     coreLibraryDesugaring(libs.desugarJdkLibs)
@@ -107,8 +110,14 @@ dependencies {
     implementation libs.google.firebase.crashlytics
     implementation libs.google.firebase.analytics
     implementation libs.google.firebase.messaging
+    implementation libs.google.firebase.auth
+    implementation libs.google.firebase.firestore
+    implementation libs.google.identity.googleid
 
     testImplementation libs.junit4
+    // Android's org.json is a runtime stub in local JVM tests; use the reference implementation
+    // for the checked-in GitHub Pages catalogue contract test.
+    testImplementation libs.json
 }
 
 // TranslatedArrayAlignmentTest reads res/values*/strings.xml straight off disk, which Gradle does

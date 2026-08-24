@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Орналасу: %1$s</string>
     <string name="watch_theme_preview_description">Сағатқа қазір қолданылған тақырыпты алдын ала қарау</string>
     <string name="watch_theme_create">Тақырып жасау</string>
+    <string name="watch_theme_browse_community">Қауымдастық тақырыптарын шолу</string>
     <string name="watch_theme_create_title">Жаңа тақырып жасау</string>
     <string name="watch_theme_rename_title">Тақырып атауын өзгерту</string>
     <string name="watch_theme_name">Тақырып атауы</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">24-ке дейін арнаулы тақырып сақтауға болады. Жаңасын жасамас бұрын біреуін жойыңыз.</string>
     <string name="watch_theme_name_required">Тақырып атауын енгізіңіз</string>
     <string name="watch_theme_name_duplicate">Мұндай атауы бар тақырып бұрыннан бар</string>
+
+    <string name="online_themes_title">Қауымдастық тақырыптары</string>
+    <string name="online_theme_intro">Қауымдастық жасаған көріністерді ашыңыз. Бұл галереяны ашу оның ашық каталогын жүктейді.</string>
+    <string name="online_theme_refresh">Қауымдастық тақырыптарын жаңарту</string>
+    <string name="online_theme_list_description">Қауымдастық жасаған сағат тақырыптары</string>
+    <string name="online_theme_byline">%1$s авторы · %2$s орналасуы</string>
+    <string name="online_theme_row_description">%1$s, авторы %2$s. %3$s орналасуы.</string>
+    <string name="online_theme_apply">Қосу және қолдану</string>
+    <string name="online_theme_loading">Қауымдастық тақырыптары жүктелуде…</string>
+    <string name="online_theme_loading_preview">Алдын ала қарау жүктелуде…</string>
+    <string name="online_theme_empty">Қауымдастық тақырыптары әлі қолжетімді емес.</string>
+    <string name="online_theme_load_error">Қауымдастық тақырыптарын жүктеу мүмкін болмады. Қосылымды тексеріп, әрекетті қайталаңыз.</string>
+    <string name="online_theme_retry">Қайталау</string>
+    <string name="online_theme_installed">МЕНІҢ ТАҚЫРЫПТАРЫМДА</string>
+    <string name="online_theme_apply_success">%1$s Менің тақырыптарыма қосылып, сағатыңызға қолданылды</string>
+    <string name="online_theme_preview_error">Тақырып мәліметтерін жүктеу мүмкін болмады. Қосылымды тексеріп, әрекетті қайталаңыз.</string>
+    <string name="online_theme_update_available">ЖАҢАРТУ ҚОЛЖЕТІМДІ</string>
+    <string name="online_theme_requires_app_version">SVARTIFOSS %1$s ҚАЖЕТ</string>
+    <string name="online_theme_sync_limit">Бұл тақырып сағат параметрлерін синхрондау үшін тым үлкен етеді. Пайдаланылмайтын циферблат параметрлерін қалпына келтіріп, әрекетті қайталаңыз.</string>
 
     <string name="watch_theme_face_classic">Классикалық</string>
     <string name="watch_theme_face_expressive">Экспрессивті</string>

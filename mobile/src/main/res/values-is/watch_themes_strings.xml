@@ -9,6 +9,7 @@
     <string name="watch_theme_active_layout">Útlit: %1$s</string>
     <string name="watch_theme_preview_description">Forskoðun á þemanu sem er nú virkt á úrinu</string>
     <string name="watch_theme_create">Búa til þema</string>
+    <string name="watch_theme_browse_community">Skoða samfélagsþemu</string>
     <string name="watch_theme_create_title">Búa til nýtt þema</string>
     <string name="watch_theme_rename_title">Endurnefna þema</string>
     <string name="watch_theme_name">Nafn þema</string>
@@ -36,6 +37,25 @@
     <string name="watch_theme_limit_reached">Þú getur vistað allt að 24 sérsniðin þemu. Eyddu einu áður en þú býrð til annað.</string>
     <string name="watch_theme_name_required">Sláðu inn nafn á þemað</string>
     <string name="watch_theme_name_duplicate">Þema með þessu nafni er þegar til</string>
+    <string name="online_themes_title">Samfélagsþemu</string>
+    <string name="online_theme_intro">Uppgötvaðu útlit sem samfélagið hefur skapað. Með því að opna þetta safn hleðst niður opinber listi þess.</string>
+    <string name="online_theme_refresh">Endurnýja samfélagsþemu</string>
+    <string name="online_theme_list_description">Úrþemu búin til af samfélaginu</string>
+    <string name="online_theme_byline">Eftir %1$s · %2$s uppsetning</string>
+    <string name="online_theme_row_description">%1$s eftir %2$s. %3$s uppsetning.</string>
+    <string name="online_theme_apply">Bæta við og nota</string>
+    <string name="online_theme_loading">Hleð inn samfélagsþemum…</string>
+    <string name="online_theme_loading_preview">Hleð inn forskoðun…</string>
+    <string name="online_theme_empty">Engin samfélagsþemu eru tiltæk enn.</string>
+    <string name="online_theme_load_error">Ekki tókst að hlaða inn samfélagsþemum. Athugaðu tenginguna þína og reyndu aftur.</string>
+    <string name="online_theme_retry">Reyndu aftur</string>
+    <string name="online_theme_installed">Í MÍNUM ÞEMUM</string>
+    <string name="online_theme_apply_success">%1$s var bætt við Mín þemu og notað á úrið þitt</string>
+    <string name="online_theme_preview_error">Ekki tókst að hlaða inn upplýsingum um þemað. Athugaðu tenginguna þína og reyndu aftur.</string>
+    <string name="online_theme_update_available">UPPFÆRSLA Í BOÐI</string>
+    <string name="online_theme_requires_app_version">KREFST SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Þetta þema myndi gera stillingar úrsins of stórar til samstillingar. Endurstilltu stillingar ónotaðra úrskífa og reyndu aftur.</string>
+
     <string name="watch_theme_face_classic">Classic</string>
     <string name="watch_theme_face_expressive">Expressive</string>
     <string name="watch_theme_face_vinyl">Vinyl</string>

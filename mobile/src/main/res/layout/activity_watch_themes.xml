@@ -124,6 +124,89 @@
         android:text="@string/watch_theme_create"
         app:icon="@drawable/ic_plus" />
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/button_browse_community_themes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:contentDescription="@string/watch_theme_browse_community"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
+        app:cardBackgroundColor="@color/lyra_surface"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/lyra_divider"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="82dp"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="12dp">
+
+            <ImageView
+                android:id="@+id/community_themes_icon"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/circle_icon_bg"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                android:padding="10dp"
+                android:src="@drawable/ic_palette"
+                tools:ignore="UseAppTint" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans"
+                    android:includeFontPadding="false"
+                    android:text="@string/online_themes_title"
+                    android:textColor="@color/lyra_on_surface"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/google_sans"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="1dp"
+                    android:maxLines="2"
+                    android:text="@string/online_theme_intro"
+                    android:textColor="@color/lyra_text_secondary"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                android:padding="9dp"
+                android:src="@drawable/ic_chevron_right"
+                android:tint="@color/lyra_text_secondary"
+                tools:ignore="UseAppTint" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/theme_list"
         android:layout_width="match_parent"

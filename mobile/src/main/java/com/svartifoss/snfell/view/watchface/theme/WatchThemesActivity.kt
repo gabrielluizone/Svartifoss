@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.view.watchface.theme
 
 import android.content.SharedPreferences
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.ColorUtils
 import androidx.core.widget.doAfterTextChanged
 import androidx.preference.PreferenceManager
@@ -54,6 +56,24 @@ class WatchThemesActivity : AppCompatActivity() {
     private lateinit var activeName: TextView
     private lateinit var activeLayout: TextView
     private var accentColor: Int = Color.WHITE
+    private val onlineThemesLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            // The gallery performs the actual install/apply, but this parent remains the route
+            // back to the Watch tab. Forward the result so its active-theme card and live preview
+            // are refreshed when the user returns there.
+            setResult(RESULT_OK)
+            refreshScreen()
+        }
+    }
+    private val communitySubmissionLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            // A successful queueing leaves the saved profile intact, but refresh the list in case
+            // the user captured edits immediately before opening the submission screen.
+            refreshScreen()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +94,14 @@ class WatchThemesActivity : AppCompatActivity() {
             setTextColor(onAccentColor(LyraAccent.resolve(this@WatchThemesActivity)))
             iconTint = ColorStateList.valueOf(onAccentColor(LyraAccent.resolve(this@WatchThemesActivity)))
             setOnClickListener { showCreateDialog() }
+        }
+        findViewById<ImageView>(R.id.community_themes_icon).imageTintList =
+                ColorStateList.valueOf(LyraAccent.resolve(this))
+        findViewById<MaterialCardView>(R.id.button_browse_community_themes).apply {
+            setOnClickListener {
+                onlineThemesLauncher.launch(
+                        Intent(this@WatchThemesActivity, OnlineThemesActivity::class.java))
+            }
         }
 
         adapter = ThemeAdapter(
@@ -199,12 +227,19 @@ class WatchThemesActivity : AppCompatActivity() {
     private fun showCustomMenu(anchor: View, profile: WatchThemeProfile) {
         PopupMenu(this, anchor).apply {
             menu.add(0, MENU_CUSTOMIZE, 0, R.string.watch_theme_customize)
-            menu.add(0, MENU_RENAME, 1, R.string.watch_theme_rename)
-            menu.add(0, MENU_DUPLICATE, 2, R.string.watch_theme_duplicate)
-            menu.add(0, MENU_DELETE, 3, R.string.watch_theme_delete)
+            // A gallery install retains its public source so it cannot be re-submitted unchanged.
+            // Duplicating it explicitly creates a user-owned fork, which can later be edited and
+            // submitted like any other local theme.
+            if (profile.publishedTheme == null) {
+                menu.add(0, MENU_SUBMIT, 1, R.string.watch_theme_submit_community)
+            }
+            menu.add(0, MENU_RENAME, 2, R.string.watch_theme_rename)
+            menu.add(0, MENU_DUPLICATE, 3, R.string.watch_theme_duplicate)
+            menu.add(0, MENU_DELETE, 4, R.string.watch_theme_delete)
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     MENU_CUSTOMIZE -> customize(profile)
+                    MENU_SUBMIT -> submitToCommunity(profile)
                     MENU_RENAME -> showRenameDialog(profile)
                     MENU_DUPLICATE -> duplicate(profile)
                     MENU_DELETE -> confirmDelete(profile)
@@ -213,6 +248,16 @@ class WatchThemesActivity : AppCompatActivity() {
             }
             show()
         }
+    }
+
+    private fun submitToCommunity(profile: WatchThemeProfile) {
+        // Capture any changes made through the normal Watch editor before handing only the local
+        // identifier to the submission screen. The profile itself stays private in this Activity;
+        // the submission boundary reloads and validates it from the local library.
+        repository.captureActive(defaultPrefs)
+        communitySubmissionLauncher.launch(Intent(
+                this, SubmitCommunityThemeActivity::class.java).putExtra(
+                SubmitCommunityThemeActivity.EXTRA_PROFILE_ID, profile.id))
     }
 
     private fun customize(profile: WatchThemeProfile) {
@@ -484,5 +529,6 @@ class WatchThemesActivity : AppCompatActivity() {
         const val MENU_RENAME = 2
         const val MENU_DUPLICATE = 3
         const val MENU_DELETE = 4
+        const val MENU_SUBMIT = 5
     }
 }

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "3f038d6e-c0e1-49e5-91e3-70a13ce3dbac",
+  "name": "Night Drive",
+  "author": "Svartifoss",
+  "baseFace": "carousel",
+  "createdAt": 1787594181000,
+  "updatedAt": 1787594181000,
+  "revision": 1,
+  "minimumAppVersion": "3.3",
+  "publishedAt": "2026-08-24T00:00:00Z",
+  "settings": {
+    "wear_color_treatment": { "type": "string", "value": "analogous" },
+    "wear_color_hue_shift": { "type": "int", "value": 330 },
+    "wear_carousel_card_shape": { "type": "string", "value": "rounded" },
+    "wear_screen_theme": { "type": "string", "value": "compact" },
+    "wear_edge_progress_visible": { "type": "boolean", "value": false },
+    "wear_edge_seek_enabled": { "type": "boolean", "value": false },
+    "wear_title_font_scale": { "type": "int", "value": 108 }
+  }
+}

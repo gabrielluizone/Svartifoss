@@ -10,6 +10,7 @@
     <string name="watch_theme_active_layout">Layout: %1$s</string>
     <string name="watch_theme_preview_description">Anteprima del tema attualmente applicato all\'orologio</string>
     <string name="watch_theme_create">Crea tema</string>
+    <string name="watch_theme_browse_community">Sfoglia i temi della community</string>
     <string name="watch_theme_create_title">Crea un nuovo tema</string>
     <string name="watch_theme_rename_title">Rinomina tema</string>
     <string name="watch_theme_name">Nome tema</string>
@@ -37,6 +38,25 @@
     <string name="watch_theme_limit_reached">Puoi salvare fino a 24 temi personalizzati. Eliminane uno prima di crearne un altro.</string>
     <string name="watch_theme_name_required">Inserisci un nome per il tema</string>
     <string name="watch_theme_name_duplicate">Esiste già un tema con questo nome</string>
+
+    <string name="online_themes_title">Temi della community</string>
+    <string name="online_theme_intro">Scopri gli stili creati dalla community. L’apertura di questa galleria scarica il suo catalogo pubblico.</string>
+    <string name="online_theme_refresh">Aggiorna i temi della community</string>
+    <string name="online_theme_list_description">Temi per orologio creati dalla community</string>
+    <string name="online_theme_byline">Di %1$s · layout %2$s</string>
+    <string name="online_theme_row_description">%1$s di %2$s. Layout %3$s.</string>
+    <string name="online_theme_apply">Aggiungi e applica</string>
+    <string name="online_theme_loading">Caricamento dei temi della community…</string>
+    <string name="online_theme_loading_preview">Caricamento dell’anteprima…</string>
+    <string name="online_theme_empty">Non sono ancora disponibili temi della community.</string>
+    <string name="online_theme_load_error">Impossibile caricare i temi della community. Controlla la connessione e riprova.</string>
+    <string name="online_theme_retry">Riprova</string>
+    <string name="online_theme_installed">NEI MIEI TEMI</string>
+    <string name="online_theme_apply_success">%1$s è stato aggiunto a “I miei temi” e applicato al tuo orologio</string>
+    <string name="online_theme_preview_error">Impossibile caricare i dettagli del tema. Controlla la connessione e riprova.</string>
+    <string name="online_theme_update_available">AGGIORNAMENTO DISPONIBILE</string>
+    <string name="online_theme_requires_app_version">RICHIEDE SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Questo tema renderebbe le impostazioni dell’orologio troppo grandi per la sincronizzazione. Reimposta le impostazioni dei quadranti inutilizzati e riprova.</string>
 
     <string name="watch_theme_face_classic">Classico</string>
     <string name="watch_theme_face_expressive">Espressivo</string>

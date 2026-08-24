@@ -31,8 +31,8 @@ private const val MAX_RETRY_MS = 60_000L
 
 /** Play Services' hard cap on one DataItem and on one message payload. */
 private const val DATA_ITEM_LIMIT_BYTES = 100 * 1024
-/** Reported well before the cap: the estimate is rough and a warning after the fact is useless. */
-private const val SNAPSHOT_WARN_BYTES = 70 * 1024
+/** Reported well before the cap; gallery installs use the same conservative boundary. */
+internal const val WATCH_SNAPSHOT_GUARD_BYTES = 70 * 1024
 /** Type tag plus length prefix plus DataMap bookkeeping, per entry. */
 private const val VALUE_OVERHEAD_BYTES = 12
 
@@ -50,6 +50,23 @@ private val WATCH_SYNC_BASE_KEYS: Set<String> by lazy {
 internal fun shouldSyncWatchPreference(key: String?): Boolean {
     val baseKey = key?.substringBefore(FaceScopedPreferences.SCOPE_SEPARATOR) ?: return false
     return baseKey in WATCH_SYNC_BASE_KEYS
+}
+
+/**
+ * Conservative common budget for the DataItem and immediate-message preference snapshots.
+ *
+ * Key names travel twice (as DataMap keys and in PreferencePusher's key inventory), and values
+ * are counted as UTF-8 because a character count would understate a public text value containing
+ * non-ASCII characters. This intentionally remains an estimate; callers use the 70 KiB guard to
+ * leave headroom below the transport's 100 KiB hard cap.
+ */
+internal fun estimateWatchPreferenceSnapshotBytes(snapshot: Map<String, Any?>): Int {
+    val bytes = snapshot.entries.sumOf { (key, value) ->
+        (2L * key.toByteArray(Charsets.UTF_8).size) +
+                ((value as? String)?.toByteArray(Charsets.UTF_8)?.size ?: 0) +
+                VALUE_OVERHEAD_BYTES
+    }
+    return bytes.coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
 }
 
 /**
@@ -219,10 +236,8 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
     private fun warnIfSnapshotIsOversized(snapshot: Map<String, Any?>) {
         // Key names are carried twice - once as DataMap keys, once in PreferencePusher's synced-key
         // inventory - so they are counted twice here.
-        val estimatedBytes = snapshot.entries.sumOf { (key, value) ->
-            2 * key.length + (value as? String)?.length.let { it ?: 0 } + VALUE_OVERHEAD_BYTES
-        }
-        if (estimatedBytes < SNAPSHOT_WARN_BYTES) {
+        val estimatedBytes = estimateWatchPreferenceSnapshotBytes(snapshot)
+        if (estimatedBytes < WATCH_SNAPSHOT_GUARD_BYTES) {
             oversizedSnapshotReported = false
             return
         }

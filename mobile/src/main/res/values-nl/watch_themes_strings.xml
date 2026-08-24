@@ -9,6 +9,7 @@
     <string name="watch_theme_active_layout">Indeling: %1$s</string>
     <string name="watch_theme_preview_description">Voorbeeld van het thema dat momenteel op het horloge is toegepast</string>
     <string name="watch_theme_create">Thema maken</string>
+    <string name="watch_theme_browse_community">Communitythema\'s bekijken</string>
     <string name="watch_theme_create_title">Nieuw thema maken</string>
     <string name="watch_theme_rename_title">Thema hernoemen</string>
     <string name="watch_theme_name">Themanaam</string>
@@ -36,6 +37,25 @@
     <string name="watch_theme_limit_reached">Je kunt maximaal 24 aangepaste thema\'s opslaan. Verwijder er een voordat je een nieuwe maakt.</string>
     <string name="watch_theme_name_required">Voer een themanaam in</string>
     <string name="watch_theme_name_duplicate">Er bestaat al een thema met deze naam</string>
+    <string name="online_themes_title">Communitythema\'s</string>
+    <string name="online_theme_intro">Ontdek looks die door de community zijn gemaakt. Als je deze galerij opent, wordt de openbare catalogus gedownload.</string>
+    <string name="online_theme_refresh">Communitythema\'s vernieuwen</string>
+    <string name="online_theme_list_description">Door de community gemaakte horlogethema\'s</string>
+    <string name="online_theme_byline">Door %1$s · lay-out %2$s</string>
+    <string name="online_theme_row_description">%1$s door %2$s. Lay-out %3$s.</string>
+    <string name="online_theme_apply">Toevoegen en toepassen</string>
+    <string name="online_theme_loading">Communitythema\'s laden…</string>
+    <string name="online_theme_loading_preview">Voorbeeld laden…</string>
+    <string name="online_theme_empty">Er zijn nog geen communitythema\'s beschikbaar.</string>
+    <string name="online_theme_load_error">Communitythema\'s konden niet worden geladen. Controleer je verbinding en probeer het opnieuw.</string>
+    <string name="online_theme_retry">Opnieuw proberen</string>
+    <string name="online_theme_installed">IN MIJN THEMA\'S</string>
+    <string name="online_theme_apply_success">%1$s is toegevoegd aan Mijn thema\'s en toegepast op je horloge</string>
+    <string name="online_theme_preview_error">Themagegevens konden niet worden geladen. Controleer je verbinding en probeer het opnieuw.</string>
+    <string name="online_theme_update_available">UPDATE BESCHIKBAAR</string>
+    <string name="online_theme_requires_app_version">SVARTIFOSS %1$s VEREIST</string>
+    <string name="online_theme_sync_limit">Dit thema zou je horloge-instellingen te groot maken om te synchroniseren. Reset instellingen van ongebruikte wijzerplaten en probeer het opnieuw.</string>
+
     <string name="watch_theme_face_classic">Classic</string>
     <string name="watch_theme_face_expressive">Expressive</string>
     <string name="watch_theme_face_vinyl">Vinyl</string>

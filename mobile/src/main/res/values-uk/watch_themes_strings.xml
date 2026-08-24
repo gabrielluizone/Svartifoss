@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Макет: %1$s</string>
     <string name="watch_theme_preview_description">Попередній перегляд теми, що зараз застосована на годиннику</string>
     <string name="watch_theme_create">Створити тему</string>
+    <string name="watch_theme_browse_community">Переглянути теми спільноти</string>
     <string name="watch_theme_create_title">Створити нову тему</string>
     <string name="watch_theme_rename_title">Перейменувати тему</string>
     <string name="watch_theme_name">Назва теми</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Можна зберегти до 24 власних тем. Перед створенням нової видаліть одну.</string>
     <string name="watch_theme_name_required">Введіть назву теми</string>
     <string name="watch_theme_name_duplicate">Тема з такою назвою вже існує</string>
+
+    <string name="online_themes_title">Теми спільноти</string>
+    <string name="online_theme_intro">Відкрийте для себе оформлення, створені спільнотою. Відкриття цієї галереї завантажує її публічний каталог.</string>
+    <string name="online_theme_refresh">Оновити теми спільноти</string>
+    <string name="online_theme_list_description">Теми годинника, створені спільнотою</string>
+    <string name="online_theme_byline">Від %1$s · макет %2$s</string>
+    <string name="online_theme_row_description">%1$s від %2$s. Макет %3$s.</string>
+    <string name="online_theme_apply">Додати й застосувати</string>
+    <string name="online_theme_loading">Завантаження тем спільноти…</string>
+    <string name="online_theme_loading_preview">Завантаження попереднього перегляду…</string>
+    <string name="online_theme_empty">Наразі немає доступних тем спільноти.</string>
+    <string name="online_theme_load_error">Не вдалося завантажити теми спільноти. Перевірте підключення та повторіть спробу.</string>
+    <string name="online_theme_retry">Спробувати ще раз</string>
+    <string name="online_theme_installed">У МОЇХ ТЕМАХ</string>
+    <string name="online_theme_apply_success">%1$s додано до Моїх тем і застосовано на годиннику</string>
+    <string name="online_theme_preview_error">Не вдалося завантажити відомості про тему. Перевірте підключення та повторіть спробу.</string>
+    <string name="online_theme_update_available">ДОСТУПНЕ ОНОВЛЕННЯ</string>
+    <string name="online_theme_requires_app_version">ПОТРІБЕН SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Ця тема зробить налаштування годинника завеликими для синхронізації. Скиньте налаштування невикористаних циферблатів і повторіть спробу.</string>
 
     <string name="watch_theme_face_classic">Класичний</string>
     <string name="watch_theme_face_expressive">Виразний</string>

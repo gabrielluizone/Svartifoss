@@ -10,6 +10,7 @@
     <string name="watch_theme_active_layout">Макет: %1$s</string>
     <string name="watch_theme_preview_description">Предпросмотр темы, применённой сейчас к часам</string>
     <string name="watch_theme_create">Создать тему</string>
+    <string name="watch_theme_browse_community">Просмотреть темы сообщества</string>
     <string name="watch_theme_create_title">Создать новую тему</string>
     <string name="watch_theme_rename_title">Переименовать тему</string>
     <string name="watch_theme_name">Название темы</string>
@@ -37,6 +38,25 @@
     <string name="watch_theme_limit_reached">Можно сохранить до 24 своих тем. Удалите одну, прежде чем создавать новую.</string>
     <string name="watch_theme_name_required">Введите название темы</string>
     <string name="watch_theme_name_duplicate">Тема с таким названием уже существует</string>
+
+    <string name="online_themes_title">Темы сообщества</string>
+    <string name="online_theme_intro">Откройте для себя оформления, созданные сообществом. При открытии этой галереи загружается её публичный каталог.</string>
+    <string name="online_theme_refresh">Обновить темы сообщества</string>
+    <string name="online_theme_list_description">Темы для часов, созданные сообществом</string>
+    <string name="online_theme_byline">От %1$s · макет %2$s</string>
+    <string name="online_theme_row_description">%1$s от %2$s. Макет %3$s.</string>
+    <string name="online_theme_apply">Добавить и применить</string>
+    <string name="online_theme_loading">Загрузка тем сообщества…</string>
+    <string name="online_theme_loading_preview">Загрузка предпросмотра…</string>
+    <string name="online_theme_empty">Пока нет доступных тем сообщества.</string>
+    <string name="online_theme_load_error">Не удалось загрузить темы сообщества. Проверьте подключение и повторите попытку.</string>
+    <string name="online_theme_retry">Повторить</string>
+    <string name="online_theme_installed">В МОИХ ТЕМАХ</string>
+    <string name="online_theme_apply_success">%1$s добавлена в Мои темы и применена к вашим часам</string>
+    <string name="online_theme_preview_error">Не удалось загрузить сведения о теме. Проверьте подключение и повторите попытку.</string>
+    <string name="online_theme_update_available">ДОСТУПНО ОБНОВЛЕНИЕ</string>
+    <string name="online_theme_requires_app_version">ТРЕБУЕТСЯ SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Эта тема сделает настройки часов слишком большими для синхронизации. Сбросьте настройки неиспользуемых циферблатов и повторите попытку.</string>
 
     <string name="watch_theme_face_classic">Классический</string>
     <string name="watch_theme_face_expressive">Экспрессивный</string>

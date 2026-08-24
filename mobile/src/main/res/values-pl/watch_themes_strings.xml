@@ -11,6 +11,7 @@
     <string name="watch_theme_active_layout">Układ: %1$s</string>
     <string name="watch_theme_preview_description">Podgląd motywu aktualnie zastosowanego na zegarku</string>
     <string name="watch_theme_create">Utwórz motyw</string>
+    <string name="watch_theme_browse_community">Przeglądaj motywy społeczności</string>
     <string name="watch_theme_create_title">Utwórz nowy motyw</string>
     <string name="watch_theme_rename_title">Zmień nazwę motywu</string>
     <string name="watch_theme_name">Nazwa motywu</string>
@@ -38,6 +39,25 @@
     <string name="watch_theme_limit_reached">Możesz zapisać maksymalnie 24 niestandardowe motywy. Usuń jeden przed utworzeniem kolejnego.</string>
     <string name="watch_theme_name_required">Wpisz nazwę motywu</string>
     <string name="watch_theme_name_duplicate">Motyw o tej nazwie już istnieje</string>
+
+    <string name="online_themes_title">Motywy społeczności</string>
+    <string name="online_theme_intro">Odkrywaj wyglądy stworzone przez społeczność. Otwarcie tej galerii pobiera jej publiczny katalog.</string>
+    <string name="online_theme_refresh">Odśwież motywy społeczności</string>
+    <string name="online_theme_list_description">Motywy zegarka stworzone przez społeczność</string>
+    <string name="online_theme_byline">Autor: %1$s · układ %2$s</string>
+    <string name="online_theme_row_description">%1$s — autor: %2$s. Układ %3$s.</string>
+    <string name="online_theme_apply">Dodaj i zastosuj</string>
+    <string name="online_theme_loading">Wczytywanie motywów społeczności…</string>
+    <string name="online_theme_loading_preview">Wczytywanie podglądu…</string>
+    <string name="online_theme_empty">Nie ma jeszcze dostępnych motywów społeczności.</string>
+    <string name="online_theme_load_error">Nie udało się wczytać motywów społeczności. Sprawdź połączenie i spróbuj ponownie.</string>
+    <string name="online_theme_retry">Spróbuj ponownie</string>
+    <string name="online_theme_installed">W MOICH MOTYWACH</string>
+    <string name="online_theme_apply_success">%1$s został dodany do Moich motywów i zastosowany na zegarku</string>
+    <string name="online_theme_preview_error">Nie udało się wczytać szczegółów motywu. Sprawdź połączenie i spróbuj ponownie.</string>
+    <string name="online_theme_update_available">DOSTĘPNA AKTUALIZACJA</string>
+    <string name="online_theme_requires_app_version">WYMAGA SVARTIFOSS %1$s</string>
+    <string name="online_theme_sync_limit">Ten motyw spowodowałby, że ustawienia zegarka byłyby zbyt duże do synchronizacji. Zresetuj ustawienia nieużywanych tarcz i spróbuj ponownie.</string>
 
     <string name="watch_theme_face_classic">Klasyczny</string>
     <string name="watch_theme_face_expressive">Ekspresyjny</string>
