@@ -44,7 +44,7 @@
     <string name="online_theme_intro">גלו עיצובים שנוצרו בידי הקהילה. פתיחת גלריה זו מורידה את הקטלוג הציבורי שלה.</string>
     <string name="online_theme_refresh">רענון ערכות נושא מהקהילה</string>
     <string name="online_theme_list_description">ערכות נושא לשעון שנוצרו בידי הקהילה</string>
-    <string name="online_theme_byline">מאת %1$s · פריסת %2$s</string>
+    <string name="online_theme_byline">מאת %1$s</string>
     <string name="online_theme_row_description">%1$s מאת %2$s. פריסת %3$s.</string>
     <string name="online_theme_apply">הוספה והחלה</string>
     <string name="online_theme_loading">טוען ערכות נושא מהקהילה…</string>

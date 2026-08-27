@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Topluluğun oluşturduğu görünümleri keşfedin. Bu galeriyi açmak herkese açık kataloğunu indirir.</string>
     <string name="online_theme_refresh">Topluluk temalarını yenile</string>
     <string name="online_theme_list_description">Topluluk tarafından oluşturulan saat temaları</string>
-    <string name="online_theme_byline">%1$s tarafından · %2$s düzeni</string>
+    <string name="online_theme_byline">%1$s tarafından</string>
     <string name="online_theme_row_description">%1$s, %2$s tarafından. %3$s düzeni.</string>
     <string name="online_theme_apply">Ekle ve uygula</string>
     <string name="online_theme_loading">Topluluk temaları yükleniyor…</string>

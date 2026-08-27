@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Қауымдастық жасаған көріністерді ашыңыз. Бұл галереяны ашу оның ашық каталогын жүктейді.</string>
     <string name="online_theme_refresh">Қауымдастық тақырыптарын жаңарту</string>
     <string name="online_theme_list_description">Қауымдастық жасаған сағат тақырыптары</string>
-    <string name="online_theme_byline">%1$s авторы · %2$s орналасуы</string>
+    <string name="online_theme_byline">%1$s авторы</string>
     <string name="online_theme_row_description">%1$s, авторы %2$s. %3$s орналасуы.</string>
     <string name="online_theme_apply">Қосу және қолдану</string>
     <string name="online_theme_loading">Қауымдастық тақырыптары жүктелуде…</string>

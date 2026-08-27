@@ -375,12 +375,6 @@
     <string name="setting_player_shading_style">陰影樣式</string>
     <string name="setting_player_shading_intensity">陰影強度</string>
     <string name="setting_player_shading_intensity_description">陰影使背景變暗的程度。100%% 為完整強度；提高數值可增加額外對比（最高 150%%）。目前為 <![CDATA[<b>%1$s%%</b>]]>。</string>
-    <string name="setting_apply_appearance_to_all_faces">將此外觀套用至所有錶面</string>
-    <string name="setting_apply_appearance_to_all_faces_description">將此錶面的外觀設定複製到所有其他錶面</string>
-    <string name="apply_appearance_confirm_title">套用到所有錶面？</string>
-    <string name="apply_appearance_confirm_message">這會以目前錶面的外觀設定覆寫所有其他錶面，不會變更行為設定。</string>
-    <string name="apply_appearance_confirm_button">套用</string>
-    <string name="apply_appearance_done">已套用至所有錶面</string>
     <string name="category_wf_layout_actions">版面配置</string>
     <string name="setting_reset_appearance">重設此版面配置</string>
     <string name="setting_reset_appearance_description">將此錶面的外觀還原為原始預設值</string>

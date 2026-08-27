@@ -44,7 +44,7 @@
     <string name="online_theme_intro">कम्युनिटी द्वारा बनाए गए लुक खोजें। इस गैलरी को खोलने पर इसका सार्वजनिक कैटलॉग डाउनलोड होता है।</string>
     <string name="online_theme_refresh">कम्युनिटी थीम रीफ़्रेश करें</string>
     <string name="online_theme_list_description">कम्युनिटी द्वारा बनाई गई घड़ी की थीम</string>
-    <string name="online_theme_byline">%1$s द्वारा · %2$s लेआउट</string>
+    <string name="online_theme_byline">%1$s द्वारा</string>
     <string name="online_theme_row_description">%1$s, %2$s द्वारा। %3$s लेआउट।</string>
     <string name="online_theme_apply">जोड़ें और लागू करें</string>
     <string name="online_theme_loading">कम्युनिटी थीम लोड हो रही हैं…</string>

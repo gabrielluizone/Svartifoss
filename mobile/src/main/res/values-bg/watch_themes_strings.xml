@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Открийте визии, създадени от общността. Отварянето на тази галерия изтегля публичния ѝ каталог.</string>
     <string name="online_theme_refresh">Обновяване на темите на общността</string>
     <string name="online_theme_list_description">Създадени от общността теми за часовника</string>
-    <string name="online_theme_byline">От %1$s · оформление %2$s</string>
+    <string name="online_theme_byline">От %1$s</string>
     <string name="online_theme_row_description">%1$s от %2$s. Оформление %3$s.</string>
     <string name="online_theme_apply">Добавяне и прилагане</string>
     <string name="online_theme_loading">Зареждат се темите на общността…</string>

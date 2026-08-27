@@ -213,15 +213,15 @@
                 android:textSize="13sp"
                 android:visibility="gone" />
 
-            <ProgressBar
+            <com.svartifoss.snfell.view.MusicLoadingBarsView
                 android:id="@+id/submission_progress"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="18dp"
                 android:contentDescription="@string/community_theme_submit_progress"
-                android:indeterminateTint="@color/lyra_accent"
-                android:visibility="gone" />
+                android:visibility="gone"
+                app:tint="@color/lyra_accent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_submit_theme"

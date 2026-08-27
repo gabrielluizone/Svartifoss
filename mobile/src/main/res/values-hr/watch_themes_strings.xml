@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Otkrijte izglede koje je izradila zajednica. Otvaranjem ove galerije preuzima se njezin javni katalog.</string>
     <string name="online_theme_refresh">Osvježi teme zajednice</string>
     <string name="online_theme_list_description">Teme sata koje je izradila zajednica</string>
-    <string name="online_theme_byline">Autor: %1$s · raspored %2$s</string>
+    <string name="online_theme_byline">Autor: %1$s</string>
     <string name="online_theme_row_description">%1$s autora %2$s. Raspored %3$s.</string>
     <string name="online_theme_apply">Dodaj i primijeni</string>
     <string name="online_theme_loading">Učitavanje tema zajednice…</string>

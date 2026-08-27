@@ -247,7 +247,7 @@ class WatchMusicService : LifecycleService() {
         // shows (faces that don't animate fall back to the static one, as does ambient) - the
         // same 3-bar equalizer the in-app Up Next button plays.
         val ongoingActivityBuilder = OngoingActivity.Builder(this, NOTIFICATION_ID_PERSISTENT, notificationBuilder)
-                .setAnimatedIcon(R.drawable.ic_equalizer_bars_animated)
+                .setAnimatedIcon(commonR.drawable.ic_equalizer_bars_animated)
                 .setStaticIcon(R.drawable.ic_notification_bars)
                 .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
                 .setTouchIntent(openAppPendingIntent)
@@ -358,4 +358,3 @@ private const val NOTIFICATION_ID_PERSISTENT = 1
 private const val KEY_NOTIFICATION_CHANNEL = "Service_Channel"
 
 private const val SERVICE_TIMEOUT = 30_000L
-

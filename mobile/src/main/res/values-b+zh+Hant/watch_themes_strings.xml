@@ -44,7 +44,7 @@
     <string name="online_theme_intro">探索由社群打造的外觀。開啟此圖庫會下載其公開目錄。</string>
     <string name="online_theme_refresh">重新整理社群主題</string>
     <string name="online_theme_list_description">社群建立的手錶主題</string>
-    <string name="online_theme_byline">由 %1$s 製作 · %2$s 版面配置</string>
+    <string name="online_theme_byline">由 %1$s 製作</string>
     <string name="online_theme_row_description">%1$s，由 %2$s 製作。%3$s 版面配置。</string>
     <string name="online_theme_apply">新增並套用</string>
     <string name="online_theme_loading">正在載入社群主題…</string>

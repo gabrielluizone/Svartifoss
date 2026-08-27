@@ -41,7 +41,7 @@
     <string name="online_theme_intro">Ontdek looks die door de community zijn gemaakt. Als je deze galerij opent, wordt de openbare catalogus gedownload.</string>
     <string name="online_theme_refresh">Communitythema\'s vernieuwen</string>
     <string name="online_theme_list_description">Door de community gemaakte horlogethema\'s</string>
-    <string name="online_theme_byline">Door %1$s · lay-out %2$s</string>
+    <string name="online_theme_byline">Door %1$s</string>
     <string name="online_theme_row_description">%1$s door %2$s. Lay-out %3$s.</string>
     <string name="online_theme_apply">Toevoegen en toepassen</string>
     <string name="online_theme_loading">Communitythema\'s laden…</string>

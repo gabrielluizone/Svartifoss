@@ -376,12 +376,6 @@
     <string name="setting_player_shading_style">Varjostustyyli</string>
     <string name="setting_player_shading_intensity">Varjostuksen voimakkuus</string>
     <string name="setting_player_shading_intensity_description">Kuinka voimakkaasti varjostus tummentaa taustaa. 100%% on täysi voimakkuus; suurempi arvo lisää kontrastia (enintään 150%%). Tällä hetkellä <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Käytä tätä ulkoasua kaikkiin kellotauluihin</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Kopioi tämän kellotaulun ulkoasuasetukset kaikkiin muihin kellotauluihin</string>
-    <string name="apply_appearance_confirm_title">Käytetäänkö kaikissa kellotauluissa?</string>
-    <string name="apply_appearance_confirm_message">Tämä korvaa kaikkien muiden kellotaulujen ulkoasuasetukset nykyisen asetuksilla. Toiminta-asetuksia ei muuteta.</string>
-    <string name="apply_appearance_confirm_button">Käytä</string>
-    <string name="apply_appearance_done">Käytetty kaikissa kellotauluissa</string>
     <string name="category_wf_layout_actions">Asettelu</string>
     <string name="setting_reset_appearance">Palauta tämä asettelu</string>
     <string name="setting_reset_appearance_description">Palauta tämän kellotaulun ulkoasu alkuperäisiin oletuksiin</string>

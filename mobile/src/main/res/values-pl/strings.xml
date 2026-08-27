@@ -378,12 +378,6 @@
     <string name="setting_player_shading_style">Styl cieniowania</string>
     <string name="setting_player_shading_intensity">Intensywność cieniowania</string>
     <string name="setting_player_shading_intensity_description">Stopień, w jakim cieniowanie przyciemnia tło. 100%% to pełna siła; wyższa wartość daje dodatkowy kontrast (do 150%%). Obecnie <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Zastosuj ten wygląd do wszystkich tarcz</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Skopiuj ustawienia wyglądu tej tarczy do wszystkich pozostałych</string>
-    <string name="apply_appearance_confirm_title">Zastosować do wszystkich tarcz?</string>
-    <string name="apply_appearance_confirm_message">Ustawienia wyglądu wszystkich pozostałych tarcz zostaną zastąpione ustawieniami bieżącej tarczy. Ustawienia zachowania nie ulegną zmianie.</string>
-    <string name="apply_appearance_confirm_button">Zastosuj</string>
-    <string name="apply_appearance_done">Zastosowano do wszystkich tarcz</string>
     <string name="category_wf_layout_actions">Układ</string>
     <string name="setting_reset_appearance">Zresetuj ten układ</string>
     <string name="setting_reset_appearance_description">Przywróć wygląd tej tarczy do oryginalnych ustawień domyślnych</string>

@@ -401,12 +401,6 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
     <string name="setting_player_shading_style">Styl stínování</string>
     <string name="setting_player_shading_intensity">Intenzita stínování</string>
     <string name="setting_player_shading_intensity_description">Jak výrazně stínování ztmavuje pozadí. 100%% je plná síla; pro větší kontrast lze nastavit více (až 150%%). Aktuálně <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Použít tento vzhled na všechny ciferníky</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Zkopírovat nastavení vzhledu tohoto ciferníku do všech ostatních ciferníků</string>
-    <string name="apply_appearance_confirm_title">Použít na všechny ciferníky?</string>
-    <string name="apply_appearance_confirm_message">Tím se přepíše nastavení vzhledu všech ostatních ciferníků aktuálním nastavením. Nastavení chování se nezmění.</string>
-    <string name="apply_appearance_confirm_button">Použít</string>
-    <string name="apply_appearance_done">Použito na všechny ciferníky</string>
     <string name="category_wf_layout_actions">Rozložení</string>
     <string name="setting_reset_appearance">Obnovit toto rozložení</string>
     <string name="setting_reset_appearance_description">Vrátit vzhled tohoto ciferníku na původní výchozí hodnoty</string>

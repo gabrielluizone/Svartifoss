@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Откријте изгледе које је креирала заједница. Отварањем ове галерије преузима се њен јавни каталог.</string>
     <string name="online_theme_refresh">Освежи теме заједнице</string>
     <string name="online_theme_list_description">Теме сата које је креирала заједница</string>
-    <string name="online_theme_byline">Аутор: %1$s · распоред %2$s</string>
+    <string name="online_theme_byline">Аутор: %1$s</string>
     <string name="online_theme_row_description">%1$s, аутор %2$s. Распоред %3$s.</string>
     <string name="online_theme_apply">Додај и примени</string>
     <string name="online_theme_loading">Учитавање тема заједнице…</string>

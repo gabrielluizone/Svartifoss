@@ -41,7 +41,7 @@
     <string name="online_theme_intro">Temukan tampilan yang dibuat komunitas. Membuka galeri ini mengunduh katalog publiknya.</string>
     <string name="online_theme_refresh">Muat ulang tema komunitas</string>
     <string name="online_theme_list_description">Tema jam tangan buatan komunitas</string>
-    <string name="online_theme_byline">Oleh %1$s · tata letak %2$s</string>
+    <string name="online_theme_byline">Oleh %1$s</string>
     <string name="online_theme_row_description">%1$s oleh %2$s. Tata letak %3$s.</string>
     <string name="online_theme_apply">Tambahkan dan terapkan</string>
     <string name="online_theme_loading">Memuat tema komunitas…</string>

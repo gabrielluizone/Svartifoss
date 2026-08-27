@@ -95,7 +95,12 @@ class WatchPreviewView @JvmOverloads constructor(
         attrs: AttributeSet? = null
 ) : View(context, attrs) {
 
-    private enum class PreviewSurface {
+    /**
+     * A representative watch surface that can be rendered from the same complete appearance
+     * snapshot. Community-theme details use these to show how a look carries beyond the player
+     * itself, without taking or uploading a screenshot from the person's real watch.
+     */
+    enum class PreviewSurface {
         PLAYER,
         AOD,
         VOLUME,
@@ -210,10 +215,18 @@ class WatchPreviewView @JvmOverloads constructor(
      * An in-memory profile supplied by the online gallery. It deliberately never materializes into
      * the default preference file: gallery cards may render many profiles before the user decides
      * to install one. While present, [readPreferenceSnapshot] reads only this profile's appearance
-     * values (falling back to built-in defaults for a malformed/incomplete input) and all media
-     * accessors use the bundled sample track rather than the user's current playback.
+     * values (falling back to built-in defaults for a malformed/incomplete input).
      */
     private var themeProfile: WatchThemeProfile? = null
+
+    /**
+     * The gallery's ordinary cards and moderation renderer must be deterministic and impersonal.
+     * A full detail screen may opt into the *locally held* album cover so a person can see how an
+     * uninstalled theme reacts to it. This flag never changes the profile, preferences, uploaded
+     * review thumbnail, catalogue, or watch sync; title, artist, progress, and queue stay on the
+     * bundled sample even when the cover is enabled.
+     */
+    private var themeProfileUsesLocalArtwork = false
 
     /**
      * When set, replaces the device clock everywhere it appears in this preview. This exists only
@@ -527,17 +540,34 @@ class WatchPreviewView @JvmOverloads constructor(
      * Previews a complete theme profile without applying it or writing any default preferences.
      *
      * This is the gallery entry point: it isolates the supplied settings from the user's active
-     * appearance and deliberately uses the bundled sample art/title/playback state, so browsing
-     * does not reveal or depend on the currently playing track. [clearThemeProfile] restores the
-     * normal default-preference and live-media preview.
+     * appearance. [useLocalArtwork] is intentionally opt-in and affects only the in-memory cover
+     * bitmap already supplied through [setNowPlaying]; it never exposes current title, artist,
+     * timing, or queue data. [clearThemeProfile] restores the normal default-preference and
+     * live-media preview.
      */
-    fun setThemeProfile(profile: WatchThemeProfile) {
+    fun setThemeProfile(profile: WatchThemeProfile, useLocalArtwork: Boolean = false) {
         themeProfile = profile
+        themeProfileUsesLocalArtwork = useLocalArtwork
         candidateActive = false
         candidateKey = null
         candidateValue = null
         focusedPreference = null
         surface = PreviewSurface.PLAYER
+        readPreferenceSnapshot()
+    }
+
+    /**
+     * Renders [surface] from the current profile or preference snapshot.
+     *
+     * This deliberately keeps [themeProfile] intact: a detail screen can switch between the
+     * player, overlays and queue while looking at exactly the same uninstalled community theme.
+     */
+    fun showPreviewSurface(surface: PreviewSurface) {
+        candidateActive = false
+        candidateKey = null
+        candidateValue = null
+        focusedPreference = null
+        this.surface = surface
         readPreferenceSnapshot()
     }
 
@@ -550,6 +580,7 @@ class WatchPreviewView @JvmOverloads constructor(
     /** Clears a profile supplied through [setThemeProfile] and returns to the active preferences. */
     fun clearThemeProfile() {
         themeProfile = null
+        themeProfileUsesLocalArtwork = false
         refresh()
     }
 
@@ -815,7 +846,7 @@ class WatchPreviewView @JvmOverloads constructor(
         // The live accent is extracted once per bitmap, so a changed accent *source* would
         // otherwise not show until the track changed - the preview would keep reporting the colour
         // the previous source picked, which is exactly the setting the user is watching.
-        if (suppliedProfile == null && albumAccentSource != liveAccentSource) {
+        if (!usesSyntheticGalleryMedia() && albumAccentSource != liveAccentSource) {
             extractLiveAccent(liveArt ?: nowPlayingSource)
         }
         invalidate()
@@ -870,6 +901,9 @@ class WatchPreviewView @JvmOverloads constructor(
         if (focusedPreference == "wear_track_time_mode") {
             return trackTimeMode != "paused"
         }
+        // A public profile always keeps the sample playback state. The optional detail-only cover
+        // is deliberately visual-only: it must not turn a community preview into a disclosure of
+        // the person's current playback state.
         return if (themeProfile != null) true else livePlaying ?: true
     }
 
@@ -995,20 +1029,24 @@ class WatchPreviewView @JvmOverloads constructor(
      * candidates still win over both so the existing preference editor remains live-previewable. */
     private fun profileValue(key: String): WatchThemeValue? = themeProfile?.settings?.get(key)
 
-    /** Gallery profiles are intentionally rendered against the same deterministic sample media
-     * regardless of whether this View was previously fed a real media session. */
+    /** Whether this profile must use fixed sample media rather than its local cover preview. */
+    private fun usesSyntheticGalleryMedia(): Boolean =
+            themeProfile != null && !themeProfileUsesLocalArtwork
+
+    /** Gallery cards and moderation previews remain deterministic. A detail page may opt in to
+     * the current cover only; its other media fields still use the bundled sample below. */
     private fun displayedArt(): Bitmap? =
-            if (themeProfile != null) sampleArt else liveArt ?: sampleArt
+            if (usesSyntheticGalleryMedia()) sampleArt else liveArt ?: sampleArt
 
     private fun displayedBlurredArt(): Bitmap? =
-            if (themeProfile != null) sampleArtBlurred else liveArtBlurred ?: sampleArtBlurred
+            if (usesSyntheticGalleryMedia()) sampleArtBlurred else liveArtBlurred ?: sampleArtBlurred
 
     private fun displayedOverlayBlurredArt(): Bitmap? =
-            if (themeProfile != null) sampleOverlayArtBlurred
+            if (usesSyntheticGalleryMedia()) sampleOverlayArtBlurred
             else liveOverlayArtBlurred ?: sampleOverlayArtBlurred
 
     private fun displayedSourceArt(): Bitmap? =
-            if (themeProfile != null) sampleArt else nowPlayingSource ?: sampleArt
+            if (usesSyntheticGalleryMedia()) sampleArt else nowPlayingSource ?: sampleArt
 
     /** Appearance keys are stored scoped per face ("<baseKey>@<face>"). Resolves the key actually
      *  present for the current [face]: the scoped entry if set, else the scoped key itself when a
@@ -1243,7 +1281,7 @@ class WatchPreviewView @JvmOverloads constructor(
             if (hex.isBlank()) null else try { Color.parseColor(hex) } catch (ignored: Exception) { null }
 
     private fun rawAlbumAccent(): Int =
-            if (themeProfile != null) SAMPLE_ALBUM_ACCENT else liveAccent ?: SAMPLE_ALBUM_ACCENT
+            if (usesSyntheticGalleryMedia()) SAMPLE_ALBUM_ACCENT else liveAccent ?: SAMPLE_ALBUM_ACCENT
 
     /**
      * The face-wide palette, mirroring `MainActivity.applyAccentColor` on the watch. Both sides
@@ -1560,13 +1598,13 @@ class WatchPreviewView @JvmOverloads constructor(
             surfaceTriad(mode, custom, legacyDesaturated).tertiary
 
     private fun rawSecondaryAccent(): Int = when {
-        themeProfile != null -> SAMPLE_ALBUM_SECONDARY
+        usesSyntheticGalleryMedia() -> SAMPLE_ALBUM_SECONDARY
         liveAccent != null -> liveSecondaryAccent ?: sameHueTone(liveAccent!!, .42f)
         else -> SAMPLE_ALBUM_SECONDARY
     }
 
     private fun rawTertiaryAccent(): Int = when {
-        themeProfile != null -> SAMPLE_ALBUM_TERTIARY
+        usesSyntheticGalleryMedia() -> SAMPLE_ALBUM_TERTIARY
         liveAccent != null -> liveTertiaryAccent ?: sameHueTone(liveAccent!!, .68f)
         else -> SAMPLE_ALBUM_TERTIARY
     }

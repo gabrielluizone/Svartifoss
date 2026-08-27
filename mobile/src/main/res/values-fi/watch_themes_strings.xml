@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Löydä yhteisön luomia ulkoasuja. Gallerian avaaminen lataa sen julkisen luettelon.</string>
     <string name="online_theme_refresh">Päivitä yhteisöteemat</string>
     <string name="online_theme_list_description">Yhteisön luomat kelloteemat</string>
-    <string name="online_theme_byline">Tekijä %1$s · %2$s-asettelu</string>
+    <string name="online_theme_byline">Tekijä %1$s</string>
     <string name="online_theme_row_description">%1$s, tekijä %2$s. %3$s-asettelu.</string>
     <string name="online_theme_apply">Lisää ja käytä</string>
     <string name="online_theme_loading">Ladataan yhteisöteemoja…</string>

@@ -311,12 +311,6 @@
     <string name="setting_player_shading_style">سبک سایه‌زنی</string>
     <string name="setting_player_shading_intensity">شدت سایه‌زنی</string>
     <string name="setting_player_shading_intensity_description">سایه‌زنی چقدر پس‌زمینه را تیره می‌کند. ۱۰۰٪ شدت کامل است؛ برای کنتراست بیشتر (تا ۱۵۰٪) بالاتر بروید. اکنون <![CDATA[<b>%1$s٪</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">این ظاهر را به همه رویه‌ها اعمال کن</string>
-    <string name="setting_apply_appearance_to_all_faces_description">تنظیمات ظاهری این رویه را در همه رویه‌های دیگر کپی کنید</string>
-    <string name="apply_appearance_confirm_title">به همه رویه‌ها اعمال شود؟</string>
-    <string name="apply_appearance_confirm_message">این کار تنظیمات ظاهری همه رویه‌های دیگر را با تنظیمات فعلی جایگزین می‌کند. تنظیمات رفتاری شما تغییر نخواهد کرد.</string>
-    <string name="apply_appearance_confirm_button">اعمال</string>
-    <string name="apply_appearance_done">به همه رویه‌ها اعمال شد</string>
     <string name="category_wf_layout_actions">چیدمان</string>
     <string name="setting_reset_appearance">بازنشانی این چیدمان</string>
     <string name="setting_reset_appearance_description">ظاهر این رویه را به پیش‌فرض‌های اصلی بازگردانید</string>

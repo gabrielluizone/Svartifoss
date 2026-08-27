@@ -227,11 +227,11 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
      *
      * Both transports cap at 100 KB and neither says so in a way a user could ever see: the put
      * simply throws and the watch silently keeps the values it already had. The snapshot grows
-     * with the number of *explicitly set* face-scoped keys - "Apply this look to all faces" writes
-     * every one of them onto all eighteen faces in a single tap - so it is reachable by ordinary
-     * use, and the symptom (a setting that will not cross to the watch) points nowhere near the
-     * cause. Advisory only; the push is still attempted, since the estimate is approximate and the
-     * real encoder is the authority.
+     * with the number of *explicitly set* face-scoped keys, so a heavily customized library can
+     * still reach it. The removed bulk "Apply this look to all faces" action used to make that
+     * growth immediate by writing every value onto all eighteen faces. The symptom (a setting that
+     * will not cross to the watch) points nowhere near the cause. Advisory only; the push is still
+     * attempted, since the estimate is approximate and the real encoder is the authority.
      */
     private fun warnIfSnapshotIsOversized(snapshot: Map<String, Any?>) {
         // Key names are carried twice - once as DataMap keys, once in PreferencePusher's synced-key

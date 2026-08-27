@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Khám phá các giao diện do cộng đồng tạo. Việc mở thư viện này sẽ tải xuống danh mục công khai của thư viện.</string>
     <string name="online_theme_refresh">Làm mới chủ đề cộng đồng</string>
     <string name="online_theme_list_description">Chủ đề đồng hồ do cộng đồng tạo</string>
-    <string name="online_theme_byline">Bởi %1$s · Bố cục %2$s</string>
+    <string name="online_theme_byline">Bởi %1$s</string>
     <string name="online_theme_row_description">%1$s bởi %2$s. Bố cục %3$s.</string>
     <string name="online_theme_apply">Thêm và áp dụng</string>
     <string name="online_theme_loading">Đang tải chủ đề cộng đồng…</string>

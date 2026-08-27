@@ -375,12 +375,6 @@
     <string name="setting_player_shading_style">Gaya lorekan</string>
     <string name="setting_player_shading_intensity">Keamatan lorekan</string>
     <string name="setting_player_shading_intensity_description">Tahap lorekan menggelapkan latar belakang. 100%% ialah kekuatan penuh; naikkan lebih tinggi untuk kontras tambahan (hingga 150%%). Kini <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Gunakan rupa ini pada semua muka jam</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Salin tetapan rupa muka jam ini ke semua muka jam lain</string>
-    <string name="apply_appearance_confirm_title">Gunakan pada semua muka jam?</string>
-    <string name="apply_appearance_confirm_message">Ini akan menulis ganti tetapan rupa semua muka jam lain dengan tetapan semasa. Tetapan tingkah laku tidak akan berubah.</string>
-    <string name="apply_appearance_confirm_button">Gunakan</string>
-    <string name="apply_appearance_done">Digunakan pada semua muka jam</string>
     <string name="category_wf_layout_actions">Susun atur</string>
     <string name="setting_reset_appearance">Tetapkan semula susun atur ini</string>
     <string name="setting_reset_appearance_description">Pulihkan rupa muka jam ini kepada lalai asal</string>

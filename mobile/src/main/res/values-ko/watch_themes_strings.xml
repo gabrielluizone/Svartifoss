@@ -44,7 +44,7 @@
     <string name="online_theme_intro">커뮤니티가 만든 디자인을 살펴보세요. 이 갤러리를 열면 공개 카탈로그를 다운로드합니다.</string>
     <string name="online_theme_refresh">커뮤니티 테마 새로고침</string>
     <string name="online_theme_list_description">커뮤니티에서 만든 워치 테마</string>
-    <string name="online_theme_byline">%1$s 제작 · %2$s 레이아웃</string>
+    <string name="online_theme_byline">%1$s 제작</string>
     <string name="online_theme_row_description">%1$s, %2$s 제작. %3$s 레이아웃.</string>
     <string name="online_theme_apply">추가하고 적용</string>
     <string name="online_theme_loading">커뮤니티 테마를 불러오는 중…</string>

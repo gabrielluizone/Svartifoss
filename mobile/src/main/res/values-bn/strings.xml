@@ -376,12 +376,6 @@
     <string name="setting_player_shading_style">শেডিং স্টাইল</string>
     <string name="setting_player_shading_intensity">শেডিংয়ের তীব্রতা</string>
     <string name="setting_player_shading_intensity_description">শেডিং ব্যাকগ্রাউন্ড কতটা অন্ধকার করবে। 100%% পূর্ণ তীব্রতা; অতিরিক্ত কনট্রাস্টের জন্য আরও বাড়াতে পারেন (সর্বোচ্চ 150%%)। বর্তমানে <![CDATA[<b>%1$s%%</b>]]>।</string>
-    <string name="setting_apply_appearance_to_all_faces">এই লুক সব ওয়াচ ফেসে প্রয়োগ করুন</string>
-    <string name="setting_apply_appearance_to_all_faces_description">এই ওয়াচ ফেসের চেহারার সেটিংস অন্য সব ফেসে কপি করুন</string>
-    <string name="apply_appearance_confirm_title">সব ওয়াচ ফেসে প্রয়োগ করবেন?</string>
-    <string name="apply_appearance_confirm_message">এটি বর্তমান ফেসের সেটিংস দিয়ে অন্য সব ফেসের চেহারার সেটিংস ওভাররাইট করবে। আচরণগত সেটিংস বদলাবে না।</string>
-    <string name="apply_appearance_confirm_button">প্রয়োগ করুন</string>
-    <string name="apply_appearance_done">সব ওয়াচ ফেসে প্রয়োগ হয়েছে</string>
     <string name="category_wf_layout_actions">লেআউট</string>
     <string name="setting_reset_appearance">এই লেআউট রিসেট করুন</string>
     <string name="setting_reset_appearance_description">এই ওয়াচ ফেসের চেহারা মূল ডিফল্টে ফিরিয়ে দিন</string>

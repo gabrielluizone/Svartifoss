@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Tuklasin ang mga itsurang ginawa ng komunidad. Ida-download ng pagbubukas sa gallery na ito ang pampublikong katalogo nito.</string>
     <string name="online_theme_refresh">I-refresh ang mga theme ng komunidad</string>
     <string name="online_theme_list_description">Mga watch theme na ginawa ng komunidad</string>
-    <string name="online_theme_byline">Ni %1$s · %2$s layout</string>
+    <string name="online_theme_byline">Ni %1$s</string>
     <string name="online_theme_row_description">%1$s ni %2$s. %3$s layout.</string>
     <string name="online_theme_apply">Idagdag at i-apply</string>
     <string name="online_theme_loading">Naglo-load ng mga theme ng komunidad…</string>

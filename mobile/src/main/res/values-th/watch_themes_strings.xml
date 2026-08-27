@@ -44,7 +44,7 @@
     <string name="online_theme_intro">ค้นหารูปแบบที่สร้างโดยชุมชน การเปิดแกลเลอรีนี้จะดาวน์โหลดแคตตาล็อกสาธารณะ</string>
     <string name="online_theme_refresh">รีเฟรชธีมจากชุมชน</string>
     <string name="online_theme_list_description">ธีมนาฬิกาที่สร้างโดยชุมชน</string>
-    <string name="online_theme_byline">โดย %1$s · เลย์เอาต์ %2$s</string>
+    <string name="online_theme_byline">โดย %1$s</string>
     <string name="online_theme_row_description">%1$s โดย %2$s เลย์เอาต์ %3$s</string>
     <string name="online_theme_apply">เพิ่มและใช้</string>
     <string name="online_theme_loading">กำลังโหลดธีมจากชุมชน…</string>

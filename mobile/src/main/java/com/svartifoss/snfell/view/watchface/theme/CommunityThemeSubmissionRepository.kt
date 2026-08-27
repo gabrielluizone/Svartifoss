@@ -1,20 +1,10 @@
 package com.svartifoss.snfell.view.watchface.theme
 
-import android.app.Activity
 import android.content.Context
-import androidx.credentials.CredentialManager
-import androidx.credentials.CustomCredential
-import androidx.credentials.GetCredentialRequest
-import androidx.credentials.exceptions.GetCredentialCancellationException
-import androidx.credentials.exceptions.GetCredentialException
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.svartifoss.snfell.BuildConfig
-import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommunityThemeSettingValue
 import com.svartifoss.snfell.common.CommunityThemeSettings
 import com.svartifoss.snfell.common.CommunityThemeSubmissionPolicy
@@ -25,7 +15,6 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
-import java.util.UUID
 
 /**
  * The initial local gate is intentionally conservative. It is user feedback rather than a
@@ -33,6 +22,7 @@ import java.util.UUID
  * pending document becomes a public Git commit.
  */
 const val COMMUNITY_THEME_MINIMUM_CHANGED_SETTINGS = 12
+const val COMMUNITY_THEME_SUBMISSION_WINDOW_MILLIS = 24L * 60L * 60L * 1_000L
 
 sealed interface CommunityThemeSubmissionPreflight {
     data class Ready(
@@ -57,10 +47,28 @@ sealed interface CommunityThemeGoogleSignInResult {
 
 sealed interface CommunityThemeQueueResult {
     object Queued : CommunityThemeQueueResult
+    /** The current server-authored v2 quota already has three submissions in its rolling window. */
+    object SubmissionLimitReached : CommunityThemeQueueResult
     object NotAuthenticated : CommunityThemeQueueResult
     object InvalidRequest : CommunityThemeQueueResult
     data class Failed(val error: Throwable) : CommunityThemeQueueResult
 }
+
+/**
+ * A UI-only early explanation based on the server-authored timestamp history. Firestore Rules
+ * remain the authority for the actual write, including concurrent submissions from another device.
+ * Legacy and malformed quota documents deliberately return false so their normal rule path stays
+ * fail-closed instead of being mislabeled as a rate limit.
+ */
+internal fun isRollingSubmissionLimitReached(
+        quotaSchemaVersion: Long?,
+        recentSubmissionCount: Int?,
+        recentSubmissionFirstAtMillis: Long?,
+        nowMillis: Long
+): Boolean = quotaSchemaVersion == 2L &&
+        recentSubmissionCount == 3 &&
+        recentSubmissionFirstAtMillis != null &&
+        nowMillis < recentSubmissionFirstAtMillis + COMMUNITY_THEME_SUBMISSION_WINDOW_MILLIS
 
 /** Android/Firebase-free adapter from a strict local draft into the shared policy model. */
 internal object CommunityThemeSubmissionPreflightEvaluator {
@@ -159,6 +167,7 @@ class CommunityThemeSubmissionRepository(
 ) {
 
     private val appContext = context.applicationContext
+    private val googleAuthentication = CommunityThemeGoogleAuthentication(auth)
     private val constraints: CommunityThemeConstraints? by lazy {
         CommunityThemeConstraints.load(appContext)
     }
@@ -167,49 +176,8 @@ class CommunityThemeSubmissionRepository(
             CommunityThemeSubmissionPreflightEvaluator.evaluate(draft, constraints)
 
     /** Presents Credential Manager only after an explicit submission action. */
-    suspend fun signInWithGoogle(activity: Activity): CommunityThemeGoogleSignInResult {
-        val option = try {
-            GetGoogleIdOption.Builder()
-                    .setFilterByAuthorizedAccounts(false)
-                    .setAutoSelectEnabled(false)
-                    .setServerClientId(activity.getString(R.string.default_web_client_id))
-                    .build()
-        } catch (error: Exception) {
-            return CommunityThemeGoogleSignInResult.Failed(error)
-        }
-        val response = try {
-            CredentialManager.create(activity).getCredential(
-                    activity,
-                    GetCredentialRequest.Builder().addCredentialOption(option).build())
-        } catch (_: GetCredentialCancellationException) {
-            return CommunityThemeGoogleSignInResult.Cancelled
-        } catch (error: CancellationException) {
-            throw error
-        } catch (error: GetCredentialException) {
-            return CommunityThemeGoogleSignInResult.Failed(error)
-        } catch (error: Exception) {
-            return CommunityThemeGoogleSignInResult.Failed(error)
-        }
-        val credential = response.credential
-        if (credential !is CustomCredential ||
-                credential.type != GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-            return CommunityThemeGoogleSignInResult.Failed(
-                    IllegalStateException("Credential Manager returned an unsupported credential"))
-        }
-        val token = try {
-            GoogleIdTokenCredential.createFrom(credential.data).idToken
-        } catch (error: Exception) {
-            return CommunityThemeGoogleSignInResult.Failed(error)
-        }
-        return try {
-            auth.signInWithCredential(GoogleAuthProvider.getCredential(token, null)).await()
-            CommunityThemeGoogleSignInResult.Authenticated
-        } catch (error: CancellationException) {
-            throw error
-        } catch (error: Exception) {
-            CommunityThemeGoogleSignInResult.Failed(error)
-        }
-    }
+    suspend fun signInWithGoogle(activity: android.app.Activity): CommunityThemeGoogleSignInResult =
+            googleAuthentication.signIn(activity)
 
     /**
      * Sends one strict, immutable queue document. It never trusts an email/display name from the
@@ -257,20 +225,65 @@ class CommunityThemeSubmissionRepository(
             firestore.runTransaction { transaction ->
                 // The quota document is readable only by its owner. Firestore rules require this
                 // write and the new intake document to appear in the same atomic transaction.
-                // A modified client cannot skip it or reset the clock between submissions.
-                val previousCount = transaction.get(quotaDocument).getLong("submissionCount") ?: 0L
-                transaction.set(
-                        quotaDocument,
-                        hashMapOf(
-                                "ownerUid" to user.uid,
-                                "submissionCount" to previousCount + 1L,
-                                "lastSubmissionAt" to FieldValue.serverTimestamp(),
-                                "lastSubmissionId" to draft.id))
+                // A modified client cannot skip it or reset the rolling history between
+                // submissions. Version 2 permits three related submissions in any 24-hour window
+                // instead of unexpectedly treating a whole account as one-and-done. The scalar
+                // history intentionally avoids a Firestore server-timestamp sentinel in an array.
+                val previousQuota = transaction.get(quotaDocument)
+                val previousCount = previousQuota.getLong("submissionCount") ?: 0L
+                val recentCount = previousQuota.getLong("recentSubmissionCount")
+                        ?.takeIf { it in 1L..3L }
+                        ?.toInt()
+                val recentFirstAt = previousQuota.getTimestamp("recentSubmissionFirstAt")
+                val recentSecondAt = previousQuota.getTimestamp("recentSubmissionSecondAt")
+                val previousLastAt = previousQuota.getTimestamp("lastSubmissionAt")
+                val isRollingQuota = previousQuota.getLong("quotaSchemaVersion") ==
+                        SUBMISSION_QUOTA_SCHEMA_VERSION.toLong() &&
+                        recentCount != null && recentCount in 1..3 &&
+                        recentFirstAt != null &&
+                        previousLastAt != null &&
+                        (recentCount != 3 || recentSecondAt != null)
+                if (isRollingQuota && isRollingSubmissionLimitReached(
+                                quotaSchemaVersion = previousQuota.getLong("quotaSchemaVersion"),
+                                recentSubmissionCount = recentCount,
+                                recentSubmissionFirstAtMillis = recentFirstAt?.toDate()?.time,
+                                nowMillis = System.currentTimeMillis())) {
+                    return@runTransaction CommunityThemeQueueResult.SubmissionLimitReached
+                }
+                val quota = hashMapOf<String, Any>(
+                        "ownerUid" to user.uid,
+                        "quotaSchemaVersion" to SUBMISSION_QUOTA_SCHEMA_VERSION,
+                        "submissionCount" to previousCount + 1L,
+                        "lastSubmissionAt" to FieldValue.serverTimestamp(),
+                        "lastSubmissionId" to draft.id)
+                when (recentCount.takeIf { isRollingQuota }) {
+                    1 -> {
+                        quota["recentSubmissionCount"] = 2
+                        quota["recentSubmissionFirstAt"] = recentFirstAt!!
+                    }
+                    2 -> {
+                        quota["recentSubmissionCount"] = 3
+                        quota["recentSubmissionFirstAt"] = recentFirstAt!!
+                        quota["recentSubmissionSecondAt"] = previousLastAt!!
+                    }
+                    3 -> {
+                        quota["recentSubmissionCount"] = 3
+                        quota["recentSubmissionFirstAt"] = recentSecondAt!!
+                        quota["recentSubmissionSecondAt"] = previousLastAt!!
+                    }
+                    else -> {
+                        // A v1/legacy document has no trustworthy rolling history. The rules
+                        // permit exactly this one migration write without a 24-hour wait.
+                        quota["recentSubmissionCount"] = 1
+                        quota["recentSubmissionFirstAt"] = FieldValue.serverTimestamp()
+                    }
+                }
+                transaction.set(quotaDocument, quota)
                 // `set` is allowed only for a create by the rules. A UUID collision therefore
                 // fails safely instead of overwriting an intake document.
                 transaction.set(intakeDocument, document)
+                CommunityThemeQueueResult.Queued
             }.await()
-            CommunityThemeQueueResult.Queued
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
@@ -287,20 +300,20 @@ class CommunityThemeSubmissionRepository(
         }
     }
 
-    private fun isCanonicalUuid(raw: String): Boolean = try {
-        UUID.fromString(raw).toString() == raw
-    } catch (_: IllegalArgumentException) {
-        false
-    }
+    /** Mirrors the UUIDv4-only Firestore document-id contract. */
+    private fun isCanonicalUuid(raw: String): Boolean = UUID_V4.matches(raw)
 
     private companion object {
         const val INTAKE_COLLECTION = "themeIntake"
         const val SUBMISSION_QUOTA_COLLECTION = "communityThemeSubmissionQuota"
         const val SUBMISSION_SCHEMA_VERSION = 1
+        const val SUBMISSION_QUOTA_SCHEMA_VERSION = 2
         const val MAX_PUBLIC_TEXT_LENGTH = 48
         const val MAX_PROFILE_JSON_LENGTH = 24 * 1024
         const val MAX_PREVIEW_BASE64_LENGTH = 64 * 1024
         val WHITESPACE = Regex("\\s+")
         val BASE64 = Regex("^[A-Za-z0-9+/]+={0,2}$")
+        val UUID_V4 = Regex(
+                "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")
     }
 }

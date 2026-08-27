@@ -35,7 +35,6 @@ class AppearancePreferenceScopingTest {
 
         /** Rows that are buttons, links or explanatory text rather than stored settings. */
         val NON_PREFERENCE_ROWS = setOf(
-                "apply_appearance_to_all_faces",
                 "reset_appearance",
                 "reset_all_faces",
                 "watch_streaming_shortcuts",

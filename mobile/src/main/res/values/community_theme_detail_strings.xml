@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Theme details</string>
+    <string name="community_theme_detail_preview_screen">Preview screen</string>
+    <string name="community_theme_detail_surface_player">Player</string>
+    <string name="community_theme_detail_surface_aod">Always-on</string>
+    <string name="community_theme_detail_surface_volume">Volume</string>
+    <string name="community_theme_detail_surface_progress">Progress</string>
+    <string name="community_theme_detail_surface_quick_panel">Quick panel</string>
+    <string name="community_theme_detail_surface_queue">Queue</string>
+    <string name="community_theme_detail_preview_label">%1$s preview</string>
+    <string name="community_theme_detail_preview_description">Preview of %1$s on the %2$s screen</string>
+    <string name="community_theme_detail_preview_privacy">Your current album cover may appear only in this preview on your phone. It is never uploaded; sample text and timing stay in use.</string>
+
+    <string name="community_theme_detail_information">Theme information</string>
+    <string name="community_theme_detail_byline">By %1$s</string>
+    <string name="community_theme_detail_layout">Base layout</string>
+    <string name="community_theme_detail_revision">Revision</string>
+    <string name="community_theme_detail_minimum_version">Minimum Svartifoss version</string>
+    <string name="community_theme_detail_published">Published</string>
+    <string name="community_theme_detail_visual_settings">Visual settings</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s visual setting</item>
+        <item quantity="other">%1$s visual settings</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Not available</string>
+
+    <string name="community_theme_detail_add_apply">Add and apply</string>
+    <string name="community_theme_detail_remove">Remove theme</string>
+    <string name="community_theme_detail_remove_title">Remove “%1$s” from My themes?</string>
+    <string name="community_theme_detail_remove_message">This saved copy and any edits you made to it will be permanently removed. If it is currently applied, your watch will return to its built-in base layout.</string>
+    <string name="community_theme_detail_removed">Theme removed from My themes</string>
+    <string name="community_theme_detail_remove_error">Couldn’t remove this theme</string>
+    <string name="community_theme_detail_like">Like</string>
+    <string name="community_theme_detail_unlike">Unlike</string>
+    <string name="community_theme_detail_like_loading">Checking…</string>
+    <string name="community_theme_detail_like_description">Like %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Unlike %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google sign-in was cancelled. Your like was not saved.</string>
+    <string name="community_theme_detail_like_error">Couldn’t save your like. Check your connection and try again.</string>
+    <string name="community_theme_detail_like_not_ready">Likes for this theme are not ready yet. Refresh Community themes after the next publication.</string>
+    <string name="community_theme_detail_like_saved">Your like was saved. Public counts update with the next catalogue publication.</string>
+    <string name="community_theme_detail_unlike_saved">Your like was removed. Public counts update with the next catalogue publication.</string>
+    <string name="community_theme_detail_apply_existing">This theme is already in My themes and was applied to your watch</string>
+    <string name="community_theme_detail_requires_app_version">This theme needs Svartifoss %1$s before it can be added.</string>
+    <string name="community_theme_detail_load_error">Couldn’t load this theme’s details. Return to Community themes and try again.</string>
+    <string name="community_theme_detail_profile_mismatch">The downloaded profile does not match this theme’s public details. Return to Community themes and try again.</string>
+</resources>

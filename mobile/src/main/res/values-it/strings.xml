@@ -311,12 +311,6 @@
     <string name="setting_player_shading_style">Stile ombreggiatura</string>
     <string name="setting_player_shading_intensity">Intensità ombreggiatura</string>
     <string name="setting_player_shading_intensity_description">Quanto fortemente l\'ombreggiatura scurisce lo sfondo. 100%% è l\'intensità massima; sali oltre per un contrasto extra (fino a 150%%). Attualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Applica questo aspetto a tutte le facce</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Copia le impostazioni di aspetto di questa faccia a tutte le altre facce</string>
-    <string name="apply_appearance_confirm_title">Applicare a tutte le facce?</string>
-    <string name="apply_appearance_confirm_message">Questo sovrascrive le impostazioni di aspetto di tutte le altre facce con quella attuale. Non modificherà le tue impostazioni di comportamento.</string>
-    <string name="apply_appearance_confirm_button">Applica</string>
-    <string name="apply_appearance_done">Applicato a tutte le facce</string>
     <string name="category_wf_layout_actions">Layout</string>
     <string name="setting_reset_appearance">Ripristina questo layout</string>
     <string name="setting_reset_appearance_description">Ripristina l\'aspetto di questa faccia ai valori predefiniti originali</string>

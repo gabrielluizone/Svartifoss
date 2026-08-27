@@ -41,7 +41,7 @@
     <string name="online_theme_intro">发现社区创作的外观。打开此图库会下载其公开目录。</string>
     <string name="online_theme_refresh">刷新社区主题</string>
     <string name="online_theme_list_description">社区创作的手表主题</string>
-    <string name="online_theme_byline">由 %1$s 创作 · %2$s 布局</string>
+    <string name="online_theme_byline">由 %1$s 创作</string>
     <string name="online_theme_row_description">%1$s，由 %2$s 创作。%3$s 布局。</string>
     <string name="online_theme_apply">添加并应用</string>
     <string name="online_theme_loading">正在加载社区主题…</string>

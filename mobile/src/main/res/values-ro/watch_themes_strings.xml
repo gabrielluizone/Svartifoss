@@ -43,7 +43,7 @@
     <string name="online_theme_intro">Descoperă aspecte create de comunitate. Deschiderea acestei galerii descarcă catalogul său public.</string>
     <string name="online_theme_refresh">Reîmprospătează temele comunității</string>
     <string name="online_theme_list_description">Teme de ceas create de comunitate</string>
-    <string name="online_theme_byline">De %1$s · aspect %2$s</string>
+    <string name="online_theme_byline">De %1$s</string>
     <string name="online_theme_row_description">%1$s de %2$s. Aspect %3$s.</string>
     <string name="online_theme_apply">Adaugă și aplică</string>
     <string name="online_theme_loading">Se încarcă temele comunității…</string>

@@ -311,12 +311,6 @@
     <string name="setting_player_shading_style">Στυλ σκίασης</string>
     <string name="setting_player_shading_intensity">Ένταση σκίασης</string>
     <string name="setting_player_shading_intensity_description">Πόσο έντονα η σκίαση σκοτεινιάζει το φόντο. Το 100%% είναι η πλήρης ένταση· ανεβάστε παραπάνω για επιπλέον αντίθεση (έως 150%%). Αυτή τη στιγμή <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Εφαρμογή αυτής της εμφάνισης σε όλες τις όψεις</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Αντιγραφή των ρυθμίσεων εμφάνισης αυτής της όψης σε κάθε άλλη όψη</string>
-    <string name="apply_appearance_confirm_title">Εφαρμογή σε όλες τις όψεις;</string>
-    <string name="apply_appearance_confirm_message">Αυτό αντικαθιστά τις ρυθμίσεις εμφάνισης κάθε άλλης όψης με την τρέχουσα. Δεν θα αλλάξει τις ρυθμίσεις συμπεριφοράς σας.</string>
-    <string name="apply_appearance_confirm_button">Εφαρμογή</string>
-    <string name="apply_appearance_done">Εφαρμόστηκε σε όλες τις όψεις</string>
     <string name="category_wf_layout_actions">Διάταξη</string>
     <string name="setting_reset_appearance">Επαναφορά αυτής της διάταξης</string>
     <string name="setting_reset_appearance_description">Επαναφορά της εμφάνισης αυτής της όψης στις αρχικές προεπιλογές</string>

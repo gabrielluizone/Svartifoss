@@ -44,7 +44,7 @@
     <string name="online_theme_intro">コミュニティが作成したデザインを見つけましょう。このギャラリーを開くと、公開カタログがダウンロードされます。</string>
     <string name="online_theme_refresh">コミュニティテーマを更新</string>
     <string name="online_theme_list_description">コミュニティ作成のウォッチテーマ</string>
-    <string name="online_theme_byline">%1$s 作 · %2$s レイアウト</string>
+    <string name="online_theme_byline">%1$s 作</string>
     <string name="online_theme_row_description">%1$s（%2$s 作）。%3$s レイアウト。</string>
     <string name="online_theme_apply">追加して適用</string>
     <string name="online_theme_loading">コミュニティテーマを読み込んでいます…</string>

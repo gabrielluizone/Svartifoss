@@ -399,12 +399,6 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
     <string name="setting_player_shading_style">Skuggningsstil</string>
     <string name="setting_player_shading_intensity">Skuggningsintensitet</string>
     <string name="setting_player_shading_intensity_description">Hur kraftigt skuggningen mörkar bakgrunden. 100%% är full styrka; gå högre för extra kontrast (upp till 150%%). Aktuellt <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Använd det här utseendet på alla urtavlor</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Kopiera den här urtavlans utseendeinställningar till alla andra urtavlor</string>
-    <string name="apply_appearance_confirm_title">Använd på alla urtavlor?</string>
-    <string name="apply_appearance_confirm_message">Detta skriver över utseendeinställningarna för alla andra urtavlor med de aktuella. Dina beteendeinställningar ändras inte.</string>
-    <string name="apply_appearance_confirm_button">Använd</string>
-    <string name="apply_appearance_done">Tillämpat på alla urtavlor</string>
     <string name="category_wf_layout_actions">Layout</string>
     <string name="setting_reset_appearance">Återställ den här layouten</string>
     <string name="setting_reset_appearance_description">Återställ den här urtavlans utseende till dess ursprungliga standardvärden</string>

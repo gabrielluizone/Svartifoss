@@ -184,7 +184,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 desaturatedKey = null,
                 customColorDescription = R.string.setting_wear_shading_custom_color_description
         )
-        initApplyToAllFaces()
+        initAppearanceResetActions()
         initAccentColorTarget(
                 modeKey = "wear_aod_color_mode",
                 customColorKey = "wear_aod_custom_color",
@@ -752,23 +752,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 ?.onWatchPreferenceInteraction(section, key, candidateValue)
     }
 
-    private fun initApplyToAllFaces() {
-        findPreference<Preference>("apply_appearance_to_all_faces")?.onPreferenceClickListener =
-                Preference.OnPreferenceClickListener {
-                    AlertDialog.Builder(requireContext())
-                            .setTitle(R.string.apply_appearance_confirm_title)
-                            .setMessage(R.string.apply_appearance_confirm_message)
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .setPositiveButton(R.string.apply_appearance_confirm_button) { _, _ ->
-                                applyCurrentAppearanceToAllFaces()
-                                Toast.makeText(requireContext(),
-                                        R.string.apply_appearance_done, Toast.LENGTH_SHORT).show()
-                            }
-                            .show()
-                            .tintLyraButtons()
-                    true
-                }
-
+    private fun initAppearanceResetActions() {
         findPreference<Preference>("reset_appearance")?.onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
                     AlertDialog.Builder(requireContext())
@@ -843,34 +827,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         resetAllFaces(requireContext(), rawPrefs)
         setPreferencesFromResource(R.xml.watch_face_settings, null)
         wirePreferences()
-    }
-
-    /** Copies the current appearance scope's explicitly-set values onto every built-in face scope,
-     *  so a look built on one face becomes the starting point for all of them. Keys the user never
-     *  chose are left untouched, so each face keeps its own per-face default where nothing was set.
-     *  Writing the flat scoped keys triggers the normal phone -> watch preference sync. */
-    private fun applyCurrentAppearanceToAllFaces() {
-        val currentScope = FaceScopedPreferences.scopeFor(ThemeAppearance.resolve(rawPrefs))
-        val snapshot = rawPrefs.all
-        val editor = rawPrefs.edit()
-        for (baseKey in FaceScopedPreferences.SCOPED_KEYS) {
-            val sourceKey = FaceScopedPreferences.scopedKey(baseKey, currentScope)
-            val value = snapshot[sourceKey] ?: continue
-            for (face in ThemeAppearance.ALLOWED_BASE_FACES) {
-                val targetKey = FaceScopedPreferences.scopedKey(baseKey, face)
-                if (targetKey == sourceKey) continue
-                when (value) {
-                    is String -> editor.putString(targetKey, value)
-                    is Boolean -> editor.putBoolean(targetKey, value)
-                    is Int -> editor.putInt(targetKey, value)
-                    is Long -> editor.putLong(targetKey, value)
-                    is Float -> editor.putFloat(targetKey, value)
-                    is Set<*> -> @Suppress("UNCHECKED_CAST")
-                        editor.putStringSet(targetKey, value as Set<String>)
-                }
-            }
-        }
-        editor.apply()
     }
 
     /** Keeps face-specific settings aligned with the renderer selected in the preview. */

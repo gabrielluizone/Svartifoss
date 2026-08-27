@@ -398,12 +398,6 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
     <string name="setting_player_shading_style">Көлеңке стилі</string>
     <string name="setting_player_shading_intensity">Көлеңке қарқындылығы</string>
     <string name="setting_player_shading_intensity_description">Көлеңке фонды қаншалықты күңгірттейді. 100%% — толық күш; қосымша контраст үшін жоғарырақ қойыңыз (150%% дейін). Қазір <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Бұл көріністі барлық циферблатқа қолдану</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Осы циферблаттың көрініс баптауларын барлық басқа циферблатқа көшіру</string>
-    <string name="apply_appearance_confirm_title">Барлық циферблатқа қолданылсын ба?</string>
-    <string name="apply_appearance_confirm_message">Бұл барлық басқа циферблаттың көрініс баптауларын ағымдағысымен ауыстырады. Әрекет баптаулары өзгермейді.</string>
-    <string name="apply_appearance_confirm_button">Қолдану</string>
-    <string name="apply_appearance_done">Барлық циферблатқа қолданылды</string>
     <string name="category_wf_layout_actions">Орналасу</string>
     <string name="setting_reset_appearance">Осы орналасуды қалпына келтіру</string>
     <string name="setting_reset_appearance_description">Осы циферблаттың көрінісін бастапқы әдепкі мәндеріне қайтару</string>

@@ -44,7 +44,7 @@
     <string name="online_theme_intro">اكتشف تصميمات أنشأها المجتمع. يؤدي فتح هذا المعرض إلى تنزيل كتالوجه العام.</string>
     <string name="online_theme_refresh">تحديث سمات المجتمع</string>
     <string name="online_theme_list_description">سمات ساعة أنشأها المجتمع</string>
-    <string name="online_theme_byline">بواسطة %1$s · تخطيط %2$s</string>
+    <string name="online_theme_byline">بواسطة %1$s</string>
     <string name="online_theme_row_description">%1$s بواسطة %2$s. تخطيط %3$s.</string>
     <string name="online_theme_apply">أضف وطبّق</string>
     <string name="online_theme_loading">جارٍ تحميل سمات المجتمع…</string>

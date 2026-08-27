@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Oppdag utseender laget av fellesskapet. Når du åpner dette galleriet, lastes den offentlige katalogen ned.</string>
     <string name="online_theme_refresh">Oppdater fellesskapstemaer</string>
     <string name="online_theme_list_description">Klokketemaer laget av fellesskapet</string>
-    <string name="online_theme_byline">Av %1$s · %2$s-oppsett</string>
+    <string name="online_theme_byline">Av %1$s</string>
     <string name="online_theme_row_description">%1$s av %2$s. %3$s-oppsett.</string>
     <string name="online_theme_apply">Legg til og bruk</string>
     <string name="online_theme_loading">Laster inn fellesskapstemaer…</string>

@@ -377,12 +377,6 @@
     <string name="setting_player_shading_style">Стил сенчења</string>
     <string name="setting_player_shading_intensity">Јачина сенчења</string>
     <string name="setting_player_shading_intensity_description">Колико јако сенчење затамњује позадину. 100%% је пуна јачина; повећајте вредност за додатни контраст (до 150%%). Тренутно <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Примени овај изглед на све бројчанике</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Копирај подешавања изгледа овог бројчаника на све остале</string>
-    <string name="apply_appearance_confirm_title">Применити на све бројчанике?</string>
-    <string name="apply_appearance_confirm_message">Ово ће преписати подешавања изгледа свих осталих бројчаника тренутним. Подешавања понашања се неће променити.</string>
-    <string name="apply_appearance_confirm_button">Примени</string>
-    <string name="apply_appearance_done">Примењено на све бројчанике</string>
     <string name="category_wf_layout_actions">Распоред</string>
     <string name="setting_reset_appearance">Ресетуј овај распоред</string>
     <string name="setting_reset_appearance_description">Врати изглед овог бројчаника на првобитне подразумеване вредности</string>

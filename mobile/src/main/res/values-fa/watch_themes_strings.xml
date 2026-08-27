@@ -43,7 +43,7 @@
     <string name="online_theme_intro">ظاهرهای ساخته‌شده توسط انجمن را کشف کنید. با باز کردن این گالری، فهرست عمومی آن دانلود می‌شود.</string>
     <string name="online_theme_refresh">به‌روزرسانی تم‌های انجمن</string>
     <string name="online_theme_list_description">تم‌های ساعت ساخته‌شده توسط انجمن</string>
-    <string name="online_theme_byline">توسط %1$s · چیدمان %2$s</string>
+    <string name="online_theme_byline">توسط %1$s</string>
     <string name="online_theme_row_description">%1$s توسط %2$s. چیدمان %3$s.</string>
     <string name="online_theme_apply">افزودن و اعمال</string>
     <string name="online_theme_loading">در حال بارگیری تم‌های انجمن…</string>

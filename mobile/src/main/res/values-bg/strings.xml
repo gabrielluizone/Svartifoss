@@ -376,12 +376,6 @@
     <string name="setting_player_shading_style">Стил на засенчване</string>
     <string name="setting_player_shading_intensity">Сила на засенчването</string>
     <string name="setting_player_shading_intensity_description">Колко силно засенчването затъмнява фона. 100%% е пълна сила; по-висока стойност дава допълнителен контраст (до 150%%). В момента <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Прилагане на този изглед към всички циферблати</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Копиране на настройките за изглед на този циферблат към всички останали</string>
-    <string name="apply_appearance_confirm_title">Да се приложи ли към всички циферблати?</string>
-    <string name="apply_appearance_confirm_message">Това ще презапише настройките за изглед на всички други циферблати с текущите. Настройките за поведение няма да се променят.</string>
-    <string name="apply_appearance_confirm_button">Прилагане</string>
-    <string name="apply_appearance_done">Приложено към всички циферблати</string>
     <string name="category_wf_layout_actions">Оформление</string>
     <string name="setting_reset_appearance">Нулиране на това оформление</string>
     <string name="setting_reset_appearance_description">Възстановяване на изгледа на този циферблат до първоначалните настройки по подразбиране</string>

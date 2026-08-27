@@ -19,16 +19,21 @@ const getDoc = (_db, reference) => reference.get();
 const getDocs = (_db, reference) => reference.get();
 const setDoc = (_db, reference, value) => reference.set(value);
 const updateDoc = (_db, reference, value) => reference.update(value);
+const deleteDoc = (_db, reference) => reference.delete();
 const writeBatch = (db) => db.batch();
 
 const PROJECT_ID = "demo-svartifoss";
 const AUTHOR = "author-uid";
 const OTHER_AUTHOR = "other-author-uid";
 const MODERATOR = "moderator-uid";
+const ANONYMOUS = "anonymous-uid";
+const SECOND_ANONYMOUS = "second-anonymous-uid";
 const SELF_MODERATOR = "self-moderator-uid";
 const FIRST_ID = "5e5a77c0-0420-4d11-8e3a-7ae4fae8de34";
 const SECOND_ID = "8c989d90-3648-489b-8da1-cc06e2f29179";
 const THIRD_ID = "be925dc0-8db5-424c-9d28-276e47c13dd4";
+const FOURTH_ID = "21c3df0d-e6d4-4f62-8ec4-f1ca1a57ed1e";
+const FIFTH_ID = "54b23da9-98de-48ce-a158-4a52d2d5bb6e";
 
 let testEnvironment;
 
@@ -53,21 +58,132 @@ function intake(ownerUid, id) {
 function quota(ownerUid, id, submissionCount = 1) {
   return {
     ownerUid,
+    quotaSchemaVersion: 2,
     submissionCount,
     lastSubmissionAt: serverTimestamp(),
+    lastSubmissionId: id,
+    recentSubmissionCount: 1,
+    recentSubmissionFirstAt: serverTimestamp(),
+  };
+}
+
+function legacyQuota(ownerUid, id, submissionCount = 1, lastSubmissionAt = serverTimestamp()) {
+  return {
+    ownerUid,
+    submissionCount,
+    lastSubmissionAt,
     lastSubmissionId: id,
   };
 }
 
+function threeSubmissionQuota(ownerUid, id, {
+  submissionCount = 3,
+  firstAt,
+  secondAt,
+  lastAt,
+}) {
+  return {
+    ownerUid,
+    quotaSchemaVersion: 2,
+    submissionCount,
+    lastSubmissionAt: lastAt,
+    lastSubmissionId: id,
+    recentSubmissionCount: 3,
+    recentSubmissionFirstAt: firstAt,
+    recentSubmissionSecondAt: secondAt,
+  };
+}
+
+function nextQuota(ownerUid, id, previous) {
+  if (previous === null || previous.quotaSchemaVersion !== 2) {
+    return quota(ownerUid, id, (previous?.submissionCount ?? 0) + 1);
+  }
+
+  const next = {
+    ownerUid,
+    quotaSchemaVersion: 2,
+    submissionCount: previous.submissionCount + 1,
+    lastSubmissionAt: serverTimestamp(),
+    lastSubmissionId: id,
+  };
+  if (previous.recentSubmissionCount === 1) {
+    return {
+      ...next,
+      recentSubmissionCount: 2,
+      recentSubmissionFirstAt: previous.recentSubmissionFirstAt,
+    };
+  }
+  if (previous.recentSubmissionCount === 2) {
+    return {
+      ...next,
+      recentSubmissionCount: 3,
+      recentSubmissionFirstAt: previous.recentSubmissionFirstAt,
+      recentSubmissionSecondAt: previous.lastSubmissionAt,
+    };
+  }
+  return {
+    ...next,
+    recentSubmissionCount: 3,
+    recentSubmissionFirstAt: previous.recentSubmissionSecondAt,
+    recentSubmissionSecondAt: previous.lastSubmissionAt,
+  };
+}
+
+function voter(db, themeId, uid) {
+  return doc(db, "communityThemeLikes", themeId).collection("voters").doc(uid);
+}
+
+function like() {
+  return {
+    schemaVersion: 1,
+    createdAt: serverTimestamp(),
+  };
+}
+
+/**
+ * Somebody who signed in with a real provider, which is what submitting a theme requires.
+ *
+ * The default mock token already carries `firebase.sign_in_provider: "custom"`, so it satisfies
+ * identifiedUser() without being spelled out. Overriding the claim here is deliberately avoided:
+ * see anonymousDb for what the emulator does with a hand-built `firebase` claim.
+ */
 function authenticatedDb(uid) {
   return testEnvironment.authenticatedContext(uid).firestore();
 }
 
-async function submit(db, ownerUid, id, submissionCount = 1) {
+/** The silent account the app provisions for a heart tap: no provider, no linked identity. */
+function anonymousDb(uid) {
+  return testEnvironment
+    .authenticatedContext(uid, {
+      firebase: { sign_in_provider: "anonymous", identities: {} },
+    })
+    .firestore();
+}
+
+/**
+ * An anonymous account that has since linked Google, which is what happens to somebody who likes
+ * a theme before submitting one. sign_in_provider keeps naming the original anonymous sign-in.
+ */
+function linkedAnonymousDb(uid) {
+  return testEnvironment
+    .authenticatedContext(uid, {
+      email: `${uid}@example.com`,
+      email_verified: true,
+      firebase: {
+        sign_in_provider: "anonymous",
+        identities: { "google.com": [`${uid}@example.com`] },
+      },
+    })
+    .firestore();
+}
+
+async function submit(db, ownerUid, id) {
+  const quotaDocument = doc(db, "communityThemeSubmissionQuota", ownerUid);
+  const previousSnapshot = await getDoc(db, quotaDocument);
+  const previousQuota = previousSnapshot.exists ? previousSnapshot.data() : null;
   const batch = writeBatch(db);
   batch.set(doc(db, "themeIntake", id), intake(ownerUid, id));
-  batch.set(doc(db, "communityThemeSubmissionQuota", ownerUid),
-    quota(ownerUid, id, submissionCount));
+  batch.set(quotaDocument, nextQuota(ownerUid, id, previousQuota));
   return batch.commit();
 }
 
@@ -86,6 +202,28 @@ async function seedPending(ownerUid, id) {
     await setDoc(db, doc(db, "themeIntake", id), {
       ...intake(ownerUid, id),
       createdAt: Timestamp.fromMillis(1_787_594_181_000),
+    });
+  });
+}
+
+async function seedPublished(id) {
+  await testEnvironment.withSecurityRulesDisabled(async (context) => {
+    const db = context.firestore();
+    await setDoc(db, doc(db, "themeIntake", id), {
+      ...intake(AUTHOR, id),
+      status: "published",
+      createdAt: Timestamp.fromMillis(1_787_594_181_000),
+    });
+  });
+}
+
+async function seedPublishedMarker(id) {
+  await testEnvironment.withSecurityRulesDisabled(async (context) => {
+    const db = context.firestore();
+    await setDoc(db, doc(db, "communityThemePublished", id), {
+      schemaVersion: 1,
+      revision: 1,
+      publishedAt: "2026-08-24T12:00:00Z",
     });
   });
 }
@@ -113,49 +251,98 @@ test("an intake and quota must be created together in one batch", async () => {
 test("a quota cannot be advanced without one matching new intake", async () => {
   const authorDb = authenticatedDb(AUTHOR);
   await assertSucceeds(submit(authorDb, AUTHOR, FIRST_ID));
+  const existingQuota = (await getDoc(authorDb,
+    doc(authorDb, "communityThemeSubmissionQuota", AUTHOR))).data();
+  const next = nextQuota(AUTHOR, SECOND_ID, existingQuota);
 
   await assertFails(setDoc(authorDb, doc(authorDb, "communityThemeSubmissionQuota", AUTHOR),
-    quota(AUTHOR, SECOND_ID, 2)));
+    next));
 
   const batch = writeBatch(authorDb);
   batch.set(doc(authorDb, "themeIntake", SECOND_ID), intake(AUTHOR, SECOND_ID));
   batch.set(doc(authorDb, "themeIntake", THIRD_ID), intake(AUTHOR, THIRD_ID));
-  batch.set(doc(authorDb, "communityThemeSubmissionQuota", AUTHOR), quota(AUTHOR, SECOND_ID, 2));
+  batch.set(doc(authorDb, "communityThemeSubmissionQuota", AUTHOR), next);
   await assertFails(batch.commit());
 });
 
-test("the quota rejects a second submission before 24 hours and accepts one after it", async () => {
+test("the quota accepts three submissions in a rolling 24-hour period and rejects a fourth", async () => {
   const authorDb = authenticatedDb(AUTHOR);
+  await assertSucceeds(submit(authorDb, AUTHOR, FIRST_ID));
+  await assertSucceeds(submit(authorDb, AUTHOR, SECOND_ID));
+  await assertSucceeds(submit(authorDb, AUTHOR, THIRD_ID));
+  await assertFails(submit(authorDb, AUTHOR, FOURTH_ID));
+});
+
+test("the rolling history shifts once its third-newest submission is older than 24 hours", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const day = 24 * 60 * 60 * 1_000;
   const now = Date.now();
+  const latest = Timestamp.fromMillis(now - 1_000);
+  const middle = Timestamp.fromMillis(now - 2_000);
   await testEnvironment.withSecurityRulesDisabled(async (context) => {
     const db = context.firestore();
-    await setDoc(db, doc(db, "communityThemeSubmissionQuota", AUTHOR), {
-      ownerUid: AUTHOR,
-      submissionCount: 1,
-      lastSubmissionAt: Timestamp.fromMillis(now - (24 * 60 * 60 * 1000 - 1_000)),
-      lastSubmissionId: FIRST_ID,
-    });
+    await setDoc(db, doc(db, "communityThemeSubmissionQuota", AUTHOR), threeSubmissionQuota(AUTHOR,
+      THIRD_ID, {
+        firstAt: Timestamp.fromMillis(now - day + 60_000),
+        secondAt: middle,
+        lastAt: latest,
+      }));
   });
-  await assertFails(submit(authorDb, AUTHOR, SECOND_ID, 2));
+  await assertFails(submit(authorDb, AUTHOR, FOURTH_ID));
 
   await testEnvironment.withSecurityRulesDisabled(async (context) => {
     const db = context.firestore();
-    await setDoc(db, doc(db, "communityThemeSubmissionQuota", AUTHOR), {
-      ownerUid: AUTHOR,
-      submissionCount: 1,
-      lastSubmissionAt: Timestamp.fromMillis(Date.now() - (24 * 60 * 60 * 1000 + 5_000)),
-      lastSubmissionId: FIRST_ID,
-    });
+    await setDoc(db, doc(db, "communityThemeSubmissionQuota", AUTHOR), threeSubmissionQuota(AUTHOR,
+      THIRD_ID, {
+        firstAt: Timestamp.fromMillis(Date.now() - day - 60_000),
+        secondAt: middle,
+        lastAt: latest,
+      }));
   });
-  await assertSucceeds(submit(authorDb, AUTHOR, SECOND_ID, 2));
+  await assertSucceeds(submit(authorDb, AUTHOR, FOURTH_ID));
+  const shifted = (await getDoc(authorDb,
+    doc(authorDb, "communityThemeSubmissionQuota", AUTHOR))).data();
+  assert.equal(shifted.recentSubmissionCount, 3);
+  assert.equal(shifted.recentSubmissionFirstAt.isEqual(middle), true);
+  assert.equal(shifted.recentSubmissionSecondAt.isEqual(latest), true);
+});
+
+test("a legacy quota migrates on its next submission without waiting and cannot reset afterward", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  await testEnvironment.withSecurityRulesDisabled(async (context) => {
+    const db = context.firestore();
+    await setDoc(db, doc(db, "communityThemeSubmissionQuota", AUTHOR), legacyQuota(AUTHOR,
+      FIRST_ID, 9, Timestamp.fromMillis(Date.now())));
+  });
+
+  await assertSucceeds(submit(authorDb, AUTHOR, SECOND_ID));
+  const migrated = (await getDoc(authorDb,
+    doc(authorDb, "communityThemeSubmissionQuota", AUTHOR))).data();
+  assert.equal(migrated.quotaSchemaVersion, 2);
+  assert.equal(migrated.submissionCount, 10);
+  assert.equal(migrated.recentSubmissionCount, 1);
+  assert.equal(migrated.recentSubmissionFirstAt.isEqual(migrated.lastSubmissionAt), true);
+
+  await assertSucceeds(submit(authorDb, AUTHOR, THIRD_ID));
+  await assertSucceeds(submit(authorDb, AUTHOR, FOURTH_ID));
+
+  const resetAttempt = quota(AUTHOR, FIFTH_ID, 13);
+  const batch = writeBatch(authorDb);
+  batch.set(doc(authorDb, "themeIntake", FIFTH_ID), intake(AUTHOR, FIFTH_ID));
+  batch.set(doc(authorDb, "communityThemeSubmissionQuota", AUTHOR), resetAttempt);
+  await assertFails(batch.commit());
+  await assertFails(submit(authorDb, AUTHOR, FIFTH_ID));
 });
 
 test("an existing intake ID cannot be paired with a quota update", async () => {
   const authorDb = authenticatedDb(AUTHOR);
   await assertSucceeds(submit(authorDb, AUTHOR, FIRST_ID));
+  const existingQuota = (await getDoc(authorDb,
+    doc(authorDb, "communityThemeSubmissionQuota", AUTHOR))).data();
   const batch = writeBatch(authorDb);
   batch.set(doc(authorDb, "themeIntake", FIRST_ID), intake(AUTHOR, FIRST_ID));
-  batch.set(doc(authorDb, "communityThemeSubmissionQuota", AUTHOR), quota(AUTHOR, FIRST_ID, 2));
+  batch.set(doc(authorDb, "communityThemeSubmissionQuota", AUTHOR),
+    nextQuota(AUTHOR, FIRST_ID, existingQuota));
   await assertFails(batch.commit());
 });
 
@@ -210,4 +397,104 @@ test("a moderator cannot decide their own intake", async () => {
     reviewedBy: SELF_MODERATOR,
     reviewedAt: serverTimestamp(),
   }));
+});
+
+test("likes are one private immutable vote and can only target a published theme", async () => {
+  const voterDb = authenticatedDb(OTHER_AUTHOR);
+  const otherDb = authenticatedDb(MODERATOR);
+  await seedPending(AUTHOR, FIRST_ID);
+
+  await assertFails(setDoc(voterDb, voter(voterDb, FIRST_ID, OTHER_AUTHOR), like()));
+  await seedPublished(FIRST_ID);
+
+  await assertFails(setDoc(voterDb, voter(voterDb, FIRST_ID, OTHER_AUTHOR), {
+    ...like(),
+    untrustedCount: 999,
+  }));
+  await assertSucceeds(setDoc(voterDb, voter(voterDb, FIRST_ID, OTHER_AUTHOR), like()));
+  await assertSucceeds(getDoc(voterDb, voter(voterDb, FIRST_ID, OTHER_AUTHOR)));
+  await assertFails(getDoc(otherDb, voter(otherDb, FIRST_ID, OTHER_AUTHOR)));
+  await assertFails(getDocs(voterDb,
+    doc(voterDb, "communityThemeLikes", FIRST_ID).collection("voters")));
+  await assertFails(updateDoc(voterDb, voter(voterDb, FIRST_ID, OTHER_AUTHOR), {
+    createdAt: serverTimestamp(),
+  }));
+
+  await testEnvironment.withSecurityRulesDisabled(async (context) => {
+    const db = context.firestore();
+    await setDoc(db, voter(db, FIRST_ID, MODERATOR), {
+      schemaVersion: 1,
+      createdAt: Timestamp.fromMillis(1_787_594_181_000),
+    });
+  });
+  await assertFails(deleteDoc(voterDb, voter(voterDb, FIRST_ID, MODERATOR)));
+  await assertSucceeds(deleteDoc(voterDb, voter(voterDb, FIRST_ID, OTHER_AUTHOR)));
+});
+
+test("a server-only catalogue marker enables likes for a static seed theme", async () => {
+  const voterDb = authenticatedDb(OTHER_AUTHOR);
+  const marker = doc(voterDb, "communityThemePublished", SECOND_ID);
+
+  await assertFails(setDoc(voterDb, voter(voterDb, SECOND_ID, OTHER_AUTHOR), like()));
+  await assertFails(getDoc(voterDb, marker));
+  await assertFails(setDoc(voterDb, marker, {
+    schemaVersion: 1,
+    revision: 1,
+    publishedAt: "2026-08-24T12:00:00Z",
+  }));
+
+  await seedPublishedMarker(SECOND_ID);
+  await assertSucceeds(setDoc(voterDb, voter(voterDb, SECOND_ID, OTHER_AUTHOR), like()));
+});
+
+test("one account can like several separately published themes", async () => {
+  const voterDb = authenticatedDb(OTHER_AUTHOR);
+  await seedPublished(FIRST_ID);
+  await seedPublished(SECOND_ID);
+  await seedPublished(THIRD_ID);
+
+  await assertSucceeds(setDoc(voterDb, voter(voterDb, FIRST_ID, OTHER_AUTHOR), like()));
+  await assertSucceeds(setDoc(voterDb, voter(voterDb, SECOND_ID, OTHER_AUTHOR), like()));
+  await assertSucceeds(setDoc(voterDb, voter(voterDb, THIRD_ID, OTHER_AUTHOR), like()));
+});
+
+test("an anonymous account can like, read and unlike its own vote", async () => {
+  const anonDb = anonymousDb(ANONYMOUS);
+  await seedPublished(FIRST_ID);
+
+  await assertSucceeds(setDoc(anonDb, voter(anonDb, FIRST_ID, ANONYMOUS), like()));
+  await assertSucceeds(getDoc(anonDb, voter(anonDb, FIRST_ID, ANONYMOUS)));
+  await assertSucceeds(deleteDoc(anonDb, voter(anonDb, FIRST_ID, ANONYMOUS)));
+});
+
+test("an anonymous account still cannot vote for or read someone else", async () => {
+  const anonDb = anonymousDb(ANONYMOUS);
+  await seedPublished(FIRST_ID);
+
+  await assertFails(setDoc(anonDb, voter(anonDb, FIRST_ID, SECOND_ANONYMOUS), like()));
+  await assertFails(getDoc(anonDb, voter(anonDb, FIRST_ID, OTHER_AUTHOR)));
+  await assertFails(getDocs(anonDb,
+    doc(anonDb, "communityThemeLikes", FIRST_ID).collection("voters")));
+});
+
+test("an anonymous account cannot submit a theme or open a submission quota", async () => {
+  // Reactions accept a disposable account; the per-account submission quota only means anything
+  // when an account costs the submitter an identity, so every intake rule refuses this provider.
+  const anonDb = anonymousDb(ANONYMOUS);
+
+  await assertFails(setDoc(anonDb, doc(anonDb, "themeIntake", FIRST_ID), intake(ANONYMOUS, FIRST_ID)));
+  await assertFails(setDoc(anonDb, doc(anonDb, "communityThemeSubmissionQuota", ANONYMOUS),
+    quota(ANONYMOUS, FIRST_ID)));
+
+  await seedPending(ANONYMOUS, SECOND_ID);
+  await assertFails(getDoc(anonDb, doc(anonDb, "themeIntake", SECOND_ID)));
+});
+
+test("linking Google onto the anonymous like account restores submission access", async () => {
+  // The upgraded account keeps reporting sign_in_provider "anonymous" until it signs in afresh,
+  // so testing that claim alone would lock out exactly the people who liked a theme first.
+  const linkedDb = linkedAnonymousDb(ANONYMOUS);
+  await seedPending(ANONYMOUS, FIRST_ID);
+
+  await assertSucceeds(getDoc(linkedDb, doc(linkedDb, "themeIntake", FIRST_ID)));
 });

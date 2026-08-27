@@ -375,12 +375,6 @@
     <string name="setting_player_shading_style">음영 스타일</string>
     <string name="setting_player_shading_intensity">음영 강도</string>
     <string name="setting_player_shading_intensity_description">음영이 배경을 어둡게 하는 강도입니다. 100%%가 최대 강도이며, 더 높은 값으로 추가 대비를 줄 수 있습니다(최대 150%%). 현재 <![CDATA[<b>%1$s%%</b>]]>입니다.</string>
-    <string name="setting_apply_appearance_to_all_faces">이 모양을 모든 페이스에 적용</string>
-    <string name="setting_apply_appearance_to_all_faces_description">이 페이스의 모양 설정을 다른 모든 페이스에 복사합니다</string>
-    <string name="apply_appearance_confirm_title">모든 페이스에 적용할까요?</string>
-    <string name="apply_appearance_confirm_message">현재 페이스의 모양 설정으로 다른 모든 페이스의 설정을 덮어씁니다. 동작 설정은 변경되지 않습니다.</string>
-    <string name="apply_appearance_confirm_button">적용</string>
-    <string name="apply_appearance_done">모든 페이스에 적용됨</string>
     <string name="category_wf_layout_actions">레이아웃</string>
     <string name="setting_reset_appearance">이 레이아웃 초기화</string>
     <string name="setting_reset_appearance_description">이 페이스의 모양을 원래 기본값으로 복원합니다</string>

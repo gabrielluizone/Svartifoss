@@ -138,6 +138,32 @@ private fun immutableThemeSettings(
 ): Map<String, WatchThemeValue> = Collections.unmodifiableMap(LinkedHashMap(values))
 
 /**
+ * Returns the first available localized copy name, preserving the numeric suffix when the base has
+ * to be truncated. Kept Android-free because built-in and custom duplication must follow exactly
+ * the same collision policy.
+ */
+internal fun uniqueWatchThemeCopyName(
+        copyBase: String,
+        existingNames: Collection<String>,
+        maxNameLength: Int = MAX_THEME_NAME_LENGTH
+): String {
+    require(maxNameLength > 0)
+    val used = existingNames.mapTo(HashSet()) { it.lowercase() }
+    var candidate = copyBase.take(maxNameLength)
+    var number = 2
+    while (candidate.lowercase() in used) {
+        val suffix = " $number"
+        candidate = if (suffix.length >= maxNameLength) {
+            suffix.takeLast(maxNameLength)
+        } else {
+            copyBase.take(maxNameLength - suffix.length) + suffix
+        }
+        number++
+    }
+    return candidate
+}
+
+/**
  * Pure half of [WatchThemeRepository.prepareCommunityThemeSubmission]. Keeping it Android-free
  * makes the public wire contract directly testable; the repository remains the only production
  * entry point that resolves a profile id from the persisted library.
@@ -481,6 +507,33 @@ class WatchThemeRepository(context: Context) {
         return copy
     }
 
+    /** Copies the selected built-in face's current resolved look into My themes without applying it. */
+    @Synchronized
+    fun duplicateBuiltIn(
+            face: String,
+            defaultPrefs: SharedPreferences
+    ): WatchThemeProfile {
+        val state = loadState()
+        ensureCapacity(state.profiles.size)
+        val normalizedBase = ThemeAppearance.normalizeBaseFace(face)
+        val now = System.currentTimeMillis()
+        val copy = WatchThemeProfile(
+                id = UUID.randomUUID().toString(),
+                name = uniqueCopyName(
+                        displayNameForFace(appContext, normalizedBase),
+                        state.profiles),
+                baseFace = normalizedBase,
+                createdAt = now,
+                updatedAt = now,
+                revision = 1,
+                settings = captureSettings(
+                        defaultPrefs,
+                        AppearanceContext.BuiltIn(normalizedBase))
+        )
+        saveState(state.copy(profiles = state.profiles + copy))
+        return copy
+    }
+
     @Synchronized
     fun rename(profile: WatchThemeProfile, name: String): WatchThemeProfile =
             rename(profile.id, name)
@@ -508,10 +561,9 @@ class WatchThemeRepository(context: Context) {
         val state = loadState()
         val updated = state.profiles.filterNot { it.id == profileId }
         if (updated.size == state.profiles.size) return false
-        saveState(state.copy(
+        return saveState(state.copy(
                 profiles = updated,
                 activeProfileId = state.activeProfileId.takeUnless { it == profileId }))
-        return true
     }
 
     /** Captures edits made by the normal Watch preference screen while a custom scope is active. */
@@ -896,16 +948,11 @@ class WatchThemeRepository(context: Context) {
                     .ifBlank { appContext.getString(R.string.watch_theme_generic_name) }
 
     private fun uniqueCopyName(source: String, profiles: List<WatchThemeProfile>): String {
-        val used = profiles.map { it.name.lowercase() }.toSet()
         val copyBase = appContext.getString(R.string.watch_theme_copy_name, source)
-        var candidate = copyBase.take(MAX_NAME_LENGTH)
-        var number = 2
-        while (candidate.lowercase() in used) {
-            val suffix = " $number"
-            candidate = (copyBase.take(MAX_NAME_LENGTH - suffix.length) + suffix)
-            number++
-        }
-        return candidate
+        return uniqueWatchThemeCopyName(
+                copyBase = copyBase,
+                existingNames = profiles.map { it.name },
+                maxNameLength = MAX_NAME_LENGTH)
     }
 
     private fun nextRevision(value: Int): Int =
@@ -970,9 +1017,12 @@ class WatchThemeRepository(context: Context) {
         }
     }
 
-    private fun saveState(state: LibraryState) {
-        libraryPrefs.edit().putString(LIBRARY_JSON, stateToJson(state).toString()).commit()
-        publishAvailableThemes(state.profiles)
+    private fun saveState(state: LibraryState): Boolean {
+        val committed = libraryPrefs.edit()
+                .putString(LIBRARY_JSON, stateToJson(state).toString())
+                .commit()
+        if (committed) publishAvailableThemes(state.profiles)
+        return committed
     }
 
     /**

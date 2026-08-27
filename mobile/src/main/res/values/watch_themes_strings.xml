@@ -42,16 +42,43 @@
     <string name="watch_theme_name_duplicate">A theme with this name already exists</string>
 
     <string name="online_themes_title">Community themes</string>
-    <string name="online_theme_intro">Discover looks made by the community. Opening this gallery downloads its public catalogue.</string>
+    <string name="online_theme_intro">Discover looks made by the community. Search, filter and compare their preview screens before adding one.</string>
     <string name="online_theme_refresh">Refresh community themes</string>
     <string name="online_theme_list_description">Community-created watch themes</string>
-    <string name="online_theme_byline">By %1$s · %2$s layout</string>
+    <string name="online_theme_byline">By %1$s</string>
     <string name="online_theme_row_description">%1$s by %2$s. %3$s layout.</string>
     <string name="online_theme_apply">Add and apply</string>
+    <string name="online_theme_opening_details">Opening…</string>
+    <string name="online_theme_search_hint">Search themes or authors</string>
+    <string name="online_theme_filter_layout">Layout</string>
+    <string name="online_theme_filter_all">All</string>
+    <string name="online_theme_filter_layout_dialog">Filter by layout</string>
+    <string name="online_theme_filter_layout_selected">Layout: %1$s</string>
+    <string name="online_theme_filter_liked">Liked</string>
+    <string name="online_theme_filter_liked_selected">Showing liked themes</string>
+    <string name="online_theme_filter_liked_loading">Loading likes…</string>
+    <string name="online_theme_filter_liked_sign_in_cancelled">Google sign-in was cancelled. Your liked themes were not loaded.</string>
+    <string name="online_theme_filter_liked_error">Couldn’t load your liked themes. Check your connection and try again.</string>
+    <string name="online_theme_sort">Sort community themes</string>
+    <string name="online_theme_sort_selected">Sort: %1$s</string>
+    <string name="online_theme_sort_newest">Most recent</string>
+    <string name="online_theme_sort_most_liked">Most liked</string>
+    <string name="online_theme_sort_newest_short">Newest</string>
+    <string name="online_theme_sort_most_liked_short">Popular</string>
+    <string name="online_theme_clear_filters">Clear filters</string>
+    <plurals name="online_theme_likes_count">
+        <item quantity="one">%1$s like</item>
+        <item quantity="other">%1$s likes</item>
+    </plurals>
+    <string name="online_theme_liked_by_you">Liked by you. %1$s</string>
+    <string name="online_theme_search_empty">No community themes match these filters.</string>
+    <string name="online_theme_search_empty_hint">Try another search or clear the active filters.</string>
     <string name="online_theme_loading">Loading community themes…</string>
     <string name="online_theme_loading_preview">Loading preview…</string>
     <string name="online_theme_empty">No community themes are available yet.</string>
+    <string name="online_theme_empty_hint">New published themes will appear here automatically.</string>
     <string name="online_theme_load_error">Couldn’t load community themes. Check your connection and try again.</string>
+    <string name="online_theme_load_error_title">Couldn’t load themes</string>
     <string name="online_theme_retry">Try again</string>
     <string name="online_theme_installed">IN MY THEMES</string>
     <string name="online_theme_apply_success">%1$s was added to My themes and applied to your watch</string>
@@ -59,10 +86,11 @@
     <string name="online_theme_sync_limit">This theme would make your watch settings too large to sync. Reset unused face settings and try again.</string>
     <string name="online_theme_update_available">UPDATE AVAILABLE</string>
     <string name="online_theme_requires_app_version">REQUIRES SVARTIFOSS %1$s</string>
+    <string name="online_theme_unsupported">UNAVAILABLE IN THIS VERSION</string>
 
     <string name="community_theme_submit_title">Submit theme</string>
     <string name="community_theme_submit_preview_description">Preview of the theme being submitted</string>
-    <string name="community_theme_submit_intro">It will be reviewed before it appears in Community themes.</string>
+    <string name="community_theme_submit_intro">It will be reviewed before it appears in Community themes. You can submit up to 3 themes every 24 hours.</string>
     <string name="community_theme_submit_public_name">Public theme name</string>
     <string name="community_theme_submit_author">Author pseudonym</string>
     <string name="community_theme_submit_author_helper">This name is public if the theme is approved.</string>
@@ -74,6 +102,7 @@
     <string name="community_theme_submit_originality">This theme changes %1$d applicable visual settings. At least %2$d are needed before it can be reviewed.</string>
     <string name="community_theme_submit_invalid">This saved theme cannot be submitted. Return to My themes and try again.</string>
     <string name="community_theme_submit_sign_in_cancelled">Google sign-in was cancelled. Your theme was not submitted.</string>
+    <string name="community_theme_submit_limit_reached">You have already sent 3 themes in the last 24 hours. Try again after the oldest submission is 24 hours old.</string>
     <string name="community_theme_submit_error">Couldn’t submit this theme. Check your connection and try again.</string>
     <string name="community_theme_submit_preview_error">Couldn’t prepare the review preview. Try again.</string>
     <string name="community_theme_submit_success_title">Submitted for review</string>

@@ -399,12 +399,6 @@ Hvis du opplever dette, kan du aktivere dette alternativet for å deaktivere dob
     <string name="setting_player_shading_style">Skyggeleggingstil</string>
     <string name="setting_player_shading_intensity">Skyggeleggingens intensitet</string>
     <string name="setting_player_shading_intensity_description">Hvor kraftig skyggeleggingen mørklegger bakgrunnen. 100%% er full styrke; gå høyere for ekstra kontrast (opptil 150%%). Nå <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Bruk dette utseendet på alle urskiver</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Kopier utseendeinnstillingene for denne urskiven til alle andre urskiver</string>
-    <string name="apply_appearance_confirm_title">Bruke på alle urskiver?</string>
-    <string name="apply_appearance_confirm_message">Dette overskriver utseendeinnstillingene for alle andre urskiver med de gjeldende. Atferdsinnstillingene dine endres ikke.</string>
-    <string name="apply_appearance_confirm_button">Bruk</string>
-    <string name="apply_appearance_done">Brukt på alle urskiver</string>
     <string name="category_wf_layout_actions">Oppsett</string>
     <string name="setting_reset_appearance">Tilbakestill dette oppsettet</string>
     <string name="setting_reset_appearance_description">Gjenopprett utseendet til denne urskiven til de opprinnelige standardverdiene</string>

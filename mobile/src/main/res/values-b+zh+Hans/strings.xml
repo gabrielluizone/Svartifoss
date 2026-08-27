@@ -310,12 +310,6 @@
     <string name="setting_player_shading_style">阴影样式</string>
     <string name="setting_player_shading_intensity">阴影强度</string>
     <string name="setting_player_shading_intensity_description">阴影使背景变暗的程度。100%% 为完全强度；调高以获得更强对比度（最高 150%%）。当前为 <![CDATA[<b>%1$s%%</b>]]>。</string>
-    <string name="setting_apply_appearance_to_all_faces">将此外观应用于所有表盘</string>
-    <string name="setting_apply_appearance_to_all_faces_description">将此表盘的外观设置复制到其他每个表盘</string>
-    <string name="apply_appearance_confirm_title">应用于所有表盘？</string>
-    <string name="apply_appearance_confirm_message">这将用当前设置覆盖所有其他表盘的外观设置。不会更改你的行为设置。</string>
-    <string name="apply_appearance_confirm_button">应用</string>
-    <string name="apply_appearance_done">已应用于所有表盘</string>
     <string name="category_wf_layout_actions">布局</string>
     <string name="setting_reset_appearance">重置此布局</string>
     <string name="setting_reset_appearance_description">将此表盘的外观恢复为原始默认值</string>

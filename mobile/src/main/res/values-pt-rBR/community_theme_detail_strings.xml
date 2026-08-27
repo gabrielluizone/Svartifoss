@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Detalhes do tema</string>
+    <string name="community_theme_detail_preview_screen">Tela de prévia</string>
+    <string name="community_theme_detail_surface_player">Player</string>
+    <string name="community_theme_detail_surface_aod">Sempre ativa</string>
+    <string name="community_theme_detail_surface_volume">Volume</string>
+    <string name="community_theme_detail_surface_progress">Progresso</string>
+    <string name="community_theme_detail_surface_quick_panel">Painel rápido</string>
+    <string name="community_theme_detail_surface_queue">Fila</string>
+    <string name="community_theme_detail_preview_label">Prévia: %1$s</string>
+    <string name="community_theme_detail_preview_description">Prévia de %1$s na tela %2$s</string>
+    <string name="community_theme_detail_preview_privacy">A capa do álbum atual pode aparecer apenas nesta prévia no seu telefone. Ela nunca é enviada; o texto e o tempo de exemplo continuam em uso.</string>
+
+    <string name="community_theme_detail_information">Informações do tema</string>
+    <string name="community_theme_detail_byline">Por %1$s</string>
+    <string name="community_theme_detail_layout">Layout-base</string>
+    <string name="community_theme_detail_revision">Revisão</string>
+    <string name="community_theme_detail_minimum_version">Versão mínima do Svartifoss</string>
+    <string name="community_theme_detail_published">Publicado</string>
+    <string name="community_theme_detail_visual_settings">Configurações visuais</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s configuração visual</item>
+        <item quantity="other">%1$s configurações visuais</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Não disponível</string>
+
+    <string name="community_theme_detail_add_apply">Adicionar e aplicar</string>
+    <string name="community_theme_detail_remove">Remover tema</string>
+    <string name="community_theme_detail_remove_title">Remover “%1$s” de Meus temas?</string>
+    <string name="community_theme_detail_remove_message">Esta cópia salva e todas as edições feitas nela serão removidas permanentemente. Se ela estiver aplicada, o relógio voltará ao layout-base predefinido.</string>
+    <string name="community_theme_detail_removed">Tema removido de Meus temas</string>
+    <string name="community_theme_detail_remove_error">Não foi possível remover este tema</string>
+    <string name="community_theme_detail_like">Curtir</string>
+    <string name="community_theme_detail_unlike">Descurtir</string>
+    <string name="community_theme_detail_like_loading">Verificando…</string>
+    <string name="community_theme_detail_like_description">Curtir %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Remover curtida de %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">O login do Google foi cancelado. Sua curtida não foi salva.</string>
+    <string name="community_theme_detail_like_error">Não foi possível salvar sua curtida. Verifique a conexão e tente novamente.</string>
+    <string name="community_theme_detail_like_not_ready">As curtidas deste tema ainda estão sendo preparadas. Atualize os temas da comunidade após a próxima publicação.</string>
+    <string name="community_theme_detail_like_saved">Sua curtida foi salva. A contagem pública será atualizada na próxima publicação do catálogo.</string>
+    <string name="community_theme_detail_unlike_saved">Sua curtida foi removida. A contagem pública será atualizada na próxima publicação do catálogo.</string>
+    <string name="community_theme_detail_apply_existing">Este tema já está em Meus temas e foi aplicado ao relógio</string>
+    <string name="community_theme_detail_requires_app_version">Este tema precisa do Svartifoss %1$s antes de poder ser adicionado.</string>
+    <string name="community_theme_detail_load_error">Não foi possível carregar os detalhes deste tema. Volte aos temas da comunidade e tente novamente.</string>
+    <string name="community_theme_detail_profile_mismatch">O perfil baixado não corresponde aos detalhes públicos deste tema. Volte aos temas da comunidade e tente novamente.</string>
+</resources>

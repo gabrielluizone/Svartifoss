@@ -377,12 +377,6 @@
     <string name="setting_player_shading_style">סגנון הצללה</string>
     <string name="setting_player_shading_intensity">עוצמת ההצללה</string>
     <string name="setting_player_shading_intensity_description">מידת ההכהיה של הרקע באמצעות ההצללה. 100%% היא עוצמה מלאה; ערך גבוה יותר מוסיף ניגודיות (עד 150%%). כרגע <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">החל את המראה הזה על כל התצוגות</string>
-    <string name="setting_apply_appearance_to_all_faces_description">העתק את הגדרות המראה של תצוגה זו לכל התצוגות האחרות</string>
-    <string name="apply_appearance_confirm_title">להחיל על כל התצוגות?</string>
-    <string name="apply_appearance_confirm_message">פעולה זו תחליף את הגדרות המראה של כל התצוגות האחרות באלו של התצוגה הנוכחית. הגדרות ההתנהגות לא ישתנו.</string>
-    <string name="apply_appearance_confirm_button">החל</string>
-    <string name="apply_appearance_done">הוחל על כל התצוגות</string>
     <string name="category_wf_layout_actions">פריסה</string>
     <string name="setting_reset_appearance">אפס פריסה זו</string>
     <string name="setting_reset_appearance_description">שחזר את מראה התצוגה הזו לברירות המחדל המקוריות</string>

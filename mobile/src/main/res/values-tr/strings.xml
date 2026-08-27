@@ -398,12 +398,6 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
     <string name="setting_player_shading_style">Gölgelendirme stili</string>
     <string name="setting_player_shading_intensity">Gölgelendirme yoğunluğu</string>
     <string name="setting_player_shading_intensity_description">Gölgelendirmenin arka planı ne kadar karartacağı. 100%% tam güçtür; ek kontrast için daha yükseğe çıkın (150%%’ye kadar). Geçerli değer: <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Bu görünümü tüm yüzlere uygula</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Bu yüzün görünüm ayarlarını diğer tüm yüzlere kopyala</string>
-    <string name="apply_appearance_confirm_title">Tüm yüzlere uygulansın mı?</string>
-    <string name="apply_appearance_confirm_message">Bu işlem diğer tüm yüzlerin görünüm ayarlarının üzerine geçerli olanı yazar. Davranış ayarlarınızı değiştirmez.</string>
-    <string name="apply_appearance_confirm_button">Uygula</string>
-    <string name="apply_appearance_done">Tüm yüzlere uygulandı</string>
     <string name="category_wf_layout_actions">Düzen</string>
     <string name="setting_reset_appearance">Bu düzeni sıfırla</string>
     <string name="setting_reset_appearance_description">Bu yüzün görünümünü özgün varsayılanlarına geri döndür</string>

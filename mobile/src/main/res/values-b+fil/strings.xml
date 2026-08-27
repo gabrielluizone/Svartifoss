@@ -399,12 +399,6 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
     <string name="setting_player_shading_style">Style ng shading</string>
     <string name="setting_player_shading_intensity">Lakas ng shading</string>
     <string name="setting_player_shading_intensity_description">Kung gaano kalakas pinapadilim ng shading ang background. 100%% ang buong lakas; taasan pa para sa dagdag na contrast (hanggang 150%%). Kasalukuyang <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Ilapat ang hitsurang ito sa lahat ng face</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Kopyahin ang appearance settings ng face na ito sa lahat ng iba pang face</string>
-    <string name="apply_appearance_confirm_title">Ilapat sa lahat ng face?</string>
-    <string name="apply_appearance_confirm_message">Papaltan nito ang appearance settings ng lahat ng ibang face gamit ang kasalukuyan. Hindi mababago ang behavior settings mo.</string>
-    <string name="apply_appearance_confirm_button">Ilapat</string>
-    <string name="apply_appearance_done">Nailapat sa lahat ng face</string>
     <string name="category_wf_layout_actions">Layout</string>
     <string name="setting_reset_appearance">I-reset ang layout na ito</string>
     <string name="setting_reset_appearance_description">Ibalik ang hitsura ng face na ito sa orihinal na default</string>

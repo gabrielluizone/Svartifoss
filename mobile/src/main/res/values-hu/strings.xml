@@ -399,12 +399,6 @@ Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen
     <string name="setting_player_shading_style">Árnyékolási stílus</string>
     <string name="setting_player_shading_intensity">Árnyékolás intenzitása</string>
     <string name="setting_player_shading_intensity_description">Mennyire sötétítse az árnyékolás a hátteret. A 100%% teljes erősség; nagyobb kontraszthoz növelje (legfeljebb 150%%). Jelenleg <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Ennek a megjelenésnek alkalmazása minden óralapra</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Az óralap megjelenési beállításainak másolása minden más óralapra</string>
-    <string name="apply_appearance_confirm_title">Alkalmazza minden óralapra?</string>
-    <string name="apply_appearance_confirm_message">Ez felülírja minden más óralap megjelenési beállításait a jelenlegi beállításokkal. A viselkedési beállításokat nem módosítja.</string>
-    <string name="apply_appearance_confirm_button">Alkalmazás</string>
-    <string name="apply_appearance_done">Minden óralapra alkalmazva</string>
     <string name="category_wf_layout_actions">Elrendezés</string>
     <string name="setting_reset_appearance">Elrendezés visszaállítása</string>
     <string name="setting_reset_appearance_description">Az óralap megjelenésének visszaállítása az eredeti alapértékekre</string>

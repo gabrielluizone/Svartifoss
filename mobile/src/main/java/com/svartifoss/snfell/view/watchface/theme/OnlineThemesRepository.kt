@@ -17,7 +17,6 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.UUID
 
 /** One entry in the static community-theme catalogue. */
 data class OnlineThemeSummary(
@@ -32,7 +31,7 @@ data class OnlineThemeSummary(
         val minimumAppVersion: String,
         /** ISO-8601 publication timestamp supplied by the static catalogue. */
         val publishedAt: String,
-        /** Absent until likes ship; retained here so that Phase 3 is a data-only extension. */
+        /** Static count supplied by the trusted publisher; older catalogues default to zero. */
         val likes: Int = 0
 )
 
@@ -261,9 +260,9 @@ class OnlineThemesRepository(context: Context) {
         if (summary.revision < 1 || summary.schemaVersion < 1 || summary.likes < 0) {
             throw IOException("Invalid online theme metadata")
         }
-        // The activity shows these items with an upgrade requirement rather than requesting
-        // them. Keep the same boundary at the data layer so a future caller cannot turn a
-        // catalogue entry for an unknown or retired face into an install candidate.
+        // The activity labels unknown schemas and retired faces unavailable rather than requesting
+        // their profile. Keep that same boundary here so a future caller cannot turn such an
+        // entry into an install candidate.
         if (summary.schemaVersion != WatchThemeRepository.LIBRARY_SCHEMA) {
             throw IOException("Unsupported online theme profile schema ${summary.schemaVersion}")
         }
@@ -494,12 +493,8 @@ class OnlineThemesRepository(context: Context) {
             ?.replace(WHITESPACE, " ")
             ?.takeIf { it.isNotBlank() && it.length <= MAX_TEXT_LENGTH }
 
-    private fun canonicalThemeId(value: String?): String? = try {
-        val parsed = UUID.fromString(value)
-        parsed.toString().takeIf { value.equals(it, ignoreCase = true) }
-    } catch (_: IllegalArgumentException) {
-        null
-    }
+    /** Public catalogue IDs use the same lower-case UUIDv4 contract as Firestore documents. */
+    private fun canonicalThemeId(value: String?): String? = value?.takeIf(UUID_V4::matches)
 
     private fun positiveInt(value: Any?): Int? = integerValue(value)?.takeIf { it > 0 }
 
@@ -545,6 +540,8 @@ class OnlineThemesRepository(context: Context) {
         private const val CATALOG_CACHE_KEY = "catalog"
 
         private val WHITESPACE = Regex("\\s+")
+        private val UUID_V4 = Regex(
+                "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")
 
         private fun etagKey(cacheKey: String): String = "$cacheKey.etag"
         private fun lastFetchKey(cacheKey: String): String = "$cacheKey.last_fetch"

@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Відкрийте для себе оформлення, створені спільнотою. Відкриття цієї галереї завантажує її публічний каталог.</string>
     <string name="online_theme_refresh">Оновити теми спільноти</string>
     <string name="online_theme_list_description">Теми годинника, створені спільнотою</string>
-    <string name="online_theme_byline">Від %1$s · макет %2$s</string>
+    <string name="online_theme_byline">Від %1$s</string>
     <string name="online_theme_row_description">%1$s від %2$s. Макет %3$s.</string>
     <string name="online_theme_apply">Додати й застосувати</string>
     <string name="online_theme_loading">Завантаження тем спільноти…</string>

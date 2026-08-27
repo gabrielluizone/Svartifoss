@@ -303,12 +303,6 @@
     <string name="setting_player_shading_style">Estilo de sombreado</string>
     <string name="setting_player_shading_intensity">Intensidad de sombreado</string>
     <string name="setting_player_shading_intensity_description">Cuánto oscurece el sombreado el fondo. 100%% es la intensidad total; sube más para contraste extra (hasta 150%%). Actualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Aplicar este aspecto a todas las caras</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Copiar los ajustes de apariencia de esta cara a todas las demás caras</string>
-    <string name="apply_appearance_confirm_title">¿Aplicar a todas las caras?</string>
-    <string name="apply_appearance_confirm_message">Esto sobrescribe los ajustes de apariencia de todas las demás caras con los actuales. No cambiará tus ajustes de comportamiento.</string>
-    <string name="apply_appearance_confirm_button">Aplicar</string>
-    <string name="apply_appearance_done">Aplicado a todas las caras</string>
     <string name="category_wf_layout_actions">Diseño</string>
     <string name="setting_reset_appearance">Restablecer este diseño</string>
     <string name="setting_reset_appearance_description">Restaurar la apariencia de esta cara a sus valores predeterminados originales</string>

@@ -398,12 +398,6 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
     <string name="setting_player_shading_style">Kiểu đổ bóng</string>
     <string name="setting_player_shading_intensity">Cường độ đổ bóng</string>
     <string name="setting_player_shading_intensity_description">Mức đổ bóng làm tối nền. 100%% là cường độ đầy đủ; tăng cao hơn để có thêm tương phản (tối đa 150%%). Hiện tại <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Áp dụng giao diện này cho mọi mặt</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Sao chép cài đặt giao diện của mặt này sang mọi mặt khác</string>
-    <string name="apply_appearance_confirm_title">Áp dụng cho mọi mặt?</string>
-    <string name="apply_appearance_confirm_message">Thao tác này ghi đè cài đặt giao diện của mọi mặt khác bằng mặt hiện tại. Cài đặt hành vi của bạn không thay đổi.</string>
-    <string name="apply_appearance_confirm_button">Áp dụng</string>
-    <string name="apply_appearance_done">Đã áp dụng cho mọi mặt</string>
     <string name="category_wf_layout_actions">Bố cục</string>
     <string name="setting_reset_appearance">Đặt lại bố cục này</string>
     <string name="setting_reset_appearance_description">Khôi phục giao diện của mặt này về mặc định ban đầu</string>

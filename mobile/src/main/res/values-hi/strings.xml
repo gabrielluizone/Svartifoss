@@ -399,12 +399,6 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
     <string name="setting_player_shading_style">शेडिंग शैली</string>
     <string name="setting_player_shading_intensity">शेडिंग तीव्रता</string>
     <string name="setting_player_shading_intensity_description">शेडिंग बैकग्राउंड को कितनी गहराई से डार्क करे। 100%% पूरी शक्ति है; अधिक कंट्रास्ट के लिए इसे 150%% तक बढ़ाएँ। अभी <![CDATA[<b>%1$s%%</b>]]>।</string>
-    <string name="setting_apply_appearance_to_all_faces">यह रूप सभी फ़ेस पर लागू करें</string>
-    <string name="setting_apply_appearance_to_all_faces_description">इस फ़ेस की दिखावट सेटिंग बाकी सभी फ़ेस में कॉपी करें</string>
-    <string name="apply_appearance_confirm_title">सभी फ़ेस पर लागू करें?</string>
-    <string name="apply_appearance_confirm_message">यह बाकी हर फ़ेस की दिखावट सेटिंग को मौजूदा सेटिंग से बदल देगा। आपकी व्यवहार सेटिंग नहीं बदलेगी।</string>
-    <string name="apply_appearance_confirm_button">लागू करें</string>
-    <string name="apply_appearance_done">सभी फ़ेस पर लागू किया गया</string>
     <string name="category_wf_layout_actions">लेआउट</string>
     <string name="setting_reset_appearance">इस लेआउट को रीसेट करें</string>
     <string name="setting_reset_appearance_description">इस फ़ेस की दिखावट को उसके मूल डिफ़ॉल्ट पर लौटाएँ</string>

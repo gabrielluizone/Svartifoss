@@ -312,12 +312,6 @@
     <string name="setting_player_shading_style">Abdunklungsstil</string>
     <string name="setting_player_shading_intensity">Abdunklungsintensität</string>
     <string name="setting_player_shading_intensity_description">Wie stark die Abdunklung den Hintergrund verdunkelt. 100%% ist volle Stärke; höher für zusätzlichen Kontrast (bis 150%%). Aktuell <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Dieses Aussehen auf alle Faces anwenden</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Die Darstellungseinstellungen dieses Faces auf jedes andere Face kopieren</string>
-    <string name="apply_appearance_confirm_title">Auf alle Faces anwenden?</string>
-    <string name="apply_appearance_confirm_message">Dies überschreibt die Darstellungseinstellungen jedes anderen Faces mit dem aktuellen. Deine Verhaltenseinstellungen bleiben unverändert.</string>
-    <string name="apply_appearance_confirm_button">Anwenden</string>
-    <string name="apply_appearance_done">Auf alle Faces angewendet</string>
     <string name="category_wf_layout_actions">Layout</string>
     <string name="setting_reset_appearance">Dieses Layout zurücksetzen</string>
     <string name="setting_reset_appearance_description">Die Darstellung dieses Faces auf seine ursprünglichen Standardwerte zurücksetzen</string>

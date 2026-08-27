@@ -378,12 +378,6 @@
     <string name="setting_player_shading_style">Štýl tieňovania</string>
     <string name="setting_player_shading_intensity">Intenzita tieňovania</string>
     <string name="setting_player_shading_intensity_description">Ako silno tieňovanie stmaví pozadie. 100%% je plná intenzita; vyššia hodnota pridá kontrast (až 150%%). Aktuálne <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Použiť tento vzhľad na všetky ciferníky</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Skopírovať nastavenia vzhľadu tohto ciferníka do všetkých ostatných</string>
-    <string name="apply_appearance_confirm_title">Použiť na všetky ciferníky?</string>
-    <string name="apply_appearance_confirm_message">Týmto sa prepíšu nastavenia vzhľadu všetkých ostatných ciferníkov aktuálnymi nastaveniami. Nastavenia správania sa nezmenia.</string>
-    <string name="apply_appearance_confirm_button">Použiť</string>
-    <string name="apply_appearance_done">Použité na všetky ciferníky</string>
     <string name="category_wf_layout_actions">Rozloženie</string>
     <string name="setting_reset_appearance">Obnoviť toto rozloženie</string>
     <string name="setting_reset_appearance_description">Obnoviť vzhľad tohto ciferníka na pôvodné predvolené hodnoty</string>

@@ -96,29 +96,76 @@ function assertValidationCode(action, code) {
     assert.throws(action, (error) => error instanceof ValidationError && error.code === code);
 }
 
-function fakeFirestore(input) {
+function fakeFirestore(input, likesByTheme = {}) {
     const documents = Array.isArray(input) ? input : [input];
     const byId = new Map(documents.map((document) => [document.id, document]));
-    return {
+    const likes = new Map(Object.entries(likesByTheme));
+    const publishedThemeMarkers = new Map();
+    const firestore = {
         collection(collectionName) {
-            assert.equal(collectionName, "themeIntake");
+            if (collectionName === "themeIntake") {
+                return {
+                    where(field, operator, value) {
+                        assert.equal(field, "status");
+                        assert.equal(operator, "==");
+                        assert.equal(value, "approved");
+                        return {
+                            get: async () => ({
+                                docs: documents.filter((document) => document.data.status === "approved").map((document) => ({
+                                    id: document.id,
+                                    ref: { id: document.id, path: `themeIntake/${document.id}` },
+                                    data: () => document.data,
+                                })),
+                            }),
+                        };
+                    },
+                    doc(id) {
+                        return { id };
+                    },
+                };
+            }
+            if (collectionName === "communityThemeLikes") {
+                return {
+                    doc(themeId) {
+                        return {
+                            collection(votersCollection) {
+                                assert.equal(votersCollection, "voters");
+                                return {
+                                    count() {
+                                        return {
+                                            get: async () => ({
+                                                data: () => ({ count: likes.get(themeId) ?? 0 }),
+                                            }),
+                                        };
+                                    },
+                                };
+                            },
+                        };
+                    },
+                };
+            }
+            assert.equal(collectionName, "communityThemePublished");
             return {
-                where(field, operator, value) {
-                    assert.equal(field, "status");
-                    assert.equal(operator, "==");
-                    assert.equal(value, "approved");
-                    return {
-                        get: async () => ({
-                            docs: documents.filter((document) => document.data.status === "approved").map((document) => ({
-                                id: document.id,
-                                ref: { id: document.id, path: `themeIntake/${document.id}` },
-                                data: () => document.data,
-                            })),
-                        }),
-                    };
-                },
                 doc(id) {
-                    return { id };
+                    return { id, path: `communityThemePublished/${id}` };
+                },
+            };
+        },
+        async getAll(...references) {
+            return references.map((reference) => ({
+                id: reference.id,
+                exists: publishedThemeMarkers.has(reference.id),
+                data: () => publishedThemeMarkers.get(reference.id),
+            }));
+        },
+        batch() {
+            const writes = [];
+            return {
+                set(reference, value) {
+                    writes.push({ id: reference.id, value: { ...value } });
+                },
+                async commit() {
+                    writes.forEach(({ id, value }) => publishedThemeMarkers.set(id, value));
                 },
             };
         },
@@ -136,6 +183,7 @@ function fakeFirestore(input) {
             return callback(transaction);
         },
     };
+    return Object.assign(firestore, { publishedThemeMarkers });
 }
 
 async function temporaryCatalogue(t) {
@@ -327,11 +375,113 @@ test("publication writes static files first, then finalization marks the matchin
     const index = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
     assert.equal(Object.hasOwn(profile, "moderationPreviewWebpBase64"), false);
     assert.equal(index.themes[0].id, ID);
+    assert.equal(index.themes[0].likes, 0);
+    assert.equal(firestore.publishedThemeMarkers.size, 0);
 
     const result = await finalizePublishedThemes({ firestore, root, manifestPath, logger });
     assert.deepEqual(result, { marked: 1, skipped: 0 });
     assert.equal(document.data.status, "published");
     assert.ok(document.data.publishedAt);
+    assert.deepEqual(firestore.publishedThemeMarkers.get(ID), {
+        schemaVersion: 1,
+        revision: 1,
+        publishedAt: "2026-08-24T12:00:00.000Z",
+    });
+});
+
+test("finalization registers a static catalogue theme with no intake document", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const candidate = validateApprovedDocument(approvedDocument());
+    await writeFile(
+        join(root, "docs", "themes", `${ID}.json`),
+        `${JSON.stringify(candidate.publicProfile, null, 2)}\n`,
+    );
+    await writeFile(join(root, "docs", "themes", "index.json"), `${JSON.stringify({
+        schemaVersion: 1,
+        generatedAt: PUBLISHED_AT,
+        themes: [candidate.summary],
+    }, null, 2)}\n`);
+    const manifestPath = join(root, "empty-manifest.json");
+    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 1, candidates: [] })}\n`);
+    const firestore = fakeFirestore([]);
+
+    assert.deepEqual(
+        await finalizePublishedThemes({ firestore, root, manifestPath, logger: { log() {}, warn() {} } }),
+        { marked: 0, skipped: 0 },
+    );
+    assert.deepEqual(firestore.publishedThemeMarkers.get(ID), {
+        schemaVersion: 1,
+        revision: 1,
+        publishedAt: PUBLISHED_AT,
+    });
+});
+
+test("finalization never registers an index entry whose static profile is missing", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const candidate = validateApprovedDocument(approvedDocument());
+    await writeFile(join(root, "docs", "themes", "index.json"), `${JSON.stringify({
+        schemaVersion: 1,
+        generatedAt: PUBLISHED_AT,
+        themes: [candidate.summary],
+    }, null, 2)}\n`);
+    const manifestPath = join(root, "empty-manifest.json");
+    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 1, candidates: [] })}\n`);
+    const firestore = fakeFirestore([]);
+
+    await assert.rejects(
+        () => finalizePublishedThemes({ firestore, root, manifestPath, logger: { log() {}, warn() {} } }),
+        (error) => error instanceof ValidationError && error.code === "catalogue-profile-is-missing",
+    );
+    assert.equal(firestore.publishedThemeMarkers.size, 0);
+});
+
+test("the publisher derives catalogue likes from private voter documents", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const logger = { log() {}, warn() {} };
+    const firstManifest = join(root, "first-manifest.json");
+    const firstFirestore = fakeFirestore(document);
+
+    await publishApprovedThemes({
+        firestore: firstFirestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: firstManifest,
+    });
+    await finalizePublishedThemes({ firestore: firstFirestore, root, manifestPath: firstManifest, logger });
+
+    const staleIndex = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    staleIndex.themes[0].likes = 999;
+    await writeFile(join(root, "docs", "themes", "index.json"), `${JSON.stringify(staleIndex, null, 2)}\n`);
+    const profileBeforeRefresh = await readFile(join(root, "docs", "themes", `${ID}.json`), "utf8");
+    const refresh = await publishApprovedThemes({
+        firestore: fakeFirestore(document, { [ID]: 7 }),
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "likes-manifest.json"),
+    });
+
+    assert.equal(refresh.plans.length, 0);
+    assert.equal(refresh.catalogChanged, true);
+    const refreshedIndex = await readFile(join(root, "docs", "themes", "index.json"), "utf8");
+    assert.equal(JSON.parse(refreshedIndex).themes[0].likes, 7);
+    assert.equal(await readFile(join(root, "docs", "themes", `${ID}.json`), "utf8"), profileBeforeRefresh);
+    assert.equal(document.data.status, "published");
+
+    const steady = await publishApprovedThemes({
+        firestore: fakeFirestore(document, { [ID]: 7 }),
+        root,
+        now: new Date("2026-08-26T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "steady-likes-manifest.json"),
+    });
+    assert.equal(steady.catalogChanged, false);
+    assert.equal(await readFile(join(root, "docs", "themes", "index.json"), "utf8"), refreshedIndex);
 });
 
 test("the publisher rejects an exact digest already present in the public catalogue", async (t) => {

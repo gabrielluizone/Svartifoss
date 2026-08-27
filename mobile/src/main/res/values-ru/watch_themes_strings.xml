@@ -43,7 +43,7 @@
     <string name="online_theme_intro">Откройте для себя оформления, созданные сообществом. При открытии этой галереи загружается её публичный каталог.</string>
     <string name="online_theme_refresh">Обновить темы сообщества</string>
     <string name="online_theme_list_description">Темы для часов, созданные сообществом</string>
-    <string name="online_theme_byline">От %1$s · макет %2$s</string>
+    <string name="online_theme_byline">От %1$s</string>
     <string name="online_theme_row_description">%1$s от %2$s. Макет %3$s.</string>
     <string name="online_theme_apply">Добавить и применить</string>
     <string name="online_theme_loading">Загрузка тем сообщества…</string>

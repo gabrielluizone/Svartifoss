@@ -2700,7 +2700,8 @@ class MainActivity : WearCompanionWatchActivity(),
         when (quickPanelLongMode) {
             QuickLongMode.UP_NEXT -> {
                 binding.quickActionUpNext.visibility = View.VISIBLE
-                binding.quickActionUpNextIcon.setImageResource(R.drawable.ic_equalizer_bars_animated)
+                binding.quickActionUpNextIcon.setImageResource(
+                        commonR.drawable.ic_equalizer_bars_animated)
                 quickActionUpNextUsesRealIcon = false
                 syncUpNextEqualizerAnimation()
                 binding.quickActionUpNextLabel.setText(R.string.quick_action_up_next)
@@ -2792,7 +2793,8 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.quickActionUpNext.visibility = View.VISIBLE
         clearQuickUpNextArtwork()
         quickPanelLongMode = QuickLongMode.UP_NEXT
-        binding.quickActionUpNextIcon.setImageResource(R.drawable.ic_equalizer_bars_animated)
+        binding.quickActionUpNextIcon.setImageResource(
+                commonR.drawable.ic_equalizer_bars_animated)
         quickActionUpNextUsesRealIcon = false
         syncUpNextEqualizerAnimation()
         binding.quickActionUpNextLabel.setText(R.string.quick_action_up_next)

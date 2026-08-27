@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Temui gaya yang dicipta oleh komuniti. Membuka galeri ini memuat turun katalog awamnya.</string>
     <string name="online_theme_refresh">Segarkan tema komuniti</string>
     <string name="online_theme_list_description">Tema jam tangan ciptaan komuniti</string>
-    <string name="online_theme_byline">Oleh %1$s · reka letak %2$s</string>
+    <string name="online_theme_byline">Oleh %1$s</string>
     <string name="online_theme_row_description">%1$s oleh %2$s. Reka letak %3$s.</string>
     <string name="online_theme_apply">Tambah dan gunakan</string>
     <string name="online_theme_loading">Memuatkan tema komuniti…</string>

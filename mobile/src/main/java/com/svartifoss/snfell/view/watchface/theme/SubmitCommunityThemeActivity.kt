@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +17,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.view.LyraAccent
+import com.svartifoss.snfell.view.MusicLoadingBarsView
 import com.svartifoss.snfell.view.watchface.WatchPreviewView
 import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.launch
@@ -39,7 +40,7 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
     private lateinit var authorInput: TextInputEditText
     private lateinit var originality: TextView
     private lateinit var error: TextView
-    private lateinit var progress: ProgressBar
+    private lateinit var progress: MusicLoadingBarsView
     private lateinit var submitButton: MaterialButton
 
     private lateinit var profileId: String
@@ -67,6 +68,7 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         originality = findViewById(R.id.submission_originality)
         error = findViewById(R.id.submission_error)
         progress = findViewById(R.id.submission_progress)
+        progress.setBarsColor(LyraAccent.resolve(this))
         submitButton = findViewById(R.id.button_submit_theme)
 
         findViewById<ImageButton>(R.id.button_back).setOnClickListener { finish() }
@@ -194,6 +196,10 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
                             author,
                             moderationPreview)) {
                         CommunityThemeQueueResult.Queued -> showSuccess()
+                        CommunityThemeQueueResult.SubmissionLimitReached -> {
+                            setLoading(false)
+                            showError(getString(R.string.community_theme_submit_limit_reached))
+                        }
                         CommunityThemeQueueResult.NotAuthenticated,
                         CommunityThemeQueueResult.InvalidRequest -> {
                             setLoading(false)

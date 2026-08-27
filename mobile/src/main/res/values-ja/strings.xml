@@ -375,12 +375,6 @@
     <string name="setting_player_shading_style">シェーディングのスタイル</string>
     <string name="setting_player_shading_intensity">シェーディングの強さ</string>
     <string name="setting_player_shading_intensity_description">シェーディングで背景を暗くする強さです。100%% が最大強度で、より高くするとコントラストをさらに上げられます（最大 150%%）。現在 <![CDATA[<b>%1$s%%</b>]]> です。</string>
-    <string name="setting_apply_appearance_to_all_faces">この外観をすべてのフェイスに適用</string>
-    <string name="setting_apply_appearance_to_all_faces_description">このフェイスの外観設定をほかのすべてのフェイスにコピーします</string>
-    <string name="apply_appearance_confirm_title">すべてのフェイスに適用しますか？</string>
-    <string name="apply_appearance_confirm_message">現在のフェイスの外観設定で、ほかのすべてのフェイスの設定を上書きします。動作設定は変更されません。</string>
-    <string name="apply_appearance_confirm_button">適用</string>
-    <string name="apply_appearance_done">すべてのフェイスに適用しました</string>
     <string name="category_wf_layout_actions">レイアウト</string>
     <string name="setting_reset_appearance">このレイアウトをリセット</string>
     <string name="setting_reset_appearance_description">このフェイスの外観を元の既定値に戻します</string>

@@ -312,12 +312,6 @@
     <string name="setting_player_shading_style">Stil de umbrire</string>
     <string name="setting_player_shading_intensity">Intensitate umbrire</string>
     <string name="setting_player_shading_intensity_description">Cât de puternic întunecă umbrirea fundalul. 100%% este intensitatea maximă; creșteți pentru contrast suplimentar (până la 150%%). Setat momentan la <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Aplică acest aspect tuturor fețelor</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Copiază setările de aspect ale acestei fețe pe fiecare altă față</string>
-    <string name="apply_appearance_confirm_title">Aplicați la toate fețele?</string>
-    <string name="apply_appearance_confirm_message">Aceasta suprascrie setările de aspect ale fiecărei alte fețe cu cea curentă. Nu vă va schimba setările de comportament.</string>
-    <string name="apply_appearance_confirm_button">Aplică</string>
-    <string name="apply_appearance_done">Aplicat la toate fețele</string>
     <string name="category_wf_layout_actions">Aspect</string>
     <string name="setting_reset_appearance">Resetează acest aspect</string>
     <string name="setting_reset_appearance_description">Restaurează aspectul acestei fețe la valorile implicite originale</string>

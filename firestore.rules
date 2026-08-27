@@ -13,13 +13,13 @@ service cloud.firestore {
      * WatchThemeRepository.parsePublishedProfile and recompute settingsDigest before publishing.
      */
     match /themeIntake/{themeId} {
-      allow create: if signedIn()
+      allow create: if identifiedUser()
           && validNewThemeIntake(themeId)
           && validSubmissionQuotaForTheme(themeId);
-      allow get, list: if signedIn() &&
+      allow get, list: if identifiedUser() &&
           (isCommunityThemeModerator() ||
             (resource.data.ownerUid == request.auth.uid && resource.data.status == "pending"));
-      allow update: if signedIn() && isCommunityThemeModerator() && validModeratorDecision();
+      allow update: if identifiedUser() && isCommunityThemeModerator() && validModeratorDecision();
 
       // Deliberately omitted: clients cannot delete or publish an intake item.
     }
@@ -31,11 +31,48 @@ service cloud.firestore {
      * itself. It is never readable by another user and cannot be listed.
      */
     match /communityThemeSubmissionQuota/{uid} {
-      allow get: if signedIn() && uid == request.auth.uid;
-      allow create: if signedIn() && uid == request.auth.uid && validNewSubmissionQuota();
-      allow update: if signedIn() && uid == request.auth.uid && validUpdatedSubmissionQuota();
+      allow get: if identifiedUser() && uid == request.auth.uid;
+      allow create: if identifiedUser() && uid == request.auth.uid && validNewSubmissionQuota();
+      allow update: if identifiedUser() && uid == request.auth.uid && validUpdatedSubmissionQuota();
 
       // Deliberately omitted: a quota can neither be listed nor deleted by a client.
+    }
+
+    /*
+     * A like is an immutable, private per-UID vote rather than a client-maintained counter.
+     * Counts are derived by the trusted GitHub publisher and baked into the public Pages
+     * catalogue, so an APK can never inflate the number used for popularity ordering. A voter
+     * can see and remove only their own document; no client can enumerate who liked a theme.
+     *
+     * These rules deliberately accept an anonymous account, unlike the submission path above.
+     * Requiring Google Sign-In to press a heart asks for an identity out of all proportion to the
+     * act, so the app provisions an anonymous UID silently instead. The accepted cost is that
+     * clearing app data yields a new UID and lets the same person vote again: this ledger is a
+     * rough popularity signal, and one vote per account is all it has ever been able to promise.
+     *
+     * The parent themeIntake record is deliberately not readable to ordinary users, but rules may
+     * still inspect its status. This makes a like possible only after the trusted publisher has
+     * completed the Git publication and marked that exact intake document `published`.
+     */
+    match /communityThemeLikes/{themeId}/voters/{uid} {
+      allow get: if signedIn() && uid == request.auth.uid;
+      allow create: if signedIn()
+          && uid == request.auth.uid
+          && validThemeId(themeId)
+          && isPublishedCommunityTheme(themeId)
+          && validNewCommunityThemeLike();
+      allow delete: if signedIn()
+          && uid == request.auth.uid
+          && validExistingCommunityThemeLike();
+
+      // Deliberately omitted: votes are never mutable or listable from a Firebase client.
+    }
+
+    // A service-account-only mirror of IDs that have crossed the Git publication boundary.
+    // It lets older hand-authored catalogue entries receive likes without granting browser or APK
+    // access to this registry. The trusted publisher creates/reconciles it only after Git push.
+    match /communityThemePublished/{themeId} {
+      allow read, write: if false;
     }
 
     // Explicit fail-closed fallback for every other collection and subcollection.
@@ -45,6 +82,49 @@ service cloud.firestore {
 
     function signedIn() {
       return request.auth != null;
+    }
+
+    /*
+     * A real, externally verifiable identity. Anonymous accounts are free and disposable, so they
+     * are accepted for reactions and refused everywhere a per-person limit has to mean something.
+     *
+     * The linked-provider clause is not redundant. Liking provisions an anonymous account, and the
+     * app upgrades that same account in place when the person later signs in to submit -- but
+     * `sign_in_provider` names the provider of the original *sign-in event* and keeps reporting
+     * "anonymous" after a link until that account signs in afresh. Testing the provider alone
+     * would refuse submissions from exactly the people who liked a theme before submitting one,
+     * which is the ordinary path through this feature. `identities` does gain the linked provider.
+     */
+    function identifiedUser() {
+      return signedIn() && (
+        request.auth.token.firebase.sign_in_provider != "anonymous" ||
+        request.auth.token.firebase.identities.keys().hasAny(["google.com"])
+      );
+    }
+
+    function isPublishedCommunityTheme(themeId) {
+      return (exists(/databases/$(database)/documents/themeIntake/$(themeId))
+              && get(/databases/$(database)/documents/themeIntake/$(themeId)).data.status == "published")
+          || exists(/databases/$(database)/documents/communityThemePublished/$(themeId));
+    }
+
+    function validNewCommunityThemeLike() {
+      let data = request.resource.data;
+      return data.keys().hasOnly(["schemaVersion", "createdAt"])
+          && data.keys().hasAll(["schemaVersion", "createdAt"])
+          && data.schemaVersion is int
+          && data.schemaVersion == 1
+          && data.createdAt is timestamp
+          && data.createdAt == request.time;
+    }
+
+    function validExistingCommunityThemeLike() {
+      let data = resource.data;
+      return data.keys().hasOnly(["schemaVersion", "createdAt"])
+          && data.keys().hasAll(["schemaVersion", "createdAt"])
+          && data.schemaVersion is int
+          && data.schemaVersion == 1
+          && data.createdAt is timestamp;
     }
 
     /*

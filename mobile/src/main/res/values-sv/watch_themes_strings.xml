@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Upptäck utseenden skapade av communityn. När du öppnar det här galleriet laddas dess offentliga katalog ned.</string>
     <string name="online_theme_refresh">Uppdatera communityteman</string>
     <string name="online_theme_list_description">Klockteman skapade av communityn</string>
-    <string name="online_theme_byline">Av %1$s · layouten %2$s</string>
+    <string name="online_theme_byline">Av %1$s</string>
     <string name="online_theme_row_description">%1$s av %2$s. Layouten %3$s.</string>
     <string name="online_theme_apply">Lägg till och använd</string>
     <string name="online_theme_loading">Läser in communityteman…</string>

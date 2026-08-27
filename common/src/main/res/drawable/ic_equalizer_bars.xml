@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Base geometry for ic_equalizer_bars_animated.xml (the "Up Next" icon while music plays) -
-     also used standalone as the paused/stopped state, with each bar's scaleY authored to a
-     varied static height so it still reads as an equalizer glyph rather than 3 identical bars.
-     Bars are fully-rounded capsules (like the Compose NowPlayingBars in the queue screen, which
-     draws round-cornered bars - keep the two looking like the same glyph). Bar paths are drawn
-     full-height (as if scaleY=1); each group's pivot sits at the bar's own bottom edge so the
-     animator (see res/animator/equalizer_barN.xml) scales it from there. -->
+<!-- Shared geometry for the animated three-bar music indicator. The phone uses it for loading
+     states and the watch uses it for now-playing surfaces. Bars are fully rounded capsules and
+     are drawn at full height; their groups pivot just below the bottom edge so scaleY animation
+     makes each bar grow upward. The initial scales leave a useful static pose when animation is
+     unavailable or stopped. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"

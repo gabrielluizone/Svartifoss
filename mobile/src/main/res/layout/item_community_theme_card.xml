@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/community_theme_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    app:cardBackgroundColor="@color/lyra_surface"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/lyra_divider"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/community_theme_artwork"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.svartifoss.snfell.view.watchface.WatchPreviewView
+                android:id="@+id/community_theme_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no" />
+
+            <ImageView
+                android:id="@+id/community_theme_preview_placeholder"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                android:padding="9dp"
+                android:src="@drawable/ic_watch"
+                android:tint="@color/lyra_accent"
+                tools:ignore="UseAppTint" />
+
+            <com.svartifoss.snfell.view.MusicLoadingBarsView
+                android:id="@+id/community_theme_preview_loading"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                app:tint="@color/lyra_accent" />
+
+            <TextView
+                android:id="@+id/community_theme_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|top"
+                android:layout_margin="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/google_sans"
+                android:includeFontPadding="false"
+                android:maxLines="2"
+                android:maxWidth="132dp"
+                android:paddingStart="8dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/lyra_on_surface"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="UPDATE AVAILABLE" />
+
+            <ImageView
+                android:id="@+id/community_theme_installed_marker"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start|top"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/online_theme_installed"
+                android:importantForAccessibility="no"
+                android:padding="8dp"
+                android:src="@drawable/ic_playlist_add_check"
+                android:tint="@color/lyra_accent"
+                android:visibility="gone"
+                tools:ignore="UseAppTint"
+                tools:visibility="visible" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/community_theme_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="12dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:textColor="@color/lyra_on_surface"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/community_theme_artwork"
+            app:lineHeight="20sp"
+            tools:text="Midnight Bloom" />
+
+        <TextView
+            android:id="@+id/community_theme_byline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="13dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/community_theme_likes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/community_theme_name"
+            app:layout_constraintVertical_bias="0"
+            tools:text="By Aurora" />
+
+        <TextView
+            android:id="@+id/community_theme_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="28dp"
+            android:layout_marginEnd="10dp"
+            android:drawablePadding="4dp"
+            android:fontFamily="@font/google_sans"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/ic_favorite_border"
+            app:layout_constraintBaseline_toBaselineOf="@id/community_theme_byline"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -43,7 +43,7 @@
     <string name="online_theme_intro">Descubre estilos creados por la comunidad. Al abrir esta galería se descarga su catálogo público.</string>
     <string name="online_theme_refresh">Actualizar temas de la comunidad</string>
     <string name="online_theme_list_description">Temas de reloj creados por la comunidad</string>
-    <string name="online_theme_byline">Por %1$s · diseño %2$s</string>
+    <string name="online_theme_byline">Por %1$s</string>
     <string name="online_theme_row_description">%1$s, de %2$s. Diseño %3$s.</string>
     <string name="online_theme_apply">Añadir y aplicar</string>
     <string name="online_theme_loading">Cargando temas de la comunidad…</string>

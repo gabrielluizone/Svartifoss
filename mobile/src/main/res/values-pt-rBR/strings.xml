@@ -314,12 +314,6 @@
     <string name="setting_player_shading_style">Estilo do sombreamento</string>
     <string name="setting_player_shading_intensity">Intensidade do sombreamento</string>
     <string name="setting_player_shading_intensity_description">O quão forte o sombreamento escurece o fundo. 100%% é intensidade cheia; vá além para mais contraste (até 150%%). Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Aplicar este visual a todos os temas</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Copia as configurações de aparência deste tema para todos os outros</string>
-    <string name="apply_appearance_confirm_title">Aplicar a todos os temas?</string>
-    <string name="apply_appearance_confirm_message">Isso sobrescreve as configurações de aparência de todos os outros temas com as atuais. Não altera suas configurações de comportamento.</string>
-    <string name="apply_appearance_confirm_button">Aplicar</string>
-    <string name="apply_appearance_done">Aplicado a todos os temas</string>
     <string name="category_wf_layout_actions">Layout</string>
     <string name="setting_reset_appearance">Resetar este layout</string>
     <string name="setting_reset_appearance_description">Restaura a aparência deste tema para os padrões originais</string>

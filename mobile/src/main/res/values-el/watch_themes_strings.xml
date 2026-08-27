@@ -43,7 +43,7 @@
     <string name="online_theme_intro">Ανακαλύψτε εμφανίσεις που δημιούργησε η κοινότητα. Το άνοιγμα αυτής της συλλογής κατεβάζει τον δημόσιο κατάλογό της.</string>
     <string name="online_theme_refresh">Ανανέωση θεμάτων κοινότητας</string>
     <string name="online_theme_list_description">Θέματα ρολογιού που δημιούργησε η κοινότητα</string>
-    <string name="online_theme_byline">Από %1$s · διάταξη %2$s</string>
+    <string name="online_theme_byline">Από %1$s</string>
     <string name="online_theme_row_description">%1$s από %2$s. Διάταξη %3$s.</string>
     <string name="online_theme_apply">Προσθήκη και εφαρμογή</string>
     <string name="online_theme_loading">Φόρτωση θεμάτων κοινότητας…</string>

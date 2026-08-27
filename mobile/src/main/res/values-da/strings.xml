@@ -376,12 +376,6 @@
     <string name="setting_player_shading_style">Skyggestil</string>
     <string name="setting_player_shading_intensity">Skyggestyrke</string>
     <string name="setting_player_shading_intensity_description">Hvor kraftigt skyggen gør baggrunden mørkere. 100%% er fuld styrke; gå højere for ekstra kontrast (op til 150%%). Aktuelt <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Anvend dette udseende på alle urskiver</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Kopiér denne urskives udseendeindstillinger til alle andre urskiver</string>
-    <string name="apply_appearance_confirm_title">Anvend på alle urskiver?</string>
-    <string name="apply_appearance_confirm_message">Dette overskriver udseendeindstillingerne for alle andre urskiver med den aktuelle. Dine adfærdsindstillinger ændres ikke.</string>
-    <string name="apply_appearance_confirm_button">Anvend</string>
-    <string name="apply_appearance_done">Anvendt på alle urskiver</string>
     <string name="category_wf_layout_actions">Layout</string>
     <string name="setting_reset_appearance">Nulstil dette layout</string>
     <string name="setting_reset_appearance_description">Gendan denne urskives udseende til de oprindelige standarder</string>

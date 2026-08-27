@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Objevte vzhledy vytvořené komunitou. Otevřením této galerie se stáhne její veřejný katalog.</string>
     <string name="online_theme_refresh">Obnovit komunitní motivy</string>
     <string name="online_theme_list_description">Komunitou vytvořené motivy hodinek</string>
-    <string name="online_theme_byline">Od %1$s · rozvržení %2$s</string>
+    <string name="online_theme_byline">Od %1$s</string>
     <string name="online_theme_row_description">%1$s od %2$s. Rozvržení %3$s.</string>
     <string name="online_theme_apply">Přidat a použít</string>
     <string name="online_theme_loading">Načítání komunitních motivů…</string>

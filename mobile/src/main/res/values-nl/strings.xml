@@ -316,12 +316,6 @@
     <string name="setting_player_shading_style">Schaduwstijl</string>
     <string name="setting_player_shading_intensity">Schaduwintensiteit</string>
     <string name="setting_player_shading_intensity_description">Hoe sterk de schaduw de achtergrond verdonkert. 100%% is volle sterkte; ga hoger voor extra contrast (tot 150%%). Momenteel <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Dit uiterlijk toepassen op alle gezichten</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Kopieer de uiterlijkinstellingen van dit gezicht naar elk ander gezicht</string>
-    <string name="apply_appearance_confirm_title">Op alle gezichten toepassen?</string>
-    <string name="apply_appearance_confirm_message">Dit overschrijft de uiterlijkinstellingen van alle andere gezichten met de huidige. Je gedragsinstellingen worden niet gewijzigd.</string>
-    <string name="apply_appearance_confirm_button">Toepassen</string>
-    <string name="apply_appearance_done">Toegepast op alle gezichten</string>
     <string name="category_wf_layout_actions">Indeling</string>
     <string name="setting_reset_appearance">Deze indeling herstellen</string>
     <string name="setting_reset_appearance_description">Herstel het uiterlijk van dit gezicht naar de oorspronkelijke standaardwaarden</string>

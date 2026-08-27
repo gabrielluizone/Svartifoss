@@ -41,7 +41,7 @@
     <string name="online_theme_intro">Uppgötvaðu útlit sem samfélagið hefur skapað. Með því að opna þetta safn hleðst niður opinber listi þess.</string>
     <string name="online_theme_refresh">Endurnýja samfélagsþemu</string>
     <string name="online_theme_list_description">Úrþemu búin til af samfélaginu</string>
-    <string name="online_theme_byline">Eftir %1$s · %2$s uppsetning</string>
+    <string name="online_theme_byline">Eftir %1$s</string>
     <string name="online_theme_row_description">%1$s eftir %2$s. %3$s uppsetning.</string>
     <string name="online_theme_apply">Bæta við og nota</string>
     <string name="online_theme_loading">Hleð inn samfélagsþemum…</string>

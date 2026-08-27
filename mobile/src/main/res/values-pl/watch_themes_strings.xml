@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Odkrywaj wyglądy stworzone przez społeczność. Otwarcie tej galerii pobiera jej publiczny katalog.</string>
     <string name="online_theme_refresh">Odśwież motywy społeczności</string>
     <string name="online_theme_list_description">Motywy zegarka stworzone przez społeczność</string>
-    <string name="online_theme_byline">Autor: %1$s · układ %2$s</string>
+    <string name="online_theme_byline">Autor: %1$s</string>
     <string name="online_theme_row_description">%1$s — autor: %2$s. Układ %3$s.</string>
     <string name="online_theme_apply">Dodaj i zastosuj</string>
     <string name="online_theme_loading">Wczytywanie motywów społeczności…</string>

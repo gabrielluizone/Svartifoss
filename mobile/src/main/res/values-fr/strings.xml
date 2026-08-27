@@ -399,12 +399,6 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
     <string name="setting_player_shading_style">Style d’ombrage</string>
     <string name="setting_player_shading_intensity">Intensité de l’ombrage</string>
     <string name="setting_player_shading_intensity_description">Niveau auquel l’ombrage assombrit l’arrière-plan. 100%% correspond à l’intensité maximale ; augmentez davantage pour plus de contraste (jusqu’à 150%%). Valeur actuelle : <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Appliquer cette apparence à tous les cadrans</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Copier les réglages d’apparence de ce cadran vers tous les autres cadrans</string>
-    <string name="apply_appearance_confirm_title">Appliquer à tous les cadrans ?</string>
-    <string name="apply_appearance_confirm_message">Cette opération remplace les réglages d’apparence de tous les autres cadrans par ceux du cadran actuel. Elle ne modifiera pas vos réglages de comportement.</string>
-    <string name="apply_appearance_confirm_button">Appliquer</string>
-    <string name="apply_appearance_done">Appliqué à tous les cadrans</string>
     <string name="category_wf_layout_actions">Disposition</string>
     <string name="setting_reset_appearance">Réinitialiser cette disposition</string>
     <string name="setting_reset_appearance_description">Rétablir l’apparence d’origine de ce cadran</string>

@@ -377,12 +377,6 @@
     <string name="setting_player_shading_style">Stil sjenčanja</string>
     <string name="setting_player_shading_intensity">Jačina sjenčanja</string>
     <string name="setting_player_shading_intensity_description">Koliko jako sjenčanje zatamnjuje pozadinu. 100%% je puna jačina; povećajte vrijednost za dodatni kontrast (do 150%%). Trenutačno <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Primijeni ovaj izgled na sva brojčanika</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Kopiraj postavke izgleda ovog brojčanika na sve ostale</string>
-    <string name="apply_appearance_confirm_title">Primijeniti na sva brojčanika?</string>
-    <string name="apply_appearance_confirm_message">Ovo će prepisati postavke izgleda svih ostalih brojčanika trenutačnim. Postavke ponašanja neće se promijeniti.</string>
-    <string name="apply_appearance_confirm_button">Primijeni</string>
-    <string name="apply_appearance_done">Primijenjeno na sva brojčanika</string>
     <string name="category_wf_layout_actions">Raspored</string>
     <string name="setting_reset_appearance">Resetiraj ovaj raspored</string>
     <string name="setting_reset_appearance_description">Vrati izgled ovog brojčanika na izvorne zadane vrijednosti</string>

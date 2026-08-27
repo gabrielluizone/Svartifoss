@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Découvrez des styles créés par la communauté. L’ouverture de cette galerie télécharge son catalogue public.</string>
     <string name="online_theme_refresh">Actualiser les thèmes de la communauté</string>
     <string name="online_theme_list_description">Thèmes de montre créés par la communauté</string>
-    <string name="online_theme_byline">Par %1$s · disposition %2$s</string>
+    <string name="online_theme_byline">Par %1$s</string>
     <string name="online_theme_row_description">%1$s par %2$s. Disposition %3$s.</string>
     <string name="online_theme_apply">Ajouter et appliquer</string>
     <string name="online_theme_loading">Chargement des thèmes de la communauté…</string>

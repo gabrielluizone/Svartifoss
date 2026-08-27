@@ -378,12 +378,6 @@
     <string name="setting_player_shading_style">Shading style</string>
     <string name="setting_player_shading_intensity">Shading intensity</string>
     <string name="setting_player_shading_intensity_description">How strongly the shading darkens the background. 100%% is full strength; go higher for extra contrast (up to 150%%). Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Apply this look to all faces</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Copy this face\'s appearance settings to every other face</string>
-    <string name="apply_appearance_confirm_title">Apply to all faces?</string>
-    <string name="apply_appearance_confirm_message">This overwrites the appearance settings of every other face with the current one. It won\'t change your behavior settings.</string>
-    <string name="apply_appearance_confirm_button">Apply</string>
-    <string name="apply_appearance_done">Applied to all faces</string>
     <string name="category_wf_layout_actions">Layout</string>
     <string name="setting_reset_appearance">Reset this layout</string>
     <string name="setting_reset_appearance_description">Restore this face\'s appearance to its original defaults</string>

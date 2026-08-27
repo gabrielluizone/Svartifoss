@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Opdag udseender skabt af fællesskabet. Når du åbner dette galleri, downloades dets offentlige katalog.</string>
     <string name="online_theme_refresh">Opdater fællesskabstemaer</string>
     <string name="online_theme_list_description">Fællesskabsskabte urtemaer</string>
-    <string name="online_theme_byline">Af %1$s · layoutet %2$s</string>
+    <string name="online_theme_byline">Af %1$s</string>
     <string name="online_theme_row_description">%1$s af %2$s. Layoutet %3$s.</string>
     <string name="online_theme_apply">Tilføj og anvend</string>
     <string name="online_theme_loading">Indlæser fællesskabstemaer…</string>

@@ -102,14 +102,27 @@ the fork.
 - A **Watch** tab with a live miniature that previews exactly how the
   now-playing screen will look — mirroring the track currently playing on the
   phone — as you tweak the appearance, including your saved custom themes.
-- **Community themes**: an opt-in public gallery of looks, each rendered
-  locally against the built-in sample track before you add it to your own theme
-  library. Browsing requires no account. You can explicitly submit a
-  user-owned local theme for review; only then does Google Sign-In identify the
-  pending submission, and an approved gallery entry uses its chosen public name
-  and pseudonym rather than Google account information. The current local
-  preflight requires 12 applicable visual setting changes; likes and theme updates
-  are not implemented yet. See the [privacy policy](docs/privacy-policy.md).
+- **Community themes**: an opt-in public gallery of looks. Search by theme or
+  author, filter by base layout, and order the downloaded public catalogue by
+  newest or most liked — all on the phone, with no account. Gallery cards stay
+  synthetic, using the theme profile and built-in sample media. Tapping a card
+  opens details before installation, including local Player, always-on, Volume,
+  Progress, Quick panel, and Queue renders. Their text, timing, and queue remain
+  synthetic, while the detail preview can show the current album cover only from
+  memory on your phone; that cover is never uploaded, transmitted, captured as a
+  screenshot, or paired with your title, artist, or playback data. A theme is
+  added to your library only when you then tap **Add and apply**. Likes are one
+  private reaction per Firebase Auth account for each published theme: an
+  explicit heart tap asks for Google Sign-In only when needed, voter identities
+  cannot be listed, and the trusted publisher eventually writes aggregate counts
+  into the static catalogue.
+  The explicit **Liked** filter reads only your own reaction documents for IDs
+  already public in that catalogue; it never lists voters. You can explicitly
+  submit a user-owned local theme for review; the public entry uses its chosen
+  name and pseudonym rather than Google account information. The local preflight
+  requires 12 applicable visual changes and the rules allow up to three
+  submissions in a rolling 24-hour window. Theme updates are not implemented
+  yet. See the [privacy policy](docs/privacy-policy.md).
 - Custom icon picker and color picker for personalizing actions.
 - A redesigned **Streaming shortcuts** screen: live link inspection,
   share/clipboard input, drag reordering, Open now / Copy link / Undo after
@@ -142,7 +155,8 @@ the fork.
   internet is touched by the optional update check (a small anonymous request
   to the GitHub API), by the community-theme catalogue only when you explicitly
   open that gallery, and by Google Firebase Authentication/Firestore only when
-  you explicitly submit a theme for review. It is also used by Firebase
+  you explicitly submit a theme for review or tap Like on a published theme. It
+  is also used by Firebase
   diagnostics that help development, occasional developer announcement
   notifications sent via Firebase Cloud Messaging (topic-based), and — only if
   you opt in — the shortcut-artwork fetch, which goes straight to the streaming

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Animated "now playing" equalizer for the Up Next icon - same 3-bar look/timing as
-     NowPlayingBars in QueueScreen.kt, ported to a View-based AnimatedVectorDrawable since the
-     legacy quick-actions panel isn't Compose. Started/stopped from MainActivity based on
-     playback state; see ic_equalizer_bars.xml for the paused/stopped static pose. -->
+<!-- Shared animated music/loading indicator. Its animators repeat forever, so View owners must
+     explicitly stop the drawable when it is hidden, detached, or replaced. -->
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:drawable="@drawable/ic_equalizer_bars">
     <target android:name="bar1_group" android:animation="@animator/equalizer_bar1" />

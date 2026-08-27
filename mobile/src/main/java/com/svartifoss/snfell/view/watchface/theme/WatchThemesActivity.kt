@@ -107,7 +107,8 @@ class WatchThemesActivity : AppCompatActivity() {
         adapter = ThemeAdapter(
                 onApplyBuiltIn = ::applyBuiltIn,
                 onApplyCustom = ::applyCustom,
-                onMore = ::showCustomMenu)
+                onMoreBuiltIn = ::showBuiltInMenu,
+                onMoreCustom = ::showCustomMenu)
         findViewById<RecyclerView>(R.id.theme_list).apply {
             layoutManager = LinearLayoutManager(this@WatchThemesActivity)
             adapter = this@WatchThemesActivity.adapter
@@ -250,6 +251,21 @@ class WatchThemesActivity : AppCompatActivity() {
         }
     }
 
+    private fun showBuiltInMenu(anchor: View, face: String) {
+        PopupMenu(this, anchor).apply {
+            menu.add(0, MENU_DUPLICATE, 0, R.string.watch_theme_duplicate)
+            setOnMenuItemClickListener { item ->
+                if (item.itemId == MENU_DUPLICATE) {
+                    duplicateBuiltIn(face)
+                    true
+                } else {
+                    false
+                }
+            }
+            show()
+        }
+    }
+
     private fun submitToCommunity(profile: WatchThemeProfile) {
         // Capture any changes made through the normal Watch editor before handing only the local
         // identifier to the submission screen. The profile itself stays private in this Activity;
@@ -301,6 +317,19 @@ class WatchThemesActivity : AppCompatActivity() {
     private fun duplicate(profile: WatchThemeProfile) {
         try {
             val copy = repository.duplicate(profile)
+            refreshScreen()
+            Toast.makeText(
+                    this,
+                    getString(R.string.watch_theme_duplicated, copy.name),
+                    Toast.LENGTH_SHORT).show()
+        } catch (_: WatchThemeLimitReachedException) {
+            Toast.makeText(this, R.string.watch_theme_limit_reached, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun duplicateBuiltIn(face: String) {
+        try {
+            val copy = repository.duplicateBuiltIn(face, defaultPrefs)
             refreshScreen()
             Toast.makeText(
                     this,
@@ -430,7 +459,8 @@ class WatchThemesActivity : AppCompatActivity() {
     private inner class ThemeAdapter(
             private val onApplyBuiltIn: (String) -> Unit,
             private val onApplyCustom: (WatchThemeProfile) -> Unit,
-            private val onMore: (View, WatchThemeProfile) -> Unit
+            private val onMoreBuiltIn: (View, String) -> Unit,
+            private val onMoreCustom: (View, WatchThemeProfile) -> Unit
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         private var rows: List<ThemeRow> = emptyList()
@@ -482,7 +512,8 @@ class WatchThemesActivity : AppCompatActivity() {
                 val description = getString(R.string.watch_theme_builtin_subtitle, display)
                 val applied = active is AppearanceContext.BuiltIn && active.baseFace == face
                 bindCommon(display, description, applied)
-                more.visibility = View.GONE
+                more.visibility = View.VISIBLE
+                more.setOnClickListener { onMoreBuiltIn(it, face) }
                 card.setOnClickListener { onApplyBuiltIn(face) }
             }
 
@@ -493,7 +524,7 @@ class WatchThemesActivity : AppCompatActivity() {
                 val applied = (active as? AppearanceContext.Custom)?.themeId == profile.id
                 bindCommon(profile.name, description, applied)
                 more.visibility = View.VISIBLE
-                more.setOnClickListener { onMore(it, profile) }
+                more.setOnClickListener { onMoreCustom(it, profile) }
                 card.setOnClickListener { onApplyCustom(profile) }
             }
 

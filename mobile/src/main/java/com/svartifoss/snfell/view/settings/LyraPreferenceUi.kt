@@ -4,16 +4,15 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckedTextView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.view.LyraAccent
+import com.svartifoss.snfell.view.applyLyraDialogStyling
 import com.svartifoss.snfell.view.mainactivity.MainActivity
 import com.matejdro.wearutils.preferences.compat.PreferenceFragmentCompatEx
 
@@ -132,34 +131,5 @@ internal fun PreferenceFragmentCompat.tintOpenLyraPreferenceDialog(attempt: Int 
         return
     }
 
-    val accent = lyraRuntimeAccent()
-    val secondary = ContextCompat.getColor(requireContext(), R.color.lyra_text_secondary)
-
-    dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(accent)
-    dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(secondary)
-    dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(secondary)
-
-    // Single/multi-choice rows are CheckedTextViews whose radio/check mark comes tinted
-    // with the static colorControlActivated; re-tint them, including rows (re)bound
-    // later while scrolling.
-    val listView = dialog.listView ?: return
-    val markTint = android.content.res.ColorStateList(
-            arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
-            intArrayOf(accent, secondary)
-    )
-    fun tintRow(row: View) {
-        val checkedText = row as? CheckedTextView ?: return
-        checkedText.checkMarkTintList = markTint
-        // Some AppCompat versions render the radio as a compound drawable instead of the
-        // check mark - tint both so the accent applies regardless.
-        TextViewCompat.setCompoundDrawableTintList(checkedText, markTint)
-    }
-    for (i in 0 until listView.childCount) {
-        tintRow(listView.getChildAt(i))
-    }
-    listView.setOnHierarchyChangeListener(object : ViewGroup.OnHierarchyChangeListener {
-        override fun onChildViewAdded(parent: View, child: View) = tintRow(child)
-
-        override fun onChildViewRemoved(parent: View, child: View) = Unit
-    })
+    dialog.applyLyraDialogStyling(accent = lyraRuntimeAccent())
 }

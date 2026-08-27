@@ -44,7 +44,7 @@
     <string name="online_theme_intro">Fedezze fel a közösség által készített megjelenéseket. A galéria megnyitásakor letöltődik a nyilvános katalógusa.</string>
     <string name="online_theme_refresh">Közösségi témák frissítése</string>
     <string name="online_theme_list_description">A közösség által készített óraí témák</string>
-    <string name="online_theme_byline">Készítette: %1$s · %2$s elrendezés</string>
+    <string name="online_theme_byline">Készítette: %1$s</string>
     <string name="online_theme_row_description">%1$s készítette: %2$s. %3$s elrendezés.</string>
     <string name="online_theme_apply">Hozzáadás és alkalmazás</string>
     <string name="online_theme_loading">Közösségi témák betöltése…</string>

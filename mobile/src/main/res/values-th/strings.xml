@@ -375,12 +375,6 @@
     <string name="setting_player_shading_style">สไตล์การไล่เงา</string>
     <string name="setting_player_shading_intensity">ความเข้มของการไล่เงา</string>
     <string name="setting_player_shading_intensity_description">ระดับที่การไล่เงาทำให้พื้นหลังมืดลง 100%% คือความเข้มเต็ม เพิ่มค่าสูงกว่านี้เพื่อเพิ่มคอนทราสต์ได้ (สูงสุด 150%%) ปัจจุบัน <![CDATA[<b>%1$s%%</b>]]></string>
-    <string name="setting_apply_appearance_to_all_faces">ใช้รูปลักษณ์นี้กับหน้าปัดทั้งหมด</string>
-    <string name="setting_apply_appearance_to_all_faces_description">คัดลอกการตั้งค่ารูปลักษณ์ของหน้าปัดนี้ไปยังหน้าปัดอื่นทั้งหมด</string>
-    <string name="apply_appearance_confirm_title">ใช้กับหน้าปัดทั้งหมดหรือไม่</string>
-    <string name="apply_appearance_confirm_message">การทำเช่นนี้จะเขียนทับการตั้งค่ารูปลักษณ์ของหน้าปัดอื่นทั้งหมดด้วยค่าของหน้าปัดปัจจุบัน โดยไม่เปลี่ยนการตั้งค่าพฤติกรรม</string>
-    <string name="apply_appearance_confirm_button">ใช้</string>
-    <string name="apply_appearance_done">ใช้กับหน้าปัดทั้งหมดแล้ว</string>
     <string name="category_wf_layout_actions">เค้าโครง</string>
     <string name="setting_reset_appearance">รีเซ็ตเค้าโครงนี้</string>
     <string name="setting_reset_appearance_description">คืนค่ารูปลักษณ์ของหน้าปัดนี้เป็นค่าเริ่มต้นดั้งเดิม</string>

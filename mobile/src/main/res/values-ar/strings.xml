@@ -403,12 +403,6 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
     <string name="setting_player_shading_style">نمط التظليل</string>
     <string name="setting_player_shading_intensity">شدة التظليل</string>
     <string name="setting_player_shading_intensity_description">مدى تعتيم التظليل للخلفية. 100%% هي القوة الكاملة؛ زدها للحصول على تباين إضافي (حتى 150%%). حاليًا <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">تطبيق هذا المظهر على كل الواجهات</string>
-    <string name="setting_apply_appearance_to_all_faces_description">نسخ إعدادات مظهر هذه الواجهة إلى كل الواجهات الأخرى</string>
-    <string name="apply_appearance_confirm_title">تطبيق على كل الواجهات؟</string>
-    <string name="apply_appearance_confirm_message">سيؤدي هذا إلى استبدال إعدادات مظهر كل الواجهات الأخرى بالإعدادات الحالية. لن تتغير إعدادات السلوك.</string>
-    <string name="apply_appearance_confirm_button">تطبيق</string>
-    <string name="apply_appearance_done">تم التطبيق على كل الواجهات</string>
     <string name="category_wf_layout_actions">التخطيط</string>
     <string name="setting_reset_appearance">إعادة تعيين هذا التخطيط</string>
     <string name="setting_reset_appearance_description">استعادة مظهر هذه الواجهة إلى إعداداته الافتراضية الأصلية</string>

@@ -341,6 +341,124 @@
 
     </PreferenceCategory>
 
+    <!-- Global palette controls lead the Colors page because the component-specific title,
+         artist and clock sections below inherit from the colour resolved here. -->
+    <PreferenceCategory
+        android:key="cat_wf_colors"
+        android:title="@string/category_music_colors"
+        android:layout="@layout/pref_category_header">
+
+        <!-- Sits above the treatment on purpose: it decides which colour the cover *is*, and every
+             treatment below then works from whatever it picked. -->
+        <ListPreference
+            android:defaultValue="balanced"
+            android:key="wear_album_accent_source"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_album_accent_source"
+            android:summary="%s"
+            android:entries="@array/wear_album_accent_source_entries"
+            android:entryValues="@array/wear_album_accent_source_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
+            android:defaultValue="expressive"
+            android:key="wear_color_treatment"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_color_treatment"
+            android:summary="%s"
+            android:entries="@array/wear_color_treatment_entries"
+            android:entryValues="@array/wear_color_treatment_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="none"
+            android:key="wear_color_modifier"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_color_modifier"
+            android:summary="%s"
+            android:entries="@array/wear_color_modifier_entries"
+            android:entryValues="@array/wear_color_modifier_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_color_hue_shift"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_color_hue_shift"
+            android:summary="@string/setting_wear_color_hue_shift_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_normal_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_normal_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_normal_color_multi"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_normal_color_multi"
+            android:summary="@string/setting_wear_normal_color_multi_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
+            android:defaultValue="follow"
+            android:key="wear_progress_color_mode"
+            android:icon="@drawable/ic_progress_ring"
+            android:title="@string/setting_wear_progress_color"
+            android:summary="%s"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
+            app:customColorKey="wear_progress_custom_color"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_progress_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_progress_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
+            android:defaultValue="follow"
+            android:key="wear_volume_color_mode"
+            android:icon="@drawable/action_volume_up"
+            android:title="@string/setting_wear_volume_color"
+            android:summary="%s"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
+            app:customColorKey="wear_volume_custom_color"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_volume_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_volume_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
+            android:defaultValue="follow"
+            android:key="wear_quick_panel_color_mode"
+            android:icon="@drawable/ic_quick_actions"
+            android:title="@string/setting_wear_quick_panel_color"
+            android:summary="%s"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
+            app:customColorKey="wear_quick_panel_custom_color"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_quick_panel_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_quick_panel_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="cat_wf_colors_title"
         android:title="@string/category_wf_colors_title"
@@ -1074,125 +1192,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="cat_wf_colors"
-        android:title="@string/category_music_colors"
-        android:layout="@layout/pref_category_header">
-
-        <!-- Sits above the treatment on purpose: it decides which colour the cover *is*, and every
-             treatment below then works from whatever it picked. -->
-        <ListPreference
-            android:defaultValue="balanced"
-            android:key="wear_album_accent_source"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_wear_album_accent_source"
-            android:summary="%s"
-            android:entries="@array/wear_album_accent_source_entries"
-            android:entryValues="@array/wear_album_accent_source_values"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
-            android:defaultValue="expressive"
-            android:key="wear_color_treatment"
-            android:icon="@drawable/ic_colors"
-            android:title="@string/setting_wear_color_treatment"
-            android:summary="%s"
-            android:entries="@array/wear_color_treatment_entries"
-            android:entryValues="@array/wear_color_treatment_values"
-            android:layout="@layout/pref_item" />
-
-        <ListPreference
-            android:defaultValue="none"
-            android:key="wear_color_modifier"
-            android:icon="@drawable/ic_colors"
-            android:title="@string/setting_wear_color_modifier"
-            android:summary="%s"
-            android:entries="@array/wear_color_modifier_entries"
-            android:entryValues="@array/wear_color_modifier_values"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
-            android:defaultValue="0"
-            android:key="wear_color_hue_shift"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_wear_color_hue_shift"
-            android:summary="@string/setting_wear_color_hue_shift_description"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.HexColorDotPreference
-            android:key="wear_normal_color"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_wear_normal_color"
-            android:layout="@layout/pref_item"
-            android:widgetLayout="@layout/pref_widget_color_dot" />
-
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="true"
-            android:key="wear_normal_color_multi"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_wear_normal_color_multi"
-            android:summary="@string/setting_wear_normal_color_multi_description"
-            android:layout="@layout/pref_switch_item" />
-
-
-
-
-        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
-            android:defaultValue="follow"
-            android:key="wear_progress_color_mode"
-            android:icon="@drawable/ic_progress_ring"
-            android:title="@string/setting_wear_progress_color"
-            android:summary="%s"
-            android:entries="@array/wear_component_color_treatment_entries"
-            android:entryValues="@array/wear_component_color_treatment_values"
-            app:customColorKey="wear_progress_custom_color"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.HexColorDotPreference
-            android:key="wear_progress_custom_color"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_wear_progress_custom_color"
-            android:layout="@layout/pref_item"
-            android:widgetLayout="@layout/pref_widget_color_dot" />
-
-        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
-            android:defaultValue="follow"
-            android:key="wear_volume_color_mode"
-            android:icon="@drawable/action_volume_up"
-            android:title="@string/setting_wear_volume_color"
-            android:summary="%s"
-            android:entries="@array/wear_component_color_treatment_entries"
-            android:entryValues="@array/wear_component_color_treatment_values"
-            app:customColorKey="wear_volume_custom_color"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.HexColorDotPreference
-            android:key="wear_volume_custom_color"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_wear_volume_custom_color"
-            android:layout="@layout/pref_item"
-            android:widgetLayout="@layout/pref_widget_color_dot" />
-
-        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
-            android:defaultValue="follow"
-            android:key="wear_quick_panel_color_mode"
-            android:icon="@drawable/ic_quick_actions"
-            android:title="@string/setting_wear_quick_panel_color"
-            android:summary="%s"
-            android:entries="@array/wear_component_color_treatment_entries"
-            android:entryValues="@array/wear_component_color_treatment_values"
-            app:customColorKey="wear_quick_panel_custom_color"
-            android:layout="@layout/pref_item" />
-
-        <com.svartifoss.snfell.view.settings.HexColorDotPreference
-            android:key="wear_quick_panel_custom_color"
-            android:icon="@drawable/ic_palette"
-            android:title="@string/setting_wear_quick_panel_custom_color"
-            android:layout="@layout/pref_item"
-            android:widgetLayout="@layout/pref_widget_color_dot" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="cat_wf_mini_buttons"
         android:title="@string/category_mini_buttons"
         android:layout="@layout/pref_category_header">
@@ -1282,13 +1281,6 @@
         android:key="cat_wf_layout_actions"
         android:title="@string/category_wf_layout_actions"
         android:layout="@layout/pref_category_header">
-
-        <Preference
-            android:key="apply_appearance_to_all_faces"
-            android:icon="@drawable/ic_format_paint"
-            android:title="@string/setting_apply_appearance_to_all_faces"
-            android:summary="@string/setting_apply_appearance_to_all_faces_description"
-            android:layout="@layout/pref_item" />
 
         <Preference
             android:key="reset_appearance"

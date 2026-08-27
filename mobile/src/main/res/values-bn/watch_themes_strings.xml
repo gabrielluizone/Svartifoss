@@ -44,7 +44,7 @@
     <string name="online_theme_intro">কমিউনিটির তৈরি লুক আবিষ্কার করুন। এই গ্যালারি খুললে এর সর্বজনীন ক্যাটালগ ডাউনলোড হবে।</string>
     <string name="online_theme_refresh">কমিউনিটি থিম রিফ্রেশ করুন</string>
     <string name="online_theme_list_description">কমিউনিটির তৈরি ঘড়ির থিম</string>
-    <string name="online_theme_byline">%1$s-এর তৈরি · %2$s লেআউট</string>
+    <string name="online_theme_byline">%1$s-এর তৈরি</string>
     <string name="online_theme_row_description">%1$s, %2$s-এর তৈরি। %3$s লেআউট।</string>
     <string name="online_theme_apply">যোগ করুন এবং প্রয়োগ করুন</string>
     <string name="online_theme_loading">কমিউনিটি থিম লোড হচ্ছে…</string>

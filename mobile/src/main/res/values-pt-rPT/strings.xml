@@ -311,12 +311,6 @@
     <string name="setting_player_shading_style">Estilo de sombreamento</string>
     <string name="setting_player_shading_intensity">Intensidade do sombreamento</string>
     <string name="setting_player_shading_intensity_description">Quão fortemente o sombreamento escurece o fundo. 100%% é força total; sobe mais para contraste extra (até 150%%). Atualmente <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Aplicar este aspeto a todos os faces</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Copiar as definições de aparência deste face para todos os outros faces</string>
-    <string name="apply_appearance_confirm_title">Aplicar a todos os faces?</string>
-    <string name="apply_appearance_confirm_message">Isto substitui as definições de aparência de todos os outros faces pelas atuais. Não altera as tuas definições de comportamento.</string>
-    <string name="apply_appearance_confirm_button">Aplicar</string>
-    <string name="apply_appearance_done">Aplicado a todos os faces</string>
     <string name="category_wf_layout_actions">Esquema</string>
     <string name="setting_reset_appearance">Repor este esquema</string>
     <string name="setting_reset_appearance_description">Restaurar a aparência deste face às predefinições originais</string>

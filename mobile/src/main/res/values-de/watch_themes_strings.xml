@@ -43,7 +43,7 @@
     <string name="online_theme_intro">Entdecke von der Community erstellte Designs. Beim Öffnen dieser Galerie wird ihr öffentlicher Katalog heruntergeladen.</string>
     <string name="online_theme_refresh">Community-Themes aktualisieren</string>
     <string name="online_theme_list_description">Von der Community erstellte Watch-Themes</string>
-    <string name="online_theme_byline">Von %1$s · %2$s-Layout</string>
+    <string name="online_theme_byline">Von %1$s</string>
     <string name="online_theme_row_description">%1$s von %2$s. %3$s-Layout.</string>
     <string name="online_theme_apply">Hinzufügen und anwenden</string>
     <string name="online_theme_loading">Community-Themes werden geladen…</string>

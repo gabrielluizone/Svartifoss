@@ -1,7 +1,9 @@
 package com.svartifoss.snfell.res
 
 import com.svartifoss.snfell.view.settings.SettingsCatalog
+import com.svartifoss.snfell.view.watchface.WatchFacePrefsFragment
 import java.io.File
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
@@ -54,6 +56,22 @@ class SettingsCatalogTest {
                     listed = SettingsCatalog.WATCH_CATEGORIES,
                     sections = SettingsCatalog.WATCH_SECTIONS)
 
+    @Test
+    fun musicColorsLeadTheColorsPage() {
+        val colors = SettingsCatalog.WATCH_SECTIONS
+                .getValue(WatchFacePrefsFragment.SECTION_COLORS)
+        val visibleOrder = declaredCategoryOrder("watch_face_settings.xml")
+                .filter { it in colors }
+
+        assertEquals(
+                listOf(
+                        "cat_wf_colors",
+                        "cat_wf_colors_title",
+                        "cat_wf_colors_artist",
+                        "cat_wf_colors_clock"),
+                visibleOrder)
+    }
+
     private fun assertCatalogMatchesXml(
             xml: String,
             declared: Set<String>,
@@ -92,6 +110,10 @@ class SettingsCatalogTest {
     /** Category keys as the XML actually declares them, read from the file like the sibling
      *  resource tests rather than through the Android resource system. */
     private fun declaredCategories(fileName: String): Set<String> {
+        return declaredCategoryOrder(fileName).toSet()
+    }
+
+    private fun declaredCategoryOrder(fileName: String): List<String> {
         val file = listOf(
                 File("src/main/res/xml/$fileName"),
                 File("mobile/src/main/res/xml/$fileName")
@@ -99,6 +121,6 @@ class SettingsCatalogTest {
         return Regex("""android:key="(cat_[a-z_0-9]+)"""")
                 .findAll(file.readText())
                 .map { it.groupValues[1] }
-                .toSet()
+                .toList()
     }
 }

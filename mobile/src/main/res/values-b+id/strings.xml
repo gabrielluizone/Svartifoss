@@ -310,12 +310,6 @@
     <string name="setting_player_shading_style">Gaya bayangan</string>
     <string name="setting_player_shading_intensity">Intensitas bayangan</string>
     <string name="setting_player_shading_intensity_description">Seberapa kuat bayangan meredupkan latar belakang. 100%% adalah kekuatan penuh; naikkan untuk kontras ekstra (hingga 150%%). Saat ini <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Terapkan tampilan ini ke semua wajah</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Salin pengaturan tampilan wajah ini ke setiap wajah lainnya</string>
-    <string name="apply_appearance_confirm_title">Terapkan ke semua wajah?</string>
-    <string name="apply_appearance_confirm_message">Ini akan menimpa pengaturan tampilan setiap wajah lainnya dengan yang saat ini. Ini tidak akan mengubah pengaturan perilaku Anda.</string>
-    <string name="apply_appearance_confirm_button">Terapkan</string>
-    <string name="apply_appearance_done">Diterapkan ke semua wajah</string>
     <string name="category_wf_layout_actions">Tata letak</string>
     <string name="setting_reset_appearance">Setel ulang tata letak ini</string>
     <string name="setting_reset_appearance_description">Pulihkan tampilan wajah ini ke default aslinya</string>

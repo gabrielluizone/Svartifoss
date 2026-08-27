@@ -22,10 +22,15 @@ import {
 
 const REPOSITORY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const INTAKE_COLLECTION = "themeIntake";
+const LIKES_COLLECTION = "communityThemeLikes";
+const LIKE_VOTERS_COLLECTION = "voters";
+const PUBLISHED_THEMES_COLLECTION = "communityThemePublished";
 const CATALOG_FILE = "index.json";
 const MANIFEST_SCHEMA_VERSION = 1;
 const MAX_CATALOG_BYTES = 512 * 1024;
 const MAX_MANIFEST_ENTRIES = 1_000;
+const LIKE_COUNT_CONCURRENCY = 16;
+const PUBLISHED_MARKER_BATCH_SIZE = 400;
 // OnlineThemesRepository permits a 128 KiB enriched Pages profile. The 24 KiB submission cap is
 // intentionally narrower and applies only to the raw profileJson coming from Firestore.
 const MAX_PUBLISHED_PROFILE_BYTES = 128 * 1024;
@@ -418,7 +423,8 @@ function buildPublishedProfile(profile, author, publishedAt) {
     };
 }
 
-function buildIndexEntry(profile, author, publishedAt) {
+function buildIndexEntry(profile, author, publishedAt, likes = 0) {
+    if (!Number.isSafeInteger(likes) || likes < 0) fail("invalid-index-likes");
     return {
         id: profile.id,
         name: profile.name,
@@ -428,6 +434,7 @@ function buildIndexEntry(profile, author, publishedAt) {
         schemaVersion: PROFILE_SCHEMA_VERSION,
         minimumAppVersion: MINIMUM_APP_VERSION,
         publishedAt,
+        likes,
     };
 }
 
@@ -642,6 +649,43 @@ async function collectPublishedDigestState(catalog) {
     return { digests };
 }
 
+/**
+ * Counts the one-vote-per-UID documents protected by Firestore rules. The public catalogue never
+ * trusts a counter supplied by an Android client: it receives only this aggregate computed by the
+ * service account while publishing. Firestore's aggregate query returns the count without
+ * downloading each voter document, so a popular theme cannot make this workflow's memory usage
+ * grow with its likes.
+ */
+async function countAuthoritativeLikes(firestore, themeId) {
+    try {
+        const voters = firestore.collection(LIKES_COLLECTION).doc(themeId).collection(LIKE_VOTERS_COLLECTION);
+        const aggregate = await voters.count().get();
+        const count = aggregate.data()?.count;
+        if (!Number.isSafeInteger(count) || count < 0) fail("invalid-authoritative-like-count");
+        return count;
+    } catch (error) {
+        if (error instanceof ValidationError) throw error;
+        throw new Error("Could not count authoritative community-theme likes");
+    }
+}
+
+/** Limits concurrent aggregate queries instead of bursting once per catalogue entry at Firestore. */
+async function collectAuthoritativeLikeCounts(firestore, themeIds) {
+    const ids = [...new Set(themeIds)].sort();
+    const counts = new Map();
+    let next = 0;
+    const worker = async () => {
+        while (next < ids.length) {
+            const index = next;
+            next += 1;
+            const id = ids[index];
+            counts.set(id, await countAuthoritativeLikes(firestore, id));
+        }
+    };
+    await Promise.all(Array.from({ length: Math.min(LIKE_COUNT_CONCURRENCY, ids.length) }, worker));
+    return counts;
+}
+
 function jsonText(value) {
     return `${JSON.stringify(value, null, 2)}\n`;
 }
@@ -817,7 +861,6 @@ async function buildPublicationPlan({ firestore, root, now, logger }) {
     const plannedDigests = new Map();
     const rejections = [];
     let skipped = 0;
-    let indexChanged = false;
 
     for (const document of documents) {
         const idForLog = documentIdForLog(document.id);
@@ -916,22 +959,40 @@ async function buildPublicationPlan({ firestore, root, now, logger }) {
     // reach Git before it is represented in the manifest that later finalizes it.
     const eligible = plans.length;
     const selectedPlans = plans.slice(0, MAX_MANIFEST_ENTRIES);
-    const selectedEntries = [...catalog.entries];
+    const likeCounts = await collectAuthoritativeLikeCounts(
+        firestore,
+        [...catalog.entries.map((entry) => entry.id), ...selectedPlans.map((plan) => plan.id)],
+    );
+    const selectedEntries = catalog.entries.map((entry) => ({
+        ...entry,
+        likes: likeCounts.get(entry.id),
+    }));
     const selectedEntriesById = new Map(selectedEntries.map((entry) => [entry.id, entry]));
+    const likesChanged = catalog.entries.some((entry, index) =>
+        !hasOwn(entry, "likes") || entry.likes !== selectedEntries[index].likes);
     let selectedIndexChanged = false;
     for (const candidate of selectedPlans) {
+        // A document cannot be liked until finalization changes it to `published`, so a newly
+        // selected intake normally starts at zero. Still use the same authoritative source for a
+        // retry where the static file already exists, rather than carrying a client-supplied total.
+        candidate.summary = {
+            ...candidate.summary,
+            likes: likeCounts.get(candidate.id),
+        };
         if (selectedEntriesById.has(candidate.id)) continue;
         selectedEntries.push(candidate.summary);
         selectedEntriesById.set(candidate.id, candidate.summary);
         selectedIndexChanged = true;
     }
 
+    const catalogChanged = selectedIndexChanged || likesChanged;
+
     const nextCatalog = {
         schemaVersion: PROFILE_SCHEMA_VERSION,
-        generatedAt: selectedIndexChanged ? publishedAt : catalog.generatedAt,
+        generatedAt: catalogChanged ? publishedAt : catalog.generatedAt,
         themes: sortIndexEntries(selectedEntries),
     };
-    if (selectedIndexChanged && Buffer.byteLength(jsonText(nextCatalog), "utf8") > MAX_CATALOG_BYTES) {
+    if (catalogChanged && Buffer.byteLength(jsonText(nextCatalog), "utf8") > MAX_CATALOG_BYTES) {
         fail("catalogue-too-large");
     }
     return {
@@ -944,7 +1005,7 @@ async function buildPublicationPlan({ firestore, root, now, logger }) {
         nextCatalog,
         // A retry that only needs Firestore finalization must not create a meaningless catalogue
         // commit merely because a clock tick would change generatedAt.
-        catalogChanged: selectedIndexChanged,
+        catalogChanged,
     };
 }
 
@@ -984,6 +1045,69 @@ async function readManifest(path) {
     const stat = await assertRegularFile(path, "invalid-publication-manifest-file");
     if (stat === null || stat.size > MAX_CATALOG_BYTES) fail("invalid-publication-manifest-file");
     return validateManifest(parseJsonText(await readFile(path, "utf8"), "invalid-publication-manifest"));
+}
+
+function publishedThemeMarker(entry) {
+    return {
+        schemaVersion: 1,
+        revision: entry.revision,
+        publishedAt: entry.publishedAt,
+    };
+}
+
+function publishedThemeMarkerMatches(snapshot, expected) {
+    if (!snapshot?.exists || typeof snapshot.data !== "function") return false;
+    const actual = snapshot.data();
+    return isJsonRecord(actual) &&
+        Object.keys(actual).length === 3 &&
+        hasOwn(actual, "schemaVersion") &&
+        hasOwn(actual, "revision") &&
+        hasOwn(actual, "publishedAt") &&
+        actual.schemaVersion === expected.schemaVersion &&
+        actual.revision === expected.revision &&
+        actual.publishedAt === expected.publishedAt;
+}
+
+/**
+ * Reconciles a private existence marker for every static catalogue entry. This intentionally runs
+ * only from finalization, after the workflow has committed and pushed the Pages files. As a
+ * result, rules can use the marker to let legacy hand-authored themes receive likes without ever
+ * declaring a locally prepared, unpushed profile public.
+ */
+async function synchronizePublishedThemeMarkers(firestore, entries, logger) {
+    let synchronized = 0;
+    for (let start = 0; start < entries.length; start += PUBLISHED_MARKER_BATCH_SIZE) {
+        const chunk = entries.slice(start, start + PUBLISHED_MARKER_BATCH_SIZE);
+        const references = chunk.map((entry) => firestore.collection(PUBLISHED_THEMES_COLLECTION).doc(entry.id));
+        let snapshots;
+        try {
+            snapshots = await firestore.getAll(...references);
+        } catch (_error) {
+            throw new Error("Could not read published community-theme markers");
+        }
+        if (!Array.isArray(snapshots)) throw new Error("Could not read published community-theme markers");
+        const snapshotsById = new Map(snapshots.map((snapshot) => [snapshot?.id, snapshot]));
+        let batch;
+        for (let index = 0; index < chunk.length; index += 1) {
+            const entry = chunk[index];
+            const expected = publishedThemeMarker(entry);
+            if (publishedThemeMarkerMatches(snapshotsById.get(entry.id), expected)) continue;
+            batch ??= firestore.batch();
+            batch.set(references[index], expected);
+            synchronized += 1;
+        }
+        if (batch !== undefined) {
+            try {
+                await batch.commit();
+            } catch (_error) {
+                throw new Error("Could not write published community-theme markers");
+            }
+        }
+    }
+    if (synchronized > 0) {
+        log(logger, "log", `Synchronized ${synchronized} published community-theme marker(s).`);
+    }
+    return synchronized;
 }
 
 /**
@@ -1048,7 +1172,11 @@ export async function finalizePublishedThemes({
     if (typeof manifestPath !== "string" || manifestPath.length === 0) fail("finalize-requires-manifest-path");
     const manifest = await readManifest(resolve(manifestPath));
     const catalog = await readCatalog(root);
+    // The marker is an authorization fact, not merely an index hint. Verify every public profile
+    // still exists and agrees with its index row before making any catalogue ID likeable.
+    await collectPublishedDigestState(catalog);
     const entriesById = new Map(catalog.entries.map((entry) => [entry.id, entry]));
+    await synchronizePublishedThemeMarkers(firestore, catalog.entries, logger);
     let marked = 0;
     let skipped = 0;
 

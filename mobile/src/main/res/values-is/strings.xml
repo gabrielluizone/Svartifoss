@@ -346,12 +346,6 @@
     <string name="setting_player_shading_style">Stíll skyggingar</string>
     <string name="setting_player_shading_intensity">Styrkur skyggingar</string>
     <string name="setting_player_shading_intensity_description">Hversu mikið skyggingin dekkir bakgrunninn. 100%% er fullur styrkur; farðu hærra fyrir aukin birtuskil (allt að 150%%). Núna <![CDATA[<b>%1$s%%</b>]]>.</string>
-    <string name="setting_apply_appearance_to_all_faces">Beita þessu útliti á allar skífur</string>
-    <string name="setting_apply_appearance_to_all_faces_description">Afrita útlitsstillingar þessarar skífu á allar aðrar skífur</string>
-    <string name="apply_appearance_confirm_title">Beita á allar skífur?</string>
-    <string name="apply_appearance_confirm_message">Þetta yfirskrifar útlitsstillingar allra annarra skífna með þeirri núverandi. Það breytir ekki hegðunarstillingum þínum.</string>
-    <string name="apply_appearance_confirm_button">Beita</string>
-    <string name="apply_appearance_done">Beitt á allar skífur</string>
     <string name="category_wf_layout_actions">Útlit</string>
     <string name="setting_reset_appearance">Endurstilla þetta útlit</string>
     <string name="setting_reset_appearance_description">Endurheimta upprunalegt sjálfgefið útlit þessarar skífu</string>

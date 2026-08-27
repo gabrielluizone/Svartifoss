@@ -41,16 +41,43 @@
     <string name="watch_theme_name_duplicate">Já existe um tema com este nome</string>
 
     <string name="online_themes_title">Temas da comunidade</string>
-    <string name="online_theme_intro">Descubra visuais criados pela comunidade. Abrir esta galeria baixa seu catálogo público.</string>
+    <string name="online_theme_intro">Descubra visuais criados pela comunidade. Pesquise, filtre e compare as prévias antes de adicionar um.</string>
     <string name="online_theme_refresh">Atualizar temas da comunidade</string>
     <string name="online_theme_list_description">Temas de relógio criados pela comunidade</string>
-    <string name="online_theme_byline">Por %1$s · Layout %2$s</string>
+    <string name="online_theme_byline">Por %1$s</string>
     <string name="online_theme_row_description">%1$s por %2$s. Layout %3$s.</string>
     <string name="online_theme_apply">Adicionar e aplicar</string>
+    <string name="online_theme_opening_details">Abrindo…</string>
+    <string name="online_theme_search_hint">Pesquisar temas ou autores</string>
+    <string name="online_theme_filter_layout">Layout</string>
+    <string name="online_theme_filter_all">Todos</string>
+    <string name="online_theme_filter_layout_dialog">Filtrar por layout</string>
+    <string name="online_theme_filter_layout_selected">Layout: %1$s</string>
+    <string name="online_theme_filter_liked">Curtidos</string>
+    <string name="online_theme_filter_liked_selected">Exibindo temas curtidos</string>
+    <string name="online_theme_filter_liked_loading">Carregando curtidas…</string>
+    <string name="online_theme_filter_liked_sign_in_cancelled">O login do Google foi cancelado. Seus temas curtidos não foram carregados.</string>
+    <string name="online_theme_filter_liked_error">Não foi possível carregar seus temas curtidos. Verifique a conexão e tente novamente.</string>
+    <string name="online_theme_sort">Ordenar temas da comunidade</string>
+    <string name="online_theme_sort_selected">Ordenar: %1$s</string>
+    <string name="online_theme_sort_newest">Mais recentes</string>
+    <string name="online_theme_sort_most_liked">Mais curtidos</string>
+    <string name="online_theme_sort_newest_short">Recentes</string>
+    <string name="online_theme_sort_most_liked_short">Populares</string>
+    <string name="online_theme_clear_filters">Limpar filtros</string>
+    <plurals name="online_theme_likes_count">
+        <item quantity="one">%1$s curtida</item>
+        <item quantity="other">%1$s curtidas</item>
+    </plurals>
+    <string name="online_theme_liked_by_you">Curtido por você. %1$s</string>
+    <string name="online_theme_search_empty">Nenhum tema da comunidade corresponde a estes filtros.</string>
+    <string name="online_theme_search_empty_hint">Tente outra busca ou limpe os filtros ativos.</string>
     <string name="online_theme_loading">Carregando temas da comunidade…</string>
     <string name="online_theme_loading_preview">Carregando prévia…</string>
     <string name="online_theme_empty">Ainda não há temas da comunidade disponíveis.</string>
+    <string name="online_theme_empty_hint">Novos temas publicados aparecerão aqui automaticamente.</string>
     <string name="online_theme_load_error">Não foi possível carregar os temas da comunidade. Verifique sua conexão e tente novamente.</string>
+    <string name="online_theme_load_error_title">Não foi possível carregar os temas</string>
     <string name="online_theme_retry">Tentar novamente</string>
     <string name="online_theme_installed">EM MEUS TEMAS</string>
     <string name="online_theme_apply_success">%1$s foi adicionado a Meus temas e aplicado ao relógio</string>
@@ -58,11 +85,12 @@
     <string name="online_theme_sync_limit">Este tema deixaria as configurações do relógio grandes demais para sincronizar. Redefina configurações de layouts não usados e tente novamente.</string>
     <string name="online_theme_update_available">ATUALIZAÇÃO DISPONÍVEL</string>
     <string name="online_theme_requires_app_version">REQUER SVARTIFOSS %1$s</string>
+    <string name="online_theme_unsupported">NÃO DISPONÍVEL NESTA VERSÃO</string>
 
     <string name="watch_theme_submit_community">Enviar para a comunidade</string>
     <string name="community_theme_submit_title">Enviar tema</string>
     <string name="community_theme_submit_preview_description">Prévia do tema que será enviado</string>
-    <string name="community_theme_submit_intro">Ele será revisado antes de aparecer nos temas da comunidade.</string>
+    <string name="community_theme_submit_intro">Ele será revisado antes de aparecer nos temas da comunidade. Você pode enviar até 3 temas a cada 24 horas.</string>
     <string name="community_theme_submit_public_name">Nome público do tema</string>
     <string name="community_theme_submit_author">Pseudônimo do autor</string>
     <string name="community_theme_submit_author_helper">Este nome será público se o tema for aprovado.</string>
@@ -74,6 +102,7 @@
     <string name="community_theme_submit_originality">Este tema altera %1$d configurações visuais aplicáveis. São necessárias pelo menos %2$d para a revisão.</string>
     <string name="community_theme_submit_invalid">Este tema salvo não pode ser enviado. Volte aos Meus temas e tente novamente.</string>
     <string name="community_theme_submit_sign_in_cancelled">O login do Google foi cancelado. Seu tema não foi enviado.</string>
+    <string name="community_theme_submit_limit_reached">Você já enviou 3 temas nas últimas 24 horas. Tente novamente quando o envio mais antigo completar 24 horas.</string>
     <string name="community_theme_submit_error">Não foi possível enviar este tema. Verifique a conexão e tente novamente.</string>
     <string name="community_theme_submit_preview_error">Não foi possível preparar a prévia para revisão. Tente novamente.</string>
     <string name="community_theme_submit_success_title">Enviado para revisão</string>
