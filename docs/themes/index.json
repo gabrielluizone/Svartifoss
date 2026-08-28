@@ -1,7 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-24T23:51:51.388Z",
+  "generatedAt": "2026-08-28T03:12:39.323Z",
   "themes": [
+    {
+      "id": "17e4176a-8429-40cb-bd15-e7ce181406f3",
+      "name": "ReStudio",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "studio",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "3.3",
+      "publishedAt": "2026-08-28T03:12:39.323Z"
+    },
     {
       "id": "ef17366c-5926-46a1-ade9-c4a2ba95a6d6",
       "name": "Spotify",
