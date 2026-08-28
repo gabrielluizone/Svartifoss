@@ -38,3 +38,26 @@ rules and Auth domain configuration above are what protect the page.
 
 Never use the Firebase Console to hand-change a queued theme's status: doing so skips the page's
 reviewer audit fields and can create a document the publisher deliberately ignores.
+
+## What the page can do
+
+It lists submissions by status — pending, approved, published, rejected, withdrawn, or all — rather
+than only the pending queue, so an approval made by mistake is visible instead of disappearing
+until the next publication run.
+
+Four actions, each written as one atomic batch that updates `themeIntake` and records who acted in
+`themeIntakeReview`. The rules verify the pair with `getAfter`, so neither write is accepted alone:
+
+- **Approve / Reject** a pending submission. Approve stays disabled until the browser's own payload
+  check has re-parsed the profile and recomputed its fingerprint.
+- **Reopen for review** an approved or rejected one, which is the way back from a mistaken verdict
+  while the theme is still not public.
+- **Withdraw / Delete**, available in every state including on a moderator's own theme. It only
+  sets the status; the publisher removes the file, the catalogue entry and the likes on its next
+  run, then deletes the record. A listing nobody can take down would be worse than one its own
+  author could also remove, which is why the self-moderation ban does not extend to this.
+- **Correct public name or author**, available only before the theme is public. Once the file is
+  committed to Git under the old text, changing the record alone would leave the two disagreeing
+  with nothing to notice it; withdraw and resubmit instead.
+
+A moderator can never publish, and can never decide or reopen their own submission.

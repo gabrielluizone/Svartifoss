@@ -16,12 +16,36 @@ service cloud.firestore {
       allow create: if identifiedUser()
           && validNewThemeIntake(themeId)
           && validSubmissionQuotaForTheme(themeId);
+      /*
+       * An author reads their own submissions in every status, which is what lets the app show
+       * them a queue with outcomes instead of a write-only hole. That is only safe because the
+       * reviewer's identity is no longer on this document: it lives in themeIntakeReview below,
+       * which no author can read. Do not reintroduce a reviewer field here.
+       */
       allow get, list: if identifiedUser() &&
-          (isCommunityThemeModerator() ||
-            (resource.data.ownerUid == request.auth.uid && resource.data.status == "pending"));
-      allow update: if identifiedUser() && isCommunityThemeModerator() && validModeratorDecision();
+          (isCommunityThemeModerator() || resource.data.ownerUid == request.auth.uid);
+      allow update: if identifiedUser() && isCommunityThemeModerator() && validModeratorUpdate(themeId);
 
       // Deliberately omitted: clients cannot delete or publish an intake item.
+    }
+
+    /*
+     * Who decided what, kept apart from the submission it decided on.
+     *
+     * Splitting it out is the whole reason an author can read their own rejected and approved
+     * submissions: Firestore rules grant access per document and never per field, so a reviewer
+     * UID stored beside the verdict would be readable by exactly the person it is withheld from.
+     * Every moderator update to themeIntake must write the matching record here in the same
+     * atomic batch, so a decision can never exist without an author.
+     */
+    match /themeIntakeReview/{themeId} {
+      allow get, list: if identifiedUser() && isCommunityThemeModerator();
+      allow create, update: if identifiedUser()
+          && isCommunityThemeModerator()
+          && validThemeId(themeId)
+          && validReviewRecord();
+
+      // Deliberately omitted: a review record is never deleted, and never readable by an author.
     }
 
     /*
@@ -197,21 +221,114 @@ service cloud.firestore {
       );
     }
 
-    function validModeratorDecision() {
+    /*
+     * The four things a moderator may do to a submission, each pinned to the exact transition it
+     * describes and each recorded in themeIntakeReview by the same batch.
+     *
+     * Note where the self-moderation ban applies and where it does not. Nobody may approve, reject
+     * or reopen their own submission -- that is the rule keeping a moderator from publishing
+     * themselves into the gallery. Taking a theme down and fixing its public name are not that:
+     * withholding them would only mean the one person able to act on a bad listing is barred from
+     * acting on their own.
+     */
+    function validModeratorUpdate(themeId) {
       let before = resource.data;
       let after = request.resource.data;
-      return before.ownerUid != request.auth.uid
-          && before.status == "pending"
+      return reviewRecordMatches(themeId, before.status, after.status)
+          && ((before.ownerUid != request.auth.uid
+                && (validModeratorDecision(before, after) || validModeratorReopen(before, after)))
+              || validModeratorWithdrawal(before, after)
+              || validModeratorMetadataEdit(before, after));
+    }
+
+    function validModeratorDecision(before, after) {
+      return before.status == "pending"
           && after.status in ["approved", "rejected"]
-          && after.reviewedBy is string
-          && after.reviewedBy == request.auth.uid
+          && changedReviewKeys(before, after);
+    }
+
+    /** Undoes an approval or a rejection while the theme is still not public. */
+    function validModeratorReopen(before, after) {
+      return before.status in ["approved", "rejected"]
+          && after.status == "pending"
+          && changedReviewKeys(before, after);
+    }
+
+    /*
+     * Marks a theme for removal from the public catalogue. The status is all a client may set: the
+     * files themselves live in Git, so the trusted publisher is what actually withdraws them and
+     * then deletes this document.
+     *
+     * It accepts a still-pending submission too, and that is not the same as rejecting one. A
+     * rejection is a verdict the author is meant to read; withdrawal is how a record stops
+     * existing at all, which is the only answer to a submission that should not be kept on file.
+     */
+    function validModeratorWithdrawal(before, after) {
+      return before.status in ["pending", "approved", "rejected", "published"]
+          && after.status == "withdrawn"
+          && changedReviewKeys(before, after);
+    }
+
+    /*
+     * Corrects the public name or author credit. Deliberately limited to a submission that is not
+     * public yet: an already-published file is committed to Git under the old text, and letting
+     * this rewrite the record alone would leave the two disagreeing with no way to notice.
+     */
+    function validModeratorMetadataEdit(before, after) {
+      return before.status in ["pending", "approved"]
+          && after.status == before.status
+          && validShortText(after.name, 48)
+          && validShortText(after.author, 48)
           && after.reviewedAt is timestamp
           && after.reviewedAt == request.time
-          && after.diff(before).affectedKeys().hasOnly([
-            "status",
+          && after.diff(before).affectedKeys().hasOnly(["name", "author", "reviewedAt"]);
+    }
+
+    function changedReviewKeys(before, after) {
+      return after.reviewedAt is timestamp
+          && after.reviewedAt == request.time
+          && after.diff(before).affectedKeys().hasOnly(["status", "reviewedAt"]);
+    }
+
+    /*
+     * The paired record in themeIntakeReview, verified with getAfter so the two writes must land
+     * in one atomic batch. `decision` restates the status this update moved the submission to, so
+     * the moderator log cannot describe an outcome the submission never reached.
+     */
+    function reviewRecordMatches(themeId, beforeStatus, afterStatus) {
+      let review = getAfter(
+        /databases/$(database)/documents/themeIntakeReview/$(themeId)
+      ).data;
+      return review.reviewedBy == request.auth.uid
+          && review.reviewedAt == request.time
+          && review.decision == afterStatus
+          && review.previousStatus == beforeStatus;
+    }
+
+    function validReviewRecord() {
+      let data = request.resource.data;
+      return data.keys().hasOnly([
+            "reviewSchemaVersion",
             "reviewedBy",
-            "reviewedAt"
-          ]);
+            "reviewedAt",
+            "decision",
+            "previousStatus"
+          ])
+          && data.keys().hasAll([
+            "reviewSchemaVersion",
+            "reviewedBy",
+            "reviewedAt",
+            "decision",
+            "previousStatus"
+          ])
+          && data.reviewSchemaVersion is int
+          && data.reviewSchemaVersion == 1
+          && data.reviewedBy is string
+          && data.reviewedBy == request.auth.uid
+          && data.reviewedAt is timestamp
+          && data.reviewedAt == request.time
+          && data.decision in ["pending", "approved", "rejected", "withdrawn"]
+          && data.previousStatus in ["pending", "approved", "rejected", "published"];
     }
 
     function validNewThemeIntake(themeId) {

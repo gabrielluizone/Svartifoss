@@ -283,6 +283,46 @@
     .button.approve:hover:not(:disabled) { background: #c0dfbc; }
     .button.reject { border-color: rgba(231, 149, 139, .45); background: transparent; color: var(--danger); }
     .button.reject:hover:not(:disabled) { border-color: var(--danger); background: var(--danger-wash); }
+    .button.withdraw { border-color: rgba(231, 149, 139, .45); background: transparent; color: var(--danger); }
+    .button.withdraw:hover:not(:disabled) { border-color: var(--danger); background: var(--danger-wash); }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+    .filter {
+      border: 1px solid var(--carbon-soft);
+      background: transparent;
+      color: var(--snow);
+      border-radius: 999px;
+      padding: 7px 15px;
+      font: inherit;
+      font-size: .85rem;
+      cursor: pointer;
+    }
+    .filter:hover { border-color: var(--sage); color: var(--sage); }
+    .filter.is-selected { border-color: var(--sage); background: rgba(160, 190, 160, .12); color: var(--sage); }
+    .status-tag {
+      display: inline-block;
+      border: 1px solid var(--carbon-soft);
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: .74rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .status-tag.pending { border-color: var(--sage); color: var(--sage); }
+    .status-tag.published { border-color: var(--ok); color: var(--ok); }
+    .status-tag.rejected, .status-tag.withdrawn { border-color: rgba(231, 149, 139, .45); color: var(--danger); }
+    .edit-field {
+      display: block;
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--carbon-soft);
+      background: rgba(0, 0, 0, .25);
+      color: var(--snow);
+      font: inherit;
+      font-size: .85rem;
+    }
 
     .workspace {
       position: relative;
@@ -497,9 +537,17 @@
           <div class="queue-heading">
             <div>
               <p class="eyebrow"><span class="dot">●</span> Moderation queue</p>
-              <h2>Pending review</h2>
+              <h2 id="queue-title">Pending review</h2>
             </div>
             <span id="count" class="count"></span>
+          </div>
+          <div class="filters" role="tablist" aria-label="Filter submissions by status">
+            <button class="filter is-selected" type="button" data-status="pending" role="tab" aria-selected="true">Pending</button>
+            <button class="filter" type="button" data-status="approved" role="tab" aria-selected="false">Approved</button>
+            <button class="filter" type="button" data-status="published" role="tab" aria-selected="false">Published</button>
+            <button class="filter" type="button" data-status="rejected" role="tab" aria-selected="false">Rejected</button>
+            <button class="filter" type="button" data-status="withdrawn" role="tab" aria-selected="false">Withdrawn</button>
+            <button class="filter" type="button" data-status="all" role="tab" aria-selected="false">All</button>
           </div>
           <div id="cards" class="grid"></div>
         </section>

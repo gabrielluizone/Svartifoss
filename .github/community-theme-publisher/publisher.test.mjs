@@ -13,6 +13,7 @@ import {
     SETTING_KEYS,
     SETTING_TYPES,
 } from "./schema.mjs";
+import { FieldValue } from "firebase-admin/firestore";
 import {
     ValidationError,
     canonicalSettingsDigest,
@@ -23,6 +24,7 @@ import {
     validateManifest,
 } from "./publisher.mjs";
 
+const DELETE_SENTINEL = FieldValue.delete();
 const ID = "123e4567-e89b-42d3-a456-426614174000";
 const SECOND_ID = "223e4567-e89b-42d3-a456-426614174000";
 const PUBLISHED_AT = "2026-08-24T12:00:00Z";
@@ -108,26 +110,48 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
         Object.entries(options.voters ?? {}).map(([themeId, uids]) => [themeId, new Set(uids)]),
     );
     const quotas = new Set(options.quotas ?? []);
-    const removed = { intake: [], markers: [], votes: [], quotas: [], requests: [] };
+    const reviews = new Map(Object.entries(options.reviews ?? {}));
+    const removed = { intake: [], markers: [], votes: [], quotas: [], requests: [], reviews: [] };
 
     const reference = (path, id) => ({ id, path: `${path}/${id}` });
-    const intakeDocuments = (predicate) => ({
-        get: async () => ({
-            docs: documents.filter((document) => byId.has(document.id) && predicate(document)).map((document) => ({
-                id: document.id,
-                ref: reference("themeIntake", document.id),
-                data: () => document.data,
-            })),
-        }),
-    });
+    const intakeDocuments = (predicate, limit = Number.MAX_SAFE_INTEGER) => {
+        const query = {
+            limit: (count) => intakeDocuments(predicate, count),
+            get: async () => ({
+                docs: documents
+                    .filter((document) => byId.has(document.id) && predicate(document))
+                    .slice(0, limit)
+                    .map((document) => ({
+                        id: document.id,
+                        ref: reference("themeIntake", document.id),
+                        data: () => document.data,
+                    })),
+            }),
+        };
+        return query;
+    };
 
     function applyWrite(target, operation, value) {
         const segments = target.path.split("/");
         if (segments[0] === "themeIntake") {
-            if (operation === "update") Object.assign(byId.get(target.id).data, value);
-            else {
+            if (operation === "update") {
+                const data = byId.get(target.id).data;
+                for (const [key, entry] of Object.entries(value)) {
+                    // firebase-admin's delete sentinel removes the field rather than storing it.
+                    if (entry === DELETE_SENTINEL) delete data[key];
+                    else data[key] = entry;
+                }
+            } else {
                 byId.delete(target.id);
                 removed.intake.push(target.id);
+            }
+            return;
+        }
+        if (segments[0] === "themeIntakeReview") {
+            if (operation === "set") reviews.set(target.id, { ...value });
+            else {
+                reviews.delete(target.id);
+                removed.reviews.push(target.id);
             }
             return;
         }
@@ -162,10 +186,18 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
             if (collectionName === "themeIntake") {
                 return {
                     where(field, operator, value) {
+                        if (field === "reviewedBy") {
+                            // The self-terminating legacy migration: documents that still carry a
+                            // reviewer identity on the submission itself.
+                            assert.equal(operator, "!=");
+                            assert.equal(value, null);
+                            return intakeDocuments((document) =>
+                                typeof document.data.reviewedBy === "string");
+                        }
                         assert.equal(operator, "==");
                         if (field === "status") {
-                            assert.equal(value, "approved");
-                            return intakeDocuments((document) => document.data.status === "approved");
+                            assert.ok(["approved", "withdrawn"].includes(value));
+                            return intakeDocuments((document) => document.data.status === value);
                         }
                         assert.equal(field, "ownerUid");
                         return intakeDocuments((document) => document.data.ownerUid === value);
@@ -191,6 +223,13 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
                     },
                     doc(uid) {
                         return reference("communityThemeAccountDeletion", uid);
+                    },
+                };
+            }
+            if (collectionName === "themeIntakeReview") {
+                return {
+                    doc(id) {
+                        return reference("themeIntakeReview", id);
                     },
                 };
             }
@@ -280,7 +319,9 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
             return callback(transaction);
         },
     };
-    return Object.assign(firestore, { publishedThemeMarkers, deletionRequests, voters, quotas, removed, byId });
+    return Object.assign(firestore, {
+        publishedThemeMarkers, deletionRequests, voters, quotas, reviews, removed, byId,
+    });
 }
 
 /** Records the identities a finalization asks Firebase Auth to delete. */
@@ -493,7 +534,7 @@ test("publication writes static files first, then finalization marks the matchin
     assert.equal(firestore.publishedThemeMarkers.size, 0);
 
     const result = await finalizePublishedThemes({ firestore, root, manifestPath, logger });
-    assert.deepEqual(result, { marked: 1, skipped: 0, erased: 0 });
+    assert.deepEqual(result, { marked: 1, skipped: 0, erased: 0, withdrawn: 0, migratedReviewers: 0 });
     assert.equal(document.data.status, "published");
     assert.ok(document.data.publishedAt);
     assert.deepEqual(firestore.publishedThemeMarkers.get(ID), {
@@ -516,12 +557,12 @@ test("finalization registers a static catalogue theme with no intake document", 
         themes: [candidate.summary],
     }, null, 2)}\n`);
     const manifestPath = join(root, "empty-manifest.json");
-    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 2, candidates: [], erasures: [] })}\n`);
+    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 2, candidates: [], erasures: [], withdrawals: [] })}\n`);
     const firestore = fakeFirestore([]);
 
     assert.deepEqual(
         await finalizePublishedThemes({ firestore, root, manifestPath, logger: { log() {}, warn() {} } }),
-        { marked: 0, skipped: 0, erased: 0 },
+        { marked: 0, skipped: 0, erased: 0, withdrawn: 0, migratedReviewers: 0 },
     );
     assert.deepEqual(firestore.publishedThemeMarkers.get(ID), {
         schemaVersion: 1,
@@ -539,7 +580,7 @@ test("finalization never registers an index entry whose static profile is missin
         themes: [candidate.summary],
     }, null, 2)}\n`);
     const manifestPath = join(root, "empty-manifest.json");
-    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 2, candidates: [], erasures: [] })}\n`);
+    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 2, candidates: [], erasures: [], withdrawals: [] })}\n`);
     const firestore = fakeFirestore([]);
 
     await assert.rejects(
@@ -1110,6 +1151,7 @@ test("a manifest cannot withdraw a theme the erasing account never submitted", (
         () => validateManifest({
             schemaVersion: 2,
             candidates: [],
+            withdrawals: [],
             erasures: [{
                 uid: "attacker",
                 themeDisposition: "delete",
@@ -1120,4 +1162,150 @@ test("a manifest cannot withdraw a theme the erasing account never submitted", (
         }),
         "unowned-publication-manifest-erasure-id",
     );
+});
+
+test("a published entry carries the digest a phone needs to refuse a duplicate", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const logger = { log() {}, warn() {} };
+    await publishApprovedThemes({
+        firestore: fakeFirestore(document),
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "digest-manifest.json"),
+    });
+
+    const index = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.equal(index.themes[0].settingsDigest, document.data.settingsDigest);
+});
+
+test("a catalogue written before the digest field is upgraded without waiting a week", async (t) => {
+    // The same carve-out a missing like count gets, and for a sharper reason: without the digest
+    // the phone cannot check a duplicate at all, so deferring would disable the check for a week.
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const logger = { log() {}, warn() {} };
+    await publishApprovedThemes({
+        firestore: fakeFirestore(document),
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "seed-manifest.json"),
+    });
+
+    const index = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    delete index.themes[0].settingsDigest;
+    await writeFile(join(root, "docs", "themes", "index.json"), `${JSON.stringify(index, null, 2)}\n`);
+
+    const result = await publishApprovedThemes({
+        firestore: fakeFirestore(document),
+        root,
+        now: new Date("2026-08-24T18:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "upgrade-manifest.json"),
+    });
+
+    assert.equal(result.catalogChanged, true);
+    const upgraded = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    // Recomputed from the published profile, not copied from anything a client ever sent.
+    assert.equal(upgraded.themes[0].settingsDigest, document.data.settingsDigest);
+});
+
+test("a moderator withdrawal removes the public files and then every Firestore trace", async (t) => {
+    const uid = "withdrawn-theme-owner";
+    const { root, firestore, logger, document } = await publishOneTheme(t, {
+        uid,
+        voters: { [ID]: ["someone", "someone-else"] },
+    });
+    // What a moderator's batch leaves behind for the publisher to act on.
+    document.data.status = "withdrawn";
+    firestore.reviews.set(ID, { reviewSchemaVersion: 1, reviewedBy: "moderator", decision: "withdrawn" });
+    const manifestPath = join(root, "withdrawal-manifest.json");
+
+    const plan = await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath,
+    });
+
+    assert.deepEqual(plan.withdrawals, [ID]);
+    await assert.rejects(readFile(join(root, "docs", "themes", `${ID}.json`), "utf8"));
+    assert.deepEqual(
+        JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8")).themes,
+        [],
+    );
+
+    const result = await finalizePublishedThemes({ firestore, auth: fakeAuth(), root, manifestPath, logger });
+    assert.equal(result.withdrawn, 1);
+    assert.equal(firestore.byId.has(ID), false);
+    assert.deepEqual(firestore.removed.markers, [ID]);
+    assert.deepEqual(firestore.removed.reviews, [ID]);
+    assert.deepEqual([...firestore.voters.get(ID)], []);
+});
+
+test("a withdrawn submission is never published by the run that withdraws it", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    // Approved earlier, withdrawn before the publisher next ran.
+    const withdrawn = { ...document, data: { ...document.data, status: "withdrawn" } };
+    const firestore = fakeFirestore(withdrawn);
+    const logger = { log() {}, warn() {} };
+
+    const plan = await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "race-withdrawal-manifest.json"),
+    });
+
+    assert.deepEqual(plan.plans, []);
+    assert.deepEqual(plan.withdrawals, [ID]);
+    assert.deepEqual(
+        JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8")).themes,
+        [],
+    );
+});
+
+test("a legacy reviewer identity is moved off the submission it decided", async (t) => {
+    // Until it moves, an author reading their own decided submission would read the reviewer's UID
+    // along with it, which is the whole reason that read used to be limited to pending themes.
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument({ status: "published", reviewedBy: "legacy-moderator-uid" });
+    const firestore = fakeFirestore(document);
+    const manifestPath = join(root, "legacy-manifest.json");
+    await writeFile(manifestPath, `${JSON.stringify({
+        schemaVersion: 2, candidates: [], erasures: [], withdrawals: [],
+    })}\n`);
+
+    const result = await finalizePublishedThemes({
+        firestore,
+        auth: fakeAuth(),
+        root,
+        manifestPath,
+        logger: { log() {}, warn() {} },
+    });
+
+    assert.equal(result.migratedReviewers, 1);
+    assert.equal(Object.hasOwn(document.data, "reviewedBy"), false);
+    assert.equal(firestore.reviews.get(ID).reviewedBy, "legacy-moderator-uid");
+    assert.equal(firestore.reviews.get(ID).decision, "approved");
+
+    // Self-terminating: nothing carries the field any more, so a second run moves nothing.
+    const again = await finalizePublishedThemes({
+        firestore,
+        auth: fakeAuth(),
+        root,
+        manifestPath,
+        logger: { log() {}, warn() {} },
+    });
+    assert.equal(again.migratedReviewers, 0);
 });

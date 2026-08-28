@@ -187,6 +187,31 @@ async function submit(db, ownerUid, id) {
   return batch.commit();
 }
 
+/**
+ * One moderator action: the intake transition and the review record that authors it, in the one
+ * atomic batch the rules verify with getAfter. Passing the pair through a single helper is what
+ * keeps every test honest about the contract the admin page has to follow.
+ */
+function moderate(db, uid, id, { from, to, fields = {} }) {
+  const batch = writeBatch(db);
+  batch.update(doc(db, "themeIntake", id), { status: to, reviewedAt: serverTimestamp(), ...fields });
+  batch.set(doc(db, "themeIntakeReview", id), {
+    reviewSchemaVersion: 1,
+    reviewedBy: uid,
+    reviewedAt: serverTimestamp(),
+    decision: to,
+    previousStatus: from,
+  });
+  return batch.commit();
+}
+
+async function seedStatus(ownerUid, id, status) {
+  await testEnvironment.withSecurityRulesDisabled(async (context) => {
+    const db = context.firestore();
+    await setDoc(db, doc(db, "themeIntake", id), { ...intake(ownerUid, id), status });
+  });
+}
+
 async function seedModerator(uid) {
   await testEnvironment.withSecurityRulesDisabled(async (context) => {
     const db = context.firestore();
@@ -357,46 +382,110 @@ test("an author can read only their pending intake and own quota", async () => {
   await assertFails(getDoc(otherDb, doc(otherDb, "communityThemeSubmissionQuota", AUTHOR)));
 });
 
-test("a moderator can make one third-party decision without changing the submitted data", async () => {
+test("a moderator decides a third-party submission without touching what was submitted", async () => {
   const authorDb = authenticatedDb(AUTHOR);
   const moderatorDb = authenticatedDb(MODERATOR);
   await assertSucceeds(submit(authorDb, AUTHOR, FIRST_ID));
   await seedModerator(MODERATOR);
 
+  await assertFails(moderate(moderatorDb, MODERATOR, FIRST_ID, {
+    from: "pending",
+    to: "approved",
+    fields: { profileJson: "{\"changed\":true}" },
+  }));
+  // Publishing is the trusted publisher's word, never a client's.
+  await assertFails(moderate(moderatorDb, MODERATOR, FIRST_ID, { from: "pending", to: "published" }));
+  // A decision without the paired review record leaves no author for the verdict.
   await assertFails(updateDoc(moderatorDb, doc(moderatorDb, "themeIntake", FIRST_ID), {
     status: "approved",
-    reviewedBy: MODERATOR,
-    reviewedAt: serverTimestamp(),
-    profileJson: "{\"changed\":true}",
-  }));
-  await assertFails(updateDoc(moderatorDb, doc(moderatorDb, "themeIntake", FIRST_ID), {
-    status: "published",
-    reviewedBy: MODERATOR,
     reviewedAt: serverTimestamp(),
   }));
-  await assertSucceeds(updateDoc(moderatorDb, doc(moderatorDb, "themeIntake", FIRST_ID), {
-    status: "approved",
-    reviewedBy: MODERATOR,
-    reviewedAt: serverTimestamp(),
+  await assertSucceeds(moderate(moderatorDb, MODERATOR, FIRST_ID, { from: "pending", to: "approved" }));
+});
+
+test("the reviewer's identity is readable by moderators and never by the author", async () => {
+  // This is what buys the author the right to read their own rejected and approved submissions:
+  // rules grant access per document, so the verdict and its author cannot share one.
+  const authorDb = authenticatedDb(AUTHOR);
+  const moderatorDb = authenticatedDb(MODERATOR);
+  await assertSucceeds(submit(authorDb, AUTHOR, FIRST_ID));
+  await seedModerator(MODERATOR);
+  await assertSucceeds(moderate(moderatorDb, MODERATOR, FIRST_ID, { from: "pending", to: "rejected" }));
+
+  await assertSucceeds(getDoc(moderatorDb, doc(moderatorDb, "themeIntakeReview", FIRST_ID)));
+  await assertFails(getDoc(authorDb, doc(authorDb, "themeIntakeReview", FIRST_ID)));
+});
+
+test("an author can list their own submissions in every status", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const otherDb = authenticatedDb(OTHER_AUTHOR);
+  await seedStatus(AUTHOR, FIRST_ID, "pending");
+  await seedStatus(AUTHOR, SECOND_ID, "rejected");
+  await seedStatus(AUTHOR, THIRD_ID, "published");
+  await seedStatus(OTHER_AUTHOR, FOURTH_ID, "pending");
+
+  const own = await getDocs(authorDb,
+    collection(authorDb, "themeIntake").where("ownerUid", "==", AUTHOR));
+  assert.deepEqual(own.docs.map((entry) => entry.id).sort(), [FIRST_ID, SECOND_ID, THIRD_ID].sort());
+  await assertSucceeds(getDoc(authorDb, doc(authorDb, "themeIntake", SECOND_ID)));
+
+  // Somebody else's queue stays closed, listed or fetched by id.
+  await assertFails(getDoc(otherDb, doc(otherDb, "themeIntake", FIRST_ID)));
+  await assertFails(getDocs(otherDb,
+    collection(otherDb, "themeIntake").where("ownerUid", "==", AUTHOR)));
+  await assertFails(getDocs(authorDb, collection(authorDb, "themeIntake")));
+});
+
+test("a moderator can reopen a decision and withdraw a published theme", async () => {
+  const moderatorDb = authenticatedDb(MODERATOR);
+  await seedStatus(AUTHOR, FIRST_ID, "approved");
+  await seedStatus(AUTHOR, SECOND_ID, "published");
+  await seedModerator(MODERATOR);
+
+  // Approved by mistake: back to the queue rather than on its way to the gallery.
+  await assertSucceeds(moderate(moderatorDb, MODERATOR, FIRST_ID, { from: "approved", to: "pending" }));
+  // Already public: only the publisher can remove the files, so this marks the intent.
+  await assertSucceeds(moderate(moderatorDb, MODERATOR, SECOND_ID, { from: "published", to: "withdrawn" }));
+  // A review record has to describe the transition it actually accompanied.
+  await seedStatus(AUTHOR, THIRD_ID, "approved");
+  await assertFails(moderate(moderatorDb, MODERATOR, THIRD_ID, { from: "pending", to: "pending" }));
+});
+
+test("a moderator corrects public text only before the theme is public", async () => {
+  const moderatorDb = authenticatedDb(MODERATOR);
+  await seedStatus(AUTHOR, FIRST_ID, "pending");
+  await seedStatus(AUTHOR, SECOND_ID, "published");
+  await seedModerator(MODERATOR);
+
+  await assertSucceeds(moderate(moderatorDb, MODERATOR, FIRST_ID, {
+    from: "pending",
+    to: "pending",
+    fields: { name: "A corrected name", author: "Corrected author" },
   }));
-  await assertFails(getDoc(authorDb, doc(authorDb, "themeIntake", FIRST_ID)));
-  await assertSucceeds(getDoc(moderatorDb, doc(moderatorDb, "themeIntake", FIRST_ID)));
-  await assertFails(updateDoc(moderatorDb, doc(moderatorDb, "themeIntake", FIRST_ID), {
-    status: "rejected",
-    reviewedBy: MODERATOR,
-    reviewedAt: serverTimestamp(),
+  // The published file is committed to Git under the old text; rewriting the record alone would
+  // leave the two disagreeing with nothing to notice it.
+  await assertFails(moderate(moderatorDb, MODERATOR, SECOND_ID, {
+    from: "published",
+    to: "published",
+    fields: { name: "Too late" },
+  }));
+  await assertFails(moderate(moderatorDb, MODERATOR, FIRST_ID, {
+    from: "pending",
+    to: "pending",
+    fields: { name: "" },
   }));
 });
 
-test("a moderator cannot decide their own intake", async () => {
+test("a moderator cannot decide or reopen their own intake, but can take it down", async () => {
   const selfDb = authenticatedDb(SELF_MODERATOR);
   await seedPending(SELF_MODERATOR, THIRD_ID);
   await seedModerator(SELF_MODERATOR);
-  await assertFails(updateDoc(selfDb, doc(selfDb, "themeIntake", THIRD_ID), {
-    status: "approved",
-    reviewedBy: SELF_MODERATOR,
-    reviewedAt: serverTimestamp(),
-  }));
+
+  // The ban exists so nobody publishes themselves into the gallery.
+  await assertFails(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "pending", to: "approved" }));
+  // Taking a listing down is not that, and barring it would leave a bad entry with nobody able
+  // to act on it.
+  await assertSucceeds(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "pending", to: "withdrawn" }));
 });
 
 test("likes are one private immutable vote and can only target a published theme", async () => {
