@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-28T04:28:52.974Z",
+  "generatedAt": "2026-08-28T16:43:22.428Z",
   "themes": [
     {
       "id": "17e4176a-8429-40cb-bd15-e7ce181406f3",
@@ -11,7 +11,8 @@
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-28T03:12:39.323Z",
-      "likes": 2
+      "likes": 2,
+      "settingsDigest": "sha256:29b4053fb7021df35c4f5792810b360c327cac8f2d524fe8c31ff50c1ed9518d"
     },
     {
       "id": "ef17366c-5926-46a1-ade9-c4a2ba95a6d6",
@@ -22,7 +23,8 @@
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T23:51:51.388Z",
-      "likes": 2
+      "likes": 2,
+      "settingsDigest": "sha256:b3d79bf32ba94fc17aa8dd819493e96248b1da1243932b9e5607c872f44969a7"
     },
     {
       "id": "09ea139e-8e25-443d-a065-09e8d10da102",
@@ -33,7 +35,8 @@
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
-      "likes": 0
+      "likes": 0,
+      "settingsDigest": "sha256:0961a25e6e075c21608babcd3380be5e911d28aa69744e5d9486d9b59bc855e0"
     },
     {
       "id": "2a9e18c9-1e57-426a-82be-dfbd5b964bf5",
@@ -44,7 +47,8 @@
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
-      "likes": 0
+      "likes": 1,
+      "settingsDigest": "sha256:0a40d197b29c39c598c65cf63c1636877ebaa00160f905718f9cba1b4fd03727"
     },
     {
       "id": "3f038d6e-c0e1-49e5-91e3-70a13ce3dbac",
@@ -55,7 +59,8 @@
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
-      "likes": 0
+      "likes": 0,
+      "settingsDigest": "sha256:9183861886ecbfe9a8624a3a5e715a22da9b001336f818976a8ce3953fb4a6b9"
     },
     {
       "id": "5de63f5e-d61e-426a-9269-27d9e3ddd24a",
@@ -66,7 +71,8 @@
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
-      "likes": 0
+      "likes": 0,
+      "settingsDigest": "sha256:44f9b973e86a565b1ed7a27a425914cad200bae02efc76840f3eba9c9d1e4035"
     }
   ]
 }
