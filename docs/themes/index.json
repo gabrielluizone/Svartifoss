@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-28T03:12:39.323Z",
+  "generatedAt": "2026-08-28T04:28:52.974Z",
   "themes": [
     {
       "id": "17e4176a-8429-40cb-bd15-e7ce181406f3",
@@ -10,7 +10,8 @@
       "revision": 1,
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
-      "publishedAt": "2026-08-28T03:12:39.323Z"
+      "publishedAt": "2026-08-28T03:12:39.323Z",
+      "likes": 2
     },
     {
       "id": "ef17366c-5926-46a1-ade9-c4a2ba95a6d6",
@@ -20,7 +21,8 @@
       "revision": 1,
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
-      "publishedAt": "2026-08-24T23:51:51.388Z"
+      "publishedAt": "2026-08-24T23:51:51.388Z",
+      "likes": 2
     },
     {
       "id": "09ea139e-8e25-443d-a065-09e8d10da102",
@@ -30,7 +32,8 @@
       "revision": 1,
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
-      "publishedAt": "2026-08-24T00:00:00Z"
+      "publishedAt": "2026-08-24T00:00:00Z",
+      "likes": 0
     },
     {
       "id": "2a9e18c9-1e57-426a-82be-dfbd5b964bf5",
@@ -40,7 +43,8 @@
       "revision": 1,
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
-      "publishedAt": "2026-08-24T00:00:00Z"
+      "publishedAt": "2026-08-24T00:00:00Z",
+      "likes": 0
     },
     {
       "id": "3f038d6e-c0e1-49e5-91e3-70a13ce3dbac",
@@ -50,7 +54,8 @@
       "revision": 1,
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
-      "publishedAt": "2026-08-24T00:00:00Z"
+      "publishedAt": "2026-08-24T00:00:00Z",
+      "likes": 0
     },
     {
       "id": "5de63f5e-d61e-426a-9269-27d9e3ddd24a",
@@ -60,7 +65,8 @@
       "revision": 1,
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
-      "publishedAt": "2026-08-24T00:00:00Z"
+      "publishedAt": "2026-08-24T00:00:00Z",
+      "likes": 0
     }
   ]
 }
