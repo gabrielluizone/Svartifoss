@@ -3,6 +3,7 @@ import { link, lstat, mkdir, open, readFile, rename, unlink } from "node:fs/prom
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cert, getApps, initializeApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
 import { FieldValue, getFirestore } from "firebase-admin/firestore";
 import {
     ALLOWED_BASE_FACES,
@@ -25,11 +26,32 @@ const INTAKE_COLLECTION = "themeIntake";
 const LIKES_COLLECTION = "communityThemeLikes";
 const LIKE_VOTERS_COLLECTION = "voters";
 const PUBLISHED_THEMES_COLLECTION = "communityThemePublished";
+const SUBMISSION_QUOTA_COLLECTION = "communityThemeSubmissionQuota";
+const ACCOUNT_DELETION_COLLECTION = "communityThemeAccountDeletion";
 const CATALOG_FILE = "index.json";
-const MANIFEST_SCHEMA_VERSION = 1;
+const MANIFEST_SCHEMA_VERSION = 2;
+const ACCOUNT_DELETION_SCHEMA_VERSION = 1;
+const MAX_ACCOUNT_DELETIONS_PER_RUN = 50;
+const MAX_ERASED_THEMES_PER_ACCOUNT = 200;
+const ERASURE_WRITE_BATCH_SIZE = 200;
+/*
+ * Firebase Auth generates a 28-character base62 UID and never a value containing a hyphen, so this
+ * sentinel cannot collide with a real account. It replaces the owner of a theme whose author asked
+ * to keep it public while deleting their account: the row stays, the link to a person does not.
+ */
+const ERASED_OWNER_UID = "account-erased";
 const MAX_CATALOG_BYTES = 512 * 1024;
 const MAX_MANIFEST_ENTRIES = 1_000;
 const LIKE_COUNT_CONCURRENCY = 16;
+/*
+ * How stale a published like count is allowed to get before the catalogue is rewritten for its own
+ * sake. Counts are re-read every run and ride along free whenever a theme is published or withdrawn;
+ * this interval governs only the case where *nothing else* changed. Without it the daily cron
+ * commits whenever any count moves, which turns a popularity number into a daily commit in the
+ * application's own history. A person who just tapped Like still sees their own vote immediately --
+ * the gallery applies it locally on top of the published figure.
+ */
+const LIKE_REFRESH_INTERVAL_MS = 7 * 24 * 60 * 60 * 1000;
 const PUBLISHED_MARKER_BATCH_SIZE = 400;
 // OnlineThemesRepository permits a 128 KiB enriched Pages profile. The 24 KiB submission cap is
 // intentionally narrower and applies only to the raw profileJson coming from Firestore.
@@ -669,6 +691,22 @@ async function countAuthoritativeLikes(firestore, themeId) {
     }
 }
 
+/**
+ * Whether a catalogue whose only pending change is its like counts has waited long enough.
+ *
+ * The catalogue's own `generatedAt` is the clock, so there is no extra state to keep in step: it
+ * advances exactly when the file is rewritten, which is the moment the counts were last correct.
+ * An unreadable or future-dated timestamp refreshes immediately rather than waiting out a window
+ * it cannot measure.
+ */
+export function isLikeRefreshDue(generatedAt, now, intervalMs = LIKE_REFRESH_INTERVAL_MS) {
+    const previous = Date.parse(generatedAt);
+    const current = Date.parse(now);
+    if (!Number.isFinite(previous) || !Number.isFinite(current)) return true;
+    if (current < previous) return true;
+    return current - previous >= intervalMs;
+}
+
 /** Limits concurrent aggregate queries instead of bursting once per catalogue entry at Firestore. */
 async function collectAuthoritativeLikeCounts(firestore, themeIds) {
     const ids = [...new Set(themeIds)].sort();
@@ -684,6 +722,225 @@ async function collectAuthoritativeLikeCounts(firestore, themeIds) {
     };
     await Promise.all(Array.from({ length: Math.min(LIKE_COUNT_CONCURRENCY, ids.length) }, worker));
     return counts;
+}
+
+/**
+ * Re-validates one account-erasure request. Firestore rules already constrain its shape, so a
+ * document that fails here was written with administrative credentials; it is skipped rather than
+ * guessed at, because erasure is the one operation in this pipeline that cannot be undone.
+ */
+export function validateAccountDeletionRequest({ id, data }) {
+    const uid = assertOpaqueText(id, 128, "invalid-account-deletion-id");
+    if (!isRecord(data)) fail("invalid-account-deletion-request");
+    if (data.status !== "pending") fail("account-deletion-is-not-pending");
+    assertExactInteger(
+        data.requestSchemaVersion,
+        ACCOUNT_DELETION_SCHEMA_VERSION,
+        "unsupported-account-deletion-schema",
+    );
+    assertOpaqueText(data.ownerUid, 128, "invalid-account-deletion-owner");
+    if (data.ownerUid !== uid) fail("account-deletion-owner-mismatch");
+    if (data.themeDisposition !== "keep" && data.themeDisposition !== "delete") {
+        fail("invalid-theme-disposition");
+    }
+    assertOpaqueText(data.clientVersion, 64, "invalid-client-version");
+    assertFirestoreTimestamp(data.createdAt, "invalid-account-deletion-created-at");
+    return { uid, themeDisposition: data.themeDisposition };
+}
+
+/**
+ * Turns pending erasure requests into a plan the publish phase can act on with files alone.
+ *
+ * Which themes are *public* is decided by the static catalogue, never by an intake status: the
+ * files under docs/themes are the thing being withdrawn, and an intake document that disagrees
+ * with them is exactly the state this must survive. A submission that never became public is
+ * removed under either disposition -- "keep my themes" can only mean the ones people can see.
+ */
+async function buildAccountErasurePlan({ firestore, catalog, logger }) {
+    let snapshot;
+    try {
+        snapshot = await firestore
+            .collection(ACCOUNT_DELETION_COLLECTION)
+            .where("status", "==", "pending")
+            .get();
+    } catch (_error) {
+        throw new Error("Could not read pending community-account erasure requests");
+    }
+    const documents = [...snapshot.docs].sort((left, right) =>
+        String(left.id) < String(right.id) ? -1 : String(left.id) > String(right.id) ? 1 : 0);
+    const catalogIds = new Set(catalog.entries.map((entry) => entry.id));
+    const requests = [];
+    let skipped = 0;
+
+    for (const document of documents.slice(0, MAX_ACCOUNT_DELETIONS_PER_RUN)) {
+        let request;
+        try {
+            request = validateAccountDeletionRequest({ id: document.id, data: document.data() });
+        } catch (error) {
+            skipped += 1;
+            log(
+                logger,
+                "warn",
+                `Skipped an erasure request: ${error instanceof ValidationError ? error.code : "invalid-account-deletion-request"}`,
+            );
+            continue;
+        }
+
+        let ownedSnapshot;
+        try {
+            ownedSnapshot = await firestore
+                .collection(INTAKE_COLLECTION)
+                .where("ownerUid", "==", request.uid)
+                .get();
+        } catch (_error) {
+            throw new Error("Could not read the submissions owned by an erasing account");
+        }
+        const intakeIds = [...ownedSnapshot.docs]
+            .map((owned) => String(owned.id))
+            .filter((id) => UUID.test(id))
+            .sort();
+        if (intakeIds.length > MAX_ERASED_THEMES_PER_ACCOUNT) {
+            // Far past what the three-per-day quota can produce, so this is a corrupt or hostile
+            // state rather than a busy author. It is skipped and logged loudly instead of thrown:
+            // one such account must not stop everybody else's themes from being published.
+            skipped += 1;
+            log(logger, "error", "Skipped an erasure request: account-erasure-too-large");
+            continue;
+        }
+        const publicIds = intakeIds.filter((id) => catalogIds.has(id));
+        requests.push({
+            uid: request.uid,
+            themeDisposition: request.themeDisposition,
+            intakeIds,
+            // Withdrawn from Pages by the publish phase; retained under the published pseudonym
+            // with its owner scrubbed by finalization.
+            removedThemeIds: request.themeDisposition === "delete" ? publicIds : [],
+            keptThemeIds: request.themeDisposition === "keep" ? publicIds : [],
+        });
+    }
+
+    const deferred = documents.length - Math.min(documents.length, MAX_ACCOUNT_DELETIONS_PER_RUN);
+    if (documents.length > 0) {
+        log(
+            logger,
+            "log",
+            `Pending account erasures: ${documents.length}; planned: ${requests.length}; ` +
+                `deferred: ${deferred}; skipped: ${skipped}.`,
+        );
+    }
+    return { requests, deferred, skipped };
+}
+
+/** Removes one Firestore document key set at a time so a large account stays within batch limits. */
+async function commitInBatches(firestore, operations, failureMessage) {
+    for (let start = 0; start < operations.length; start += ERASURE_WRITE_BATCH_SIZE) {
+        const chunk = operations.slice(start, start + ERASURE_WRITE_BATCH_SIZE);
+        const batch = firestore.batch();
+        for (const operation of chunk) operation(batch);
+        try {
+            await batch.commit();
+        } catch (_error) {
+            throw new Error(failureMessage);
+        }
+    }
+}
+
+/** Every vote on a theme that is itself being withdrawn; the document ids are voter UIDs. */
+async function collectVoterReferences(firestore, themeId) {
+    try {
+        return await firestore
+            .collection(LIKES_COLLECTION)
+            .doc(themeId)
+            .collection(LIKE_VOTERS_COLLECTION)
+            .listDocuments();
+    } catch (_error) {
+        throw new Error("Could not read the votes of a withdrawn community theme");
+    }
+}
+
+/**
+ * Carries out one validated erasure, after the Git commit that withdrew any public files.
+ *
+ * The order is deliberate: everything this account owns or wrote goes first, the Firebase identity
+ * second, and the request document last. A failure at any point leaves the request pending, and
+ * every step is idempotent, so the next scheduled run resumes rather than restarting.
+ */
+async function applyAccountErasure({ firestore, auth, request, catalogIds, logger }) {
+    if (auth === undefined || auth === null || typeof auth.deleteUser !== "function") {
+        throw new Error("Account erasure requires a Firebase Auth client");
+    }
+    const intakeCollection = firestore.collection(INTAKE_COLLECTION);
+    const keptThemeIds = new Set(request.keptThemeIds);
+    const intakeOperations = request.intakeIds.map((id) => {
+        const reference = intakeCollection.doc(id);
+        if (request.themeDisposition === "keep" && keptThemeIds.has(id)) {
+            // The public row and its pseudonym stay exactly as published; only the private link
+            // back to a person is removed. Nothing re-reads a published intake, so a sentinel
+            // owner cannot be mistaken for a submitter.
+            return (batch) => batch.update(reference, {
+                ownerUid: ERASED_OWNER_UID,
+                ownerErasedAt: FieldValue.serverTimestamp(),
+            });
+        }
+        return (batch) => batch.delete(reference);
+    });
+    const withdrawnMarkers = request.removedThemeIds.map((id) => {
+        const reference = firestore.collection(PUBLISHED_THEMES_COLLECTION).doc(id);
+        return (batch) => batch.delete(reference);
+    });
+    await commitInBatches(
+        firestore,
+        [...intakeOperations, ...withdrawnMarkers],
+        "Could not erase the submissions of a deleted community account",
+    );
+
+    // Other people's votes on a theme that no longer exists publicly.
+    for (const themeId of request.removedThemeIds) {
+        const voters = await collectVoterReferences(firestore, themeId);
+        await commitInBatches(
+            firestore,
+            voters.map((reference) => (batch) => batch.delete(reference)),
+            "Could not erase the votes of a withdrawn community theme",
+        );
+    }
+
+    // This account's own votes. The voters subcollection cannot be queried by voter UID, so the
+    // bounded public catalogue is walked instead -- the same shape the app's Liked filter uses.
+    const remainingThemeIds = [...catalogIds].filter((id) => !request.removedThemeIds.includes(id)).sort();
+    await commitInBatches(
+        firestore,
+        remainingThemeIds.map((themeId) => (batch) => batch.delete(
+            firestore.collection(LIKES_COLLECTION).doc(themeId).collection(LIKE_VOTERS_COLLECTION).doc(request.uid),
+        )),
+        "Could not erase the votes of a deleted community account",
+    );
+
+    await commitInBatches(
+        firestore,
+        [(batch) => batch.delete(firestore.collection(SUBMISSION_QUOTA_COLLECTION).doc(request.uid))],
+        "Could not erase the submission quota of a deleted community account",
+    );
+
+    try {
+        await auth.deleteUser(request.uid);
+    } catch (error) {
+        // An identity already gone is the success state of a resumed run, not a failure.
+        if (error?.code !== "auth/user-not-found") {
+            throw new Error("Could not delete the Firebase identity of an erased community account");
+        }
+    }
+
+    await commitInBatches(
+        firestore,
+        [(batch) => batch.delete(firestore.collection(ACCOUNT_DELETION_COLLECTION).doc(request.uid))],
+        "Could not close a completed community-account erasure request",
+    );
+    log(
+        logger,
+        "log",
+        `Erased a community account: ${request.intakeIds.length} submission(s), ` +
+            `${request.removedThemeIds.length} withdrawn, ${request.keptThemeIds.length} kept public.`,
+    );
 }
 
 function jsonText(value) {
@@ -846,9 +1103,19 @@ function fixedNow(now) {
  * Reads only approved documents and calculates a conflict-free, idempotent publication plan.
  * A malformed approval never blocks unrelated valid documents, but it also can never enter Git.
  */
-async function buildPublicationPlan({ firestore, root, now, logger }) {
+async function buildPublicationPlan({ firestore, root, now, logger, refreshLikes = false }) {
     const catalog = await readCatalog(root);
+    // Withdrawals resolve before anything else. A theme leaving the catalogue must not be counted,
+    // re-indexed, or held against a new submission as an already-published duplicate.
+    const erasurePlan = await buildAccountErasurePlan({ firestore, catalog, logger });
+    const erasingOwnerUids = new Set(erasurePlan.requests.map((request) => request.uid));
+    const removedThemeIds = new Set(erasurePlan.requests.flatMap((request) => request.removedThemeIds));
     const publishedDigestState = await collectPublishedDigestState(catalog);
+    for (const [digest, ids] of publishedDigestState.digests) {
+        for (const id of removedThemeIds) ids.delete(id);
+        if (ids.size === 0) publishedDigestState.digests.delete(digest);
+    }
+    const remainingEntries = catalog.entries.filter((entry) => !removedThemeIds.has(entry.id));
     const publishedAt = fixedNow(now);
     const snapshot = await firestore.collection(INTAKE_COLLECTION).where("status", "==", "approved").get();
     const documents = [...snapshot.docs].sort((left, right) => {
@@ -856,7 +1123,7 @@ async function buildPublicationPlan({ firestore, root, now, logger }) {
         const b = String(right.id);
         return a < b ? -1 : a > b ? 1 : 0;
     });
-    const catalogEntriesById = new Map(catalog.entries.map((entry) => [entry.id, entry]));
+    const catalogEntriesById = new Map(remainingEntries.map((entry) => [entry.id, entry]));
     const plans = [];
     const plannedDigests = new Map();
     const rejections = [];
@@ -864,6 +1131,14 @@ async function buildPublicationPlan({ firestore, root, now, logger }) {
 
     for (const document of documents) {
         const idForLog = documentIdForLog(document.id);
+        // An account being erased has its whole intake queue removed at finalization. Publishing
+        // one of its themes first would put a file into Git that the same run then withdraws.
+        const ownerUid = document.data()?.ownerUid;
+        if (typeof ownerUid === "string" && erasingOwnerUids.has(ownerUid)) {
+            skipped += 1;
+            log(logger, "warn", `Skipped ${idForLog}: owner-account-erasure-pending`);
+            continue;
+        }
         let candidate;
         try {
             candidate = validateApprovedDocument({
@@ -961,16 +1236,21 @@ async function buildPublicationPlan({ firestore, root, now, logger }) {
     const selectedPlans = plans.slice(0, MAX_MANIFEST_ENTRIES);
     const likeCounts = await collectAuthoritativeLikeCounts(
         firestore,
-        [...catalog.entries.map((entry) => entry.id), ...selectedPlans.map((plan) => plan.id)],
+        [...remainingEntries.map((entry) => entry.id), ...selectedPlans.map((plan) => plan.id)],
     );
-    const selectedEntries = catalog.entries.map((entry) => ({
+    const refreshedEntries = remainingEntries.map((entry) => ({
         ...entry,
         likes: likeCounts.get(entry.id),
     }));
-    const selectedEntriesById = new Map(selectedEntries.map((entry) => [entry.id, entry]));
-    const likesChanged = catalog.entries.some((entry, index) =>
-        !hasOwn(entry, "likes") || entry.likes !== selectedEntries[index].likes);
-    let selectedIndexChanged = false;
+    const likesMoved = remainingEntries.some((entry, index) =>
+        !hasOwn(entry, "likes") || entry.likes !== refreshedEntries[index].likes);
+    // An entry carrying no count at all is not a stale number but a missing one -- the app reads
+    // the absent field as zero -- so it is never made to wait out the refresh interval.
+    const likesMissing = remainingEntries.some((entry) => !hasOwn(entry, "likes"));
+
+    let publicationChanged = removedThemeIds.size > 0;
+    const selectedEntriesById = new Map(remainingEntries.map((entry) => [entry.id, entry]));
+    const addedEntries = [];
     for (const candidate of selectedPlans) {
         // A document cannot be liked until finalization changes it to `published`, so a newly
         // selected intake normally starts at zero. Still use the same authoritative source for a
@@ -980,12 +1260,25 @@ async function buildPublicationPlan({ firestore, root, now, logger }) {
             likes: likeCounts.get(candidate.id),
         };
         if (selectedEntriesById.has(candidate.id)) continue;
-        selectedEntries.push(candidate.summary);
+        addedEntries.push(candidate.summary);
         selectedEntriesById.set(candidate.id, candidate.summary);
-        selectedIndexChanged = true;
+        publicationChanged = true;
     }
 
-    const catalogChanged = selectedIndexChanged || likesChanged;
+    // Fresh counts are written whenever the file is being rewritten anyway, and otherwise only
+    // once the interval has elapsed. Deferring costs a number some accuracy for a while; writing
+    // every time costs a commit a day in a repository that is mainly an Android application.
+    const writeLikes = likesMoved && (
+        likesMissing ||
+        publicationChanged ||
+        refreshLikes ||
+        isLikeRefreshDue(catalog.generatedAt, publishedAt));
+    const selectedEntries = [...(writeLikes ? refreshedEntries : remainingEntries), ...addedEntries];
+    if (likesMoved && !writeLikes) {
+        log(logger, "log", "Like counts moved but are not due for publication; deferring the catalogue rewrite.");
+    }
+
+    const catalogChanged = publicationChanged || writeLikes;
 
     const nextCatalog = {
         schemaVersion: PROFILE_SCHEMA_VERSION,
@@ -1002,6 +1295,10 @@ async function buildPublicationPlan({ firestore, root, now, logger }) {
         deferred: eligible - selectedPlans.length,
         rejections,
         skipped,
+        erasures: erasurePlan.requests,
+        erasuresDeferred: erasurePlan.deferred,
+        erasuresSkipped: erasurePlan.skipped,
+        removedThemeIds: [...removedThemeIds].sort(),
         nextCatalog,
         // A retry that only needs Firestore finalization must not create a meaningless catalogue
         // commit merely because a clock tick would change generatedAt.
@@ -1009,7 +1306,7 @@ async function buildPublicationPlan({ firestore, root, now, logger }) {
     };
 }
 
-function manifestFor(plans) {
+function manifestFor(plans, erasures) {
     return {
         schemaVersion: MANIFEST_SCHEMA_VERSION,
         candidates: plans.map((plan) => ({
@@ -1017,12 +1314,62 @@ function manifestFor(plans) {
             settingsDigest: plan.settingsDigest,
             publishedAt: plan.summary.publishedAt,
         })).sort((left, right) => left.id < right.id ? -1 : left.id > right.id ? 1 : 0),
+        erasures: erasures.map((request) => ({
+            uid: request.uid,
+            themeDisposition: request.themeDisposition,
+            intakeIds: [...request.intakeIds].sort(),
+            removedThemeIds: [...request.removedThemeIds].sort(),
+            keptThemeIds: [...request.keptThemeIds].sort(),
+        })).sort((left, right) => left.uid < right.uid ? -1 : left.uid > right.uid ? 1 : 0),
     };
 }
 
-function validateManifest(rawManifest) {
+function validateManifestIdList(value, code) {
+    if (!Array.isArray(value) || value.length > MAX_ERASED_THEMES_PER_ACCOUNT) fail(code);
+    const ids = value.map((id) => assertCanonicalUuid(id, code));
+    if (new Set(ids).size !== ids.length) fail(code);
+    return ids;
+}
+
+function validateManifestErasures(rawErasures) {
+    if (!Array.isArray(rawErasures) || rawErasures.length > MAX_ACCOUNT_DELETIONS_PER_RUN) {
+        fail("invalid-publication-manifest-erasures");
+    }
+    const seen = new Set();
+    return rawErasures.map((raw) => {
+        const erasure = assertJsonRecord(raw, "invalid-publication-manifest-erasure");
+        assertExactKeys(
+            erasure,
+            ["uid", "themeDisposition", "intakeIds", "removedThemeIds", "keptThemeIds"],
+            "invalid-publication-manifest-erasure",
+        );
+        const uid = assertOpaqueText(erasure.uid, 128, "invalid-publication-manifest-erasure-uid");
+        if (seen.has(uid)) fail("duplicate-publication-manifest-erasure");
+        seen.add(uid);
+        if (erasure.themeDisposition !== "keep" && erasure.themeDisposition !== "delete") {
+            fail("invalid-publication-manifest-disposition");
+        }
+        const intakeIds = validateManifestIdList(erasure.intakeIds, "invalid-publication-manifest-erasure-ids");
+        const removedThemeIds = validateManifestIdList(erasure.removedThemeIds, "invalid-publication-manifest-erasure-ids");
+        const keptThemeIds = validateManifestIdList(erasure.keptThemeIds, "invalid-publication-manifest-erasure-ids");
+        const owned = new Set(intakeIds);
+        // A public id that this account never submitted would withdraw somebody else's theme.
+        for (const id of [...removedThemeIds, ...keptThemeIds]) {
+            if (!owned.has(id)) fail("unowned-publication-manifest-erasure-id");
+        }
+        if (erasure.themeDisposition === "keep" && removedThemeIds.length > 0) {
+            fail("invalid-publication-manifest-disposition");
+        }
+        if (erasure.themeDisposition === "delete" && keptThemeIds.length > 0) {
+            fail("invalid-publication-manifest-disposition");
+        }
+        return { uid, themeDisposition: erasure.themeDisposition, intakeIds, removedThemeIds, keptThemeIds };
+    }).sort((left, right) => left.uid < right.uid ? -1 : left.uid > right.uid ? 1 : 0);
+}
+
+export function validateManifest(rawManifest) {
     const manifest = assertJsonRecord(rawManifest, "invalid-publication-manifest");
-    assertExactKeys(manifest, ["schemaVersion", "candidates"], "invalid-publication-manifest");
+    assertExactKeys(manifest, ["schemaVersion", "candidates", "erasures"], "invalid-publication-manifest");
     assertExactInteger(manifest.schemaVersion, MANIFEST_SCHEMA_VERSION, "unsupported-publication-manifest");
     if (!Array.isArray(manifest.candidates) || manifest.candidates.length > MAX_MANIFEST_ENTRIES) {
         fail("invalid-publication-manifest");
@@ -1038,7 +1385,10 @@ function validateManifest(rawManifest) {
         seen.add(id);
         return { id, settingsDigest: candidate.settingsDigest, publishedAt };
     });
-    return candidates.sort((left, right) => left.id < right.id ? -1 : left.id > right.id ? 1 : 0);
+    return {
+        candidates: candidates.sort((left, right) => left.id < right.id ? -1 : left.id > right.id ? 1 : 0),
+        erasures: validateManifestErasures(manifest.erasures),
+    };
 }
 
 async function readManifest(path) {
@@ -1122,16 +1472,19 @@ export async function publishApprovedThemes({
     logger = console,
     publish = false,
     manifestPath,
+    refreshLikes = false,
 }) {
-    const plan = await buildPublicationPlan({ firestore, root, now, logger });
+    const plan = await buildPublicationPlan({ firestore, root, now, logger, refreshLikes });
     log(
         logger,
         "log",
         `Eligible approved intake documents: ${plan.eligible}; scheduled: ${plan.plans.length}; ` +
-            `deferred: ${plan.deferred}; skipped: ${plan.skipped}; terminal rejections: ${plan.rejections.length}.`,
+            `deferred: ${plan.deferred}; skipped: ${plan.skipped}; terminal rejections: ${plan.rejections.length}; ` +
+            `account erasures: ${plan.erasures.length}; themes withdrawn: ${plan.removedThemeIds.length}.`,
     );
     if (!publish) {
         for (const candidate of plan.plans) log(logger, "log", `Would publish ${candidate.id}.`);
+        for (const id of plan.removedThemeIds) log(logger, "log", `Would withdraw ${id}.`);
         log(logger, "log", "Dry run complete; no files or Firestore documents were changed.");
         return plan;
     }
@@ -1142,6 +1495,12 @@ export async function publishApprovedThemes({
     // touching static files; infrastructure failures still throw and leave the document approved.
     await rejectDeterministicIntakes(firestore, plan.rejections, logger);
 
+    // Withdrawals happen before new files so a single commit never shows a theme both ways.
+    for (const id of plan.removedThemeIds) {
+        await unlink(profilePath(plan.catalog.themesDirectory, id)).catch((error) => {
+            if (error?.code !== "ENOENT") throw error;
+        });
+    }
     for (const candidate of plan.plans) {
         if (!candidate.needsProfileWrite) continue;
         const target = profilePath(plan.catalog.themesDirectory, candidate.id);
@@ -1153,8 +1512,13 @@ export async function publishApprovedThemes({
         await assertCatalogUnchanged(plan.catalog);
         await atomicReplaceJson(plan.catalog.indexPath, plan.nextCatalog);
     }
-    await atomicCreateJson(resolve(manifestPath), manifestFor(plan.plans));
-    log(logger, "log", `Prepared ${plan.plans.length} publication(s); finalize only after Git push succeeds.`);
+    await atomicCreateJson(resolve(manifestPath), manifestFor(plan.plans, plan.erasures));
+    log(
+        logger,
+        "log",
+        `Prepared ${plan.plans.length} publication(s) and ${plan.erasures.length} account erasure(s); ` +
+            "finalize only after Git push succeeds.",
+    );
     return plan;
 }
 
@@ -1165,12 +1529,13 @@ export async function publishApprovedThemes({
  */
 export async function finalizePublishedThemes({
     firestore,
+    auth,
     root = REPOSITORY_ROOT,
     manifestPath,
     logger = console,
 }) {
     if (typeof manifestPath !== "string" || manifestPath.length === 0) fail("finalize-requires-manifest-path");
-    const manifest = await readManifest(resolve(manifestPath));
+    const { candidates: manifest, erasures } = await readManifest(resolve(manifestPath));
     const catalog = await readCatalog(root);
     // The marker is an authorization fact, not merely an index hint. Verify every public profile
     // still exists and agrees with its index row before making any catalogue ID likeable.
@@ -1243,10 +1608,33 @@ export async function finalizePublishedThemes({
         }
     }
     log(logger, "log", `Marked ${marked} Firestore intake document(s) as published; skipped ${skipped}.`);
-    return { marked, skipped };
+
+    // Erasure runs last: the withdrawn files are committed and every publication above is already
+    // recorded, so a failure here can be retried by the next scheduled run without republishing.
+    const catalogIds = new Set(catalog.entries.map((entry) => entry.id));
+    let erased = 0;
+    const failedErasures = [];
+    for (const request of erasures) {
+        try {
+            await applyAccountErasure({ firestore, auth, request, catalogIds, logger });
+            erased += 1;
+        } catch (error) {
+            // Never fail the whole run on one account: the rest of the queue still deserves to be
+            // carried out. The throw after the loop makes the incomplete erasure visible instead.
+            failedErasures.push(error instanceof Error ? error.message : "account-erasure-failed");
+            log(logger, "error", "Could not complete a community-account erasure; it stays pending.");
+        }
+    }
+    if (erasures.length > 0) {
+        log(logger, "log", `Completed ${erased} of ${erasures.length} community-account erasure(s).`);
+    }
+    if (failedErasures.length > 0) {
+        throw new Error(`Could not complete ${failedErasures.length} community-account erasure(s)`);
+    }
+    return { marked, skipped, erased };
 }
 
-function initializeFirestoreFromEnvironment() {
+function initializeFirebaseFromEnvironment() {
     const serialized = process.env.FIREBASE_SERVICE_ACCOUNT;
     if (typeof serialized !== "string" || serialized.length === 0) {
         throw new Error("FIREBASE_SERVICE_ACCOUNT is required");
@@ -1264,14 +1652,14 @@ function initializeFirestoreFromEnvironment() {
         throw new Error("FIREBASE_SERVICE_ACCOUNT is not a service-account JSON object");
     }
     const app = getApps()[0] ?? initializeApp({ credential: cert(serviceAccount) });
-    return getFirestore(app);
+    return { firestore: getFirestore(app), auth: getAuth(app) };
 }
 
 function usage() {
     return [
         "Usage:",
         "  node publisher.mjs                         # dry run (default)",
-        "  node publisher.mjs --publish --manifest <path>",
+        "  node publisher.mjs --publish --manifest <path> [--refresh-likes]",
         "  node publisher.mjs --finalize <manifest-path>",
     ].join("\n");
 }
@@ -1280,10 +1668,14 @@ function parseArguments(argumentsList) {
     let publish = false;
     let manifestPath;
     let finalizePath;
+    let refreshLikes = false;
     for (let index = 0; index < argumentsList.length; index += 1) {
         const argument = argumentsList[index];
         if (argument === "--publish") {
             publish = true;
+        } else if (argument === "--refresh-likes") {
+            // The manual way past the weekly interval, so a maintainer never has to wait it out.
+            refreshLikes = true;
         } else if (argument === "--manifest") {
             manifestPath = argumentsList[++index];
         } else if (argument === "--finalize") {
@@ -1294,7 +1686,7 @@ function parseArguments(argumentsList) {
             throw new Error("Unknown publisher argument");
         }
     }
-    if (finalizePath !== undefined && (publish || manifestPath !== undefined)) {
+    if (finalizePath !== undefined && (publish || manifestPath !== undefined || refreshLikes)) {
         throw new Error("--finalize cannot be combined with publication options");
     }
     if (publish && (typeof manifestPath !== "string" || manifestPath.length === 0)) {
@@ -1304,7 +1696,7 @@ function parseArguments(argumentsList) {
     if (finalizePath !== undefined && (typeof finalizePath !== "string" || finalizePath.length === 0)) {
         throw new Error("--finalize requires a manifest path");
     }
-    return { publish, manifestPath, finalizePath };
+    return { publish, manifestPath, finalizePath, refreshLikes };
 }
 
 async function main() {
@@ -1313,14 +1705,15 @@ async function main() {
         process.stdout.write(`${usage()}\n`);
         return;
     }
-    const firestore = initializeFirestoreFromEnvironment();
+    const { firestore, auth } = initializeFirebaseFromEnvironment();
     if (options.finalizePath !== undefined) {
-        await finalizePublishedThemes({ firestore, manifestPath: options.finalizePath });
+        await finalizePublishedThemes({ firestore, auth, manifestPath: options.finalizePath });
     } else {
         await publishApprovedThemes({
             firestore,
             publish: options.publish,
             manifestPath: options.manifestPath,
+            refreshLikes: options.refreshLikes,
         });
     }
 }

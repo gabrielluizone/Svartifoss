@@ -17,8 +17,10 @@ import {
     ValidationError,
     canonicalSettingsDigest,
     finalizePublishedThemes,
+    isLikeRefreshDue,
     publishApprovedThemes,
     validateApprovedDocument,
+    validateManifest,
 } from "./publisher.mjs";
 
 const ID = "123e4567-e89b-42d3-a456-426614174000";
@@ -96,31 +98,106 @@ function assertValidationCode(action, code) {
     assert.throws(action, (error) => error instanceof ValidationError && error.code === code);
 }
 
-function fakeFirestore(input, likesByTheme = {}) {
+function fakeFirestore(input, likesByTheme = {}, options = {}) {
     const documents = Array.isArray(input) ? input : [input];
     const byId = new Map(documents.map((document) => [document.id, document]));
     const likes = new Map(Object.entries(likesByTheme));
     const publishedThemeMarkers = new Map();
+    const deletionRequests = new Map(Object.entries(options.deletionRequests ?? {}));
+    const voters = new Map(
+        Object.entries(options.voters ?? {}).map(([themeId, uids]) => [themeId, new Set(uids)]),
+    );
+    const quotas = new Set(options.quotas ?? []);
+    const removed = { intake: [], markers: [], votes: [], quotas: [], requests: [] };
+
+    const reference = (path, id) => ({ id, path: `${path}/${id}` });
+    const intakeDocuments = (predicate) => ({
+        get: async () => ({
+            docs: documents.filter((document) => byId.has(document.id) && predicate(document)).map((document) => ({
+                id: document.id,
+                ref: reference("themeIntake", document.id),
+                data: () => document.data,
+            })),
+        }),
+    });
+
+    function applyWrite(target, operation, value) {
+        const segments = target.path.split("/");
+        if (segments[0] === "themeIntake") {
+            if (operation === "update") Object.assign(byId.get(target.id).data, value);
+            else {
+                byId.delete(target.id);
+                removed.intake.push(target.id);
+            }
+            return;
+        }
+        if (segments[0] === "communityThemePublished") {
+            if (operation === "set") publishedThemeMarkers.set(target.id, { ...value });
+            else {
+                publishedThemeMarkers.delete(target.id);
+                removed.markers.push(target.id);
+            }
+            return;
+        }
+        if (segments[0] === "communityThemeLikes") {
+            voters.get(segments[1])?.delete(target.id);
+            removed.votes.push(`${segments[1]}/${target.id}`);
+            return;
+        }
+        if (segments[0] === "communityThemeSubmissionQuota") {
+            quotas.delete(target.id);
+            removed.quotas.push(target.id);
+            return;
+        }
+        if (segments[0] === "communityThemeAccountDeletion") {
+            deletionRequests.delete(target.id);
+            removed.requests.push(target.id);
+            return;
+        }
+        throw new Error(`Unexpected write to ${target.path}`);
+    }
+
     const firestore = {
         collection(collectionName) {
             if (collectionName === "themeIntake") {
                 return {
                     where(field, operator, value) {
+                        assert.equal(operator, "==");
+                        if (field === "status") {
+                            assert.equal(value, "approved");
+                            return intakeDocuments((document) => document.data.status === "approved");
+                        }
+                        assert.equal(field, "ownerUid");
+                        return intakeDocuments((document) => document.data.ownerUid === value);
+                    },
+                    doc(id) {
+                        return reference("themeIntake", id);
+                    },
+                };
+            }
+            if (collectionName === "communityThemeAccountDeletion") {
+                return {
+                    where(field, operator, value) {
                         assert.equal(field, "status");
                         assert.equal(operator, "==");
-                        assert.equal(value, "approved");
+                        assert.equal(value, "pending");
                         return {
                             get: async () => ({
-                                docs: documents.filter((document) => document.data.status === "approved").map((document) => ({
-                                    id: document.id,
-                                    ref: { id: document.id, path: `themeIntake/${document.id}` },
-                                    data: () => document.data,
-                                })),
+                                docs: [...deletionRequests.entries()]
+                                    .filter(([, data]) => data.status === "pending")
+                                    .map(([uid, data]) => ({ id: uid, data: () => data })),
                             }),
                         };
                     },
-                    doc(id) {
-                        return { id };
+                    doc(uid) {
+                        return reference("communityThemeAccountDeletion", uid);
+                    },
+                };
+            }
+            if (collectionName === "communityThemeSubmissionQuota") {
+                return {
+                    doc(uid) {
+                        return reference("communityThemeSubmissionQuota", uid);
                     },
                 };
             }
@@ -134,8 +211,22 @@ function fakeFirestore(input, likesByTheme = {}) {
                                     count() {
                                         return {
                                             get: async () => ({
-                                                data: () => ({ count: likes.get(themeId) ?? 0 }),
+                                                data: () => ({
+                                                    count: likes.get(themeId) ?? voters.get(themeId)?.size ?? 0,
+                                                }),
                                             }),
+                                        };
+                                    },
+                                    async listDocuments() {
+                                        return [...(voters.get(themeId) ?? [])].sort().map((uid) => ({
+                                            id: uid,
+                                            path: `communityThemeLikes/${themeId}/voters/${uid}`,
+                                        }));
+                                    },
+                                    doc(uid) {
+                                        return {
+                                            id: uid,
+                                            path: `communityThemeLikes/${themeId}/voters/${uid}`,
                                         };
                                     },
                                 };
@@ -147,43 +238,66 @@ function fakeFirestore(input, likesByTheme = {}) {
             assert.equal(collectionName, "communityThemePublished");
             return {
                 doc(id) {
-                    return { id, path: `communityThemePublished/${id}` };
+                    return reference("communityThemePublished", id);
                 },
             };
         },
         async getAll(...references) {
-            return references.map((reference) => ({
-                id: reference.id,
-                exists: publishedThemeMarkers.has(reference.id),
-                data: () => publishedThemeMarkers.get(reference.id),
+            return references.map((entry) => ({
+                id: entry.id,
+                exists: publishedThemeMarkers.has(entry.id),
+                data: () => publishedThemeMarkers.get(entry.id),
             }));
         },
         batch() {
             const writes = [];
             return {
-                set(reference, value) {
-                    writes.push({ id: reference.id, value: { ...value } });
+                set(target, value) {
+                    writes.push(() => applyWrite(target, "set", value));
+                },
+                update(target, value) {
+                    writes.push(() => applyWrite(target, "update", value));
+                },
+                delete(target) {
+                    writes.push(() => applyWrite(target, "delete"));
                 },
                 async commit() {
-                    writes.forEach(({ id, value }) => publishedThemeMarkers.set(id, value));
+                    writes.forEach((write) => write());
                 },
             };
         },
         async runTransaction(callback) {
             const transaction = {
-                get: async (reference) => ({
-                    id: reference.id,
-                    exists: byId.has(reference.id),
-                    data: () => byId.get(reference.id)?.data,
+                get: async (target) => ({
+                    id: target.id,
+                    exists: byId.has(target.id),
+                    data: () => byId.get(target.id)?.data,
                 }),
-                update(reference, values) {
-                    Object.assign(byId.get(reference.id).data, values);
+                update(target, values) {
+                    Object.assign(byId.get(target.id).data, values);
                 },
             };
             return callback(transaction);
         },
     };
-    return Object.assign(firestore, { publishedThemeMarkers });
+    return Object.assign(firestore, { publishedThemeMarkers, deletionRequests, voters, quotas, removed, byId });
+}
+
+/** Records the identities a finalization asks Firebase Auth to delete. */
+function fakeAuth(missingUids = []) {
+    const deletedUids = [];
+    const missing = new Set(missingUids);
+    return {
+        deletedUids,
+        async deleteUser(uid) {
+            if (missing.has(uid)) {
+                const error = new Error("no user record");
+                error.code = "auth/user-not-found";
+                throw error;
+            }
+            deletedUids.push(uid);
+        },
+    };
 }
 
 async function temporaryCatalogue(t) {
@@ -379,7 +493,7 @@ test("publication writes static files first, then finalization marks the matchin
     assert.equal(firestore.publishedThemeMarkers.size, 0);
 
     const result = await finalizePublishedThemes({ firestore, root, manifestPath, logger });
-    assert.deepEqual(result, { marked: 1, skipped: 0 });
+    assert.deepEqual(result, { marked: 1, skipped: 0, erased: 0 });
     assert.equal(document.data.status, "published");
     assert.ok(document.data.publishedAt);
     assert.deepEqual(firestore.publishedThemeMarkers.get(ID), {
@@ -402,12 +516,12 @@ test("finalization registers a static catalogue theme with no intake document", 
         themes: [candidate.summary],
     }, null, 2)}\n`);
     const manifestPath = join(root, "empty-manifest.json");
-    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 1, candidates: [] })}\n`);
+    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 2, candidates: [], erasures: [] })}\n`);
     const firestore = fakeFirestore([]);
 
     assert.deepEqual(
         await finalizePublishedThemes({ firestore, root, manifestPath, logger: { log() {}, warn() {} } }),
-        { marked: 0, skipped: 0 },
+        { marked: 0, skipped: 0, erased: 0 },
     );
     assert.deepEqual(firestore.publishedThemeMarkers.get(ID), {
         schemaVersion: 1,
@@ -425,7 +539,7 @@ test("finalization never registers an index entry whose static profile is missin
         themes: [candidate.summary],
     }, null, 2)}\n`);
     const manifestPath = join(root, "empty-manifest.json");
-    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 1, candidates: [] })}\n`);
+    await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 2, candidates: [], erasures: [] })}\n`);
     const firestore = fakeFirestore([]);
 
     await assert.rejects(
@@ -456,10 +570,25 @@ test("the publisher derives catalogue likes from private voter documents", async
     staleIndex.themes[0].likes = 999;
     await writeFile(join(root, "docs", "themes", "index.json"), `${JSON.stringify(staleIndex, null, 2)}\n`);
     const profileBeforeRefresh = await readFile(join(root, "docs", "themes", `${ID}.json`), "utf8");
-    const refresh = await publishApprovedThemes({
+    const staleFile = await readFile(join(root, "docs", "themes", "index.json"), "utf8");
+
+    // One day later the number is wrong and known to be wrong, and is still left alone: a daily
+    // commit to move a popularity count is not worth the history it writes.
+    const deferred = await publishApprovedThemes({
         firestore: fakeFirestore(document, { [ID]: 7 }),
         root,
         now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "deferred-likes-manifest.json"),
+    });
+    assert.equal(deferred.catalogChanged, false);
+    assert.equal(await readFile(join(root, "docs", "themes", "index.json"), "utf8"), staleFile);
+
+    const refresh = await publishApprovedThemes({
+        firestore: fakeFirestore(document, { [ID]: 7 }),
+        root,
+        now: new Date("2026-09-01T12:00:00Z"),
         logger,
         publish: true,
         manifestPath: join(root, "likes-manifest.json"),
@@ -475,13 +604,91 @@ test("the publisher derives catalogue likes from private voter documents", async
     const steady = await publishApprovedThemes({
         firestore: fakeFirestore(document, { [ID]: 7 }),
         root,
-        now: new Date("2026-08-26T12:00:00Z"),
+        now: new Date("2026-09-09T12:00:00Z"),
         logger,
         publish: true,
         manifestPath: join(root, "steady-likes-manifest.json"),
     });
     assert.equal(steady.catalogChanged, false);
     assert.equal(await readFile(join(root, "docs", "themes", "index.json"), "utf8"), refreshedIndex);
+});
+
+test("a catalogue entry with no like count at all never waits for the refresh interval", async (t) => {
+    // This is the state a catalogue published before like aggregation existed is in. The app reads
+    // the absent field as zero, so deferring it would leave every theme showing 0 for a week.
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const logger = { log() {}, warn() {} };
+    const seedManifest = join(root, "seed-manifest.json");
+    await publishApprovedThemes({
+        firestore: fakeFirestore(document),
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: seedManifest,
+    });
+
+    const index = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    delete index.themes[0].likes;
+    await writeFile(join(root, "docs", "themes", "index.json"), `${JSON.stringify(index, null, 2)}\n`);
+
+    const result = await publishApprovedThemes({
+        firestore: fakeFirestore(document, { [ID]: 4 }),
+        root,
+        now: new Date("2026-08-24T18:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "missing-likes-manifest.json"),
+    });
+
+    assert.equal(result.catalogChanged, true);
+    const written = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.equal(written.themes[0].likes, 4);
+});
+
+test("a publication carries fresh like counts even inside the refresh interval", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const first = approvedDocument();
+    const logger = { log() {}, warn() {} };
+    await publishApprovedThemes({
+        firestore: fakeFirestore(first, { [ID]: 3 }),
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "first-manifest.json"),
+    });
+
+    // The file is being rewritten for the second theme anyway, so the counts ride along free.
+    const second = approvedDocument({}, SECOND_ID);
+    const secondProfile = JSON.parse(second.data.profileJson);
+    secondProfile.settings.wear_color_modifier.value = "warm";
+    second.data.profileJson = JSON.stringify(secondProfile);
+    second.data.settingsDigest = canonicalSettingsDigest(secondProfile.baseFace, secondProfile.settings);
+    const result = await publishApprovedThemes({
+        firestore: fakeFirestore([first, second], { [ID]: 11, [SECOND_ID]: 0 }),
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "second-manifest.json"),
+    });
+
+    assert.equal(result.catalogChanged, true);
+    const written = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.equal(written.themes.find((entry) => entry.id === ID).likes, 11);
+});
+
+test("the like refresh interval is measured from the catalogue's own timestamp", () => {
+    const week = 7 * 24 * 60 * 60 * 1000;
+    assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-30T12:00:00Z"), false);
+    assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-31T12:00:00Z"), true);
+    assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-25T12:00:00Z", week), false);
+    // A clock that ran backwards, or a timestamp that cannot be read, refreshes rather than
+    // stalling until real time catches up with a window it cannot measure.
+    assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-20T12:00:00Z"), true);
+    assert.equal(isLikeRefreshDue("not a date", "2026-08-25T12:00:00Z"), true);
 });
 
 test("the publisher rejects an exact digest already present in the public catalogue", async (t) => {
@@ -686,4 +893,231 @@ test("an oversized eligible batch is deterministically paged without publishing 
     const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
     assert.equal(manifest.candidates.length, 1_000);
     assert.equal(documents.every((document) => document.data.status === "approved"), true);
+});
+
+function deletionRequest(uid, themeDisposition, overrides = {}) {
+    return {
+        ownerUid: uid,
+        requestSchemaVersion: 1,
+        status: "pending",
+        themeDisposition,
+        clientVersion: "3.3",
+        createdAt: timestamp(),
+        ...overrides,
+    };
+}
+
+/** Publishes one theme and marks it public, which is the starting point every erasure needs. */
+async function publishOneTheme(t, { uid = "firebase-user-id", voters = {} } = {}) {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument({ ownerUid: uid });
+    const firestore = fakeFirestore(document, {}, { voters, quotas: [uid] });
+    const manifestPath = join(root, "seed-manifest.json");
+    const logger = { log() {}, warn() {} };
+    await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath,
+    });
+    await finalizePublishedThemes({ firestore, auth: fakeAuth(), root, manifestPath, logger });
+    return { root, document, firestore, logger };
+}
+
+test("deleting an account keeps its published themes when the author chose to keep them", async (t) => {
+    const uid = "keeping-user";
+    const { root, document, firestore, logger } = await publishOneTheme(t, {
+        uid,
+        voters: { [ID]: [uid, "someone-else"] },
+    });
+    firestore.deletionRequests.set(uid, deletionRequest(uid, "keep"));
+    const manifestPath = join(root, "keep-manifest.json");
+    const auth = fakeAuth();
+
+    const plan = await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath,
+    });
+    assert.deepEqual(plan.removedThemeIds, []);
+
+    // The public theme and the vote another person left on it both survive untouched.
+    const index = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.deepEqual(index.themes.map((entry) => entry.id), [ID]);
+    assert.equal(index.themes[0].author, "Theme maker");
+
+    const result = await finalizePublishedThemes({ firestore, auth, root, manifestPath, logger });
+    assert.equal(result.erased, 1);
+    assert.equal(document.data.status, "published");
+    assert.equal(document.data.ownerUid, "account-erased");
+    assert.ok(document.data.ownerErasedAt);
+    assert.deepEqual(auth.deletedUids, [uid]);
+    assert.deepEqual([...firestore.voters.get(ID)], ["someone-else"]);
+    assert.equal(firestore.quotas.size, 0);
+    assert.equal(firestore.deletionRequests.size, 0);
+    assert.ok(firestore.publishedThemeMarkers.has(ID));
+});
+
+test("deleting an account withdraws its published themes when the author chose to delete them", async (t) => {
+    const uid = "withdrawing-user";
+    const { root, firestore, logger } = await publishOneTheme(t, {
+        uid,
+        voters: { [ID]: [uid, "someone-else"] },
+    });
+    firestore.deletionRequests.set(uid, deletionRequest(uid, "delete"));
+    const manifestPath = join(root, "delete-manifest.json");
+    const auth = fakeAuth();
+
+    const plan = await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath,
+    });
+    assert.deepEqual(plan.removedThemeIds, [ID]);
+
+    // Withdrawal is a Git change: the profile file and its index row are gone before Firestore is
+    // touched at all, which is the same ordering a publication uses.
+    await assert.rejects(readFile(join(root, "docs", "themes", `${ID}.json`), "utf8"));
+    const index = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.deepEqual(index.themes, []);
+
+    const result = await finalizePublishedThemes({ firestore, auth, root, manifestPath, logger });
+    assert.equal(result.erased, 1);
+    assert.equal(firestore.byId.has(ID), false);
+    assert.deepEqual(firestore.removed.markers, [ID]);
+    // Every vote on a withdrawn theme goes, not only the erasing account's own.
+    assert.deepEqual([...firestore.voters.get(ID)], []);
+    assert.deepEqual(auth.deletedUids, [uid]);
+    assert.equal(firestore.deletionRequests.size, 0);
+});
+
+test("an erasing account cannot have a theme published in the same run", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const uid = "leaving-user";
+    const document = approvedDocument({ ownerUid: uid });
+    const firestore = fakeFirestore(document, {}, {
+        deletionRequests: { [uid]: deletionRequest(uid, "keep") },
+    });
+    const manifestPath = join(root, "race-manifest.json");
+    const logger = { log() {}, warn() {} };
+
+    const plan = await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath,
+    });
+
+    assert.deepEqual(plan.plans, []);
+    assert.equal(plan.skipped, 1);
+    const index = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.deepEqual(index.themes, []);
+
+    // Nothing was public, so "keep my themes" has nothing to keep and the queue is cleared.
+    await finalizePublishedThemes({ firestore, auth: fakeAuth(), root, manifestPath, logger });
+    assert.equal(firestore.byId.has(ID), false);
+});
+
+test("a resumed erasure tolerates an identity Firebase has already deleted", async (t) => {
+    const uid = "half-erased-user";
+    const { root, firestore, logger } = await publishOneTheme(t, { uid });
+    firestore.deletionRequests.set(uid, deletionRequest(uid, "keep"));
+    const manifestPath = join(root, "resume-manifest.json");
+
+    await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath,
+    });
+    const auth = fakeAuth([uid]);
+    const result = await finalizePublishedThemes({ firestore, auth, root, manifestPath, logger });
+
+    assert.equal(result.erased, 1);
+    assert.deepEqual(auth.deletedUids, []);
+    assert.equal(firestore.deletionRequests.size, 0);
+});
+
+test("an erasure that cannot delete the identity stays pending and fails the run", async (t) => {
+    const uid = "stuck-user";
+    const { root, firestore, logger } = await publishOneTheme(t, { uid });
+    firestore.deletionRequests.set(uid, deletionRequest(uid, "keep"));
+    const manifestPath = join(root, "stuck-manifest.json");
+
+    await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath,
+    });
+    const auth = {
+        async deleteUser() {
+            throw new Error("identity toolkit unavailable");
+        },
+    };
+
+    await assert.rejects(
+        finalizePublishedThemes({
+            firestore,
+            auth,
+            root,
+            manifestPath,
+            logger: { log() {}, warn() {}, error() {} },
+        }),
+        /Could not complete 1 community-account erasure/,
+    );
+    assert.equal(firestore.deletionRequests.size, 1);
+});
+
+test("a malformed erasure request is skipped rather than guessed at", async (t) => {
+    const uid = "tampered-user";
+    const { root, firestore, logger } = await publishOneTheme(t, { uid });
+    firestore.deletionRequests.set(uid, deletionRequest(uid, "everything"));
+    const manifestPath = join(root, "malformed-manifest.json");
+
+    const plan = await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath,
+    });
+
+    assert.deepEqual(plan.erasures, []);
+    assert.equal(plan.erasuresSkipped, 1);
+    const result = await finalizePublishedThemes({ firestore, auth: fakeAuth(), root, manifestPath, logger });
+    assert.equal(result.erased, 0);
+    assert.equal(firestore.deletionRequests.size, 1);
+});
+
+test("a manifest cannot withdraw a theme the erasing account never submitted", () => {
+    assertValidationCode(
+        () => validateManifest({
+            schemaVersion: 2,
+            candidates: [],
+            erasures: [{
+                uid: "attacker",
+                themeDisposition: "delete",
+                intakeIds: [],
+                removedThemeIds: [SECOND_ID],
+                keptThemeIds: [],
+            }],
+        }),
+        "unowned-publication-manifest-erasure-id",
+    );
 });

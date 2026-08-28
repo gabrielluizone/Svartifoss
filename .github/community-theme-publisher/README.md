@@ -7,8 +7,10 @@ GitHub Pages catalogue under `docs/themes/`.
 It accepts no project ID, key file or application credential. The only Firebase credential is the
 JSON service-account value in `FIREBASE_SERVICE_ACCOUNT`. In GitHub, create a repository secret
 with exactly that name and paste the full service-account JSON into it. Give that service account
-the minimum Firestore access needed to read `themeIntake` and update its status. Do not add the
-JSON file to the repository or to an APK.
+the minimum Firestore access needed to read `themeIntake` and update its status, plus Firebase
+Authentication user administration -- carrying out an account erasure ends by deleting the identity
+itself, and a service account without that permission fails the run rather than half-erasing an
+account. Do not add the JSON file to the repository or to an APK.
 
 ## Deliberate execution modes
 
@@ -38,6 +40,42 @@ node .github/community-theme-publisher/publisher.mjs \
 Finalization rechecks the committed profile and index against the still-approved Firestore document
 inside a transaction, then changes only matching documents to `published` with a server timestamp.
 This two-phase order means a failed Git push cannot make Firestore claim that a theme is public.
+
+## Like counts and how often they are committed
+
+Every run re-reads the authoritative vote counts, but not every run writes them. A count is written
+whenever the catalogue is being rewritten anyway -- a publication or a withdrawal -- and otherwise
+only once `LIKE_REFRESH_INTERVAL_MS` (a week) has elapsed since the catalogue's own `generatedAt`.
+The catalogue is its own clock, so there is no extra state to keep in step.
+
+The point is the commit, not the read: without the interval the daily cron commits whenever any
+count moves, which turns a popularity number into a daily commit in a repository that is mainly an
+Android application. The person who tapped Like is not the one waiting -- the gallery applies their
+own vote locally on top of the published figure.
+
+Two exceptions are deliberate. An entry carrying no `likes` field at all is a missing count rather
+than a stale one, since the app reads the absent field as zero, so it is written immediately. And
+`--publish --refresh-likes` forces a rewrite regardless of the interval; the workflow exposes it as
+the `refresh_likes` checkbox on a manual run.
+
+## Account erasures
+
+The same two phases carry out the account deletions requested from the app, for the same reason:
+withdrawing a theme is a Git change and forgetting an account is a Firestore change, and only this
+order keeps a failure in one from contradicting the other.
+
+The first phase reads pending `communityThemeAccountDeletion` documents, resolves which catalogue
+entries each account owns, and -- for a request whose `themeDisposition` is `delete` -- removes
+those profile files and index rows so the workflow's commit withdraws them. It also refuses to
+publish a theme belonging to an account being erased in the same run, which would otherwise put a
+file into Git that the same run then takes back out.
+
+Finalization then deletes or scrubs the intake documents (a `keep` request leaves a published theme
+in place with its `ownerUid` replaced by `account-erased`), deletes the published markers and votes
+for every withdrawn theme, deletes that account's own votes across the remaining catalogue, deletes
+its submission quota, deletes the Firebase Auth identity, and only then removes the request itself.
+Each step is idempotent, so a run that fails part-way is resumed by the next one; an erasure that
+cannot be completed is logged, left pending and fails the run so it is visible rather than lost.
 
 ## Validation contract
 

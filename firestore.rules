@@ -68,6 +68,34 @@ service cloud.firestore {
       // Deliberately omitted: votes are never mutable or listable from a Firebase client.
     }
 
+    /*
+     * A person's own request to erase their community account, and the one place where the choice
+     * about their published themes is recorded.
+     *
+     * It is create-only from every client, for the same reason an intake document is: the trusted
+     * publisher is what carries it out, and a request that could be edited between the Git commit
+     * that removes a theme file and the Firestore writes that follow it would let the two halves
+     * disagree. That makes deletion deliberately one-way, which the app states before asking.
+     *
+     * An anonymous account may request this too. Its only trace is a set of private like
+     * documents, and refusing to erase them because the account was never named would be the
+     * wrong way round -- the less identified someone is, the less standing there is to keep
+     * their data.
+     *
+     * `themeDisposition` is the whole point of the document: "keep" leaves already-published
+     * themes public under the pseudonym that was published with them and severs their link to
+     * this UID, "delete" withdraws them from the catalogue on the next publication run. Neither
+     * value preserves a submission that is not public yet -- there is nothing published to keep.
+     */
+    match /communityThemeAccountDeletion/{uid} {
+      allow get: if signedIn() && uid == request.auth.uid;
+      allow create: if signedIn()
+          && uid == request.auth.uid
+          && validNewAccountDeletionRequest(uid);
+
+      // Deliberately omitted: a request can neither be listed, edited, nor withdrawn by a client.
+    }
+
     // A service-account-only mirror of IDs that have crossed the Git publication boundary.
     // It lets older hand-authored catalogue entries receive likes without granting browser or APK
     // access to this registry. The trusted publisher creates/reconciles it only after Git push.
@@ -125,6 +153,35 @@ service cloud.firestore {
           && data.schemaVersion is int
           && data.schemaVersion == 1
           && data.createdAt is timestamp;
+    }
+
+    function validNewAccountDeletionRequest(uid) {
+      let data = request.resource.data;
+      return data.keys().hasOnly([
+            "ownerUid",
+            "requestSchemaVersion",
+            "status",
+            "themeDisposition",
+            "clientVersion",
+            "createdAt"
+          ])
+          && data.keys().hasAll([
+            "ownerUid",
+            "requestSchemaVersion",
+            "status",
+            "themeDisposition",
+            "clientVersion",
+            "createdAt"
+          ])
+          && data.ownerUid is string
+          && data.ownerUid == uid
+          && data.requestSchemaVersion is int
+          && data.requestSchemaVersion == 1
+          && data.status == "pending"
+          && data.themeDisposition in ["keep", "delete"]
+          && validShortText(data.clientVersion, 64)
+          && data.createdAt is timestamp
+          && data.createdAt == request.time;
     }
 
     /*
@@ -256,8 +313,11 @@ service cloud.firestore {
       let after = getAfter(
         /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
       ).data;
-      return validSubmissionQuotaShape(after)
+      return validSubmissionQuotaV2Shape(after)
           && after.submissionCount == 1
+          && after.recentSubmissionCount == 1
+          && after.recentSubmissionFirstAt == request.time
+          && after.lastSubmissionAt == request.time
           && quotaTargetsCurrentIntake(after);
     }
 
@@ -268,14 +328,19 @@ service cloud.firestore {
       let after = getAfter(
         /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
       ).data;
-      return validSubmissionQuotaShape(after)
-          && after.ownerUid == before.ownerUid
-          && after.submissionCount == before.submissionCount + 1
-          && request.time >= before.lastSubmissionAt + duration.value(24, 'h')
-          && quotaTargetsCurrentIntake(after);
+      return (validLegacySubmissionQuotaShape(before)
+              && validLegacyQuotaMigration(before, after))
+          || (validSubmissionQuotaV2Shape(before)
+              && validRollingQuotaProgression(before, after));
     }
 
-    function validSubmissionQuotaShape(data) {
+    /*
+     * V1 stored only the latest timestamp, which could enforce a one-per-day cooldown but could
+     * not prove a three-per-rolling-window limit. V2 keeps the first and (when needed) second of
+     * the last three submission timestamps. A valid V1 record may migrate exactly once on its
+     * next submission; malformed records stay fail-closed and must be repaired administratively.
+     */
+    function validLegacySubmissionQuotaShape(data) {
       return data.keys().hasOnly([
             "ownerUid",
             "submissionCount",
@@ -293,9 +358,84 @@ service cloud.firestore {
           && data.submissionCount is int
           && data.submissionCount >= 1
           && data.lastSubmissionAt is timestamp
-          && data.lastSubmissionAt == request.time
           && data.lastSubmissionId is string
           && validThemeId(data.lastSubmissionId);
+    }
+
+    function validSubmissionQuotaV2Shape(data) {
+      return data.keys().hasOnly([
+            "ownerUid",
+            "quotaSchemaVersion",
+            "submissionCount",
+            "lastSubmissionAt",
+            "lastSubmissionId",
+            "recentSubmissionCount",
+            "recentSubmissionFirstAt",
+            "recentSubmissionSecondAt"
+          ])
+          && data.keys().hasAll([
+            "ownerUid",
+            "quotaSchemaVersion",
+            "submissionCount",
+            "lastSubmissionAt",
+            "lastSubmissionId",
+            "recentSubmissionCount",
+            "recentSubmissionFirstAt"
+          ])
+          && data.ownerUid is string
+          && data.ownerUid == request.auth.uid
+          && data.quotaSchemaVersion is int
+          && data.quotaSchemaVersion == 2
+          && data.submissionCount is int
+          && data.submissionCount >= 1
+          && data.lastSubmissionAt is timestamp
+          && data.lastSubmissionId is string
+          && validThemeId(data.lastSubmissionId)
+          && data.recentSubmissionCount is int
+          && data.recentSubmissionCount in [1, 2, 3]
+          && data.submissionCount >= data.recentSubmissionCount
+          && data.recentSubmissionFirstAt is timestamp
+          && ((data.recentSubmissionCount == 1
+                && !data.keys().hasAny(["recentSubmissionSecondAt"])
+                && data.recentSubmissionFirstAt == data.lastSubmissionAt)
+              || (data.recentSubmissionCount == 2
+                && !data.keys().hasAny(["recentSubmissionSecondAt"])
+                && data.recentSubmissionFirstAt <= data.lastSubmissionAt)
+              || (data.recentSubmissionCount == 3
+                && data.keys().hasAll(["recentSubmissionSecondAt"])
+                && data.recentSubmissionSecondAt is timestamp
+                && data.recentSubmissionFirstAt <= data.recentSubmissionSecondAt
+                && data.recentSubmissionSecondAt <= data.lastSubmissionAt));
+    }
+
+    function validLegacyQuotaMigration(before, after) {
+      return validSubmissionQuotaV2Shape(after)
+          && after.ownerUid == before.ownerUid
+          && after.submissionCount == before.submissionCount + 1
+          && after.recentSubmissionCount == 1
+          && after.recentSubmissionFirstAt == request.time
+          && after.lastSubmissionAt == request.time
+          && quotaTargetsCurrentIntake(after);
+    }
+
+    function validRollingQuotaProgression(before, after) {
+      return validSubmissionQuotaV2Shape(after)
+          && after.ownerUid == before.ownerUid
+          && after.submissionCount == before.submissionCount + 1
+          && after.lastSubmissionAt == request.time
+          && quotaTargetsCurrentIntake(after)
+          && ((before.recentSubmissionCount == 1
+                && after.recentSubmissionCount == 2
+                && after.recentSubmissionFirstAt == before.recentSubmissionFirstAt)
+              || (before.recentSubmissionCount == 2
+                && after.recentSubmissionCount == 3
+                && after.recentSubmissionFirstAt == before.recentSubmissionFirstAt
+                && after.recentSubmissionSecondAt == before.lastSubmissionAt)
+              || (before.recentSubmissionCount == 3
+                && request.time >= before.recentSubmissionFirstAt + duration.value(24, 'h')
+                && after.recentSubmissionCount == 3
+                && after.recentSubmissionFirstAt == before.recentSubmissionSecondAt
+                && after.recentSubmissionSecondAt == before.lastSubmissionAt));
     }
 
     function quotaTargetsCurrentIntake(quota) {

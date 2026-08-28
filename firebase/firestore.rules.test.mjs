@@ -498,3 +498,70 @@ test("linking Google onto the anonymous like account restores submission access"
 
   await assertSucceeds(getDoc(linkedDb, doc(linkedDb, "themeIntake", FIRST_ID)));
 });
+
+function deletionRequest(uid, themeDisposition = "keep", overrides = {}) {
+  return {
+    ownerUid: uid,
+    requestSchemaVersion: 1,
+    status: "pending",
+    themeDisposition,
+    clientVersion: "3.3",
+    createdAt: serverTimestamp(),
+    ...overrides,
+  };
+}
+
+test("an account can request its own erasure with either choice about its themes", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const otherDb = authenticatedDb(OTHER_AUTHOR);
+
+  await assertSucceeds(setDoc(authorDb,
+    doc(authorDb, "communityThemeAccountDeletion", AUTHOR), deletionRequest(AUTHOR, "keep")));
+  await assertSucceeds(getDoc(authorDb, doc(authorDb, "communityThemeAccountDeletion", AUTHOR)));
+  await assertSucceeds(setDoc(otherDb,
+    doc(otherDb, "communityThemeAccountDeletion", OTHER_AUTHOR),
+    deletionRequest(OTHER_AUTHOR, "delete")));
+});
+
+test("an erasure request is one-way: it cannot be edited, withdrawn, or read by anyone else", async () => {
+  // The publisher removes a public theme file in a Git commit and only then writes Firestore. A
+  // request that could change in between would let those two halves disagree about what was asked.
+  const authorDb = authenticatedDb(AUTHOR);
+  const otherDb = authenticatedDb(OTHER_AUTHOR);
+  await assertSucceeds(setDoc(authorDb,
+    doc(authorDb, "communityThemeAccountDeletion", AUTHOR), deletionRequest(AUTHOR, "keep")));
+
+  await assertFails(updateDoc(authorDb,
+    doc(authorDb, "communityThemeAccountDeletion", AUTHOR), { themeDisposition: "delete" }));
+  await assertFails(deleteDoc(authorDb, doc(authorDb, "communityThemeAccountDeletion", AUTHOR)));
+  await assertFails(getDoc(otherDb, doc(otherDb, "communityThemeAccountDeletion", AUTHOR)));
+  await assertFails(getDocs(authorDb, collection(authorDb, "communityThemeAccountDeletion")));
+});
+
+test("an erasure request cannot name another account or an unknown choice", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+
+  await assertFails(setDoc(authorDb,
+    doc(authorDb, "communityThemeAccountDeletion", OTHER_AUTHOR), deletionRequest(OTHER_AUTHOR)));
+  await assertFails(setDoc(authorDb,
+    doc(authorDb, "communityThemeAccountDeletion", AUTHOR),
+    deletionRequest(AUTHOR, "keep", { ownerUid: OTHER_AUTHOR })));
+  await assertFails(setDoc(authorDb,
+    doc(authorDb, "communityThemeAccountDeletion", AUTHOR), deletionRequest(AUTHOR, "everything")));
+  await assertFails(setDoc(authorDb,
+    doc(authorDb, "communityThemeAccountDeletion", AUTHOR),
+    deletionRequest(AUTHOR, "keep", { status: "approved" })));
+  await assertFails(setDoc(authorDb,
+    doc(authorDb, "communityThemeAccountDeletion", AUTHOR),
+    deletionRequest(AUTHOR, "keep", { removeEverything: true })));
+});
+
+test("an anonymous account may also ask for its own erasure", async () => {
+  // Its only trace is a set of private like documents. The less identified somebody is, the less
+  // standing there is to keep their data, so this is the one intake path anonymity does not gate.
+  const anonDb = anonymousDb(ANONYMOUS);
+
+  await assertSucceeds(setDoc(anonDb,
+    doc(anonDb, "communityThemeAccountDeletion", ANONYMOUS), deletionRequest(ANONYMOUS, "delete")));
+  await assertSucceeds(getDoc(anonDb, doc(anonDb, "communityThemeAccountDeletion", ANONYMOUS)));
+});
