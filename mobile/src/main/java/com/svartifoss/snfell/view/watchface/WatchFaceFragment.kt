@@ -31,6 +31,8 @@ import androidx.preference.PreferenceManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -151,6 +153,22 @@ class WatchFaceFragment : Fragment() {
     private var _binding: FragmentWatchFaceBinding? = null
     private val binding get() = _binding!!
     private var preview: WatchPreviewView? = null
+
+    /**
+     * The enlarged copy, while the full-screen dialog is open.
+     *
+     * Held so the live feed keeps reaching it: the docked miniature is driven by a media callback
+     * and a 500ms ticker, and a full-screen copy that only received a snapshot at open time would
+     * freeze its progress ring and stop following the track -- on the screen a person opened
+     * precisely to look at it closely.
+     */
+    private var fullScreenPreview: WatchPreviewView? = null
+
+    /** Every preview currently on screen. Content and surface changes must reach all of them. */
+    private fun previews(action: (WatchPreviewView) -> Unit) {
+        preview?.let(action)
+        fullScreenPreview?.let(action)
+    }
     private var mediaController: MediaController? = null
     private var mediaCallbackRegistered = false
     private var previewPlayingConfig = true
@@ -167,7 +185,7 @@ class WatchFaceFragment : Fragment() {
             ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK && _binding != null) {
             updateThemeCard()
-            preview?.refresh()
+            previews { it.refresh() }
         }
     }
 
@@ -178,9 +196,9 @@ class WatchFaceFragment : Fragment() {
             selectedSection = nextSection
             lastSelectedSection = position
             if (sectionChanged) selectedPreviewPreference = null
-            preview?.showSection(nextSection)
+            previews { it.showSection(nextSection) }
             if (!sectionChanged) {
-                selectedPreviewPreference?.let { preview?.showPreference(it) }
+                selectedPreviewPreference?.let { key -> previews { it.showPreference(key) } }
             }
         }
     }
@@ -234,7 +252,7 @@ class WatchFaceFragment : Fragment() {
                 MiniButtonIconLoader.loadConfiguredIcons(context, playing)
             }
             // A media-state callback may have switched configs while this disk read was running.
-            if (playing == previewPlayingConfig) preview?.setButtonIcons(icons)
+            if (playing == previewPlayingConfig) previews { it.setButtonIcons(icons) }
         }
     }
 
@@ -308,6 +326,17 @@ class WatchFaceFragment : Fragment() {
         }
         binding.root.addOnLayoutChangeListener(previewLayoutListener)
         bindPreviewSwipe()
+        // The horizontal drag over the preview already switches sections, so this is a click
+        // rather than any other gesture: the two do not compete, and a tap on something that
+        // looks like a watch reads as "show me this properly".
+        binding.watchPreview.isClickable = true
+        binding.watchPreview.isFocusable = true
+        binding.watchPreview.setOnClickListener { openFullScreenPreview() }
+        ViewCompat.replaceAccessibilityAction(
+                binding.watchPreview,
+                AccessibilityActionCompat.ACTION_CLICK,
+                getString(R.string.watch_preview_expand),
+                null)
         tintNavigation()
         binding.watchThemeCard.setOnClickListener {
             val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
@@ -323,12 +352,14 @@ class WatchFaceFragment : Fragment() {
         }
         (activity as? MainActivity)?.connectedWatchInfo()?.observe(viewLifecycleOwner) { info ->
             val watch = info?.watchInfo
-            preview?.setDeviceProfile(
-                round = watch?.roundWatch,
-                displayWidthPx = watch?.displayWidth ?: 0,
-                displayHeightPx = watch?.displayHeight ?: 0,
-                density = watch?.displayDensity ?: 1f
-            )
+            previews {
+                it.setDeviceProfile(
+                    round = watch?.roundWatch,
+                    displayWidthPx = watch?.displayWidth ?: 0,
+                    displayHeightPx = watch?.displayHeight ?: 0,
+                    density = watch?.displayDensity ?: 1f
+                )
+            }
         }
         GlobalButtonConfig.playingConfigSaved.observe(viewLifecycleOwner) {
             if (previewPlayingConfig) loadMiniButtons()
@@ -368,7 +399,37 @@ class WatchFaceFragment : Fragment() {
     ) {
         if (_binding == null || selectedSection != section) return
         selectedPreviewPreference = key
-        preview?.showPreference(key, candidateValue)
+        previews { it.showPreference(key, candidateValue) }
+    }
+
+    /**
+     * Opens the enlarged preview on exactly the surface the docked one is showing.
+     *
+     * The full-screen view starts from the same live preferences, so it only has to be told the
+     * *context* the docked miniature is in — the section, and the specific preference being
+     * edited if there is one, since that is what routes to a non-player surface. The live content
+     * arrives immediately afterwards through the ordinary push paths, which now address both.
+     */
+    private fun openFullScreenPreview() {
+        val activity = activity ?: return
+        val docked = preview ?: return
+        fullScreenPreview = WatchPreviewFullScreen.show(
+                activity,
+                onDismiss = { fullScreenPreview = null }
+        ) { large ->
+            large.showSection(selectedSection)
+            val focused = selectedPreviewPreference
+            if (focused != null) {
+                large.showPreference(focused)
+            } else {
+                large.showPreviewSurface(docked.currentSurface)
+            }
+        } ?: return
+        // Re-run the live pushes so the enlarged copy starts with the current track and playback
+        // rather than waiting for the next media callback, which may be a whole track away.
+        pushNowPlaying(mediaController?.metadata)
+        pushPlayback()
+        loadMiniButtons()
     }
 
     /** Exposes the preview's live album accent triple to the color-treatment picker dialog
@@ -511,11 +572,13 @@ class WatchFaceFragment : Fragment() {
     private fun pushNowPlaying(metadata: MediaMetadata?) {
         val art = metadata?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
                 ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ART)
-        preview?.setNowPlaying(
-                art,
-                metadata?.getString(MediaMetadata.METADATA_KEY_TITLE),
-                metadata?.getString(MediaMetadata.METADATA_KEY_ARTIST)
-        )
+        previews {
+            it.setNowPlaying(
+                    art,
+                    metadata?.getString(MediaMetadata.METADATA_KEY_TITLE),
+                    metadata?.getString(MediaMetadata.METADATA_KEY_ARTIST)
+            )
+        }
         pushSourceGlyph()
     }
 
@@ -533,12 +596,12 @@ class WatchFaceFragment : Fragment() {
         val context = context ?: return
         val packageName = mediaController?.packageName
         if (packageName == null) {
-            preview?.setSourceGlyph(null, tintable = true)
+            previews { it.setSourceGlyph(null, tintable = true) }
             return
         }
         val template = AppGlyphStore.drawable(context, packageName)
         if (template != null) {
-            preview?.setSourceGlyph(template.toBitmapOrNull(), tintable = true)
+            previews { it.setSourceGlyph(template.toBitmapOrNull(), tintable = true) }
             return
         }
         val launcher = try {
@@ -546,7 +609,7 @@ class WatchFaceFragment : Fragment() {
         } catch (e: PackageManager.NameNotFoundException) {
             null
         }
-        preview?.setSourceGlyph(launcher?.toBitmapOrNull(), tintable = false)
+        previews { it.setSourceGlyph(launcher?.toBitmapOrNull(), tintable = false) }
     }
 
     private fun Drawable.toBitmapOrNull(): Bitmap? {
@@ -571,7 +634,7 @@ class WatchFaceFragment : Fragment() {
         val controller = mediaController
         val state = controller?.playbackState
         if (controller == null || state == null) {
-            preview?.setPlayback(null, -1, -1)
+            previews { it.setPlayback(null, -1, -1) }
             if (!previewPlayingConfig) {
                 previewPlayingConfig = true
                 loadMiniButtons()
@@ -591,7 +654,7 @@ class WatchFaceFragment : Fragment() {
         } else {
             state.position
         }
-        preview?.setPlayback(playing, position, duration)
+        previews { it.setPlayback(playing, position, duration) }
     }
 
     private fun restartPlaybackTicker() {
@@ -626,6 +689,9 @@ class WatchFaceFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        // The dialog holds a view that would outlive this fragment's view tree, and it is fed by
+        // the ticker being torn down here, so it cannot be left standing.
+        fullScreenPreview = null
         tickHandler.removeCallbacks(playbackTick)
         binding.root.removeOnLayoutChangeListener(previewLayoutListener)
         binding.watchPreviewPanel.setOnTouchListener(null)

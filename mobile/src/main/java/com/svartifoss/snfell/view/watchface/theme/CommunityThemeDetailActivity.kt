@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.button.MaterialButton
@@ -29,6 +30,7 @@ import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.music.ActiveMediaSessionProvider
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.applyLyraDialogStyling
+import com.svartifoss.snfell.view.watchface.WatchPreviewFullScreen
 import com.svartifoss.snfell.view.watchface.WatchPreviewView
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
@@ -86,6 +88,21 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
     private lateinit var themeRepository: WatchThemeRepository
     private lateinit var previewCard: MaterialCardView
     private lateinit var preview: WatchPreviewView
+
+    /**
+     * The enlarged copy, while the full-screen dialog is open.
+     *
+     * The detail preview is a synthetic render of a theme nobody has installed, which is the only
+     * way to see it before adding it -- and at card size that is a hard thing to judge. Held so
+     * the surface toggle and the local-artwork callback keep reaching it.
+     */
+    private var fullScreenPreview: WatchPreviewView? = null
+
+    /** The card preview plus, while it is open, its full-screen copy. */
+    private fun previews(action: (WatchPreviewView) -> Unit) {
+        if (::preview.isInitialized) action(preview)
+        fullScreenPreview?.let(action)
+    }
     private lateinit var previewLabel: TextView
     private lateinit var detailName: TextView
     private lateinit var detailAuthor: TextView
@@ -164,6 +181,16 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
                 true)
 
         findViewById<ImageButton>(R.id.button_back).setOnClickListener { finish() }
+        // The surface toggle below the card already answers "show me another screen"; this
+        // answers "show me this one properly", which the card is too small to do.
+        preview.isClickable = true
+        preview.isFocusable = true
+        preview.setOnClickListener { openFullScreenPreview() }
+        ViewCompat.replaceAccessibilityAction(
+                preview,
+                AccessibilityActionCompat.ACTION_CLICK,
+                getString(R.string.watch_preview_expand),
+                null)
         themeActionButton.setOnClickListener { handleThemeAction() }
         likeButton.setOnClickListener { toggleLike() }
         surfaceToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
@@ -219,7 +246,9 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         unbindLocalArtwork()
-        if (::preview.isInitialized) preview.setNowPlaying(null, null, null)
+        previews { it.setNowPlaying(null, null, null) }
+        // Clearing the artwork above must reach it, so it is released only afterwards.
+        fullScreenPreview = null
         super.onDestroy()
     }
 
@@ -296,9 +325,28 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         loadCurrentLike()
     }
 
+    /**
+     * Opens the enlarged preview on the surface the card is currently showing.
+     *
+     * It re-applies the parsed profile rather than sharing state with the card's view: a theme
+     * profile is the entire input this screen renders from, and passing it again is what keeps the
+     * enlarged copy isolated from the viewer's own appearance in exactly the same way.
+     */
+    private fun openFullScreenPreview() {
+        val profile = parsedProfile ?: return
+        fullScreenPreview = WatchPreviewFullScreen.show(
+                this,
+                onDismiss = { fullScreenPreview = null }
+        ) { large ->
+            large.setThemeProfile(profile, useLocalArtwork = true)
+            large.showPreviewSurface(selectedSurface.previewSurface)
+        } ?: return
+        pushLocalArtwork(localArtworkController?.metadata)
+    }
+
     private fun showSurface(surface: PreviewSurface) {
         selectedSurface = surface
-        preview.showPreviewSurface(surface.previewSurface)
+        previews { it.showPreviewSurface(surface.previewSurface) }
         val surfaceName = getString(surface.labelRes)
         previewLabel.text = getString(R.string.community_theme_detail_preview_label, surfaceName)
         preview.contentDescription = getString(
@@ -351,7 +399,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
     private fun pushLocalArtwork(metadata: MediaMetadata?) {
         val artwork = metadata?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
                 ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ART)
-        preview.setNowPlaying(artwork, null, null)
+        previews { it.setNowPlaying(artwork, null, null) }
     }
 
     /** Reads only the current person's private vote; public counts stay in the static catalogue. */

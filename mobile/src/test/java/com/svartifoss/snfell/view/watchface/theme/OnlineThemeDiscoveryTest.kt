@@ -118,6 +118,54 @@ class OnlineThemeDiscoveryTest {
         assertEquals(listOf(newestLiked, olderLiked), results)
     }
 
+    @Test
+    fun `installed themes are hidden by default and returned once the filter is off`() {
+        val installed = theme(id = "installed", name = "Already Mine")
+        val fresh = theme(id = "fresh", name = "Brand New")
+
+        val hidden = OnlineThemeDiscovery.discover(
+                themes = listOf(installed, fresh),
+                request = OnlineThemeDiscoveryRequest(),
+                installedThemeIds = setOf(installed.id))
+        assertEquals(listOf(fresh), hidden)
+
+        val shown = OnlineThemeDiscovery.discover(
+                themes = listOf(installed, fresh),
+                request = OnlineThemeDiscoveryRequest(hideInstalled = false),
+                installedThemeIds = setOf(installed.id))
+        assertEquals(setOf(installed, fresh), shown.toSet())
+    }
+
+    /**
+     * Asking to see what you liked and being shown nothing because you also installed it would
+     * read as a broken filter, so Liked wins over the default hide.
+     */
+    @Test
+    fun `liked filter overrides hiding an installed theme`() {
+        val installedAndLiked = theme(id = "both", name = "Kept Favourite")
+
+        val results = OnlineThemeDiscovery.discover(
+                themes = listOf(installedAndLiked),
+                request = OnlineThemeDiscoveryRequest(likedOnly = true),
+                likedThemeIds = setOf(installedAndLiked.id),
+                installedThemeIds = setOf(installedAndLiked.id))
+
+        assertEquals(listOf(installedAndLiked), results)
+    }
+
+    /** An unknown installed id must never remove a catalogue entry it does not name. */
+    @Test
+    fun `hiding installed themes matches on id alone`() {
+        val theme = theme(id = "catalogue-id", name = "Untouched")
+
+        val results = OnlineThemeDiscovery.discover(
+                themes = listOf(theme),
+                request = OnlineThemeDiscoveryRequest(),
+                installedThemeIds = setOf("some-other-local-id"))
+
+        assertEquals(listOf(theme), results)
+    }
+
     private fun theme(
             id: String,
             name: String = "Theme $id",

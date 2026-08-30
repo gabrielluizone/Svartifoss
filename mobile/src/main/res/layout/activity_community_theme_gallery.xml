@@ -165,6 +165,15 @@
                     android:text="@string/online_theme_sort_newest_short" />
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/community_gallery_installed_filter"
+                    style="@style/LyraCommunityGalleryChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/online_theme_filter_not_installed"
+                    app:chipIcon="@drawable/ic_download_for_offline"
+                    app:chipIconVisible="true" />
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/community_gallery_liked_filter"
                     style="@style/LyraCommunityGalleryChip"
                     android:layout_width="wrap_content"

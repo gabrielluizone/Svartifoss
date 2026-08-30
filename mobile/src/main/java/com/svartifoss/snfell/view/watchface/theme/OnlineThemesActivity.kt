@@ -100,6 +100,7 @@ class OnlineThemesActivity : AppCompatActivity() {
     private lateinit var filterScroll: View
     private lateinit var layoutFilterChip: Chip
     private lateinit var sortChip: Chip
+    private lateinit var installedFilterChip: Chip
     private lateinit var likedFilterChip: Chip
     private lateinit var clearFiltersChip: Chip
     private lateinit var galleryList: RecyclerView
@@ -137,6 +138,16 @@ class OnlineThemesActivity : AppCompatActivity() {
      */
     private val likeDeltas: MutableMap<String, Int> = mutableMapOf()
 
+    /**
+     * Ids of catalogue themes this phone has already installed, mirrored from the local library.
+     *
+     * Held here as well as in the adapter because the “New to me” filter has to run inside
+     * discovery, before a card exists to ask. It is derived from the same provenance the adapter
+     * reads, through one shared helper, so the row's installed marker and the filter can never
+     * disagree about what counts as installed.
+     */
+    private var installedThemeIds: Set<String> = emptySet()
+
     /** Loaded only after an explicit request for the private “Liked” filter. */
     private var likedThemeIds: Set<String> = emptySet()
     private var likedThemesLoading = false
@@ -157,7 +168,9 @@ class OnlineThemesActivity : AppCompatActivity() {
             // The detail screen is the only place that can install a gallery profile. Re-read the
             // local library when it returns so its card immediately reflects an installed/update
             // state without relying on a mutable object passed through an Intent.
-            adapter.updateInstalled(themeRepository.load())
+            val localProfiles = themeRepository.load()
+            installedThemeIds = installedIdsOf(localProfiles)
+            adapter.updateInstalled(localProfiles)
             val data = result.data
             val themeId = data?.getStringExtra(CommunityThemeDetailActivity.EXTRA_ID)
             val changedLike = data?.let { intent ->
@@ -225,7 +238,8 @@ class OnlineThemesActivity : AppCompatActivity() {
                 sort = savedInstanceState?.getString(STATE_SORT)
                         ?.let { saved -> OnlineThemeSort.values().firstOrNull { it.name == saved } }
                         ?: OnlineThemeSort.NEWEST,
-                likedOnly = savedInstanceState?.getBoolean(STATE_LIKED_ONLY) ?: false)
+                likedOnly = savedInstanceState?.getBoolean(STATE_LIKED_ONLY) ?: false,
+                hideInstalled = savedInstanceState?.getBoolean(STATE_HIDE_INSTALLED) ?: true)
 
         state = findViewById(R.id.community_gallery_state)
         stateIcon = findViewById(R.id.community_gallery_state_icon)
@@ -240,6 +254,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         filterScroll = findViewById(R.id.community_gallery_filter_scroll)
         layoutFilterChip = findViewById(R.id.community_gallery_layout_filter)
         sortChip = findViewById(R.id.community_gallery_sort)
+        installedFilterChip = findViewById(R.id.community_gallery_installed_filter)
         likedFilterChip = findViewById(R.id.community_gallery_liked_filter)
         clearFiltersChip = findViewById(R.id.community_gallery_clear_filters)
         galleryList = findViewById(R.id.community_gallery_list)
@@ -286,6 +301,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         clearFiltersChip.setOnClickListener { clearDiscoveryControls() }
         layoutFilterChip.setOnClickListener { showLayoutFilterDialog() }
         sortChip.setOnClickListener { showSortDialog() }
+        installedFilterChip.setOnClickListener { toggleInstalledFilter() }
         likedFilterChip.setOnClickListener { toggleLikedFilter() }
         searchInput.apply {
             setText(discoveryRequest.query)
@@ -346,6 +362,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         }
         outState.putString(STATE_SORT, discoveryRequest.sort.name)
         outState.putBoolean(STATE_LIKED_ONLY, discoveryRequest.likedOnly)
+        outState.putBoolean(STATE_HIDE_INSTALLED, discoveryRequest.hideInstalled)
         outState.putStringArrayList(STATE_LIKED_IDS, ArrayList(likedThemeIds))
         outState.putBundle(STATE_LIKE_DELTAS, Bundle().apply {
             likeDeltas.forEach { (id, delta) -> putInt(id, delta) }
@@ -388,7 +405,9 @@ class OnlineThemesActivity : AppCompatActivity() {
                 // use a profile parsed for the preceding revision.
                 discardLoadedProfiles()
                 allThemes = themes
-                adapter.replaceCatalog(themes, themeRepository.load())
+                val localProfiles = themeRepository.load()
+                installedThemeIds = installedIdsOf(localProfiles)
+                adapter.replaceCatalog(themes, localProfiles)
                 updateAvailableFaces()
                 updateDiscoveryControls()
                 setDiscoveryAvailable(themes.isNotEmpty())
@@ -654,6 +673,7 @@ class OnlineThemesActivity : AppCompatActivity() {
     private fun updateDiscoveryControls() {
         updateLayoutFilterControl()
         updateSortControl()
+        updateInstalledFilterControl()
         updateLikedFilterControl()
         updateClearControl()
         applyRuntimeAccent(refreshCards = false)
@@ -706,6 +726,7 @@ class OnlineThemesActivity : AppCompatActivity() {
                 layoutFilterChip,
                 discoveryRequest.baseFace !is OnlineThemeBaseFaceFilter.All)
         styleFilterChip(sortChip, selected = false)
+        styleFilterChip(installedFilterChip, discoveryRequest.hideInstalled)
         styleFilterChip(likedFilterChip, discoveryRequest.likedOnly)
         styleClearFiltersChip()
 
@@ -859,6 +880,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         searchLayout.isEnabled = available
         layoutFilterChip.isEnabled = available && availableFaces.isNotEmpty()
         sortChip.isEnabled = available
+        installedFilterChip.isEnabled = available
         likedFilterChip.isEnabled = available && !likedThemesLoading
         applyRuntimeAccent(refreshCards = false)
     }
@@ -869,7 +891,10 @@ class OnlineThemesActivity : AppCompatActivity() {
                     discoveryRequest.likedOnly
 
     private fun hasNonDefaultDiscoveryControls(): Boolean =
-            hasActiveFilters() || discoveryRequest.sort != OnlineThemeSort.NEWEST
+            hasActiveFilters() ||
+                    discoveryRequest.sort != OnlineThemeSort.NEWEST ||
+                    // Off is the non-default state here: the filter ships on.
+                    !discoveryRequest.hideInstalled
 
     private fun clearDiscoveryControls() {
         if (likedThemesLoading || !hasNonDefaultDiscoveryControls()) return
@@ -881,6 +906,35 @@ class OnlineThemesActivity : AppCompatActivity() {
         updateDiscoveryControls()
         if (allThemes.isNotEmpty()) applyDiscovery(resetScroll = true)
     }
+
+    /**
+     * Purely local, unlike every other filter chip: it reads the installed library, never Firebase
+     * or the network, so it can be toggled freely and can ship enabled.
+     */
+    private fun toggleInstalledFilter() {
+        discoveryRequest = discoveryRequest.copy(hideInstalled = !discoveryRequest.hideInstalled)
+        updateDiscoveryControls()
+        if (allThemes.isNotEmpty()) applyDiscovery(resetScroll = true)
+    }
+
+    private fun updateInstalledFilterControl() {
+        installedFilterChip.setText(R.string.online_theme_filter_not_installed)
+        styleFilterChip(installedFilterChip, discoveryRequest.hideInstalled)
+        installedFilterChip.setChipIconResource(if (discoveryRequest.hideInstalled) {
+            R.drawable.ic_download_for_offline
+        } else {
+            R.drawable.ic_cloud_download
+        })
+        installedFilterChip.contentDescription = getString(if (discoveryRequest.hideInstalled) {
+            R.string.online_theme_filter_not_installed_selected
+        } else {
+            R.string.online_theme_filter_not_installed_off
+        })
+    }
+
+    /** One derivation of "installed", shared with the adapter's per-card marker. */
+    private fun installedIdsOf(localProfiles: List<WatchThemeProfile>): Set<String> =
+            localProfiles.mapNotNullTo(mutableSetOf()) { it.publishedTheme?.id }
 
     /** The only gallery control that may read private Firebase documents or offer sign-in. */
     private fun toggleLikedFilter() {
@@ -943,7 +997,8 @@ class OnlineThemesActivity : AppCompatActivity() {
         val visibleThemes = OnlineThemeDiscovery.discover(
                 themes = allThemes,
                 request = discoveryRequest,
-                likedThemeIds = likedThemeIds)
+                likedThemeIds = likedThemeIds,
+                installedThemeIds = installedThemeIds)
         adapter.submit(visibleThemes)
         if (resetScroll && visibleThemes.isNotEmpty()) galleryList.scrollToPosition(0)
         updateClearControl()
@@ -1079,10 +1134,35 @@ class OnlineThemesActivity : AppCompatActivity() {
     }
 
     private fun showSearchEmptyState() {
+        /*
+         * "Nothing matches these filters" is misleading when the only filter doing the hiding is
+         * the one that ships on and the real answer is that you already have them all. Detected by
+         * asking discovery the same question with that filter off, rather than by counting ids, so
+         * the search terms and layout chip still apply.
+         */
+        val onlyHiddenByInstalled = discoveryRequest.hideInstalled &&
+                allThemes.isNotEmpty() &&
+                OnlineThemeDiscovery.discover(
+                        themes = allThemes,
+                        request = discoveryRequest.copy(hideInstalled = false),
+                        likedThemeIds = likedThemeIds,
+                        installedThemeIds = installedThemeIds).isNotEmpty()
         showMessageState(
-                icon = R.drawable.ic_tune,
-                title = R.string.online_theme_search_empty,
-                message = R.string.online_theme_search_empty_hint,
+                icon = if (onlyHiddenByInstalled) {
+                    R.drawable.ic_download_for_offline
+                } else {
+                    R.drawable.ic_tune
+                },
+                title = if (onlyHiddenByInstalled) {
+                    R.string.online_theme_search_empty_all_installed
+                } else {
+                    R.string.online_theme_search_empty
+                },
+                message = if (onlyHiddenByInstalled) {
+                    R.string.online_theme_search_empty_all_installed_hint
+                } else {
+                    R.string.online_theme_search_empty_hint
+                },
                 clear = hasNonDefaultDiscoveryControls())
         // The central recovery action is clearer than showing two simultaneous Clear buttons.
         clearFiltersChip.visibility = View.GONE
@@ -1454,6 +1534,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         const val STATE_BASE_FACE = "online_themes.base_face"
         const val STATE_SORT = "online_themes.sort"
         const val STATE_LIKED_ONLY = "online_themes.liked_only"
+        const val STATE_HIDE_INSTALLED = "online_themes.hide_installed"
         const val STATE_LIKED_IDS = "online_themes.liked_ids"
         const val STATE_LIKE_DELTAS = "online_themes.like_deltas"
         const val STATE_SUBMISSION_QUEUE = "online_themes.submission_queue"

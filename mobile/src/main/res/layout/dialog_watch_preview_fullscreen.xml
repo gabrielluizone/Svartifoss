@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    Full-screen version of the Watch tab / Community theme miniature.
+
+    The preview is square and centred, sized at runtime from the shorter screen edge so the round
+    face keeps its aspect on any phone and in either orientation. Tapping anywhere closes it: the
+    dialog exists to enlarge one image, so an explicit close button would be the only control on a
+    screen whose whole content is that image.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/watch_preview_fullscreen_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lyra_background"
+    android:clickable="true"
+    android:focusable="true">
+
+    <com.svartifoss.snfell.view.watchface.WatchPreviewView
+        android:id="@+id/watch_preview_fullscreen"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/watch_preview_description"
+        android:importantForAccessibility="yes" />
+
+    <TextView
+        android:id="@+id/watch_preview_fullscreen_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="28dp"
+        android:fontFamily="@font/google_sans"
+        android:importantForAccessibility="no"
+        android:includeFontPadding="false"
+        android:text="@string/watch_preview_fullscreen_dismiss"
+        android:textColor="@color/lyra_text_secondary"
+        android:textSize="13sp"
+        tools:ignore="TextContrastCheck" />
+
+</FrameLayout>

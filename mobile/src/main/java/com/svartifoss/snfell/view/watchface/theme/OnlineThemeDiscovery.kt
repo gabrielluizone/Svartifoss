@@ -23,7 +23,16 @@ data class OnlineThemeDiscoveryRequest(
         val baseFace: OnlineThemeBaseFaceFilter = OnlineThemeBaseFaceFilter.All,
         val sort: OnlineThemeSort = OnlineThemeSort.NEWEST,
         /** Set only after an explicit authenticated “Liked” filter request. */
-        val likedOnly: Boolean = false
+        val likedOnly: Boolean = false,
+        /**
+         * Hides themes this phone has already installed. **On by default**: the gallery exists to
+         * find something new, and a theme already in My themes is the one result that cannot be
+         * that. It reads a local set, never the network, so it costs nothing to leave on.
+         *
+         * Deliberately not folded into [likedOnly]-style opt-in: this is a default the user turns
+         * *off* to see everything, which is why [hasActiveDefaults] treats it as unremarkable.
+         */
+        val hideInstalled: Boolean = true
 )
 
 /**
@@ -44,7 +53,8 @@ object OnlineThemeDiscovery {
     fun discover(
             themes: List<OnlineThemeSummary>,
             request: OnlineThemeDiscoveryRequest,
-            likedThemeIds: Set<String> = emptySet()
+            likedThemeIds: Set<String> = emptySet(),
+            installedThemeIds: Set<String> = emptySet()
     ): List<OnlineThemeSummary> {
         val terms = normalize(request.query).split(' ').filter(String::isNotEmpty)
         val selectedFace = when (val filter = request.baseFace) {
@@ -54,6 +64,13 @@ object OnlineThemeDiscovery {
 
         return themes.asSequence()
                 .filter { summary -> !request.likedOnly || summary.id in likedThemeIds }
+                // Liked wins over hidden-when-installed: asking to see what you liked and being
+                // shown nothing because you also installed it would read as a broken filter.
+                .filter { summary ->
+                    !request.hideInstalled ||
+                            request.likedOnly ||
+                            summary.id !in installedThemeIds
+                }
                 .filter { summary ->
                     selectedFace == null || normalize(summary.baseFace) == selectedFace
                 }

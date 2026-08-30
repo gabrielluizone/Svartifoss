@@ -58,6 +58,8 @@
 
     <string name="watch_live_preview">Live watch preview</string>
     <string name="watch_preview_description">Live preview of the selected watch surface. Changes appear here before you try them on the watch.</string>
+    <string name="watch_preview_expand">Open a larger preview</string>
+    <string name="watch_preview_fullscreen_dismiss">Tap anywhere to close</string>
     <string name="watch_section_style">Player</string>
     <string name="watch_section_style_description">Choose the player layout and how its title, time and progress behave.</string>
     <string name="watch_section_background">Background</string>

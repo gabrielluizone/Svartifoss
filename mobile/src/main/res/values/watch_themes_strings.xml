@@ -54,6 +54,11 @@
     <string name="online_theme_filter_all">All</string>
     <string name="online_theme_filter_layout_dialog">Filter by layout</string>
     <string name="online_theme_filter_layout_selected">Layout: %1$s</string>
+    <string name="online_theme_filter_not_installed">New to me</string>
+    <string name="online_theme_filter_not_installed_selected">Hiding themes you already added</string>
+    <string name="online_theme_filter_not_installed_off">Showing themes you already added</string>
+    <string name="online_theme_search_empty_all_installed">You have already added every community theme.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Turn off “New to me” to see them again.</string>
     <string name="online_theme_filter_liked">Liked</string>
     <string name="online_theme_filter_liked_selected">Showing liked themes</string>
     <string name="online_theme_filter_liked_loading">Loading likes…</string>

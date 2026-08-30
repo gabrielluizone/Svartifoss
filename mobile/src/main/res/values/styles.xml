@@ -75,6 +75,20 @@
         <item name="fontFamily">@font/google_sans</item>
     </style>
 
+    <!-- The enlarged watch miniature. Deliberately not LyraDialogBase: that one paints the
+         rounded 12dp card every ordinary dialog sits in, and here the content *is* the whole
+         screen, so the card's corners and inset would frame a face that should be floating on
+         the app background. No title bar, no dim scrim over an opaque full-screen background. -->
+    <style name="LyraFullScreenPreviewDialog" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="fontFamily">@font/google_sans</item>
+    </style>
+
     <!-- AlertDialog.Builder dialogs (playlist add, permission prompts, ...) don't inflate our
          popup layouts, so the Lyra look has to come from the dialog theme itself: 12dp window
          corners and the metric-fixed bar buttons. Colors that must follow the runtime accent

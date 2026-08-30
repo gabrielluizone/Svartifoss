@@ -348,6 +348,8 @@ class WatchPreviewView @JvmOverloads constructor(
     private var demoMiniButtonIcons: List<PreviewActionIcon> = emptyList()
 
     private var surface = PreviewSurface.PLAYER
+    /** Lets a full-screen copy of this preview open on whatever surface is currently shown. */
+    val currentSurface: PreviewSurface get() = surface
     private var focusedPreference: String? = null
     private var candidateKey: String? = null
     private var candidateValue: Any? = null
