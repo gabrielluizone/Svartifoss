@@ -96,6 +96,7 @@ import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.FrostedEdges
 import com.svartifoss.snfell.common.BitmapBlur
 import com.svartifoss.snfell.common.ActivityVisibility
@@ -112,7 +113,7 @@ import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.QuickPanelButtons
-import com.svartifoss.snfell.common.CarouselCardShape
+import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.IdleScreenAction
 import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.common.RotaryAction
@@ -128,7 +129,9 @@ import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.common.SwipeGesture
 import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.WatchTypography
+import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.TitleTextMode
 import com.svartifoss.snfell.common.resolveAodArtwork
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_DOUBLE_TAP
@@ -153,7 +156,6 @@ import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.config.WatchActionConfigProvider
 import com.svartifoss.snfell.watch.model.Notification
 import com.svartifoss.snfell.watch.theme.WatchTheme
-import com.svartifoss.snfell.watch.theme.lainFont
 import com.svartifoss.snfell.watch.theme.watchFontTypeface
 import com.svartifoss.snfell.watch.theme.flexTypeface
 import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
@@ -177,6 +179,8 @@ import com.svartifoss.snfell.watch.view.face.CarouselFace
 import com.svartifoss.snfell.watch.view.face.ChatFace
 import com.svartifoss.snfell.watch.view.face.NoteFace
 import com.svartifoss.snfell.watch.view.face.VerseFace
+import com.svartifoss.snfell.watch.view.face.RibbonFace
+import com.svartifoss.snfell.watch.view.face.FrameFace
 import com.svartifoss.snfell.watch.view.lyrics.LyricsUiState
 import com.svartifoss.snfell.watch.view.face.SplitFace
 import com.svartifoss.snfell.watch.view.face.QueueCard
@@ -188,6 +192,7 @@ import com.svartifoss.snfell.watch.view.face.MetadataFace
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceState
 import com.svartifoss.snfell.watch.view.face.ScreenTheme
 import com.svartifoss.snfell.watch.view.face.resolveMetadataVisibility
+import com.svartifoss.snfell.watch.view.face.shouldShowClassicSourceIcon
 import com.svartifoss.snfell.watch.view.face.shouldEnableCentralSeek
 import com.svartifoss.snfell.watch.view.face.shouldKeepEdgeSeekView
 import com.matejdro.wearutils.companionnotice.WearCompanionWatchActivity
@@ -243,6 +248,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
         /** The one face that renders the track's full metadata; see applyScreenFaceNow. */
         private const val FACE_METADATA = "metadata"
+
         private const val KEY_SEARCH_QUERY = "search_query"
 
         /** Leading size for a full-colour app-launcher icon in a quick-panel row. Kept in step
@@ -256,14 +262,17 @@ class MainActivity : WearCompanionWatchActivity(),
 
         /** The classic face's designed text sizes, which the user's size scale multiplies. Named
          *  so the initial setup and applyClassicTypography cannot drift out of step. */
-        private const val CLASSIC_TITLE_MAX_SP = 46f
-        private const val CLASSIC_TITLE_MIN_SP = 25f
-        private const val CLASSIC_ARTIST_MAX_SP = 16f
-        private const val CLASSIC_ARTIST_MIN_SP = 9f
+        private const val CLASSIC_TITLE_MAX_SP = FaceGeometry.Classic.TITLE_MAX_SP
+        private const val CLASSIC_TITLE_MIN_SP = FaceGeometry.Classic.TITLE_MIN_SP
+        private const val CLASSIC_ARTIST_MAX_SP = FaceGeometry.Classic.ARTIST_MAX_SP
+        private const val CLASSIC_ARTIST_MIN_SP = FaceGeometry.Classic.ARTIST_MIN_SP
 
         /** The awake clock's designed size - must match activity_main.xml's ambient_clock
          *  textSize, which the clock size percentage scales from. */
-        private const val CLASSIC_CLOCK_SP = 15f
+        private const val CLASSIC_CLOCK_SP = FaceGeometry.Classic.CLOCK_SP
+
+        /** The elapsed/total readout's designed size, matching text_playback_time in XML. */
+        private const val CLASSIC_TRACK_TIME_SP = FaceGeometry.Classic.TRACK_TIME_SP
 
         private const val MESSAGE_HIDE_VOLUME = 10
         private const val MESSAGE_UPDATE_CLOCK = 11
@@ -304,6 +313,9 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     private lateinit var binding: ActivityMainBinding
+    /** Captured before any per-face override is applied, so “Follow the design” can truly restore
+     *  the classic readout instead of retaining a font picked on the previously selected face. */
+    private lateinit var classicTrackTimeTypeface: Typeface
     private lateinit var vibrator: Vibrator
     private lateinit var ambientObserver: AmbientLifecycleObserver
 
@@ -321,8 +333,12 @@ class MainActivity : WearCompanionWatchActivity(),
     private var dimAlbumArt: Boolean = false
     private var albumArtStyle: String = "cover"
     /** Carousel's card outline, re-read with the other face-scoped appearance values. */
-    private val carouselCardShape = mutableStateOf(CarouselCardShape.ROUNDED)
+    private val carouselCardShape = mutableStateOf(CoverShape.ROUNDED)
+    /** Note's cover silhouette. Its own state beside [carouselCardShape] for the reason
+     *  MiscPreferences.WEAR_NOTE_COVER_SHAPE is its own key: two faces, two shapes. */
+    private val noteCoverShape = mutableStateOf(CoverShape.CIRCLE)
     private var playerBackgroundStyle: PlayerBackgroundStyle = PlayerBackgroundStyle.COVER
+    private var accentFloor: AccentFloorStyle = AccentFloorStyle.DEFAULT
     private var blurAlbumArtBackground: Boolean = false
     private var albumArtGrayscale: Boolean = false
     private var albumArtHidden: Boolean = false
@@ -420,10 +436,16 @@ class MainActivity : WearCompanionWatchActivity(),
      *  face ([applyClassicTypography]) and every Compose face (through the face state). */
     private var titleTypography = WatchTypography.IDENTITY_TEXT
     private var artistTypography = WatchTypography.IDENTITY_TEXT
+    private var trackTimeTypography = WatchTypography.IDENTITY_TEXT
     private var clockTypography = WatchTypography.IDENTITY_TEXT
-    /** Google Sans Flex's shared width/optical-size/grade/roundness axes - see
-     *  [WatchTypography.flexAxes]. Only consulted when the active font is actually Flex. */
+    /** Google Sans Flex axes for the global title/artist fallback family. */
     private var flexAxes = WatchTypography.IDENTITY_FLEX_AXES
+    /** Axes owned by explicit Flex overrides rather than by the global track family. */
+    private var titleFlexAxes = WatchTypography.IDENTITY_FLEX_AXES
+    private var artistFlexAxes = WatchTypography.IDENTITY_FLEX_AXES
+    private var clockFlexAxes = WatchTypography.IDENTITY_FLEX_AXES
+    private var lyricsFlexAxes = WatchTypography.IDENTITY_FLEX_AXES
+    private var trackTimeFlexAxes = WatchTypography.IDENTITY_FLEX_AXES
     private var sourceIconTypography = WatchTypography.IDENTITY_ICON
     private var showTrackTitle = true
     private var showTrackArtist = true
@@ -442,9 +464,13 @@ class MainActivity : WearCompanionWatchActivity(),
      *  visible on the expressive face, "none" leaves seeking to the rotary crown. */
     private var expressiveSeekMode: String = "central"
 
-    /** Title/artist typeface choice (MiscPreferences.WEAR_FONT), applied to every layout -
-     *  including the View-based classic face, which reads it directly (see applyWearFont). */
+    /** Global fallback typeface for title/artist text (MiscPreferences.WEAR_FONT). Individual
+     *  title and artist selections use this when they are set to "follow". */
     private var wearFontKey: String = "google_sans"
+    /** Raw per-title font selection. "follow" keeps [wearFontKey]. */
+    private var wearTitleFontKey: String = WatchTypography.TITLE_FONT_FOLLOW
+    /** Raw per-artist font selection. "follow" keeps [wearFontKey]. */
+    private var wearArtistFontKey: String = WatchTypography.ARTIST_FONT_FOLLOW
     /** Raw MiscPreferences.WEAR_CLOCK_FONT value - "follow" until the user picks a clock typeface.
      *  Resolved against [wearFontKey] through WatchTypography.clockFontKey at the point of use. */
     private var wearClockFontKey: String = WatchTypography.CLOCK_FONT_FOLLOW
@@ -452,6 +478,8 @@ class MainActivity : WearCompanionWatchActivity(),
      *  song lyrics, which keeps the serif the Verse face was designed around. Resolved by
      *  NowPlayingFaceState.lyricFont at the point of use. */
     private var wearLyricsFontKey: String = WatchTypography.LYRICS_FONT_FOLLOW
+    /** Raw track-time choice. “follow” intentionally restores each face's own numeric design. */
+    private var wearTrackTimeFontKey: String = WatchTypography.TRACK_TIME_FONT_FOLLOW
     /** Which blocks of the Metadata face are switched on - see TrackMetadataFields.Group. */
     private var metadataGroups: Set<TrackMetadataFields.Group> = emptySet()
 
@@ -467,7 +495,7 @@ class MainActivity : WearCompanionWatchActivity(),
     private val composeFaces = setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum",
             "material", "immersive", "depth", "carousel", "chat", "split", "note", "verse",
-            "metadata"
+            "metadata", "ribbon", "frame"
     )
 
     /** Mirrors [FourWayTouchLayout]'s own tap-feedback pulse at a higher z-order, drawn into
@@ -782,6 +810,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        classicTrackTimeTypeface = binding.textPlaybackTime.typeface
 
         // "Stop"/"Force stop" on the phone's notification now ends the watch app too; the player
         // is the bottom of the task, so closing here takes the queue/menu/picker with it.
@@ -826,10 +855,15 @@ class MainActivity : WearCompanionWatchActivity(),
                 "depth" -> DepthFace(state = faceState.value, listener = expressiveFaceListener)
                 "chat" -> ChatFace(state = faceState.value, listener = expressiveFaceListener)
                 "split" -> SplitFace(state = faceState.value, listener = expressiveFaceListener)
-                "note" -> NoteFace(state = faceState.value, listener = expressiveFaceListener)
+                "note" -> NoteFace(
+                        state = faceState.value,
+                        listener = expressiveFaceListener,
+                        coverShape = noteCoverShape.value)
                 "verse" -> VerseFace(state = faceState.value, listener = expressiveFaceListener)
                 "metadata" ->
                         MetadataFace(state = faceState.value, listener = expressiveFaceListener)
+                "ribbon" -> RibbonFace(state = faceState.value, listener = expressiveFaceListener)
+                "frame" -> FrameFace(state = faceState.value, listener = expressiveFaceListener)
                 "carousel" -> CarouselFace(
                         state = faceState.value,
                         listener = expressiveFaceListener,
@@ -1036,6 +1070,7 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.volume.observe(this, phoneVolumeListener)
         viewModel.popupVolumeBar.observe(this, volumeBarPopupListener)
         viewModel.openActionsMenu.observe(this, openActionsMenuListener)
+        viewModel.openQuickActionsPanel.observe(this, openQuickActionsPanelListener)
         viewModel.openPlaybackQueueScreen.observe(this, openPlaybackQueueScreenListener)
         viewModel.openLyricsScreen.observe(this, openLyricsScreenListener)
         viewModel.lyricsState.observe(this, lyricsStateObserver)
@@ -1365,7 +1400,11 @@ class MainActivity : WearCompanionWatchActivity(),
 
         binding.textTitle.visibility = if (visibility.title) View.VISIBLE else View.GONE
         binding.textArtist.visibility = if (visibility.artist) View.VISIBLE else View.GONE
-        applyClassicFont(title, artist)
+        // Unlike Compose's SourceIconGlyph, Classic's mark is a sibling View. Re-evaluate it
+        // after the artist line's resolved visibility so hiding an artist cannot leave an orphaned
+        // app icon; status copy remains visible and therefore keeps its adjacent mark.
+        applyClassicFont()
+        applyClassicSourceIcon()
 
         updateFaceState { face ->
             face.copy(
@@ -1384,27 +1423,52 @@ class MainActivity : WearCompanionWatchActivity(),
         syncScreenButtonsVisibility()
     }
 
-    /** Mirrors [NowPlayingFaceState.titleFont] for the View-based classic face: the Lain keyword
-     *  easter egg wins over the user's [wearFontKey] choice, matching every Compose face exactly. */
-    private fun applyClassicFont(title: String, artist: String) {
-        val effectiveKey = if (lainFont(title) != null || lainFont(artist) != null) {
+    /** Mirrors [NowPlayingFaceState.titleFont]/artistFont for the View-based classic face. */
+    private fun applyClassicFont() {
+        val specialEliteTriggered = SpecialEliteKeywordPolicy.matches(
+                binding.textTitle.text?.toString().orEmpty(),
+                binding.textArtist.text?.toString().orEmpty())
+        val titleKey = if (specialEliteTriggered) {
             "love_letter"
         } else {
-            wearFontKey
+            WatchTypography.titleFontKey(wearTitleFontKey, wearFontKey) ?: wearFontKey
         }
-        if (WatchTypography.isFlexFont(effectiveKey)) {
-            // Flex needs its own real variable-font instance per element (wght/slnt from that
-            // element's spec, plus the shared wdth/opsz/GRAD/ROND) rather than the generic
-            // weight-matching styledClassicTypeface applies to every other font - see flexTypeface.
-            binding.textTitle.typeface = flexTypeface(this, titleTypography, flexAxes)
-            binding.textArtist.typeface = flexTypeface(this, artistTypography, flexAxes)
-            applyQuickPanelFont()
-            return
+        val artistKey = if (specialEliteTriggered) {
+            "love_letter"
+        } else {
+            WatchTypography.artistFontKey(wearArtistFontKey, wearFontKey) ?: wearFontKey
         }
-        val base = watchFontTypeface(this, effectiveKey)
-        binding.textTitle.typeface = styledClassicTypeface(base, titleTypography)
-        binding.textArtist.typeface = styledClassicTypeface(base, artistTypography)
+
+        // Flex needs a real variable-font instance per line (wght/slnt from that line's spec,
+        // plus the axes owned by the selection that supplied Flex) rather than the generic
+        // weight-matching styledClassicTypeface used for every other family.
+        binding.textTitle.typeface = classicTrackTextTypeface(
+                titleKey,
+                titleTypography,
+                if (wearTitleFontKey == WatchTypography.FLEX_FONT_KEY) {
+                    titleFlexAxes
+                } else {
+                    flexAxes
+                })
+        binding.textArtist.typeface = classicTrackTextTypeface(
+                artistKey,
+                artistTypography,
+                if (wearArtistFontKey == WatchTypography.FLEX_FONT_KEY) {
+                    artistFlexAxes
+                } else {
+                    flexAxes
+                })
         applyQuickPanelFont()
+    }
+
+    private fun classicTrackTextTypeface(
+            key: String,
+            typography: WatchTypography.TextSpec,
+            axes: WatchTypography.FlexAxes
+    ): Typeface = if (WatchTypography.isFlexFont(key)) {
+        flexTypeface(this, typography, axes)
+    } else {
+        styledClassicTypeface(watchFontTypeface(this, key), typography)
     }
 
     /**
@@ -1417,7 +1481,11 @@ class MainActivity : WearCompanionWatchActivity(),
      */
     /** Null means "leave the layout's own typeface", i.e. the switch is off. */
     private fun quickPanelTypeface(): android.graphics.Typeface? =
-            if (faceBool(MiscPreferences.WEAR_FONT_ALL_SCREENS)) {
+            if (SpecialEliteKeywordPolicy.matches(
+                    binding.textTitle.text?.toString().orEmpty(),
+                    binding.textArtist.text?.toString().orEmpty())) {
+                watchFontTypeface(this, "love_letter")
+            } else if (faceBool(MiscPreferences.WEAR_FONT_ALL_SCREENS)) {
                 watchFontTypeface(this, wearFontKey)
             } else {
                 null
@@ -1488,9 +1556,37 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     /**
+     * Applies the independently configurable elapsed/total readout in the View-based Classic
+     * face. The identity choice keeps this layout's original family exactly; every picked family
+     * (including Flex) receives the same weight, slant, size, opacity and tracking deltas as the
+     * Compose faces and the phone preview.
+     */
+    private fun applyClassicTrackTimeTypography() {
+        val selectedKey = WatchTypography.trackTimeFontKey(wearTrackTimeFontKey)
+        binding.textPlaybackTime.typeface = when {
+            selectedKey == null && trackTimeTypography.isIdentity -> classicTrackTimeTypeface
+            WatchTypography.isFlexFont(selectedKey) ->
+                flexTypeface(this, trackTimeTypography, trackTimeFlexAxes)
+            else -> {
+                val base = if (selectedKey == null) {
+                    classicTrackTimeTypeface
+                } else {
+                    watchFontTypeface(this, selectedKey)
+                }
+                styledClockTypeface(base, trackTimeTypography)
+            }
+        }
+        binding.textPlaybackTime.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                trackTimeTypography.scaled(CLASSIC_TRACK_TIME_SP))
+        binding.textPlaybackTime.letterSpacing = trackTimeTypography.trackingEm
+        binding.textPlaybackTime.alpha = trackTimeTypography.alpha
+    }
+
+    /**
      * Applies the size/opacity/tracking half of the typography preferences to the classic face.
      * Weight and slant travel with the typeface instead ([applyClassicFont]), which also has to run
-     * on every track change for the Lain easter egg.
+     * on every track change when the selected typography changes.
      *
      * Opacity goes on the View's own alpha rather than into the text colour: the artist line's
      * colour is recomputed from the album palette on every metadata update
@@ -1507,9 +1603,8 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.textArtist.letterSpacing = artistTypography.trackingEm
         binding.textTitle.alpha = titleTypography.alpha
         binding.textArtist.alpha = artistTypography.alpha
-        applyClassicFont(
-                binding.textTitle.text?.toString().orEmpty(),
-                binding.textArtist.text?.toString().orEmpty())
+        applyClassicFont()
+        applyClassicTrackTimeTypography()
         applyClassicSourceIcon()
     }
 
@@ -1638,29 +1733,40 @@ class MainActivity : WearCompanionWatchActivity(),
      *  artwork - [inAmbient] is the reliable signal for that. */
     private fun applyClassicSourceIcon() {
         val iconView = binding.sourceIconClassic
-        val icon = latestSourceIcon.takeUnless { inAmbient }
-        if (icon == null) {
+        val icon = latestSourceIcon
+        val artistVisible = binding.textArtist.visibility == View.VISIBLE &&
+                !binding.textArtist.text.isNullOrBlank()
+        if (!shouldShowClassicSourceIcon(
+                        hasSourceIcon = icon != null,
+                        artistVisible = artistVisible,
+                        ambient = inAmbient)) {
             iconView.visibility = View.GONE
             iconView.setImageDrawable(null)
             return
         }
+
+        // The predicate above has established this, but keep the nullability explicit to make the
+        // bitmap hand-off below safe if its implementation changes independently later.
+        val sourceIcon = icon ?: return
 
         // A square box sized off the artist line's own text size, with FIT_CENTER below keeping
         // the icon's own aspect ratio inside it - forcing non-square source art into a square
         // stretched it, which made the glyph look skewed next to the artist name.
         // The box already tracks the artist line's size; the icon's own scale multiplies that, so
         // resizing the icon stays independent of resizing the text next to it.
-        val box = (binding.textArtist.textSize * 1.1f * sourceIconTypography.scale)
+        val box = (binding.textArtist.textSize *
+                FaceGeometry.Classic.SOURCE_ICON_SIZE_ARTIST_FACTOR * sourceIconTypography.scale)
                 .toInt().coerceAtLeast(1)
         val params = iconView.layoutParams as LinearLayout.LayoutParams
         params.width = box
         params.height = box
-        params.marginEnd = (binding.textArtist.textSize * .28f).toInt()
+        params.marginEnd = (binding.textArtist.textSize *
+                FaceGeometry.Classic.SOURCE_ICON_END_MARGIN_ARTIST_FACTOR).toInt()
         iconView.layoutParams = params
 
         iconView.alpha = sourceIconTypography.alpha
         iconView.scaleType = ImageView.ScaleType.FIT_CENTER
-        iconView.setImageBitmap(icon)
+        iconView.setImageBitmap(sourceIcon)
         // A notification small icon is a flat white template, so it has to be tinted to the
         // artist line's own colour or it reads as a foreign white blob next to accent-coloured
         // text. Launcher artwork is full-colour and must stay untinted.
@@ -4107,14 +4213,18 @@ class MainActivity : WearCompanionWatchActivity(),
 
         dimAlbumArt = faceBool(MiscPreferences.DIM_ALBUM_ART)
         albumArtStyle = faceString(MiscPreferences.ALBUM_ART_STYLE)
-        carouselCardShape.value = CarouselCardShape.fromPreference(
+        carouselCardShape.value = CoverShape.fromPreference(
                 faceString(MiscPreferences.WEAR_CAROUSEL_CARD_SHAPE))
+        noteCoverShape.value = CoverShape.fromPreference(
+                faceString(MiscPreferences.WEAR_NOTE_COVER_SHAPE), CoverShape.CIRCLE)
         playerBackgroundStyle = PlayerBackgroundStyle.fromPreference(albumArtStyle)
         blurAlbumArtBackground = playerBackgroundStyle.blurredArtwork
         albumArtGrayscale = playerBackgroundStyle.grayscaleArtwork
         albumArtHidden = playerBackgroundStyle.hidesArtwork
         blurRadiusPx = faceInt(MiscPreferences.ALBUM_ART_BLUR_RADIUS)
                 .coerceIn(5, 120).toFloat()
+        accentFloor = AccentFloorStyle.fromPreference(
+                faceString(MiscPreferences.WEAR_ACCENT_FLOOR))
         // The classic host ImageView applies these itself (applyMainAlbumArtDisplay); the Compose
         // faces read the same choice through the shared state instead of ignoring it.
         updateFaceState {
@@ -4122,8 +4232,7 @@ class MainActivity : WearCompanionWatchActivity(),
                     backgroundStyle = playerBackgroundStyle,
                     // A shared piece rendered by the background layer, so it is resolved here with
                     // the rest of the backdrop rather than by whichever face happens to want it.
-                    accentFloor = AccentFloorStyle.fromPreference(
-                            faceString(MiscPreferences.WEAR_ACCENT_FLOOR)),
+                    accentFloor = accentFloor,
                     // Resolved here with the rest of the backdrop for the same reason: Split's
                     // panel *is* its background, it just happens to be the one the shared layer
                     // cannot draw.
@@ -4217,6 +4326,8 @@ class MainActivity : WearCompanionWatchActivity(),
                 faceString(MiscPreferences.WEAR_VOLUME_LAYOUT))
         val progressRingStyle = faceString(MiscPreferences.WEAR_PROGRESS_STYLE)
         binding.seekBar.ringStyle = RingStyle.fromPref(progressRingStyle)
+        binding.seekBar.ringLayout = ProgressRingLayout.fromPref(
+                faceString(MiscPreferences.WEAR_PROGRESS_LAYOUT))
         binding.seekBar.gradientEnabled = faceBool(MiscPreferences.WEAR_PROGRESS_GRADIENT)
         updateFaceState { it.copy(progressRingStyle = progressRingStyle) }
         seekOverlayStyle = faceString(MiscPreferences.WEAR_SEEK_STYLE)
@@ -4234,10 +4345,10 @@ class MainActivity : WearCompanionWatchActivity(),
         coverPillStyle = QueueStyle.fromPref(faceString(MiscPreferences.WEAR_QUEUE_STYLE))
         coverPillsActive = coverPillStyle.isCover
         quickPanelShortcutCoverEnabled = faceBool(MiscPreferences.WEAR_QUICK_PANEL_SHORTCUT_COVER)
-        // Legacy cover_compact / cover_tall still name their own size; otherwise the standalone
-        // preference owns it, so the quick panel's pills match the queue's rows.
-        listRowSize = coverPillStyle.legacyRowSize
-                ?: QueueRowSize.fromPref(faceString(MiscPreferences.WEAR_LIST_ROW_SIZE))
+        // The standalone row-size preference belongs to QueueActivity only. Keep the Panel,
+        // action menu and shortcuts at their normal rhythm; the two legacy cover styles still
+        // carry their historical size in the style token itself.
+        listRowSize = coverPillStyle.legacyRowSize ?: QueueRowSize.NORMAL
         applyListRowHeight()
         // Source controls a phone-side MediaSession binding and is intentionally global; it is
         // not part of a saved appearance snapshot (see FaceScopedPreferences.SCOPED_KEYS).
@@ -4307,8 +4418,11 @@ class MainActivity : WearCompanionWatchActivity(),
         updateEdgeSeekTouchState()
         expressiveSeekMode = faceString(MiscPreferences.WEAR_EXPRESSIVE_SEEK_MODE)
         wearFontKey = faceString(MiscPreferences.WEAR_FONT)
+        wearTitleFontKey = faceString(MiscPreferences.WEAR_TITLE_FONT)
+        wearArtistFontKey = faceString(MiscPreferences.WEAR_ARTIST_FONT)
         wearClockFontKey = faceString(MiscPreferences.WEAR_CLOCK_FONT)
         wearLyricsFontKey = faceString(MiscPreferences.WEAR_LYRICS_FONT)
+        wearTrackTimeFontKey = faceString(MiscPreferences.WEAR_TRACK_TIME_FONT)
         metadataGroups = TrackMetadataFields.Group.entries
                 .filterTo(mutableSetOf()) { group ->
                     faceBool(MiscPreferences.metadataGroupPreference(group))
@@ -4332,44 +4446,71 @@ class MainActivity : WearCompanionWatchActivity(),
                     centralSeekEnabled = shouldEnableCentralSeek(expressiveSeekMode),
                     showClock = alwaysDisplayClock,
                     fontKey = wearFontKey,
+                    titleFontKey = wearTitleFontKey,
+                    artistFontKey = wearArtistFontKey,
                     clockFontKey = wearClockFontKey,
                     lyricsFontKey = wearLyricsFontKey,
+                    trackTimeFontKey = wearTrackTimeFontKey,
                     metadataGroups = metadataGroups
             )
         }
-        // Now that wearFontKey and the state's fontKey are current, resolve the awake clock colour
-        // + typeface (see the deferred note where the clock prefs are read above).
-        applyClockAppearance()
         applyMetadataVisibility()
 
         trackTimeMode = faceString(MiscPreferences.WEAR_TRACK_TIME_MODE)
         updatePlaybackTimeVisibility()
 
         val titleTextModePref = faceString(MiscPreferences.WEAR_TITLE_TEXT_MODE)
-        val titleTextMode = when (titleTextModePref) {
-            "marquee" -> TextSizingMode.MARQUEE
-            "wrap" -> TextSizingMode.WRAP
-            "shrink" -> TextSizingMode.SHRINK
+        // "static", "wrap3" and "wrap5" are all WRAP with a different line cap. They used to fall
+        // into the else branch and behave as "smart", so three of the six choices did nothing on
+        // Classic while working on every Compose face - and the phone preview, which implements
+        // all six, showed a layout the wrist would not produce.
+        val titleWrapLines = TitleTextMode.wrapLines(titleTextModePref)
+        val titleTextMode = when {
+            titleWrapLines != null -> TextSizingMode.WRAP
+            TitleTextMode.isMarquee(titleTextModePref) -> TextSizingMode.MARQUEE
+            TitleTextMode.isShrink(titleTextModePref) -> TextSizingMode.SHRINK
             else -> TextSizingMode.SMART
         }
-        binding.textTitle.setSizingMode(titleTextMode)
+        binding.textTitle.setSizingMode(titleTextMode, titleWrapLines)
         // Every Compose face reads the same raw preference value through AdaptiveTitleText now,
         // instead of each hardcoding one fixed overflow strategy the way they used to.
         updateFaceState { it.copy(titleTextMode = titleTextModePref ?: "smart") }
 
         titleTypography = WatchTypography.titleSpec(preferences, appearanceContext)
         artistTypography = WatchTypography.artistSpec(preferences, appearanceContext)
+        trackTimeTypography = WatchTypography.trackTimeSpec(preferences, appearanceContext)
         sourceIconTypography = WatchTypography.sourceIconSpec(preferences, appearanceContext)
         clockTypography = WatchTypography.clockSpec(preferences, appearanceContext)
         flexAxes = WatchTypography.flexAxes(preferences, appearanceContext)
+        titleFlexAxes = WatchTypography.flexAxes(
+                preferences, appearanceContext, WatchTypography.FlexAxesTarget.TITLE)
+        artistFlexAxes = WatchTypography.flexAxes(
+                preferences, appearanceContext, WatchTypography.FlexAxesTarget.ARTIST)
+        clockFlexAxes = WatchTypography.flexAxes(
+                preferences, appearanceContext, WatchTypography.FlexAxesTarget.CLOCK)
+        lyricsFlexAxes = WatchTypography.flexAxes(
+                preferences, appearanceContext, WatchTypography.FlexAxesTarget.LYRICS)
+        trackTimeFlexAxes = WatchTypography.flexAxes(
+                preferences, appearanceContext, WatchTypography.FlexAxesTarget.TRACK_TIME)
         updateFaceState {
             it.copy(
                     titleTypography = titleTypography,
                     artistTypography = artistTypography,
+                    trackTimeTypography = trackTimeTypography,
                     sourceIconTypography = sourceIconTypography,
                     clockTypography = clockTypography,
-                    flexAxes = flexAxes)
+                    flexAxes = flexAxes,
+                    titleFlexAxes = titleFlexAxes,
+                    artistFlexAxes = artistFlexAxes,
+                    clockFlexAxes = clockFlexAxes,
+                    lyricsFlexAxes = lyricsFlexAxes,
+                    trackTimeFlexAxes = trackTimeFlexAxes)
         }
+        // Resolve after the per-element specs and shared Flex axes above. Calling this while only
+        // the raw font key had been refreshed made a Clock-only Flex choice reuse stale axes,
+        // which is why its width/optical-size/grade/roundness appeared to work only for the
+        // global track font.
+        applyClockAppearance()
         applyClassicTypography()
 
         // Re-apply the last raw palette so changing Normal/Desaturated/Expressive updates every
@@ -4476,7 +4617,8 @@ class MainActivity : WearCompanionWatchActivity(),
                 secondary = resolvedSecondaryAccent(),
                 tertiary = resolvedTertiaryAccent(),
                 materialSurface = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
-                materialSurfaceSoftened = colorTreatment == "desaturated")
+                materialSurfaceSoftened = colorTreatment == "desaturated",
+                accentFloor = accentFloor)
     }
 
     /** Compose faces own the same layer inside their composition; the host View is Classic-only. */
@@ -4524,6 +4666,14 @@ class MainActivity : WearCompanionWatchActivity(),
         // Same rule, same reason: the phone reads a file (and, if the user switched it on,
         // queries a service) to answer this, so nobody who has not selected the face pays.
         viewModel.setMetadataEnabled(screenFace == FACE_METADATA)
+        // Ribbon and Carousel make the surrounding covers part of the face, not a secondary queue
+        // screen. Warm the cached list immediately when one becomes visible, then refresh it
+        // without changing the current player state. Both still degrade to the current cover alone
+        // if an app exposes no playback queue.
+        if (screenFace in ThemeAppearance.QUEUE_ART_FACES) {
+            viewModel.customList.value?.let(::updateUpNextPreview)
+            viewModel.refreshPlaybackQueueSilently()
+        }
         binding.expressiveFace.visibility = if (composeFace) View.VISIBLE else View.GONE
         binding.playerBackground.visibility = if (
             composeFace || binding.idleStateGroup.visibility == View.VISIBLE
@@ -4682,6 +4832,10 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val openActionsMenuListener = Observer<Unit?> {
         startMenu(showCustomList = false)
+    }
+
+    private val openQuickActionsPanelListener = Observer<Unit?> {
+        showQuickActionsPanel()
     }
 
     private val openPlaybackQueueScreenListener = Observer<Unit?> {
@@ -4969,9 +5123,11 @@ class MainActivity : WearCompanionWatchActivity(),
      *
      * "dynamic" samples only the small artwork region *under* the clock (top-centre), never the
      * whole cover, and picks white on a dark region or black on a light one. It is a best-effort
-     * proxy: it reads the raw album bitmap, not the on-screen (blurred/shaded) background, so a
-     * heavily dimmed light cover can still read as "light". The fixed colour modes are there for
-     * anyone who wants a guaranteed result.
+     * proxy: it reads the raw album bitmap rather than the blurred/shaded pixels finally drawn, so
+     * a heavily dimmed light cover can still read as "light" - but a background style that puts no
+     * artwork on screen at all is no longer treated as though it did (see
+     * [sampleBackdropLuminance]). The fixed colour modes are there for anyone who wants a
+     * guaranteed result.
      */
     private fun resolveClockColor(): Int {
         val base = when (clockColorMode) {
@@ -4998,9 +5154,26 @@ class MainActivity : WearCompanionWatchActivity(),
     private fun clockAreaIsLight(): Boolean =
             clockBandLuminance()?.let { it > 0.55f } ?: false
 
-    /** The strip of artwork the top-centre clock sits on - the same band [clockAreaIsLight]
-     *  thresholds, kept as a raw value so the contrast correction can use it too. */
-    private fun clockBandLuminance(): Float? = sampleArtLuminance(0.35f, 0.65f, 0.02f, 0.15f)
+    /** The strip the top-centre clock sits on - the same band [clockAreaIsLight] thresholds, kept
+     *  as a raw value so the contrast correction can use it too. */
+    private fun clockBandLuminance(): Float? = sampleBackdropLuminance(0.35f, 0.65f, 0.02f, 0.15f)
+
+    /**
+     * [sampleArtLuminance] against what the screen is *actually* showing.
+     *
+     * Every band below is measured to decide whether text will read against it, and a background
+     * style that hides the artwork means the answer has nothing to do with the cover - see
+     * [AdaptiveTextContrast.backdropLuminance], which is shared with the phone preview so the two
+     * cannot answer differently.
+     */
+    private fun sampleBackdropLuminance(
+            leftFraction: Float,
+            rightFraction: Float,
+            topFraction: Float,
+            bottomFraction: Float
+    ): Float? = AdaptiveTextContrast.backdropLuminance(playerBackgroundStyle) {
+        sampleArtLuminance(leftFraction, rightFraction, topFraction, bottomFraction)
+    }
 
     /** The album-derived clock colour, lifted or darkened away from the artwork under the clock
      *  when the user asked for it. Hue and saturation are untouched, so it still reads as the
@@ -5059,11 +5232,11 @@ class MainActivity : WearCompanionWatchActivity(),
      * far better predictor than the cover's overall accent, which is what the line used before.
      */
     private fun artistBandLuminance(): Float? =
-            sampleArtLuminance(0.10f, 0.90f, 0.68f, 0.84f)
+            sampleBackdropLuminance(0.10f, 0.90f, 0.68f, 0.84f)
 
     /** The band the title sits on - directly above the artist's, since the title is the taller
      *  line of the pair on every face. */
-    private fun titleBandLuminance(): Float? = sampleArtLuminance(0.10f, 0.90f, 0.54f, 0.70f)
+    private fun titleBandLuminance(): Float? = sampleBackdropLuminance(0.10f, 0.90f, 0.54f, 0.70f)
 
     /** Applies the resolved awake-clock colour + font to the Classic View clock and pushes the
      *  colour into the face state for the Compose clock. Called on preference and artwork changes. */
@@ -5074,7 +5247,14 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.ambientClock.typeface = if (WatchTypography.isFlexFont(clockKey)) {
             // Flex carries wght/slnt as real axes, so it gets an instance rather than a synthesized
             // bold - the same split applyClassicFont makes for the title and artist.
-            flexTypeface(this, clockTypography, flexAxes)
+            flexTypeface(
+                    this,
+                    clockTypography,
+                    if (wearClockFontKey == WatchTypography.FLEX_FONT_KEY) {
+                        clockFlexAxes
+                    } else {
+                        flexAxes
+                    })
         } else {
             styledClockTypeface(watchFontTypeface(this, clockKey), clockTypography)
         }
@@ -5341,6 +5521,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     )
                     binding.textTitle.displayTextOutline = false
                     binding.textPlaybackTime.displayTextOutline = false
+                    // Ambient presentation restores alpha to 1 while it freezes the readout.
+                    // Put the per-face time typography back before making it visible again.
+                    applyClassicTrackTimeTypography()
 
                     // onEnterAmbient force-hid the track time; the position ticker would bring
                     // it back on its own only while playing, so restore it explicitly.
@@ -5583,6 +5766,14 @@ class MainActivity : WearCompanionWatchActivity(),
             )
             OverlayBackdrop.SOLID_BLACK -> ColorDrawable(Color.BLACK)
             OverlayBackdrop.SOLID_ALBUM -> ColorDrawable(PaletteTransforms.tonalSurface(accent, .22f, PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT))
+            OverlayBackdrop.SOLID_SECONDARY -> ColorDrawable(
+                    PaletteTransforms.tonalSurface(
+                            secondary, .24f,
+                            PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT))
+            OverlayBackdrop.SOLID_TERTIARY -> ColorDrawable(
+                    PaletteTransforms.tonalSurface(
+                            tertiary, .24f,
+                            PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT))
             OverlayBackdrop.GLASS -> GradientDrawable(
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     intArrayOf(0x2EFFFFFF, 0xB8000000.toInt())
@@ -5605,6 +5796,76 @@ class MainActivity : WearCompanionWatchActivity(),
             ).apply {
                 setStroke((1f * density).roundToInt().coerceAtLeast(1), 0x66FFFFFF)
             }
+            OverlayBackdrop.MESH -> LayerDrawable(arrayOf(
+                    ColorDrawable(tonalSurface(accent, .13f)),
+                    GradientDrawable().apply {
+                        gradientType = GradientDrawable.RADIAL_GRADIENT
+                        colors = intArrayOf(withAlpha(secondary, 0xB8), Color.TRANSPARENT)
+                        setGradientCenter(.18f, .22f)
+                        gradientRadius = resources.displayMetrics.widthPixels * .72f
+                    },
+                    GradientDrawable().apply {
+                        gradientType = GradientDrawable.RADIAL_GRADIENT
+                        colors = intArrayOf(withAlpha(tertiary, 0xA0), Color.TRANSPARENT)
+                        setGradientCenter(.86f, .78f)
+                        gradientRadius = resources.displayMetrics.widthPixels * .68f
+                    }))
+            OverlayBackdrop.AURORA -> GradientDrawable(
+                    GradientDrawable.Orientation.BL_TR,
+                    intArrayOf(
+                            tonalSurface(tertiary, .11f),
+                            tonalSurface(accent, .36f),
+                            tonalSurface(secondary, .24f),
+                            Color.BLACK))
+            OverlayBackdrop.SPOTLIGHT -> GradientDrawable().apply {
+                gradientType = GradientDrawable.RADIAL_GRADIENT
+                colors = intArrayOf(
+                        tonalSurface(accent, .68f),
+                        tonalSurface(accent, .28f),
+                        Color.BLACK)
+                setGradientCenter(.5f, .38f)
+                gradientRadius = resources.displayMetrics.widthPixels * .70f
+            }
+            OverlayBackdrop.VIGNETTE -> LayerDrawable(arrayOf(
+                    ColorDrawable(tonalSurface(accent, .24f)),
+                    GradientDrawable().apply {
+                        gradientType = GradientDrawable.RADIAL_GRADIENT
+                        colors = intArrayOf(
+                                Color.TRANSPARENT,
+                                withAlpha(Color.BLACK, 0x28),
+                                withAlpha(Color.BLACK, 0xF0))
+                        setGradientCenter(.5f, .5f)
+                        gradientRadius = resources.displayMetrics.widthPixels * .68f
+                    }))
+            OverlayBackdrop.SPLIT -> GradientDrawable(
+                    GradientDrawable.Orientation.LEFT_RIGHT,
+                    intArrayOf(tonalSurface(accent, .20f), tonalSurface(secondary, .34f)))
+            OverlayBackdrop.BANDS -> GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    intArrayOf(
+                            tonalSurface(tertiary, .18f),
+                            tonalSurface(accent, .36f),
+                            tonalSurface(accent, .14f),
+                            tonalSurface(secondary, .30f),
+                            Color.BLACK))
+            OverlayBackdrop.MIDNIGHT -> GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    intArrayOf(tonalSurface(tertiary, .16f), 0xFF070914.toInt(), Color.BLACK))
+            OverlayBackdrop.HALO -> GradientDrawable().apply {
+                gradientType = GradientDrawable.RADIAL_GRADIENT
+                colors = intArrayOf(
+                        withAlpha(tonalSurface(accent, .42f), 0xD8),
+                        withAlpha(tonalSurface(secondary, .24f), 0xA0),
+                        Color.BLACK)
+                setGradientCenter(.5f, .5f)
+                gradientRadius = resources.displayMetrics.widthPixels * .62f
+            }
+            OverlayBackdrop.SMOKE -> GradientDrawable(
+                    GradientDrawable.Orientation.TL_BR,
+                    intArrayOf(
+                            withAlpha(tonalSurface(tertiary, .24f), 0x78),
+                            withAlpha(0xFF323238.toInt(), 0xC8),
+                            withAlpha(Color.BLACK, 0xE8)))
             // Deliberately the lightest wash of the set: the blurred cover underneath is the
             // material, and covering it would defeat the effect. The album tint is kept low-alpha
             // and lifted (.62 lightness) so it reads as coloured glass rather than as a filter,
@@ -5962,22 +6223,34 @@ class MainActivity : WearCompanionWatchActivity(),
         actions.arrangement = when (quickPanelLayout) {
             "arc" -> QuickActionsRowLayout.Arrangement.ARC
             "grid" -> QuickActionsRowLayout.Arrangement.GRID
+            "fan" -> QuickActionsRowLayout.Arrangement.FAN
+            "orbit" -> QuickActionsRowLayout.Arrangement.ORBIT
+            "dock" -> QuickActionsRowLayout.Arrangement.DOCK
+            "column" -> QuickActionsRowLayout.Arrangement.COLUMN
+            "split" -> QuickActionsRowLayout.Arrangement.SPLIT
+            "diamond" -> QuickActionsRowLayout.Arrangement.DIAMOND
+            "carousel" -> QuickActionsRowLayout.Arrangement.CAROUSEL
             else -> QuickActionsRowLayout.Arrangement.ROW
         }
 
         // The grid stands on its own as a dense launcher, so metadata would only cost it the room
         // it needs; every other layout keeps both lines.
-        val metadataVisible = quickPanelLayout != "grid"
+        val metadataVisible = quickPanelLayout !in setOf("grid", "orbit", "diamond")
         title.visibility = if (metadataVisible && title.text.isNotBlank()) View.VISIBLE else View.GONE
         // Hero deliberately drops to a single metadata line - its point is one dominant action.
-        artist.visibility = if (metadataVisible && quickPanelLayout != "hero" &&
+        artist.visibility = if (metadataVisible &&
+                quickPanelLayout !in setOf("hero", "column", "split") &&
                 artist.text.isNotBlank()) View.VISIBLE else View.GONE
 
         // Every layout now keeps the natural reading order and expresses itself through the
         // arrangement of the slots instead. The old "actions first" / "compact deck" options were
         // only reorderings of this same stack, which is why they never looked meaningfully
         // different from it.
-        val desiredOrder = listOf(title, artist, actions, primaryList, upNext)
+        val desiredOrder = if (quickPanelLayout == "dock") {
+            listOf(title, artist, upNext, actions, primaryList)
+        } else {
+            listOf(title, artist, actions, primaryList, upNext)
+        }
         val params = desiredOrder.associateWith { it.layoutParams }
         desiredOrder.forEach(panel::removeView)
         panel.removeView(extras)
@@ -5996,7 +6269,12 @@ class MainActivity : WearCompanionWatchActivity(),
                 ?: resources.displayMetrics.heightPixels
         panel.setPadding(
                 panel.paddingLeft,
-                (viewportHeight * .17f).roundToInt(),
+                (viewportHeight * when (quickPanelLayout) {
+                    "dock" -> .10f
+                    "column" -> .08f
+                    "orbit", "diamond" -> .14f
+                    else -> .17f
+                }).roundToInt(),
                 panel.paddingRight,
                 panel.paddingBottom
         )
@@ -6016,7 +6294,8 @@ class MainActivity : WearCompanionWatchActivity(),
         val actionParams = actions.layoutParams as LinearLayout.LayoutParams
         // The arc's dipped centre slot already reserves its depth inside the row's measured
         // height, so only the grid needs to be held off the Up Next row below it.
-        actionParams.bottomMargin = if (quickPanelLayout == "grid") {
+        actionParams.bottomMargin = if (quickPanelLayout in setOf(
+                        "grid", "orbit", "column", "split", "diamond")) {
             (10f * density).roundToInt()
         } else {
             0
@@ -6042,10 +6321,10 @@ class MainActivity : WearCompanionWatchActivity(),
         if (visible.isNotEmpty()) {
             // The grid puts at most two slots on a line, so they are fitted for two rather than for
             // the whole row - which is what lets them come out noticeably larger than in a row.
-            val fitCount = if (quickPanelLayout == "grid") {
-                minOf(visible.size, 2)
-            } else {
-                visible.size
+            val fitCount = when (quickPanelLayout) {
+                "grid", "split", "diamond" -> minOf(visible.size, 2)
+                "column" -> 1
+                else -> visible.size
             }
             val (width, height, gap) = fittedRoundQuickSizes(fitCount)
             visible.forEachIndexed { index, button ->
@@ -6188,6 +6467,62 @@ class MainActivity : WearCompanionWatchActivity(),
         }
     }
 
+    private fun chromeCapsule(radiusPx: Float = 999f, active: Boolean = false): GradientDrawable {
+        val d = resources.displayMetrics.density
+        val accent = tonalSurface(resolvedQuickPanelAccent(), if (active) .46f else .24f)
+        return GradientDrawable(
+                GradientDrawable.Orientation.TL_BR,
+                intArrayOf(0xFF111318.toInt(), accent, 0xFF8A8E96.toInt(), 0xFF202228.toInt()))
+                .apply {
+                    shape = GradientDrawable.RECTANGLE
+                    cornerRadius = radiusPx
+                    setStroke((1f * d).roundToInt(), 0xA6FFFFFF.toInt())
+                }
+    }
+
+    private fun holoCapsule(radiusPx: Float = 999f, active: Boolean = false): GradientDrawable {
+        val d = resources.displayMetrics.density
+        val alpha = if (active) 0xF0 else 0xB8
+        return GradientDrawable(
+                GradientDrawable.Orientation.BL_TR,
+                intArrayOf(
+                        ColorUtils.setAlphaComponent(resolvedQuickPanelTertiaryAccent(), alpha),
+                        ColorUtils.setAlphaComponent(resolvedQuickPanelAccent(), alpha),
+                        ColorUtils.setAlphaComponent(resolvedQuickPanelSecondaryAccent(), alpha)))
+                .apply {
+                    shape = GradientDrawable.RECTANGLE
+                    cornerRadius = radiusPx
+                    setStroke((1f * d).roundToInt(), 0x8CFFFFFF.toInt())
+                }
+    }
+
+    private fun sunsetCapsule(radiusPx: Float = 999f, active: Boolean = false): GradientDrawable {
+        val lightness = if (active) .46f else .30f
+        return GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                intArrayOf(
+                        tonalSurface(resolvedQuickPanelTertiaryAccent(), lightness + .10f),
+                        tonalSurface(resolvedQuickPanelAccent(), lightness),
+                        tonalSurface(resolvedQuickPanelSecondaryAccent(), lightness - .10f)))
+                .apply {
+                    shape = GradientDrawable.RECTANGLE
+                    cornerRadius = radiusPx
+                }
+    }
+
+    private fun bubbleCapsule(fill: Int, radiusPx: Float = 999f): GradientDrawable {
+        val small = 6f * resources.displayMetrics.density
+        return GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            setColor(fill)
+            cornerRadii = floatArrayOf(
+                    radiusPx, radiusPx,
+                    radiusPx, radiusPx,
+                    radiusPx, radiusPx,
+                    small, small)
+        }
+    }
+
     /** Inactive background of a round quick-panel slot button, per [quickPanelStyle]. The active
      *  (accent-filled) look stays shared across styles. */
     private fun inactiveQuickButtonBackground(): android.graphics.drawable.Drawable {
@@ -6220,6 +6555,16 @@ class MainActivity : WearCompanionWatchActivity(),
                     liftedAccent(resolvedQuickPanelAccent()), (2f * d).roundToInt())
             "dot" -> markerDrawable(
                     liftedAccent(resolvedQuickPanelAccent()), (5f * d).roundToInt())
+            "soft" -> capsule(expressiveSurface(resolvedQuickPanelAccent()))
+            "chrome" -> chromeCapsule()
+            "holo" -> holoCapsule()
+            "bubble" -> bubbleCapsule(expressiveSurface(resolvedQuickPanelSecondaryAccent()))
+            "rail" -> capsule(
+                    tonalSurface(resolvedQuickPanelAccent(), .18f),
+                    (2f * d).roundToInt(),
+                    liftedAccent(resolvedQuickPanelAccent()),
+                    radiusPx = 6f * d)
+            "sunset" -> sunsetCapsule()
             else -> AppCompatResources.getDrawable(this, R.drawable.glass_pill_background)!!
         }
     }
@@ -6329,13 +6674,19 @@ class MainActivity : WearCompanionWatchActivity(),
         "terminal" -> 0f
         // Slab's identity is a tight, flat rectangle rather than the soft list-item corner.
         "slab" -> SLAB_CORNER_DP * resources.displayMetrics.density
+        "rail" -> 6f * resources.displayMetrics.density
+        "chrome" -> 12f * resources.displayMetrics.density
+        "sunset" -> 20f * resources.displayMetrics.density
+        "holo" -> 26f * resources.displayMetrics.density
+        "bubble" -> 28f * resources.displayMetrics.density
+        "soft" -> 30f * resources.displayMetrics.density
         else -> QUICK_PANEL_ROW_CORNER_DP * resources.displayMetrics.density
     }
 
     private fun quickPanelRowBackground(): android.graphics.drawable.Drawable {
         val d = resources.displayMetrics.density
         val hairline = (1.25f * d).roundToInt().coerceAtLeast(1)
-        val r = if (quickPanelStyle == "terminal") 0f else QUICK_PANEL_ROW_CORNER_DP * d
+        val r = quickPanelRowCornerPx()
         return when (quickPanelStyle) {
             "glass_white" -> capsule(0xB3FFFFFF.toInt(), radiusPx = r)
             "glass_tonal" -> capsule(
@@ -6365,6 +6716,17 @@ class MainActivity : WearCompanionWatchActivity(),
                     ColorUtils.setAlphaComponent(liftedAccent(resolvedQuickPanelAccent()), 0xB3),
                     radiusPx = r)
             "dot" -> capsule(0x0DFFFFFF, radiusPx = r)
+            "soft" -> capsule(expressiveSurface(resolvedQuickPanelAccent()), radiusPx = r)
+            "chrome" -> chromeCapsule(radiusPx = r)
+            "holo" -> holoCapsule(radiusPx = r)
+            "bubble" -> bubbleCapsule(
+                    expressiveSurface(resolvedQuickPanelSecondaryAccent()), radiusPx = r)
+            "rail" -> capsule(
+                    tonalSurface(resolvedQuickPanelAccent(), .18f),
+                    (2f * d).roundToInt(),
+                    liftedAccent(resolvedQuickPanelAccent()),
+                    radiusPx = r)
+            "sunset" -> sunsetCapsule(radiusPx = r)
             else -> capsule(ContextCompat.getColor(this, R.color.glass_surface_fill), radiusPx = r)
         }
     }
@@ -6433,6 +6795,16 @@ class MainActivity : WearCompanionWatchActivity(),
             OverlayBackdrop.GRADIENT -> tonalSurface(accent, .42f)
             OverlayBackdrop.DUOTONE -> tonalSurface(accent, .30f)
             OverlayBackdrop.PRISM -> tonalSurface(accent, .42f)
+            OverlayBackdrop.SOLID_SECONDARY -> tonalSurface(
+                    resolvedQuickPanelSecondaryAccent(), .24f)
+            OverlayBackdrop.SOLID_TERTIARY -> tonalSurface(
+                    resolvedQuickPanelTertiaryAccent(), .24f)
+            OverlayBackdrop.MESH, OverlayBackdrop.AURORA, OverlayBackdrop.SPLIT,
+            OverlayBackdrop.BANDS -> tonalSurface(accent, .34f)
+            OverlayBackdrop.SPOTLIGHT -> tonalSurface(accent, .62f)
+            OverlayBackdrop.VIGNETTE -> tonalSurface(accent, .24f)
+            OverlayBackdrop.HALO -> tonalSurface(accent, .34f)
+            OverlayBackdrop.MIDNIGHT, OverlayBackdrop.SMOKE -> Color.BLACK
             // The centre of the Expressive wash, where this text sits, is well inside the vignette
             // and reads as a dark album tone rather than as black.
             OverlayBackdrop.EXPRESSIVE, OverlayBackdrop.EXPRESSIVE_NO_BLUR ->
@@ -6454,6 +6826,10 @@ class MainActivity : WearCompanionWatchActivity(),
         // dark to stay legible (matching the face's dark-on-light transport icons).
         "tonal", "glass_tonal" -> contrastingIconColor(
                 expressiveSurface(resolvedQuickPanelAccent()))
+        "soft" -> contrastingIconColor(expressiveSurface(resolvedQuickPanelAccent()))
+        "bubble" -> contrastingIconColor(
+                expressiveSurface(resolvedQuickPanelSecondaryAccent()))
+        "rail" -> liftedAccent(resolvedQuickPanelAccent())
         else -> Color.WHITE
     }
 
@@ -6463,20 +6839,27 @@ class MainActivity : WearCompanionWatchActivity(),
         "contrast" -> Color.WHITE
         "terminal" -> TERMINAL_GREEN
         "mono" -> MONO_PANEL_ACTIVE
+        "soft", "bubble" -> expressiveSurface(resolvedQuickPanelAccent())
         else -> resolvedQuickPanelAccent()
     }
 
     private fun activeQuickButtonBackground(): android.graphics.drawable.Drawable =
-            if (quickPanelStyle == "prism") {
-                prismCapsule(active = true)
-            } else {
+            when (quickPanelStyle) {
+                "prism" -> prismCapsule(active = true)
+                "chrome" -> chromeCapsule(active = true)
+                "holo" -> holoCapsule(active = true)
+                "sunset" -> sunsetCapsule(active = true)
+                "bubble" -> bubbleCapsule(activeQuickFillColor())
+                else -> {
                 // The reduced styles are chromeless only while inactive - an active slot always
                 // gets a real accent fill, which is what makes the state readable at a glance.
                 capsule(activeQuickFillColor(), radiusPx = when (quickPanelStyle) {
                     "terminal" -> 0f
                     "slab" -> SLAB_CORNER_DP * resources.displayMetrics.density
+                    "rail" -> 6f * resources.displayMetrics.density
                     else -> 999f
                 })
+            }
             }
 
     /** White icons can disappear against a light album-art accent color, so the icon itself
@@ -6500,7 +6883,8 @@ class MainActivity : WearCompanionWatchActivity(),
         if (active) {
             view.background = activeQuickButtonBackground()
             if (tintable) {
-                view.setColorFilter(if (quickPanelStyle == "prism") Color.WHITE
+                view.setColorFilter(if (quickPanelStyle in setOf(
+                                "prism", "chrome", "holo", "sunset")) Color.WHITE
                 else contrastingIconColor(activeQuickFillColor()))
             } else {
                 view.clearColorFilter()
@@ -6858,6 +7242,16 @@ class MainActivity : WearCompanionWatchActivity(),
             return
         }
 
+        if (seekOverlayStyle == "stacked_pill") {
+            val total = formatPlaybackTime(lastKnownDurationMs)
+            applyPillReadoutStyle(
+                    text,
+                    seekOverlayStyle,
+                    "$position\n$total",
+                    resolvedProgressAccent())
+            return
+        }
+
         applyPillReadoutStyle(text, seekOverlayStyle, position, resolvedProgressAccent())
     }
 
@@ -6876,7 +7270,8 @@ class MainActivity : WearCompanionWatchActivity(),
         if (binding.volumeBar.barStyle == VolumeStyle.LIGHT &&
                 seekOverlayStyle !in setOf("pill", "expressive", "material", "white", "glass_white",
                         "translucent_album", "glow_album", "outline", "solid_theme", "solid_album",
-                        "mono", "tonal_dark", "terminal")) {
+                        "mono", "tonal_dark", "terminal", "compact_pill", "square_album",
+                        "stacked_pill", "badge", "glass_bar", "lcd", "outline_square", "ribbon")) {
             binding.textVolumePercent.setTextColor(LIGHT_PANEL_ON)
         }
     }
@@ -6904,7 +7299,9 @@ class MainActivity : WearCompanionWatchActivity(),
             VolumeLayout.EDGE_TALL,
             VolumeLayout.EDGE_RIGHT,
             VolumeLayout.RING,
-            VolumeLayout.HALO -> {
+            VolumeLayout.HALO,
+            VolumeLayout.DOUBLE_EDGE,
+            VolumeLayout.DIAL -> {
                 top.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
                 bottom.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
             }
@@ -6922,9 +7319,15 @@ class MainActivity : WearCompanionWatchActivity(),
                 bottom.bottomMargin = 0
                 bottom.topMargin = 0
             }
-            VolumeLayout.METER -> {
+            VolumeLayout.METER,
+            VolumeLayout.METER_TOP,
+            VolumeLayout.METER_BOTTOM -> {
                 val side = (8f * density).roundToInt()
-                val vertical = (29f * density).roundToInt()
+                val vertical = when (binding.volumeBar.barLayout) {
+                    VolumeLayout.METER_TOP -> (-42f * density).roundToInt()
+                    VolumeLayout.METER_BOTTOM -> (42f * density).roundToInt()
+                    else -> (29f * density).roundToInt()
+                }
                 top.gravity = Gravity.END or Gravity.CENTER_VERTICAL
                 top.marginEnd = side
                 top.topMargin = 0
@@ -6934,7 +7337,31 @@ class MainActivity : WearCompanionWatchActivity(),
                 bottom.topMargin = 0
                 binding.volumeIconTop.translationY = vertical.toFloat()
                 binding.volumeIconBottom.translationY = vertical.toFloat()
-                binding.textVolumePercent.translationY = -16f * density
+                binding.textVolumePercent.translationY = when (binding.volumeBar.barLayout) {
+                    VolumeLayout.METER_TOP -> 18f * density
+                    VolumeLayout.METER_BOTTOM -> -18f * density
+                    else -> -16f * density
+                }
+            }
+            VolumeLayout.VERTICAL_LEFT,
+            VolumeLayout.VERTICAL_RIGHT -> {
+                val side = (24f * density).roundToInt()
+                val gravitySide = if (binding.volumeBar.barLayout == VolumeLayout.VERTICAL_LEFT) {
+                    Gravity.START
+                } else {
+                    Gravity.END
+                }
+                top.gravity = gravitySide or Gravity.TOP
+                bottom.gravity = gravitySide or Gravity.BOTTOM
+                top.topMargin = (24f * density).roundToInt()
+                bottom.bottomMargin = (24f * density).roundToInt()
+                if (gravitySide == Gravity.START) {
+                    top.marginStart = side
+                    bottom.marginStart = side
+                } else {
+                    top.marginEnd = side
+                    bottom.marginEnd = side
+                }
             }
         }
         binding.volumeIconTop.layoutParams = top
@@ -6945,7 +7372,7 @@ class MainActivity : WearCompanionWatchActivity(),
         val density = resources.displayMetrics.density
         // The edge family keeps the bezel ring and only varies its weight; everything else swaps
         // the ring out for the meter. Thickness is orthogonal to WEAR_PROGRESS_STYLE, so each
-        // variant works with all eight ring appearances.
+        // variant works with every ring appearance.
         val edgeStrokeScale = when (seekPanelLayout) {
             "edge_thin" -> 0.5f
             "edge_thick" -> 1.8f
@@ -6955,14 +7382,26 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.seekBar.edgeStrokeScale = edgeStrokeScale
         binding.seekBar.animate().cancel()
         binding.seekBar.alpha = if (customMeter) 0f else 1f
-        binding.textSeekTime.translationY = if (customMeter) -18f * density else 0f
+        binding.textSeekTime.translationY = when (seekPanelLayout) {
+            "timeline", "segments", "timeline_bottom" -> -18f * density
+            "timeline_top", "segments_top" -> 20f * density
+            "dial" -> -42f * density
+            else -> 0f
+        }
         binding.seekOverlayMeter.apply {
             progress = fraction
             accentColor = binding.seekBar.progressColor
-            mode = if (seekPanelLayout == "segments") {
-                OverlayProgressMeter.Mode.SEGMENTS
-            } else {
-                OverlayProgressMeter.Mode.TIMELINE
+            secondaryColor = resolvedProgressSecondaryAccent()
+            mode = when (seekPanelLayout) {
+                "segments" -> OverlayProgressMeter.Mode.SEGMENTS
+                "timeline_top" -> OverlayProgressMeter.Mode.TIMELINE_TOP
+                "timeline_bottom" -> OverlayProgressMeter.Mode.TIMELINE_BOTTOM
+                "segments_top" -> OverlayProgressMeter.Mode.SEGMENTS_TOP
+                "vertical_left" -> OverlayProgressMeter.Mode.VERTICAL_LEFT
+                "vertical_right" -> OverlayProgressMeter.Mode.VERTICAL_RIGHT
+                "dial" -> OverlayProgressMeter.Mode.DIAL
+                "twin" -> OverlayProgressMeter.Mode.TWIN
+                else -> OverlayProgressMeter.Mode.TIMELINE
             }
             visibility = if (customMeter) View.VISIBLE else View.GONE
         }
@@ -6988,6 +7427,10 @@ class MainActivity : WearCompanionWatchActivity(),
         // size and padding are set by every branch; these two are not.
         text.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT)
         text.letterSpacing = 0f
+        text.minWidth = 0
+        text.minHeight = 0
+        text.gravity = Gravity.CENTER
+        text.setLineSpacing(0f, 1f)
 
         when (style) {
             "pill" -> {
@@ -7211,6 +7654,105 @@ class MainActivity : WearCompanionWatchActivity(),
                 val padH = (16 * resources.displayMetrics.density).toInt()
                 val padV = (7 * resources.displayMetrics.density).toInt()
                 text.setPadding(padH, padV, padH, padV)
+                text.text = content
+            }
+            "compact_pill" -> {
+                text.textSize = 20f
+                text.setTextColor(Color.WHITE)
+                text.background = capsule(ColorUtils.setAlphaComponent(
+                        tonalSurface(accentColor, .20f), 0xE6))
+                val padH = (12 * resources.displayMetrics.density).toInt()
+                val padV = (5 * resources.displayMetrics.density).toInt()
+                text.setPadding(padH, padV, padH, padV)
+                text.text = content
+            }
+            "square_album" -> {
+                val fill = tonalSurface(accentColor, .44f)
+                text.textSize = 26f
+                text.setTextColor(contrastingIconColor(fill))
+                text.background = capsule(
+                        fill, radiusPx = 8f * resources.displayMetrics.density)
+                val pad = (12 * resources.displayMetrics.density).toInt()
+                text.setPadding(pad, pad, pad, pad)
+                text.text = content
+            }
+            "stacked_pill" -> {
+                text.textSize = 22f
+                text.setTextColor(Color.WHITE)
+                text.background = capsule(ColorUtils.setAlphaComponent(
+                        tonalSurface(accentColor, .22f), 0xE8))
+                text.setLineSpacing(0f, .86f)
+                val padH = (20 * resources.displayMetrics.density).toInt()
+                val padV = (8 * resources.displayMetrics.density).toInt()
+                text.setPadding(padH, padV, padH, padV)
+                text.text = content
+            }
+            "badge" -> {
+                val d = resources.displayMetrics.density
+                text.textSize = 18f
+                text.setTextColor(contrastingIconColor(accentColor))
+                text.background = capsule(accentColor)
+                text.minWidth = (58f * d).roundToInt()
+                text.minHeight = (46f * d).roundToInt()
+                text.setPadding((10f * d).roundToInt(), 0, (10f * d).roundToInt(), 0)
+                text.text = content
+            }
+            "glass_bar" -> {
+                val d = resources.displayMetrics.density
+                text.textSize = 24f
+                text.setTextColor(Color.WHITE)
+                text.background = capsule(
+                        0x24FFFFFF,
+                        (1f * d).roundToInt(),
+                        0x70FFFFFF,
+                        radiusPx = 12f * d)
+                text.setPadding((32f * d).roundToInt(), (7f * d).roundToInt(),
+                        (32f * d).roundToInt(), (7f * d).roundToInt())
+                text.text = content
+            }
+            "lcd" -> {
+                val d = resources.displayMetrics.density
+                text.textSize = 24f
+                text.setTextColor(TERMINAL_GREEN)
+                text.letterSpacing = .14f
+                text.background = capsule(
+                        0xF0000802.toInt(),
+                        (2f * d).roundToInt(),
+                        0x8833FF66.toInt(),
+                        radiusPx = 3f * d)
+                text.setPadding((16f * d).roundToInt(), (8f * d).roundToInt(),
+                        (16f * d).roundToInt(), (8f * d).roundToInt())
+                text.text = content
+            }
+            "outline_square" -> {
+                val d = resources.displayMetrics.density
+                val lifted = liftedAccent(accentColor)
+                text.textSize = 25f
+                text.setTextColor(lifted)
+                text.background = capsule(
+                        Color.TRANSPARENT,
+                        (2f * d).roundToInt(),
+                        lifted,
+                        radiusPx = 6f * d)
+                text.setPadding((17f * d).roundToInt(), (8f * d).roundToInt(),
+                        (17f * d).roundToInt(), (8f * d).roundToInt())
+                text.text = content
+            }
+            "ribbon" -> {
+                val d = resources.displayMetrics.density
+                val fill = tonalSurface(accentColor, .34f)
+                text.textSize = 24f
+                text.setTextColor(contrastingIconColor(fill))
+                text.background = GradientDrawable(
+                        GradientDrawable.Orientation.LEFT_RIGHT,
+                        intArrayOf(
+                                tonalSurface(accentColor, .18f),
+                                tonalSurface(accentColor, .56f),
+                                tonalSurface(accentColor, .18f))).apply {
+                    cornerRadius = 4f * d
+                }
+                text.setPadding((30f * d).roundToInt(), (7f * d).roundToInt(),
+                        (30f * d).roundToInt(), (7f * d).roundToInt())
                 text.text = content
             }
             else -> {

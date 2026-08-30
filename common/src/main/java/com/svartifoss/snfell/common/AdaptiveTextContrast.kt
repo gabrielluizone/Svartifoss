@@ -105,8 +105,51 @@ object AdaptiveTextContrast {
     fun prefersDarkText(background: Int): Boolean =
             relativeLuminance(background) > DARK_TEXT_LUMINANCE_PIVOT
 
-    /** Chosen at the luminance where black and white text are about equally legible. */
-    const val DARK_TEXT_LUMINANCE_PIVOT = 0.34f
+    /**
+     * The luminance at which black and white text are exactly equally legible, solved rather than
+     * estimated: WCAG contrast against white is `1.05 / (L + 0.05)` and against black is
+     * `(L + 0.05) / 0.05`, and the two are equal at `L = sqrt(0.0525) - 0.05`.
+     *
+     * It was 0.34, carrying the same "about equally legible" claim - which is a full band too high.
+     * Every colour between the real crossover and that value took white text when black read
+     * better, and the band is not obscure: it is where saturated blues, purples and reds land once
+     * `WatchTheme.accentForSurface` lifts them into its filled-surface lightness range. Frame's
+     * artist chip is the visible case - a light periwinkle pill carrying white text - and Split's
+     * panel is the same decision on a larger surface.
+     */
+    const val DARK_TEXT_LUMINANCE_PIVOT = 0.17913f
+
+    /**
+     * The luminance of the ground a face paints where no artwork reaches: black.
+     *
+     * Both artwork-hiding treatments (`HIDDEN` and Eclipse's true-black AMOLED field) paint the
+     * screen black, so this is a measurement rather than a placeholder.
+     */
+    const val HIDDEN_BACKDROP_LUMINANCE = 0f
+
+    /**
+     * The luminance actually behind a line of on-screen chrome, given the selected background
+     * treatment.
+     *
+     * Everything here measures *the artwork* to decide whether text will read - which is only the
+     * right question when artwork is on screen. A background style that hides it paints a black
+     * field instead, and sampling the cover then answers about a picture nobody can see: a bright
+     * album under Frame's default `HIDDEN` backdrop darkened the clock into near-invisibility
+     * against the black it was actually sitting on, which is the exact inverse of what the
+     * "Adapt to background" switch promises. The band sampler is passed lazily because in that
+     * case there is nothing to sample and the pixel reads are wasted.
+     *
+     * It stays an approximation for the artwork case, and deliberately so: the dim scrim and the
+     * authored treatments both darken what is drawn, and each does it unevenly across the screen,
+     * so folding a single number in would trade one wrong answer for a subtler one. Every one of
+     * those errs in the same direction - the screen is *darker* than the cover measured - so the
+     * correction under-lifts rather than inverting, which is the survivable half.
+     */
+    fun backdropLuminance(
+            style: PlayerBackgroundStyle,
+            artworkBandLuminance: () -> Float?
+    ): Float? =
+            if (style.hidesArtwork) HIDDEN_BACKDROP_LUMINANCE else artworkBandLuminance()
 
     fun adapt(color: Int, backgroundLuminance: Float): Int {
         val hsl = FloatArray(3)

@@ -30,8 +30,9 @@ rules and Auth domain configuration above are what protect the page.
 ## Operational flow
 
 1. A user submits a theme from the Android app; it appears as `pending`.
-2. The moderator checks the client-supplied WebP as a visual aid, the public name/pseudonym, and
-   the browser's profile JSON/digest check, then approves or rejects it. The bitmap is not proof
+2. The moderator checks the client-supplied WebP as a visual aid, the public theme name/fixed
+   account author and the browser's profile JSON/digest check, then approves or rejects it. The
+   bitmap is not proof
    of the JSON; the trusted publisher does the final full schema validation.
 3. The publication workflow reads only `approved` documents, validates them again with its trusted
    service account, commits approved profiles to `docs/themes/`, and marks them `published`.
@@ -56,8 +57,9 @@ Four actions, each written as one atomic batch that updates `themeIntake` and re
   sets the status; the publisher removes the file, the catalogue entry and the likes on its next
   run, then deletes the record. A listing nobody can take down would be worse than one its own
   author could also remove, which is why the self-moderation ban does not extend to this.
-- **Correct public name or author**, available only before the theme is public. Once the file is
-  committed to Git under the old text, changing the record alone would leave the two disagreeing
-  with nothing to notice it; withdraw and resubmit instead.
+- **Correct public theme name**, available only before the theme is public. An author name is an
+  immutable account reservation and cannot be edited by a moderator. Once the file is committed to
+  Git under the old theme name, changing the record alone would leave the two disagreeing with
+  nothing to notice it; withdraw and resubmit instead.
 
 A moderator can never publish, and can never decide or reopen their own submission.

@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.common.AdaptiveTextContrast
+import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.BitmapBlur
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.common.SplitPanelStyle
@@ -106,6 +107,10 @@ fun SplitFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
             }
         }
 
+        // Split paints an opaque backdrop of its own, so the common background layer would be
+        // covered. Put the shared floor on top of that backdrop and below the card content.
+        PlayerAccentFloor(state)
+
         // Under the badge, over the panel: the badge is a real control-free ornament, so the centre
         // gestures must not be blocked by it - nothing here is clickable.
         CenterGestureRegion(listener, size = screen * .58f)
@@ -133,7 +138,7 @@ fun SplitFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
 
 /** Where the cover stops and the panel starts, as a fraction of screen height. Two thirds:
  *  the artwork is the subject and the panel only has to hold two lines of text. */
-private const val SEAM_FRACTION = .66f
+private const val SEAM_FRACTION = FaceGeometry.Split.SEAM_FRACTION
 
 /**
  * How much of the blurred artwork shows through the panel colour.
@@ -146,7 +151,7 @@ private const val SEAM_FRACTION = .66f
  * decision stops being reliable: black text chosen for a pale accent would sit on whatever the
  * blurred cover happened to be.
  */
-private const val PANEL_ART_ALPHA = .34f
+private const val PANEL_ART_ALPHA = FaceGeometry.Split.PANEL_ART_ALPHA
 
 /**
  * Floor for the panel blur, in px.
@@ -159,7 +164,7 @@ private const val PANEL_ART_ALPHA = .34f
 private const val MIN_PANEL_BLUR_PX = 26f
 
 /** Lightness the album accent is taken to for the lower panel. */
-private const val PANEL_LIGHTNESS = .40f
+private const val PANEL_LIGHTNESS = FaceGeometry.Split.PANEL_LIGHTNESS
 
 /**
  * One image across the whole screen: sharp above the seam, blurred and tinted below it.
@@ -304,7 +309,7 @@ private fun TrackText(
                     mode = state.titleTextMode,
                     fontSize = 21.sp,
                     color = titleTextColor(state, primary),
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Bold,
                     fontStyle = state.titleFontStyle,
                     fontFamily = state.titleFont,
                     letterSpacing = state.titleLetterSpacing,
@@ -378,7 +383,7 @@ private fun SourceBadge(
 
 /** Footprint of the source icon on the seam. Named for the badge it used to be the disc of - the
  *  disc is gone, but this is still the mark's size on the seam. */
-private const val BADGE_FRACTION = .21f
+private const val BADGE_FRACTION = FaceGeometry.Split.BADGE_FRACTION
 
 /**
  * Ambient variant: outline only, no fills.

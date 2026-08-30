@@ -124,6 +124,7 @@ class MusicViewModel @Inject constructor(
     val popupVolumeBar = SingleLiveEvent<Unit>()
     val closeActionsMenu = SingleLiveEvent<Unit>()
     val openActionsMenu = SingleLiveEvent<Unit>()
+    val openQuickActionsPanel = SingleLiveEvent<Unit>()
     val openPlaybackQueueScreen = SingleLiveEvent<Unit>()
     val openStreamingShortcutsMenu = SingleLiveEvent<Unit>()
     val openVoiceSearch = SingleLiveEvent<Unit>()
@@ -303,6 +304,10 @@ class MusicViewModel @Inject constructor(
             }
             StandardActions.ACTION_OPEN_MENU -> {
                 openActionsMenu.call()
+                true
+            }
+            StandardActions.ACTION_OPEN_QUICK_ACTIONS_PANEL -> {
+                openQuickActionsPanel.call()
                 true
             }
             StandardActions.ACTION_SEARCH -> {

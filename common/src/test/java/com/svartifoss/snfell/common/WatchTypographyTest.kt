@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.common
 
+import android.content.SharedPreferences
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -17,6 +18,10 @@ class WatchTypographyTest {
         // An install that never opens these controls must render as it did before they existed.
         assertTrue(WatchTypography.IDENTITY_TEXT.isIdentity)
         assertTrue(WatchTypography.IDENTITY_ICON.isIdentity)
+        assertEquals(WatchTypography.TITLE_FONT_FOLLOW,
+                MiscPreferences.WEAR_TITLE_FONT.defaultValue)
+        assertEquals(WatchTypography.ARTIST_FONT_FOLLOW,
+                MiscPreferences.WEAR_ARTIST_FONT.defaultValue)
         assertEquals(400, MiscPreferences.WEAR_TITLE_FONT_WEIGHT.defaultValue)
         assertEquals(400, MiscPreferences.WEAR_ARTIST_FONT_WEIGHT.defaultValue)
         assertEquals(100, MiscPreferences.WEAR_TITLE_FONT_SCALE.defaultValue)
@@ -24,6 +29,12 @@ class WatchTypographyTest {
         assertEquals(0, MiscPreferences.WEAR_TITLE_FONT_TRACKING.defaultValue)
         assertEquals(100, MiscPreferences.WEAR_SOURCE_ICON_SCALE.defaultValue)
         assertEquals(100, MiscPreferences.WEAR_SOURCE_ICON_OPACITY.defaultValue)
+        assertEquals(WatchTypography.TRACK_TIME_FONT_FOLLOW,
+                MiscPreferences.WEAR_TRACK_TIME_FONT.defaultValue)
+        assertEquals(400, MiscPreferences.WEAR_TRACK_TIME_FONT_WEIGHT.defaultValue)
+        assertEquals(100, MiscPreferences.WEAR_TRACK_TIME_FONT_SCALE.defaultValue)
+        assertEquals(100, MiscPreferences.WEAR_TRACK_TIME_FONT_OPACITY.defaultValue)
+        assertEquals(0, MiscPreferences.WEAR_TRACK_TIME_FONT_TRACKING.defaultValue)
     }
 
     @Test
@@ -93,16 +104,44 @@ class WatchTypographyTest {
         // A key missing from either registry silently fails to reach the watch, or leaks across
         // faces - both are invisible until a user reports the wrong font on one face.
         val keys = listOf(
+                MiscPreferences.WEAR_TITLE_FONT,
                 MiscPreferences.WEAR_TITLE_FONT_WEIGHT, MiscPreferences.WEAR_TITLE_FONT_ITALIC,
                 MiscPreferences.WEAR_TITLE_FONT_SCALE, MiscPreferences.WEAR_TITLE_FONT_OPACITY,
                 MiscPreferences.WEAR_TITLE_FONT_TRACKING,
+                MiscPreferences.WEAR_ARTIST_FONT,
                 MiscPreferences.WEAR_ARTIST_FONT_WEIGHT, MiscPreferences.WEAR_ARTIST_FONT_ITALIC,
                 MiscPreferences.WEAR_ARTIST_FONT_SCALE, MiscPreferences.WEAR_ARTIST_FONT_OPACITY,
                 MiscPreferences.WEAR_ARTIST_FONT_TRACKING,
+                MiscPreferences.WEAR_TRACK_TIME_FONT,
+                MiscPreferences.WEAR_TRACK_TIME_FONT_WEIGHT,
+                MiscPreferences.WEAR_TRACK_TIME_FONT_ITALIC,
+                MiscPreferences.WEAR_TRACK_TIME_FONT_SCALE,
+                MiscPreferences.WEAR_TRACK_TIME_FONT_OPACITY,
+                MiscPreferences.WEAR_TRACK_TIME_FONT_TRACKING,
                 MiscPreferences.WEAR_SOURCE_ICON_SCALE, MiscPreferences.WEAR_SOURCE_ICON_OPACITY,
                 MiscPreferences.WEAR_COLOR_MODIFIER,
                 MiscPreferences.WEAR_FONT_FLEX_WIDTH, MiscPreferences.WEAR_FONT_FLEX_OPTICAL_SIZE,
-                MiscPreferences.WEAR_FONT_FLEX_GRADE, MiscPreferences.WEAR_FONT_FLEX_ROUNDNESS)
+                MiscPreferences.WEAR_FONT_FLEX_GRADE, MiscPreferences.WEAR_FONT_FLEX_ROUNDNESS,
+                MiscPreferences.WEAR_TITLE_FONT_FLEX_WIDTH,
+                MiscPreferences.WEAR_TITLE_FONT_FLEX_OPTICAL_SIZE,
+                MiscPreferences.WEAR_TITLE_FONT_FLEX_GRADE,
+                MiscPreferences.WEAR_TITLE_FONT_FLEX_ROUNDNESS,
+                MiscPreferences.WEAR_ARTIST_FONT_FLEX_WIDTH,
+                MiscPreferences.WEAR_ARTIST_FONT_FLEX_OPTICAL_SIZE,
+                MiscPreferences.WEAR_ARTIST_FONT_FLEX_GRADE,
+                MiscPreferences.WEAR_ARTIST_FONT_FLEX_ROUNDNESS,
+                MiscPreferences.WEAR_CLOCK_FONT_FLEX_WIDTH,
+                MiscPreferences.WEAR_CLOCK_FONT_FLEX_OPTICAL_SIZE,
+                MiscPreferences.WEAR_CLOCK_FONT_FLEX_GRADE,
+                MiscPreferences.WEAR_CLOCK_FONT_FLEX_ROUNDNESS,
+                MiscPreferences.WEAR_LYRICS_FONT_FLEX_WIDTH,
+                MiscPreferences.WEAR_LYRICS_FONT_FLEX_OPTICAL_SIZE,
+                MiscPreferences.WEAR_LYRICS_FONT_FLEX_GRADE,
+                MiscPreferences.WEAR_LYRICS_FONT_FLEX_ROUNDNESS,
+                MiscPreferences.WEAR_TRACK_TIME_FONT_FLEX_WIDTH,
+                MiscPreferences.WEAR_TRACK_TIME_FONT_FLEX_OPTICAL_SIZE,
+                MiscPreferences.WEAR_TRACK_TIME_FONT_FLEX_GRADE,
+                MiscPreferences.WEAR_TRACK_TIME_FONT_FLEX_ROUNDNESS)
         for (definition in keys) {
             assertTrue("${definition.key} must be exportable to reach the watch",
                     MiscPreferences.EXPORTABLE.contains(definition))
@@ -153,13 +192,63 @@ class WatchTypographyTest {
     }
 
     @Test
-    fun flexVariationSettingsCarriesTheSharedAxes() {
+    fun flexVariationSettingsCarriesTheSelectedAxes() {
         val axes = WatchTypography.FlexAxes(width = 80f, opticalSize = 96f, grade = 25f, roundness = 70f)
         val settings = WatchTypography.flexVariationSettings(WatchTypography.IDENTITY_TEXT, axes)
         assertTrue(settings.contains("'wdth' 80.0"))
         assertTrue(settings.contains("'opsz' 96.0"))
         assertTrue(settings.contains("'GRAD' 25.0"))
         assertTrue(settings.contains("'ROND' 70.0"))
+    }
+
+    @Test
+    fun explicitElementsReadTheirOwnScopedFlexAxes() {
+        val prefs = MapPreferences(mapOf(
+                "wear_font_flex_width@classic" to "80",
+                "wear_font_flex_optical_size@classic" to "96",
+                "wear_font_flex_grade@classic" to "20",
+                "wear_font_flex_roundness@classic" to "30",
+                "wear_title_font_flex_width@classic" to "75",
+                "wear_title_font_flex_optical_size@classic" to "36",
+                "wear_title_font_flex_grade@classic" to "15",
+                "wear_title_font_flex_roundness@classic" to "45",
+                "wear_artist_font_flex_width@classic" to "110",
+                "wear_artist_font_flex_optical_size@classic" to "120",
+                "wear_artist_font_flex_grade@classic" to "55",
+                "wear_artist_font_flex_roundness@classic" to "20",
+                "wear_clock_font_flex_width@classic" to "120",
+                "wear_clock_font_flex_optical_size@classic" to "48",
+                "wear_clock_font_flex_grade@classic" to "40",
+                "wear_clock_font_flex_roundness@classic" to "60",
+                "wear_lyrics_font_flex_width@classic" to "60",
+                "wear_lyrics_font_flex_optical_size@classic" to "72",
+                "wear_lyrics_font_flex_grade@classic" to "80",
+                "wear_lyrics_font_flex_roundness@classic" to "10",
+                "wear_track_time_font_flex_width@classic" to "140",
+                "wear_track_time_font_flex_optical_size@classic" to "24",
+                "wear_track_time_font_flex_grade@classic" to "10",
+                "wear_track_time_font_flex_roundness@classic" to "90"))
+        val context = AppearanceContext.BuiltIn("classic")
+
+        assertEquals(
+                WatchTypography.FlexAxes(80f, 96f, 20f, 30f),
+                WatchTypography.flexAxes(prefs, context))
+        assertEquals(
+                WatchTypography.FlexAxes(75f, 36f, 15f, 45f),
+                WatchTypography.flexAxes(prefs, context, WatchTypography.FlexAxesTarget.TITLE))
+        assertEquals(
+                WatchTypography.FlexAxes(110f, 120f, 55f, 20f),
+                WatchTypography.flexAxes(prefs, context, WatchTypography.FlexAxesTarget.ARTIST))
+        assertEquals(
+                WatchTypography.FlexAxes(120f, 48f, 40f, 60f),
+                WatchTypography.flexAxes(prefs, context, WatchTypography.FlexAxesTarget.CLOCK))
+        assertEquals(
+                WatchTypography.FlexAxes(60f, 72f, 80f, 10f),
+                WatchTypography.flexAxes(prefs, context, WatchTypography.FlexAxesTarget.LYRICS))
+        assertEquals(
+                WatchTypography.FlexAxes(140f, 24f, 10f, 90f),
+                WatchTypography.flexAxes(
+                        prefs, context, WatchTypography.FlexAxesTarget.TRACK_TIME))
     }
 
     @Test
@@ -193,6 +282,24 @@ class WatchTypographyTest {
     fun anUnknownClockFontIsPassedThroughForTheCatalogToResolve() {
         assertEquals("font_from_a_newer_build",
                 WatchTypography.clockFontKey("font_from_a_newer_build", "caveat"))
+    }
+
+    @Test
+    fun titleAndArtistFontsFollowTheGlobalFamilyUntilPicked() {
+        listOf("google_sans", "orbitron", null).forEach { globalFont ->
+            assertEquals(globalFont, WatchTypography.titleFontKey(
+                    WatchTypography.TITLE_FONT_FOLLOW, globalFont))
+            assertEquals(globalFont, WatchTypography.artistFontKey(
+                    WatchTypography.ARTIST_FONT_FOLLOW, globalFont))
+        }
+        assertEquals("caveat", WatchTypography.titleFontKey(null, "caveat"))
+        assertEquals("caveat", WatchTypography.artistFontKey("   ", "caveat"))
+    }
+
+    @Test
+    fun explicitTitleAndArtistFontsWinOverTheGlobalFamily() {
+        assertEquals("bebas_neue", WatchTypography.titleFontKey("bebas_neue", "caveat"))
+        assertEquals("marcellus", WatchTypography.artistFontKey("marcellus", "orbitron"))
     }
 
     // ---- lyricsFontKey ----------------------------------------------------
@@ -234,5 +341,36 @@ class WatchTypographyTest {
                     WatchTypography.clockFontKey(WatchTypography.CLOCK_FONT_FOLLOW, track),
                     WatchTypography.lyricsFontKey(WatchTypography.LYRICS_FONT_FOLLOW, track))
         }
+    }
+
+    @Test
+    fun `track-time follow keeps the face design until a font is picked`() {
+        assertEquals(null, WatchTypography.trackTimeFontKey(WatchTypography.TRACK_TIME_FONT_FOLLOW))
+        assertEquals(null, WatchTypography.trackTimeFontKey(null))
+        assertEquals(null, WatchTypography.trackTimeFontKey("   "))
+        assertEquals("google_sans_flex",
+                WatchTypography.trackTimeFontKey("google_sans_flex"))
+    }
+
+    private class MapPreferences(values: Map<String, Any>) : SharedPreferences {
+        private val data = values.toMap()
+
+        override fun getAll(): MutableMap<String, *> = data.toMutableMap()
+        override fun contains(key: String?): Boolean = data.containsKey(key)
+        override fun getString(key: String?, defValue: String?): String? =
+                (data[key] as? String) ?: defValue
+        override fun getBoolean(key: String?, defValue: Boolean): Boolean =
+                (data[key] as? Boolean) ?: defValue
+        override fun getInt(key: String?, defValue: Int): Int = (data[key] as? Int) ?: defValue
+        override fun getLong(key: String?, defValue: Long): Long = (data[key] as? Long) ?: defValue
+        override fun getFloat(key: String?, defValue: Float): Float = (data[key] as? Float) ?: defValue
+        @Suppress("UNCHECKED_CAST")
+        override fun getStringSet(key: String?, defValues: MutableSet<String>?): MutableSet<String>? =
+                (data[key] as? Set<String>)?.toMutableSet() ?: defValues
+        override fun edit(): SharedPreferences.Editor = throw UnsupportedOperationException()
+        override fun registerOnSharedPreferenceChangeListener(
+                listener: SharedPreferences.OnSharedPreferenceChangeListener?) = Unit
+        override fun unregisterOnSharedPreferenceChangeListener(
+                listener: SharedPreferences.OnSharedPreferenceChangeListener?) = Unit
     }
 }

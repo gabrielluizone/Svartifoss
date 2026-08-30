@@ -99,6 +99,13 @@ object FaceScopedPreferences {
             // The lyrics typeface, for the lyrics screen and the Verse face alike. Scoped like
             // every other appearance key so a saved theme carries it - see WEAR_LYRICS_FONT.
             "wear_lyrics_font",
+            // Both metadata lines can choose a family distinct from the default track family.
+            // They belong to a face's composition for the same reason as the rest of typography.
+            "wear_title_font",
+            "wear_artist_font",
+            // The elapsed/total readout is authored differently by each face, so both its font
+            // override and its formatting deltas belong to the face whose composition it sits in.
+            "wear_track_time_font",
             // The metadata face's blocks - see TrackMetadataFields.Group. Scoped, so a theme built
             // around that face can show everything while another theme keeps only the essentials.
             "wear_metadata_show_core",
@@ -114,6 +121,23 @@ object FaceScopedPreferences {
             "wear_clock_font_italic",
             "wear_clock_font_scale",
             "wear_clock_font_tracking",
+            "wear_clock_font_flex_width",
+            "wear_clock_font_flex_optical_size",
+            "wear_clock_font_flex_grade",
+            "wear_clock_font_flex_roundness",
+            "wear_lyrics_font_flex_width",
+            "wear_lyrics_font_flex_optical_size",
+            "wear_lyrics_font_flex_grade",
+            "wear_lyrics_font_flex_roundness",
+            "wear_track_time_font_weight",
+            "wear_track_time_font_italic",
+            "wear_track_time_font_scale",
+            "wear_track_time_font_opacity",
+            "wear_track_time_font_tracking",
+            "wear_track_time_font_flex_width",
+            "wear_track_time_font_flex_optical_size",
+            "wear_track_time_font_flex_grade",
+            "wear_track_time_font_flex_roundness",
             "wear_clock_adaptive_contrast",
             "wear_artist_color_mode",
             "wear_artist_custom_color",
@@ -133,11 +157,21 @@ object FaceScopedPreferences {
             "wear_title_font_scale",
             "wear_title_font_opacity",
             "wear_title_font_tracking",
+            "wear_title_text_case",
+            "wear_title_font_flex_width",
+            "wear_title_font_flex_optical_size",
+            "wear_title_font_flex_grade",
+            "wear_title_font_flex_roundness",
             "wear_artist_font_weight",
             "wear_artist_font_italic",
             "wear_artist_font_scale",
             "wear_artist_font_opacity",
             "wear_artist_font_tracking",
+            "wear_artist_text_case",
+            "wear_artist_font_flex_width",
+            "wear_artist_font_flex_optical_size",
+            "wear_artist_font_flex_grade",
+            "wear_artist_font_flex_roundness",
             "wear_artist_adaptive_contrast",
             "wear_title_color_mode",
             "wear_title_custom_color",
@@ -159,12 +193,14 @@ object FaceScopedPreferences {
             // typeface belongs to that face/theme too. A legacy global value remains the fallback.
             "wear_font_all_screens",
             "wear_carousel_card_shape",
+            "wear_note_cover_shape",
             "wear_internal_progress_visible",
             "wear_overlay_backdrop_style",
             "wear_progress_color_mode",
             "wear_progress_custom_color",
             "wear_progress_desaturated",
             "wear_progress_style",
+            "wear_progress_layout",
             "wear_queue_style",
             "wear_quick_panel_shortcut_cover",
             "wear_list_row_size",
@@ -247,13 +283,13 @@ object FaceScopedPreferences {
      * Faces that compose the whole screen themselves, edge to edge, and so cannot share the band
      * the standard chrome expects to own.
      *
-     * Chat's thread runs to the bottom of the screen and carries its own two round actions; Split's
-     * lower half is a solid panel holding the track text. On both, the mini-button row lands on top
-     * of the composition rather than beside it. Neither wants the edge progress arc either - Chat's
-     * waveform already *is* the progress bar, and on Split an arc around a two-tone card reads as a
-     * stray ring.
+     * Split's lower half is a solid panel holding the track text; Ribbon's title occupies the
+     * bottom band below its tall cover; Frame carries a full card through that band. On all three,
+     * the mini-button row lands on top of the composition rather than beside it. Neither wants the
+     * edge progress arc either - Ribbon already has a deliberate rim of colour, while an arc around
+     * Split's two-tone card or Frame's inset card reads as a stray ring.
      */
-    private val SELF_COMPOSED_FACES = setOf("split", "verse")
+    private val SELF_COMPOSED_FACES = setOf("split", "verse", "ribbon", "frame")
 
     /** Defaults only - both keys stay face-scoped and switchable like any other appearance key, so
      *  a user who wants the mini buttons back on these faces simply turns them on. */
@@ -294,6 +330,25 @@ object FaceScopedPreferences {
     )
 
     /**
+     * Ribbon's rails are designed against a persistent clock.
+     *
+     * It shipped pinning the artist line to a fixed lilac (`wear_artist_color_mode` = custom,
+     * `#D7A5F2`), taken from the reference sketch - where that colour was the *album's*, on a
+     * sketch of one album. A face that hardcodes it stays lilac for every record after it, which
+     * is precisely the thing every other face's colour resolution exists to avoid. The artist line
+     * follows the music here like everywhere else; the custom mode is still one tap away for
+     * anyone who wants a fixed colour.
+     */
+    private val RIBBON_DEFAULTS = SELF_COMPOSED_DEFAULTS + ALBUM_ACCENT_SURFACE_DEFAULTS + mapOf(
+            MiscPreferences.ALWAYS_SHOW_TIME.key to "true"
+    )
+
+    /** Frame composes the whole screen as one card, so it shares [SELF_COMPOSED_DEFAULTS]; the
+     *  card is tinted from the album, so it also wants the album-accent overlay surfaces rather
+     *  than a neutral grey quick panel appearing over it. */
+    private val FRAME_DEFAULTS = SELF_COMPOSED_DEFAULTS + ALBUM_ACCENT_SURFACE_DEFAULTS
+
+    /**
      * Chat used to sit in [SELF_COMPOSED_FACES] for the same reason the others do - its thread runs
      * to the bottom of the screen, and the shared mini-button row landed on top of the round
      * actions already there.
@@ -315,6 +370,8 @@ object FaceScopedPreferences {
         face == "split" -> SPLIT_DEFAULTS[baseKey]
         face == "note" -> NOTE_DEFAULTS[baseKey]
         face == "verse" -> VERSE_DEFAULTS[baseKey]
+        face == "ribbon" -> RIBBON_DEFAULTS[baseKey]
+        face == "frame" -> FRAME_DEFAULTS[baseKey]
         face in SELF_COMPOSED_FACES -> SELF_COMPOSED_DEFAULTS[baseKey]
         face in ALBUM_ACCENT_FACES -> ALBUM_ACCENT_SURFACE_DEFAULTS[baseKey]
         else -> null

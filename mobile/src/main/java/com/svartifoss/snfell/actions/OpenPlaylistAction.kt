@@ -270,15 +270,17 @@ class OpenPlaylistAction : SelectableAction {
             }
         }
 
-        /** Whether the watch's queue is set to the cover-filled pill style, which needs the
-         *  larger artwork. Read from the phone's own copy of the synced preference. */
+        /** Whether anything on the watch draws these thumbnails larger than the 30dp list slot -
+         *  the cover-filled queue pill styles, or a face whose composition is the queue itself.
+         *  Read from the phone's own copy of the synced preference. */
         private fun coverQueueStyleActive(): Boolean {
             val prefs = PreferenceManager.getDefaultSharedPreferences(service)
             val appearance = ThemeAppearance.resolve(prefs)
-            // The Carousel face draws these same thumbnails as full-screen-width cards, so it needs
-            // the large size for the same reason the cover queue styles do - at the 96px list size
-            // a hero card is visibly pixelated.
-            if (appearance.baseFace == "carousel") return true
+            // Carousel draws them as full-screen-width cards and Ribbon crops them into tall rails
+            // roughly a third of the dial high, so both need the large size for the same reason the
+            // cover queue styles do - at the 96px list size the result is visibly soft, and Ribbon's
+            // crop makes it worse by upscaling a square thumbnail into a portrait window.
+            if (appearance.baseFace in ThemeAppearance.QUEUE_ART_FACES) return true
             return FaceScopedPreferences.getString(
                     prefs,
                     MiscPreferences.WEAR_QUEUE_STYLE,

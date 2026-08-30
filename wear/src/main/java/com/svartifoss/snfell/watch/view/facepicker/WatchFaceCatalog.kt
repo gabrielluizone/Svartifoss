@@ -62,7 +62,9 @@ object WatchFaceCatalog {
             "split" to R.string.face_name_split,
             "note" to R.string.face_name_note,
             "verse" to R.string.face_name_verse,
-            "metadata" to R.string.face_name_metadata
+            "metadata" to R.string.face_name_metadata,
+            "ribbon" to R.string.face_name_ribbon,
+            "frame" to R.string.face_name_frame
     )
 
     /**

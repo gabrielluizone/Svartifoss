@@ -222,6 +222,8 @@
     <string name="tasker_task">Tasker Task</string>
     <string name="icon_selection_title">Icon selection</string>
     <string name="icon_selection_gallery">From gallery</string>
+    <string name="icon_selection_search_hint">Search icons</string>
+    <string name="icon_selection_search_empty">No icons match your search</string>
     <string name="icon_selection_no_icon_pack">This feature allows you to pick custom icon for your action from
         installed icon pack.\n\nUnfortunately it appears you do not have any icon packs installed.</string>
     <string name="icon_selection_no_storage_permission">This feature allows you to pick custom icon for your action from
@@ -230,19 +232,46 @@
     <string name="action_text">Action text</string>
     <string name="swap_action">Swap action</string>
     <string name="open_actions_menu">Open actions menu</string>
+    <string name="open_quick_actions_panel">Open quick actions panel</string>
     <string name="open_playlist_menu">Show current playlist</string>
     <string name="misc_settings">Misc settings</string>
 
     <string name="category_backup">Backup</string>
-    <string name="export_config">Export configuration</string>
-    <string name="export_config_description">Save your button mappings, action list and watch settings to a file</string>
-    <string name="import_config">Import configuration</string>
-    <string name="import_config_description">Restore button mappings, action list and watch settings from a file</string>
-    <string name="export_config_done">Configuration exported</string>
-    <string name="export_config_failed">Couldn\'t export configuration</string>
+    <string name="export_config">Export backup</string>
+    <string name="export_config_description">Choose what to include — buttons, shortcuts, icons, colors, themes and other app data</string>
+    <string name="import_config">Import backup</string>
+    <string name="import_config_description">Restore the sections contained in a backup file; other data stays unchanged</string>
+    <string name="export_config_done">Backup exported</string>
+    <string name="export_config_failed">Couldn\'t export backup</string>
     <string name="import_config_done_title">Import successful</string>
-    <string name="import_config_done_message">Svartifoss needs to restart to apply the imported configuration.</string>
-    <string name="import_config_failed">Couldn\'t import configuration — the file may be invalid or from an incompatible version</string>
+    <string name="import_config_done_message">Svartifoss needs to restart to apply the imported backup.</string>
+    <string name="import_config_failed">Couldn\'t import backup — the file may be invalid or from an incompatible version</string>
+    <string name="backup_selection_title">Choose backup contents</string>
+    <string name="backup_selection_description">Select the parts of Svartifoss you want to save. Everything is selected by default; unselected parts are left unchanged when this backup is imported.</string>
+    <string name="backup_selection_select_all">Select all</string>
+    <string name="backup_selection_clear_all">Clear all</string>
+    <string name="backup_selection_export">Export backup</string>
+    <string name="backup_selection_empty">Select at least one item</string>
+    <string name="backup_section_buttons">Button configurations</string>
+    <string name="backup_section_buttons_description">Button, crown and gesture actions for music playing and stopped.</string>
+    <string name="backup_section_actions">Action list</string>
+    <string name="backup_section_actions_description">The ordered list of actions shown in the watch action menu.</string>
+    <string name="backup_section_app_settings">App settings</string>
+    <string name="backup_section_app_settings_description">Phone settings, watch behavior, language, playback and integrations.</string>
+    <string name="backup_section_watch_appearance">Watch appearance and themes</string>
+    <string name="backup_section_watch_appearance_description">Watch layouts, colors, typography, panels, AOD and saved custom themes.</string>
+    <string name="backup_section_playlist_shortcuts">Playlist shortcuts</string>
+    <string name="backup_section_playlist_shortcuts_description">Your saved music, album, artist, playlist and other streaming links.</string>
+    <string name="backup_section_history">Search and playback history</string>
+    <string name="backup_section_history_description">Recent searches and recently played tracks.</string>
+    <string name="backup_section_icons">Loaded icons and artwork</string>
+    <string name="backup_section_icons_description">Custom action icons, shortcut covers and cached app icons.</string>
+    <string name="backup_section_privacy">Privacy and notifications</string>
+    <string name="backup_section_privacy_description">Crash reports, announcement notifications and other consent choices saved by the app.</string>
+    <string name="backup_section_local_app_state">Local app state</string>
+    <string name="backup_section_local_app_state_description">Current accent, last menu position, completed prompts and update state.</string>
+    <string name="backup_section_auxiliary_data">Other app data</string>
+    <string name="backup_section_auxiliary_data_description">Additional app-owned preferences and internal files, including future data stores.</string>
     <string name="action_restart_now">Restart now</string>
 
     <string name="category_about">About</string>
@@ -261,6 +290,24 @@
     <string name="category_wf_typography_flex">Google Sans Flex axes</string>
     <string name="category_wf_metadata">Metadata face content</string>
     <string name="category_wf_typography_secondary">Text on other screens</string>
+    <!-- Short element names for the contextual editors' target rails, shared by Color and Panel.
+         The longer category titles elsewhere still name the underlying preference groups. -->
+    <string name="watch_element_progress">Progress</string>
+    <string name="watch_element_volume">Volume</string>
+    <string name="watch_element_quick_panel">Quick actions</string>
+    <string name="watch_element_queue">Queue</string>
+
+    <!-- Chip labels for the Player editor. A chip that is on already says "shown", so it
+         carries the element's name rather than the row's sentence; the full preference
+         title still reaches screen readers through the chip content description. -->
+    <string name="player_section_on_screen">On screen</string>
+    <string name="player_element_app_icon">App icon</string>
+    <string name="player_element_controls">Player controls</string>
+    <string name="player_element_tap_flash">Tap flash</string>
+    <string name="player_element_inner_progress">Inner progress</string>
+    <string name="player_element_edge_arc">Edge arc</string>
+    <string name="player_element_edge_seek">Edge seek</string>
+    <string name="player_element_clock">Clock</string>
     <string name="category_wf_colors_title">Title colors</string>
     <string name="category_wf_colors_artist">Artist colors</string>
     <string name="category_wf_colors_clock">Clock colors</string>
@@ -546,8 +593,8 @@
     <string name="wear_font_montserrat_description">A clean geometric sans, a free (OFL) alternative in the spirit of Proxima Nova.</string>
     <string name="wear_font_marcellus">Marcellus</string>
     <string name="wear_font_marcellus_description">An elegant humanist roman, a free (OFL) alternative in the spirit of Optima.</string>
-    <string name="wear_font_love_letter">Wired</string>
-    <string name="wear_font_love_letter_description">A softer typewriter style (Love Letter Typewriter) — normally reserved for \"Lain\"-themed tracks.</string>
+    <string name="wear_font_love_letter">Special Elite</string>
+    <string name="wear_font_love_letter_description">A distressed typewriter style with a worn, analog look.</string>
     <string name="wear_font_serif">Serif</string>
     <string name="wear_font_serif_description">A classic serif typeface.</string>
     <string name="wear_font_serif_monospace">Serif Mono</string>
@@ -637,6 +684,8 @@
         <item>Note</item>
         <item>Verse</item>
         <item>Metadata</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -657,6 +706,8 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>ribbon</item>
+        <item>frame</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
@@ -690,6 +741,8 @@
         <item>Split</item>
         <item>Note</item>
         <item>Verse</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
     </string-array>
     <string-array name="wear_aod_style_values">
         <item>follow</item>
@@ -706,6 +759,8 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>ribbon</item>
+        <item>frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Always-on color</string>
     <string-array name="wear_aod_color_entries">
@@ -826,7 +881,7 @@
     <string name="setting_wear_quick_panel_shortcut_cover">Use shortcut covers as background</string>
     <string name="setting_wear_quick_panel_shortcut_cover_description">When Queue style is a Cover variant, a quick-panel action row with a fetched shortcut cover (track, playlist, artist…) also fills its pill with that art, like Up Next does. Shortcuts without a fetched cover (a plain app icon) are unaffected.</string>
     <string name="setting_wear_list_row_size">List pill size</string>
-    <string name="setting_wear_list_row_size_description">Height of the full-width rows in the queue, menus and quick panel.</string>
+    <string name="setting_wear_list_row_size_description">Height of the full-width rows in the queue.</string>
     <string name="setting_wear_progress_gradient">Blend palette into the ring</string>
     <string name="setting_wear_progress_gradient_description">With a multi-hue color treatment (Complementary, Triadic, Analogous, Duotone) the solid ring fades through all three colors. Turn this off for a single-color ring while keeping the album palette everywhere else.</string>
     <string name="setting_wear_progress_style">Progress ring style</string>
@@ -880,10 +935,12 @@
         <item>duotone</item>
     </string-array>
     <string name="setting_wear_title_font_weight">Title weight</string>
+    <string name="setting_wear_title_font">Title typeface</string>
     <string name="setting_wear_title_font_italic">Italic title</string>
     <string name="setting_wear_title_font_scale">Title size</string>
     <string name="setting_wear_title_font_opacity">Title opacity</string>
     <string name="setting_wear_title_font_tracking">Title letter spacing</string>
+    <string name="setting_wear_title_text_case">Title case</string>
     <string name="setting_wear_title_color">Title text color</string>
     <string name="setting_wear_title_custom_color">Title custom color</string>
     <string name="wear_title_color_face_default">Face default (as designed)</string>
@@ -892,10 +949,12 @@
     <string name="setting_wear_artist_adaptive_contrast">Adapt artist color for contrast</string>
     <string name="setting_wear_artist_adaptive_contrast_description">Brightens or darkens the artist line when the album color is too close to the artwork behind it, keeping the color\'s hue. Measures only the strip the line sits on, not the whole cover.</string>
     <string name="setting_wear_artist_font_weight">Artist weight</string>
+    <string name="setting_wear_artist_font">Artist typeface</string>
     <string name="setting_wear_artist_font_italic">Italic artist</string>
     <string name="setting_wear_artist_font_scale">Artist size</string>
     <string name="setting_wear_artist_font_opacity">Artist opacity</string>
     <string name="setting_wear_artist_font_tracking">Artist letter spacing</string>
+    <string name="setting_wear_artist_text_case">Artist case</string>
     <string name="setting_wear_source_icon_scale">App icon size</string>
     <string name="setting_wear_source_icon_opacity">App icon opacity</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 is the face\'s normal weight; higher is bolder. For Google Sans Flex this is that font\'s own weight axis</string>
@@ -1276,6 +1335,110 @@
         <item>@string/wear_screen_theme_compact_description</item>
         <item>@string/wear_screen_theme_contrast_description</item>
     </string-array>
+    <!-- The expanded bundled catalog. Names are proper nouns, so they are declared once
+         here and fall back to English in every other locale by design. -->
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">A friendly rounded sans drawn for early reading</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">A high-contrast Didone display face with editorial weight</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">A sturdy poster sans with a hand-lettered comic edge</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">A calm geometric sans with generous, even spacing</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">A contemporary slab serif with softly rounded terminals</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">A massive slab serif built for headline impact</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">A narrow hand-drawn face in small capitals</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">A tightly packed condensed sans for loud headlines</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">A geometric slab serif that stays solid at small sizes</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">A comic-book display face with shouting energy</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">A stencilled military display face</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">An upright serif with warm, informal curves</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">A humanist sans with subtly rounded corners</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">A grotesque sans with strong, plain-spoken forms</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">A refined typewriter monospace built for scripts</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">A rounded slab serif with a soft, bookish tone</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">An old-style book serif tuned for long passages</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">A low-contrast geometric sans with a modern finish</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">A robust serif drawn to hold up at body sizes</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">A contemporary technical sans with angular joints</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">A programming monospace with clear, distinct glyphs</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">A humanist monospace designed for on-screen code</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">A bubbly handwritten face with rounded strokes</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">A geometric sans with a 1920s vintage character</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">A geometric sans in the Futura tradition</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">A loopless Thai and Latin sans with a slight slant</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">A sans shaped to reduce visual stress while reading</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">A bold connected script with retro signage flair</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">A semi-geometric sans balancing warmth and precision</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">A minimalist sans drawn for clean interface text</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">A well-rounded sans with soft terminals</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">A geometric sans with an even, contemporary rhythm</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">A squared techno face with a gaming feel</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">A compact technical sans drawn on a grid</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">A modern grotesque with distinctive open curves</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">A pixel face straight out of an arcade cabinet</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">A rounded geometric sans with a gentle, light feel</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">A squarish condensed sans with technical angles</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">An art-deco display face with retro sign painting roots</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">The monospaced companion to Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">A chunky display face with playful, blunt strokes</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">A wide industrial face with heavy squared forms</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">A vivid slanted display face with Gujarati roots</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">A tiny bitmap face recalling early computer screens</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">A monospace designed for reading code comfortably</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">A condensed all-caps face with poster presence</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">A tall condensed face for Devanagari and Latin headlines</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">A squarish humanist sans with a technical air</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">A fully rounded sans with an approachable tone</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">A condensed face echoing 1920s coffee-shop signage</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">A slab serif with softly clipped, modern terminals</string>
     <string-array name="wear_font_entries">
         <item>@string/wear_font_google_sans</item>
         <item>@string/wear_font_google_sans_flex</item>
@@ -1304,6 +1467,67 @@
         <item>@string/wear_font_space_grotesk</item>
         <item>@string/wear_font_orbitron</item>
         <item>@string/wear_font_caveat</item>
+        <item>@string/wear_font_inter</item>
+        <item>@string/wear_font_atkinson_hyperlegible</item>
+        <item>@string/wear_font_rubik</item>
+        <item>@string/wear_font_barlow_condensed</item>
+        <item>@string/wear_font_oswald</item>
+        <item>@string/wear_font_lora</item>
+        <item>@string/wear_font_fraunces</item>
+        <item>@string/wear_font_space_mono</item>
+        <item>@string/wear_font_archivo_black</item>
+        <item>@string/wear_font_dancing_script</item>
+        <item>@string/wear_font_abeezee</item>
+        <item>@string/wear_font_abril_fatface</item>
+        <item>@string/wear_font_acme</item>
+        <item>@string/wear_font_alata</item>
+        <item>@string/wear_font_aleo</item>
+        <item>@string/wear_font_alfa_slab_one</item>
+        <item>@string/wear_font_amatic_sc</item>
+        <item>@string/wear_font_anton</item>
+        <item>@string/wear_font_arvo</item>
+        <item>@string/wear_font_bangers</item>
+        <item>@string/wear_font_black_ops_one</item>
+        <item>@string/wear_font_bree_serif</item>
+        <item>@string/wear_font_cabin</item>
+        <item>@string/wear_font_chivo</item>
+        <item>@string/wear_font_courier_prime</item>
+        <item>@string/wear_font_crete_round</item>
+        <item>@string/wear_font_crimson_pro</item>
+        <item>@string/wear_font_dm_sans</item>
+        <item>@string/wear_font_domine</item>
+        <item>@string/wear_font_exo_2</item>
+        <item>@string/wear_font_fira_code</item>
+        <item>@string/wear_font_inconsolata</item>
+        <item>@string/wear_font_indie_flower</item>
+        <item>@string/wear_font_josefin_sans</item>
+        <item>@string/wear_font_jost</item>
+        <item>@string/wear_font_kanit</item>
+        <item>@string/wear_font_lexend</item>
+        <item>@string/wear_font_lobster</item>
+        <item>@string/wear_font_manrope</item>
+        <item>@string/wear_font_mulish</item>
+        <item>@string/wear_font_nunito</item>
+        <item>@string/wear_font_outfit</item>
+        <item>@string/wear_font_oxanium</item>
+        <item>@string/wear_font_play</item>
+        <item>@string/wear_font_plus_jakarta_sans</item>
+        <item>@string/wear_font_press_start_2p</item>
+        <item>@string/wear_font_quicksand</item>
+        <item>@string/wear_font_rajdhani</item>
+        <item>@string/wear_font_righteous</item>
+        <item>@string/wear_font_roboto_mono</item>
+        <item>@string/wear_font_rowdies</item>
+        <item>@string/wear_font_russo_one</item>
+        <item>@string/wear_font_shrikhand</item>
+        <item>@string/wear_font_silkscreen</item>
+        <item>@string/wear_font_source_code_pro</item>
+        <item>@string/wear_font_staatliches</item>
+        <item>@string/wear_font_teko</item>
+        <item>@string/wear_font_titillium_web</item>
+        <item>@string/wear_font_varela_round</item>
+        <item>@string/wear_font_yanone_kaffeesatz</item>
+        <item>@string/wear_font_zilla_slab</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1333,6 +1557,67 @@
         <item>@string/wear_font_space_grotesk_description</item>
         <item>@string/wear_font_orbitron_description</item>
         <item>@string/wear_font_caveat_description</item>
+        <item>@string/wear_font_inter_description</item>
+        <item>@string/wear_font_atkinson_hyperlegible_description</item>
+        <item>@string/wear_font_rubik_description</item>
+        <item>@string/wear_font_barlow_condensed_description</item>
+        <item>@string/wear_font_oswald_description</item>
+        <item>@string/wear_font_lora_description</item>
+        <item>@string/wear_font_fraunces_description</item>
+        <item>@string/wear_font_space_mono_description</item>
+        <item>@string/wear_font_archivo_black_description</item>
+        <item>@string/wear_font_dancing_script_description</item>
+        <item>@string/wear_font_abeezee_description</item>
+        <item>@string/wear_font_abril_fatface_description</item>
+        <item>@string/wear_font_acme_description</item>
+        <item>@string/wear_font_alata_description</item>
+        <item>@string/wear_font_aleo_description</item>
+        <item>@string/wear_font_alfa_slab_one_description</item>
+        <item>@string/wear_font_amatic_sc_description</item>
+        <item>@string/wear_font_anton_description</item>
+        <item>@string/wear_font_arvo_description</item>
+        <item>@string/wear_font_bangers_description</item>
+        <item>@string/wear_font_black_ops_one_description</item>
+        <item>@string/wear_font_bree_serif_description</item>
+        <item>@string/wear_font_cabin_description</item>
+        <item>@string/wear_font_chivo_description</item>
+        <item>@string/wear_font_courier_prime_description</item>
+        <item>@string/wear_font_crete_round_description</item>
+        <item>@string/wear_font_crimson_pro_description</item>
+        <item>@string/wear_font_dm_sans_description</item>
+        <item>@string/wear_font_domine_description</item>
+        <item>@string/wear_font_exo_2_description</item>
+        <item>@string/wear_font_fira_code_description</item>
+        <item>@string/wear_font_inconsolata_description</item>
+        <item>@string/wear_font_indie_flower_description</item>
+        <item>@string/wear_font_josefin_sans_description</item>
+        <item>@string/wear_font_jost_description</item>
+        <item>@string/wear_font_kanit_description</item>
+        <item>@string/wear_font_lexend_description</item>
+        <item>@string/wear_font_lobster_description</item>
+        <item>@string/wear_font_manrope_description</item>
+        <item>@string/wear_font_mulish_description</item>
+        <item>@string/wear_font_nunito_description</item>
+        <item>@string/wear_font_outfit_description</item>
+        <item>@string/wear_font_oxanium_description</item>
+        <item>@string/wear_font_play_description</item>
+        <item>@string/wear_font_plus_jakarta_sans_description</item>
+        <item>@string/wear_font_press_start_2p_description</item>
+        <item>@string/wear_font_quicksand_description</item>
+        <item>@string/wear_font_rajdhani_description</item>
+        <item>@string/wear_font_righteous_description</item>
+        <item>@string/wear_font_roboto_mono_description</item>
+        <item>@string/wear_font_rowdies_description</item>
+        <item>@string/wear_font_russo_one_description</item>
+        <item>@string/wear_font_shrikhand_description</item>
+        <item>@string/wear_font_silkscreen_description</item>
+        <item>@string/wear_font_source_code_pro_description</item>
+        <item>@string/wear_font_staatliches_description</item>
+        <item>@string/wear_font_teko_description</item>
+        <item>@string/wear_font_titillium_web_description</item>
+        <item>@string/wear_font_varela_round_description</item>
+        <item>@string/wear_font_yanone_kaffeesatz_description</item>
+        <item>@string/wear_font_zilla_slab_description</item>
     </string-array>
 
     <string name="action_open_library">Browse library</string>
@@ -1342,18 +1627,36 @@
     <string name="error_library_no_player">Start playing something first</string>
 
     <string name="setting_wear_carousel_card_shape">Carousel card shape</string>
-    <string-array name="wear_carousel_card_shape_entries">
+    <string name="setting_wear_note_cover_shape">Note cover shape</string>
+    <string-array name="wear_cover_shape_entries">
         <item>Rounded</item>
         <item>Square</item>
         <item>Squircle</item>
         <item>Circle</item>
     </string-array>
 
+    <!-- Shared by wear_title_text_case and wear_artist_text_case - one vocabulary, same as
+         wear_cover_shape_entries backing two different picker keys above. -->
+    <string-array name="wear_text_case_entries">
+        <item>Normal</item>
+        <item>UPPERCASE</item>
+        <item>lowercase</item>
+    </string-array>
+
     <string name="setting_wear_font_all_screens">Use font everywhere</string>
     <string name="setting_wear_font_all_screens_description">Applies the chosen font to menus, the queue and Quick actions, not just the player. Display and handwritten fonts can be harder to read in lists.</string>
+    <string name="wear_text_font_follow">Follow global typeface</string>
 
     <string name="setting_wear_clock_font">Clock typeface</string>
     <string name="wear_clock_font_follow">Follow track font</string>
+    <string name="category_wf_typography_track_time">Track time</string>
+    <string name="setting_wear_track_time_font">Track-time typeface</string>
+    <string name="wear_track_time_font_follow">Follow the design</string>
+    <string name="setting_wear_track_time_font_weight">Track-time weight</string>
+    <string name="setting_wear_track_time_font_italic">Italic track time</string>
+    <string name="setting_wear_track_time_font_scale">Track-time size</string>
+    <string name="setting_wear_track_time_font_opacity">Track-time opacity</string>
+    <string name="setting_wear_track_time_font_tracking">Track-time letter spacing</string>
     <string name="setting_wear_lyrics_font">Lyrics typeface</string>
     <string name="setting_wear_lyrics_font_description">The typeface for song words, on the lyrics screen and the Verse face. Follows the track typeface unless you pick one here.</string>
     <string name="wear_lyrics_font_follow">Follow track typeface</string>
@@ -1691,6 +1994,12 @@
     <string name="setting_desaturated_color">Desaturated color</string>
     <string name="setting_desaturated_color_description">Adjusts the saturation and brightness of the extracted color to guarantee high readability and contrast depending on the active theme.</string>
 
+    <string name="queue_item_now_playing">Now playing</string>
+    <string name="queue_item_unknown_title">Unknown track</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Playback queue · %1$d track</item>
+        <item quantity="other">Playback queue · %1$d tracks</item>
+    </plurals>
     <string name="queue_header">Playback queue</string>
     <string name="queue_unavailable">Queue unavailable</string>
 
@@ -1932,6 +2241,10 @@
     <string name="preview_metadata_album">Album</string>
     <string name="preview_metadata_album_value">Slow Rivers</string>
     <string name="preview_metadata_track">Track</string>
+    <string name="preview_metadata_composer">Composer</string>
+    <!-- Catalogue codes, identical in every language - the watch shows the same text. -->
+    <string name="preview_metadata_isrc" translatable="false">ISRC</string>
+    <string name="preview_metadata_url" translatable="false">URL</string>
     <string name="preview_metadata_genre">Genre</string>
     <string name="preview_metadata_genre_value">Alternative</string>
     <string name="preview_metadata_year">Year</string>
@@ -1964,4 +2277,24 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC and catalogue ids. Off by default — useful when you want one, noise when you do not.</string>
     <string name="setting_metadata_lookup">Look up track details online</string>
     <string name="setting_metadata_lookup_description">Fills in what the playing app did not publish — ISRC, label, release date — from MusicBrainz, a free public database. Off by default. The Metadata watch face works without it; this only adds rows. Nothing is sent unless you turn this on and select that face, and only the track name and artist are sent.</string>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">A neutral, highly legible interface sans designed for everyday reading</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Accessibility-first letterforms with distinct shapes that stay clear at small sizes</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">A softly rounded geometric sans — confident and friendly</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">A compact humanist sans that gives long titles more breathing room</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">A tall, condensed display face with punchy poster energy</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">A contemporary serif designed for comfortable long-form reading</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">An expressive soft serif with warmth and character</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">A retro-futurist monospaced face with a technical edge</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">A dense heavyweight display face for maximum contrast</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">A flowing handwritten script with a lively, personal feel</string>
 </resources>

@@ -70,6 +70,7 @@
     <string name="action_name_volume_up">Aumentar volume</string>
     <string name="action_name_volume_down">Diminuir volume</string>
     <string name="action_name_open_menu">Abrir menu</string>
+    <string name="action_name_open_quick_actions_panel">Abrir painel de ações rápidas</string>
     <string name="action_name_skip_30">Avançar 30 segundos</string>
     <string name="action_name_reverse_30">Recuar 30 segundos</string>
     <string name="action_name_play_pause">Reproduzir/Pausar</string>
@@ -162,4 +163,6 @@
     <string name="face_name_note" translatable="false">Note</string>
     <string name="face_name_verse" translatable="false">Verse</string>
     <string name="face_name_metadata" translatable="false">Metadata</string>
+    <string name="face_name_ribbon" translatable="false">Ribbon</string>
+    <string name="face_name_frame" translatable="false">Frame</string>
 </resources>

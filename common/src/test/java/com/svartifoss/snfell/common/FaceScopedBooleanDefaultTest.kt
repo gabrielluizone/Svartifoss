@@ -49,12 +49,23 @@ class FaceScopedBooleanDefaultTest {
      *  stopped resolving, that chrome would land back on top of their layouts. */
     @Test
     fun `self-composed faces default the edge progress arc off`() {
-        listOf("chat", "split").forEach { face ->
+        listOf("chat", "split", "ribbon", "frame").forEach { face ->
             assertEquals(
                     "$face must default the edge progress arc off",
                     "false",
                     FaceScopedPreferences.perFaceDefault(
                             face, MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key))
+        }
+    }
+
+    @Test
+    fun `ribbon and frame reserve their compositions from the shared mini-button row`() {
+        listOf("ribbon", "frame").forEach { face ->
+            assertEquals(
+                    "$face must default the shared mini-button row off",
+                    ActivityVisibility.NEVER,
+                    FaceScopedPreferences.perFaceDefault(
+                            face, MiscPreferences.WEAR_MINI_BUTTONS_MODE.key))
         }
     }
 

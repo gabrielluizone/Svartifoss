@@ -11,7 +11,9 @@ android {
         applicationId "com.svartifoss.snfell"
         namespace = "com.svartifoss.snfell"
         minSdkVersion 23
-        targetSdkVersion 35
+        // Google Play requires Android 16 / API 36 for mobile app updates from 31 August 2026.
+        // Wear OS has a separate API-35 requirement and remains configured in wear/build.gradle.
+        targetSdkVersion 36
         compileSdk 36
         versionCode 61
         versionName "3.3"
@@ -127,5 +129,14 @@ dependencies {
 tasks.withType(Test).configureEach {
     inputs.dir("src/main/res")
             .withPropertyName("resourcesForTranslationTests")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // The same trap, one module further out. WatchPreviewParityTest compares the preview's copy of
+    // each face's geometry against the Wear face it mirrors, and `mobile` has no dependency on
+    // `wear` at all - so nothing here would ever be invalidated by the very edit the check exists
+    // to catch. Without this, changing a constant on the watch leaves the task UP-TO-DATE and the
+    // drift is reported only on a clean build.
+    inputs.dir("${rootProject.projectDir}/wear/src/main/java/com/svartifoss/snfell/watch/view/face")
+            .withPropertyName("wearFaceSourcesForPreviewParity")
             .withPathSensitivity(PathSensitivity.RELATIVE)
 }

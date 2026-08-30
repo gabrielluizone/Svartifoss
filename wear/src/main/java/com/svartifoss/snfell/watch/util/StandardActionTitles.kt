@@ -19,6 +19,8 @@ object StandardActionTitles {
             StandardActions.ACTION_VOLUME_UP to R.string.action_name_volume_up,
             StandardActions.ACTION_VOLUME_DOWN to R.string.action_name_volume_down,
             StandardActions.ACTION_OPEN_MENU to R.string.action_name_open_menu,
+            StandardActions.ACTION_OPEN_QUICK_ACTIONS_PANEL to
+                    R.string.action_name_open_quick_actions_panel,
             StandardActions.ACTION_SKIP_30_SECONDS to R.string.action_name_skip_30,
             StandardActions.ACTION_REVERSE_30_SECONDS to R.string.action_name_reverse_30,
             StandardActions.ACTION_PLAY_PAUSE to R.string.action_name_play_pause,

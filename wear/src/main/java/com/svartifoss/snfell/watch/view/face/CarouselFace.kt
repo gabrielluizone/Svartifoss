@@ -44,7 +44,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
-import com.svartifoss.snfell.common.CarouselCardShape
+import com.svartifoss.snfell.common.CoverShape
+import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.watch.view.compose.FaceClock
 
@@ -69,7 +70,7 @@ import com.svartifoss.snfell.watch.view.compose.FaceClock
 fun CarouselFace(
         state: NowPlayingFaceState,
         listener: NowPlayingFaceListener,
-        cardShape: CarouselCardShape
+        cardShape: CoverShape
 ) {
     // Deliberately no early return on idle: the face owns the "nothing playing" screen too, so
     // choosing a face is visible even with no session. Every layout below already tolerates absent
@@ -146,7 +147,7 @@ private fun CarouselFrameContent(
         frame: CarouselFrame,
         state: NowPlayingFaceState,
         listener: NowPlayingFaceListener,
-        cardShape: CarouselCardShape,
+        cardShape: CoverShape,
         screen: Dp
 ) {
     // Sizes and offsets are fractions of the SCREEN, not of the card, because what matters is where
@@ -325,25 +326,25 @@ private const val CAROUSEL_TITLE_TRACKING = 0.12f
  * numbers rather than being tuned independently, so moving or resizing the cover keeps the artist
  * hugging its top edge and the title hugging its bottom one.
  */
-private const val CARD_FRACTION = .52f
+private const val CARD_FRACTION = FaceGeometry.Carousel.CARD_FRACTION
 
 /**
  * The rail's centre, above the screen's. The face needs a deeper band under the cover than a
  * centred rail leaves, because that is where a wrapped title has to live and the chord closes in
  * fast down there. Kept small: any further up and the artist line collides with the clock.
  */
-private const val RAIL_CENTER = .475f
+private const val RAIL_CENTER = FaceGeometry.Carousel.RAIL_CENTER
 
-private const val CARD_TOP = RAIL_CENTER - CARD_FRACTION / 2f
-private const val CARD_BOTTOM = RAIL_CENTER + CARD_FRACTION / 2f
+private const val CARD_TOP = FaceGeometry.Carousel.CARD_TOP
+private const val CARD_BOTTOM = FaceGeometry.Carousel.CARD_BOTTOM
 
 /** Height of the artist row - the source badge, which is the taller of the two things in it. */
-private const val ARTIST_ROW_FRACTION = .075f
+private const val ARTIST_ROW_FRACTION = FaceGeometry.Carousel.ARTIST_ROW_FRACTION
 
-private const val ARTIST_TOP = CARD_TOP - ARTIST_ROW_FRACTION
+private const val ARTIST_TOP = FaceGeometry.Carousel.ARTIST_TOP
 
 /** A hair of air between the cover and the title, not a gap: they read as one block. */
-private const val TITLE_TOP = CARD_BOTTOM + .014f
+private const val TITLE_TOP = FaceGeometry.Carousel.TITLE_TOP
 
 /** Ceiling for the inset calculation. Modes offering more lines than this (wrap5) still render
  *  them; this only stops the *width* being computed for lines that fall outside the glass. */
@@ -354,12 +355,7 @@ private const val CAROUSEL_TITLE_LINE_HEIGHT = 16f
 private const val CAROUSEL_ARTIST_SIZE = 10f
 
 /** Sized against the 10sp artist line it annotates, matching the curated faces' proportion. */
-private const val CAROUSEL_SOURCE_ICON_SIZE = 12f
-
-/** Resolves the shared shape contract into a Compose [Shape] for a card of [size]. */
-private fun CarouselCardShape.toComposeShape(size: Dp): Shape =
-        if (this == CarouselCardShape.CIRCLE) CircleShape
-        else RoundedCornerShape(size * cornerFraction)
+private const val CAROUSEL_SOURCE_ICON_SIZE = FaceGeometry.Carousel.SOURCE_ICON_SIZE_DP
 
 /**
  * A rail card. Neighbours stay fully opaque and recede through [shade], a darkening veil, rather
@@ -389,8 +385,8 @@ private fun CarouselCardImage(
     }
 }
 
-private const val NEAR_SHADE = .46f
-private const val FAR_SHADE = .68f
+private const val NEAR_SHADE = FaceGeometry.Carousel.NEAR_SHADE
+private const val FAR_SHADE = FaceGeometry.Carousel.FAR_SHADE
 
 /** Outline-only ambient variant: one card and the text, no neighbours, no fills. */
 @Composable

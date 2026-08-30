@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.common.AdaptiveTextContrast
+import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.LyricLine
 import com.svartifoss.snfell.common.LyricsParser
 import com.svartifoss.snfell.common.MusicGlyphs
@@ -59,8 +60,8 @@ private val INSTRUMENTAL_MARKER = MusicGlyphs.INSTRUMENTAL_MARKER
  * Three narrower lines still carry appreciably more of a lyric than two wide ones, which is the
  * trade this is making.
  */
-private const val VERSE_BAND_TOP = 0.28f
-private const val VERSE_BAND_BOTTOM = 0.80f
+private const val VERSE_BAND_TOP = FaceGeometry.Verse.BAND_TOP
+private const val VERSE_BAND_BOTTOM = FaceGeometry.Verse.BAND_BOTTOM
 
 /**
  * Where the block's centre sits, as a fraction of screen height.
@@ -70,7 +71,7 @@ private const val VERSE_BAND_BOTTOM = 0.80f
  * grows symmetrically about its centre, so a centre at 0.5 spends half of every new line on the
  * end that has no room.
  */
-private const val VERSE_BAND_CENTER = (VERSE_BAND_TOP + VERSE_BAND_BOTTOM) / 2f
+private const val VERSE_BAND_CENTER = FaceGeometry.Verse.BAND_CENTER
 
 /**
  * Verse: the song's words on the main screen, three lines at a time.
@@ -406,11 +407,12 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.ElapsedTi
 ) {
     if (!state.showTrackTime) return
 
-    ArtistLineText(
+    TrackTimeText(
             text = formatFaceClockTime(state.positionMs),
             state = state,
             color = Color.White.copy(alpha = 0.62f),
             fontSize = 11.sp,
+            fontFamily = state.artistFont,
             letterSpacing = 0.10.em,
             modifier = Modifier
                     .align(Alignment.BottomCenter)

@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- One row of the mini player's queue sheet.
+
+     The cover leads, because a queue is scanned by looking rather than by reading - which is the
+     whole reason the row grew one. It is resolved through the same QueueArtworkResolver the watch
+     queue uses, so a cover the wrist can show is a cover this list can show, with no second
+     resolution chain to drift.
+
+     The playing row is marked by the app's own three-bar animation rather than by a static glyph,
+     matching the watch's queue and every other "something is happening" state in the app. It
+     replaced a stack of three simultaneous signals - an accent bar, a tinted background and a bold
+     accent title - which said one thing three times. Two remain: the bars, and the accent title. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/queue_item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:background="?selectableItemBackground"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:paddingStart="20dp"
+    android:paddingTop="6dp"
     android:paddingEnd="16dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:background="?selectableItemBackground">
+    android:paddingBottom="6dp">
 
-    <!-- Active indicator bar -->
-    <View
-        android:id="@+id/queue_item_active_bar"
-        android:layout_width="3dp"
-        android:layout_height="28dp"
-        android:background="@color/lyra_accent"
-        android:layout_marginEnd="12dp"
-        android:visibility="invisible" />
+    <FrameLayout
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="14dp">
+
+        <ImageView
+            android:id="@+id/queue_item_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/mini_album_bg"
+            android:clipToOutline="true"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_music_note"
+            tools:src="@drawable/ic_music_note" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -31,35 +52,51 @@
             android:id="@+id/queue_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="@color/lyra_on_surface"
-            android:fontFamily="@font/google_sans"
-            android:maxLines="1"
             android:ellipsize="end"
-            android:includeFontPadding="false" />
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/lyra_on_surface"
+            android:textSize="13sp"
+            tools:text="A track that is playing" />
 
         <TextView
             android:id="@+id/queue_item_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:textColor="@color/lyra_text_secondary"
-            android:fontFamily="@font/google_sans"
-            android:maxLines="1"
+            android:layout_marginTop="1dp"
             android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
             android:includeFontPadding="false"
-            android:layout_marginTop="1dp" />
+            android:maxLines="1"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="11sp"
+            tools:text="An artist" />
 
     </LinearLayout>
 
-    <!-- Now playing icon (visible only for active track) -->
-    <ImageView
-        android:id="@+id/queue_item_playing_icon"
+    <!-- Exactly one of the two below is shown: the bars for the track playing now, the position
+         for every other row. -->
+    <TextView
+        android:id="@+id/queue_item_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/google_sans"
+        android:includeFontPadding="false"
+        android:minWidth="24dp"
+        android:gravity="end"
+        android:textColor="@color/lyra_text_secondary"
+        android:textSize="12sp"
+        tools:text="7" />
+
+    <com.svartifoss.snfell.view.MusicLoadingBarsView
+        android:id="@+id/queue_item_playing_bars"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:src="@drawable/ic_playlist_play"
-        app:tint="@color/lyra_accent"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/queue_item_now_playing"
         android:visibility="gone"
-        android:contentDescription="Tocando" />
+        tools:visibility="visible" />
 
 </LinearLayout>

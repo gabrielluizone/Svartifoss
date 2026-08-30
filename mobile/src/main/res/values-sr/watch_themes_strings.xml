@@ -77,4 +77,6 @@
     <string name="watch_theme_face_note">Нота</string>
     <string name="watch_theme_face_verse">Стих</string>
     <string name="watch_theme_face_metadata">Метаподаци</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

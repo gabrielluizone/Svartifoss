@@ -30,6 +30,11 @@ class SettingsSearchRoutingTest {
         // These rows are deliberately managed outside the normal section pages and search index.
         val EXTERNAL_CATEGORIES = setOf("cat_developer")
         val EXTERNAL_TOP_LEVEL_ROWS = setOf("no_watch_banner")
+        val NON_SEARCH_ROWS = setOf(
+                "typography_editor_surface",
+                "color_editor_surface",
+                "panel_editor_surface",
+                "player_editor_surface")
     }
 
     @Test
@@ -41,6 +46,7 @@ class SettingsSearchRoutingTest {
             preferenceRows(source.fileName).forEach rowLoop@ { row ->
                 if (row.category?.let { it in EXTERNAL_CATEGORIES } == true) return@rowLoop
                 if (row.category == null && row.key in EXTERNAL_TOP_LEVEL_ROWS) return@rowLoop
+                if (row.key in NON_SEARCH_ROWS) return@rowLoop
 
                 if (row.category == null) {
                     problems += "${source.fileName}:${row.key} is outside a category, so search " +
@@ -79,7 +85,12 @@ class SettingsSearchRoutingTest {
                         "wear_font_flex_width",
                         "wear_font_flex_optical_size",
                         "wear_font_flex_grade",
-                        "wear_font_flex_roundness"),
+                        "wear_font_flex_roundness") +
+                        flexAxisKeys("wear_title_font_flex") +
+                        flexAxisKeys("wear_artist_font_flex") +
+                        flexAxisKeys("wear_clock_font_flex") +
+                        flexAxisKeys("wear_lyrics_font_flex") +
+                        flexAxisKeys("wear_track_time_font_flex"),
                 flexRows.map { it.key }.toSet())
         flexRows.forEach {
             assertEquals(
@@ -96,6 +107,7 @@ class SettingsSearchRoutingTest {
                         row.category?.let { it in EXTERNAL_CATEGORIES } == true
                     }
                     .filterNot { it.category == null && it.key in EXTERNAL_TOP_LEVEL_ROWS }
+                    .filterNot { it.key in NON_SEARCH_ROWS }
                     .map { source to it }
         }
         val duplicates = occurrences.groupBy { it.second.key }.filterValues { it.size > 1 }
@@ -153,6 +165,12 @@ class SettingsSearchRoutingTest {
     }
 
     private fun Element.androidAttribute(name: String): String = getAttributeNS(ANDROID_NS, name)
+
+    private fun flexAxisKeys(prefix: String): Set<String> = setOf(
+            "${prefix}_width",
+            "${prefix}_optical_size",
+            "${prefix}_grade",
+            "${prefix}_roundness")
 
     private data class Source(
             val fileName: String,

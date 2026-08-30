@@ -77,4 +77,6 @@
     <string name="watch_theme_face_note">Not</string>
     <string name="watch_theme_face_verse">Mısra</string>
     <string name="watch_theme_face_metadata">Meta Veri</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.common.AdaptiveTextContrast
+import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.ColorHarmony
+import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.FaceClock
@@ -57,7 +58,11 @@ import com.svartifoss.snfell.watch.view.compose.FaceClock
  * this layout leaves the bottom band free, so the shortcut row is the natural way to reach anything.
  */
 @Composable
-fun NoteFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
+fun NoteFace(
+        state: NowPlayingFaceState,
+        listener: NowPlayingFaceListener,
+        coverShape: CoverShape = CoverShape.CIRCLE
+) {
     if (state.ambient) {
         NoteAmbient(state)
         return
@@ -84,15 +89,19 @@ fun NoteFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
         ) {
-            CoverDisc(state, size = (screen * COVER_FRACTION).coerceIn(34.dp, 60.dp))
+            CoverDisc(
+                    state,
+                    size = (screen * COVER_FRACTION).coerceIn(34.dp, 60.dp),
+                    shape = coverShape)
             Spacer(Modifier.height(screen * .05f))
             NoteLine(state, screen)
         }
 
         if (state.showTrackTime) {
-            Text(
+            TrackTimeText(
                     text = "${formatFaceClockTime(state.positionMs)} / " +
                             formatFaceClockTime(state.durationMs),
+                    state = state,
                     color = noteTitleColor(state).copy(alpha = .55f),
                     fontFamily = state.artistFont,
                     fontSize = 11.sp,
@@ -113,21 +122,33 @@ fun NoteFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
 
 /** Cover diameter as a fraction of the screen - small, as in the reference: it identifies the
  *  track, the text carries it. */
-private const val COVER_FRACTION = .21f
+private const val COVER_FRACTION = FaceGeometry.Note.COVER_FRACTION
 
 /** Side padding for the text block. Wide, because a centred two-line sentence on a round screen
  *  loses its corners first. */
 private const val NOTE_TEXT_INSET = .17f
 
-/** The album cover as a plain circle. Falls back to an accent disc before any artwork arrives, so
- *  the composition never collapses to text floating alone. */
+/**
+ * The album cover, cut to the user's chosen [shape]. Falls back to an accent fill before any
+ * artwork arrives, so the composition never collapses to text floating alone.
+ *
+ * A circle by default - beside a line of text it reads as the contact photo on a message, which is
+ * the composition this face is after - but the shape is the shared [CoverShape] vocabulary
+ * Carousel's rail already offers, because a square sleeve is a perfectly reasonable thing to want
+ * here and there was no way to ask for one.
+ */
 @Composable
-private fun CoverDisc(state: NowPlayingFaceState, size: Dp, modifier: Modifier = Modifier) {
+private fun CoverDisc(
+        state: NowPlayingFaceState,
+        size: Dp,
+        shape: CoverShape,
+        modifier: Modifier = Modifier
+) {
     val art = state.albumArt
     Box(
             modifier = modifier
                     .size(size)
-                    .clip(CircleShape)
+                    .clip(shape.toComposeShape(size))
                     .background(Color(state.accentColor).copy(alpha = if (art == null) .5f else 1f)),
             contentAlignment = Alignment.Center
     ) {
@@ -157,28 +178,50 @@ private fun NoteLine(state: NowPlayingFaceState, screen: Dp, modifier: Modifier 
     if (!showArtist && !showTitle) return
 
     val titleColor = noteTitleColor(state)
-    val artistColor = Color(state.artistColor)
+    val titleSpec = state.titleTypography
+    val artistSpec = state.artistTypography
+    val artistColor = Color(state.artistColor).copy(alpha = artistSpec.alpha)
+    // This face is one sentence, so the artist cannot take ArtistLineText - it is a span, not a
+    // line. Everything the spec carries that a span can express is applied here instead; only the
+    // *size* is deliberately left to the title's scale, because "Artist: Title" is set as a single
+    // run and two independent sizes inside it would stop it reading as a sentence, which is the
+    // whole composition. Bold is the face's design, so it survives the identity weight the way
+    // AdaptiveTitleText and ArtistLineText preserve a designed value.
+    val artistWeight =
+            if (artistSpec.weight == 400) FontWeight.Bold else FontWeight(artistSpec.weight)
     val text = buildAnnotatedString {
         if (showArtist) {
             withStyle(SpanStyle(
                     color = artistColor,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = artistWeight,
+                    fontStyle = state.artistFontStyle,
+                    letterSpacing = state.artistLetterSpacing,
                     fontFamily = state.artistFont)) {
-                append(state.artist)
+                append(artistSpec.case.apply(state.artist))
             }
             if (showTitle) {
-                withStyle(SpanStyle(color = artistColor, fontWeight = FontWeight.Bold)) {
+                withStyle(SpanStyle(color = artistColor, fontWeight = artistWeight)) {
                     append(":")
                 }
                 append(" ")
             }
         }
         if (showTitle) {
+            // The title is a span here for the same reason the artist is, so like the artist it
+            // carries the whole spec by hand - slant, tracking and opacity included. Only the
+            // *size* is left to the run (see above): one sentence, one size.
+            //
+            // Each span cases its own text before appending, rather than casing the finished
+            // sentence afterwards: the artist and title cases are independent settings, and a case
+            // transform can change a run's character count (German ß -> SS), so casing after the
+            // fact risks shifting this span's boundary into what the artist span already wrote.
             withStyle(SpanStyle(
-                    color = titleColor,
+                    color = titleColor.copy(alpha = titleColor.alpha * titleSpec.alpha),
                     fontWeight = state.titleFontWeight,
+                    fontStyle = state.titleFontStyle,
+                    letterSpacing = state.titleLetterSpacing,
                     fontFamily = state.titleFont)) {
-                append(state.title)
+                append(titleSpec.case.apply(state.title))
             }
         }
     }
@@ -188,13 +231,19 @@ private fun NoteLine(state: NowPlayingFaceState, screen: Dp, modifier: Modifier 
             top = .52f,
             lineHeight = 19.dp / screen,
             lines = NOTE_MAX_LINES)
-    Text(
+    // Through AdaptiveTitleText, not a bare Text: the sentence is this face's title, so the user's
+    // Title text behaviour (marquee/wrap/static/shrink/smart) has to reach it like it reaches every
+    // other face. It used to draw a fixed three-line wrap here, which made that setting a no-op on
+    // Note alone. The typography spec is applied to the spans above rather than passed in, so the
+    // already-scaled size goes in as the run's own - passing both would scale it twice. Three lines
+    // is the ceiling the composition has room for, which is also the depth [inset] is measured at.
+    AdaptiveTitleText(
             text = text,
-            fontSize = state.titleTypography.scaled(16f).sp,
-            lineHeight = 19.sp,
+            mode = state.titleTextMode,
+            fontSize = titleSpec.scaled(16f).sp,
+            color = titleColor,
             textAlign = TextAlign.Center,
             maxLines = NOTE_MAX_LINES,
-            overflow = TextOverflow.Ellipsis,
             modifier = modifier
                     .fillMaxWidth()
                     .padding(horizontal = (screen * inset - screen * NOTE_TEXT_INSET)
@@ -202,7 +251,7 @@ private fun NoteLine(state: NowPlayingFaceState, screen: Dp, modifier: Modifier 
     )
 }
 
-private const val NOTE_MAX_LINES = 3
+private const val NOTE_MAX_LINES = FaceGeometry.Note.MAX_LINES
 
 /**
  * The title colour, decided against the backdrop rather than assumed.

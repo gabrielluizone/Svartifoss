@@ -543,8 +543,8 @@
     <string name="wear_font_montserrat_description">Sans-serif geometri yang bersih, alternatif percuma (OFL) dalam gaya Proxima Nova.</string>
     <string name="wear_font_marcellus">Marcellus</string>
     <string name="wear_font_marcellus_description">Muka taip roman humanis yang elegan, alternatif percuma (OFL) dalam gaya Optima.</string>
-    <string name="wear_font_love_letter">Wired</string>
-    <string name="wear_font_love_letter_description">Gaya mesin taip yang lebih lembut (Love Letter Typewriter) — biasanya dikhaskan untuk trek bertema \"Lain\".</string>
+    <string name="wear_font_love_letter">Special Elite</string>
+    <string name="wear_font_love_letter_description">A distressed typewriter style with a worn, analog look.</string>
     <string name="wear_font_serif">Serif</string>
     <string name="wear_font_serif_description">Muka taip serif klasik.</string>
     <string name="wear_font_serif_monospace">Serif mono</string>
@@ -634,6 +634,8 @@
         <item>Nota</item>
         <item>Rangkap</item>
         <item>Metadata</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -654,6 +656,8 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>ribbon</item>
+        <item>frame</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Carian Ekspresif</string>
@@ -687,6 +691,8 @@
         <item>Berpecah</item>
         <item>Nota</item>
         <item>Rangkap</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
     </string-array>
     <string-array name="wear_aod_style_values">
         <item>follow</item>
@@ -703,6 +709,8 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>ribbon</item>
+        <item>frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Warna paparan sentiasa hidup</string>
     <string-array name="wear_aod_color_entries">
@@ -1300,7 +1308,68 @@
         <item>@string/wear_font_playfair</item>
         <item>@string/wear_font_space_grotesk</item>
         <item>@string/wear_font_orbitron</item>
-        <item>@string/wear_font_caveat</item>
+       <item>@string/wear_font_caveat</item>
+        <item>@string/wear_font_inter</item>
+        <item>@string/wear_font_atkinson_hyperlegible</item>
+        <item>@string/wear_font_rubik</item>
+        <item>@string/wear_font_barlow_condensed</item>
+        <item>@string/wear_font_oswald</item>
+        <item>@string/wear_font_lora</item>
+        <item>@string/wear_font_fraunces</item>
+        <item>@string/wear_font_space_mono</item>
+        <item>@string/wear_font_archivo_black</item>
+        <item>@string/wear_font_dancing_script</item>
+        <item>@string/wear_font_abeezee</item>
+        <item>@string/wear_font_abril_fatface</item>
+        <item>@string/wear_font_acme</item>
+        <item>@string/wear_font_alata</item>
+        <item>@string/wear_font_aleo</item>
+        <item>@string/wear_font_alfa_slab_one</item>
+        <item>@string/wear_font_amatic_sc</item>
+        <item>@string/wear_font_anton</item>
+        <item>@string/wear_font_arvo</item>
+        <item>@string/wear_font_bangers</item>
+        <item>@string/wear_font_black_ops_one</item>
+        <item>@string/wear_font_bree_serif</item>
+        <item>@string/wear_font_cabin</item>
+        <item>@string/wear_font_chivo</item>
+        <item>@string/wear_font_courier_prime</item>
+        <item>@string/wear_font_crete_round</item>
+        <item>@string/wear_font_crimson_pro</item>
+        <item>@string/wear_font_dm_sans</item>
+        <item>@string/wear_font_domine</item>
+        <item>@string/wear_font_exo_2</item>
+        <item>@string/wear_font_fira_code</item>
+        <item>@string/wear_font_inconsolata</item>
+        <item>@string/wear_font_indie_flower</item>
+        <item>@string/wear_font_josefin_sans</item>
+        <item>@string/wear_font_jost</item>
+        <item>@string/wear_font_kanit</item>
+        <item>@string/wear_font_lexend</item>
+        <item>@string/wear_font_lobster</item>
+        <item>@string/wear_font_manrope</item>
+        <item>@string/wear_font_mulish</item>
+        <item>@string/wear_font_nunito</item>
+        <item>@string/wear_font_outfit</item>
+        <item>@string/wear_font_oxanium</item>
+        <item>@string/wear_font_play</item>
+        <item>@string/wear_font_plus_jakarta_sans</item>
+        <item>@string/wear_font_press_start_2p</item>
+        <item>@string/wear_font_quicksand</item>
+        <item>@string/wear_font_rajdhani</item>
+        <item>@string/wear_font_righteous</item>
+        <item>@string/wear_font_roboto_mono</item>
+        <item>@string/wear_font_rowdies</item>
+        <item>@string/wear_font_russo_one</item>
+        <item>@string/wear_font_shrikhand</item>
+        <item>@string/wear_font_silkscreen</item>
+        <item>@string/wear_font_source_code_pro</item>
+        <item>@string/wear_font_staatliches</item>
+        <item>@string/wear_font_teko</item>
+        <item>@string/wear_font_titillium_web</item>
+        <item>@string/wear_font_varela_round</item>
+        <item>@string/wear_font_yanone_kaffeesatz</item>
+        <item>@string/wear_font_zilla_slab</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1329,7 +1398,68 @@
         <item>@string/wear_font_playfair_description</item>
         <item>@string/wear_font_space_grotesk_description</item>
         <item>@string/wear_font_orbitron_description</item>
-        <item>@string/wear_font_caveat_description</item>
+       <item>@string/wear_font_caveat_description</item>
+        <item>@string/wear_font_inter_description</item>
+        <item>@string/wear_font_atkinson_hyperlegible_description</item>
+        <item>@string/wear_font_rubik_description</item>
+        <item>@string/wear_font_barlow_condensed_description</item>
+        <item>@string/wear_font_oswald_description</item>
+        <item>@string/wear_font_lora_description</item>
+        <item>@string/wear_font_fraunces_description</item>
+        <item>@string/wear_font_space_mono_description</item>
+        <item>@string/wear_font_archivo_black_description</item>
+        <item>@string/wear_font_dancing_script_description</item>
+        <item>@string/wear_font_abeezee_description</item>
+        <item>@string/wear_font_abril_fatface_description</item>
+        <item>@string/wear_font_acme_description</item>
+        <item>@string/wear_font_alata_description</item>
+        <item>@string/wear_font_aleo_description</item>
+        <item>@string/wear_font_alfa_slab_one_description</item>
+        <item>@string/wear_font_amatic_sc_description</item>
+        <item>@string/wear_font_anton_description</item>
+        <item>@string/wear_font_arvo_description</item>
+        <item>@string/wear_font_bangers_description</item>
+        <item>@string/wear_font_black_ops_one_description</item>
+        <item>@string/wear_font_bree_serif_description</item>
+        <item>@string/wear_font_cabin_description</item>
+        <item>@string/wear_font_chivo_description</item>
+        <item>@string/wear_font_courier_prime_description</item>
+        <item>@string/wear_font_crete_round_description</item>
+        <item>@string/wear_font_crimson_pro_description</item>
+        <item>@string/wear_font_dm_sans_description</item>
+        <item>@string/wear_font_domine_description</item>
+        <item>@string/wear_font_exo_2_description</item>
+        <item>@string/wear_font_fira_code_description</item>
+        <item>@string/wear_font_inconsolata_description</item>
+        <item>@string/wear_font_indie_flower_description</item>
+        <item>@string/wear_font_josefin_sans_description</item>
+        <item>@string/wear_font_jost_description</item>
+        <item>@string/wear_font_kanit_description</item>
+        <item>@string/wear_font_lexend_description</item>
+        <item>@string/wear_font_lobster_description</item>
+        <item>@string/wear_font_manrope_description</item>
+        <item>@string/wear_font_mulish_description</item>
+        <item>@string/wear_font_nunito_description</item>
+        <item>@string/wear_font_outfit_description</item>
+        <item>@string/wear_font_oxanium_description</item>
+        <item>@string/wear_font_play_description</item>
+        <item>@string/wear_font_plus_jakarta_sans_description</item>
+        <item>@string/wear_font_press_start_2p_description</item>
+        <item>@string/wear_font_quicksand_description</item>
+        <item>@string/wear_font_rajdhani_description</item>
+        <item>@string/wear_font_righteous_description</item>
+        <item>@string/wear_font_roboto_mono_description</item>
+        <item>@string/wear_font_rowdies_description</item>
+        <item>@string/wear_font_russo_one_description</item>
+        <item>@string/wear_font_shrikhand_description</item>
+        <item>@string/wear_font_silkscreen_description</item>
+        <item>@string/wear_font_source_code_pro_description</item>
+        <item>@string/wear_font_staatliches_description</item>
+        <item>@string/wear_font_teko_description</item>
+        <item>@string/wear_font_titillium_web_description</item>
+        <item>@string/wear_font_varela_round_description</item>
+        <item>@string/wear_font_yanone_kaffeesatz_description</item>
+        <item>@string/wear_font_zilla_slab_description</item>
     </string-array>
 
     <string name="action_open_library">Semak imbas pustaka</string>
@@ -1339,7 +1469,8 @@
     <string name="error_library_no_player">Mulakan sesuatu dahulu</string>
 
     <string name="setting_wear_carousel_card_shape">Bentuk kad karusel</string>
-    <string-array name="wear_carousel_card_shape_entries">
+    <string name="setting_wear_note_cover_shape">Bentuk kover Nota</string>
+    <string-array name="wear_cover_shape_entries">
         <item>Bulat</item>
         <item>Segi empat sama</item>
         <item>Segi empat bulat</item>
@@ -1926,6 +2057,7 @@
     <string name="preview_metadata_album">Album</string>
     <string name="preview_metadata_album_value">Slow Rivers</string>
     <string name="preview_metadata_track">Trek</string>
+    <string name="preview_metadata_composer">Komposer</string>
     <string name="preview_metadata_genre">Genre</string>
     <string name="preview_metadata_genre_value">Alternative</string>
     <string name="preview_metadata_year">Tahun</string>

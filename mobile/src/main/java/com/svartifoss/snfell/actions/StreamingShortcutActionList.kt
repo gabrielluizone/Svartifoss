@@ -11,7 +11,8 @@ import com.svartifoss.snfell.view.buttonconfig.ActionPickerViewModel
 /**
  * Action-picker category backed by the same library as Streaming shortcuts. Saved tracks,
  * albums, mixes and playlists are exposed directly as assignable actions; no second list or
- * preference is created for the Actions tab.
+ * preference is created for the Actions tab. The built-in account-library shortcuts live here
+ * too, so the root picker has one streaming entry instead of a growing row per service.
  */
 class StreamingShortcutActionList : PhoneAction {
     constructor(context: Context) : super(context)
@@ -22,7 +23,17 @@ class StreamingShortcutActionList : PhoneAction {
 
     override fun onActionPicked(actionPicker: ActionPickerViewModel) {
         val shortcuts = PlaylistShortcutStorage.load(context)
-        val actions = ArrayList<PhoneAction>(shortcuts.size + 2)
+        val actions = ArrayList<PhoneAction>(shortcuts.size + BUILT_IN_SHORTCUT_COUNT + 2)
+
+        // These are fixed account-library links rather than user-saved links, but they are
+        // still streaming shortcuts. Keeping them inside this category prevents every newly
+        // supported service (and YouTube Music's shuffled variant) from adding another root row.
+        actions.addAll(listOf(
+            PlayLikedSongsAction(context),
+            PlayLikedSongsShuffledAction(context),
+            PlaySpotifyLikedSongsAction(context),
+            PlaySoundCloudLikesAction(context)
+        ))
 
         // Pick mode uses PlaylistShortcutStorage itself and also lets an empty/new library be
         // populated without leaving the action assignment flow - the short path that saves the
@@ -58,11 +69,15 @@ class StreamingShortcutActionList : PhoneAction {
     }
 
     override fun retrieveTitle(): String =
-            context.getString(R.string.group_streaming_shortcuts)
+            context.getString(R.string.action_my_playlists)
 
     override val defaultIcon: Drawable
         get() = AppCompatResources.getDrawable(
                 context,
                 com.svartifoss.snfell.common.R.drawable.action_open_playlist
         )!!
+
+    private companion object {
+        const val BUILT_IN_SHORTCUT_COUNT = 4
+    }
 }

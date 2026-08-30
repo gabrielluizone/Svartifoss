@@ -3,20 +3,23 @@ package com.svartifoss.snfell.watch.view.face
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.AccentFloorStyle
 import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.LyricLine
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.TrackMetadataFields
+import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
+import com.svartifoss.snfell.watch.theme.SpecialEliteFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.theme.flexFontFamily
-import com.svartifoss.snfell.watch.theme.lainFont
 import com.svartifoss.snfell.watch.theme.watchFontFamily
 
 internal data class MetadataVisibility(
@@ -36,6 +39,18 @@ internal fun resolveMetadataVisibility(
         title = title.isNotEmpty() && (showTitle || titleIsStatus),
         artist = artist.isNotEmpty() && (showArtist || artistIsStatus)
 )
+
+/**
+ * Classic renders the app mark in a sibling View rather than inside [resolveMetadataVisibility]'s
+ * text view. It must therefore explicitly follow that resolved line: leaving it visible when the
+ * artist is hidden produces an orphaned icon, while a status line such as "Playback stopped"
+ * remains a valid sibling.
+ */
+internal fun shouldShowClassicSourceIcon(
+        hasSourceIcon: Boolean,
+        artistVisible: Boolean,
+        ambient: Boolean
+): Boolean = hasSourceIcon && artistVisible && !ambient
 
 /** The full-screen edge View must survive visual hiding whenever its independent gesture is on. */
 internal fun shouldKeepEdgeSeekView(
@@ -325,15 +340,22 @@ data class NowPlayingFaceState(
         val ambientShowProgress: Boolean = true,
         /** Whether the static outlined Up Next pill shows in supported ambient faces. */
         val ambientShowPills: Boolean = true,
-        /** The user's font choice for title/artist text (MiscPreferences.WEAR_FONT key). Resolved
-         *  through [watchFontFamily]; the Lain keyword easter egg still takes precedence. */
+        /** The global fallback font for title/artist text (MiscPreferences.WEAR_FONT key).
+         *  Per-line "follow" choices resolve through it. */
         val fontKey: String = "google_sans",
+        /** The title's own font choice, or "follow"/null to retain [fontKey]. */
+        val titleFontKey: String? = null,
+        /** The artist's own font choice, or "follow"/null to retain [fontKey]. */
+        val artistFontKey: String? = null,
         /** The clock's own font choice (MiscPreferences.WEAR_CLOCK_FONT), or "follow"/null to keep
          *  tracking [fontKey] as the clock always did. Resolved by [WatchTypography.clockFontKey]. */
         val clockFontKey: String? = null,
         /** The lyrics' own font choice (MiscPreferences.WEAR_LYRICS_FONT), or "follow"/null to keep
          *  the serif the Verse face was designed around. Resolved by [lyricFont]. */
         val lyricsFontKey: String? = null,
+        /** The elapsed/total readout's own font choice, or "follow"/null to preserve the
+         *  individual face's authored numeric typeface. Resolved by [trackTimeFont]. */
+        val trackTimeFontKey: String? = null,
         /**
          * Everything the phone knows about the playing track, for the Metadata face.
          *
@@ -398,41 +420,70 @@ data class NowPlayingFaceState(
         /** As [titleTypography], for the artist line. Independent on purpose - a heavier title
          *  against a lighter artist line is the common ask. */
         val artistTypography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
+        /** Typography deltas for the elapsed/total readout. The family stays face-authored until
+         *  [trackTimeFontKey] is explicitly selected. */
+        val trackTimeTypography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
         /** Size/opacity for [sourceIcon]. */
         val sourceIconTypography: WatchTypography.IconSpec = WatchTypography.IDENTITY_ICON,
-        /** Google Sans Flex's shared width/optical-size/grade/roundness axes - only consulted when
-         *  [fontKey] is [WatchTypography.FLEX_FONT_KEY]. See [WatchTypography.flexAxes]. */
+        /** Google Sans Flex axes belonging to the global [fontKey] family. */
         val flexAxes: WatchTypography.FlexAxes = WatchTypography.IDENTITY_FLEX_AXES,
+        /** Axes for an explicit Title-only Google Sans Flex choice. */
+        val titleFlexAxes: WatchTypography.FlexAxes = WatchTypography.IDENTITY_FLEX_AXES,
+        /** Axes for an explicit Artist-only Google Sans Flex choice. */
+        val artistFlexAxes: WatchTypography.FlexAxes = WatchTypography.IDENTITY_FLEX_AXES,
+        /** Axes for an explicit Clock-only Google Sans Flex choice. */
+        val clockFlexAxes: WatchTypography.FlexAxes = WatchTypography.IDENTITY_FLEX_AXES,
+        /** Axes for an explicit Lyrics-only Google Sans Flex choice. */
+        val lyricsFlexAxes: WatchTypography.FlexAxes = WatchTypography.IDENTITY_FLEX_AXES,
+        /** Axes for an explicit Track-time-only Google Sans Flex choice. */
+        val trackTimeFlexAxes: WatchTypography.FlexAxes = WatchTypography.IDENTITY_FLEX_AXES,
 ) {
     /**
-     * The [FontFamily] to use for the track title. The Lain keyword easter egg (title or artist
-     * containing a trigger word, case-insensitive substring) always wins; otherwise the user's
-     * [fontKey] choice applies, defaulting to [GoogleSansFamily] so normal tracks are unaffected.
-     * Google Sans Flex additionally bakes in [titleTypography]'s own weight/slant plus [flexAxes],
-     * since its variable axes need a per-element instance no plain family lookup can express - see
-     * [flexFontFamily].
+     * The [FontFamily] to use for the track title. The explicit [titleFontKey] choice applies,
+     * falling back to [fontKey]. Google Sans Flex additionally bakes in [titleTypography]'s own
+     * weight/slant plus the axes belonging to the family that selected it, since its variable axes
+     * need a per-element instance no plain family lookup can express - see [flexFontFamily].
      */
     val titleFont: FontFamily
-        get() = lainFont(title) ?: lainFont(artist) ?: run {
-            if (WatchTypography.isFlexFont(fontKey)) {
-                flexFontFamily(titleTypography, flexAxes)
+        get() {
+            if (SpecialEliteKeywordPolicy.matches(title, artist)) {
+                return SpecialEliteFamily
+            }
+            val resolved = WatchTypography.titleFontKey(titleFontKey, fontKey)
+            return if (WatchTypography.isFlexFont(resolved)) {
+                flexFontFamily(
+                        titleTypography,
+                        if (titleFontKey == WatchTypography.FLEX_FONT_KEY) {
+                            titleFlexAxes
+                        } else {
+                            flexAxes
+                        })
             } else {
-                watchFontFamily(fontKey)
+                watchFontFamily(resolved)
             }
         }
 
     /**
-     * The [FontFamily] to use for the artist line. Matches [titleFont] for the Lain easter egg and
-     * for every ordinary font choice (both lines share one family, weight/slant applied separately
-     * by the caller); for Google Sans Flex it instead bakes in [artistTypography]'s own weight/
-     * slant, since Flex's variable axes make title/artist genuinely different font instances.
+     * The [FontFamily] to use for the artist line. The explicit [artistFontKey] choice falls back
+     * to [fontKey]. For Google Sans Flex it bakes in [artistTypography]'s own weight/slant and
+     * either its own axes or the global axes, depending on which family selection supplied Flex.
      */
     val artistFont: FontFamily
-        get() = lainFont(title) ?: lainFont(artist) ?: run {
-            if (WatchTypography.isFlexFont(fontKey)) {
-                flexFontFamily(artistTypography, flexAxes)
+        get() {
+            if (SpecialEliteKeywordPolicy.matches(title, artist)) {
+                return SpecialEliteFamily
+            }
+            val resolved = WatchTypography.artistFontKey(artistFontKey, fontKey)
+            return if (WatchTypography.isFlexFont(resolved)) {
+                flexFontFamily(
+                        artistTypography,
+                        if (artistFontKey == WatchTypography.FLEX_FONT_KEY) {
+                            artistFlexAxes
+                        } else {
+                            flexAxes
+                        })
             } else {
-                watchFontFamily(fontKey)
+                watchFontFamily(resolved)
             }
         }
 
@@ -455,20 +506,67 @@ data class NowPlayingFaceState(
     val artistLetterSpacing: TextUnit get() = artistTypography.trackingEm.em
 
     /**
+     * Optional family override for the elapsed/total readout.
+     *
+     * Null deliberately means “retain the face's own family”; this is unlike [clockFont], whose
+     * historical default is to follow the track family. A Flex override is instantiated with the
+     * readout's own weight/slant and its own width/optical-size/grade/roundness axes.
+     */
+    val trackTimeFont: FontFamily?
+        get() {
+            val resolved = WatchTypography.trackTimeFontKey(trackTimeFontKey) ?: return null
+            return if (WatchTypography.isFlexFont(resolved)) {
+                flexFontFamily(trackTimeTypography, trackTimeFlexAxes)
+            } else {
+                watchFontFamily(resolved)
+            }
+        }
+
+    /** A default 400 preserves each face's own designed weight. */
+    val trackTimeFontWeight: FontWeight?
+        get() = FontWeight(trackTimeTypography.weight).takeUnless {
+            trackTimeTypography.weight == 400
+        }
+
+    /** A default upright style preserves each face's own designed style. */
+    val trackTimeFontStyle: FontStyle?
+        get() = FontStyle.Italic.takeIf { trackTimeTypography.italic }
+
+    /** The size controls are relative to the face's authored readout size. */
+    fun trackTimeTextSize(designedSize: TextUnit): TextUnit =
+            (designedSize.value * trackTimeTypography.scale).sp
+
+    /** Tracking at zero preserves any deliberate letter spacing on the composition. */
+    fun trackTimeLetterSpacing(designedSpacing: TextUnit): TextUnit =
+            if (trackTimeTypography.trackingEm == 0f) {
+                designedSpacing
+            } else {
+                trackTimeTypography.trackingEm.em
+            }
+
+    /** Applies opacity over a face's own colour rather than replacing its intentional alpha. */
+    fun trackTimeColor(designedColor: Color): Color =
+            designedColor.copy(alpha = designedColor.alpha * trackTimeTypography.alpha)
+
+    /**
      * The [FontFamily] for the awake clock: [clockFontKey] when the user picked one, otherwise
      * [fontKey] as the clock always followed.
      *
-     * Deliberately ignores the Lain easter egg either way: the clock is chrome, not track text, so
-     * it should not flip typeface based on what is playing. For Google Sans Flex it still picks up
-     * the shared [flexAxes] (width/optical-size/grade/roundness are described to the user as
-     * applying "to the whole face") at the identity weight/slant, since the clock has no weight
-     * control of its own.
+     * The clock is chrome, not track text, so it does not change typeface based on what is playing.
+     * A Clock-only Flex choice receives its own width/optical-size/grade/roundness set; a "follow"
+     * choice keeps the title/artist axes.
      */
     val clockFont: FontFamily
         get() {
             val resolved = WatchTypography.clockFontKey(clockFontKey, fontKey)
             return if (WatchTypography.isFlexFont(resolved)) {
-                flexFontFamily(clockTypography, flexAxes)
+                flexFontFamily(
+                        clockTypography,
+                        if (clockFontKey == WatchTypography.FLEX_FONT_KEY) {
+                            clockFlexAxes
+                        } else {
+                            flexAxes
+                        })
             } else {
                 watchFontFamily(resolved)
             }
@@ -488,15 +586,21 @@ data class NowPlayingFaceState(
      * words of the song stayed put while everything around them followed the font you picked.
      * Marcellus is still in the catalog for anyone who wants the original look.
      *
-     * Flex gets the title's axes rather than its own set. Lyrics have no weight or slant control of
-     * their own, so there is nothing else to resolve them from, and inventing a second identity for
-     * them would only be a third opinion about the same font.
+     * A Lyrics-only Flex choice has its own four visual axes while retaining the title's
+     * weight/slant (lyrics have no separate weight or slant control). A "follow" choice keeps the
+     * title/artist axes instead.
      */
     val lyricFont: FontFamily
         get() {
             val resolved = WatchTypography.lyricsFontKey(lyricsFontKey, fontKey)
             return if (WatchTypography.isFlexFont(resolved)) {
-                flexFontFamily(titleTypography, flexAxes)
+                flexFontFamily(
+                        titleTypography,
+                        if (lyricsFontKey == WatchTypography.FLEX_FONT_KEY) {
+                            lyricsFlexAxes
+                        } else {
+                            flexAxes
+                        })
             } else {
                 watchFontFamily(resolved)
             }

@@ -42,9 +42,23 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/community_gallery_refresh"
+            app:layout_constraintEnd_toStartOf="@id/community_gallery_submissions"
             app:layout_constraintStart_toEndOf="@id/community_gallery_back"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/community_gallery_submissions"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/community_theme_submissions_action"
+            android:padding="12dp"
+            android:src="@drawable/ic_history"
+            android:tint="@color/lyra_on_surface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/community_gallery_refresh"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UseAppTint" />
 
         <ImageButton
             android:id="@+id/community_gallery_refresh"
@@ -276,6 +290,23 @@
                 android:visibility="gone" />
 
         </LinearLayout>
+
+        <!-- Declared after the state overlay so it stays reachable while the list is empty,
+             loading or offline: submitting reads the local library and needs no catalogue. -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/community_gallery_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/community_theme_submit_picker_action"
+            android:src="@drawable/ic_upload_file"
+            android:visibility="gone"
+            app:backgroundTint="@color/lyra_accent"
+            app:elevation="6dp"
+            app:fabSize="normal"
+            app:tint="@color/lyra_white" />
 
     </FrameLayout>
 

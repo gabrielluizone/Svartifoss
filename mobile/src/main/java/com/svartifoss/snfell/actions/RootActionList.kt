@@ -33,15 +33,12 @@ class RootActionList : PhoneAction {
                 AppPlayPickerAction(context),
                 StreamingShortcutActionList(context),
                 OpenMenuAction(context),
+                OpenQuickActionsPanelAction(context),
                 OpenPlaylistAction(context),
                 OpenLyricsAction(context),
                 SearchAction(context),
                 OpenSearchHistoryAction(context),
-                OpenLibraryAction(context),
-                PlayLikedSongsAction(context),
-                PlayLikedSongsShuffledAction(context),
-                PlaySpotifyLikedSongsAction(context),
-                PlaySoundCloudLikesAction(context)
+                OpenLibraryAction(context)
         ))
 
         if (isTaskerInstalled()) {

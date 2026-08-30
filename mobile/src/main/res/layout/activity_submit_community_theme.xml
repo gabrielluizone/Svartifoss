@@ -24,7 +24,7 @@
             android:contentDescription="@string/back"
             android:padding="12dp"
             android:src="@drawable/ic_arrow_left"
-            android:tint="@color/lyra_on_surface" />
+            app:tint="@color/lyra_on_surface" />
 
         <TextView
             android:layout_width="0dp"
@@ -137,8 +137,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/google_sans"
+                    android:gravity="start|center_vertical"
                     android:imeOptions="actionNext"
+                    android:includeFontPadding="false"
                     android:inputType="textCapSentences"
+                    android:letterSpacing="0"
+                    app:lineHeight="21sp"
                     android:maxLength="48"
                     android:maxLines="1"
                     android:textSize="15sp" />
@@ -161,13 +165,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/google_sans"
+                    android:gravity="start|center_vertical"
                     android:imeOptions="actionDone"
+                    android:includeFontPadding="false"
                     android:inputType="textCapWords"
+                    android:letterSpacing="0"
+                    app:lineHeight="21sp"
                     android:maxLength="48"
                     android:maxLines="1"
                     android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/anonymous_author_switch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/google_sans"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:text="@string/community_theme_submit_publish_anonymously"
+                android:textColor="@color/lyra_on_surface"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/submission_originality"

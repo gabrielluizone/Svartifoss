@@ -1,24 +1,31 @@
 package com.svartifoss.snfell.view.watchface.theme
 
+import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.ColorUtils
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.MusicLoadingBarsView
+import com.svartifoss.snfell.view.applyLyraDialogStyling
 import com.svartifoss.snfell.view.watchface.WatchPreviewView
 import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.launch
@@ -31,13 +38,16 @@ import timber.log.Timber
  */
 class SubmitCommunityThemeActivity : AppCompatActivity() {
 
+    private lateinit var defaultPrefs: SharedPreferences
     private lateinit var themeRepository: WatchThemeRepository
     private lateinit var submissionRepository: CommunityThemeSubmissionRepository
+    private lateinit var accountRepository: CommunityThemeAccountRepository
     private lateinit var preview: WatchPreviewView
     private lateinit var publicNameLayout: TextInputLayout
     private lateinit var publicNameInput: TextInputEditText
     private lateinit var authorLayout: TextInputLayout
     private lateinit var authorInput: TextInputEditText
+    private lateinit var anonymousAuthorSwitch: SwitchMaterial
     private lateinit var originality: TextView
     private lateinit var error: TextView
     private lateinit var progress: MusicLoadingBarsView
@@ -45,10 +55,20 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
 
     private lateinit var profileId: String
     private var submissionInProgress = false
+    private var authorIdentity: CommunityThemeAuthorIdentity? = null
+    private var authorIdentityRequestUid: String? = null
+    /** MainActivity can keep extracting a new album accent underneath this standalone Activity. */
+    private val accentPreferenceListener =
+            SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+                if (LyraAccent.affectsResolvedColor(key) && ::submitButton.isInitialized) {
+                    runOnUiThread(::applyRuntimeAccent)
+                }
+            }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_submit_community_theme)
+        defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this)
 
         val requestedProfileId = intent.getStringExtra(EXTRA_PROFILE_ID)
         if (requestedProfileId.isNullOrBlank()) {
@@ -59,17 +79,20 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         profileId = requestedProfileId
         themeRepository = WatchThemeRepository(this)
         submissionRepository = CommunityThemeSubmissionRepository(applicationContext)
+        accountRepository = CommunityThemeAccountRepository()
 
         preview = findViewById(R.id.submission_preview)
         publicNameLayout = findViewById(R.id.public_name_layout)
         publicNameInput = findViewById(R.id.public_name_input)
         authorLayout = findViewById(R.id.author_layout)
         authorInput = findViewById(R.id.author_input)
+        anonymousAuthorSwitch = findViewById(R.id.anonymous_author_switch)
         originality = findViewById(R.id.submission_originality)
         error = findViewById(R.id.submission_error)
         progress = findViewById(R.id.submission_progress)
-        progress.setBarsColor(LyraAccent.resolve(this))
         submitButton = findViewById(R.id.button_submit_theme)
+        applyRuntimeAccent()
+        updateSubmitButtonLabel()
 
         findViewById<ImageButton>(R.id.button_back).setOnClickListener { finish() }
         publicNameInput.doAfterTextChanged {
@@ -80,9 +103,153 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
             authorLayout.error = null
             clearError()
         }
+        anonymousAuthorSwitch.setOnCheckedChangeListener { _, publishAnonymously ->
+            updateAuthorPresentation(publishAnonymously)
+            clearError()
+        }
+        updateAuthorPresentation(anonymousAuthorSwitch.isChecked)
         submitButton.setOnClickListener { submit() }
 
         loadInitialTheme()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        defaultPrefs.registerOnSharedPreferenceChangeListener(accentPreferenceListener)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        applyRuntimeAccent()
+        updateSubmitButtonLabel()
+        loadFixedAuthorIdentity()
+    }
+
+    override fun onStop() {
+        defaultPrefs.unregisterOnSharedPreferenceChangeListener(accentPreferenceListener)
+        super.onStop()
+    }
+
+    /** Applies the live Lyra accent without sacrificing contrast for very light album colours. */
+    private fun applyRuntimeAccent() {
+        if (!::submitButton.isInitialized) return
+        val accent = LyraAccent.resolve(this)
+        val background = getColor(R.color.lyra_background)
+        val accentOnBackground = LyraAccent.contrastSafe(
+                accent,
+                background,
+                minimumContrast = 3.0)
+        val accentTextOnBackground = LyraAccent.contrastSafe(
+                accent,
+                background,
+                minimumContrast = 4.5)
+        val onAccent = LyraAccent.foregroundFor(accent)
+
+        submitButton.backgroundTintList = ColorStateList.valueOf(accent)
+        submitButton.setTextColor(onAccent)
+        submitButton.iconTint = ColorStateList.valueOf(onAccent)
+        renderSubmitButtonEnabledState()
+        progress.setBarsColor(accentOnBackground)
+
+        listOf(
+                publicNameLayout to publicNameInput,
+                authorLayout to authorInput
+        ).forEach { (layout, input) ->
+            // Cursor/handles and Material's focused outline otherwise retain the static sage that
+            // colorControlActivated resolved at inflation time.
+            LyraAccent.applyToEditText(input, accentOnBackground)
+            layout.boxStrokeColor = accentOnBackground
+            layout.defaultHintTextColor = ColorStateList.valueOf(accentTextOnBackground)
+            layout.setCounterTextColor(ColorStateList.valueOf(accentTextOnBackground))
+        }
+        val switchStates = arrayOf(
+                intArrayOf(-android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_checked),
+                intArrayOf())
+        anonymousAuthorSwitch.thumbTintList = ColorStateList(
+                switchStates,
+                intArrayOf(
+                        getColor(R.color.lyra_divider),
+                        accentOnBackground,
+                        getColor(R.color.lyra_stone)))
+        anonymousAuthorSwitch.trackTintList = ColorStateList(
+                switchStates,
+                intArrayOf(
+                        ColorUtils.setAlphaComponent(getColor(R.color.lyra_divider), 0x60),
+                        ColorUtils.setAlphaComponent(accentOnBackground, 0x80),
+                        getColor(R.color.lyra_divider)))
+        anonymousAuthorSwitch.jumpDrawablesToCurrentState()
+    }
+
+    private fun renderSubmitButtonEnabledState() {
+        submitButton.alpha = if (submitButton.isEnabled) 1f else DISABLED_CONTROL_ALPHA
+    }
+
+    /** Firebase restores Google Auth automatically; the copy must not ask to sign in again. */
+    private fun updateSubmitButtonLabel() {
+        if (!::submitButton.isInitialized || !::accountRepository.isInitialized) return
+        submitButton.setText(if (accountRepository.isGoogleConnected()) {
+            R.string.community_theme_submit_button_connected
+        } else {
+            R.string.community_theme_submit_button
+        })
+    }
+
+    /**
+     * Anonymous is a per-theme visibility choice, not a way to create disposable identities.
+     * Every submitting account reserves one name; once claimed, the field is read-only here.
+     */
+    private fun updateAuthorPresentation(publishAnonymously: Boolean) {
+        authorLayout.visibility = View.VISIBLE
+        publicNameInput.imeOptions = EditorInfo.IME_ACTION_NEXT
+        val identity = authorIdentity
+        if (identity != null) {
+            if (authorInput.text?.toString() != identity.authorName) {
+                authorInput.setText(identity.authorName)
+                authorInput.setSelection(identity.authorName.length)
+            }
+            authorInput.isEnabled = false
+            authorLayout.helperText = getString(
+                    if (publishAnonymously) {
+                        R.string.community_theme_submit_author_fixed_anonymous_helper
+                    } else {
+                        R.string.community_theme_submit_author_fixed_helper
+                    })
+        } else {
+            authorInput.isEnabled = !submissionInProgress
+            authorLayout.helperText = getString(
+                    if (publishAnonymously) {
+                        R.string.community_theme_submit_author_first_anonymous_helper
+                    } else {
+                        R.string.community_theme_submit_author_helper
+                    })
+        }
+    }
+
+    private fun applyAuthorIdentity(identity: CommunityThemeAuthorIdentity) {
+        authorIdentity = identity
+        updateAuthorPresentation(anonymousAuthorSwitch.isChecked)
+    }
+
+    /** Loads the server-owned identity early so returning authors never see an editable field. */
+    private fun loadFixedAuthorIdentity() {
+        if (!accountRepository.isGoogleConnected()) return
+        val uid = accountRepository.userUid() ?: return
+        if (authorIdentityRequestUid == uid) return
+        authorIdentityRequestUid = uid
+        lifecycleScope.launch {
+            when (val result = accountRepository.publicAuthorIdentity()) {
+                is CommunityThemeAuthorIdentityLoadResult.Claimed ->
+                    applyAuthorIdentity(result.identity)
+                CommunityThemeAuthorIdentityLoadResult.Unclaimed -> {
+                    authorIdentity = null
+                    updateAuthorPresentation(anonymousAuthorSwitch.isChecked)
+                }
+                CommunityThemeAuthorIdentityLoadResult.NotAuthenticated -> Unit
+                is CommunityThemeAuthorIdentityLoadResult.Failed ->
+                    Timber.d(result.error, "Could not preload fixed community author identity")
+            }
+        }
     }
 
     private fun loadInitialTheme() {
@@ -107,6 +274,11 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         publicNameInput.setText(ready.draft.name)
         publicNameInput.setSelection(publicNameInput.text?.length ?: 0)
         showPreflight(submissionRepository.preflight(ready.draft))
+        // The duplicate check reads a cached catalogue and can touch the network, so the cheap
+        // gates above draw first and this only ever tightens the result afterwards.
+        lifecycleScope.launch {
+            showPreflight(submissionRepository.preflightAgainstPublished(ready.draft))
+        }
     }
 
     private fun showPreflight(preflight: CommunityThemeSubmissionPreflight) {
@@ -125,23 +297,29 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
                         preflight.minimumRequired)
                 submitButton.isEnabled = false
             }
+            CommunityThemeSubmissionPreflight.ExactDuplicate -> {
+                originality.text = getString(R.string.community_theme_submit_duplicate)
+                submitButton.isEnabled = false
+            }
             CommunityThemeSubmissionPreflight.InvalidDraft -> {
                 originality.text = getString(R.string.community_theme_submit_invalid)
                 submitButton.isEnabled = false
             }
         }
+        renderSubmitButtonEnabledState()
     }
 
     private fun submit() {
         if (submissionInProgress) return
         val publicName = publicNameInput.text?.toString().orEmpty()
+        val publishAnonymously = anonymousAuthorSwitch.isChecked
         val author = authorInput.text?.toString().orEmpty()
         if (publicName.isBlank()) {
             publicNameLayout.error = getString(R.string.community_theme_submit_name_required)
             publicNameInput.requestFocus()
             return
         }
-        if (!isValidPublicText(author)) {
+        if (CommunityThemeAuthorNames.normalize(author) == null) {
             authorLayout.error = getString(R.string.community_theme_submit_author_required)
             authorInput.requestFocus()
             return
@@ -165,17 +343,24 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
                         preflight.minimumRequired))
                 return
             }
+            CommunityThemeSubmissionPreflight.ExactDuplicate -> {
+                showPreflight(preflight)
+                showError(getString(R.string.community_theme_submit_duplicate))
+                return
+            }
             CommunityThemeSubmissionPreflight.InvalidDraft -> {
                 showError(getString(R.string.community_theme_submit_invalid))
                 return
             }
-            is CommunityThemeSubmissionPreflight.Ready -> submitReady(preflight, author)
+            is CommunityThemeSubmissionPreflight.Ready ->
+                submitReady(preflight, author, publishAnonymously)
         }
     }
 
     private fun submitReady(
             preflight: CommunityThemeSubmissionPreflight.Ready,
-            author: String
+            author: String,
+            publishAnonymously: Boolean
     ) {
         val publicProfile = themeRepository.parsePublishedProfile(preflight.draft.profileJson()) ?: run {
             showError(getString(R.string.community_theme_submit_invalid))
@@ -194,11 +379,39 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
                     when (val queued = submissionRepository.enqueue(
                             preflight,
                             author,
+                            publishAnonymously,
                             moderationPreview)) {
-                        CommunityThemeQueueResult.Queued -> showSuccess()
+                        CommunityThemeQueueResult.Queued -> {
+                            showSuccess()
+                        }
                         CommunityThemeQueueResult.SubmissionLimitReached -> {
                             setLoading(false)
                             showError(getString(R.string.community_theme_submit_limit_reached))
+                        }
+                        CommunityThemeQueueResult.ExactDuplicate -> {
+                            setLoading(false)
+                            submitButton.isEnabled = false
+                            originality.text = getString(R.string.community_theme_submit_duplicate)
+                            showError(getString(R.string.community_theme_submit_duplicate))
+                        }
+                        CommunityThemeQueueResult.AuthorNameUnavailable -> {
+                            setLoading(false)
+                            authorLayout.error = getString(
+                                    R.string.community_theme_submit_author_unavailable)
+                            authorInput.requestFocus()
+                            showError(getString(R.string.community_theme_submit_author_unavailable))
+                        }
+                        is CommunityThemeQueueResult.AuthorNameLocked -> {
+                            setLoading(false)
+                            val uid = accountRepository.userUid().orEmpty()
+                            applyAuthorIdentity(CommunityThemeAuthorIdentity(
+                                    ownerUid = uid,
+                                    authorName = queued.authorName,
+                                    authorKey = CommunityThemeAuthorNames.keyForCanonicalName(
+                                            queued.authorName)))
+                            showError(getString(
+                                    R.string.community_theme_submit_author_locked,
+                                    queued.authorName))
                         }
                         CommunityThemeQueueResult.NotAuthenticated,
                         CommunityThemeQueueResult.InvalidRequest -> {
@@ -264,7 +477,9 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
     private fun setLoading(loading: Boolean) {
         submissionInProgress = loading
         submitButton.isEnabled = !loading
+        renderSubmitButtonEnabledState()
         progress.visibility = if (loading) View.VISIBLE else View.GONE
+        updateAuthorPresentation(anonymousAuthorSwitch.isChecked)
         if (loading) clearError()
     }
 
@@ -279,7 +494,7 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
 
     private fun showSuccess() {
         setLoading(false)
-        AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
                 .setTitle(R.string.community_theme_submit_success_title)
                 .setMessage(R.string.community_theme_submit_success_message)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
@@ -287,7 +502,15 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
                     finish()
                 }
                 .setCancelable(false)
-                .show()
+                .create()
+        dialog.setOnShowListener {
+            val dialogAccent = LyraAccent.contrastSafe(
+                    LyraAccent.resolve(this),
+                    getColor(R.color.lyra_surface),
+                    minimumContrast = 4.5)
+            dialog.applyLyraDialogStyling(accent = dialogAccent)
+        }
+        dialog.show()
     }
 
     private fun showInvalidAndFinish() {
@@ -295,19 +518,11 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun isValidPublicText(value: String): Boolean {
-        val normalized = value.trim().replace(WHITESPACE, " ")
-        return normalized.isNotBlank() &&
-                normalized.length <= MAX_PUBLIC_TEXT_LENGTH &&
-                normalized.none(Character::isISOControl)
-    }
-
     companion object {
         const val EXTRA_PROFILE_ID = "community_theme_profile_id"
 
         private const val MODERATION_PREVIEW_PIXELS = 200
         private const val MODERATION_PREVIEW_QUALITY = 84
-        private const val MAX_PUBLIC_TEXT_LENGTH = 48
-        private val WHITESPACE = Regex("\\s+")
+        private const val DISABLED_CONTROL_ALPHA = 0.5f
     }
 }

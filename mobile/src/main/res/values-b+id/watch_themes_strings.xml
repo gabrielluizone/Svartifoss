@@ -74,4 +74,6 @@
     <string name="watch_theme_face_note">Note</string>
     <string name="watch_theme_face_verse">Bait</string>
     <string name="watch_theme_face_metadata">Metadata</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

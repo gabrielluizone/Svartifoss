@@ -12,10 +12,21 @@ enum class OverlayBackdrop {
     ACRYLIC,
     SOLID_BLACK,
     SOLID_ALBUM,
+    SOLID_SECONDARY,
+    SOLID_TERTIARY,
     GLASS,
     GRADIENT,
     DUOTONE,
     PRISM,
+    MESH,
+    AURORA,
+    SPOTLIGHT,
+    VIGNETTE,
+    SPLIT,
+    BANDS,
+    MIDNIGHT,
+    HALO,
+    SMOKE,
 
     /**
      * Heavily blurred artwork read through a bright, thin-edged pane - the treatment Apple calls
@@ -49,10 +60,21 @@ enum class OverlayBackdrop {
             "acrylic", "blur" -> ACRYLIC
             "black" -> SOLID_BLACK
             "album" -> SOLID_ALBUM
+            "secondary" -> SOLID_SECONDARY
+            "tertiary" -> SOLID_TERTIARY
             "glass" -> GLASS
             "gradient" -> GRADIENT
             "duotone" -> DUOTONE
             "prism" -> PRISM
+            "mesh" -> MESH
+            "aurora" -> AURORA
+            "spotlight" -> SPOTLIGHT
+            "vignette" -> VIGNETTE
+            "split" -> SPLIT
+            "bands" -> BANDS
+            "midnight" -> MIDNIGHT
+            "halo" -> HALO
+            "smoke" -> SMOKE
             "liquid_glass" -> LIQUID_GLASS
             "expressive" -> EXPRESSIVE
             "expressive_no_blur" -> EXPRESSIVE_NO_BLUR
@@ -69,7 +91,7 @@ enum class OverlayBackdrop {
      */
     val usesAlbumBlur: Boolean
         get() = this == ACRYLIC || this == GLASS || this == PRISM || this == LIQUID_GLASS ||
-                this == EXPRESSIVE
+                this == EXPRESSIVE || this == SMOKE
 }
 
 /** Resolves the compatibility option without leaking renderer-specific Android classes here. */
@@ -79,12 +101,14 @@ object OverlayBackdropResolver {
         if (requested != OverlayBackdrop.FOLLOW_STYLE) return requested
 
         return when (contentStyle) {
-            "glass", "glass_white", "glass_tonal", "outline_glass_white", "frost", "mist", "pill" ->
+            "glass", "glass_white", "glass_tonal", "outline_glass_white", "frost", "mist",
+            "pill", "chrome" ->
                 OverlayBackdrop.GLASS
-            "tonal", "ink", "expressive" -> OverlayBackdrop.SOLID_ALBUM
-            "gradient", "aurora" -> OverlayBackdrop.GRADIENT
-            "duotone" -> OverlayBackdrop.DUOTONE
-            "prism" -> OverlayBackdrop.PRISM
+            "tonal", "ink", "expressive", "soft", "bubble", "pulse", "rail" ->
+                OverlayBackdrop.SOLID_ALBUM
+            "gradient", "aurora", "sunset" -> OverlayBackdrop.GRADIENT
+            "duotone", "dual" -> OverlayBackdrop.DUOTONE
+            "prism", "holo", "spectrum" -> OverlayBackdrop.PRISM
             else -> OverlayBackdrop.SOLID_BLACK
         }
     }
@@ -100,6 +124,10 @@ object OverlayBackdropResolver {
         "expressive" -> "tonal"
         "material" -> "material"
         "white" -> "light"
+        "square_album", "stacked_pill" -> "tonal"
+        "ribbon" -> "gradient"
+        "lcd" -> "terminal"
+        "compact_pill", "badge", "glass_bar", "outline_square" -> "glass"
         else -> "glass"
     }
 }

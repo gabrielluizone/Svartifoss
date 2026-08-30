@@ -4,8 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.media.session.PlaybackState
@@ -33,6 +38,7 @@ import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.databinding.FragmentWatchFaceBinding
 import com.svartifoss.snfell.config.buttons.GlobalButtonConfig
 import com.svartifoss.snfell.music.isPlaying
+import com.svartifoss.snfell.notifications.AppGlyphStore
 import com.svartifoss.snfell.view.TitledActivity
 import com.svartifoss.snfell.view.mainactivity.MainActivity
 import com.svartifoss.snfell.view.settings.FaceScopedPreferenceDataStore
@@ -46,6 +52,7 @@ import kotlinx.coroutines.withContext
 import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
+import timber.log.Timber
 
 private const val PLAYBACK_TICK_INTERVAL_MS = 500L
 
@@ -509,6 +516,53 @@ class WatchFaceFragment : Fragment() {
                 metadata?.getString(MediaMetadata.METADATA_KEY_TITLE),
                 metadata?.getString(MediaMetadata.METADATA_KEY_ARTIST)
         )
+        pushSourceGlyph()
+    }
+
+    /**
+     * The playing app's own mark, so the miniature shows the glyph the watch will actually draw
+     * rather than a stand-in.
+     *
+     * [AppGlyphStore] is the same persistent store `MusicService` sends the watch from, and it is
+     * consulted before the launcher icon for the reason recorded there: the notification small icon
+     * is what the faces show. The store's bytes are a flat white template and must be reported as
+     * tintable; a launcher icon is real artwork and must not be, which is why the two travel
+     * together instead of being decided separately.
+     */
+    private fun pushSourceGlyph() {
+        val context = context ?: return
+        val packageName = mediaController?.packageName
+        if (packageName == null) {
+            preview?.setSourceGlyph(null, tintable = true)
+            return
+        }
+        val template = AppGlyphStore.drawable(context, packageName)
+        if (template != null) {
+            preview?.setSourceGlyph(template.toBitmapOrNull(), tintable = true)
+            return
+        }
+        val launcher = try {
+            context.packageManager.getApplicationIcon(packageName)
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
+        preview?.setSourceGlyph(launcher?.toBitmapOrNull(), tintable = false)
+    }
+
+    private fun Drawable.toBitmapOrNull(): Bitmap? {
+        if (this is BitmapDrawable) return bitmap
+        val width = intrinsicWidth.takeIf { it > 0 } ?: return null
+        val height = intrinsicHeight.takeIf { it > 0 } ?: return null
+        return try {
+            Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).also {
+                val canvas = Canvas(it)
+                setBounds(0, 0, canvas.width, canvas.height)
+                draw(canvas)
+            }
+        } catch (e: RuntimeException) {
+            Timber.w(e, "Could not rasterize the source glyph for the preview")
+            null
+        }
     }
 
     /** Pushes the current (interpolated) playback position/state into the preview - the state's

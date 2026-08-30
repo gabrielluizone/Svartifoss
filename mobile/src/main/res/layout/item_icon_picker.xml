@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One cell of the icon-selection grid: icon over a name caption, so browsing (or a search
+     match) shows what a glyph is actually called instead of only its shape. Borderless ripple
+     across the whole cell - button/action icons are picked far more often than they're renamed,
+     so a dense unbordered grid reads better here than a field of individually-carded tiles. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:paddingTop="8dp"
+    android:paddingBottom="6dp"
+    android:paddingStart="2dp"
+    android:paddingEnd="2dp">
+
+    <!-- The visible label below does the announcing (the cell itself is one focusable,
+         clickable accessibility node) - a separate content description here would just have
+         TalkBack read the same name twice. -->
+    <ImageView
+        android:id="@+id/icon_picker_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="6dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        tools:src="@drawable/ic_music_note" />
+
+    <TextView
+        android:id="@+id/icon_picker_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/google_sans"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="1dp"
+        android:maxLines="2"
+        android:minLines="2"
+        android:textColor="@color/lyra_text_secondary"
+        android:textSize="10sp"
+        tools:text="Skip next" />
+
+</LinearLayout>

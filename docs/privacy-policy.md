@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 26-08-2026**
+**Last updated: 28-08-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -190,18 +190,22 @@ catalogue.
 
 The public catalogue shows only a trusted aggregate count. The GitHub publisher
 counts the private reactions and later writes the total into the static
-catalogue, so a like or unlike can take until the next publisher run to appear
-or affect the **most liked** ordering. The public count never identifies who
-reacted.
+catalogue, so a like or unlike can take until the next publication that
+rewrites it — and at most about a week — to appear there or affect the **most
+liked** ordering. Your own reaction is shown immediately on your own device.
+The public count never identifies who reacted.
 
 ### Submitting a theme
 
-Submitting is separate from browsing. It starts only after you choose **Submit
-to community** for a private, user-owned saved theme and then tap **Sign in and
-submit**. Before opening Google Sign-In, the app creates and checks a fresh
-public profile locally. The current preflight requires at least **12** setting
-values to differ from the selected base face; this is an eligibility filter,
-not a promise that the theme will be approved.
+Submitting is separate from browsing. You can explicitly connect Google first
+under **Settings → General → Community themes → Community account**, or
+choose **Submit to community** for a private, user-owned saved theme and tap
+**Sign in and submit**. Firebase keeps that connection on this device, so later
+submissions reuse it without showing the account picker again. Before sending a
+theme, the app creates and checks a fresh public profile locally. The current
+preflight requires at least **12** setting values to differ from the selected
+base face; this is an eligibility filter, not a promise that the theme will be
+approved.
 
 At that explicit point, Firebase Authentication processes the Google
 credential and account information needed to authenticate you, then issues a
@@ -209,11 +213,11 @@ Firebase Auth UID. Svartifoss stores that UID — rather than your Google accoun
 name or email — in the Firestore submission document as the ownership
 identifier (`ownerUid`). It does not show your Google account name or email to
 gallery visitors or publish them. Instead, you choose the public theme name and
-author pseudonym yourself.
+either an author pseudonym or the public credit **Anonymous** yourself.
 
 Firestore receives one immutable **pending** submission record. Its submitted
 content includes the fresh public theme ID; the complete typed profile JSON and
-its settings digest; the public theme name and author pseudonym; the base face,
+its settings digest; the public theme name and selected public author credit; the base face,
 revision, client version, and Firestore server timestamp. It also includes a
 fixed-sample 200×200 WebP review preview rendered from Svartifoss's built-in
 sample track, not your current playback, album art, or media metadata. A
@@ -230,30 +234,82 @@ Google processes Authentication and Firestore data under
 [Google's Privacy Policy](https://policies.google.com/privacy) and
 [Firebase's data processing terms](https://firebase.google.com/support/privacy).
 
-### Moderation, publication, and removal requests
+### Moderation and publication
 
 The pending record is private to its owner and configured moderators. Approval
 does not make a theme public immediately. When an approved submission is
 published, the trusted publisher validates it again and commits the public
-profile JSON, public theme name, and author pseudonym to this project's Git
+profile JSON, public theme name, and selected public author credit to this project's Git
 repository; GitHub Pages then serves those public files in the catalogue. The
 Firebase Auth UID and Google account name/email are not copied to the public
 repository or catalogue.
 
-Version 3.3 does not implement comments, theme-update submissions, a
-submission-history screen, or self-service deletion of a Firebase Auth record
-or submitted theme. Uninstalling the app removes its local data but does not
-automatically retract a submission or remove a private reaction already stored
-in Firestore. You can remove your own reaction by tapping **Unlike** in that
-theme's detail page, for as long as the app still holds the anonymous identifier
-that created it.
+Version 3.3 does not implement comments or theme-update submissions.
 
-To request a takedown of a pending submission, removal of a current public
-listing, or help identifying a community-theme record, email the address in
-[Contact](#contact). Include the public theme name, pseudonym, and approximate
-submission date if you can. Requests are handled manually. Removing a current
-listing cannot erase information already committed to Git history or copied
-into forks, clones, caches, or third-party archives.
+**My submissions** (Community account → See my submissions, or the history
+button in the community gallery) reads back the submissions this account has
+sent, with the status of each: waiting for review, approved, published,
+rejected, or being removed. For a published theme it also shows the public like
+count already in the downloaded catalogue; no per-theme figure is requested
+from Firebase.
+
+From that screen you can **remove any of your own themes** without deleting
+your account. It is a request rather than an instant delete, for the same
+reason account deletion is: the catalogue is a set of files in this project's
+Git repository, so the trusted publisher removes the file, the catalogue entry
+and the theme's likes on its next run, normally within about a day, and then
+deletes the submission record. Anyone who already installed the theme keeps
+their own local copy. It reads only records whose
+owner is your own Firebase Auth UID; Firestore rules refuse anyone else's. It
+deliberately does not show who reviewed a submission — the reviewer's identity
+is kept in a separate moderator-only record precisely so that showing you your
+own outcomes never reveals it.
+
+### Deleting your community account
+
+**Settings → General → Community themes → Community account → Delete
+account** deletes the account itself. Before it is submitted, the app asks the
+one question it cannot answer for you — what should happen to the themes you
+have already published:
+
+- **Keep my published themes.** They stay in the public catalogue under the
+  author credit they were published with, and the record linking them to your
+  account is stripped of your Firebase Auth UID.
+- **Delete my published themes too.** Their public profile files and catalogue
+  entries are removed from this project's Git repository on the next publication
+  run, together with every like recorded against them.
+
+Under either choice, the deletion removes your Firebase Authentication
+identity, your private submission-quota record, every private like document
+created by that account, and any submission of yours that is not public — a
+theme still waiting for review, or one that was rejected, is deleted in both
+cases, because there is nothing published to keep.
+
+The request is carried out by the same trusted publisher that publishes themes,
+on its next scheduled run, normally within about a day. The app records only
+your decision; it never deletes the public catalogue or the identity by itself,
+because doing only the half an app can reach would destroy the account while
+leaving its published content behind. For the same reason the request cannot be
+edited or withdrawn from the app once confirmed, and the screen says so before
+asking.
+
+An account that exists only for likes — the silent anonymous one described
+above — can be deleted the same way. It owns no themes, so it is not asked the
+question; its identity and its private like documents are removed.
+
+Two limits are worth stating plainly. Removing a public listing cannot erase
+information already committed to Git history or copied into forks, clones,
+caches, or third-party archives, and anyone who already installed one of your
+themes keeps their own local copy on their own phone. **Remove from this
+device**, listed beside it, is a different action: it only signs out locally and
+deletes nothing. Uninstalling the app also removes local data but does not
+retract a submission or a private reaction already stored in Firestore.
+
+You can remove a single reaction at any time by tapping **Unlike** on that
+theme's detail page, for as long as the app still holds the identifier that
+created it. For a takedown request about someone else's theme, or help
+identifying a community-theme record, email the address in [Contact](#contact);
+those requests are handled manually.
 
 ## Streaming shortcut artwork (optional)
 
@@ -283,12 +339,14 @@ audio permission, requested from the "Queue covers from your library" row in
 Settings → Apps. This is a purely local read — no network access is involved
 and nothing about your library is uploaded, transmitted to the watch beyond
 the covers for the up-to-20 queue entries being displayed, or shared with
-anyone. Declining leaves the queue working with blank thumbnails.
+anyone. The same covers are what the phone's own playback-queue sheet draws;
+that one stays on the phone and is never transmitted anywhere. Declining
+leaves both queues working with blank thumbnails.
 
 **From the internet.** Streaming clients publish a cover URL instead of an
 image. **Fetch queue covers online** (Settings → Apps, and the Watch face
 tab's Panels section) downloads each such cover once and caches it on the
-phone. Only the cover URL the music app itself published is requested; no
+phone, for the queue on the watch and the phone's own queue sheet alike. Only the cover URL the music app itself published is requested; no
 account, API key, or other personal data is attached, and the request goes
 directly to whatever host that app pointed at, not through any server of
 ours.

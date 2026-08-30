@@ -8,6 +8,9 @@ object StandardActions {
     const val ACTION_VOLUME_UP = "com.svartifoss.snfell.actions.volume.IncreaseVolumeAction"
     const val ACTION_VOLUME_DOWN = "com.svartifoss.snfell.actions.volume.DecreaseVolumeAction"
     const val ACTION_OPEN_MENU = "com.svartifoss.snfell.actions.OpenMenuAction"
+    /** Opens the watch's quick-actions panel without requiring the center double tap. */
+    const val ACTION_OPEN_QUICK_ACTIONS_PANEL =
+            "com.svartifoss.snfell.actions.OpenQuickActionsPanelAction"
     const val ACTION_SKIP_30_SECONDS = "com.svartifoss.snfell.actions.playback.SkipThirtySecondsAction"
     const val ACTION_REVERSE_30_SECONDS = "com.svartifoss.snfell.actions.playback.ReverseThirtySecondsAction"
     const val ACTION_PLAY_PAUSE = "com.svartifoss.snfell.actions.playback.PlayPauseToggleAction"

@@ -6,6 +6,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- The legacy player categories below remain inflated as the authoritative preferences
+         (search metadata, scoped persistence, validation and dialogs), but the Player page presents
+         this one contextual editor instead of rendering every row in sequence. -->
+    <PreferenceCategory
+        android:key="cat_wf_player_editor"
+        android:layout="@layout/pref_category_hidden_header">
+
+        <com.svartifoss.snfell.view.watchface.PlayerEditorPreference
+            android:key="player_editor_surface" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="cat_wf_screen_behavior"
         android:title="@string/category_wf_screen_behavior"
@@ -62,8 +74,22 @@
             android:icon="@drawable/ic_album"
             android:title="@string/setting_wear_carousel_card_shape"
             android:summary="%s"
-            android:entries="@array/wear_carousel_card_shape_entries"
-            android:entryValues="@array/wear_carousel_card_shape_values"
+            android:entries="@array/wear_cover_shape_entries"
+            android:entryValues="@array/wear_cover_shape_values"
+            android:layout="@layout/pref_item" />
+
+        <!-- Note's cover disc, cut from the same shape vocabulary as the Carousel cards above:
+             a circle reads as a contact photo beside the sentence, which is that face's whole
+             idea, but a square sleeve is a reasonable thing to want and there was no way to ask.
+             Its own key, so choosing one shape here cannot restyle the Carousel rail. -->
+        <ListPreference
+            android:defaultValue="circle"
+            android:key="wear_note_cover_shape"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_wear_note_cover_shape"
+            android:summary="%s"
+            android:entries="@array/wear_cover_shape_entries"
+            android:entryValues="@array/wear_cover_shape_values"
             android:layout="@layout/pref_item" />
 
         <!-- Split paints its own lower panel. Keep this layout-specific control beside the face
@@ -165,6 +191,18 @@
             android:summaryOn="@string/setting_always_show_time_on_description"
             android:title="@string/setting_always_show_time"
             android:layout="@layout/pref_switch_item" />
+
+    </PreferenceCategory>
+
+    <!-- The legacy typography categories below remain inflated as the authoritative preferences
+         (search metadata, scoped persistence, validation and dialogs), but the Text page presents
+         this one contextual editor instead of rendering every row in sequence. -->
+    <PreferenceCategory
+        android:key="cat_wf_typography_editor"
+        android:layout="@layout/pref_category_hidden_header">
+
+        <com.svartifoss.snfell.view.watchface.TypographyEditorPreference
+            android:key="typography_editor_surface" />
 
     </PreferenceCategory>
 
@@ -284,6 +322,17 @@
             android:summary="@string/setting_wear_show_track_title_description"
             android:layout="@layout/pref_switch_item" />
 
+        <!-- Entries are populated from the shared catalog with a leading “Follow global font”
+             option by WatchFacePrefsFragment.applyTitleFontEntries. -->
+        <com.svartifoss.snfell.view.settings.DescribedListPreference
+            android:key="wear_title_font"
+            android:icon="@drawable/ic_music_note"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_title_font"
+            app:previewTypeface="true"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_title" />
+
         <ListPreference
             android:defaultValue="smart"
             android:key="wear_title_text_mode"
@@ -338,6 +387,29 @@
             android:summary="@string/setting_wear_typography_tracking_description"
             android:layout="@layout/pref_item"
             android:dependency="wear_show_track_title" />
+
+        <ListPreference
+            android:defaultValue="normal"
+            android:key="wear_title_text_case"
+            android:icon="@drawable/ic_match_case"
+            android:title="@string/setting_wear_title_text_case"
+            android:summary="%s"
+            android:entries="@array/wear_text_case_entries"
+            android:entryValues="@array/wear_text_case_values"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_title" />
+
+    </PreferenceCategory>
+
+    <!-- The legacy colour categories below remain inflated as the authoritative preferences
+         (search metadata, scoped persistence, validation and dialogs), but the Color page presents
+         this one contextual editor instead of rendering every row in sequence. -->
+    <PreferenceCategory
+        android:key="cat_wf_colors_editor"
+        android:layout="@layout/pref_category_hidden_header">
+
+        <com.svartifoss.snfell.view.watchface.ColorEditorPreference
+            android:key="color_editor_surface" />
 
     </PreferenceCategory>
 
@@ -509,6 +581,17 @@
             android:summary="@string/setting_wear_show_track_artist_description"
             android:layout="@layout/pref_switch_item" />
 
+        <!-- As the title picker, but scoped to the artist line so each can choose a different
+             family while “Follow global font” preserves existing themes. -->
+        <com.svartifoss.snfell.view.settings.DescribedListPreference
+            android:key="wear_artist_font"
+            android:icon="@drawable/ic_person"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_artist_font"
+            app:previewTypeface="true"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_artist" />
+
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="400"
             android:key="wear_artist_font_weight"
@@ -550,6 +633,17 @@
             android:icon="@drawable/ic_person"
             android:title="@string/setting_wear_artist_font_tracking"
             android:summary="@string/setting_wear_typography_tracking_description"
+            android:layout="@layout/pref_item"
+            android:dependency="wear_show_track_artist" />
+
+        <ListPreference
+            android:defaultValue="normal"
+            android:key="wear_artist_text_case"
+            android:icon="@drawable/ic_match_case"
+            android:title="@string/setting_wear_artist_text_case"
+            android:summary="%s"
+            android:entries="@array/wear_text_case_entries"
+            android:entryValues="@array/wear_text_case_values"
             android:layout="@layout/pref_item"
             android:dependency="wear_show_track_artist" />
 
@@ -637,6 +731,64 @@
             android:key="wear_clock_font_tracking"
             android:icon="@drawable/ic_text_fields"
             android:title="@string/setting_wear_clock_font_tracking"
+            android:summary="@string/setting_wear_typography_tracking_description"
+            android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <!-- The elapsed/total readout (for example, 1:23 / 3:45) has its own typeface and formatting
+         controls. "Follow the design" preserves every face's authored chrome until the user makes
+         an explicit override; entries are populated from the shared font catalog in
+         WatchFacePrefsFragment.applyTrackTimeFontEntries. -->
+    <PreferenceCategory
+        android:key="cat_wf_typography_track_time"
+        android:title="@string/category_wf_typography_track_time"
+        android:layout="@layout/pref_category_header">
+
+        <com.svartifoss.snfell.view.settings.DescribedListPreference
+            android:key="wear_track_time_font"
+            android:icon="@drawable/ic_history"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_track_time_font"
+            app:previewTypeface="true"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="400"
+            android:key="wear_track_time_font_weight"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_track_time_font_weight"
+            android:summary="@string/setting_wear_typography_weight_description"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_track_time_font_italic"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_track_time_font_italic"
+            android:layout="@layout/pref_switch_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_track_time_font_scale"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_track_time_font_scale"
+            android:summary="@string/setting_wear_typography_scale_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_track_time_font_opacity"
+            android:icon="@drawable/ic_opacity"
+            android:title="@string/setting_wear_track_time_font_opacity"
+            android:summary="@string/setting_wear_typography_opacity_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_track_time_font_tracking"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_track_time_font_tracking"
             android:summary="@string/setting_wear_typography_tracking_description"
             android:layout="@layout/pref_item" />
 
@@ -759,6 +911,170 @@
             android:summary="@string/setting_wear_font_flex_roundness_description"
             android:layout="@layout/pref_item" />
 
+        <!-- Explicit Title and Artist Flex choices own their axes; following the global family
+             keeps using wear_font_flex_* above. The compact Text editor provides the context. -->
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_title_font_flex_width"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_width"
+            android:summary="@string/setting_wear_font_flex_width_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="18"
+            android:key="wear_title_font_flex_optical_size"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_optical_size"
+            android:summary="@string/setting_wear_font_flex_optical_size_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_title_font_flex_grade"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_grade"
+            android:summary="@string/setting_wear_font_flex_grade_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_title_font_flex_roundness"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_roundness"
+            android:summary="@string/setting_wear_font_flex_roundness_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_artist_font_flex_width"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_width"
+            android:summary="@string/setting_wear_font_flex_width_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="18"
+            android:key="wear_artist_font_flex_optical_size"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_optical_size"
+            android:summary="@string/setting_wear_font_flex_optical_size_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_artist_font_flex_grade"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_grade"
+            android:summary="@string/setting_wear_font_flex_grade_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_artist_font_flex_roundness"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_roundness"
+            android:summary="@string/setting_wear_font_flex_roundness_description"
+            android:layout="@layout/pref_item" />
+
+        <!-- Legacy backing rows for the compact editor's individual Flex dialogs. The same labels
+             are intentional: the selected Clock/Lyrics/Track time target provides the context. -->
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_clock_font_flex_width"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_width"
+            android:summary="@string/setting_wear_font_flex_width_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="18"
+            android:key="wear_clock_font_flex_optical_size"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_optical_size"
+            android:summary="@string/setting_wear_font_flex_optical_size_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_clock_font_flex_grade"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_grade"
+            android:summary="@string/setting_wear_font_flex_grade_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_clock_font_flex_roundness"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_roundness"
+            android:summary="@string/setting_wear_font_flex_roundness_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_lyrics_font_flex_width"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_width"
+            android:summary="@string/setting_wear_font_flex_width_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="18"
+            android:key="wear_lyrics_font_flex_optical_size"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_optical_size"
+            android:summary="@string/setting_wear_font_flex_optical_size_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_lyrics_font_flex_grade"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_grade"
+            android:summary="@string/setting_wear_font_flex_grade_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_lyrics_font_flex_roundness"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_roundness"
+            android:summary="@string/setting_wear_font_flex_roundness_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_track_time_font_flex_width"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_width"
+            android:summary="@string/setting_wear_font_flex_width_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="18"
+            android:key="wear_track_time_font_flex_optical_size"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_optical_size"
+            android:summary="@string/setting_wear_font_flex_optical_size_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_track_time_font_flex_grade"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_grade"
+            android:summary="@string/setting_wear_font_flex_grade_description"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="0"
+            android:key="wear_track_time_font_flex_roundness"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_font_flex_roundness"
+            android:summary="@string/setting_wear_font_flex_roundness_description"
+            android:layout="@layout/pref_item" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -873,6 +1189,18 @@
     </PreferenceCategory>
 
 
+    <!-- The legacy panel categories below remain inflated as the authoritative preferences
+         (search metadata, scoped persistence, validation and dialogs), but the Panel page presents
+         this one contextual editor instead of rendering every row in sequence. -->
+    <PreferenceCategory
+        android:key="cat_wf_panels_editor"
+        android:layout="@layout/pref_category_hidden_header">
+
+        <com.svartifoss.snfell.view.watchface.PanelEditorPreference
+            android:key="panel_editor_surface" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="cat_wf_panel_shared"
         android:title="@string/category_wf_panel_shared"
@@ -930,6 +1258,16 @@
             android:summary="%s"
             android:entries="@array/wear_progress_style_entries"
             android:entryValues="@array/wear_progress_style_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="edge"
+            android:key="wear_progress_layout"
+            android:icon="@drawable/ic_progress_ring"
+            android:title="@string/setting_wear_progress_layout"
+            android:summary="%s"
+            android:entries="@array/wear_progress_layout_entries"
+            android:entryValues="@array/wear_progress_layout_values"
             android:layout="@layout/pref_item" />
 
         <!-- Only the Solid ring blends the companion colours, so this is shown/hidden with it by
@@ -1287,13 +1625,6 @@
             android:icon="@drawable/ic_autorenew"
             android:title="@string/setting_reset_appearance"
             android:summary="@string/setting_reset_appearance_description"
-            android:layout="@layout/pref_item" />
-
-        <Preference
-            android:key="reset_all_faces"
-            android:icon="@drawable/ic_autorenew"
-            android:title="@string/setting_reset_all_faces"
-            android:summary="@string/setting_reset_all_faces_description"
             android:layout="@layout/pref_item" />
 
     </PreferenceCategory>

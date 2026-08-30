@@ -63,6 +63,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.FaceGeometry
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
@@ -268,12 +269,13 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
             // for the real row position. Material consumes the same metric for exact parity.
             val timeOffset = centeredTransportTrackTimeOffset(
                     screen, state.miniButtonsTopFraction)
-            Text(
+            TrackTimeText(
                     text = stringResource(
                             R.string.playback_time_format,
                             formatFaceTime(shownPositionMs),
                             formatFaceTime(state.durationMs)
                     ),
+                    state = state,
                     color = if (scrubbing) Color.White else Color.White.copy(alpha = 0.7f),
                     fontSize = 11.sp,
                     fontFamily = GoogleSansFamily,
@@ -657,20 +659,20 @@ private fun expressiveMetrics(screen: Dp): ExpressiveMetrics {
 
 // --- Cookie geometry ---------------------------------------------------------------------
 
-private const val COOKIE_LOBES = 10
+private const val COOKIE_LOBES = FaceGeometry.Expressive.COOKIE_LOBES
 
 /** tanh() gently flattens the cosine's crests and valleys, turning a pointy star into the
  *  reference's soft scallops. Lower = closer to a pure sinusoid (rounder, softer lobes). */
-private const val COOKIE_SOFTNESS = 0.55f
+private const val COOKIE_SOFTNESS = FaceGeometry.Expressive.COOKIE_SOFTNESS
 
 /** Cookie lobe amplitude as a fraction of its base radius. */
-private const val COOKIE_MODULATION = 0.05f
+private const val COOKIE_MODULATION = FaceGeometry.Expressive.COOKIE_MODULATION
 
 /** The ring undulates noticeably less than the cookie it wraps, as in the reference. */
-private const val RING_MODULATION = 0.03f
+private const val RING_MODULATION = FaceGeometry.Expressive.RING_MODULATION
 
 /** Gap (degrees) the ring leaves around the progress thumb and the 12 o'clock start. */
-private const val RING_GAP_DEGREES = 7f
+private const val RING_GAP_DEGREES = FaceGeometry.Expressive.RING_GAP_DEGREES
 
 /** Radius multiplier for the given polar [angleRad]: 1f ± [modulation]. The phase term anchors a
  *  lobe crest at 12 o'clock for any lobe count ([angleRad] is measured from 3 o'clock, so the

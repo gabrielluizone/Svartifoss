@@ -17,9 +17,9 @@ build in the Watch tab, browse what others published, and apply them on their ow
 >   hand-curated set.
 >
 > **Revised (2026-08-26):** identity is **Google Sign-In via Firebase Auth, required only to
-> submit**. Liking, unliking and the private **Liked** filter use an anonymous Firebase account
-> provisioned silently, so no community action except submission ever shows a sign-in prompt. See
-> §5.
+> submit**. A person may also explicitly connect it in Settings ahead of time; Firebase restores
+> that local connection, so later submissions do not ask again. Liking, unliking and the private
+> **Liked** filter use an anonymous Firebase account provisioned silently. See §5.
 > - Approved themes are **hosted in this repository** and served from GitHub Pages. Approval is a
 >   commit.
 > - **Comments and theme updates are out of scope.** Likes are private reactions, not discussion.
@@ -70,7 +70,7 @@ profile schema, base face and minimum app version; an older client keeps incompa
 with a requirement rather than downloading and applying a partial look. Local backup import remains
 tolerant of old data. (See §8.)
 
-**Size:** ~115 keys ≈ 6–9 KB of JSON per theme, and it compresses well (highly repetitive). An index
+**Size:** ~143 keys ≈ 6–9 KB of JSON per theme, and it compresses well (highly repetitive). An index
 entry is ~200 bytes. At 500 themes the index is ~100 KB — one fetch, ETag-cacheable.
 
 ## 3. Architecture
@@ -172,9 +172,10 @@ vector. The value is low: nobody needs to discuss a theme, they need to see it a
 Firebase Auth carries submission ownership and private likes, but the two use **different kinds of
 account**, and the split is the point.
 
-**Submission uses Google Sign-In.** The app opens Credential Manager only after a person selects
-**Submit to community** for their own saved profile and taps **Sign in and submit**. Nothing else in
-the gallery can start that flow.
+**Submission uses Google Sign-In.** A person can either select **Submit to community** for their
+own saved profile and tap **Sign in and submit**, or explicitly connect Google first from
+**Settings → Data & support → Community themes → Community account**. Firebase restores that
+connection locally, so a later submission reuses it without reopening Credential Manager.
 
 **Liking uses an anonymous account.** Demanding a Google account for a heart tap asks for an
 identity out of all proportion to the act, and the friction falls hardest on the one interaction the
@@ -202,11 +203,12 @@ only when the Google account already exists in its own right.
 Firebase Auth processes the Google credential/account information needed for authentication and
 returns a UID, which is written as `ownerUid` in the private Firestore intake record. The Android
 client deliberately does **not** send the Google profile name or email in that document; the author
-supplies a separate public pseudonym. The UID makes an intake record attributable to the same
-Firebase identity without making that identity public.
+supplies a separate public pseudonym or chooses the public credit **Anonymous**. The UID makes an
+intake record attributable to the same Firebase identity without making that identity public.
 
-This current phase does not provide an app-wide account screen, comments, a submission history, or
-theme updates. It also has no self-service Firebase-account or submission-deletion control. A like
+This current phase provides a device-local account screen for explicit Google connection and
+disconnection, but not comments, a submission history, or theme updates. **Remove from this
+device** signs out locally; it is not self-service Firebase-account or submission deletion. A like
 does not publish a profile, expose a voter, or make a public account page.
 Takedown/removal requests use the existing address in
 [`privacy-policy.md`](privacy-policy.md#contact); they are handled manually. A current public
@@ -214,6 +216,31 @@ listing can be removed going forward, but a profile/name/pseudonym already commi
 repository can remain in Git history and third-party copies. The privacy-policy and Data Safety
 documents therefore describe authored-content storage explicitly rather than claiming an automatic
 account deletion mechanism.
+
+### Deleting an account (3.3)
+
+Two things make this different from an ordinary "delete my account" button, and both push the work
+out of the app.
+
+An APK can delete its own Firebase identity and nothing else. The themes that account published
+live in Git, behind a workflow the app cannot reach, so an in-app deletion would destroy exactly the
+half that could later ask for them to come down and leave the public half standing. The request is
+therefore recorded as one create-only Firestore document and carried out by the publisher, which
+already owns both sides: it withdraws files in a commit first and writes Firestore after, the same
+ordering publication uses and for the same reason.
+
+And the interesting half is not deleting -- it is that **the answer is not the app's to guess**. A
+published theme carries a pseudonym that is already public and that other people have installed;
+withdrawing it and leaving it are both entirely reasonable, so `themeDisposition` (`keep` /
+`delete`) is asked once, stored on the request, and re-validated by the publisher. Neither value
+preserves a submission that is not public yet: "keep my themes" can only mean the ones people can
+see. An anonymous like-only account is not asked at all, since it cannot own a theme, and the
+unprompted disposition is `keep` so that an account which unexpectedly does own something public has
+it left alone rather than silently withdrawn.
+
+The request is deliberately one-way. Allowing a client to edit or withdraw it would let it change
+between the commit that removed a theme file and the Firestore writes that follow, which is the one
+state this pipeline has no way to reconcile.
 
 ## 6. Moderation at scale
 
@@ -257,7 +284,7 @@ text is the real abuse surface, since the theme itself is inert.
 
 ### Where review happens
 
-The Firebase Console is not usable for this: no preview grid, no bulk actions, and 115 keys of JSON
+The Firebase Console is not usable for this: no preview grid, no bulk actions, and 143 keys of JSON
 tell a reviewer nothing about how a theme looks.
 
 Instead: **a static admin page on GitHub Pages**, gated by Firebase Auth with a moderator's UID
@@ -320,12 +347,12 @@ explanation on older installs. The index already needs `baseFace`; pair it with 
 would publish themes most users cannot see the base of.
 
 **Public name ≠ Google account.** Once an approved theme becomes a commit in a public repository, the
-author's name is in git history permanently, and rewriting history is not an option. So the author
-picks a **pseudonym at submission time**; the Google account name and email are never published by
-default. There is no self-service account or submission deletion in the current app. The privacy
-policy instead provides the existing email address for manual takedown/removal requests: a current
-listing can be removed going forward, but Git history and third-party copies may retain what was
-already public.
+public credit is in git history permanently, and rewriting history is not an option. At submission,
+the author can choose a **pseudonym** or the public credit **Anonymous**; the Google account name and
+email are never published by default. The app can disconnect an account from the current device,
+but there is no self-service account or submission deletion. The privacy policy instead provides the existing email address for manual
+takedown/removal requests: a current listing can be removed going forward, but Git history and
+third-party copies may retain what was already public.
 
 **Likes retain a static catalogue.** A person creates or removes a like only with an explicit touch
 on a published theme. If authentication is needed, that touch is what opens Google Sign-In. Each
@@ -362,8 +389,8 @@ anything depends on it.
 
 **Phase 2 — submission and moderation.** The Android intake is now additive to Phase 1: a person
 chooses a user-owned local profile, receives a fresh public UUID and complete typed profile body,
-passes the local 12-applicable-setting originality preflight, and only then explicitly invokes
-Google Sign-In.
+passes the local 12-applicable-setting originality preflight, and then either reuses a Google
+connection made in Settings or explicitly invokes Google Sign-In.
 Firestore stores the UID-owned immutable pending record, public theme name/pseudonym, fixed-sample
 WebP review preview, client version, and server timestamp. The versioned rules enforce at most three
 submissions in any rolling 24-hour window. The restricted static reviewer page makes a one-time
@@ -379,8 +406,8 @@ most liked. Its optional **Liked** filter is an explicit authenticated action th
 person's own vote documents for public catalogue IDs. A card opens a detail screen before
 installation, including synthetic watch-surface previews and metadata; the detail preview may use
 only the current local album cover, never live title, artist, timing, queue, a screenshot, or an
-upload. Likes require an explicit heart touch and, if needed, Google Sign-In; their private per-UID
-documents are aggregated only by the trusted publisher. Theme updates are still not implemented:
+upload. Likes require an explicit heart touch and silently provision an anonymous Firebase account;
+their private per-UID documents are aggregated only by the trusted publisher. Theme updates are still not implemented:
 they can reuse the `revision` field the profile already carries, re-enter the queue, overwrite
 `docs/themes/<id>.json`, bump the index, and let the app compare with the locally installed revision
 to offer a choice.
@@ -395,4 +422,8 @@ to offer a choice.
 - Whether `MAX_PROFILES` (24) should apply to installed store themes, or whether store themes live in
   a separate bucket from user-authored ones.
 - How a user's own submissions are listed back to them across devices (needs a Firestore query by
-  UID; cheap, but a screen).
+  UID; cheap, but a screen). Account deletion needs the same query and does it in the publisher
+  rather than the app, deliberately: the rules still let an author read only their own *pending*
+  submission, because widening that to approved and rejected ones would expose the reviewer UID on
+  each. So the deletion screen asks its question without listing what it applies to, which is the
+  honest shape until that screen exists.

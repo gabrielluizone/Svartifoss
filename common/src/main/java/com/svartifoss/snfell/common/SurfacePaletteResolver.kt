@@ -46,6 +46,19 @@ object SurfacePaletteResolver {
             hueShiftDegrees: Float = 0f,
             multiColor: Boolean = true
     ): ColorHarmony.Triad {
+        // Promoted before anything reads them, and this is the only place it happens. A cover with
+        // no colour hands every downstream transform an undefined hue, which each of them then
+        // clamps to a saturation of its own choosing - the artist line got none, the quick panel a
+        // third, the buttons more, the palette dots more again. Giving the accent a real value here
+        // is what makes the rest of the pipeline agree, because every one of those floors then has
+        // nothing left to do. See ColorHarmony.promotedNeutralSaturation.
+        //
+        // Note the NORMAL branch below reads `fixedColor`, not these: a hand-picked colour is never
+        // promoted, because there is nothing undefined about it.
+        val rawPrimary = ColorHarmony.promoteNeutralAccent(rawPrimary)
+        val rawSecondary = ColorHarmony.promoteNeutralAccent(rawSecondary)
+        val rawTertiary = ColorHarmony.promoteNeutralAccent(rawTertiary)
+
         val base = when (treatment) {
             SurfaceColorTreatment.NORMAL -> if (multiColor) {
                 ColorHarmony.Triad(

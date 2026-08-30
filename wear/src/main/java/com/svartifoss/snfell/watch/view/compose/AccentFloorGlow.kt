@@ -14,8 +14,8 @@ import com.svartifoss.snfell.common.AccentFloorStyle
 /**
  * A wash of [accentColor] pooled along the bottom of the screen, **concentric with the display**.
  *
- * Shared by the lyrics screen and the Verse face, which are the same idea on two surfaces and must
- * not drift into two slightly different glows.
+ * Shared by the player faces and the lyrics screen, which must not drift into slightly different
+ * glows. The player host supplies the same shape from its native Drawable for Classic.
  *
  * A flat vertical gradient is the obvious way to draw this and the wrong one on a round watch: its
  * edge cuts a chord across the circle and reads as a rectangle peeking out from behind the bezel.

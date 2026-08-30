@@ -63,7 +63,9 @@ import androidx.wear.compose.material3.Icon
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.ColorFilter
 import com.svartifoss.snfell.common.AdaptiveTextContrast
+import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.MiniButtonSurfaces
+import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.R
 import androidx.compose.ui.res.stringResource
 import com.svartifoss.snfell.watch.view.compose.FaceClock
@@ -128,7 +130,9 @@ fun ChatFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
                         // Wide side padding: bubbles are rectangles on a round screen, so their
                         // corners are the first thing the bezel eats.
                         .padding(horizontal = screen * SIDE_PADDING_FRACTION)
-                        .padding(top = screen * .085f, bottom = screen * .05f),
+                        .padding(
+                                top = screen * FaceGeometry.Chat.TOP_PADDING_FRACTION,
+                                bottom = screen * FaceGeometry.Chat.BOTTOM_PADDING_FRACTION),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 // Bottom-anchored, so the newest message is always the one at a fixed place and
                 // older ones drift up and out - a thread, not a list that grows downward off-screen.
@@ -139,13 +143,13 @@ fun ChatFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
             // of the two elements that matter, and neither could then be the size the design
             // wants. Looking further back is what the queue button below is for.
             DayChip(incoming)
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(FaceGeometry.Chat.DAY_TO_MESSAGE_GAP_DP.dp))
 
             // The current track's own text. It has to be here: the voice bubble below shows a
             // cover and a waveform but names nothing. Sent as an outgoing bubble like the voice
             // note under it - same sender, two messages.
             CurrentMessageBubble(state = state, color = outgoing)
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(FaceGeometry.Chat.CURRENT_TO_VOICE_GAP_DP.dp))
 
             VoiceBubble(
                     state = state,
@@ -153,7 +157,7 @@ fun ChatFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
                     accent = accent,
                     screen = screen)
 
-            Spacer(Modifier.height(5.dp))
+            Spacer(Modifier.height(FaceGeometry.Chat.VOICE_TO_ACTION_GAP_DP.dp))
             ChatActionRow(state = state, listener = listener, accent = accent, screen = screen)
         }
 
@@ -167,25 +171,25 @@ fun ChatFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
 
 /** Bubble and action sizes. The current track's bubble is the screen's subject, so it is the
  *  largest element on it. */
-private val CURRENT_BUBBLE_HEIGHT = 58.dp
+private val CURRENT_BUBBLE_HEIGHT = FaceGeometry.Chat.VOICE_BUBBLE_HEIGHT_DP.dp
 
 /** Bubble rounding. Softer than a card but well short of a stadium: at the full half-height the
  *  bubble stops reading as a bubble and starts reading as a pill. The tail corner - the one facing
  *  the sender - stays small, which is the single detail that makes the shape a speech bubble. */
-private val BUBBLE_CORNER = 18.dp
-private val BUBBLE_TAIL_CORNER = 6.dp
-private const val ACTION_DIAMETER_FRACTION = .215f
-private const val GLYPH_FRACTION = .48f
-private const val SIDE_PADDING_FRACTION = .09f
-private const val ACTION_GAP_FRACTION = .05f
+private val BUBBLE_CORNER = FaceGeometry.Chat.BUBBLE_CORNER_DP.dp
+private val BUBBLE_TAIL_CORNER = FaceGeometry.Chat.BUBBLE_TAIL_CORNER_DP.dp
+private const val ACTION_DIAMETER_FRACTION = FaceGeometry.Chat.ACTION_DIAMETER_FRACTION
+private const val GLYPH_FRACTION = FaceGeometry.Chat.ACTION_GLYPH_FRACTION
+private const val SIDE_PADDING_FRACTION = FaceGeometry.Chat.SIDE_PADDING_FRACTION
+private const val ACTION_GAP_FRACTION = FaceGeometry.Chat.ACTION_GAP_FRACTION
 
 /** Floor on a circle's diameter once three of them have to share the row. Below this the target
  *  stops being reliably hittable on a wrist, which is the point at which shrinking to fit stops
  *  being the right answer. */
-private val MIN_ACTION_DIAMETER = 32.dp
+private val MIN_ACTION_DIAMETER = FaceGeometry.Chat.ACTION_MIN_DIAMETER_DP.dp
 
-private const val INCOMING_LIGHTNESS = .17f
-private const val OUTGOING_LIGHTNESS = .32f
+private const val INCOMING_LIGHTNESS = FaceGeometry.Chat.INCOMING_LIGHTNESS
+private const val OUTGOING_LIGHTNESS = FaceGeometry.Chat.OUTGOING_LIGHTNESS
 
 /**
  * The "Today" divider a chat puts above the day's first message. Scene-setting: it is what makes
@@ -196,13 +200,15 @@ private fun DayChip(color: Color) {
     Box(
             modifier = Modifier
                     .clip(RoundedCornerShape(50))
-                    .background(color.copy(alpha = .85f))
-                    .padding(horizontal = 12.dp, vertical = 4.dp)
+                    .background(color.copy(alpha = FaceGeometry.Chat.DAY_CHIP_ALPHA))
+                    .padding(
+                            horizontal = FaceGeometry.Chat.DAY_CHIP_HORIZONTAL_PADDING_DP.dp,
+                            vertical = FaceGeometry.Chat.DAY_CHIP_VERTICAL_PADDING_DP.dp)
     ) {
         Text(
                 text = stringResource(R.string.chat_face_today),
-                color = Color.White.copy(alpha = .75f),
-                fontSize = 11.sp,
+                color = Color.White.copy(alpha = FaceGeometry.Chat.DAY_CHIP_TEXT_ALPHA),
+                fontSize = FaceGeometry.Chat.DAY_CHIP_TEXT_SP.sp,
                 fontWeight = FontWeight.Medium,
                 maxLines = 1
         )
@@ -225,8 +231,9 @@ private fun CurrentMessageBubble(state: NowPlayingFaceState, color: Color) {
         ChatBubble(color = color, incoming = false) {
             Column {
                 if (showTitle) {
+                    val titleSpec = state.titleTypography
                     Text(
-                            text = state.title,
+                            text = titleSpec.case.apply(state.title),
                             // Was a hardcoded white, which made the title colour treatment, the
                             // custom colour and the adaptive-contrast option all inert on this
                             // face. titleTextColor keeps the face's designed colour when the user
@@ -236,20 +243,31 @@ private fun CurrentMessageBubble(state: NowPlayingFaceState, color: Color) {
                             fontWeight = FontWeight.Bold,
                             fontStyle = state.titleFontStyle,
                             letterSpacing = state.titleLetterSpacing,
-                            fontSize = state.titleTypography.scaled(15f).sp,
+                            fontSize = titleSpec
+                                    .scaled(FaceGeometry.Chat.CURRENT_BUBBLE_TITLE_SP).sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                     )
                 }
                 if (showArtist) {
+                    // Not ArtistLineText: that helper centres and this bubble's text is
+                    // start-aligned inside a Column it does not own. The spec is therefore applied
+                    // here, and all of it - family, slant, size and case were already read while
+                    // weight, tracking and opacity were not, so three of the six controls moved
+                    // this line and three silently did nothing.
+                    val artistSpec = state.artistTypography
                     Text(
-                            text = state.artist,
+                            text = artistSpec.case.apply(state.artist),
                             // Same: the artist colour mode reaches every other face and was
                             // dropped here. The face's own .70f alpha is preserved.
-                            color = Color(state.artistColor).copy(alpha = .70f),
+                            color = Color(state.artistColor)
+                                    .copy(alpha = .70f * artistSpec.alpha),
                             fontFamily = state.artistFont,
                             fontStyle = state.artistFontStyle,
-                            fontSize = state.artistTypography.scaled(12f).sp,
+                            fontWeight = state.artistFontWeight,
+                            letterSpacing = state.artistLetterSpacing,
+                            fontSize = artistSpec.scaled(
+                                    FaceGeometry.Chat.CURRENT_BUBBLE_ARTIST_SP).sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                     )
@@ -284,10 +302,12 @@ private fun ChatBubble(
     }
     Box(
             modifier = Modifier
-                    .widthIn(max = 210.dp)
+                    .widthIn(max = FaceGeometry.Chat.CURRENT_BUBBLE_MAX_WIDTH_DP.dp)
                     .clip(shape)
                     .background(color)
-                    .padding(horizontal = 11.dp, vertical = 6.dp),
+                    .padding(
+                            horizontal = FaceGeometry.Chat.CURRENT_BUBBLE_HORIZONTAL_PADDING_DP.dp,
+                            vertical = FaceGeometry.Chat.CURRENT_BUBBLE_VERTICAL_PADDING_DP.dp),
             contentAlignment = Alignment.CenterStart
     ) {
         content()
@@ -324,14 +344,14 @@ private fun VoiceBubble(
                                 bottomEnd = BUBBLE_CORNER,
                                 bottomStart = BUBBLE_CORNER))
                         .background(bubbleColor)
-                        .padding(horizontal = 8.dp)
+                        .padding(horizontal = FaceGeometry.Chat.VOICE_BUBBLE_HORIZONTAL_PADDING_DP.dp)
         ) {
             Row(
                     modifier = Modifier.fillMaxSize(),
                     verticalAlignment = Alignment.CenterVertically
             ) {
-                Avatar(state.albumArt, accent, size = 34.dp)
-                Spacer(Modifier.width(8.dp))
+                Avatar(state.albumArt, accent, size = FaceGeometry.Chat.AVATAR_SIZE_DP.dp)
+                Spacer(Modifier.width(FaceGeometry.Chat.AVATAR_TO_WAVE_GAP_DP.dp))
                 // Centred in what is left, with nothing stacked under it - that stacking is what
                 // used to push the waveform above the bubble's midline by half a line of text.
                 Box(
@@ -350,7 +370,7 @@ private fun VoiceBubble(
                             played = Color(state.progressColor),
                             remaining = Color.White.copy(alpha = .35f))
                 }
-                Spacer(Modifier.width(7.dp))
+                Spacer(Modifier.width(FaceGeometry.Chat.WAVE_TO_GLYPH_GAP_DP.dp))
                 // Display-only: it mirrors playback state so the bubble reads as a voice note, but
                 // the gesture that changes it is the centre tap.
                 PlayGlyph(playing = state.playing, showControls = state.showControls)
@@ -359,17 +379,20 @@ private fun VoiceBubble(
 
         if (state.showTrackTime) {
             Row(
-                    modifier = Modifier.padding(top = 3.dp, end = 4.dp),
+                    modifier = Modifier.padding(
+                            top = FaceGeometry.Chat.TIME_TOP_PADDING_DP.dp,
+                            end = FaceGeometry.Chat.TIME_END_PADDING_DP.dp),
                     verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
+                TrackTimeText(
                         text = formatFaceClockTime(state.positionMs),
+                        state = state,
                         color = Color.White.copy(alpha = .60f),
                         fontFamily = state.artistFont,
-                        fontSize = 10.sp,
+                        fontSize = FaceGeometry.Chat.TIME_TEXT_SP.sp,
                         maxLines = 1
                 )
-                Spacer(Modifier.width(4.dp))
+                Spacer(Modifier.width(FaceGeometry.Chat.TIME_TO_TICKS_GAP_DP.dp))
                 DoubleTick(if (state.playing) accent else Color.White.copy(alpha = .35f))
             }
         }
@@ -414,12 +437,14 @@ private fun Waveform(
 ) {
     val transition = rememberInfiniteTransition(label = "chatWave")
     val pulse by transition.animateFloat(
-            initialValue = if (playing) .82f else 1f,
+            initialValue = if (playing) FaceGeometry.Chat.WAVE_PLAYHEAD_PULSE_MIN_SCALE else 1f,
             targetValue = 1f,
-            animationSpec = infiniteRepeatable(tween(620), RepeatMode.Reverse),
+            animationSpec = infiniteRepeatable(
+                    tween(FaceGeometry.Chat.WAVE_PLAYHEAD_PULSE_HALF_CYCLE_MS),
+                    RepeatMode.Reverse),
             label = "chatWavePulse"
     )
-    Canvas(Modifier.fillMaxWidth().height(18.dp)) {
+    Canvas(Modifier.fillMaxWidth().height(FaceGeometry.Chat.WAVE_HEIGHT_DP.dp)) {
         val count = WAVE_PATTERN.size
         val slot = size.width / count
         val barWidth = (slot * .45f).coerceAtLeast(1f)
@@ -442,17 +467,14 @@ private fun Waveform(
 }
 
 /** Static, deliberately irregular bar heights - see [Waveform]. */
-private val WAVE_PATTERN = listOf(
-        .30f, .55f, .80f, .45f, 1f, .65f, .35f, .75f, .50f, .90f,
-        .40f, .70f, .25f, .60f, .85f, .45f, .30f, .55f
-)
+private val WAVE_PATTERN = FaceGeometry.Chat.WAVE_PATTERN
 
 /** Filled play/pause glyph in the dark circle the reference chat uses. */
 @Composable
 private fun PlayGlyph(playing: Boolean, showControls: Boolean) {
     Box(
             modifier = Modifier
-                    .size(31.dp)
+                    .size(FaceGeometry.Chat.PLAY_GLYPH_SIZE_DP.dp)
                     .clip(CircleShape)
                     .background(Color.Black.copy(alpha = .45f)),
             contentAlignment = Alignment.Center
@@ -460,7 +482,7 @@ private fun PlayGlyph(playing: Boolean, showControls: Boolean) {
         // "Hidden" screen themes keep the hit target and the accessibility action but draw no
         // glyph, matching ScreenTheme's contract everywhere else.
         if (!showControls) return@Box
-        Canvas(Modifier.size(13.dp)) {
+        Canvas(Modifier.size(FaceGeometry.Chat.PLAY_GLYPH_MARK_DP.dp)) {
             if (playing) {
                 val barWidth = size.width * .3f
                 drawRect(Color.White, Offset(0f, 0f), Size(barWidth, size.height))
@@ -483,7 +505,10 @@ private fun PlayGlyph(playing: Boolean, showControls: Boolean) {
 /** The two "delivered" ticks. */
 @Composable
 private fun DoubleTick(color: Color) {
-    Canvas(Modifier.size(width = 13.dp, height = 8.dp)) {
+    Canvas(
+            Modifier.size(
+                    width = FaceGeometry.Chat.TICK_WIDTH_DP.dp,
+                    height = FaceGeometry.Chat.TICK_HEIGHT_DP.dp)) {
         val stroke = Stroke(width = size.height * .18f)
         fun tick(offsetX: Float) {
             drawPath(
@@ -539,7 +564,9 @@ private fun ChatActionRow(
     // into the bezel.
     val available = screen * (1f - SIDE_PADDING_FRACTION * 2f)
     val diameter = minOf(
-            (screen * ACTION_DIAMETER_FRACTION).coerceIn(38.dp, 50.dp),
+            (screen * ACTION_DIAMETER_FRACTION).coerceIn(
+                    FaceGeometry.Chat.ACTION_MIN_DESIGNED_DIAMETER_DP.dp,
+                    FaceGeometry.Chat.ACTION_MAX_DESIGNED_DIAMETER_DP.dp),
             (available - gap * (count - 1)) / count
     ).coerceAtLeast(MIN_ACTION_DIAMETER)
     // Worked out against the button's own fill rather than assumed dark. The buttons are painted in
@@ -571,7 +598,7 @@ private fun ChatActionRow(
                     label = stringResource(R.string.quick_action_up_next),
                     onClick = listener::onQueueTap
             ) {
-                ActionGlyph(R.drawable.ic_face_queue_music, onAccent, diameter * GLYPH_FRACTION)
+                ActionGlyph(commonR.drawable.ic_face_queue_music, onAccent, diameter * GLYPH_FRACTION)
             }
             Spacer(Modifier.width(gap))
             FaceTapTarget(
@@ -582,7 +609,7 @@ private fun ChatActionRow(
                     label = stringResource(R.string.action_name_skip_next),
                     onClick = listener::onSkipNextTap
             ) {
-                ActionGlyph(R.drawable.ic_face_skip_next, onAccent, diameter * GLYPH_FRACTION)
+                ActionGlyph(commonR.drawable.ic_face_skip_next, onAccent, diameter * GLYPH_FRACTION)
             }
         } else {
             buttons.forEachIndexed { index, button ->

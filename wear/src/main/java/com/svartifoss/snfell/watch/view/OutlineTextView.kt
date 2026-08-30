@@ -52,9 +52,13 @@ class OutlineTextView : AppCompatTextView {
     private var smartMinSizePx = 0f
     private var sizingMode = TextSizingMode.SMART
 
-    // Captured once, the first time smart sizing runs - the XML-configured cap (e.g. maxLines=2)
-    // that wrapping should respect before giving up and switching to a scrolling single line.
+    // The cap wrapping respects before giving up and switching to a scrolling single line. Follows
+    // the chosen text mode, so "Wrap to 3 lines" really wraps to three.
     private var wrapMaxLines = 1
+    // The XML-configured cap (e.g. maxLines=2), captured before any mode can change `maxLines`.
+    // Re-reading the view's own maxLines later would pick up the 1 an active marquee leaves behind
+    // and shrink the wrap cap permanently.
+    private var declaredMaxLines = -1
     private var marqueeActive = false
 
     /**
@@ -66,21 +70,52 @@ class OutlineTextView : AppCompatTextView {
      * [mode] picks which of that shrink/wrap/scroll behavior actually applies - see
      * [TextSizingMode]. Defaults to [TextSizingMode.SMART] for callers that don't offer a choice.
      */
-    fun enableSmartWordSizing(maxSizeSp: Float, minSizeSp: Float, mode: TextSizingMode = TextSizingMode.SMART) {
+    fun enableSmartWordSizing(
+            maxSizeSp: Float,
+            minSizeSp: Float,
+            mode: TextSizingMode? = null,
+            wrapLines: Int? = null
+    ) {
+        val firstConfiguration = !smartSizingEnabled
         smartSizingEnabled = true
         smartMaxSizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxSizeSp, resources.displayMetrics)
         smartMinSizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, minSizeSp, resources.displayMetrics)
-        wrapMaxLines = maxLines
-        sizingMode = mode
+        if (declaredMaxLines < 0) declaredMaxLines = maxLines
+        // Omitting [mode] and [wrapLines] *keeps* whatever the text mode already selected, and
+        // that is load-bearing rather than tidy. This is re-called whenever typography changes to
+        // re-supply only the sizes - forty lines after the mode was applied, in the same function -
+        // so defaulting to SMART here reverted the user's choice immediately every time. The result
+        // was that Classic's title behaviour setting did nothing at all: not just the wrap counts,
+        // but marquee and shrink too.
+        if (mode != null) sizingMode = mode
+        applyWrapLines(
+                wrapLines ?: if (firstConfiguration) declaredMaxLines else wrapMaxLines)
         requestSmartResize()
     }
 
-    /** Changes the sizing mode of an already-configured view (e.g. reacting to a settings
-     *  change) without needing to re-supply the min/max sizes. */
-    fun setSizingMode(mode: TextSizingMode) {
-        if (sizingMode == mode) return
+    /**
+     * Changes the sizing mode of an already-configured view (e.g. reacting to a settings change)
+     * without needing to re-supply the min/max sizes.
+     *
+     * [wrapLines] is how many lines [TextSizingMode.WRAP] may use. It is a parameter rather than a
+     * property of the mode because the user picks the number: "Cut off after one line", "Wrap to 3
+     * lines" and "Wrap to 5 lines" are all WRAP, differing only here. Null keeps the XML cap, which
+     * is what the shrink/smart cascade wraps to before it gives up.
+     */
+    fun setSizingMode(mode: TextSizingMode, wrapLines: Int? = null) {
+        if (declaredMaxLines < 0) declaredMaxLines = maxLines
+        val resolvedLines = wrapLines ?: declaredMaxLines
+        if (sizingMode == mode && wrapMaxLines == resolvedLines) return
         sizingMode = mode
+        applyWrapLines(resolvedLines)
         requestSmartResize()
+    }
+
+    /** A scrolling title is single-line by construction; disableMarquee restores the cap from
+     *  [wrapMaxLines], so setting it here while the marquee is up would fight that restore. */
+    private fun applyWrapLines(lines: Int) {
+        wrapMaxLines = lines.coerceAtLeast(1)
+        if (!marqueeActive) maxLines = wrapMaxLines
     }
 
     override fun onTextChanged(text: CharSequence?, start: Int, lengthBefore: Int, lengthAfter: Int) {

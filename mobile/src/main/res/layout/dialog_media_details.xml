@@ -173,21 +173,34 @@
 
     </LinearLayout>
 
-    <!-- Scrollable queue list with fixed height -->
-    <androidx.core.widget.NestedScrollView
+    <!-- A RecyclerView, not the hand-inflated column this replaced: every row now carries a
+         cover, and the old list held one View and one bitmap per entry for the whole queue with
+         nothing to release them. -->
+    <!-- clipToPadding stays at its default. A View draws its bottom fading edge at
+         `height - paddingBottom`, not at the bottom edge, so pairing a bottom padding with
+         clipToPadding="false" hangs the 12dp gradient 16dp up from the floor and then keeps
+         drawing rows underneath it - a shaded band floating over the content rather than the
+         content fading out at its own edge. Clipped, the fade lands exactly where the rows stop. -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detail_queue_list"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:overScrollMode="ifContentScrolls"
+        android:layout_height="320dp"
         android:fadingEdgeLength="12dp"
-        android:requiresFadingEdge="vertical">
+        android:overScrollMode="ifContentScrolls"
+        android:paddingBottom="16dp"
+        android:requiresFadingEdge="vertical"
+        android:scrollbars="none" />
 
-        <LinearLayout
-            android:id="@+id/detail_queue_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="16dp" />
-
-    </androidx.core.widget.NestedScrollView>
+    <!-- Shown in place of the list when the playing app publishes no queue at all. -->
+    <TextView
+        android:id="@+id/detail_queue_empty"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:fontFamily="@font/google_sans"
+        android:gravity="center"
+        android:text="@string/queue_unavailable"
+        android:textColor="@color/lyra_text_secondary"
+        android:textSize="14sp"
+        android:visibility="gone" />
 
 </LinearLayout>

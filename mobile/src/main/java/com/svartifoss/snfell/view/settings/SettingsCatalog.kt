@@ -33,7 +33,10 @@ object SettingsCatalog {
 
     /** Section key -> the categories visible on that page. Keys match `MiscSettingsFragment.SECTION_*`. */
     val SETTINGS_SECTIONS: Map<String, Set<String>> = mapOf(
-            MiscSettingsFragment.SECTION_GENERAL to setOf("cat_updates", "cat_appearance"),
+            MiscSettingsFragment.SECTION_GENERAL to setOf(
+                    "cat_community_themes",
+                    "cat_updates",
+                    "cat_appearance"),
             MiscSettingsFragment.SECTION_WATCH to setOf(
                     "cat_watch_navigation",
                     "cat_rotary_input",
@@ -46,7 +49,10 @@ object SettingsCatalog {
                     "cat_streaming_services",
                     "cat_queue_artwork",
                     "cat_system_access"),
-            MiscSettingsFragment.SECTION_DATA to setOf("cat_backup", "cat_privacy", "cat_about")
+            MiscSettingsFragment.SECTION_DATA to setOf(
+                    "cat_backup",
+                    "cat_privacy",
+                    "cat_about")
     )
 
     /** Every category in `settings.xml`; the fragment iterates this to hide the ones not in the
@@ -69,6 +75,7 @@ object SettingsCatalog {
             "cat_queue_artwork",
             "cat_system_access",
             "cat_backup",
+            "cat_community_themes",
             "cat_privacy",
             "cat_about"
     )
@@ -78,6 +85,7 @@ object SettingsCatalog {
     /** Section key -> visible categories. Keys match `WatchFacePrefsFragment.SECTION_*`. */
     val WATCH_SECTIONS: Map<String, Set<String>> = mapOf(
             WatchFacePrefsFragment.SECTION_STYLE to setOf(
+                    "cat_wf_player_editor",
                     "cat_wf_screen_behavior",
                     "cat_wf_player_layout",
                     "cat_wf_player_progress",
@@ -85,20 +93,24 @@ object SettingsCatalog {
                     "cat_wf_layout_actions"),
             WatchFacePrefsFragment.SECTION_BACKGROUND to setOf("cat_wf_background"),
             WatchFacePrefsFragment.SECTION_COLORS to setOf(
+                    "cat_wf_colors_editor",
                     "cat_wf_colors",
                     "cat_wf_colors_title",
                     "cat_wf_colors_artist",
                     "cat_wf_colors_clock"),
             WatchFacePrefsFragment.SECTION_TYPOGRAPHY to setOf(
+                    "cat_wf_typography_editor",
                     "cat_wf_typography_font",
                     "cat_wf_typography_secondary",
                     "cat_wf_typography_title",
                     "cat_wf_typography_artist",
                     "cat_wf_typography_clock",
+                    "cat_wf_typography_track_time",
                     "cat_wf_typography_icon",
                     "cat_wf_typography_flex"),
             WatchFacePrefsFragment.SECTION_AOD to setOf("cat_wf_aod"),
             WatchFacePrefsFragment.SECTION_PANELS to setOf(
+                    "cat_wf_panels_editor",
                     "cat_wf_panel_shared",
                     "cat_wf_panel_volume",
                     "cat_wf_panel_seek",
@@ -112,11 +124,13 @@ object SettingsCatalog {
 
     /** Every category in `watch_face_settings.xml`. See [SETTINGS_CATEGORIES]. */
     val WATCH_CATEGORIES: List<String> = listOf(
+            "cat_wf_player_editor",
             "cat_wf_screen_behavior",
             "cat_wf_player_layout",
             "cat_wf_player_progress",
             "cat_wf_metadata",
             "cat_wf_aod",
+            "cat_wf_panels_editor",
             "cat_wf_panel_shared",
             "cat_wf_panel_volume",
             "cat_wf_panel_seek",
@@ -124,14 +138,17 @@ object SettingsCatalog {
             "cat_wf_panel_queue",
             "cat_wf_panel_effects",
             "cat_wf_background",
+            "cat_wf_colors_editor",
             "cat_wf_colors",
             "cat_wf_colors_title",
             "cat_wf_colors_artist",
             "cat_wf_colors_clock",
+            "cat_wf_typography_editor",
             "cat_wf_typography_font",
             "cat_wf_typography_secondary",
             "cat_wf_typography_title",
             "cat_wf_typography_clock",
+            "cat_wf_typography_track_time",
             "cat_wf_typography_artist",
             "cat_wf_typography_icon",
             "cat_wf_typography_flex",

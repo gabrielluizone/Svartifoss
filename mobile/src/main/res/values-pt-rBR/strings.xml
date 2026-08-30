@@ -214,19 +214,46 @@
     <string name="action_text">Texto da ação</string>
     <string name="swap_action">Trocar ação</string>
     <string name="open_actions_menu">Abrir menu de ações</string>
+    <string name="open_quick_actions_panel">Abrir painel de ações rápidas</string>
     <string name="open_playlist_menu">Mostrar playlist atual</string>
     <string name="misc_settings">Configurações diversas</string>
 
     <string name="category_backup">Backup</string>
-    <string name="export_config">Exportar configuração</string>
-    <string name="export_config_description">Salva seus mapeamentos de botões, lista de ações e configurações do relógio em um arquivo</string>
-    <string name="import_config">Importar configuração</string>
-    <string name="import_config_description">Restaura mapeamentos de botões, lista de ações e configurações do relógio a partir de um arquivo</string>
-    <string name="export_config_done">Configuração exportada</string>
-    <string name="export_config_failed">Não foi possível exportar a configuração</string>
+    <string name="export_config">Exportar backup</string>
+    <string name="export_config_description">Escolha o que incluir — botões, atalhos, ícones, cores, temas e outros dados do app</string>
+    <string name="import_config">Importar backup</string>
+    <string name="import_config_description">Restaura as seções contidas no backup; os outros dados permanecem inalterados</string>
+    <string name="export_config_done">Backup exportado</string>
+    <string name="export_config_failed">Não foi possível exportar o backup</string>
     <string name="import_config_done_title">Importação concluída</string>
-    <string name="import_config_done_message">O Svartifoss precisa reiniciar para aplicar a configuração importada.</string>
-    <string name="import_config_failed">Não foi possível importar a configuração — o arquivo pode estar inválido ou ser de uma versão incompatível</string>
+    <string name="import_config_done_message">O Svartifoss precisa reiniciar para aplicar o backup importado.</string>
+    <string name="import_config_failed">Não foi possível importar o backup — o arquivo pode estar inválido ou ser de uma versão incompatível</string>
+    <string name="backup_selection_title">Escolha o conteúdo do backup</string>
+    <string name="backup_selection_description">Selecione as partes do Svartifoss que você quer salvar. Tudo vem selecionado por padrão; as partes desmarcadas não serão alteradas ao importar este backup.</string>
+    <string name="backup_selection_select_all">Selecionar tudo</string>
+    <string name="backup_selection_clear_all">Limpar seleção</string>
+    <string name="backup_selection_export">Exportar backup</string>
+    <string name="backup_selection_empty">Selecione pelo menos um item</string>
+    <string name="backup_section_buttons">Configurações dos botões</string>
+    <string name="backup_section_buttons_description">Ações dos botões, coroa e gestos durante e sem reprodução.</string>
+    <string name="backup_section_actions">Lista de ações</string>
+    <string name="backup_section_actions_description">A lista ordenada de ações exibida no menu de ações do relógio.</string>
+    <string name="backup_section_app_settings">Configurações do app</string>
+    <string name="backup_section_app_settings_description">Preferências do celular, comportamento do relógio, idioma, reprodução e integrações.</string>
+    <string name="backup_section_watch_appearance">Aparência e temas do relógio</string>
+    <string name="backup_section_watch_appearance_description">Layouts, cores, tipografia, painéis, AOD e temas personalizados salvos.</string>
+    <string name="backup_section_playlist_shortcuts">Atalhos de playlists</string>
+    <string name="backup_section_playlist_shortcuts_description">Seus links salvos de músicas, álbuns, artistas, playlists e outros serviços.</string>
+    <string name="backup_section_history">Histórico de buscas e reprodução</string>
+    <string name="backup_section_history_description">Buscas recentes e faixas reproduzidas recentemente.</string>
+    <string name="backup_section_icons">Ícones e capas carregados</string>
+    <string name="backup_section_icons_description">Ícones personalizados de ações, capas dos atalhos e ícones de apps em cache.</string>
+    <string name="backup_section_privacy">Privacidade e notificações</string>
+    <string name="backup_section_privacy_description">Relatórios de falha, notificações de anúncios e outras escolhas de consentimento salvas pelo app.</string>
+    <string name="backup_section_local_app_state">Estado local do app</string>
+    <string name="backup_section_local_app_state_description">Cor atual, posição do último menu, avisos concluídos e estado das atualizações.</string>
+    <string name="backup_section_auxiliary_data">Outros dados do app</string>
+    <string name="backup_section_auxiliary_data_description">Preferências adicionais e arquivos internos do app, incluindo futuros dados salvos.</string>
     <string name="action_restart_now">Reiniciar agora</string>
 
     <string name="category_about">Sobre</string>
@@ -463,8 +490,8 @@
     <string name="wear_font_montserrat_description">Sans geométrica limpa, alternativa livre (OFL) no espírito da Proxima Nova.</string>
     <string name="wear_font_marcellus">Marcellus</string>
     <string name="wear_font_marcellus_description">Romana humanista elegante, alternativa livre (OFL) no espírito da Optima.</string>
-    <string name="wear_font_love_letter">Wired</string>
-    <string name="wear_font_love_letter_description">Um estilo de máquina de escrever mais suave (Love Letter Typewriter) — normalmente reservado para faixas temáticas de \"Wired\".</string>
+    <string name="wear_font_love_letter">Special Elite</string>
+    <string name="wear_font_love_letter_description">Um estilo de máquina de escrever desgastado, com aparência analógica.</string>
     <string name="wear_font_serif">Serifada</string>
     <string name="wear_font_serif_description">Uma fonte serifada clássica.</string>
     <string name="wear_font_serif_monospace">Serifada Mono</string>
@@ -554,6 +581,8 @@
         <item>Nota</item>
         <item>Verso</item>
         <item>Metadata</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -574,6 +603,8 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>ribbon</item>
+        <item>frame</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Busca expressiva</string>
@@ -607,6 +638,8 @@
         <item>Dividido</item>
         <item>Nota</item>
         <item>Verso</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
     </string-array>
     <string-array name="wear_aod_style_values">
         <item>follow</item>
@@ -623,6 +656,8 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>ribbon</item>
+        <item>frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Cor da tela sempre ativa</string>
     <string-array name="wear_aod_color_entries">
@@ -737,7 +772,7 @@
     <string name="setting_wear_quick_panel_shortcut_cover">Usar capa do atalho como fundo</string>
     <string name="setting_wear_quick_panel_shortcut_cover_description">Quando o Estilo da fila for uma variação de Capa, uma linha de ação do painel rápido com uma capa de atalho já buscada (faixa, playlist, artista…) também preenche seu pill com essa imagem, como já acontece no Próxima na fila. Atalhos sem capa buscada (só o ícone do app) não são afetados.</string>
     <string name="setting_wear_list_row_size">Tamanho das pills</string>
-    <string name="setting_wear_list_row_size_description">Altura das linhas de largura total na fila, nos menus e no painel rápido.</string>
+    <string name="setting_wear_list_row_size_description">Altura das linhas de largura total na fila.</string>
     <string name="setting_wear_progress_style">Estilo do anel de progresso</string>
     <string name="setting_wear_seek_style">Estilo do tempo de seek e volume</string>
     <string name="setting_wear_seek_layout">Layout do painel de progresso</string>
@@ -1579,10 +1614,12 @@
 
     <!-- Title typography -->
     <string name="setting_wear_title_font_weight">Peso do título</string>
+    <string name="setting_wear_title_font">Fonte do título</string>
     <string name="setting_wear_title_font_italic">Título itálico</string>
     <string name="setting_wear_title_font_scale">Tamanho do título</string>
     <string name="setting_wear_title_font_opacity">Opacidade do título</string>
     <string name="setting_wear_title_font_tracking">Espaçamento entre letras do título</string>
+    <string name="setting_wear_title_text_case">Caixa do título</string>
     <string name="setting_wear_title_color">Cor do texto do título</string>
     <string name="setting_wear_title_custom_color">Cor personalizada do título</string>
     <string name="wear_title_color_face_default">Padrão do layout (como projetado)</string>
@@ -1591,10 +1628,12 @@
     <string name="setting_wear_artist_adaptive_contrast">Adaptar cor do artista para contraste</string>
     <string name="setting_wear_artist_adaptive_contrast_description">Clareia ou escurece a linha do artista quando a cor do álbum fica próxima demais da capa atrás dela, mantendo o matiz da cor. Mede apenas a região da capa onde a linha está, não a capa inteira.</string>
     <string name="setting_wear_artist_font_weight">Peso do artista</string>
+    <string name="setting_wear_artist_font">Fonte do artista</string>
     <string name="setting_wear_artist_font_italic">Artista itálico</string>
     <string name="setting_wear_artist_font_scale">Tamanho do artista</string>
     <string name="setting_wear_artist_font_opacity">Opacidade do artista</string>
     <string name="setting_wear_artist_font_tracking">Espaçamento entre letras do artista</string>
+    <string name="setting_wear_artist_text_case">Caixa do artista</string>
     <string name="setting_wear_source_icon_scale">Tamanho do ícone do app</string>
     <string name="setting_wear_source_icon_opacity">Opacidade do ícone do app</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 é o peso normal do layout; quanto maior, mais negrito. No Google Sans Flex, este é o eixo de peso próprio da fonte</string>
@@ -1633,11 +1672,21 @@
     <string name="error_library_empty">Nada aqui</string>
     <string name="error_library_no_player">Comece a tocar algo primeiro</string>
     <string name="setting_wear_carousel_card_shape">Formato do card do carrossel</string>
+    <string name="setting_wear_note_cover_shape">Forma da capa da Nota</string>
 
     <string name="setting_wear_font_all_screens">Usar fonte em todas as telas</string>
     <string name="setting_wear_font_all_screens_description">Aplica a fonte escolhida aos menus, à fila e às Ações rápidas, não apenas ao player. Fontes decorativas e manuscritas podem ser mais difíceis de ler em listas.</string>
+    <string name="wear_text_font_follow">Seguir tipografia global</string>
     <string name="setting_wear_clock_font">Fonte do relógio</string>
     <string name="wear_clock_font_follow">Seguir fonte da faixa</string>
+    <string name="category_wf_typography_track_time">Tempo da faixa</string>
+    <string name="setting_wear_track_time_font">Fonte do tempo da faixa</string>
+    <string name="wear_track_time_font_follow">Seguir o design</string>
+    <string name="setting_wear_track_time_font_weight">Peso do tempo da faixa</string>
+    <string name="setting_wear_track_time_font_italic">Tempo da faixa em itálico</string>
+    <string name="setting_wear_track_time_font_scale">Tamanho do tempo da faixa</string>
+    <string name="setting_wear_track_time_font_opacity">Opacidade do tempo da faixa</string>
+    <string name="setting_wear_track_time_font_tracking">Espaçamento do tempo da faixa</string>
     <string name="setting_wear_clock_font_weight">Peso do relógio</string>
     <string name="setting_wear_clock_font_italic">Relógio itálico</string>
     <string name="setting_wear_clock_font_scale">Tamanho do relógio</string>
@@ -1756,6 +1805,67 @@
         <item>@string/wear_font_space_grotesk</item>
         <item>@string/wear_font_orbitron</item>
         <item>@string/wear_font_caveat</item>
+        <item>@string/wear_font_inter</item>
+        <item>@string/wear_font_atkinson_hyperlegible</item>
+        <item>@string/wear_font_rubik</item>
+        <item>@string/wear_font_barlow_condensed</item>
+        <item>@string/wear_font_oswald</item>
+        <item>@string/wear_font_lora</item>
+        <item>@string/wear_font_fraunces</item>
+        <item>@string/wear_font_space_mono</item>
+        <item>@string/wear_font_archivo_black</item>
+        <item>@string/wear_font_dancing_script</item>
+        <item>@string/wear_font_abeezee</item>
+        <item>@string/wear_font_abril_fatface</item>
+        <item>@string/wear_font_acme</item>
+        <item>@string/wear_font_alata</item>
+        <item>@string/wear_font_aleo</item>
+        <item>@string/wear_font_alfa_slab_one</item>
+        <item>@string/wear_font_amatic_sc</item>
+        <item>@string/wear_font_anton</item>
+        <item>@string/wear_font_arvo</item>
+        <item>@string/wear_font_bangers</item>
+        <item>@string/wear_font_black_ops_one</item>
+        <item>@string/wear_font_bree_serif</item>
+        <item>@string/wear_font_cabin</item>
+        <item>@string/wear_font_chivo</item>
+        <item>@string/wear_font_courier_prime</item>
+        <item>@string/wear_font_crete_round</item>
+        <item>@string/wear_font_crimson_pro</item>
+        <item>@string/wear_font_dm_sans</item>
+        <item>@string/wear_font_domine</item>
+        <item>@string/wear_font_exo_2</item>
+        <item>@string/wear_font_fira_code</item>
+        <item>@string/wear_font_inconsolata</item>
+        <item>@string/wear_font_indie_flower</item>
+        <item>@string/wear_font_josefin_sans</item>
+        <item>@string/wear_font_jost</item>
+        <item>@string/wear_font_kanit</item>
+        <item>@string/wear_font_lexend</item>
+        <item>@string/wear_font_lobster</item>
+        <item>@string/wear_font_manrope</item>
+        <item>@string/wear_font_mulish</item>
+        <item>@string/wear_font_nunito</item>
+        <item>@string/wear_font_outfit</item>
+        <item>@string/wear_font_oxanium</item>
+        <item>@string/wear_font_play</item>
+        <item>@string/wear_font_plus_jakarta_sans</item>
+        <item>@string/wear_font_press_start_2p</item>
+        <item>@string/wear_font_quicksand</item>
+        <item>@string/wear_font_rajdhani</item>
+        <item>@string/wear_font_righteous</item>
+        <item>@string/wear_font_roboto_mono</item>
+        <item>@string/wear_font_rowdies</item>
+        <item>@string/wear_font_russo_one</item>
+        <item>@string/wear_font_shrikhand</item>
+        <item>@string/wear_font_silkscreen</item>
+        <item>@string/wear_font_source_code_pro</item>
+        <item>@string/wear_font_staatliches</item>
+        <item>@string/wear_font_teko</item>
+        <item>@string/wear_font_titillium_web</item>
+        <item>@string/wear_font_varela_round</item>
+        <item>@string/wear_font_yanone_kaffeesatz</item>
+        <item>@string/wear_font_zilla_slab</item>
     </string-array>
 
     <string-array name="wear_font_descriptions">
@@ -1786,13 +1896,79 @@
         <item>@string/wear_font_space_grotesk_description</item>
         <item>@string/wear_font_orbitron_description</item>
         <item>@string/wear_font_caveat_description</item>
+        <item>@string/wear_font_inter_description</item>
+        <item>@string/wear_font_atkinson_hyperlegible_description</item>
+        <item>@string/wear_font_rubik_description</item>
+        <item>@string/wear_font_barlow_condensed_description</item>
+        <item>@string/wear_font_oswald_description</item>
+        <item>@string/wear_font_lora_description</item>
+        <item>@string/wear_font_fraunces_description</item>
+        <item>@string/wear_font_space_mono_description</item>
+        <item>@string/wear_font_archivo_black_description</item>
+        <item>@string/wear_font_dancing_script_description</item>
+        <item>@string/wear_font_abeezee_description</item>
+        <item>@string/wear_font_abril_fatface_description</item>
+        <item>@string/wear_font_acme_description</item>
+        <item>@string/wear_font_alata_description</item>
+        <item>@string/wear_font_aleo_description</item>
+        <item>@string/wear_font_alfa_slab_one_description</item>
+        <item>@string/wear_font_amatic_sc_description</item>
+        <item>@string/wear_font_anton_description</item>
+        <item>@string/wear_font_arvo_description</item>
+        <item>@string/wear_font_bangers_description</item>
+        <item>@string/wear_font_black_ops_one_description</item>
+        <item>@string/wear_font_bree_serif_description</item>
+        <item>@string/wear_font_cabin_description</item>
+        <item>@string/wear_font_chivo_description</item>
+        <item>@string/wear_font_courier_prime_description</item>
+        <item>@string/wear_font_crete_round_description</item>
+        <item>@string/wear_font_crimson_pro_description</item>
+        <item>@string/wear_font_dm_sans_description</item>
+        <item>@string/wear_font_domine_description</item>
+        <item>@string/wear_font_exo_2_description</item>
+        <item>@string/wear_font_fira_code_description</item>
+        <item>@string/wear_font_inconsolata_description</item>
+        <item>@string/wear_font_indie_flower_description</item>
+        <item>@string/wear_font_josefin_sans_description</item>
+        <item>@string/wear_font_jost_description</item>
+        <item>@string/wear_font_kanit_description</item>
+        <item>@string/wear_font_lexend_description</item>
+        <item>@string/wear_font_lobster_description</item>
+        <item>@string/wear_font_manrope_description</item>
+        <item>@string/wear_font_mulish_description</item>
+        <item>@string/wear_font_nunito_description</item>
+        <item>@string/wear_font_outfit_description</item>
+        <item>@string/wear_font_oxanium_description</item>
+        <item>@string/wear_font_play_description</item>
+        <item>@string/wear_font_plus_jakarta_sans_description</item>
+        <item>@string/wear_font_press_start_2p_description</item>
+        <item>@string/wear_font_quicksand_description</item>
+        <item>@string/wear_font_rajdhani_description</item>
+        <item>@string/wear_font_righteous_description</item>
+        <item>@string/wear_font_roboto_mono_description</item>
+        <item>@string/wear_font_rowdies_description</item>
+        <item>@string/wear_font_russo_one_description</item>
+        <item>@string/wear_font_shrikhand_description</item>
+        <item>@string/wear_font_silkscreen_description</item>
+        <item>@string/wear_font_source_code_pro_description</item>
+        <item>@string/wear_font_staatliches_description</item>
+        <item>@string/wear_font_teko_description</item>
+        <item>@string/wear_font_titillium_web_description</item>
+        <item>@string/wear_font_varela_round_description</item>
+        <item>@string/wear_font_yanone_kaffeesatz_description</item>
+        <item>@string/wear_font_zilla_slab_description</item>
     </string-array>
 
-    <string-array name="wear_carousel_card_shape_entries">
+    <string-array name="wear_cover_shape_entries">
         <item>Arredondado</item>
         <item>Quadrado</item>
         <item>Supercírculo (Squircle)</item>
         <item>Círculo</item>
+    </string-array>
+    <string-array name="wear_text_case_entries">
+        <item>Normal</item>
+        <item>CAIXA ALTA</item>
+        <item>caixa baixa</item>
     </string-array>
 
     <string-array name="theme_entries">
@@ -1910,6 +2086,7 @@
     <string name="preview_metadata_album">Álbum</string>
     <string name="preview_metadata_album_value">Slow Rivers</string>
     <string name="preview_metadata_track">Faixa</string>
+    <string name="preview_metadata_composer">Compositor</string>
     <string name="preview_metadata_genre">Gênero</string>
     <string name="preview_metadata_genre_value">Alternative</string>
     <string name="preview_metadata_year">Ano</string>
@@ -1985,4 +2162,24 @@
     <string name="category_system_access">Acesso do Android e notificações</string>
     <string name="setting_privacy_policy">Política de privacidade</string>
     <string name="setting_privacy_policy_description">Veja quais dados o Svartifoss usa e quais serviços on-line são opcionais.</string>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Uma sans neutra e muito legível, feita para leitura do dia a dia</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Letras pensadas para acessibilidade, com formas distintas que seguem claras em tamanhos pequenos</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Sans geométrica suavemente arredondada — segura e amigável</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Sans humanista compacta que dá mais espaço para títulos longos</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Fonte display alta e condensada, com energia de pôster</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Serifada contemporânea feita para leitura confortável de textos longos</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Serifada expressiva e suave, com calor e personalidade</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Monoespaçada retrô-futurista com toque técnico</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Display densa e muito pesada para máximo contraste</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Caligrafia fluida e manuscrita, viva e pessoal</string>
 </resources>

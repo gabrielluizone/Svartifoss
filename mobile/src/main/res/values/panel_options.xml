@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Additive catalog for the Panel editor. Existing options stay in strings.xml so their
+        translations keep their stable indexes; WatchFacePrefsFragment appends these choices at
+        runtime. Locales may translate only the entry arrays and safely inherit the stable values.
+    -->
+    <string name="setting_wear_progress_layout">Progress ring layout</string>
+
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Secondary color</item>
+        <item>Tertiary color</item>
+        <item>Color mesh</item>
+        <item>Aurora</item>
+        <item>Spotlight</item>
+        <item>Vignette</item>
+        <item>Split tone</item>
+        <item>Color bands</item>
+        <item>Midnight</item>
+        <item>Halo</item>
+        <item>Smoke blur</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_extra_values" translatable="false">
+        <item>secondary</item>
+        <item>tertiary</item>
+        <item>mesh</item>
+        <item>aurora</item>
+        <item>spotlight</item>
+        <item>vignette</item>
+        <item>split</item>
+        <item>bands</item>
+        <item>midnight</item>
+        <item>halo</item>
+        <item>smoke</item>
+    </string-array>
+
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Beads</item>
+        <item>Dual rail</item>
+        <item>Pulse</item>
+        <item>Chrome</item>
+        <item>Spectrum</item>
+        <item>Steps</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_values" translatable="false">
+        <item>beads</item>
+        <item>dual</item>
+        <item>pulse</item>
+        <item>chrome</item>
+        <item>spectrum</item>
+        <item>steps</item>
+    </string-array>
+
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Double edge</item>
+        <item>Vertical meter (left)</item>
+        <item>Vertical meter (right)</item>
+        <item>Top meter</item>
+        <item>Bottom meter</item>
+        <item>Center dial</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_values" translatable="false">
+        <item>double_edge</item>
+        <item>vertical_left</item>
+        <item>vertical_right</item>
+        <item>meter_top</item>
+        <item>meter_bottom</item>
+        <item>dial</item>
+    </string-array>
+
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Double ring</item>
+        <item>Beads</item>
+        <item>Dash and dot</item>
+        <item>24-hour ticks</item>
+        <item>Progress only</item>
+        <item>Glow</item>
+        <item>Duotone</item>
+        <item>Needle</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_values" translatable="false">
+        <item>double</item>
+        <item>beads</item>
+        <item>dash_dot</item>
+        <item>ticks_24</item>
+        <item>progress_only</item>
+        <item>glow</item>
+        <item>duotone</item>
+        <item>needle</item>
+    </string-array>
+
+    <string-array name="wear_progress_layout_entries">
+        <item>Bezel edge</item>
+        <item>Inset ring</item>
+        <item>Inner ring</item>
+        <item>Bold ring</item>
+        <item>Open at bottom</item>
+        <item>Open at top</item>
+        <item>Left arc</item>
+        <item>Right arc</item>
+        <item>Double track</item>
+    </string-array>
+    <string-array name="wear_progress_layout_values" translatable="false">
+        <item>edge</item>
+        <item>inset</item>
+        <item>inner</item>
+        <item>bold</item>
+        <item>open_bottom</item>
+        <item>open_top</item>
+        <item>left_arc</item>
+        <item>right_arc</item>
+        <item>double</item>
+    </string-array>
+
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Compact pill</item>
+        <item>Square album</item>
+        <item>Stacked pill</item>
+        <item>Badge</item>
+        <item>Glass bar</item>
+        <item>LCD</item>
+        <item>Outline square</item>
+        <item>Ribbon</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_values" translatable="false">
+        <item>compact_pill</item>
+        <item>square_album</item>
+        <item>stacked_pill</item>
+        <item>badge</item>
+        <item>glass_bar</item>
+        <item>lcd</item>
+        <item>outline_square</item>
+        <item>ribbon</item>
+    </string-array>
+
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Timeline (top)</item>
+        <item>Timeline (bottom)</item>
+        <item>Segments (top)</item>
+        <item>Vertical timeline (left)</item>
+        <item>Vertical timeline (right)</item>
+        <item>Center dial</item>
+        <item>Twin timeline</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_values" translatable="false">
+        <item>timeline_top</item>
+        <item>timeline_bottom</item>
+        <item>segments_top</item>
+        <item>vertical_left</item>
+        <item>vertical_right</item>
+        <item>dial</item>
+        <item>twin</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Soft</item>
+        <item>Chrome</item>
+        <item>Holographic</item>
+        <item>Bubble</item>
+        <item>Rail</item>
+        <item>Sunset</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_values" translatable="false">
+        <item>soft</item>
+        <item>chrome</item>
+        <item>holo</item>
+        <item>bubble</item>
+        <item>rail</item>
+        <item>sunset</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Fan</item>
+        <item>Orbit</item>
+        <item>Bottom dock</item>
+        <item>Column</item>
+        <item>Split deck</item>
+        <item>Diamond</item>
+        <item>Carousel</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_values" translatable="false">
+        <item>fan</item>
+        <item>orbit</item>
+        <item>dock</item>
+        <item>column</item>
+        <item>split</item>
+        <item>diamond</item>
+        <item>carousel</item>
+    </string-array>
+
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Soft</item>
+        <item>Slab</item>
+        <item>Ink</item>
+        <item>Rail</item>
+        <item>Sunset</item>
+        <item>Bubble</item>
+        <item>Chrome</item>
+        <item>Holographic</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_values" translatable="false">
+        <item>soft</item>
+        <item>slab</item>
+        <item>ink</item>
+        <item>rail</item>
+        <item>sunset</item>
+        <item>bubble</item>
+        <item>chrome</item>
+        <item>holo</item>
+    </string-array>
+</resources>

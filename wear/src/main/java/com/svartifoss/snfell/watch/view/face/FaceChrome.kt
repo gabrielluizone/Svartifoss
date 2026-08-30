@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,6 +46,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -56,10 +58,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.WatchTypography
+import com.svartifoss.snfell.common.TitleTextMode
 import androidx.core.graphics.ColorUtils
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.R as commonR
+import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingStyle
@@ -335,11 +340,19 @@ internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
         }
     }
 
-    // Drawn here rather than by each face, and here rather than over the whole face: it belongs to
-    // the background stack, so it must sit above whatever backdrop was chosen and below the face's
-    // own content. Over the top it would tint the text; under the backdrop an opaque one would
-    // hide it. Every face that goes through this shared pipeline therefore gets the piece for
-    // free - which is the whole point of it being a piece.
+    PlayerAccentFloor(state)
+}
+
+/**
+ * Shared accent floor layer for player faces whose backdrop is composed elsewhere.
+ *
+ * Split owns an opaque two-band backdrop, so it places this same layer immediately after that
+ * backdrop instead of letting the common layer be painted underneath and then covered.
+ */
+@Composable
+internal fun PlayerAccentFloor(state: NowPlayingFaceState) {
+    // Drawn above the backdrop and below the face content. Over the top it would tint the text;
+    // under an opaque backdrop it would disappear.
     if (state.accentFloor.isVisible && !state.ambient) {
         Box(Modifier
                 .fillMaxSize()
@@ -738,6 +751,17 @@ internal fun ChronoAmbientFace(state: NowPlayingFaceState) {
     }
 }
 
+/**
+ * Resolves the shared [CoverShape] vocabulary into a Compose [Shape] for artwork of [size].
+ *
+ * Here rather than in one face because two draw a cover the user can reshape - Carousel's rail
+ * cards and Note's disc - and the corner is a *fraction* of the size, so the two must derive it the
+ * same way or the same choice reads as a different shape on each.
+ */
+internal fun CoverShape.toComposeShape(size: Dp): Shape =
+        if (this == CoverShape.CIRCLE) CircleShape
+        else RoundedCornerShape(size * cornerFraction)
+
 /** The "⋮" overflow glyph, drawn directly so no icon resource is needed. */
 @Composable
 internal fun FaceOverflowDots(color: Color = Color.White, scale: Float = 1f) {
@@ -772,6 +796,55 @@ internal fun AdaptiveTitleText(
         fontStyle: FontStyle? = null,
         fontFamily: FontFamily? = null,
         letterSpacing: TextUnit = TextUnit.Unspecified,
+        lineHeight: TextUnit = TextUnit.Unspecified,
+        textAlign: TextAlign = TextAlign.Center,
+        minFontSize: TextUnit = (fontSize.value * 0.62f).sp,
+        typography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
+        maxLines: Int? = null,
+        onLineCount: ((Int) -> Unit)? = null
+) = AdaptiveTitleText(
+        // Applied here rather than in the AnnotatedString overload below: that one is Note's own
+        // "Artist: Title" sentence, which cases its artist and title spans independently *before*
+        // building the AnnotatedString (see NoteLine) - a generic case transform run over the
+        // finished string could shift multi-byte case expansions (German ß -> SS) across a span
+        // boundary built for the un-cased text. A plain String has no such boundary to protect.
+        text = AnnotatedString(typography.case.apply(text)),
+        mode = mode,
+        fontSize = fontSize,
+        color = color,
+        modifier = modifier,
+        fontWeight = fontWeight,
+        fontStyle = fontStyle,
+        fontFamily = fontFamily,
+        letterSpacing = letterSpacing,
+        lineHeight = lineHeight,
+        textAlign = textAlign,
+        minFontSize = minFontSize,
+        typography = typography,
+        maxLines = maxLines,
+        onLineCount = onLineCount)
+
+/**
+ * As [AdaptiveTitleText], for a line that is more than one run of text.
+ *
+ * The overload exists for the Note face, whose whole composition is a single `Artist: Title`
+ * sentence built as an [AnnotatedString] - two colours in one flowing line, which the `String`
+ * entry point cannot express. It had no way in here and so drew a plain wrapped [Text], which
+ * meant the Title text behaviour setting did nothing at all on that face. The cascade itself is
+ * identical; only the text type differs, and the `String` version above is a thin delegate so
+ * there is still exactly one implementation of each mode.
+ */
+@Composable
+internal fun AdaptiveTitleText(
+        text: AnnotatedString,
+        mode: String,
+        fontSize: TextUnit,
+        color: Color,
+        modifier: Modifier = Modifier,
+        fontWeight: FontWeight? = null,
+        fontStyle: FontStyle? = null,
+        fontFamily: FontFamily? = null,
+        letterSpacing: TextUnit = TextUnit.Unspecified,
         /** Passed through untouched, including to the shrunk-down text. An absolute value therefore
          *  does *not* scale with the size this settles on, and a title that shrinks two or three
          *  steps ends up with lines spaced further apart than they are tall. Leave it unspecified
@@ -780,6 +853,14 @@ internal fun AdaptiveTitleText(
         textAlign: TextAlign = TextAlign.Center,
         minFontSize: TextUnit = (fontSize.value * 0.62f).sp,
         typography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
+        /**
+         * Hard ceiling on the line count, for a face whose title sits in a band of fixed height.
+         *
+         * The mode is the user's choice and stays theirs; this only says how much room the
+         * composition has for the answer. Null - every face but Frame - means "as many as the mode
+         * asks for", which is what every caller did before this existed.
+         */
+        maxLines: Int? = null,
         // How many lines the text actually settled on. A face on a round screen cannot inset its
         // title correctly without this: the usable chord depends on how deep the block reaches, so
         // the caller has to know whether it wrapped before it can pick a width (see
@@ -800,12 +881,8 @@ internal fun AdaptiveTitleText(
             if (typography.trackingEm == 0f) letterSpacing else typography.trackingEm.em
     val color = if (typography.alpha == 1f) color else color.copy(alpha = color.alpha * typography.alpha)
 
-    val wrapLines = when (mode) {
-        "static" -> 1
-        "wrap" -> 2
-        "wrap3" -> 3
-        "wrap5" -> 5
-        else -> null
+    val wrapLines = TitleTextMode.wrapLines(mode)?.let {
+        if (maxLines == null) it else minOf(it, maxLines)
     }
     when {
         wrapLines != null -> Text(
@@ -829,7 +906,7 @@ internal fun AdaptiveTitleText(
         )
         mode == "smart" -> SmartTitleText(
                 text, fontSize, minFontSize, color, fontWeight, fontStyle, fontFamily,
-                letterSpacing, lineHeight, textAlign, modifier, onLineCount
+                letterSpacing, lineHeight, textAlign, modifier, maxLines, onLineCount
         )
         else -> Text( // "marquee", and the fallback for any value this build doesn't know yet.
                 text = text,
@@ -851,7 +928,7 @@ internal fun AdaptiveTitleText(
 /** Single line, font size stepped down until it fits - no wrap, no scroll. */
 @Composable
 private fun ShrinkToFitTitleText(
-        text: String,
+        text: AnnotatedString,
         maxFontSize: TextUnit,
         minFontSize: TextUnit,
         color: Color,
@@ -897,7 +974,7 @@ private fun ShrinkToFitTitleText(
  *  size) - the same combination the classic face's "Automatic" title mode already offers. */
 @Composable
 private fun SmartTitleText(
-        text: String,
+        text: AnnotatedString,
         maxFontSize: TextUnit,
         minFontSize: TextUnit,
         color: Color,
@@ -908,6 +985,8 @@ private fun SmartTitleText(
         lineHeight: TextUnit,
         textAlign: TextAlign,
         modifier: Modifier,
+        /** See [AdaptiveTitleText]'s own `maxLines`: null leaves the two-line escalation intact. */
+        lineCeiling: Int? = null,
         onLineCount: ((Int) -> Unit)? = null
 ) {
     var fontSize by remember(text, maxFontSize) { mutableStateOf(maxFontSize) }
@@ -935,7 +1014,7 @@ private fun SmartTitleText(
                     }
                     fontSize > minFontSize ->
                         fontSize = (fontSize.value - 1f).coerceAtLeast(minFontSize.value).sp
-                    maxLines == 1 -> maxLines = 2
+                    maxLines == 1 && (lineCeiling == null || lineCeiling > 1) -> maxLines = 2
                     // Already at the floor size on two lines and still overflowing: accept the
                     // ellipsis rather than looping forever on a title with no room left to give.
                     else -> {
@@ -1021,7 +1100,7 @@ internal fun ArtistLineText(
 ) {
     val spec = state.artistTypography
     Text(
-            text = text,
+            text = spec.case.apply(text),
             color = if (spec.alpha == 1f) color else color.copy(alpha = color.alpha * spec.alpha),
             fontSize = if (spec.scale == 1f) fontSize else spec.scaled(fontSize.value).sp,
             fontWeight = if (spec.weight == 400) fontWeight else FontWeight(spec.weight),
@@ -1032,6 +1111,49 @@ internal fun ArtistLineText(
             textAlign = textAlign,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
+            modifier = modifier
+    )
+}
+
+/**
+ * An elapsed/total playback readout honoring [NowPlayingFaceState.trackTimeTypography].
+ *
+ * The family parameter is each composition's historical choice. When the user leaves Track time
+ * on “Follow the design”, it stays intact; a selected family, including Google Sans Flex,
+ * overrides it consistently across every Compose face.
+ */
+@Composable
+internal fun TrackTimeText(
+        text: String,
+        state: NowPlayingFaceState,
+        color: Color,
+        fontSize: TextUnit,
+        modifier: Modifier = Modifier,
+        fontFamily: FontFamily? = null,
+        fontWeight: FontWeight? = null,
+        fontStyle: FontStyle? = null,
+        lineHeight: TextUnit = TextUnit.Unspecified,
+        letterSpacing: TextUnit = TextUnit.Unspecified,
+        textAlign: TextAlign = TextAlign.Center,
+        maxLines: Int = 1,
+        overflow: TextOverflow = TextOverflow.Clip
+) {
+    Text(
+            text = text,
+            color = state.trackTimeColor(color),
+            fontSize = state.trackTimeTextSize(fontSize),
+            fontWeight = state.trackTimeFontWeight ?: fontWeight,
+            fontStyle = state.trackTimeFontStyle ?: fontStyle,
+            fontFamily = state.trackTimeFont ?: fontFamily,
+            lineHeight = if (lineHeight == TextUnit.Unspecified) {
+                lineHeight
+            } else {
+                state.trackTimeTextSize(lineHeight)
+            },
+            letterSpacing = state.trackTimeLetterSpacing(letterSpacing),
+            textAlign = textAlign,
+            maxLines = maxLines,
+            overflow = overflow,
             modifier = modifier
     )
 }
@@ -1073,6 +1195,12 @@ internal fun AmbientSourceIconGlyph(state: NowPlayingFaceState, size: Dp, tint: 
  * Place it *before* the face's own content so interactive controls layered above still take their
  * own taps, and keep the content itself non-clickable unless it genuinely needs to be - anything
  * clickable over this region swallows the centre gestures.
+ *
+ * The one exception is a face whose composition is entirely **opaque** over the centre - Frame's
+ * card, Ribbon's cover rail. Nothing there takes its own taps, and drawing the region first buries
+ * its own confirmation underneath the artwork: the tap works, and looks exactly like a tap that
+ * missed. Those faces place it last instead, and pass [state] so the confirmation is the play/pause
+ * glyph itself rather than a ring the composition would have swallowed anyway.
  */
 @Composable
 internal fun CenterGestureRegion(
@@ -1080,7 +1208,14 @@ internal fun CenterGestureRegion(
         size: Dp,
         /** Radius the confirmation ring expands to. Defaults to the region itself; pass a smaller
          *  value when the region is much larger than the thing the user thinks they tapped. */
-        pulseSize: Dp = size
+        pulseSize: Dp = size,
+        /**
+         * When non-null, a centre *tap* also flashes the play/pause glyph for the state the tap is
+         * entering - the confirmation a face with a visible transport control gets for free from
+         * that control changing shape. Only the tap: a double tap opens the quick panel and a long
+         * press the face picker, and neither is a playback command.
+         */
+        state: NowPlayingFaceState? = null
 ) {
     // The same expanding-ring flash the curated faces draw around their play control, and Classic
     // draws in center_tap_pulse. Without it a centre tap on a face with no visible button gives no
@@ -1094,6 +1229,18 @@ internal fun CenterGestureRegion(
             pulse.animateTo(1f, tween(300))
         }
     }
+    // The glyph rides its own nonce rather than the ring's: every gesture confirms with the ring,
+    // but only a tap is a playback command, and flashing "pause" while the queue opens would be
+    // reporting something that did not happen.
+    var tapNonce by remember { mutableStateOf(0) }
+    var enteringPlay by remember { mutableStateOf(false) }
+    val glyph = remember { Animatable(0f) }
+    LaunchedEffect(tapNonce) {
+        if (tapNonce > 0) {
+            glyph.snapTo(1f)
+            glyph.animateTo(0f, tween(GLYPH_FLASH_FADE_MS, delayMillis = GLYPH_FLASH_HOLD_MS))
+        }
+    }
     Box(
             modifier = Modifier
                     .fillMaxSize()
@@ -1103,6 +1250,11 @@ internal fun CenterGestureRegion(
                         detectTapGestures(
                                 onTap = {
                                     pulseNonce++
+                                    // The state being *entered*, sampled before the command goes
+                                    // out: the phone's answer is a Bluetooth round trip away, and a
+                                    // confirmation that waits for it is not a confirmation.
+                                    enteringPlay = state?.playing != true
+                                    tapNonce++
                                     listener.onPlayPauseTap()
                                 },
                                 onDoubleTap = {
@@ -1125,6 +1277,47 @@ internal fun CenterGestureRegion(
                                     style = Stroke(2.dp.toPx())
                             )
                         }
-                    }
-    )
+                    },
+            contentAlignment = Alignment.Center
+    ) {
+        // Honours the same visibility contract as every other control: the "hidden" screen theme
+        // keeps hit targets alive and draws no icons, and this is an icon.
+        if (state != null && state.showControls && glyph.value > 0f) {
+            val diameter = pulseSize * GLYPH_FLASH_DIAMETER_FRACTION
+            Box(
+                    modifier = Modifier
+                            .size(diameter)
+                            .graphicsLayer {
+                                alpha = glyph.value
+                                // Settles rather than pops: full size the instant it appears would
+                                // read as an element of the face flickering, not as an answer.
+                                val scale = 1f - .12f * glyph.value
+                                scaleX = scale
+                                scaleY = scale
+                            }
+                            .clip(androidx.compose.foundation.shape.CircleShape)
+                            // A cover can be any colour, so the glyph carries its own ground
+                            // instead of trusting whatever the composition put behind it.
+                            .background(Color.Black.copy(alpha = .38f)),
+                    contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                        painter = painterResource(
+                                if (enteringPlay) commonR.drawable.action_play_filled
+                                else commonR.drawable.action_pause_filled),
+                        contentDescription = null,
+                        tint = Color.White.copy(alpha = state.screenTheme.tokens.iconAlpha),
+                        modifier = Modifier.size(diameter * .5f)
+                )
+            }
+        }
+    }
 }
+
+/** How long the play/pause confirmation holds at full strength before fading, and how long the
+ *  fade itself takes. Long enough to register on a wrist glance, short enough that it is gone
+ *  before anyone reads it as part of the face. */
+private const val GLYPH_FLASH_HOLD_MS = 220
+private const val GLYPH_FLASH_FADE_MS = 320
+/** Sized against the ring's own radius so the two confirmations read as one gesture. */
+private const val GLYPH_FLASH_DIAMETER_FRACTION = .46f

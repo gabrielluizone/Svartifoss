@@ -76,4 +76,6 @@
     <string name="watch_theme_face_note">یادداشت</string>
     <string name="watch_theme_face_verse">بند</string>
     <string name="watch_theme_face_metadata">فراداده</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

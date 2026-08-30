@@ -10,6 +10,7 @@ import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
+import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
@@ -43,7 +44,9 @@ object WatchTheme {
     const val TEXT_SECONDARY = 0xFFB0B0B0.toInt()
 
     private const val TEXT_ACCENT_MIN_LIGHTNESS = 0.62f
-    private const val SURFACE_ACCENT_MIN_SATURATION = 0.45f
+    /** The same value a colourless accent is promoted to at the source, so this clamp is a no-op
+     *  on the covers that used to depend on it - see ColorHarmony.NEUTRAL_ACCENT_SATURATION. */
+    private const val SURFACE_ACCENT_MIN_SATURATION = ColorHarmony.NEUTRAL_ACCENT_SATURATION
     private const val SURFACE_ACCENT_MIN_LIGHTNESS = 0.62f
     private const val SURFACE_ACCENT_MAX_LIGHTNESS = 0.82f
 
@@ -149,12 +152,12 @@ val MomsTypewriterFamily = FontFamily(
         Font(R.font.moms_typewriter, FontWeight.Light)
 )
 
-/** Love Letter Typewriter — a retro typewriter-style font, used for Lain-themed tracks. */
-val LoveLetterTypewriterFamily = FontFamily(
-        Font(R.font.love_letter_typewriter, FontWeight.Normal),
-        Font(R.font.love_letter_typewriter, FontWeight.Bold),
-        Font(R.font.love_letter_typewriter, FontWeight.Medium),
-        Font(R.font.love_letter_typewriter, FontWeight.Light)
+/** Special Elite — a distressed typewriter-style font for an aged, analog look. */
+val SpecialEliteFamily = FontFamily(
+        Font(R.font.special_elite_regular, FontWeight.Normal),
+        Font(R.font.special_elite_regular, FontWeight.Bold),
+        Font(R.font.special_elite_regular, FontWeight.Medium),
+        Font(R.font.special_elite_regular, FontWeight.Light)
 )
 
 /** Bundled free (OFL) typefaces offered as redistributable alternatives to popular commercial
@@ -212,17 +215,133 @@ val CaveatFamily = FontFamily(
         Font(R.font.caveat_regular, FontWeight.Bold)
 )
 
-/**
- * Keywords that trigger the [LoveLetterTypewriterFamily] override on title/artist text.
- * The match is case-insensitive and only requires the keyword to be a substring
- * (e.g. "wiredlau" → true for "wired").
- */
-private val LAIN_KEYWORDS = setOf("iwakura", "lain", "wired", "breakcore", "serial experiments")
+/** The expanded catalog keeps one regular instance per family. Reusing it for bold prevents a
+ *  missing weight from silently switching just bold watch text back to a system font. */
+val InterFamily = FontFamily(
+        Font(R.font.inter_regular, FontWeight.Normal),
+        Font(R.font.inter_regular, FontWeight.Bold)
+)
 
-/** Returns [LoveLetterTypewriterFamily] if [text] contains any [LAIN_KEYWORDS], null otherwise. */
-fun lainFont(text: String): FontFamily? {
-    val lower = text.lowercase()
-    return if (LAIN_KEYWORDS.any { lower.contains(it) }) LoveLetterTypewriterFamily else null
+val AtkinsonHyperlegibleFamily = FontFamily(
+        Font(R.font.atkinson_hyperlegible_regular, FontWeight.Normal),
+        Font(R.font.atkinson_hyperlegible_regular, FontWeight.Bold)
+)
+
+val RubikFamily = FontFamily(
+        Font(R.font.rubik_regular, FontWeight.Normal),
+        Font(R.font.rubik_regular, FontWeight.Bold)
+)
+
+val BarlowCondensedFamily = FontFamily(
+        Font(R.font.barlow_condensed_regular, FontWeight.Normal),
+        Font(R.font.barlow_condensed_regular, FontWeight.Bold)
+)
+
+val OswaldFamily = FontFamily(
+        Font(R.font.oswald_regular, FontWeight.Normal),
+        Font(R.font.oswald_regular, FontWeight.Bold)
+)
+
+val LoraFamily = FontFamily(
+        Font(R.font.lora_regular, FontWeight.Normal),
+        Font(R.font.lora_regular, FontWeight.Bold)
+)
+
+val FrauncesFamily = FontFamily(
+        Font(R.font.fraunces_regular, FontWeight.Normal),
+        Font(R.font.fraunces_regular, FontWeight.Bold)
+)
+
+val SpaceMonoFamily = FontFamily(
+        Font(R.font.space_mono_regular, FontWeight.Normal),
+        Font(R.font.space_mono_regular, FontWeight.Bold)
+)
+
+val ArchivoBlackFamily = FontFamily(
+        Font(R.font.archivo_black_regular, FontWeight.Normal),
+        Font(R.font.archivo_black_regular, FontWeight.Bold)
+)
+
+val DancingScriptFamily = FontFamily(
+        Font(R.font.dancing_script_regular, FontWeight.Normal),
+        Font(R.font.dancing_script_regular, FontWeight.Bold)
+)
+
+/**
+ * The large third wave of bundled families.
+ *
+ * Keep this as resource ids rather than resolving by resource *name*: both APKs enable resource
+ * shrinking for release builds, so `Resources.getIdentifier()` would make a font look selectable
+ * in debug and then allow the shrinker to discard it from a release APK. Every id below is a
+ * static reference and therefore kept by aapt/R8. [ExpandedBundledFontFamilies] feeds Compose
+ * while the exact same map feeds [watchFontTypeface] for the classic View face.
+ *
+ * Each family has one regular master. Declaring that same master at Normal and Bold deliberately
+ * prevents a bold title from falling back to a different system family halfway through a screen;
+ * it mirrors the existing one-file families above. The mobile preview carries an equivalent
+ * resource-id map because it cannot depend on this Wear module.
+ */
+private val ExpandedBundledFontResources: Map<String, Int> = mapOf(
+        "abeezee" to R.font.abeezee_regular,
+        "abril_fatface" to R.font.abril_fatface_regular,
+        "acme" to R.font.acme_regular,
+        "alata" to R.font.alata_regular,
+        "aleo" to R.font.aleo_regular,
+        "alfa_slab_one" to R.font.alfa_slab_one_regular,
+        "amatic_sc" to R.font.amatic_sc_regular,
+        "anton" to R.font.anton_regular,
+        "arvo" to R.font.arvo_regular,
+        "bangers" to R.font.bangers_regular,
+        "black_ops_one" to R.font.black_ops_one_regular,
+        "bree_serif" to R.font.bree_serif_regular,
+        "cabin" to R.font.cabin_regular,
+        "chivo" to R.font.chivo_regular,
+        "courier_prime" to R.font.courier_prime_regular,
+        "crete_round" to R.font.crete_round_regular,
+        "crimson_pro" to R.font.crimson_pro_regular,
+        "dm_sans" to R.font.dm_sans_regular,
+        "domine" to R.font.domine_regular,
+        "exo_2" to R.font.exo_2_regular,
+        "fira_code" to R.font.fira_code_regular,
+        "inconsolata" to R.font.inconsolata_regular,
+        "indie_flower" to R.font.indie_flower_regular,
+        "josefin_sans" to R.font.josefin_sans_regular,
+        "jost" to R.font.jost_regular,
+        "kanit" to R.font.kanit_regular,
+        "lexend" to R.font.lexend_regular,
+        "lobster" to R.font.lobster_regular,
+        "manrope" to R.font.manrope_regular,
+        "mulish" to R.font.mulish_regular,
+        "nunito" to R.font.nunito_regular,
+        "outfit" to R.font.outfit_regular,
+        "oxanium" to R.font.oxanium_regular,
+        "play" to R.font.play_regular,
+        "plus_jakarta_sans" to R.font.plus_jakarta_sans_regular,
+        "press_start_2p" to R.font.press_start_2p_regular,
+        "quicksand" to R.font.quicksand_regular,
+        "rajdhani" to R.font.rajdhani_regular,
+        "righteous" to R.font.righteous_regular,
+        "roboto_mono" to R.font.roboto_mono_regular,
+        "rowdies" to R.font.rowdies_regular,
+        "russo_one" to R.font.russo_one_regular,
+        "shrikhand" to R.font.shrikhand_regular,
+        "silkscreen" to R.font.silkscreen_regular,
+        "source_code_pro" to R.font.source_code_pro_regular,
+        "staatliches" to R.font.staatliches_regular,
+        "teko" to R.font.teko_regular,
+        "titillium_web" to R.font.titillium_web_regular,
+        "varela_round" to R.font.varela_round_regular,
+        "yanone_kaffeesatz" to R.font.yanone_kaffeesatz_regular,
+        "zilla_slab" to R.font.zilla_slab_regular
+)
+
+private val ExpandedBundledFontFamilies: Map<String, FontFamily> by lazy {
+    ExpandedBundledFontResources.mapValues { (_, resourceId) ->
+        FontFamily(
+                Font(resourceId, FontWeight.Normal),
+                Font(resourceId, FontWeight.Bold)
+        )
+    }
 }
 
 /** System condensed sans — present on every device, so it costs no bundled asset. `by lazy`
@@ -273,28 +392,40 @@ private val modernSystemTypefaceNames = mapOf(
  * missing values fall back to Google Sans so old configs keep rendering unchanged. Keep the keys
  * in sync with the phone's `wear_font_values` array and `WatchPreviewView`'s typeface mapping.
  */
-fun watchFontFamily(key: String?): FontFamily = when (key) {
-    "roboto" -> FontFamily.Default
-    "google_sans_flex" -> GoogleSansFlexFamily
-    "typewriter" -> MomsTypewriterFamily
-    "love_letter" -> LoveLetterTypewriterFamily
-    "poppins" -> PoppinsFamily
-    "montserrat" -> MontserratFamily
-    "marcellus" -> MarcellusFamily
-    "bebas_neue" -> BebasNeueFamily
-    "playfair" -> PlayfairDisplayFamily
-    "space_grotesk" -> SpaceGroteskFamily
-    "orbitron" -> OrbitronFamily
-    "caveat" -> CaveatFamily
-    "serif" -> FontFamily.Serif
-    "monospace" -> FontFamily.Monospace
-    "cursive" -> FontFamily.Cursive
-    "condensed" -> CondensedFamily
-    else -> key
-            ?.takeIf(modernSystemTypefaceNames::containsKey)
-            ?.let { ModernSystemFamilies.getValue(it) }
-            ?: GoogleSansFamily
-}
+fun watchFontFamily(key: String?): FontFamily =
+        key?.let(ExpandedBundledFontFamilies::get) ?: when (key) {
+            "roboto" -> FontFamily.Default
+            "google_sans_flex" -> GoogleSansFlexFamily
+            "typewriter" -> MomsTypewriterFamily
+            // Keep the legacy key so saved preferences and imported themes continue to work.
+            "love_letter" -> SpecialEliteFamily
+            "poppins" -> PoppinsFamily
+            "montserrat" -> MontserratFamily
+            "marcellus" -> MarcellusFamily
+            "bebas_neue" -> BebasNeueFamily
+            "playfair" -> PlayfairDisplayFamily
+            "space_grotesk" -> SpaceGroteskFamily
+            "orbitron" -> OrbitronFamily
+            "caveat" -> CaveatFamily
+            "inter" -> InterFamily
+            "atkinson_hyperlegible" -> AtkinsonHyperlegibleFamily
+            "rubik" -> RubikFamily
+            "barlow_condensed" -> BarlowCondensedFamily
+            "oswald" -> OswaldFamily
+            "lora" -> LoraFamily
+            "fraunces" -> FrauncesFamily
+            "space_mono" -> SpaceMonoFamily
+            "archivo_black" -> ArchivoBlackFamily
+            "dancing_script" -> DancingScriptFamily
+            "serif" -> FontFamily.Serif
+            "monospace" -> FontFamily.Monospace
+            "cursive" -> FontFamily.Cursive
+            "condensed" -> CondensedFamily
+            else -> key
+                    ?.takeIf(modernSystemTypefaceNames::containsKey)
+                    ?.let { ModernSystemFamilies.getValue(it) }
+                    ?: GoogleSansFamily
+        }
 
 /**
  * The typeface every *non-player* watch surface draws with - the menu, the queue, the shared
@@ -328,29 +459,44 @@ fun watchUiFontFamily(preferences: SharedPreferences?): FontFamily {
 
 /** [watchFontFamily]'s [Typeface] counterpart for the View-based classic face - keep the key set
  *  and fallback identical to it so classic and Compose faces render the exact same choice. */
-fun watchFontTypeface(context: Context, key: String?): Typeface = when (key) {
-    "roboto" -> Typeface.DEFAULT
-    // The plain (non-variable) instance - callers that need per-element axis control use
-    // WatchTheme.flexTypeface instead, which every classic-face draw site already does
-    // (applyClassicFont / styledClassicTypeface in MainActivity).
-    "google_sans_flex" -> ResourcesCompat.getFont(context, R.font.google_sans_flex)
-    "typewriter" -> ResourcesCompat.getFont(context, R.font.moms_typewriter)
-    "love_letter" -> ResourcesCompat.getFont(context, R.font.love_letter_typewriter)
-    "poppins" -> ResourcesCompat.getFont(context, R.font.poppins_regular)
-    "montserrat" -> ResourcesCompat.getFont(context, R.font.montserrat_regular)
-    "marcellus" -> ResourcesCompat.getFont(context, R.font.marcellus_regular)
-    "bebas_neue" -> ResourcesCompat.getFont(context, R.font.bebas_neue_regular)
-    "playfair" -> ResourcesCompat.getFont(context, R.font.playfair_display_regular)
-    "space_grotesk" -> ResourcesCompat.getFont(context, R.font.space_grotesk_regular)
-    "orbitron" -> ResourcesCompat.getFont(context, R.font.orbitron_regular)
-    "caveat" -> ResourcesCompat.getFont(context, R.font.caveat_regular)
-    "serif" -> Typeface.SERIF
-    "monospace" -> Typeface.MONOSPACE
-    "cursive" -> Typeface.create("cursive", Typeface.NORMAL)
-    "condensed" -> Typeface.create("sans-serif-condensed", Typeface.NORMAL)
-    else -> key?.let(modernSystemTypefaceNames::get)?.let { Typeface.create(it, Typeface.NORMAL) }
-            ?: ResourcesCompat.getFont(context, R.font.google_sans_regular)
-} ?: Typeface.DEFAULT
+fun watchFontTypeface(context: Context, key: String?): Typeface =
+        key?.let(ExpandedBundledFontResources::get)
+                ?.let { ResourcesCompat.getFont(context, it) }
+                ?: when (key) {
+                    "roboto" -> Typeface.DEFAULT
+                    // The plain (non-variable) instance - callers that need per-element axis
+                    // control use WatchTheme.flexTypeface instead, which every classic-face draw
+                    // site already does (applyClassicFont / styledClassicTypeface in MainActivity).
+                    "google_sans_flex" -> ResourcesCompat.getFont(context, R.font.google_sans_flex)
+                    "typewriter" -> ResourcesCompat.getFont(context, R.font.moms_typewriter)
+                    // Keep the legacy key so saved preferences and imported themes continue to work.
+                    "love_letter" -> ResourcesCompat.getFont(context, R.font.special_elite_regular)
+                    "poppins" -> ResourcesCompat.getFont(context, R.font.poppins_regular)
+                    "montserrat" -> ResourcesCompat.getFont(context, R.font.montserrat_regular)
+                    "marcellus" -> ResourcesCompat.getFont(context, R.font.marcellus_regular)
+                    "bebas_neue" -> ResourcesCompat.getFont(context, R.font.bebas_neue_regular)
+                    "playfair" -> ResourcesCompat.getFont(context, R.font.playfair_display_regular)
+                    "space_grotesk" -> ResourcesCompat.getFont(context, R.font.space_grotesk_regular)
+                    "orbitron" -> ResourcesCompat.getFont(context, R.font.orbitron_regular)
+                    "caveat" -> ResourcesCompat.getFont(context, R.font.caveat_regular)
+                    "inter" -> ResourcesCompat.getFont(context, R.font.inter_regular)
+                    "atkinson_hyperlegible" -> ResourcesCompat.getFont(context, R.font.atkinson_hyperlegible_regular)
+                    "rubik" -> ResourcesCompat.getFont(context, R.font.rubik_regular)
+                    "barlow_condensed" -> ResourcesCompat.getFont(context, R.font.barlow_condensed_regular)
+                    "oswald" -> ResourcesCompat.getFont(context, R.font.oswald_regular)
+                    "lora" -> ResourcesCompat.getFont(context, R.font.lora_regular)
+                    "fraunces" -> ResourcesCompat.getFont(context, R.font.fraunces_regular)
+                    "space_mono" -> ResourcesCompat.getFont(context, R.font.space_mono_regular)
+                    "archivo_black" -> ResourcesCompat.getFont(context, R.font.archivo_black_regular)
+                    "dancing_script" -> ResourcesCompat.getFont(context, R.font.dancing_script_regular)
+                    "serif" -> Typeface.SERIF
+                    "monospace" -> Typeface.MONOSPACE
+                    "cursive" -> Typeface.create("cursive", Typeface.NORMAL)
+                    "condensed" -> Typeface.create("sans-serif-condensed", Typeface.NORMAL)
+                    else -> key?.let(modernSystemTypefaceNames::get)
+                            ?.let { Typeface.create(it, Typeface.NORMAL) }
+                            ?: ResourcesCompat.getFont(context, R.font.google_sans_regular)
+                } ?: Typeface.DEFAULT
 
 /** Cached copy of the bundled Flex font, extracted once per process. `Typeface.Builder` has no
  *  constructor for a `res/font` resource id directly (only `File`, `FileDescriptor`, an asset path,

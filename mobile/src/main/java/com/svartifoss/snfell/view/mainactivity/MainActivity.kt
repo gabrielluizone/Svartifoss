@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.music.QueueArtworkResolver
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.databinding.ActivityMainBinding
@@ -75,6 +76,13 @@ private const val SVARTIFOSS_RELEASES_URL = "https://github.com/gabrielluizone/S
 class MainActivity : WearCompanionPhoneActivity(),
         TitledActivity, ActivityResultReceiver, HasAndroidInjector {
 
+    private companion object {
+        /** Fallback refresh for a player that moves the active entry without publishing a new
+         *  PlaybackState. The controller callback normally beats this. */
+        const val QUEUE_SELECTION_SETTLE_MS = 300L
+    }
+
+
     private lateinit var binding: ActivityMainBinding
 
     private var currentFragment: Fragment? = null
@@ -94,7 +102,10 @@ class MainActivity : WearCompanionPhoneActivity(),
     private var detailArtist: TextView? = null
     private var detailPlayPause: ImageButton? = null
     private var detailAlbumArt: ImageView? = null
-    private var detailQueueContainer: LinearLayout? = null
+    private var detailQueueList: androidx.recyclerview.widget.RecyclerView? = null
+    private var detailQueueEmpty: TextView? = null
+    private var detailQueueHeader: TextView? = null
+    private var queueAdapter: QueueAdapter? = null
     private var isSeeking = false
     // Holds the currently extracted dynamic accent color (null = use default lyra_accent)
     private var dynamicAccentColor: Int? = null
@@ -163,8 +174,12 @@ class MainActivity : WearCompanionPhoneActivity(),
         // preference while a session is still active, and the Play FAB (which means "tap to
         // resume") must not appear in that case.
         val isFabFragment = currentFragment is FabFragment
+        // The Watch tab is excluded outright. Its whole surface is the live preview plus the
+        // appearance list, and a floating button parked over the bottom-right corner covers the
+        // controls being edited - on a tab where "resume playback" is not what the user came for.
+        val hidesPlayFab = isFabFragment || currentFragment is WatchFaceFragment
         binding.fabPlay.visibility =
-                if (miniPlayerController == null && !isFabFragment) View.VISIBLE else View.GONE
+                if (miniPlayerController == null && !hidesPlayFab) View.VISIBLE else View.GONE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -729,68 +744,63 @@ class MainActivity : WearCompanionPhoneActivity(),
         return String.format("%d:%02d", minutes, seconds)
     }
 
+    /**
+     * Feeds the queue sheet.
+     *
+     * Builds the whole row list and hands it to the adapter, which diffs it - so a refresh while
+     * the sheet is open (a track change, an accent change) redraws only what moved instead of
+     * tearing the list down and rebuilding every row, which is what the hand-inflated column had
+     * to do and what made a scroll position impossible to keep.
+     */
     private fun updateQueueList() {
-        val container = detailQueueContainer ?: return
-        container.removeAllViews()
-
+        val adapter = queueAdapter ?: return
+        val list = detailQueueList ?: return
         val queue = miniPlayerController?.queue
-        if (queue.isNullOrEmpty()) {
-            val noQueueTv = TextView(this).apply {
-                text = getString(R.string.queue_unavailable)
-                textSize = 14f
-                setTextColor(ContextCompat.getColor(this@MainActivity, R.color.lyra_text_secondary))
-                gravity = android.view.Gravity.CENTER
-                setPadding(0, 24, 0, 24)
-            }
-            container.addView(noQueueTv)
+
+        val empty = queue.isNullOrEmpty()
+        detailQueueEmpty?.visibility = if (empty) View.VISIBLE else View.GONE
+        list.visibility = if (empty) View.GONE else View.VISIBLE
+        detailQueueHeader?.text = if (empty) {
+            getString(R.string.queue_header)
+        } else {
+            // The count is the one thing the header can say that the list itself cannot: how much
+            // is below the fold.
+            resources.getQuantityString(
+                    R.plurals.queue_header_count, queue!!.size, queue.size)
+        }
+        if (empty) {
+            adapter.submitList(emptyList())
             return
         }
 
-        // Get currently active queue item id from playback state
         val activeQueueId = miniPlayerController?.playbackState?.activeQueueItemId ?: -1L
-        val accentColor = dynamicAccentColor ?: resolveDefaultAccent()
+        // Resolved once per rebuild rather than per row: the switch is one preference read, and a
+        // toggle landing mid-build would otherwise give a half-remote list.
+        adapter.setAllowRemoteArtwork(QueueArtworkResolver.remoteArtworkEnabled(this))
+        adapter.accentColor = dynamicAccentColor ?: resolveDefaultAccent()
 
-        val inflater = layoutInflater
-        for (item in queue) {
-            val itemView = inflater.inflate(R.layout.item_queue_song, container, false)
-            val titleTv = itemView.findViewById<TextView>(R.id.queue_item_title)
-            val artistTv = itemView.findViewById<TextView>(R.id.queue_item_artist)
-            val activeBar = itemView.findViewById<android.view.View>(R.id.queue_item_active_bar)
-            val playingIcon = itemView.findViewById<ImageView>(R.id.queue_item_playing_icon)
-
-            titleTv.text = item.description.title ?: "—"
-            artistTv.text = item.description.subtitle ?: ""
-
-            val isActive = item.queueId == activeQueueId
-            if (isActive) {
-                activeBar.visibility = android.view.View.VISIBLE
-                playingIcon.visibility = android.view.View.VISIBLE
-                titleTv.setTextColor(accentColor)
-                titleTv.typeface = android.graphics.Typeface.DEFAULT_BOLD
-                playingIcon.imageTintList = android.content.res.ColorStateList.valueOf(accentColor)
-                activeBar.backgroundTintList = android.content.res.ColorStateList.valueOf(accentColor)
-                
-                val activeBg = ContextCompat.getDrawable(this, R.drawable.queue_item_active_bg)?.mutate()
-                if (activeBg != null) {
-                    val alphaColor = androidx.core.graphics.ColorUtils.setAlphaComponent(accentColor, 38) // ~15% opacity
-                    DrawableCompat.setTint(activeBg, alphaColor)
-                    itemView.background = activeBg
-                }
-            } else {
-                activeBar.visibility = android.view.View.INVISIBLE
-                playingIcon.visibility = android.view.View.GONE
-                itemView.background = ContextCompat.getDrawable(this, android.R.color.transparent)
-                titleTv.setTextColor(ContextCompat.getColor(this, R.color.lyra_on_surface))
-                titleTv.typeface = android.graphics.Typeface.DEFAULT
+        val activeIndex = queue.indexOfFirst { it.queueId == activeQueueId }
+        val rows = queue.mapIndexed { index, item ->
+            QueueAdapter.Row(
+                    item = item,
+                    position = index + 1,
+                    isPlaying = item.queueId == activeQueueId,
+                    // Only dim when the playing entry is actually known: with no active id every
+                    // row would compare as "past" and the whole list would fade out.
+                    isPast = activeIndex >= 0 && index < activeIndex)
+        }
+        val hadRows = adapter.itemCount > 0
+        adapter.submitList(rows) {
+            // Open on the track being played rather than at the top, the way the watch queue does
+            // - on anything longer than a screenful the playing entry is otherwise below the fold.
+            // Only on the first fill, so a later refresh cannot yank a scrolled list back.
+            if (!hadRows && activeIndex > 0) {
+                // The row *before* the playing one goes to the top, so there is a line of context
+                // above it rather than the playing track pinned flush against the edge. Expressed
+                // as a position rather than a pixel offset, which would have to track row height.
+                (list.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)
+                        ?.scrollToPositionWithOffset(activeIndex - 1, 0)
             }
-
-            itemView.setOnClickListener {
-                miniPlayerController?.transportControls?.skipToQueueItem(item.queueId)
-                // Refresh highlights after skip
-                progressHandler.postDelayed({ updateQueueList() }, 300)
-            }
-
-            container.addView(itemView)
         }
     }
 
@@ -815,7 +825,23 @@ class MainActivity : WearCompanionPhoneActivity(),
         detailTimeElapsed = dialogView.findViewById(R.id.detail_time_elapsed)
         detailTimeTotal = dialogView.findViewById(R.id.detail_time_total)
         detailPlayPause = dialogView.findViewById(R.id.detail_play_pause)
-        detailQueueContainer = dialogView.findViewById(R.id.detail_queue_container)
+        detailQueueList = dialogView.findViewById(R.id.detail_queue_list)
+        detailQueueEmpty = dialogView.findViewById(R.id.detail_queue_empty)
+        detailQueueHeader = dialogView.findViewById(R.id.queue_header)
+        val adapter = QueueAdapter(lifecycleScope) { item ->
+            miniPlayerController?.transportControls?.skipToQueueItem(item.queueId)
+            // The controller reports the move through onPlaybackStateChanged, which already
+            // refreshes this list; the delayed pass is the fallback for a player that changes the
+            // active item without publishing a new state.
+            progressHandler.postDelayed({ updateQueueList() }, QUEUE_SELECTION_SETTLE_MS)
+        }
+        queueAdapter = adapter
+        detailQueueList?.layoutManager =
+                androidx.recyclerview.widget.LinearLayoutManager(this)
+        detailQueueList?.adapter = adapter
+        // Nothing in this list animates on its own; the default change animation made a row blink
+        // white every time the playing entry moved.
+        detailQueueList?.itemAnimator = null
 
         detailTitle?.isSelected = true
         detailArtist?.isSelected = true
@@ -867,7 +893,11 @@ class MainActivity : WearCompanionPhoneActivity(),
             detailTimeElapsed = null
             detailTimeTotal = null
             detailPlayPause = null
-            detailQueueContainer = null
+            detailQueueList?.adapter = null
+            detailQueueList = null
+            detailQueueEmpty = null
+            detailQueueHeader = null
+            queueAdapter = null
         }
 
         // Show first so views are attached to the window
@@ -1093,6 +1123,12 @@ class MainActivity : WearCompanionPhoneActivity(),
     }
 
     private fun applyAccentColorToViewTree(view: View, color: Int) {
+        // Complex controls with stateful foreground/background pairs must recolor themselves as a
+        // unit. Traversing their children would flatten those state lists to one accent color and
+        // can produce accent text on an accent fill (the compact Watch Text editor is one such
+        // surface). The owning view refreshes itself whenever the runtime accent changes.
+        if (view.getTag(R.id.tag_handles_accent_locally) == true) return
+
         if (view is TabLayout) {
             view.setSelectedTabIndicatorColor(color)
             val inactive = ContextCompat.getColor(this, R.color.lyra_text_secondary)

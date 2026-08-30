@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.RoundScreenText
+import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.TrackMetadataFields.Group
 import com.svartifoss.snfell.proto.TrackMetadata
@@ -57,13 +58,13 @@ private const val TABLE_BOTTOM = 0.82f
  * Derived from the actual height instead of a constant, because a fixed count is either wasteful on
  * a 45mm watch or overflowing on a 40mm one, and there is no single number that is right for both.
  */
-private val ROW_HEIGHT = 13.dp
+private val ROW_HEIGHT = FaceGeometry.Metadata.ROW_HEIGHT_DP.dp
 
 /** Share of the screen the table may occupy, once the identity block above it has had its own. */
-private const val TABLE_HEIGHT_FRACTION = 0.42f
+private const val TABLE_HEIGHT_FRACTION = FaceGeometry.Metadata.TABLE_HEIGHT_FRACTION
 
-private const val MIN_ROWS = 4
-private const val MAX_ROWS = 12
+private const val MIN_ROWS = FaceGeometry.Metadata.MIN_ROWS
+private const val MAX_ROWS = FaceGeometry.Metadata.MAX_ROWS
 
 private const val LABEL_ALPHA = 0.52f
 private const val VALUE_ALPHA = 0.92f
@@ -176,15 +177,14 @@ private fun Identity(state: NowPlayingFaceState, screen: Dp) {
                 modifier = Modifier.fillMaxWidth())
     }
     if (state.showArtist && state.artist.isNotBlank()) {
-        Text(
+        // The shared helper rather than a bare Text: this line already picked up the artist's
+        // family, weight and slant by hand and so looked wired up, while the size, tracking and
+        // opacity controls sitting beside them in the Text tab did nothing here at all.
+        ArtistLineText(
                 text = state.artist,
+                state = state,
                 color = Color(state.artistColor),
-                fontFamily = state.artistFont,
-                fontWeight = state.artistFontWeight,
-                fontStyle = state.artistFontStyle,
                 fontSize = 11.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth())
     }

@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.watchface.theme
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.content.res.Configuration
@@ -33,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.svartifoss.snfell.BuildConfig
@@ -102,6 +104,18 @@ class OnlineThemesActivity : AppCompatActivity() {
     private lateinit var clearFiltersChip: Chip
     private lateinit var galleryList: RecyclerView
     private lateinit var refreshButton: ImageButton
+    private lateinit var submitFab: FloatingActionButton
+
+    /**
+     * Profile ids still to be submitted from one picker run, and how many that run started with.
+     *
+     * The submission screen owns one theme at a time (it asks for a public name and a pseudonym
+     * per theme), so a multi-selection is served by opening it once per pick. Both survive
+     * [onSaveInstanceState] because the submission flow includes Google sign-in, which can take
+     * this Activity down with it.
+     */
+    private val submissionQueue = ArrayDeque<String>()
+    private var submissionRunSize = 0
 
     private var catalogJob: Job? = null
     private var searchJob: Job? = null
@@ -173,6 +187,20 @@ class OnlineThemesActivity : AppCompatActivity() {
         }
     }
 
+    private val submitLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            startNextQueuedSubmission()
+        } else {
+            // Backing out of one form ends the whole run. The remaining picks were chosen in the
+            // same gesture, so pushing the next form at someone who just declined this one reads
+            // as the app refusing to let go rather than as the queue it is.
+            submissionQueue.clear()
+            submissionRunSize = 0
+        }
+        updateSubmitControl()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_theme_gallery)
@@ -187,6 +215,8 @@ class OnlineThemesActivity : AppCompatActivity() {
         likedThemeIds = savedInstanceState?.getStringArrayList(STATE_LIKED_IDS)
                 ?.toSet()
                 .orEmpty()
+        savedInstanceState?.getStringArrayList(STATE_SUBMISSION_QUEUE)?.let(submissionQueue::addAll)
+        submissionRunSize = savedInstanceState?.getInt(STATE_SUBMISSION_RUN_SIZE) ?: 0
         discoveryRequest = OnlineThemeDiscoveryRequest(
                 query = savedInstanceState?.getString(STATE_QUERY).orEmpty(),
                 baseFace = savedInstanceState?.getString(STATE_BASE_FACE)
@@ -214,6 +244,10 @@ class OnlineThemesActivity : AppCompatActivity() {
         clearFiltersChip = findViewById(R.id.community_gallery_clear_filters)
         galleryList = findViewById(R.id.community_gallery_list)
         refreshButton = findViewById(R.id.community_gallery_refresh)
+        submitFab = findViewById(R.id.community_gallery_submit)
+        findViewById<ImageButton>(R.id.community_gallery_submissions).setOnClickListener {
+            startActivity(Intent(this, CommunityThemeSubmissionsActivity::class.java))
+        }
         ViewCompat.setAccessibilityHeading(
                 findViewById(R.id.community_gallery_title),
                 true)
@@ -245,6 +279,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         }
 
         findViewById<ImageButton>(R.id.community_gallery_back).setOnClickListener { finish() }
+        submitFab.setOnClickListener { showSubmissionPicker() }
         refreshButton.setOnClickListener { loadCatalog(true) }
         retryButton.setOnClickListener { loadCatalog(true) }
         stateClearButton.setOnClickListener { clearDiscoveryControls() }
@@ -292,6 +327,9 @@ class OnlineThemesActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         applyRuntimeAccent()
+        // My themes is reachable from the same tab, so the local library can gain or lose an
+        // eligible theme while this screen sits in the background.
+        updateSubmitControl()
     }
 
     override fun onStop() {
@@ -312,6 +350,8 @@ class OnlineThemesActivity : AppCompatActivity() {
         outState.putBundle(STATE_LIKE_DELTAS, Bundle().apply {
             likeDeltas.forEach { (id, delta) -> putInt(id, delta) }
         })
+        outState.putStringArrayList(STATE_SUBMISSION_QUEUE, ArrayList(submissionQueue))
+        outState.putInt(STATE_SUBMISSION_RUN_SIZE, submissionRunSize)
         super.onSaveInstanceState(outState)
     }
 
@@ -456,6 +496,128 @@ class OnlineThemesActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    /**
+     * The saved themes this phone may offer for review.
+     *
+     * A gallery install keeps its [PublishedThemeSource], which is exactly what stops it being
+     * re-submitted as an original - the rule My themes already applies to its own overflow menu.
+     * Duplicating such a theme clears that provenance, so a deliberate fork stays submittable.
+     */
+    private fun submittableThemes(): List<WatchThemeProfile> =
+            themeRepository.load().filter { it.publishedTheme == null }
+
+    /**
+     * Offered only when there is something to offer. A picker that can only report having nothing
+     * in it is a button whose entire answer is that it should not have been shown.
+     */
+    private fun updateSubmitControl() {
+        if (!::submitFab.isInitialized) return
+        submitFab.isVisible = submittableThemes().isNotEmpty()
+    }
+
+    private fun showSubmissionPicker() {
+        // Capture pending edits first. The Watch editor writes into the custom_active scope, and
+        // the submission boundary re-reads each profile from the local library by id.
+        themeRepository.captureActive(defaultPrefs)
+        val themes = submittableThemes()
+        if (themes.isEmpty()) {
+            updateSubmitControl()
+            showSubmissionMessage(
+                    R.string.community_theme_submit_picker_empty_title,
+                    R.string.community_theme_submit_picker_empty_message)
+            return
+        }
+
+        val labels = themes.map { it.name }.toTypedArray()
+        val selection = sortedSetOf<Int>()
+        // Deliberately no setMessage. AlertController swaps the choice list into the content
+        // panel only on the branch where there is no message, so a dialog given both shows the
+        // message and no list at all. The cap goes in the title and in the refusal toast.
+        val dialog = AlertDialog.Builder(this)
+                .setTitle(getString(
+                        R.string.community_theme_submit_picker_title,
+                        COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW))
+                .setMultiChoiceItems(labels, null) { shown, index, isChecked ->
+                    val chooser = shown as AlertDialog
+                    if (isChecked && selection.size >= COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW) {
+                        // Refused here rather than accepted and rejected at the write, which would
+                        // only happen after the last form had already been filled in.
+                        chooser.listView.setItemChecked(index, false)
+                        Toast.makeText(
+                                this,
+                                getString(
+                                        R.string.community_theme_submit_picker_limit,
+                                        COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW),
+                                Toast.LENGTH_SHORT).show()
+                    } else if (isChecked) {
+                        selection += index
+                    } else {
+                        selection -= index
+                    }
+                    chooser.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled =
+                            selection.isNotEmpty()
+                }
+                .setPositiveButton(R.string.community_theme_submit_picker_confirm) { _, _ ->
+                    startSubmissionRun(selection.map { themes[it].id })
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .create()
+        dialog.setOnShowListener {
+            dialog.applyLyraDialogStyling(accent = LyraAccent.resolve(this))
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+        }
+        dialog.show()
+    }
+
+    private fun showSubmissionMessage(titleRes: Int, messageRes: Int) {
+        val dialog = AlertDialog.Builder(this)
+                .setTitle(titleRes)
+                .setMessage(messageRes)
+                .setPositiveButton(android.R.string.ok, null)
+                .create()
+        dialog.setOnShowListener {
+            dialog.applyLyraDialogStyling(accent = LyraAccent.resolve(this))
+        }
+        dialog.show()
+    }
+
+    private fun startSubmissionRun(profileIds: List<String>) {
+        submissionQueue.clear()
+        submissionQueue.addAll(profileIds)
+        submissionRunSize = profileIds.size
+        startNextQueuedSubmission()
+    }
+
+    /**
+     * Opens the submission screen for the next pick, or ends the run when the queue is empty.
+     *
+     * The position counter is the only thing telling the user that a second form is coming, so it
+     * is shown for every theme of a multi-theme run - including the first.
+     */
+    private fun startNextQueuedSubmission() {
+        val nextId = submissionQueue.removeFirstOrNull()
+        if (nextId == null) {
+            submissionRunSize = 0
+            return
+        }
+        if (submissionRunSize > 1) {
+            val name = themeRepository.load()
+                    .firstOrNull { it.id == nextId }
+                    ?.name
+                    .orEmpty()
+            Toast.makeText(
+                    this,
+                    getString(
+                            R.string.community_theme_submit_picker_next,
+                            submissionRunSize - submissionQueue.size,
+                            submissionRunSize,
+                            name),
+                    Toast.LENGTH_SHORT).show()
+        }
+        submitLauncher.launch(Intent(this, SubmitCommunityThemeActivity::class.java)
+                .putExtra(SubmitCommunityThemeActivity.EXTRA_PROFILE_ID, nextId))
+    }
+
     private fun styleFilterChip(chip: Chip, selected: Boolean) {
         val accent = LyraAccent.resolve(this)
         val surface = getColor(R.color.lyra_surface)
@@ -553,6 +715,8 @@ class OnlineThemesActivity : AppCompatActivity() {
         retryButton.iconTint = ColorStateList.valueOf(onAccent)
         retryButton.setTextColor(onAccent)
         stateClearButton.setTextColor(accentTextOnBackground)
+        submitFab.backgroundTintList = ColorStateList.valueOf(accent)
+        submitFab.imageTintList = ColorStateList.valueOf(onAccent)
         if (refreshCards) adapter.refreshAccent()
     }
 
@@ -1292,6 +1456,8 @@ class OnlineThemesActivity : AppCompatActivity() {
         const val STATE_LIKED_ONLY = "online_themes.liked_only"
         const val STATE_LIKED_IDS = "online_themes.liked_ids"
         const val STATE_LIKE_DELTAS = "online_themes.like_deltas"
+        const val STATE_SUBMISSION_QUEUE = "online_themes.submission_queue"
+        const val STATE_SUBMISSION_RUN_SIZE = "online_themes.submission_run_size"
         const val SEARCH_DEBOUNCE_MS = 120L
     }
 }

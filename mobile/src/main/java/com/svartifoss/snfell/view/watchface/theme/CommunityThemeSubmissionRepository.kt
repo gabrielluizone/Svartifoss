@@ -9,6 +9,7 @@ import com.svartifoss.snfell.common.CommunityThemeSettingValue
 import com.svartifoss.snfell.common.CommunityThemeSettings
 import com.svartifoss.snfell.common.CommunityThemeSubmissionPolicy
 import com.svartifoss.snfell.common.CommunityThemeSubmissionResult
+import com.svartifoss.snfell.common.CommunityThemeSubmissionRejection
 import com.svartifoss.snfell.common.CommunityThemeSubmissionRules
 import com.svartifoss.snfell.common.ArchivedFaces
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -24,6 +25,13 @@ import kotlinx.coroutines.tasks.await
 const val COMMUNITY_THEME_MINIMUM_CHANGED_SETTINGS = 12
 const val COMMUNITY_THEME_SUBMISSION_WINDOW_MILLIS = 24L * 60L * 60L * 1_000L
 
+/**
+ * How many submissions the rolling window allows. Firestore Rules remain the authority; this is
+ * the same number named once so the gallery's picker cannot offer more themes than the quota
+ * would accept and leave the last pick failing at the write.
+ */
+const val COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW = 3
+
 sealed interface CommunityThemeSubmissionPreflight {
     data class Ready(
             val draft: CommunityThemeSubmissionDraft,
@@ -35,6 +43,15 @@ sealed interface CommunityThemeSubmissionPreflight {
             val changedSettings: Int,
             val minimumRequired: Int
     ) : CommunityThemeSubmissionPreflight
+
+    /**
+     * These exact settings are already published on this base face.
+     *
+     * Refused here so a person learns it before being asked to sign in. The trusted publisher
+     * applies the same rule and stays the boundary: this check reads the catalogue the phone has
+     * already downloaded, so it is silent about a duplicate the device has never seen.
+     */
+    object ExactDuplicate : CommunityThemeSubmissionPreflight
 
     object InvalidDraft : CommunityThemeSubmissionPreflight
 }
@@ -50,6 +67,12 @@ sealed interface CommunityThemeQueueResult {
     /** The current server-authored v2 quota already has three submissions in its rolling window. */
     object SubmissionLimitReached : CommunityThemeQueueResult
     object NotAuthenticated : CommunityThemeQueueResult
+    /** These exact settings are already published on this base face. */
+    object ExactDuplicate : CommunityThemeQueueResult
+    /** Another account already owns the case-insensitive canonical form of this name. */
+    object AuthorNameUnavailable : CommunityThemeQueueResult
+    /** This account already owns a different immutable public author identity. */
+    data class AuthorNameLocked(val authorName: String) : CommunityThemeQueueResult
     object InvalidRequest : CommunityThemeQueueResult
     data class Failed(val error: Throwable) : CommunityThemeQueueResult
 }
@@ -66,7 +89,7 @@ internal fun isRollingSubmissionLimitReached(
         recentSubmissionFirstAtMillis: Long?,
         nowMillis: Long
 ): Boolean = quotaSchemaVersion == 2L &&
-        recentSubmissionCount == 3 &&
+        recentSubmissionCount == COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW &&
         recentSubmissionFirstAtMillis != null &&
         nowMillis < recentSubmissionFirstAtMillis + COMMUNITY_THEME_SUBMISSION_WINDOW_MILLIS
 
@@ -75,7 +98,8 @@ internal object CommunityThemeSubmissionPreflightEvaluator {
 
     fun evaluate(
             draft: CommunityThemeSubmissionDraft,
-            constraints: CommunityThemeConstraints?
+            constraints: CommunityThemeConstraints?,
+            publishedSettingsDigests: Set<String> = emptySet()
     ): CommunityThemeSubmissionPreflight {
         constraints ?: return CommunityThemeSubmissionPreflight.InvalidDraft
         if (draft.baseFace !in ThemeAppearance.ALLOWED_BASE_FACES ||
@@ -102,7 +126,9 @@ internal object CommunityThemeSubmissionPreflightEvaluator {
                 // The shared policy remains the canonical full-map validator and digest writer.
                 // Applicability is intentionally a higher-level UI/publisher rule: filtering the
                 // map before passing it here would change the public SHA-256 fingerprint.
-                CommunityThemeSubmissionRules(minimumChangedSettings = 0))) {
+                CommunityThemeSubmissionRules(
+                        minimumChangedSettings = 0,
+                        publishedSettingsDigests = publishedSettingsDigests))) {
             is CommunityThemeSubmissionResult.Accepted -> {
                 val changedSettings = result.normalizedSettings.values.count { (key, value) ->
                     value != defaults.getValue(key) && constraints.isOriginalityApplicable(
@@ -121,9 +147,15 @@ internal object CommunityThemeSubmissionPreflightEvaluator {
                             minimumRequired = COMMUNITY_THEME_MINIMUM_CHANGED_SETTINGS)
                 }
             }
-            // With a zero floor and no client-side duplicate index this is defensive only. Do not
-            // turn an unexpected policy state into a publishable Firebase request.
-            is CommunityThemeSubmissionResult.Rejected -> CommunityThemeSubmissionPreflight.InvalidDraft
+            // With a zero originality floor, the only reason the shared policy can reject here is
+            // an exact duplicate. Anything else is an unexpected state and must not become a
+            // publishable Firebase request.
+            is CommunityThemeSubmissionResult.Rejected ->
+                if (result.reasons.any { it is CommunityThemeSubmissionRejection.ExactDuplicate }) {
+                    CommunityThemeSubmissionPreflight.ExactDuplicate
+                } else {
+                    CommunityThemeSubmissionPreflight.InvalidDraft
+                }
             is CommunityThemeSubmissionResult.InvalidSettings ->
                 CommunityThemeSubmissionPreflight.InvalidDraft
         }
@@ -171,9 +203,25 @@ class CommunityThemeSubmissionRepository(
     private val constraints: CommunityThemeConstraints? by lazy {
         CommunityThemeConstraints.load(appContext)
     }
+    private val onlineThemes: OnlineThemesRepository by lazy { OnlineThemesRepository(appContext) }
 
+    /** The cheap, offline gates: schema, base face and originality. No duplicate check. */
     fun preflight(draft: CommunityThemeSubmissionDraft): CommunityThemeSubmissionPreflight =
             CommunityThemeSubmissionPreflightEvaluator.evaluate(draft, constraints)
+
+    /**
+     * [preflight] plus the exact-duplicate check against the published catalogue.
+     *
+     * Deliberately **fails open**: a catalogue this device cannot reach yields nothing to compare
+     * against, and a submission is not blocked because the network was down. The publisher
+     * re-applies the rule from the authoritative side and rejects a duplicate that slips past.
+     */
+    suspend fun preflightAgainstPublished(
+            draft: CommunityThemeSubmissionDraft
+    ): CommunityThemeSubmissionPreflight = CommunityThemeSubmissionPreflightEvaluator.evaluate(
+            draft,
+            constraints,
+            onlineThemes.publishedSettingsDigests())
 
     /** Presents Credential Manager only after an explicit submission action. */
     suspend fun signInWithGoogle(activity: android.app.Activity): CommunityThemeGoogleSignInResult =
@@ -181,18 +229,23 @@ class CommunityThemeSubmissionRepository(
 
     /**
      * Sends one strict, immutable queue document. It never trusts an email/display name from the
-     * Google account; Firestore receives only the Firebase UID and the author pseudonym explicitly
-     * entered by the person submitting the theme.
+     * Google account. The first submission atomically reserves one globally unique author name for
+     * that UID; later submissions can use only that identity (or hide its credit as Anonymous).
      */
     suspend fun enqueue(
             preflight: CommunityThemeSubmissionPreflight.Ready,
             rawAuthor: String,
+            publishAnonymously: Boolean,
             moderationPreviewWebpBase64: String
     ): CommunityThemeQueueResult {
-        val author = normalizePublicText(rawAuthor) ?: return CommunityThemeQueueResult.InvalidRequest
         val draft = preflight.draft
-        val verifiedPreflight = this.preflight(draft) as? CommunityThemeSubmissionPreflight.Ready
-                ?: return CommunityThemeQueueResult.InvalidRequest
+        val verifiedPreflight = this.preflightAgainstPublished(draft)
+        if (verifiedPreflight is CommunityThemeSubmissionPreflight.ExactDuplicate) {
+            return CommunityThemeQueueResult.ExactDuplicate
+        }
+        if (verifiedPreflight !is CommunityThemeSubmissionPreflight.Ready) {
+            return CommunityThemeQueueResult.InvalidRequest
+        }
         if (verifiedPreflight.changedSettings != preflight.changedSettings ||
                 verifiedPreflight.settingsDigest != preflight.settingsDigest) {
             return CommunityThemeQueueResult.InvalidRequest
@@ -205,24 +258,45 @@ class CommunityThemeSubmissionRepository(
             return CommunityThemeQueueResult.InvalidRequest
         }
         val user = auth.currentUser ?: return CommunityThemeQueueResult.NotAuthenticated
-        val document = hashMapOf<String, Any>(
-                "ownerUid" to user.uid,
-                "status" to "pending",
-                "submissionSchemaVersion" to SUBMISSION_SCHEMA_VERSION,
-                "name" to draft.name,
-                "author" to author,
-                "baseFace" to draft.baseFace,
-                "profileSchemaVersion" to WatchThemeRepository.LIBRARY_SCHEMA,
-                "revision" to 1,
-                "profileJson" to draft.serializedProfile,
-                "settingsDigest" to preflight.settingsDigest,
-                "moderationPreviewWebpBase64" to moderationPreviewWebpBase64,
-                "clientVersion" to BuildConfig.VERSION_NAME,
-                "createdAt" to FieldValue.serverTimestamp())
+        val requestedIdentity = CommunityThemeAuthorNames.identity(user.uid, rawAuthor)
+                ?: return CommunityThemeQueueResult.InvalidRequest
         return try {
             val intakeDocument = firestore.collection(INTAKE_COLLECTION).document(draft.id)
             val quotaDocument = firestore.collection(SUBMISSION_QUOTA_COLLECTION).document(user.uid)
+            val accountDocument = firestore.collection(AUTHOR_ACCOUNT_COLLECTION).document(user.uid)
             firestore.runTransaction { transaction ->
+                /*
+                 * Account and reservation are a reciprocal pair. Reading both before any write
+                 * makes the first claim race-safe across devices and accounts: Firestore retries
+                 * the loser against the winner's committed reservation.
+                 */
+                val accountSnapshot = transaction.get(accountDocument)
+                val existingIdentity = if (accountSnapshot.exists()) {
+                    CommunityThemeAuthorNames.parse(user.uid, accountSnapshot.data)
+                            ?: return@runTransaction CommunityThemeQueueResult.InvalidRequest
+                } else {
+                    null
+                }
+                if (existingIdentity != null &&
+                        existingIdentity.authorKey != requestedIdentity.authorKey) {
+                    return@runTransaction CommunityThemeQueueResult.AuthorNameLocked(
+                            existingIdentity.authorName)
+                }
+                val identity = existingIdentity ?: requestedIdentity
+                val authorNameDocument = firestore.collection(AUTHOR_NAME_COLLECTION)
+                        .document(identity.authorKey)
+                val authorNameSnapshot = transaction.get(authorNameDocument)
+                if (existingIdentity == null && authorNameSnapshot.exists()) {
+                    return@runTransaction CommunityThemeQueueResult.AuthorNameUnavailable
+                }
+                if (existingIdentity != null &&
+                        (!authorNameSnapshot.exists() ||
+                                !CommunityThemeAuthorNames.claimMatches(
+                                        identity,
+                                        authorNameSnapshot.data))) {
+                    return@runTransaction CommunityThemeQueueResult.InvalidRequest
+                }
+
                 // The quota document is readable only by its owner. Firestore rules require this
                 // write and the new intake document to appear in the same atomic transaction.
                 // A modified client cannot skip it or reset the rolling history between
@@ -278,10 +352,41 @@ class CommunityThemeSubmissionRepository(
                         quota["recentSubmissionFirstAt"] = FieldValue.serverTimestamp()
                     }
                 }
+                if (existingIdentity == null) {
+                    transaction.set(accountDocument, hashMapOf<String, Any>(
+                            "ownerUid" to user.uid,
+                            "accountSchemaVersion" to CommunityThemeAuthorNames.ACCOUNT_SCHEMA_VERSION,
+                            "authorName" to identity.authorName,
+                            "authorKey" to identity.authorKey,
+                            "createdAt" to FieldValue.serverTimestamp()))
+                    transaction.set(authorNameDocument, hashMapOf<String, Any>(
+                            "ownerUid" to user.uid,
+                            "nameSchemaVersion" to CommunityThemeAuthorNames.NAME_SCHEMA_VERSION,
+                            "authorName" to identity.authorName,
+                            "authorKey" to identity.authorKey,
+                            "createdAt" to FieldValue.serverTimestamp()))
+                }
                 transaction.set(quotaDocument, quota)
                 // `set` is allowed only for a create by the rules. A UUID collision therefore
                 // fails safely instead of overwriting an intake document.
-                transaction.set(intakeDocument, document)
+                transaction.set(intakeDocument, hashMapOf<String, Any>(
+                        "ownerUid" to user.uid,
+                        "status" to "pending",
+                        "submissionSchemaVersion" to SUBMISSION_SCHEMA_VERSION,
+                        "name" to draft.name,
+                        "author" to if (publishAnonymously) {
+                            CommunityThemeAuthorNames.ANONYMOUS_CREDIT
+                        } else {
+                            identity.authorName
+                        },
+                        "baseFace" to draft.baseFace,
+                        "profileSchemaVersion" to WatchThemeRepository.LIBRARY_SCHEMA,
+                        "revision" to 1,
+                        "profileJson" to draft.serializedProfile,
+                        "settingsDigest" to preflight.settingsDigest,
+                        "moderationPreviewWebpBase64" to moderationPreviewWebpBase64,
+                        "clientVersion" to BuildConfig.VERSION_NAME,
+                        "createdAt" to FieldValue.serverTimestamp()))
                 CommunityThemeQueueResult.Queued
             }.await()
         } catch (error: CancellationException) {
@@ -291,27 +396,19 @@ class CommunityThemeSubmissionRepository(
         }
     }
 
-    private fun normalizePublicText(raw: String): String? {
-        val normalized = raw.trim().replace(WHITESPACE, " ")
-        return normalized.takeIf {
-            it.isNotBlank() &&
-                    it.length <= MAX_PUBLIC_TEXT_LENGTH &&
-                    it.none(Character::isISOControl)
-        }
-    }
-
     /** Mirrors the UUIDv4-only Firestore document-id contract. */
     private fun isCanonicalUuid(raw: String): Boolean = UUID_V4.matches(raw)
 
     private companion object {
         const val INTAKE_COLLECTION = "themeIntake"
         const val SUBMISSION_QUOTA_COLLECTION = "communityThemeSubmissionQuota"
-        const val SUBMISSION_SCHEMA_VERSION = 1
+        const val AUTHOR_ACCOUNT_COLLECTION = "communityThemeAccounts"
+        const val AUTHOR_NAME_COLLECTION = "communityThemeAuthorNames"
+        const val SUBMISSION_SCHEMA_VERSION = 2
         const val SUBMISSION_QUOTA_SCHEMA_VERSION = 2
         const val MAX_PUBLIC_TEXT_LENGTH = 48
         const val MAX_PROFILE_JSON_LENGTH = 24 * 1024
         const val MAX_PREVIEW_BASE64_LENGTH = 64 * 1024
-        val WHITESPACE = Regex("\\s+")
         val BASE64 = Regex("^[A-Za-z0-9+/]+={0,2}$")
         val UUID_V4 = Regex(
                 "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")

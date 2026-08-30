@@ -77,4 +77,6 @@
     <string name="watch_theme_face_note">โน้ต</string>
     <string name="watch_theme_face_verse">ท่อนเพลง</string>
     <string name="watch_theme_face_metadata">ข้อมูลเมตา</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

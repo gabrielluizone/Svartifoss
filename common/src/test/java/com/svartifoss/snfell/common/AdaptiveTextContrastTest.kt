@@ -2,6 +2,7 @@ package com.svartifoss.snfell.common
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -103,9 +104,95 @@ class AdaptiveTextContrastTest {
         assertFalse(AdaptiveTextContrast.prefersDarkText(0xFF0000FF.toInt()))
     }
 
+    /**
+     * The regression the pivot was moved for: `WatchTheme.accentForSurface` produces filled pills
+     * in an HSL lightness band, and a saturated blue or purple lands there *looking* light while
+     * measuring well under the old 0.34. Those are the fills Frame's artist chip is made of.
+     */
+    @Test
+    fun `a light but low-luminance fill takes dark text`() {
+        assertTrue(AdaptiveTextContrast.prefersDarkText(0xFF7A7ADB.toInt()))
+        assertTrue(AdaptiveTextContrast.prefersDarkText(0xFFCF6F8F.toInt()))
+    }
+
+    /** Solved, not tuned: black and white contrast are equal here, so the constant is checkable. */
+    @Test
+    fun `the pivot is the luminance where black and white contrast are equal`() {
+        val pivot = AdaptiveTextContrast.DARK_TEXT_LUMINANCE_PIVOT
+        val againstWhite = 1.05f / (pivot + 0.05f)
+        val againstBlack = (pivot + 0.05f) / 0.05f
+        assertEquals(againstWhite, againstBlack, 1e-3f)
+    }
+
     @Test
     fun `luminance stays within range for the extremes`() {
         assertEquals(0f, AdaptiveTextContrast.relativeLuminance(0xFF000000.toInt()), 1e-4f)
         assertEquals(1f, AdaptiveTextContrast.relativeLuminance(0xFFFFFFFF.toInt()), 1e-4f)
+    }
+
+    /**
+     * The bug: Frame defaults to the `HIDDEN` backdrop, so the clock sits on black - and the
+     * correction measured the *cover* instead, decided a bright album meant "darken the text", and
+     * produced a near-black clock on a black screen. Both artwork-hiding styles must answer for
+     * the field they actually paint.
+     */
+    @Test
+    fun `a backdrop that hides the artwork is measured as black, not as the cover`() {
+        listOf(PlayerBackgroundStyle.HIDDEN, PlayerBackgroundStyle.ECLIPSE).forEach { style ->
+            assertEquals(
+                    style.name,
+                    AdaptiveTextContrast.HIDDEN_BACKDROP_LUMINANCE,
+                    AdaptiveTextContrast.backdropLuminance(style) { 0.82f }!!,
+                    1e-6f)
+        }
+    }
+
+    /** Nothing to sample there, so the pixel reads must not happen at all. */
+    @Test
+    fun `a hidden backdrop never samples the artwork`() {
+        var sampled = false
+        AdaptiveTextContrast.backdropLuminance(PlayerBackgroundStyle.HIDDEN) {
+            sampled = true
+            0.82f
+        }
+        assertFalse(sampled)
+    }
+
+    /** Every treatment that puts artwork on screen still answers from the artwork. */
+    @Test
+    fun `an artwork treatment reports the measured band`() {
+        listOf(
+                PlayerBackgroundStyle.COVER,
+                PlayerBackgroundStyle.BLUR,
+                PlayerBackgroundStyle.SQUARE_SHARP,
+                PlayerBackgroundStyle.EXPRESSIVE,
+                PlayerBackgroundStyle.POSTER
+        ).forEach { style ->
+            assertEquals(
+                    style.name,
+                    0.82f,
+                    AdaptiveTextContrast.backdropLuminance(style) { 0.82f }!!,
+                    1e-6f)
+        }
+        assertNull(AdaptiveTextContrast.backdropLuminance(PlayerBackgroundStyle.COVER) { null })
+    }
+
+    /**
+     * End to end, on the reported case: a pale cover behind an artwork-hiding backdrop must lift
+     * the text, where measuring the cover would have darkened it into the black field.
+     */
+    @Test
+    fun `a pale cover behind a hidden backdrop lifts rather than darkens`() {
+        val onArtwork = AdaptiveTextContrast.adaptedLightness(
+                lightness = 0.55f,
+                backgroundLuminance = AdaptiveTextContrast.backdropLuminance(
+                        PlayerBackgroundStyle.COVER) { 0.82f }!!)
+        val onBlack = AdaptiveTextContrast.adaptedLightness(
+                lightness = 0.55f,
+                backgroundLuminance = AdaptiveTextContrast.backdropLuminance(
+                        PlayerBackgroundStyle.HIDDEN) { 0.82f }!!)
+        assertTrue("expected a darkening over pale artwork, got $onArtwork", onArtwork < 0.55f)
+        assertTrue("expected no darkening on black, got $onBlack", onBlack >= 0.55f)
+        assertTrue(AdaptiveTextContrast.isLegibleAgainst(onBlack, 0f))
     }
 }

@@ -90,7 +90,7 @@
                 android:contentDescription="@string/online_theme_installed"
                 android:importantForAccessibility="no"
                 android:padding="8dp"
-                android:src="@drawable/ic_playlist_add_check"
+                android:src="@drawable/ic_download_for_offline"
                 android:tint="@color/lyra_accent"
                 android:visibility="gone"
                 tools:ignore="UseAppTint"

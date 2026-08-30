@@ -77,4 +77,6 @@
     <string name="watch_theme_face_note">नोट</string>
     <string name="watch_theme_face_verse">वर्स</string>
     <string name="watch_theme_face_metadata">मेटाडेटा</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

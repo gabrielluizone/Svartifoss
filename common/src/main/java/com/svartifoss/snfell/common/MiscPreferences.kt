@@ -279,6 +279,18 @@ object MiscPreferences {
     val WEAR_LYRICS_FONT: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_lyrics_font", WatchTypography.LYRICS_FONT_FOLLOW)
 
+    /**
+     * Typeface for the elapsed/total playback readout (for example, `1:23 / 3:45`).
+     *
+     * [WatchTypography.TRACK_TIME_FONT_FOLLOW] deliberately means "follow the design", rather
+     * than following [WEAR_FONT]: the readout was part of each face's chrome before it gained a
+     * control, and faces do not all use the same family for it. That identity default therefore
+     * keeps existing themes byte-for-byte intact while a picked catalog family overrides it on
+     * every face. Resolved by [WatchTypography.trackTimeFontKey].
+     */
+    val WEAR_TRACK_TIME_FONT: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_track_time_font", WatchTypography.TRACK_TIME_FONT_FOLLOW)
+
     // Which blocks of the metadata face are drawn. One switch per block rather than per field,
     // because a row only exists when the playing app published that tag - see
     // TrackMetadataFields.Group, which owns the keys and the defaults so the registry and the
@@ -553,17 +565,32 @@ object MiscPreferences {
     val WEAR_QUADRANT_TAP_FLASH: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("wear_quadrant_tap_flash", false)
 
-    /** Typeface for title/artist text on every player layout. The catalog combines the bundled
-     *  Google Sans/Love Letter faces with Android system-family aliases (rounded, light, thin,
-     *  medium, black, small caps, casual, serif, mono, condensed and cursive). The older bundled
-     *  "typewriter" choice remains readable but is hidden unless developer archived options are
-     *  enabled. Decoded by watchFontFamily and mirrored by WatchPreviewView. */
+    /** Default typeface for title/artist text on every player layout. An element can opt into a
+     *  different catalog family through [WEAR_TITLE_FONT] or [WEAR_ARTIST_FONT]; their default is
+     *  to follow this value. The catalog combines the bundled Google Sans/Special Elite faces with
+     *  Android system-family aliases (rounded, light, thin, medium, black, small caps, casual,
+     *  serif, mono, condensed and cursive), plus the packaged OFL reading, display, mono and
+     *  script families. The older bundled "typewriter" choice remains readable but is hidden
+     *  unless developer archived options are enabled. Decoded by watchFontFamily and mirrored by
+     *  WatchPreviewView. */
     val WEAR_FONT: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_font", "google_sans")
 
-    /** Card outline for the Carousel face's cover rail - see [CarouselCardShape]. */
+    /** Card outline for the Carousel face's cover rail - see [CoverShape]. */
     val WEAR_CAROUSEL_CARD_SHAPE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_carousel_card_shape",
-                    CarouselCardShape.ROUNDED.preferenceValue)
+                    CoverShape.ROUNDED.preferenceValue)
+
+    /**
+     * Silhouette of the Note face's cover disc - see [CoverShape], the same vocabulary
+     * [WEAR_CAROUSEL_CARD_SHAPE] uses.
+     *
+     * Its own key rather than a shared one: the two faces sit at opposite ends of that vocabulary
+     * (a rail of cards, a single round thumbnail beside a line of text), so one value would make
+     * choosing a shape for either silently restyle the other.
+     */
+    val WEAR_NOTE_COVER_SHAPE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_note_cover_shape",
+                    CoverShape.CIRCLE.preferenceValue)
 
     /**
      * Whether [WEAR_FONT] also styles the menu, the queue and the shared chrome, instead of only
@@ -573,7 +600,7 @@ object MiscPreferences {
     val WEAR_FONT_ALL_SCREENS: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("wear_font_all_screens", false)
 
-    // --- Per-element typography, layered on top of the single [WEAR_FONT] family choice ---
+    // --- Per-element typography, layered on top of the default [WEAR_FONT] family choice ---
     //
     // Title and artist are styled independently because they carry different weight in the
     // hierarchy: users overwhelmingly want a heavier/larger title against a lighter, dimmer
@@ -582,7 +609,20 @@ object MiscPreferences {
     // absolute override would break their layout on any other screen size. Defaults are the
     // exact identity (weight 400, no italic, 100% size/opacity, no extra tracking), so an
     // install that never opens these controls renders bit-for-bit as it did before they existed.
-    // Decoded by [WatchTypography], mirrored by WatchPreviewView.
+    // The family choices follow [WEAR_FONT] until explicitly changed. Decoded by
+    // [WatchTypography], mirrored by WatchPreviewView.
+
+    /** Typeface for the track title: a [WEAR_FONT] catalog key, or
+     *  [WatchTypography.TITLE_FONT_FOLLOW] (the default) to use the face's default track family.
+     *  Resolved by [WatchTypography.titleFontKey]. */
+    val WEAR_TITLE_FONT: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_title_font", WatchTypography.TITLE_FONT_FOLLOW)
+
+    /** Typeface for the artist line: a [WEAR_FONT] catalog key, or
+     *  [WatchTypography.ARTIST_FONT_FOLLOW] (the default) to use the face's default track family.
+     *  Resolved by [WatchTypography.artistFontKey]. */
+    val WEAR_ARTIST_FONT: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_artist_font", WatchTypography.ARTIST_FONT_FOLLOW)
 
     /** Track title weight, 100-900 in CSS-style steps. 400 is the face's normal weight. */
     val WEAR_TITLE_FONT_WEIGHT: PreferenceDefinition<Int> =
@@ -607,6 +647,12 @@ object MiscPreferences {
     val WEAR_TITLE_FONT_TRACKING: PreferenceDefinition<Int> =
             SimplePreferenceDefinition("wear_title_font_tracking", 0)
 
+    /** Track title text-case transform - a [TextCase.preferenceValue], default
+     *  [TextCase.NORMAL]. Applied last, after every other title typography control, so it always
+     *  wins over whatever case a face's own composition happens to use. */
+    val WEAR_TITLE_TEXT_CASE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_title_text_case", TextCase.NORMAL.preferenceValue)
+
     /** Artist line weight, 100-900. See [WEAR_TITLE_FONT_WEIGHT]. */
     val WEAR_ARTIST_FONT_WEIGHT: PreferenceDefinition<Int> =
             SimplePreferenceDefinition("wear_artist_font_weight", 400)
@@ -627,6 +673,35 @@ object MiscPreferences {
     val WEAR_ARTIST_FONT_TRACKING: PreferenceDefinition<Int> =
             SimplePreferenceDefinition("wear_artist_font_tracking", 0)
 
+    /** Artist line text-case transform. See [WEAR_TITLE_TEXT_CASE]. */
+    val WEAR_ARTIST_TEXT_CASE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_artist_text_case", TextCase.NORMAL.preferenceValue)
+
+    // The elapsed/total readout is its own chrome element rather than secondary metadata. It has
+    // a separate family plus the same small set of typography deltas as title/artist, so choosing
+    // a display face for a compact `1:23 / 3:45` line does not require distorting either track
+    // text. Identity preserves each face's authored family, size, opacity and spacing.
+
+    /** Playback-time weight, 1-1000. See [WEAR_TITLE_FONT_WEIGHT]. */
+    val WEAR_TRACK_TIME_FONT_WEIGHT: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_track_time_font_weight", 400)
+
+    /** Renders the playback-time readout italic. See [WEAR_TITLE_FONT_ITALIC]. */
+    val WEAR_TRACK_TIME_FONT_ITALIC: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_track_time_font_italic", false)
+
+    /** Playback-time size percentage over the face's designed readout size. */
+    val WEAR_TRACK_TIME_FONT_SCALE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_track_time_font_scale", 100)
+
+    /** Playback-time opacity percentage, layered over the face's designed readout color. */
+    val WEAR_TRACK_TIME_FONT_OPACITY: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_track_time_font_opacity", 100)
+
+    /** Extra playback-time letter spacing in hundredths of an em. */
+    val WEAR_TRACK_TIME_FONT_TRACKING: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_track_time_font_tracking", 0)
+
     /** Size of the playing-app icon next to the artist line, as a percentage of its designed size
      *  ([TYPOGRAPHY_MIN_SCALE]..[TYPOGRAPHY_MAX_SCALE]). Only meaningful while
      *  [WEAR_SHOW_SOURCE_ICON] is on. */
@@ -639,11 +714,9 @@ object MiscPreferences {
 
     // --- Google Sans Flex variable-font axes (WatchTypography.FLEX_*) ---
     //
-    // Only meaningful while WEAR_FONT is "google_sans_flex" - every other bundled font has no
-    // variable axes to move. Deliberately global rather than per title/artist: unlike weight
-    // (WEAR_TITLE_FONT_WEIGHT / WEAR_ARTIST_FONT_WEIGHT, reused as this font's own wght axis) a
-    // mismatched width/roundness/grade between the two lines would read as a rendering glitch, not
-    // a hierarchy choice. See WatchTypography.flexVariationSettings for how all six axes combine.
+    // The global set belongs to any element following [WEAR_FONT]. Every explicit typeface
+    // override gets its own set below: choosing Flex only for one element must not silently edit
+    // the axes used by another element.
 
     /** Google Sans Flex `wdth` axis, [WatchTypography.FLEX_WIDTH_MIN]..[WatchTypography.FLEX_WIDTH_MAX]. */
     val WEAR_FONT_FLEX_WIDTH: PreferenceDefinition<Int> =
@@ -660,6 +733,91 @@ object MiscPreferences {
     /** Google Sans Flex `ROND` axis, [WatchTypography.FLEX_ROUNDNESS_MIN]..[WatchTypography.FLEX_ROUNDNESS_MAX]. */
     val WEAR_FONT_FLEX_ROUNDNESS: PreferenceDefinition<Int> =
             SimplePreferenceDefinition("wear_font_flex_roundness", 0)
+
+    // The five individual typeface pickers each receive a full Flex-axis set. They intentionally
+    // default to the variable font's own identity point rather than inheriting the track family's
+    // values: an explicit element override is a separate piece of typography, and must remain
+    // independently editable even while the track uses another family.
+
+    /** Title-only Google Sans Flex `wdth` axis. */
+    val WEAR_TITLE_FONT_FLEX_WIDTH: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_title_font_flex_width", 100)
+
+    /** Title-only Google Sans Flex `opsz` axis. */
+    val WEAR_TITLE_FONT_FLEX_OPTICAL_SIZE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_title_font_flex_optical_size", 18)
+
+    /** Title-only Google Sans Flex `GRAD` axis. */
+    val WEAR_TITLE_FONT_FLEX_GRADE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_title_font_flex_grade", 0)
+
+    /** Title-only Google Sans Flex `ROND` axis. */
+    val WEAR_TITLE_FONT_FLEX_ROUNDNESS: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_title_font_flex_roundness", 0)
+
+    /** Artist-only Google Sans Flex `wdth` axis. */
+    val WEAR_ARTIST_FONT_FLEX_WIDTH: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_artist_font_flex_width", 100)
+
+    /** Artist-only Google Sans Flex `opsz` axis. */
+    val WEAR_ARTIST_FONT_FLEX_OPTICAL_SIZE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_artist_font_flex_optical_size", 18)
+
+    /** Artist-only Google Sans Flex `GRAD` axis. */
+    val WEAR_ARTIST_FONT_FLEX_GRADE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_artist_font_flex_grade", 0)
+
+    /** Artist-only Google Sans Flex `ROND` axis. */
+    val WEAR_ARTIST_FONT_FLEX_ROUNDNESS: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_artist_font_flex_roundness", 0)
+
+    /** Clock-only Google Sans Flex `wdth` axis. */
+    val WEAR_CLOCK_FONT_FLEX_WIDTH: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_clock_font_flex_width", 100)
+
+    /** Clock-only Google Sans Flex `opsz` axis. */
+    val WEAR_CLOCK_FONT_FLEX_OPTICAL_SIZE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_clock_font_flex_optical_size", 18)
+
+    /** Clock-only Google Sans Flex `GRAD` axis. */
+    val WEAR_CLOCK_FONT_FLEX_GRADE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_clock_font_flex_grade", 0)
+
+    /** Clock-only Google Sans Flex `ROND` axis. */
+    val WEAR_CLOCK_FONT_FLEX_ROUNDNESS: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_clock_font_flex_roundness", 0)
+
+    /** Lyrics-only Google Sans Flex `wdth` axis. */
+    val WEAR_LYRICS_FONT_FLEX_WIDTH: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_lyrics_font_flex_width", 100)
+
+    /** Lyrics-only Google Sans Flex `opsz` axis. */
+    val WEAR_LYRICS_FONT_FLEX_OPTICAL_SIZE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_lyrics_font_flex_optical_size", 18)
+
+    /** Lyrics-only Google Sans Flex `GRAD` axis. */
+    val WEAR_LYRICS_FONT_FLEX_GRADE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_lyrics_font_flex_grade", 0)
+
+    /** Lyrics-only Google Sans Flex `ROND` axis. */
+    val WEAR_LYRICS_FONT_FLEX_ROUNDNESS: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_lyrics_font_flex_roundness", 0)
+
+    /** Playback-time-only Google Sans Flex `wdth` axis. */
+    val WEAR_TRACK_TIME_FONT_FLEX_WIDTH: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_track_time_font_flex_width", 100)
+
+    /** Playback-time-only Google Sans Flex `opsz` axis. */
+    val WEAR_TRACK_TIME_FONT_FLEX_OPTICAL_SIZE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_track_time_font_flex_optical_size", 18)
+
+    /** Playback-time-only Google Sans Flex `GRAD` axis. */
+    val WEAR_TRACK_TIME_FONT_FLEX_GRADE: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_track_time_font_flex_grade", 0)
+
+    /** Playback-time-only Google Sans Flex `ROND` axis. */
+    val WEAR_TRACK_TIME_FONT_FLEX_ROUNDNESS: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_track_time_font_flex_roundness", 0)
 
     /** Bounds for the percentage-based typography controls. The scale ceiling is deliberately
      *  modest: the faces reserve fixed vertical space for the title/artist block, so a larger
@@ -781,10 +939,22 @@ object MiscPreferences {
     /** Cross-fade album art when the track changes. */
     val WEAR_ALBUM_ART_FADE: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_album_art_fade", true)
 
-    /** Preferred distance (dp) between the bottom of the watch screen and the mini-buttons row
-     *  (see ScreenButtons); the watch still auto-adjusts away from long titles on its own. The
-     *  42dp default clears the bottom quadrant icon and keeps the full 3-button row inside a
-     *  round screen's circle. */
+    /**
+     * Retired. Nothing reads this any more and it must not be deleted.
+     *
+     * The mini-button row's position became fully automatic: `MainActivity.configureScreenButtons`
+     * computes the lowest round-safe resting margin and `repositionScreenButtonsRow` lifts it only
+     * as far as it must to clear the track text, so there is no offset left to prefer. There is no
+     * settings row for it on either screen, and neither the watch nor the phone preview reads it.
+     *
+     * It stays in [EXPORTABLE] and [FaceScopedPreferences.SCOPED_KEYS] because published community
+     * themes already carry it: `WatchThemeRepository.parsePublishedSettings` rejects the *whole*
+     * profile on a key it does not recognise, so dropping it would make every theme in the gallery
+     * that contains it fail to parse and silently vanish for everyone who has not installed it yet.
+     * `OnlineThemeCatalogTest` fails if it is removed while any committed profile still names it,
+     * which is the guard that turns that into a build error rather than a missing gallery. The
+     * shipped constraint pins it to 42..42 so it can never carry anything but its own default.
+     */
     val WEAR_SCREEN_BUTTONS_OFFSET: PreferenceDefinition<Int> =
             SimplePreferenceDefinition("screen_buttons_bottom_offset", 42)
 
@@ -941,8 +1111,12 @@ object MiscPreferences {
     val WEAR_PROGRESS_STYLE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_progress_style", "solid")
 
-    /** Visual style of the scrub-time readout shown while seeking: "plain" (default), "pill",
-     *  "expressive", "material", "white", "giant" or "split" (position stacked over total). */
+    /** Geometry of the resting/interactive edge ring, independent from its stroke style. */
+    val WEAR_PROGRESS_LAYOUT: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_progress_layout", "edge")
+
+    /** Visual style of the scrub-time and volume readouts. Values are kept as stable tokens so
+     *  new appearances can be added without changing existing saved faces. */
     val WEAR_SEEK_STYLE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_seek_style", "plain")
 
@@ -1010,17 +1184,29 @@ object MiscPreferences {
             WEAR_PLAYER_CONTROLS_VISIBLE, WEAR_INTERNAL_PROGRESS_VISIBLE,
             WEAR_EDGE_PROGRESS_VISIBLE, WEAR_EDGE_SEEK_ENABLED, WEAR_ACCENT_FLOOR,
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
-            WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE,
-            WEAR_TRACK_TIME_MODE,
+            WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE, WEAR_NOTE_COVER_SHAPE,
+            WEAR_TRACK_TIME_MODE, WEAR_TRACK_TIME_FONT, WEAR_TRACK_TIME_FONT_WEIGHT,
+            WEAR_TRACK_TIME_FONT_ITALIC, WEAR_TRACK_TIME_FONT_SCALE,
+            WEAR_TRACK_TIME_FONT_OPACITY, WEAR_TRACK_TIME_FONT_TRACKING,
             WEAR_DYNAMIC_ACCENT, WEAR_COLOR_TREATMENT, WEAR_NORMAL_COLOR, WEAR_NORMAL_COLOR_MULTI, WEAR_COLOR_MODIFIER,
             WEAR_COLOR_HUE_SHIFT, WEAR_ALBUM_ACCENT_SOURCE,
-            WEAR_TITLE_FONT_WEIGHT, WEAR_TITLE_FONT_ITALIC, WEAR_TITLE_FONT_SCALE,
-            WEAR_TITLE_FONT_OPACITY, WEAR_TITLE_FONT_TRACKING,
-            WEAR_ARTIST_FONT_WEIGHT, WEAR_ARTIST_FONT_ITALIC, WEAR_ARTIST_FONT_SCALE,
-            WEAR_ARTIST_FONT_OPACITY, WEAR_ARTIST_FONT_TRACKING,
+            WEAR_TITLE_FONT, WEAR_TITLE_FONT_WEIGHT, WEAR_TITLE_FONT_ITALIC, WEAR_TITLE_FONT_SCALE,
+            WEAR_TITLE_FONT_OPACITY, WEAR_TITLE_FONT_TRACKING, WEAR_TITLE_TEXT_CASE,
+            WEAR_ARTIST_FONT, WEAR_ARTIST_FONT_WEIGHT, WEAR_ARTIST_FONT_ITALIC, WEAR_ARTIST_FONT_SCALE,
+            WEAR_ARTIST_FONT_OPACITY, WEAR_ARTIST_FONT_TRACKING, WEAR_ARTIST_TEXT_CASE,
             WEAR_SOURCE_ICON_SCALE, WEAR_SOURCE_ICON_OPACITY,
             WEAR_FONT_FLEX_WIDTH, WEAR_FONT_FLEX_OPTICAL_SIZE,
             WEAR_FONT_FLEX_GRADE, WEAR_FONT_FLEX_ROUNDNESS,
+            WEAR_TITLE_FONT_FLEX_WIDTH, WEAR_TITLE_FONT_FLEX_OPTICAL_SIZE,
+            WEAR_TITLE_FONT_FLEX_GRADE, WEAR_TITLE_FONT_FLEX_ROUNDNESS,
+            WEAR_ARTIST_FONT_FLEX_WIDTH, WEAR_ARTIST_FONT_FLEX_OPTICAL_SIZE,
+            WEAR_ARTIST_FONT_FLEX_GRADE, WEAR_ARTIST_FONT_FLEX_ROUNDNESS,
+            WEAR_CLOCK_FONT_FLEX_WIDTH, WEAR_CLOCK_FONT_FLEX_OPTICAL_SIZE,
+            WEAR_CLOCK_FONT_FLEX_GRADE, WEAR_CLOCK_FONT_FLEX_ROUNDNESS,
+            WEAR_LYRICS_FONT_FLEX_WIDTH, WEAR_LYRICS_FONT_FLEX_OPTICAL_SIZE,
+            WEAR_LYRICS_FONT_FLEX_GRADE, WEAR_LYRICS_FONT_FLEX_ROUNDNESS,
+            WEAR_TRACK_TIME_FONT_FLEX_WIDTH, WEAR_TRACK_TIME_FONT_FLEX_OPTICAL_SIZE,
+            WEAR_TRACK_TIME_FONT_FLEX_GRADE, WEAR_TRACK_TIME_FONT_FLEX_ROUNDNESS,
             WEAR_ALBUM_ART_FADE, WEAR_SCREEN_BUTTONS_OFFSET, WEAR_SCREEN_BUTTONS_CURVE_STYLE,
             WEAR_SCREEN_BUTTONS_BG, WEAR_SCREEN_BUTTONS_OPACITY, WEAR_SCREEN_BUTTONS_SHAPE,
             WEAR_MINI_BUTTONS_MODE, WEAR_GESTURES_MODE,
@@ -1031,7 +1217,7 @@ object MiscPreferences {
             WEAR_SHOW_UP_NEXT_PILL,
             WEAR_QUICK_PANEL_SOURCE, WEAR_QUEUE_STYLE, WEAR_QUICK_PANEL_SHORTCUT_COVER,
             WEAR_LIST_ROW_SIZE,
-            WEAR_PROGRESS_STYLE, WEAR_SEEK_STYLE, WEAR_SEEK_LAYOUT,
+            WEAR_PROGRESS_STYLE, WEAR_PROGRESS_LAYOUT, WEAR_SEEK_STYLE, WEAR_SEEK_LAYOUT,
             WEAR_TITLE_TEXT_MODE, WEAR_ARTIST_COLOR_MODE, WEAR_ARTIST_CUSTOM_COLOR, WEAR_ARTIST_DESATURATED,
             WEAR_PROGRESS_COLOR_MODE, WEAR_PROGRESS_CUSTOM_COLOR, WEAR_PROGRESS_DESATURATED,
             WEAR_VOLUME_COLOR_MODE, WEAR_VOLUME_CUSTOM_COLOR,

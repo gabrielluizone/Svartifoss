@@ -5,6 +5,7 @@
     <item name="tag_uses_accent_background" type="id" />
     <item name="tag_uses_accent_icon" type="id" />
     <item name="tag_accent_listener_attached" type="id" />
+    <item name="tag_handles_accent_locally" type="id" />
     <item name="accessibility_action_move_up" type="id" />
     <item name="accessibility_action_move_down" type="id" />
 </resources>

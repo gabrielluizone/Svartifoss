@@ -18,11 +18,39 @@ import java.io.File
 import java.io.IOException
 
 /**
+ * User-facing groups of state that can be included in a backup.
+ *
+ * Keep this list about persisted state, rather than individual preference keys. New preference
+ * keys automatically follow the group selected by [ConfigBackup.sectionForPreference], so adding a
+ * setting does not silently make the backup screen incomplete.
+ */
+enum class ConfigBackupSection(val id: String) {
+    BUTTONS("buttons"),
+    ACTIONS("actions"),
+    APP_SETTINGS("appSettings"),
+    WATCH_APPEARANCE("watchAppearance"),
+    PLAYLIST_SHORTCUTS("playlistShortcuts"),
+    HISTORY("history"),
+    ICONS("icons"),
+    PRIVACY("privacy"),
+    LOCAL_APP_STATE("localAppState"),
+    AUXILIARY_DATA("auxiliaryData");
+
+    companion object {
+        val ALL: Set<ConfigBackupSection> =
+                values().toCollection(LinkedHashSet())
+
+        fun fromId(id: String): ConfigBackupSection? =
+                values().firstOrNull { it.id == id }
+    }
+}
+
+/**
  * Exports/imports the button configs (playing + stopped), the action list and the
  * complete phone/watch configuration as a single JSON document. It includes every supported
  * default-preference value, saved themes, personal shortcut/history data and the on-disk icon
- * stores those configs reference. Device-local consent and transient bookkeeping are excluded by
- * [ConfigBackupPreferencePolicy].
+ * stores those configs reference. Every supported preference is preserved, including local app
+ * state and consent; the selection screen lets the user decide whether those parts travel too.
  *
  * The button-config and action-list files are [android.os.PersistableBundle]s on disk
  * (see [com.svartifoss.snfell.config.buttons.DiskButtonConfigStorage] /
@@ -33,16 +61,22 @@ import java.io.IOException
  * (with a decodability check) so old backups keep working, but new exports never produce them.
  */
 object ConfigBackup {
-    private const val SCHEMA_VERSION = 5
+    private const val SCHEMA_VERSION = 7
+    private const val INCLUDED_SECTIONS_KEY = "includedSections"
     private const val WATCH_THEMES_KEY = "watchThemes"
     private const val USER_DATA_KEY = "userData"
     private const val ASSETS_KEY = "assets"
+    private const val NAMED_PREFERENCES_KEY = "namedPreferences"
+    private const val INTERNAL_FILES_KEY = "internalFiles"
     private const val TYPE_KEY = "type"
     private const val VALUE_KEY = "value"
 
     private const val MAX_ASSETS_PER_STORE = 200
     private const val MAX_SINGLE_ASSET_BYTES = 4 * 1024 * 1024
     private const val MAX_TOTAL_ASSET_BYTES = 32 * 1024 * 1024
+    private const val MAX_INTERNAL_FILES = 500
+    private const val MAX_SINGLE_INTERNAL_FILE_BYTES = 8 * 1024 * 1024
+    private const val MAX_TOTAL_INTERNAL_FILE_BYTES = 64 * 1024 * 1024
 
     private val SAFE_ASSET_NAME = Regex("[A-Za-z0-9_.-]{1,240}\\.png")
 
@@ -61,6 +95,34 @@ object ConfigBackup {
             "track_history"
     )
 
+    private val WATCH_APPEARANCE_GLOBAL_KEYS = setOf(
+            MiscPreferences.WEAR_SCREEN_FACE.key,
+            MiscPreferences.WEAR_ACTIVE_CUSTOM_THEME_ID.key,
+            MiscPreferences.WEAR_AVAILABLE_CUSTOM_THEMES.key,
+            MiscPreferences.WEAR_CUSTOM_THEME_SCHEMA.key,
+            MiscPreferences.WEAR_CUSTOM_THEME_COMPLETE.key,
+            MiscPreferences.WEAR_CUSTOM_THEME_REVISION.key
+    )
+
+    private val PRIVACY_KEYS = setOf(
+            MiscPreferences.CRASH_REPORTING_ENABLED.key,
+            MiscPreferences.ANNOUNCEMENTS_ENABLED.key
+    )
+
+    /** State which changes the phone's current presentation or records a completed migration.
+     * It is intentionally selectable: a user moving to a new phone may want a clean first-run
+     * experience, while a device clone should preserve it. */
+    private val LOCAL_APP_STATE_KEYS = setOf(
+            "current_accent_color",
+            MiscPreferences.LAST_MENU_DISPLAYED.key,
+            "center_long_press_repaired",
+            "notification_access_prompted",
+            "face_reset_prompt_handled",
+            "update_last_check_ms",
+            "update_last_notified_tag",
+            "update_last_seen_version_code"
+    )
+
     private data class AssetStore(
             val jsonKey: String,
             val folder: (Context) -> File,
@@ -70,25 +132,69 @@ object ConfigBackup {
 
     private data class RestoredAssetStore(val store: AssetStore, val assets: List<BackupAsset>)
 
+    private data class NamedPreferenceStore(
+            val name: String,
+            val preferences: SharedPreferences
+    )
+
+    private data class RestoredNamedPreferenceStore(
+            val name: String,
+            val values: Map<String, JSONObject>
+    )
+
+    private data class BackupInternalFile(val path: String, val bytes: ByteArray)
+
     private val ASSET_STORES = listOf(
             AssetStore("customIcons", CustomIconStorage::backupDirectory),
             AssetStore("shortcutArtwork", ShortcutArtworkStore::backupDirectory),
             AssetStore("appGlyphs", AppGlyphStore::backupDirectory, AppGlyphStore::markRestored)
     )
 
-    fun export(context: Context, preferences: SharedPreferences): JSONObject {
+    /** Small named preference files that carry user-facing auxiliary state. Runtime counters for
+     * caches and the Wear message sequence are deliberately not part of the backup. */
+    private fun namedPreferenceStores(context: Context): List<NamedPreferenceStore> = listOf(
+            NamedPreferenceStore(
+                    "custom_icon_storage",
+                    context.getSharedPreferences("custom_icon_storage", Context.MODE_PRIVATE)),
+            NamedPreferenceStore(
+                    "community_theme_submission",
+                    context.getSharedPreferences("community_theme_submission", Context.MODE_PRIVATE))
+    )
+
+    fun export(
+            context: Context,
+            preferences: SharedPreferences,
+            sections: Set<ConfigBackupSection> = ConfigBackupSection.ALL
+    ): JSONObject {
+        val selectedSections = sections.toSet()
         val json = JSONObject()
         json.put("schemaVersion", SCHEMA_VERSION)
         json.put("exportedAt", System.currentTimeMillis())
+        json.put(INCLUDED_SECTIONS_KEY, JSONArray().apply {
+            ConfigBackupSection.values()
+                    .filter { it in selectedSections }
+                    .forEach { put(it.id) }
+        })
 
         for ((jsonKey, fileName) in CONFIG_FILES) {
+            val section = if (jsonKey == "actionList") {
+                ConfigBackupSection.ACTIONS
+            } else {
+                ConfigBackupSection.BUTTONS
+            }
+            if (section !in selectedSections) continue
             val file = File(context.filesDir, fileName)
             // Read + re-encode as a portable JSON tree. readFromFile force-unparcels the top level;
             // BundleJson.toJson then walks (and forces) the nested bundles too. On the device that
-            // wrote the config this always succeeds; a config that can't be read is simply omitted.
+            // wrote the config this always succeeds. An explicit null records a missing file so a
+            // complete restore can also remove a stale file from the destination device.
             val bundle = if (file.exists()) BundleFileSerialization.readFromFile(file) else null
             if (bundle != null) {
                 json.put(jsonKey, BundleJson.toJson(bundle))
+            } else {
+                // Schema 7 records an explicit absence too, so importing a complete snapshot can
+                // remove a stale config file from the destination device.
+                json.put(jsonKey, JSONObject.NULL)
             }
         }
 
@@ -97,23 +203,38 @@ object ConfigBackup {
         // Typed envelopes retain integer/long/float values too. Earlier schemas only supported
         // booleans, strings and sets from EXPORTABLE, which silently dropped phone-only settings.
         for ((key, value) in allPrefs) {
-            if (ConfigBackupPreferencePolicy.shouldExport(key, value)) {
+            if (ConfigBackupPreferencePolicy.shouldExport(key, value) &&
+                    sectionForPreference(key) in selectedSections) {
                 prefsJson.put(key, preferenceToJson(value ?: continue))
             }
         }
         json.put("preferences", prefsJson)
-        // The full theme library intentionally lives outside default SharedPreferences so it is
-        // never mirrored wholesale to Wear. Export it explicitly; the repository first captures
-        // any edits made to the active custom snapshot in the shared Watch editor.
-        json.put(WATCH_THEMES_KEY, WatchThemeRepository(context).exportToJson(preferences))
+
+        if (ConfigBackupSection.WATCH_APPEARANCE in selectedSections) {
+            // The full theme library intentionally lives outside default SharedPreferences so it
+            // is never mirrored wholesale to Wear. Export it explicitly; the repository first
+            // captures any edits made to the active custom snapshot in the shared Watch editor.
+            json.put(WATCH_THEMES_KEY, WatchThemeRepository(context).exportToJson(preferences))
+        }
 
         // Personal runtime data (saved shortcuts, search/track history) as opaque JSON strings.
         val userDataJson = JSONObject()
         for (key in USER_DATA_KEYS) {
-            (allPrefs[key] as? String)?.let { userDataJson.put(key, it) }
+            val section = sectionForPreference(key)
+            if (section in selectedSections) {
+                (allPrefs[key] as? String)?.let { userDataJson.put(key, it) }
+            }
         }
-        json.put(USER_DATA_KEY, userDataJson)
-        json.put(ASSETS_KEY, exportAssets(context))
+        if (userDataJson.length() > 0) {
+            json.put(USER_DATA_KEY, userDataJson)
+        }
+        if (ConfigBackupSection.ICONS in selectedSections) {
+            json.put(ASSETS_KEY, exportAssets(context))
+        }
+        if (ConfigBackupSection.AUXILIARY_DATA in selectedSections) {
+            json.put(NAMED_PREFERENCES_KEY, exportNamedPreferences(context))
+            json.put(INTERNAL_FILES_KEY, exportInternalFiles(context))
+        }
 
         return json
     }
@@ -129,12 +250,22 @@ object ConfigBackup {
      *
      *  @throws java.io.IOException when a legacy config blob in the backup can't be decoded on this
      *  device (parcel bytes aren't stable across Android versions). */
-    fun import(context: Context, preferences: SharedPreferences, json: JSONObject) {
+    fun import(
+            context: Context,
+            preferences: SharedPreferences,
+            json: JSONObject
+    ): Set<ConfigBackupSection> {
         val schemaVersion = schemaVersion(json)
+        val selectedSections = includedSections(json)
+        val hasExplicitSections = json.has(INCLUDED_SECTIONS_KEY)
         // Validate the phone-only theme catalog before the first config/preference write. This
         // preserves the all-or-nothing guarantee for malformed or future-schema backups.
         val themeRepository = WatchThemeRepository(context)
-        val themesJson = when {
+        val themesJson = if (ConfigBackupSection.WATCH_APPEARANCE !in selectedSections) {
+            null
+        } else when {
+            !json.has(WATCH_THEMES_KEY) && hasExplicitSections && schemaVersion >= SCHEMA_VERSION ->
+                throw IOException("Backup is missing the watch theme library")
             !json.has(WATCH_THEMES_KEY) -> null
             json.optJSONObject(WATCH_THEMES_KEY) != null -> json.optJSONObject(WATCH_THEMES_KEY)
             else -> throw IOException("Invalid watch theme library")
@@ -143,13 +274,37 @@ object ConfigBackup {
 
         // Decode every icon before touching the existing config. A malformed backup therefore
         // cannot leave actions restored with missing custom imagery.
-        val restoredAssets = parseAssets(json)
+        if (ConfigBackupSection.ICONS in selectedSections &&
+                schemaVersion >= SCHEMA_VERSION && hasExplicitSections && !json.has(ASSETS_KEY)) {
+            throw IOException("Backup is missing icon assets")
+        }
+        val restoredAssets = if (ConfigBackupSection.ICONS in selectedSections) {
+            parseAssets(json)
+        } else {
+            emptyList()
+        }
+        val restoredNamedPreferences = if (ConfigBackupSection.AUXILIARY_DATA in selectedSections) {
+            parseNamedPreferences(context, json)
+        } else {
+            emptyList()
+        }
+        val restoredInternalFiles = if (ConfigBackupSection.AUXILIARY_DATA in selectedSections) {
+            parseInternalFiles(json)
+        } else {
+            emptyList()
+        }
         val prefsJson = json.optJSONObject("preferences") ?: JSONObject()
-        if (schemaVersion >= 5) validateTypedPreferences(prefsJson)
+        if (schemaVersion >= 5) validateTypedPreferences(prefsJson, selectedSections)
 
         val pendingWrites = ArrayList<() -> Unit>()
         for ((jsonKey, fileName) in CONFIG_FILES) {
             if (!json.has(jsonKey)) continue
+            val section = if (jsonKey == "actionList") {
+                ConfigBackupSection.ACTIONS
+            } else {
+                ConfigBackupSection.BUTTONS
+            }
+            if (section !in selectedSections) continue
             val target = File(context.filesDir, fileName)
             when (val entry = json.get(jsonKey)) {
                 is JSONObject -> {
@@ -169,7 +324,21 @@ object ConfigBackup {
                     }
                     pendingWrites.add { target.writeBytes(bytes) }
                 }
+                JSONObject.NULL -> pendingWrites.add { target.delete() }
                 else -> throw IOException("Unexpected config entry type for '$jsonKey'")
+            }
+        }
+        if (schemaVersion >= SCHEMA_VERSION && hasExplicitSections) {
+            val requiredConfigKeys = when {
+                ConfigBackupSection.BUTTONS in selectedSections &&
+                        ConfigBackupSection.ACTIONS in selectedSections -> CONFIG_FILES.keys
+                ConfigBackupSection.BUTTONS in selectedSections ->
+                        setOf("buttonConfigPlaying", "buttonConfigStopped")
+                ConfigBackupSection.ACTIONS in selectedSections -> setOf("actionList")
+                else -> emptySet()
+            }
+            requiredConfigKeys.forEach { key ->
+                if (!json.has(key)) throw IOException("Backup is missing config entry '$key'")
             }
         }
         pendingWrites.forEach { it() }
@@ -180,19 +349,26 @@ object ConfigBackup {
 
         val editor = preferences.edit()
         if (schemaVersion >= 5) {
-            restoreTypedPreferences(editor, prefsJson)
+            restoreTypedPreferences(editor, prefsJson, selectedSections)
         } else {
-            restoreLegacyPreferences(editor, prefsJson)
+            restoreLegacyPreferences(editor, prefsJson, selectedSections)
+        }
+        if (schemaVersion >= SCHEMA_VERSION && hasExplicitSections) {
+            clearMissingPreferences(preferences, editor, prefsJson, selectedSections)
         }
         // Restore personal runtime data (saved shortcuts, search/track history) if present. Older
-        // backups (schema <= 3) simply omit it and leave whatever is already on the phone.
+        // backups that do not carry it simply leave whatever is already on the phone.
         val userDataJson = json.optJSONObject(USER_DATA_KEY)
         if (userDataJson != null) {
             for (key in USER_DATA_KEYS) {
-                if (userDataJson.has(key)) editor.putString(key, userDataJson.getString(key))
+                if (userDataJson.has(key) && sectionForPreference(key) in selectedSections) {
+                    editor.putString(key, userDataJson.getString(key))
+                }
             }
         }
-        if (themesJson == null) {
+        val legacyBackupWithoutThemeLibrary = !hasExplicitSections && schemaVersion <= 2
+        if (ConfigBackupSection.WATCH_APPEARANCE in selectedSections &&
+                legacyBackupWithoutThemeLibrary) {
             // A schema-1/2 backup cannot describe the custom profile that may currently be
             // active. Deactivate that projection in the same preference transaction; otherwise
             // an imported wear_screen_face would silently rewrite the saved profile's base layout
@@ -206,7 +382,8 @@ object ConfigBackup {
 
         // Push the restored shortcut library to the watch's dedicated cache so it appears there
         // without waiting for the next manual edit.
-        if (userDataJson != null && userDataJson.has("playlist_shortcuts")) {
+        if (userDataJson != null && userDataJson.has("playlist_shortcuts") &&
+                ConfigBackupSection.PLAYLIST_SHORTCUTS in selectedSections) {
             PlaylistShortcutStorage.syncToWatch(context)
         }
 
@@ -215,12 +392,22 @@ object ConfigBackup {
         // profile into custom_active, or safely returns to the imported built-in face.
         if (themesJson != null) {
             themeRepository.replaceFromJson(themesJson, preferences)
-        } else {
+        } else if (legacyBackupWithoutThemeLibrary &&
+                ConfigBackupSection.WATCH_APPEARANCE in selectedSections) {
             // Keep the phone-only catalog, but clear its stale active marker to match the imported
             // legacy preference state. Saved themes remain available for later use.
             themeRepository.applyBuiltIn(
                     preferences, ThemeAppearance.resolve(preferences).baseFace)
         }
+        if (ConfigBackupSection.AUXILIARY_DATA in selectedSections) {
+            restoreNamedPreferences(context, restoredNamedPreferences)
+            restoredInternalFiles.forEach { restored ->
+                val target = safeInternalFile(context, restored.path)
+                target.parentFile?.mkdirs()
+                target.writeBytes(restored.bytes)
+            }
+        }
+        return selectedSections
     }
 
     private fun preferenceToJson(value: Any): JSONObject {
@@ -237,55 +424,91 @@ object ConfigBackup {
         return entry
     }
 
-    private fun restoreTypedPreferences(editor: SharedPreferences.Editor, prefsJson: JSONObject) {
+    private fun restoreTypedPreferences(
+            editor: SharedPreferences.Editor,
+            prefsJson: JSONObject,
+            selectedSections: Set<ConfigBackupSection>
+    ) {
         val keys = prefsJson.keys()
         while (keys.hasNext()) {
             val key = keys.next()
+            if (!ConfigBackupPreferencePolicy.shouldRestore(key) ||
+                    sectionForPreference(key) !in selectedSections) continue
             val entry = prefsJson.optJSONObject(key)
                     ?: throw IOException("Invalid typed preference '$key'")
-            if (!ConfigBackupPreferencePolicy.shouldRestore(key)) continue
-            when (entry.optString(TYPE_KEY)) {
-                "boolean" -> editor.putBoolean(key, entry.getBoolean(VALUE_KEY))
-                "string" -> editor.putString(key, entry.getString(VALUE_KEY))
-                "int" -> editor.putInt(key, entry.getInt(VALUE_KEY))
-                "long" -> editor.putLong(key, entry.getLong(VALUE_KEY))
-                "float" -> editor.putFloat(key, entry.getDouble(VALUE_KEY).toFloat())
-                "stringSet" -> {
-                    val values = entry.optJSONArray(VALUE_KEY)
-                            ?: throw IOException("Invalid string set preference '$key'")
-                    editor.putStringSet(key, (0 until values.length()).map { values.getString(it) }.toSet())
-                }
-                else -> throw IOException("Unknown preference type for '$key'")
-            }
+            putTypedPreference(editor, key, entry)
         }
     }
 
-    private fun validateTypedPreferences(prefsJson: JSONObject) {
+    private fun validateTypedPreferences(
+            prefsJson: JSONObject,
+            selectedSections: Set<ConfigBackupSection>
+    ) {
         val keys = prefsJson.keys()
         while (keys.hasNext()) {
             val key = keys.next()
+            if (!ConfigBackupPreferencePolicy.shouldRestore(key) ||
+                    sectionForPreference(key) !in selectedSections) continue
             val entry = prefsJson.optJSONObject(key)
                     ?: throw IOException("Invalid typed preference '$key'")
-            if (!ConfigBackupPreferencePolicy.shouldRestore(key)) continue
-            when (entry.optString(TYPE_KEY)) {
-                "boolean" -> entry.getBoolean(VALUE_KEY)
-                "string" -> entry.getString(VALUE_KEY)
-                "int" -> entry.getInt(VALUE_KEY)
-                "long" -> entry.getLong(VALUE_KEY)
-                "float" -> entry.getDouble(VALUE_KEY)
-                "stringSet" -> {
-                    val values = entry.optJSONArray(VALUE_KEY)
-                            ?: throw IOException("Invalid string set preference '$key'")
-                    (0 until values.length()).forEach { values.getString(it) }
-                }
-                else -> throw IOException("Unknown preference type for '$key'")
-            }
+            readTypedPreference(entry, key)
         }
     }
 
-    private fun restoreLegacyPreferences(editor: SharedPreferences.Editor, prefsJson: JSONObject) {
+    private fun putTypedPreference(
+            editor: SharedPreferences.Editor,
+            key: String,
+            entry: JSONObject
+    ) {
+        when (val value = readTypedPreference(entry, key)) {
+            is Boolean -> editor.putBoolean(key, value)
+            is String -> editor.putString(key, value)
+            is Int -> editor.putInt(key, value)
+            is Long -> editor.putLong(key, value)
+            is Float -> editor.putFloat(key, value)
+            is Set<*> -> editor.putStringSet(key, value.filterIsInstance<String>().toSet())
+            else -> throw IOException("Unsupported preference type for '$key'")
+        }
+    }
+
+    private fun readTypedPreference(entry: JSONObject, key: String): Any = when {
+        entry.optString(TYPE_KEY) == "boolean" -> entry.getBoolean(VALUE_KEY)
+        entry.optString(TYPE_KEY) == "string" -> entry.getString(VALUE_KEY)
+        entry.optString(TYPE_KEY) == "int" -> entry.getInt(VALUE_KEY)
+        entry.optString(TYPE_KEY) == "long" -> entry.getLong(VALUE_KEY)
+        entry.optString(TYPE_KEY) == "float" -> entry.getDouble(VALUE_KEY).toFloat()
+        entry.optString(TYPE_KEY) == "stringSet" -> {
+            val values = entry.optJSONArray(VALUE_KEY)
+                    ?: throw IOException("Invalid string set preference '$key'")
+            (0 until values.length()).map { values.getString(it) }.toSet()
+        }
+        else -> throw IOException("Unknown preference type for '$key'")
+    }
+
+    /** A selected category is a snapshot, not a merge: values that existed only on the target
+     * device must not survive a full restore. Removing them makes the normal preference defaults
+     * take effect again. Older schemas remain merge-compatible. */
+    private fun clearMissingPreferences(
+            preferences: SharedPreferences,
+            editor: SharedPreferences.Editor,
+            prefsJson: JSONObject,
+            selectedSections: Set<ConfigBackupSection>
+    ) {
+        preferences.all.keys
+                .filter { ConfigBackupPreferencePolicy.shouldRestore(it) }
+                .filter { sectionForPreference(it) in selectedSections }
+                .filter { !prefsJson.has(it) }
+                .forEach(editor::remove)
+    }
+
+    private fun restoreLegacyPreferences(
+            editor: SharedPreferences.Editor,
+            prefsJson: JSONObject,
+            selectedSections: Set<ConfigBackupSection>
+    ) {
         for (definition in MiscPreferences.EXPORTABLE) {
-            if (!prefsJson.has(definition.key)) continue
+            if (!prefsJson.has(definition.key) ||
+                    sectionForPreference(definition.key) !in selectedSections) continue
             putLegacyPreference(editor, definition.key, prefsJson.get(definition.key))
         }
         // Restore the per-face variants ("<baseKey>@<face>") of scoped exportable keys.
@@ -293,7 +516,8 @@ object ConfigBackup {
         val prefKeys = prefsJson.keys()
         while (prefKeys.hasNext()) {
             val key = prefKeys.next()
-            if (isExportableScopedKey(key, exportableKeys)) {
+            if (isExportableScopedKey(key, exportableKeys) &&
+                    sectionForPreference(key) in selectedSections) {
                 putLegacyPreference(editor, key, prefsJson.get(key))
             }
         }
@@ -331,6 +555,151 @@ object ConfigBackup {
             assetsJson.put(store.jsonKey, entries)
         }
         return assetsJson
+    }
+
+    private fun exportNamedPreferences(context: Context): JSONObject {
+        val storesJson = JSONObject()
+        for (store in namedPreferenceStores(context)) {
+            val valuesJson = JSONObject()
+            for ((key, value) in store.preferences.all) {
+                if (ConfigBackupPreferencePolicy.isSupportedValue(value)) {
+                    valuesJson.put(key, preferenceToJson(value ?: continue))
+                }
+            }
+            storesJson.put(store.name, valuesJson)
+        }
+        return storesJson
+    }
+
+    private fun parseNamedPreferences(
+            context: Context,
+            json: JSONObject
+    ): List<RestoredNamedPreferenceStore> {
+        val storesJson = json.optJSONObject(NAMED_PREFERENCES_KEY)
+                ?: throw IOException("Backup is missing named preferences")
+        return namedPreferenceStores(context).map { store ->
+            val valuesJson = storesJson.optJSONObject(store.name)
+                    ?: throw IOException("Backup is missing named preference store '${store.name}'")
+            val values = LinkedHashMap<String, JSONObject>()
+            val keys = valuesJson.keys()
+            while (keys.hasNext()) {
+                val key = keys.next()
+                val entry = valuesJson.optJSONObject(key)
+                        ?: throw IOException("Invalid named preference '$key'")
+                // Decode every value before any named preference file is cleared or rewritten.
+                readTypedPreference(entry, "${store.name}.$key")
+                values[key] = entry
+            }
+            RestoredNamedPreferenceStore(store.name, values)
+        }
+    }
+
+    private fun restoreNamedPreferences(
+            context: Context,
+            stores: List<RestoredNamedPreferenceStore>
+    ) {
+        for (store in stores) {
+            val editor = context.getSharedPreferences(store.name, Context.MODE_PRIVATE)
+                    .edit()
+                    .clear()
+            store.values.forEach { (key, entry) -> putTypedPreference(editor, key, entry) }
+            if (!editor.commit()) {
+                throw IOException("Could not restore named preference store '${store.name}'")
+            }
+        }
+    }
+
+    /** Captures any future user data written to filesDir without duplicating the known bundle and
+     * asset stores. Cache files are intentionally excluded: Android may delete cacheDir at any
+     * time, and regenerating a cache is not part of restoring app configuration. */
+    private fun exportInternalFiles(context: Context): JSONArray {
+        val representedRoots = CONFIG_FILES.values.toSet() + ASSET_STORES.map { store ->
+            store.folder(context).name
+        }
+        val candidates = context.filesDir.walkTopDown()
+                .filter { it.isFile }
+                .mapNotNull { file ->
+                    val path = file.relativeTo(context.filesDir).path
+                            .replace(File.separatorChar, '/')
+                    val firstSegment = path.substringBefore('/')
+                    if (firstSegment in representedRoots || path.split('/').any { it.startsWith('.') }) {
+                        null
+                    } else {
+                        path to file
+                    }
+                }
+                .toList()
+                .sortedBy { it.first }
+        if (candidates.size > MAX_INTERNAL_FILES) {
+            throw IOException("Too many internal files to back up")
+        }
+
+        var totalBytes = 0L
+        return JSONArray().also { filesJson ->
+            candidates.forEach { (path, file) ->
+                val bytes = file.readBytes()
+                if (bytes.isEmpty() || bytes.size > MAX_SINGLE_INTERNAL_FILE_BYTES ||
+                        totalBytes + bytes.size > MAX_TOTAL_INTERNAL_FILE_BYTES) {
+                    throw IOException("Invalid internal file size")
+                }
+                totalBytes += bytes.size
+                filesJson.put(JSONObject()
+                        .put("path", path)
+                        .put("data", Base64.encodeToString(bytes, Base64.NO_WRAP)))
+            }
+        }
+    }
+
+    private fun parseInternalFiles(json: JSONObject): List<BackupInternalFile> {
+        val filesJson = json.optJSONArray(INTERNAL_FILES_KEY)
+                ?: throw IOException("Backup is missing internal files")
+        if (filesJson.length() > MAX_INTERNAL_FILES) {
+            throw IOException("Too many internal files in backup")
+        }
+        val paths = HashSet<String>()
+        var totalBytes = 0L
+        return (0 until filesJson.length()).map { index ->
+            val entry = filesJson.optJSONObject(index)
+                    ?: throw IOException("Invalid internal file")
+            val path = entry.optString("path")
+            if (!isSafeInternalPath(path) || !paths.add(path)) {
+                throw IOException("Unsafe internal file path")
+            }
+            val bytes = try {
+                Base64.decode(entry.getString("data"), Base64.NO_WRAP)
+            } catch (e: IllegalArgumentException) {
+                throw IOException("Invalid internal file data", e)
+            }
+            if (bytes.isEmpty() || bytes.size > MAX_SINGLE_INTERNAL_FILE_BYTES ||
+                    totalBytes + bytes.size > MAX_TOTAL_INTERNAL_FILE_BYTES) {
+                throw IOException("Invalid internal file size")
+            }
+            totalBytes += bytes.size
+            BackupInternalFile(path, bytes)
+        }
+    }
+
+    private fun isSafeInternalPath(path: String): Boolean {
+        if (path.isBlank() || path.startsWith('/') || path.contains('\\')) return false
+        val segments = path.split('/')
+        return segments.all { segment ->
+            segment.isNotBlank() && segment != "." && segment != ".." &&
+                    segment.length <= 240 && segment.all { it.isLetterOrDigit() || it in "._@-" }
+        }
+    }
+
+    private fun safeInternalFile(context: Context, path: String): File {
+        if (!isSafeInternalPath(path)) throw IOException("Unsafe internal file path")
+        val root = context.filesDir.canonicalFile
+        val target = File(root, path).canonicalFile
+        if (target.path != root.path && !target.path.startsWith(root.path + File.separator)) {
+            throw IOException("Internal file escapes files directory")
+        }
+        val representedRoots = CONFIG_FILES.values + ASSET_STORES.map { it.folder(context).name }
+        if (path.substringBefore('/') in representedRoots) {
+            throw IOException("Internal file collides with a managed store")
+        }
+        return target
     }
 
     private fun parseAssets(json: JSONObject): List<RestoredAssetStore> {
@@ -405,6 +774,40 @@ object ConfigBackup {
             file.listFiles()?.forEach(::deleteTreeIfPresent)
         }
         if (!file.delete()) throw IOException("Could not remove temporary backup files")
+    }
+
+    /**
+     * Backups before schema 6 represented one complete snapshot, so their missing section list
+     * means "all". New backups always carry the list, including an intentionally empty selection.
+     */
+    private fun includedSections(json: JSONObject): Set<ConfigBackupSection> {
+        if (!json.has(INCLUDED_SECTIONS_KEY)) return ConfigBackupSection.ALL
+        val array = json.optJSONArray(INCLUDED_SECTIONS_KEY)
+                ?: throw IOException("Invalid backup section list")
+        val sections = LinkedHashSet<ConfigBackupSection>()
+        for (index in 0 until array.length()) {
+            val id = array.opt(index) as? String
+                    ?: throw IOException("Invalid backup section")
+            val section = ConfigBackupSection.fromId(id)
+                    ?: throw IOException("Unknown backup section '$id'")
+            if (!sections.add(section)) throw IOException("Duplicate backup section '$id'")
+        }
+        return sections
+    }
+
+    /** Maps every default-preference entry to exactly one selectable backup section. */
+    internal fun sectionForPreference(key: String): ConfigBackupSection = when {
+        key == "playlist_shortcuts" -> ConfigBackupSection.PLAYLIST_SHORTCUTS
+        key == "search_history" || key == "track_history" -> ConfigBackupSection.HISTORY
+        key in PRIVACY_KEYS -> ConfigBackupSection.PRIVACY
+        key in LOCAL_APP_STATE_KEYS -> ConfigBackupSection.LOCAL_APP_STATE
+        isWatchAppearancePreference(key) -> ConfigBackupSection.WATCH_APPEARANCE
+        else -> ConfigBackupSection.APP_SETTINGS
+    }
+
+    private fun isWatchAppearancePreference(key: String): Boolean {
+        val baseKey = key.substringBefore(FaceScopedPreferences.SCOPE_SEPARATOR)
+        return baseKey in WATCH_APPEARANCE_GLOBAL_KEYS || FaceScopedPreferences.isScoped(baseKey)
     }
 
     private fun schemaVersion(json: JSONObject): Int {

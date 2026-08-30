@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Layout do anel de progresso</string>
+
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Cor secundária</item>
+        <item>Cor terciária</item>
+        <item>Malha de cores</item>
+        <item>Aurora</item>
+        <item>Holofote</item>
+        <item>Vinheta</item>
+        <item>Tom dividido</item>
+        <item>Faixas de cores</item>
+        <item>Meia-noite</item>
+        <item>Halo</item>
+        <item>Desfoque de fumaça</item>
+    </string-array>
+
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Contas</item>
+        <item>Trilho duplo</item>
+        <item>Pulso</item>
+        <item>Cromado</item>
+        <item>Espectro</item>
+        <item>Degraus</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Borda dupla</item>
+        <item>Medidor vertical (esquerda)</item>
+        <item>Medidor vertical (direita)</item>
+        <item>Medidor superior</item>
+        <item>Medidor inferior</item>
+        <item>Dial central</item>
+    </string-array>
+
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Anel duplo</item>
+        <item>Contas</item>
+        <item>Traço e ponto</item>
+        <item>24 marcações</item>
+        <item>Somente progresso</item>
+        <item>Brilho</item>
+        <item>Duotônico</item>
+        <item>Ponteiro</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Borda da tela</item>
+        <item>Anel recuado</item>
+        <item>Anel interno</item>
+        <item>Anel espesso</item>
+        <item>Aberto embaixo</item>
+        <item>Aberto em cima</item>
+        <item>Arco esquerdo</item>
+        <item>Arco direito</item>
+        <item>Trilho duplo</item>
+    </string-array>
+
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Pílula compacta</item>
+        <item>Álbum quadrado</item>
+        <item>Pílula empilhada</item>
+        <item>Emblema</item>
+        <item>Barra de vidro</item>
+        <item>LCD</item>
+        <item>Quadrado contornado</item>
+        <item>Faixa</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Linha do tempo (superior)</item>
+        <item>Linha do tempo (inferior)</item>
+        <item>Segmentos (superior)</item>
+        <item>Linha vertical (esquerda)</item>
+        <item>Linha vertical (direita)</item>
+        <item>Dial central</item>
+        <item>Linha dupla</item>
+    </string-array>
+
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Suave</item>
+        <item>Cromado</item>
+        <item>Holográfico</item>
+        <item>Bolha</item>
+        <item>Trilho</item>
+        <item>Pôr do sol</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Leque</item>
+        <item>Órbita</item>
+        <item>Doca inferior</item>
+        <item>Coluna</item>
+        <item>Painel dividido</item>
+        <item>Diamante</item>
+        <item>Carrossel</item>
+    </string-array>
+
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Suave</item>
+        <item>Bloco</item>
+        <item>Tinta</item>
+        <item>Trilho</item>
+        <item>Pôr do sol</item>
+        <item>Bolha</item>
+        <item>Cromado</item>
+        <item>Holográfico</item>
+    </string-array>
+</resources>

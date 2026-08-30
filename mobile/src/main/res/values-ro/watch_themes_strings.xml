@@ -76,4 +76,6 @@
     <string name="watch_theme_face_note">Notă</string>
     <string name="watch_theme_face_verse">Vers</string>
     <string name="watch_theme_face_metadata">Metadata</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

@@ -26,7 +26,16 @@ internal data class PreviewActionIcon(
         val bitmap: Bitmap,
         val tintable: Boolean,
         val actionKey: String = "",
-        val title: String = ""
+        val title: String = "",
+        /**
+         * Whether [bitmap] is genuine artwork rather than an app-launcher icon.
+         *
+         * Deliberately separate from [tintable] and not derivable from it: a launcher icon is
+         * full-colour and therefore untintable too, so the two questions look alike and are not.
+         * `PhoneAction.isCoverArt` is the same flag the watch reads, and only a streaming shortcut
+         * with a *fetched* thumbnail sets it.
+         */
+        val coverArt: Boolean = false
 )
 
 internal data class PreviewButtonIcons(
@@ -100,7 +109,8 @@ object MiniButtonIconLoader {
                         bitmap = renderIcon(loadActionIcon(context, action), iconTintable),
                         tintable = iconTintable,
                         actionKey = action.javaClass.canonicalName ?: action.javaClass.name,
-                        title = action.title
+                        title = action.title,
+                        coverArt = action.isCoverArt
                 )
             } catch (e: Exception) {
                 Timber.w(e, "Could not decode action icon for preview")

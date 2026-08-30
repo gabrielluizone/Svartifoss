@@ -4,7 +4,7 @@ import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import { FieldValue, getFirestore } from "firebase-admin/firestore";
+import { FieldValue, Timestamp, getFirestore } from "firebase-admin/firestore";
 import {
     ALLOWED_BASE_FACES,
     defaultSettingsForFace,
@@ -28,12 +28,19 @@ const LIKE_VOTERS_COLLECTION = "voters";
 const PUBLISHED_THEMES_COLLECTION = "communityThemePublished";
 const SUBMISSION_QUOTA_COLLECTION = "communityThemeSubmissionQuota";
 const ACCOUNT_DELETION_COLLECTION = "communityThemeAccountDeletion";
+const ACCOUNT_COLLECTION = "communityThemeAccounts";
+const AUTHOR_NAMES_COLLECTION = "communityThemeAuthorNames";
+const DELETED_ACCOUNTS_COLLECTION = "communityThemeDeletedAccounts";
 const REVIEW_COLLECTION = "themeIntakeReview";
 const MAX_WITHDRAWALS_PER_RUN = 200;
 const MAX_REVIEWER_MIGRATIONS_PER_RUN = 400;
 const CATALOG_FILE = "index.json";
 const MANIFEST_SCHEMA_VERSION = 2;
 const ACCOUNT_DELETION_SCHEMA_VERSION = 1;
+const ACCOUNT_SCHEMA_VERSION = 1;
+const AUTHOR_NAME_SCHEMA_VERSION = 1;
+const DELETED_ACCOUNT_SCHEMA_VERSION = 1;
+const DELETED_ACCOUNT_TOMBSTONE_MS = 24 * 60 * 60 * 1000;
 const MAX_ACCOUNT_DELETIONS_PER_RUN = 50;
 const MAX_ERASED_THEMES_PER_ACCOUNT = 200;
 const ERASURE_WRITE_BATCH_SIZE = 200;
@@ -168,6 +175,84 @@ function assertPublicText(value, code) {
         fail(code);
     }
     return normalized;
+}
+
+/**
+ * The reservation document id is derived from the normalized display name. JavaScript's
+ * `toLowerCase` is locale-independent, matching the Android client and Firestore rules. The
+ * version prefix leaves room for a future canonicalization scheme without silently colliding with
+ * names already reserved under this one.
+ */
+function canonicalAuthorKey(authorName) {
+    return `v1:${authorName.toLowerCase()}`;
+}
+
+function validateAuthorAccount({ uid, data }) {
+    const account = data;
+    if (!isRecord(account)) fail("missing-author-account");
+    assertExactKeys(
+        account,
+        ["ownerUid", "accountSchemaVersion", "authorName", "authorKey", "createdAt"],
+        "invalid-author-account",
+    );
+    if (account.ownerUid !== uid) fail("author-account-owner-mismatch");
+    assertExactInteger(account.accountSchemaVersion, ACCOUNT_SCHEMA_VERSION, "invalid-author-account-schema");
+    const authorName = assertPublicText(account.authorName, "invalid-author-account-name");
+    const authorKey = assertOpaqueText(account.authorKey, MAX_PUBLIC_TEXT_LENGTH + 3, "invalid-author-account-key");
+    if (authorKey.includes("/") || authorKey !== canonicalAuthorKey(authorName)) {
+        fail("invalid-author-account-key");
+    }
+    assertFirestoreTimestamp(account.createdAt, "invalid-author-account-created-at");
+    return { authorName, authorKey };
+}
+
+function validateAuthorNameClaim({ uid, authorName, authorKey, data }) {
+    const claim = data;
+    if (!isRecord(claim)) fail("missing-author-name-claim");
+    assertExactKeys(
+        claim,
+        ["ownerUid", "nameSchemaVersion", "authorName", "authorKey", "createdAt"],
+        "invalid-author-name-claim",
+    );
+    if (claim.ownerUid !== uid) fail("author-name-owner-mismatch");
+    assertExactInteger(claim.nameSchemaVersion, AUTHOR_NAME_SCHEMA_VERSION, "invalid-author-name-schema");
+    if (claim.authorName !== authorName || claim.authorKey !== authorKey) {
+        fail("author-name-claim-mismatch");
+    }
+    assertFirestoreTimestamp(claim.createdAt, "invalid-author-name-created-at");
+}
+
+/**
+ * A named submission is publishable only while both immutable halves of its account identity
+ * agree. Anonymous submissions deliberately carry no public-name reservation.
+ */
+async function validateAuthorIdentity({ firestore, transaction, uid, author }) {
+    if (author === "Anonymous") return null;
+    const accountReference = firestore.collection(ACCOUNT_COLLECTION).doc(uid);
+    let accountSnapshot;
+    try {
+        accountSnapshot = transaction === undefined
+            ? await accountReference.get()
+            : await transaction.get(accountReference);
+    } catch (_error) {
+        throw new Error("Could not read the community author account");
+    }
+    if (!accountSnapshot.exists) fail("missing-author-account");
+    const identity = validateAuthorAccount({ uid, data: accountSnapshot.data() });
+    if (identity.authorName !== author) fail("submission-author-mismatch");
+
+    const claimReference = firestore.collection(AUTHOR_NAMES_COLLECTION).doc(identity.authorKey);
+    let claimSnapshot;
+    try {
+        claimSnapshot = transaction === undefined
+            ? await claimReference.get()
+            : await transaction.get(claimReference);
+    } catch (_error) {
+        throw new Error("Could not read the community author-name reservation");
+    }
+    if (!claimSnapshot.exists) fail("missing-author-name-claim");
+    validateAuthorNameClaim({ uid, ...identity, data: claimSnapshot.data() });
+    return identity;
 }
 
 function assertOpaqueText(value, maximumLength, code) {
@@ -487,11 +572,11 @@ export function validateApprovedDocument({ id, data, publishedAt }) {
     if (!isRecord(data)) fail("invalid-intake-document");
     if (data.status !== "approved") fail("document-is-not-approved");
     assertOpaqueText(data.ownerUid, 128, "invalid-owner-uid");
-    assertExactInteger(
-        data.submissionSchemaVersion,
-        SUBMISSION_SCHEMA_VERSION,
-        "unsupported-submission-schema",
-    );
+    const submissionSchemaVersion = data.submissionSchemaVersion;
+    if (!Number.isSafeInteger(submissionSchemaVersion) ||
+            (submissionSchemaVersion !== 1 && submissionSchemaVersion !== SUBMISSION_SCHEMA_VERSION)) {
+        fail("unsupported-submission-schema");
+    }
     const name = assertPublicText(data.name, "invalid-document-name");
     const author = assertPublicText(data.author, "invalid-document-author");
     const baseFace = assertAllowedBaseFace(data.baseFace, "invalid-document-base-face");
@@ -529,6 +614,7 @@ export function validateApprovedDocument({ id, data, publishedAt }) {
     }
     return {
         id: documentId,
+        submissionSchemaVersion,
         settingsDigest: expectedDigest,
         changedSettings,
         publicProfile,
@@ -991,6 +1077,34 @@ async function collectVoterReferences(firestore, themeId) {
 }
 
 /**
+ * Resolves the reservation that belongs to an account before its Auth identity is deleted. A
+ * missing account is valid for anonymous/legacy users that never reserved a public name. If an
+ * account exists, however, its claim must still agree so deletion can never release somebody
+ * else's name through a corrupt profile.
+ */
+async function authorIdentityForErasure(firestore, uid) {
+    const accountReference = firestore.collection(ACCOUNT_COLLECTION).doc(uid);
+    let accountSnapshot;
+    try {
+        accountSnapshot = await accountReference.get();
+    } catch (_error) {
+        throw new Error("Could not read the community author account before erasure");
+    }
+    if (!accountSnapshot.exists) return null;
+    const identity = validateAuthorAccount({ uid, data: accountSnapshot.data() });
+    const claimReference = firestore.collection(AUTHOR_NAMES_COLLECTION).doc(identity.authorKey);
+    let claimSnapshot;
+    try {
+        claimSnapshot = await claimReference.get();
+    } catch (_error) {
+        throw new Error("Could not read the community author-name reservation before erasure");
+    }
+    if (!claimSnapshot.exists) fail("missing-author-name-claim");
+    validateAuthorNameClaim({ uid, ...identity, data: claimSnapshot.data() });
+    return identity;
+}
+
+/**
  * Carries out one validated erasure, after the Git commit that withdrew any public files.
  *
  * The order is deliberate: everything this account owns or wrote goes first, the Firebase identity
@@ -1001,6 +1115,9 @@ async function applyAccountErasure({ firestore, auth, request, catalogIds, logge
     if (auth === undefined || auth === null || typeof auth.deleteUser !== "function") {
         throw new Error("Account erasure requires a Firebase Auth client");
     }
+    // Resolve the exact reservation now, but retain it until Firebase Authentication confirms that
+    // the account is gone. This keeps a still-live identity from racing to reclaim its own name.
+    const authorIdentity = await authorIdentityForErasure(firestore, request.uid);
     const intakeCollection = firestore.collection(INTAKE_COLLECTION);
     const keptThemeIds = new Set(request.keptThemeIds);
     const intakeOperations = request.intakeIds.map((id) => {
@@ -1062,11 +1179,22 @@ async function applyAccountErasure({ firestore, auth, request, catalogIds, logge
         }
     }
 
-    await commitInBatches(
-        firestore,
-        [(batch) => batch.delete(firestore.collection(ACCOUNT_DELETION_COLLECTION).doc(request.uid))],
-        "Could not close a completed community-account erasure request",
-    );
+    const completion = firestore.batch();
+    completion.delete(firestore.collection(ACCOUNT_COLLECTION).doc(request.uid));
+    if (authorIdentity !== null) {
+        completion.delete(firestore.collection(AUTHOR_NAMES_COLLECTION).doc(authorIdentity.authorKey));
+    }
+    completion.delete(firestore.collection(ACCOUNT_DELETION_COLLECTION).doc(request.uid));
+    completion.set(firestore.collection(DELETED_ACCOUNTS_COLLECTION).doc(request.uid), {
+        schemaVersion: DELETED_ACCOUNT_SCHEMA_VERSION,
+        deletedAt: FieldValue.serverTimestamp(),
+        expiresAt: Timestamp.fromMillis(Date.now() + DELETED_ACCOUNT_TOMBSTONE_MS),
+    });
+    try {
+        await completion.commit();
+    } catch (_error) {
+        throw new Error("Could not finalize a completed community-account erasure");
+    }
     log(
         logger,
         "log",
@@ -1293,6 +1421,21 @@ async function buildPublicationPlan({ firestore, root, now, logger, refreshLikes
             log(logger, "warn", `Skipped ${idForLog}: ${error instanceof ValidationError ? error.code : "invalid-intake-document"}`);
             queueRejection(rejections, document, "invalid-submission");
             continue;
+        }
+        if (candidate.submissionSchemaVersion >= 2) {
+            try {
+                await validateAuthorIdentity({
+                    firestore,
+                    uid: ownerUid,
+                    author: candidate.publicProfile.author,
+                });
+            } catch (error) {
+                if (!(error instanceof ValidationError)) throw error;
+                skipped += 1;
+                log(logger, "warn", `Skipped ${idForLog}: ${error.code}`);
+                queueRejection(rejections, document, "invalid-author-identity");
+                continue;
+            }
         }
 
         let existingProfile;
@@ -1748,8 +1891,17 @@ export async function finalizePublishedThemes({
                         data: snapshot.data(),
                         publishedAt: item.publishedAt,
                     });
-                } catch (_error) {
-                    return false;
+                    if (current.submissionSchemaVersion >= 2) {
+                        await validateAuthorIdentity({
+                            firestore,
+                            transaction,
+                            uid: snapshot.data().ownerUid,
+                            author: current.publicProfile.author,
+                        });
+                    }
+                } catch (error) {
+                    if (error instanceof ValidationError) return false;
+                    throw error;
                 }
                 if (!digestMatches(current.settingsDigest, item.settingsDigest) ||
                         !publicProfilesMatch(staticProfile, current.publicProfile) ||

@@ -8,9 +8,10 @@ package com.svartifoss.snfell.common
  * composition cannot be put on another face or saved into a custom theme, so the only way to have
  * it was to accept everything else that face decided too.
  *
- * Rendered by the shared background layer (`PlayerBackgroundTreatment`), so it sits above the
- * backdrop and below the face's own content - which is the only stacking that works. Drawn over the
- * whole face it would tint the text; drawn under the backdrop an opaque one would hide it.
+ * Rendered by the shared player-background layer, so it sits above the backdrop and below the
+ * face's own content - which is the only stacking that works. Drawn over the whole face it would
+ * tint the text; drawn under an opaque backdrop it would hide it. Split and Classic place their
+ * equivalent layer after their own opaque backdrop.
  *
  * [OFF] is the default for every face but Verse. This is a strong, opinionated treatment, and
  * turning it on everywhere would redesign fifteen faces nobody asked to have redesigned.

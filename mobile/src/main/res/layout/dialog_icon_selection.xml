@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Content of BuiltInIconPicker's dialog. The Lyra rounded shell, the title and the
+     gallery/cancel button row all still come from AlertDialog.Builder (LyraAlertDialogTheme
+     supplies the shell; the title and buttons are set on the builder itself), matching every
+     other hand-built Lyra dialog - this view is only the search box and the icon grid. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/icon_search_input"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="6dp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/lyra_text_secondary"
+        android:fontFamily="@font/google_sans"
+        android:hint="@string/icon_selection_search_hint"
+        android:imeOptions="actionSearch"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textColor="@color/lyra_on_surface"
+        android:textColorHint="@color/lyra_pref_summary"
+        android:textSize="15sp"
+        tools:ignore="UseAppTint,Autofill" />
+
+    <!-- Fixed height rather than wrap_content: with ~270 icons the grid would otherwise try to
+         lay out to its full extent before the dialog clips it, so this is what actually makes it
+         scroll instead of just running off the bottom of the screen. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="360dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/icon_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="12dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_icon_picker" />
+
+        <TextView
+            android:id="@+id/icon_search_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/google_sans"
+            android:gravity="center"
+            android:padding="24dp"
+            android:text="@string/icon_selection_search_empty"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+</LinearLayout>

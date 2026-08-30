@@ -36,11 +36,16 @@ class AppearancePreferenceScopingTest {
         /** Rows that are buttons, links or explanatory text rather than stored settings. */
         val NON_PREFERENCE_ROWS = setOf(
                 "reset_appearance",
-                "reset_all_faces",
                 "watch_streaming_shortcuts",
                 "quick_panel_open_note",
                 "screen_buttons_hint",
-                "wear_flex_axes_hint"
+                "wear_flex_axes_hint",
+                // A custom view over the real typography Preference objects; stores nothing.
+                "typography_editor_surface",
+                // The same, for the Color, Panel and Player pages' contextual editors.
+                "color_editor_surface",
+                "panel_editor_surface",
+                "player_editor_surface"
         )
     }
 
@@ -67,11 +72,13 @@ class AppearancePreferenceScopingTest {
      * Keys that style one visual element must all agree on being per-face.
      *
      * This is the rule the screen-based test above cannot enforce, because an appearance key does
-     * not have to live on the Watch face screen: `screen_buttons_bottom_offset` sits in developer
-     * settings, so it was invisible to that check while its four siblings
+     * not have to live on the Watch face screen: `screen_buttons_bottom_offset` had no row on it,
+     * so it was invisible to that check while its four siblings
      * (`screen_buttons_bg_style` / `_curve_style` / `_opacity` / `_shape`) were all scoped. One
      * family, split down the middle - which is exactly how a setting ends up following the user
-     * from face to face while the ones next to it do not.
+     * from face to face while the ones next to it do not. (That key is retired now - the row's
+     * position is automatic - but it still has to stay scoped and exportable, because published
+     * themes carry it; see its note in MiscPreferences.)
      */
     @Test
     fun eachAppearanceFamilyIsScopedConsistently() {
@@ -80,6 +87,8 @@ class AppearancePreferenceScopingTest {
                 "wear_clock_",
                 "wear_title_font_",
                 "wear_artist_font_",
+                "wear_track_time_font_",
+                "wear_lyrics_font_",
                 "wear_source_icon_",
                 "wear_aod_",
                 "wear_font_flex_"
@@ -108,8 +117,8 @@ class AppearancePreferenceScopingTest {
      * XML.
      *
      * MiscPreferences is the only complete source: `screen_buttons_bottom_offset` - the key this
-     * family check exists for - has no row in either settings screen at all (it is set from the
-     * developer menu), so an XML-based sweep could never see it.
+     * family check exists for - has no row in either settings screen at all, so an XML-based sweep
+     * could never see it.
      */
     private fun knownKeys(): Set<String> {
         val file = listOf(

@@ -62,8 +62,22 @@ object ThemeAppearance {
             "split",
             "note",
             "verse",
-            "metadata"
+            "metadata",
+            "ribbon",
+            "frame"
     )
+
+    /**
+     * Faces that draw the playback queue's own covers as part of their composition, at a size the
+     * 30dp list thumbnail cannot serve - Carousel's neighbouring cards, Ribbon's rails.
+     *
+     * Named here rather than in either module because both sides act on it and neither can see the
+     * other: the phone sizes the queue thumbnails it transmits (`OpenPlaylistAction`), and the
+     * watch warms the queue the moment such a face becomes visible (`MainActivity`). A face added
+     * to one list and not the other renders a soft cover, or an empty rail, with nothing to say
+     * why.
+     */
+    val QUEUE_ART_FACES: Set<String> = setOf("carousel", "ribbon")
 
     fun normalizeBaseFace(face: String?): String =
             face?.takeIf { it in ALLOWED_BASE_FACES } ?: DEFAULT_FACE

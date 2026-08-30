@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A PreferenceCategory that groups rows without announcing itself. The Text page is already
+     titled by its tab, so the ordinary header would repeat that word directly above the editor.
+     The category itself has to stay: SettingsCatalog resolves page visibility by category key. -->
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:importantForAccessibility="no" />

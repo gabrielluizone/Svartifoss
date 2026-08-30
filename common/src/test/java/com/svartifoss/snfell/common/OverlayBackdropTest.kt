@@ -6,6 +6,50 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class OverlayBackdropTest {
+    private val explicitPreferenceMappings = linkedMapOf(
+            "acrylic" to OverlayBackdrop.ACRYLIC,
+            "blur" to OverlayBackdrop.ACRYLIC,
+            "black" to OverlayBackdrop.SOLID_BLACK,
+            "album" to OverlayBackdrop.SOLID_ALBUM,
+            "secondary" to OverlayBackdrop.SOLID_SECONDARY,
+            "tertiary" to OverlayBackdrop.SOLID_TERTIARY,
+            "glass" to OverlayBackdrop.GLASS,
+            "gradient" to OverlayBackdrop.GRADIENT,
+            "duotone" to OverlayBackdrop.DUOTONE,
+            "prism" to OverlayBackdrop.PRISM,
+            "mesh" to OverlayBackdrop.MESH,
+            "aurora" to OverlayBackdrop.AURORA,
+            "spotlight" to OverlayBackdrop.SPOTLIGHT,
+            "vignette" to OverlayBackdrop.VIGNETTE,
+            "split" to OverlayBackdrop.SPLIT,
+            "bands" to OverlayBackdrop.BANDS,
+            "midnight" to OverlayBackdrop.MIDNIGHT,
+            "halo" to OverlayBackdrop.HALO,
+            "smoke" to OverlayBackdrop.SMOKE,
+            "liquid_glass" to OverlayBackdrop.LIQUID_GLASS,
+            "expressive" to OverlayBackdrop.EXPRESSIVE,
+            "expressive_no_blur" to OverlayBackdrop.EXPRESSIVE_NO_BLUR
+    )
+
+    @Test
+    fun everyExplicitPreferenceTokenMapsToItsBackdrop() {
+        explicitPreferenceMappings.forEach { (preference, expected) ->
+            assertEquals(
+                    "Unexpected mapping for preference '$preference'",
+                    expected,
+                    OverlayBackdrop.fromPreference(preference)
+            )
+        }
+
+        assertEquals(
+                OverlayBackdrop.values().filterNot { it == OverlayBackdrop.FOLLOW_STYLE }.toSet(),
+                explicitPreferenceMappings.values.toSet()
+        )
+        assertEquals(OverlayBackdrop.FOLLOW_STYLE, OverlayBackdrop.fromPreference("follow"))
+        assertEquals(OverlayBackdrop.FOLLOW_STYLE, OverlayBackdrop.fromPreference("unknown"))
+        assertEquals(OverlayBackdrop.FOLLOW_STYLE, OverlayBackdrop.fromPreference(null))
+    }
+
     @Test
     fun explicitBackgroundNeverDependsOnContentStyle() {
         assertEquals(
@@ -38,15 +82,40 @@ class OverlayBackdropTest {
                 OverlayBackdropResolver.resolve("follow", "glass_tonal"))
         assertEquals(OverlayBackdrop.GLASS,
                 OverlayBackdropResolver.resolve("follow", "outline_glass_white"))
+        assertEquals(OverlayBackdrop.GLASS,
+                OverlayBackdropResolver.resolve("follow", "chrome"))
+        assertEquals(OverlayBackdrop.SOLID_ALBUM,
+                OverlayBackdropResolver.resolve("follow", "soft"))
+        assertEquals(OverlayBackdrop.SOLID_ALBUM,
+                OverlayBackdropResolver.resolve("follow", "bubble"))
+        assertEquals(OverlayBackdrop.GRADIENT,
+                OverlayBackdropResolver.resolve("follow", "sunset"))
+        assertEquals(OverlayBackdrop.DUOTONE,
+                OverlayBackdropResolver.resolve("follow", "dual"))
+        assertEquals(OverlayBackdrop.PRISM,
+                OverlayBackdropResolver.resolve("follow", "holo"))
+        assertEquals(OverlayBackdrop.PRISM,
+                OverlayBackdropResolver.resolve("follow", "spectrum"))
     }
 
     @Test
-    fun onlyCompositedTreatmentsRequestThePrecomputedBlurLayer() {
-        assertTrue(OverlayBackdrop.ACRYLIC.usesAlbumBlur)
-        assertTrue(OverlayBackdrop.GLASS.usesAlbumBlur)
-        assertTrue(OverlayBackdrop.PRISM.usesAlbumBlur)
-        assertFalse(OverlayBackdrop.SOLID_BLACK.usesAlbumBlur)
-        assertFalse(OverlayBackdrop.GRADIENT.usesAlbumBlur)
+    fun blurPolicyIsDefinedForEveryBackdrop() {
+        val blurredBackdrops = setOf(
+                OverlayBackdrop.ACRYLIC,
+                OverlayBackdrop.GLASS,
+                OverlayBackdrop.PRISM,
+                OverlayBackdrop.LIQUID_GLASS,
+                OverlayBackdrop.EXPRESSIVE,
+                OverlayBackdrop.SMOKE
+        )
+
+        OverlayBackdrop.values().forEach { backdrop ->
+            assertEquals(
+                    "Unexpected album-blur policy for $backdrop",
+                    backdrop in blurredBackdrops,
+                    backdrop.usesAlbumBlur
+            )
+        }
     }
 
     @Test
@@ -87,6 +156,13 @@ class OverlayBackdropTest {
         assertEquals("tonal", OverlayBackdropResolver.seekContentStyle("expressive"))
         assertEquals("material", OverlayBackdropResolver.seekContentStyle("material"))
         assertEquals("light", OverlayBackdropResolver.seekContentStyle("white"))
+        assertEquals("tonal", OverlayBackdropResolver.seekContentStyle("square_album"))
+        assertEquals("tonal", OverlayBackdropResolver.seekContentStyle("stacked_pill"))
+        assertEquals("gradient", OverlayBackdropResolver.seekContentStyle("ribbon"))
+        assertEquals("terminal", OverlayBackdropResolver.seekContentStyle("lcd"))
+        listOf("compact_pill", "badge", "glass_bar", "outline_square").forEach { style ->
+            assertEquals("glass", OverlayBackdropResolver.seekContentStyle(style))
+        }
         // plain/pill/giant/split and any unknown value all fall back to glass - the control-style
         // theme deliberately no longer influences the seek backdrop.
         assertEquals("glass", OverlayBackdropResolver.seekContentStyle("plain"))

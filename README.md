@@ -30,7 +30,7 @@ the fork.
   <img src="docs/images/watch-expressive-blue.jpg" width="215" alt="Expressive face, album-derived palette" />
   <img src="docs/images/watch-poster.jpg" width="215" alt="Poster face, full-bleed album art" />
 </p>
-<p align="center"><em>Same watch, three of the eighteen built-in faces &mdash; each one built from whatever's playing</em></p>
+<p align="center"><em>Same watch, three of the twenty built-in faces &mdash; each one built from whatever's playing</em></p>
 
 ## Contents
 
@@ -46,7 +46,7 @@ the fork.
 
 | | |
 |---|---|
-| **Eighteen now-playing faces** | Classic, Expressive, and a curated collection (Poster, Studio, Vinyl, Halo, Aurora, Eclipse, Spectrum, Material, Depth, Carousel, Chat, Split, Note, the lyric-following Verse, the detail-listing Metadata and the Spotify-style Immersive layout) — each one builds its gradients, accents and progress treatment from the album art actually playing. An optional edge progress ring can be made draggable on every layout, with optional rotary-crown seek. Title and artist can each be hidden independently, with configurable sizing/marquee behavior. |
+| **Twenty now-playing faces** | Classic, Expressive, and a curated collection (Poster, Studio, Vinyl, Halo, Aurora, Eclipse, Spectrum, Material, Depth, Carousel, Chat, Split, Note, the lyric-following Verse, the detail-listing Metadata, the Spotify-style Immersive layout, the queue-art Ribbon and the framed Frame) — each one builds its gradients, accents and progress treatment from the album art actually playing. An optional edge progress ring can be made draggable on every layout, with optional rotary-crown seek. Title and artist can each be hidden independently, with configurable sizing/marquee behavior. |
 | **Configurable input** | Assign any supported action — play/pause, skip, volume, shuffle, repeat (including repeat-one), like/favorite, search, playlist shortcuts, Tasker tasks, opening another app — to physical buttons, screen quadrants (tap zones), swipe gestures (up/down/left), or the now-configurable center tap. |
 | **Quick actions panel** | Four distinct layouts — Arc, Hero, Grid, and Labelled rows — each in a choice of styles, from full glass containers down to a bare accent marker. Slots can be manually assigned or mirror the current media notification's real actions and icons. |
 | **Queue and play history** | Browse the app's real playback queue when one is exposed, or fall back to a locally tracked play-history list when it isn't. A dozen+ visual styles, including cover-art rows that mirror each entry's own artwork. |
@@ -85,8 +85,9 @@ the fork.
 - A dozen+ seek and volume readout styles (glass pill, expressive, material,
   giant, position/total, terminal, mono, hairline, and more), plus volume
   layouts that can sit on any edge of the bezel or wrap it as a full ring.
-- 18 typefaces for track title/artist, including three free bundled fonts
-  (Poppins, Montserrat, Marcellus).
+- 36 typefaces for track text, including Inter, Atkinson Hyperlegible, Lora,
+  Fraunces, Space Mono, Barlow Condensed and more; title, artist, lyrics,
+  clock and track time can each use their own choice.
 
 <p align="center">
   <img src="docs/images/watch-studio.jpg" width="215" alt="Studio face" />
@@ -119,7 +120,7 @@ the fork.
   The explicit **Liked** filter reads only your own reaction documents for IDs
   already public in that catalogue; it never lists voters. You can explicitly
   submit a user-owned local theme for review; the public entry uses its chosen
-  name and pseudonym rather than Google account information. The local preflight
+  name and either a pseudonym or Anonymous rather than Google account information. The local preflight
   requires 12 applicable visual changes and the rules allow up to three
   submissions in a rolling 24-hour window. Theme updates are not implemented
   yet. See the [privacy policy](docs/privacy-policy.md).

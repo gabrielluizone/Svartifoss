@@ -20,8 +20,10 @@ class WatchSearchTargetResolverTest {
     @Test
     fun `disabled title and artist rows lead to their Typography switches`() {
         val titleKeys = listOf(
+                "wear_title_font",
                 "wear_title_text_mode",
                 "wear_title_font_weight",
+                "wear_title_font_flex_width",
                 "wear_title_color_mode",
                 "wear_title_custom_color",
                 "wear_title_adaptive_contrast")
@@ -33,8 +35,10 @@ class WatchSearchTargetResolverTest {
         }
 
         val artistKeys = listOf(
+                "wear_artist_font",
                 "wear_artist_font_scale",
                 "wear_artist_font_tracking",
+                "wear_artist_font_flex_grade",
                 "wear_artist_color_mode",
                 "wear_artist_custom_color",
                 "wear_artist_adaptive_contrast")
@@ -130,15 +134,54 @@ class WatchSearchTargetResolverTest {
     }
 
     @Test
-    fun `Flex axes lead to font selection until Flex is active`() {
-        listOf("wear_flex_axes_hint", "wear_font_flex_width").forEach { key ->
+    fun `global Flex axes require the global font to use Flex`() {
+        listOf(
+                "wear_flex_axes_hint",
+                "wear_font_flex_width",
+                "wear_font_flex_optical_size",
+                "wear_font_flex_grade",
+                "wear_font_flex_roundness").forEach { key ->
             assertRedirect(
-                    resolve(key = key, strings = mapOf("wear_font" to "google_sans")),
+                    resolve(
+                            key = key,
+                            strings = mapOf(
+                                    "wear_font" to "google_sans",
+                                    "wear_clock_font" to WatchTypography.FLEX_FONT_KEY,
+                                    "wear_lyrics_font" to WatchTypography.FLEX_FONT_KEY,
+                                    "wear_track_time_font" to WatchTypography.FLEX_FONT_KEY)),
                     WatchFacePrefsFragment.SECTION_TYPOGRAPHY,
                     "wear_font")
             assertFalse(resolve(
                     key = key,
                     strings = mapOf("wear_font" to WatchTypography.FLEX_FONT_KEY)).redirected)
+        }
+    }
+
+    @Test
+    fun `individual Flex axes require Flex on their own font override`() {
+        val axisFamilies = listOf(
+                "wear_title_font_flex_" to "wear_title_font",
+                "wear_artist_font_flex_" to "wear_artist_font",
+                "wear_clock_font_flex_" to "wear_clock_font",
+                "wear_lyrics_font_flex_" to "wear_lyrics_font",
+                "wear_track_time_font_flex_" to "wear_track_time_font")
+        val axes = listOf("width", "optical_size", "grade", "roundness")
+
+        axisFamilies.forEach { (prefix, fontKey) ->
+            axes.forEach { axis ->
+                val key = "$prefix$axis"
+                assertRedirect(
+                        resolve(
+                                key = key,
+                                strings = mapOf(
+                                        "wear_font" to WatchTypography.FLEX_FONT_KEY,
+                                        fontKey to "google_sans")),
+                        WatchFacePrefsFragment.SECTION_TYPOGRAPHY,
+                        fontKey)
+                assertFalse(resolve(
+                        key = key,
+                        strings = mapOf(fontKey to WatchTypography.FLEX_FONT_KEY)).redirected)
+            }
         }
     }
 
@@ -226,6 +269,22 @@ class WatchSearchTargetResolverTest {
         assertFalse(resolve(
                 key = "wear_aod_show_art",
                 strings = mapOf("wear_aod_style" to "classic")).redirected)
+    }
+
+    @Test
+    fun `ribbon and frame keep visual AOD controls on their own rows`() {
+        listOf("ribbon", "frame").forEach { face ->
+            listOf(
+                    "wear_aod_show_transport",
+                    "wear_aod_show_progress",
+                    "wear_aod_show_pills").forEach { key ->
+                assertFalse(
+                        "$face should support $key when its AOD style follows the face",
+                        resolve(
+                                key = key,
+                                strings = mapOf("wear_screen_face" to face)).redirected)
+            }
+        }
     }
 
     @Test

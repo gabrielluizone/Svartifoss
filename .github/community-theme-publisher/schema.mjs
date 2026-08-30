@@ -7,7 +7,7 @@ import { readFileSync } from "node:fs";
  * the app grows a new appearance preference. Update it in the same change as the Android schema.
  */
 export const PROFILE_SCHEMA_VERSION = 1;
-export const SUBMISSION_SCHEMA_VERSION = 1;
+export const SUBMISSION_SCHEMA_VERSION = 2;
 export const PROFILE_REVISION = 1;
 export const MINIMUM_APP_VERSION = "3.3";
 
@@ -29,6 +29,8 @@ export const ALLOWED_BASE_FACES = Object.freeze([
     "note",
     "verse",
     "metadata",
+    "ribbon",
+    "frame",
 ]);
 
 const STRING_SETTINGS = [
@@ -44,6 +46,8 @@ const STRING_SETTINGS = [
     "wear_aod_style",
     "wear_artist_color_mode",
     "wear_artist_custom_color",
+    "wear_artist_font",
+    "wear_artist_text_case",
     "wear_carousel_card_shape",
     "wear_clock_color_mode",
     "wear_clock_custom_color",
@@ -57,11 +61,13 @@ const STRING_SETTINGS = [
     "wear_lyrics_font",
     "wear_mini_buttons_mode",
     "wear_normal_color",
+    "wear_note_cover_shape",
     "wear_overlay_backdrop_style",
     "wear_player_shading_intensity",
     "wear_player_shading_style",
     "wear_progress_color_mode",
     "wear_progress_custom_color",
+    "wear_progress_layout",
     "wear_progress_style",
     "wear_queue_style",
     "wear_quick_panel_color_mode",
@@ -76,7 +82,10 @@ const STRING_SETTINGS = [
     "wear_split_panel",
     "wear_title_color_mode",
     "wear_title_custom_color",
+    "wear_title_font",
+    "wear_title_text_case",
     "wear_title_text_mode",
+    "wear_track_time_font",
     "wear_track_time_mode",
     "wear_up_next_pill_style",
     "wear_volume_color_mode",
@@ -124,6 +133,7 @@ const BOOLEAN_SETTINGS = [
     "wear_show_up_next_pill",
     "wear_title_adaptive_contrast",
     "wear_title_font_italic",
+    "wear_track_time_font_italic",
 ];
 
 const INT_SETTINGS = [
@@ -138,21 +148,45 @@ const INT_SETTINGS = [
     "wear_artist_font_scale",
     "wear_artist_font_tracking",
     "wear_artist_font_weight",
+    "wear_artist_font_flex_grade",
+    "wear_artist_font_flex_optical_size",
+    "wear_artist_font_flex_roundness",
+    "wear_artist_font_flex_width",
     "wear_clock_font_scale",
     "wear_clock_font_tracking",
     "wear_clock_font_weight",
+    "wear_clock_font_flex_grade",
+    "wear_clock_font_flex_optical_size",
+    "wear_clock_font_flex_roundness",
+    "wear_clock_font_flex_width",
     "wear_clock_opacity",
     "wear_color_hue_shift",
     "wear_font_flex_grade",
     "wear_font_flex_optical_size",
     "wear_font_flex_roundness",
     "wear_font_flex_width",
+    "wear_lyrics_font_flex_grade",
+    "wear_lyrics_font_flex_optical_size",
+    "wear_lyrics_font_flex_roundness",
+    "wear_lyrics_font_flex_width",
     "wear_source_icon_opacity",
     "wear_source_icon_scale",
     "wear_title_font_opacity",
     "wear_title_font_scale",
     "wear_title_font_tracking",
     "wear_title_font_weight",
+    "wear_title_font_flex_grade",
+    "wear_title_font_flex_optical_size",
+    "wear_title_font_flex_roundness",
+    "wear_title_font_flex_width",
+    "wear_track_time_font_opacity",
+    "wear_track_time_font_scale",
+    "wear_track_time_font_tracking",
+    "wear_track_time_font_weight",
+    "wear_track_time_font_flex_grade",
+    "wear_track_time_font_flex_optical_size",
+    "wear_track_time_font_flex_roundness",
+    "wear_track_time_font_flex_width",
 ];
 
 export const SETTING_TYPES = Object.freeze(Object.fromEntries([
@@ -487,11 +521,17 @@ const DEFAULT_VALUES = Object.freeze({
     wear_artist_color_mode: "follow",
     wear_artist_custom_color: "",
     wear_artist_desaturated: false,
+    wear_artist_font: "follow",
+    wear_artist_font_flex_grade: 0,
+    wear_artist_font_flex_optical_size: 18,
+    wear_artist_font_flex_roundness: 0,
+    wear_artist_font_flex_width: 100,
     wear_artist_font_italic: false,
     wear_artist_font_opacity: 100,
     wear_artist_font_scale: 100,
     wear_artist_font_tracking: 0,
     wear_artist_font_weight: 400,
+    wear_artist_text_case: "normal",
     wear_carousel_card_shape: "rounded",
     wear_classic_icons_visible: true,
     wear_clock_adaptive_contrast: false,
@@ -502,6 +542,10 @@ const DEFAULT_VALUES = Object.freeze({
     wear_clock_font_scale: 100,
     wear_clock_font_tracking: 0,
     wear_clock_font_weight: 400,
+    wear_clock_font_flex_grade: 0,
+    wear_clock_font_flex_optical_size: 18,
+    wear_clock_font_flex_roundness: 0,
+    wear_clock_font_flex_width: 100,
     wear_clock_opacity: 60,
     wear_color_hue_shift: 0,
     wear_color_modifier: "none",
@@ -521,6 +565,10 @@ const DEFAULT_VALUES = Object.freeze({
     wear_keep_screen_on: false,
     wear_list_row_size: "normal",
     wear_lyrics_font: "follow",
+    wear_lyrics_font_flex_grade: 0,
+    wear_lyrics_font_flex_optical_size: 18,
+    wear_lyrics_font_flex_roundness: 0,
+    wear_lyrics_font_flex_width: 100,
     wear_metadata_show_core: true,
     wear_metadata_show_credits: true,
     wear_metadata_show_identifiers: false,
@@ -530,6 +578,7 @@ const DEFAULT_VALUES = Object.freeze({
     wear_mini_buttons_mode: "always",
     wear_normal_color: "",
     wear_normal_color_multi: true,
+    wear_note_cover_shape: "circle",
     wear_overlay_backdrop_style: "follow",
     wear_player_shading_intensity: "balanced",
     wear_player_shading_style: "follow",
@@ -537,6 +586,7 @@ const DEFAULT_VALUES = Object.freeze({
     wear_progress_custom_color: "",
     wear_progress_desaturated: false,
     wear_progress_gradient: true,
+    wear_progress_layout: "edge",
     wear_progress_style: "solid",
     wear_quadrant_tap_flash: false,
     wear_queue_style: "glass",
@@ -560,12 +610,28 @@ const DEFAULT_VALUES = Object.freeze({
     wear_title_adaptive_contrast: false,
     wear_title_color_mode: "face",
     wear_title_custom_color: "",
+    wear_title_font: "follow",
+    wear_title_font_flex_grade: 0,
+    wear_title_font_flex_optical_size: 18,
+    wear_title_font_flex_roundness: 0,
+    wear_title_font_flex_width: 100,
     wear_title_font_italic: false,
     wear_title_font_opacity: 100,
     wear_title_font_scale: 100,
     wear_title_font_tracking: 0,
     wear_title_font_weight: 400,
+    wear_title_text_case: "normal",
     wear_title_text_mode: "smart",
+    wear_track_time_font: "follow",
+    wear_track_time_font_flex_grade: 0,
+    wear_track_time_font_flex_optical_size: 18,
+    wear_track_time_font_flex_roundness: 0,
+    wear_track_time_font_flex_width: 100,
+    wear_track_time_font_italic: false,
+    wear_track_time_font_opacity: 100,
+    wear_track_time_font_scale: 100,
+    wear_track_time_font_tracking: 0,
+    wear_track_time_font_weight: 400,
     wear_track_time_mode: "always",
     wear_up_next_pill_style: "follow",
     wear_volume_color_mode: "follow",
@@ -574,6 +640,9 @@ const DEFAULT_VALUES = Object.freeze({
     wear_volume_style: "glass",
 });
 
+// Mirrors FaceScopedPreferences: the faces whose overlay surfaces default to the album-accent
+// styles. Ribbon and Frame reach the same defaults through their own per-face maps on the Android
+// side, so they are listed here with them rather than in this set.
 const ALBUM_ACCENT_FACES = new Set(["expressive", "poster", "studio", "material"]);
 const ALBUM_ART_DEFAULTS = Object.freeze({
     classic: "cover",
@@ -588,7 +657,17 @@ const ALBUM_ART_DEFAULTS = Object.freeze({
     note: "hidden",
     verse: "hidden",
     metadata: "hidden",
+    ribbon: "hidden",
+    frame: "hidden",
 });
+
+/** FaceScopedPreferences.SELF_COMPOSED_FACES: no shared mini-button row, no edge progress arc. */
+const SELF_COMPOSED_FACES = new Set(["split", "verse", "ribbon", "frame"]);
+
+/** FaceScopedPreferences.ALBUM_ACCENT_SURFACE_DEFAULTS, applied to the faces that ask for it. */
+const ALBUM_ACCENT_SURFACE_FACES = new Set([
+    ...ALBUM_ACCENT_FACES, "ribbon", "frame",
+]);
 
 if (SETTING_KEYS.length !== Object.keys(DEFAULT_VALUES).length ||
         SETTING_KEYS.some((key) => !Object.hasOwn(DEFAULT_VALUES, key))) {
@@ -604,18 +683,19 @@ export function defaultSettingsForFace(baseFace) {
     }
 
     settings.album_art_style.value = ALBUM_ART_DEFAULTS[baseFace];
-    if (ALBUM_ACCENT_FACES.has(baseFace)) {
+    if (ALBUM_ACCENT_SURFACE_FACES.has(baseFace)) {
         settings.wear_quick_panel_style.value = "tonal";
         settings.wear_queue_style.value = "tonal";
         settings.wear_volume_style.value = "tonal";
         settings.wear_seek_style.value = "expressive";
     }
-    if (baseFace === "split" || baseFace === "verse") {
+    if (SELF_COMPOSED_FACES.has(baseFace)) {
         settings.wear_mini_buttons_mode.value = "never";
         settings.wear_edge_progress_visible.value = false;
     }
     if (baseFace === "verse") settings.wear_accent_floor.value = "standard";
     if (baseFace === "split") settings.wear_show_source_icon.value = true;
+    if (baseFace === "ribbon") settings.always_show_time.value = true;
     if (baseFace === "note" || baseFace === "chat") settings.wear_edge_progress_visible.value = false;
     return settings;
 }

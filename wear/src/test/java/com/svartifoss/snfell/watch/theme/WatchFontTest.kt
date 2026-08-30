@@ -12,7 +12,20 @@ class WatchFontTest {
     fun everyPickerValueMapsToADistinctFamily() {
         assertEquals(GoogleSansFamily, watchFontFamily("google_sans"))
         assertEquals(MomsTypewriterFamily, watchFontFamily("typewriter"))
-        assertEquals(LoveLetterTypewriterFamily, watchFontFamily("love_letter"))
+        assertEquals(SpecialEliteFamily, watchFontFamily("love_letter"))
+        assertEquals(InterFamily, watchFontFamily("inter"))
+        assertEquals(AtkinsonHyperlegibleFamily, watchFontFamily("atkinson_hyperlegible"))
+        assertEquals(RubikFamily, watchFontFamily("rubik"))
+        assertEquals(BarlowCondensedFamily, watchFontFamily("barlow_condensed"))
+        assertEquals(OswaldFamily, watchFontFamily("oswald"))
+        listOf("dm_sans", "manrope", "exo_2", "oxanium").forEach { key ->
+            assertNotEquals(GoogleSansFamily, watchFontFamily(key))
+        }
+        assertEquals(LoraFamily, watchFontFamily("lora"))
+        assertEquals(FrauncesFamily, watchFontFamily("fraunces"))
+        assertEquals(SpaceMonoFamily, watchFontFamily("space_mono"))
+        assertEquals(ArchivoBlackFamily, watchFontFamily("archivo_black"))
+        assertEquals(DancingScriptFamily, watchFontFamily("dancing_script"))
 
         // "roboto"/"serif"/"monospace"/"cursive" resolve to the platform's built-in families -
         // just assert they differ from the app's own bundled families and from each other's

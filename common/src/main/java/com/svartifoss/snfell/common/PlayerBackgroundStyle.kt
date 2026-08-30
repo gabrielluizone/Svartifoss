@@ -122,6 +122,10 @@ enum class PlayerBackgroundStyle(
             // Small text over a full-bleed cover is unreadable, and this face is nothing but
             // small text. A default only - the background picker still reaches it like any other.
             "metadata" -> HIDDEN
+            // Ribbon and Frame author their own vivid rails/card on an OLED-black field. Keeping
+            // the artwork out by default makes that composition legible, while the background
+            // picker can still put a cover treatment behind either face when the user wants one.
+            "ribbon", "frame" -> HIDDEN
             else -> COVER
         }
     }

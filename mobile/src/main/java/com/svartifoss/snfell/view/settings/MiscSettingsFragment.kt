@@ -29,6 +29,7 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.RotaryAction
 import com.svartifoss.snfell.common.model.AutoStartMode
 import com.svartifoss.snfell.config.ConfigBackup
+import com.svartifoss.snfell.config.ConfigBackupSection
 import com.svartifoss.snfell.update.UpdateActivity
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
@@ -40,6 +41,9 @@ import com.svartifoss.snfell.music.StreamingShortcutLinks
 import com.svartifoss.snfell.util.WearableAvailability
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.TitledActivity
+import com.svartifoss.snfell.view.watchface.theme.CommunityThemeAccountActivity
+import com.svartifoss.snfell.view.watchface.theme.CommunityThemeAccountRepository
+import com.svartifoss.snfell.view.watchface.theme.CommunityThemeAccountState
 import com.matejdro.wearutils.logging.LogRetrievalTask
 import com.matejdro.wearutils.preferences.compat.PreferenceFragmentCompatEx
 import com.matejdro.wearutils.preferences.definition.Preferences
@@ -90,10 +94,6 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
 
     @Inject
     lateinit var watchInfoProvider: WatchInfoProvider
-
-    private val exportConfigLauncher = registerForActivityResult(
-            ActivityResultContracts.CreateDocument("application/json")
-    ) { uri -> uri?.let { exportConfigTo(it) } }
 
     private val importConfigLauncher = registerForActivityResult(
             ActivityResultContracts.OpenDocument()
@@ -165,6 +165,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         initAppsSection()
         initAutomationSection()
         initBackupSection()
+        initCommunityThemesSection()
         initAboutSection()
         initDevSection()
         applySectionVisibility()
@@ -543,7 +544,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
     private fun initBackupSection() {
         findPreference<Preference>("exportConfig")!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                exportConfigLauncher.launch("svartifoss_config.json")
+                startActivity(Intent(requireContext(), ConfigBackupSelectionActivity::class.java))
                 true
             }
 
@@ -554,27 +555,38 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
             }
     }
 
-    private fun exportConfigTo(uri: Uri) {
-        try {
-            val json = ConfigBackup.export(requireContext(), preferenceManager.sharedPreferences!!)
-            requireContext().contentResolver.openOutputStream(uri)?.use { out ->
-                out.write(json.toString(2).toByteArray(Charsets.UTF_8))
-            } ?: throw java.io.IOException("Could not open output stream")
+    /** Community identity is phone-local and never a watch setting, so it belongs in Data & support. */
+    private fun initCommunityThemesSection() {
+        findPreference<Preference>("community_theme_account")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(requireContext(), CommunityThemeAccountActivity::class.java))
+                true
+            }
+        refreshCommunityThemeAccountSummary()
+    }
 
-            Toast.makeText(requireContext(), R.string.export_config_done, Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Timber.e(e, "Config export failed")
-            Toast.makeText(requireContext(), R.string.export_config_failed, Toast.LENGTH_LONG).show()
-        }
+    /** Reflects the Firebase session when returning from the Community account screen. */
+    private fun refreshCommunityThemeAccountSummary() {
+        val preference = findPreference<Preference>("community_theme_account") ?: return
+        preference.setSummary(when (CommunityThemeAccountRepository().state()) {
+            CommunityThemeAccountState.GOOGLE ->
+                R.string.community_theme_account_settings_google
+            CommunityThemeAccountState.ANONYMOUS_LIKES ->
+                R.string.community_theme_account_settings_anonymous
+            CommunityThemeAccountState.SIGNED_OUT ->
+                R.string.community_theme_account_settings_signed_out
+        })
     }
 
     private fun importConfigFrom(uri: Uri) {
+        val importedSections: Set<ConfigBackupSection>
         try {
             val text = requireContext().contentResolver.openInputStream(uri)?.use {
                 it.readBytes().toString(Charsets.UTF_8)
             } ?: throw java.io.IOException("Could not open input stream")
 
-            ConfigBackup.import(requireContext(), preferenceManager.sharedPreferences!!, JSONObject(text))
+            importedSections = ConfigBackup.import(
+                    requireContext(), preferenceManager.sharedPreferences!!, JSONObject(text))
         } catch (e: Exception) {
             Timber.e(e, "Config import failed")
             Toast.makeText(requireContext(), R.string.import_config_failed, Toast.LENGTH_LONG).show()
@@ -582,17 +594,21 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         }
 
         // The button/action-list transmitters only push to the watch when their DataItem is
-        // missing (ButtonConfigTransmitter/ActionListTransmitter.resendIfNeeded). After an import
-        // the items still hold the OLD config, so the watch would keep the old buttons until each
-        // config was hand-edited and re-saved. Clear them so the post-restart transmitters re-push
-        // the freshly imported config. Wait for the clear to finish before offering the restart so
-        // it isn't cut short by restartApp()'s process exit; a missing/disconnected watch no-ops.
+        // missing (ButtonConfigTransmitter/ActionListTransmitter.resendIfNeeded). If either of
+        // those sections was imported, the items still hold the OLD config, so the watch would
+        // keep the old buttons until each config was hand-edited and re-saved. Clear them so the
+        // post-restart transmitters re-push the freshly imported config. Wait for the clear to
+        // finish before offering the restart so it isn't cut short by restartApp()'s process exit;
+        // a missing/disconnected watch no-ops.
         val appContext = requireContext().applicationContext
         lifecycleScope.launch {
-            try {
-                clearWatchConfigDataItems(appContext)
-            } catch (e: Exception) {
-                Timber.w(e, "Could not clear watch config DataItems after import")
+            if (ConfigBackupSection.BUTTONS in importedSections ||
+                    ConfigBackupSection.ACTIONS in importedSections) {
+                try {
+                    clearWatchConfigDataItems(appContext)
+                } catch (e: Exception) {
+                    Timber.w(e, "Could not clear watch config DataItems after import")
+                }
             }
 
             AlertDialog.Builder(requireContext())
@@ -890,6 +906,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
     override fun onResume() {
         super.onResume()
         refreshAppsSection()
+        refreshCommunityThemeAccountSummary()
     }
 
     override fun onStop() {

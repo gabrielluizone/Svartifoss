@@ -15,7 +15,26 @@
         android:visible="false"
         android:layout="@layout/pref_item" />
 
-    <!-- Kept first: the only category that ever needs urgent attention (a pending release), so
+    <!-- Kept at the very top of General: signing in once is what every other community action
+         depends on, and it was previously buried at the bottom of Data & support, where nobody
+         looks for an account. -->
+    <PreferenceCategory
+        android:key="cat_community_themes"
+        android:title="@string/category_community_themes"
+        android:layout="@layout/pref_category_header">
+
+        <Preference
+            android:key="community_theme_account"
+            android:icon="@drawable/ic_account_circle"
+            android:title="@string/community_theme_account_settings_title"
+            android:summary="@string/community_theme_account_settings_signed_out"
+            android:persistent="false"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_chevron" />
+
+    </PreferenceCategory>
+
+    <!-- Then updates: the only category that ever needs urgent attention (a pending release), so
          it shouldn't be buried below everything else. -->
     <PreferenceCategory
         android:key="cat_updates"

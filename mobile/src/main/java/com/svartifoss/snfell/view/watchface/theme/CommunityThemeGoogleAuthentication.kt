@@ -16,17 +16,26 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 
 /**
- * The one explicit Google sign-in boundary, used by community theme *submission* only.
+ * The explicit Google sign-in boundary for a community-theme submission or an opt-in connection
+ * from Settings.
  *
  * Merely constructing this class never starts an interactive flow. Callers invoke [signIn] only
  * after a person taps an action that needs a real identity, preserving anonymous browsing — and
  * anonymous liking, which [CommunityThemeLikeRepository] handles with no account at all.
  */
 internal class CommunityThemeGoogleAuthentication(
-        private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 ) {
 
     suspend fun signIn(activity: Activity): CommunityThemeGoogleSignInResult {
+        // Firebase Auth restores this session across launches. Do not reopen Credential Manager
+        // for every submission after a person has already explicitly connected Google; a linked
+        // anonymous account is recognized from providerData even while its original sign-in event
+        // still reports "anonymous" in the token.
+        if (CommunityThemeAccountStateResolver.resolve(auth.currentUser) ==
+                CommunityThemeAccountState.GOOGLE) {
+            return CommunityThemeGoogleSignInResult.Authenticated
+        }
         val option = try {
             GetGoogleIdOption.Builder()
                     .setFilterByAuthorizedAccounts(false)

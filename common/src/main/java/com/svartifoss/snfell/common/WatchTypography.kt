@@ -23,18 +23,26 @@ object WatchTypography {
      * @param scale multiplier over the face's designed text size, e.g. 1.15f.
      * @param alpha 0..1 multiplier over the text colour's own alpha.
      * @param trackingEm extra letter spacing in em; 0 keeps the font's own metrics.
+     * @param case text-case transform - see [TextCase]. Only Title and Artist ever populate this
+     *   from a real preference ([titleSpec]/[artistSpec]); every other element's spec carries the
+     *   [TextCase.NORMAL] default, which is a no-op, so bundling it here rather than as a sixth
+     *   sibling field on [NowPlayingFaceState] costs those elements nothing and reaches every
+     *   existing call site - font family, weight, scale, opacity and tracking already all thread
+     *   through the one `typography` parameter faces pass, and case is no different in kind.
      */
     data class TextSpec(
             val weight: Int,
             val italic: Boolean,
             val scale: Float,
             val alpha: Float,
-            val trackingEm: Float
+            val trackingEm: Float,
+            val case: TextCase = TextCase.NORMAL
     ) {
         /** True when this spec changes nothing, letting renderers skip their styling path entirely
          *  and keep the exact pre-3.1 drawing code for the (very common) untouched case. */
         val isIdentity: Boolean
-            get() = weight == 400 && !italic && scale == 1f && alpha == 1f && trackingEm == 0f
+            get() = weight == 400 && !italic && scale == 1f && alpha == 1f && trackingEm == 0f &&
+                    case == TextCase.NORMAL
 
         /** [size] with this spec's scale applied. */
         fun scaled(size: Float): Float = size * scale
@@ -60,6 +68,31 @@ object WatchTypography {
 
     fun isFlexFont(fontKey: String?): Boolean = fontKey == FLEX_FONT_KEY
 
+    /** [MiscPreferences.WEAR_TITLE_FONT] value meaning "use the global track family". */
+    const val TITLE_FONT_FOLLOW: String = "follow"
+
+    /**
+     * The font key the track title should render in.
+     *
+     * The title used to be inseparable from [MiscPreferences.WEAR_FONT].
+     * [TITLE_FONT_FOLLOW] preserves that exact behavior by default, while an explicit catalog
+     * choice can give the title its own visual role. Blank imported values are treated as follow
+     * for the same backwards-compatible reason.
+     */
+    fun titleFontKey(titlePreference: String?, globalFontKey: String?): String? =
+            fontOverrideKey(titlePreference, TITLE_FONT_FOLLOW, globalFontKey)
+
+    /** [MiscPreferences.WEAR_ARTIST_FONT] value meaning "use the global track family". */
+    const val ARTIST_FONT_FOLLOW: String = "follow"
+
+    /**
+     * The font key the artist line should render in. See [titleFontKey] for the fallback contract:
+     * an unset or [ARTIST_FONT_FOLLOW] value retains the global family, while an explicit catalog
+     * key wins unchanged for the catalog to resolve.
+     */
+    fun artistFontKey(artistPreference: String?, globalFontKey: String?): String? =
+            fontOverrideKey(artistPreference, ARTIST_FONT_FOLLOW, globalFontKey)
+
     /** [MiscPreferences.WEAR_CLOCK_FONT] value meaning "use whatever the track text uses". */
     const val CLOCK_FONT_FOLLOW: String = "follow"
 
@@ -77,11 +110,7 @@ object WatchTypography {
      * falling back to the user's chosen face is far less surprising than reverting to Google Sans.
      */
     fun clockFontKey(clockPreference: String?, trackFontKey: String?): String? =
-            if (clockPreference.isNullOrBlank() || clockPreference == CLOCK_FONT_FOLLOW) {
-                trackFontKey
-            } else {
-                clockPreference
-            }
+            fontOverrideKey(clockPreference, CLOCK_FONT_FOLLOW, trackFontKey)
 
     /** [MiscPreferences.WEAR_LYRICS_FONT] value meaning "use whatever the track text uses". */
     const val LYRICS_FONT_FOLLOW: String = "follow"
@@ -110,21 +139,31 @@ object WatchTypography {
      * chosen face is far less surprising than reverting to something they never picked.
      */
     fun lyricsFontKey(lyricsPreference: String?, trackFontKey: String?): String? =
-            if (lyricsPreference.isNullOrBlank() || lyricsPreference == LYRICS_FONT_FOLLOW) {
-                trackFontKey
-            } else {
-                lyricsPreference
+            fontOverrideKey(lyricsPreference, LYRICS_FONT_FOLLOW, trackFontKey)
+
+    /** [MiscPreferences.WEAR_TRACK_TIME_FONT] value meaning "keep this face's authored readout". */
+    const val TRACK_TIME_FONT_FOLLOW: String = "follow"
+
+    /**
+     * Resolves the playback-time font override.
+     *
+     * Unlike the title, artist and clock, the elapsed/total readout was intentionally authored
+     * with a different family by some faces. Its identity choice therefore returns null instead
+     * of [trackFontKey]: renderers retain their own designed typeface until the user explicitly
+     * selects one. A blank imported value gets the same safe behavior.
+     */
+    fun trackTimeFontKey(trackTimePreference: String?): String? =
+            trackTimePreference?.takeUnless {
+                it.isBlank() || it == TRACK_TIME_FONT_FOLLOW
             }
 
     /**
      * The four Google Sans Flex axes that are *not* already covered by the per-element
-     * weight/italic controls - width, optical size, grade and roundness. These are deliberately
-     * global (not per title/artist) rather than doubling every field: unlike weight, a mismatched
-     * roundness or width between the title and artist line reads as a rendering glitch rather than
-     * a deliberate hierarchy choice, so one shared "character" for the font is what a user actually
-     * wants. wght and slnt still come from each element's own [TextSpec] ([TextSpec.weight] and
-     * [TextSpec.italic]), so switching to Flex does not add a second, conflicting weight control -
-     * see [flexVariationSettings].
+     * weight/italic controls: width, optical size, grade and roundness. A title or artist that
+     * follows the global family uses the global set; every explicit Flex selection owns its own
+     * set. wght and slnt still come from each element's own [TextSpec] ([TextSpec.weight] and
+     * [TextSpec.italic]), so switching to Flex does not add a second, conflicting weight control
+     * - see [flexVariationSettings].
      */
     data class FlexAxes(
             val width: Float,
@@ -162,27 +201,105 @@ object WatchTypography {
     const val FLEX_ROUNDNESS_MAX: Float = 100f
     const val FLEX_ROUNDNESS_DEFAULT: Float = 0f
 
-    fun flexAxes(prefs: SharedPreferences, context: AppearanceContext): FlexAxes = FlexAxes(
-            width = normalizeFlexAxis(
-                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_FONT_FLEX_WIDTH, context),
-                    FLEX_WIDTH_MIN, FLEX_WIDTH_MAX),
-            opticalSize = normalizeFlexAxis(
-                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_FONT_FLEX_OPTICAL_SIZE, context),
-                    FLEX_OPTICAL_SIZE_MIN, FLEX_OPTICAL_SIZE_MAX),
-            grade = normalizeFlexAxis(
-                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_FONT_FLEX_GRADE, context),
-                    FLEX_GRADE_MIN, FLEX_GRADE_MAX),
-            roundness = normalizeFlexAxis(
-                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_FONT_FLEX_ROUNDNESS, context),
-                    FLEX_ROUNDNESS_MIN, FLEX_ROUNDNESS_MAX)
+    /** Which font family owns a Google Sans Flex axis set. */
+    enum class FlexAxesTarget {
+        /** The [MiscPreferences.WEAR_FONT] family, used by elements that follow the global font. */
+        GLOBAL,
+        /** An explicit [MiscPreferences.WEAR_TITLE_FONT] Flex override. */
+        TITLE,
+        /** An explicit [MiscPreferences.WEAR_ARTIST_FONT] Flex override. */
+        ARTIST,
+        /** An explicit [MiscPreferences.WEAR_CLOCK_FONT] Flex override. */
+        CLOCK,
+        /** An explicit [MiscPreferences.WEAR_LYRICS_FONT] Flex override. */
+        LYRICS,
+        /** An explicit [MiscPreferences.WEAR_TRACK_TIME_FONT] Flex override. */
+        TRACK_TIME
+    }
+
+    /**
+     * Resolves one independent Google Sans Flex axis set.
+     *
+     * An element following [FlexAxesTarget.GLOBAL] keeps the global axes. Title, artist, clock,
+     * lyrics and playback time can select Flex independently, so their width, optical size, grade
+     * and roundness must be independent as well.
+     */
+    fun flexAxes(
+            prefs: SharedPreferences,
+            context: AppearanceContext,
+            target: FlexAxesTarget = FlexAxesTarget.GLOBAL
+    ): FlexAxes {
+        val definitions = when (target) {
+            FlexAxesTarget.GLOBAL -> FlexAxisDefinitions(
+                    MiscPreferences.WEAR_FONT_FLEX_WIDTH,
+                    MiscPreferences.WEAR_FONT_FLEX_OPTICAL_SIZE,
+                    MiscPreferences.WEAR_FONT_FLEX_GRADE,
+                    MiscPreferences.WEAR_FONT_FLEX_ROUNDNESS)
+            FlexAxesTarget.TITLE -> FlexAxisDefinitions(
+                    MiscPreferences.WEAR_TITLE_FONT_FLEX_WIDTH,
+                    MiscPreferences.WEAR_TITLE_FONT_FLEX_OPTICAL_SIZE,
+                    MiscPreferences.WEAR_TITLE_FONT_FLEX_GRADE,
+                    MiscPreferences.WEAR_TITLE_FONT_FLEX_ROUNDNESS)
+            FlexAxesTarget.ARTIST -> FlexAxisDefinitions(
+                    MiscPreferences.WEAR_ARTIST_FONT_FLEX_WIDTH,
+                    MiscPreferences.WEAR_ARTIST_FONT_FLEX_OPTICAL_SIZE,
+                    MiscPreferences.WEAR_ARTIST_FONT_FLEX_GRADE,
+                    MiscPreferences.WEAR_ARTIST_FONT_FLEX_ROUNDNESS)
+            FlexAxesTarget.CLOCK -> FlexAxisDefinitions(
+                    MiscPreferences.WEAR_CLOCK_FONT_FLEX_WIDTH,
+                    MiscPreferences.WEAR_CLOCK_FONT_FLEX_OPTICAL_SIZE,
+                    MiscPreferences.WEAR_CLOCK_FONT_FLEX_GRADE,
+                    MiscPreferences.WEAR_CLOCK_FONT_FLEX_ROUNDNESS)
+            FlexAxesTarget.LYRICS -> FlexAxisDefinitions(
+                    MiscPreferences.WEAR_LYRICS_FONT_FLEX_WIDTH,
+                    MiscPreferences.WEAR_LYRICS_FONT_FLEX_OPTICAL_SIZE,
+                    MiscPreferences.WEAR_LYRICS_FONT_FLEX_GRADE,
+                    MiscPreferences.WEAR_LYRICS_FONT_FLEX_ROUNDNESS)
+            FlexAxesTarget.TRACK_TIME -> FlexAxisDefinitions(
+                    MiscPreferences.WEAR_TRACK_TIME_FONT_FLEX_WIDTH,
+                    MiscPreferences.WEAR_TRACK_TIME_FONT_FLEX_OPTICAL_SIZE,
+                    MiscPreferences.WEAR_TRACK_TIME_FONT_FLEX_GRADE,
+                    MiscPreferences.WEAR_TRACK_TIME_FONT_FLEX_ROUNDNESS)
+        }
+        return FlexAxes(
+                width = normalizeFlexAxis(
+                        FaceScopedPreferences.getInt(prefs, definitions.width, context),
+                        FLEX_WIDTH_MIN, FLEX_WIDTH_MAX),
+                opticalSize = normalizeFlexAxis(
+                        FaceScopedPreferences.getInt(prefs, definitions.opticalSize, context),
+                        FLEX_OPTICAL_SIZE_MIN, FLEX_OPTICAL_SIZE_MAX),
+                grade = normalizeFlexAxis(
+                        FaceScopedPreferences.getInt(prefs, definitions.grade, context),
+                        FLEX_GRADE_MIN, FLEX_GRADE_MAX),
+                roundness = normalizeFlexAxis(
+                        FaceScopedPreferences.getInt(prefs, definitions.roundness, context),
+                        FLEX_ROUNDNESS_MIN, FLEX_ROUNDNESS_MAX)
+        )
+    }
+
+    private data class FlexAxisDefinitions(
+            val width: com.matejdro.wearutils.preferences.definition.PreferenceDefinition<Int>,
+            val opticalSize: com.matejdro.wearutils.preferences.definition.PreferenceDefinition<Int>,
+            val grade: com.matejdro.wearutils.preferences.definition.PreferenceDefinition<Int>,
+            val roundness: com.matejdro.wearutils.preferences.definition.PreferenceDefinition<Int>
     )
 
     private fun normalizeFlexAxis(raw: Int, min: Float, max: Float): Float =
             raw.toFloat().coerceIn(min, max)
 
+    private fun fontOverrideKey(
+            preference: String?,
+            followValue: String,
+            globalFontKey: String?
+    ): String? = if (preference.isNullOrBlank() || preference == followValue) {
+        globalFontKey
+    } else {
+        preference
+    }
+
     /**
      * The `android.graphics.Typeface.Builder#setFontVariationSettings` string for one text element
-     * of the Flex font: its own weight/slant from [spec], plus the shared [axes]. Both the watch's
+     * of the Flex font: its own weight/slant from [spec], plus its selected [axes]. Both the watch's
      * `Typeface.Builder(context, R.font.google_sans_flex)` path and the phone preview's identical
      * `Paint` typeface use this exact string, so neither can render a combination the other
      * disagrees on.
@@ -204,7 +321,9 @@ object WatchTypography {
             alpha = normalizeOpacity(
                     FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_TITLE_FONT_OPACITY, context)),
             trackingEm = normalizeTracking(
-                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_TITLE_FONT_TRACKING, context))
+                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_TITLE_FONT_TRACKING, context)),
+            case = TextCase.fromPreference(
+                    FaceScopedPreferences.getString(prefs, MiscPreferences.WEAR_TITLE_TEXT_CASE, context))
     )
 
     fun artistSpec(prefs: SharedPreferences, context: AppearanceContext): TextSpec = TextSpec(
@@ -217,7 +336,27 @@ object WatchTypography {
             alpha = normalizeOpacity(
                     FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_ARTIST_FONT_OPACITY, context)),
             trackingEm = normalizeTracking(
-                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_ARTIST_FONT_TRACKING, context))
+                    FaceScopedPreferences.getInt(prefs, MiscPreferences.WEAR_ARTIST_FONT_TRACKING, context)),
+            case = TextCase.fromPreference(
+                    FaceScopedPreferences.getString(prefs, MiscPreferences.WEAR_ARTIST_TEXT_CASE, context))
+    )
+
+    /** Typography deltas for the elapsed/total playback readout. */
+    fun trackTimeSpec(prefs: SharedPreferences, context: AppearanceContext): TextSpec = TextSpec(
+            weight = normalizeWeight(
+                    FaceScopedPreferences.getInt(
+                            prefs, MiscPreferences.WEAR_TRACK_TIME_FONT_WEIGHT, context)),
+            italic = FaceScopedPreferences.getBoolean(
+                    prefs, MiscPreferences.WEAR_TRACK_TIME_FONT_ITALIC, context),
+            scale = normalizeScale(
+                    FaceScopedPreferences.getInt(
+                            prefs, MiscPreferences.WEAR_TRACK_TIME_FONT_SCALE, context)),
+            alpha = normalizeOpacity(
+                    FaceScopedPreferences.getInt(
+                            prefs, MiscPreferences.WEAR_TRACK_TIME_FONT_OPACITY, context)),
+            trackingEm = normalizeTracking(
+                    FaceScopedPreferences.getInt(
+                            prefs, MiscPreferences.WEAR_TRACK_TIME_FONT_TRACKING, context))
     )
 
     /**

@@ -21,22 +21,34 @@ internal object WatchSearchTargetResolver {
             val redirected: Boolean)
 
     private val titleDependentRows = setOf(
+            "wear_title_font",
             "wear_title_text_mode",
             "wear_title_font_weight",
             "wear_title_font_italic",
             "wear_title_font_scale",
             "wear_title_font_opacity",
             "wear_title_font_tracking",
+            "wear_title_text_case",
+            "wear_title_font_flex_width",
+            "wear_title_font_flex_optical_size",
+            "wear_title_font_flex_grade",
+            "wear_title_font_flex_roundness",
             "wear_title_color_mode",
             "wear_title_custom_color",
             "wear_title_adaptive_contrast")
 
     private val artistDependentRows = setOf(
+            "wear_artist_font",
             "wear_artist_font_weight",
             "wear_artist_font_italic",
             "wear_artist_font_scale",
             "wear_artist_font_opacity",
             "wear_artist_font_tracking",
+            "wear_artist_text_case",
+            "wear_artist_font_flex_width",
+            "wear_artist_font_flex_optical_size",
+            "wear_artist_font_flex_grade",
+            "wear_artist_font_flex_roundness",
             "wear_artist_color_mode",
             "wear_artist_custom_color",
             "wear_artist_adaptive_contrast")
@@ -47,10 +59,6 @@ internal object WatchSearchTargetResolver {
             "wear_shading_color_mode",
             "wear_shading_custom_color")
 
-    private val internalProgressFaces = setOf(
-            "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum",
-            "depth", "verse")
-
     private val visualAodKeys = setOf(
             "wear_aod_show_transport", "wear_aod_show_progress", "wear_aod_show_pills")
 
@@ -59,7 +67,7 @@ internal object WatchSearchTargetResolver {
     private val visualAodStyles = setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
             "spectrum", "material", "immersive", "depth", "carousel", "chat", "split",
-            "note", "verse", "metadata")
+            "note", "verse", "metadata", "ribbon", "frame")
 
     private val artworkAodKeys = setOf(
             "wear_aod_show_art", "wear_aod_art_treatment", "ambient_album_art_opacity")
@@ -117,20 +125,32 @@ internal object WatchSearchTargetResolver {
             return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_screen_face")
         }
         if (key == "wear_expressive_seek_mode" && face != "expressive" ||
+                key == "wear_screen_theme" && face !in PlayerEditorModel.CONTROL_STYLE_FACES ||
                 key == "wear_carousel_card_shape" && face != "carousel" ||
+                key == "wear_note_cover_shape" && face != "note" ||
                 key == "wear_split_panel" && face != "split" ||
                 key == "wear_quadrant_tap_flash" && face != "classic" ||
                 key == "wear_classic_icons_visible" && face in setOf("expressive", "material") ||
-                key == "wear_internal_progress_visible" && face !in internalProgressFaces ||
+                key == "wear_internal_progress_visible" && face !in PlayerEditorModel.INTERNAL_PROGRESS_FACES ||
                 key in setOf("screen_buttons_curve_style", "screen_buttons_shape") &&
                     MiniButtonPlacement.isHostedByFace(face)) {
             return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_screen_face")
         }
 
-        if (key.startsWith("wear_font_flex_") || key == "wear_flex_axes_hint") {
-            if (!WatchTypography.isFlexFont(readString("wear_font", "google_sans"))) {
-                return redirect(WatchFacePrefsFragment.SECTION_TYPOGRAPHY, "wear_font")
-            }
+        val flexAxesFontKey = when {
+            key.startsWith("wear_font_flex_") || key == "wear_flex_axes_hint" ->
+                MiscPreferences.WEAR_FONT.key
+            key.startsWith("wear_title_font_flex_") -> MiscPreferences.WEAR_TITLE_FONT.key
+            key.startsWith("wear_artist_font_flex_") -> MiscPreferences.WEAR_ARTIST_FONT.key
+            key.startsWith("wear_clock_font_flex_") -> MiscPreferences.WEAR_CLOCK_FONT.key
+            key.startsWith("wear_lyrics_font_flex_") -> MiscPreferences.WEAR_LYRICS_FONT.key
+            key.startsWith("wear_track_time_font_flex_") ->
+                MiscPreferences.WEAR_TRACK_TIME_FONT.key
+            else -> null
+        }
+        if (flexAxesFontKey != null &&
+                !WatchTypography.isFlexFont(readString(flexAxesFontKey, ""))) {
+            return redirect(WatchFacePrefsFragment.SECTION_TYPOGRAPHY, flexAxesFontKey)
         }
 
         if (key == "album_art_blur_radius" &&
@@ -142,7 +162,8 @@ internal object WatchSearchTargetResolver {
         val edgeProgressAvailable =
                 readBoolean("wear_edge_progress_visible", true) ||
                         readBoolean("wear_edge_seek_enabled", true)
-        if (key in setOf("wear_progress_style", "wear_progress_gradient") &&
+        if (key in setOf(
+                        "wear_progress_style", "wear_progress_layout", "wear_progress_gradient") &&
                 !edgeProgressAvailable) {
             return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_edge_progress_visible")
         }

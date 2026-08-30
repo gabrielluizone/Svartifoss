@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A contextual colour editor rather than 22 vertically stacked preference rows, mirroring the
+     Text page's editor. The ordinary preferences remain inflated (but hidden) behind this surface
+     and still own every value. Buttons carry a tinted dot instead of a static glyph wherever they
+     resolve to an actual colour, so the palette is readable without opening anything. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="12dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="18dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/lyra_surface"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/lyra_divider"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/color_editor_global_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans"
+                android:includeFontPadding="false"
+                android:text="@string/category_music_colors"
+                android:textAllCaps="true"
+                android:textColor="@color/lyra_accent"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- The palette the whole page works from, shown as the three slots the treatment
+                 actually resolves to rather than as a name to pick blind. -->
+            <LinearLayout
+                android:id="@+id/color_editor_palette_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="2dp"
+                android:importantForAccessibility="no"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/color_editor_swatch_primary"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/color_dot_circle"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/color_editor_swatch_secondary"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="6dp"
+                    android:src="@drawable/color_dot_circle"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/color_editor_swatch_tertiary"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="6dp"
+                    android:src="@drawable/color_dot_circle"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_treatment_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:icon="@drawable/ic_colors"
+                tools:text="Expressive" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_normal_color_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:visibility="gone"
+                app:icon="@drawable/color_dot_circle"
+                tools:text="Normal color"
+                tools:visibility="visible" />
+
+            <HorizontalScrollView
+                android:id="@+id/color_editor_global_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/color_editor_accent_source_button"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:fontFamily="@font/google_sans"
+                        android:includeFontPadding="false"
+                        android:minWidth="96dp"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        app:icon="@drawable/ic_palette"
+                        app:iconGravity="textStart"
+                        app:iconPadding="6dp"
+                        tools:text="Balanced" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/color_editor_modifier_button"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/google_sans"
+                        android:includeFontPadding="false"
+                        android:minWidth="88dp"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        app:icon="@drawable/ic_colors"
+                        app:iconGravity="textStart"
+                        app:iconPadding="6dp"
+                        tools:text="None" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/color_editor_hue_shift_button"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/google_sans"
+                        android:includeFontPadding="false"
+                        android:minWidth="80dp"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        app:icon="@drawable/ic_tune"
+                        app:iconGravity="textStart"
+                        app:iconPadding="6dp"
+                        tools:text="0°" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/color_editor_palette_switch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:fontFamily="@font/google_sans"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:text="@string/setting_wear_normal_color_multi"
+                android:textColor="@color/lyra_on_surface"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <HorizontalScrollView
+        android:id="@+id/color_editor_target_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:clipToPadding="false"
+        android:fillViewport="false"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/color_editor_target_group"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:checkedButton="@id/color_editor_target_title"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_target_title"
+                style="@style/LyraCommunityDetailSurfaceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minWidth="76dp"
+                android:text="@string/category_wf_typography_title" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_target_artist"
+                style="@style/LyraCommunityDetailSurfaceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minWidth="76dp"
+                android:text="@string/category_wf_typography_artist" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_target_clock"
+                style="@style/LyraCommunityDetailSurfaceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minWidth="76dp"
+                android:text="@string/category_wf_clock" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_target_progress"
+                style="@style/LyraCommunityDetailSurfaceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minWidth="82dp"
+                android:text="@string/watch_element_progress" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_target_volume"
+                style="@style/LyraCommunityDetailSurfaceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minWidth="82dp"
+                android:text="@string/watch_element_volume" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_target_quick_panel"
+                style="@style/LyraCommunityDetailSurfaceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minWidth="96dp"
+                android:text="@string/watch_element_quick_panel" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    </HorizontalScrollView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/lyra_surface"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/lyra_divider"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_mode_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:icon="@drawable/color_dot_circle"
+                tools:text="Follow watch treatment" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_custom_color_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:visibility="gone"
+                app:icon="@drawable/color_dot_circle"
+                tools:text="Custom color"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_opacity_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:visibility="gone"
+                app:icon="@drawable/ic_opacity"
+                tools:text="Clock opacity · 60%"
+                tools:visibility="visible" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/color_editor_contrast_switch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:fontFamily="@font/google_sans"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:textColor="@color/lyra_on_surface"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:text="Keep readable over artwork"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

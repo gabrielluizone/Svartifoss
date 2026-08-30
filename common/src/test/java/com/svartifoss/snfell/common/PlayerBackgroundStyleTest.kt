@@ -32,6 +32,10 @@ class PlayerBackgroundStyleTest {
                 PlayerBackgroundStyle.defaultForFace("poster"))
         assertEquals(PlayerBackgroundStyle.MATERIAL,
                 PlayerBackgroundStyle.defaultForFace("material"))
+        assertEquals(PlayerBackgroundStyle.HIDDEN,
+                PlayerBackgroundStyle.defaultForFace("ribbon"))
+        assertEquals(PlayerBackgroundStyle.HIDDEN,
+                PlayerBackgroundStyle.defaultForFace("frame"))
         assertEquals(PlayerBackgroundStyle.COVER,
                 PlayerBackgroundStyle.defaultForFace("classic"))
     }

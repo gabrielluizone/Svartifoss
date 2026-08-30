@@ -77,4 +77,6 @@
     <string name="watch_theme_face_note">ملاحظة</string>
     <string name="watch_theme_face_verse">بيت شعري</string>
     <string name="watch_theme_face_metadata">بيانات وصفية</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

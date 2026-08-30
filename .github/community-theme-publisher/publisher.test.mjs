@@ -8,6 +8,7 @@ import {
     SETTING_TYPES as ADMIN_SETTING_TYPES,
 } from "../../docs/admin/theme-profile-schema.mjs";
 import {
+    COMMUNITY_THEME_CONSTRAINTS,
     defaultSettingsForFace,
     isOriginalityApplicableSetting,
     SETTING_KEYS,
@@ -79,7 +80,7 @@ function approvedDocument(overrides = {}, id = ID) {
         data: {
             ownerUid: "firebase-user-id",
             status: "approved",
-            submissionSchemaVersion: 1,
+            submissionSchemaVersion: 2,
             name: profile.name,
             author: "Theme maker",
             baseFace: profile.baseFace,
@@ -111,9 +112,51 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
     );
     const quotas = new Set(options.quotas ?? []);
     const reviews = new Map(Object.entries(options.reviews ?? {}));
-    const removed = { intake: [], markers: [], votes: [], quotas: [], requests: [], reviews: [] };
+    const defaultAccounts = {};
+    const defaultAuthorNames = {};
+    for (const document of documents) {
+        const { ownerUid, author, submissionSchemaVersion } = document.data;
+        if (submissionSchemaVersion < 2 || author === "Anonymous") continue;
+        const authorKey = `v1:${author.toLowerCase()}`;
+        defaultAccounts[ownerUid] = {
+            ownerUid,
+            accountSchemaVersion: 1,
+            authorName: author,
+            authorKey,
+            createdAt: timestamp(),
+        };
+        defaultAuthorNames[authorKey] = {
+            ownerUid,
+            nameSchemaVersion: 1,
+            authorName: author,
+            authorKey,
+            createdAt: timestamp(),
+        };
+    }
+    const accounts = new Map(Object.entries(options.accounts ?? defaultAccounts));
+    const authorNames = new Map(Object.entries(options.authorNames ?? defaultAuthorNames));
+    const deletedAccounts = new Map(Object.entries(options.deletedAccounts ?? {}));
+    const events = options.events ?? [];
+    const removed = {
+        intake: [], markers: [], votes: [], quotas: [], requests: [], reviews: [], accounts: [], authorNames: [],
+    };
 
-    const reference = (path, id) => ({ id, path: `${path}/${id}` });
+    const snapshotFor = (target) => {
+        const segments = target.path.split("/");
+        let value;
+        if (segments[0] === "themeIntake") value = byId.get(target.id)?.data;
+        else if (segments[0] === "communityThemePublished") value = publishedThemeMarkers.get(target.id);
+        else if (segments[0] === "communityThemeAccounts") value = accounts.get(target.id);
+        else if (segments[0] === "communityThemeAuthorNames") value = authorNames.get(target.id);
+        else if (segments[0] === "communityThemeDeletedAccounts") value = deletedAccounts.get(target.id);
+        else if (segments[0] === "communityThemeAccountDeletion") value = deletionRequests.get(target.id);
+        return { id: target.id, exists: value !== undefined, data: () => value };
+    };
+    const reference = (path, id) => {
+        const target = { id, path: `${path}/${id}` };
+        target.get = async () => snapshotFor(target);
+        return target;
+    };
     const intakeDocuments = (predicate, limit = Number.MAX_SAFE_INTEGER) => {
         const query = {
             limit: (count) => intakeDocuments(predicate, count),
@@ -133,6 +176,7 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
 
     function applyWrite(target, operation, value) {
         const segments = target.path.split("/");
+        events.push(`${operation}:${target.path}`);
         if (segments[0] === "themeIntake") {
             if (operation === "update") {
                 const data = byId.get(target.id).data;
@@ -176,6 +220,20 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
         if (segments[0] === "communityThemeAccountDeletion") {
             deletionRequests.delete(target.id);
             removed.requests.push(target.id);
+            return;
+        }
+        if (segments[0] === "communityThemeAccounts") {
+            accounts.delete(target.id);
+            removed.accounts.push(target.id);
+            return;
+        }
+        if (segments[0] === "communityThemeAuthorNames") {
+            authorNames.delete(target.id);
+            removed.authorNames.push(target.id);
+            return;
+        }
+        if (segments[0] === "communityThemeDeletedAccounts" && operation === "set") {
+            deletedAccounts.set(target.id, { ...value });
             return;
         }
         throw new Error(`Unexpected write to ${target.path}`);
@@ -240,6 +298,27 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
                     },
                 };
             }
+            if (collectionName === "communityThemeAccounts") {
+                return {
+                    doc(uid) {
+                        return reference("communityThemeAccounts", uid);
+                    },
+                };
+            }
+            if (collectionName === "communityThemeAuthorNames") {
+                return {
+                    doc(authorKey) {
+                        return reference("communityThemeAuthorNames", authorKey);
+                    },
+                };
+            }
+            if (collectionName === "communityThemeDeletedAccounts") {
+                return {
+                    doc(uid) {
+                        return reference("communityThemeDeletedAccounts", uid);
+                    },
+                };
+            }
             if (collectionName === "communityThemeLikes") {
                 return {
                     doc(themeId) {
@@ -282,11 +361,7 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
             };
         },
         async getAll(...references) {
-            return references.map((entry) => ({
-                id: entry.id,
-                exists: publishedThemeMarkers.has(entry.id),
-                data: () => publishedThemeMarkers.get(entry.id),
-            }));
+            return references.map(snapshotFor);
         },
         batch() {
             const writes = [];
@@ -307,11 +382,7 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
         },
         async runTransaction(callback) {
             const transaction = {
-                get: async (target) => ({
-                    id: target.id,
-                    exists: byId.has(target.id),
-                    data: () => byId.get(target.id)?.data,
-                }),
+                get: async (target) => snapshotFor(target),
                 update(target, values) {
                     Object.assign(byId.get(target.id).data, values);
                 },
@@ -321,16 +392,18 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
     };
     return Object.assign(firestore, {
         publishedThemeMarkers, deletionRequests, voters, quotas, reviews, removed, byId,
+        accounts, authorNames, deletedAccounts, events,
     });
 }
 
 /** Records the identities a finalization asks Firebase Auth to delete. */
-function fakeAuth(missingUids = []) {
+function fakeAuth(missingUids = [], events = []) {
     const deletedUids = [];
     const missing = new Set(missingUids);
     return {
         deletedUids,
         async deleteUser(uid) {
+            events.push(`auth:delete:${uid}`);
             if (missing.has(uid)) {
                 const error = new Error("no user record");
                 error.code = "auth/user-not-found";
@@ -369,10 +442,48 @@ test("the browser moderation schema stays aligned with the publisher schema", ()
     assert.deepEqual(Object.keys(ADMIN_SETTING_TYPES).sort(), ADMIN_SETTING_KEYS);
 });
 
+test("individual title and artist fonts retain their Flex contracts", () => {
+    const settings = defaultSettingsForFace("poster");
+    const targets = [
+        { prefix: "wear_title_font", visible: "wear_show_track_title" },
+        { prefix: "wear_artist_font", visible: "wear_show_track_artist" },
+    ];
+    const axisBounds = {
+        flex_width: [25, 151],
+        flex_optical_size: [6, 144],
+        flex_grade: [0, 100],
+        flex_roundness: [0, 100],
+    };
+
+    for (const { prefix, visible } of targets) {
+        assert.equal(SETTING_TYPES[prefix], "string");
+        assert.equal(settings[prefix].value, "follow");
+        assert.equal(isOriginalityApplicableSetting(prefix, settings, "poster"), true);
+
+        for (const [axis, [min, max]] of Object.entries(axisBounds)) {
+            const key = `${prefix}_${axis}`;
+            assert.equal(SETTING_TYPES[key], "int");
+            assert.deepEqual(COMMUNITY_THEME_CONSTRAINTS.settings[key], { type: "int", min, max });
+            assert.equal(isOriginalityApplicableSetting(key, settings, "poster"), false);
+        }
+
+        settings[prefix].value = "google_sans_flex";
+        for (const axis of Object.keys(axisBounds)) {
+            assert.equal(isOriginalityApplicableSetting(`${prefix}_${axis}`, settings, "poster"), true);
+        }
+
+        settings[visible].value = false;
+        assert.equal(isOriginalityApplicableSetting(prefix, settings, "poster"), false);
+        for (const axis of Object.keys(axisBounds)) {
+            assert.equal(isOriginalityApplicableSetting(`${prefix}_${axis}`, settings, "poster"), false);
+        }
+    }
+});
+
 test("a complete approved intake creates a preview-free public profile", () => {
     const candidate = validateApprovedDocument(approvedDocument());
 
-    assert.equal(SETTING_KEYS.length, 115);
+    assert.equal(SETTING_KEYS.length, 147);
     assert.equal(candidate.id, ID);
     assert.equal(candidate.publicProfile.author, "Theme maker");
     assert.equal(candidate.publicProfile.publishedAt, PUBLISHED_AT);
@@ -542,6 +653,99 @@ test("publication writes static files first, then finalization marks the matchin
         revision: 1,
         publishedAt: "2026-08-24T12:00:00.000Z",
     });
+});
+
+test("a schema-v2 named submission requires its immutable account profile", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const firestore = fakeFirestore(document, {}, { accounts: {} });
+
+    const plan = await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger: { log() {}, warn() {} },
+        publish: true,
+        manifestPath: join(root, "missing-author-account-manifest.json"),
+    });
+
+    assert.equal(plan.plans.length, 0);
+    assert.equal(document.data.status, "rejected");
+    assert.equal(document.data.publicationFailure, "invalid-author-identity");
+});
+
+test("a schema-v2 name reservation owned by another account is rejected", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const authorKey = "v1:theme maker";
+    const firestore = fakeFirestore(document, {}, {
+        authorNames: {
+            [authorKey]: {
+                ownerUid: "different-user",
+                nameSchemaVersion: 1,
+                authorName: "Theme maker",
+                authorKey,
+                createdAt: timestamp(),
+            },
+        },
+    });
+
+    await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger: { log() {}, warn() {} },
+        publish: true,
+        manifestPath: join(root, "foreign-author-claim-manifest.json"),
+    });
+
+    assert.equal(document.data.status, "rejected");
+    assert.equal(document.data.publicationFailure, "invalid-author-identity");
+});
+
+test("schema-v2 Anonymous and legacy schema-v1 submissions need no name reservation", async (t) => {
+    const anonymousRoot = await temporaryCatalogue(t);
+    const anonymous = approvedDocument({ author: "Anonymous" });
+    const anonymousPlan = await publishApprovedThemes({
+        firestore: fakeFirestore(anonymous, {}, { accounts: {}, authorNames: {} }),
+        root: anonymousRoot,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger: { log() {}, warn() {} },
+    });
+    assert.equal(anonymousPlan.plans.length, 1);
+
+    const legacyRoot = await temporaryCatalogue(t);
+    const legacy = approvedDocument({ submissionSchemaVersion: 1 });
+    const legacyPlan = await publishApprovedThemes({
+        firestore: fakeFirestore(legacy, {}, { accounts: {}, authorNames: {} }),
+        root: legacyRoot,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger: { log() {}, warn() {} },
+    });
+    assert.equal(legacyPlan.plans.length, 1);
+});
+
+test("finalization rechecks the author reservation after the static commit", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const firestore = fakeFirestore(document);
+    const manifestPath = join(root, "identity-race-manifest.json");
+    const logger = { log() {}, warn() {} };
+    await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath,
+    });
+    firestore.authorNames.get("v1:theme maker").ownerUid = "different-user";
+
+    const result = await finalizePublishedThemes({ firestore, root, manifestPath, logger });
+
+    assert.equal(result.marked, 0);
+    assert.equal(result.skipped, 1);
+    assert.equal(document.data.status, "approved");
 });
 
 test("finalization registers a static catalogue theme with no intake document", async (t) => {
@@ -975,7 +1179,7 @@ test("deleting an account keeps its published themes when the author chose to ke
     });
     firestore.deletionRequests.set(uid, deletionRequest(uid, "keep"));
     const manifestPath = join(root, "keep-manifest.json");
-    const auth = fakeAuth();
+    const auth = fakeAuth([], firestore.events);
 
     const plan = await publishApprovedThemes({
         firestore,
@@ -1001,7 +1205,17 @@ test("deleting an account keeps its published themes when the author chose to ke
     assert.deepEqual([...firestore.voters.get(ID)], ["someone-else"]);
     assert.equal(firestore.quotas.size, 0);
     assert.equal(firestore.deletionRequests.size, 0);
+    assert.equal(firestore.accounts.size, 0);
+    assert.equal(firestore.authorNames.size, 0);
+    assert.equal(firestore.deletedAccounts.get(uid).schemaVersion, 1);
+    assert.equal(typeof firestore.deletedAccounts.get(uid).expiresAt.toMillis, "function");
     assert.ok(firestore.publishedThemeMarkers.has(ID));
+    const authDelete = firestore.events.lastIndexOf(`auth:delete:${uid}`);
+    assert.ok(authDelete >= 0);
+    assert.ok(firestore.events.lastIndexOf(`delete:communityThemeAccounts/${uid}`) > authDelete);
+    assert.ok(firestore.events.lastIndexOf("delete:communityThemeAuthorNames/v1:theme maker") > authDelete);
+    assert.ok(firestore.events.lastIndexOf(`delete:communityThemeAccountDeletion/${uid}`) > authDelete);
+    assert.ok(firestore.events.lastIndexOf(`set:communityThemeDeletedAccounts/${uid}`) > authDelete);
 });
 
 test("deleting an account withdraws its published themes when the author chose to delete them", async (t) => {
@@ -1038,6 +1252,9 @@ test("deleting an account withdraws its published themes when the author chose t
     assert.deepEqual([...firestore.voters.get(ID)], []);
     assert.deepEqual(auth.deletedUids, [uid]);
     assert.equal(firestore.deletionRequests.size, 0);
+    assert.equal(firestore.accounts.size, 0);
+    assert.equal(firestore.authorNames.size, 0);
+    assert.ok(firestore.deletedAccounts.has(uid));
 });
 
 test("an erasing account cannot have a theme published in the same run", async (t) => {
@@ -1083,12 +1300,15 @@ test("a resumed erasure tolerates an identity Firebase has already deleted", asy
         publish: true,
         manifestPath,
     });
-    const auth = fakeAuth([uid]);
+    const auth = fakeAuth([uid], firestore.events);
     const result = await finalizePublishedThemes({ firestore, auth, root, manifestPath, logger });
 
     assert.equal(result.erased, 1);
     assert.deepEqual(auth.deletedUids, []);
     assert.equal(firestore.deletionRequests.size, 0);
+    assert.equal(firestore.accounts.size, 0);
+    assert.equal(firestore.authorNames.size, 0);
+    assert.ok(firestore.deletedAccounts.has(uid));
 });
 
 test("an erasure that cannot delete the identity stays pending and fails the run", async (t) => {
@@ -1122,6 +1342,9 @@ test("an erasure that cannot delete the identity stays pending and fails the run
         /Could not complete 1 community-account erasure/,
     );
     assert.equal(firestore.deletionRequests.size, 1);
+    assert.equal(firestore.accounts.size, 1);
+    assert.equal(firestore.authorNames.size, 1);
+    assert.equal(firestore.deletedAccounts.size, 0);
 });
 
 test("a malformed erasure request is skipped rather than guessed at", async (t) => {

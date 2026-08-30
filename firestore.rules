@@ -13,7 +13,7 @@ service cloud.firestore {
      * WatchThemeRepository.parsePublishedProfile and recompute settingsDigest before publishing.
      */
     match /themeIntake/{themeId} {
-      allow create: if identifiedUser()
+      allow create: if activeIdentifiedUser()
           && validNewThemeIntake(themeId)
           && validSubmissionQuotaForTheme(themeId);
       /*
@@ -24,7 +24,15 @@ service cloud.firestore {
        */
       allow get, list: if identifiedUser() &&
           (isCommunityThemeModerator() || resource.data.ownerUid == request.auth.uid);
-      allow update: if identifiedUser() && isCommunityThemeModerator() && validModeratorUpdate(themeId);
+      /*
+       * The author's branch is tested first, and the order is load-bearing: a moderator update is
+       * only valid alongside a themeIntakeReview record, and evaluating that getAfter for a write
+       * that never made one is an evaluation error rather than a clean false. An author who also
+       * happens to be a moderator would otherwise be unable to take down their own theme.
+       */
+      allow update: if identifiedUser() && (
+          validAuthorWithdrawal() ||
+          (isCommunityThemeModerator() && validModeratorUpdate(themeId)));
 
       // Deliberately omitted: clients cannot delete or publish an intake item.
     }
@@ -56,10 +64,31 @@ service cloud.firestore {
      */
     match /communityThemeSubmissionQuota/{uid} {
       allow get: if identifiedUser() && uid == request.auth.uid;
-      allow create: if identifiedUser() && uid == request.auth.uid && validNewSubmissionQuota();
-      allow update: if identifiedUser() && uid == request.auth.uid && validUpdatedSubmissionQuota();
+      allow create: if activeIdentifiedUser() && uid == request.auth.uid && validNewSubmissionQuota();
+      allow update: if activeIdentifiedUser() && uid == request.auth.uid && validUpdatedSubmissionQuota();
 
       // Deliberately omitted: a quota can neither be listed nor deleted by a client.
+    }
+
+    /*
+     * One immutable public identity per submitting account, paired with one globally unique,
+     * case-insensitive name reservation. Neither half can be created alone: reciprocal getAfter
+     * checks require the first submission transaction to create both atomically. Clients can
+     * never rename or release either document; only the trusted account-erasure publisher may do
+     * that after the Firebase identity itself has been deleted.
+     */
+    match /communityThemeAccounts/{uid} {
+      allow get: if identifiedUser() && uid == request.auth.uid;
+      allow create: if activeIdentifiedUser()
+          && uid == request.auth.uid
+          && validNewCommunityThemeAccount(uid);
+    }
+
+    match /communityThemeAuthorNames/{authorKey} {
+      // Availability checks need a point read. Listing all reservations remains forbidden.
+      allow get: if identifiedUser();
+      allow create: if activeIdentifiedUser()
+          && validNewCommunityThemeAuthorName(authorKey);
     }
 
     /*
@@ -80,12 +109,12 @@ service cloud.firestore {
      */
     match /communityThemeLikes/{themeId}/voters/{uid} {
       allow get: if signedIn() && uid == request.auth.uid;
-      allow create: if signedIn()
+      allow create: if communityWritesAllowed()
           && uid == request.auth.uid
           && validThemeId(themeId)
           && isPublishedCommunityTheme(themeId)
           && validNewCommunityThemeLike();
-      allow delete: if signedIn()
+      allow delete: if communityWritesAllowed()
           && uid == request.auth.uid
           && validExistingCommunityThemeLike();
 
@@ -115,6 +144,7 @@ service cloud.firestore {
       allow get: if signedIn() && uid == request.auth.uid;
       allow create: if signedIn()
           && uid == request.auth.uid
+          && !deletedAccountTombstoneExists()
           && validNewAccountDeletionRequest(uid);
 
       // Deliberately omitted: a request can neither be listed, edited, nor withdrawn by a client.
@@ -124,6 +154,12 @@ service cloud.firestore {
     // It lets older hand-authored catalogue entries receive likes without granting browser or APK
     // access to this registry. The trusted publisher creates/reconciles it only after Git push.
     match /communityThemePublished/{themeId} {
+      allow read, write: if false;
+    }
+
+    // A short-lived server-only tombstone closes the validity window of Firebase ID tokens that
+    // were issued before an account was deleted. The publisher removes it only after expiry.
+    match /communityThemeDeletedAccounts/{uid} {
       allow read, write: if false;
     }
 
@@ -152,6 +188,35 @@ service cloud.firestore {
         request.auth.token.firebase.sign_in_provider != "anonymous" ||
         request.auth.token.firebase.identities.keys().hasAny(["google.com"])
       );
+    }
+
+    function deletionRequestExistsAfter() {
+      return existsAfter(
+        /databases/$(database)/documents/communityThemeAccountDeletion/$(request.auth.uid)
+      );
+    }
+
+    function deletedAccountTombstoneExists() {
+      return exists(
+        /databases/$(database)/documents/communityThemeDeletedAccounts/$(request.auth.uid)
+      );
+    }
+
+    function deletedAccountTombstoneExistsAfter() {
+      return existsAfter(
+        /databases/$(database)/documents/communityThemeDeletedAccounts/$(request.auth.uid)
+      );
+    }
+
+    /* Refuses a request that is already being erased, including one created in this same batch. */
+    function communityWritesAllowed() {
+      return signedIn()
+          && !deletionRequestExistsAfter()
+          && !deletedAccountTombstoneExistsAfter();
+    }
+
+    function activeIdentifiedUser() {
+      return identifiedUser() && communityWritesAllowed();
     }
 
     function isPublishedCommunityTheme(themeId) {
@@ -241,6 +306,24 @@ service cloud.firestore {
               || validModeratorMetadataEdit(before, after));
     }
 
+    /*
+     * An author taking their own theme out of the gallery.
+     *
+     * This is theirs to decide, not a moderation call: they can already remove every theme they
+     * published by deleting their account, so refusing the smaller version of the same request
+     * would only push somebody towards the more destructive one. It sets the status and nothing
+     * else -- no reviewedAt, and no review record, because no review happened. The publisher then
+     * removes the files and the record exactly as it does for a moderator withdrawal.
+     */
+    function validAuthorWithdrawal() {
+      let before = resource.data;
+      let after = request.resource.data;
+      return before.ownerUid == request.auth.uid
+          && before.status in ["pending", "approved", "rejected", "published"]
+          && after.status == "withdrawn"
+          && after.diff(before).affectedKeys().hasOnly(["status"]);
+    }
+
     function validModeratorDecision(before, after) {
       return before.status == "pending"
           && after.status in ["approved", "rejected"]
@@ -278,10 +361,9 @@ service cloud.firestore {
       return before.status in ["pending", "approved"]
           && after.status == before.status
           && validShortText(after.name, 48)
-          && validShortText(after.author, 48)
           && after.reviewedAt is timestamp
           && after.reviewedAt == request.time
-          && after.diff(before).affectedKeys().hasOnly(["name", "author", "reviewedAt"]);
+          && after.diff(before).affectedKeys().hasOnly(["name", "reviewedAt"]);
     }
 
     function changedReviewKeys(before, after) {
@@ -368,9 +450,10 @@ service cloud.firestore {
           && data.ownerUid == request.auth.uid
           && data.status == "pending"
           && data.submissionSchemaVersion is int
-          && data.submissionSchemaVersion == 1
+          && data.submissionSchemaVersion == 2
           && validShortText(data.name, 48)
           && validShortText(data.author, 48)
+          && validCommunityThemeAuthorForSubmission(data.author)
           && data.baseFace is string
           && data.baseFace in [
             "classic",
@@ -412,6 +495,124 @@ service cloud.firestore {
 
     function validShortText(value, maximumLength) {
       return value is string && value.size() >= 1 && value.size() <= maximumLength;
+    }
+
+    function authorKeyFor(authorName) {
+      return "v1:" + authorName.lower();
+    }
+
+    function validCommunityThemeAuthorName(authorName) {
+      let canonical = authorName.lower();
+      return validShortText(authorName, 48)
+          && authorName == authorName.trim()
+          && authorName == authorName.replace(' +', ' ')
+          && authorName.matches("^[A-Za-z0-9]([A-Za-z0-9._' -]*[A-Za-z0-9])?$")
+          && !(canonical in [
+            "anonymous",
+            "deleted account",
+            "account-erased",
+            "svartifoss"
+          ]);
+    }
+
+    function validCommunityThemeAccountData(data, uid) {
+      return data.keys().hasOnly([
+            "ownerUid",
+            "accountSchemaVersion",
+            "authorName",
+            "authorKey",
+            "createdAt"
+          ])
+          && data.keys().hasAll([
+            "ownerUid",
+            "accountSchemaVersion",
+            "authorName",
+            "authorKey",
+            "createdAt"
+          ])
+          && data.ownerUid is string
+          && data.ownerUid == uid
+          && data.accountSchemaVersion is int
+          && data.accountSchemaVersion == 1
+          && validCommunityThemeAuthorName(data.authorName)
+          && data.authorKey is string
+          && data.authorKey == authorKeyFor(data.authorName)
+          && data.createdAt is timestamp;
+    }
+
+    function validCommunityThemeAuthorNameData(data, authorKey, uid) {
+      return data.keys().hasOnly([
+            "ownerUid",
+            "nameSchemaVersion",
+            "authorName",
+            "authorKey",
+            "createdAt"
+          ])
+          && data.keys().hasAll([
+            "ownerUid",
+            "nameSchemaVersion",
+            "authorName",
+            "authorKey",
+            "createdAt"
+          ])
+          && data.ownerUid is string
+          && data.ownerUid == uid
+          && data.nameSchemaVersion is int
+          && data.nameSchemaVersion == 1
+          && validCommunityThemeAuthorName(data.authorName)
+          && data.authorKey is string
+          && data.authorKey == authorKey
+          && authorKey == authorKeyFor(data.authorName)
+          && data.createdAt is timestamp;
+    }
+
+    function validNewCommunityThemeAccount(uid) {
+      let data = request.resource.data;
+      let namePath = /databases/$(database)/documents/communityThemeAuthorNames/$(data.authorKey);
+      return validCommunityThemeAccountData(data, uid)
+          && data.createdAt == request.time
+          && !exists(namePath)
+          && validCommunityThemeAuthorNameData(
+            getAfter(namePath).data,
+            data.authorKey,
+            uid
+          )
+          && getAfter(namePath).data.createdAt == request.time;
+    }
+
+    function validNewCommunityThemeAuthorName(authorKey) {
+      let data = request.resource.data;
+      let accountPath = /databases/$(database)/documents/communityThemeAccounts/$(request.auth.uid);
+      return validCommunityThemeAuthorNameData(data, authorKey, request.auth.uid)
+          && data.createdAt == request.time
+          && !exists(accountPath)
+          && validCommunityThemeAccountData(
+            getAfter(accountPath).data,
+            request.auth.uid
+          )
+          && getAfter(accountPath).data.authorKey == authorKey
+          && getAfter(accountPath).data.createdAt == request.time;
+    }
+
+    function validCommunityThemeAuthorForSubmission(author) {
+      let accountPath = /databases/$(database)/documents/communityThemeAccounts/$(request.auth.uid);
+      return existsAfter(accountPath)
+          && validCommunityThemeAuthorAccountForSubmission(
+            getAfter(accountPath).data,
+            author
+          );
+    }
+
+    function validCommunityThemeAuthorAccountForSubmission(account, author) {
+      let namePath = /databases/$(database)/documents/communityThemeAuthorNames/$(account.authorKey);
+      return validCommunityThemeAccountData(account, request.auth.uid)
+          && existsAfter(namePath)
+          && validCommunityThemeAuthorNameData(
+            getAfter(namePath).data,
+            account.authorKey,
+            request.auth.uid
+          )
+          && (author == account.authorName || author == "Anonymous");
     }
 
     function validSubmissionQuotaForTheme(themeId) {

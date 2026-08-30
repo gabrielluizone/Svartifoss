@@ -60,6 +60,38 @@ class ColorHarmonyTest {
         assertEquals(0.05f, ColorHarmony.clampSaturation(0.05f), 1e-4f)
     }
 
+    /**
+     * Measured on one watch screen from one accent: artist line at saturation 0.00, quick panel at
+     * 0.33, transport buttons at 0.38, phone palette dots at 0.45. Ninety-seven call sites clamp
+     * the accent up to thirteen different floors, so a colourless cover had no single colour for
+     * anything to report. Promoting it once, here, is what gives them all the same answer.
+     */
+    @Test
+    fun promotedNeutralSaturationGivesAColourlessAccentARealOne() {
+        // A neutral source: the derived value stays neutral, the swatch shows the surface's floor.
+        assertEquals(0f, ColorHarmony.clampSaturation(0f), 1e-4f)
+        assertEquals(
+                ColorHarmony.NEUTRAL_ACCENT_SATURATION,
+                ColorHarmony.promotedNeutralSaturation(0f),
+                1e-4f)
+        assertEquals(
+                ColorHarmony.NEUTRAL_ACCENT_SATURATION,
+                ColorHarmony.promotedNeutralSaturation(ColorHarmony.CHROMATIC_SATURATION_FLOOR - 0.01f),
+                1e-4f)
+    }
+
+    @Test
+    fun promotedNeutralSaturationLeavesEveryChromaticSourceAlone() {
+        // The common case has to be a no-op, or fixing the monochrome report would silently
+        // restate every other album's palette.
+        assertEquals(
+                ColorHarmony.CHROMATIC_SATURATION_FLOOR,
+                ColorHarmony.promotedNeutralSaturation(ColorHarmony.CHROMATIC_SATURATION_FLOOR),
+                1e-4f)
+        assertEquals(0.33f, ColorHarmony.promotedNeutralSaturation(0.33f), 1e-4f)
+        assertEquals(0.9f, ColorHarmony.promotedNeutralSaturation(0.9f), 1e-4f)
+    }
+
     @Test
     fun clampSaturationPullsChromaticValuesIntoTheLegibleBand() {
         assertEquals(ColorHarmony.MIN_SAT, ColorHarmony.clampSaturation(0.12f), 1e-4f)

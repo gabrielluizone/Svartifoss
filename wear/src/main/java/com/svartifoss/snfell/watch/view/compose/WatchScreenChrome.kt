@@ -47,6 +47,7 @@ import androidx.wear.compose.foundation.basicCurvedText
 import androidx.wear.compose.foundation.lazy.ScalingLazyListState
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.common.WatchTypography
+import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import kotlinx.coroutines.delay
@@ -160,13 +161,15 @@ internal fun FaceClock(
                 } else {
                     typography.trackingEm.em
                 },
-                modifier = Modifier.align(Alignment.TopCenter).padding(top = 5.dp)
+                modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(top = FaceGeometry.Classic.CLOCK_TOP_PADDING_DP.dp)
         )
     }
 }
 
 /** The Compose faces' designed clock size, matching the classic face's CLASSIC_CLOCK_SP. */
-private const val FACE_CLOCK_SP = 15f
+private const val FACE_CLOCK_SP = FaceGeometry.Classic.CLOCK_SP
 
 /**
  * Thin curved scroll indicator that hugs the right bezel and auto-hides ~1.2s after scrolling stops.

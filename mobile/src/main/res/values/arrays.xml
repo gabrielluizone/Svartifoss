@@ -33,11 +33,16 @@
         <item>search</item>
         <item>queue</item>
     </string-array>
-    <string-array name="wear_carousel_card_shape_values" translatable="false">
+    <string-array name="wear_cover_shape_values" translatable="false">
         <item>rounded</item>
         <item>square</item>
         <item>squircle</item>
         <item>circle</item>
+    </string-array>
+    <string-array name="wear_text_case_values" translatable="false">
+        <item>normal</item>
+        <item>uppercase</item>
+        <item>lowercase</item>
     </string-array>
     <string-array name="wear_rotary_action_values" translatable="false">
         <item>volume</item>
@@ -72,6 +77,67 @@
         <item>space_grotesk</item>
         <item>orbitron</item>
         <item>caveat</item>
+        <item>inter</item>
+        <item>atkinson_hyperlegible</item>
+        <item>rubik</item>
+        <item>barlow_condensed</item>
+        <item>oswald</item>
+        <item>lora</item>
+        <item>fraunces</item>
+        <item>space_mono</item>
+        <item>archivo_black</item>
+        <item>dancing_script</item>
+        <item>abeezee</item>
+        <item>abril_fatface</item>
+        <item>acme</item>
+        <item>alata</item>
+        <item>aleo</item>
+        <item>alfa_slab_one</item>
+        <item>amatic_sc</item>
+        <item>anton</item>
+        <item>arvo</item>
+        <item>bangers</item>
+        <item>black_ops_one</item>
+        <item>bree_serif</item>
+        <item>cabin</item>
+        <item>chivo</item>
+        <item>courier_prime</item>
+        <item>crete_round</item>
+        <item>crimson_pro</item>
+        <item>dm_sans</item>
+        <item>domine</item>
+        <item>exo_2</item>
+        <item>fira_code</item>
+        <item>inconsolata</item>
+        <item>indie_flower</item>
+        <item>josefin_sans</item>
+        <item>jost</item>
+        <item>kanit</item>
+        <item>lexend</item>
+        <item>lobster</item>
+        <item>manrope</item>
+        <item>mulish</item>
+        <item>nunito</item>
+        <item>outfit</item>
+        <item>oxanium</item>
+        <item>play</item>
+        <item>plus_jakarta_sans</item>
+        <item>press_start_2p</item>
+        <item>quicksand</item>
+        <item>rajdhani</item>
+        <item>righteous</item>
+        <item>roboto_mono</item>
+        <item>rowdies</item>
+        <item>russo_one</item>
+        <item>shrikhand</item>
+        <item>silkscreen</item>
+        <item>source_code_pro</item>
+        <item>staatliches</item>
+        <item>teko</item>
+        <item>titillium_web</item>
+        <item>varela_round</item>
+        <item>yanone_kaffeesatz</item>
+        <item>zilla_slab</item>
     </string-array>
     <string-array name="streaming_open_mode_values" translatable="false">
         <item>app</item>

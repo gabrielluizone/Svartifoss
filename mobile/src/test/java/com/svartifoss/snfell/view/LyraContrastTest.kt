@@ -18,6 +18,16 @@ class LyraContrastTest {
     }
 
     @Test
+    fun `night sage filled button chooses a readable dark foreground`() {
+        val nightSage = 0xff87a89f.toInt()
+        val foreground = LyraContrast.foregroundFor(nightSage)
+
+        assertEquals(LyraContrast.BLACK, foreground)
+        assertTrue(LyraContrast.contrastRatio(foreground, nightSage) >= 4.5)
+        assertTrue(LyraContrast.contrastRatio(LyraContrast.WHITE, nightSage) < 4.5)
+    }
+
+    @Test
     fun `accent text is adjusted to four point five on light surface`() {
         val surface = 0xfff2f2f2.toInt()
         val washedAccent = 0xffe4b7a8.toInt()

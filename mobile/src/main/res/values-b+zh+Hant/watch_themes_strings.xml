@@ -77,4 +77,6 @@
     <string name="watch_theme_face_note">音符</string>
     <string name="watch_theme_face_verse">歌詞</string>
     <string name="watch_theme_face_metadata">中繼資料</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

@@ -23,7 +23,7 @@ const CANONICAL_HEADER = "svartifoss-community-theme-settings-v1";
 const textEncoder = new TextEncoder();
 const ALLOWED_BASE_FACES = new Set([
   "classic", "expressive", "poster", "studio", "material", "immersive",
-  "carousel", "chat", "split", "note", "verse", "metadata"
+  "carousel", "chat", "split", "note", "verse", "metadata", "ribbon", "frame"
 ]);
 
 const elements = {
@@ -318,41 +318,34 @@ function withdrawalWarning(previousStatus) {
 }
 
 /**
- * Corrects the public name and author credit, which is the one part of a submission a moderator
- * may rewrite. Deliberately absent once a theme is public: its file is already committed to Git
- * under the old text, and changing the record alone would leave the two disagreeing silently.
+ * Corrects the theme's public title. The author credit is the account's immutable reserved name,
+ * so even a moderator must not rewrite it from this client.
  */
 function metadataEditor(id, data, status) {
   if (status !== "pending" && status !== "approved") return null;
   const details = document.createElement("details");
   details.className = "submitted-json";
   const summary = document.createElement("summary");
-  summary.textContent = "Correct public name or author";
+  summary.textContent = "Correct public theme name";
   const name = document.createElement("input");
   name.className = "edit-field";
   name.maxLength = MAX_PUBLIC_TEXT_LENGTH;
   name.value = stringOr(data.name, "");
   name.setAttribute("aria-label", "Public theme name");
-  const author = document.createElement("input");
-  author.className = "edit-field";
-  author.maxLength = MAX_PUBLIC_TEXT_LENGTH;
-  author.value = stringOr(data.author, "");
-  author.setAttribute("aria-label", "Public author credit");
   const save = document.createElement("button");
   save.type = "button";
   save.className = "button secondary";
   save.textContent = "Save text";
   save.addEventListener("click", async () => {
     const nextName = name.value.trim().replace(/\s+/gu, " ");
-    const nextAuthor = author.value.trim().replace(/\s+/gu, " ");
-    if (!nextName || !nextAuthor) {
-      showStatus("A public name and an author credit are both required.", true);
+    if (!nextName) {
+      showStatus("A public theme name is required.", true);
       return;
     }
     save.disabled = true;
     try {
       // The status does not move; the review record still names who made the correction.
-      await applyModeratorAction(id, status, status, { name: nextName, author: nextAuthor });
+      await applyModeratorAction(id, status, status, { name: nextName });
       await loadSubmissions();
     } catch (error) {
       console.error(`Could not correct the public text of ${id}`, error);
@@ -360,7 +353,7 @@ function metadataEditor(id, data, status) {
       save.disabled = false;
     }
   });
-  details.append(summary, name, author, save);
+  details.append(summary, name, save);
   return details;
 }
 

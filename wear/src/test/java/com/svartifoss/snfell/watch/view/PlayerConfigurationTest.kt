@@ -2,6 +2,7 @@ package com.svartifoss.snfell.watch.view
 
 import com.svartifoss.snfell.watch.view.face.resolveMetadataVisibility
 import com.svartifoss.snfell.watch.view.face.shouldEnableCentralSeek
+import com.svartifoss.snfell.watch.view.face.shouldShowClassicSourceIcon
 import com.svartifoss.snfell.watch.view.face.shouldKeepEdgeSeekView
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -47,6 +48,18 @@ class PlayerConfigurationTest {
 
         assertTrue(visibility.title)
         assertTrue(visibility.artist)
+    }
+
+    @Test
+    fun classicSourceIconFollowsItsResolvedArtistLine() {
+        assertFalse(shouldShowClassicSourceIcon(
+                hasSourceIcon = true, artistVisible = false, ambient = false))
+        assertTrue(shouldShowClassicSourceIcon(
+                hasSourceIcon = true, artistVisible = true, ambient = false))
+        assertFalse(shouldShowClassicSourceIcon(
+                hasSourceIcon = true, artistVisible = true, ambient = true))
+        assertFalse(shouldShowClassicSourceIcon(
+                hasSourceIcon = false, artistVisible = true, ambient = false))
     }
 
     @Test
@@ -135,6 +148,12 @@ class PlayerConfigurationTest {
         assertEquals(VolumeLayout.EDGE, VolumeLayout.fromPref("edge"))
         assertEquals(VolumeLayout.HALO, VolumeLayout.fromPref("halo"))
         assertEquals(VolumeLayout.METER, VolumeLayout.fromPref("meter"))
+        assertEquals(VolumeLayout.DOUBLE_EDGE, VolumeLayout.fromPref("double_edge"))
+        assertEquals(VolumeLayout.VERTICAL_LEFT, VolumeLayout.fromPref("vertical_left"))
+        assertEquals(VolumeLayout.VERTICAL_RIGHT, VolumeLayout.fromPref("vertical_right"))
+        assertEquals(VolumeLayout.METER_TOP, VolumeLayout.fromPref("meter_top"))
+        assertEquals(VolumeLayout.METER_BOTTOM, VolumeLayout.fromPref("meter_bottom"))
+        assertEquals(VolumeLayout.DIAL, VolumeLayout.fromPref("dial"))
         assertEquals(VolumeLayout.EDGE, VolumeLayout.fromPref("unknown"))
     }
 }

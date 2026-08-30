@@ -91,6 +91,8 @@
     <string name="face_name_note" translatable="false">Note</string>
     <string name="face_name_verse" translatable="false">Verse</string>
     <string name="face_name_metadata" translatable="false">Metadata</string>
+    <string name="face_name_ribbon" translatable="false">Ribbon</string>
+    <string name="face_name_frame" translatable="false">Frame</string>
 
     <!-- One-time gesture hints overlay shown on first launch -->
     <string name="hint_title">How to use</string>
@@ -110,6 +112,7 @@
     <string name="action_name_volume_up">Volume up</string>
     <string name="action_name_volume_down">Volume down</string>
     <string name="action_name_open_menu">Open menu</string>
+    <string name="action_name_open_quick_actions_panel">Open quick actions panel</string>
     <string name="action_name_skip_30">Skip 30 seconds</string>
     <string name="action_name_reverse_30">Rewind 30 seconds</string>
     <string name="action_name_play_pause">Play/Pause</string>

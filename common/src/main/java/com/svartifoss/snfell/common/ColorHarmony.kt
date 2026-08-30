@@ -44,6 +44,15 @@ object ColorHarmony {
     const val MIN_SAT: Float = 0.28f
     const val MAX_SAT: Float = 0.86f
 
+    /**
+     * The saturation a colourless album accent is *promoted* to before anything else touches it.
+     *
+     * Chosen as `WatchTheme.accentForSurface`'s own floor, which is the middle of the band the
+     * filled surfaces were already clamping to - so promotion leaves the pills and buttons looking
+     * essentially as they did, and changes the elements that were being left out.
+     */
+    const val NEUTRAL_ACCENT_SATURATION: Float = 0.45f
+
     /** Tone steps for the secondary/tertiary slots. The primary keeps the source's own lightness
      *  (lifted into a legible range) so the accent the user already recognises does not shift. */
     const val SECONDARY_LIGHTNESS: Float = 0.46f
@@ -94,6 +103,34 @@ object ColorHarmony {
     fun clampSaturation(saturation: Float): Float =
             if (degradesToTonal(saturation)) saturation else saturation.coerceIn(MIN_SAT, MAX_SAT)
 
+    /**
+     * The saturation a source at [saturation] carries once a colourless accent has been promoted.
+     *
+     * **This is the one place the "never invent chroma" rule above is deliberately overridden, and
+     * it is overridden because leaving it in place is what produced the bug.** A black-and-white
+     * cover has no hue; HSL still has to return one and returns the undefined 0°, which is red.
+     * The rules here left that alone - correctly, on their own terms - while 97 call sites across
+     * the two apps clamped the same accent up to one of *thirteen* different saturation floors
+     * before painting it. `tonalSurface` and `tunedFaceColor` also overwrite lightness outright, so
+     * on a monochrome cover every album-derived surface was a function of that single undefined
+     * number, each drawing it at a different strength. Measured on one screen: the artist line at
+     * saturation 0.00 (`accentForText` floors lightness and never touches saturation), the quick
+     * panel at 0.33, the transport buttons at 0.38, and the phone's palette dots at 0.45. Four
+     * answers, one colour, and no possible way for a swatch to report them all.
+     *
+     * Promoting once, at the source, is what collapses that: the accent arrives with a real hue and
+     * a real saturation, every floor below [NEUTRAL_ACCENT_SATURATION] becomes a no-op, and the
+     * remaining per-surface variation is the same variation a colourful album already gets by
+     * design. The elements that were being left out - the artist line, the clock, the dots - now
+     * carry the same colour as the ones that were not.
+     *
+     * The invariant at the top of this file is not violated: rotation is still meaningless on a
+     * neutral source, and nothing below the floor is rotated. What changed is that a neutral source
+     * no longer reaches those functions.
+     */
+    fun promotedNeutralSaturation(saturation: Float): Float =
+            if (degradesToTonal(saturation)) NEUTRAL_ACCENT_SATURATION else saturation
+
     /** Lifts a primary's own lightness into the band chrome can sit on. */
     fun clampPrimaryLightness(lightness: Float): Float =
             lightness.coerceIn(PRIMARY_MIN_LIGHTNESS, PRIMARY_MAX_LIGHTNESS)
@@ -114,6 +151,24 @@ object ColorHarmony {
 
     /** True when [color] has enough chroma for a hue rotation to produce a visibly different hue. */
     fun isChromatic(color: Int): Boolean = !degradesToTonal(hslOf(color)[1])
+
+    /**
+     * [color] with a colourless accent promoted to a real one - see [promotedNeutralSaturation].
+     *
+     * A no-op for every album that has colour in it, which is the common case and the reason this
+     * can sit at the top of the pipeline without restating anything.
+     *
+     * Saturation only: the source keeps its own hue (whatever HSL reported for it, which *is* the
+     * colour the surfaces were already inventing) and its own lightness, so a triad promoted slot
+     * by slot still reads as the tonal ladder it was.
+     */
+    fun promoteNeutralAccent(color: Int): Int {
+        val hsl = hslOf(color)
+        val saturation = promotedNeutralSaturation(hsl[1])
+        if (saturation == hsl[1]) return color
+        hsl[1] = saturation
+        return ColorUtils.HSLToColor(hsl)
+    }
 
     /**
      * Primary plus its opposite hue. The complement lands on the tertiary slot rather than the

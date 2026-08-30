@@ -7,10 +7,11 @@ GitHub Pages catalogue under `docs/themes/`.
 It accepts no project ID, key file or application credential. The only Firebase credential is the
 JSON service-account value in `FIREBASE_SERVICE_ACCOUNT`. In GitHub, create a repository secret
 with exactly that name and paste the full service-account JSON into it. Give that service account
-the minimum Firestore access needed to read `themeIntake` and update its status, plus Firebase
-Authentication user administration -- carrying out an account erasure ends by deleting the identity
-itself, and a service account without that permission fails the run rather than half-erasing an
-account. Do not add the JSON file to the repository or to an APK.
+the minimum Firestore access needed by the queue, author-account/name reservations, moderation,
+likes and account-erasure collections, plus Firebase Authentication user administration -- carrying
+out an account erasure ends by deleting the identity itself, and a service account without that
+permission fails the run rather than half-erasing an account. Do not add the JSON file to the
+repository or to an APK.
 
 ## Deliberate execution modes
 
@@ -72,10 +73,15 @@ file into Git that the same run then takes back out.
 
 Finalization then deletes or scrubs the intake documents (a `keep` request leaves a published theme
 in place with its `ownerUid` replaced by `account-erased`), deletes the published markers and votes
-for every withdrawn theme, deletes that account's own votes across the remaining catalogue, deletes
-its submission quota, deletes the Firebase Auth identity, and only then removes the request itself.
-Each step is idempotent, so a run that fails part-way is resumed by the next one; an erasure that
-cannot be completed is logged, left pending and fails the run so it is visible rather than lost.
+for every withdrawn theme, deletes that account's own votes across the remaining catalogue, and
+deletes its submission quota. It then deletes the Firebase Auth identity. Only after Auth confirms
+that deletion does one atomic batch release `communityThemeAuthorNames/<authorKey>`, remove the
+account profile and request, and create a server-only `communityThemeDeletedAccounts/<uid>`
+tombstone that expires after 24 hours. The old author credit remains in a kept static theme even
+though its name becomes available to a future account, as explicitly requested by the deleting
+user. Each step is idempotent, so a run that fails part-way is resumed by the next one; an erasure
+that cannot be completed is logged, left pending and fails the run so it is visible rather than
+lost.
 
 ## Validation contract
 
@@ -83,6 +89,10 @@ The publisher is intentionally stricter than the UI:
 
 - document and profile IDs must be lower-case RFC UUIDs and agree;
 - names and pseudonyms are normalized, control-free strings of at most 48 UTF-16 code units;
+- every schema-v2 non-anonymous intake author must match both the immutable
+  `communityThemeAccounts/<uid>` profile and its canonical `communityThemeAuthorNames/<authorKey>`
+  reservation (`v1:` plus the lower-cased display name); schema-v1 documents retain their legacy
+  validation path so an already-approved queue can be drained;
 - only current non-archived base faces and the current schema/revision are accepted;
 - `profileJson` must contain exactly the current complete typed settings map;
 - every setting must also satisfy the shared semantic contract in

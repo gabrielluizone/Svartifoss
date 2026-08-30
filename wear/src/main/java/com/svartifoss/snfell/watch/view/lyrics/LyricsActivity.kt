@@ -29,6 +29,7 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
+import com.svartifoss.snfell.watch.theme.flexFontFamily
 import com.svartifoss.snfell.watch.theme.watchFontFamily
 import com.svartifoss.snfell.watch.theme.watchUiFontFamily
 import com.svartifoss.snfell.watch.util.WatchLanguage
@@ -163,12 +164,30 @@ class LyricsActivity : ComponentActivity() {
         // UI font - see WatchTypography.lyricsFontKey for why keeping the old look as the default
         // was the bug rather than the compatibility guarantee it looked like.
         val appearance = ThemeAppearance.resolve(preferences)
+        val lyricsFontPreference = FaceScopedPreferences.getString(
+                preferences, MiscPreferences.WEAR_LYRICS_FONT, appearance)
         val lyricsFontKey = WatchTypography.lyricsFontKey(
-                FaceScopedPreferences.getString(
-                        preferences, MiscPreferences.WEAR_LYRICS_FONT, appearance),
+                lyricsFontPreference,
                 trackFontKey = FaceScopedPreferences.getString(
                         preferences, MiscPreferences.WEAR_FONT, appearance))
-        val lyricsFontFamily = lyricsFontKey?.let(::watchFontFamily)
+        // This screen is an individual typography surface too. In particular, selecting Google
+        // Sans Flex here must create the same variable-font instance as the Verse face instead of
+        // falling back to the catalog's static default family and silently dropping wdth/opsz/
+        // GRAD/ROND (and the title weight/slant axes it shares with lyrics).
+        val lyricsFontFamily = when {
+            lyricsFontKey == null -> null
+            WatchTypography.isFlexFont(lyricsFontKey) -> flexFontFamily(
+                    WatchTypography.titleSpec(preferences, appearance),
+                    WatchTypography.flexAxes(
+                            preferences,
+                            appearance,
+                            if (lyricsFontPreference == WatchTypography.FLEX_FONT_KEY) {
+                                WatchTypography.FlexAxesTarget.LYRICS
+                            } else {
+                                WatchTypography.FlexAxesTarget.GLOBAL
+                            }))
+            else -> watchFontFamily(lyricsFontKey)
+        }
 
         setContent {
             val state by viewModel.state.observeAsState(LyricsUiState.Loading)

@@ -81,6 +81,7 @@ import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.PaletteTransforms
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
+import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 import com.svartifoss.snfell.watch.view.compose.FaceClock
@@ -332,10 +333,14 @@ private fun BoxScope.ImmersiveComposition(
             // activity_main.xml), so they simply draw over the text instead of displacing it.
             // Lifting the block to clear them, as this used to, made the text float mid-screen
             // and broke the composition the face exists for.
-            val bottomPadding = screen * .13f
+            val bottomPadding = screen * FaceGeometry.Immersive.BOTTOM_PADDING_FRACTION
             Column(
                     Modifier.align(Alignment.BottomCenter)
-                            .padding(bottom = bottomPadding, start = screen * .1f, end = screen * .1f)
+                            .padding(
+                                    bottom = bottomPadding,
+                                    start = screen * FaceGeometry.Immersive.SIDE_PADDING_FRACTION,
+                                    end = screen * FaceGeometry.Immersive.SIDE_PADDING_FRACTION
+                            )
                             .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -348,8 +353,8 @@ private fun BoxScope.ImmersiveComposition(
                             mode = state.titleTextMode,
                             typography = state.titleTypography,
                             color = titleTextColor(state, Color.White),
-                            fontSize = 17.sp,
-                            lineHeight = 19.sp,
+                            fontSize = FaceGeometry.Immersive.TITLE_SP.sp,
+                            lineHeight = FaceGeometry.Immersive.TITLE_LINE_HEIGHT_SP.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = state.titleFont,
                             textAlign = TextAlign.Center
@@ -357,40 +362,45 @@ private fun BoxScope.ImmersiveComposition(
                 }
                 if (state.showArtist) {
                     Row(
-                            modifier = Modifier.padding(top = 4.dp),
+                            modifier = Modifier.padding(
+                                    top = FaceGeometry.Immersive.ARTIST_TOP_PADDING_DP.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                     ) {
                         // Immersive's artist line is the largest of any face (13sp), so it carries
                         // the full-size glyph.
-                        SourceIconGlyph(state, 15.dp, artistOrStatusColor(state, .82f))
-                        Text(
-                                artistOrStatus(state),
+                        SourceIconGlyph(
+                                state,
+                                FaceGeometry.Immersive.SOURCE_ICON_SIZE_DP.dp,
+                                artistOrStatusColor(state, .82f)
+                        )
+                        ArtistLineText(
+                                text = artistOrStatus(state),
+                                state = state,
                                 color = artistOrStatusColor(state, .82f),
-                                fontSize = 13.sp,
-                                lineHeight = 15.sp,
-                                fontFamily = state.artistFont,
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                                fontSize = FaceGeometry.Immersive.ARTIST_SP.sp,
+                                lineHeight = FaceGeometry.Immersive.ARTIST_LINE_HEIGHT_SP.sp,
+                                textAlign = TextAlign.Center
                         )
                     }
                 }
                 // Track time in the same MM:SS / MM:SS form as Poster/Studio (TrackFooter).
                 if (state.showTrackTime) {
-                    Text(
+                    TrackTimeText(
                             stringResource(
                                     R.string.playback_time_format,
                                     formatFaceClockTime(state.positionMs),
                                     formatFaceClockTime(state.durationMs)
                             ),
+                            state = state,
                             color = Color.White.copy(alpha = .70f),
-                            fontSize = 11.sp,
-                            lineHeight = 12.sp,
+                            fontSize = FaceGeometry.Immersive.TRACK_TIME_SP.sp,
+                            lineHeight = FaceGeometry.Immersive.TRACK_TIME_LINE_HEIGHT_SP.sp,
                             fontFamily = state.artistFont,
                             textAlign = TextAlign.Center,
                             maxLines = 1,
-                            modifier = Modifier.padding(top = 5.dp)
+                            modifier = Modifier.padding(
+                                    top = FaceGeometry.Immersive.TRACK_TIME_TOP_PADDING_DP.dp)
                     )
                 }
             }
@@ -502,15 +512,13 @@ private fun BoxScope.DepthComposition(
                             horizontalArrangement = Arrangement.Center
                     ) {
                         SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, .78f))
-                        Text(
-                                artistOrStatus(state),
+                        ArtistLineText(
+                                text = artistOrStatus(state),
+                                state = state,
                                 color = artistOrStatusColor(state, .78f),
                                 fontSize = 12.sp,
                                 lineHeight = 14.sp,
-                                fontFamily = state.artistFont,
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                                textAlign = TextAlign.Center
                         )
                     }
                 }
@@ -726,15 +734,14 @@ private fun BoxScope.AuroraComposition(
             if (state.showArtist) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .70f))
-                    Text(
-                            artistOrStatus(state).uppercase(),
+                    ArtistLineText(
+                            text = artistOrStatus(state).uppercase(),
+                            state = state,
                             color = artistOrStatusColor(state, .70f),
                             fontSize = 8.sp,
                             lineHeight = 9.sp,
                             letterSpacing = 1.8.sp,
-                            fontFamily = state.artistFont,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            textAlign = TextAlign.Start
                     )
                 }
             }
@@ -977,16 +984,14 @@ private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .58f))
-                Text(
-                        artistOrStatus(state).uppercase(),
+                ArtistLineText(
+                        text = artistOrStatus(state).uppercase(),
+                        state = state,
                         color = artistOrStatusColor(state, .58f),
                         fontSize = 8.sp,
                         lineHeight = 9.sp,
                         letterSpacing = 2.sp,
-                        fontFamily = state.artistFont,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        textAlign = TextAlign.Center
                 )
             }
         }
@@ -1038,16 +1043,14 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(top = if (state.showTitle) 6.dp else 0.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .76f))
-                Text(
-                        artistOrStatus(state).uppercase(),
+                ArtistLineText(
+                        text = artistOrStatus(state).uppercase(),
+                        state = state,
                         color = artistOrStatusColor(state, .76f),
                         fontSize = 8.sp,
                         lineHeight = 9.sp,
                         letterSpacing = 1.55.sp,
-                        fontFamily = state.artistFont,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        textAlign = TextAlign.Center
                 )
             }
         }
@@ -1081,16 +1084,14 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(top = if (state.showTitle) 5.dp else 0.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .62f))
-                Text(
-                        artistOrStatus(state).uppercase(),
+                ArtistLineText(
+                        text = artistOrStatus(state).uppercase(),
+                        state = state,
                         color = artistOrStatusColor(state, .62f),
                         fontSize = 8.sp,
                         lineHeight = 9.sp,
                         letterSpacing = 1.2.sp,
-                        fontFamily = state.artistFont,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        textAlign = TextAlign.Center
                 )
             }
         }
@@ -1129,16 +1130,14 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
                             .background(Color.White.copy(alpha = .09f))
                             .padding(horizontal = 8.dp, vertical = 2.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .70f))
-                Text(
-                        artistOrStatus(state),
+                ArtistLineText(
+                        text = artistOrStatus(state),
+                        state = state,
                         color = artistOrStatusColor(state, .70f),
                         fontSize = 8.sp,
                         lineHeight = 10.sp,
                         letterSpacing = .55.sp,
-                        fontFamily = state.artistFont,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        textAlign = TextAlign.Center
                 )
             }
         }
@@ -1172,17 +1171,15 @@ private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(top = if (state.showTitle) 3.dp else 0.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .48f))
-                Text(
-                        artistOrStatus(state).uppercase(),
+                ArtistLineText(
+                        text = artistOrStatus(state).uppercase(),
+                        state = state,
                         color = artistOrStatusColor(state, .48f),
                         fontSize = 8.sp,
                         lineHeight = 9.sp,
                         letterSpacing = 2.4.sp,
                         fontWeight = FontWeight.Light,
-                        fontFamily = state.artistFont,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        textAlign = TextAlign.Center
                 )
             }
         }
@@ -1213,9 +1210,10 @@ private fun BoxScope.TrackFooter(
     val miniRowClearance =
             screen * state.miniButtonsTopFraction.coerceIn(.20f, .95f) - screen * .50f - 10.dp
     val clampedY = minOf(y, miniRowClearance).coerceAtLeast(minOf(y, screen * 0.16f))
-    Text(
+    TrackTimeText(
             text = stringResource(R.string.playback_time_format,
                     formatFaceClockTime(state.positionMs), formatFaceClockTime(state.durationMs)),
+            state = state,
             color = color, fontSize = fontSize, lineHeight = fontSize, fontFamily = fontFamily,
             letterSpacing = letterSpacing,
             modifier = Modifier.align(Alignment.Center).offset(y = clampedY).width(width),
@@ -1827,12 +1825,13 @@ private fun BoxScope.MaterialComposition(
     }
 
     if (state.showTrackTime) {
-        Text(
+        TrackTimeText(
                 text = stringResource(
                         R.string.playback_time_format,
                         formatFaceClockTime(state.positionMs),
                         formatFaceClockTime(state.durationMs)
                 ),
+                state = state,
                 color = Color.White.copy(alpha = .70f),
                 fontSize = 11.sp,
                 fontFamily = GoogleSansFamily,

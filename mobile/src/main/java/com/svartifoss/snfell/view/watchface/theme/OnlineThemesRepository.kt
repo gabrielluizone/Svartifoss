@@ -32,7 +32,14 @@ data class OnlineThemeSummary(
         /** ISO-8601 publication timestamp supplied by the static catalogue. */
         val publishedAt: String,
         /** Static count supplied by the trusted publisher; older catalogues default to zero. */
-        val likes: Int = 0
+        val likes: Int = 0,
+        /**
+         * Canonical fingerprint of this theme's settings, recomputed by the publisher from the
+         * published profile. It is what lets a submission be refused as an exact duplicate before
+         * anyone is asked to sign in. Absent on catalogues written before the field existed, which
+         * is why every consumer must treat null as "cannot tell" rather than as "not a duplicate".
+         */
+        val settingsDigest: String? = null
 )
 
 /** A verified catalogue entry and its flat `profileToJson`-shaped JSON object. */
@@ -58,6 +65,35 @@ class OnlineThemesRepository(context: Context) {
     private val appContext = context.applicationContext
     private val cacheDirectory = File(appContext.cacheDir, CACHE_DIRECTORY)
     private val cachePreferences = appContext.getSharedPreferences(CACHE_PREFERENCES, Context.MODE_PRIVATE)
+
+    /**
+     * Canonical settings fingerprints of every published theme this device already knows about.
+     *
+     * Used to refuse an exact duplicate before anyone is asked to sign in. It never throws and
+     * never forces a network round trip: an unreachable catalogue simply yields nothing to compare
+     * against, because a submission must not be blocked by the network being down. Entries from a
+     * catalogue written before the field existed carry no digest and are absent for the same
+     * reason. The trusted publisher re-applies the rule from the authoritative side.
+     */
+    suspend fun publishedSettingsDigests(): Set<String> = try {
+        loadCatalog(forceRefresh = false).mapNotNullTo(mutableSetOf()) { it.settingsDigest }
+    } catch (e: IOException) {
+        Timber.d(e, "No cached catalogue for the community-theme duplicate check")
+        emptySet()
+    }
+
+    /**
+     * Public like counts by theme id, for the author's own view of what they have published.
+     *
+     * Fails open like [publishedSettingsDigests]: an unreachable catalogue yields no counts, and a
+     * missing count is shown as "no figure yet" rather than as zero.
+     */
+    suspend fun publishedLikeCounts(): Map<String, Int> = try {
+        loadCatalog(forceRefresh = false).associate { it.id to it.likes }
+    } catch (e: IOException) {
+        Timber.d(e, "No cached catalogue for the author's own like counts")
+        emptyMap()
+    }
 
     /**
      * Returns the published catalogue, using a fresh disk cache when possible.
@@ -232,6 +268,11 @@ class OnlineThemesRepository(context: Context) {
         } else {
             0
         }
+        val settingsDigest = if (json.has("settingsDigest")) {
+            json.requiredText("settingsDigest")?.takeIf(SETTINGS_DIGEST::matches) ?: return null
+        } else {
+            null
+        }
         return OnlineThemeSummary(
                 id = id,
                 name = name,
@@ -241,7 +282,8 @@ class OnlineThemesRepository(context: Context) {
                 schemaVersion = schemaVersion,
                 minimumAppVersion = minimumAppVersion,
                 publishedAt = publishedAt,
-                likes = likes)
+                likes = likes,
+                settingsDigest = settingsDigest)
     }
 
     private fun validateSummary(summary: OnlineThemeSummary): OnlineThemeSummary {
@@ -542,6 +584,8 @@ class OnlineThemesRepository(context: Context) {
         private val WHITESPACE = Regex("\\s+")
         private val UUID_V4 = Regex(
                 "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")
+        /** Mirrors CommunityThemeSubmissionPolicy's canonical digest form exactly. */
+        private val SETTINGS_DIGEST = Regex("^sha256:[0-9a-f]{64}$")
 
         private fun etagKey(cacheKey: String): String = "$cacheKey.etag"
         private fun lastFetchKey(cacheKey: String): String = "$cacheKey.last_fetch"

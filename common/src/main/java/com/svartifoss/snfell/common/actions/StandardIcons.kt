@@ -13,6 +13,8 @@ object StandardIcons {
             StandardActions.ACTION_VOLUME_UP to com.svartifoss.snfell.common.R.drawable.action_volume_up,
             StandardActions.ACTION_VOLUME_DOWN to com.svartifoss.snfell.common.R.drawable.action_volume_down,
             StandardActions.ACTION_OPEN_MENU to com.svartifoss.snfell.common.R.drawable.action_open_menu,
+            StandardActions.ACTION_OPEN_QUICK_ACTIONS_PANEL to
+                    com.svartifoss.snfell.common.R.drawable.action_open_quick_panel,
             StandardActions.ACTION_SKIP_30_SECONDS to com.svartifoss.snfell.common.R.drawable.action_skip_30_seconds,
             StandardActions.ACTION_REVERSE_30_SECONDS to com.svartifoss.snfell.common.R.drawable.action_reverse_30_seconds,
             StandardActions.ACTION_PLAY_PAUSE to com.svartifoss.snfell.common.R.drawable.action_play_pause,

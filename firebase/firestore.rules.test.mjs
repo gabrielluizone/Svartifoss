@@ -37,11 +37,11 @@ const FIFTH_ID = "54b23da9-98de-48ce-a158-4a52d2d5bb6e";
 
 let testEnvironment;
 
-function intake(ownerUid, id) {
+function intake(ownerUid, id, overrides = {}) {
   return {
     ownerUid,
     status: "pending",
-    submissionSchemaVersion: 1,
+    submissionSchemaVersion: 2,
     name: "A community theme",
     author: "Theme maker",
     baseFace: "poster",
@@ -52,6 +52,33 @@ function intake(ownerUid, id) {
     moderationPreviewWebpBase64: "AAAA",
     clientVersion: "3.3",
     createdAt: serverTimestamp(),
+    ...overrides,
+  };
+}
+
+function authorKey(authorName) {
+  return `v1:${authorName.toLowerCase()}`;
+}
+
+function authorAccount(ownerUid, authorName = "Theme maker", overrides = {}) {
+  return {
+    ownerUid,
+    accountSchemaVersion: 1,
+    authorName,
+    authorKey: authorKey(authorName),
+    createdAt: serverTimestamp(),
+    ...overrides,
+  };
+}
+
+function authorNameClaim(ownerUid, authorName = "Theme maker", overrides = {}) {
+  return {
+    ownerUid,
+    nameSchemaVersion: 1,
+    authorName,
+    authorKey: authorKey(authorName),
+    createdAt: serverTimestamp(),
+    ...overrides,
   };
 }
 
@@ -177,13 +204,32 @@ function linkedAnonymousDb(uid) {
     .firestore();
 }
 
-async function submit(db, ownerUid, id) {
+async function submit(db, ownerUid, id, { authorName = "Theme maker", credit = authorName } = {}) {
+  const accountDocument = doc(db, "communityThemeAccounts", ownerUid);
+  const accountSnapshot = await getDoc(db, accountDocument);
   const quotaDocument = doc(db, "communityThemeSubmissionQuota", ownerUid);
   const previousSnapshot = await getDoc(db, quotaDocument);
   const previousQuota = previousSnapshot.exists ? previousSnapshot.data() : null;
   const batch = writeBatch(db);
-  batch.set(doc(db, "themeIntake", id), intake(ownerUid, id));
+  if (!accountSnapshot.exists) {
+    batch.set(accountDocument, authorAccount(ownerUid, authorName));
+    batch.set(doc(db, "communityThemeAuthorNames", authorKey(authorName)),
+      authorNameClaim(ownerUid, authorName));
+  }
+  batch.set(doc(db, "themeIntake", id), intake(ownerUid, id, { author: credit }));
   batch.set(quotaDocument, nextQuota(ownerUid, id, previousQuota));
+  return batch.commit();
+}
+
+function claimAuthorName(db, ownerUid, authorName, {
+  accountOverrides = {},
+  claimOverrides = {},
+} = {}) {
+  const batch = writeBatch(db);
+  batch.set(doc(db, "communityThemeAccounts", ownerUid),
+    authorAccount(ownerUid, authorName, accountOverrides));
+  batch.set(doc(db, "communityThemeAuthorNames", authorKey(authorName)),
+    authorNameClaim(ownerUid, authorName, claimOverrides));
   return batch.commit();
 }
 
@@ -271,6 +317,95 @@ test("an intake and quota must be created together in one batch", async () => {
   await assertFails(setDoc(authorDb, doc(authorDb, "communityThemeSubmissionQuota", AUTHOR),
     quota(AUTHOR, FIRST_ID)));
   await assertSucceeds(submit(authorDb, AUTHOR, FIRST_ID));
+});
+
+test("an author account and its globally unique name reservation are one atomic pair", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const accountDocument = doc(authorDb, "communityThemeAccounts", AUTHOR);
+  const claimDocument = doc(authorDb, "communityThemeAuthorNames", authorKey("Theme maker"));
+
+  await assertFails(setDoc(authorDb, accountDocument, authorAccount(AUTHOR)));
+  await assertFails(setDoc(authorDb, claimDocument, authorNameClaim(AUTHOR)));
+  await assertSucceeds(claimAuthorName(authorDb, AUTHOR, "Theme maker"));
+
+  await assertSucceeds(getDoc(authorDb, accountDocument));
+  await assertSucceeds(getDoc(authorDb, claimDocument));
+  await assertFails(getDocs(authorDb, collection(authorDb, "communityThemeAuthorNames")));
+  const otherDb = authenticatedDb(OTHER_AUTHOR);
+  await assertFails(getDoc(otherDb, doc(otherDb, "communityThemeAccounts", AUTHOR)));
+});
+
+test("author names are canonical ASCII handles and reserve all casing variants", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  await assertSucceeds(claimAuthorName(authorDb, AUTHOR, "Theme Maker"));
+
+  const otherDb = authenticatedDb(OTHER_AUTHOR);
+  await assertFails(claimAuthorName(otherDb, OTHER_AUTHOR, "theme maker"));
+
+  const invalidNames = [
+    " Theme maker",
+    "Theme maker ",
+    "Theme  maker",
+    "Theme/maker",
+    "Thème maker",
+    "-Theme maker",
+    "Theme maker-",
+    "Anonymous",
+    "SVARTIFOSS",
+    "a".repeat(49),
+  ];
+  for (let index = 0; index < invalidNames.length; index += 1) {
+    const uid = `invalid-name-${index}`;
+    const db = authenticatedDb(uid);
+    await assertFails(claimAuthorName(db, uid, invalidNames[index]));
+  }
+});
+
+test("a claimed author identity is immutable and a submitting account cannot choose another", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  await assertSucceeds(claimAuthorName(authorDb, AUTHOR, "Theme maker"));
+
+  await assertFails(updateDoc(authorDb, doc(authorDb, "communityThemeAccounts", AUTHOR), {
+    authorName: "Another author",
+    authorKey: authorKey("Another author"),
+  }));
+  await assertFails(deleteDoc(authorDb, doc(authorDb, "communityThemeAccounts", AUTHOR)));
+  await assertFails(deleteDoc(authorDb,
+    doc(authorDb, "communityThemeAuthorNames", authorKey("Theme maker"))));
+  await assertFails(claimAuthorName(authorDb, AUTHOR, "Another author"));
+});
+
+test("a submission uses exactly the account author or hides it as Anonymous", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  await assertSucceeds(submit(authorDb, AUTHOR, FIRST_ID, {
+    authorName: "Theme maker",
+    credit: "Theme maker",
+  }));
+  await assertSucceeds(submit(authorDb, AUTHOR, SECOND_ID, {
+    authorName: "Theme maker",
+    credit: "Anonymous",
+  }));
+  await assertFails(submit(authorDb, AUTHOR, THIRD_ID, {
+    authorName: "Theme maker",
+    credit: "Impostor",
+  }));
+
+  const ownerWithoutIdentity = "no-author-profile";
+  const noIdentityDb = authenticatedDb(ownerWithoutIdentity);
+  const batch = writeBatch(noIdentityDb);
+  batch.set(doc(noIdentityDb, "themeIntake", FOURTH_ID),
+    intake(ownerWithoutIdentity, FOURTH_ID));
+  batch.set(doc(noIdentityDb, "communityThemeSubmissionQuota", ownerWithoutIdentity),
+    quota(ownerWithoutIdentity, FOURTH_ID));
+  await assertFails(batch.commit());
+});
+
+test("anonymous auth cannot reserve an author name but a Google-linked anonymous account can", async () => {
+  const anonDb = anonymousDb(ANONYMOUS);
+  await assertFails(claimAuthorName(anonDb, ANONYMOUS, "Quiet maker"));
+
+  const linkedDb = linkedAnonymousDb(SECOND_ANONYMOUS);
+  await assertSucceeds(claimAuthorName(linkedDb, SECOND_ANONYMOUS, "Linked maker"));
 });
 
 test("a quota cannot be advanced without one matching new intake", async () => {
@@ -451,7 +586,7 @@ test("a moderator can reopen a decision and withdraw a published theme", async (
   await assertFails(moderate(moderatorDb, MODERATOR, THIRD_ID, { from: "pending", to: "pending" }));
 });
 
-test("a moderator corrects public text only before the theme is public", async () => {
+test("a moderator can correct only the theme name before publication, never the fixed author", async () => {
   const moderatorDb = authenticatedDb(MODERATOR);
   await seedStatus(AUTHOR, FIRST_ID, "pending");
   await seedStatus(AUTHOR, SECOND_ID, "published");
@@ -460,7 +595,13 @@ test("a moderator corrects public text only before the theme is public", async (
   await assertSucceeds(moderate(moderatorDb, MODERATOR, FIRST_ID, {
     from: "pending",
     to: "pending",
-    fields: { name: "A corrected name", author: "Corrected author" },
+    fields: { name: "A corrected name" },
+  }));
+  await seedStatus(AUTHOR, THIRD_ID, "pending");
+  await assertFails(moderate(moderatorDb, MODERATOR, THIRD_ID, {
+    from: "pending",
+    to: "pending",
+    fields: { author: "Corrected author" },
   }));
   // The published file is committed to Git under the old text; rewriting the record alone would
   // leave the two disagreeing with nothing to notice it.
@@ -653,4 +794,46 @@ test("an anonymous account may also ask for its own erasure", async () => {
   await assertSucceeds(setDoc(anonDb,
     doc(anonDb, "communityThemeAccountDeletion", ANONYMOUS), deletionRequest(ANONYMOUS, "delete")));
   await assertSucceeds(getDoc(anonDb, doc(anonDb, "communityThemeAccountDeletion", ANONYMOUS)));
+});
+
+test("an author withdraws their own theme without a moderator or a review record", async () => {
+  // Their account deletion can already remove every theme they published; refusing the smaller
+  // version of that request would only push somebody toward the more destructive one.
+  const authorDb = authenticatedDb(AUTHOR);
+  const otherDb = authenticatedDb(OTHER_AUTHOR);
+  await seedStatus(AUTHOR, FIRST_ID, "published");
+  await seedStatus(AUTHOR, SECOND_ID, "pending");
+  await seedStatus(OTHER_AUTHOR, THIRD_ID, "published");
+
+  await assertSucceeds(updateDoc(authorDb, doc(authorDb, "themeIntake", FIRST_ID), {
+    status: "withdrawn",
+  }));
+  await assertSucceeds(updateDoc(authorDb, doc(authorDb, "themeIntake", SECOND_ID), {
+    status: "withdrawn",
+  }));
+
+  // Somebody else's theme, and any other edit to their own, both stay closed.
+  await assertFails(updateDoc(otherDb, doc(otherDb, "themeIntake", FIRST_ID), {
+    status: "withdrawn",
+  }));
+  await seedStatus(AUTHOR, FOURTH_ID, "pending");
+  await assertFails(updateDoc(authorDb, doc(authorDb, "themeIntake", FOURTH_ID), {
+    status: "approved",
+  }));
+  await assertFails(updateDoc(authorDb, doc(authorDb, "themeIntake", FOURTH_ID), {
+    status: "withdrawn",
+    name: "Renamed on the way out",
+  }));
+});
+
+test("a moderator who owns the theme can still take it down", async () => {
+  // The author branch has to be evaluated first for this to work at all: the moderator branch
+  // reaches for a review record this write never made, which errors rather than returning false.
+  const selfDb = authenticatedDb(SELF_MODERATOR);
+  await seedStatus(SELF_MODERATOR, FIFTH_ID, "published");
+  await seedModerator(SELF_MODERATOR);
+
+  await assertSucceeds(updateDoc(selfDb, doc(selfDb, "themeIntake", FIFTH_ID), {
+    status: "withdrawn",
+  }));
 });

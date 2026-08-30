@@ -7,11 +7,13 @@ import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PixelFormat
+import android.graphics.PorterDuff
 import android.graphics.RadialGradient
 import android.graphics.Shader
 import android.graphics.SweepGradient
 import android.graphics.drawable.Drawable
 import androidx.core.graphics.ColorUtils
+import com.svartifoss.snfell.common.AccentFloorStyle
 import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
@@ -24,7 +26,8 @@ class PlayerBackgroundDrawable(
         private val secondary: Int,
         private val tertiary: Int,
         private val materialSurface: Int,
-        private val materialSurfaceSoftened: Boolean
+        private val materialSurfaceSoftened: Boolean,
+        private val accentFloor: AccentFloorStyle
 ) : Drawable() {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -320,6 +323,49 @@ class PlayerBackgroundDrawable(
             }
         }
         paint.shader = null
+        drawAccentFloor(canvas, accentFloor, primary)
+    }
+
+    /** Native twin of Compose's accentFloorGlow for the View-based Classic face. */
+    private fun drawAccentFloor(canvas: Canvas, style: AccentFloorStyle, accent: Int) {
+        if (!style.isVisible) return
+
+        val b = bounds
+        val width = b.width().toFloat()
+        val height = b.height().toFloat()
+        val radius = minOf(width, height) / 2f
+        val cx = b.exactCenterX()
+        val cy = b.exactCenterY()
+        val saved = canvas.saveLayer(
+                b.left.toFloat(), b.top.toFloat(), b.right.toFloat(), b.bottom.toFloat(), null)
+
+        paint.xfermode = null
+        paint.shader = RadialGradient(
+                cx,
+                cy,
+                radius,
+                intArrayOf(
+                        Color.TRANSPARENT,
+                        ColorUtils.setAlphaComponent(accent, (style.maxAlpha * 255).toInt())
+                ),
+                floatArrayOf(style.innerStop, 1f),
+                Shader.TileMode.CLAMP)
+        canvas.drawCircle(cx, cy, radius, paint)
+
+        paint.shader = LinearGradient(
+                0f,
+                b.top + height * style.maskStart,
+                0f,
+                b.top + height * AccentFloorStyle.MASK_END,
+                Color.TRANSPARENT,
+                Color.BLACK,
+                Shader.TileMode.CLAMP)
+        paint.xfermode = android.graphics.PorterDuffXfermode(PorterDuff.Mode.DST_IN)
+        canvas.drawRect(b, paint)
+
+        paint.xfermode = null
+        paint.shader = null
+        canvas.restoreToCount(saved)
     }
 
     override fun setAlpha(alpha: Int) {

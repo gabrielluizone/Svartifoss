@@ -56,6 +56,15 @@ class SettingsCatalogTest {
                     listed = SettingsCatalog.WATCH_CATEGORIES,
                     sections = SettingsCatalog.WATCH_SECTIONS)
 
+    /**
+     * The compact editor leads, then the global palette, then the per-element groups.
+     *
+     * The order still encodes the same rule it always did - the title, artist and clock groups
+     * inherit whatever colour the global group resolves, so they cannot be read first. The editor
+     * category sits ahead of both because it is the only one the Color page shows; the four behind
+     * it stay inflated as the authoritative preferences and are what a search result, a scoped
+     * write or a dialog still goes through.
+     */
     @Test
     fun musicColorsLeadTheColorsPage() {
         val colors = SettingsCatalog.WATCH_SECTIONS
@@ -65,6 +74,7 @@ class SettingsCatalogTest {
 
         assertEquals(
                 listOf(
+                        "cat_wf_colors_editor",
                         "cat_wf_colors",
                         "cat_wf_colors_title",
                         "cat_wf_colors_artist",

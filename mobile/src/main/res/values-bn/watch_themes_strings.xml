@@ -77,4 +77,6 @@
     <string name="watch_theme_face_note">নোট</string>
     <string name="watch_theme_face_verse">পংক্তি</string>
     <string name="watch_theme_face_metadata">মেটাডেটা</string>
+    <string name="watch_theme_face_ribbon">Ribbon</string>
+    <string name="watch_theme_face_frame">Frame</string>
 </resources>

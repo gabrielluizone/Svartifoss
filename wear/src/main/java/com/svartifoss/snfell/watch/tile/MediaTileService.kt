@@ -36,6 +36,7 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.SwatchInfo
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.theme.WatchTheme
@@ -213,11 +214,14 @@ class MediaTileService : TileService() {
         return try {
             val palette = Palette.from(bitmap).generate()
             val swatchInfos = palette.swatches.map { SwatchInfo(it.rgb, it.population) }
+            // Promoted here rather than in SurfacePaletteResolver like everything else, because
+            // the tile renders its own layout and never derives a triad. Without it a monochrome
+            // cover would leave the tile grey while the player it launches is not.
             selectPrimaryAccent(
                 palette.getVibrantSwatch()?.let { SwatchInfo(it.rgb, it.population) },
                 swatchInfos,
                 accentSource()
-            )
+            )?.let(ColorHarmony::promoteNeutralAccent)
         } catch (e: Exception) {
             null
         }

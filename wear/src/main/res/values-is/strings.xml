@@ -78,6 +78,8 @@
     <string name="face_name_note" translatable="false">Note</string>
     <string name="face_name_verse" translatable="false">Verse</string>
     <string name="face_name_metadata" translatable="false">Metadata</string>
+    <string name="face_name_ribbon" translatable="false">Ribbon</string>
+    <string name="face_name_frame" translatable="false">Frame</string>
 
     <string name="hint_title">Svona notarðu þetta</string>
     <string name="hint_edges">Ýttu efst, neðst, til vinstri eða hægri — hvert svæði framkvæmir úthlutaða aðgerð</string>

@@ -290,7 +290,9 @@ class WatchThemeRepository(context: Context) {
                 "split" to R.string.watch_theme_face_split,
                 "note" to R.string.watch_theme_face_note,
                 "verse" to R.string.watch_theme_face_verse,
-                "metadata" to R.string.watch_theme_face_metadata
+                "metadata" to R.string.watch_theme_face_metadata,
+                "ribbon" to R.string.watch_theme_face_ribbon,
+                "frame" to R.string.watch_theme_face_frame
         )
 
         fun displayNameForFace(context: Context, face: String): String =
