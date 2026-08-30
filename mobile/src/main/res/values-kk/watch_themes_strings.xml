@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Метадеректер</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Маған жаңа</string>
+    <string name="online_theme_filter_not_installed_selected">Қосылған тақырыптар жасырылған</string>
+    <string name="online_theme_filter_not_installed_off">Қосылған тақырыптар көрсетілген</string>
+    <string name="online_theme_search_empty_all_installed">Сіз барлық қоғамдастық тақырыбын қостыңыз.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Оларды қайта көру үшін «Маған жаңа» опциясын өшіріңіз.</string>
 </resources>

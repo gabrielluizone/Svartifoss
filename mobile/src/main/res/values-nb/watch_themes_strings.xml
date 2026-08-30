@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Nytt for meg</string>
+    <string name="online_theme_filter_not_installed_selected">Skjuler temaer du allerede har lagt til</string>
+    <string name="online_theme_filter_not_installed_off">Viser temaer du allerede har lagt til</string>
+    <string name="online_theme_search_empty_all_installed">Du har allerede lagt til alle fellesskapstemaene.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Slå av «Nytt for meg» for å se dem igjen.</string>
 </resources>

@@ -2094,4 +2094,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC ও ক্যাটালগ আইডি। ডিফল্টে বন্ধ — প্রয়োজন হলে কাজে লাগে, না হলে অপ্রয়োজনীয় তথ্য।</string>
     <string name="setting_metadata_lookup">অনলাইনে ট্র্যাকের বিবরণ খুঁজুন</string>
     <string name="setting_metadata_lookup_description">প্লেয়ার অ্যাপ যে তথ্য প্রকাশ করেনি — ISRC, লেবেল, রিলিজের তারিখ — সেগুলো বিনামূল্যের পাবলিক ডেটাবেস MusicBrainz থেকে পূরণ করে। ডিফল্টে বন্ধ। Metadata ওয়াচ ফেস এটি ছাড়াও চলে; এটি শুধু অতিরিক্ত সারি যোগ করে। আপনি এটি চালু করে ওই ফেস নির্বাচন না করা পর্যন্ত কিছুই পাঠানো হয় না, আর পাঠানো হলেও শুধু ট্র্যাকের নাম ও শিল্পীর নাম পাঠানো হয়।</string>
+    <string name="watch_preview_expand">বড় প্রিভিউ খুলুন</string>
+    <string name="watch_preview_fullscreen_dismiss">বন্ধ করতে যেকোনো জায়গায় ট্যাপ করুন</string>
 </resources>

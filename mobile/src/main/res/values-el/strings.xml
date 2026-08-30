@@ -2077,4 +2077,6 @@
     <string name="category_system_access">Πρόσβαση Android &amp; ειδοποιήσεις</string>
     <string name="setting_privacy_policy">Πολιτική απορρήτου</string>
     <string name="setting_privacy_policy_description">Δείτε ποια δεδομένα χρησιμοποιεί το Svartifoss και ποιες διαδικτυακές υπηρεσίες είναι προαιρετικές.</string>
+    <string name="watch_preview_expand">Άνοιγμα μεγαλύτερης προεπισκόπησης</string>
+    <string name="watch_preview_fullscreen_dismiss">Πατήστε οπουδήποτε για κλείσιμο</string>
 </resources>

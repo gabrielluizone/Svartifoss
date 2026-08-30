@@ -2119,4 +2119,6 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     <string name="setting_wear_metadata_identifiers_description">ISRC et identifiants de catalogue. Désactivés par défaut — utiles lorsque vous en avez besoin, superflus sinon.</string>
     <string name="setting_metadata_lookup">Rechercher les détails du titre en ligne</string>
     <string name="setting_metadata_lookup_description">Complète ce que l’application en cours de lecture n’a pas publié — ISRC, label, date de sortie — à partir de MusicBrainz, une base de données publique gratuite. Désactivé par défaut. Le cadran Métadonnées fonctionne sans cette option ; elle ajoute seulement des lignes. Rien n’est envoyé tant que vous ne l’activez pas et ne sélectionnez pas ce cadran, et seuls le nom du titre et l’artiste sont envoyés.</string>
+    <string name="watch_preview_expand">Ouvrir un aperçu plus grand</string>
+    <string name="watch_preview_fullscreen_dismiss">Appuyez n’importe où pour fermer</string>
 </resources>

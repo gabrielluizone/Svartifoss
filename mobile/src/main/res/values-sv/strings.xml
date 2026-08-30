@@ -2119,4 +2119,6 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     <string name="setting_wear_metadata_identifiers_description">ISRC och katalog-ID:n. Avstängt som standard — användbart när du behöver dem, brus när du inte gör det.</string>
     <string name="setting_metadata_lookup">Sök spårdetaljer online</string>
     <string name="setting_metadata_lookup_description">Fyller i det som den spelande appen inte publicerade — ISRC, skivbolag, utgivningsdatum — från MusicBrainz, en kostnadsfri offentlig databas. Avstängt som standard. Metadata-urtavlan fungerar utan detta; alternativet lägger bara till rader. Ingenting skickas om du inte aktiverar detta och väljer den urtavlan, och endast spårnamn och artist skickas.</string>
+    <string name="watch_preview_expand">Öppna en större förhandsvisning</string>
+    <string name="watch_preview_fullscreen_dismiss">Tryck var som helst för att stänga</string>
 </resources>

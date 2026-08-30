@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Nové pro mě</string>
+    <string name="online_theme_filter_not_installed_selected">Motivy, které jste už přidali, jsou skryté</string>
+    <string name="online_theme_filter_not_installed_off">Motivy, které jste už přidali, se zobrazují</string>
+    <string name="online_theme_search_empty_all_installed">Už jste přidali všechny komunitní motivy.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Vypněte „Nové pro mě“ a zobrazte je znovu.</string>
 </resources>

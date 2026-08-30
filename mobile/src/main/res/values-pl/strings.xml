@@ -2102,4 +2102,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC i identyfikatory katalogowe. Domyślnie wyłączone — przydatne, gdy ich potrzebujesz, zbędne, gdy nie.</string>
     <string name="setting_metadata_lookup">Wyszukuj szczegóły utworu online</string>
     <string name="setting_metadata_lookup_description">Uzupełnia dane, których aplikacja odtwarzająca nie udostępniła — ISRC, wytwórnię, datę wydania — z MusicBrainz, bezpłatnej publicznej bazy danych. Domyślnie wyłączone. Tarcza Metadata działa bez tego; ta opcja tylko dodaje wiersze. Nic nie jest wysyłane, dopóki jej nie włączysz i nie wybierzesz tej tarczy, a wysyłane są tylko nazwa utworu i wykonawca.</string>
+    <string name="watch_preview_expand">Otwórz większy podgląd</string>
+    <string name="watch_preview_fullscreen_dismiss">Dotknij dowolnego miejsca, aby zamknąć</string>
 </resources>

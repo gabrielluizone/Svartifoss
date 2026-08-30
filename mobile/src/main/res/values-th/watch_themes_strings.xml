@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">ข้อมูลเมตา</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">ใหม่สำหรับฉัน</string>
+    <string name="online_theme_filter_not_installed_selected">กำลังซ่อนธีมที่คุณเพิ่มแล้ว</string>
+    <string name="online_theme_filter_not_installed_off">กำลังแสดงธีมที่คุณเพิ่มแล้ว</string>
+    <string name="online_theme_search_empty_all_installed">คุณเพิ่มธีมของชุมชนครบทุกธีมแล้ว</string>
+    <string name="online_theme_search_empty_all_installed_hint">ปิด “ใหม่สำหรับฉัน” เพื่อดูอีกครั้ง</string>
 </resources>

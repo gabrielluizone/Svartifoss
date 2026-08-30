@@ -2119,4 +2119,6 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     <string name="setting_wear_metadata_identifiers_description">ISRC- és katalógusazonosítók. Alapértelmezés szerint kikapcsolva — hasznos, ha szüksége van rájuk, különben csak zaj.</string>
     <string name="setting_metadata_lookup">Szám részleteinek keresése online</string>
     <string name="setting_metadata_lookup_description">Kiegészíti, amit a lejátszó alkalmazás nem tett közzé — ISRC, kiadó, megjelenési dátum — a MusicBrainz ingyenes nyilvános adatbázisból. Alapértelmezés szerint kikapcsolva. A Metadata óralap enélkül is működik; ez csak sorokat ad hozzá. Semmi nem kerül elküldésre, hacsak be nem kapcsolja és ki nem választja ezt az óralapot, és csak a szám neve és az előadó kerül elküldésre.</string>
+    <string name="watch_preview_expand">Nagyobb előnézet megnyitása</string>
+    <string name="watch_preview_fullscreen_dismiss">Koppints bárhová a bezáráshoz</string>
 </resources>

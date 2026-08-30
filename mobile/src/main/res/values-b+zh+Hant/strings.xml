@@ -2090,4 +2090,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC 與目錄 ID。預設關閉；需要時很有用，不需要時只會增加雜訊。</string>
     <string name="setting_metadata_lookup">線上查詢曲目詳細資料</string>
     <string name="setting_metadata_lookup_description">從免費的公開資料庫 MusicBrainz 補上播放應用程式未提供的資訊，例如 ISRC、唱片公司與發行日期。預設關閉。Metadata 錶面不需此功能也能運作；它只會增加資料列。除非您開啟此功能並選擇該錶面，否則不會傳送任何資料，而且只會傳送曲目名稱與演出者。</string>
+    <string name="watch_preview_expand">開啟更大的預覽</string>
+    <string name="watch_preview_fullscreen_dismiss">輕觸任何位置以關閉</string>
 </resources>

@@ -2098,4 +2098,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC i kataloški ID-jevi. Zadano isključeno — korisno kada ih trebate, suvišno kada ne.</string>
     <string name="setting_metadata_lookup">Potraži pojedinosti pjesme na mreži</string>
     <string name="setting_metadata_lookup_description">Dopunjava podatke koje aplikacija za reprodukciju nije objavila — ISRC, izdavačku kuću, datum izdanja — iz MusicBrainza, besplatne javne baze. Zadano isključeno. Metadata lice radi i bez toga; ovo samo dodaje retke. Ništa se ne šalje dok ovo ne uključite i odaberete to lice, a šalju se samo naziv pjesme i izvođač.</string>
+    <string name="watch_preview_expand">Otvori veći pregled</string>
+    <string name="watch_preview_fullscreen_dismiss">Dodirnite bilo gdje za zatvaranje</string>
 </resources>

@@ -2094,4 +2094,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC- ja luettelotunnisteet. Oletuksena pois käytöstä — hyödyllisiä tarvittaessa, muuten turhaa tietoa.</string>
     <string name="setting_metadata_lookup">Hae kappaleen tiedot verkosta</string>
     <string name="setting_metadata_lookup_description">Täydentää tiedot, joita toistosovellus ei julkaissut — ISRC:n, levy-yhtiön, julkaisupäivän — MusicBrainzista, ilmaisesta julkisesta tietokannasta. Oletuksena pois käytöstä. Metadata-kellotaulu toimii ilmankin; tämä lisää vain rivejä. Mitään ei lähetetä, ellet ota tätä käyttöön ja valitse kyseistä kellotaulua, ja silloinkin lähetetään vain kappaleen nimi ja esittäjä.</string>
+    <string name="watch_preview_expand">Avaa suurempi esikatselu</string>
+    <string name="watch_preview_fullscreen_dismiss">Sulje napauttamalla mitä tahansa kohtaa</string>
 </resources>

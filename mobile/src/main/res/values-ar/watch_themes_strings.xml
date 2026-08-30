@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">بيانات وصفية</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">جديد لي</string>
+    <string name="online_theme_filter_not_installed_selected">إخفاء السمات التي أضفتها بالفعل</string>
+    <string name="online_theme_filter_not_installed_off">عرض السمات التي أضفتها بالفعل</string>
+    <string name="online_theme_search_empty_all_installed">لقد أضفت بالفعل كل سمات المجتمع.</string>
+    <string name="online_theme_search_empty_all_installed_hint">أوقف ”جديد لي“ لعرضها مجددًا.</string>
 </resources>

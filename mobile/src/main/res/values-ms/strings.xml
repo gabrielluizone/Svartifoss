@@ -2090,4 +2090,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC dan ID katalog. Dimatikan secara lalai — berguna apabila diperlukan, gangguan apabila tidak.</string>
     <string name="setting_metadata_lookup">Cari butiran trek dalam talian</string>
     <string name="setting_metadata_lookup_description">Melengkapkan maklumat yang tidak diterbitkan oleh aplikasi pemain — ISRC, label, tarikh keluaran — daripada MusicBrainz, pangkalan data awam percuma. Dimatikan secara lalai. Muka jam Metadata berfungsi tanpanya; pilihan ini hanya menambah baris. Tiada apa-apa dihantar melainkan anda menghidupkannya dan memilih muka itu, dan hanya nama trek serta artis dihantar.</string>
+    <string name="watch_preview_expand">Buka pratonton lebih besar</string>
+    <string name="watch_preview_fullscreen_dismiss">Ketik di mana-mana untuk menutup</string>
 </resources>

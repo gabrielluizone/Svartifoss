@@ -2119,4 +2119,6 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="setting_wear_metadata_identifiers_description">ISRC at catalogue ids. Off bilang default — kapaki-pakinabang kapag kailangan mo, ingay kapag hindi.</string>
     <string name="setting_metadata_lookup">Hanapin online ang mga detalye ng track</string>
     <string name="setting_metadata_lookup_description">Pinupunan ang hindi inilathala ng tumutugtog na app — ISRC, label, release date — mula sa MusicBrainz, isang libreng public database. Off bilang default. Gumagana ang Metadata watch face kahit wala ito; nagdadagdag lang ito ng rows. Walang ipinapadala maliban kung i-on mo ito at piliin ang face na iyon, at track name at artist lang ang ipinapadala.</string>
+    <string name="watch_preview_expand">Buksan ang mas malaking preview</string>
+    <string name="watch_preview_fullscreen_dismiss">I-tap kahit saan para isara</string>
 </resources>

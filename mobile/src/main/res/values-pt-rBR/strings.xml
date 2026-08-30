@@ -2182,4 +2182,6 @@
     <string name="wear_font_archivo_black_description">Display densa e muito pesada para máximo contraste</string>
     <string name="wear_font_dancing_script">Dancing Script</string>
     <string name="wear_font_dancing_script_description">Caligrafia fluida e manuscrita, viva e pessoal</string>
+    <string name="watch_preview_expand">Abrir uma prévia maior</string>
+    <string name="watch_preview_fullscreen_dismiss">Toque em qualquer lugar para fechar</string>
 </resources>

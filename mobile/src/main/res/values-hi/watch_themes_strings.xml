@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">मेटाडेटा</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">मेरे लिए नए</string>
+    <string name="online_theme_filter_not_installed_selected">आपके जोड़े गए थीम छिपाए जा रहे हैं</string>
+    <string name="online_theme_filter_not_installed_off">आपके जोड़े गए थीम दिखाए जा रहे हैं</string>
+    <string name="online_theme_search_empty_all_installed">आपने सभी कम्युनिटी थीम जोड़ लिए हैं।</string>
+    <string name="online_theme_search_empty_all_installed_hint">उन्हें फिर से देखने के लिए “मेरे लिए नए” बंद करें।</string>
 </resources>

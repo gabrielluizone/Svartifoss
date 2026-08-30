@@ -221,4 +221,9 @@
         <item quantity="other">%1$d curtidas</item>
     </plurals>
 
+    <string name="online_theme_filter_not_installed">Novos para mim</string>
+    <string name="online_theme_filter_not_installed_selected">Ocultando temas que você já adicionou</string>
+    <string name="online_theme_filter_not_installed_off">Mostrando temas que você já adicionou</string>
+    <string name="online_theme_search_empty_all_installed">Você já adicionou todos os temas da comunidade.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Desative “Novos para mim” para vê-los de novo.</string>
 </resources>

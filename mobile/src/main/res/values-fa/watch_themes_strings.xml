@@ -78,4 +78,9 @@
     <string name="watch_theme_face_metadata">فراداده</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">تازه برای من</string>
+    <string name="online_theme_filter_not_installed_selected">پوسته‌هایی که افزوده‌اید پنهان می‌شوند</string>
+    <string name="online_theme_filter_not_installed_off">پوسته‌هایی که افزوده‌اید نمایش داده می‌شوند</string>
+    <string name="online_theme_search_empty_all_installed">شما همهٔ پوسته‌های انجمن را افزوده‌اید.</string>
+    <string name="online_theme_search_empty_all_installed_hint">برای دیدن دوبارهٔ آن‌ها «تازه برای من» را خاموش کنید.</string>
 </resources>

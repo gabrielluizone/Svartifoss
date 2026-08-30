@@ -2090,4 +2090,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC とカタログ ID。デフォルトではオフ。必要なときには便利ですが、不要なら情報量が増えるだけです。</string>
     <string name="setting_metadata_lookup">トラックの詳細をオンラインで検索</string>
     <string name="setting_metadata_lookup_description">再生アプリが公開しなかった ISRC、レーベル、リリース日などを、無料の公開データベース MusicBrainz から補完します。デフォルトではオフです。Metadata ウォッチフェイスはこれなしでも動作し、これは行を追加するだけです。オンにしてそのフェイスを選択しない限り何も送信されず、送信されるのはトラック名とアーティストだけです。</string>
+    <string name="watch_preview_expand">大きなプレビューを開く</string>
+    <string name="watch_preview_fullscreen_dismiss">どこかをタップして閉じる</string>
 </resources>

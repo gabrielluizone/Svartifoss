@@ -2077,4 +2077,6 @@
     <string name="category_system_access">Accesso Android e notifiche</string>
     <string name="setting_privacy_policy">Informativa sulla privacy</string>
     <string name="setting_privacy_policy_description">Scopri quali dati usa Svartifoss e quali servizi online sono facoltativi.</string>
+    <string name="watch_preview_expand">Apri un’anteprima più grande</string>
+    <string name="watch_preview_fullscreen_dismiss">Tocca in qualsiasi punto per chiudere</string>
 </resources>

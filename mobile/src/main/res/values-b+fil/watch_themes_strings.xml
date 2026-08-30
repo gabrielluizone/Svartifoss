@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Bago sa akin</string>
+    <string name="online_theme_filter_not_installed_selected">Itinatago ang mga temang naidagdag mo na</string>
+    <string name="online_theme_filter_not_installed_off">Ipinapakita ang mga temang naidagdag mo na</string>
+    <string name="online_theme_search_empty_all_installed">Naidagdag mo na ang lahat ng tema ng komunidad.</string>
+    <string name="online_theme_search_empty_all_installed_hint">I-off ang “Bago sa akin” para makita ulit ang mga ito.</string>
 </resources>

@@ -2090,4 +2090,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC และรหัสแค็ตตาล็อก ปิดเป็นค่าเริ่มต้น — มีประโยชน์เมื่อคุณต้องการ แต่เป็นข้อมูลรบกวนเมื่อไม่ต้องการ</string>
     <string name="setting_metadata_lookup">ค้นหารายละเอียดแทร็กออนไลน์</string>
     <string name="setting_metadata_lookup_description">เติมข้อมูลที่แอปเล่นเพลงไม่ได้เผยแพร่ เช่น ISRC ค่ายเพลง และวันที่เผยแพร่ จาก MusicBrainz ซึ่งเป็นฐานข้อมูลสาธารณะฟรี ปิดเป็นค่าเริ่มต้น หน้าปัด Metadata ทำงานได้โดยไม่ต้องใช้ตัวเลือกนี้ ตัวเลือกนี้เพียงเพิ่มแถวข้อมูล จะไม่มีการส่งข้อมูลใด ๆ จนกว่าคุณจะเปิดตัวเลือกนี้และเลือกหน้าปัดดังกล่าว และจะส่งเฉพาะชื่อแทร็กกับศิลปินเท่านั้น</string>
+    <string name="watch_preview_expand">เปิดตัวอย่างขนาดใหญ่ขึ้น</string>
+    <string name="watch_preview_fullscreen_dismiss">แตะที่ใดก็ได้เพื่อปิด</string>
 </resources>

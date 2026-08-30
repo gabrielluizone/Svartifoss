@@ -2098,4 +2098,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC ומזהי קטלוג. כבוי כברירת מחדל — שימושי כשצריך, רעש כשלא.</string>
     <string name="setting_metadata_lookup">חפש פרטי רצועה באינטרנט</string>
     <string name="setting_metadata_lookup_description">משלים פרטים שאפליקציית הניגון לא פרסמה — ISRC, חברת תקליטים, תאריך יציאה — מ-MusicBrainz, מסד נתונים ציבורי וחינמי. כבוי כברירת מחדל. פני השעון Metadata עובדים גם בלעדיו; האפשרות רק מוסיפה שורות. דבר לא נשלח אלא אם מפעילים אותה ובוחרים בפנים האלה, וגם אז נשלחים רק שם הרצועה והאמן.</string>
+    <string name="watch_preview_expand">פתיחת תצוגה מקדימה גדולה יותר</string>
+    <string name="watch_preview_fullscreen_dismiss">הקישו בכל מקום כדי לסגור</string>
 </resources>

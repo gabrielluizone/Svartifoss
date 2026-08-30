@@ -2098,4 +2098,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC и каталошки ID-еви. Подразумевано искључено — корисно када вам требају, сувишно када не.</string>
     <string name="setting_metadata_lookup">Потражи детаље нумере на мрежи</string>
     <string name="setting_metadata_lookup_description">Попуњава податке које апликација за репродукцију није објавила — ISRC, издавачку кућу, датум издања — из MusicBrainz-а, бесплатне јавне базе. Подразумевано искључено. Metadata лице ради и без овога; ово само додаје редове. Ништа се не шаље док ово не укључите и изаберете то лице, а шаљу се само назив нумере и извођач.</string>
+    <string name="watch_preview_expand">Отвори већи преглед</string>
+    <string name="watch_preview_fullscreen_dismiss">Додирните било где да затворите</string>
 </resources>

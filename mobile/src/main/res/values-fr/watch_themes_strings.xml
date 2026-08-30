@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Métadonnées</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Nouveaux pour moi</string>
+    <string name="online_theme_filter_not_installed_selected">Les thèmes déjà ajoutés sont masqués</string>
+    <string name="online_theme_filter_not_installed_off">Les thèmes déjà ajoutés sont affichés</string>
+    <string name="online_theme_search_empty_all_installed">Vous avez déjà ajouté tous les thèmes de la communauté.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Désactivez « Nouveaux pour moi » pour les revoir.</string>
 </resources>

@@ -2077,4 +2077,6 @@
     <string name="category_system_access">دسترسی Android و اعلان‌ها</string>
     <string name="setting_privacy_policy">سیاست حفظ حریم خصوصی</string>
     <string name="setting_privacy_policy_description">ببینید Svartifoss از چه داده‌هایی استفاده می‌کند و کدام سرویس‌های آنلاین اختیاری هستند.</string>
+    <string name="watch_preview_expand">باز کردن پیش‌نمایش بزرگ‌تر</string>
+    <string name="watch_preview_fullscreen_dismiss">برای بستن هرجا ضربه بزنید</string>
 </resources>

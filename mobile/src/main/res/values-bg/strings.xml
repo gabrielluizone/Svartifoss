@@ -2094,4 +2094,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC и каталожни идентификатори. Изключено по подразбиране — полезно, когато ви трябва, излишно, когато не.</string>
     <string name="setting_metadata_lookup">Търси подробности за песента онлайн</string>
     <string name="setting_metadata_lookup_description">Допълва данни, които приложението за възпроизвеждане не е предоставило — ISRC, лейбъл, дата на издаване — от MusicBrainz, безплатна публична база данни. Изключено по подразбиране. Циферблатът Metadata работи и без това; опцията само добавя редове. Нищо не се изпраща, освен ако не я включите и не изберете този циферблат, и се изпращат само името на песента и изпълнителят.</string>
+    <string name="watch_preview_expand">Отваряне на по-голям преглед</string>
+    <string name="watch_preview_fullscreen_dismiss">Докоснете където и да е, за да затворите</string>
 </resources>

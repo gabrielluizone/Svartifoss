@@ -76,4 +76,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Baru bagi saya</string>
+    <string name="online_theme_filter_not_installed_selected">Menyembunyikan tema yang sudah Anda tambahkan</string>
+    <string name="online_theme_filter_not_installed_off">Menampilkan tema yang sudah Anda tambahkan</string>
+    <string name="online_theme_search_empty_all_installed">Anda sudah menambahkan semua tema komunitas.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Matikan “Baru bagi saya” untuk melihatnya lagi.</string>
 </resources>

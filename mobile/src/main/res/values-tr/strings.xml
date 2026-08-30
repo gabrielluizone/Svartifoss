@@ -2115,4 +2115,6 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="setting_wear_metadata_identifiers_description">ISRC ve katalog kimlikleri. Varsayılan olarak kapalıdır — gerektiğinde yararlı, gerekmediğinde gereksizdir.</string>
     <string name="setting_metadata_lookup">Parça ayrıntılarını çevrimiçi ara</string>
     <string name="setting_metadata_lookup_description">Çalan uygulamanın yayımlamadığı bilgileri — ISRC, plak şirketi, yayın tarihi — ücretsiz açık bir veritabanı olan MusicBrainz’den tamamlar. Varsayılan olarak kapalıdır. Meta veriler saat yüzü onsuz da çalışır; bu yalnızca ek satırlar ekler. Siz bunu açıp o yüzü seçmedikçe hiçbir şey gönderilmez; yalnızca parça adı ve sanatçı gönderilir.</string>
+    <string name="watch_preview_expand">Daha büyük bir önizleme aç</string>
+    <string name="watch_preview_fullscreen_dismiss">Kapatmak için herhangi bir yere dokunun</string>
 </resources>

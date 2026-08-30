@@ -2115,4 +2115,6 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     <string name="setting_wear_metadata_identifiers_description">ISRC және каталог ID. Әдепкіде өшірулі — керек кезде пайдалы, керек емес кезде артық ақпарат.</string>
     <string name="setting_metadata_lookup">Трек мәліметтерін интернеттен іздеу</string>
     <string name="setting_metadata_lookup_description">Ойнатып жатқан қолданба жарияламағанды толтырады — ISRC, лейбл, релиз күні — тегін қоғамдық дерекқор MusicBrainz арқылы. Әдепкіде өшірулі. Metadata сағат циферблаты онсыз да жұмыс істейді; бұл тек жолдар қосады. Мұны қосып, сол циферблатты таңдамайынша ештеңе жіберілмейді; сонда да тек трек атауы мен орындаушы жіберіледі.</string>
+    <string name="watch_preview_expand">Үлкенірек алдын ала қарауды ашу</string>
+    <string name="watch_preview_fullscreen_dismiss">Жабу үшін кез келген жерді түртіңіз</string>
 </resources>

@@ -2090,4 +2090,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC 및 카탈로그 ID. 기본값은 꺼짐입니다. 필요할 때 유용하지만 그렇지 않으면 불필요한 정보가 됩니다.</string>
     <string name="setting_metadata_lookup">온라인에서 트랙 세부정보 조회</string>
     <string name="setting_metadata_lookup_description">재생 앱이 제공하지 않은 ISRC, 레이블, 발매일 등을 무료 공개 데이터베이스 MusicBrainz에서 채웁니다. 기본값은 꺼짐입니다. Metadata 시계 화면은 이 기능 없이도 작동하며, 이 옵션은 행만 추가합니다. 이 기능을 켜고 해당 화면을 선택하지 않는 한 아무것도 전송되지 않으며, 전송되는 정보도 트랙 이름과 아티스트뿐입니다.</string>
+    <string name="watch_preview_expand">더 큰 미리보기 열기</string>
+    <string name="watch_preview_fullscreen_dismiss">아무 곳이나 탭하여 닫기</string>
 </resources>

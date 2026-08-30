@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Metapodaci</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Novo za mene</string>
+    <string name="online_theme_filter_not_installed_selected">Teme koje ste već dodali su skrivene</string>
+    <string name="online_theme_filter_not_installed_off">Teme koje ste već dodali su prikazane</string>
+    <string name="online_theme_search_empty_all_installed">Već ste dodali sve teme zajednice.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Isključite „Novo za mene“ da ih ponovno vidite.</string>
 </resources>

@@ -2119,4 +2119,6 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
     <string name="setting_wear_metadata_identifiers_description">ISRC और कैटलॉग ID। डिफ़ॉल्ट रूप से बंद — ज़रूरत होने पर उपयोगी, नहीं होने पर अनावश्यक।</string>
     <string name="setting_metadata_lookup">ट्रैक विवरण ऑनलाइन खोजें</string>
     <string name="setting_metadata_lookup_description">चल रहा ऐप जो प्रकाशित नहीं करता उसे भरता है — ISRC, लेबल, रिलीज़ तारीख — MusicBrainz से, जो मुफ़्त सार्वजनिक डेटाबेस है। डिफ़ॉल्ट रूप से बंद। Metadata वॉच फ़ेस इसके बिना काम करता है; यह केवल पंक्तियाँ जोड़ता है। जब तक इसे चालू कर वह फ़ेस न चुनें, कुछ नहीं भेजा जाता; तब भी केवल ट्रैक नाम और कलाकार भेजे जाते हैं।</string>
+    <string name="watch_preview_expand">बड़ा प्रीव्यू खोलें</string>
+    <string name="watch_preview_fullscreen_dismiss">बंद करने के लिए कहीं भी टैप करें</string>
 </resources>

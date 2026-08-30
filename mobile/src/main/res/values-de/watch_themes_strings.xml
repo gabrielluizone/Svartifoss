@@ -78,4 +78,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Neu für mich</string>
+    <string name="online_theme_filter_not_installed_selected">Bereits hinzugefügte Designs werden ausgeblendet</string>
+    <string name="online_theme_filter_not_installed_off">Bereits hinzugefügte Designs werden angezeigt</string>
+    <string name="online_theme_search_empty_all_installed">Du hast bereits alle Community-Designs hinzugefügt.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Schalte „Neu für mich“ aus, um sie wieder zu sehen.</string>
 </resources>

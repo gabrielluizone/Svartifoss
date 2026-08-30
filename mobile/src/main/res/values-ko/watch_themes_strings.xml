@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">메타데이터</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">새로운 테마</string>
+    <string name="online_theme_filter_not_installed_selected">이미 추가한 테마를 숨기는 중</string>
+    <string name="online_theme_filter_not_installed_off">이미 추가한 테마를 표시하는 중</string>
+    <string name="online_theme_search_empty_all_installed">모든 커뮤니티 테마를 이미 추가했습니다.</string>
+    <string name="online_theme_search_empty_all_installed_hint">다시 보려면 ‘새로운 테마’를 끄세요.</string>
 </resources>

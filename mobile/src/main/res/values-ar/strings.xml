@@ -2135,4 +2135,6 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
     <string name="setting_wear_metadata_identifiers_description">ISRC ومعرّفات الكتالوج. متوقف افتراضيًا — مفيد عندما تحتاج أحدها، وتشويش عندما لا تحتاجه.</string>
     <string name="setting_metadata_lookup">البحث عن تفاصيل المقطع عبر الإنترنت</string>
     <string name="setting_metadata_lookup_description">يملأ ما لم ينشره تطبيق التشغيل — ISRC وشركة الإنتاج وتاريخ الإصدار — من MusicBrainz، وهي قاعدة بيانات عامة مجانية. متوقف افتراضيًا. تعمل واجهة Metadata من دونه؛ وهذا الخيار يضيف صفوفًا فقط. لا يتم إرسال شيء إلا إذا فعّلته واخترت تلك الواجهة، وعندها لا يُرسل سوى اسم المقطع والفنان.</string>
+    <string name="watch_preview_expand">فتح معاينة أكبر</string>
+    <string name="watch_preview_fullscreen_dismiss">اضغط في أي مكان للإغلاق</string>
 </resources>

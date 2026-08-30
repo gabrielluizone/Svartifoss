@@ -2073,4 +2073,6 @@
     <string name="category_system_access">Android 权限与通知</string>
     <string name="setting_privacy_policy">隐私政策</string>
     <string name="setting_privacy_policy_description">查看 Svartifoss 使用哪些数据，以及哪些在线服务为可选服务。</string>
+    <string name="watch_preview_expand">打开更大的预览</string>
+    <string name="watch_preview_fullscreen_dismiss">点按任意位置关闭</string>
 </resources>

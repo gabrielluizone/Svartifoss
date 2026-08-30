@@ -2115,4 +2115,6 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     <string name="setting_wear_metadata_identifiers_description">ISRC và mã danh mục. Tắt theo mặc định — hữu ích khi bạn cần, gây nhiễu khi không cần.</string>
     <string name="setting_metadata_lookup">Tra cứu chi tiết bài hát trực tuyến</string>
     <string name="setting_metadata_lookup_description">Bổ sung những gì ứng dụng đang phát không cung cấp — ISRC, hãng đĩa, ngày phát hành — từ MusicBrainz, cơ sở dữ liệu công khai miễn phí. Tắt theo mặc định. Mặt Siêu dữ liệu hoạt động mà không cần mục này; nó chỉ thêm hàng. Không có gì được gửi trừ khi bạn bật và chọn mặt đó, và chỉ tên bài cùng nghệ sĩ được gửi.</string>
+    <string name="watch_preview_expand">Mở bản xem trước lớn hơn</string>
+    <string name="watch_preview_fullscreen_dismiss">Chạm vào bất kỳ đâu để đóng</string>
 </resources>

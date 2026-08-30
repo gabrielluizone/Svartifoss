@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Meta Veri</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Bana yeni</string>
+    <string name="online_theme_filter_not_installed_selected">Daha önce eklediğiniz temalar gizleniyor</string>
+    <string name="online_theme_filter_not_installed_off">Daha önce eklediğiniz temalar gösteriliyor</string>
+    <string name="online_theme_search_empty_all_installed">Tüm topluluk temalarını zaten eklediniz.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Yeniden görmek için “Bana yeni” seçeneğini kapatın.</string>
 </resources>

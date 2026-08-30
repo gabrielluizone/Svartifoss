@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">মেটাডেটা</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">আমার জন্য নতুন</string>
+    <string name="online_theme_filter_not_installed_selected">আপনি যেগুলি যোগ করেছেন সেই থিমগুলি লুকানো হচ্ছে</string>
+    <string name="online_theme_filter_not_installed_off">আপনি যেগুলি যোগ করেছেন সেই থিমগুলি দেখানো হচ্ছে</string>
+    <string name="online_theme_search_empty_all_installed">আপনি ইতিমধ্যেই সব কমিউনিটি থিম যোগ করেছেন।</string>
+    <string name="online_theme_search_empty_all_installed_hint">আবার দেখতে “আমার জন্য নতুন” বন্ধ করুন।</string>
 </resources>

@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Nytt för mig</string>
+    <string name="online_theme_filter_not_installed_selected">Döljer teman du redan lagt till</string>
+    <string name="online_theme_filter_not_installed_off">Visar teman du redan lagt till</string>
+    <string name="online_theme_search_empty_all_installed">Du har redan lagt till alla community-teman.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Stäng av ”Nytt för mig” för att se dem igen.</string>
 </resources>

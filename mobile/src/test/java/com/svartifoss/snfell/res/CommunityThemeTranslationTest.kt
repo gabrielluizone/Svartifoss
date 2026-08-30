@@ -27,7 +27,15 @@ class CommunityThemeTranslationTest {
             "online_theme_preview_error",
             "online_theme_sync_limit",
             "online_theme_update_available",
-            "online_theme_requires_app_version"
+            "online_theme_requires_app_version",
+            // The "New to me" filter and the empty state it can produce. The hint quotes the chip
+            // label, so a locale that translated one and not the other would tell the reader to
+            // turn off a control that is not on screen under that name.
+            "online_theme_filter_not_installed",
+            "online_theme_filter_not_installed_selected",
+            "online_theme_filter_not_installed_off",
+            "online_theme_search_empty_all_installed",
+            "online_theme_search_empty_all_installed_hint"
     )
 
     @Test

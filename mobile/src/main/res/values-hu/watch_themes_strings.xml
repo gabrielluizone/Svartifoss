@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Metaadatok</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Nekem új</string>
+    <string name="online_theme_filter_not_installed_selected">A már hozzáadott témák el vannak rejtve</string>
+    <string name="online_theme_filter_not_installed_off">A már hozzáadott témák láthatók</string>
+    <string name="online_theme_search_empty_all_installed">Már minden közösségi témát hozzáadtál.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Kapcsold ki a „Nekem új” szűrőt, hogy újra lásd őket.</string>
 </resources>

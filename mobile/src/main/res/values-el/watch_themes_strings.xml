@@ -78,4 +78,9 @@
     <string name="watch_theme_face_metadata">Μεταδεδομένα</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Νέα για εμένα</string>
+    <string name="online_theme_filter_not_installed_selected">Τα θέματα που έχετε ήδη προσθέσει αποκρύπτονται</string>
+    <string name="online_theme_filter_not_installed_off">Τα θέματα που έχετε ήδη προσθέσει εμφανίζονται</string>
+    <string name="online_theme_search_empty_all_installed">Έχετε ήδη προσθέσει όλα τα θέματα της κοινότητας.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Απενεργοποιήστε το «Νέα για εμένα» για να τα δείτε ξανά.</string>
 </resources>

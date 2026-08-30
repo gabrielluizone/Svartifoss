@@ -76,4 +76,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Nýtt fyrir mig</string>
+    <string name="online_theme_filter_not_installed_selected">Þemu sem þú hefur þegar bætt við eru falin</string>
+    <string name="online_theme_filter_not_installed_off">Þemu sem þú hefur þegar bætt við eru sýnd</string>
+    <string name="online_theme_search_empty_all_installed">Þú hefur þegar bætt við öllum samfélagsþemum.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Slökktu á „Nýtt fyrir mig“ til að sjá þau aftur.</string>
 </resources>

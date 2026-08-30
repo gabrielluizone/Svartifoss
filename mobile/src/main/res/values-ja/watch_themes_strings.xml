@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">メタデータ</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">未追加</string>
+    <string name="online_theme_filter_not_installed_selected">追加済みのテーマを非表示にしています</string>
+    <string name="online_theme_filter_not_installed_off">追加済みのテーマを表示しています</string>
+    <string name="online_theme_search_empty_all_installed">コミュニティテーマをすべて追加済みです。</string>
+    <string name="online_theme_search_empty_all_installed_hint">もう一度表示するには「未追加」をオフにします。</string>
 </resources>

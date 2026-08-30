@@ -2088,4 +2088,6 @@
     <string name="category_system_access">Android-aðgangur &amp; tilkynningar</string>
     <string name="setting_privacy_policy">Persónuverndarstefna</string>
     <string name="setting_privacy_policy_description">Sjáðu hvaða gögn Svartifoss notar og hvaða netþjónustur eru valfrjálsar.</string>
+    <string name="watch_preview_expand">Opna stærri forskoðun</string>
+    <string name="watch_preview_fullscreen_dismiss">Ýttu hvar sem er til að loka</string>
 </resources>

@@ -76,4 +76,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Nieuw voor mij</string>
+    <string name="online_theme_filter_not_installed_selected">Al toegevoegde thema’s worden verborgen</string>
+    <string name="online_theme_filter_not_installed_off">Al toegevoegde thema’s worden getoond</string>
+    <string name="online_theme_search_empty_all_installed">Je hebt alle communitythema’s al toegevoegd.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Schakel ‘Nieuw voor mij’ uit om ze weer te zien.</string>
 </resources>

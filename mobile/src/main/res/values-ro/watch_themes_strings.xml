@@ -78,4 +78,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Noi pentru mine</string>
+    <string name="online_theme_filter_not_installed_selected">Temele pe care le-ai adăugat deja sunt ascunse</string>
+    <string name="online_theme_filter_not_installed_off">Temele pe care le-ai adăugat deja sunt afișate</string>
+    <string name="online_theme_search_empty_all_installed">Ai adăugat deja toate temele comunității.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Dezactivează „Noi pentru mine” ca să le vezi din nou.</string>
 </resources>

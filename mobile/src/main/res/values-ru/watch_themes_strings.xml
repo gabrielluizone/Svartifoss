@@ -78,4 +78,9 @@
     <string name="watch_theme_face_metadata">Метаданные</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Новые для меня</string>
+    <string name="online_theme_filter_not_installed_selected">Темы, которые вы уже добавили, скрыты</string>
+    <string name="online_theme_filter_not_installed_off">Темы, которые вы уже добавили, показаны</string>
+    <string name="online_theme_search_empty_all_installed">Вы уже добавили все темы сообщества.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Отключите «Новые для меня», чтобы снова их увидеть.</string>
 </resources>

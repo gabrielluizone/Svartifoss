@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Mới với tôi</string>
+    <string name="online_theme_filter_not_installed_selected">Đang ẩn các chủ đề bạn đã thêm</string>
+    <string name="online_theme_filter_not_installed_off">Đang hiện các chủ đề bạn đã thêm</string>
+    <string name="online_theme_search_empty_all_installed">Bạn đã thêm tất cả chủ đề cộng đồng.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Tắt “Mới với tôi” để xem lại.</string>
 </resources>

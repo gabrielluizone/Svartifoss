@@ -2102,4 +2102,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC та каталожні ідентифікатори. Типово вимкнено — корисно, коли потрібно, зайве, коли ні.</string>
     <string name="setting_metadata_lookup">Шукати відомості про трек онлайн</string>
     <string name="setting_metadata_lookup_description">Доповнює дані, яких не надав застосунок програвача — ISRC, лейбл, дату випуску — з MusicBrainz, безкоштовної публічної бази даних. Типово вимкнено. Циферблат Metadata працює й без цього; параметр лише додає рядки. Нічого не надсилається, доки ви не ввімкнете цю функцію й не виберете цей циферблат, і надсилаються лише назва треку та виконавець.</string>
+    <string name="watch_preview_expand">Відкрити більший попередній перегляд</string>
+    <string name="watch_preview_fullscreen_dismiss">Торкніться будь-де, щоб закрити</string>
 </resources>

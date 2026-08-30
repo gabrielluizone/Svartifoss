@@ -2094,4 +2094,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC og katalog-id\'er. Slået fra som standard — nyttigt, når du har brug for dem, støj når du ikke har.</string>
     <string name="setting_metadata_lookup">Slå nummerdetaljer op online</string>
     <string name="setting_metadata_lookup_description">Udfylder det, som afspillerappen ikke oplyste — ISRC, pladeselskab, udgivelsesdato — fra MusicBrainz, en gratis offentlig database. Slået fra som standard. Metadata-urskiven virker uden; dette tilføjer kun rækker. Intet sendes, medmindre du slår det til og vælger den urskive, og kun nummernavn og kunstner sendes.</string>
+    <string name="watch_preview_expand">Åbn en større forhåndsvisning</string>
+    <string name="watch_preview_fullscreen_dismiss">Tryk et vilkårligt sted for at lukke</string>
 </resources>

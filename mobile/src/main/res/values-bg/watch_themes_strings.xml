@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Метаданни</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Нови за мен</string>
+    <string name="online_theme_filter_not_installed_selected">Темите, които вече сте добавили, са скрити</string>
+    <string name="online_theme_filter_not_installed_off">Темите, които вече сте добавили, се показват</string>
+    <string name="online_theme_search_empty_all_installed">Вече сте добавили всички теми на общността.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Изключете „Нови за мен“, за да ги видите отново.</string>
 </resources>

@@ -2081,4 +2081,6 @@
     <string name="category_system_access">Acces Android și notificări</string>
     <string name="setting_privacy_policy">Politica de confidențialitate</string>
     <string name="setting_privacy_policy_description">Vedeți ce date folosește Svartifoss și ce servicii online sunt opționale.</string>
+    <string name="watch_preview_expand">Deschide o previzualizare mai mare</string>
+    <string name="watch_preview_fullscreen_dismiss">Atinge oriunde pentru a închide</string>
 </resources>

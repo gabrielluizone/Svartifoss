@@ -2102,4 +2102,6 @@
     <string name="setting_wear_metadata_identifiers_description">ISRC a katalógové ID. Predvolene vypnuté — užitočné, keď ich potrebujete, inak zbytočný šum.</string>
     <string name="setting_metadata_lookup">Vyhľadávať podrobnosti skladby online</string>
     <string name="setting_metadata_lookup_description">Doplní údaje, ktoré prehrávacia aplikácia nezverejnila — ISRC, vydavateľstvo, dátum vydania — z MusicBrainz, bezplatnej verejnej databázy. Predvolene vypnuté. Ciferník Metadata funguje aj bez toho; táto možnosť iba pridá riadky. Nič sa neodosiela, kým ju nezapnete a nevyberiete tento ciferník, a odosiela sa iba názov skladby a interpret.</string>
+    <string name="watch_preview_expand">Otvoriť väčšiu ukážku</string>
+    <string name="watch_preview_fullscreen_dismiss">Zavrite klepnutím kdekoľvek</string>
 </resources>

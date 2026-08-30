@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Metadáta</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Nové pre mňa</string>
+    <string name="online_theme_filter_not_installed_selected">Motívy, ktoré ste už pridali, sú skryté</string>
+    <string name="online_theme_filter_not_installed_off">Motívy, ktoré ste už pridali, sa zobrazujú</string>
+    <string name="online_theme_search_empty_all_installed">Už ste pridali všetky komunitné motívy.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Vypnite „Nové pre mňa“ a zobrazte ich znova.</string>
 </resources>

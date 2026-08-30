@@ -79,4 +79,9 @@
     <string name="watch_theme_face_metadata">Метаподаци</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <string name="online_theme_filter_not_installed">Ново за мене</string>
+    <string name="online_theme_filter_not_installed_selected">Теме које сте већ додали су сакривене</string>
+    <string name="online_theme_filter_not_installed_off">Теме које сте већ додали су приказане</string>
+    <string name="online_theme_search_empty_all_installed">Већ сте додали све теме заједнице.</string>
+    <string name="online_theme_search_empty_all_installed_hint">Искључите „Ново за мене“ да их поново видите.</string>
 </resources>
