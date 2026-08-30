@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-28T16:43:22.428Z",
+  "generatedAt": "2026-08-30T09:59:32.444Z",
   "themes": [
     {
       "id": "17e4176a-8429-40cb-bd15-e7ce181406f3",
@@ -13,18 +13,6 @@
       "publishedAt": "2026-08-28T03:12:39.323Z",
       "likes": 2,
       "settingsDigest": "sha256:29b4053fb7021df35c4f5792810b360c327cac8f2d524fe8c31ff50c1ed9518d"
-    },
-    {
-      "id": "ef17366c-5926-46a1-ade9-c4a2ba95a6d6",
-      "name": "Spotify",
-      "author": "Gabriel L Svafoss",
-      "baseFace": "immersive",
-      "revision": 1,
-      "schemaVersion": 1,
-      "minimumAppVersion": "3.3",
-      "publishedAt": "2026-08-24T23:51:51.388Z",
-      "likes": 2,
-      "settingsDigest": "sha256:b3d79bf32ba94fc17aa8dd819493e96248b1da1243932b9e5607c872f44969a7"
     },
     {
       "id": "09ea139e-8e25-443d-a065-09e8d10da102",
