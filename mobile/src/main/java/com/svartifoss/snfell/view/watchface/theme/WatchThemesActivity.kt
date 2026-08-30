@@ -271,6 +271,11 @@ class WatchThemesActivity : AppCompatActivity() {
         // identifier to the submission screen. The profile itself stays private in this Activity;
         // the submission boundary reloads and validates it from the local library.
         repository.captureActive(defaultPrefs)
+        // captureActive only refreshes whichever theme is currently active, which is not
+        // necessarily this one. A theme saved before a later update added new appearance keys
+        // needs the same backfill before it can pass the submission screen's complete-snapshot
+        // check.
+        repository.ensureCurrentSchema(profile.id, defaultPrefs)
         communitySubmissionLauncher.launch(Intent(
                 this, SubmitCommunityThemeActivity::class.java).putExtra(
                 SubmitCommunityThemeActivity.EXTRA_PROFILE_ID, profile.id))

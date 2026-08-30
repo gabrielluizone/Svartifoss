@@ -107,13 +107,23 @@ class ThemeUiResourceContractTest {
                 "view/watchface/theme/SubmitCommunityThemeActivity.kt").readText()
         val strings = mobileResource("values/watch_themes_strings.xml").readText()
 
+        val identity = mobileSource(
+                "view/watchface/theme/CommunityThemeAuthorIdentity.kt").readText()
+        val repository = mobileSource(
+                "view/watchface/theme/CommunityThemeSubmissionRepository.kt").readText()
+
         assertTrue(layout.contains("@+id/anonymous_author_switch"))
         assertTrue(layout.contains("@string/community_theme_submit_publish_anonymously"))
         assertTrue(source.contains("anonymousAuthorSwitch.isChecked"))
-        assertTrue(source.contains("ANONYMOUS_AUTHOR = \"Anonymous\""))
         assertTrue(source.contains("authorLayout.visibility"))
         assertTrue(source.contains("submissionRepository.signInWithGoogle"))
         assertTrue(strings.contains("name=\"community_theme_submit_publish_anonymously\""))
+
+        // Publishing anonymously hides the credit on one theme; it must never be a way to send a
+        // name of the submitter's choosing. The credit is substituted at the Firestore boundary
+        // from one shared constant, never assembled in the Activity from the text field.
+        assertTrue(identity.contains("ANONYMOUS_CREDIT = \"Anonymous\""))
+        assertTrue(repository.contains("CommunityThemeAuthorNames.ANONYMOUS_CREDIT"))
     }
 
     @Test
@@ -137,8 +147,11 @@ class ThemeUiResourceContractTest {
         assertTrue(activity.contains("signOutFromThisDevice"))
         assertFalse(activity.contains(".delete()"))
         assertTrue(auth.contains("CommunityThemeAccountState.GOOGLE"))
-        assertTrue(submission.contains("restoreLastAuthorPseudonym()"))
-        assertTrue(submission.contains("rememberAuthorPseudonym(author)"))
+        // The public author name is owned by the account, not remembered per device: it is loaded
+        // from Firestore and the field is locked once claimed. A locally restored pseudonym would
+        // let one person publish under several names, which is what the reservation prevents.
+        assertTrue(submission.contains("loadFixedAuthorIdentity()"))
+        assertTrue(submission.contains("authorInput.isEnabled = false"))
         assertTrue(manifest.contains("CommunityThemeAccountActivity"))
     }
 

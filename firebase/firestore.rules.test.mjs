@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { after, before, beforeEach, test } from "node:test";
 import {
   assertFails,
@@ -204,6 +205,26 @@ function linkedAnonymousDb(uid) {
     .firestore();
 }
 
+/**
+ * Every base face a released build can submit, read from the shipped constraints asset rather
+ * than retyped here.
+ *
+ * The rules carry their own hand-maintained copy of this list because Rules cannot read Kotlin,
+ * and every other test in this file submits `poster` -- so a face added to the app but not to the
+ * rules was accepted by every local gate and then denied at the write, which the app can only
+ * report as a generic network failure. Deriving the expectation from the asset is what makes the
+ * next added face fail here instead of on someone's wrist.
+ */
+function publicBaseFaces() {
+  const asset = JSON.parse(
+    readFileSync(
+      new URL("../common/src/main/assets/community-theme-constraints.json", import.meta.url),
+      "utf8"));
+  const faces = asset.originalityApplicableFaces.default;
+  assert.ok(faces.length > 0, "constraints asset declares no base faces");
+  return faces;
+}
+
 async function submit(db, ownerUid, id, { authorName = "Theme maker", credit = authorName } = {}) {
   const accountDocument = doc(db, "communityThemeAccounts", ownerUid);
   const accountSnapshot = await getDoc(db, accountDocument);
@@ -224,12 +245,13 @@ async function submit(db, ownerUid, id, { authorName = "Theme maker", credit = a
 function claimAuthorName(db, ownerUid, authorName, {
   accountOverrides = {},
   claimOverrides = {},
+  documentKey = authorKey(authorName),
 } = {}) {
   const batch = writeBatch(db);
   batch.set(doc(db, "communityThemeAccounts", ownerUid),
-    authorAccount(ownerUid, authorName, accountOverrides));
-  batch.set(doc(db, "communityThemeAuthorNames", authorKey(authorName)),
-    authorNameClaim(ownerUid, authorName, claimOverrides));
+    authorAccount(ownerUid, authorName, { authorKey: documentKey, ...accountOverrides }));
+  batch.set(doc(db, "communityThemeAuthorNames", documentKey),
+    authorNameClaim(ownerUid, authorName, { authorKey: documentKey, ...claimOverrides }));
   return batch.commit();
 }
 
@@ -319,6 +341,35 @@ test("an intake and quota must be created together in one batch", async () => {
   await assertSucceeds(submit(authorDb, AUTHOR, FIRST_ID));
 });
 
+test("every base face the app can build is accepted by the rules", async () => {
+  for (const baseFace of publicBaseFaces()) {
+    await testEnvironment.clearFirestore();
+    const authorDb = authenticatedDb(AUTHOR);
+    const accountDocument = doc(authorDb, "communityThemeAccounts", AUTHOR);
+    const batch = writeBatch(authorDb);
+    batch.set(accountDocument, authorAccount(AUTHOR));
+    batch.set(doc(authorDb, "communityThemeAuthorNames", authorKey("Theme maker")),
+      authorNameClaim(AUTHOR, "Theme maker"));
+    batch.set(doc(authorDb, "themeIntake", FIRST_ID), intake(AUTHOR, FIRST_ID, { baseFace }));
+    batch.set(doc(authorDb, "communityThemeSubmissionQuota", AUTHOR),
+      nextQuota(AUTHOR, FIRST_ID, null));
+    await assertSucceeds(batch.commit(), `base face ${baseFace} was rejected by the rules`);
+  }
+});
+
+test("an unknown base face is still refused", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const batch = writeBatch(authorDb);
+  batch.set(doc(authorDb, "communityThemeAccounts", AUTHOR), authorAccount(AUTHOR));
+  batch.set(doc(authorDb, "communityThemeAuthorNames", authorKey("Theme maker")),
+    authorNameClaim(AUTHOR, "Theme maker"));
+  batch.set(doc(authorDb, "themeIntake", FIRST_ID),
+    intake(AUTHOR, FIRST_ID, { baseFace: "not-a-face" }));
+  batch.set(doc(authorDb, "communityThemeSubmissionQuota", AUTHOR),
+    nextQuota(AUTHOR, FIRST_ID, null));
+  await assertFails(batch.commit());
+});
+
 test("an author account and its globally unique name reservation are one atomic pair", async () => {
   const authorDb = authenticatedDb(AUTHOR);
   const accountDocument = doc(authorDb, "communityThemeAccounts", AUTHOR);
@@ -346,7 +397,6 @@ test("author names are canonical ASCII handles and reserve all casing variants",
     " Theme maker",
     "Theme maker ",
     "Theme  maker",
-    "Theme/maker",
     "Thème maker",
     "-Theme maker",
     "Theme maker-",
@@ -359,6 +409,14 @@ test("author names are canonical ASCII handles and reserve all casing variants",
     const db = authenticatedDb(uid);
     await assertFails(claimAuthorName(db, uid, invalidNames[index]));
   }
+
+  // A name containing a slash cannot even be expressed as a reservation id -- its canonical key
+  // would be a two-segment path, which the client refuses to build before any rule is consulted.
+  // Pinning it therefore means offering the name under a *well-formed* key, which is the shape a
+  // modified client could actually send, and proving the rules refuse the name itself.
+  const slashDb = authenticatedDb("invalid-name-slash");
+  await assertFails(claimAuthorName(slashDb, "invalid-name-slash", "Theme/maker",
+    { documentKey: "v1:theme-maker" }));
 });
 
 test("a claimed author identity is immutable and a submitting account cannot choose another", async () => {

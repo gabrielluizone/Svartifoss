@@ -594,6 +594,32 @@ class WatchThemeRepository(context: Context) {
         return captured
     }
 
+    /**
+     * Backfills one profile to the current [FaceScopedPreferences.SCOPED_DEFINITIONS] schema and
+     * persists the result, independent of which theme (if any) is currently active.
+     *
+     * A profile saved before a later release added new scoped preferences is otherwise stuck with
+     * its old, incomplete key set forever: nothing but [applyProfile] (selecting/activating it)
+     * backfills missing keys, and submitting a theme the user is not currently wearing never goes
+     * through that path - it reached [CommunityThemeSubmissionDraftFactory.build]'s strict
+     * complete-snapshot check with the stale settings map untouched, which is why an old saved
+     * theme failed submission with no actionable error. Reuses the same base-face backfill
+     * [normalizeProfile] already performs on apply/import, exposed here for a profile that may not
+     * be the active one.
+     */
+    @Synchronized
+    fun ensureCurrentSchema(profileId: String, defaultPrefs: SharedPreferences): WatchThemeProfile? {
+        val state = loadState()
+        val index = state.profiles.indexOfFirst { it.id == profileId }
+        if (index < 0) return null
+        val old = state.profiles[index]
+        if (old.settings.keys == FaceScopedPreferences.SCOPED_DEFINITIONS_BY_KEY.keys) return old
+        val normalized = normalizeProfile(old, defaultPrefs) ?: return old
+        val updated = state.profiles.toMutableList().apply { set(index, normalized) }
+        saveState(state.copy(profiles = updated))
+        return normalized
+    }
+
     /** Atomically projects every scoped definition plus validation metadata to default prefs. */
     @Synchronized
     fun applyProfile(defaultPrefs: SharedPreferences, profile: WatchThemeProfile): Boolean {

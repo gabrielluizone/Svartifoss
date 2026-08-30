@@ -64,8 +64,19 @@ service cloud.firestore {
      */
     match /communityThemeSubmissionQuota/{uid} {
       allow get: if identifiedUser() && uid == request.auth.uid;
-      allow create: if activeIdentifiedUser() && uid == request.auth.uid && validNewSubmissionQuota();
-      allow update: if activeIdentifiedUser() && uid == request.auth.uid && validUpdatedSubmissionQuota();
+      /*
+       * create and update already say whether a previous quota exists, so each branch asserts the
+       * shared contract once and then only how the rolling history moves. This document's rule is
+       * the authority on that contract; the themeIntake rule re-checks only the pairing.
+       */
+      allow create: if activeIdentifiedUser()
+          && uid == request.auth.uid
+          && validQuotaResult(request.resource.data)
+          && validNewSubmissionQuota(request.resource.data);
+      allow update: if activeIdentifiedUser()
+          && uid == request.auth.uid
+          && validQuotaResult(request.resource.data)
+          && validUpdatedSubmissionQuota(request.resource.data);
 
       // Deliberately omitted: a quota can neither be listed nor deleted by a client.
     }
@@ -416,6 +427,11 @@ service cloud.firestore {
     function validNewThemeIntake(themeId) {
       let data = request.resource.data;
       return validThemeId(themeId)
+          // hasOnly plus an exact key count is the same contract as hasOnly plus hasAll over the
+          // identical list, at roughly half the expressions. That matters here: Firestore caps a
+          // request at 1000 evaluated expressions, and a submission batch writes four documents
+          // whose rules all run against that single budget. Exceeding it surfaces to the client as
+          // PERMISSION_DENIED, indistinguishable from a genuine rejection.
           && data.keys().hasOnly([
             "ownerUid",
             "status",
@@ -431,21 +447,7 @@ service cloud.firestore {
             "clientVersion",
             "createdAt"
           ])
-          && data.keys().hasAll([
-            "ownerUid",
-            "status",
-            "submissionSchemaVersion",
-            "name",
-            "author",
-            "baseFace",
-            "profileSchemaVersion",
-            "revision",
-            "profileJson",
-            "settingsDigest",
-            "moderationPreviewWebpBase64",
-            "clientVersion",
-            "createdAt"
-          ])
+          && data.keys().size() == 13
           && data.ownerUid is string
           && data.ownerUid == request.auth.uid
           && data.status == "pending"
@@ -455,6 +457,12 @@ service cloud.firestore {
           && validShortText(data.author, 48)
           && validCommunityThemeAuthorForSubmission(data.author)
           && data.baseFace is string
+          // Mirrors ThemeAppearance.ALLOWED_BASE_FACES minus ArchivedFaces.KEYS. Rules cannot read
+          // Kotlin, so this is a fifth hand-maintained copy of the face registry alongside the
+          // constraints asset, schema.mjs and docs/admin/admin.js -- a new face must be added here
+          // or every submission using it is denied by the rules while passing every local gate,
+          // which the app can only report as a generic network failure. Pinned by the emulator
+          // suite's per-face sweep.
           && data.baseFace in [
             "classic",
             "expressive",
@@ -467,7 +475,9 @@ service cloud.firestore {
             "split",
             "note",
             "verse",
-            "metadata"
+            "metadata",
+            "ribbon",
+            "frame"
           ]
           && data.profileSchemaVersion is int
           && data.profileSchemaVersion == 1
@@ -523,13 +533,7 @@ service cloud.firestore {
             "authorKey",
             "createdAt"
           ])
-          && data.keys().hasAll([
-            "ownerUid",
-            "accountSchemaVersion",
-            "authorName",
-            "authorKey",
-            "createdAt"
-          ])
+          && data.keys().size() == 5
           && data.ownerUid is string
           && data.ownerUid == uid
           && data.accountSchemaVersion is int
@@ -548,13 +552,7 @@ service cloud.firestore {
             "authorKey",
             "createdAt"
           ])
-          && data.keys().hasAll([
-            "ownerUid",
-            "nameSchemaVersion",
-            "authorName",
-            "authorKey",
-            "createdAt"
-          ])
+          && data.keys().size() == 5
           && data.ownerUid is string
           && data.ownerUid == uid
           && data.nameSchemaVersion is int
@@ -566,17 +564,28 @@ service cloud.firestore {
           && data.createdAt is timestamp;
     }
 
+    /*
+     * Each half of the reciprocal pair fully validates *itself* and cross-checks only the other's
+     * identifying fields.
+     *
+     * Both documents are written in the same atomic batch, so both of these rules run for every
+     * first submission and each one's full shape is therefore proven exactly once. Having each
+     * also re-prove the other's entire shape was pure duplicated work against the 1000-expression
+     * request budget. The invariant that matters is unchanged: neither document can be created
+     * without the other appearing in the same write, carrying the same owner, key and timestamp.
+     *
+     * The name document's own rule pins `authorKey` to its document id and to
+     * `authorKeyFor(authorName)`, so agreeing on `authorKey` here is enough to agree on the name.
+     */
     function validNewCommunityThemeAccount(uid) {
       let data = request.resource.data;
       let namePath = /databases/$(database)/documents/communityThemeAuthorNames/$(data.authorKey);
       return validCommunityThemeAccountData(data, uid)
           && data.createdAt == request.time
           && !exists(namePath)
-          && validCommunityThemeAuthorNameData(
-            getAfter(namePath).data,
-            data.authorKey,
-            uid
-          )
+          && existsAfter(namePath)
+          && getAfter(namePath).data.ownerUid == uid
+          && getAfter(namePath).data.authorKey == data.authorKey
           && getAfter(namePath).data.createdAt == request.time;
     }
 
@@ -586,70 +595,65 @@ service cloud.firestore {
       return validCommunityThemeAuthorNameData(data, authorKey, request.auth.uid)
           && data.createdAt == request.time
           && !exists(accountPath)
-          && validCommunityThemeAccountData(
-            getAfter(accountPath).data,
-            request.auth.uid
-          )
+          && existsAfter(accountPath)
+          && getAfter(accountPath).data.ownerUid == request.auth.uid
           && getAfter(accountPath).data.authorKey == authorKey
           && getAfter(accountPath).data.createdAt == request.time;
     }
 
+    /*
+     * The account document is immutable: it has no update or delete rule, so once created it can
+     * only ever be the one its own create rule fully validated, complete with the paired name
+     * reservation that rule demanded atomically. Re-deriving both shapes on every subsequent
+     * submission proved nothing new and cost the budget that made real submissions fail.
+     */
     function validCommunityThemeAuthorForSubmission(author) {
       let accountPath = /databases/$(database)/documents/communityThemeAccounts/$(request.auth.uid);
       return existsAfter(accountPath)
-          && validCommunityThemeAuthorAccountForSubmission(
-            getAfter(accountPath).data,
-            author
-          );
+          && getAfter(accountPath).data.ownerUid == request.auth.uid
+          && (author == getAfter(accountPath).data.authorName || author == "Anonymous");
     }
 
-    function validCommunityThemeAuthorAccountForSubmission(account, author) {
-      let namePath = /databases/$(database)/documents/communityThemeAuthorNames/$(account.authorKey);
-      return validCommunityThemeAccountData(account, request.auth.uid)
-          && existsAfter(namePath)
-          && validCommunityThemeAuthorNameData(
-            getAfter(namePath).data,
-            account.authorKey,
-            request.auth.uid
-          )
-          && (author == account.authorName || author == "Anonymous");
-    }
-
+    /*
+     * The intake asserts only that a quota was written in *this* request and points back at this
+     * exact theme. It deliberately does not re-derive the quota's shape or its rolling history:
+     * that document's own create/update rule proves all of it, in this same atomic batch, and
+     * duplicating the eight-key V2 shape here is what pushed an ordinary submission past
+     * Firestore's 1000-expression request budget -- reported to the client as PERMISSION_DENIED
+     * and shown by the app as a connection failure on a perfectly valid theme.
+     *
+     * `lastSubmissionAt == request.time` is what forces the write to be part of this request: an
+     * already-stored quota carries an older timestamp, so an intake cannot ride along on one.
+     */
     function validSubmissionQuotaForTheme(themeId) {
-      let after = getAfter(
-        /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
-      ).data;
-      return after.lastSubmissionId == themeId
-          && (exists(
-                /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
-              )
-              ? validUpdatedSubmissionQuota()
-              : validNewSubmissionQuota());
+      let quotaPath =
+        /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid);
+      return existsAfter(quotaPath)
+          && getAfter(quotaPath).data.lastSubmissionId == themeId
+          && getAfter(quotaPath).data.lastSubmissionAt == request.time;
     }
 
-    function validNewSubmissionQuota() {
-      let after = getAfter(
-        /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
-      ).data;
+    /* Everything true of a resulting quota whether or not the account had one before. */
+    function validQuotaResult(after) {
       return validSubmissionQuotaV2Shape(after)
-          && after.submissionCount == 1
-          && after.recentSubmissionCount == 1
-          && after.recentSubmissionFirstAt == request.time
           && after.lastSubmissionAt == request.time
           && quotaTargetsCurrentIntake(after);
     }
 
-    function validUpdatedSubmissionQuota() {
-      let before = get(
-        /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
-      ).data;
-      let after = getAfter(
-        /databases/$(database)/documents/communityThemeSubmissionQuota/$(request.auth.uid)
-      ).data;
-      return (validLegacySubmissionQuotaShape(before)
-              && validLegacyQuotaMigration(before, after))
-          || (validSubmissionQuotaV2Shape(before)
-              && validRollingQuotaProgression(before, after));
+    function validNewSubmissionQuota(after) {
+      return after.submissionCount == 1
+          && after.recentSubmissionCount == 1
+          && after.recentSubmissionFirstAt == request.time;
+    }
+
+    function validUpdatedSubmissionQuota(after) {
+      let before = resource.data;
+      return after.ownerUid == before.ownerUid
+          && after.submissionCount == before.submissionCount + 1
+          && ((validLegacySubmissionQuotaShape(before)
+                && validLegacyQuotaMigration(after))
+              || (validSubmissionQuotaV2Shape(before)
+                && validRollingQuotaProgression(before, after)));
     }
 
     /*
@@ -665,12 +669,7 @@ service cloud.firestore {
             "lastSubmissionAt",
             "lastSubmissionId"
           ])
-          && data.keys().hasAll([
-            "ownerUid",
-            "submissionCount",
-            "lastSubmissionAt",
-            "lastSubmissionId"
-          ])
+          && data.keys().size() == 4
           && data.ownerUid is string
           && data.ownerUid == request.auth.uid
           && data.submissionCount is int
@@ -691,15 +690,6 @@ service cloud.firestore {
             "recentSubmissionFirstAt",
             "recentSubmissionSecondAt"
           ])
-          && data.keys().hasAll([
-            "ownerUid",
-            "quotaSchemaVersion",
-            "submissionCount",
-            "lastSubmissionAt",
-            "lastSubmissionId",
-            "recentSubmissionCount",
-            "recentSubmissionFirstAt"
-          ])
           && data.ownerUid is string
           && data.ownerUid == request.auth.uid
           && data.quotaSchemaVersion is int
@@ -713,36 +703,30 @@ service cloud.firestore {
           && data.recentSubmissionCount in [1, 2, 3]
           && data.submissionCount >= data.recentSubmissionCount
           && data.recentSubmissionFirstAt is timestamp
+          // The seven required keys are already pinned present by the `is` checks above, and
+          // hasOnly bounds the set to eight, so each branch only has to settle whether the
+          // optional eighth is there -- an exact size does that and replaces a second key list.
           && ((data.recentSubmissionCount == 1
-                && !data.keys().hasAny(["recentSubmissionSecondAt"])
+                && data.keys().size() == 7
                 && data.recentSubmissionFirstAt == data.lastSubmissionAt)
               || (data.recentSubmissionCount == 2
-                && !data.keys().hasAny(["recentSubmissionSecondAt"])
+                && data.keys().size() == 7
                 && data.recentSubmissionFirstAt <= data.lastSubmissionAt)
               || (data.recentSubmissionCount == 3
-                && data.keys().hasAll(["recentSubmissionSecondAt"])
+                && data.keys().size() == 8
                 && data.recentSubmissionSecondAt is timestamp
                 && data.recentSubmissionFirstAt <= data.recentSubmissionSecondAt
                 && data.recentSubmissionSecondAt <= data.lastSubmissionAt));
     }
 
-    function validLegacyQuotaMigration(before, after) {
-      return validSubmissionQuotaV2Shape(after)
-          && after.ownerUid == before.ownerUid
-          && after.submissionCount == before.submissionCount + 1
-          && after.recentSubmissionCount == 1
-          && after.recentSubmissionFirstAt == request.time
-          && after.lastSubmissionAt == request.time
-          && quotaTargetsCurrentIntake(after);
+    /* Shape, owner, count, timestamp and intake pairing are asserted by the caller. */
+    function validLegacyQuotaMigration(after) {
+      return after.recentSubmissionCount == 1
+          && after.recentSubmissionFirstAt == request.time;
     }
 
     function validRollingQuotaProgression(before, after) {
-      return validSubmissionQuotaV2Shape(after)
-          && after.ownerUid == before.ownerUid
-          && after.submissionCount == before.submissionCount + 1
-          && after.lastSubmissionAt == request.time
-          && quotaTargetsCurrentIntake(after)
-          && ((before.recentSubmissionCount == 1
+      return ((before.recentSubmissionCount == 1
                 && after.recentSubmissionCount == 2
                 && after.recentSubmissionFirstAt == before.recentSubmissionFirstAt)
               || (before.recentSubmissionCount == 2
