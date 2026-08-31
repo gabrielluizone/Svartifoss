@@ -91,7 +91,9 @@ object SettingsCatalog {
                     "cat_wf_player_progress",
                     "cat_wf_metadata",
                     "cat_wf_layout_actions"),
-            WatchFacePrefsFragment.SECTION_BACKGROUND to setOf("cat_wf_background"),
+            WatchFacePrefsFragment.SECTION_BACKGROUND to setOf(
+                    "cat_wf_background_editor",
+                    "cat_wf_background"),
             WatchFacePrefsFragment.SECTION_COLORS to setOf(
                     "cat_wf_colors_editor",
                     "cat_wf_colors",
@@ -137,6 +139,7 @@ object SettingsCatalog {
             "cat_wf_panel_quick",
             "cat_wf_panel_queue",
             "cat_wf_panel_effects",
+            "cat_wf_background_editor",
             "cat_wf_background",
             "cat_wf_colors_editor",
             "cat_wf_colors",

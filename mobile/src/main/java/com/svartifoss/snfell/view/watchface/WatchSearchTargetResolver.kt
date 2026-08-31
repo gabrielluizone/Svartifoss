@@ -53,12 +53,6 @@ internal object WatchSearchTargetResolver {
             "wear_artist_custom_color",
             "wear_artist_adaptive_contrast")
 
-    private val dimDependentRows = setOf(
-            "wear_player_shading_style",
-            "album_art_dim_strength",
-            "wear_shading_color_mode",
-            "wear_shading_custom_color")
-
     private val visualAodKeys = setOf(
             "wear_aod_show_transport", "wear_aod_show_progress", "wear_aod_show_pills")
 
@@ -89,12 +83,14 @@ internal object WatchSearchTargetResolver {
             "wear_volume_custom_color" to ModePrerequisite(
                     "wear_volume_color_mode", setOf("normal", "custom"),
                     WatchFacePrefsFragment.SECTION_COLORS),
+            // The shading rows have no entry here on purpose. They used to be gated twice -
+            // on "Dim album art" and on the colour mode - and both gates pointed at rows that are
+            // now read through the Background page's layer list rather than edited one at a time.
+            // A redirect would have to name a control that is no longer on screen, so the search
+            // result goes to the list, where every one of these values now lives.
             "wear_quick_panel_custom_color" to ModePrerequisite(
                     "wear_quick_panel_color_mode", setOf("normal", "custom"),
-                    WatchFacePrefsFragment.SECTION_COLORS),
-            "wear_shading_custom_color" to ModePrerequisite(
-                    "wear_shading_color_mode", setOf("custom"),
-                    WatchFacePrefsFragment.SECTION_BACKGROUND))
+                    WatchFacePrefsFragment.SECTION_COLORS))
 
     fun resolve(
             section: String,
@@ -117,10 +113,6 @@ internal object WatchSearchTargetResolver {
                 !readBoolean("wear_show_source_icon", true)) {
             return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_show_source_icon")
         }
-        if (key in dimDependentRows && !readBoolean("dim_album_art", true)) {
-            return redirect(WatchFacePrefsFragment.SECTION_BACKGROUND, "dim_album_art")
-        }
-
         if (key.startsWith("wear_metadata_") && face != "metadata") {
             return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_screen_face")
         }

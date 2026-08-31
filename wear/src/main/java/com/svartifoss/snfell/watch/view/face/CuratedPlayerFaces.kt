@@ -165,7 +165,6 @@ private fun CuratedPlayerFace(
         }
 
         PlayerBackgroundTreatment(state)
-        PlayerShadingOverlay(state)
 
         when (layout) {
             CuratedLayout.VINYL -> VinylComposition(state, listener, palette, progress, screen)

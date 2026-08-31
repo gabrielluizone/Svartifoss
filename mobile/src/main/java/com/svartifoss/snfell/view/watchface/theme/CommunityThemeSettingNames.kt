@@ -40,9 +40,21 @@ internal object CommunityThemeSettingNames {
             "wear_lyrics_font",
             "wear_track_time_font")
 
+    /**
+     * Settings the user edits through a surface rather than a row of their own.
+     *
+     * The background stack is the only one so far: it is a list somebody builds on the Background
+     * page, so there is no `<Preference>` in the XML for the search index to have found a title
+     * on - and a refusal that cannot name it would land back on the generic message this object
+     * exists to replace.
+     */
+    private val TITLES_WITHOUT_A_ROW = mapOf(
+            "wear_background_layers" to R.string.background_editor_layers)
+
     /** The row's own localized title, e.g. "Title font". */
     fun settingTitle(context: Context, key: String): String? =
             SettingsSearchIndex.build(context).firstOrNull { it.key == key }?.title
+                    ?: TITLES_WITHOUT_A_ROW[key]?.let(context::getString)
 
     /** The label the picker shows for [value], e.g. "Lobster" rather than `lobster`. */
     fun valueLabel(context: Context, key: String, value: WatchThemeValue): String? {

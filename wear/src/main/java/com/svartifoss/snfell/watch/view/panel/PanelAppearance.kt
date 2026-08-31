@@ -16,7 +16,11 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.OverlayBackdropResolver
 import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.BackgroundLayerColor
+import com.svartifoss.snfell.common.BackgroundLayerStack
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.ResolvedBackgroundLayer
+import com.svartifoss.snfell.common.resolveLayers
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
 import com.svartifoss.snfell.common.PlayerShadingIntensity
@@ -76,12 +80,15 @@ data class PanelBackdrop(
         val albumArtStyle: PlayerBackgroundStyle,
         val blurRadiusPx: Float,
         val overlayBlurRadiusPx: Float,
-        val authoredStrength: Float,
-        val shadingStyle: PlayerShadingStyle,
-        val shadingIntensity: Float,
-        val shadingColor: Int,
-        val accentFloor: AccentFloorStyle,
-        val accentFloorColor: Int,
+        /**
+         * Everything drawn over the artwork, bottom first - see
+         * [com.svartifoss.snfell.common.BackgroundLayerStack].
+         *
+         * The dedicated Volume and Progress screens draw *your* panel, which means they have to
+         * draw your background too. Reading the same resolved stack the player does is what keeps
+         * that promise once the order of these treatments became something the user chooses.
+         */
+        val layers: List<ResolvedBackgroundLayer>,
         val materialSurfaceSoftened: Boolean,
         val globalTriad: PanelTriad
 ) {
@@ -297,19 +304,13 @@ object PanelAppearanceResolver {
         val intensity = shadingMultiplier(prefs, context)
         val globalTriad = globalTriad(prefs, context, triad, fallbackAccent)
 
-        // Authored background styles own their designed look and render it regardless of the "Dim
-        // album art" toggle - that toggle governs the separate legibility scrim over plain
-        // artwork, not a background style's identity. The intensity slider still modulates depth.
-        val authoredStrength = if (
-                shadingStyle == PlayerShadingStyle.FOLLOW &&
-                !albumArtStyle.isPlainArtworkTreatment
-        ) {
-            (intensity / .8f).coerceIn(0f, SHADING_MAX_MULTIPLIER / .8f)
-        } else {
-            0f
-        }
-        val usesSharedLayer = shadingStyle != PlayerShadingStyle.FOLLOW ||
-                albumArtStyle.isPlainArtworkTreatment
+        val accentFloor = AccentFloorStyle.fromPreference(
+                faceString(prefs, context, MiscPreferences.WEAR_ACCENT_FLOOR))
+        val shadeTint = shadingColor(prefs, context, globalTriad.primary)
+        val floorTint = accentFloorColor(prefs, context, globalTriad)
+        val face = prefs.getString(
+                MiscPreferences.WEAR_SCREEN_FACE.key,
+                MiscPreferences.WEAR_SCREEN_FACE.defaultValue).orEmpty()
 
         return PanelBackdrop(
                 albumArtStyle = albumArtStyle,
@@ -318,13 +319,27 @@ object PanelAppearanceResolver {
                         .coerceIn(5, 120).toFloat(),
                 overlayBlurRadiusPx = FaceScopedPreferences.getInt(
                         prefs, MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS, context).toFloat(),
-                authoredStrength = authoredStrength,
-                shadingStyle = shadingStyle,
-                shadingIntensity = if (dimAlbumArt && usesSharedLayer) intensity else 0f,
-                shadingColor = shadingColor(prefs, context, globalTriad.primary),
-                accentFloor = AccentFloorStyle.fromPreference(
-                        faceString(prefs, context, MiscPreferences.WEAR_ACCENT_FLOOR)),
-                accentFloorColor = accentFloorColor(prefs, context, globalTriad),
+                layers = BackgroundLayerStack.resolve(
+                        raw = faceString(prefs, context, MiscPreferences.WEAR_BACKGROUND_LAYERS),
+                        background = albumArtStyle,
+                        dimEnabled = dimAlbumArt,
+                        dimPercent = (intensity * 100f).toInt(),
+                        shading = shadingStyle,
+                        shadingColor = BackgroundLayerColor.fromPreference(
+                                faceString(prefs, context, MiscPreferences.WEAR_SHADING_COLOR_MODE)),
+                        floor = accentFloor,
+                        floorColor = BackgroundLayerColor.fromPreference(
+                                faceString(
+                                        prefs,
+                                        context,
+                                        MiscPreferences.WEAR_ACCENT_FLOOR_COLOR_MODE)),
+                        baseWashDrawn = face !in BackgroundLayerStack.SELF_BACKDROP_FACES)
+                        .resolveLayers(
+                                // These panels are their own Activities with no live palette of
+                                // their own, so a layer's colour is resolved from the same two
+                                // tones the single legacy rows already produce here.
+                                shadeColor = { shadeTint },
+                                floorColor = { floorTint }),
                 materialSurfaceSoftened =
                         colorTreatmentPreference(prefs, context) == "desaturated",
                 globalTriad = globalTriad)

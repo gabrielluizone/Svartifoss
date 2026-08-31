@@ -32,6 +32,11 @@ object FaceScopedPreferences {
     val SCOPED_KEYS: Set<String> = setOf(
             // A shared piece rather than one face's fixture - see AccentFloorStyle.
             "wear_accent_floor",
+            // The background layer stack (BackgroundLayerStack). Scoped like every other
+            // appearance key: a stack is composed against one face's geometry - a floor tuned to
+            // sit under Verse's lyric band is wrong behind Metadata's table - and a saved theme
+            // has to carry it or the theme is not the look it was saved from.
+            "wear_background_layers",
             // Per face, not per app: "keep the screen on" is a property of the composition you are
             // looking at, not of the watch. A face you read (Verse, Chat) wants it; the one you
             // glance at does not, and paying its battery cost on every face to have it on one is

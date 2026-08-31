@@ -68,13 +68,15 @@ import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingStyle
+import com.svartifoss.snfell.common.ResolvedBackgroundLayer
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
-import com.svartifoss.snfell.watch.view.compose.accentFloorGlow
+import com.svartifoss.snfell.watch.view.compose.drawAccentFloorGlow
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.Animatable
@@ -95,37 +97,112 @@ internal fun faceTonal(accent: Int, lightness: Float, minSat: Float = 0.25f, max
 }
 
 /**
- * Draws the selected background treatment without making any decision about control geometry.
- * It is shared by Expressive and every curated layout, which is the key distinction between a
- * layout (where controls live) and a background (how artwork/album colour fills the screen).
+ * Draws everything between the artwork and this face's own content, bottom layer first.
+ *
+ * Shared by Expressive and every curated layout, which is the key distinction between a layout
+ * (where controls live) and a background (how artwork/album colour fills the screen).
+ *
+ * One Canvas for the whole stack, deliberately. The order of these treatments is now a user
+ * choice, and the only way a composable can express "this goes under that" is to be drawn earlier
+ * in the same draw pass - splitting them across sibling composables would put the ordering back
+ * into whichever order the file happens to call them in, which is exactly the fixed arrangement
+ * the stack replaced.
  */
 @Composable
 internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
-    val style = state.backgroundStyle
-    // An authored background style owns its designed look regardless of the "Dim album art"
-    // toggle (that toggle governs the separate legibility scrim over plain artwork). The intensity
-    // still modulates its depth, and an explicit shading style replaces (not stacks) it.
-    val authoredStrength = if (
-        state.backdropShadingStyle == PlayerShadingStyle.FOLLOW && !style.isPlainArtworkTreatment
-    ) {
-        (state.backdropDimStrength / .8f).coerceIn(0f, SHADING_MAX_MULTIPLIER / .8f)
-    } else {
-        0f
+    val palette = backgroundWashPalette(state)
+    val layers = state.backgroundLayers
+    if (layers.isEmpty()) return
+
+    Canvas(Modifier.fillMaxSize()) {
+        layers.forEach { layer -> drawBackgroundLayer(layer, palette, ambient = state.ambient) }
     }
+}
+
+/**
+ * The album tones every authored wash composes itself from, resolved once per draw.
+ *
+ * A wash never takes a single colour: each one is built from several tones of the record at fixed
+ * relationships, which is why a [com.svartifoss.snfell.common.BackgroundLayerKind.WASH] layer has
+ * no colour control while the other two kinds do.
+ */
+internal data class BackgroundWashPalette(
+        val primary: Color,
+        val secondary: Color,
+        val tertiary: Color,
+        val deep: Color,
+        val surface: Color,
+        val accent: Int,
+        /** Raw, untuned - the shading treatments tone it differently from the washes. */
+        val secondaryAccent: Int,
+        val materialSurface: Int,
+        val materialSoftened: Boolean
+)
+
+internal fun backgroundWashPalette(state: NowPlayingFaceState) = BackgroundWashPalette(
+        primary = Color(PaletteTransforms.tunedFaceColor(state.accentColor, .62f, .74f)),
+        secondary = Color(PaletteTransforms.tunedFaceColor(
+                state.secondaryAccentColor, .58f, .70f)),
+        tertiary = Color(PaletteTransforms.tunedFaceColor(
+                state.tertiaryAccentColor, .62f, .72f)),
+        deep = Color(PaletteTransforms.tunedFaceColor(state.accentColor, .075f, .48f)),
+        surface = Color(PaletteTransforms.tunedFaceColor(
+                state.secondaryAccentColor, .16f, .42f)),
+        accent = state.accentColor,
+        secondaryAccent = state.secondaryAccentColor,
+        materialSurface = state.materialSurfaceColor,
+        materialSoftened = state.materialSurfaceSoftened)
+
+/** Dispatches one resolved layer to the drawing its kind already had. */
+private fun DrawScope.drawBackgroundLayer(
+        layer: ResolvedBackgroundLayer,
+        palette: BackgroundWashPalette,
+        ambient: Boolean
+) {
+    when (layer) {
+        is ResolvedBackgroundLayer.Wash ->
+            drawBackgroundWash(layer.style, layer.strength, palette)
+
+        is ResolvedBackgroundLayer.Shade -> drawShadingTreatment(
+                style = layer.style,
+                rawStrength = layer.strength,
+                shade = Color(layer.color),
+                accent = palette.accent,
+                secondaryAccent = palette.secondaryAccent)
+
+        // Ambient must not carry a large lit area, and this is the one layer big and bright
+        // enough to be it. The others are darkening passes, which cost an always-on panel nothing.
+        is ResolvedBackgroundLayer.Floor ->
+            if (!ambient) drawAccentFloorGlow(
+                    Color(layer.color), layer.style, alphaScale = layer.strength)
+    }
+}
+
+/**
+ * One authored background treatment, at [authoredStrength] of its designed scrim depth.
+ *
+ * [authoredStrength] scales the *scrim* and not the style's own tint, which is the same thing the
+ * intensity control has always modulated - a Poster without its warm cast is not a lighter Poster,
+ * it is a different background. Fading a wash out of the composition entirely is done by removing
+ * the layer, which is a thing the stack can express and the old single picker could not.
+ */
+@Suppress("CyclomaticComplexMethod")
+private fun DrawScope.drawBackgroundWash(
+        style: PlayerBackgroundStyle,
+        authoredStrength: Float,
+        palette: BackgroundWashPalette
+) {
     fun opacity(base: Float): Float = base.coerceIn(0f, 1f)
     fun authoredOpacity(base: Float): Float =
             (base * authoredStrength).coerceIn(0f, 1f)
 
-    val primary = Color(PaletteTransforms.tunedFaceColor(state.accentColor, .62f, .74f))
-    val secondary = Color(PaletteTransforms.tunedFaceColor(
-            state.secondaryAccentColor, .58f, .70f))
-    val tertiary = Color(PaletteTransforms.tunedFaceColor(
-            state.tertiaryAccentColor, .62f, .72f))
-    val deep = Color(PaletteTransforms.tunedFaceColor(state.accentColor, .075f, .48f))
-    val surface = Color(PaletteTransforms.tunedFaceColor(
-            state.secondaryAccentColor, .16f, .42f))
+    val primary = palette.primary
+    val secondary = palette.secondary
+    val tertiary = palette.tertiary
+    val deep = palette.deep
+    val surface = palette.surface
 
-    Canvas(Modifier.fillMaxSize()) {
+    run {
         when (style) {
             PlayerBackgroundStyle.COVER,
             PlayerBackgroundStyle.BLUR,
@@ -157,7 +234,7 @@ internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
             PlayerBackgroundStyle.EXPRESSIVE,
             PlayerBackgroundStyle.EXPRESSIVE_NO_BLUR -> {
                 val tint = Color(PaletteTransforms.tonalSurface(
-                        state.accentColor, .30f, .30f, .90f))
+                        palette.accent, .30f, .30f, .90f))
                 drawRect(tint.copy(alpha = opacity(.45f)))
                 drawRect(Color.Black.copy(alpha = authoredOpacity(.30f)))
                 drawRect(brush = Brush.radialGradient(
@@ -171,9 +248,9 @@ internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
             PlayerBackgroundStyle.MATERIAL -> {
                 drawRect(Color.Black)
                 val tint = Color(PaletteTransforms.tonalSurface(
-                        state.materialSurfaceColor,
-                        lightness = if (state.materialSurfaceSoftened) .36f else .26f,
-                        minSat = if (state.materialSurfaceSoftened) 0f else .30f,
+                        palette.materialSurface,
+                        lightness = if (palette.materialSoftened) .36f else .26f,
+                        minSat = if (palette.materialSoftened) 0f else .30f,
                         maxSat = .80f))
                 drawCircle(
                         brush = Brush.radialGradient(
@@ -417,48 +494,49 @@ internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
             PlayerBackgroundStyle.HIDDEN -> drawRect(Color.Black)
         }
     }
-
-    PlayerAccentFloor(state)
 }
 
 /**
- * Shared accent floor layer for player faces whose backdrop is composed elsewhere.
+ * The stack for a face that paints its own opaque backdrop.
  *
- * Split owns an opaque two-band backdrop, so it places this same layer immediately after that
- * backdrop instead of letting the common layer be painted underneath and then covered.
+ * Split is the only one: its two-band panel *is* its background, so the shared layer underneath it
+ * would simply be covered, and it places this immediately after its own backdrop instead. The base
+ * treatment is deliberately not drawn here even in the legacy arrangement - it never reached the
+ * screen on this face, and putting it back because the stack now names it would redesign Split.
  */
 @Composable
-internal fun PlayerAccentFloor(state: NowPlayingFaceState) {
-    // Drawn above the backdrop and below the face content. Over the top it would tint the text;
-    // under an opaque backdrop it would disappear.
-    if (state.accentFloor.isVisible && !state.ambient) {
-        Box(Modifier
-                .fillMaxSize()
-                .accentFloorGlow(Color(state.accentFloorColor), state.accentFloor))
+internal fun PlayerBackgroundLayers(state: NowPlayingFaceState) {
+    val layers = state.backgroundLayers
+    if (layers.isEmpty()) return
+    val palette = backgroundWashPalette(state)
+    // Above the backdrop and below the face content. Over the top it would tint the text; under an
+    // opaque backdrop it would disappear.
+    Canvas(Modifier.fillMaxSize()) {
+        layers.forEach { layer -> drawBackgroundLayer(layer, palette, ambient = state.ambient) }
     }
 }
 
 /**
- * Shared player-shading layer for every Compose face. FOLLOW lets a named background use its
- * authored scrim, while plain artwork gets the neutral bottom fade; explicit values replace it.
+ * One shading treatment, at [strength] of its authored maximum, tinted [shade].
+ *
+ * [shade] is black by default, or the album/desaturated/custom tone the host resolved.
+ * ALBUM_TINT/DUOTONE keep their own album tones regardless - they *are* album styles, so a colour
+ * choice on them would be answering a question they already answer.
  */
-@Composable
-internal fun PlayerShadingOverlay(state: NowPlayingFaceState) {
-    if (!state.backdropDimEnabled) return
-    val style = when {
-        state.backdropShadingStyle != PlayerShadingStyle.FOLLOW -> state.backdropShadingStyle
-        state.backgroundStyle.isPlainArtworkTreatment -> PlayerShadingStyle.BOTTOM_FADE
-        else -> return // Named backgrounds already rendered their scaled authored scrim above.
-    }
-    val strength = state.backdropDimStrength.coerceIn(0f, SHADING_MAX_MULTIPLIER)
-    // Shading gradient colour: black by default, or the album/desaturated/custom tone resolved by
-    // the host. ALBUM_TINT/DUOTONE keep their own album tones regardless (they are album styles).
-    val shade = Color(state.backdropShadingColor)
+@Suppress("CyclomaticComplexMethod")
+private fun DrawScope.drawShadingTreatment(
+        style: PlayerShadingStyle,
+        rawStrength: Float,
+        shade: Color,
+        accent: Int,
+        secondaryAccent: Int
+) {
+    val strength = rawStrength.coerceIn(0f, SHADING_MAX_MULTIPLIER)
     fun shaded(maxAlpha: Float) = shade.copy(alpha = (maxAlpha * strength).coerceIn(0f, 1f))
-    val primary = Color(faceTonal(state.accentColor, .13f, .25f, .78f))
-    val secondary = Color(faceTonal(state.secondaryAccentColor, .13f, .25f, .78f))
+    val primary = Color(faceTonal(accent, .13f, .25f, .78f))
+    val secondary = Color(faceTonal(secondaryAccent, .13f, .25f, .78f))
 
-    Canvas(Modifier.fillMaxSize()) {
+    run {
         when (style) {
             PlayerShadingStyle.EDGE_VIGNETTE,
             PlayerShadingStyle.EDGE_VIGNETTE_STRONG,
@@ -574,7 +652,9 @@ internal fun PlayerShadingOverlay(state: NowPlayingFaceState) {
                             start = Offset.Zero,
                             end = Offset(size.width, size.height)))
 
-            PlayerShadingStyle.FOLLOW -> Unit // Resolved to BOTTOM_FADE above.
+            // Never reaches a layer: `follow` is the absence of a choice, and the stack resolves
+            // it to the neutral bottom fade before a layer is ever built from it.
+            PlayerShadingStyle.FOLLOW -> Unit
         }
     }
 }

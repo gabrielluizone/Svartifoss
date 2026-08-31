@@ -126,7 +126,6 @@ fun VerseFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
         // face can wear (see AccentFloorStyle). Painting black here instead is what made the
         // background picker do nothing on this face.
         PlayerBackgroundTreatment(state)
-        PlayerShadingOverlay(state)
 
         // With no lyric the band falls back to a title card, which *is* the track's name and
         // artist set large - so the running head above would print both of them a second time.

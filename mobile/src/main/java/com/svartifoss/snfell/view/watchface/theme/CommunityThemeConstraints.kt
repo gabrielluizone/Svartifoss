@@ -85,12 +85,74 @@ internal class CommunityThemeConstraints private constructor(
                 value is WatchThemeValue.Text && expression.matches(value.value)
     }
 
+    /**
+     * A structured setting: the ordered background stack, whose grammar the asset declares.
+     *
+     * The other three rule kinds each describe one value. This one describes a *sequence* of
+     * enumerated values, which is a wider public input boundary than anything before it - so the
+     * contract states the whole grammar (version marker, depth, encoded length, the opacity range
+     * and the vocabulary each kind may draw from) and the parse below admits nothing that is not
+     * in it. A stack is still enumerated data: there is no expression to evaluate, no colour that
+     * is not six hex digits and no style that is not one of the names the asset lists.
+     *
+     * Deliberately not a regex. The grammar is positional and each field's vocabulary depends on
+     * the field before it, which a pattern can only express by inlining every combination - and a
+     * pattern nobody can read is a poor thing to make a trust boundary out of.
+     */
+    private data class LayerStackRule(
+            val version: String,
+            val maxLayers: Int,
+            val maxLength: Int,
+            val minOpacity: Int,
+            val maxOpacity: Int,
+            val colors: Set<String>,
+            val kinds: Map<String, Set<String>>
+    ) : Rule {
+        override fun acceptsCanonical(value: WatchThemeValue): Boolean {
+            val text = (value as? WatchThemeValue.Text)?.value ?: return false
+            // Empty is the shipped default: nobody has composed a stack, and the three legacy
+            // settings in this same profile are what the recipient renders.
+            if (text.isEmpty()) return true
+            if (text.length > maxLength) return false
+            val parts = text.split('|')
+            if (parts.first() != version || parts.size - 1 > maxLayers) return false
+            return parts.drop(1).all(::acceptsLayer)
+        }
+
+        private fun acceptsLayer(encoded: String): Boolean {
+            val fields = encoded.split('.')
+            if (fields.size !in 2..5) return false
+            val styles = kinds[fields[0]] ?: return false
+            if (fields[1] !in styles) return false
+
+            val opacity = fields.getOrNull(2)
+            if (opacity != null) {
+                val parsed = opacity.takeIf { it.isNotEmpty() && it.all(Char::isDigit) }
+                        ?.toIntOrNull() ?: return false
+                // Compared back against its own decimal so "060" cannot become a second spelling
+                // of one composition - the settings digest is taken over this exact string.
+                if (parsed.toString() != opacity || parsed !in minOpacity..maxOpacity) return false
+            }
+
+            val color = fields.getOrNull(3)
+            if (color != null && color !in colors) return false
+            val custom = fields.getOrNull(4)
+            return if (color == "custom") {
+                custom != null && HEX_RGB_EXPRESSION.matches(custom)
+            } else {
+                custom == null
+            }
+        }
+    }
+
     companion object {
         private const val ASSET_NAME = "community-theme-constraints.json"
-        private const val SCHEMA_VERSION = 1
+        private const val SCHEMA_VERSION = 2
         private const val HEX_RGB_RULE_NAME = "empty-or-uppercase-hex-rgb"
         private const val HEX_RGB_PATTERN = "^$|^#[0-9A-F]{6}$"
         private val VALUE_SET_NAME = Regex("^[a-z][A-Za-z0-9]*$")
+        private const val LAYER_RULE_NAME = "background-layer-stack-v1"
+        private val HEX_RGB_EXPRESSION = Regex("^#[0-9A-F]{6}$")
 
         fun load(context: Context): CommunityThemeConstraints? = try {
             context.assets.open(ASSET_NAME).bufferedReader(Charsets.UTF_8).use { reader ->
@@ -108,6 +170,7 @@ internal class CommunityThemeConstraints private constructor(
                 }
                 val valueSetsJson = root.optJSONObject("valueSets") ?: return null
                 val colorRulesJson = root.optJSONObject("colorRules") ?: return null
+                val layerRulesJson = root.optJSONObject("layerRules") ?: return null
                 val applicabilityJson = root.optJSONObject("originalityApplicableFaces") ?: return null
                 val requirementsJson = root.optJSONObject("originalityRequires") ?: return null
                 val legacyValuesJson = root.optJSONObject("legacyReadOnlyValues") ?: return null
@@ -115,7 +178,9 @@ internal class CommunityThemeConstraints private constructor(
 
                 val valueSets = parseValueSets(valueSetsJson) ?: return null
                 val colorRules = parseColorRules(colorRulesJson) ?: return null
-                val rules = parseSettings(settingsJson, valueSets, colorRules) ?: return null
+                val layerRules = parseLayerRules(layerRulesJson, valueSets) ?: return null
+                val rules = parseSettings(settingsJson, valueSets, colorRules, layerRules)
+                        ?: return null
                 val applicability = parseOriginalityApplicability(applicabilityJson, rules) ?: return null
                 val requirements = parseOriginalityRequirements(requirementsJson, rules) ?: return null
                 val legacyValues = parseLegacyValues(legacyValuesJson, rules) ?: return null
@@ -159,10 +224,59 @@ internal class CommunityThemeConstraints private constructor(
             return rules.takeIf { it.keys == setOf(HEX_RGB_RULE_NAME) }
         }
 
+        /**
+         * The layer grammar, pinned to the one name and shape this build implements.
+         *
+         * Same posture as [parseColorRules] and for the same reason: widening a public input
+         * boundary is a decision, so a future grammar arrives as a schema bump with explicit
+         * support here, never by an asset quietly describing something new.
+         */
+        private fun parseLayerRules(
+                json: JSONObject,
+                valueSets: Map<String, Set<String>>
+        ): Map<String, LayerStackRule>? {
+            if (!json.hasExactlyKeys(setOf(LAYER_RULE_NAME))) return null
+            val rule = json.optJSONObject(LAYER_RULE_NAME) ?: return null
+            if (!rule.hasExactlyKeys(
+                            setOf("version", "maxLayers", "maxLength", "opacity", "colors", "kinds"))) {
+                return null
+            }
+            val version = rule.requiredString("version") ?: return null
+            val maxLayers = rule.requiredInt("maxLayers")?.takeIf { it in 1..32 } ?: return null
+            val maxLength = rule.requiredInt("maxLength")?.takeIf { it in 1..1024 } ?: return null
+            val opacity = rule.optJSONObject("opacity") ?: return null
+            if (!opacity.hasExactlyKeys(setOf("min", "max"))) return null
+            val minOpacity = opacity.requiredInt("min") ?: return null
+            val maxOpacity = opacity.requiredInt("max") ?: return null
+            if (minOpacity > maxOpacity) return null
+            val colors = parseUniqueTextArray(rule.optJSONArray("colors") ?: return null)
+                    ?: return null
+            val kindsJson = rule.optJSONObject("kinds") ?: return null
+            val kinds = linkedMapOf<String, Set<String>>()
+            val kindKeys = kindsJson.keys()
+            while (kindKeys.hasNext()) {
+                val token = kindKeys.next()
+                // One character, so a layer's kind can never be mistaken for part of its style.
+                if (token.length != 1) return null
+                val setName = kindsJson.requiredString(token) ?: return null
+                kinds[token] = valueSets[setName] ?: return null
+            }
+            if (kinds.isEmpty()) return null
+            return mapOf(LAYER_RULE_NAME to LayerStackRule(
+                    version = version,
+                    maxLayers = maxLayers,
+                    maxLength = maxLength,
+                    minOpacity = minOpacity,
+                    maxOpacity = maxOpacity,
+                    colors = colors,
+                    kinds = kinds))
+        }
+
         private fun parseSettings(
                 json: JSONObject,
                 valueSets: Map<String, Set<String>>,
-                colorRules: Map<String, Regex>
+                colorRules: Map<String, Regex>,
+                layerRules: Map<String, LayerStackRule>
         ): Map<String, Rule>? {
             val expected = FaceScopedPreferences.SCOPED_DEFINITIONS.associate { definition ->
                 definition.key to typeFor(definition.defaultValue)
@@ -189,13 +303,19 @@ internal class CommunityThemeConstraints private constructor(
                     "string" -> {
                         val valueSet = setting.requiredString("valueSet")
                         val colorRule = setting.requiredString("colorRule")
+                        val layerRule = setting.requiredString("layerRule")
+                        val declared = listOfNotNull(valueSet, colorRule, layerRule)
+                        if (declared.size != 1) return null
                         when {
-                            valueSet != null && colorRule == null &&
+                            valueSet != null &&
                                     setting.hasExactlyKeys(setOf("type", "valueSet")) ->
                                 EnumRule(valueSets[valueSet] ?: return null)
-                            colorRule != null && valueSet == null &&
+                            colorRule != null &&
                                     setting.hasExactlyKeys(setOf("type", "colorRule")) ->
                                 ColorRule(colorRules[colorRule] ?: return null)
+                            layerRule != null &&
+                                    setting.hasExactlyKeys(setOf("type", "layerRule")) ->
+                                layerRules[layerRule] ?: return null
                             else -> return null
                         }
                     }
@@ -274,7 +394,8 @@ internal class CommunityThemeConstraints private constructor(
                 BooleanRule -> (rawValue as? Boolean)?.let(WatchThemeValue::Flag)
                 is IntRule -> (rawValue as? Int)?.let(WatchThemeValue::Number)
                 is EnumRule,
-                is ColorRule -> (rawValue as? String)?.let(WatchThemeValue::Text)
+                is ColorRule,
+                is LayerStackRule -> (rawValue as? String)?.let(WatchThemeValue::Text)
             } ?: return null
             return value.takeIf(rule::acceptsCanonical)
         }
@@ -331,6 +452,7 @@ internal class CommunityThemeConstraints private constructor(
         private val ROOT_KEYS = setOf(
                 "schemaVersion",
                 "colorRules",
+                "layerRules",
                 "valueSets",
                 "originalityApplicableFaces",
                 "originalityRequires",

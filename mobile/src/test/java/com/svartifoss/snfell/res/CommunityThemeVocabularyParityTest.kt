@@ -3,6 +3,10 @@ package com.svartifoss.snfell.res
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 import org.json.JSONObject
+import com.svartifoss.snfell.common.BackgroundLayerColor
+import com.svartifoss.snfell.common.BackgroundLayerKind
+import com.svartifoss.snfell.common.BackgroundLayerStack
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
@@ -103,6 +107,75 @@ class CommunityThemeVocabularyParityTest {
                     "\nEither drop them from the value sets in " +
                     "common/src/main/assets/community-theme-constraints.json, or stop archiving " +
                     "them in WatchFacePrefsFragment.")
+        }
+    }
+
+    /**
+     * The background stack's grammar is written twice, and the copies have to say the same thing.
+     *
+     * `BackgroundLayerStack` is what the editor builds and all three renderers read; the layer
+     * rule in the constraints asset is what the gallery, the trusted publisher and the moderator
+     * page read. A drift between them does not error - it makes a stack the app happily composes
+     * unpublishable, reported as "this saved theme cannot be submitted", which names neither the
+     * setting nor the value. That is precisely how fifty-one fonts got lost, and a stack is worse
+     * to diagnose than a font because the offending value is buried inside a longer string.
+     *
+     * The vocabularies are derived rather than retyped, so adding a background treatment, a
+     * shading or an accent floor reaches the contract or fails here.
+     */
+    @Test
+    fun theBackgroundStackGrammarMatchesTheOneTheAppBuilds() {
+        val rule = constraints().getJSONObject("layerRules")
+                .getJSONObject("background-layer-stack-v1")
+
+        assertEquals(BackgroundLayerStack.FORMAT_VERSION, rule.getString("version"))
+        assertEquals(BackgroundLayerStack.MAX_LAYERS, rule.getInt("maxLayers"))
+        assertEquals(BackgroundLayerStack.MAX_ENCODED_LENGTH, rule.getInt("maxLength"))
+        assertEquals(0, rule.getJSONObject("opacity").getInt("min"))
+        assertEquals(
+                BackgroundLayerStack.MAX_OPACITY_PERCENT,
+                rule.getJSONObject("opacity").getInt("max"))
+        assertEquals(
+                BackgroundLayerColor.entries.map { it.preferenceValue }.toSet(),
+                rule.getJSONArray("colors").let { array ->
+                    (0 until array.length()).map(array::getString).toSet()
+                })
+
+        val valueSets = constraints().getJSONObject("valueSets")
+        val kinds = rule.getJSONObject("kinds")
+        val problems = mutableListOf<String>()
+        BackgroundLayerKind.entries.forEach { kind ->
+            val setName = kinds.optString(kind.token).takeIf { it.isNotEmpty() }
+            if (setName == null) {
+                problems += "the layer rule declares no vocabulary for kind \"${kind.token}\""
+                return@forEach
+            }
+            val declared = valueSets.optJSONArray(setName)?.let { array ->
+                (0 until array.length()).map(array::getString)
+            }
+            if (declared == null) {
+                problems += "kind \"${kind.token}\" points at value set \"$setName\", " +
+                        "which the asset does not define"
+                return@forEach
+            }
+            val offered = BackgroundLayerStack.stylesFor(kind)
+            val missing = offered - declared.toSet()
+            val extra = declared.toSet() - offered.toSet()
+            if (missing.isNotEmpty()) {
+                problems += "$kind offers ${missing.joinToString(", ")}, which value set " +
+                        "\"$setName\" rejects"
+            }
+            if (extra.isNotEmpty()) {
+                problems += "value set \"$setName\" accepts ${extra.joinToString(", ")}, " +
+                        "which $kind layers cannot carry"
+            }
+        }
+        if (problems.isNotEmpty()) {
+            fail("The background layer grammar and its public contract disagree:\n  " +
+                    problems.joinToString("\n  ") +
+                    "\nUpdate the layerRules/valueSets entries in " +
+                    "common/src/main/assets/community-theme-constraints.json to match " +
+                    "BackgroundLayerStack.")
         }
     }
 

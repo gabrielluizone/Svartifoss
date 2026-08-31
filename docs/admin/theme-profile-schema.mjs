@@ -24,6 +24,7 @@ const STRING_SETTINGS = [
   "wear_artist_custom_color",
   "wear_artist_font",
   "wear_artist_text_case",
+  "wear_background_layers",
   "wear_carousel_card_shape",
   "wear_chat_cover_shape",
   "wear_clock_color_mode",

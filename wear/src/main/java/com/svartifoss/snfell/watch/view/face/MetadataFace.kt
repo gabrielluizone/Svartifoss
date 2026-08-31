@@ -100,7 +100,7 @@ private const val POSITION_REFRESH_MS = 60L
  * simply grows if one succeeds.
  *
  * **It composes, it does not decide.** Backdrop through [PlayerBackgroundTreatment], shading
- * through [PlayerShadingOverlay], colours and fonts from the state - so every background style,
+ * through [PlayerBackgroundTreatment], colours and fonts from the state - so every background style,
  * colour treatment and typography preference reaches this face exactly as it reaches the others.
  * What it owns is the arrangement.
  */
@@ -123,7 +123,6 @@ fun MetadataFace(
                 .coerceIn(MIN_ROWS, MAX_ROWS)
 
         PlayerBackgroundTreatment(state)
-        PlayerShadingOverlay(state)
 
         val inset = RoundScreenText.sideInsetFor(top = TABLE_TOP, bottom = TABLE_BOTTOM)
 

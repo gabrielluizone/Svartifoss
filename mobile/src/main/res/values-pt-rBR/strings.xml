@@ -2195,4 +2195,35 @@
     <string name="wear_font_dancing_script_description">Caligrafia fluida e manuscrita, viva e pessoal</string>
     <string name="watch_preview_expand">Abrir uma prévia maior</string>
     <string name="watch_preview_fullscreen_dismiss">Toque em qualquer lugar para fechar</string>
+    <!-- Editor contextual da aba Fundo: a arte embaixo e a pilha ordenada de tratamentos por cima. -->
+    <string name="background_editor_artwork">Arte</string>
+    <string name="background_editor_layers">Camadas</string>
+    <string name="background_editor_layers_count">%1$d de %2$d</string>
+    <string name="background_editor_add_layer">Adicionar camada</string>
+    <string name="background_editor_reset_layers">Restaurar</string>
+    <string name="background_editor_empty">Nenhuma camada. A arte aparece sozinha.</string>
+    <string name="background_editor_note">A camada no topo desta lista é desenhada sobre tudo; a de baixo fica mais próxima da arte.</string>
+    <string name="background_editor_full">Você pode empilhar até %1$d camadas.</string>
+    <string name="background_layer_kind_wash">Fundo</string>
+    <string name="background_layer_kind_shade">Sombreamento</string>
+    <string name="background_layer_kind_floor">Piso de destaque</string>
+    <string name="background_layer_move_up">Mover esta camada para cima</string>
+    <string name="background_layer_move_down">Mover esta camada para baixo</string>
+    <string name="background_layer_more">Mais opções desta camada</string>
+    <string name="background_layer_add_title">Adicionar uma camada</string>
+    <string name="background_layer_style_title">Camada de %1$s</string>
+    <string name="background_layer_opacity">Intensidade</string>
+    <string name="background_layer_color">Cor</string>
+    <string name="background_layer_custom_color">Escolher uma cor</string>
+    <string name="background_layer_duplicate">Duplicar</string>
+    <string name="background_layer_remove">Remover</string>
+    <string name="background_layer_color_default">Padrão</string>
+    <string name="background_layer_color_album">Cor do álbum</string>
+    <string name="background_layer_color_secondary">Segunda cor do álbum</string>
+    <string name="background_layer_color_tertiary">Terceira cor do álbum</string>
+    <string name="background_layer_color_desaturated">Cor do álbum suavizada</string>
+    <string name="background_layer_color_black">Preto</string>
+    <string name="background_layer_color_custom">Cor personalizada</string>
+    <string name="background_layer_reset_title">Restaurar as camadas?</string>
+    <string name="background_layer_reset_message">A pilha volta ao sombreamento e ao piso de destaque definidos nas linhas de sempre, que é o que um relógio com uma versão mais antiga já renderiza.</string>
 </resources>

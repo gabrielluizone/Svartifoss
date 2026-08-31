@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import com.svartifoss.snfell.common.AccentFloorStyle
 
@@ -41,7 +42,29 @@ fun Modifier.accentFloorGlow(
         style: AccentFloorStyle = AccentFloorStyle.STANDARD,
         enabled: Boolean = true,
 ): Modifier = drawBehind {
-    if (!enabled || !style.isVisible) return@drawBehind
+    if (!enabled) return@drawBehind
+    drawAccentFloorGlow(accentColor, style)
+}
+
+/**
+ * The same glow, drawn into a caller's own pass.
+ *
+ * The player draws its background as one ordered stack now (see
+ * [com.svartifoss.snfell.common.BackgroundLayerStack]), and a Modifier cannot be sequenced against
+ * other treatments inside a single draw - which is exactly what "put the accent floor under this
+ * and over that" requires. The lyrics screen keeps the Modifier, since there the floor is the only
+ * thing behind the words and there is nothing to order it against.
+ *
+ * @param alphaScale the layer's strength; 1f is the style's authored depth.
+ */
+fun DrawScope.drawAccentFloorGlow(
+        accentColor: Color,
+        style: AccentFloorStyle = AccentFloorStyle.STANDARD,
+        alphaScale: Float = 1f
+) {
+    if (!style.isVisible) return
+    val peak = (style.maxAlpha * alphaScale).coerceIn(0f, 1f)
+    if (peak <= 0f) return
 
     // minDimension, not height: on the square Wear devices that still exist this keeps the arc
     // tangent to the shorter edge instead of spilling off the sides.
@@ -55,7 +78,7 @@ fun Modifier.accentFloorGlow(
                 brush = Brush.radialGradient(
                         colorStops = arrayOf(
                                 style.innerStop to Color.Transparent,
-                                1f to accentColor.copy(alpha = style.maxAlpha)),
+                                1f to accentColor.copy(alpha = peak)),
                         center = middle,
                         radius = radius),
                 radius = radius,

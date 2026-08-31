@@ -121,7 +121,6 @@ fun ChatFace(
         // Shared pipeline, same as every Compose face: the host's artwork View sits under this
         // ComposeView and the background style composes on top of it.
         PlayerBackgroundTreatment(state)
-        PlayerShadingOverlay(state)
 
         // The centre of the screen carries the standard contract - tap play/pause, double tap quick
         // actions, long press the face picker - because the host's own center_tap_zone View is GONE

@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.HorizontalScrollView
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -36,7 +37,14 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.BackgroundLayer
+import com.svartifoss.snfell.common.BackgroundLayerColor
+import com.svartifoss.snfell.common.BackgroundLayerKind
+import com.svartifoss.snfell.common.BackgroundLayerStack
+import com.svartifoss.snfell.common.AccentFloorStyle
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.PlayerShadingStyle
+import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
 import com.svartifoss.snfell.common.SurfaceColorTreatment
 import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.common.ThemeAppearance
@@ -92,6 +100,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         private const val PANEL_EDITOR_KEY = "panel_editor_surface"
         private const val PLAYER_EDITOR_CATEGORY = "cat_wf_player_editor"
         private const val PLAYER_EDITOR_KEY = "player_editor_surface"
+        private const val BACKGROUND_EDITOR_CATEGORY = "cat_wf_background_editor"
+        private const val BACKGROUND_EDITOR_KEY = "background_editor_surface"
+        private val BACKGROUND_LAYERS_KEY = MiscPreferences.WEAR_BACKGROUND_LAYERS.key
         /** Stands in wherever a value names no fixed colour, matching HexColorDotPreference. */
         private const val UNSET_SWATCH_COLOR = 0x40808080
 
@@ -147,6 +158,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private var panelTarget = PanelTarget.VOLUME
     private var panelEditor: PanelEditorPreference? = null
     private var playerEditor: PlayerEditorPreference? = null
+    private var backgroundEditor: BackgroundEditorPreference? = null
 
     /** Re-reads scoped values after a face change and refreshes archived lists when their
      *  developer switch changes, even if this fragment remained alive beside Settings. */
@@ -165,6 +177,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 refreshColorEditor()
                 refreshPanelEditor()
                 refreshPlayerEditor()
+                refreshBackgroundEditor()
             }
             "dev_show_archived" -> {
                 applyArchivedOptionFilters()
@@ -173,6 +186,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 refreshPanelEditor()
                 // The face picker hides archived faces the same way.
                 refreshPlayerEditor()
+                // Every layer's style label comes from a picker that filters archived values.
+                refreshBackgroundEditor()
             }
             in TypographyEditorModel.keys,
             MiscPreferences.WEAR_SHOW_SOURCE_ICON.key -> {
@@ -198,11 +213,19 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 rebindScopedValues()
                 refreshPlayerEditor()
             }
+            // The stack has no Preference of its own, so nothing else would repaint the list -
+            // and the artwork rows it sits over are edited from that same surface.
+            MiscPreferences.WEAR_BACKGROUND_LAYERS.key,
+            in BackgroundEditorModel.keys -> {
+                rebindScopedValues()
+                refreshBackgroundEditor()
+            }
             else -> if (LyraAccent.affectsResolvedColor(baseKey)) {
                 refreshTypographyEditor()
                 refreshColorEditor()
                 refreshPanelEditor()
                 refreshPlayerEditor()
+                refreshBackgroundEditor()
             }
         }
     }
@@ -328,6 +351,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         initColorEditor()
         initPanelEditor()
         initPlayerEditor()
+        initBackgroundEditor()
         applySectionVisibility()
         wirePreviewInteractions()
     }
@@ -2190,6 +2214,21 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 }
                 return@post
             }
+            if (section == SECTION_BACKGROUND) {
+                BackgroundEditorModel.controlFor(key)?.let { control ->
+                    // Six of these rows describe one particular layer, and a face can now carry
+                    // several of each - so they resolve to the list rather than to a control, and
+                    // the pulse points at where the answer moved to.
+                    refreshBackgroundEditor()
+                    listView?.scrollToPosition(0)
+                    listView?.post {
+                        backgroundEditor?.pulse(
+                                backgroundControlIdFor(control),
+                                findPreference<Preference>(key)?.title)
+                    }
+                    return@post
+                }
+            }
             if (section == SECTION_PANELS) {
                 PanelEditorModel.searchTargetFor(key)?.let { target ->
                     panelTarget = target.target
@@ -2245,12 +2284,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val compactColors = section == SECTION_COLORS
         val compactPanels = section == SECTION_PANELS
         val compactPlayer = section == SECTION_STYLE
+        val compactBackground = section == SECTION_BACKGROUND
         SettingsCatalog.WATCH_CATEGORIES.forEach { key ->
             val visible = key in visibleCategories &&
                     (!compactTypography || key == TYPOGRAPHY_EDITOR_CATEGORY) &&
                     (!compactColors || key == COLOR_EDITOR_CATEGORY) &&
                     (!compactPanels || key == PANEL_EDITOR_CATEGORY) &&
-                    (!compactPlayer || key == PLAYER_EDITOR_CATEGORY)
+                    (!compactPlayer || key == PLAYER_EDITOR_CATEGORY) &&
+                    (!compactBackground || key == BACKGROUND_EDITOR_CATEGORY)
             findPreference<Preference>(key)?.isVisible = visible
         }
         // Visible only on the Text page, and only once Google Sans Flex is actually chosen -
@@ -2309,6 +2350,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // Reads the shortcut count refreshed just above, so it must follow that call.
         refreshPanelEditor()
         refreshPlayerEditor()
+        refreshBackgroundEditor()
     }
 
     override fun onPause() {
@@ -2321,6 +2363,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         colorEditor?.releaseBoundView()
         panelEditor?.releaseBoundView()
         playerEditor?.releaseBoundView()
+        backgroundEditor?.releaseBoundView()
         super.onDestroyView()
     }
 
@@ -2810,6 +2853,517 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private fun notifyPreviewInteraction(key: String, candidateValue: Any?) {
         (parentFragment as? WatchFaceFragment)
                 ?.onWatchPreferenceInteraction(section, key, candidateValue)
+    }
+
+
+    /**
+     * Replaces the eleven Background rows with the artwork underneath and the stack over it, on
+     * the same terms as [initTypographyEditor] and its three siblings.
+     */
+    private fun initBackgroundEditor() {
+        val editor = findPreference<BackgroundEditorPreference>(BACKGROUND_EDITOR_KEY) ?: return
+        backgroundEditor = editor
+        editor.bindEditor = ::bindBackgroundEditor
+        editor.refresh()
+    }
+
+    private fun refreshBackgroundEditor() {
+        backgroundEditor?.refresh()
+    }
+
+    private fun bindBackgroundEditor(root: View) {
+        root.setTag(R.id.tag_handles_accent_locally, true)
+        root.disableScrollbarsInSubtree()
+
+        root.findViewById<MaterialButton>(R.id.background_editor_artwork_button)
+                .setOnClickListener { openPreferenceDialog(MiscPreferences.ALBUM_ART_STYLE.key) }
+        root.findViewById<MaterialButton>(R.id.background_editor_blur_button)
+                .setOnClickListener {
+                    openPreferenceDialog(MiscPreferences.ALBUM_ART_BLUR_RADIUS.key)
+                }
+        root.findViewById<MaterialButton>(R.id.background_editor_add_button)
+                .setOnClickListener { showAddBackgroundLayerDialog() }
+        root.findViewById<MaterialButton>(R.id.background_editor_reset_button)
+                .setOnClickListener { confirmResetBackgroundLayers() }
+
+        renderBackgroundEditor(root)
+    }
+
+    @SuppressLint("SetTextI18n") // "Title · value" is the editor's own notation, not prose.
+    private fun renderBackgroundEditor(root: View) {
+        val artworkKey = MiscPreferences.ALBUM_ART_STYLE.key
+        val artworkButton = root.findViewById<MaterialButton>(R.id.background_editor_artwork_button)
+        val artworkValue = readStringPreference(
+                artworkKey, MiscPreferences.ALBUM_ART_STYLE.defaultValue)
+        artworkButton.text = choiceLabel(artworkKey, artworkValue)
+        artworkButton.contentDescription = buildPreferenceDescription(artworkKey, artworkButton.text)
+
+        // Blurring is the only artwork control that does not apply to every treatment, and a
+        // radius beside a style that never blurs reads as broken rather than as inapplicable -
+        // the rule updatePlayerCapabilityVisibility already follows for the per-face rows.
+        val blurKey = MiscPreferences.ALBUM_ART_BLUR_RADIUS.key
+        val blurButton = root.findViewById<MaterialButton>(R.id.background_editor_blur_button)
+        blurButton.isVisible = PlayerBackgroundStyle.fromPreference(artworkValue).usesBlurRadius
+        if (blurButton.isVisible) {
+            val radius = store.getInt(blurKey, MiscPreferences.ALBUM_ART_BLUR_RADIUS.defaultValue)
+            blurButton.text = "${findPreference<Preference>(blurKey)?.title} · $radius"
+            blurButton.contentDescription = buildPreferenceDescription(blurKey, radius)
+        }
+
+        bindPanelSwitch(
+                root.findViewById(R.id.background_editor_fade_switch),
+                MiscPreferences.WEAR_ALBUM_ART_FADE.key,
+                MiscPreferences.WEAR_ALBUM_ART_FADE.defaultValue)
+
+        renderBackgroundLayerList(root)
+        tintBackgroundEditor(root)
+    }
+
+    private fun renderBackgroundLayerList(root: View) {
+        val layers = currentBackgroundLayers()
+        val container = root.findViewById<LinearLayout>(R.id.background_editor_layer_list)
+        container.removeAllViews()
+
+        // Topmost first, the way a layer stack is drawn everywhere people have seen one. The
+        // model is in draw order (index 0 is painted first, closest to the artwork), so the list
+        // walks it backwards and the arrows say what they look like they say.
+        layers.indices.reversed().forEach { index ->
+            val layer = layers[index]
+            val position = layers.lastIndex - index
+            val row = layoutInflater.inflate(R.layout.item_background_layer, container, false)
+            val button = row.findViewById<MaterialButton>(R.id.background_layer_row)
+            button.text = "${backgroundLayerKindLabel(layer.kind)} · ${backgroundLayerStyleLabel(layer)}"
+            button.setIconResource(backgroundLayerIcon(layer.kind))
+            button.contentDescription = backgroundLayerDescription(layer, position, layers.size)
+            button.setOnClickListener { showBackgroundLayerStyleDialog(index) }
+
+            row.findViewById<ImageButton>(R.id.background_layer_up).apply {
+                isEnabled = index < layers.lastIndex
+                alpha = if (isEnabled) 1f else .35f
+                setOnClickListener { moveBackgroundLayer(index, 1) }
+            }
+            row.findViewById<ImageButton>(R.id.background_layer_down).apply {
+                isEnabled = index > 0
+                alpha = if (isEnabled) 1f else .35f
+                setOnClickListener { moveBackgroundLayer(index, -1) }
+            }
+            row.findViewById<ImageButton>(R.id.background_layer_more)
+                    .setOnClickListener { showBackgroundLayerMenu(index) }
+            container.addView(row)
+        }
+
+        root.findViewById<TextView>(R.id.background_editor_empty).isVisible = layers.isEmpty()
+        root.findViewById<TextView>(R.id.background_editor_layers_count).text = getString(
+                R.string.background_editor_layers_count, layers.size, BackgroundLayerStack.MAX_LAYERS)
+        root.findViewById<MaterialButton>(R.id.background_editor_add_button).isEnabled =
+                layers.size < BackgroundLayerStack.MAX_LAYERS
+        // Offered only once there is something to go back *to*: with no explicit stack stored the
+        // list is already the legacy arrangement, so the button would undo nothing.
+        root.findViewById<MaterialButton>(R.id.background_editor_reset_button).isVisible =
+                BackgroundLayerStack.isExplicit(readStringPreference(BACKGROUND_LAYERS_KEY, ""))
+    }
+
+    /**
+     * The stack this face is rendering, explicit or the equivalent of the legacy rows.
+     *
+     * Reading through [BackgroundLayerStack.resolve] rather than only the stored key is what lets
+     * the page open on the arrangement already on screen instead of an empty list beside controls
+     * that clearly do something - and it makes adopting the stack a visual no-op, since the first
+     * edit is saved from exactly what was being displayed.
+     */
+    private fun currentBackgroundLayers(): List<BackgroundLayer> = BackgroundLayerStack.resolve(
+            raw = readStringPreference(BACKGROUND_LAYERS_KEY, ""),
+            background = PlayerBackgroundStyle.fromPreference(readStringPreference(
+                    MiscPreferences.ALBUM_ART_STYLE.key,
+                    MiscPreferences.ALBUM_ART_STYLE.defaultValue)),
+            dimEnabled = store.getBoolean(
+                    MiscPreferences.DIM_ALBUM_ART.key, MiscPreferences.DIM_ALBUM_ART.defaultValue),
+            dimPercent = store.getInt(
+                    MiscPreferences.ALBUM_ART_DIM_STRENGTH.key,
+                    MiscPreferences.ALBUM_ART_DIM_STRENGTH.defaultValue),
+            shading = PlayerShadingStyle.fromPreference(readStringPreference(
+                    MiscPreferences.WEAR_PLAYER_SHADING_STYLE.key,
+                    MiscPreferences.WEAR_PLAYER_SHADING_STYLE.defaultValue)),
+            shadingColor = BackgroundLayerColor.fromPreference(readStringPreference(
+                    MiscPreferences.WEAR_SHADING_COLOR_MODE.key,
+                    MiscPreferences.WEAR_SHADING_COLOR_MODE.defaultValue)),
+            floor = AccentFloorStyle.fromPreference(readStringPreference(
+                    MiscPreferences.WEAR_ACCENT_FLOOR.key,
+                    MiscPreferences.WEAR_ACCENT_FLOOR.defaultValue)),
+            floorColor = BackgroundLayerColor.fromPreference(readStringPreference(
+                    MiscPreferences.WEAR_ACCENT_FLOOR_COLOR_MODE.key,
+                    MiscPreferences.WEAR_ACCENT_FLOOR_COLOR_MODE.defaultValue)),
+            baseWashDrawn = readStringPreference("wear_screen_face", "classic") !in
+                    BackgroundLayerStack.SELF_BACKDROP_FACES)
+
+    /**
+     * Persists [layers] and repaints both the list and the miniature.
+     *
+     * Written straight through [store] rather than through a Preference, because there is no row
+     * for this key: the stack is a list the user builds, not a value a picker holds. The store is
+     * the same one every Watch-tab row writes through, so the value still lands in `custom_active`
+     * while a theme is active and in `key@<face>` otherwise.
+     */
+    private fun writeBackgroundLayers(layers: List<BackgroundLayer>) {
+        val encoded = BackgroundLayerStack.encode(layers.take(BackgroundLayerStack.MAX_LAYERS))
+        store.putString(BACKGROUND_LAYERS_KEY, encoded)
+        notifyPreviewInteraction(BACKGROUND_LAYERS_KEY, encoded)
+        refreshBackgroundEditor()
+    }
+
+    private fun moveBackgroundLayer(index: Int, delta: Int) {
+        val layers = currentBackgroundLayers()
+        val moved = BackgroundLayerStack.move(layers, index, delta)
+        if (moved !== layers) writeBackgroundLayers(moved)
+    }
+
+    private fun showAddBackgroundLayerDialog() {
+        val kinds = BackgroundLayerKind.entries
+        val labels = kinds.map<BackgroundLayerKind, CharSequence>(::backgroundLayerKindLabel)
+                .toTypedArray()
+        showLyraChoiceDialog(getString(R.string.background_layer_add_title), labels) { index ->
+            val kind = kinds[index]
+            val added = BackgroundLayerStack.add(
+                    currentBackgroundLayers(),
+                    BackgroundLayer(kind, BackgroundLayerStack.defaultStyleFor(kind)))
+            writeBackgroundLayers(added)
+            // Straight into the style picker: "add a shading" is almost never the whole intent,
+            // and an extra tap to say which one is the kind of friction a list of eight invites.
+            // The new layer is on top, which is the last entry in draw order and the first row.
+            showBackgroundLayerStyleDialog(added.lastIndex)
+        }
+    }
+
+    /**
+     * Picks a layer's treatment from the very row that owns that vocabulary.
+     *
+     * The entries come from the real ListPreference - so archived options stay filtered out and
+     * every label stays translated in one place - narrowed to the values this kind of layer can
+     * carry. Only the storage differs, because a layer's style is not a preference.
+     */
+    private fun showBackgroundLayerStyleDialog(index: Int) {
+        val layers = currentBackgroundLayers()
+        val layer = layers.getOrNull(index) ?: return
+        val sourceKey = BackgroundEditorModel.styleSourceKey(layer.kind)
+        val offered = findPreference<ListPreference>(sourceKey)?.entryValues
+                ?.map(CharSequence::toString)
+                ?.filter { BackgroundLayerStack.accepts(layer.kind, it) }
+                ?: BackgroundLayerStack.stylesFor(layer.kind)
+        if (offered.isEmpty()) return
+        val labels = offered.map { choiceLabel(sourceKey, it) }.toTypedArray()
+        showLyraChoiceDialog(
+                getString(R.string.background_layer_style_title,
+                        backgroundLayerKindLabel(layer.kind)),
+                labels,
+                checkedItem = offered.indexOf(layer.style)
+        ) { chosen ->
+            writeBackgroundLayers(layers.toMutableList().also {
+                it[index] = layer.copy(style = offered[chosen])
+            })
+        }
+    }
+
+    private fun showBackgroundLayerMenu(index: Int) {
+        val layers = currentBackgroundLayers()
+        val layer = layers.getOrNull(index) ?: return
+        // A wash composes several album tones itself, so there is no single colour to offer it.
+        val tintable = layer.kind != BackgroundLayerKind.WASH
+        val actions = buildList {
+            add(getString(R.string.background_layer_opacity) to { showBackgroundLayerOpacity(index) })
+            if (tintable) {
+                add(getString(R.string.background_layer_color) to {
+                    showBackgroundLayerColorDialog(index)
+                })
+            }
+            add(getString(R.string.background_layer_duplicate) to {
+                writeBackgroundLayers(BackgroundLayerStack.duplicate(layers, index))
+            })
+            add(getString(R.string.background_layer_remove) to {
+                writeBackgroundLayers(BackgroundLayerStack.remove(layers, index))
+            })
+        }
+        showLyraChoiceDialog(
+                "${backgroundLayerKindLabel(layer.kind)} · ${backgroundLayerStyleLabel(layer)}",
+                actions.map<Pair<String, () -> Unit>, CharSequence> { it.first }.toTypedArray()
+        ) { chosen -> actions[chosen].second() }
+    }
+
+    private fun showBackgroundLayerOpacity(index: Int) {
+        val layers = currentBackgroundLayers()
+        val layer = layers.getOrNull(index) ?: return
+        showBackgroundSlider(
+                title = "${backgroundLayerKindLabel(layer.kind)} · " +
+                        getString(R.string.background_layer_opacity),
+                range = 0..SHADING_MAX_PERCENT,
+                initial = layer.opacityPercent,
+                defaultValue = BackgroundLayerStack.DEFAULT_OPACITY_PERCENT
+        ) { value ->
+            writeBackgroundLayers(layers.toMutableList().also {
+                it[index] = layer.copy(opacityPercent = value)
+            })
+        }
+    }
+
+    private fun showBackgroundLayerColorDialog(index: Int) {
+        val layers = currentBackgroundLayers()
+        val layer = layers.getOrNull(index) ?: return
+        val modes = if (layer.kind == BackgroundLayerKind.FLOOR) {
+            BackgroundLayerColor.FLOOR_MODES
+        } else {
+            BackgroundLayerColor.SHADE_MODES
+        }
+        val labels = modes.map<BackgroundLayerColor, CharSequence>(::backgroundLayerColorLabel)
+                .toTypedArray()
+        showLyraChoiceDialog(
+                getString(R.string.background_layer_color),
+                labels,
+                checkedItem = modes.indexOf(layer.effectiveColor)
+        ) { chosen ->
+            val mode = modes[chosen]
+            if (mode == BackgroundLayerColor.CUSTOM) {
+                showBackgroundLayerCustomColor(index)
+            } else {
+                writeBackgroundLayers(layers.toMutableList().also {
+                    it[index] = layer.copy(color = mode, customColor = "")
+                })
+            }
+        }
+    }
+
+    private fun showBackgroundLayerCustomColor(index: Int) {
+        val layers = currentBackgroundLayers()
+        val layer = layers.getOrNull(index) ?: return
+        showLyraColorPickerDialog(
+                initialColor = parseHexOrDefault(layer.customColor.takeIf { it.isNotBlank() }),
+                onReset = {
+                    writeBackgroundLayers(layers.toMutableList().also {
+                        it[index] = layer.copy(
+                                color = BackgroundLayerColor.DEFAULT, customColor = "")
+                    })
+                },
+                onApply = { hex ->
+                    writeBackgroundLayers(layers.toMutableList().also {
+                        it[index] = layer.copy(
+                                color = BackgroundLayerColor.CUSTOM,
+                                customColor = hex.uppercase())
+                    })
+                })
+    }
+
+    private fun confirmResetBackgroundLayers() {
+        AlertDialog.Builder(requireContext())
+                .setTitle(R.string.background_layer_reset_title)
+                .setMessage(R.string.background_layer_reset_message)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.background_editor_reset_layers) { _, _ ->
+                    // Written as empty rather than removed: preference sync does not transmit
+                    // removals, so a cleared key would leave the watch on the old stack forever.
+                    store.putString(BACKGROUND_LAYERS_KEY, "")
+                    notifyPreviewInteraction(BACKGROUND_LAYERS_KEY, "")
+                    refreshBackgroundEditor()
+                }
+                .show()
+                .tintLyraButtons()
+    }
+
+    /** [showNumericSlider] for a value that has no Preference of its own to take a title from. */
+    private fun showBackgroundSlider(
+            title: CharSequence,
+            range: IntRange,
+            initial: Int,
+            defaultValue: Int,
+            onCommit: (Int) -> Unit
+    ) {
+        val content = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_typography_slider, null)
+        val slider = content.findViewById<Slider>(R.id.typography_slider)
+        val valueLabel = content.findViewById<TextView>(R.id.typography_slider_value)
+        content.findViewById<TextView>(R.id.typography_slider_min).text = "${range.first}%"
+        content.findViewById<TextView>(R.id.typography_slider_max).text = "${range.last}%"
+        var selected = initial.coerceIn(range)
+
+        slider.valueFrom = range.first.toFloat()
+        slider.valueTo = range.last.toFloat()
+        slider.stepSize = 1f
+        slider.value = selected.toFloat()
+        fun renderValue(value: Int) {
+            selected = value.coerceIn(range)
+            valueLabel.text = "$selected%"
+            valueLabel.contentDescription = "$title. $selected%"
+        }
+        renderValue(selected)
+        slider.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) renderValue(value.toInt())
+        }
+        val dialog = AlertDialog.Builder(requireContext())
+                .setTitle(title)
+                .setView(content)
+                .setNeutralButton(R.string.pref_reset_default, null)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok) { _, _ -> onCommit(selected) }
+                .create()
+        dialog.setOnShowListener {
+            val accent = lyraRuntimeAccent()
+            val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
+            val controlAccent = LyraAccent.contrastSafe(accent, surface, 3.0)
+            val textAccent = LyraAccent.contrastSafe(accent, surface, 4.5)
+            slider.thumbTintList = ColorStateList.valueOf(controlAccent)
+            slider.trackActiveTintList = ColorStateList.valueOf(controlAccent)
+            slider.haloTintList = ColorStateList.valueOf(
+                    ColorUtils.setAlphaComponent(controlAccent, 0x33))
+            dialog.applyLyraDialogStyling(accent = controlAccent, positiveColor = textAccent)
+            dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setOnClickListener {
+                slider.value = defaultValue.toFloat()
+                renderValue(defaultValue)
+            }
+        }
+        dialog.show()
+    }
+
+    /** One list dialog for the whole editor, styled the way every other Lyra dialog is. */
+    private fun showLyraChoiceDialog(
+            title: CharSequence,
+            labels: Array<CharSequence>,
+            checkedItem: Int = -1,
+            onChosen: (Int) -> Unit
+    ) {
+        val builder = AlertDialog.Builder(requireContext())
+                .setTitle(title)
+                .setNegativeButton(android.R.string.cancel, null)
+        // A single-choice list when there is a current value to show as chosen, a plain item list
+        // when the entries are actions - the same distinction the preference dialogs already draw.
+        if (checkedItem >= 0) {
+            builder.setSingleChoiceItems(labels, checkedItem) { dialog, index ->
+                dialog.dismiss()
+                onChosen(index)
+            }
+        } else {
+            builder.setItems(labels) { _, index -> onChosen(index) }
+        }
+        val dialog = builder.create()
+        dialog.setOnShowListener {
+            val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
+            val accent = LyraAccent.contrastSafe(lyraRuntimeAccent(), surface, 4.5)
+            dialog.applyLyraDialogStyling(accent = accent)
+        }
+        dialog.show()
+    }
+
+    private fun backgroundControlIdFor(control: BackgroundControl): Int = when (control) {
+        BackgroundControl.ARTWORK -> R.id.background_editor_artwork_button
+        BackgroundControl.BLUR -> R.id.background_editor_blur_button
+        BackgroundControl.FADE -> R.id.background_editor_fade_switch
+        BackgroundControl.LAYERS -> R.id.background_editor_layer_list
+    }
+
+    private fun backgroundLayerKindLabel(kind: BackgroundLayerKind): String = getString(
+            when (kind) {
+                BackgroundLayerKind.WASH -> R.string.background_layer_kind_wash
+                BackgroundLayerKind.SHADE -> R.string.background_layer_kind_shade
+                BackgroundLayerKind.FLOOR -> R.string.background_layer_kind_floor
+            })
+
+    private fun backgroundLayerColorLabel(color: BackgroundLayerColor): String = getString(
+            when (color) {
+                BackgroundLayerColor.DEFAULT -> R.string.background_layer_color_default
+                BackgroundLayerColor.ALBUM -> R.string.background_layer_color_album
+                BackgroundLayerColor.SECONDARY -> R.string.background_layer_color_secondary
+                BackgroundLayerColor.TERTIARY -> R.string.background_layer_color_tertiary
+                BackgroundLayerColor.DESATURATED -> R.string.background_layer_color_desaturated
+                BackgroundLayerColor.BLACK -> R.string.background_layer_color_black
+                BackgroundLayerColor.CUSTOM -> R.string.background_layer_color_custom
+            })
+
+    private fun backgroundLayerStyleLabel(layer: BackgroundLayer): CharSequence =
+            choiceLabel(BackgroundEditorModel.styleSourceKey(layer.kind), layer.style)
+
+    private fun backgroundLayerIcon(kind: BackgroundLayerKind): Int = when (kind) {
+        BackgroundLayerKind.WASH -> R.drawable.ic_format_paint
+        BackgroundLayerKind.SHADE -> R.drawable.ic_dim_style
+        BackgroundLayerKind.FLOOR -> R.drawable.ic_colors
+    }
+
+    /** Position is read out too: a screen reader has no arrows to see, and order is the point. */
+    private fun backgroundLayerDescription(
+            layer: BackgroundLayer,
+            position: Int,
+            total: Int
+    ): CharSequence = "${backgroundLayerKindLabel(layer.kind)}. " +
+            "${backgroundLayerStyleLabel(layer)}. " +
+            "${layer.opacityPercent}%. " +
+            getString(R.string.background_editor_layers_count, position + 1, total)
+
+    private fun tintBackgroundEditor(root: View) {
+        val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
+        val rawAccent = lyraRuntimeAccent()
+        val accent = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 3.0)
+        val textAccent = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 4.5)
+        val onSurface = ContextCompat.getColor(requireContext(), R.color.lyra_on_surface)
+        val secondary = ContextCompat.getColor(requireContext(), R.color.lyra_text_secondary)
+        val divider = ContextCompat.getColor(requireContext(), R.color.lyra_divider)
+
+        listOf(R.id.background_editor_artwork_heading, R.id.background_editor_layers_heading)
+                .forEach { root.findViewById<TextView>(it)?.setTextColor(textAccent) }
+
+        val states = arrayOf(intArrayOf(-android.R.attr.state_enabled), intArrayOf())
+        val foregrounds = ColorStateList(states, intArrayOf(secondary, onSurface))
+        val fills = ColorStateList(states, intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT))
+        val strokes = ColorStateList(states, intArrayOf(divider, divider))
+        val accented = ColorStateList(states, intArrayOf(secondary, textAccent))
+
+        listOf(
+                R.id.background_editor_artwork_button,
+                R.id.background_editor_blur_button
+        ).forEach { id ->
+            root.findViewById<MaterialButton>(id)?.apply {
+                backgroundTintList = fills
+                setTextColor(foregrounds)
+                iconTint = foregrounds
+                strokeColor = strokes
+            }
+        }
+        listOf(
+                R.id.background_editor_add_button,
+                R.id.background_editor_reset_button
+        ).forEach { id ->
+            root.findViewById<MaterialButton>(id)?.apply {
+                backgroundTintList = fills
+                setTextColor(accented)
+                iconTint = accented
+                strokeColor = ColorStateList(states, intArrayOf(divider, accent))
+            }
+        }
+
+        val list = root.findViewById<LinearLayout>(R.id.background_editor_layer_list)
+        for (index in 0 until list.childCount) {
+            val row = list.getChildAt(index)
+            row.findViewById<MaterialButton>(R.id.background_layer_row)?.apply {
+                backgroundTintList = fills
+                setTextColor(foregrounds)
+                iconTint = ColorStateList(states, intArrayOf(secondary, accent))
+                strokeColor = strokes
+            }
+            listOf(
+                    R.id.background_layer_up,
+                    R.id.background_layer_down,
+                    R.id.background_layer_more
+            ).forEach { id ->
+                row.findViewById<ImageButton>(id)?.imageTintList =
+                        ColorStateList.valueOf(onSurface)
+            }
+        }
+
+        root.findViewById<SwitchMaterial>(R.id.background_editor_fade_switch)?.apply {
+            setTextColor(onSurface)
+            thumbTintList = ColorStateList(
+                    arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
+                    intArrayOf(accent, secondary))
+            trackTintList = ColorStateList(
+                    arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(accent, 0x66),
+                            ColorUtils.setAlphaComponent(divider, 0x99)))
+        }
     }
 
     private fun initAppearanceResetActions() {

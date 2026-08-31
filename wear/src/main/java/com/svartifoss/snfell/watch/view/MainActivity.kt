@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Matrix
+import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.RenderEffect
@@ -115,6 +116,11 @@ import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.common.RotaryAction
 import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.AccentFloorStyle
+import com.svartifoss.snfell.common.BackgroundLayer
+import com.svartifoss.snfell.common.BackgroundLayerColor
+import com.svartifoss.snfell.common.BackgroundLayerStack
+import com.svartifoss.snfell.common.ResolvedBackgroundLayer
+import com.svartifoss.snfell.common.resolveLayers
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.AlbumArtFilter
@@ -349,6 +355,15 @@ class MainActivity : WearCompanionWatchActivity(),
     private val metadataShowCover = mutableStateOf(true)
     private var playerBackgroundStyle: PlayerBackgroundStyle = PlayerBackgroundStyle.COVER
     private var accentFloor: AccentFloorStyle = AccentFloorStyle.DEFAULT
+    /**
+     * The background stack as the user composed it, colours not yet resolved.
+     *
+     * Kept unresolved because album colour lands asynchronously (Palette.generate is a callback),
+     * so anything derived from the accent has to be recomputed inside applyAccentColor rather than
+     * captured when the preferences were read - the rule the awake clock was fixed by.
+     */
+    private var backgroundLayerSpecs: List<BackgroundLayer> = emptyList()
+    private var backgroundLayersExplicit = false
     private var accentFloorColorMode: String = "album"
     private var accentFloorCustomColor: String = ""
     private var blurAlbumArtBackground: Boolean = false
@@ -1667,9 +1682,14 @@ class MainActivity : WearCompanionWatchActivity(),
      */
     private fun setIdleStateVisible(visible: Boolean) {
         binding.idleStateGroup.visibility = if (visible) View.VISIBLE else View.GONE
+        // Stays up on the idle screen now, because it carries the shading pass as well as the
+        // authored backdrop - and the idle group can sit over the last cover, which is what that
+        // pass keeps legible. applyPlayerBackground drops every other kind of layer while this is
+        // showing, so the deliberate "no authored backdrop on idle" behaviour is unchanged.
         binding.playerBackground.visibility = if (
-            visible || ambientObserver.isAmbient || screenFace in composeFaces
+            ambientObserver.isAmbient || screenFace in composeFaces
         ) View.GONE else View.VISIBLE
+        applyPlayerBackground()
         if (visible) {
             applyIdleScreenConfiguration()
             maybeAutoOpenIdleDestination()
@@ -2102,7 +2122,6 @@ class MainActivity : WearCompanionWatchActivity(),
             val materialSurfaceSoftened = colorTreatment == "desaturated"
             val base = it.copy(
                     accentColor = currentAccentColor,
-                    accentFloorColor = resolvedAccentFloorColor(),
                     materialSurfaceColor = if (materialSurfaceSoftened) {
                         currentAccentColor
                     } else {
@@ -2137,7 +2156,6 @@ class MainActivity : WearCompanionWatchActivity(),
             }
         }
         // Album-based and duotone shading must follow the same palette update as the controls.
-        applyAlbumArtScrim()
         applyPlayerBackground()
         if (ambientObserver.isAmbient) {
             // Keep all host-rendered AOD metadata (including the clock) following a newly
@@ -3664,8 +3682,9 @@ class MainActivity : WearCompanionWatchActivity(),
      * depending on the style also rotated toward the circle's tangent - "arc" keeps the pills
      * upright, "curved_soft" applies half the tangent angle, "curved" the full angle. The row
      * gets top padding for the raised buttons so they stay inside its touch bounds (parents
-     * only dispatch touches within child bounds), and clipChildren is off so rotated pill
-     * corners aren't shaved. No-op (flat row) when set to "flat" or on square screens.
+     * only dispatch touches within child bounds), and clipping is cleared all the way up to the
+     * content frame ([clearScreenButtonsClipping]) so rotated pill corners aren't shaved. No-op
+     * (flat row) when set to "flat" or on square screens.
      */
     private fun applyScreenButtonsCurvature(): Float {
         val row = binding.screenButtonsRow
@@ -3703,10 +3722,7 @@ class MainActivity : WearCompanionWatchActivity(),
             return 0f
         }
 
-        row.clipChildren = false
-        row.clipToPadding = false
-        content.clipChildren = false
-        content.clipToPadding = false
+        clearScreenButtonsClipping()
 
         // Two passes: first work out every button's rise/rotation WITHOUT touching the views, so
         // maxRise (and therefore the row's top padding) is known and applied *before* any button
@@ -3724,7 +3740,7 @@ class MainActivity : WearCompanionWatchActivity(),
                 continue
             }
 
-            val buttonCenterX = row.left + button.left + button.width / 2f
+            val buttonCenterX = layoutCenterInContent(button).x
             val dx = buttonCenterX - content.width / 2f
             val clampedDx = dx.coerceIn(-radius + 1f, radius - 1f)
 
@@ -3812,6 +3828,76 @@ class MainActivity : WearCompanionWatchActivity(),
      * no pill is hit it declines the event and the parent carries on down to the gesture layers
      * beneath it.
      */
+    /**
+     * Clears clipping from the mini-button row up to [content_frame], so a raised or rotated pill
+     * is not shaved off.
+     *
+     * It walks the chain rather than naming two views, and that is the whole point. A parent with
+     * `clipChildren` on clips each child to *the child's own* bounds - so the row, whose height is
+     * `wrap_content` around the pills, cuts every pixel the curvature lifts above it. The row
+     * reserves top padding for exactly that, but `setPadding` schedules a layout while the
+     * translations are applied on the spot, so there is at least one frame where the pills are
+     * already up and the row's box has not grown yet.
+     *
+     * This used to set the flags on the row and the content frame, which *were* the whole chain.
+     * Then a `ClaimedGestureHost` was inserted between them for the swipe-dispatch work, and a
+     * plain FrameLayout defaults to `clipChildren = true` - so the tops of the curved side pills
+     * started being cut by an invisible rectangle that is simply the row's own bounds. Naming the
+     * endpoints is what made that silent; walking is what stops the next re-parenting doing it
+     * again. `ScreenButtonsClippingTest` pins the declarative half.
+     */
+    /**
+     * Centre of [view] in [contentFrame]'s coordinates, from layout position alone.
+     *
+     * Every mini-button placement is a *relative* move: the code works out where a pill should end
+     * up on the round display, subtracts where it currently is, and assigns the difference as a
+     * translation. So "where it currently is" has to mean its laid-out position, and two obvious
+     * ways of asking are both wrong here.
+     *
+     * `getLocationInWindow` reports the position *after* the previous pass's translation, so the
+     * offsets would accumulate instead of converging - each pass would move a pill that was
+     * already where it belonged. And `row.left + button.left`, which these call sites used to add
+     * up by hand, is only the answer while the row's parent happens to sit at the frame's origin.
+     * That held for years because the row *was* a direct child of the content frame - and then a
+     * dispatch host was wrapped around it for the swipe work and it silently stopped being one.
+     * The arithmetic survived by luck, because that wrapper is full-bleed at (0,0); the next
+     * wrapper need not be, and nothing would have reported it. Walking the chain is the answer
+     * that depends on neither.
+     *
+     * An intermediate scroll is honoured, the ancestor's own is not: the callers compare this
+     * against `contentFrame.width / 2f`, which is view space, so subtracting the frame's own
+     * scroll would return a coordinate from a different space than the one it is measured against.
+     */
+    private fun layoutCenterInContent(view: View): PointF {
+        val content = binding.contentFrame
+        val center = PointF(view.width / 2f, view.height / 2f)
+        var current: View = view
+        while (current !== content) {
+            center.x += current.left
+            center.y += current.top
+            val parent = current.parent as? View ?: break
+            if (parent !== content) {
+                center.x -= parent.scrollX
+                center.y -= parent.scrollY
+            }
+            current = parent
+        }
+        return center
+    }
+
+    private fun clearScreenButtonsClipping() {
+        val row = binding.screenButtonsRow
+        row.clipChildren = false
+        row.clipToPadding = false
+        var ancestor = row.parent
+        while (ancestor is ViewGroup) {
+            ancestor.clipChildren = false
+            ancestor.clipToPadding = false
+            if (ancestor === binding.contentFrame) return
+            ancestor = ancestor.parent
+        }
+    }
+
     private fun applyScreenButtonsRowBounds(placement: MiniButtonPlacement) {
         val row = binding.screenButtonsRow
         val params = row.layoutParams as? FrameLayout.LayoutParams ?: return
@@ -3877,7 +3963,7 @@ class MainActivity : WearCompanionWatchActivity(),
         val centerX = content.width / 2f
         // Depth of the highest point the row reaches, so the chord is measured where the pills
         // actually are rather than at their resting line.
-        val rowCenterY = row.top + row.height / 2f - maxRise
+        val rowCenterY = layoutCenterInContent(row).y - maxRise
         val dy = abs(rowCenterY - content.height / 2f).coerceAtMost(radius - 1f)
         val halfChord = kotlin.math.sqrt(radius * radius - dy * dy)
         val inset = 6f * resources.displayMetrics.density
@@ -3888,7 +3974,7 @@ class MainActivity : WearCompanionWatchActivity(),
         for (button in visibleButtons) {
             if (button !== first && button !== last) continue
             val sign = if (button === first) -1f else 1f
-            val currentCenterX = row.left + button.left + button.width / 2f
+            val currentCenterX = layoutCenterInContent(button).x
             val targetCenterX = centerX + sign * (halfChord - inset - button.width / 2f)
             // Never pull a pill inwards: on a narrow screen the chord can sit inside where the row
             // already had it, and "spread" that squeezes is worse than one that does nothing.
@@ -3917,10 +4003,7 @@ class MainActivity : WearCompanionWatchActivity(),
         val content = binding.contentFrame
         if (content.width == 0 || row.width == 0 || visibleButtons.isEmpty()) return 0f
 
-        row.clipChildren = false
-        row.clipToPadding = false
-        content.clipChildren = false
-        content.clipToPadding = false
+        clearScreenButtonsClipping()
         if (row.paddingTop != 0) {
             row.setPadding(0, 0, 0, 0)
         }
@@ -3934,10 +4017,9 @@ class MainActivity : WearCompanionWatchActivity(),
         val round = resources.configuration.isScreenRound
 
         fun place(button: ImageView, targetCenterX: Float, targetCenterY: Float) {
-            val currentCenterX = row.left + button.left + button.width / 2f
-            val currentCenterY = row.top + button.top + button.height / 2f
-            button.translationX = targetCenterX - currentCenterX
-            button.translationY = targetCenterY - currentCenterY
+            val current = layoutCenterInContent(button)
+            button.translationX = targetCenterX - current.x
+            button.translationY = targetCenterY - current.y
             button.rotation = 0f
         }
 
@@ -4322,10 +4404,6 @@ class MainActivity : WearCompanionWatchActivity(),
         updateFaceState {
             it.copy(
                     backgroundStyle = playerBackgroundStyle,
-                    // A shared piece rendered by the background layer, so it is resolved here with
-                    // the rest of the backdrop rather than by whichever face happens to want it.
-                    accentFloor = accentFloor,
-                    accentFloorColor = resolvedAccentFloorColor(),
                     // Resolved here with the rest of the backdrop for the same reason: Split's
                     // panel *is* its background, it just happens to be the one the shared layer
                     // cannot draw.
@@ -4343,12 +4421,18 @@ class MainActivity : WearCompanionWatchActivity(),
         shadingColorMode = faceString(MiscPreferences.WEAR_SHADING_COLOR_MODE)
                 ?: MiscPreferences.WEAR_SHADING_COLOR_MODE.defaultValue
         shadingCustomColor = faceString(MiscPreferences.WEAR_SHADING_CUSTOM_COLOR).orEmpty()
+        // After every field it is composed from: the stack either replaces all three legacy slots
+        // or reproduces them, and reading it earlier would build it from the previous face's
+        // values on a face change.
+        readBackgroundLayers()
         updateFaceState {
             it.copy(
                     backdropDimEnabled = dimAlbumArt,
                     backdropDimStrength = playerShadingIntensity,
                     backdropShadingStyle = playerShadingStyle,
-                    backdropShadingColor = resolvedShadingColor()
+                    backdropShadingColor = resolvedShadingColor(),
+                    backgroundLayers = resolvedBackgroundLayers(),
+                    backgroundLayersExplicit = backgroundLayersExplicit
             )
         }
         volumeBarTimeoutMs = Preferences.getInt(preferences, MiscPreferences.VOLUME_OVERLAY_TIMEOUT)
@@ -4626,15 +4710,12 @@ class MainActivity : WearCompanionWatchActivity(),
             }
         }
 
-        applyAlbumArtScrim()
         applyPlayerBackground()
         applyScreenFace()
 
         updateDynamicAccentFromArt(latestAlbumArt)
 
         if (!ambientObserver.isAmbient) {
-            binding.albumArtScrim.visibility =
-                    if (shouldShowInteractiveScrim()) View.VISIBLE else View.INVISIBLE
             applyMainAlbumArtDisplay(latestAlbumArt, forceBlur = blurAlbumArtBackground)
         } else {
             // A config edit can arrive mid-ambient (ConfigListenerService delivers while idle) -
@@ -4676,58 +4757,94 @@ class MainActivity : WearCompanionWatchActivity(),
         }
     }
 
-    private fun resolvedAccentFloorColor(): Int = when (accentFloorColorMode) {
-        "secondary" -> resolvedSecondaryAccent()
-        "tertiary" -> resolvedTertiaryAccent()
-        "custom" -> parseHexColorOrNull(accentFloorCustomColor)
-                ?: currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
-        else -> currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
+    /**
+     * Re-reads the background stack for the current face.
+     *
+     * `wear_background_layers` empty (or unreadable - a value from a newer build, say) means the
+     * user has never composed one, and [BackgroundLayerStack.resolve] then hands back the exact
+     * equivalent of the three legacy slots, so nothing about the shipped look depends on which
+     * mode is in effect. Split is told its base treatment never reaches the screen: it paints its
+     * own opaque panel over the shared layer.
+     */
+    private fun readBackgroundLayers() {
+        val raw = faceString(MiscPreferences.WEAR_BACKGROUND_LAYERS)
+        backgroundLayersExplicit = BackgroundLayerStack.isExplicit(raw)
+        backgroundLayerSpecs = BackgroundLayerStack.resolve(
+                raw = raw,
+                background = playerBackgroundStyle,
+                dimEnabled = dimAlbumArt,
+                dimPercent = (playerShadingIntensity * 100f).toInt(),
+                shading = playerShadingStyle,
+                shadingColor = BackgroundLayerColor.fromPreference(shadingColorMode),
+                floor = accentFloor,
+                floorColor = BackgroundLayerColor.fromPreference(accentFloorColorMode),
+                baseWashDrawn = screenFace !in BackgroundLayerStack.SELF_BACKDROP_FACES)
     }
 
-    private fun applyAlbumArtScrim() {
-        val usesSharedLayer = playerShadingStyle != PlayerShadingStyle.FOLLOW ||
-                playerBackgroundStyle.isPlainArtworkTreatment
-        binding.albumArtScrim.background = PlayerShadingDrawable(
-                style = playerShadingStyle,
-                intensity = if (dimAlbumArt && usesSharedLayer) playerShadingIntensity else 0f,
-                primary = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
-                secondary = resolvedSecondaryAccent(),
-                shadingColor = resolvedShadingColor()
-        )
+    /** The stack with every layer's colour resolved against the accent showing right now. */
+    private fun resolvedBackgroundLayers(): List<ResolvedBackgroundLayer> =
+            backgroundLayerSpecs.resolveLayers(
+                    shadeColor = ::layerShadingColor,
+                    floorColor = ::layerFloorColor)
+
+    /** A shading layer's tint, on the same terms as the single `wear_shading_color_mode` row. */
+    private fun layerShadingColor(layer: BackgroundLayer): Int {
+        val accent = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
+        return when (layer.effectiveColor) {
+            BackgroundLayerColor.ALBUM -> PaletteTransforms.shadingTone(accent)
+            BackgroundLayerColor.SECONDARY ->
+                PaletteTransforms.shadingTone(resolvedSecondaryAccent())
+            BackgroundLayerColor.TERTIARY ->
+                PaletteTransforms.shadingTone(resolvedTertiaryAccent())
+            BackgroundLayerColor.DESATURATED ->
+                PaletteTransforms.shadingTone(PaletteTransforms.softenedAlbumAccent(accent))
+            BackgroundLayerColor.CUSTOM -> parseHexColorOrNull(layer.customColor)
+                    ?.let { PaletteTransforms.shadingTone(it) } ?: Color.BLACK
+            else -> Color.BLACK
+        }
     }
 
-    /** Native background renderer used only by Classic; Compose faces draw the same treatment
-     * inside their own canvas so layout and background remain independently selectable. */
+    /** An accent-floor layer's colour, on the same terms as `wear_accent_floor_color_mode`. */
+    private fun layerFloorColor(layer: BackgroundLayer): Int {
+        val accent = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
+        return when (layer.effectiveColor) {
+            BackgroundLayerColor.SECONDARY -> resolvedSecondaryAccent()
+            BackgroundLayerColor.TERTIARY -> resolvedTertiaryAccent()
+            BackgroundLayerColor.DESATURATED -> PaletteTransforms.softenedAlbumAccent(accent)
+            BackgroundLayerColor.BLACK -> Color.BLACK
+            BackgroundLayerColor.CUSTOM -> parseHexColorOrNull(layer.customColor) ?: accent
+            else -> accent
+        }
+    }
+
+    /**
+     * Native background renderer used only by Classic; Compose faces draw the same stack inside
+     * their own canvas so layout and background remain independently selectable.
+     *
+     * It carries the shading pass too, which used to live on its own `album_art_scrim` View above
+     * this one. Two sibling Views can only ever be in the order the layout declares, and the order
+     * of these treatments is a user choice now - so the whole stack has to be one drawing.
+     */
     private fun applyPlayerBackground() {
-        // Authored background styles (Expressive, Poster, ...) own their designed look and must
-        // render it regardless of the "Dim album art" toggle - that toggle governs the separate
-        // legibility scrim over plain artwork, not a background style's identity. The intensity
-        // slider still modulates their depth. Plain treatments have no authored overlay.
-        val authoredStrength = if (
-            playerShadingStyle == PlayerShadingStyle.FOLLOW &&
-            !playerBackgroundStyle.isPlainArtworkTreatment
-        ) {
-            (playerShadingIntensity / .8f).coerceIn(0f, SHADING_MAX_MULTIPLIER / .8f)
-        } else {
-            0f
+        // The idle screen is its own presentation - a centred column, not a player - so an
+        // authored backdrop behind it was always suppressed. The shading was not, because it used
+        // to live on a separate View, and it is what keeps "Nothing playing" readable over the
+        // last cover. Keeping only the shading layers preserves both halves of that.
+        val layers = resolvedBackgroundLayers().let { resolved ->
+            if (binding.idleStateGroup.visibility == View.VISIBLE) {
+                resolved.filterIsInstance<ResolvedBackgroundLayer.Shade>()
+            } else {
+                resolved
+            }
         }
         binding.playerBackground.background = PlayerBackgroundDrawable(
-                style = playerBackgroundStyle,
-                authoredStrength = authoredStrength,
+                layers = layers,
                 primary = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
                 secondary = resolvedSecondaryAccent(),
                 tertiary = resolvedTertiaryAccent(),
                 materialSurface = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
-                materialSurfaceSoftened = colorTreatment == "desaturated",
-                accentFloor = accentFloor,
-                accentFloorColor = resolvedAccentFloorColor())
+                materialSurfaceSoftened = colorTreatment == "desaturated")
     }
-
-    /** Compose faces own the same layer inside their composition; the host View is Classic-only. */
-    private fun shouldShowInteractiveScrim(): Boolean =
-            dimAlbumArt && screenFace == "classic" &&
-                    (playerShadingStyle != PlayerShadingStyle.FOLLOW ||
-                            playerBackgroundStyle.isPlainArtworkTreatment)
 
     /** Keep the bezel scrubber inert whenever another full-screen surface owns input. Merely
      * fading the ring to alpha=0 is insufficient because an invisible View remains hit-testable. */
@@ -4777,9 +4894,9 @@ class MainActivity : WearCompanionWatchActivity(),
             viewModel.refreshPlaybackQueueSilently()
         }
         binding.expressiveFace.visibility = if (composeFace) View.VISIBLE else View.GONE
-        binding.playerBackground.visibility = if (
-            composeFace || binding.idleStateGroup.visibility == View.VISIBLE
-        ) View.GONE else View.VISIBLE
+        // Kept up on the idle screen for its shading pass - see setIdleStateVisible.
+        binding.playerBackground.visibility = if (composeFace) View.GONE else View.VISIBLE
+        applyPlayerBackground()
         binding.classicTextBlock.visibility = if (composeFace) View.GONE else View.VISIBLE
         // Keep the bezel View/hit target present when only the arc is hidden. onTouchEvent passes
         // non-bezel touches through, so this does not steal the layouts' central controls.
@@ -4804,15 +4921,12 @@ class MainActivity : WearCompanionWatchActivity(),
     /** [applyScreenTheme] without the ambient guard - see [applyScreenFaceNow]. */
     private fun applyScreenThemeNow() {
         val icons = listOf(binding.iconTop, binding.iconBottom, binding.iconLeft, binding.iconRight)
-        applyAlbumArtScrim()
         val alwaysShowTime = faceBool(MiscPreferences.ALWAYS_SHOW_TIME)
         val tokens = screenTheme.tokens
 
-        // The backdrop scrim is never theme-owned. Gesture regions, the center tap zone, seek
-        // ring, text and the user-configured mini buttons keep their existing geometry for every
-        // theme - only the quadrant hint icons' opacity and size change.
-        binding.albumArtScrim.visibility =
-                if (shouldShowInteractiveScrim()) View.VISIBLE else View.INVISIBLE
+        // The backdrop is never theme-owned. Gesture regions, the center tap zone, seek ring,
+        // text and the user-configured mini buttons keep their existing geometry for every theme -
+        // only the quadrant hint icons' opacity and size change.
 
         if (screenFace in composeFaces) {
             // Compose faces resolve the same tokens from NowPlayingFaceState. The host still owns
@@ -5494,7 +5608,6 @@ class MainActivity : WearCompanionWatchActivity(),
                         viewModel.refreshPlaybackQueueSilently()
                     }
 
-                    binding.albumArtScrim.visibility = View.GONE
                     binding.volumeBar.visibility = View.GONE
                     binding.seekBar.visibility = View.GONE
                     binding.overlayBackdrop.animate().cancel()
@@ -5577,7 +5690,6 @@ class MainActivity : WearCompanionWatchActivity(),
 
                     binding.albumArt.alpha = 1f
                     applyMainAlbumArtDisplay(latestAlbumArt, forceBlur = blurAlbumArtBackground)
-                    binding.albumArtScrim.visibility = if (dimAlbumArt) View.VISIBLE else View.INVISIBLE
                     // Seek ring visibility is face-dependent - applyScreenFaceNow() below owns it
                     // (the old unconditional VISIBLE here leaked the edge ring onto the
                     // expressive face after every ambient round-trip).

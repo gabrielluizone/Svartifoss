@@ -126,7 +126,6 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
         // The visual treatment is independent from this layout: Material/Poster/Aurora and every
         // other background can be combined with Expressive's control geometry.
         PlayerBackgroundTreatment(state)
-        PlayerShadingOverlay(state)
 
         FaceClock(
                 visible = state.showClock,

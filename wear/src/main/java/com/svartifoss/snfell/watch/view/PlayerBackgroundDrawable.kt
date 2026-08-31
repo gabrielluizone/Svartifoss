@@ -16,19 +16,24 @@ import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.common.AccentFloorStyle
 import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.ResolvedBackgroundLayer
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 
-/** Native counterpart of Compose's PlayerBackgroundTreatment for the Classic layout. */
+/**
+ * Native counterpart of Compose's PlayerBackgroundTreatment for the Classic layout.
+ *
+ * It draws the whole ordered stack rather than one treatment, for the same reason the Compose side
+ * does it in a single Canvas: the order of these passes is a user choice now, and two sibling
+ * Views can only express the one order the layout file happens to declare. So Classic's shading
+ * scrim is drawn here too, rather than on the separate View that used to sit above this one.
+ */
 class PlayerBackgroundDrawable(
-        private val style: PlayerBackgroundStyle,
-        private val authoredStrength: Float,
+        private val layers: List<ResolvedBackgroundLayer>,
         private val primary: Int,
         private val secondary: Int,
         private val tertiary: Int,
         private val materialSurface: Int,
-        private val materialSurfaceSoftened: Boolean,
-        private val accentFloor: AccentFloorStyle,
-        private val accentFloorColor: Int
+        private val materialSurfaceSoftened: Boolean
 ) : Drawable() {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -40,12 +45,40 @@ class PlayerBackgroundDrawable(
     private fun fixedAlpha(base: Float): Int =
             (255f * base * drawableAlpha / 255f).toInt().coerceIn(0, 255)
 
-    private fun authoredAlpha(base: Float): Int =
-            (255f * base * authoredStrength.coerceIn(0f, AUTHORED_STRENGTH_CEILING) *
-                    drawableAlpha / 255f)
-                    .toInt().coerceIn(0, 255)
-
     override fun draw(canvas: Canvas) {
+        if (bounds.isEmpty) return
+        layers.forEach { layer ->
+            when (layer) {
+                is ResolvedBackgroundLayer.Wash -> drawWash(canvas, layer.style, layer.strength)
+                // The shading vocabulary already has exactly one implementation, and a layer is
+                // not a reason to grow a second copy of it that can drift.
+                is ResolvedBackgroundLayer.Shade -> PlayerShadingDrawable(
+                        style = layer.style,
+                        intensity = layer.strength,
+                        primary = primary,
+                        secondary = secondary,
+                        shadingColor = layer.color).apply {
+                    bounds = this@PlayerBackgroundDrawable.bounds
+                    setAlpha(drawableAlpha)
+                }.draw(canvas)
+
+                is ResolvedBackgroundLayer.Floor ->
+                    drawAccentFloor(canvas, layer.style, layer.color, layer.strength)
+            }
+        }
+    }
+
+    @Suppress("CyclomaticComplexMethod")
+    private fun drawWash(
+            canvas: Canvas,
+            style: PlayerBackgroundStyle,
+            authoredStrength: Float
+    ) {
+        fun authoredAlpha(base: Float): Int =
+                (255f * base * authoredStrength.coerceIn(0f, AUTHORED_STRENGTH_CEILING) *
+                        drawableAlpha / 255f)
+                        .toInt().coerceIn(0, 255)
+
         val b = bounds
         if (b.isEmpty) return
         val left = b.left.toFloat()
@@ -423,12 +456,18 @@ class PlayerBackgroundDrawable(
             }
         }
         paint.shader = null
-        drawAccentFloor(canvas, accentFloor, accentFloorColor)
     }
 
     /** Native twin of Compose's accentFloorGlow for the View-based Classic face. */
-    private fun drawAccentFloor(canvas: Canvas, style: AccentFloorStyle, accent: Int) {
+    private fun drawAccentFloor(
+            canvas: Canvas,
+            style: AccentFloorStyle,
+            accent: Int,
+            alphaScale: Float
+    ) {
         if (!style.isVisible) return
+        val peak = (style.maxAlpha * alphaScale).coerceIn(0f, 1f)
+        if (peak <= 0f) return
 
         val b = bounds
         val width = b.width().toFloat()
@@ -446,7 +485,7 @@ class PlayerBackgroundDrawable(
                 radius,
                 intArrayOf(
                         Color.TRANSPARENT,
-                        ColorUtils.setAlphaComponent(accent, (style.maxAlpha * 255).toInt())
+                        ColorUtils.setAlphaComponent(accent, (peak * 255).toInt())
                 ),
                 floatArrayOf(style.innerStop, 1f),
                 Shader.TileMode.CLAMP)

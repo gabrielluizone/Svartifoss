@@ -62,6 +62,11 @@ import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.common.SwatchInfo
 import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.common.AccentFloorStyle
+import com.svartifoss.snfell.common.BackgroundLayer
+import com.svartifoss.snfell.common.BackgroundLayerColor
+import com.svartifoss.snfell.common.BackgroundLayerStack
+import com.svartifoss.snfell.common.ResolvedBackgroundLayer
+import com.svartifoss.snfell.common.resolveLayers
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.CoverShape
@@ -382,6 +387,13 @@ class WatchPreviewView @JvmOverloads constructor(
     private var wearTrackTimeFontKey = WatchTypography.TRACK_TIME_FONT_FOLLOW
     private var artStyle = "cover"
     private var accentFloor = AccentFloorStyle.DEFAULT
+    /**
+     * The resolved background stack - see [BackgroundLayerStack].
+     *
+     * Read here rather than derived at draw time because this miniature exists to show what the
+     * watch will do, and "which treatments, in which order" is now a preference like any other.
+     */
+    private var backgroundLayers: List<ResolvedBackgroundLayer> = emptyList()
     private var accentFloorColorMode = "album"
     private var accentFloorCustomColor = ""
     private var splitPanel = SplitPanelStyle.DEFAULT
@@ -979,6 +991,21 @@ class WatchPreviewView @JvmOverloads constructor(
             dimStrength
         }
         playerShadingIntensity = shadingPercent.coerceIn(0, SHADING_MAX_PERCENT) / 100f
+        // After every value it is composed from. Split is told its base treatment never reaches
+        // the screen - drawSplitPlayer paints an opaque two-band backdrop over the shared layer.
+        backgroundLayers = BackgroundLayerStack.resolve(
+                raw = readString("wear_background_layers", ""),
+                background = PlayerBackgroundStyle.fromPreference(artStyle),
+                dimEnabled = dimArt,
+                dimPercent = shadingPercent.coerceIn(0, SHADING_MAX_PERCENT),
+                shading = playerShadingStyle,
+                shadingColor = BackgroundLayerColor.fromPreference(shadingColorMode),
+                floor = accentFloor,
+                floorColor = BackgroundLayerColor.fromPreference(accentFloorColorMode),
+                baseWashDrawn = face !in BackgroundLayerStack.SELF_BACKDROP_FACES)
+                .resolveLayers(
+                        shadeColor = ::layerShadingColor,
+                        floorColor = ::layerFloorColor)
         shadingColorMode = readString("wear_shading_color_mode", "black")
         shadingCustomColor = readString("wear_shading_custom_color", "")
         albumArtFade = readBoolean("wear_album_art_fade", true)
@@ -1627,27 +1654,6 @@ class WatchPreviewView @JvmOverloads constructor(
             normalColorMulti)
 
     private fun albumAccent(): Int = globalTriad().primary
-
-    private fun resolvedAccentFloorColor(): Int = AdaptiveTextContrast.adapt(
-            when (accentFloorColorMode) {
-                "secondary" -> albumSecondaryAccent()
-                "tertiary" -> albumTertiaryAccent()
-                "custom" -> parseHexOrNull(accentFloorCustomColor) ?: albumAccent()
-                else -> albumAccent()
-            }, 0f)
-
-    /** Colour that tints the shading gradient; mirrors MainActivity.resolvedShadingColor. */
-    private fun resolvedShadingColor(): Int {
-        val accent = albumAccent()
-        return when (shadingColorMode) {
-            "album" -> PaletteTransforms.shadingTone(accent)
-            "desaturated" ->
-                PaletteTransforms.shadingTone(PaletteTransforms.softenedAlbumAccent(accent))
-            "custom" -> parseHexOrNull(shadingCustomColor)
-                    ?.let { PaletteTransforms.shadingTone(it) } ?: Color.BLACK
-            else -> Color.BLACK
-        }
-    }
 
     /** Real secondary/tertiary cover swatches, run through the face-wide treatment. A monochromatic
      * live cover falls back to a same-hue tone (see [rawSecondaryAccent]); the generated sample uses
@@ -2406,12 +2412,11 @@ class WatchPreviewView @JvmOverloads constructor(
         }
         drawPlayerBackdrop(canvas, geometry, dp)
 
-        // Immediately after the backdrop and before any face draws, exactly where the watch
-        // renders it (inside PlayerBackgroundTreatment). Any face can wear this piece, so the
-        // preview must not tie it to one either. Ribbon and Frame ship with a hidden backdrop,
-        // but an explicit per-face artwork choice must still be visible in their miniature.
-        if (accentFloor.isVisible && demonstratedFace != "split") {
-            drawAccentFloor(canvas, geometry, resolvedAccentFloorColor())
+        // Immediately after the artwork and before any face draws, exactly where the watch
+        // renders them (inside PlayerBackgroundTreatment). Split is the exception: it paints an
+        // opaque backdrop of its own, so its stack goes on afterwards, from inside its own draw.
+        if (demonstratedFace != "split") {
+            drawBackgroundLayers(canvas, geometry)
         }
         when (demonstratedFace) {
             "expressive" -> drawExpressive(
@@ -2426,11 +2431,7 @@ class WatchPreviewView @JvmOverloads constructor(
             "frame" -> drawFramePlayer(canvas, geometry, dp)
             "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth" ->
                 drawCuratedPlayer(canvas, geometry, dp, demonstratedFace)
-            else -> {
-                drawPlayerShading(canvas, geometry.bounds, geometry.cx, geometry.cy,
-                        geometry.radius)
-                drawClassic(canvas, geometry, dp)
-            }
+            else -> drawClassic(canvas, geometry, dp)
         }
         if (edgeProgressVisible) {
             drawEdgeSeekRing(canvas, geometry.cx, geometry.cy, geometry.radius, dp)
@@ -2488,31 +2489,73 @@ class WatchPreviewView @JvmOverloads constructor(
             }
         }
 
-        drawPlayerBackgroundTreatment(canvas, geometry, backgroundStyle)
-
     }
+
+    /**
+     * Every treatment between the artwork and the face, in the order the user put them in.
+     *
+     * The watch draws these in one pass for a reason the preview inherits: the order is a choice
+     * now, so it cannot be expressed by which function this file happens to call first.
+     */
+    private fun drawBackgroundLayers(canvas: Canvas, geometry: PreviewGeometry) {
+        backgroundLayers.forEach { layer ->
+            when (layer) {
+                is ResolvedBackgroundLayer.Wash ->
+                    drawPlayerBackgroundTreatment(canvas, geometry, layer.style, layer.strength)
+
+                is ResolvedBackgroundLayer.Shade -> drawPlayerShading(
+                        canvas, geometry.bounds, geometry.cx, geometry.cy, geometry.radius,
+                        layer.style, layer.strength, layer.color)
+
+                is ResolvedBackgroundLayer.Floor ->
+                    drawAccentFloor(canvas, geometry, layer.style, layer.color, layer.strength)
+            }
+        }
+    }
+
+    /** A shading layer's tint, mirroring the watch's own `layerShadingColor`. */
+    private fun layerShadingColor(layer: BackgroundLayer): Int = when (layer.effectiveColor) {
+        BackgroundLayerColor.ALBUM -> PaletteTransforms.shadingTone(albumAccent())
+        BackgroundLayerColor.SECONDARY ->
+            PaletteTransforms.shadingTone(albumSecondaryAccent())
+        BackgroundLayerColor.TERTIARY -> PaletteTransforms.shadingTone(albumTertiaryAccent())
+        BackgroundLayerColor.DESATURATED -> PaletteTransforms.shadingTone(
+                PaletteTransforms.softenedAlbumAccent(albumAccent()))
+        BackgroundLayerColor.CUSTOM -> parseHexOrNull(layer.customColor)
+                ?.let { PaletteTransforms.shadingTone(it) } ?: Color.BLACK
+        else -> Color.BLACK
+    }
+
+    /**
+     * An accent-floor layer's colour, mirroring the watch's own `layerFloorColor`.
+     *
+     * The [AdaptiveTextContrast] lift is the miniature's own and predates the stack: this canvas
+     * has no artwork luminance to measure at drawing time, so it resolves the floor against black.
+     * Kept exactly as it was rather than aligned to the watch here, since that difference is about
+     * colour and this change is about order.
+     */
+    private fun layerFloorColor(layer: BackgroundLayer): Int = AdaptiveTextContrast.adapt(
+            when (layer.effectiveColor) {
+                BackgroundLayerColor.SECONDARY -> albumSecondaryAccent()
+                BackgroundLayerColor.TERTIARY -> albumTertiaryAccent()
+                BackgroundLayerColor.DESATURATED ->
+                    PaletteTransforms.softenedAlbumAccent(albumAccent())
+                BackgroundLayerColor.BLACK -> Color.BLACK
+                BackgroundLayerColor.CUSTOM -> parseHexOrNull(layer.customColor) ?: albumAccent()
+                else -> albumAccent()
+            }, 0f)
 
     /** Mirrors Wear's Compose/native independent background renderers. */
     private fun drawPlayerBackgroundTreatment(
             canvas: Canvas,
             geometry: PreviewGeometry,
-            style: PlayerBackgroundStyle
+            style: PlayerBackgroundStyle,
+            authoredStrength: Float
     ) {
         val bounds = geometry.bounds
         val cx = geometry.cx
         val cy = geometry.cy
         val radius = geometry.radius
-        // Authored background styles (Expressive, Poster, ...) own their designed look and must
-        // render it regardless of the "Dim album art" toggle - that toggle governs the separate
-        // legibility scrim over plain artwork, not a background style's identity. The intensity
-        // slider still modulates their depth. Plain treatments have no authored overlay.
-        val authoredStrength = if (
-            playerShadingStyle == PlayerShadingStyle.FOLLOW && !style.isPlainArtworkTreatment
-        ) {
-            (playerShadingIntensity / .8f).coerceIn(0f, SHADING_MAX_MULTIPLIER / .8f)
-        } else {
-            0f
-        }
         fun alpha(base: Float): Int =
                 (255f * base).toInt().coerceIn(0, 255)
         fun authoredAlpha(base: Float): Int =
@@ -2899,19 +2942,13 @@ class WatchPreviewView @JvmOverloads constructor(
             bounds: RectF,
             cx: Float,
             cy: Float,
-            radius: Float
+            radius: Float,
+            shadingStyle: PlayerShadingStyle,
+            layerStrength: Float,
+            shadingRgb: Int
     ) {
-        if (!dimArt) return
-        val style = if (playerShadingStyle == PlayerShadingStyle.FOLLOW) {
-            if (!PlayerBackgroundStyle.fromPreference(artStyle).isPlainArtworkTreatment) return
-            PlayerShadingStyle.BOTTOM_FADE
-        } else {
-            playerShadingStyle
-        }
-        val strength = playerShadingIntensity.coerceIn(0f, SHADING_MAX_MULTIPLIER)
-        // Shading gradient colour (black by default; album/desaturated/custom resolve to a dark
-        // tone). Mirrors the watch's PlayerShadingDrawable so a tinted shading previews correctly.
-        val shadingRgb = resolvedShadingColor()
+        val style = shadingStyle
+        val strength = layerStrength.coerceIn(0f, SHADING_MAX_MULTIPLIER)
         fun shade(maxAlpha: Float) = ColorUtils.setAlphaComponent(
                 shadingRgb, (255f * maxAlpha * strength).toInt().coerceIn(0, 255))
         fun darkTone(color: Int) = PaletteTransforms.shadingTone(color)
@@ -8315,8 +8352,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val accent = albumAccent()
         val theme = screenThemeSpec()
 
-        drawPlayerShading(canvas, screenBounds, cx, cy, radius)
-
         val sideContainer = tonal(accent, .74f, .40f, .85f)
         val centerContainer = tonal(accent, .87f, .30f, .70f)
         val onContainer = tonal(accent, .16f, .25f, .60f)
@@ -8478,8 +8513,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val radius = geometry.radius
         val screen = radius * 2f
         val screenTop = cy - radius
-
-        drawPlayerShading(canvas, geometry.bounds, cx, cy, radius)
 
         val art = displayedArt()
         val shape = CoverShape.fromPreference(carouselCardShape)
@@ -8731,7 +8764,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val screen = radius * 2f
         val screenLeft = cx - radius
         val screenTop = geometry.cy - radius
-        drawPlayerShading(canvas, geometry.bounds, cx, geometry.cy, radius)
         val card = RectF(
                 screenLeft + screen * FaceGeometry.Frame.CARD_INSET_FRACTION,
                 screenTop + screen * FaceGeometry.Frame.CARD_TOP_FRACTION,
@@ -8916,8 +8948,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val radius = geometry.radius
         val screen = radius * 2f
         val screenTop = cy - radius
-
-        drawPlayerShading(canvas, geometry.bounds, cx, cy, radius)
 
         val accent = albumAccent()
         val chatPlaying = isPlayingShown()
@@ -9343,8 +9373,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val radius = geometry.radius
         val screen = radius * 2f
 
-        drawPlayerShading(canvas, geometry.bounds, cx, cy, radius)
-
         // Lifted exactly as VerseFace does: a near-black cover would otherwise render the current
         // line - the only thing marking where the song is - invisible on this face's own backdrop.
         val accent = AdaptiveTextContrast.adapt(albumAccent(), 0f)
@@ -9454,7 +9482,16 @@ class WatchPreviewView @JvmOverloads constructor(
      * two cannot drift. Only the drawing is duplicated, because `mobile` cannot depend on `wear`
      * and Canvas has no Compose Brush.
      */
-    private fun drawAccentFloor(canvas: Canvas, geometry: PreviewGeometry, accent: Int) {
+    private fun drawAccentFloor(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            style: AccentFloorStyle,
+            accent: Int,
+            alphaScale: Float
+    ) {
+        if (!style.isVisible) return
+        val peak = (style.maxAlpha * alphaScale).coerceIn(0f, 1f)
+        if (peak <= 0f) return
         val cx = geometry.cx
         val cy = geometry.cy
         val radius = geometry.radius
@@ -9465,14 +9502,14 @@ class WatchPreviewView @JvmOverloads constructor(
         fillPaint.shader = RadialGradient(
                 cx, cy, radius,
                 intArrayOf(Color.TRANSPARENT,
-                        ColorUtils.setAlphaComponent(accent, (accentFloor.maxAlpha * 255).toInt())),
-                floatArrayOf(accentFloor.innerStop, 1f),
+                        ColorUtils.setAlphaComponent(accent, (peak * 255).toInt())),
+                floatArrayOf(style.innerStop, 1f),
                 Shader.TileMode.CLAMP)
         canvas.drawCircle(cx, cy, radius, fillPaint)
 
         // The mask fractions are of screen height; the screen spans cy-radius..cy+radius.
         fillPaint.shader = LinearGradient(
-                0f, cy - radius + radius * 2f * accentFloor.maskStart,
+                0f, cy - radius + radius * 2f * style.maskStart,
                 0f, cy - radius + radius * 2f * AccentFloorStyle.MASK_END,
                 Color.TRANSPARENT, Color.BLACK, Shader.TileMode.CLAMP)
         fillPaint.xfermode = android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.DST_IN)
@@ -9501,8 +9538,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val cy = geometry.cy
         val radius = geometry.radius
         val screen = radius * 2f
-
-        drawPlayerShading(canvas, geometry.bounds, cx, cy, radius)
 
         fillPaint.shader = null
         textPaint.style = Paint.Style.FILL
@@ -9660,8 +9695,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val cy = geometry.cy
         val radius = geometry.radius
         val screen = radius * 2f
-
-        drawPlayerShading(canvas, geometry.bounds, cx, cy, radius)
 
         val accent = albumAccent()
         val backdropHidesArt = PlayerBackgroundStyle.fromPreference(artStyle).hidesArtwork
@@ -9909,11 +9942,9 @@ class WatchPreviewView @JvmOverloads constructor(
             canvas.drawRect(panelRect, fillPaint)
         }
 
-        // Split owns an opaque backdrop, so the shared floor must be placed after it or it is
-        // completely covered. Keep it below the card's text and badge, matching the watch face.
-        if (accentFloor.isVisible) {
-            drawAccentFloor(canvas, geometry, resolvedAccentFloorColor())
-        }
+        // Split owns an opaque backdrop, so the shared layers must be placed after it or they
+        // are completely covered. Keep them below the card's text and badge, matching the face.
+        drawBackgroundLayers(canvas, geometry)
 
         // Artist over title, left-aligned, inset for the narrowing round chord.
         val inset = RoundScreenText.sideInsetFor(
@@ -10075,8 +10106,6 @@ class WatchPreviewView @JvmOverloads constructor(
                 (!hasMiniButtons || shortcutTop >= screenTop + screenDiameter * .50f)
 
         fillPaint.shader = null
-        drawPlayerShading(canvas, bounds, cx, cy, radius)
-
         fun header(topY: Float, compact: Boolean = false, showArtist: Boolean = true) {
             val titleSize = dp(when (kind) {
                 "vinyl" -> 12f

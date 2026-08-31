@@ -63,17 +63,23 @@ class WatchSearchTargetResolverTest {
         }
     }
 
+    /**
+     * The shading rows are reached through the Background page's layer list now, so neither of
+     * the two gates they used to carry can be answered by pointing at a row: "Dim album art" and
+     * the shading colour mode are both read through that list themselves. Pointing a user at a
+     * control that is no longer on screen is worse than landing them on the list, which is where
+     * the setting actually is - and where an explicit stack ignores `dim_album_art` outright.
+     */
     @Test
-    fun `disabled dimming rows lead to the background dim switch`() {
+    fun `shading rows are never redirected away from the background page`() {
         listOf(
                 "wear_player_shading_style",
                 "album_art_dim_strength",
                 "wear_shading_color_mode",
                 "wear_shading_custom_color").forEach { key ->
-            assertRedirect(
-                    resolve(key = key, booleans = mapOf("dim_album_art" to false)),
-                    WatchFacePrefsFragment.SECTION_BACKGROUND,
-                    "dim_album_art")
+            assertFalse(
+                    "$key should reach the layer list rather than a prerequisite row",
+                    resolve(key = key, booleans = mapOf("dim_album_art" to false)).redirected)
         }
     }
 
@@ -337,9 +343,7 @@ class WatchSearchTargetResolverTest {
                 Triple("wear_volume_custom_color", "wear_volume_color_mode",
                     WatchFacePrefsFragment.SECTION_COLORS),
                 Triple("wear_quick_panel_custom_color", "wear_quick_panel_color_mode",
-                    WatchFacePrefsFragment.SECTION_COLORS),
-                Triple("wear_shading_custom_color", "wear_shading_color_mode",
-                    WatchFacePrefsFragment.SECTION_BACKGROUND))
+                    WatchFacePrefsFragment.SECTION_COLORS))
 
         prerequisites.forEach { (key, modeKey, section) ->
             assertRedirect(resolve(key = key), section, modeKey)

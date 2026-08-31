@@ -50,6 +50,7 @@ const STRING_SETTINGS = [
     "wear_artist_custom_color",
     "wear_artist_font",
     "wear_artist_text_case",
+    "wear_background_layers",
     "wear_carousel_card_shape",
     "wear_chat_cover_shape",
     "wear_clock_color_mode",
@@ -211,6 +212,8 @@ const CONSTRAINTS_URL = new URL(
 );
 const HEX_RGB_OR_EMPTY_PATTERN = "^$|^#[0-9A-F]{6}$";
 const HEX_RGB_OR_EMPTY = /^(?:|#[0-9A-F]{6})$/;
+const HEX_RGB = /^#[0-9A-F]{6}$/;
+const LAYER_RULE_NAME = "background-layer-stack-v1";
 
 function isPlainRecord(value) {
     return typeof value === "object" && value !== null &&
@@ -248,7 +251,7 @@ function normalizeFaceSet(value, context, { allowEmpty = false } = {}) {
     return Object.freeze([...value]);
 }
 
-function constraintPrimitiveMatches(definition, value, valueSets) {
+function constraintPrimitiveMatches(definition, value, valueSets, layerRules = {}) {
     switch (definition.type) {
         case "boolean":
             return typeof value === "boolean";
@@ -257,10 +260,53 @@ function constraintPrimitiveMatches(definition, value, valueSets) {
         case "string":
             if (typeof value !== "string") return false;
             if (definition.valueSet !== undefined) return valueSets[definition.valueSet].includes(value);
+            if (definition.layerRule !== undefined) {
+                return layerStackMatches(layerRules[definition.layerRule], value);
+            }
             return definition.colorRule === "empty-or-uppercase-hex-rgb" && HEX_RGB_OR_EMPTY.test(value);
         default:
             return false;
     }
+}
+
+/**
+ * Mirror of BackgroundLayerStack's grammar, kept byte-for-byte compatible with the Kotlin parser.
+ *
+ * A drift here does not error - it silently makes the publisher accept a stack the phone refuses,
+ * or refuse one it built, so this reads the shape out of the shared contract rather than hard-coding
+ * the vocabulary a second time.
+ */
+function layerStackMatches(rule, value) {
+    if (rule === undefined) return false;
+    // Empty is the shipped default: nobody has composed a stack and the legacy settings in this
+    // same profile are what the recipient renders.
+    if (value === "") return true;
+    if (value.length > rule.maxLength) return false;
+    const parts = value.split("|");
+    if (parts[0] !== rule.version || parts.length - 1 > rule.maxLayers) return false;
+    return parts.slice(1).every((encoded) => {
+        const fields = encoded.split(".");
+        if (fields.length < 2 || fields.length > 5) return false;
+        const styles = rule.kinds[fields[0]];
+        if (styles === undefined || !styles.includes(fields[1])) return false;
+
+        if (fields.length >= 3) {
+            const opacity = fields[2];
+            if (!/^[0-9]+$/.test(opacity)) return false;
+            const parsed = Number(opacity);
+            // Compared back against its own decimal so "060" cannot become a second spelling of
+            // one composition - the settings digest is taken over this exact string.
+            if (String(parsed) !== opacity ||
+                    parsed < rule.minOpacity || parsed > rule.maxOpacity) {
+                return false;
+            }
+        }
+
+        const color = fields.length >= 4 ? fields[3] : undefined;
+        if (color !== undefined && !rule.colors.includes(color)) return false;
+        const custom = fields.length >= 5 ? fields[4] : undefined;
+        return color === "custom" ? custom !== undefined && HEX_RGB.test(custom) : custom === undefined;
+    });
 }
 
 /**
@@ -281,6 +327,7 @@ function loadConstraintContract() {
         [
             "schemaVersion",
             "colorRules",
+            "layerRules",
             "valueSets",
             "originalityApplicableFaces",
             "originalityRequires",
@@ -289,7 +336,8 @@ function loadConstraintContract() {
         ],
         "root",
     );
-    if (raw.schemaVersion !== 1) constraintError("has an unsupported schemaVersion");
+    if (raw.schemaVersion !== 2) constraintError("has an unsupported schemaVersion");
+    if (!isPlainRecord(raw.layerRules)) constraintError("layerRules must be an object");
     if (!isPlainRecord(raw.valueSets) || !isPlainRecord(raw.colorRules) ||
             !isPlainRecord(raw.originalityApplicableFaces) ||
             !isPlainRecord(raw.originalityRequires) ||
@@ -311,6 +359,55 @@ function loadConstraintContract() {
     for (const [name, values] of Object.entries(raw.valueSets)) {
         if (!/^[a-z][A-Za-z0-9]*$/.test(name)) constraintError(`invalid value-set name ${name}`);
         valueSets[name] = normalizeValueSet(values, `value set ${name}`);
+    }
+
+    // The ordered background stack: a *sequence* of enumerated values rather than one of them, so
+    // the contract states its whole grammar and this pins it to the single shape implemented here.
+    // Same posture as the colour rule above - widening a public input boundary is a decision.
+    const layerRules = {};
+    for (const [name, rule] of Object.entries(raw.layerRules)) {
+        if (name !== LAYER_RULE_NAME) constraintError(`layer rule ${name} is unsupported`);
+        if (!isPlainRecord(rule)) constraintError(`layer rule ${name} must be an object`);
+        assertExactConstraintKeys(
+            rule,
+            ["version", "maxLayers", "maxLength", "opacity", "colors", "kinds"],
+            `layer rule ${name}`,
+        );
+        if (typeof rule.version !== "string" || rule.version.length === 0) {
+            constraintError(`layer rule ${name} needs a version marker`);
+        }
+        if (!Number.isSafeInteger(rule.maxLayers) || rule.maxLayers < 1 || rule.maxLayers > 32 ||
+                !Number.isSafeInteger(rule.maxLength) || rule.maxLength < 1 || rule.maxLength > 1024) {
+            constraintError(`layer rule ${name} has invalid bounds`);
+        }
+        if (!isPlainRecord(rule.opacity)) constraintError(`layer rule ${name} needs an opacity range`);
+        assertExactConstraintKeys(rule.opacity, ["min", "max"], `layer rule ${name} opacity`);
+        if (!Number.isSafeInteger(rule.opacity.min) || !Number.isSafeInteger(rule.opacity.max) ||
+                rule.opacity.min > rule.opacity.max) {
+            constraintError(`layer rule ${name} has an invalid opacity range`);
+        }
+        const colors = normalizeValueSet(rule.colors, `layer rule ${name} colors`);
+        if (!isPlainRecord(rule.kinds) || Object.keys(rule.kinds).length === 0) {
+            constraintError(`layer rule ${name} needs at least one kind`);
+        }
+        const kinds = {};
+        for (const [token, setName] of Object.entries(rule.kinds)) {
+            // One character, so a kind can never be mistaken for part of a style name.
+            if (token.length !== 1) constraintError(`layer rule ${name} kind ${token} must be one character`);
+            if (typeof setName !== "string" || valueSets[setName] === undefined) {
+                constraintError(`layer rule ${name} kind ${token} references an unknown value set`);
+            }
+            kinds[token] = valueSets[setName];
+        }
+        layerRules[name] = Object.freeze({
+            version: rule.version,
+            maxLayers: rule.maxLayers,
+            maxLength: rule.maxLength,
+            minOpacity: rule.opacity.min,
+            maxOpacity: rule.opacity.max,
+            colors,
+            kinds: Object.freeze(kinds),
+        });
     }
 
     const actualSettingKeys = Object.keys(raw.settings).sort();
@@ -360,8 +457,17 @@ function loadConstraintContract() {
                         type: "string",
                         colorRule: definition.colorRule,
                     });
+                } else if (typeof definition.layerRule === "string") {
+                    assertExactConstraintKeys(definition, ["type", "layerRule"], `setting ${key}`);
+                    if (layerRules[definition.layerRule] === undefined) {
+                        constraintError(`setting ${key} references an unknown layer rule`);
+                    }
+                    settings[key] = Object.freeze({
+                        type: "string",
+                        layerRule: definition.layerRule,
+                    });
                 } else {
-                    constraintError(`setting ${key} needs a valueSet or colorRule`);
+                    constraintError(`setting ${key} needs a valueSet, colorRule or layerRule`);
                 }
                 break;
             default:
@@ -407,7 +513,7 @@ function loadConstraintContract() {
             const candidates = condition.equalsAny;
             if (!Array.isArray(candidates) || candidates.length === 0 ||
                     candidates.some((value) => !constraintPrimitiveMatches(
-                        settings[condition.setting], value, valueSets,
+                        settings[condition.setting], value, valueSets, layerRules,
                     )) ||
                     new Set(candidates.map((value) => JSON.stringify(value))).size !== candidates.length) {
                 constraintError(`originality condition ${key}[${index}] has invalid equalsAny values`);
@@ -432,8 +538,9 @@ function loadConstraintContract() {
     }
 
     return Object.freeze({
-        schemaVersion: 1,
+        schemaVersion: 2,
         colorRules: Object.freeze(colorRules),
+        layerRules: Object.freeze(layerRules),
         valueSets: Object.freeze(valueSets),
         originalityApplicableFaces: Object.freeze({
             default: originalityApplicableFaces.default,
@@ -470,11 +577,31 @@ export function isSemanticallyValidSetting(key, setting, { allowLegacyReadOnly =
                     (allowLegacyReadOnly &&
                         (COMMUNITY_THEME_CONSTRAINTS.legacyReadOnlyValues[key] ?? []).includes(setting.value));
             }
+            if (definition.layerRule !== undefined) {
+                return layerStackMatches(
+                    COMMUNITY_THEME_CONSTRAINTS.layerRules[definition.layerRule], setting.value);
+            }
             return definition.colorRule === "empty-or-uppercase-hex-rgb" &&
                 HEX_RGB_OR_EMPTY.test(setting.value);
         default:
             return false;
     }
+}
+
+/**
+ * Longest a public value for [key] may be.
+ *
+ * Every other appearance setting is one enumerated token or a hex colour and sits well inside the
+ * shared 128; the background stack is a sequence of them and declares its own ceiling on its layer
+ * rule. Mirrors `maxPublicTextLengthFor` on the Android side. Length is not what makes any of
+ * these safe - the vocabulary check above is far stricter than a character count.
+ */
+export function maxSettingTextLength(key) {
+    const definition = COMMUNITY_THEME_CONSTRAINTS.settings[key];
+    if (definition?.layerRule !== undefined) {
+        return COMMUNITY_THEME_CONSTRAINTS.layerRules[definition.layerRule].maxLength;
+    }
+    return MAX_SETTING_TEXT_LENGTH;
 }
 
 /** True only when a changed setting can visibly contribute to this complete face snapshot. */
@@ -541,6 +668,9 @@ const DEFAULT_VALUES = Object.freeze({
     wear_artist_font_tracking: 0,
     wear_artist_font_weight: 400,
     wear_artist_text_case: "normal",
+    // Empty: nobody has composed a stack, so the three legacy settings in this same profile are
+    // what the recipient renders - see BackgroundLayerStack.
+    wear_background_layers: "",
     wear_carousel_card_shape: "rounded",
     wear_chat_cover_shape: "circle",
     wear_chat_show_cover: true,

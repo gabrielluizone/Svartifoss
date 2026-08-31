@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.AccentFloorStyle
+import com.svartifoss.snfell.common.ResolvedBackgroundLayer
 import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.LyricLine
@@ -247,12 +248,22 @@ data class NowPlayingFaceState(
          * The host only fills this while such a face is selected: the lookup is a network call on
          * the phone, and nobody who has not asked for lyrics should be paying for one.
          */
-        /** The accent wash along the bottom edge - a shared piece, not one face's fixture.
-         *  Rendered by [PlayerBackgroundTreatment] so it lands above the backdrop and below the
-         *  face's own content, which is the only stacking that works for it. */
-        val accentFloor: AccentFloorStyle = AccentFloorStyle.OFF,
-        /** Resolved floor colour, independent from the face's main accent. */
-        val accentFloorColor: Int = WatchTheme.ACCENT_DEFAULT,
+        /**
+         * Every treatment between the artwork and this face's own content, bottom first.
+         *
+         * The host resolves it (explicit stack, else the equivalent of the legacy keys - see
+         * [com.svartifoss.snfell.common.BackgroundLayerStack]) so a face never has to ask which
+         * mode is in effect. [PlayerBackgroundTreatment] walks it; a face composes what goes *on*
+         * the background and never how the background is stacked.
+         */
+        val backgroundLayers: List<ResolvedBackgroundLayer> = emptyList(),
+        /**
+         * True while an explicit stack is in charge, which suppresses the three legacy slots.
+         *
+         * All three at once, never some of them: [backgroundLayers] already contains whichever of
+         * them the user kept, so drawing one again would put back a treatment they removed.
+         */
+        val backgroundLayersExplicit: Boolean = false,
         /** How the Split face fills its lower panel. Ignored by every other face - Split is the
          *  only one that paints its own backdrop, which is why it needs its own control. */
         val splitPanelStyle: SplitPanelStyle = SplitPanelStyle.DEFAULT,

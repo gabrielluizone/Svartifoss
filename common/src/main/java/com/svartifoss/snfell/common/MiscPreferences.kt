@@ -541,6 +541,17 @@ object MiscPreferences {
     val WEAR_ACCENT_FLOOR_CUSTOM_COLOR: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_accent_floor_custom_color", "")
 
+    /**
+     * The ordered background layer stack - see [BackgroundLayerStack] for the grammar.
+     *
+     * Empty means nobody has touched it, and every renderer then keeps its pre-stack path driven
+     * by [ALBUM_ART_STYLE], [WEAR_PLAYER_SHADING_STYLE] and [WEAR_ACCENT_FLOOR]. That is also what
+     * a watch build older than this key does with it, so a phone that has moved on degrades to the
+     * previous look rather than to no background at all.
+     */
+    val WEAR_BACKGROUND_LAYERS: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_background_layers", "")
+
     /** Draw the universal playback-progress ring at the screen edge, regardless of the selected
      *  player layout. */
     val WEAR_EDGE_PROGRESS_VISIBLE: PreferenceDefinition<Boolean> =
@@ -1221,6 +1232,7 @@ object MiscPreferences {
             WEAR_PLAYER_CONTROLS_VISIBLE, WEAR_INTERNAL_PROGRESS_VISIBLE,
             WEAR_EDGE_PROGRESS_VISIBLE, WEAR_EDGE_SEEK_ENABLED, WEAR_ACCENT_FLOOR,
             WEAR_ACCENT_FLOOR_COLOR_MODE, WEAR_ACCENT_FLOOR_CUSTOM_COLOR,
+            WEAR_BACKGROUND_LAYERS,
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
             WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE, WEAR_NOTE_COVER_SHAPE, WEAR_NOTE_SHOW_COVER,
             WEAR_CHAT_COVER_SHAPE, WEAR_CHAT_SHOW_COVER, WEAR_METADATA_COVER_SHAPE, WEAR_METADATA_SHOW_COVER,

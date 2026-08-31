@@ -193,7 +193,6 @@ private fun CarouselFrameContent(
         // the face's *default* background (PlayerBackgroundStyle.defaultForFace) instead of a
         // hardcoded layer, so changing it actually changes something.
         PlayerBackgroundTreatment(state)
-        PlayerShadingOverlay(state)
 
         // Artist sits under the clock, at the top. It used to share the bottom with the title,
         // which on a round screen meant both fought for the narrowest part of the glass; the top

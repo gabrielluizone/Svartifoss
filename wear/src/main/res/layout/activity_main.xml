@@ -51,12 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <View
-            android:id="@+id/album_art_scrim"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/album_art_scrim" />
-
         <!-- The classic face's centered text block. Hidden as a whole while the expressive
              face is selected (its children keep being updated regardless - ambient mode and
              the quick panel read from them for both faces). -->
@@ -313,10 +307,16 @@
              quadrant icon and keeps the full 3-button row inside a round screen's circle.
              Row and unconfigured slots stay gone, so the screen is unchanged until the user
              assigns something on the phone. -->
+        <!-- clipChildren must stay off on every ancestor of the row: a parent that clips cuts
+             each child to the child's *own* bounds, and a curved row lifts its side pills above
+             the row's wrap_content box on purpose. A plain FrameLayout defaults to clipping, so
+             adding this host without these two lines shaved the tops off the curved pills. -->
         <com.svartifoss.snfell.watch.view.ClaimedGestureHost
             android:id="@+id/screen_buttons_gesture_host"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
             <LinearLayout
                 android:id="@+id/screen_buttons_row"

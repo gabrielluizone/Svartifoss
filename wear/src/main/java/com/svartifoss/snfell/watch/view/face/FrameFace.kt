@@ -62,7 +62,6 @@ fun FrameFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val screen = maxWidth
         PlayerBackgroundTreatment(state)
-        PlayerShadingOverlay(state)
 
         FrameCard(state, screen)
 

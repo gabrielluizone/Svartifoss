@@ -75,7 +75,6 @@ fun NoteFace(
         // background composes on top of it. Not painted over - a user who picks an artwork
         // backdrop on this face should get one.
         PlayerBackgroundTreatment(state)
-        PlayerShadingOverlay(state)
 
         CenterGestureRegion(listener, size = screen * .60f, pulseSize = screen * .36f)
 

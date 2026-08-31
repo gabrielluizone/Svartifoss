@@ -34,7 +34,8 @@ class SettingsSearchRoutingTest {
                 "typography_editor_surface",
                 "color_editor_surface",
                 "panel_editor_surface",
-                "player_editor_surface")
+                "player_editor_surface",
+                "background_editor_surface")
     }
 
     @Test

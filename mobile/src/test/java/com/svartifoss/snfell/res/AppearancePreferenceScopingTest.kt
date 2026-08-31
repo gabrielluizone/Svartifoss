@@ -42,10 +42,12 @@ class AppearancePreferenceScopingTest {
                 "wear_flex_axes_hint",
                 // A custom view over the real typography Preference objects; stores nothing.
                 "typography_editor_surface",
-                // The same, for the Color, Panel and Player pages' contextual editors.
+                // The same, for the Color, Panel, Player and Background pages' contextual
+                // editors.
                 "color_editor_surface",
                 "panel_editor_surface",
-                "player_editor_surface"
+                "player_editor_surface",
+                "background_editor_surface"
         )
     }
 

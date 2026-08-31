@@ -10,7 +10,6 @@ import android.widget.ImageView
 import androidx.core.view.doOnLayout
 import com.svartifoss.snfell.watch.view.OverlayBackdropDrawables
 import com.svartifoss.snfell.watch.view.PlayerBackgroundDrawable
-import com.svartifoss.snfell.watch.view.PlayerShadingDrawable
 
 /**
  * The player's backdrop plus a panel background on top of it - the exact stack
@@ -100,23 +99,18 @@ class PanelBackdropView(context: Context) : FrameLayout(context) {
             applySquareInsetMatrix(insetSource)
         }
 
+        // The whole stack, shading included, in one drawing - see PlayerBackgroundDrawable. The
+        // separate scrim View below it is left empty rather than removed: it is what keeps the
+        // panel's own background one child higher than the player's treatments.
         playerBackground.background = PlayerBackgroundDrawable(
-                style = backdrop.albumArtStyle,
-                authoredStrength = backdrop.authoredStrength,
+                layers = backdrop.layers,
                 primary = backdrop.globalTriad.primary,
                 secondary = backdrop.globalTriad.secondary,
                 tertiary = backdrop.globalTriad.tertiary,
                 materialSurface = backdrop.globalTriad.primary,
-                materialSurfaceSoftened = backdrop.materialSurfaceSoftened,
-                accentFloor = backdrop.accentFloor,
-                accentFloorColor = backdrop.accentFloorColor)
+                materialSurfaceSoftened = backdrop.materialSurfaceSoftened)
 
-        shading.background = PlayerShadingDrawable(
-                style = backdrop.shadingStyle,
-                intensity = backdrop.shadingIntensity,
-                primary = backdrop.globalTriad.primary,
-                secondary = backdrop.globalTriad.secondary,
-                shadingColor = backdrop.shadingColor)
+        shading.background = null
 
         if (appearance.usesAlbumBlur && albumArt != null && !albumArt.isRecycled) {
             overlayBlur.visibility = View.VISIBLE

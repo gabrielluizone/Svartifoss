@@ -1471,6 +1471,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="cat_wf_background_editor"
+        android:title="@string/category_album_background"
+        android:layout="@layout/pref_category_header">
+
+        <com.svartifoss.snfell.view.watchface.BackgroundEditorPreference
+            android:key="background_editor_surface"
+            android:selectable="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="cat_wf_background"
         android:title="@string/category_album_background"
         android:layout="@layout/pref_category_header">

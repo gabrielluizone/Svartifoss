@@ -66,7 +66,6 @@ fun RibbonFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val screen = maxWidth
         PlayerBackgroundTreatment(state)
-        PlayerShadingOverlay(state)
 
         RibbonQueueRails(state, screen)
         RibbonArtwork(state, screen)

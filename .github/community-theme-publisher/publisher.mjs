@@ -11,6 +11,7 @@ import {
     MAX_PROFILE_JSON_BYTES,
     MAX_PUBLIC_TEXT_LENGTH,
     MAX_SETTING_TEXT_LENGTH,
+    maxSettingTextLength,
     MINIMUM_APP_VERSION,
     PROFILE_REVISION,
     PROFILE_SCHEMA_VERSION,
@@ -336,8 +337,12 @@ function hasNonIntegerNumberLiteral(source) {
     return false;
 }
 
-function assertSettingString(value) {
-    if (!isWellFormed(value) || CONTROL_OR_SURROGATE.test(value) || value.length > MAX_SETTING_TEXT_LENGTH) {
+function assertSettingString(value, key) {
+    // Per key rather than one shared cap: the background stack is a sequence of enumerated values
+    // and declares its own ceiling on its layer rule, while every other setting is a single token
+    // well inside the shared 128. The semantic check below is what actually bounds either.
+    if (!isWellFormed(value) || CONTROL_OR_SURROGATE.test(value) ||
+            value.length > maxSettingTextLength(key)) {
         fail("invalid-setting-string");
     }
     return value;
@@ -363,7 +368,7 @@ function validateSettingsInternal(value, { requireComplete, allowLegacyReadOnly 
         let settingValue;
         switch (expectedType) {
             case "string":
-                settingValue = assertSettingString(setting.value);
+                settingValue = assertSettingString(setting.value, key);
                 break;
             case "boolean":
                 if (typeof setting.value !== "boolean") fail("setting-type-mismatch");

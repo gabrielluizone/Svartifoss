@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One entry in the background stack. Tapping the row picks the treatment; the arrows move it
+     under or over its neighbours, which is the whole point of the list; the overflow holds the
+     rest (strength, colour, duplicate, remove) so an eight-deep stack still fits on the page. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:gravity="center_vertical"
+    android:minHeight="52dp"
+    android:orientation="horizontal">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/background_layer_row"
+        style="@style/LyraGestureButton"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:icon="@drawable/ic_dim_style"
+        tools:text="Shading · Bottom fade" />
+
+    <ImageButton
+        android:id="@+id/background_layer_up"
+        android:layout_width="36dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="2dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/background_layer_move_up"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_arrow_up" />
+
+    <ImageButton
+        android:id="@+id/background_layer_down"
+        android:layout_width="36dp"
+        android:layout_height="44dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/background_layer_move_down"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_arrow_down" />
+
+    <ImageButton
+        android:id="@+id/background_layer_more"
+        android:layout_width="36dp"
+        android:layout_height="44dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/background_layer_more"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_more_vert" />
+
+</LinearLayout>

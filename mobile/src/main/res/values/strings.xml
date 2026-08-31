@@ -286,6 +286,39 @@
     <string name="category_wf_screen_behavior">Screen behavior</string>
     <string name="category_wf_player_progress">Progress, seeking &amp; time</string>
     <string name="category_album_background">Album background</string>
+
+    <!-- The Background page's contextual editor: the artwork underneath, and the ordered stack of
+         treatments drawn over it. -->
+    <string name="background_editor_artwork">Artwork</string>
+    <string name="background_editor_layers">Layers</string>
+    <string name="background_editor_layers_count">%1$d of %2$d</string>
+    <string name="background_editor_add_layer">Add layer</string>
+    <string name="background_editor_reset_layers">Reset</string>
+    <string name="background_editor_empty">No layers. The artwork is shown on its own.</string>
+    <string name="background_editor_note">The layer at the top of this list is drawn over everything else; the one at the bottom sits closest to the artwork.</string>
+    <string name="background_editor_full">You can stack up to %1$d layers.</string>
+    <string name="background_layer_kind_wash">Background</string>
+    <string name="background_layer_kind_shade">Shading</string>
+    <string name="background_layer_kind_floor">Accent floor</string>
+    <string name="background_layer_move_up">Move this layer up</string>
+    <string name="background_layer_move_down">Move this layer down</string>
+    <string name="background_layer_more">More options for this layer</string>
+    <string name="background_layer_add_title">Add a layer</string>
+    <string name="background_layer_style_title">%1$s layer</string>
+    <string name="background_layer_opacity">Strength</string>
+    <string name="background_layer_color">Colour</string>
+    <string name="background_layer_custom_color">Pick a colour</string>
+    <string name="background_layer_duplicate">Duplicate</string>
+    <string name="background_layer_remove">Remove</string>
+    <string name="background_layer_color_default">Default</string>
+    <string name="background_layer_color_album">Album colour</string>
+    <string name="background_layer_color_secondary">Second album colour</string>
+    <string name="background_layer_color_tertiary">Third album colour</string>
+    <string name="background_layer_color_desaturated">Muted album colour</string>
+    <string name="background_layer_color_black">Black</string>
+    <string name="background_layer_color_custom">Custom colour</string>
+    <string name="background_layer_reset_title">Reset the layers?</string>
+    <string name="background_layer_reset_message">The stack goes back to the shading and accent floor set on their own rows, which is what a watch running an older build renders anyway.</string>
     <string name="category_music_colors">Colors from the music</string>
     <string name="category_wf_typography_font">Typeface</string>
     <string name="category_wf_typography_title">Title</string>

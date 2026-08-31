@@ -109,7 +109,7 @@ fun SplitFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
 
         // Split paints an opaque backdrop of its own, so the common background layer would be
         // covered. Put the shared floor on top of that backdrop and below the card content.
-        PlayerAccentFloor(state)
+        PlayerBackgroundLayers(state)
 
         // Under the badge, over the panel: the badge is a real control-free ornament, so the centre
         // gestures must not be blocked by it - nothing here is clickable.

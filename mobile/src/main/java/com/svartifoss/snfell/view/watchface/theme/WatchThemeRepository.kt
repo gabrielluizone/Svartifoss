@@ -8,6 +8,7 @@ import com.svartifoss.snfell.WATCH_SNAPSHOT_GUARD_BYTES
 import com.svartifoss.snfell.estimateWatchPreferenceSnapshotBytes
 import com.svartifoss.snfell.shouldSyncWatchPreference
 import com.svartifoss.snfell.common.AppearanceContext
+import com.svartifoss.snfell.common.BackgroundLayerStack
 import com.svartifoss.snfell.common.ArchivedFaces
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
@@ -23,6 +24,23 @@ private const val MAX_THEME_NAME_LENGTH = 48
 
 /** Public profile strings are deliberately capped before they cross the network boundary. */
 internal const val MAX_PUBLIC_SETTING_TEXT_LENGTH = 128
+
+/**
+ * Longest a public value for [key] may be.
+ *
+ * Every appearance setting is one enumerated token or a hex colour and sits well inside the shared
+ * 128, with one exception: the background stack is a *sequence* of them, and the community
+ * contract declares that key's own ceiling on its layer rule rather than raising the shared cap
+ * for every setting. Length was never what makes these values safe in any case - the constraints
+ * asset accepts nothing outside the vocabulary it enumerates, which is far stricter than a
+ * character count.
+ */
+internal fun maxPublicTextLengthFor(key: String): Int =
+        if (key == MiscPreferences.WEAR_BACKGROUND_LAYERS.key) {
+            BackgroundLayerStack.MAX_ENCODED_LENGTH
+        } else {
+            MAX_PUBLIC_SETTING_TEXT_LENGTH
+        }
 
 /** Leaves ample room below the Wear Data Layer's 100 KiB per-item ceiling. */
 private const val MAX_PUBLIC_MATERIALIZED_BYTES = 24 * 1024
@@ -216,7 +234,7 @@ internal object CommunityThemeSubmissionDraftFactory {
                     ?: return CommunityThemeSubmissionDraftResult.InvalidProfile
             if (!valueMatchesDefinition(value, definition.defaultValue) ||
                     (value is WatchThemeValue.Text &&
-                            value.value.length > MAX_PUBLIC_SETTING_TEXT_LENGTH)) {
+                            value.value.length > maxPublicTextLengthFor(definition.key))) {
                 return CommunityThemeSubmissionDraftResult.InvalidProfile
             }
             // Kept apart from the checks above: those describe a broken profile, this one
@@ -284,8 +302,6 @@ class WatchThemeRepository(context: Context) {
         private const val LIBRARY_JSON = "library_json"
         private const val LEGACY_PHASE_ONE_CINEMA_ID = "09ea139e-8e25-443d-a065-09e8d10da102"
         private const val MAX_NAME_LENGTH = MAX_THEME_NAME_LENGTH
-        /** Public theme values are materialized into the phone→watch preference snapshot. */
-        private const val MAX_PUBLISHED_SETTING_TEXT_LENGTH = MAX_PUBLIC_SETTING_TEXT_LENGTH
         /** Leaves ample room below the Wear Data Layer's 100 KiB per-item ceiling. */
         private const val MAX_PUBLISHED_MATERIALIZED_BYTES = MAX_PUBLIC_MATERIALIZED_BYTES
 
@@ -822,7 +838,8 @@ class WatchThemeRepository(context: Context) {
             val value = if (candidate != null) {
                 if (!valueMatchesDefinition(candidate, definition.defaultValue) ||
                         (candidate is WatchThemeValue.Text &&
-                                candidate.value.length > MAX_PUBLISHED_SETTING_TEXT_LENGTH) ||
+                                candidate.value.length >
+                                        maxPublicTextLengthFor(definition.key)) ||
                         !constraints.accepts(
                                 definition.key,
                                 candidate,
@@ -914,7 +931,7 @@ class WatchThemeRepository(context: Context) {
         val value = json.opt("value")
         val parsed = when (defaultValue) {
             is String -> (value as? String)
-                    ?.takeIf { type == "string" && it.length <= MAX_PUBLISHED_SETTING_TEXT_LENGTH }
+                    ?.takeIf { type == "string" && it.length <= maxPublicTextLengthFor(key) }
                     ?.let(WatchThemeValue::Text)
             is Boolean -> (value as? Boolean)
                     ?.takeIf { type == "boolean" }

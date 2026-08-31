@@ -1,8 +1,22 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "colorRules": {
     "empty-or-uppercase-hex-rgb": {
       "pattern": "^$|^#[0-9A-F]{6}$"
+    }
+  },
+  "layerRules": {
+    "background-layer-stack-v1": {
+      "version": "1",
+      "maxLayers": 8,
+      "maxLength": 384,
+      "opacity": { "min": 0, "max": 188 },
+      "colors": ["default", "album", "secondary", "tertiary", "desaturated", "black", "custom"],
+      "kinds": {
+        "w": "backgroundLayerWash",
+        "s": "backgroundLayerShade",
+        "f": "backgroundLayerFloor"
+      }
     }
   },
   "valueSets": {
@@ -10,6 +24,9 @@
     "accentFloor": ["off", "whisper", "soft", "standard", "bold", "radiant", "glimmer", "flood", "deep"],
     "accentFloorColorMode": ["album", "secondary", "tertiary", "custom"],
     "albumAccentSource": ["balanced", "vibrant"],
+    "backgroundLayerFloor": ["whisper", "soft", "standard", "bold", "radiant", "glimmer", "flood", "deep"],
+    "backgroundLayerShade": ["edge_vignette", "edge_vignette_strong", "edge_vignette_heavy", "bottom_corner", "bottom_fade", "floor_ceiling", "full_filter", "album_tint", "duotone", "side_curtains", "top_fade", "center_spotlight", "diagonal", "left_curtain", "right_curtain", "center_band", "crossfade"],
+    "backgroundLayerWash": ["expressive", "expressive_no_blur", "material", "poster", "studio", "vinyl", "halo", "aurora", "spectrum", "corona", "dusk", "bloom", "horizon", "ember", "ocean", "sunset", "spotlight", "glass_veil", "velvet", "noir", "ice", "rose", "eclipse", "hidden"],
     "albumArtStyle": ["cover", "blur", "frosted", "square_sharp", "square_soft", "square", "bw", "blur_bw", "expressive", "expressive_no_blur", "material", "poster", "studio", "vinyl", "halo", "aurora", "spectrum", "corona", "dusk", "bloom", "horizon", "ember", "ocean", "sunset", "spotlight", "glass_veil", "velvet", "noir", "ice", "rose", "filter_warm", "filter_cool", "filter_golden", "filter_rose", "filter_vintage", "filter_faded", "filter_matte", "filter_vivid", "filter_punch", "filter_pastel", "filter_sepia", "filter_cyanotype", "filter_teal_orange", "filter_high_contrast", "filter_soft_light", "filter_night", "eclipse", "hidden"],
     "aodArtTreatment": ["blur", "clear", "monochrome_blur", "follow"],
     "aodColorMode": ["white", "album", "custom"],
@@ -349,6 +366,7 @@
     "wear_artist_font_tracking": { "type": "int", "min": -5, "max": 20 },
     "wear_artist_font_weight": { "type": "int", "min": 1, "max": 1000 },
     "wear_artist_text_case": { "type": "string", "valueSet": "textCase" },
+    "wear_background_layers": { "type": "string", "layerRule": "background-layer-stack-v1" },
     "wear_carousel_card_shape": { "type": "string", "valueSet": "coverShape" },
     "wear_chat_cover_shape": { "type": "string", "valueSet": "coverShape" },
     "wear_chat_show_cover": { "type": "boolean" },
