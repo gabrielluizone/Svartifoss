@@ -69,6 +69,7 @@ object BuiltInIconPicker {
             // reported missing here despite the action existing for a full release.
             com.svartifoss.snfell.common.R.drawable.action_open_quick_panel,
             com.svartifoss.snfell.common.R.drawable.action_lyrics,
+            com.svartifoss.snfell.common.R.drawable.action_progress,
             com.svartifoss.snfell.common.R.drawable.action_search,
             com.svartifoss.snfell.common.R.drawable.action_custom,
             // Mobile module drawables

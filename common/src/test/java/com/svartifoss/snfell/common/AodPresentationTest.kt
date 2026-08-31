@@ -53,6 +53,9 @@ class AodPresentationTest {
         assertEquals(
                 AodArtworkSpec(visible = true, blurred = true),
                 resolveAodArtwork(true, "classic", AodArtTreatment.FOLLOW, "expressive"))
+        assertEquals(
+                AodArtworkSpec(visible = true, photoFilter = AlbumArtFilter.WARM),
+                resolveAodArtwork(true, "classic", AodArtTreatment.FOLLOW, "filter_warm"))
         assertFalse(resolveAodArtwork(
                 true, "classic", AodArtTreatment.FOLLOW, "hidden").visible)
         assertFalse(resolveAodArtwork(

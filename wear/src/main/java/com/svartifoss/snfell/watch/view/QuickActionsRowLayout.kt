@@ -46,7 +46,11 @@ class QuickActionsRowLayout @JvmOverloads constructor(
         /** One action above two, forming a diamond/triangle. */
         DIAMOND,
         /** Horizontal deck with an enlarged centre card. */
-        CAROUSEL
+        CAROUSEL,
+        /** Two actions over one, forming a downward-pointing triangle. */
+        TRIANGLE,
+        /** Actions descend diagonally from left to right. */
+        STAIR
     }
 
     var arrangement: Arrangement = Arrangement.ROW
@@ -138,6 +142,20 @@ class QuickActionsRowLayout @JvmOverloads constructor(
             }
             Arrangement.CAROUSEL -> setMeasuredDimension(
                     measuredWidth, measuredHeight + (12f * density).roundToInt())
+            Arrangement.TRIANGLE -> {
+                val children = visibleChildren()
+                if (children.isEmpty()) return
+                val cellHeight = children.maxOf { it.measuredHeight }
+                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec),
+                        if (children.size <= 2) cellHeight else cellHeight * 2 + compactGapPx)
+            }
+            Arrangement.STAIR -> {
+                val children = visibleChildren()
+                if (children.isEmpty()) return
+                val cellHeight = children.maxOf { it.measuredHeight }
+                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec),
+                        cellHeight + compactGapPx * (children.size - 1))
+            }
         }
     }
 
@@ -170,6 +188,8 @@ class QuickActionsRowLayout @JvmOverloads constructor(
                 super.onLayout(changed, l, t, r, b)
                 applyCarouselEmphasis()
             }
+            Arrangement.TRIANGLE -> layoutAsTriangle(r - l)
+            Arrangement.STAIR -> layoutAsStair(r - l)
         }
     }
 
@@ -296,6 +316,35 @@ class QuickActionsRowLayout @JvmOverloads constructor(
                 child.scaleY = .88f
                 child.alpha = .82f
             }
+        }
+    }
+
+    private fun layoutAsTriangle(width: Int) {
+        val children = visibleChildren()
+        if (children.isEmpty()) return
+        val top = children.take(2)
+        val topWidth = top.sumOf { it.measuredWidth } + compactGapPx * (top.size - 1)
+        var x = (width - topWidth) / 2
+        top.forEach { child ->
+            child.layout(x, 0, x + child.measuredWidth, child.measuredHeight)
+            x += child.measuredWidth + compactGapPx
+        }
+        children.drop(2).forEachIndexed { index, child ->
+            val childX = (width - child.measuredWidth) / 2
+            val y = top.maxOf { it.measuredHeight } + compactGapPx + index * compactGapPx
+            child.layout(childX, y, childX + child.measuredWidth, y + child.measuredHeight)
+        }
+    }
+
+    private fun layoutAsStair(width: Int) {
+        val children = visibleChildren()
+        if (children.isEmpty()) return
+        val usableX = (width - children.maxOf { it.measuredWidth }).coerceAtLeast(0)
+        children.forEachIndexed { index, child ->
+            val fraction = if (children.size == 1) .5f else index / (children.size - 1f)
+            val x = (usableX * fraction).roundToInt()
+            val y = index * compactGapPx
+            child.layout(x, y, x + child.measuredWidth, y + child.measuredHeight)
         }
     }
 

@@ -269,6 +269,24 @@
             android:launchMode="singleTop"
             android:noHistory="true" />
 
+        <!-- Dedicated volume/progress screens, reachable only by assigning "Open volume screen" /
+             "Open progress screen" to a button, gesture or quick-panel slot - additional to, never
+             a replacement for, the existing rotary/gesture-triggered transient overlay. Same
+             transient shape as the queue and menu above: noHistory, dismissed on screen-off. -->
+        <activity
+            android:name=".watch.view.volume.VolumeActivity"
+            android:exported="false"
+            android:theme="@style/QueueTheme"
+            android:launchMode="singleTop"
+            android:noHistory="true" />
+
+        <activity
+            android:name=".watch.view.progress.ProgressActivity"
+            android:exported="false"
+            android:theme="@style/QueueTheme"
+            android:launchMode="singleTop"
+            android:noHistory="true" />
+
         <!-- Compose actions/custom-list menu (replaces the old bottom drawer). noHistory so it
              dismisses on screen-off, matching the drawer's close-on-ambient behavior. -->
         <activity

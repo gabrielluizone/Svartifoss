@@ -27,6 +27,9 @@ enum class AccentFloorStyle(
 ) {
     OFF("off", 0f, 1f, 1f),
 
+    /** A hairline hint at the bezel, useful when the lower chrome is already visually busy. */
+    WHISPER("whisper", 0.14f, 0.72f, 0.78f),
+
     /** Barely there: a hint of colour at the rim, for faces with content near the bottom. */
     SOFT("soft", 0.26f, 0.62f, 0.70f),
 
@@ -34,7 +37,19 @@ enum class AccentFloorStyle(
     STANDARD("standard", 0.44f, 0.55f, 0.62f),
 
     /** Reaches further up the screen and holds more colour. */
-    BOLD("bold", 0.62f, 0.45f, 0.52f);
+    BOLD("bold", 0.62f, 0.45f, 0.52f),
+
+    /** A brighter pool that reaches behind the complete lower control row. */
+    RADIANT("radiant", 0.78f, 0.36f, 0.43f),
+
+    /** A crisp but shallow accent shimmer between Standard and Radiant. */
+    GLIMMER("glimmer", 0.70f, 0.50f, 0.58f),
+
+    /** The most graphic option: a deep accent field rising almost to the screen centre. */
+    FLOOD("flood", 0.92f, 0.27f, 0.35f),
+
+    /** A dense, low floor that is darker and more contained than Flood. */
+    DEEP("deep", 0.86f, 0.40f, 0.56f);
 
     val isVisible: Boolean get() = this != OFF
 

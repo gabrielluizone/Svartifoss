@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Additive catalogs keep existing localized arrays index-stable. -->
+    <string-array name="album_art_style_extra_entries">
+        <item>Ocean wash</item>
+        <item>Sunset wash</item>
+        <item>Center spotlight</item>
+        <item>Glass veil</item>
+        <item>Velvet</item>
+        <item>Noir spotlight</item>
+        <item>Ice wash</item>
+        <item>Rose bloom</item>
+        <item>Filter · Warm</item>
+        <item>Filter · Cool</item>
+        <item>Filter · Golden hour</item>
+        <item>Filter · Rosé</item>
+        <item>Filter · Vintage film</item>
+        <item>Filter · Faded film</item>
+        <item>Filter · Matte</item>
+        <item>Filter · Vivid</item>
+        <item>Filter · Punch</item>
+        <item>Filter · Pastel</item>
+        <item>Filter · Sepia</item>
+        <item>Filter · Cyanotype</item>
+        <item>Filter · Teal &amp; orange</item>
+        <item>Filter · High contrast</item>
+        <item>Filter · Soft light</item>
+        <item>Filter · Night</item>
+    </string-array>
+    <string-array name="album_art_style_extra_values" translatable="false">
+        <item>ocean</item>
+        <item>sunset</item>
+        <item>spotlight</item>
+        <item>glass_veil</item>
+        <item>velvet</item>
+        <item>noir</item>
+        <item>ice</item>
+        <item>rose</item>
+        <item>filter_warm</item>
+        <item>filter_cool</item>
+        <item>filter_golden</item>
+        <item>filter_rose</item>
+        <item>filter_vintage</item>
+        <item>filter_faded</item>
+        <item>filter_matte</item>
+        <item>filter_vivid</item>
+        <item>filter_punch</item>
+        <item>filter_pastel</item>
+        <item>filter_sepia</item>
+        <item>filter_cyanotype</item>
+        <item>filter_teal_orange</item>
+        <item>filter_high_contrast</item>
+        <item>filter_soft_light</item>
+        <item>filter_night</item>
+    </string-array>
+
+    <string-array name="player_shading_style_extra_entries">
+        <item>Top fade</item>
+        <item>Center spotlight</item>
+        <item>Diagonal shadow</item>
+        <item>Left curtain</item>
+        <item>Right curtain</item>
+        <item>Center band</item>
+        <item>Crossfade</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_values" translatable="false">
+        <item>top_fade</item>
+        <item>center_spotlight</item>
+        <item>diagonal</item>
+        <item>left_curtain</item>
+        <item>right_curtain</item>
+        <item>center_band</item>
+        <item>crossfade</item>
+    </string-array>
+
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Reverse leaf</item>
+        <item>Reverse drop</item>
+        <item>Pebble</item>
+        <item>Arch</item>
+        <item>Shield</item>
+        <item>Reverse arch</item>
+        <item>Reverse shield</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_values" translatable="false">
+        <item>leaf_reverse</item>
+        <item>drop_reverse</item>
+        <item>pebble</item>
+        <item>arch</item>
+        <item>shield</item>
+        <item>arch_reverse</item>
+        <item>shield_reverse</item>
+    </string-array>
+
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Whisper</item>
+        <item>Radiant</item>
+        <item>Flood</item>
+        <item>Glimmer</item>
+        <item>Deep glow</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_values" translatable="false">
+        <item>whisper</item>
+        <item>radiant</item>
+        <item>flood</item>
+        <item>glimmer</item>
+        <item>deep</item>
+    </string-array>
+
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Album outline</item>
+        <item>Album gradient</item>
+        <item>Secondary album color</item>
+        <item>Album glass</item>
+        <item>Tertiary album color</item>
+        <item>Neon outline</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_values" translatable="false">
+        <item>outline_album</item>
+        <item>gradient_album</item>
+        <item>secondary</item>
+        <item>glass_album</item>
+        <item>tertiary</item>
+        <item>neon_outline</item>
+    </string-array>
+</resources>

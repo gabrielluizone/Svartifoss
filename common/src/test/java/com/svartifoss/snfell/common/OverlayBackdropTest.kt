@@ -26,6 +26,8 @@ class OverlayBackdropTest {
             "midnight" to OverlayBackdrop.MIDNIGHT,
             "halo" to OverlayBackdrop.HALO,
             "smoke" to OverlayBackdrop.SMOKE,
+            "sunrise" to OverlayBackdrop.SUNRISE,
+            "deep_ocean" to OverlayBackdrop.DEEP_OCEAN,
             "liquid_glass" to OverlayBackdrop.LIQUID_GLASS,
             "expressive" to OverlayBackdrop.EXPRESSIVE,
             "expressive_no_blur" to OverlayBackdrop.EXPRESSIVE_NO_BLUR

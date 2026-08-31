@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -34,6 +33,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.TrackMetadataFields
@@ -105,7 +105,12 @@ private const val POSITION_REFRESH_MS = 60L
  * What it owns is the arrangement.
  */
 @Composable
-fun MetadataFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
+fun MetadataFace(
+        state: NowPlayingFaceState,
+        listener: NowPlayingFaceListener,
+        coverShape: CoverShape = CoverShape.ROUNDED,
+        showCover: Boolean = true
+) {
     if (state.ambient) {
         MetadataAmbient(state)
         return
@@ -129,7 +134,7 @@ fun MetadataFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center
         ) {
-            Identity(state, screen)
+            Identity(state, screen, coverShape, showCover)
             Box(Modifier.height(screen * 0.045f))
             MetadataTable(state, rowBudget)
         }
@@ -149,16 +154,22 @@ fun MetadataFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
 
 /** Cover, title and artist: the part every face shows, kept small so the table has the screen. */
 @Composable
-private fun Identity(state: NowPlayingFaceState, screen: Dp) {
+private fun Identity(
+        state: NowPlayingFaceState,
+        screen: Dp,
+        coverShape: CoverShape,
+        showCover: Boolean
+) {
     val art = state.albumArt?.takeUnless { state.albumArtHidden }
-    if (art != null) {
+    if (art != null && showCover) {
+        val size = screen * 0.17f
         Image(
                 bitmap = art,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                        .size(screen * 0.17f)
-                        .clip(RoundedCornerShape(percent = 22)))
+                        .size(size)
+                        .clip(coverShape.toComposeShape(size)))
         Box(Modifier.height(screen * 0.025f))
     }
 

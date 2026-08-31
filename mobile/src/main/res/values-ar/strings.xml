@@ -1503,6 +1503,7 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>مربع</item>
         <item>مربع مستدير</item>
         <item>دائرة</item>
+        <item>نمط سامسونج</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">استخدام الخط في كل مكان</string>

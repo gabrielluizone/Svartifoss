@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Banho oceânico</item>
+        <item>Banho de pôr do sol</item>
+        <item>Holofote central</item>
+        <item>Véu de vidro</item>
+        <item>Veludo</item>
+        <item>Holofote noir</item>
+        <item>Banho de gelo</item>
+        <item>Flor rosa</item>
+        <item>Filtro · Quente</item>
+        <item>Filtro · Frio</item>
+        <item>Filtro · Hora dourada</item>
+        <item>Filtro · Rosé</item>
+        <item>Filtro · Filme vintage</item>
+        <item>Filtro · Filme desbotado</item>
+        <item>Filtro · Fosco</item>
+        <item>Filtro · Vívido</item>
+        <item>Filtro · Intenso</item>
+        <item>Filtro · Pastel</item>
+        <item>Filtro · Sépia</item>
+        <item>Filtro · Cianótipo</item>
+        <item>Filtro · Verde-azulado e laranja</item>
+        <item>Filtro · Alto contraste</item>
+        <item>Filtro · Luz suave</item>
+        <item>Filtro · Noturno</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Degradê superior</item>
+        <item>Holofote central</item>
+        <item>Sombra diagonal</item>
+        <item>Cortina esquerda</item>
+        <item>Cortina direita</item>
+        <item>Faixa central</item>
+        <item>Degradê cruzado</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Folha invertida</item>
+        <item>Gota invertida</item>
+        <item>Seixo</item>
+        <item>Arco</item>
+        <item>Escudo</item>
+        <item>Arco invertido</item>
+        <item>Escudo invertido</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Sussurro</item>
+        <item>Radiante</item>
+        <item>Inundação</item>
+        <item>Cintilação</item>
+        <item>Brilho profundo</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Contorno do álbum</item>
+        <item>Gradiente do álbum</item>
+        <item>Cor secundária do álbum</item>
+        <item>Vidro do álbum</item>
+        <item>Cor terciária do álbum</item>
+        <item>Contorno neon</item>
+    </string-array>
+</resources>

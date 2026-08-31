@@ -1475,6 +1475,7 @@
         <item>Segi empat sama</item>
         <item>Segi empat bulat</item>
         <item>Bulatan</item>
+        <item>Gaya Samsung</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Gunakan fon di mana-mana</string>

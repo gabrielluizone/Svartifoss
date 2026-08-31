@@ -766,6 +766,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         currentMediaController?.transportControls?.seekTo(positionMs)
     }
 
+    /** Issued unconditionally, like every transport command in this switch - a session that does
+     *  not implement ACTION_SET_PLAYBACK_SPEED reports the same speed back on its next state,
+     *  which is a harmless no-op rather than a reason to withhold the command. */
+    private fun setPlaybackSpeed(multiplier: Float) {
+        currentMediaController?.transportControls?.setPlaybackSpeed(multiplier)
+    }
+
     /** Seeks by [deltaMs] relative to the session's LIVE position. Senders like the Tile only
      *  hold a snapshot that may be many seconds stale (30s refresh), so the phone - not the
      *  sender - resolves the actual target position. */
@@ -2715,6 +2722,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
             CommPaths.MESSAGE_SEEK_RELATIVE -> {
                 seekRelative(ByteBuffer.wrap(event.data).long)
+            }
+            CommPaths.MESSAGE_SET_PLAYBACK_SPEED -> {
+                setPlaybackSpeed(FloatPacker.unpackFloat(event.data))
             }
             CommPaths.MESSAGE_TOGGLE_PLAY_PAUSE -> {
                 togglePlayPause()

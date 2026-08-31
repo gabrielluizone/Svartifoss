@@ -1501,6 +1501,7 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>Čtverec</item>
         <item>Zaoblený čtverec</item>
         <item>Kruh</item>
+        <item>Styl Samsung</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Používat písmo všude</string>

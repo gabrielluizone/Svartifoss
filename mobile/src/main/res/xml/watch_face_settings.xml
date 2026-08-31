@@ -92,6 +92,53 @@
             android:entryValues="@array/wear_cover_shape_values"
             android:layout="@layout/pref_item" />
 
+        <!-- Whether Note draws its cover disc at all - its own switch rather than a "none" entry
+             in the shape list above, since hiding the disc is a layout decision each face makes,
+             not a corner radius the shared shape vocabulary can express. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_note_show_cover"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_wear_note_show_cover"
+            android:layout="@layout/pref_switch_item" />
+
+        <!-- Chat's avatar, cut from the same shape vocabulary as the rows above. Its own key so
+             choosing a shape here cannot restyle Note's disc or the Carousel rail. -->
+        <ListPreference
+            android:defaultValue="circle"
+            android:key="wear_chat_cover_shape"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_wear_chat_cover_shape"
+            android:summary="%s"
+            android:entries="@array/wear_cover_shape_entries"
+            android:entryValues="@array/wear_cover_shape_values"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_chat_show_cover"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_wear_chat_show_cover"
+            android:layout="@layout/pref_switch_item" />
+
+        <!-- Metadata's small identity thumbnail, same shape vocabulary again. -->
+        <ListPreference
+            android:defaultValue="rounded"
+            android:key="wear_metadata_cover_shape"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_wear_metadata_cover_shape"
+            android:summary="%s"
+            android:entries="@array/wear_cover_shape_entries"
+            android:entryValues="@array/wear_cover_shape_values"
+            android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_metadata_show_cover"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_wear_metadata_show_cover"
+            android:layout="@layout/pref_switch_item" />
+
         <!-- Split paints its own lower panel. Keep this layout-specific control beside the face
              picker; it is hidden for every renderer that cannot consume it. -->
         <ListPreference
@@ -1438,6 +1485,24 @@
             android:entries="@array/wear_accent_floor_entries"
             android:entryValues="@array/wear_accent_floor_values"
             android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="album"
+            android:key="wear_accent_floor_color_mode"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_accent_floor_color"
+            android:summary="%s"
+            android:entries="@array/wear_accent_floor_color_entries"
+            android:entryValues="@array/wear_accent_floor_color_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_accent_floor_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_accent_floor_custom_color"
+            android:summary="@string/setting_wear_accent_floor_custom_color_description"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
 
         <ListPreference
             android:key="album_art_style"

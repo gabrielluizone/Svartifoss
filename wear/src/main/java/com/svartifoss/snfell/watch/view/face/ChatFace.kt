@@ -63,6 +63,7 @@ import androidx.wear.compose.material3.Icon
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.ColorFilter
 import com.svartifoss.snfell.common.AdaptiveTextContrast
+import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.common.R as commonR
@@ -100,7 +101,12 @@ import com.svartifoss.snfell.watch.view.compose.FaceClock
  * everywhere else. See [ChatActionRow].
  */
 @Composable
-fun ChatFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
+fun ChatFace(
+        state: NowPlayingFaceState,
+        listener: NowPlayingFaceListener,
+        coverShape: CoverShape = CoverShape.CIRCLE,
+        showCover: Boolean = true
+) {
     if (state.ambient) {
         ChatAmbient(state)
         return
@@ -155,7 +161,9 @@ fun ChatFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
                     state = state,
                     bubbleColor = outgoing,
                     accent = accent,
-                    screen = screen)
+                    screen = screen,
+                    coverShape = coverShape,
+                    showCover = showCover)
 
             Spacer(Modifier.height(FaceGeometry.Chat.VOICE_TO_ACTION_GAP_DP.dp))
             ChatActionRow(state = state, listener = listener, accent = accent, screen = screen)
@@ -331,7 +339,9 @@ private fun VoiceBubble(
         state: NowPlayingFaceState,
         bubbleColor: Color,
         accent: Color,
-        screen: Dp
+        screen: Dp,
+        coverShape: CoverShape,
+        showCover: Boolean
 ) {
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End) {
         Box(
@@ -350,8 +360,17 @@ private fun VoiceBubble(
                     modifier = Modifier.fillMaxSize(),
                     verticalAlignment = Alignment.CenterVertically
             ) {
-                Avatar(state.albumArt, accent, size = FaceGeometry.Chat.AVATAR_SIZE_DP.dp)
-                Spacer(Modifier.width(FaceGeometry.Chat.AVATAR_TO_WAVE_GAP_DP.dp))
+                // Hiding the avatar is a layout choice, not a shape: the waveform's own weight(1f)
+                // already claims whatever width a hidden avatar and its gap would have taken, so
+                // nothing else here has to change to make room for it.
+                if (showCover) {
+                    Avatar(
+                            state.albumArt,
+                            accent,
+                            shape = coverShape,
+                            size = FaceGeometry.Chat.AVATAR_SIZE_DP.dp)
+                    Spacer(Modifier.width(FaceGeometry.Chat.AVATAR_TO_WAVE_GAP_DP.dp))
+                }
                 // Centred in what is left, with nothing stacked under it - that stacking is what
                 // used to push the waveform above the bubble's midline by half a line of text.
                 Box(
@@ -399,13 +418,15 @@ private fun VoiceBubble(
     }
 }
 
-/** The album cover as the sender's profile picture; a flat accent disc before any art arrives. */
+/** The album cover as the sender's profile picture; a flat accent disc before any art arrives.
+ *  Cut to the user's chosen [shape] - the same [CoverShape] vocabulary Note's disc and Carousel's
+ *  rail already offer, since a circle is only this face's default, not a rule. */
 @Composable
-private fun Avatar(art: ImageBitmap?, accent: Color, size: Dp) {
+private fun Avatar(art: ImageBitmap?, accent: Color, shape: CoverShape, size: Dp) {
     Box(
             modifier = Modifier
                     .size(size)
-                    .clip(CircleShape)
+                    .clip(shape.toComposeShape(size))
                     .background(accent.copy(alpha = .55f)),
             contentAlignment = Alignment.Center
     ) {

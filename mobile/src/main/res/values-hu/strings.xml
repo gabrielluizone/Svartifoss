@@ -1499,6 +1499,7 @@ Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen
         <item>Négyzet</item>
         <item>Kerekített négyzet</item>
         <item>Kör</item>
+        <item>Samsung stílus</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Betűtípus használata mindenhol</string>

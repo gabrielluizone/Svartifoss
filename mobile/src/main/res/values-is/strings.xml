@@ -1439,6 +1439,7 @@
         <item>Ferningslaga</item>
         <item>Squircle</item>
         <item>Hringlaga</item>
+        <item>Samsung stíll</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Nota letur alls staðar</string>

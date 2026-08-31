@@ -258,9 +258,9 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
             showInvalidAndFinish()
             return
         }
-        val ready = themeRepository.prepareCommunityThemeSubmission(profileId, initialName)
-                as? CommunityThemeSubmissionDraftResult.Ready ?: run {
-            showInvalidAndFinish()
+        val prepared = themeRepository.prepareCommunityThemeSubmission(profileId, initialName)
+        val ready = prepared as? CommunityThemeSubmissionDraftResult.Ready ?: run {
+            showInvalidAndFinish(unsupportedSettingMessage(prepared))
             return
         }
         val publicProfile = themeRepository.parsePublishedProfile(ready.draft.profileJson()) ?: run {
@@ -330,7 +330,8 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
                 publicNameLayout.error = getString(R.string.community_theme_submit_name_required)
                 publicNameInput.requestFocus()
             } else {
-                showError(getString(R.string.community_theme_submit_invalid))
+                showError(unsupportedSettingMessage(draftResult)
+                        ?: getString(R.string.community_theme_submit_invalid))
             }
             return
         }
@@ -513,9 +514,33 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showInvalidAndFinish() {
-        Toast.makeText(this, R.string.community_theme_submit_invalid, Toast.LENGTH_LONG).show()
+    private fun showInvalidAndFinish(message: String? = null) {
+        Toast.makeText(
+                this,
+                message ?: getString(R.string.community_theme_submit_invalid),
+                Toast.LENGTH_LONG).show()
         finish()
+    }
+
+    /**
+     * Turns the one refusal a person can act on into a sentence naming the control to change.
+     *
+     * Every other way [CommunityThemeSubmissionDraftResult] fails describes a broken or oversized
+     * profile, where there is nothing to point at; this one is a choice they made in the Watch
+     * appearance tab. Falls back to naming just the setting when the stored value has no label in
+     * its picker, since the setting alone is already the whole of what was missing before.
+     */
+    private fun unsupportedSettingMessage(
+            result: CommunityThemeSubmissionDraftResult
+    ): String? {
+        if (result !is CommunityThemeSubmissionDraftResult.UnsupportedSetting) return null
+        val setting = CommunityThemeSettingNames.settingTitle(this, result.key) ?: return null
+        val value = CommunityThemeSettingNames.valueLabel(this, result.key, result.value)
+        return if (value != null) {
+            getString(R.string.community_theme_submit_unsupported_setting_value, setting, value)
+        } else {
+            getString(R.string.community_theme_submit_unsupported_setting, setting)
+        }
     }
 
     companion object {

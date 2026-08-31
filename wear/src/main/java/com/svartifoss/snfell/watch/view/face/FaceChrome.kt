@@ -136,7 +136,23 @@ internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
             PlayerBackgroundStyle.BLURRED_BLACK_AND_WHITE,
             PlayerBackgroundStyle.SQUARE_SHARP,
             PlayerBackgroundStyle.SQUARE_SOFT,
-            PlayerBackgroundStyle.SQUARE -> Unit
+            PlayerBackgroundStyle.SQUARE,
+            PlayerBackgroundStyle.FILTER_WARM,
+            PlayerBackgroundStyle.FILTER_COOL,
+            PlayerBackgroundStyle.FILTER_GOLDEN,
+            PlayerBackgroundStyle.FILTER_ROSE,
+            PlayerBackgroundStyle.FILTER_VINTAGE,
+            PlayerBackgroundStyle.FILTER_FADED,
+            PlayerBackgroundStyle.FILTER_MATTE,
+            PlayerBackgroundStyle.FILTER_VIVID,
+            PlayerBackgroundStyle.FILTER_PUNCH,
+            PlayerBackgroundStyle.FILTER_PASTEL,
+            PlayerBackgroundStyle.FILTER_SEPIA,
+            PlayerBackgroundStyle.FILTER_CYANOTYPE,
+            PlayerBackgroundStyle.FILTER_TEAL_ORANGE,
+            PlayerBackgroundStyle.FILTER_HIGH_CONTRAST,
+            PlayerBackgroundStyle.FILTER_SOFT_LIGHT,
+            PlayerBackgroundStyle.FILTER_NIGHT -> Unit
 
             PlayerBackgroundStyle.EXPRESSIVE,
             PlayerBackgroundStyle.EXPRESSIVE_NO_BLUR -> {
@@ -335,6 +351,68 @@ internal fun PlayerBackgroundTreatment(state: NowPlayingFaceState) {
                         center = Offset(size.width * .82f, size.height * .84f))
             }
 
+            PlayerBackgroundStyle.OCEAN -> drawRect(brush = Brush.verticalGradient(
+                    0f to Color.Transparent,
+                    .48f to tertiary.copy(alpha = opacity(.22f)),
+                    1f to Color(0xFF063C4C).copy(alpha = authoredOpacity(.78f))))
+
+            PlayerBackgroundStyle.SUNSET -> drawRect(brush = Brush.linearGradient(
+                    0f to Color.Transparent,
+                    .46f to Color(0xFFFF6F61).copy(alpha = opacity(.28f)),
+                    .72f to Color(0xFFFFB347).copy(alpha = opacity(.34f)),
+                    1f to Color.Black.copy(alpha = authoredOpacity(.62f)),
+                    start = Offset.Zero, end = Offset(size.width, size.height)))
+
+            PlayerBackgroundStyle.SPOTLIGHT -> drawRect(brush = Brush.radialGradient(
+                    0f to Color.Transparent,
+                    .44f to deep.copy(alpha = opacity(.16f)),
+                    1f to Color.Black.copy(alpha = authoredOpacity(.90f)),
+                    center = center, radius = size.minDimension * .72f))
+
+            PlayerBackgroundStyle.GLASS_VEIL -> {
+                drawRect(Color.White.copy(alpha = opacity(.12f)))
+                drawCircle(
+                        brush = Brush.sweepGradient(
+                                colors = listOf(Color.White, primary, Color.White, secondary, Color.White),
+                                center = center),
+                        radius = size.minDimension * .485f,
+                        center = center,
+                        alpha = opacity(.72f),
+                        style = Stroke(width = size.minDimension * .018f))
+            }
+
+            PlayerBackgroundStyle.VELVET -> {
+                drawRect(Color(0xFF120B16).copy(alpha = authoredOpacity(.74f)))
+                drawCircle(
+                        brush = Brush.radialGradient(
+                                0f to primary.copy(alpha = opacity(.34f)),
+                                1f to Color.Transparent),
+                        radius = size.minDimension * .62f,
+                        center = Offset(size.width * .34f, size.height * .76f))
+            }
+
+            PlayerBackgroundStyle.NOIR -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.58f)))
+                drawRect(brush = Brush.radialGradient(
+                        0f to Color.White.copy(alpha = opacity(.10f)),
+                        .52f to Color.Transparent,
+                        1f to Color.Black.copy(alpha = authoredOpacity(.82f)),
+                        center = Offset(size.width * .5f, size.height * .42f),
+                        radius = size.minDimension * .58f))
+            }
+
+            PlayerBackgroundStyle.ICE -> drawRect(brush = Brush.verticalGradient(
+                    0f to Color(0xFFB9F3FF).copy(alpha = opacity(.34f)),
+                    .48f to Color(0xFF3B82C4).copy(alpha = opacity(.22f)),
+                    1f to Color(0xFF061426).copy(alpha = authoredOpacity(.76f))))
+
+            PlayerBackgroundStyle.ROSE -> drawRect(brush = Brush.radialGradient(
+                    0f to Color(0xFFFF8CAB).copy(alpha = opacity(.42f)),
+                    .55f to primary.copy(alpha = opacity(.18f)),
+                    1f to Color(0xFF1B0810).copy(alpha = authoredOpacity(.68f)),
+                    center = Offset(size.width * .72f, size.height * .74f),
+                    radius = size.minDimension * .72f))
+
             PlayerBackgroundStyle.ECLIPSE,
             PlayerBackgroundStyle.HIDDEN -> drawRect(Color.Black)
         }
@@ -356,7 +434,7 @@ internal fun PlayerAccentFloor(state: NowPlayingFaceState) {
     if (state.accentFloor.isVisible && !state.ambient) {
         Box(Modifier
                 .fillMaxSize()
-                .accentFloorGlow(Color(state.accentColor), state.accentFloor))
+                .accentFloorGlow(Color(state.accentFloorColor), state.accentFloor))
     }
 }
 
@@ -446,6 +524,55 @@ internal fun PlayerShadingOverlay(state: NowPlayingFaceState) {
                             .34f to Color.Transparent,
                             .66f to Color.Transparent,
                             1f to shaded(.72f)))
+
+            PlayerShadingStyle.TOP_FADE -> drawRect(
+                    brush = Brush.verticalGradient(
+                            0f to shaded(.94f),
+                            .58f to Color.Transparent,
+                            1f to Color.Transparent))
+
+            PlayerShadingStyle.CENTER_SPOTLIGHT -> drawRect(
+                    brush = Brush.radialGradient(
+                            0f to Color.Transparent,
+                            .38f to Color.Transparent,
+                            1f to shaded(.90f),
+                            center = center,
+                            radius = size.maxDimension * .64f))
+
+            PlayerShadingStyle.DIAGONAL -> drawRect(
+                    brush = Brush.linearGradient(
+                            0f to Color.Transparent,
+                            .40f to Color.Transparent,
+                            1f to shaded(.92f),
+                            start = Offset(size.width, 0f),
+                            end = Offset(0f, size.height)))
+
+            PlayerShadingStyle.LEFT_CURTAIN -> drawRect(
+                    brush = Brush.horizontalGradient(
+                            0f to shaded(.90f),
+                            .56f to Color.Transparent,
+                            1f to Color.Transparent))
+
+            PlayerShadingStyle.RIGHT_CURTAIN -> drawRect(
+                    brush = Brush.horizontalGradient(
+                            0f to Color.Transparent,
+                            .44f to Color.Transparent,
+                            1f to shaded(.90f)))
+
+            PlayerShadingStyle.CENTER_BAND -> drawRect(
+                    brush = Brush.verticalGradient(
+                            0f to shaded(.84f),
+                            .40f to Color.Transparent,
+                            .60f to Color.Transparent,
+                            1f to shaded(.84f)))
+
+            PlayerShadingStyle.CROSSFADE -> drawRect(
+                    brush = Brush.linearGradient(
+                            0f to shaded(.78f),
+                            .5f to Color.Transparent,
+                            1f to shaded(.78f),
+                            start = Offset.Zero,
+                            end = Offset(size.width, size.height)))
 
             PlayerShadingStyle.FOLLOW -> Unit // Resolved to BOTTOM_FADE above.
         }

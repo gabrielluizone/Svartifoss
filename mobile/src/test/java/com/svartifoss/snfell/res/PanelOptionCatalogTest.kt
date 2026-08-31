@@ -17,21 +17,21 @@ class PanelOptionCatalogTest {
 
     private val catalogs = listOf(
             Catalog("wear_overlay_backdrop_style", "wear_overlay_backdrop_values",
-                    "wear_overlay_backdrop_extra_entries", "wear_overlay_backdrop_extra_values", 22),
+                    "wear_overlay_backdrop_extra_entries", "wear_overlay_backdrop_extra_values", 24),
             Catalog("wear_volume_style", "wear_volume_style_values",
-                    "wear_volume_style_extra_entries", "wear_volume_style_extra_values", 24),
+                    "wear_volume_style_extra_entries", "wear_volume_style_extra_values", 26),
             Catalog("wear_volume_layout", "wear_volume_layout_values",
-                    "wear_volume_layout_extra_entries", "wear_volume_layout_extra_values", 14),
+                    "wear_volume_layout_extra_entries", "wear_volume_layout_extra_values", 16),
             Catalog("wear_progress_style", "wear_progress_style_values",
-                    "wear_progress_style_extra_entries", "wear_progress_style_extra_values", 16),
+                    "wear_progress_style_extra_entries", "wear_progress_style_extra_values", 18),
             Catalog("wear_seek_style", "wear_seek_style_values",
-                    "wear_seek_style_extra_entries", "wear_seek_style_extra_values", 29),
+                    "wear_seek_style_extra_entries", "wear_seek_style_extra_values", 31),
             Catalog("wear_seek_layout", "wear_seek_layout_values",
-                    "wear_seek_layout_extra_entries", "wear_seek_layout_extra_values", 12),
+                    "wear_seek_layout_extra_entries", "wear_seek_layout_extra_values", 14),
             Catalog("wear_quick_panel_style", "wear_quick_panel_style_values",
-                    "wear_quick_panel_style_extra_entries", "wear_quick_panel_style_extra_values", 28),
+                    "wear_quick_panel_style_extra_entries", "wear_quick_panel_style_extra_values", 30),
             Catalog("wear_quick_panel_layout", "wear_quick_panel_layout_values",
-                    "wear_quick_panel_layout_extra_entries", "wear_quick_panel_layout_extra_values", 12),
+                    "wear_quick_panel_layout_extra_entries", "wear_quick_panel_layout_extra_values", 14),
             // Queue historically shares the base overlay-style list, then adds its own skins.
             Catalog("wear_queue_style", "wear_overlay_style_values",
                     "wear_queue_style_extra_entries", "wear_queue_style_extra_values", 26))
@@ -69,10 +69,10 @@ class PanelOptionCatalogTest {
         val entries = arrayItems(additions, "wear_progress_layout_entries")
         val values = arrayItems(additions, "wear_progress_layout_values")
         assertEquals(entries.size, values.size)
-        assertEquals(9, values.size)
+        assertEquals(11, values.size)
         assertEquals(
                 listOf("edge", "inset", "inner", "bold", "open_bottom", "open_top",
-                        "left_arc", "right_arc", "double"),
+                        "left_arc", "right_arc", "double", "open_left", "open_right"),
                 values)
     }
 

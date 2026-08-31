@@ -1475,6 +1475,7 @@
         <item>정사각형</item>
         <item>스쿼클</item>
         <item>원</item>
+        <item>삼성 스타일</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">모든 곳에 글꼴 사용</string>

@@ -36,6 +36,8 @@ class RootActionList : PhoneAction {
                 OpenQuickActionsPanelAction(context),
                 OpenPlaylistAction(context),
                 OpenLyricsAction(context),
+                OpenVolumeScreenAction(context),
+                OpenProgressScreenAction(context),
                 SearchAction(context),
                 OpenSearchHistoryAction(context),
                 OpenLibraryAction(context)

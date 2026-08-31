@@ -12,7 +12,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GestureDetectorCompat
 import com.svartifoss.snfell.common.R
 import com.svartifoss.snfell.common.ScreenQuadrant
-import kotlin.math.abs
+import com.svartifoss.snfell.common.ScreenSwipeDirection
+import com.svartifoss.snfell.common.ScreenSwipeResolver
 
 class FourWayTouchLayout : FrameLayout,
         GestureDetector.OnGestureListener,
@@ -48,8 +49,6 @@ class FourWayTouchLayout : FrameLayout,
         if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
             tapPulse.release()
             listener?.onTouchUp()
-        } else if (event.actionMasked == MotionEvent.ACTION_MOVE) {
-            listener?.onTouchMove(event.x, event.y)
         }
 
         return gestureDetector.onTouchEvent(event)
@@ -134,24 +133,13 @@ class FourWayTouchLayout : FrameLayout,
     // phone action to that direction (same as an unconfigured quadrant tap doing nothing) - this
     // layout itself no longer gates detection behind a separate on/off toggle.
     override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-        if (abs(velocityX) > abs(velocityY)) {
-            // Only leftward: a left-to-right swipe is the universal Wear OS "swipe to exit"
-            // gesture, so it's deliberately left unconsumed here and allowed to propagate to the
-            // system's own dismiss handling instead of being treated as a configurable action.
-            if (velocityX < 0 && abs(velocityX) > SWIPE_MIN_VELOCITY) {
-                listener?.onSwipeLeft()
-                return true
-            }
-        } else if (abs(velocityY) > SWIPE_MIN_VELOCITY) {
-            if (velocityY < 0) {
-                listener?.onUpwardsSwipe()
-            } else {
-                listener?.onDownwardsSwipe()
-            }
-            return true
+        when (ScreenSwipeResolver.resolve(velocityX, velocityY, SWIPE_MIN_VELOCITY)) {
+            ScreenSwipeDirection.UP -> listener?.onUpwardsSwipe()
+            ScreenSwipeDirection.DOWN -> listener?.onDownwardsSwipe()
+            ScreenSwipeDirection.LEFT -> listener?.onSwipeLeft()
+            null -> return false
         }
-
-        return false
+        return true
     }
 
     override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
@@ -201,12 +189,6 @@ class FourWayTouchLayout : FrameLayout,
          *  feedback at a higher z-order where it will actually be visible. Default no-op so
          *  existing listeners (e.g. the phone's touch-zone picker) don't need to implement it. */
         fun onTouchDown(x: Float, y: Float) {}
-
-        /** Live position while the finger is down, fired for every ACTION_MOVE between
-         *  [onTouchDown] and [onTouchUp] - lets a host record the path of an in-progress gesture
-         *  (e.g. a swipe trail) before it's classified as a tap, swipe, or long-press. Default
-         *  no-op so existing listeners don't need to implement it. */
-        fun onTouchMove(x: Float, y: Float) {}
 
         /** Matches a prior [onTouchDown] - fired on ACTION_UP/ACTION_CANCEL. */
         fun onTouchUp() {}

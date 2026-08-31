@@ -4,6 +4,9 @@
     <string name="watch_theme_manage">Manage themes</string>
     <string name="watch_theme_builtin_subtitle">Built-in theme · %1$s layout</string>
     <string name="watch_theme_custom_subtitle">Custom theme · %1$s layout</string>
+    <!-- %1$s is the device's community author name, %2$s the layout - deliberately no "layout"
+         word here, unlike watch_theme_custom_subtitle above: this is a byline, not a description. -->
+    <string name="watch_theme_custom_subtitle_authored">%1$s · %2$s</string>
     <string name="watch_theme_unknown_name">Unknown theme</string>
 
     <string name="watch_themes_title">Watch themes</string>
@@ -113,6 +116,8 @@
     <string name="community_theme_submit_author_locked">This account already publishes as %1$s. The fixed name has been restored; review it and submit again.</string>
     <string name="community_theme_submit_originality">This theme changes %1$d applicable visual settings. At least %2$d are needed before it can be reviewed.</string>
     <string name="community_theme_submit_invalid">This saved theme cannot be submitted. Return to My themes and try again.</string>
+    <string name="community_theme_submit_unsupported_setting_value">The gallery can’t accept “%2$s” for %1$s. Change that setting on this theme and submit it again.</string>
+    <string name="community_theme_submit_unsupported_setting">The gallery can’t accept this theme’s %1$s setting. Change it and submit the theme again.</string>
     <string name="community_theme_submit_duplicate">A theme with exactly these settings is already published on this layout. Change something visible before submitting it.</string>
     <string name="community_theme_submit_sign_in_cancelled">Google sign-in was cancelled. Your theme was not submitted.</string>
     <string name="community_theme_submit_limit_reached">You have already sent 3 themes in the last 24 hours. Try again after the oldest submission is 24 hours old.</string>

@@ -533,6 +533,14 @@ object MiscPreferences {
     val WEAR_ACCENT_FLOOR: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_accent_floor", AccentFloorStyle.DEFAULT.preferenceValue)
 
+    /** Palette source for the accent floor: album primary/secondary/tertiary or a fixed colour. */
+    val WEAR_ACCENT_FLOOR_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_accent_floor_color_mode", "album")
+
+    /** User-picked floor colour, read only when [WEAR_ACCENT_FLOOR_COLOR_MODE] is `custom`. */
+    val WEAR_ACCENT_FLOOR_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_accent_floor_custom_color", "")
+
     /** Draw the universal playback-progress ring at the screen edge, regardless of the selected
      *  player layout. */
     val WEAR_EDGE_PROGRESS_VISIBLE: PreferenceDefinition<Boolean> =
@@ -591,6 +599,35 @@ object MiscPreferences {
     val WEAR_NOTE_COVER_SHAPE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_note_cover_shape",
                     CoverShape.CIRCLE.preferenceValue)
+
+    /** Whether Note draws its cover disc at all - see [WEAR_NOTE_COVER_SHAPE]. Its own key rather
+     *  than folding "hidden" into the shape vocabulary itself: a shape is a corner radius every
+     *  consumer of [CoverShape] can draw the same way, while "nothing here" is a layout decision
+     *  each face has to make on its own (Note collapses its sentence to the centre; Chat's waveform
+     *  widens; Metadata's identity block shrinks) - the same "does this element exist" question
+     *  [WEAR_SHOW_SOURCE_ICON] already answers for the app-icon glyph, kept separate from *how*
+     *  that glyph looks. */
+    val WEAR_NOTE_SHOW_COVER: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_note_show_cover", true)
+
+    /** Silhouette of Chat's avatar - the same [CoverShape] vocabulary as [WEAR_NOTE_COVER_SHAPE]
+     *  and [WEAR_CAROUSEL_CARD_SHAPE], its own key for the same reason theirs is: a rail of cards,
+     *  a disc beside a sentence and a message avatar are three different compositions, and one
+     *  shared value would let choosing a shape for any of them silently restyle the others. */
+    val WEAR_CHAT_COVER_SHAPE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_chat_cover_shape", CoverShape.CIRCLE.preferenceValue)
+
+    /** Whether Chat draws the avatar in its voice bubble - see [WEAR_NOTE_SHOW_COVER]. */
+    val WEAR_CHAT_SHOW_COVER: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_chat_show_cover", true)
+
+    /** Silhouette of Metadata's small identity thumbnail - see [WEAR_CHAT_COVER_SHAPE]. */
+    val WEAR_METADATA_COVER_SHAPE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_metadata_cover_shape", CoverShape.ROUNDED.preferenceValue)
+
+    /** Whether Metadata draws its identity thumbnail - see [WEAR_NOTE_SHOW_COVER]. */
+    val WEAR_METADATA_SHOW_COVER: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_metadata_show_cover", true)
 
     /**
      * Whether [WEAR_FONT] also styles the menu, the queue and the shared chrome, instead of only
@@ -1183,8 +1220,10 @@ object MiscPreferences {
             WEAR_SHOW_TRACK_TITLE, WEAR_SHOW_TRACK_ARTIST,
             WEAR_PLAYER_CONTROLS_VISIBLE, WEAR_INTERNAL_PROGRESS_VISIBLE,
             WEAR_EDGE_PROGRESS_VISIBLE, WEAR_EDGE_SEEK_ENABLED, WEAR_ACCENT_FLOOR,
+            WEAR_ACCENT_FLOOR_COLOR_MODE, WEAR_ACCENT_FLOOR_CUSTOM_COLOR,
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
-            WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE, WEAR_NOTE_COVER_SHAPE,
+            WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE, WEAR_NOTE_COVER_SHAPE, WEAR_NOTE_SHOW_COVER,
+            WEAR_CHAT_COVER_SHAPE, WEAR_CHAT_SHOW_COVER, WEAR_METADATA_COVER_SHAPE, WEAR_METADATA_SHOW_COVER,
             WEAR_TRACK_TIME_MODE, WEAR_TRACK_TIME_FONT, WEAR_TRACK_TIME_FONT_WEIGHT,
             WEAR_TRACK_TIME_FONT_ITALIC, WEAR_TRACK_TIME_FONT_SCALE,
             WEAR_TRACK_TIME_FONT_OPACITY, WEAR_TRACK_TIME_FONT_TRACKING,

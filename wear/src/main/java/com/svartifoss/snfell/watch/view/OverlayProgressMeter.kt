@@ -27,6 +27,8 @@ class OverlayProgressMeter @JvmOverloads constructor(
         TIMELINE_TOP,
         TIMELINE_BOTTOM,
         SEGMENTS_TOP,
+        SEGMENTS_BOTTOM,
+        CENTER_STACK,
         VERTICAL_LEFT,
         VERTICAL_RIGHT,
         DIAL,
@@ -84,6 +86,11 @@ class OverlayProgressMeter @JvmOverloads constructor(
                 setHorizontalBounds(density, height * .27f, segmented = true)
                 drawSegments(canvas, density)
             }
+            Mode.SEGMENTS_BOTTOM -> {
+                setHorizontalBounds(density, height * .73f, segmented = true)
+                drawSegments(canvas, density)
+            }
+            Mode.CENTER_STACK -> drawCenterStack(canvas, density)
             Mode.VERTICAL_LEFT -> drawVerticalTimeline(canvas, density, left = true)
             Mode.VERTICAL_RIGHT -> drawVerticalTimeline(canvas, density, left = false)
             Mode.DIAL -> drawDial(canvas, density)
@@ -210,5 +217,26 @@ class OverlayProgressMeter @JvmOverloads constructor(
                 canvas.drawRoundRect(fill, radius, radius, paint)
             }
         }
+    }
+
+    private fun drawCenterStack(canvas: Canvas, density: Float) {
+        val meterWidth = min(width * .52f, 104f * density)
+        val meterHeight = 6f * density
+        listOf(height / 2f - 15f * density, height / 2f + 15f * density)
+                .forEachIndexed { index, centerY ->
+                    bounds.set((width - meterWidth) / 2f, centerY - meterHeight / 2f,
+                            (width + meterWidth) / 2f, centerY + meterHeight / 2f)
+                    val radius = meterHeight / 2f
+                    paint.style = Paint.Style.FILL
+                    paint.color = 0x30FFFFFF
+                    canvas.drawRoundRect(bounds, radius, radius, paint)
+                    val fraction = if (index == 0) progress else progress * .72f
+                    if (fraction > 0f) {
+                        paint.color = if (index == 0) accentColor else secondaryColor
+                        canvas.drawRoundRect(RectF(bounds.left, bounds.top,
+                                bounds.left + bounds.width() * fraction, bounds.bottom),
+                                radius, radius, paint)
+                    }
+                }
     }
 }

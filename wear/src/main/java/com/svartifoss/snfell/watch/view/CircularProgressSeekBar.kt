@@ -16,6 +16,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.watch.view.panel.PanelReadout
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
@@ -71,7 +72,11 @@ enum class RingStyle {
     /** Secondary-color lead followed by a primary-color progress head. */
     DUOTONE,
     /** Fine track plus an analogue radial pointer at the current position. */
-    NEEDLE;
+    NEEDLE,
+    /** Alternates primary and secondary blocks around the bezel. */
+    ALTERNATING,
+    /** Hairline track with a bright oversized progress head. */
+    SPARK;
 
     companion object {
         fun fromPref(value: String?): RingStyle = when (value) {
@@ -90,6 +95,8 @@ enum class RingStyle {
             "glow" -> GLOW
             "duotone" -> DUOTONE
             "needle" -> NEEDLE
+            "alternating" -> ALTERNATING
+            "spark" -> SPARK
             else -> SOLID
         }
     }
@@ -125,6 +132,10 @@ enum class ProgressRingLayout(
     LEFT_ARC(100f, 160f, 0f),
     /** Mirrored right bezel arc, also filling bottom-to-top. */
     RIGHT_ARC(80f, -160f, 0f),
+    /** Three-quarter ring whose gap is centred on the left edge. */
+    OPEN_LEFT(45f, 270f, 1f),
+    /** Three-quarter ring whose gap is centred on the right edge. */
+    OPEN_RIGHT(-135f, 270f, 1f),
     /** Two concentric full rings, the inner rail taking the secondary palette color. */
     DOUBLE(
             -90f,
@@ -143,6 +154,8 @@ enum class ProgressRingLayout(
             "open_top" -> OPEN_TOP
             "left_arc" -> LEFT_ARC
             "right_arc" -> RIGHT_ARC
+            "open_left" -> OPEN_LEFT
+            "open_right" -> OPEN_RIGHT
             "double" -> DOUBLE
             else -> EDGE
         }
@@ -160,6 +173,12 @@ class CircularProgressSeekBar : View {
         // Slightly longer than MusicViewModel's tick interval so each animation is still
         // in flight (and gets smoothly redirected) when the next tick's value arrives.
         private const val PROGRESS_ANIMATION_DURATION_MS = 600L
+
+        private const val MARKER_WIDTH_DP = 2.5f
+        /** How far the tick overshoots the ring band on each side, as a multiple of the stroke. */
+        private const val MARKER_LENGTH_SCALE = 2.4f
+
+        private const val CANCEL_REVEAL_DURATION_MS = 180L
 
         /** Hue-distance floor (degrees) for [hasVisibleHueSpread] - matches
          *  [ColorHarmony.MIN_DUOTONE_HUE_GAP], the same bar the palette math itself uses to decide
@@ -217,6 +236,51 @@ class CircularProgressSeekBar : View {
 
     /** Fired continuously while the ring is being dragged (including the initial touch-down). */
     var onSeekPreview: ((Float) -> Unit)? = null
+
+    /**
+     * Fired instead of [onSeekFinished] when the finger is released inside the cancel zone. The
+     * track's position is left exactly where it was, so the caller's job is only to put the screen
+     * back - see [SeekDragPolicy].
+     */
+    var onSeekCancelled: (() -> Unit)? = null
+
+    /**
+     * Fired when the finger crosses into (true) or back out of (false) the cancel zone, and once
+     * more with false when the gesture ends.
+     *
+     * The affordance lives with the caller rather than being painted here, because the thing it has
+     * to replace is the seek time - a sibling View on the player, a composable on the dedicated
+     * progress screen - and this View cannot reach either. Drawing its own marker beside that
+     * readout was the first attempt and it read as clutter: two things in the middle of the screen
+     * saying different things about the same gesture.
+     */
+    var onCancelArmedChanged: ((Boolean) -> Unit)? = null
+
+    /**
+     * Where playback actually was when this drag started.
+     *
+     * The whole reason the marker exists: [displayProgress] is overwritten by the finger from the
+     * first touch, so once a drag is under way nothing on screen says where the track is any more -
+     * the user is choosing a destination with no reference point for where they are leaving from.
+     */
+    private var dragOriginProgress = 0f
+
+    /** Angle-derived position of the finger, kept apart from [displayProgress] because while the
+     *  cancel is arming the two deliberately differ. */
+    private var fingerProgress = 0f
+
+    private var cancelArmed = false
+
+    /** 0f..1f reveal of the cancel affordance, and the same factor that walks the ring back to
+     *  [dragOriginProgress]. */
+    private var cancelReveal = 0f
+    private var cancelAnimator: ValueAnimator? = null
+
+    private val markerPaint = Paint().apply {
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        isAntiAlias = true
+    }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -353,8 +417,26 @@ class CircularProgressSeekBar : View {
     var progress: Float
         get() = displayProgress
         set(value) {
-            if (isDragging) return
-            animateProgressTo(value.coerceIn(0f, 1f))
+            val clamped = value.coerceIn(0f, 1f)
+            if (isDragging) {
+                // The arc belongs to the finger for the duration of the drag, but the *marker* is
+                // where the track actually is - and the track keeps playing while the user decides.
+                // Feeding the tick here is what makes it live; it was previously frozen at the
+                // value captured on touch-down, which is exactly the moment it stops being true.
+                if (dragOriginProgress != clamped) {
+                    dragOriginProgress = clamped
+                    // While the cancel is armed the arc is being walked back onto the marker, so a
+                    // marker that has moved has to take the arc with it or releasing would land on
+                    // a position the ring never showed.
+                    if (cancelReveal > 0f) {
+                        displayProgress = SeekDragPolicy.previewProgress(
+                                fingerProgress, dragOriginProgress, cancelReveal)
+                    }
+                    invalidate()
+                }
+                return
+            }
+            animateProgressTo(clamped)
         }
 
     private fun animateProgressTo(target: Float) {
@@ -495,7 +577,10 @@ class CircularProgressSeekBar : View {
 
         // A visually hidden ring remains a usable bezel target. Reveal it only for the lifetime of
         // an active drag, giving position feedback without changing the user's resting appearance.
-        if (!shouldDrawEdgeProgress(seekable, drawProgress, isDragging)) {
+        // `cancelReveal > 0` keeps the ring up for the affordance's fade-out after the finger has
+        // already lifted, so the cancel does not vanish in the same frame it takes effect.
+        val gestureVisible = isDragging || cancelReveal > 0f
+        if (!shouldDrawEdgeProgress(seekable, drawProgress, gestureVisible)) {
             return
         }
 
@@ -511,6 +596,76 @@ class CircularProgressSeekBar : View {
                     baseWidth * .76f,
                     allowPaletteGradient = false)
             foregroundPaint.color = originalColor
+        }
+
+        if (gestureVisible) {
+            drawSeekOriginMarker(canvas, baseWidth)
+        }
+    }
+
+    /**
+     * The tick showing where the track actually is, drawn only for the lifetime of a drag.
+     *
+     * A radial tick rather than a second dot on the arc: a dot at ring radius reads as another
+     * thumb, i.e. as a second thing being dragged, while a mark crossing the band reads as a scale
+     * marking - which is what it is. White with a dark outer stroke rather than the accent, because
+     * it has to stay legible on all twenty-odd ring styles, several of which are already painted in
+     * the accent at that exact radius.
+     */
+    private fun drawSeekOriginMarker(canvas: Canvas, baseWidth: Float) {
+        markerPaint.style = Paint.Style.STROKE
+        markerPaint.pathEffect = null
+        val density = resources.displayMetrics.density
+        val radius = circleBounds.width() / 2f
+        val angle = Math.toRadians(
+                (ringLayout.startAngle + dragOriginProgress * ringLayout.sweepAngle).toDouble())
+        val cosA = cos(angle).toFloat()
+        val sinA = sin(angle).toFloat()
+        val half = (baseWidth * MARKER_LENGTH_SCALE) / 2f
+        val cx = circleBounds.centerX()
+        val cy = circleBounds.centerY()
+        val innerR = radius - half
+        val outerR = radius + half
+
+        // The palette's tertiary rather than white on a black outline: the tick belongs to the
+        // same surface as the ring it crosses, and an outlined white mark read as a foreign object
+        // dropped on top of it. Tertiary is the slot that is furthest from the arc's own primary
+        // in every treatment, and it is lifted so a dark album cannot make the tick invisible.
+        markerPaint.color = markerColor()
+        markerPaint.strokeWidth = MARKER_WIDTH_DP * density
+        canvas.drawLine(
+                cx + cosA * innerR, cy + sinA * innerR,
+                cx + cosA * outerR, cy + sinA * outerR,
+                markerPaint)
+    }
+
+    private fun markerColor(): Int {
+        val palette = tertiaryColorInt.takeIf { it != 0 }
+                ?: secondaryColorInt.takeIf { it != 0 }
+                ?: foregroundPaint.color
+        return PanelReadout.liftedAccent(palette)
+    }
+
+    /**
+     * Runs [cancelReveal] to its target, redrawing the ring *and* re-emitting the preview on every
+     * frame - the time readout is a separate View owned by the caller, so without the second half
+     * the arc would walk back to the live position while the clock stayed frozen on the abandoned
+     * destination.
+     */
+    private fun animateCancelReveal(armed: Boolean) {
+        cancelAnimator?.cancel()
+        cancelAnimator = ValueAnimator.ofFloat(cancelReveal, if (armed) 1f else 0f).apply {
+            duration = CANCEL_REVEAL_DURATION_MS
+            addUpdateListener {
+                cancelReveal = it.animatedValue as Float
+                if (isDragging) {
+                    displayProgress = SeekDragPolicy.previewProgress(
+                            fingerProgress, dragOriginProgress, cancelReveal)
+                    onSeekPreview?.invoke(displayProgress)
+                }
+                invalidate()
+            }
+            start()
         }
     }
 
@@ -653,6 +808,31 @@ class CircularProgressSeekBar : View {
                     canvas, bounds, baseWidth, start, totalSweep)
             RingStyle.NEEDLE -> drawNeedleRing(
                     canvas, bounds, baseWidth, start, totalSweep, playedSweep)
+            RingStyle.ALTERNATING -> {
+                val alternating = DashPathEffect(
+                        floatArrayOf(baseWidth * 2.2f, baseWidth * .8f), 0f)
+                backgroundPaint.pathEffect = alternating
+                foregroundPaint.pathEffect = alternating
+                foregroundPaint.strokeCap = Paint.Cap.BUTT
+                backgroundPaint.strokeCap = Paint.Cap.BUTT
+                canvas.drawArc(bounds, start, totalSweep, false, backgroundPaint)
+                val original = foregroundPaint.color
+                foregroundPaint.color = resolvedSecondaryColor()
+                canvas.drawArc(bounds, start, playedSweep, false, foregroundPaint)
+                foregroundPaint.pathEffect = DashPathEffect(
+                        floatArrayOf(baseWidth * 2.2f, baseWidth * .8f), baseWidth * 3f)
+                foregroundPaint.color = original
+                canvas.drawArc(bounds, start, playedSweep, false, foregroundPaint)
+            }
+            RingStyle.SPARK -> {
+                foregroundPaint.strokeWidth = baseWidth * .42f
+                backgroundPaint.strokeWidth = baseWidth * .24f
+                canvas.drawArc(bounds, start, totalSweep, false, backgroundPaint)
+                canvas.drawArc(bounds, start, playedSweep, false, foregroundPaint)
+                if (kotlin.math.abs(playedSweep) > .5f) {
+                    drawHeadDot(canvas, bounds, baseWidth * 1.15f, start + playedSweep)
+                }
+            }
         }
         foregroundPaint.shader = null
         foregroundPaint.pathEffect = null
@@ -953,6 +1133,12 @@ class CircularProgressSeekBar : View {
                 // making the ring appear to snap back towards wherever it was animating to.
                 progressAnimator?.cancel()
                 isDragging = true
+                // Captured before the finger overwrites displayProgress - this is the whole
+                // reference the marker and the cancel both work from.
+                dragOriginProgress = displayProgress
+                cancelArmed = false
+                cancelAnimator?.cancel()
+                cancelReveal = 0f
 
                 // Tells any parent that intercepts edge/bezel touches (e.g. a swipe-to-dismiss
                 // container) to back off for the duration of this gesture - without it, a held
@@ -960,7 +1146,8 @@ class CircularProgressSeekBar : View {
                 // appear to freeze and never reach onSeekFinished.
                 parent?.requestDisallowInterceptTouchEvent(true)
 
-                displayProgress = angleToProgress(dx, dy)
+                fingerProgress = angleToProgress(dx, dy)
+                displayProgress = fingerProgress
                 invalidate()
                 onSeekPreview?.invoke(displayProgress)
                 return true
@@ -976,7 +1163,21 @@ class CircularProgressSeekBar : View {
                 // freezing and snapping back to the live playback position (the next position
                 // tick would no longer be held back once isDragging flipped to false). The
                 // exclusion only needs to stop a drag from *starting* on top of an icon.
-                displayProgress = angleToProgress(dx, dy)
+                // The angle is still tracked while the cancel is armed, so sliding back out to
+                // the ring resumes the scrub from where the finger actually is rather than from
+                // wherever it was when the cancel engaged.
+                fingerProgress = angleToProgress(dx, dy)
+
+                val armed = SeekDragPolicy.isInsideCancelZone(
+                        distanceFromCenter, circleBounds.width() / 2f, touchBand)
+                if (armed != cancelArmed) {
+                    cancelArmed = armed
+                    animateCancelReveal(armed)
+                    onCancelArmedChanged?.invoke(armed)
+                }
+
+                displayProgress = SeekDragPolicy.previewProgress(
+                        fingerProgress, dragOriginProgress, cancelReveal)
                 invalidate()
                 onSeekPreview?.invoke(displayProgress)
                 return true
@@ -986,8 +1187,26 @@ class CircularProgressSeekBar : View {
                     return false
                 }
                 isDragging = false
-                invalidate()
                 parent?.requestDisallowInterceptTouchEvent(false)
+
+                if (cancelArmed || event.action == MotionEvent.ACTION_CANCEL) {
+                    // Nothing is sent to the phone: the position was never changed, so putting the
+                    // ring back on the live value is the entire undo. The affordance fades out
+                    // rather than disappearing with the finger, which is what makes a cancel look
+                    // deliberate rather than like the gesture having failed.
+                    cancelArmed = false
+                    displayProgress = dragOriginProgress
+                    animateCancelReveal(false)
+                    invalidate()
+                    onCancelArmedChanged?.invoke(false)
+                    onSeekCancelled?.invoke()
+                    return true
+                }
+
+                cancelAnimator?.cancel()
+                cancelReveal = 0f
+                invalidate()
+                onCancelArmedChanged?.invoke(false)
                 // A quick tap (no ACTION_MOVE in between) still jumps straight to that position;
                 // ACTION_DOWN already emitted its preview so tap and drag share the same feedback.
                 onSeekFinished?.invoke(displayProgress)

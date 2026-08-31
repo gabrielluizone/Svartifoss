@@ -12,7 +12,8 @@ enum class PlayerBackgroundStyle(
         val blurredArtwork: Boolean = false,
         val grayscaleArtwork: Boolean = false,
         val hidesArtwork: Boolean = false,
-        val frostedEdges: Boolean = false
+        val frostedEdges: Boolean = false,
+        val photoFilter: AlbumArtFilter = AlbumArtFilter.NONE
 ) {
     COVER("cover"),
     BLUR("blur", blurredArtwork = true),
@@ -68,17 +69,53 @@ enum class PlayerBackgroundStyle(
     /** A single small, warm glow tucked into one corner - no base scrim at all, so the cover is
      *  otherwise completely untouched. */
     EMBER("ember"),
+    /** A cool blue/teal wash rising from the bottom over the sharp artwork. */
+    OCEAN("ocean"),
+    /** Warm coral and amber light pooled across the lower half of the artwork. */
+    SUNSET("sunset"),
+    /** A restrained central light well surrounded by a deep circular vignette. */
+    SPOTLIGHT("spotlight"),
+    /** Blurred artwork behind a pale translucent veil and a fine bright rim. */
+    GLASS_VEIL("glass_veil", blurredArtwork = true),
+    /** Near-black plum treatment with a small, soft album-colour bloom. */
+    VELVET("velvet"),
+    /** Black field, desaturated artwork impression and one crisp white light well. */
+    NOIR("noir", grayscaleArtwork = true),
+    /** Cool cyan light across the upper half, fading into a navy floor. */
+    ICE("ice"),
+    /** Muted rose light gathered around the lower-right controls. */
+    ROSE("rose"),
+    FILTER_WARM("filter_warm", photoFilter = AlbumArtFilter.WARM),
+    FILTER_COOL("filter_cool", photoFilter = AlbumArtFilter.COOL),
+    FILTER_GOLDEN("filter_golden", photoFilter = AlbumArtFilter.GOLDEN),
+    FILTER_ROSE("filter_rose", photoFilter = AlbumArtFilter.ROSE),
+    FILTER_VINTAGE("filter_vintage", photoFilter = AlbumArtFilter.VINTAGE),
+    FILTER_FADED("filter_faded", photoFilter = AlbumArtFilter.FADED),
+    FILTER_MATTE("filter_matte", photoFilter = AlbumArtFilter.MATTE),
+    FILTER_VIVID("filter_vivid", photoFilter = AlbumArtFilter.VIVID),
+    FILTER_PUNCH("filter_punch", photoFilter = AlbumArtFilter.PUNCH),
+    FILTER_PASTEL("filter_pastel", photoFilter = AlbumArtFilter.PASTEL),
+    FILTER_SEPIA("filter_sepia", photoFilter = AlbumArtFilter.SEPIA),
+    FILTER_CYANOTYPE("filter_cyanotype", photoFilter = AlbumArtFilter.CYANOTYPE),
+    FILTER_TEAL_ORANGE("filter_teal_orange", photoFilter = AlbumArtFilter.TEAL_ORANGE),
+    FILTER_HIGH_CONTRAST("filter_high_contrast", photoFilter = AlbumArtFilter.HIGH_CONTRAST),
+    FILTER_SOFT_LIGHT("filter_soft_light", photoFilter = AlbumArtFilter.SOFT_LIGHT),
+    FILTER_NIGHT("filter_night", photoFilter = AlbumArtFilter.NIGHT),
     ECLIPSE("eclipse", hidesArtwork = true),
     HIDDEN("hidden", hidesArtwork = true);
 
     val usesBlurRadius: Boolean
         get() = blurredArtwork || frostedEdges
 
+    val artworkFilter: AlbumArtFilter
+        get() = if (grayscaleArtwork) AlbumArtFilter.MONOCHROME else photoFilter
+
     /** Styles that only transform the host image and therefore need the shared default fade. */
     val isPlainArtworkTreatment: Boolean
         get() = this == COVER || this == BLUR || this == BLACK_AND_WHITE ||
                 this == BLURRED_BLACK_AND_WHITE || this == FROSTED ||
-                this == SQUARE_SHARP || this == SQUARE_SOFT || this == SQUARE
+                this == SQUARE_SHARP || this == SQUARE_SOFT || this == SQUARE ||
+                photoFilter != AlbumArtFilter.NONE
 
     /** Fraction of the inset square's own side used as its corner radius, or null for a style
      *  that isn't a Square variant at all. */

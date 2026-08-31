@@ -272,17 +272,23 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- The expressive now-playing face (see NowPlayingFace.kt). Sits above the gesture
-             layers so its transport buttons win touch dispatch, but below the mini buttons and
-             every overlay (blur, volume/seek, quick panel) so those keep covering the face.
-             Touches on its non-interactive areas fall through to FourWayTouchLayout, keeping
-             quadrant taps and swipe gestures working. GONE unless the "expressive" face is
-             selected on the phone (wear_screen_face); ambient always hides it. -->
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/expressive_face"
+        <!-- All Compose now-playing faces share this host. ComposeView has an internal child that
+             owns pointerInput/clickable streams, so observing the ComposeView itself misses a
+             swipe begun over a face-owned region (for example Chat's conversation bubble). This
+             non-consuming dispatch host sees those claimed streams while rejected touches still
+             fall through to FourWayTouchLayout. It remains below mini buttons and every overlay. -->
+        <com.svartifoss.snfell.watch.view.ClaimedGestureHost
+            android:id="@+id/expressive_face_gesture_host"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:layout_height="match_parent">
+
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/expressive_face"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+        </com.svartifoss.snfell.watch.view.ClaimedGestureHost>
 
         <!-- Mirrors FourWayTouchLayout's own tap-feedback pulse at a higher z-order: that
              layout's ripple is a child of itself, so it is drawn UNDER expressive_face and every
@@ -307,16 +313,21 @@
              quadrant icon and keeps the full 3-button row inside a round screen's circle.
              Row and unconfigured slots stay gone, so the screen is unchanged until the user
              assigns something on the phone. -->
-        <LinearLayout
-            android:id="@+id/screen_buttons_row"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="42dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            tools:visibility="visible">
+        <com.svartifoss.snfell.watch.view.ClaimedGestureHost
+            android:id="@+id/screen_buttons_gesture_host"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/screen_buttons_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="42dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/screen_button_1"
@@ -361,7 +372,9 @@
                 tools:src="@drawable/action_shuffle"
                 tools:visibility="visible" />
 
-        </LinearLayout>
+            </LinearLayout>
+
+        </com.svartifoss.snfell.watch.view.ClaimedGestureHost>
 
         <!-- One full-screen compositing group for blur + gradient/dim. It stays before the panel
              content so rings and actions draw on top, and absorbs stray touches outside them.
@@ -451,6 +464,19 @@
             android:visibility="gone"
             tools:text="1:45"
             tools:visibility="visible" />
+
+        <!-- Replaces the seek time in the middle of the screen while an edge-seek drag is inside
+             the cancel zone: releasing there abandons the scrub, and the readout would otherwise
+             go on advertising a destination that is about to be thrown away. Declared after
+             text_seek_time so it draws over it. -->
+        <ImageView
+            android:id="@+id/seek_cancel_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/action_close"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
 
         <com.svartifoss.snfell.watch.view.OverlayProgressMeter
             android:id="@+id/seek_overlay_meter"
@@ -683,17 +709,6 @@
         <include
             android:id="@+id/notification_popup"
             layout="@layout/popup_notification" />
-
-        <!-- Topmost in content_frame so the same single drawable instance renders identically
-             above Classic's views and every Compose face's opaque backdrop alike - no per-face
-             branching needed, unlike compose_tap_pulse above. MainActivity's onTouchMove/swipe
-             callbacks/onTouchUp (FourWayTouchLayout.UserActionListener) drive it. Not clickable,
-             so touches pass straight through it, same as compose_tap_pulse. -->
-        <ImageView
-            android:id="@+id/swipe_trail_overlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="ContentDescription" />
 
     </FrameLayout>
 

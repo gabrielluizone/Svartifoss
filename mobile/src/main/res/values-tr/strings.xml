@@ -1498,6 +1498,7 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>Kare</item>
         <item>Squircle</item>
         <item>Daire</item>
+        <item>Samsung stili</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Yazı tipini her yerde kullan</string>

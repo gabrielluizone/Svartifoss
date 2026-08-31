@@ -139,4 +139,12 @@ tasks.withType(Test).configureEach {
     inputs.dir("${rootProject.projectDir}/wear/src/main/java/com/svartifoss/snfell/watch/view/face")
             .withPropertyName("wearFaceSourcesForPreviewParity")
             .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // And once more for the public community-theme contract, which lives in `common`.
+    // CommunityThemeVocabularyParityTest reads it beside this module's arrays, so without this a
+    // value set left short of its picker keeps reporting UP-TO-DATE - which is the exact way the
+    // fonts and the two new AOD styles went missing from it unnoticed.
+    inputs.file("${rootProject.projectDir}/common/src/main/assets/community-theme-constraints.json")
+            .withPropertyName("communityThemeConstraintsAsset")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
 }

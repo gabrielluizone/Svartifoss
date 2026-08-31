@@ -27,7 +27,8 @@ class PlayerBackgroundDrawable(
         private val tertiary: Int,
         private val materialSurface: Int,
         private val materialSurfaceSoftened: Boolean,
-        private val accentFloor: AccentFloorStyle
+        private val accentFloor: AccentFloorStyle,
+        private val accentFloorColor: Int
 ) : Drawable() {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -74,7 +75,23 @@ class PlayerBackgroundDrawable(
             PlayerBackgroundStyle.BLURRED_BLACK_AND_WHITE,
             PlayerBackgroundStyle.SQUARE_SHARP,
             PlayerBackgroundStyle.SQUARE_SOFT,
-            PlayerBackgroundStyle.SQUARE -> Unit
+            PlayerBackgroundStyle.SQUARE,
+            PlayerBackgroundStyle.FILTER_WARM,
+            PlayerBackgroundStyle.FILTER_COOL,
+            PlayerBackgroundStyle.FILTER_GOLDEN,
+            PlayerBackgroundStyle.FILTER_ROSE,
+            PlayerBackgroundStyle.FILTER_VINTAGE,
+            PlayerBackgroundStyle.FILTER_FADED,
+            PlayerBackgroundStyle.FILTER_MATTE,
+            PlayerBackgroundStyle.FILTER_VIVID,
+            PlayerBackgroundStyle.FILTER_PUNCH,
+            PlayerBackgroundStyle.FILTER_PASTEL,
+            PlayerBackgroundStyle.FILTER_SEPIA,
+            PlayerBackgroundStyle.FILTER_CYANOTYPE,
+            PlayerBackgroundStyle.FILTER_TEAL_ORANGE,
+            PlayerBackgroundStyle.FILTER_HIGH_CONTRAST,
+            PlayerBackgroundStyle.FILTER_SOFT_LIGHT,
+            PlayerBackgroundStyle.FILTER_NIGHT -> Unit
 
             PlayerBackgroundStyle.EXPRESSIVE,
             PlayerBackgroundStyle.EXPRESSIVE_NO_BLUR -> {
@@ -315,6 +332,89 @@ class PlayerBackgroundDrawable(
                 canvas.drawRect(left, top, right, bottom, paint)
             }
 
+            PlayerBackgroundStyle.OCEAN -> {
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.22f)),
+                                ColorUtils.setAlphaComponent(0xFF063C4C.toInt(), authoredAlpha(.78f))),
+                        floatArrayOf(0f, .48f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.SUNSET -> {
+                paint.shader = LinearGradient(left, top, right, bottom,
+                        intArrayOf(Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(0xFFFF6F61.toInt(), fixedAlpha(.28f)),
+                                ColorUtils.setAlphaComponent(0xFFFFB347.toInt(), fixedAlpha(.34f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.62f))),
+                        floatArrayOf(0f, .46f, .72f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.SPOTLIGHT -> {
+                paint.shader = RadialGradient(cx, cy, minDimension * .72f,
+                        intArrayOf(Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(deep, fixedAlpha(.16f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.90f))),
+                        floatArrayOf(0f, .44f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.GLASS_VEIL -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.WHITE, fixedAlpha(.12f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                stroke.shader = SweepGradient(cx, cy,
+                        intArrayOf(Color.WHITE, tunedPrimary, Color.WHITE, tunedSecondary, Color.WHITE),
+                        null)
+                stroke.strokeWidth = minDimension * .018f
+                stroke.alpha = fixedAlpha(.72f)
+                canvas.drawCircle(cx, cy, minDimension * .485f, stroke)
+                stroke.shader = null
+                stroke.alpha = 255
+            }
+
+            PlayerBackgroundStyle.VELVET -> {
+                paint.color = ColorUtils.setAlphaComponent(0xFF120B16.toInt(), authoredAlpha(.74f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .34f, top + height * .76f,
+                        minDimension * .62f,
+                        intArrayOf(ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.34f)),
+                                Color.TRANSPARENT), null, Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.NOIR -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.58f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(cx, cy - height * .08f, minDimension * .58f,
+                        intArrayOf(ColorUtils.setAlphaComponent(Color.WHITE, fixedAlpha(.10f)),
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.82f))),
+                        floatArrayOf(0f, .52f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.ICE -> {
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFFB9F3FF.toInt(), fixedAlpha(.34f)),
+                                ColorUtils.setAlphaComponent(0xFF3B82C4.toInt(), fixedAlpha(.22f)),
+                                ColorUtils.setAlphaComponent(0xFF061426.toInt(), authoredAlpha(.76f))),
+                        floatArrayOf(0f, .48f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.ROSE -> {
+                paint.shader = RadialGradient(left + width * .72f, top + height * .74f,
+                        minDimension * .72f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFFFF8CAB.toInt(), fixedAlpha(.42f)),
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.18f)),
+                                ColorUtils.setAlphaComponent(0xFF1B0810.toInt(), authoredAlpha(.68f))),
+                        floatArrayOf(0f, .55f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
             PlayerBackgroundStyle.ECLIPSE,
             PlayerBackgroundStyle.HIDDEN -> {
                 paint.shader = null
@@ -323,7 +423,7 @@ class PlayerBackgroundDrawable(
             }
         }
         paint.shader = null
-        drawAccentFloor(canvas, accentFloor, primary)
+        drawAccentFloor(canvas, accentFloor, accentFloorColor)
     }
 
     /** Native twin of Compose's accentFloorGlow for the View-based Classic face. */

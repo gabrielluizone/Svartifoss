@@ -5,8 +5,6 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.graphics.DashPathEffect
 import android.graphics.LinearGradient
 import android.graphics.Matrix
@@ -59,6 +57,7 @@ import com.svartifoss.snfell.common.ScreenThemeTokens
 import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
 import android.os.Build
 import com.svartifoss.snfell.common.AlbumAccentSource
+import com.svartifoss.snfell.common.AlbumArtFilter
 import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.common.SwatchInfo
 import com.svartifoss.snfell.common.selectPrimaryAccent
@@ -276,7 +275,6 @@ class WatchPreviewView @JvmOverloads constructor(
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
     private val bitmapPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
-    private val grayscaleFilter = ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
     private val iconDst = RectF()
 
     private val fontRegular: Typeface? = ResourcesCompat.getFont(context, R.font.google_sans_regular)
@@ -384,6 +382,8 @@ class WatchPreviewView @JvmOverloads constructor(
     private var wearTrackTimeFontKey = WatchTypography.TRACK_TIME_FONT_FOLLOW
     private var artStyle = "cover"
     private var accentFloor = AccentFloorStyle.DEFAULT
+    private var accentFloorColorMode = "album"
+    private var accentFloorCustomColor = ""
     private var splitPanel = SplitPanelStyle.DEFAULT
     private var dimArt = true
     private var dimStrength = 80
@@ -424,6 +424,11 @@ class WatchPreviewView @JvmOverloads constructor(
     private var clockAdaptiveContrast = false
     private var carouselCardShape = "rounded"
     private var noteCoverShape = "circle"
+    private var noteShowCover = true
+    private var chatCoverShape = "circle"
+    private var chatShowCover = true
+    private var metadataCoverShape = "rounded"
+    private var metadataShowCover = true
     private var progressGradientEnabled = true
     private var progressMode = "follow"
     private var progressCustom = ""
@@ -945,6 +950,8 @@ class WatchPreviewView @JvmOverloads constructor(
         artStyle = readString("album_art_style", "cover")
         accentFloor = AccentFloorStyle.fromPreference(
                 readString("wear_accent_floor", AccentFloorStyle.DEFAULT.preferenceValue))
+        accentFloorColorMode = readString("wear_accent_floor_color_mode", "album")
+        accentFloorCustomColor = readString("wear_accent_floor_custom_color", "")
         splitPanel = SplitPanelStyle.fromPref(
                 readString("wear_split_panel", SplitPanelStyle.DEFAULT.preferenceValue))
         albumBlurRadius = readInt("album_art_blur_radius", 35).coerceIn(5, 120)
@@ -1048,6 +1055,11 @@ class WatchPreviewView @JvmOverloads constructor(
         clockAdaptiveContrast = readBoolean("wear_clock_adaptive_contrast", false)
         carouselCardShape = readString("wear_carousel_card_shape", "rounded")
         noteCoverShape = readString("wear_note_cover_shape", "circle")
+        noteShowCover = readBoolean("wear_note_show_cover", true)
+        chatCoverShape = readString("wear_chat_cover_shape", "circle")
+        chatShowCover = readBoolean("wear_chat_show_cover", true)
+        metadataCoverShape = readString("wear_metadata_cover_shape", "rounded")
+        metadataShowCover = readBoolean("wear_metadata_show_cover", true)
         progressGradientEnabled = readBoolean("wear_progress_gradient", true)
         progressMode = readString("wear_progress_color_mode", "follow")
         progressCustom = readString("wear_progress_custom_color", "")
@@ -1615,6 +1627,14 @@ class WatchPreviewView @JvmOverloads constructor(
             normalColorMulti)
 
     private fun albumAccent(): Int = globalTriad().primary
+
+    private fun resolvedAccentFloorColor(): Int = AdaptiveTextContrast.adapt(
+            when (accentFloorColorMode) {
+                "secondary" -> albumSecondaryAccent()
+                "tertiary" -> albumTertiaryAccent()
+                "custom" -> parseHexOrNull(accentFloorCustomColor) ?: albumAccent()
+                else -> albumAccent()
+            }, 0f)
 
     /** Colour that tints the shading gradient; mirrors MainActivity.resolvedShadingColor. */
     private fun resolvedShadingColor(): Int {
@@ -2391,7 +2411,7 @@ class WatchPreviewView @JvmOverloads constructor(
         // preview must not tie it to one either. Ribbon and Frame ship with a hidden backdrop,
         // but an explicit per-face artwork choice must still be visible in their miniature.
         if (accentFloor.isVisible && demonstratedFace != "split") {
-            drawAccentFloor(canvas, geometry, AdaptiveTextContrast.adapt(albumAccent(), 0f))
+            drawAccentFloor(canvas, geometry, resolvedAccentFloorColor())
         }
         when (demonstratedFace) {
             "expressive" -> drawExpressive(
@@ -2437,7 +2457,6 @@ class WatchPreviewView @JvmOverloads constructor(
             else -> artStyle
         }
         val backgroundStyle = PlayerBackgroundStyle.fromPreference(effectiveStyle)
-        val grayscale = backgroundStyle.grayscaleArtwork
         val blurred = backgroundStyle.blurredArtwork
 
         if (!backgroundStyle.hidesArtwork) {
@@ -2446,7 +2465,8 @@ class WatchPreviewView @JvmOverloads constructor(
                 // that preview only needs the blurred backdrop, same as plain Blur.
                 val first = if (blurred) sampleArtBlurred else sampleArt
                 val second = if (blurred) sampleAlternateArtBlurred else sampleAlternateArt
-                drawFadeDemonstration(canvas, first, second, geometry.bounds, grayscale)
+                drawFadeDemonstration(
+                        canvas, first, second, geometry.bounds, backgroundStyle.artworkFilter)
             } else if (backgroundStyle.squareCornerRadiusFraction != null) {
                 drawArtwork(canvas, displayedBlurredArt(), geometry.bounds, 255, grayscale = false)
                 // The true original source, not liveArt - that copy is already center-cropped to
@@ -2462,7 +2482,9 @@ class WatchPreviewView @JvmOverloads constructor(
                     blurred -> displayedBlurredArt()
                     else -> displayedArt()
                 }
-                drawArtwork(canvas, art, geometry.bounds, 255, grayscale)
+                drawArtwork(
+                        canvas, art, geometry.bounds, 255,
+                        filter = backgroundStyle.artworkFilter)
             }
         }
 
@@ -2512,7 +2534,23 @@ class WatchPreviewView @JvmOverloads constructor(
             PlayerBackgroundStyle.BLURRED_BLACK_AND_WHITE,
             PlayerBackgroundStyle.SQUARE_SHARP,
             PlayerBackgroundStyle.SQUARE_SOFT,
-            PlayerBackgroundStyle.SQUARE -> Unit
+            PlayerBackgroundStyle.SQUARE,
+            PlayerBackgroundStyle.FILTER_WARM,
+            PlayerBackgroundStyle.FILTER_COOL,
+            PlayerBackgroundStyle.FILTER_GOLDEN,
+            PlayerBackgroundStyle.FILTER_ROSE,
+            PlayerBackgroundStyle.FILTER_VINTAGE,
+            PlayerBackgroundStyle.FILTER_FADED,
+            PlayerBackgroundStyle.FILTER_MATTE,
+            PlayerBackgroundStyle.FILTER_VIVID,
+            PlayerBackgroundStyle.FILTER_PUNCH,
+            PlayerBackgroundStyle.FILTER_PASTEL,
+            PlayerBackgroundStyle.FILTER_SEPIA,
+            PlayerBackgroundStyle.FILTER_CYANOTYPE,
+            PlayerBackgroundStyle.FILTER_TEAL_ORANGE,
+            PlayerBackgroundStyle.FILTER_HIGH_CONTRAST,
+            PlayerBackgroundStyle.FILTER_SOFT_LIGHT,
+            PlayerBackgroundStyle.FILTER_NIGHT -> Unit
 
             PlayerBackgroundStyle.EXPRESSIVE,
             PlayerBackgroundStyle.EXPRESSIVE_NO_BLUR -> {
@@ -2763,6 +2801,88 @@ class WatchPreviewView @JvmOverloads constructor(
                 canvas.drawRect(bounds, fillPaint)
             }
 
+            PlayerBackgroundStyle.OCEAN -> {
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.22f)),
+                                ColorUtils.setAlphaComponent(0xFF063C4C.toInt(), authoredAlpha(.78f))),
+                        floatArrayOf(0f, .48f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.SUNSET -> {
+                fillPaint.shader = LinearGradient(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                        intArrayOf(Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(0xFFFF6F61.toInt(), alpha(.28f)),
+                                ColorUtils.setAlphaComponent(0xFFFFB347.toInt(), alpha(.34f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.62f))),
+                        floatArrayOf(0f, .46f, .72f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.SPOTLIGHT -> {
+                fillPaint.shader = RadialGradient(cx, cy, radius * 1.44f,
+                        intArrayOf(Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(deep, alpha(.16f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.90f))),
+                        floatArrayOf(0f, .44f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.GLASS_VEIL -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, alpha(.12f))
+                canvas.drawRect(bounds, fillPaint)
+                strokePaint.shader = SweepGradient(cx, cy,
+                        intArrayOf(Color.WHITE, primary, Color.WHITE, secondary, Color.WHITE), null)
+                strokePaint.strokeWidth = radius * .036f
+                strokePaint.alpha = alpha(.72f)
+                canvas.drawCircle(cx, cy, radius * .97f, strokePaint)
+                strokePaint.shader = null
+                strokePaint.alpha = 255
+            }
+
+            PlayerBackgroundStyle.VELVET -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(0xFF120B16.toInt(), authoredAlpha(.74f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .34f,
+                        bounds.top + bounds.height() * .76f, radius * 1.24f,
+                        intArrayOf(ColorUtils.setAlphaComponent(primary, alpha(.34f)),
+                                Color.TRANSPARENT), null, Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.NOIR -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.58f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(cx, cy - bounds.height() * .08f, radius * 1.16f,
+                        intArrayOf(ColorUtils.setAlphaComponent(Color.WHITE, alpha(.10f)),
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.82f))),
+                        floatArrayOf(0f, .52f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.ICE -> {
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFFB9F3FF.toInt(), alpha(.34f)),
+                                ColorUtils.setAlphaComponent(0xFF3B82C4.toInt(), alpha(.22f)),
+                                ColorUtils.setAlphaComponent(0xFF061426.toInt(), authoredAlpha(.76f))),
+                        floatArrayOf(0f, .48f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.ROSE -> {
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .72f,
+                        bounds.top + bounds.height() * .74f, radius * 1.44f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFFFF8CAB.toInt(), alpha(.42f)),
+                                ColorUtils.setAlphaComponent(primary, alpha(.18f)),
+                                ColorUtils.setAlphaComponent(0xFF1B0810.toInt(), authoredAlpha(.68f))),
+                        floatArrayOf(0f, .55f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
             PlayerBackgroundStyle.ECLIPSE,
             PlayerBackgroundStyle.HIDDEN -> {
                 fillPaint.shader = null
@@ -2843,6 +2963,34 @@ class WatchPreviewView @JvmOverloads constructor(
                     bounds.left, 0f, bounds.right, 0f,
                     intArrayOf(shade(.72f), Color.TRANSPARENT, Color.TRANSPARENT, shade(.72f)),
                     floatArrayOf(0f, .34f, .66f, 1f), Shader.TileMode.CLAMP)
+            PlayerShadingStyle.TOP_FADE -> LinearGradient(
+                    0f, bounds.top, 0f, bounds.bottom,
+                    intArrayOf(shade(.94f), Color.TRANSPARENT, Color.TRANSPARENT),
+                    floatArrayOf(0f, .58f, 1f), Shader.TileMode.CLAMP)
+            PlayerShadingStyle.CENTER_SPOTLIGHT -> RadialGradient(
+                    cx, cy, radius * 1.28f,
+                    intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT, shade(.90f)),
+                    floatArrayOf(0f, .38f, 1f), Shader.TileMode.CLAMP)
+            PlayerShadingStyle.DIAGONAL -> LinearGradient(
+                    bounds.right, bounds.top, bounds.left, bounds.bottom,
+                    intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT, shade(.92f)),
+                    floatArrayOf(0f, .40f, 1f), Shader.TileMode.CLAMP)
+            PlayerShadingStyle.LEFT_CURTAIN -> LinearGradient(
+                    bounds.left, 0f, bounds.right, 0f,
+                    intArrayOf(shade(.90f), Color.TRANSPARENT, Color.TRANSPARENT),
+                    floatArrayOf(0f, .56f, 1f), Shader.TileMode.CLAMP)
+            PlayerShadingStyle.RIGHT_CURTAIN -> LinearGradient(
+                    bounds.left, 0f, bounds.right, 0f,
+                    intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT, shade(.90f)),
+                    floatArrayOf(0f, .44f, 1f), Shader.TileMode.CLAMP)
+            PlayerShadingStyle.CENTER_BAND -> LinearGradient(
+                    0f, bounds.top, 0f, bounds.bottom,
+                    intArrayOf(shade(.84f), Color.TRANSPARENT, Color.TRANSPARENT, shade(.84f)),
+                    floatArrayOf(0f, .40f, .60f, 1f), Shader.TileMode.CLAMP)
+            PlayerShadingStyle.CROSSFADE -> LinearGradient(
+                    bounds.left, bounds.top, bounds.right, bounds.bottom,
+                    intArrayOf(shade(.78f), Color.TRANSPARENT, shade(.78f)),
+                    floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
             else -> null
         }
         fillPaint.color = when (style) {
@@ -2860,7 +3008,7 @@ class WatchPreviewView @JvmOverloads constructor(
             first: Bitmap?,
             second: Bitmap?,
             bounds: RectF,
-            grayscale: Boolean
+            filter: AlbumArtFilter
     ) {
         val halfCycle = 1800L
         val cycle = previewAnimationTimeMillis() % (halfCycle * 2L)
@@ -2873,8 +3021,8 @@ class WatchPreviewView @JvmOverloads constructor(
         }
         val from = if (reverse) second else first
         val to = if (reverse) first else second
-        drawArtwork(canvas, from, bounds, 255, grayscale)
-        drawArtwork(canvas, to, bounds, (transition * 255).toInt(), grayscale)
+        drawArtwork(canvas, from, bounds, 255, filter = filter)
+        drawArtwork(canvas, to, bounds, (transition * 255).toInt(), filter = filter)
         transientAnimationActive = true
     }
 
@@ -2883,7 +3031,8 @@ class WatchPreviewView @JvmOverloads constructor(
             bitmap: Bitmap?,
             bounds: RectF,
             alpha: Int,
-            grayscale: Boolean = false
+            grayscale: Boolean = false,
+            filter: AlbumArtFilter = AlbumArtFilter.NONE
     ) {
         if (bitmap == null || bitmap.isRecycled || alpha <= 0) return
         val scale = max(bounds.width() / bitmap.width, bounds.height() / bitmap.height)
@@ -2895,7 +3044,10 @@ class WatchPreviewView @JvmOverloads constructor(
             )
         }
         bitmapPaint.alpha = alpha.coerceIn(0, 255)
-        bitmapPaint.colorFilter = if (grayscale) grayscaleFilter else null
+        bitmapPaint.colorFilter = when {
+            grayscale -> AlbumArtFilter.MONOCHROME.androidColorFilter
+            else -> filter.androidColorFilter
+        }
         canvas.drawBitmap(bitmap, matrix, bitmapPaint)
         bitmapPaint.alpha = 255
         bitmapPaint.colorFilter = null
@@ -2911,6 +3063,7 @@ class WatchPreviewView @JvmOverloads constructor(
             cornerRadius: Float,
             alpha: Int = 255,
             grayscale: Boolean = false,
+            filter: AlbumArtFilter = AlbumArtFilter.NONE,
             fallbackColor: Int? = null
     ) {
         val saved = canvas.save()
@@ -2918,7 +3071,7 @@ class WatchPreviewView @JvmOverloads constructor(
             addRoundRect(bounds, cornerRadius, cornerRadius, Path.Direction.CW)
         })
         if (bitmap != null) {
-            drawArtwork(canvas, bitmap, bounds, alpha, grayscale)
+            drawArtwork(canvas, bitmap, bounds, alpha, grayscale, filter)
         } else if (fallbackColor != null) {
             fillPaint.shader = null
             fillPaint.color = fallbackColor
@@ -3014,7 +3167,8 @@ class WatchPreviewView @JvmOverloads constructor(
                     },
                     geometry.bounds,
                     ambientArtOpacity * 255 / 100,
-                    artwork.monochrome
+                    artwork.monochrome,
+                    artwork.photoFilter
             )
         }
 
@@ -3087,13 +3241,15 @@ class WatchPreviewView @JvmOverloads constructor(
                 drawClippedFaceArtwork(
                         canvas, art, column, columnCorner,
                         alpha = (ambientArtOpacity * 255 / 100f * .62f).roundToInt(),
-                        grayscale = artwork.monochrome
+                        grayscale = artwork.monochrome,
+                        filter = artwork.photoFilter
                 )
             }
             drawClippedFaceArtwork(
                     canvas, art, cover, coverCorner,
                     alpha = ambientArtOpacity * 255 / 100,
-                    grayscale = artwork.monochrome
+                    grayscale = artwork.monochrome,
+                    filter = artwork.photoFilter
             )
         }
 
@@ -3191,7 +3347,8 @@ class WatchPreviewView @JvmOverloads constructor(
                     art,
                     artCorner,
                     alpha = ambientArtOpacity * 255 / 100,
-                    grayscale = artwork.monochrome
+                    grayscale = artwork.monochrome,
+                    filter = artwork.photoFilter
             )
         }
 
@@ -4071,6 +4228,19 @@ class WatchPreviewView @JvmOverloads constructor(
                     floatArrayOf(0f, .46f, 1f),
                     Shader.TileMode.CLAMP
             )
+            OverlayBackdrop.SUNRISE -> fillPaint.shader = LinearGradient(
+                    geometry.bounds.left, geometry.bounds.bottom,
+                    geometry.bounds.right, geometry.bounds.top,
+                    intArrayOf(
+                            0xFF35102D.toInt(), 0xFFFF5E62.toInt(),
+                            0xFFFFC371.toInt(), tonal(tertiary, .24f, .30f, .80f)),
+                    floatArrayOf(0f, .34f, .70f, 1f), Shader.TileMode.CLAMP)
+            OverlayBackdrop.DEEP_OCEAN -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            0xFF031B2D.toInt(), 0xFF075D73.toInt(),
+                            tonal(tertiary, .20f, .34f, .82f), Color.BLACK),
+                    floatArrayOf(0f, .38f, .72f, 1f), Shader.TileMode.CLAMP)
             // Mirrors the watch's LIQUID_GLASS drawable: a low-alpha lifted album tint, a white
             // sheen through the middle and a deeper tail, over the blurred cover this backdrop
             // shares with Acrylic/Glass/Prism.
@@ -4281,6 +4451,15 @@ class WatchPreviewView @JvmOverloads constructor(
                 "segments_top" -> drawPreviewSeekTimeline(
                         canvas, geometry, dp, segmented = true,
                         centerY = geometry.bounds.top + geometry.bounds.height() * .27f)
+                "segments_bottom" -> drawPreviewSeekTimeline(
+                        canvas, geometry, dp, segmented = true,
+                        centerY = geometry.bounds.top + geometry.bounds.height() * .73f)
+                "center_stack" -> {
+                    drawPreviewSeekTimeline(canvas, geometry, dp, segmented = false,
+                            centerY = geometry.cy - dp(15f))
+                    drawPreviewSeekTimeline(canvas, geometry, dp, segmented = true,
+                            centerY = geometry.cy + dp(15f))
+                }
                 "vertical_left", "vertical_right" ->
                     drawPreviewVerticalSeekTimeline(canvas, geometry, dp)
                 "dial" -> drawPreviewSeekDial(canvas, geometry, dp)
@@ -4291,7 +4470,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val readoutShift = when (seekLayout) {
             "timeline", "segments" -> -dp(18f)
             "timeline_top", "segments_top" -> dp(20f)
-            "timeline_bottom" -> -dp(18f)
+            "timeline_bottom", "segments_bottom" -> -dp(18f)
             "dial" -> -dp(42f)
             else -> 0f
         }
@@ -4536,6 +4715,42 @@ class WatchPreviewView @JvmOverloads constructor(
                 canvas.drawText(content, geometry.cx,
                         geometry.cy - (metrics.ascent + metrics.descent) / 2f, textPaint)
             }
+            "bubble_time" -> {
+                val radius = dp(36f)
+                fillPaint.shader = RadialGradient(
+                        geometry.cx - radius * .25f, geometry.cy - radius * .3f,
+                        radius * 1.4f,
+                        intArrayOf(
+                                tonal(accent, .72f, .30f, .86f),
+                                tonal(accent, .42f, .30f, .86f),
+                                tonal(accent, .20f, .30f, .86f)),
+                        floatArrayOf(0f, .56f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawCircle(geometry.cx, geometry.cy, radius, fillPaint)
+                fillPaint.shader = null
+                strokePaint.style = Paint.Style.STROKE
+                strokePaint.strokeWidth = dp(1f)
+                strokePaint.color = 0x70FFFFFF
+                canvas.drawCircle(geometry.cx, geometry.cy, radius, strokePaint)
+                textPaint.textSize = dp(22f)
+                textPaint.color = contrastingColor(tonal(accent, .48f, .30f, .86f))
+                val metrics = textPaint.fontMetrics
+                canvas.drawText(content, geometry.cx,
+                        geometry.cy - (metrics.ascent + metrics.descent) / 2f, textPaint)
+            }
+            "split_tone" -> {
+                val rect = RectF(geometry.cx - dp(68f), geometry.cy - dp(24f),
+                        geometry.cx + dp(68f), geometry.cy + dp(24f))
+                fillPaint.shader = LinearGradient(rect.left, rect.centerY(), rect.right, rect.centerY(),
+                        tonal(accent, .24f, .30f, .80f),
+                        tonal(albumSecondaryAccent(), .52f, .30f, .80f), Shader.TileMode.CLAMP)
+                canvas.drawRoundRect(rect, dp(18f), dp(18f), fillPaint)
+                fillPaint.shader = null
+                textPaint.textSize = dp(25f)
+                textPaint.color = Color.WHITE
+                val metrics = textPaint.fontMetrics
+                canvas.drawText(content, geometry.cx,
+                        geometry.cy - (metrics.ascent + metrics.descent) / 2f, textPaint)
+            }
             "pill", "expressive", "material", "white", "glass_white", "translucent_album",
             "glow_album", "outline", "solid_theme", "solid_album",
             "mono", "tonal_dark", "terminal", "hairline" -> {
@@ -4702,7 +4917,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val maxStroke = baseStroke * 1.7f
         val inset = maxStroke / 2f
         val diameter = when (volumeLayout) {
-            "halo" -> min(geometry.radius * 1.44f, dp(138f))
+            "halo", "halo_top", "halo_bottom" -> min(geometry.radius * 1.44f, dp(138f))
             "dial" -> min(geometry.bounds.width() - dp(76f), dp(104f))
                     .coerceAtLeast(dp(68f))
             else -> geometry.radius * 2f - inset * 2f
@@ -4711,6 +4926,7 @@ class WatchPreviewView @JvmOverloads constructor(
         // included - those are the arcs that fill counter-clockwise so "up" still means louder.
         previewVolumeArcStart = when (volumeLayout) {
             "halo" -> 135f
+            "halo_top", "halo_bottom" -> 155f
             "edge_tall" -> 100f
             "edge_right" -> 50f
             "edge_top" -> 235f
@@ -4721,6 +4937,7 @@ class WatchPreviewView @JvmOverloads constructor(
         }
         previewVolumeArcSweep = when (volumeLayout) {
             "halo" -> 270f
+            "halo_top", "halo_bottom" -> 230f
             "edge_tall" -> 160f
             "edge_right" -> -100f
             "edge_top" -> 70f
@@ -4729,11 +4946,16 @@ class WatchPreviewView @JvmOverloads constructor(
             "dial" -> 300f
             else -> 100f
         }
+        val haloOffset = when (volumeLayout) {
+            "halo_top" -> -dp(34f)
+            "halo_bottom" -> dp(34f)
+            else -> 0f
+        }
         val bounds = RectF(
                 geometry.cx - diameter / 2f,
-                geometry.cy - diameter / 2f,
+                geometry.cy + haloOffset - diameter / 2f,
                 geometry.cx + diameter / 2f,
-                geometry.cy + diameter / 2f
+                geometry.cy + haloOffset + diameter / 2f
         )
         val accent = volumeAccent()
         val secondary = volumeSecondaryAccent()
@@ -4865,6 +5087,14 @@ class WatchPreviewView @JvmOverloads constructor(
                         preservePathEffect = true)
                 strokePaint.pathEffect = null
             }
+            "candy" -> drawVolumeArcPass(
+                    canvas, bounds, baseStroke * 1.35f, Paint.Cap.ROUND,
+                    0x24FFFFFF, Color.TRANSPARENT,
+                    LinearGradient(bounds.left, bounds.bottom, bounds.right, bounds.top,
+                            intArrayOf(0xFFFF4F9A.toInt(), 0xFFFFC857.toInt(), 0xFF65D6FF.toInt()),
+                            null, Shader.TileMode.CLAMP))
+            "ghost" -> drawVolumeArcPass(canvas, bounds, baseStroke * .42f,
+                    Paint.Cap.ROUND, 0x16FFFFFF, 0xD9FFFFFF.toInt())
             else -> drawVolumeArcPass(canvas, bounds, baseStroke,
                     Paint.Cap.ROUND, 0x33FFFFFF, accent)
         }
@@ -5046,6 +5276,7 @@ class WatchPreviewView @JvmOverloads constructor(
             "contrast" -> Color.WHITE
             "terminal" -> TERMINAL_GREEN
             "tonal" -> tonal(accent, .72f, .25f, .60f)
+            "ghost" -> 0xD9FFFFFF.toInt()
             else -> accent
         }
         val trackColor = when (volumeStyle) {
@@ -5053,6 +5284,7 @@ class WatchPreviewView @JvmOverloads constructor(
             "terminal" -> ColorUtils.setAlphaComponent(TERMINAL_GREEN, 0x40)
             "duotone" -> tonal(secondary, .30f, .25f, .60f)
             "tonal" -> tonal(accent, .22f, .25f, .60f)
+            "ghost" -> 0x16FFFFFF
             else -> 0x35FFFFFF
         }
 
@@ -5225,6 +5457,17 @@ class WatchPreviewView @JvmOverloads constructor(
                 } else {
                     LinearGradient(
                             bounds.left, bounds.centerY(), bounds.right, bounds.centerY(),
+                            colors, null, Shader.TileMode.CLAMP)
+                }
+            }
+            "candy" -> {
+                val colors = intArrayOf(
+                        0xFFFF4F9A.toInt(), 0xFFFFC857.toInt(), 0xFF65D6FF.toInt())
+                if (vertical) {
+                    LinearGradient(bounds.centerX(), bounds.bottom, bounds.centerX(), bounds.top,
+                            colors, null, Shader.TileMode.CLAMP)
+                } else {
+                    LinearGradient(bounds.left, bounds.centerY(), bounds.right, bounds.centerY(),
                             colors, null, Shader.TileMode.CLAMP)
                 }
             }
@@ -5426,7 +5669,8 @@ class WatchPreviewView @JvmOverloads constructor(
 
         // Dense spatial layouts stand alone and Hero/Column/Split keep one metadata line,
         // MainActivity.applyQuickPanelLayout on the watch.
-        val metadataVisible = quickPanelLayout !in setOf("grid", "orbit", "diamond")
+        val metadataVisible = quickPanelLayout !in setOf(
+                "grid", "orbit", "diamond", "triangle", "stair")
         val showTrackTitle = showTrackTitle && metadataVisible
         val renderArtist = showTrackArtist && metadataVisible &&
                 quickPanelLayout !in setOf("hero", "column", "split")
@@ -5599,6 +5843,22 @@ class WatchPreviewView @JvmOverloads constructor(
                 val fill = tonal(accent, 0.24f, 0.25f, 0.60f)
                 PreviewSkin(fill = fill, onColor = contrastingColor(fill), cornerDp = corner)
             }
+            "outline_album" -> PreviewSkin(onColor = Color.WHITE, cornerDp = corner,
+                    strokeColor = accent, strokeDp = 1.5f)
+            "gradient_album" -> PreviewSkin(onColor = contrastingColor(accent), cornerDp = corner,
+                    gradientTop = accent, gradientBottom = albumSecondaryAccent())
+            "secondary" -> albumSecondaryAccent().let {
+                PreviewSkin(fill = it, onColor = contrastingColor(it), cornerDp = corner)
+            }
+            "glass_album" -> PreviewSkin(
+                    fill = ColorUtils.setAlphaComponent(tonal(accent, .42f, .25f, .80f), 0x73),
+                    onColor = Color.WHITE, cornerDp = corner)
+            "tertiary" -> albumTertiaryAccent().let {
+                PreviewSkin(fill = it, onColor = contrastingColor(it), cornerDp = corner)
+            }
+            "neon_outline" -> PreviewSkin(
+                    fill = 0x66000000, onColor = Color.WHITE, cornerDp = corner,
+                    strokeColor = liftedAccent(accent), strokeDp = 2.5f)
             else -> quickSkin(quickPanelStyle, active = false, row = true, accent = accent)
         }
     }
@@ -5615,6 +5875,13 @@ class WatchPreviewView @JvmOverloads constructor(
             "white_blur" -> 0x73FFFFFF to LIGHT_ON
             "black" -> 0xCC000000.toInt() to Color.WHITE
             "dynamic" -> tonal(accent, 0.24f, 0.25f, 0.60f).let { it to contrastingColor(it) }
+            "outline_album" -> Color.TRANSPARENT to Color.WHITE
+            "gradient_album" -> accent to contrastingColor(accent)
+            "secondary" -> albumSecondaryAccent().let { it to contrastingColor(it) }
+            "glass_album" -> ColorUtils.setAlphaComponent(
+                    tonal(accent, .42f, .25f, .80f), 0x73) to Color.WHITE
+            "tertiary" -> albumTertiaryAccent().let { it to contrastingColor(it) }
+            "neon_outline" -> 0x66000000 to Color.WHITE
             else -> ColorUtils.setAlphaComponent(accent, 0x38) to Color.WHITE
         }
     }
@@ -5797,6 +6064,12 @@ class WatchPreviewView @JvmOverloads constructor(
                     gradientTop = 0xB8FF7A45.toInt(),
                     gradientMiddle = 0xB8DF3D82.toInt(),
                     gradientBottom = 0xB8783DE8.toInt())
+            "outline_album" -> PreviewSkin(
+                    onColor = liftedAccent(accent), cornerDp = corner,
+                    strokeColor = liftedAccent(accent), strokeDp = 2f)
+            "glass_dark" -> PreviewSkin(
+                    fill = 0x9905090F.toInt(), onColor = Color.WHITE, cornerDp = corner,
+                    strokeColor = 0x70FFFFFF, strokeDp = 1.25f)
             "ink" -> if (row) {
                 PreviewSkin(
                         fill = 0x0DFFFFFF, cornerDp = corner,
@@ -6471,6 +6744,23 @@ class WatchPreviewView @JvmOverloads constructor(
             val y = centerY + if (index == selected) 0f else dp(7f)
             RectF(x - size / 2f, y - size / 2f, x + size / 2f, y + size / 2f)
         }
+        "triangle" -> {
+            val size = buttonHeight * .88f
+            val (x, y) = when {
+                count <= 2 -> (geometry.cx + (index - (count - 1) / 2f) * dp(60f)) to centerY
+                index < 2 -> (geometry.cx + if (index == 0) -dp(32f) else dp(32f)) to
+                        (centerY - dp(22f))
+                else -> geometry.cx to (centerY + dp(30f))
+            }
+            RectF(x - size / 2f, y - size / 2f, x + size / 2f, y + size / 2f)
+        }
+        "stair" -> {
+            val size = buttonHeight * .78f
+            val t = if (count <= 1) .5f else index / (count - 1f)
+            val x = geometry.cx - dp(50f) + dp(100f) * t
+            val y = centerY - dp(24f) + dp(48f) * t
+            RectF(x - size / 2f, y - size / 2f, x + size / 2f, y + size / 2f)
+        }
         "grid" -> {
             // Two columns; an odd final row is centred. Cells are wider than in a row because
             // only two of them share the width.
@@ -6587,7 +6877,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val layoutRadius = (radius - when (progressLayout) {
             "inset" -> dp(7f)
             "inner" -> dp(17f)
-            "bold", "open_bottom", "open_top", "double" -> dp(1f)
+            "bold", "open_bottom", "open_top", "open_left", "open_right", "double" -> dp(1f)
             else -> 0f
         }).coerceAtLeast(dp(28f))
         val layoutStrokeScale = when (progressLayout) {
@@ -6601,10 +6891,12 @@ class WatchPreviewView @JvmOverloads constructor(
             "open_top" -> -45f
             "left_arc" -> 100f
             "right_arc" -> 80f
+            "open_left" -> 45f
+            "open_right" -> -135f
             else -> -90f
         }
         val layoutSweep = when (progressLayout) {
-            "open_bottom", "open_top" -> 270f
+            "open_bottom", "open_top", "open_left", "open_right" -> 270f
             "left_arc" -> 160f
             "right_arc" -> -160f
             else -> 360f
@@ -6784,6 +7076,16 @@ class WatchPreviewView @JvmOverloads constructor(
                 fillWidth = baseStroke * .42f
                 trackWidth = baseStroke * .26f
             }
+            "alternating" -> {
+                strokePaint.pathEffect = DashPathEffect(
+                        floatArrayOf(baseStroke * 2.2f, baseStroke * .8f), 0f)
+                fillCap = Paint.Cap.BUTT
+                trackCap = Paint.Cap.BUTT
+            }
+            "spark" -> {
+                fillWidth = baseStroke * .42f
+                trackWidth = baseStroke * .24f
+            }
         }
 
         strokePaint.style = Paint.Style.STROKE
@@ -6874,8 +7176,27 @@ class WatchPreviewView @JvmOverloads constructor(
             strokePaint.shader = shader
             canvas.drawArc(ringRect, layoutStart, sweep, false, strokePaint)
             strokePaint.shader = null
+        } else if (progressStyle == "alternating" && sweep > 1f) {
+            val secondary = resolveSecondaryTint(
+                    progressMode, progressCustom, progressDesaturated)
+            strokePaint.color = secondary
+            canvas.drawArc(ringRect, layoutStart, sweep, false, strokePaint)
+            strokePaint.pathEffect = DashPathEffect(
+                    floatArrayOf(baseStroke * 2.2f, baseStroke * .8f), baseStroke * 3f)
+            strokePaint.color = progressColor
+            canvas.drawArc(ringRect, layoutStart, sweep, false, strokePaint)
         } else {
             canvas.drawArc(ringRect, layoutStart, sweep, false, strokePaint)
+        }
+
+        if (progressStyle == "spark" && sweep > .5f) {
+            val angle = Math.toRadians((layoutStart + sweep).toDouble())
+            val r = ringRect.width() / 2f
+            fillPaint.shader = null
+            fillPaint.color = progressColor
+            canvas.drawCircle(
+                    cx + r * cos(angle).toFloat(), cy + r * sin(angle).toFloat(),
+                    baseStroke * 1.15f, fillPaint)
         }
 
         if (progressStyle == "double") {
@@ -7357,7 +7678,8 @@ class WatchPreviewView @JvmOverloads constructor(
         var baseH = if (compact) 38f else 42f
         when (buttonsShape) {
             "circle", "square", "rounded_square_soft", "rounded_square_medium",
-            "drop", "squircle", "leaf" -> {
+            "drop", "squircle", "leaf", "leaf_reverse", "drop_reverse", "pebble",
+            "arch", "shield", "arch_reverse", "shield_reverse" -> {
                 baseW = if (compact) 38f else 42f
                 baseH = if (compact) 38f else 42f
             }
@@ -7376,7 +7698,8 @@ class WatchPreviewView @JvmOverloads constructor(
             val contentWidthDp = radius * 2f / dp(1f).coerceAtLeast(0.01f)
             val equalAspectShape = buttonsShape in setOf(
                     "circle", "square", "rounded_square_soft", "rounded_square_medium",
-                    "drop", "squircle", "leaf"
+                    "drop", "squircle", "leaf", "leaf_reverse", "drop_reverse", "pebble",
+                    "arch", "shield", "arch_reverse", "shield_reverse"
             )
             when {
                 iconCount >= 3 -> {
@@ -7519,6 +7842,14 @@ class WatchPreviewView @JvmOverloads constructor(
             fillPaint.color = fill
             canvas.drawRoundRect(rect, height / 2f, height / 2f, fillPaint)
         }
+        if (upNextPillStyle == "outline_album" || upNextPillStyle == "neon_outline") {
+            strokePaint.shader = null
+            strokePaint.pathEffect = null
+            strokePaint.style = Paint.Style.STROKE
+            strokePaint.strokeWidth = dp(if (upNextPillStyle == "neon_outline") 2.5f else 1.5f)
+            strokePaint.color = liftedAccent(albumAccent())
+            canvas.drawRoundRect(rect, height / 2f, height / 2f, strokePaint)
+        }
         drawIcon(canvas, R.drawable.ic_queue_music,
                 rect.left + dp(20f), centerY, dp(20f),
                 ColorUtils.setAlphaComponent(onColor, 0xD1), 0xD1)
@@ -7654,10 +7985,70 @@ class WatchPreviewView @JvmOverloads constructor(
                     }
                     canvas.drawPath(path, paint)
                 }
+                "leaf_reverse" -> {
+                    val large = dp(16f)
+                    val small = dp(4f)
+                    val path = Path().apply {
+                        addRoundRect(rect, floatArrayOf(small, small, large, large,
+                                small, small, large, large), Path.Direction.CW)
+                    }
+                    canvas.drawPath(path, paint)
+                }
                 "drop" -> {
                     val c = dp(18f)
                     val path = Path().apply {
                         addRoundRect(rect, floatArrayOf(0f, 0f, 0f, 0f, c, c, c, c), Path.Direction.CW)
+                    }
+                    canvas.drawPath(path, paint)
+                }
+                "drop_reverse" -> {
+                    val c = dp(18f)
+                    val path = Path().apply {
+                        addRoundRect(rect, floatArrayOf(c, c, c, c, 0f, 0f, 0f, 0f),
+                                Path.Direction.CW)
+                    }
+                    canvas.drawPath(path, paint)
+                }
+                "pebble" -> {
+                    val path = Path().apply {
+                        addRoundRect(rect, floatArrayOf(dp(18f), dp(18f), dp(10f), dp(10f),
+                                dp(14f), dp(14f), dp(6f), dp(6f)), Path.Direction.CW)
+                    }
+                    canvas.drawPath(path, paint)
+                }
+                "arch" -> {
+                    val crown = pillH / 2f
+                    val base = dp(4f)
+                    val path = Path().apply {
+                        addRoundRect(rect, floatArrayOf(crown, crown, crown, crown,
+                                base, base, base, base), Path.Direction.CW)
+                    }
+                    canvas.drawPath(path, paint)
+                }
+                "shield" -> {
+                    val top = dp(4f)
+                    val bottom = dp(18f)
+                    val path = Path().apply {
+                        addRoundRect(rect, floatArrayOf(top, top, top, top,
+                                bottom, bottom, bottom, bottom), Path.Direction.CW)
+                    }
+                    canvas.drawPath(path, paint)
+                }
+                "arch_reverse" -> {
+                    val crown = pillH / 2f
+                    val base = dp(4f)
+                    val path = Path().apply {
+                        addRoundRect(rect, floatArrayOf(base, base, base, base,
+                                crown, crown, crown, crown), Path.Direction.CW)
+                    }
+                    canvas.drawPath(path, paint)
+                }
+                "shield_reverse" -> {
+                    val top = dp(18f)
+                    val bottom = dp(4f)
+                    val path = Path().apply {
+                        addRoundRect(rect, floatArrayOf(top, top, top, top,
+                                bottom, bottom, bottom, bottom), Path.Direction.CW)
                     }
                     canvas.drawPath(path, paint)
                 }
@@ -8711,23 +9102,34 @@ class WatchPreviewView @JvmOverloads constructor(
         // --- voice bubble ---
         bubble(bubbleLeft, bubbleTop, right, bubbleBottom, outgoing, tail = false)
 
-        // Avatar: the cover, or a flat accent disc before any art exists.
-        val avatarSize = dp(CHAT_AVATAR_SIZE_DP)
+        // Avatar: the cover, or a flat accent disc before any art exists. Hidden entirely is a
+        // layout choice, not a shape - mirrors NoteFace's showCover - so the waveform's own left
+        // edge simply moves in to meet where the avatar and its gap would have been.
+        val avatarSize = if (chatShowCover) dp(CHAT_AVATAR_SIZE_DP) else 0f
+        val avatarGap = if (chatShowCover) dp(CHAT_AVATAR_TO_WAVE_GAP_DP) else 0f
         val avatarRect = RectF(
                 bubbleLeft + dp(CHAT_VOICE_HORIZONTAL_PADDING_DP),
                 (bubbleTop + bubbleBottom) / 2f - avatarSize / 2f,
                 bubbleLeft + dp(CHAT_VOICE_HORIZONTAL_PADDING_DP) + avatarSize,
                 (bubbleTop + bubbleBottom) / 2f + avatarSize / 2f)
-        val art = displayedArt()
-        canvas.save()
-        canvas.clipPath(Path().apply { addOval(avatarRect, Path.Direction.CW) })
-        if (art != null) {
-            drawArtwork(canvas, art, avatarRect, 255)
-        } else {
-            fillPaint.color = ColorUtils.setAlphaComponent(accent, 0x8C)
-            canvas.drawRect(avatarRect, fillPaint)
+        if (chatShowCover) {
+            val art = displayedArt()
+            // A round-rect at half the (square) side is a perfect circle, same as drawNotePlayer's
+            // disc - no separate CIRCLE case needed.
+            val avatarCorner = avatarSize *
+                    CoverShape.fromPreference(chatCoverShape, CoverShape.CIRCLE).cornerFraction
+            canvas.save()
+            canvas.clipPath(Path().apply {
+                addRoundRect(avatarRect, avatarCorner, avatarCorner, Path.Direction.CW)
+            })
+            if (art != null) {
+                drawArtwork(canvas, art, avatarRect, 255)
+            } else {
+                fillPaint.color = ColorUtils.setAlphaComponent(accent, 0x8C)
+                canvas.drawRect(avatarRect, fillPaint)
+            }
+            canvas.restore()
         }
-        canvas.restore()
 
         // Play/pause disc at the trailing edge.
         val glyphSize = dp(CHAT_GLYPH_SIZE_DP)
@@ -8757,7 +9159,7 @@ class WatchPreviewView @JvmOverloads constructor(
         }
 
         // Waveform between the two, filled up to the current position.
-        val waveLeft = avatarRect.right + dp(CHAT_AVATAR_TO_WAVE_GAP_DP)
+        val waveLeft = avatarRect.right + avatarGap
         val waveRight = glyphCx - glyphSize / 2f - dp(CHAT_WAVE_TO_GLYPH_GAP_DP)
         if (waveRight > waveLeft) {
             val waveH = dp(CHAT_WAVE_HEIGHT_DP)
@@ -9108,14 +9510,17 @@ class WatchPreviewView @JvmOverloads constructor(
         var y = cy - radius * .52f
 
         // Cover, small on purpose: this is the one face where the artwork is the caption and the
-        // table is the subject.
+        // table is the subject. Hidden entirely is a layout choice, not a shape - see NoteFace's
+        // showCover - so the table's own top-of-block y simply doesn't advance for it.
         val art = displayedArt()
-        if (art != null) {
+        if (art != null && metadataShowCover) {
             val side = screen * .17f
             val rect = RectF(cx - side / 2f, y, cx + side / 2f, y + side)
+            val corner = side *
+                    CoverShape.fromPreference(metadataCoverShape, CoverShape.ROUNDED).cornerFraction
             canvas.save()
             canvas.clipPath(Path().apply {
-                addRoundRect(rect, side * .22f, side * .22f, Path.Direction.CW)
+                addRoundRect(rect, corner, corner, Path.Direction.CW)
             })
             drawArtwork(canvas, art, rect, 255)
             canvas.restore()
@@ -9278,8 +9683,13 @@ class WatchPreviewView @JvmOverloads constructor(
         textPaint.style = Paint.Style.FILL
         textPaint.textAlign = Paint.Align.CENTER
 
-        val discSize = (screen * NOTE_COVER_FRACTION).coerceIn(dp(34f), dp(60f))
-        val blockGap = screen * .05f
+        // Hiding the cover zeroes both the size and the gap together, mirroring NoteFace: with
+        // nothing occupying the top of the block the sentence alone is what the centred block
+        // measures, rather than leaving the disc's gap as dead space above it.
+        val discSize = if (noteShowCover) {
+            (screen * NOTE_COVER_FRACTION).coerceIn(dp(34f), dp(60f))
+        } else 0f
+        val blockGap = if (noteShowCover) screen * .05f else 0f
 
         // "Artist: Title", artist bold in the accent. The sentence is this face's *title*, so it
         // follows the user's Title text behaviour exactly as every other face's does - the watch
@@ -9323,27 +9733,31 @@ class WatchPreviewView @JvmOverloads constructor(
         // wrapped lifts the artwork instead of running off the bottom. With both lines hidden the
         // disc is the whole block, as the face's own Column is when NoteLine draws nothing.
         val lineCount = if (sentence.isEmpty()) 0 else plan.lines.size
-        val blockHeight = discSize + if (lineCount == 0) 0f else blockGap + lineHeight * lineCount
+        val blockHeight = discSize + if (lineCount == 0 || !noteShowCover) 0f else
+            blockGap + lineHeight * lineCount
         val discCy = cy - blockHeight / 2f + discSize / 2f
         val art = displayedArt()
-        val discRect = RectF(
-                cx - discSize / 2f, discCy - discSize / 2f,
-                cx + discSize / 2f, discCy + discSize / 2f)
-        // The same shared silhouette Carousel's cards are cut to, so one vocabulary answers both
-        // faces here as it does on the watch. A circle is only this face's default, not its shape.
-        val discCorner = discSize * CoverShape.fromPreference(noteCoverShape, CoverShape.CIRCLE)
-                .cornerFraction
-        canvas.save()
-        canvas.clipPath(Path().apply {
-            addRoundRect(discRect, discCorner, discCorner, Path.Direction.CW)
-        })
-        if (art != null) {
-            drawArtwork(canvas, art, discRect, 255)
-        } else {
-            fillPaint.color = ColorUtils.setAlphaComponent(accent, 0x80)
-            canvas.drawRect(discRect, fillPaint)
+        if (noteShowCover) {
+            val discRect = RectF(
+                    cx - discSize / 2f, discCy - discSize / 2f,
+                    cx + discSize / 2f, discCy + discSize / 2f)
+            // The same shared silhouette Carousel's cards are cut to, so one vocabulary answers
+            // both faces here as it does on the watch. A circle is only this face's default, not
+            // its shape.
+            val discCorner = discSize * CoverShape.fromPreference(noteCoverShape, CoverShape.CIRCLE)
+                    .cornerFraction
+            canvas.save()
+            canvas.clipPath(Path().apply {
+                addRoundRect(discRect, discCorner, discCorner, Path.Direction.CW)
+            })
+            if (art != null) {
+                drawArtwork(canvas, art, discRect, 255)
+            } else {
+                fillPaint.color = ColorUtils.setAlphaComponent(accent, 0x80)
+                canvas.drawRect(discRect, fillPaint)
+            }
+            canvas.restore()
         }
-        canvas.restore()
 
         if (lineCount > 0) drawNoteSentence(
                 canvas,
@@ -9498,7 +9912,7 @@ class WatchPreviewView @JvmOverloads constructor(
         // Split owns an opaque backdrop, so the shared floor must be placed after it or it is
         // completely covered. Keep it below the card's text and badge, matching the watch face.
         if (accentFloor.isVisible) {
-            drawAccentFloor(canvas, geometry, AdaptiveTextContrast.adapt(albumAccent(), 0f))
+            drawAccentFloor(canvas, geometry, resolvedAccentFloorColor())
         }
 
         // Artist over title, left-aligned, inset for the narrowing round chord.

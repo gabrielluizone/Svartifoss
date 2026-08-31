@@ -108,6 +108,8 @@
     <string name="community_theme_submit_author_locked">Esta conta já publica como %1$s. O nome fixo foi restaurado; confira e envie novamente.</string>
     <string name="community_theme_submit_originality">Este tema altera %1$d configurações visuais aplicáveis. São necessárias pelo menos %2$d para a revisão.</string>
     <string name="community_theme_submit_invalid">Este tema salvo não pode ser enviado. Volte aos Meus temas e tente novamente.</string>
+    <string name="community_theme_submit_unsupported_setting_value">A galeria não aceita “%2$s” em %1$s. Altere essa opção no tema e envie de novo.</string>
+    <string name="community_theme_submit_unsupported_setting">A galeria não aceita a opção %1$s deste tema. Altere-a e envie o tema de novo.</string>
     <string name="community_theme_submit_duplicate">Um tema com exatamente estas configurações já está publicado neste layout. Mude algo visível antes de enviá-lo.</string>
     <string name="community_theme_submit_sign_in_cancelled">O login do Google foi cancelado. Seu tema não foi enviado.</string>
     <string name="community_theme_submit_limit_reached">Você já enviou 3 temas nas últimas 24 horas. Tente novamente quando o envio mais antigo completar 24 horas.</string>

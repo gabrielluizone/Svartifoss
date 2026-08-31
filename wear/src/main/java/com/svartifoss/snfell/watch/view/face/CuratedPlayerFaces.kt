@@ -9,7 +9,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -880,7 +879,6 @@ private fun BoxScope.SpectrumComposition(
             Modifier.align(Alignment.Center)
                     .offset(x = playX, y = groupY)
                     .size(playSize),
-            captureSwipes = true
     ) {
         if (state.showControls) {
             Canvas(Modifier.fillMaxSize()) {
@@ -900,7 +898,6 @@ private fun BoxScope.SpectrumComposition(
                 { fraction -> listener.onSeek(fraction) }
             } else null,
             surfaceProgress = state.progress.coerceIn(0f, 1f),
-            captureSwipes = state.seekable && state.durationMs > 0L,
             showCoreInteraction = false) {
         Canvas(Modifier.fillMaxSize()) {
             val bars = 15
@@ -1245,7 +1242,6 @@ private fun InteractiveFocus(
         animateHero: Boolean = true,
         onSurfaceTap: ((Float) -> Unit)? = null,
         surfaceProgress: Float? = null,
-        captureSwipes: Boolean = false,
         showCoreInteraction: Boolean = true,
         content: @Composable androidx.compose.foundation.layout.BoxScope.() -> Unit
 ) {
@@ -1265,31 +1261,8 @@ private fun InteractiveFocus(
             if (state.playing) R.string.action_name_pause else R.string.action_name_play
     )
     val seekDescription = stringResource(R.string.action_name_seek)
-    val swipeModifier = if (captureSwipes) {
-        Modifier.pointerInput(listener) {
-            var distance = Offset.Zero
-            val threshold = 32.dp.toPx()
-            detectDragGestures(
-                    onDragStart = { distance = Offset.Zero },
-                    onDrag = { change, amount ->
-                        distance += amount
-                        change.consume()
-                    },
-                    onDragEnd = {
-                        if (abs(distance.x) > abs(distance.y)) {
-                            if (distance.x < -threshold) listener.onSwipeLeft()
-                        } else if (abs(distance.y) > threshold) {
-                            if (distance.y < 0f) listener.onSwipeUp() else listener.onSwipeDown()
-                        }
-                    },
-                    onDragCancel = { distance = Offset.Zero }
-            )
-        }
-    } else {
-        Modifier
-    }
     Box(
-            modifier = modifier.then(swipeModifier),
+            modifier = modifier,
             contentAlignment = Alignment.Center
     ) {
         Box(
@@ -1327,8 +1300,8 @@ private fun InteractiveFocus(
                             }
             )
         }
-        // Only this accessible 52dp core captures input. The surrounding cover/gradient remains
-        // visual, so swipes that begin outside the central control still reach the host gestures.
+        // Only this accessible 52dp core captures taps. The host's full-screen Compose bridge
+        // observes swipes over both this core and the visual surface around it.
         if (showCoreInteraction) Box(
                 Modifier.align(Alignment.Center)
                         .offset(y = touchOffsetY)

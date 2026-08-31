@@ -1499,6 +1499,7 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>Carré</item>
         <item>Squircle</item>
         <item>Cercle</item>
+        <item>Style Samsung</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Utiliser la police partout</string>

@@ -236,6 +236,8 @@
     <string name="open_actions_menu">Open actions menu</string>
     <string name="open_quick_actions_panel">Open quick actions panel</string>
     <string name="open_playlist_menu">Show current playlist</string>
+    <string name="open_volume_screen">Open volume screen</string>
+    <string name="open_progress_screen">Open progress screen</string>
     <string name="misc_settings">Misc settings</string>
 
     <string name="category_backup">Backup</string>
@@ -310,6 +312,9 @@
     <string name="player_element_edge_arc">Edge arc</string>
     <string name="player_element_edge_seek">Edge seek</string>
     <string name="player_element_clock">Clock</string>
+    <!-- Shared by Note/Chat/Metadata's cover-art toggle: only one is ever visible at a time, since
+         each is gated to its own face. -->
+    <string name="player_element_cover_art">Cover art</string>
     <string name="category_wf_colors_title">Title colors</string>
     <string name="category_wf_colors_artist">Artist colors</string>
     <string name="category_wf_colors_clock">Clock colors</string>
@@ -1630,11 +1635,17 @@
 
     <string name="setting_wear_carousel_card_shape">Carousel card shape</string>
     <string name="setting_wear_note_cover_shape">Note cover shape</string>
+    <string name="setting_wear_note_show_cover">Cover art</string>
+    <string name="setting_wear_chat_cover_shape">Chat avatar shape</string>
+    <string name="setting_wear_chat_show_cover">Cover art</string>
+    <string name="setting_wear_metadata_cover_shape">Metadata cover shape</string>
+    <string name="setting_wear_metadata_show_cover">Cover art</string>
     <string-array name="wear_cover_shape_entries">
         <item>Rounded</item>
         <item>Square</item>
         <item>Squircle</item>
         <item>Circle</item>
+        <item>Samsung style</item>
     </string-array>
 
     <!-- Shared by wear_title_text_case and wear_artist_text_case - one vocabulary, same as
@@ -1643,6 +1654,7 @@
         <item>Normal</item>
         <item>UPPERCASE</item>
         <item>lowercase</item>
+        <item>Title Case</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Use font everywhere</string>
@@ -2240,6 +2252,21 @@
         <item>bold</item>
     </string-array>
     <string name="setting_wear_accent_floor">Accent floor</string>
+    <string name="setting_wear_accent_floor_color">Accent floor color</string>
+    <string name="setting_wear_accent_floor_custom_color">Custom floor color</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Choose the color used when Accent floor color is set to Custom color</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Album accent</item>
+        <item>Album secondary</item>
+        <item>Album tertiary</item>
+        <item>Custom color</item>
+    </string-array>
+    <string-array name="wear_accent_floor_color_values" translatable="false">
+        <item>album</item>
+        <item>secondary</item>
+        <item>tertiary</item>
+        <item>custom</item>
+    </string-array>
     <string name="preview_metadata_album">Album</string>
     <string name="preview_metadata_album_value">Slow Rivers</string>
     <string name="preview_metadata_track">Track</string>

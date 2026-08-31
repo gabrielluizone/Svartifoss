@@ -1477,6 +1477,7 @@
         <item>Kvadrat</item>
         <item>Zaobljeni kvadrat</item>
         <item>Krug</item>
+        <item>Samsung stil</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Koristi font posvuda</string>

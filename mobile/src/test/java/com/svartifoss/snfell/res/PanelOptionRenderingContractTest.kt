@@ -72,9 +72,16 @@ class PanelOptionRenderingContractTest {
                 "wear/src/main/java/com/svartifoss/snfell/watch/view/queue/QueueScreen.kt")
         val backdrop = source(
                 "common/src/main/java/com/svartifoss/snfell/common/OverlayBackdrop.kt")
+        // The backdrop table and the readout table were lifted out of MainActivity so the
+        // dedicated volume/progress screens - separate Activities - render from the same branch
+        // instead of their own approximation. Same contract, new home.
+        val backdropDrawables = source(
+                "wear/src/main/java/com/svartifoss/snfell/watch/view/OverlayBackdropDrawables.kt")
+        val panelReadout = source(
+                "wear/src/main/java/com/svartifoss/snfell/watch/view/panel/PanelReadout.kt")
 
         val previewBackdrop = functionBody(preview, "drawConfiguredOverlayBackdrop")
-        val wearBackdrop = functionBody(wearMain, "applyOverlayBackdrop")
+        val wearBackdrop = functionBody(backdropDrawables, "build")
         val previewVolume = functionBody(preview, "drawVolumeArc")
         val previewRing = functionBody(preview, "drawEdgeSeekRing")
         val previewReadout = functionBody(preview, "drawOverlayReadout")
@@ -82,7 +89,7 @@ class PanelOptionRenderingContractTest {
         val previewQuickStyle = functionBody(preview, "quickSkin")
         val previewQuickLayout = functionBody(preview, "previewQuickSlotRect")
         val previewQueue = functionBody(preview, "queueSkin")
-        val wearReadout = functionBody(wearMain, "applyPillReadoutStyle")
+        val wearReadout = functionBody(panelReadout, "apply")
         val wearSeekLayout = functionBody(wearMain, "applySeekPanelLayout")
         val wearQuickStyle = functionBody(wearMain, "inactiveQuickButtonBackground")
         val wearQuickLayout = functionBody(wearMain, "applyQuickPanelLayout")

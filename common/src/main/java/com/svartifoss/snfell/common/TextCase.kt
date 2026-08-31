@@ -14,15 +14,21 @@ package com.svartifoss.snfell.common
 enum class TextCase(val preferenceValue: String) {
     NORMAL("normal"),
     UPPERCASE("uppercase"),
-    LOWERCASE("lowercase");
+    LOWERCASE("lowercase"),
+    TITLE_CASE("title_case");
 
     fun apply(text: String): String = when (this) {
         NORMAL -> text
         UPPERCASE -> text.uppercase()
         LOWERCASE -> text.lowercase()
+        TITLE_CASE -> text.lowercase().replace(TITLE_CASE_WORD_START) { match ->
+            match.groupValues[1] + match.groupValues[2] + match.groupValues[3].uppercase()
+        }
     }
 
     companion object {
+        private val TITLE_CASE_WORD_START = Regex("""(^|\s+)([^\p{L}\s]*)(\p{L})""")
+
         fun fromPreference(value: String?): TextCase =
                 entries.firstOrNull { it.preferenceValue == value } ?: NORMAL
     }

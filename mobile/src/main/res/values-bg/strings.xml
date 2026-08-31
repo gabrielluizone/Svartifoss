@@ -1476,6 +1476,7 @@
         <item>Квадрат</item>
         <item>Закръглен квадрат</item>
         <item>Кръг</item>
+        <item>Стил Samsung</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Използване на шрифта навсякъде</string>

@@ -38,11 +38,13 @@
         <item>square</item>
         <item>squircle</item>
         <item>circle</item>
+        <item>samsung</item>
     </string-array>
     <string-array name="wear_text_case_values" translatable="false">
         <item>normal</item>
         <item>uppercase</item>
         <item>lowercase</item>
+        <item>title_case</item>
     </string-array>
     <string-array name="wear_rotary_action_values" translatable="false">
         <item>volume</item>

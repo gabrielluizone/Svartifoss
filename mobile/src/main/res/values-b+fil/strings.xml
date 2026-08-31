@@ -1499,6 +1499,7 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>Parisukat</item>
         <item>Squircle</item>
         <item>Bilog</item>
+        <item>Estilo ng Samsung</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Gamitin ang font sa lahat</string>

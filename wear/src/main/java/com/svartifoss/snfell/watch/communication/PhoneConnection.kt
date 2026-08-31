@@ -404,6 +404,17 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         sendToPhone(CommPaths.MESSAGE_SKIP_PREVIOUS)
     }
 
+    /** Seeks by [deltaMs] (signed) relative to the session's *live* position - the phone resolves
+     *  the actual target, since a watch-held snapshot can already be stale. */
+    suspend fun sendSeekRelative(deltaMs: Long) {
+        sendToPhone(CommPaths.MESSAGE_SEEK_RELATIVE, ByteBuffer.allocate(8).putLong(deltaMs).array())
+    }
+
+    /** Sends the new absolute playback-speed multiplier - see [CommPaths.MESSAGE_SET_PLAYBACK_SPEED]. */
+    suspend fun sendPlaybackSpeed(multiplier: Float) {
+        sendToPhone(CommPaths.MESSAGE_SET_PLAYBACK_SPEED, FloatPacker.packFloat(multiplier))
+    }
+
     /** [name] is one of "like"/"shuffle"/"repeat" - see MusicService.onMessageReceived on the phone. */
     suspend fun sendQuickAction(name: String) {
         sendToPhone(CommPaths.MESSAGE_QUICK_ACTION, name.toByteArray(Charsets.UTF_8))

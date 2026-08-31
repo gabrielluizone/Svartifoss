@@ -251,6 +251,8 @@ data class NowPlayingFaceState(
          *  Rendered by [PlayerBackgroundTreatment] so it lands above the backdrop and below the
          *  face's own content, which is the only stacking that works for it. */
         val accentFloor: AccentFloorStyle = AccentFloorStyle.OFF,
+        /** Resolved floor colour, independent from the face's main accent. */
+        val accentFloorColor: Int = WatchTheme.ACCENT_DEFAULT,
         /** How the Split face fills its lower panel. Ignored by every other face - Split is the
          *  only one that paints its own backdrop, which is why it needs its own control. */
         val splitPanelStyle: SplitPanelStyle = SplitPanelStyle.DEFAULT,

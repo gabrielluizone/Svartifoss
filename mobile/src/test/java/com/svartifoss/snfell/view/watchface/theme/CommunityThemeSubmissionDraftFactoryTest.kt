@@ -1,6 +1,8 @@
 package com.svartifoss.snfell.view.watchface.theme
 
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import java.io.File
+import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
@@ -105,6 +107,49 @@ class CommunityThemeSubmissionDraftFactoryTest {
                         source.copy(settings = source.settings +
                                 (textDefinition.key to WatchThemeValue.Text("x".repeat(129)))),
                         "Valid name", publicId, 123L))
+    }
+
+    /**
+     * A value outside the public vocabulary names itself, instead of joining every other fault
+     * under one unactionable "this theme cannot be submitted".
+     *
+     * It is the only refusal a person can do anything about - the others describe a broken or
+     * oversized profile - and reported anonymously it cost a real user days, because a per-face
+     * setting made it look like whole layouts were unsubmittable.
+     */
+    @Test
+    fun `factory names the setting holding a value the public vocabulary refuses`() {
+        val publicId = "22222222-2222-4222-8222-222222222222"
+        val rejected = WatchThemeValue.Text("not-a-font")
+        val result = CommunityThemeSubmissionDraftFactory.build(
+                profile().copy(settings = profile().settings + ("wear_font" to rejected)),
+                "Valid name",
+                publicId,
+                123L,
+                constraints)
+        assertEquals(
+                CommunityThemeSubmissionDraftResult.UnsupportedSetting("wear_font", rejected),
+                result)
+    }
+
+    /** The same profile with every value in vocabulary still builds, so the check is not blanket. */
+    @Test
+    fun `factory accepts a profile whose values are all in the public vocabulary`() {
+        val result = CommunityThemeSubmissionDraftFactory.build(
+                profile(),
+                "Valid name",
+                "22222222-2222-4222-8222-222222222222",
+                123L,
+                constraints)
+        assertTrue(result is CommunityThemeSubmissionDraftResult.Ready)
+    }
+
+    private val constraints: CommunityThemeConstraints by lazy {
+        val file = listOf(
+                File("../common/src/main/assets/community-theme-constraints.json"),
+                File("common/src/main/assets/community-theme-constraints.json"))
+                .first(File::isFile)
+        requireNotNull(CommunityThemeConstraints.fromJson(JSONObject(file.readText())))
     }
 
     private fun profile(

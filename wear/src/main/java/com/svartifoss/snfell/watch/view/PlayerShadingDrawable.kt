@@ -111,6 +111,52 @@ class PlayerShadingDrawable(
                             Color.TRANSPARENT,
                             ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.72f))),
                     floatArrayOf(0f, .34f, .66f, 1f), Shader.TileMode.CLAMP)
+
+            PlayerShadingStyle.TOP_FADE -> LinearGradient(
+                    0f, top, 0f, bottom,
+                    intArrayOf(ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.94f)),
+                            Color.TRANSPARENT, Color.TRANSPARENT),
+                    floatArrayOf(0f, .58f, 1f), Shader.TileMode.CLAMP)
+
+            PlayerShadingStyle.CENTER_SPOTLIGHT -> RadialGradient(
+                    cx, cy, maxOf(b.width(), b.height()) * .64f,
+                    intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.90f))),
+                    floatArrayOf(0f, .38f, 1f), Shader.TileMode.CLAMP)
+
+            PlayerShadingStyle.DIAGONAL -> LinearGradient(
+                    right, top, left, bottom,
+                    intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.92f))),
+                    floatArrayOf(0f, .40f, 1f), Shader.TileMode.CLAMP)
+
+            PlayerShadingStyle.LEFT_CURTAIN -> LinearGradient(
+                    left, 0f, right, 0f,
+                    intArrayOf(ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.90f)),
+                            Color.TRANSPARENT, Color.TRANSPARENT),
+                    floatArrayOf(0f, .56f, 1f), Shader.TileMode.CLAMP)
+
+            PlayerShadingStyle.RIGHT_CURTAIN -> LinearGradient(
+                    left, 0f, right, 0f,
+                    intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.90f))),
+                    floatArrayOf(0f, .44f, 1f), Shader.TileMode.CLAMP)
+
+            PlayerShadingStyle.CENTER_BAND -> LinearGradient(
+                    0f, top, 0f, bottom,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.84f)),
+                            Color.TRANSPARENT, Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.84f))),
+                    floatArrayOf(0f, .40f, .60f, 1f), Shader.TileMode.CLAMP)
+
+            PlayerShadingStyle.CROSSFADE -> LinearGradient(
+                    left, top, right, bottom,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.78f)),
+                            Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(shadingColor, scaledAlpha(.78f))),
+                    floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
         }
 
         paint.color = when (style) {

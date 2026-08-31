@@ -1964,11 +1964,13 @@
         <item>Quadrado</item>
         <item>Supercírculo (Squircle)</item>
         <item>Círculo</item>
+        <item>Estilo Samsung</item>
     </string-array>
     <string-array name="wear_text_case_entries">
         <item>Normal</item>
         <item>CAIXA ALTA</item>
         <item>caixa baixa</item>
+        <item>Iniciais Maiúsculas</item>
     </string-array>
 
     <string-array name="theme_entries">
@@ -2083,6 +2085,15 @@
         <item>bold</item>
     </string-array>
     <string name="setting_wear_accent_floor">Base do destaque</string>
+    <string name="setting_wear_accent_floor_color">Cor da base do destaque</string>
+    <string name="setting_wear_accent_floor_custom_color">Cor personalizada da base</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Escolha a cor usada quando a cor da base do destaque estiver definida como personalizada</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Destaque do álbum</item>
+        <item>Cor secundária do álbum</item>
+        <item>Cor terciária do álbum</item>
+        <item>Cor personalizada</item>
+    </string-array>
     <string name="preview_metadata_album">Álbum</string>
     <string name="preview_metadata_album_value">Slow Rivers</string>
     <string name="preview_metadata_track">Faixa</string>

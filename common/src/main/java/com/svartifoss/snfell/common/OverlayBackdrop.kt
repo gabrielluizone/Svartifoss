@@ -27,6 +27,8 @@ enum class OverlayBackdrop {
     MIDNIGHT,
     HALO,
     SMOKE,
+    SUNRISE,
+    DEEP_OCEAN,
 
     /**
      * Heavily blurred artwork read through a bright, thin-edged pane - the treatment Apple calls
@@ -75,6 +77,8 @@ enum class OverlayBackdrop {
             "midnight" -> MIDNIGHT
             "halo" -> HALO
             "smoke" -> SMOKE
+            "sunrise" -> SUNRISE
+            "deep_ocean" -> DEEP_OCEAN
             "liquid_glass" -> LIQUID_GLASS
             "expressive" -> EXPRESSIVE
             "expressive_no_blur" -> EXPRESSIVE_NO_BLUR

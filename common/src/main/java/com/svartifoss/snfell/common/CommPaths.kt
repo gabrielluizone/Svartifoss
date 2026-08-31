@@ -47,6 +47,13 @@ interface CommPaths {
         // the session's LIVE position - senders like the Tile only hold a stale snapshot, so
         // the phone resolves the actual target. Used by the Tile's -10s/+10s buttons.
         const val MESSAGE_SEEK_RELATIVE = "/Messages/SeekRelative"
+        // Watch -> phone: an absolute playback-speed multiplier (packed float, see FloatPacker),
+        // same shape as MESSAGE_CHANGE_VOLUME - the watch computes the new value itself from the
+        // MusicState.playbackSpeed it already has, rather than sending a delta. Issued
+        // unconditionally, like every other transport command here: a session that does not honour
+        // ACTION_SET_PLAYBACK_SPEED simply reports the same speed back, which is a silent no-op
+        // rather than a reason to withhold the command (see MediaSessionCapabilities's reasoning).
+        const val MESSAGE_SET_PLAYBACK_SPEED = "/Messages/SetPlaybackSpeed"
         const val MESSAGE_TOGGLE_PLAY_PAUSE = "/Messages/TogglePlayPause"
         const val MESSAGE_SKIP_NEXT = "/Messages/SkipNext"
         const val MESSAGE_SKIP_PREVIOUS = "/Messages/SkipPrevious"

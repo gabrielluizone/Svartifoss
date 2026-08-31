@@ -1843,6 +1843,7 @@
         <item>Cuadrada</item>
         <item>Squircle</item>
         <item>Circular</item>
+        <item>Estilo Samsung</item>
     </string-array>
     <string name="setting_wear_font_all_screens">Usar tipografía en todas partes</string>
     <string name="setting_wear_font_all_screens_description">Aplica la tipografía elegida a los menús, la cola y las Acciones rápidas, no solo al reproductor. Las tipografías decorativas y manuscritas pueden ser más difíciles de leer en listas.</string>

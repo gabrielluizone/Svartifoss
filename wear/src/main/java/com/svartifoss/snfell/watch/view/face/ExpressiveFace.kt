@@ -85,16 +85,9 @@ import kotlin.math.tanh
  * entirely to the user's configured mini buttons (see [NowPlayingFaceState.miniButtonsTopFraction])
  * rather than a fixed default trio, so there is never a second, conflicting set of shortcuts.
  *
- * Only the buttons are hit-testable; touches everywhere else fall straight through this
- * composable to the shared input layers underneath (quadrant taps, swipe gestures), so the
- * user's configured gestures keep working. The trade-off: a swipe that *starts* on a button is
- * consumed by it - unlike the classic center tap zone, which mirrors fling handling. Kept out
- * of v1 deliberately; revisit if it bothers anyone in practice.
- *
- * The ring is display-only for now ([NowPlayingFaceListener.onSeek] is reserved for a future
- * scrub interaction) and, matching the reference stills, draws in neutral white rather than
- * the classic face's configurable progress color - drag-to-seek and progress tinting stay
- * available on the classic face and via the rotary crown.
+ * Buttons retain their own taps and the ring retains drag-to-seek, while MainActivity's
+ * full-screen Compose bridge observes swipe streams claimed by either. Configured swipes can
+ * therefore begin on controls as well as on the non-interactive artwork around them.
  */
 @Composable
 fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {

@@ -296,6 +296,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 desaturatedKey = null,
                 customColorDescription = R.string.setting_wear_shading_custom_color_description
         )
+        initAccentColorTarget(
+                modeKey = "wear_accent_floor_color_mode",
+                customColorKey = "wear_accent_floor_custom_color",
+                desaturatedKey = null,
+                customColorDescription = R.string.setting_wear_accent_floor_custom_color_description
+        )
         initAppearanceResetActions()
         initAccentColorTarget(
                 modeKey = "wear_aod_color_mode",
@@ -570,6 +576,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     com.svartifoss.snfell.common.TextCase.fromPreference(value)) {
                 com.svartifoss.snfell.common.TextCase.UPPERCASE -> R.drawable.ic_uppercase
                 com.svartifoss.snfell.common.TextCase.LOWERCASE -> R.drawable.ic_lowercase
+                com.svartifoss.snfell.common.TextCase.TITLE_CASE -> R.drawable.ic_titlecase
                 com.svartifoss.snfell.common.TextCase.NORMAL -> R.drawable.ic_match_case
             })
             caseButton.contentDescription =
@@ -2421,6 +2428,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         applyLyricsFontEntries(showArchived)
         applyTitleColorEntries()
         PanelOptionCatalog.apply(resources) { key -> findPreference(key) }
+        AppearanceOptionCatalog.apply(resources) { key -> findPreference(key) }
     }
 
     /**

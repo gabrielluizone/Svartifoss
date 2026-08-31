@@ -70,7 +70,11 @@ enum class VolumeStyle {
     /** A fixed full-hue rainbow rather than an album-derived gradient. */
     SPECTRUM,
     /** Graduated radial/linear blocks that grow with the level. */
-    STEPS;
+    STEPS,
+    /** Alternating pink and amber candy rail. */
+    CANDY,
+    /** Nearly transparent track with a fine white value trace. */
+    GHOST;
 
     companion object {
         fun fromPref(value: String?): VolumeStyle = when (value) {
@@ -97,6 +101,8 @@ enum class VolumeStyle {
             "chrome" -> CHROME
             "spectrum" -> SPECTRUM
             "steps" -> STEPS
+            "candy" -> CANDY
+            "ghost" -> GHOST
             else -> GLASS
         }
     }
@@ -140,7 +146,11 @@ enum class VolumeLayout {
     /** Horizontal level meter close to the lower edge. */
     METER_BOTTOM,
     /** Compact centre dial with a radial value needle. */
-    DIAL;
+    DIAL,
+    /** Compact arc floating above the player controls. */
+    HALO_TOP,
+    /** Compact arc floating below the player controls. */
+    HALO_BOTTOM;
 
     companion object {
         fun fromPref(value: String?): VolumeLayout = when (value) {
@@ -157,6 +167,8 @@ enum class VolumeLayout {
             "meter_top" -> METER_TOP
             "meter_bottom" -> METER_BOTTOM
             "dial" -> DIAL
+            "halo_top" -> HALO_TOP
+            "halo_bottom" -> HALO_BOTTOM
             else -> EDGE
         }
     }
@@ -195,6 +207,8 @@ class CircularVolumeBar : android.view.View {
     private val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     private val circleBounds = RectF()
     private val haloBounds = RectF()
+    private val haloTopBounds = RectF()
+    private val haloBottomBounds = RectF()
     private val dialBounds = RectF()
     private val meterBounds = RectF()
     private val meterTopBounds = RectF()
@@ -297,6 +311,9 @@ class CircularVolumeBar : android.view.View {
                 measuredHeight / 2f - haloSize / 2f,
                 measuredWidth / 2f + haloSize / 2f,
                 measuredHeight / 2f + haloSize / 2f)
+        val haloShift = 34f * density
+        haloTopBounds.set(haloBounds).also { haloTopBounds.offset(0f, -haloShift) }
+        haloBottomBounds.set(haloBounds).also { haloBottomBounds.offset(0f, haloShift) }
 
         val dialSize = min(viewSize - 76f * density, 104f * density)
                 .coerceAtLeast(68f * density)
@@ -442,6 +459,16 @@ class CircularVolumeBar : android.view.View {
                 drawArc(canvas, baseStroke * 1.25f, Paint.Cap.ROUND,
                         0x24FFFFFF, 0, fillShader = spectrumShader())
             VolumeStyle.STEPS -> drawVolumeSteps(canvas)
+            VolumeStyle.CANDY ->
+                drawArc(canvas, baseStroke * 1.35f, Paint.Cap.ROUND,
+                        0x24FFFFFF, 0, fillShader = LinearGradient(
+                                activeArcBounds().left, activeArcBounds().bottom,
+                                activeArcBounds().right, activeArcBounds().top,
+                                intArrayOf(0xFFFF4F9A.toInt(), 0xFFFFC857.toInt(), 0xFF65D6FF.toInt()),
+                                null, Shader.TileMode.CLAMP))
+            VolumeStyle.GHOST ->
+                drawArc(canvas, baseStroke * .42f, Paint.Cap.ROUND,
+                        0x16FFFFFF, 0xD9FFFFFF.toInt())
         }
 
         if (barLayout == VolumeLayout.DIAL) {
@@ -692,6 +719,8 @@ class CircularVolumeBar : android.view.View {
 
     private fun activeArcBounds(): RectF = when (barLayout) {
         VolumeLayout.HALO -> haloBounds
+        VolumeLayout.HALO_TOP -> haloTopBounds
+        VolumeLayout.HALO_BOTTOM -> haloBottomBounds
         VolumeLayout.DIAL -> dialBounds
         else -> circleBounds
     }
@@ -711,6 +740,7 @@ class CircularVolumeBar : android.view.View {
     // counter-clockwise.
     private fun activeArcStart(): Float = when (barLayout) {
         VolumeLayout.HALO -> HALO_START_DEG
+        VolumeLayout.HALO_TOP, VolumeLayout.HALO_BOTTOM -> 155f
         VolumeLayout.EDGE_TALL -> 100f
         // 50deg is the lower-right; sweeping back through 0deg reaches the upper right.
         VolumeLayout.EDGE_RIGHT -> 50f
@@ -724,6 +754,7 @@ class CircularVolumeBar : android.view.View {
 
     private fun activeArcSweep(): Float = when (barLayout) {
         VolumeLayout.HALO -> HALO_SWEEP_DEG
+        VolumeLayout.HALO_TOP, VolumeLayout.HALO_BOTTOM -> 230f
         VolumeLayout.EDGE_TALL -> 160f
         VolumeLayout.EDGE_RIGHT -> -100f
         VolumeLayout.EDGE_TOP -> 70f
@@ -792,6 +823,7 @@ class CircularVolumeBar : android.view.View {
             VolumeStyle.TERMINAL -> ColorUtils.setAlphaComponent(TERMINAL_GREEN, 0x40)
             VolumeStyle.DUOTONE -> tonal(secondaryColorInt, .30f)
             VolumeStyle.TONAL -> tonal(accentColorInt, .22f)
+            VolumeStyle.GHOST -> 0x16FFFFFF
             else -> 0x35FFFFFF
         }
         val fillColor = when (barStyle) {
@@ -799,6 +831,7 @@ class CircularVolumeBar : android.view.View {
             VolumeStyle.CONTRAST -> 0xFFFFFFFF.toInt()
             VolumeStyle.TERMINAL -> TERMINAL_GREEN
             VolumeStyle.TONAL -> tonal(accentColorInt, .72f)
+            VolumeStyle.GHOST -> 0xD9FFFFFF.toInt()
             else -> accentColorInt
         }
 
@@ -933,6 +966,15 @@ class CircularVolumeBar : android.view.View {
                         bounds.left, bounds.centerY(), bounds.right, bounds.centerY(),
                         colors, null, Shader.TileMode.CLAMP)
             }
+        }
+        VolumeStyle.CANDY -> if (vertical) {
+            LinearGradient(bounds.centerX(), bounds.bottom, bounds.centerX(), bounds.top,
+                    intArrayOf(0xFFFF4F9A.toInt(), 0xFFFFC857.toInt(), 0xFF65D6FF.toInt()),
+                    null, Shader.TileMode.CLAMP)
+        } else {
+            LinearGradient(bounds.left, bounds.centerY(), bounds.right, bounds.centerY(),
+                    intArrayOf(0xFFFF4F9A.toInt(), 0xFFFFC857.toInt(), 0xFF65D6FF.toInt()),
+                    null, Shader.TileMode.CLAMP)
         }
         else -> null
     }
@@ -1102,7 +1144,23 @@ class CircularVolumeBar : android.view.View {
         }
     }
 
+    /**
+     * Whether a finger on the arc adjusts the volume.
+     *
+     * Off on the dedicated volume screen, whose whole surface is this arc: on a persistent screen
+     * the arc lands under the swipe-back gesture, so a drag meant to leave was also a volume
+     * change. There the crown and the step buttons do the adjusting and the arc is the readout.
+     * The transient overlay in `MainActivity` leaves it on - it dismisses itself in a couple of
+     * seconds and never competes with a dismissal.
+     *
+     * Mirrors [CircularProgressSeekBar.touchSeekingEnabled], including seeing an in-flight drag
+     * through rather than bailing out mid-gesture.
+     */
+    var touchAdjustEnabled: Boolean = true
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (!touchAdjustEnabled && !isDragging) return false
+
         when (barLayout) {
             VolumeLayout.METER,
             VolumeLayout.METER_TOP,

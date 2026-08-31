@@ -128,6 +128,11 @@ internal object WatchSearchTargetResolver {
                 key == "wear_screen_theme" && face !in PlayerEditorModel.CONTROL_STYLE_FACES ||
                 key == "wear_carousel_card_shape" && face != "carousel" ||
                 key == "wear_note_cover_shape" && face != "note" ||
+                key == "wear_note_show_cover" && face != "note" ||
+                key == "wear_chat_cover_shape" && face != "chat" ||
+                key == "wear_chat_show_cover" && face != "chat" ||
+                // wear_metadata_cover_shape / wear_metadata_show_cover need no entry here: the
+                // "wear_metadata_" prefix check above already redirects both.
                 key == "wear_split_panel" && face != "split" ||
                 key == "wear_quadrant_tap_flash" && face != "classic" ||
                 key == "wear_classic_icons_visible" && face in setOf("expressive", "material") ||

@@ -1478,6 +1478,7 @@
         <item>Kwadrat</item>
         <item>Superelipsa</item>
         <item>Koło</item>
+        <item>Styl Samsung</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Używaj fontu wszędzie</string>

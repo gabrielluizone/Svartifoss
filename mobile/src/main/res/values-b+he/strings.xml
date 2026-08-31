@@ -1477,6 +1477,7 @@
         <item>ריבוע</item>
         <item>ריבוע מעוגל</item>
         <item>עיגול</item>
+        <item>סגנון Samsung</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">השתמש בגופן בכל מקום</string>

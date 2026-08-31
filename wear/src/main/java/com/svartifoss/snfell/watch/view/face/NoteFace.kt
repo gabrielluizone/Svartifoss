@@ -61,7 +61,8 @@ import com.svartifoss.snfell.watch.view.compose.FaceClock
 fun NoteFace(
         state: NowPlayingFaceState,
         listener: NowPlayingFaceListener,
-        coverShape: CoverShape = CoverShape.CIRCLE
+        coverShape: CoverShape = CoverShape.CIRCLE,
+        showCover: Boolean = true
 ) {
     if (state.ambient) {
         NoteAmbient(state)
@@ -89,11 +90,16 @@ fun NoteFace(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
         ) {
-            CoverDisc(
-                    state,
-                    size = (screen * COVER_FRACTION).coerceIn(34.dp, 60.dp),
-                    shape = coverShape)
-            Spacer(Modifier.height(screen * .05f))
+            // Hiding the cover is a layout decision, not a shape - with it off the sentence alone
+            // fills the block the Column already centres, rather than leaving the gap the disc
+            // used to occupy.
+            if (showCover) {
+                CoverDisc(
+                        state,
+                        size = (screen * COVER_FRACTION).coerceIn(34.dp, 60.dp),
+                        shape = coverShape)
+                Spacer(Modifier.height(screen * .05f))
+            }
             NoteLine(state, screen)
         }
 

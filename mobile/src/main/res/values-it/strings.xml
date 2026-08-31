@@ -1879,6 +1879,7 @@
         <item>Quadrato</item>
         <item>Squircle</item>
         <item>Cerchio</item>
+        <item>Stile Samsung</item>
     </string-array>
     <string-array name="theme_entries">
         <item>@string/theme_light</item>

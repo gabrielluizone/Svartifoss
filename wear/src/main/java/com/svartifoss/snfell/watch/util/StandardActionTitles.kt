@@ -32,7 +32,9 @@ object StandardActionTitles {
             StandardActions.ACTION_SHUFFLE to R.string.quick_action_shuffle,
             StandardActions.ACTION_REPEAT to R.string.quick_action_repeat,
             StandardActions.ACTION_REPEAT_ONE to R.string.quick_action_repeat_one,
-            StandardActions.ACTION_OPEN_PLAYLIST_MENU to R.string.quick_action_up_next
+            StandardActions.ACTION_OPEN_PLAYLIST_MENU to R.string.quick_action_up_next,
+            StandardActions.ACTION_OPEN_VOLUME_SCREEN to R.string.action_name_open_volume_screen,
+            StandardActions.ACTION_OPEN_PROGRESS_SCREEN to R.string.action_name_open_progress_screen
     )
 
     /**

@@ -46,6 +46,11 @@ internal enum class PlayerControl {
     ALWAYS_SHOW_TIME,
     CAROUSEL_SHAPE,
     NOTE_COVER_SHAPE,
+    NOTE_SHOW_COVER,
+    CHAT_COVER_SHAPE,
+    CHAT_SHOW_COVER,
+    METADATA_COVER_SHAPE,
+    METADATA_SHOW_COVER,
     SPLIT_PANEL,
     EXPRESSIVE_SEEK,
     TRACK_TIME_MODE,
@@ -187,6 +192,26 @@ internal object PlayerEditorModel {
                     MiscPreferences.WEAR_NOTE_COVER_SHAPE,
                     PlayerSlot.CHOICE,
                     PlayerControl.NOTE_COVER_SHAPE),
+            element(
+                    MiscPreferences.WEAR_NOTE_SHOW_COVER,
+                    PlayerControl.NOTE_SHOW_COVER,
+                    R.string.player_element_cover_art),
+            choice(
+                    MiscPreferences.WEAR_CHAT_COVER_SHAPE,
+                    PlayerSlot.CHOICE,
+                    PlayerControl.CHAT_COVER_SHAPE),
+            element(
+                    MiscPreferences.WEAR_CHAT_SHOW_COVER,
+                    PlayerControl.CHAT_SHOW_COVER,
+                    R.string.player_element_cover_art),
+            choice(
+                    MiscPreferences.WEAR_METADATA_COVER_SHAPE,
+                    PlayerSlot.CHOICE,
+                    PlayerControl.METADATA_COVER_SHAPE),
+            element(
+                    MiscPreferences.WEAR_METADATA_SHOW_COVER,
+                    PlayerControl.METADATA_SHOW_COVER,
+                    R.string.player_element_cover_art),
             choice(
                     MiscPreferences.WEAR_SPLIT_PANEL,
                     PlayerSlot.CHOICE,
@@ -246,7 +271,9 @@ internal object PlayerEditorModel {
         PlayerControl.SCREEN_THEME -> face in CONTROL_STYLE_FACES
         PlayerControl.QUADRANT_FLASH -> face == "classic"
         PlayerControl.CAROUSEL_SHAPE -> face == "carousel"
-        PlayerControl.NOTE_COVER_SHAPE -> face == "note"
+        PlayerControl.NOTE_COVER_SHAPE, PlayerControl.NOTE_SHOW_COVER -> face == "note"
+        PlayerControl.CHAT_COVER_SHAPE, PlayerControl.CHAT_SHOW_COVER -> face == "chat"
+        PlayerControl.METADATA_COVER_SHAPE, PlayerControl.METADATA_SHOW_COVER -> face == "metadata"
         PlayerControl.SPLIT_PANEL -> face == "split"
         PlayerControl.EXPRESSIVE_SEEK -> face == "expressive"
         PlayerControl.PLAYER_CONTROLS -> face !in FIXED_TRANSPORT_FACES

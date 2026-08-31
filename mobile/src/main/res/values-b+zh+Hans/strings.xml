@@ -1657,6 +1657,7 @@
         <item>方形</item>
         <item>Squircle</item>
         <item>圆形</item>
+        <item>三星风格</item>
     </string-array>
     <string-array name="auto_start_modes_descriptions">
         <item>已禁用</item>

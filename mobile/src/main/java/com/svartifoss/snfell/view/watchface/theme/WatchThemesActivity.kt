@@ -20,9 +20,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.ColorUtils
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.TextInputEditText
@@ -56,6 +58,15 @@ class WatchThemesActivity : AppCompatActivity() {
     private lateinit var activeName: TextView
     private lateinit var activeLayout: TextView
     private var accentColor: Int = Color.WHITE
+    private val accountRepository = CommunityThemeAccountRepository()
+
+    /**
+     * This device's reserved community author name, once loaded - `null` until the fetch resolves
+     * or when nobody is Google-signed-in / hasn't claimed one. A local theme was never signed, so
+     * showing this here rather than any Firestore-stored provenance is what lets every local theme
+     * carry a name at all, published or not.
+     */
+    private var communityAuthorName: String? = null
     private val onlineThemesLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -113,6 +124,18 @@ class WatchThemesActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@WatchThemesActivity)
             adapter = this@WatchThemesActivity.adapter
         }
+        refreshScreen()
+        // Fetched once per screen visit, not per row: this is a Firestore read, and every custom
+        // row shares the same name. Rows show "Custom theme" until it resolves (or forever, if
+        // nobody is signed in or hasn't claimed a name), then refreshScreen() re-binds them.
+        lifecycleScope.launch { loadCommunityAuthorName() }
+    }
+
+    private suspend fun loadCommunityAuthorName() {
+        val result = accountRepository.publicAuthorIdentity()
+        val name = (result as? CommunityThemeAuthorIdentityLoadResult.Claimed)?.identity?.authorName
+        if (name == communityAuthorName) return
+        communityAuthorName = name
         refreshScreen()
     }
 
@@ -525,7 +548,15 @@ class WatchThemesActivity : AppCompatActivity() {
             fun bindCustom(profile: WatchThemeProfile) {
                 val layout = WatchThemeRepository.displayNameForFace(
                         this@WatchThemesActivity, profile.baseFace)
-                val description = getString(R.string.watch_theme_custom_subtitle, layout)
+                // The author name (once loaded) replaces the generic "Custom theme" label - a
+                // local profile has no stored provenance of its own, so this is this device's
+                // *signed* community identity standing in for it, not per-theme authorship.
+                val author = communityAuthorName
+                val description = if (author != null) {
+                    getString(R.string.watch_theme_custom_subtitle_authored, author, layout)
+                } else {
+                    getString(R.string.watch_theme_custom_subtitle, layout)
+                }
                 val applied = (active as? AppearanceContext.Custom)?.themeId == profile.id
                 bindCommon(profile.name, description, applied)
                 more.visibility = View.VISIBLE

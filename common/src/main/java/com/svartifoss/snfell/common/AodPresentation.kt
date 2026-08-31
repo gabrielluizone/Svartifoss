@@ -25,7 +25,8 @@ enum class AodArtTreatment(val preferenceValue: String) {
 data class AodArtworkSpec(
         val visible: Boolean,
         val blurred: Boolean = false,
-        val monochrome: Boolean = false
+        val monochrome: Boolean = false,
+        val photoFilter: AlbumArtFilter = AlbumArtFilter.NONE
 )
 
 /**
@@ -52,7 +53,8 @@ fun resolveAodArtwork(
             AodArtworkSpec(
                     visible = !it.hidesArtwork,
                     blurred = it.blurredArtwork,
-                    monochrome = it.grayscaleArtwork)
+                    monochrome = it.grayscaleArtwork,
+                    photoFilter = it.photoFilter)
         }
     }
 }

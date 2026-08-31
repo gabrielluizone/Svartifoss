@@ -133,6 +133,11 @@ class MusicViewModel @Inject constructor(
      *  screen itself requests the lyric text. */
     val openLyricsScreen = SingleLiveEvent<Unit>()
 
+    /** Opens the dedicated volume/progress screens - fully local, like [openLyricsScreen]: both
+     *  read what they need from the MusicState PhoneConnection already holds. */
+    val openVolumeScreen = SingleLiveEvent<Unit>()
+    val openProgressScreen = SingleLiveEvent<Unit>()
+
     /**
      * Lyrics for the current track, for the Verse face.
      *
@@ -327,6 +332,14 @@ class MusicViewModel @Inject constructor(
                 // locally instead of only reacting to whatever list shows up.
                 openPlaybackQueueScreen.call()
                 openPlaybackQueue()
+                true
+            }
+            StandardActions.ACTION_OPEN_VOLUME_SCREEN -> {
+                openVolumeScreen.call()
+                true
+            }
+            StandardActions.ACTION_OPEN_PROGRESS_SCREEN -> {
+                openProgressScreen.call()
                 true
             }
             else -> false

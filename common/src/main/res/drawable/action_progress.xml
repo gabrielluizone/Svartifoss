@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A neutral playback-position scrubber. Unlike the timed skip glyphs, this describes the
+     destination screen without suggesting that assigning the action immediately skips audio. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M3,11h6.17C9.58,9.83 10.69,9 12,9s2.42,0.83 2.83,2H21v2h-6.17C14.42,14.17 13.31,15 12,15s-2.42,-0.83 -2.83,-2H3v-2z" />
+</vector>

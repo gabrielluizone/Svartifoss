@@ -26,7 +26,21 @@ enum class PlayerShadingStyle(val preferenceValue: String) {
     /** A diagonal wash made from two real album swatches. */
     DUOTONE("duotone"),
     /** Dark side edges with a clear vertical strip through the centre. */
-    SIDE_CURTAINS("side_curtains");
+    SIDE_CURTAINS("side_curtains"),
+    /** A conventional fade from the upper edge, leaving bottom controls over clear artwork. */
+    TOP_FADE("top_fade"),
+    /** Darkens every edge while preserving a circular pool of light in the centre. */
+    CENTER_SPOTLIGHT("center_spotlight"),
+    /** Shadow running diagonally from upper-left to lower-right. */
+    DIAGONAL("diagonal"),
+    /** A single dark curtain entering from the left edge. */
+    LEFT_CURTAIN("left_curtain"),
+    /** A single dark curtain entering from the right edge. */
+    RIGHT_CURTAIN("right_curtain"),
+    /** Dark upper and lower thirds with a narrow clear strip through the middle. */
+    CENTER_BAND("center_band"),
+    /** Two opposing diagonal shadows that meet without covering the central controls. */
+    CROSSFADE("crossfade");
 
     companion object {
         fun fromPreference(value: String?): PlayerShadingStyle =

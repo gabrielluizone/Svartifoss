@@ -88,6 +88,19 @@ sealed class CommunityThemeSubmissionDraftResult {
     object InvalidPublicName : CommunityThemeSubmissionDraftResult()
     object InvalidProfile : CommunityThemeSubmissionDraftResult()
     object ProfileTooLarge : CommunityThemeSubmissionDraftResult()
+
+    /**
+     * One setting holds a value the public vocabulary does not accept, and which one.
+     *
+     * Separated from [InvalidProfile] because it is the only refusal the person can act on: the
+     * others are storage or schema faults with nothing to change, while this names a control and a
+     * value. Reported as a bare "cannot be submitted", it sent a real user hunting through layouts
+     * for days over a font.
+     */
+    data class UnsupportedSetting(
+            val key: String,
+            val value: WatchThemeValue
+    ) : CommunityThemeSubmissionDraftResult()
 }
 
 class WatchThemeLimitReachedException : IllegalStateException()
@@ -203,9 +216,13 @@ internal object CommunityThemeSubmissionDraftFactory {
                     ?: return CommunityThemeSubmissionDraftResult.InvalidProfile
             if (!valueMatchesDefinition(value, definition.defaultValue) ||
                     (value is WatchThemeValue.Text &&
-                            value.value.length > MAX_PUBLIC_SETTING_TEXT_LENGTH) ||
-                    (constraints != null && !constraints.accepts(definition.key, value))) {
+                            value.value.length > MAX_PUBLIC_SETTING_TEXT_LENGTH)) {
                 return CommunityThemeSubmissionDraftResult.InvalidProfile
+            }
+            // Kept apart from the checks above: those describe a broken profile, this one
+            // describes a choice, so the caller can say which setting to change.
+            if (constraints != null && !constraints.accepts(definition.key, value)) {
+                return CommunityThemeSubmissionDraftResult.UnsupportedSetting(definition.key, value)
             }
             completeSettings[definition.key] = value
         }

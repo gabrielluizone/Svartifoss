@@ -33,6 +33,10 @@ object StandardIcons {
             // push - see its icon-skipping logic.
             StandardActions.ACTION_OPEN_LYRICS to
                     com.svartifoss.snfell.common.R.drawable.action_lyrics,
+            StandardActions.ACTION_OPEN_VOLUME_SCREEN to
+                    com.svartifoss.snfell.common.R.drawable.action_volume_up,
+            StandardActions.ACTION_OPEN_PROGRESS_SCREEN to
+                    com.svartifoss.snfell.common.R.drawable.action_progress,
 
             getButtonKey(KeyEvent.KEYCODE_BACK) to R.drawable.button_back,
             getButtonKey(SpecialButtonCodes.TURN_ROTARY_CW) to R.drawable.button_turn_cw,

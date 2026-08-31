@@ -1475,6 +1475,7 @@
         <item>正方形</item>
         <item>圓角方形</item>
         <item>圓形</item>
+        <item>三星風格</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">所有位置使用字型</string>

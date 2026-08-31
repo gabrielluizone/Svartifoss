@@ -1475,6 +1475,7 @@
         <item>สี่เหลี่ยมจัตุรัส</item>
         <item>สเควอร์เคิล</item>
         <item>วงกลม</item>
+        <item>สไตล์ Samsung</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">ใช้ฟอนต์ทุกที่</string>

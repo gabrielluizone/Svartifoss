@@ -1477,6 +1477,7 @@
         <item>Квадрат</item>
         <item>Заобљени квадрат</item>
         <item>Круг</item>
+        <item>Samsung стил</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Користи фонт свуда</string>

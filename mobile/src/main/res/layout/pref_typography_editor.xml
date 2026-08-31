@@ -299,9 +299,9 @@
                         tools:text="0" />
 
                     <!-- Icon-only, unlike its neighbours: the icon itself is the value (match
-                         case / UPPERCASE / lowercase), so there is nothing a text label would add
+                         case / UPPERCASE / lowercase / Title Case), so there is nothing a text label would add
                          that the glyph does not already say - and the toolbar has no room to say
-                         it twice. Opens the same three-way ListPreference dialog every other
+                         it twice. Opens the same four-way ListPreference dialog every other
                          choice-type control in this editor opens. -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/typography_case_button"

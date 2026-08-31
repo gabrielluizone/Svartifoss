@@ -41,4 +41,12 @@ object StandardActions {
      * (the actions menu), where it bounces an "open lyrics" message back.
      */
     const val ACTION_OPEN_LYRICS = "com.svartifoss.snfell.actions.OpenLyricsAction"
+
+    /** Opens the watch's dedicated volume screen - fully watch-local like [ACTION_OPEN_MENU]:
+     *  current volume already arrives on every MusicState, so nothing needs to be requested. */
+    const val ACTION_OPEN_VOLUME_SCREEN = "com.svartifoss.snfell.actions.OpenVolumeScreenAction"
+
+    /** Opens the watch's dedicated progress screen (skip/seek/speed) - fully watch-local like
+     *  [ACTION_OPEN_VOLUME_SCREEN]. */
+    const val ACTION_OPEN_PROGRESS_SCREEN = "com.svartifoss.snfell.actions.OpenProgressScreenAction"
 }

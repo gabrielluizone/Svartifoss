@@ -14,18 +14,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.RenderEffect
 import android.graphics.Shader
 import android.graphics.Typeface
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
 import android.util.TypedValue
 import android.graphics.drawable.Animatable
 import androidx.compose.ui.unit.dp
@@ -112,6 +106,8 @@ import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
 import com.svartifoss.snfell.common.ScreenQuadrant
+import com.svartifoss.snfell.common.ScreenSwipeDirection
+import com.svartifoss.snfell.common.ScreenSwipeResolver
 import com.svartifoss.snfell.common.QuickPanelButtons
 import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.IdleScreenAction
@@ -121,6 +117,7 @@ import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.AccentFloorStyle
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.AlbumAccentSource
+import com.svartifoss.snfell.common.AlbumArtFilter
 import com.svartifoss.snfell.common.SwatchInfo
 import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.common.ColorModifier
@@ -139,7 +136,6 @@ import com.svartifoss.snfell.common.buttonconfig.GESTURE_LONG_TAP
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_SINGLE_TAP
 import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
 import com.svartifoss.snfell.common.view.FourWayTouchLayout
-import com.svartifoss.snfell.common.view.SwipeTrailDrawable
 import com.svartifoss.snfell.common.view.TapPulseDrawable
 import com.svartifoss.snfell.databinding.ActivityMainBinding
 import com.svartifoss.snfell.proto.MediaAction
@@ -151,6 +147,11 @@ import com.svartifoss.snfell.watch.communication.WatchInfoSender
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.view.menu.MenuActivity
 import com.svartifoss.snfell.watch.view.queue.QueueActivity
+import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
+import com.svartifoss.snfell.watch.theme.watchUiTypeface
+import com.svartifoss.snfell.watch.view.panel.PanelReadout
+import com.svartifoss.snfell.watch.view.progress.ProgressActivity
+import com.svartifoss.snfell.watch.view.volume.VolumeActivity
 import com.svartifoss.snfell.watch.view.lyrics.LyricsActivity
 import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.config.WatchActionConfigProvider
@@ -294,6 +295,8 @@ class MainActivity : WearCompanionWatchActivity(),
         private const val AWAKE_PILL_TOP_FRACTION = 0.66f
 
         private const val ROTARY_SEEK_COMMIT_DELAY_MS = 400L
+        private const val SEEK_CANCEL_FADE_MS = 140L
+        private const val SEEK_CANCEL_ENTER_SCALE = 0.7f
         private const val OVERLAY_FADE_OUT_MS = 150L
         private const val OVERLAY_FADE_IN_MS = 90L
         private const val ALBUM_ART_CROSSFADE_MS = 300
@@ -337,8 +340,17 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Note's cover silhouette. Its own state beside [carouselCardShape] for the reason
      *  MiscPreferences.WEAR_NOTE_COVER_SHAPE is its own key: two faces, two shapes. */
     private val noteCoverShape = mutableStateOf(CoverShape.CIRCLE)
+    private val noteShowCover = mutableStateOf(true)
+    /** Chat's avatar silhouette - its own key/state for the same reason [noteCoverShape] is. */
+    private val chatCoverShape = mutableStateOf(CoverShape.CIRCLE)
+    private val chatShowCover = mutableStateOf(true)
+    /** Metadata's identity-thumbnail silhouette. */
+    private val metadataCoverShape = mutableStateOf(CoverShape.ROUNDED)
+    private val metadataShowCover = mutableStateOf(true)
     private var playerBackgroundStyle: PlayerBackgroundStyle = PlayerBackgroundStyle.COVER
     private var accentFloor: AccentFloorStyle = AccentFloorStyle.DEFAULT
+    private var accentFloorColorMode: String = "album"
+    private var accentFloorCustomColor: String = ""
     private var blurAlbumArtBackground: Boolean = false
     private var albumArtGrayscale: Boolean = false
     private var albumArtHidden: Boolean = false
@@ -347,6 +359,9 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Frosted-rim composition and the exact bitmap it was built from - see [frostArtworkIfSelected]. */
     private var cachedFrostedArt: Bitmap? = null
     private var cachedFrostedSource: Bitmap? = null
+    private var cachedFilteredArt: Bitmap? = null
+    private var cachedFilteredSource: Bitmap? = null
+    private var cachedFilteredStyle: AlbumArtFilter = AlbumArtFilter.NONE
     private var overlayBackdropStyle: String = "follow"
     private var playerShadingStyle: PlayerShadingStyle = PlayerShadingStyle.FOLLOW
     private var playerShadingIntensity: Float = PlayerShadingIntensity.BALANCED.multiplier
@@ -507,28 +522,6 @@ class MainActivity : WearCompanionWatchActivity(),
     private val composeTapPulse by lazy {
         TapPulseDrawable(ResourcesCompat.getColor(resources, com.svartifoss.snfell.common.R.color.music_screen_ripple, null))
     }
-
-    /** Drawn into R.id.swipe_trail_overlay, the topmost view in content_frame - so unlike
-     *  [composeTapPulse] it doesn't need a face-conditional, the same instance renders above
-     *  Classic and every Compose face alike. Fed live points via [onTouchMove] while a touch is
-     *  unclassified, revealed only once a swipe actually fires (see [onUpwardsSwipe] and
-     *  siblings), gated by [swipeTrailEnabled]. */
-    private val swipeTrail by lazy {
-        SwipeTrailDrawable(ResourcesCompat.getColor(resources, com.svartifoss.snfell.common.R.color.music_screen_ripple, null))
-    }
-
-    /** Whether the *currently active* config (playing or stopped, whichever is live) has at
-     *  least one swipe gesture assigned - recomputed by [buttonConfigObserver] on every config
-     *  swap, exactly the condition the user asked for: a screen with nothing assigned to swipes
-     *  never shows the trail, one with at least one assignment always does, regardless of which
-     *  direction was actually performed. */
-    private var swipeTrailEnabled = false
-
-    /** Set once a swipe is actually recognized during the current touch sequence, so
-     *  [onTouchUp] knows whether to [SwipeTrailDrawable.discard] the just-recorded path (a tap,
-     *  long-press, or quadrant gesture shouldn't leave a stray trail) or leave the just-revealed
-     *  fade alone. */
-    private var swipeTrailRevealedThisTouch = false
 
     private var paletteGeneration = 0
     private var lastPaletteArt: Bitmap? = null
@@ -817,13 +810,18 @@ class MainActivity : WearCompanionWatchActivity(),
         WatchAppShutdown.closeOn(this, this)
 
         binding.fourWayTouch.listener = this
+        installComposeFullScreenSwipeBridge()
         binding.composeTapPulse.setImageDrawable(composeTapPulse)
-        binding.swipeTrailOverlay.setImageDrawable(swipeTrail)
         binding.seekBar.onSeekPreview = { fraction -> showSeekOverlay(fraction) }
         binding.seekBar.onSeekFinished = { fraction ->
             viewModel.seekTo(fraction)
             hideOverlay()
         }
+        // Released inside the ring's cancel zone: the track keeps playing from wherever it already
+        // was, so there is nothing to send - only the overlay to take down. The ring has already
+        // put itself back on the live position, and the next position tick confirms it.
+        binding.seekBar.onSeekCancelled = { hideOverlay() }
+        binding.seekBar.onCancelArmedChanged = { armed -> showSeekCancelAffordance(armed) }
         binding.volumeBar.onVolumeChanged = { fraction ->
             viewModel.updateVolume(fraction)
             showVolumeBar()
@@ -853,15 +851,23 @@ class MainActivity : WearCompanionWatchActivity(),
                 "material" -> MaterialFace(state = faceState.value, listener = expressiveFaceListener)
                 "immersive" -> ImmersiveFace(state = faceState.value, listener = expressiveFaceListener)
                 "depth" -> DepthFace(state = faceState.value, listener = expressiveFaceListener)
-                "chat" -> ChatFace(state = faceState.value, listener = expressiveFaceListener)
+                "chat" -> ChatFace(
+                        state = faceState.value,
+                        listener = expressiveFaceListener,
+                        coverShape = chatCoverShape.value,
+                        showCover = chatShowCover.value)
                 "split" -> SplitFace(state = faceState.value, listener = expressiveFaceListener)
                 "note" -> NoteFace(
                         state = faceState.value,
                         listener = expressiveFaceListener,
-                        coverShape = noteCoverShape.value)
+                        coverShape = noteCoverShape.value,
+                        showCover = noteShowCover.value)
                 "verse" -> VerseFace(state = faceState.value, listener = expressiveFaceListener)
-                "metadata" ->
-                        MetadataFace(state = faceState.value, listener = expressiveFaceListener)
+                "metadata" -> MetadataFace(
+                        state = faceState.value,
+                        listener = expressiveFaceListener,
+                        coverShape = metadataCoverShape.value,
+                        showCover = metadataShowCover.value)
                 "ribbon" -> RibbonFace(state = faceState.value, listener = expressiveFaceListener)
                 "frame" -> FrameFace(state = faceState.value, listener = expressiveFaceListener)
                 "carousel" -> CarouselFace(
@@ -1073,6 +1079,8 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.openQuickActionsPanel.observe(this, openQuickActionsPanelListener)
         viewModel.openPlaybackQueueScreen.observe(this, openPlaybackQueueScreenListener)
         viewModel.openLyricsScreen.observe(this, openLyricsScreenListener)
+        viewModel.openVolumeScreen.observe(this, openVolumeScreenListener)
+        viewModel.openProgressScreen.observe(this, openProgressScreenListener)
         viewModel.lyricsState.observe(this, lyricsStateObserver)
         viewModel.trackMetadata.observe(this, trackMetadataObserver)
         viewModel.openStreamingShortcutsMenu.observe(this, openStreamingShortcutsMenuListener)
@@ -1096,6 +1104,49 @@ class MainActivity : WearCompanionWatchActivity(),
         setupFirstRunHints()
 
         handleVoiceSearchIntent(intent)
+    }
+
+    /**
+     * Observes touch streams claimed by a Compose face so configured swipes keep working when the
+     * gesture starts over one of that face's controls, cover cards or other interactive regions.
+     *
+     * [ClaimedGestureHost] observes dispatch after a Compose or Android child has claimed a stream,
+     * without intercepting or consuming it. Controls therefore retain taps, long presses and
+     * direct manipulation such as seeking. A rejected stream is not mirrored here and keeps
+     * falling through to [FourWayTouchLayout], so each swipe has exactly one detector.
+     */
+    private fun installComposeFullScreenSwipeBridge() {
+        val detector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDown(e: MotionEvent): Boolean {
+                // Required for GestureDetector to retain this stream and deliver onFling.
+                return true
+            }
+
+            override fun onFling(
+                    e1: MotionEvent?,
+                    e2: MotionEvent,
+                    velocityX: Float,
+                    velocityY: Float
+            ): Boolean {
+                when (ScreenSwipeResolver.resolve(
+                        velocityX, velocityY, FourWayTouchLayout.SWIPE_MIN_VELOCITY)) {
+                    ScreenSwipeDirection.UP -> onUpwardsSwipe()
+                    ScreenSwipeDirection.DOWN -> onDownwardsSwipe()
+                    ScreenSwipeDirection.LEFT -> onSwipeLeft()
+                    null -> return false
+                }
+                return true
+            }
+        })
+        val touchObserver: (MotionEvent) -> Unit = { event ->
+            detector.onTouchEvent(event)
+            if (event.actionMasked == MotionEvent.ACTION_UP ||
+                    event.actionMasked == MotionEvent.ACTION_CANCEL) {
+                onTouchUp()
+            }
+        }
+        binding.expressiveFaceGestureHost.touchObserver = touchObserver
+        binding.screenButtonsGestureHost.touchObserver = touchObserver
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -1879,23 +1930,12 @@ class MainActivity : WearCompanionWatchActivity(),
         }
     }
 
-    /** Same-hue fallback for monochromatic covers/static accents. It varies only luminance and
-     * saturation, never inventing a second hue that was absent from the artwork. */
-    private fun albumToneFallback(color: Int, lightness: Float): Int {
-        val hsl = FloatArray(3)
-        ColorUtils.colorToHSL(color, hsl)
-        hsl[1] = hsl[1].coerceIn(.25f, .82f)
-        hsl[2] = lightness
-        return ColorUtils.HSLToColor(hsl)
-    }
+    /** Both of these moved to [PanelAppearanceResolver] when the dedicated volume/progress screens needed
+     *  them: those are separate Activities and could not call a private method here. */
+    private fun albumToneFallback(color: Int, lightness: Float): Int =
+            PanelAppearanceResolver.albumToneFallback(color, lightness)
 
-    /** parseColor throws StringIndexOutOfBounds (not IllegalArgument) on an empty string - and
-     *  empty is every custom-color preference's "not picked yet" default. */
-    private fun parseHexColorOrNull(hex: String): Int? = if (hex.isBlank()) null else try {
-        Color.parseColor(hex)
-    } catch (ignored: Exception) {
-        null
-    }
+    private fun parseHexColorOrNull(hex: String): Int? = PanelAppearanceResolver.parseHexColorOrNull(hex)
 
     private data class SurfacePalette(
             val primary: Int,
@@ -2041,7 +2081,6 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.volumeBar.tertiaryColor = volumeTertiaryAccentColor
         binding.fourWayTouch.setTapFeedbackColor(currentAccentColor)
         composeTapPulse.accentColor = currentAccentColor
-        swipeTrail.accentColor = currentAccentColor
         // Artist name uses the same dark-theme-adapted (lightened) accent as the queue's now-playing row.
         binding.textArtist.setTextColor(resolvedArtistTextColor())
 
@@ -2063,6 +2102,7 @@ class MainActivity : WearCompanionWatchActivity(),
             val materialSurfaceSoftened = colorTreatment == "desaturated"
             val base = it.copy(
                     accentColor = currentAccentColor,
+                    accentFloorColor = resolvedAccentFloorColor(),
                     materialSurfaceColor = if (materialSurfaceSoftened) {
                         currentAccentColor
                     } else {
@@ -2091,7 +2131,7 @@ class MainActivity : WearCompanionWatchActivity(),
             // cover - frosting the rim must not shift the accent the whole screen is tinted with.
             // Both call sites share one cache, keyed on bitmap identity.
             if (publishArt) {
-                base.copy(albumArt = frostArtworkIfSelected(art)?.asImageBitmap())
+                base.copy(albumArt = filteredArtworkForFace(art)?.asImageBitmap())
             } else {
                 base
             }
@@ -2299,10 +2339,6 @@ class MainActivity : WearCompanionWatchActivity(),
         return frame
     }
 
-    /** Grayscale for the "Black & white" album art styles - a plain saturation-0 color filter
-     *  works on every API level and stacks with the blur paths untouched. */
-    private val grayscaleFilter = ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
-
     /** Renders the main background album art — sharp cover, full-screen blur, black & white
      *  variants, Square (an uncropped inset over a blurred backdrop), or hidden entirely, per
      *  user setting. */
@@ -2310,7 +2346,7 @@ class MainActivity : WearCompanionWatchActivity(),
         applyAlbumArtDisplay(
                 source = frostArtworkIfSelected(source),
                 blurred = forceBlur,
-                grayscale = albumArtGrayscale,
+                artworkFilter = playerBackgroundStyle.artworkFilter,
                 hidden = albumArtHidden,
                 square = playerBackgroundStyle.squareCornerRadiusFraction != null
         )
@@ -2344,6 +2380,21 @@ class MainActivity : WearCompanionWatchActivity(),
         return frosted
     }
 
+    /** Bakes the chosen filter once for cover windows drawn inside Compose faces. */
+    private fun filteredArtworkForFace(source: Bitmap?): Bitmap? {
+        val postFrost = frostArtworkIfSelected(source) ?: return null
+        val filter = playerBackgroundStyle.artworkFilter
+        if (filter == AlbumArtFilter.NONE) return postFrost
+        if (cachedFilteredSource === postFrost && cachedFilteredStyle == filter) {
+            cachedFilteredArt?.takeIf { !it.isRecycled }?.let { return it }
+        }
+        return filter.applyTo(postFrost).also {
+            cachedFilteredSource = postFrost
+            cachedFilteredStyle = filter
+            cachedFilteredArt = it
+        }
+    }
+
     /** Low-level artwork renderer shared by interactive and ambient modes. Ambient treatment is
      * independent from the interactive artwork style, so blur/monochrome/visibility - and
      * [square], which only the interactive caller ever passes true - must be supplied explicitly
@@ -2351,11 +2402,11 @@ class MainActivity : WearCompanionWatchActivity(),
     private fun applyAlbumArtDisplay(
             source: Bitmap?,
             blurred: Boolean,
-            grayscale: Boolean,
+            artworkFilter: AlbumArtFilter,
             hidden: Boolean,
             square: Boolean = false
     ) {
-        binding.albumArt.colorFilter = if (grayscale) grayscaleFilter else null
+        binding.albumArt.colorFilter = artworkFilter.androidColorFilter
         updateSquareInset(if (square && !hidden) source else null)
 
         if (source == null || hidden) {
@@ -2442,7 +2493,11 @@ class MainActivity : WearCompanionWatchActivity(),
         applyAlbumArtDisplay(
                 source = latestAlbumArt,
                 blurred = spec.blurred,
-                grayscale = spec.monochrome,
+                artworkFilter = if (spec.monochrome) {
+                    AlbumArtFilter.MONOCHROME
+                } else {
+                    spec.photoFilter
+                },
                 hidden = !spec.visible
         )
     }
@@ -2678,13 +2733,6 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         backButtonOverrideCallback.isEnabled = config.isActionActive(ButtonInfo(true, KeyEvent.KEYCODE_BACK, GESTURE_SINGLE_TAP))
-
-        // Gates the swipe comet trail (see swipeTrail/onTouchMove/onUpwardsSwipe and siblings):
-        // only shown when this specific screen's config - playing or stopped, whichever is
-        // currently active - has at least one swipe direction actually assigned.
-        swipeTrailEnabled = config.isActionActive(ButtonInfo(false, SwipeGesture.UP, GESTURE_SINGLE_TAP)) ||
-                config.isActionActive(ButtonInfo(false, SwipeGesture.DOWN, GESTURE_SINGLE_TAP)) ||
-                config.isActionActive(ButtonInfo(false, SwipeGesture.LEFT, GESTURE_SINGLE_TAP))
 
         updateScreenButtons(config)
 
@@ -3225,7 +3273,9 @@ class MainActivity : WearCompanionWatchActivity(),
         var baseH = if (compact) 38f else 42f
 
         when (screenButtonsShape) {
-            "circle", "square", "rounded_square_soft", "rounded_square_medium", "drop", "squircle", "leaf" -> {
+            "circle", "square", "rounded_square_soft", "rounded_square_medium", "drop", "squircle", "leaf",
+            "leaf_reverse", "drop_reverse", "pebble", "arch", "shield",
+            "arch_reverse", "shield_reverse" -> {
                 baseW = if (compact) 38f else 42f
                 baseH = if (compact) 38f else 42f
             }
@@ -3263,7 +3313,8 @@ class MainActivity : WearCompanionWatchActivity(),
             val contentWidthDp = contentWidthPx / density
             val equalAspectShape = screenButtonsShape in setOf(
                     "circle", "square", "rounded_square_soft", "rounded_square_medium",
-                    "drop", "squircle", "leaf")
+                    "drop", "squircle", "leaf", "leaf_reverse", "drop_reverse", "pebble",
+                    "arch", "shield", "arch_reverse", "shield_reverse")
 
             when (visibleCount) {
                 2 -> {
@@ -4061,9 +4112,49 @@ class MainActivity : WearCompanionWatchActivity(),
                 val c2 = 4f * density
                 drawable.cornerRadii = floatArrayOf(c1, c1, c2, c2, c1, c1, c2, c2)
             }
+            "leaf_reverse" -> {
+                val c1 = 16f * density
+                val c2 = 4f * density
+                drawable.cornerRadii = floatArrayOf(c2, c2, c1, c1, c2, c2, c1, c1)
+            }
             "drop" -> {
                 val c = 18f * density
                 drawable.cornerRadii = floatArrayOf(0f, 0f, 0f, 0f, c, c, c, c)
+            }
+            "drop_reverse" -> {
+                val c = 18f * density
+                drawable.cornerRadii = floatArrayOf(c, c, c, c, 0f, 0f, 0f, 0f)
+            }
+            "pebble" -> {
+                val a = 18f * density
+                val b = 10f * density
+                val c = 14f * density
+                val d = 6f * density
+                drawable.cornerRadii = floatArrayOf(a, a, b, b, c, c, d, d)
+            }
+            "arch" -> {
+                val crown = heightPx / 2f
+                val base = 4f * density
+                drawable.cornerRadii = floatArrayOf(crown, crown, crown, crown,
+                        base, base, base, base)
+            }
+            "shield" -> {
+                val top = 4f * density
+                val bottom = 18f * density
+                drawable.cornerRadii = floatArrayOf(top, top, top, top,
+                        bottom, bottom, bottom, bottom)
+            }
+            "arch_reverse" -> {
+                val base = 4f * density
+                val crown = heightPx / 2f
+                drawable.cornerRadii = floatArrayOf(base, base, base, base,
+                        crown, crown, crown, crown)
+            }
+            "shield_reverse" -> {
+                val top = 18f * density
+                val bottom = 4f * density
+                drawable.cornerRadii = floatArrayOf(top, top, top, top,
+                        bottom, bottom, bottom, bottom)
             }
             "circle" -> {
                 drawable.cornerRadius = heightPx / 2f
@@ -4127,21 +4218,13 @@ class MainActivity : WearCompanionWatchActivity(),
 
     /** Runtime migration for a watch paired to an older phone or a config restored before the
      * rewritten Colors page has been opened. */
-    private fun resolveColorTreatmentPreference(): String {
-        if (hasFacePreference(MiscPreferences.WEAR_COLOR_TREATMENT.key)) {
-            return faceString(MiscPreferences.WEAR_COLOR_TREATMENT)
-        }
-        // Artist/progress preferences are independent targets again; never let one legacy custom
-        // target silently recolor the whole watch when the unified key is absent.
-        return if (faceBool(MiscPreferences.WEAR_DYNAMIC_ACCENT)) "expressive" else "normal"
-    }
+    private fun resolveColorTreatmentPreference(): String =
+            // Artist/progress preferences are independent targets again; never let one legacy
+            // custom target silently recolor the whole watch when the unified key is absent.
+            PanelAppearanceResolver.colorTreatmentPreference(preferences, appearanceContext)
 
-    private fun resolveNormalColorPreference(): String {
-        if (hasFacePreference(MiscPreferences.WEAR_NORMAL_COLOR.key)) {
-            return faceString(MiscPreferences.WEAR_NORMAL_COLOR)
-        }
-        return ""
-    }
+    private fun resolveNormalColorPreference(): String =
+            PanelAppearanceResolver.normalColorPreference(preferences, appearanceContext)
 
     /** Rasterizes a configured action's icon (BitmapDrawable or vector) to an ImageBitmap so a
      *  Compose face can render it. Null on failure -> the face keeps its default glyph. */
@@ -4217,6 +4300,13 @@ class MainActivity : WearCompanionWatchActivity(),
                 faceString(MiscPreferences.WEAR_CAROUSEL_CARD_SHAPE))
         noteCoverShape.value = CoverShape.fromPreference(
                 faceString(MiscPreferences.WEAR_NOTE_COVER_SHAPE), CoverShape.CIRCLE)
+        noteShowCover.value = faceBool(MiscPreferences.WEAR_NOTE_SHOW_COVER)
+        chatCoverShape.value = CoverShape.fromPreference(
+                faceString(MiscPreferences.WEAR_CHAT_COVER_SHAPE), CoverShape.CIRCLE)
+        chatShowCover.value = faceBool(MiscPreferences.WEAR_CHAT_SHOW_COVER)
+        metadataCoverShape.value = CoverShape.fromPreference(
+                faceString(MiscPreferences.WEAR_METADATA_COVER_SHAPE), CoverShape.ROUNDED)
+        metadataShowCover.value = faceBool(MiscPreferences.WEAR_METADATA_SHOW_COVER)
         playerBackgroundStyle = PlayerBackgroundStyle.fromPreference(albumArtStyle)
         blurAlbumArtBackground = playerBackgroundStyle.blurredArtwork
         albumArtGrayscale = playerBackgroundStyle.grayscaleArtwork
@@ -4225,6 +4315,8 @@ class MainActivity : WearCompanionWatchActivity(),
                 .coerceIn(5, 120).toFloat()
         accentFloor = AccentFloorStyle.fromPreference(
                 faceString(MiscPreferences.WEAR_ACCENT_FLOOR))
+        accentFloorColorMode = faceString(MiscPreferences.WEAR_ACCENT_FLOOR_COLOR_MODE)
+        accentFloorCustomColor = faceString(MiscPreferences.WEAR_ACCENT_FLOOR_CUSTOM_COLOR)
         // The classic host ImageView applies these itself (applyMainAlbumArtDisplay); the Compose
         // faces read the same choice through the shared state instead of ignoring it.
         updateFaceState {
@@ -4233,6 +4325,7 @@ class MainActivity : WearCompanionWatchActivity(),
                     // A shared piece rendered by the background layer, so it is resolved here with
                     // the rest of the backdrop rather than by whichever face happens to want it.
                     accentFloor = accentFloor,
+                    accentFloorColor = resolvedAccentFloorColor(),
                     // Resolved here with the rest of the backdrop for the same reason: Split's
                     // panel *is* its background, it just happens to be the one the shared layer
                     // cannot draw.
@@ -4583,6 +4676,14 @@ class MainActivity : WearCompanionWatchActivity(),
         }
     }
 
+    private fun resolvedAccentFloorColor(): Int = when (accentFloorColorMode) {
+        "secondary" -> resolvedSecondaryAccent()
+        "tertiary" -> resolvedTertiaryAccent()
+        "custom" -> parseHexColorOrNull(accentFloorCustomColor)
+                ?: currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
+        else -> currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
+    }
+
     private fun applyAlbumArtScrim() {
         val usesSharedLayer = playerShadingStyle != PlayerShadingStyle.FOLLOW ||
                 playerBackgroundStyle.isPlainArtworkTreatment
@@ -4618,7 +4719,8 @@ class MainActivity : WearCompanionWatchActivity(),
                 tertiary = resolvedTertiaryAccent(),
                 materialSurface = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
                 materialSurfaceSoftened = colorTreatment == "desaturated",
-                accentFloor = accentFloor)
+                accentFloor = accentFloor,
+                accentFloorColor = resolvedAccentFloorColor())
     }
 
     /** Compose faces own the same layer inside their composition; the host View is Classic-only. */
@@ -4844,6 +4946,14 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val openLyricsScreenListener = Observer<Unit?> {
         openLyricsScreen()
+    }
+
+    private val openVolumeScreenListener = Observer<Unit?> {
+        startActivity(Intent(this, VolumeActivity::class.java))
+    }
+
+    private val openProgressScreenListener = Observer<Unit?> {
+        startActivity(Intent(this, ProgressActivity::class.java))
     }
 
     /**
@@ -5747,166 +5857,12 @@ class MainActivity : WearCompanionWatchActivity(),
                     resolvedQuickPanelSecondaryAccent(),
                     resolvedQuickPanelTertiaryAccent())
         }
-        fun withAlpha(color: Int, alpha: Int) = ColorUtils.setAlphaComponent(color, alpha)
-        binding.overlayDim.background = when (backdrop) {
-            // The album-tinted backdrops use the faces' wider saturation band (.30-.90) instead of
-            // the chrome default (.25-.60) so an overlay opened over a face shares its palette
-            // instead of showing a desaturated, mismatched tint.
-            // The bleed-through the user saw was mostly the always-on clock and mini-button row
-            // drawing OVER this backdrop (fixed separately in showOverlay by hiding them), not the
-            // backdrop's own opacity - a first attempt raised these to near-opaque and over-shot
-            // ("quase totalmente opaco"). Settled at a middle ground: clearly reads as a covering
-            // surface without losing the frosted/acrylic look these styles are meant to have.
-            OverlayBackdrop.ACRYLIC -> GradientDrawable(
-                    GradientDrawable.Orientation.TL_BR,
-                    intArrayOf(
-                            withAlpha(PaletteTransforms.tonalSurface(accent, .22f, PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT), 0xAE),
-                            withAlpha(Color.BLACK, 0xD2)
-                    )
-            )
-            OverlayBackdrop.SOLID_BLACK -> ColorDrawable(Color.BLACK)
-            OverlayBackdrop.SOLID_ALBUM -> ColorDrawable(PaletteTransforms.tonalSurface(accent, .22f, PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT))
-            OverlayBackdrop.SOLID_SECONDARY -> ColorDrawable(
-                    PaletteTransforms.tonalSurface(
-                            secondary, .24f,
-                            PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT))
-            OverlayBackdrop.SOLID_TERTIARY -> ColorDrawable(
-                    PaletteTransforms.tonalSurface(
-                            tertiary, .24f,
-                            PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT))
-            OverlayBackdrop.GLASS -> GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    intArrayOf(0x2EFFFFFF, 0xB8000000.toInt())
-            )
-            OverlayBackdrop.GRADIENT -> GradientDrawable(
-                    GradientDrawable.Orientation.TL_BR,
-                    intArrayOf(tonalSurface(accent, .42f), tonalSurface(secondary, .18f))
-            )
-            OverlayBackdrop.DUOTONE -> GradientDrawable(
-                    GradientDrawable.Orientation.LEFT_RIGHT,
-                    intArrayOf(tonalSurface(accent, .30f), tonalSurface(secondary, .30f))
-            )
-            OverlayBackdrop.PRISM -> GradientDrawable(
-                    GradientDrawable.Orientation.TL_BR,
-                    intArrayOf(
-                            withAlpha(tonalSurface(tertiary, .25f), 0xE8),
-                            withAlpha(tonalSurface(accent, .42f), 0xD8),
-                            withAlpha(tonalSurface(secondary, .22f), 0xEA)
-                    )
-            ).apply {
-                setStroke((1f * density).roundToInt().coerceAtLeast(1), 0x66FFFFFF)
-            }
-            OverlayBackdrop.MESH -> LayerDrawable(arrayOf(
-                    ColorDrawable(tonalSurface(accent, .13f)),
-                    GradientDrawable().apply {
-                        gradientType = GradientDrawable.RADIAL_GRADIENT
-                        colors = intArrayOf(withAlpha(secondary, 0xB8), Color.TRANSPARENT)
-                        setGradientCenter(.18f, .22f)
-                        gradientRadius = resources.displayMetrics.widthPixels * .72f
-                    },
-                    GradientDrawable().apply {
-                        gradientType = GradientDrawable.RADIAL_GRADIENT
-                        colors = intArrayOf(withAlpha(tertiary, 0xA0), Color.TRANSPARENT)
-                        setGradientCenter(.86f, .78f)
-                        gradientRadius = resources.displayMetrics.widthPixels * .68f
-                    }))
-            OverlayBackdrop.AURORA -> GradientDrawable(
-                    GradientDrawable.Orientation.BL_TR,
-                    intArrayOf(
-                            tonalSurface(tertiary, .11f),
-                            tonalSurface(accent, .36f),
-                            tonalSurface(secondary, .24f),
-                            Color.BLACK))
-            OverlayBackdrop.SPOTLIGHT -> GradientDrawable().apply {
-                gradientType = GradientDrawable.RADIAL_GRADIENT
-                colors = intArrayOf(
-                        tonalSurface(accent, .68f),
-                        tonalSurface(accent, .28f),
-                        Color.BLACK)
-                setGradientCenter(.5f, .38f)
-                gradientRadius = resources.displayMetrics.widthPixels * .70f
-            }
-            OverlayBackdrop.VIGNETTE -> LayerDrawable(arrayOf(
-                    ColorDrawable(tonalSurface(accent, .24f)),
-                    GradientDrawable().apply {
-                        gradientType = GradientDrawable.RADIAL_GRADIENT
-                        colors = intArrayOf(
-                                Color.TRANSPARENT,
-                                withAlpha(Color.BLACK, 0x28),
-                                withAlpha(Color.BLACK, 0xF0))
-                        setGradientCenter(.5f, .5f)
-                        gradientRadius = resources.displayMetrics.widthPixels * .68f
-                    }))
-            OverlayBackdrop.SPLIT -> GradientDrawable(
-                    GradientDrawable.Orientation.LEFT_RIGHT,
-                    intArrayOf(tonalSurface(accent, .20f), tonalSurface(secondary, .34f)))
-            OverlayBackdrop.BANDS -> GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    intArrayOf(
-                            tonalSurface(tertiary, .18f),
-                            tonalSurface(accent, .36f),
-                            tonalSurface(accent, .14f),
-                            tonalSurface(secondary, .30f),
-                            Color.BLACK))
-            OverlayBackdrop.MIDNIGHT -> GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    intArrayOf(tonalSurface(tertiary, .16f), 0xFF070914.toInt(), Color.BLACK))
-            OverlayBackdrop.HALO -> GradientDrawable().apply {
-                gradientType = GradientDrawable.RADIAL_GRADIENT
-                colors = intArrayOf(
-                        withAlpha(tonalSurface(accent, .42f), 0xD8),
-                        withAlpha(tonalSurface(secondary, .24f), 0xA0),
-                        Color.BLACK)
-                setGradientCenter(.5f, .5f)
-                gradientRadius = resources.displayMetrics.widthPixels * .62f
-            }
-            OverlayBackdrop.SMOKE -> GradientDrawable(
-                    GradientDrawable.Orientation.TL_BR,
-                    intArrayOf(
-                            withAlpha(tonalSurface(tertiary, .24f), 0x78),
-                            withAlpha(0xFF323238.toInt(), 0xC8),
-                            withAlpha(Color.BLACK, 0xE8)))
-            // Deliberately the lightest wash of the set: the blurred cover underneath is the
-            // material, and covering it would defeat the effect. The album tint is kept low-alpha
-            // and lifted (.62 lightness) so it reads as coloured glass rather than as a filter,
-            // and the near-white stroke is the pane's edge - the single cue that turns a
-            // translucent wash into a surface with thickness.
-            OverlayBackdrop.LIQUID_GLASS -> GradientDrawable(
-                    GradientDrawable.Orientation.TL_BR,
-                    intArrayOf(
-                            withAlpha(PaletteTransforms.tonalSurface(accent, .62f, PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT), 0x3D),
-                            withAlpha(Color.WHITE, 0x14),
-                            withAlpha(PaletteTransforms.tonalSurface(secondary, .30f, PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT), 0x66)
-                    )
-            ).apply {
-                setStroke((1.5f * density).roundToInt().coerceAtLeast(1), 0x8CFFFFFF.toInt())
-            }
-            // The authored Expressive background, rebuilt as an overlay: album wash, black
-            // knock-back, then the vignette that makes the rim recede. Three stacked layers rather
-            // than one gradient because that is what the face's own PlayerBackgroundDrawable draws,
-            // and an overlay that only approximated it would read as a different treatment sharing
-            // a name. The blurred/sharp pair differ *only* in what shows through underneath
-            // (usesAlbumBlur), exactly as the album-art styles of the same name do.
-            OverlayBackdrop.EXPRESSIVE, OverlayBackdrop.EXPRESSIVE_NO_BLUR -> LayerDrawable(
-                    arrayOf(
-                            ColorDrawable(withAlpha(
-                                    PaletteTransforms.tonalSurface(accent, .30f, .30f, .90f), 0x73)),
-                            ColorDrawable(withAlpha(Color.BLACK, 0x4D)),
-                            GradientDrawable().apply {
-                                gradientType = GradientDrawable.RADIAL_GRADIENT
-                                colors = intArrayOf(
-                                        Color.TRANSPARENT,
-                                        Color.TRANSPARENT,
-                                        withAlpha(Color.BLACK, 0xE0))
-                                setGradientCenter(.5f, .5f)
-                                // Full-screen overlay, so the face's own maxDimension * .68f is
-                                // just the screen width; px because GradientDrawable's programmatic
-                                // radius has no fraction form (that exists only in XML).
-                                gradientRadius =
-                                        resources.displayMetrics.widthPixels * .68f
-                            }))
-            OverlayBackdrop.FOLLOW_STYLE -> ColorDrawable(Color.BLACK) // resolved above
-        }
+        // The table itself lives in OverlayBackdropDrawables so the dedicated volume and progress
+        // screens - separate Activities, which cannot reach a private method here - render the
+        // identical backdrop rather than their own approximation of it.
+        binding.overlayDim.background = OverlayBackdropDrawables.build(
+                backdrop, accent, secondary, tertiary, density,
+                resources.displayMetrics.widthPixels)
         return backdrop.usesAlbumBlur
     }
 
@@ -5968,6 +5924,12 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     private fun hideOverlay() {
+        // The drag may end with the overlay, so clear the cancel glyph unconditionally rather than
+        // relying on the ring's own "armed = false" reaching us first.
+        binding.seekCancelIcon.animate().cancel()
+        binding.seekCancelIcon.visibility = View.GONE
+        binding.textSeekTime.animate().cancel()
+        binding.textSeekTime.alpha = 1f
         overlayActive = false
         activeOverlayKind = null
         updateDeveloperOverlay()
@@ -6230,12 +6192,15 @@ class MainActivity : WearCompanionWatchActivity(),
             "split" -> QuickActionsRowLayout.Arrangement.SPLIT
             "diamond" -> QuickActionsRowLayout.Arrangement.DIAMOND
             "carousel" -> QuickActionsRowLayout.Arrangement.CAROUSEL
+            "triangle" -> QuickActionsRowLayout.Arrangement.TRIANGLE
+            "stair" -> QuickActionsRowLayout.Arrangement.STAIR
             else -> QuickActionsRowLayout.Arrangement.ROW
         }
 
         // The grid stands on its own as a dense launcher, so metadata would only cost it the room
         // it needs; every other layout keeps both lines.
-        val metadataVisible = quickPanelLayout !in setOf("grid", "orbit", "diamond")
+        val metadataVisible = quickPanelLayout !in setOf(
+                "grid", "orbit", "diamond", "triangle", "stair")
         title.visibility = if (metadataVisible && title.text.isNotBlank()) View.VISIBLE else View.GONE
         // Hero deliberately drops to a single metadata line - its point is one dominant action.
         artist.visibility = if (metadataVisible &&
@@ -6272,7 +6237,7 @@ class MainActivity : WearCompanionWatchActivity(),
                 (viewportHeight * when (quickPanelLayout) {
                     "dock" -> .10f
                     "column" -> .08f
-                    "orbit", "diamond" -> .14f
+                    "orbit", "diamond", "triangle", "stair" -> .14f
                     else -> .17f
                 }).roundToInt(),
                 panel.paddingRight,
@@ -6295,7 +6260,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // The arc's dipped centre slot already reserves its depth inside the row's measured
         // height, so only the grid needs to be held off the Up Next row below it.
         actionParams.bottomMargin = if (quickPanelLayout in setOf(
-                        "grid", "orbit", "column", "split", "diamond")) {
+                        "grid", "orbit", "column", "split", "diamond", "triangle", "stair")) {
             (10f * density).roundToInt()
         } else {
             0
@@ -6322,7 +6287,7 @@ class MainActivity : WearCompanionWatchActivity(),
             // The grid puts at most two slots on a line, so they are fitted for two rather than for
             // the whole row - which is what lets them come out noticeably larger than in a row.
             val fitCount = when (quickPanelLayout) {
-                "grid", "split", "diamond" -> minOf(visible.size, 2)
+                "grid", "split", "diamond", "triangle" -> minOf(visible.size, 2)
                 "column" -> 1
                 else -> visible.size
             }
@@ -6424,7 +6389,7 @@ class MainActivity : WearCompanionWatchActivity(),
      *  so the white icons/text keep enough contrast). Delegates to the shared transform so the
      *  phone preview and the watch tint the same album accent identically. */
     private fun tonalSurface(accent: Int, lightness: Float = 0.28f): Int =
-            PaletteTransforms.tonalSurface(accent, lightness)
+            PanelReadout.tonalSurface(accent, lightness)
 
     /** The exact light tonal container the Expressive face paints on its transport buttons
      *  (tonalSurface(accent, .74, .40, .92)). Overlay surfaces reuse it so the quick panel /
@@ -6433,18 +6398,10 @@ class MainActivity : WearCompanionWatchActivity(),
             PaletteTransforms.tonalSurface(accent, 0.74f, 0.40f, 0.92f)
 
     private fun capsule(fill: Int, strokePx: Int = 0, strokeColor: Int = 0, radiusPx: Float = 999f) =
-            GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = radiusPx
-                setColor(fill)
-                if (strokePx > 0) setStroke(strokePx, strokeColor)
-            }
+            PanelReadout.capsule(fill, strokePx, strokeColor, radiusPx)
 
     private fun gradientCapsule(topColor: Int, bottomColor: Int, radiusPx: Float = 999f) =
-            GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(topColor, bottomColor)).apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = radiusPx
-            }
+            PanelReadout.gradientCapsule(topColor, bottomColor, radiusPx)
 
     /** Three real album swatches, with a thin glass keyline instead of a synthetic opposite hue. */
     private fun prismCapsule(radiusPx: Float = 999f, active: Boolean = false): GradientDrawable {
@@ -6565,6 +6522,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     liftedAccent(resolvedQuickPanelAccent()),
                     radiusPx = 6f * d)
             "sunset" -> sunsetCapsule()
+            "outline_album" -> capsule(Color.TRANSPARENT, (2f * d).roundToInt(),
+                    liftedAccent(resolvedQuickPanelAccent()))
+            "glass_dark" -> capsule(0x9905090F.toInt(), hairline, 0x70FFFFFF)
             else -> AppCompatResources.getDrawable(this, R.drawable.glass_pill_background)!!
         }
     }
@@ -6727,6 +6687,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     liftedAccent(resolvedQuickPanelAccent()),
                     radiusPx = r)
             "sunset" -> sunsetCapsule(radiusPx = r)
+            "outline_album" -> capsule(Color.TRANSPARENT, (2f * d).roundToInt(),
+                    liftedAccent(resolvedQuickPanelAccent()), radiusPx = r)
+            "glass_dark" -> capsule(0x9905090F.toInt(), hairline, 0x70FFFFFF, radiusPx = r)
             else -> capsule(ContextCompat.getColor(this, R.color.glass_surface_fill), radiusPx = r)
         }
     }
@@ -6743,6 +6706,19 @@ class MainActivity : WearCompanionWatchActivity(),
     private fun upNextPillBackground(): android.graphics.drawable.Drawable {
         if (upNextPillStyle == "follow") return quickPanelRowBackground()
         val r = quickPanelRowCornerPx()
+        val d = resources.displayMetrics.density
+        if (upNextPillStyle == "outline_album") {
+            return capsule(Color.TRANSPARENT, (1.5f * d).roundToInt(),
+                    resolvedQuickPanelAccent(), radiusPx = r)
+        }
+        if (upNextPillStyle == "neon_outline") {
+            return capsule(ColorUtils.setAlphaComponent(Color.BLACK, 0x66),
+                    (2.5f * d).roundToInt(), liftedAccent(resolvedQuickPanelAccent()), radiusPx = r)
+        }
+        if (upNextPillStyle == "gradient_album") {
+            return gradientCapsule(resolvedQuickPanelAccent(), resolvedQuickPanelSecondaryAccent(),
+                    radiusPx = r)
+        }
         return capsule(upNextPillFillColor(), radiusPx = r)
     }
 
@@ -6758,6 +6734,12 @@ class MainActivity : WearCompanionWatchActivity(),
             "white_blur" -> 0x73FFFFFF
             "black" -> 0xCC000000.toInt()
             "dynamic" -> tonalSurface(accent, lightness = 0.24f)
+            "secondary" -> resolvedQuickPanelSecondaryAccent()
+            "tertiary" -> resolvedQuickPanelTertiaryAccent()
+            "glass_album" -> ColorUtils.setAlphaComponent(tonalSurface(accent, .42f), 0x73)
+            "outline_album" -> Color.TRANSPARENT
+            "neon_outline" -> ColorUtils.setAlphaComponent(Color.BLACK, 0x66)
+            "gradient_album" -> accent
             "transparent" -> Color.TRANSPARENT
             // "follow": the awake pill has no quick-panel context, so it uses the tonal accent.
             else -> ColorUtils.setAlphaComponent(accent, 0x38)
@@ -6769,8 +6751,11 @@ class MainActivity : WearCompanionWatchActivity(),
     private fun upNextPillTint(): Int = when (upNextPillStyle) {
         "follow" -> quickPanelInactiveTint()
         "white", "white_blur" -> LIGHT_PANEL_ON
-        "translucent", "transparent" -> Color.WHITE
+        "translucent", "transparent", "outline_album", "glass_album", "neon_outline" -> Color.WHITE
         "accent" -> contrastingIconColor(resolvedQuickPanelAccent())
+        "gradient_album" -> contrastingIconColor(resolvedQuickPanelAccent())
+        "secondary" -> contrastingIconColor(resolvedQuickPanelSecondaryAccent())
+        "tertiary" -> contrastingIconColor(resolvedQuickPanelTertiaryAccent())
         "black" -> Color.WHITE
         "dynamic" -> contrastingIconColor(tonalSurface(resolvedQuickPanelAccent(), lightness = 0.24f))
         else -> quickPanelInactiveTint()
@@ -6805,6 +6790,8 @@ class MainActivity : WearCompanionWatchActivity(),
             OverlayBackdrop.VIGNETTE -> tonalSurface(accent, .24f)
             OverlayBackdrop.HALO -> tonalSurface(accent, .34f)
             OverlayBackdrop.MIDNIGHT, OverlayBackdrop.SMOKE -> Color.BLACK
+            OverlayBackdrop.SUNRISE -> 0xFFFF8B70.toInt()
+            OverlayBackdrop.DEEP_OCEAN -> 0xFF075D73.toInt()
             // The centre of the Expressive wash, where this text sits, is well inside the vignette
             // and reads as a dark album tone rather than as black.
             OverlayBackdrop.EXPRESSIVE, OverlayBackdrop.EXPRESSIVE_NO_BLUR ->
@@ -6830,6 +6817,7 @@ class MainActivity : WearCompanionWatchActivity(),
         "bubble" -> contrastingIconColor(
                 expressiveSurface(resolvedQuickPanelSecondaryAccent()))
         "rail" -> liftedAccent(resolvedQuickPanelAccent())
+        "outline_album" -> liftedAccent(resolvedQuickPanelAccent())
         else -> Color.WHITE
     }
 
@@ -6864,16 +6852,8 @@ class MainActivity : WearCompanionWatchActivity(),
 
     /** White icons can disappear against a light album-art accent color, so the icon itself
      *  flips to black/white depending on how light or dark [backgroundColor] is. */
-    private fun contrastingIconColor(backgroundColor: Int): Int {
-        // Pick black or white by whichever gives the higher WCAG contrast ratio against the
-        // background (crossover ~0.179 luminance), not a naive 0.5 split - the latter left white
-        // icons on medium-light pills (e.g. the expressive face's tonal surfaces, ~0.45 luminance
-        // but visually light) where dark ink is clearly more legible.
-        val lum = ColorUtils.calculateLuminance(backgroundColor)
-        val contrastWithWhite = 1.05 / (lum + 0.05)
-        val contrastWithBlack = (lum + 0.05) / 0.05
-        return if (contrastWithBlack >= contrastWithWhite) Color.BLACK else Color.WHITE
-    }
+    private fun contrastingIconColor(backgroundColor: Int): Int =
+            PanelReadout.contrastingIconColor(backgroundColor)
 
     /** [tintable] must be false for a real, already-colored icon (a rasterized notification
      *  bitmap or a user-picked custom action icon) - forcing a flat colour filter over one
@@ -7201,6 +7181,46 @@ class MainActivity : WearCompanionWatchActivity(),
         handler.sendEmptyMessageDelayed(MESSAGE_HIDE_VOLUME, volumeBarTimeoutMs)
     }
 
+    /**
+     * Swaps the seek time for a cancel glyph while the drag sits in the ring's cancel zone.
+     *
+     * The readout is what has to give way: leaving it up would keep advertising a destination the
+     * release is about to discard, which is the one thing the user needs to know is *not* going to
+     * happen. Tinted from the progress palette rather than left white, so it reads as part of the
+     * same surface as the ring that armed it.
+     */
+    private fun showSeekCancelAffordance(armed: Boolean) {
+        val icon = binding.seekCancelIcon
+        icon.animate().cancel()
+        if (armed) {
+            icon.setColorFilter(liftedAccent(resolvedProgressTertiaryAccent()))
+            icon.alpha = 0f
+            icon.scaleX = SEEK_CANCEL_ENTER_SCALE
+            icon.scaleY = SEEK_CANCEL_ENTER_SCALE
+            icon.visibility = View.VISIBLE
+            icon.animate()
+                    .alpha(1f).scaleX(1f).scaleY(1f)
+                    .setDuration(SEEK_CANCEL_FADE_MS)
+                    .start()
+            binding.textSeekTime.animate().cancel()
+            binding.textSeekTime.animate()
+                    .alpha(0f)
+                    .setDuration(SEEK_CANCEL_FADE_MS)
+                    .start()
+            return
+        }
+        icon.animate()
+                .alpha(0f).scaleX(SEEK_CANCEL_ENTER_SCALE).scaleY(SEEK_CANCEL_ENTER_SCALE)
+                .setDuration(SEEK_CANCEL_FADE_MS)
+                .withEndAction { icon.visibility = View.GONE }
+                .start()
+        binding.textSeekTime.animate().cancel()
+        binding.textSeekTime.animate()
+                .alpha(1f)
+                .setDuration(SEEK_CANCEL_FADE_MS)
+                .start()
+    }
+
     private fun showSeekOverlay(fraction: Float) {
         showOverlay(OverlayKind.SEEK)
 
@@ -7228,21 +7248,10 @@ class MainActivity : WearCompanionWatchActivity(),
         val position = formatPlaybackTime((fraction * lastKnownDurationMs).toLong())
         val text = binding.textSeekTime
 
-        if (seekOverlayStyle == "split") {
-            text.textSize = 30f
-            text.background = null
-            text.setPadding(0, 0, 0, 0)
-            val total = formatPlaybackTime(lastKnownDurationMs)
-            val stacked = SpannableString("$position\n$total")
-            stacked.setSpan(RelativeSizeSpan(0.55f), position.length + 1, stacked.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            stacked.setSpan(ForegroundColorSpan(0xB3FFFFFF.toInt()), position.length + 1,
-                    stacked.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            text.text = stacked
-            return
-        }
-
-        if (seekOverlayStyle == "stacked_pill") {
+        // "split" and "stacked_pill" are the two that stack the target over the track's total
+        // length; both are handled by the shared table, which owns the span styling now that the
+        // dedicated progress screen renders the same readout.
+        if (seekOverlayStyle == "split" || seekOverlayStyle == "stacked_pill") {
             val total = formatPlaybackTime(lastKnownDurationMs)
             applyPillReadoutStyle(
                     text,
@@ -7264,16 +7273,10 @@ class MainActivity : WearCompanionWatchActivity(),
         )
         applyPillReadoutStyle(
                 binding.textVolumePercent, seekOverlayStyle, percentText, resolvedVolumeAccent())
-        // Chromeless readouts draw white numerals straight onto the backdrop, which the LIGHT arc
-        // style makes pale; they get flipped to dark text. Styles carrying their own filled
-        // container already guarantee their own contrast and are left alone.
-        if (binding.volumeBar.barStyle == VolumeStyle.LIGHT &&
-                seekOverlayStyle !in setOf("pill", "expressive", "material", "white", "glass_white",
-                        "translucent_album", "glow_album", "outline", "solid_theme", "solid_album",
-                        "mono", "tonal_dark", "terminal", "compact_pill", "square_album",
-                        "stacked_pill", "badge", "glass_bar", "lcd", "outline_square", "ribbon")) {
-            binding.textVolumePercent.setTextColor(LIGHT_PANEL_ON)
-        }
+        PanelReadout.applyLightArcContrast(
+                binding.textVolumePercent,
+                seekOverlayStyle,
+                binding.volumeBar.barStyle == VolumeStyle.LIGHT)
     }
 
     private fun applyVolumePanelLayout() {
@@ -7292,42 +7295,44 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.volumeIconBottom.translationY = 0f
         binding.textVolumePercent.translationY = 0f
 
-        when (binding.volumeBar.barLayout) {
-            // Every arc that fills bottom-to-top keeps the louder/quieter glyphs on the vertical
-            // axis, matching the direction the fill actually travels.
-            VolumeLayout.EDGE,
-            VolumeLayout.EDGE_TALL,
-            VolumeLayout.EDGE_RIGHT,
-            VolumeLayout.RING,
-            VolumeLayout.HALO,
-            VolumeLayout.DOUBLE_EDGE,
-            VolumeLayout.DIAL -> {
-                top.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-                bottom.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-            }
-            // The top/bottom arcs fill left-to-right, so the glyphs move onto the horizontal axis.
-            // They sit at mid-height (as in METER) rather than beside the arc's ends: near the top
-            // or bottom of a round screen there is no width left to place them without clipping.
-            VolumeLayout.EDGE_TOP,
-            VolumeLayout.EDGE_BOTTOM -> {
-                val side = (8f * density).roundToInt()
-                top.gravity = Gravity.END or Gravity.CENTER_VERTICAL
-                top.marginEnd = side
-                top.topMargin = 0
-                bottom.gravity = Gravity.START or Gravity.CENTER_VERTICAL
-                bottom.marginStart = side
-                bottom.bottomMargin = 0
-                bottom.topMargin = 0
-            }
-            VolumeLayout.METER,
-            VolumeLayout.METER_TOP,
-            VolumeLayout.METER_BOTTOM -> {
-                val side = (8f * density).roundToInt()
-                val vertical = when (binding.volumeBar.barLayout) {
-                    VolumeLayout.METER_TOP -> (-42f * density).roundToInt()
-                    VolumeLayout.METER_BOTTOM -> (42f * density).roundToInt()
-                    else -> (29f * density).roundToInt()
+        // Which axis the glyphs sit on is [VolumeControlAxis], not a list repeated here: the
+        // dedicated volume screen places its own step buttons and the two had already drifted,
+        // leaving that screen's controls side by side under an arc that fills upwards. Only the
+        // per-layout detail - which side, what offset - stays local to this View hierarchy.
+        val layout = binding.volumeBar.barLayout
+        when (VolumeControlAxis.forLayout(layout)) {
+            VolumeControlAxis.VERTICAL -> when (layout) {
+                // The upright meters are not arcs, so their glyphs hug the meter's own side rather
+                // than the screen's centre line, but still read bottom-to-top.
+                VolumeLayout.VERTICAL_LEFT,
+                VolumeLayout.VERTICAL_RIGHT -> {
+                    val side = (24f * density).roundToInt()
+                    val gravitySide = if (layout == VolumeLayout.VERTICAL_LEFT) {
+                        Gravity.START
+                    } else {
+                        Gravity.END
+                    }
+                    top.gravity = gravitySide or Gravity.TOP
+                    bottom.gravity = gravitySide or Gravity.BOTTOM
+                    top.topMargin = (24f * density).roundToInt()
+                    bottom.bottomMargin = (24f * density).roundToInt()
+                    if (gravitySide == Gravity.START) {
+                        top.marginStart = side
+                        bottom.marginStart = side
+                    } else {
+                        top.marginEnd = side
+                        bottom.marginEnd = side
+                    }
                 }
+                else -> {
+                    top.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+                    bottom.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+                }
+            }
+            // The glyphs sit at mid-height rather than beside the bar's ends: near the top or
+            // bottom of a round screen there is no width left to place them without clipping.
+            VolumeControlAxis.HORIZONTAL -> {
+                val side = (8f * density).roundToInt()
                 top.gravity = Gravity.END or Gravity.CENTER_VERTICAL
                 top.marginEnd = side
                 top.topMargin = 0
@@ -7335,32 +7340,22 @@ class MainActivity : WearCompanionWatchActivity(),
                 bottom.marginStart = side
                 bottom.bottomMargin = 0
                 bottom.topMargin = 0
-                binding.volumeIconTop.translationY = vertical.toFloat()
-                binding.volumeIconBottom.translationY = vertical.toFloat()
-                binding.textVolumePercent.translationY = when (binding.volumeBar.barLayout) {
+
+                // The linear meters also move the glyphs and the readout clear of the bar itself,
+                // which the top/bottom bezel arcs do not need.
+                val meterOffset = when (layout) {
+                    VolumeLayout.METER_TOP -> -42f * density
+                    VolumeLayout.METER_BOTTOM -> 42f * density
+                    VolumeLayout.METER -> 29f * density
+                    else -> 0f
+                }
+                binding.volumeIconTop.translationY = meterOffset
+                binding.volumeIconBottom.translationY = meterOffset
+                binding.textVolumePercent.translationY = when (layout) {
                     VolumeLayout.METER_TOP -> 18f * density
                     VolumeLayout.METER_BOTTOM -> -18f * density
-                    else -> -16f * density
-                }
-            }
-            VolumeLayout.VERTICAL_LEFT,
-            VolumeLayout.VERTICAL_RIGHT -> {
-                val side = (24f * density).roundToInt()
-                val gravitySide = if (binding.volumeBar.barLayout == VolumeLayout.VERTICAL_LEFT) {
-                    Gravity.START
-                } else {
-                    Gravity.END
-                }
-                top.gravity = gravitySide or Gravity.TOP
-                bottom.gravity = gravitySide or Gravity.BOTTOM
-                top.topMargin = (24f * density).roundToInt()
-                bottom.bottomMargin = (24f * density).roundToInt()
-                if (gravitySide == Gravity.START) {
-                    top.marginStart = side
-                    bottom.marginStart = side
-                } else {
-                    top.marginEnd = side
-                    bottom.marginEnd = side
+                    VolumeLayout.METER -> -16f * density
+                    else -> 0f
                 }
             }
         }
@@ -7383,7 +7378,7 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.seekBar.animate().cancel()
         binding.seekBar.alpha = if (customMeter) 0f else 1f
         binding.textSeekTime.translationY = when (seekPanelLayout) {
-            "timeline", "segments", "timeline_bottom" -> -18f * density
+            "timeline", "segments", "timeline_bottom", "segments_bottom" -> -18f * density
             "timeline_top", "segments_top" -> 20f * density
             "dial" -> -42f * density
             else -> 0f
@@ -7397,6 +7392,8 @@ class MainActivity : WearCompanionWatchActivity(),
                 "timeline_top" -> OverlayProgressMeter.Mode.TIMELINE_TOP
                 "timeline_bottom" -> OverlayProgressMeter.Mode.TIMELINE_BOTTOM
                 "segments_top" -> OverlayProgressMeter.Mode.SEGMENTS_TOP
+                "segments_bottom" -> OverlayProgressMeter.Mode.SEGMENTS_BOTTOM
+                "center_stack" -> OverlayProgressMeter.Mode.CENTER_STACK
                 "vertical_left" -> OverlayProgressMeter.Mode.VERTICAL_LEFT
                 "vertical_right" -> OverlayProgressMeter.Mode.VERTICAL_RIGHT
                 "dial" -> OverlayProgressMeter.Mode.DIAL
@@ -7412,376 +7409,36 @@ class MainActivity : WearCompanionWatchActivity(),
      * pill rendering for a centered overlay readout - used by both the
      * seek-time and volume-percentage text views so they always share one visual language.
      *
-     * "expressive" mirrors the system media player's tonal-pair look: a light, saturated tint of
-     * the album accent as the pill fill with a dark tone of the *same* hue as the text - rather
-     * than white-on-dark-glass, so the accent color itself reads as the decoration.
+     * The table lives in [PanelReadout] so the dedicated volume and progress screens, which are
+     * separate Activities, style their readout from the identical branch rather than a plainer
+     * approximation of it.
      */
     private fun applyPillReadoutStyle(
             text: TextView,
             style: String,
             content: String,
             accentColor: Int
-    ) {
-        // One TextView is restyled in place every time the style changes, so any property only some
-        // branches set has to be cleared here or it leaks into the next style. Background, colour,
-        // size and padding are set by every branch; these two are not.
-        text.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT)
-        text.letterSpacing = 0f
-        text.minWidth = 0
-        text.minHeight = 0
-        text.gravity = Gravity.CENTER
-        text.setLineSpacing(0f, 1f)
-
-        when (style) {
-            "pill" -> {
-                text.textSize = 26f
-                text.setTextColor(Color.WHITE)
-                text.setBackgroundResource(R.drawable.glass_pill_background)
-                val padH = (18 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "glass_white" -> {
-                text.textSize = 26f
-                text.setTextColor(Color.WHITE)
-                text.background = capsule(Color.argb(0x1A, 0xFF, 0xFF, 0xFF))
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "translucent_album" -> {
-                text.textSize = 26f
-                val accent = accentColor
-                val tintColor = if (screenFace == "expressive") {
-                    PaletteTransforms.tonalSurface(accent, 0.74f, 0.40f, 0.92f)
-                } else {
-                    accent
-                }
-                text.setTextColor(Color.WHITE)
-                text.background = capsule(ColorUtils.setAlphaComponent(tintColor, 0x4D))
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "glow_album" -> {
-                text.textSize = 26f
-                val accent = accentColor
-                val tintColor = if (screenFace == "expressive") {
-                    PaletteTransforms.tonalSurface(accent, 0.74f, 0.40f, 0.92f)
-                } else {
-                    accent
-                }
-                val glowColor = liftedAccent(tintColor)
-                text.setTextColor(glowColor)
-                text.background = capsule(
-                        Color.TRANSPARENT,
-                        (2f * resources.displayMetrics.density).roundToInt(),
-                        ColorUtils.setAlphaComponent(glowColor, 0xE0)
-                )
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "outline" -> {
-                text.textSize = 26f
-                val accent = accentColor
-                text.setTextColor(accent)
-                text.background = capsule(
-                        Color.TRANSPARENT,
-                        (1.5f * resources.displayMetrics.density).roundToInt(),
-                        ColorUtils.setAlphaComponent(accent, 0xE0)
-                )
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "solid_theme" -> {
-                text.textSize = 26f
-                val accent = defaultSeekBarColor
-                val tintColor = if (screenFace == "expressive") {
-                    PaletteTransforms.tonalSurface(accent, 0.74f, 0.40f, 0.92f)
-                } else {
-                    accent
-                }
-                text.setTextColor(contrastingIconColor(tintColor))
-                text.background = capsule(tintColor)
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "solid_album" -> {
-                text.textSize = 26f
-                val accent = accentColor
-                val tintColor = if (screenFace == "expressive") {
-                    PaletteTransforms.tonalSurface(accent, 0.74f, 0.40f, 0.92f)
-                } else {
-                    accent
-                }
-                text.setTextColor(contrastingIconColor(tintColor))
-                text.background = capsule(tintColor)
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "expressive" -> {
-                text.textSize = 26f
-                text.setTextColor(PILL_ON_LIGHT)
-                text.background = capsule(expressivePillFillColor(accentColor))
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "material" -> {
-                text.textSize = 26f
-                text.setTextColor(PILL_ON_LIGHT)
-                text.background = capsule(tonalSurface(accentColor, lightness = 0.92f))
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "white" -> {
-                text.textSize = 26f
-                text.setTextColor(PILL_ON_LIGHT)
-                text.background = capsule(Color.WHITE)
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "giant" -> {
-                text.textSize = 52f
-                text.setTextColor(Color.WHITE)
-                text.background = null
-                text.setPadding(0, 0, 0, 0)
-                text.text = content
-            }
-            // --- Minimal readouts: no filled container, the numerals themselves carry the style.
-            "micro" -> {
-                // Deliberately the smallest readout offered: on a scrub the ring already shows the
-                // position, so the numerals only need to confirm it, not announce it.
-                text.textSize = 15f
-                text.setTextColor(ColorUtils.setAlphaComponent(Color.WHITE, 0xB3))
-                text.letterSpacing = 0.08f
-                text.background = null
-                text.setPadding(0, 0, 0, 0)
-                text.text = content
-            }
-            "shadow" -> {
-                // Chromeless but readable over bright artwork: the drop shadow does the work a
-                // capsule would, without covering the art.
-                text.textSize = 30f
-                text.setTextColor(Color.WHITE)
-                text.setShadowLayer(
-                        6f * resources.displayMetrics.density, 0f,
-                        1.5f * resources.displayMetrics.density,
-                        ColorUtils.setAlphaComponent(Color.BLACK, 0xCC))
-                text.background = null
-                text.setPadding(0, 0, 0, 0)
-                text.text = content
-            }
-            "underline" -> {
-                val accent = liftedAccent(accentColor)
-                text.textSize = 28f
-                text.setTextColor(Color.WHITE)
-                text.background = underlineDrawable(
-                        accent, (2f * resources.displayMetrics.density).roundToInt())
-                val padH = (4 * resources.displayMetrics.density).toInt()
-                val padV = (6 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "hairline" -> {
-                text.textSize = 22f
-                text.setTextColor(Color.WHITE)
-                text.background = capsule(
-                        Color.TRANSPARENT,
-                        (1f * resources.displayMetrics.density).roundToInt(),
-                        ColorUtils.setAlphaComponent(Color.WHITE, 0x66))
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (7 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "giant_album" -> {
-                text.textSize = 52f
-                text.setTextColor(liftedAccent(accentColor))
-                text.background = null
-                text.setPadding(0, 0, 0, 0)
-                text.text = content
-            }
-            // --- Filled counterparts that stay off the album accent entirely, or invert it.
-            "mono" -> {
-                text.textSize = 26f
-                text.setTextColor(Color.WHITE)
-                text.background = capsule(MONO_PANEL_SURFACE)
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "tonal_dark" -> {
-                // The inverse of "material": a dark tonal container with light accent numerals,
-                // for users who find the light pill too bright at night.
-                val container = tonalSurface(accentColor, lightness = 0.22f)
-                text.textSize = 26f
-                text.setTextColor(liftedAccent(accentColor))
-                text.background = capsule(container)
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "terminal" -> {
-                // Sharp corners and forced green, matching the "terminal" vocabulary the arc and
-                // quick panel already speak - the album accent is ignored on purpose.
-                text.textSize = 24f
-                text.setTextColor(TERMINAL_GREEN)
-                text.letterSpacing = 0.12f
-                text.background = capsule(
-                        ColorUtils.setAlphaComponent(Color.BLACK, 0xCC),
-                        (1f * resources.displayMetrics.density).roundToInt(),
-                        ColorUtils.setAlphaComponent(TERMINAL_GREEN, 0x99),
-                        radiusPx = 0f)
-                val padH = (16 * resources.displayMetrics.density).toInt()
-                val padV = (7 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "compact_pill" -> {
-                text.textSize = 20f
-                text.setTextColor(Color.WHITE)
-                text.background = capsule(ColorUtils.setAlphaComponent(
-                        tonalSurface(accentColor, .20f), 0xE6))
-                val padH = (12 * resources.displayMetrics.density).toInt()
-                val padV = (5 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "square_album" -> {
-                val fill = tonalSurface(accentColor, .44f)
-                text.textSize = 26f
-                text.setTextColor(contrastingIconColor(fill))
-                text.background = capsule(
-                        fill, radiusPx = 8f * resources.displayMetrics.density)
-                val pad = (12 * resources.displayMetrics.density).toInt()
-                text.setPadding(pad, pad, pad, pad)
-                text.text = content
-            }
-            "stacked_pill" -> {
-                text.textSize = 22f
-                text.setTextColor(Color.WHITE)
-                text.background = capsule(ColorUtils.setAlphaComponent(
-                        tonalSurface(accentColor, .22f), 0xE8))
-                text.setLineSpacing(0f, .86f)
-                val padH = (20 * resources.displayMetrics.density).toInt()
-                val padV = (8 * resources.displayMetrics.density).toInt()
-                text.setPadding(padH, padV, padH, padV)
-                text.text = content
-            }
-            "badge" -> {
-                val d = resources.displayMetrics.density
-                text.textSize = 18f
-                text.setTextColor(contrastingIconColor(accentColor))
-                text.background = capsule(accentColor)
-                text.minWidth = (58f * d).roundToInt()
-                text.minHeight = (46f * d).roundToInt()
-                text.setPadding((10f * d).roundToInt(), 0, (10f * d).roundToInt(), 0)
-                text.text = content
-            }
-            "glass_bar" -> {
-                val d = resources.displayMetrics.density
-                text.textSize = 24f
-                text.setTextColor(Color.WHITE)
-                text.background = capsule(
-                        0x24FFFFFF,
-                        (1f * d).roundToInt(),
-                        0x70FFFFFF,
-                        radiusPx = 12f * d)
-                text.setPadding((32f * d).roundToInt(), (7f * d).roundToInt(),
-                        (32f * d).roundToInt(), (7f * d).roundToInt())
-                text.text = content
-            }
-            "lcd" -> {
-                val d = resources.displayMetrics.density
-                text.textSize = 24f
-                text.setTextColor(TERMINAL_GREEN)
-                text.letterSpacing = .14f
-                text.background = capsule(
-                        0xF0000802.toInt(),
-                        (2f * d).roundToInt(),
-                        0x8833FF66.toInt(),
-                        radiusPx = 3f * d)
-                text.setPadding((16f * d).roundToInt(), (8f * d).roundToInt(),
-                        (16f * d).roundToInt(), (8f * d).roundToInt())
-                text.text = content
-            }
-            "outline_square" -> {
-                val d = resources.displayMetrics.density
-                val lifted = liftedAccent(accentColor)
-                text.textSize = 25f
-                text.setTextColor(lifted)
-                text.background = capsule(
-                        Color.TRANSPARENT,
-                        (2f * d).roundToInt(),
-                        lifted,
-                        radiusPx = 6f * d)
-                text.setPadding((17f * d).roundToInt(), (8f * d).roundToInt(),
-                        (17f * d).roundToInt(), (8f * d).roundToInt())
-                text.text = content
-            }
-            "ribbon" -> {
-                val d = resources.displayMetrics.density
-                val fill = tonalSurface(accentColor, .34f)
-                text.textSize = 24f
-                text.setTextColor(contrastingIconColor(fill))
-                text.background = GradientDrawable(
-                        GradientDrawable.Orientation.LEFT_RIGHT,
-                        intArrayOf(
-                                tonalSurface(accentColor, .18f),
-                                tonalSurface(accentColor, .56f),
-                                tonalSurface(accentColor, .18f))).apply {
-                    cornerRadius = 4f * d
-                }
-                text.setPadding((30f * d).roundToInt(), (7f * d).roundToInt(),
-                        (30f * d).roundToInt(), (7f * d).roundToInt())
-                text.text = content
-            }
-            else -> {
-                text.textSize = 30f
-                text.setTextColor(Color.WHITE)
-                text.background = null
-                text.setPadding(0, 0, 0, 0)
-                text.text = content
-            }
-        }
-    }
+    ) = PanelReadout.apply(
+            text, style, content, accentColor,
+            secondaryColor = resolvedProgressSecondaryAccent(),
+            themeAccentColor = defaultSeekBarColor,
+            screenFace = screenFace,
+            density = resources.displayMetrics.density,
+            // This readout was the last piece of chrome still drawing in the platform default
+            // while everything around it followed the chosen font.
+            typeface = watchUiTypeface(this, preferences))
 
     /** Light, saturated tint of the album accent - the "expressive" pill style's fill. Lightness
      *  is high enough that dark text stays legible regardless of the accent's own hue. */
     private fun expressivePillFillColor(accentColor: Int): Int =
-            tonalSurface(accentColor, lightness = 0.82f)
+            PanelReadout.expressivePillFillColor(accentColor)
 
     /**
      * The album accent raised to a lightness that stays readable when it is used as *text* or a
      * hairline rather than as a fill. Dark album art routinely yields an accent near-black, which
      * is invisible on the overlay backdrop; anything already light is passed through untouched.
      */
-    private fun liftedAccent(color: Int): Int {
-        val hsl = FloatArray(3)
-        ColorUtils.colorToHSL(color, hsl)
-        if (hsl[2] >= 0.4f) return color
-        hsl[2] = 0.45f
-        return ColorUtils.HSLToColor(hsl)
-    }
+    private fun liftedAccent(color: Int): Int = PanelReadout.liftedAccent(color)
 
     /**
      * A rule drawn along the bottom edge of whatever it backs, used by the "underline" readout.
@@ -7790,13 +7447,7 @@ class MainActivity : WearCompanionWatchActivity(),
      * background is assigned.
      */
     private fun underlineDrawable(color: Int, thicknessPx: Int): LayerDrawable =
-            LayerDrawable(arrayOf<android.graphics.drawable.Drawable>(
-                    ColorDrawable(Color.TRANSPARENT),
-                    GradientDrawable().apply { setColor(color); cornerRadius = thicknessPx / 2f }
-            )).apply {
-                setLayerGravity(1, Gravity.BOTTOM)
-                setLayerHeight(1, thicknessPx)
-            }
+            PanelReadout.underlineDrawable(color, thicknessPx)
 
     private val rotarySeekCommitRunnable = Runnable {
         // Clear the pending fraction *before* seeking: seekTo() posts the re-anchored position
@@ -7850,7 +7501,6 @@ class MainActivity : WearCompanionWatchActivity(),
         if (!gesturesEnabledNow()) return
         Timber.d("UpwardsSwipe")
         buzz()
-        revealSwipeTrailIfEnabled()
         if (!viewModel.executeAction(ButtonInfo(false, SwipeGesture.UP, GESTURE_SINGLE_TAP))) {
             startMenu(showCustomList = false)
         }
@@ -7859,24 +7509,13 @@ class MainActivity : WearCompanionWatchActivity(),
     override fun onDownwardsSwipe() {
         if (!gesturesEnabledNow()) return
         buzz()
-        revealSwipeTrailIfEnabled()
         viewModel.executeAction(ButtonInfo(false, SwipeGesture.DOWN, GESTURE_SINGLE_TAP))
     }
 
     override fun onSwipeLeft() {
         if (!gesturesEnabledNow()) return
         buzz()
-        revealSwipeTrailIfEnabled()
         viewModel.executeAction(ButtonInfo(false, SwipeGesture.LEFT, GESTURE_SINGLE_TAP))
-    }
-
-    /** Freezes and fades the path recorded by [onTouchMove] since the finger went down - see
-     *  [swipeTrailEnabled]'s doc for the gating rule. Marks the touch sequence so [onTouchUp]
-     *  doesn't also [SwipeTrailDrawable.discard] what was just revealed. */
-    private fun revealSwipeTrailIfEnabled() {
-        if (!swipeTrailEnabled) return
-        swipeTrail.reveal()
-        swipeTrailRevealedThisTouch = true
     }
 
     override fun onSingleTap(quadrant: Int) {
@@ -7909,32 +7548,15 @@ class MainActivity : WearCompanionWatchActivity(),
      *  [binding.fourWayTouch] itself) is already visible since nothing opaque sits above it.
      *  Boosted when "Flash icon on tap" is on - these faces have no persistent quadrant icon to
      *  flash (see [pulseQuadrantIcon]), so the ripple itself has to carry that confirmation.
-     *  Also starts recording this touch sequence's path for the swipe trail (see
-     *  [swipeTrailEnabled]) - captured here rather than only from [onTouchMove] so the trail
-     *  doesn't miss the actual finger-down origin. */
+     */
     override fun onTouchDown(x: Float, y: Float) {
-        swipeTrailRevealedThisTouch = false
-        if (swipeTrailEnabled) {
-            swipeTrail.record(x, y)
-        }
         if (screenFace in composeFaces) {
             composeTapPulse.press(x, y, boosted = quadrantTapFlashEnabled)
         }
     }
 
-    override fun onTouchMove(x: Float, y: Float) {
-        if (swipeTrailEnabled) {
-            swipeTrail.record(x, y)
-        }
-    }
-
     override fun onTouchUp() {
         composeTapPulse.release()
-        // A tap, long-press, or quadrant gesture never reveals the trail - drop what was
-        // recorded so it doesn't leave a stray mark for a touch that wasn't a swipe.
-        if (!swipeTrailRevealedThisTouch) {
-            swipeTrail.discard()
-        }
     }
 
     /** Briefly scales the tapped quadrant's icon up and back, visually tying "I tapped here"

@@ -457,6 +457,29 @@ fun watchUiFontFamily(preferences: SharedPreferences?): FontFamily {
             preferences, MiscPreferences.WEAR_FONT, appearanceContext))
 }
 
+/**
+ * [watchUiFontFamily]'s [Typeface] counterpart, for the chrome that is drawn with Views rather than
+ * Compose - the seek/volume readout being the one that matters.
+ *
+ * That readout was the last piece of watch chrome still rendering in the platform default while
+ * everything around it followed the chosen font, which showed up most clearly on the dedicated
+ * volume and progress screens: a Compose title in the theme's font directly above a percentage in
+ * Roboto.
+ *
+ * A null key is deliberately how Google Sans is asked for: [watchFontTypeface]'s fallback is that
+ * font, so this cannot drift from whatever [watchUiFontFamily] treats as its own default.
+ */
+fun watchUiTypeface(context: Context, preferences: SharedPreferences?): Typeface {
+    if (preferences == null) return watchFontTypeface(context, null)
+    val appearanceContext = ThemeAppearance.resolve(preferences)
+    if (!FaceScopedPreferences.getBoolean(
+                    preferences, MiscPreferences.WEAR_FONT_ALL_SCREENS, appearanceContext)) {
+        return watchFontTypeface(context, null)
+    }
+    return watchFontTypeface(context, FaceScopedPreferences.getString(
+            preferences, MiscPreferences.WEAR_FONT, appearanceContext))
+}
+
 /** [watchFontFamily]'s [Typeface] counterpart for the View-based classic face - keep the key set
  *  and fallback identical to it so classic and Compose faces render the exact same choice. */
 fun watchFontTypeface(context: Context, key: String?): Typeface =

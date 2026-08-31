@@ -19,6 +19,8 @@
         <item>Midnight</item>
         <item>Halo</item>
         <item>Smoke blur</item>
+        <item>Sunrise</item>
+        <item>Deep ocean</item>
     </string-array>
     <string-array name="wear_overlay_backdrop_extra_values" translatable="false">
         <item>secondary</item>
@@ -32,6 +34,8 @@
         <item>midnight</item>
         <item>halo</item>
         <item>smoke</item>
+        <item>sunrise</item>
+        <item>deep_ocean</item>
     </string-array>
 
     <string-array name="wear_volume_style_extra_entries">
@@ -41,6 +45,8 @@
         <item>Chrome</item>
         <item>Spectrum</item>
         <item>Steps</item>
+        <item>Candy</item>
+        <item>Ghost</item>
     </string-array>
     <string-array name="wear_volume_style_extra_values" translatable="false">
         <item>beads</item>
@@ -49,6 +55,8 @@
         <item>chrome</item>
         <item>spectrum</item>
         <item>steps</item>
+        <item>candy</item>
+        <item>ghost</item>
     </string-array>
 
     <string-array name="wear_volume_layout_extra_entries">
@@ -58,6 +66,8 @@
         <item>Top meter</item>
         <item>Bottom meter</item>
         <item>Center dial</item>
+        <item>Top halo</item>
+        <item>Bottom halo</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_values" translatable="false">
         <item>double_edge</item>
@@ -66,6 +76,8 @@
         <item>meter_top</item>
         <item>meter_bottom</item>
         <item>dial</item>
+        <item>halo_top</item>
+        <item>halo_bottom</item>
     </string-array>
 
     <string-array name="wear_progress_style_extra_entries">
@@ -77,6 +89,8 @@
         <item>Glow</item>
         <item>Duotone</item>
         <item>Needle</item>
+        <item>Alternating</item>
+        <item>Spark</item>
     </string-array>
     <string-array name="wear_progress_style_extra_values" translatable="false">
         <item>double</item>
@@ -87,6 +101,8 @@
         <item>glow</item>
         <item>duotone</item>
         <item>needle</item>
+        <item>alternating</item>
+        <item>spark</item>
     </string-array>
 
     <string-array name="wear_progress_layout_entries">
@@ -99,6 +115,8 @@
         <item>Left arc</item>
         <item>Right arc</item>
         <item>Double track</item>
+        <item>Open on left</item>
+        <item>Open on right</item>
     </string-array>
     <string-array name="wear_progress_layout_values" translatable="false">
         <item>edge</item>
@@ -110,6 +128,8 @@
         <item>left_arc</item>
         <item>right_arc</item>
         <item>double</item>
+        <item>open_left</item>
+        <item>open_right</item>
     </string-array>
 
     <string-array name="wear_seek_style_extra_entries">
@@ -121,6 +141,8 @@
         <item>LCD</item>
         <item>Outline square</item>
         <item>Ribbon</item>
+        <item>Time bubble</item>
+        <item>Split tone</item>
     </string-array>
     <string-array name="wear_seek_style_extra_values" translatable="false">
         <item>compact_pill</item>
@@ -131,6 +153,8 @@
         <item>lcd</item>
         <item>outline_square</item>
         <item>ribbon</item>
+        <item>bubble_time</item>
+        <item>split_tone</item>
     </string-array>
 
     <string-array name="wear_seek_layout_extra_entries">
@@ -141,6 +165,8 @@
         <item>Vertical timeline (right)</item>
         <item>Center dial</item>
         <item>Twin timeline</item>
+        <item>Segments (bottom)</item>
+        <item>Center stack</item>
     </string-array>
     <string-array name="wear_seek_layout_extra_values" translatable="false">
         <item>timeline_top</item>
@@ -150,6 +176,8 @@
         <item>vertical_right</item>
         <item>dial</item>
         <item>twin</item>
+        <item>segments_bottom</item>
+        <item>center_stack</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_extra_entries">
@@ -159,6 +187,8 @@
         <item>Bubble</item>
         <item>Rail</item>
         <item>Sunset</item>
+        <item>Album outline</item>
+        <item>Dark glass</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_values" translatable="false">
         <item>soft</item>
@@ -167,6 +197,8 @@
         <item>bubble</item>
         <item>rail</item>
         <item>sunset</item>
+        <item>outline_album</item>
+        <item>glass_dark</item>
     </string-array>
 
     <string-array name="wear_quick_panel_layout_extra_entries">
@@ -177,6 +209,8 @@
         <item>Split deck</item>
         <item>Diamond</item>
         <item>Carousel</item>
+        <item>Triangle</item>
+        <item>Stair</item>
     </string-array>
     <string-array name="wear_quick_panel_layout_extra_values" translatable="false">
         <item>fan</item>
@@ -186,6 +220,8 @@
         <item>split</item>
         <item>diamond</item>
         <item>carousel</item>
+        <item>triangle</item>
+        <item>stair</item>
     </string-array>
 
     <string-array name="wear_queue_style_extra_entries">

@@ -14,6 +14,8 @@
         <item>Meia-noite</item>
         <item>Halo</item>
         <item>Desfoque de fumaça</item>
+        <item>Nascer do sol</item>
+        <item>Oceano profundo</item>
     </string-array>
 
     <string-array name="wear_volume_style_extra_entries">
@@ -23,6 +25,8 @@
         <item>Cromado</item>
         <item>Espectro</item>
         <item>Degraus</item>
+        <item>Doce</item>
+        <item>Fantasma</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Borda dupla</item>
@@ -31,6 +35,8 @@
         <item>Medidor superior</item>
         <item>Medidor inferior</item>
         <item>Dial central</item>
+        <item>Halo superior</item>
+        <item>Halo inferior</item>
     </string-array>
 
     <string-array name="wear_progress_style_extra_entries">
@@ -42,6 +48,8 @@
         <item>Brilho</item>
         <item>Duotônico</item>
         <item>Ponteiro</item>
+        <item>Alternado</item>
+        <item>Faísca</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Borda da tela</item>
@@ -53,6 +61,8 @@
         <item>Arco esquerdo</item>
         <item>Arco direito</item>
         <item>Trilho duplo</item>
+        <item>Aberto à esquerda</item>
+        <item>Aberto à direita</item>
     </string-array>
 
     <string-array name="wear_seek_style_extra_entries">
@@ -64,6 +74,8 @@
         <item>LCD</item>
         <item>Quadrado contornado</item>
         <item>Faixa</item>
+        <item>Bolha de tempo</item>
+        <item>Tom dividido</item>
     </string-array>
     <string-array name="wear_seek_layout_extra_entries">
         <item>Linha do tempo (superior)</item>
@@ -73,6 +85,8 @@
         <item>Linha vertical (direita)</item>
         <item>Dial central</item>
         <item>Linha dupla</item>
+        <item>Segmentos (inferior)</item>
+        <item>Pilha central</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_extra_entries">
@@ -82,6 +96,8 @@
         <item>Bolha</item>
         <item>Trilho</item>
         <item>Pôr do sol</item>
+        <item>Contorno do álbum</item>
+        <item>Vidro escuro</item>
     </string-array>
     <string-array name="wear_quick_panel_layout_extra_entries">
         <item>Leque</item>
@@ -91,6 +107,8 @@
         <item>Painel dividido</item>
         <item>Diamante</item>
         <item>Carrossel</item>
+        <item>Triângulo</item>
+        <item>Escada</item>
     </string-array>
 
     <string-array name="wear_queue_style_extra_entries">

@@ -483,7 +483,7 @@ test("individual title and artist fonts retain their Flex contracts", () => {
 test("a complete approved intake creates a preview-free public profile", () => {
     const candidate = validateApprovedDocument(approvedDocument());
 
-    assert.equal(SETTING_KEYS.length, 147);
+    assert.equal(SETTING_KEYS.length, 154);
     assert.equal(candidate.id, ID);
     assert.equal(candidate.publicProfile.author, "Theme maker");
     assert.equal(candidate.publicProfile.publishedAt, PUBLISHED_AT);
