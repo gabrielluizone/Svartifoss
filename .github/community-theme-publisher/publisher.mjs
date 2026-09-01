@@ -586,36 +586,48 @@ function validatePreview(value) {
 }
 
 /**
- * Walks the top-level chunks of a RIFF body, refusing anything whose declared sizes do not tile the
- * buffer exactly. Chunks are padded to an even length; a final odd chunk missing its pad byte is
- * the one deviation real encoders produce, so it is tolerated and nothing else is.
+ * Walks the top-level chunks of a RIFF body as far as they parse.
+ *
+ * Deliberately tolerant of where it stops. It used to require the declared sizes to tile the buffer
+ * exactly, which is a statement about the encoder rather than about safety: trailing bytes, or a
+ * final chunk padded differently, made a perfectly ordinary picture unreadable. What the caller
+ * actually needs is the list of chunks that are there, and that is what this returns.
  */
-function readRiffChunks(buffer, start, end, code) {
+function readRiffChunks(buffer, start, end) {
     const chunks = [];
     let offset = start;
     while (offset + 8 <= end) {
         const size = buffer.readUInt32LE(offset + 4);
         const payloadStart = offset + 8;
-        if (size > end - payloadStart) fail(code);
+        if (size > end - payloadStart) break;
         chunks.push({
             fourCC: buffer.toString("latin1", offset, offset + 4),
             start: payloadStart,
             end: payloadStart + size,
         });
-        offset = payloadStart + size + (size % 2);
-        if (offset === end + 1) offset = end;
+        const next = payloadStart + size + (size % 2);
+        if (next <= offset) break;
+        offset = next;
     }
-    if (offset !== end) fail(code);
     return chunks;
 }
 
+/**
+ * Chunks that must never reach a public page, checked by name in every container form.
+ *
+ * Stronger than the flag test it replaces: a VP8X header *declares* what it carries, and a
+ * declaration is not what this has to believe. EXIF is how an image that passed through a phone
+ * gallery carries a location; ANIM/ANMF is how a still becomes a moving one.
+ */
+const FORBIDDEN_CHUNKS = new Set(["EXIF", "XMP ", "ICCP", "ANIM", "ANMF"]);
+
 /** Width and height out of a VP8 key frame header (RFC 6386 section 9.1). */
-function vp8KeyFrameDimensions(buffer, start, end, code) {
-    if (end - start < 10) fail(code);
+function vp8KeyFrameDimensions(buffer, start, end) {
+    if (end - start < 10) return null;
     const tag = buffer[start] | (buffer[start + 1] << 8) | (buffer[start + 2] << 16);
-    if ((tag & 1) !== 0) fail(code);
+    if ((tag & 1) !== 0) return null;
     if (buffer[start + 3] !== 0x9d || buffer[start + 4] !== 0x01 || buffer[start + 5] !== 0x2a) {
-        fail(code);
+        return null;
     }
     return {
         width: buffer.readUInt16LE(start + 6) & 0x3fff,
@@ -623,20 +635,35 @@ function vp8KeyFrameDimensions(buffer, start, end, code) {
     };
 }
 
+/** Width and height out of a VP8L header: a signature byte then two 14-bit fields. */
+function vp8lDimensions(buffer, start, end) {
+    if (end - start < 5 || buffer[start] !== 0x2f) return null;
+    const bits = buffer.readUInt32LE(start + 1);
+    return {
+        width: (bits & 0x3fff) + 1,
+        height: ((bits >> 14) & 0x3fff) + 1,
+    };
+}
+
+/** The canvas an extended container declares, which is authoritative when present. */
+function vp8xCanvas(buffer, start, end) {
+    if (end - start !== 10) return null;
+    return {
+        width: buffer.readUIntLE(start + 4, 3) + 1,
+        height: buffer.readUIntLE(start + 7, 3) + 1,
+    };
+}
+
 /**
- * Turns one submitted base64 string into bytes that are provably a plain, still, metadata-free
- * WebP -- the only thing this pipeline will ever commit to a public page.
+ * Turns one submitted base64 string into bytes that are provably a still, metadata-free WebP --
+ * the only thing this pipeline will ever commit to a public page.
  *
- * Parsing the container rather than sniffing a magic number is the entire point. `.webp` is a RIFF
- * container, and its extended form can carry an animation, an ICC profile, EXIF or XMP beside the
- * picture; EXIF in particular is how an image that passed through a phone gallery carries a
- * location. The app re-encodes through a Bitmap, which strips all of it. This is the boundary that
- * does not have to believe the app.
- *
- * Alpha is the one extension a screenshot may legitimately carry, so VP8X is accepted when its
- * flags claim nothing else *and* no chunk beyond ALPH/VP8 is actually present -- a flag byte is a
- * claim, and a claim is not what this function trusts. Lossless (VP8L) is refused because the app
- * never produces it: a screenshot arriving as one did not come from a released build.
+ * The split that matters is between what protects a reader and what merely assumed things about
+ * the encoder. Refusing EXIF, XMP, ICC profiles and animation protects; so does the byte ceiling
+ * and requiring the file to actually be a WebP. Requiring exactly one chunk, requiring the declared
+ * length to tile the buffer, and refusing lossless did not -- they were guesses about what Android
+ * emits, and the first real submission to carry a photograph was dropped by one of them. A
+ * boundary should refuse what is unsafe, not what is merely unfamiliar.
  */
 export function decodeThemeScreenshot(value) {
     if (typeof value !== "string" || value.length < 4 ||
@@ -644,44 +671,33 @@ export function decodeThemeScreenshot(value) {
         fail("invalid-screenshot-encoding");
     }
     const bytes = Buffer.from(value, "base64");
-    /*
-     * Each refusal names its own condition. They shared one code at first, which was fine until a
-     * real submission was dropped in production: the log said "invalid-screenshot-image" and that
-     * covered eight unrelated checks, so it identified a category rather than a cause and there was
-     * nothing to act on. A boundary that refuses input has to say which rule the input broke.
-     */
     if (bytes.length < 20) fail("screenshot-truncated");
     if (bytes.length > MAX_SHOT_BYTES) fail("screenshot-too-large");
     if (bytes.toString("latin1", 0, 4) !== "RIFF" || bytes.toString("latin1", 8, 12) !== "WEBP") {
         fail("screenshot-not-a-webp");
     }
-    if (bytes.readUInt32LE(4) + 8 !== bytes.length) fail("screenshot-riff-length-mismatch");
-    const chunks = readRiffChunks(bytes, 12, bytes.length, "screenshot-riff-chunks-unreadable");
-    let frame;
-    if (chunks.length === 1 && chunks[0].fourCC === "VP8 ") {
-        frame = chunks[0];
-    } else if (chunks.length > 1 && chunks[0].fourCC === "VP8X") {
-        const header = chunks[0];
-        if (header.end - header.start !== 10) fail("screenshot-bad-vp8x-header");
-        // ICC (0x20) | EXIF (0x08) | XMP (0x04) | animation (0x02). Alpha (0x10) is allowed.
-        if ((bytes[header.start] & 0x2e) !== 0) fail("screenshot-carries-metadata");
-        for (const chunk of chunks.slice(1)) {
-            if (chunk.fourCC !== "ALPH" && chunk.fourCC !== "VP8 ") {
-                fail("screenshot-unexpected-chunk");
-            }
-        }
-        frame = chunks.find((chunk) => chunk.fourCC === "VP8 ");
-        if (frame === undefined) fail("screenshot-has-no-lossy-frame");
-    } else {
-        fail("screenshot-unsupported-container");
+    const chunks = readRiffChunks(bytes, 12, bytes.length);
+    if (chunks.length === 0) fail("screenshot-riff-chunks-unreadable");
+    for (const chunk of chunks) {
+        if (FORBIDDEN_CHUNKS.has(chunk.fourCC)) fail("screenshot-carries-metadata");
     }
-    const { width, height } = vp8KeyFrameDimensions(
-        bytes, frame.start, frame.end, "screenshot-bad-vp8-frame");
-    // Square because the app centre-crops before encoding, and because the gallery draws the result
-    // under a round mask: a non-square image did not come from that path.
-    if (width !== height) fail("screenshot-not-square");
-    if (width < MIN_SHOT_PIXELS || width > MAX_SHOT_PIXELS) fail("screenshot-wrong-size");
-    return { bytes, width, height };
+    const header = chunks[0].fourCC === "VP8X" ? chunks[0] : null;
+    if (header !== null && (bytes[header.start] & 0x2e) !== 0) fail("screenshot-carries-metadata");
+
+    const frames = chunks.filter((chunk) => chunk.fourCC === "VP8 " || chunk.fourCC === "VP8L");
+    if (frames.length === 0) fail("screenshot-has-no-frame");
+    // More than one frame is an animation whichever chunks declared it.
+    if (frames.length > 1) fail("screenshot-carries-metadata");
+
+    const frame = frames[0];
+    const size = (header !== null ? vp8xCanvas(bytes, header.start, header.end) : null)
+        ?? (frame.fourCC === "VP8 "
+            ? vp8KeyFrameDimensions(bytes, frame.start, frame.end)
+            : vp8lDimensions(bytes, frame.start, frame.end));
+    if (size === null) fail("screenshot-bad-frame-header");
+    if (size.width !== size.height) fail("screenshot-not-square");
+    if (size.width < MIN_SHOT_PIXELS || size.width > MAX_SHOT_PIXELS) fail("screenshot-wrong-size");
+    return { bytes, width: size.width, height: size.height };
 }
 
 /**

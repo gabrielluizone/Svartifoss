@@ -1609,6 +1609,14 @@ function vp8Frame(width, height) {
     return payload;
 }
 
+/** A minimal VP8L header: the signature byte then two packed 14-bit fields. */
+function vp8lFrame(width, height) {
+    const payload = Buffer.alloc(8);
+    payload[0] = 0x2f;
+    payload.writeUInt32LE(((width - 1) & 0x3fff) | (((height - 1) & 0x3fff) << 14), 1);
+    return payload;
+}
+
 function vp8xHeader(flags, width, height) {
     const payload = Buffer.alloc(10);
     payload[0] = flags;
@@ -1647,38 +1655,54 @@ function shotDocument(ownerUid = "firebase-user-id", overrides = {}) {
     };
 }
 
-test("a screenshot decodes only as a plain still WebP", () => {
+test("a screenshot decodes as any still WebP an encoder plausibly writes", () => {
     assert.deepEqual(
         { ...decodeThemeScreenshot(screenshot(450)), bytes: undefined },
         { bytes: undefined, width: 450, height: 450 });
     // Genuine libwebp output, not only bytes this test file built.
     assert.equal(decodeThemeScreenshot(REAL_WEBP).width, 128);
-    // Alpha is the one extension a screenshot may legitimately carry.
+    // Extended container with alpha, which is what an encoder writes for a bitmap it thinks has any.
     assert.equal(decodeThemeScreenshot(riff([
         riffChunk("VP8X", vp8xHeader(0x10, 256, 256)),
         riffChunk("ALPH", Buffer.alloc(4)),
         riffChunk("VP8 ", vp8Frame(256, 256)),
     ]).toString("base64")).width, 256);
+    // Lossless. Refusing it was a guess about what the app emits, not a safety property: a still
+    // VP8L picture is exactly as safe to publish as a lossy one.
+    assert.equal(decodeThemeScreenshot(riff([
+        riffChunk("VP8L", vp8lFrame(256, 256)),
+    ]).toString("base64")).width, 256);
+    // Trailing bytes no longer make an ordinary picture unreadable.
+    const padded = Buffer.concat([
+        riff([riffChunk("VP8 ", vp8Frame(256, 256))]),
+        Buffer.alloc(4),
+    ]);
+    assert.equal(decodeThemeScreenshot(padded.toString("base64")).width, 256);
 });
 
 test("a screenshot carrying anything but a picture is refused", () => {
-    // Each metadata flag on its own: ICC, EXIF, XMP, animation.
+    // By chunk, in every container form. A VP8X header only *declares* what it carries, and the
+    // declaration is not what this trusts -- EXIF is how a file that passed through a phone gallery
+    // carries a location.
+    for (const fourCC of ["EXIF", "XMP ", "ICCP", "ANIM", "ANMF"]) {
+        assertValidationCode(() => decodeThemeScreenshot(riff([
+            riffChunk("VP8X", vp8xHeader(0x00, 256, 256)),
+            riffChunk("VP8 ", vp8Frame(256, 256)),
+            riffChunk(fourCC, Buffer.from("abcdefgh", "latin1")),
+        ]).toString("base64")), "screenshot-carries-metadata");
+    }
+    // And by flag, for a header that declares metadata it did not attach.
     for (const flags of [0x20, 0x08, 0x04, 0x02]) {
         assertValidationCode(() => decodeThemeScreenshot(riff([
             riffChunk("VP8X", vp8xHeader(flags, 256, 256)),
             riffChunk("VP8 ", vp8Frame(256, 256)),
         ]).toString("base64")), "screenshot-carries-metadata");
     }
-    // The sharp case: a flag byte is a claim, and the chunk is what actually carries a location.
+    // Several frames is an animation whichever chunks announced it.
     assertValidationCode(() => decodeThemeScreenshot(riff([
-        riffChunk("VP8X", vp8xHeader(0x00, 256, 256)),
         riffChunk("VP8 ", vp8Frame(256, 256)),
-        riffChunk("EXIF", Buffer.from("II*abcd", "latin1")),
-    ]).toString("base64")), "screenshot-unexpected-chunk");
-    // Lossless never comes out of the app, so it did not come from a released build.
-    assertValidationCode(
-        () => decodeThemeScreenshot(riff([riffChunk("VP8L", Buffer.alloc(16))]).toString("base64")),
-        "screenshot-unsupported-container");
+        riffChunk("VP8 ", vp8Frame(256, 256)),
+    ]).toString("base64")), "screenshot-carries-metadata");
 });
 
 test("a screenshot has to be a square of a plausible size", () => {
@@ -1692,12 +1716,25 @@ test("a malformed screenshot envelope never reaches the container parser", () =>
     assertValidationCode(() => decodeThemeScreenshot(""), "invalid-screenshot-encoding");
     assertValidationCode(() => decodeThemeScreenshot("A".repeat(131_073)), "invalid-screenshot-encoding");
     assertValidationCode(() => decodeThemeScreenshot(42), "invalid-screenshot-encoding");
-    // A RIFF whose declared length disagrees with what arrived.
-    const truncated = riff([riffChunk("VP8 ", vp8Frame(256, 256))]).subarray(0, 24);
-    assertValidationCode(() => decodeThemeScreenshot(truncated.toString("base64")), "screenshot-riff-length-mismatch");
     assertValidationCode(
         () => decodeThemeScreenshot(Buffer.from("GIF89a").toString("base64")),
         "screenshot-truncated");
+    assertValidationCode(
+        () => decodeThemeScreenshot(Buffer.alloc(64).toString("base64")),
+        "screenshot-not-a-webp");
+    // A chunk header that declares more payload than arrived, so nothing parses.
+    assertValidationCode(
+        () => decodeThemeScreenshot(
+            riff([riffChunk("VP8 ", vp8Frame(256, 256))]).subarray(0, 24).toString("base64")),
+        "screenshot-riff-chunks-unreadable");
+    // A chunk table that parses but holds no picture.
+    assertValidationCode(
+        () => decodeThemeScreenshot(riff([riffChunk("ALPH", Buffer.alloc(16))]).toString("base64")),
+        "screenshot-has-no-frame");
+    // A frame whose header is not one.
+    assertValidationCode(
+        () => decodeThemeScreenshot(riff([riffChunk("VP8 ", Buffer.alloc(16))]).toString("base64")),
+        "screenshot-bad-frame-header");
 });
 
 test("a refused screenshot is described well enough to act on", () => {
