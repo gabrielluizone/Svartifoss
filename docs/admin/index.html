@@ -410,6 +410,31 @@
       color: var(--danger);
       font-size: 13px;
     }
+    .preview-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--carbon-soft);
+    }
+    .preview-figure { min-width: 0; margin: 0; }
+    .preview-figure + .preview-figure { border-left: 1px solid var(--carbon-soft); }
+    /*
+     * One size and one shape for both. The comparison is the review, so neither image may flatter
+     * the other by being larger, and a watch screen is square.
+     */
+    .preview-pair .preview { aspect-ratio: 1 / 1; border-bottom: 0; }
+    .preview-caption {
+      padding: 8px 10px;
+      color: var(--ash);
+      font-size: 12px;
+      text-align: center;
+    }
+    .shot-verdict {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      cursor: pointer;
+    }
     .card-body { padding: 20px; }
     .card-title { overflow-wrap: anywhere; font-size: 19px; }
     .byline, .meta {

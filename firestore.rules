@@ -57,6 +57,50 @@ service cloud.firestore {
     }
 
     /*
+     * One optional author screenshot per submission: a real photograph of the theme running on the
+     * author's own watch, shown on the gallery's detail screen beside the locally-rendered preview.
+     *
+     * It is a separate document, written *after* the intake it belongs to, and both halves of that
+     * sentence are load-bearing.
+     *
+     * Separate, because a submission already writes intake, quota, account and name reservation in
+     * one atomic batch whose rules share a single 1000-expression budget -- a limit only reached on
+     * an account's second submission and reported as an indistinguishable PERMISSION_DENIED. A
+     * screenshot has nothing to do with quota or name reservation, so it must not spend that
+     * budget. Failing to write it is harmless: the theme is simply published without an image,
+     * which is the same state as an author who chose not to attach one.
+     *
+     * After, because that is what bounds it. A screenshot written first could only ever be checked
+     * against an invented UUID, so any signed-in account could store unlimited 128 KB documents
+     * outside the three-per-day submission limit. Requiring the intake to already exist, to belong
+     * to the caller, and to still be `pending` ties every screenshot to a rate-limited submission
+     * and makes an orphan impossible. The `pending` clause is the sharp one: without it an author
+     * could attach an image *after* a moderator approved the theme, putting unreviewed bytes
+     * straight into a public commit.
+     *
+     * The surface list is a literal for the same reason the base-face list above is, and for now it
+     * holds one value. The path keeps a surface segment anyway so a second surface is a new entry
+     * here rather than a migration of every already-published theme.
+     */
+    match /themeIntakeShots/{themeId}/surfaces/{surface} {
+      /*
+       * An author reads back what they attached; a moderator reads it to review it. Nobody else
+       * can, because until publication this is an unreviewed image.
+       */
+      allow get, list: if identifiedUser() &&
+          (isCommunityThemeModerator() || resource.data.ownerUid == request.auth.uid);
+      allow create: if activeIdentifiedUser()
+          && validThemeId(themeId)
+          && validNewThemeScreenshot(themeId, surface);
+
+      /*
+       * Deliberately omitted: a screenshot is immutable once written, so an approved image can
+       * never be swapped for another one. Only the trusted publisher removes it, after the bytes
+       * are committed or the theme is withdrawn.
+       */
+    }
+
+    /*
      * This private per-user document makes an intake create rate-limited at the rules boundary.
      * Its lastSubmissionId must point to the exact intake document created in the same atomic
      * transaction (verified with getAfter below), so an APK cannot advance or reset this clock by
@@ -405,7 +449,8 @@ service cloud.firestore {
             "reviewedBy",
             "reviewedAt",
             "decision",
-            "previousStatus"
+            "previousStatus",
+            "shotsAccepted"
           ])
           && data.keys().hasAll([
             "reviewSchemaVersion",
@@ -414,6 +459,18 @@ service cloud.firestore {
             "decision",
             "previousStatus"
           ])
+          /*
+           * Optional, and the two lists above therefore genuinely differ -- this is not the
+           * hasOnly-plus-hasAll-over-one-list pattern the intake rule avoids for costing twice
+           * what a key count does.
+           *
+           * A moderator may approve a theme and drop its screenshot: without that, one bad image
+           * forces rejecting an otherwise good theme, which is the worse outcome for everyone.
+           * Absent means the same as true, so every review record written before screenshots
+           * existed keeps meaning what it meant, and a decision on a theme with no image never has
+           * to carry the field.
+           */
+          && (!data.keys().hasAny(["shotsAccepted"]) || data.shotsAccepted is bool)
           && data.reviewSchemaVersion is int
           && data.reviewSchemaVersion == 1
           && data.reviewedBy is string
@@ -493,6 +550,36 @@ service cloud.firestore {
           && data.moderationPreviewWebpBase64.size() <= 65536
           && data.moderationPreviewWebpBase64.matches('^[A-Za-z0-9+/]+={0,2}$')
           && validShortText(data.clientVersion, 64)
+          && data.createdAt is timestamp
+          && data.createdAt == request.time;
+    }
+
+    /*
+     * The screenshot envelope. Bytes stay opaque base64 here exactly as the moderation preview
+     * does: rules can bound a transport envelope and its size, and nothing more. Whether these
+     * bytes are a real WebP -- and not an animation, an ICC profile or an EXIF block wearing a
+     * .webp name -- is re-decided by the trusted publisher, which parses the RIFF container before
+     * a byte reaches a public commit.
+     *
+     * 128 KB of base64 is roughly 96 KB of image, comfortably above the ~55 KB a 450x450 screenshot
+     * encodes to and low enough that a stored document stays cheap.
+     */
+    function validNewThemeScreenshot(themeId, surface) {
+      let data = request.resource.data;
+      let intake = /databases/$(database)/documents/themeIntake/$(themeId);
+      return surface in ["player"]
+          && exists(intake)
+          && get(intake).data.ownerUid == request.auth.uid
+          && get(intake).data.status == "pending"
+          && data.keys().hasOnly(["ownerUid", "surface", "webpBase64", "createdAt"])
+          && data.keys().size() == 4
+          && data.ownerUid is string
+          && data.ownerUid == request.auth.uid
+          && data.surface == surface
+          && data.webpBase64 is string
+          && data.webpBase64.size() >= 4
+          && data.webpBase64.size() <= 131072
+          && data.webpBase64.matches('^[A-Za-z0-9+/]+={0,2}$')
           && data.createdAt is timestamp
           && data.createdAt == request.time;
     }

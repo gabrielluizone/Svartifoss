@@ -895,3 +895,168 @@ test("a moderator who owns the theme can still take it down", async () => {
     status: "withdrawn",
   }));
 });
+
+function shotDoc(db, themeId, surface = "player") {
+  return doc(db, "themeIntakeShots", themeId).collection("surfaces").doc(surface);
+}
+
+function shot(ownerUid, surface = "player", overrides = {}) {
+  return {
+    ownerUid,
+    surface,
+    webpBase64: "UklGRhoAAABXRUJQ",
+    createdAt: serverTimestamp(),
+    ...overrides,
+  };
+}
+
+test("an author attaches one screenshot to their own pending submission", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  await seedPending(AUTHOR, FIRST_ID);
+
+  await assertSucceeds(setDoc(authorDb, shotDoc(authorDb, FIRST_ID), shot(AUTHOR)));
+});
+
+test("a screenshot needs an existing pending intake owned by the caller", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const otherDb = authenticatedDb(OTHER_AUTHOR);
+  await seedPending(AUTHOR, FIRST_ID);
+
+  // No intake at all: nothing to attach to, and the case that would otherwise let any signed-in
+  // account store unbounded documents against invented UUIDs, outside the submission quota.
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, SECOND_ID), shot(AUTHOR)));
+  // Somebody else's submission, with and without an honest ownerUid on the screenshot itself.
+  await assertFails(setDoc(otherDb, shotDoc(otherDb, FIRST_ID), shot(OTHER_AUTHOR)));
+  await assertFails(setDoc(otherDb, shotDoc(otherDb, FIRST_ID), shot(AUTHOR)));
+});
+
+test("a screenshot cannot be attached once the theme has left pending", async () => {
+  // The sharp one. Without the pending clause an author could wait for approval and then attach an
+  // image nobody reviewed, which the publisher would commit straight to a public page.
+  const authorDb = authenticatedDb(AUTHOR);
+  await seedStatus(AUTHOR, FIRST_ID, "approved");
+  await seedStatus(AUTHOR, SECOND_ID, "published");
+  await seedStatus(AUTHOR, THIRD_ID, "rejected");
+
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, FIRST_ID), shot(AUTHOR)));
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, SECOND_ID), shot(AUTHOR)));
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, THIRD_ID), shot(AUTHOR)));
+});
+
+test("a screenshot is immutable and only the publisher removes it", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  await seedPending(AUTHOR, FIRST_ID);
+  await assertSucceeds(setDoc(authorDb, shotDoc(authorDb, FIRST_ID), shot(AUTHOR)));
+
+  await assertFails(updateDoc(authorDb, shotDoc(authorDb, FIRST_ID), {
+    webpBase64: "UklGRhoAAABXRUJQAAAA",
+  }));
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, FIRST_ID), shot(AUTHOR)));
+  await assertFails(deleteDoc(authorDb, shotDoc(authorDb, FIRST_ID)));
+});
+
+test("only the enumerated surfaces accept a screenshot", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  await seedPending(AUTHOR, FIRST_ID);
+
+  // Deferred surfaces are refused by the rules, not merely absent from the app's submit screen.
+  // An empty segment is not in this list: Firestore refuses it client-side, before any rule runs.
+  for (const surface of ["volume", "progress", "quickPanel", "queue", "aod", "PLAYER"]) {
+    await assertFails(
+      setDoc(authorDb, shotDoc(authorDb, FIRST_ID, surface), shot(AUTHOR, surface)));
+  }
+  // The declared surface has to be the one in the path, so a legal document cannot be filed
+  // against a different one.
+  await assertFails(
+    setDoc(authorDb, shotDoc(authorDb, FIRST_ID, "player"), shot(AUTHOR, "volume")));
+});
+
+test("the screenshot envelope is bounded and opaque", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  await seedPending(AUTHOR, FIRST_ID);
+
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, FIRST_ID),
+    shot(AUTHOR, "player", { webpBase64: "A".repeat(131_073) })));
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, FIRST_ID),
+    shot(AUTHOR, "player", { webpBase64: "not base64!" })));
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, FIRST_ID),
+    shot(AUTHOR, "player", { webpBase64: "" })));
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, FIRST_ID),
+    shot(AUTHOR, "player", { webpBase64: 42 })));
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, FIRST_ID),
+    shot(AUTHOR, "player", { createdAt: Timestamp.fromMillis(1_787_594_181_000) })));
+  await assertFails(setDoc(authorDb, shotDoc(authorDb, FIRST_ID),
+    shot(AUTHOR, "player", { caption: "look at my watch" })));
+});
+
+test("an anonymous account cannot attach a screenshot", async () => {
+  const anonymous = anonymousDb(ANONYMOUS);
+  await seedPending(ANONYMOUS, FIRST_ID);
+
+  await assertFails(setDoc(anonymous, shotDoc(anonymous, FIRST_ID), shot(ANONYMOUS)));
+});
+
+test("a screenshot is readable by its author and any moderator, and nobody else", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const otherDb = authenticatedDb(OTHER_AUTHOR);
+  const moderatorDb = authenticatedDb(MODERATOR);
+  await seedPending(AUTHOR, FIRST_ID);
+  await seedModerator(MODERATOR);
+  await assertSucceeds(setDoc(authorDb, shotDoc(authorDb, FIRST_ID), shot(AUTHOR)));
+
+  await assertSucceeds(getDoc(authorDb, shotDoc(authorDb, FIRST_ID)));
+  await assertSucceeds(getDoc(moderatorDb, shotDoc(moderatorDb, FIRST_ID)));
+  await assertFails(getDoc(otherDb, shotDoc(otherDb, FIRST_ID)));
+});
+
+test("a moderator may record whether a screenshot was accepted", async () => {
+  const moderatorDb = authenticatedDb(MODERATOR);
+  await seedPending(AUTHOR, FIRST_ID);
+  await seedPending(AUTHOR, SECOND_ID);
+  await seedPending(AUTHOR, THIRD_ID);
+  await seedModerator(MODERATOR);
+
+  // Approving the theme while dropping its image, so one bad screenshot never costs a good theme.
+  await assertSucceeds(moderateWithShots(moderatorDb, MODERATOR, FIRST_ID, {
+    from: "pending",
+    to: "approved",
+    shotsAccepted: false,
+  }));
+  await assertSucceeds(moderateWithShots(moderatorDb, MODERATOR, SECOND_ID, {
+    from: "pending",
+    to: "approved",
+    shotsAccepted: true,
+  }));
+  // Absent still means accepted, so every record written before screenshots existed keeps meaning
+  // what it meant.
+  await assertSucceeds(moderate(moderatorDb, MODERATOR, THIRD_ID, {
+    from: "pending",
+    to: "approved",
+  }));
+});
+
+test("the screenshot verdict has to be a boolean", async () => {
+  const moderatorDb = authenticatedDb(MODERATOR);
+  await seedPending(AUTHOR, FIRST_ID);
+  await seedModerator(MODERATOR);
+
+  await assertFails(moderateWithShots(moderatorDb, MODERATOR, FIRST_ID, {
+    from: "pending",
+    to: "approved",
+    shotsAccepted: "no",
+  }));
+});
+
+function moderateWithShots(db, uid, id, { from, to, shotsAccepted }) {
+  const batch = writeBatch(db);
+  batch.update(doc(db, "themeIntake", id), { status: to, reviewedAt: serverTimestamp() });
+  batch.set(doc(db, "themeIntakeReview", id), {
+    reviewSchemaVersion: 1,
+    reviewedBy: uid,
+    reviewedAt: serverTimestamp(),
+    decision: to,
+    previousStatus: from,
+    shotsAccepted,
+  });
+  return batch.commit();
+}

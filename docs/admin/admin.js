@@ -3,6 +3,11 @@ import { SETTING_KEYS, SETTING_TYPES } from "./theme-profile-schema.mjs";
 const FIREBASE_VERSION = "12.17.1";
 const INTAKE_COLLECTION = "themeIntake";
 const REVIEW_COLLECTION = "themeIntakeReview";
+const SHOTS_COLLECTION = "themeIntakeShots";
+const SHOT_SURFACES_SUBCOLLECTION = "surfaces";
+/* Mirrors SHOT_SURFACES in the publisher and the literal list in firestore.rules. */
+const SHOT_SURFACES = ["player"];
+const MAX_SHOT_BASE64_LENGTH = 128 * 1024;
 const STATUSES = ["pending", "approved", "published", "rejected", "withdrawn"];
 const STATUS_TITLES = {
   pending: "Pending review",
@@ -72,6 +77,7 @@ async function boot() {
     query: firestoreApi.query,
     where: firestoreApi.where,
     getDocs: firestoreApi.getDocs,
+    getDoc: firestoreApi.getDoc,
     doc: firestoreApi.doc,
     updateDoc: firestoreApi.updateDoc,
     writeBatch: firestoreApi.writeBatch,
@@ -198,11 +204,17 @@ function buildCard({ id, data }) {
   actions.className = "actions";
   const ownSubmission = data.ownerUid === signedInUser?.uid;
   const status = stringOr(data.status, "pending");
+  // Filled in once the screenshot read below resolves, and read at click time by the Approve
+  // button. Absent means accepted, so a theme with no screenshot writes no verdict at all.
+  const screenshotState = { present: false, accepted: true };
+  const screenshotVerdict = () =>
+    screenshotState.present ? { shotsAccepted: screenshotState.accepted } : {};
   const statusTag = textElement("span", `status-tag ${status}`, status);
   let approve = null;
   if (status === "pending") {
     // Approve stays disabled until the payload check below has actually passed.
-    approve = transitionButton("Approve", "approve", id, status, "approved", actions, true);
+    approve = transitionButton(
+      "Approve", "approve", id, status, "approved", actions, true, screenshotVerdict);
     actions.append(approve, transitionButton("Reject", "reject", id, status, "rejected", actions, ownSubmission));
   }
   if (status === "approved" || status === "rejected") {
@@ -234,6 +246,12 @@ function buildCard({ id, data }) {
     ));
   }
   card.append(preview, body);
+  loadAuthorScreenshot(id, status).then((screenshot) => {
+    if (screenshot === null) return;
+    screenshotState.present = true;
+    preview.replaceWith(screenshotPair(data.moderationPreviewWebpBase64, screenshot));
+    if (status === "pending") body.insertBefore(screenshotVerdictControl(screenshotState), actions);
+  });
   inspectSubmissionPayload(id, data)
     .then((inspection) => {
       payloadStatus.textContent = `Payload check passed · ${inspection.settingCount} typed settings · ${inspection.digest}`;
@@ -246,6 +264,80 @@ function buildCard({ id, data }) {
       payloadStatus.classList.add("error");
     });
   return card;
+}
+
+/**
+ * One author screenshot, or null.
+ *
+ * Only pending and approved cards are worth a read: a published theme has had its stored copy
+ * cleared by the publisher, because the bytes are in Git by then. A failure is not reported as an
+ * error either -- most submissions carry no screenshot at all, which is the same answer.
+ */
+async function loadAuthorScreenshot(id, status) {
+  if (status !== "pending" && status !== "approved") return null;
+  for (const surface of SHOT_SURFACES) {
+    try {
+      const snapshot = await firebase.getDoc(firebase.doc(
+        firebase.db, SHOTS_COLLECTION, id, SHOT_SURFACES_SUBCOLLECTION, surface));
+      if (!snapshot.exists()) continue;
+      const base64 = snapshot.data()?.webpBase64;
+      if (typeof base64 !== "string" || base64.length > MAX_SHOT_BASE64_LENGTH ||
+          !BASE64.test(base64)) {
+        continue;
+      }
+      return { surface, base64 };
+    } catch (error) {
+      console.error(`Could not read the ${surface} screenshot of ${id}`, error);
+    }
+  }
+  return null;
+}
+
+/**
+ * The author's screenshot beside the render the app made from the same profile.
+ *
+ * The pairing is the whole review interaction. A screenshot is unverifiable on its own -- nothing
+ * stops somebody attaching a picture of a different theme, or of no theme at all -- so the question
+ * a moderator has to answer is a comparison, and putting the two at the same size answers it at a
+ * glance instead of from memory.
+ */
+function screenshotPair(syntheticBase64, screenshot) {
+  const pair = document.createElement("div");
+  pair.className = "preview-pair";
+  pair.append(
+    captionedPreview(previewElement(syntheticBase64), "Rendered from the submitted profile"),
+    captionedPreview(shotElement(screenshot.base64), `Author's watch (${screenshot.surface})`));
+  return pair;
+}
+
+function captionedPreview(previewNode, caption) {
+  const figure = document.createElement("figure");
+  figure.className = "preview-figure";
+  figure.append(previewNode, textElement("figcaption", "preview-caption", caption));
+  return figure;
+}
+
+function shotElement(base64) {
+  const image = document.createElement("img");
+  image.className = "preview shot";
+  image.alt = "Screenshot supplied by the theme's author";
+  image.src = `data:image/webp;base64,${base64}`;
+  return image;
+}
+
+/**
+ * Approving the theme while dropping its picture. Without it a single bad screenshot would force
+ * rejecting an otherwise good theme, which is the worse outcome for everyone.
+ */
+function screenshotVerdictControl(state) {
+  const label = document.createElement("label");
+  label.className = "shot-verdict";
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = true;
+  checkbox.addEventListener("change", () => { state.accepted = checkbox.checked; });
+  label.append(checkbox, textElement("span", "meta", "Publish the author's screenshot"));
+  return label;
 }
 
 function previewElement(base64) {
@@ -269,7 +361,7 @@ function previewElement(base64) {
  * what lets an author read their own decided submissions without ever seeing who decided them --
  * and `getAfter` in the rules means neither write is accepted without the other.
  */
-async function applyModeratorAction(id, previousStatus, nextStatus, fields = {}) {
+async function applyModeratorAction(id, previousStatus, nextStatus, fields = {}, reviewFields = {}) {
   const batch = firebase.writeBatch(firebase.db);
   batch.update(firebase.doc(firebase.db, INTAKE_COLLECTION, id), {
     status: nextStatus,
@@ -281,12 +373,15 @@ async function applyModeratorAction(id, previousStatus, nextStatus, fields = {})
     reviewedBy: signedInUser.uid,
     reviewedAt: firebase.serverTimestamp(),
     decision: nextStatus,
-    previousStatus
+    previousStatus,
+    // Never on the intake document: its key list is fixed by the rules, and a reviewer-authored
+    // field there would be readable by the very author it is withheld from.
+    ...reviewFields
   });
   await batch.commit();
 }
 
-function transitionButton(label, kind, id, previousStatus, nextStatus, actions, disabled) {
+function transitionButton(label, kind, id, previousStatus, nextStatus, actions, disabled, reviewFields) {
   const button = document.createElement("button");
   button.type = "button";
   button.className = `button ${kind}`;
@@ -300,7 +395,8 @@ function transitionButton(label, kind, id, previousStatus, nextStatus, actions, 
     const previousDisabledStates = buttons.map((item) => item.disabled);
     buttons.forEach((item) => { item.disabled = true; });
     try {
-      await applyModeratorAction(id, previousStatus, nextStatus);
+      // Read at click time, not at build time: the screenshot arrives after the card is drawn.
+      await applyModeratorAction(id, previousStatus, nextStatus, {}, reviewFields?.() ?? {});
       await loadSubmissions();
     } catch (error) {
       console.error(`Could not move ${id} to ${nextStatus}`, error);
