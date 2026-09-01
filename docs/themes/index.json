@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-31T10:57:37.883Z",
+  "generatedAt": "2026-09-01T09:28:45.909Z",
   "themes": [
     {
       "id": "17e4176a-8429-40cb-bd15-e7ce181406f3",
@@ -12,7 +12,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-28T03:12:39.323Z",
       "likes": 2,
-      "settingsDigest": "sha256:cb9c4fe2da7784f125f19f0d70624f6c9a785e290e14be4f06960d48b8c31fca"
+      "settingsDigest": "sha256:1c638d443a3e0fa583bea4729aac7e8feae303822096be4f854bbea450d4ab92"
     },
     {
       "id": "09ea139e-8e25-443d-a065-09e8d10da102",
@@ -24,7 +24,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:54e07d59a98866b3fe6242cc842b0e176a0774135ffdc2f96d2ec110f6c20032"
+      "settingsDigest": "sha256:52a3dd9414cedf2d0d00c519ad5c7bd48cbaa9bab44886b6254bdcf4d120d586"
     },
     {
       "id": "2a9e18c9-1e57-426a-82be-dfbd5b964bf5",
@@ -36,7 +36,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 1,
-      "settingsDigest": "sha256:ef4cbdf5d4f3c58430c162c8c19f28ae29df1fc7f4e605ffc2443f9c27630694"
+      "settingsDigest": "sha256:99335045121fba32d5ad66f102bc0934674a6b2ce27ce84970e6e851f83ca4c8"
     },
     {
       "id": "3f038d6e-c0e1-49e5-91e3-70a13ce3dbac",
@@ -48,7 +48,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:30fb6d61e4adb5d114764d1b1bb4baf43635a546266982e7d99ba47798ffda59"
+      "settingsDigest": "sha256:400f733dba7c0fa263a03b16bcc3d1892c3fc61769282e84ca7efc63392a0212"
     },
     {
       "id": "5de63f5e-d61e-426a-9269-27d9e3ddd24a",
@@ -60,7 +60,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:a2f17863f6ec2c46ca6a83b88a7d5a6b79d86a1f4b32528b0235d28235bacabd"
+      "settingsDigest": "sha256:a861e6305661d73fc9a9f5f15283c78a3a39ab6d757b306905645fef6f6f37a4"
     }
   ]
 }
