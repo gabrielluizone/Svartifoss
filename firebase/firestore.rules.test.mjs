@@ -525,49 +525,6 @@ test("the rolling history shifts once its third-newest submission is older than 
   assert.equal(shifted.recentSubmissionSecondAt.isEqual(latest), true);
 });
 
-async function seedQuotaExempt(uid) {
-  await testEnvironment.withSecurityRulesDisabled(async (context) => {
-    const db = context.firestore();
-    await setDoc(db, doc(db, "communityThemeSubmissionQuotaExempt", uid), {
-      createdAt: Timestamp.fromMillis(1_787_594_181_000),
-    });
-  });
-}
-
-test("an allowlisted account keeps submitting past the rolling limit", async () => {
-  const authorDb = authenticatedDb(AUTHOR);
-  await seedQuotaExempt(AUTHOR);
-  await submit(authorDb, AUTHOR, FIRST_ID);
-  await submit(authorDb, AUTHOR, SECOND_ID);
-  await submit(authorDb, AUTHOR, THIRD_ID);
-
-  // The fourth is what the limit exists to refuse; the exemption is why it lands.
-  await assertSucceeds(submit(authorDb, AUTHOR, FOURTH_ID));
-  await assertSucceeds(submit(authorDb, AUTHOR, FIFTH_ID));
-});
-
-test("the exemption is per account and cannot be granted by a client", async () => {
-  const authorDb = authenticatedDb(AUTHOR);
-  const otherDb = authenticatedDb(OTHER_AUTHOR);
-  await seedQuotaExempt(OTHER_AUTHOR);
-
-  // Somebody else's exemption does nothing for this account.
-  await submit(authorDb, AUTHOR, FIRST_ID);
-  await submit(authorDb, AUTHOR, SECOND_ID);
-  await submit(authorDb, AUTHOR, THIRD_ID);
-  await assertFails(submit(authorDb, AUTHOR, FOURTH_ID));
-
-  // And no client can write itself one, which is what makes it an allowlist.
-  await assertFails(setDoc(authorDb,
-    doc(authorDb, "communityThemeSubmissionQuotaExempt", AUTHOR),
-    { createdAt: serverTimestamp() }));
-  // An account reads only its own, so the list can never be enumerated.
-  await assertSucceeds(getDoc(otherDb,
-    doc(otherDb, "communityThemeSubmissionQuotaExempt", OTHER_AUTHOR)));
-  await assertFails(getDoc(authorDb,
-    doc(authorDb, "communityThemeSubmissionQuotaExempt", OTHER_AUTHOR)));
-});
-
 test("a legacy quota migrates on its next submission without waiting and cannot reset afterward", async () => {
   const authorDb = authenticatedDb(AUTHOR);
   await testEnvironment.withSecurityRulesDisabled(async (context) => {
@@ -718,45 +675,16 @@ test("a moderator can correct only the theme name before publication, never the 
   }));
 });
 
-/*
- * TEMPORARY (2026-09-01), pinning selfModerationAllowed() == true.
- *
- * The rule this replaces asserted the opposite: that a moderator can never decide or reopen their
- * own submission, which is what stops one publishing themselves into the gallery. It is suspended
- * while a single person is both the only moderator and the only author, because in that
- * configuration the ban leaves every submission permanently stuck at pending.
- *
- * **When selfModerationAllowed() goes back to `false`, this test fails and this whole block is
- * what to delete**, restoring the assertFails on the approve line and dropping the reopen case.
- * That is deliberate: the tripwire should name the change rather than let it pass silently.
- */
-test("a moderator can currently decide and reopen their own intake (self-review suspended)", async () => {
+test("a moderator cannot decide or reopen their own intake, but can take it down", async () => {
   const selfDb = authenticatedDb(SELF_MODERATOR);
   await seedPending(SELF_MODERATOR, THIRD_ID);
   await seedModerator(SELF_MODERATOR);
 
-  await assertSucceeds(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "pending", to: "approved" }));
-  await assertSucceeds(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "approved", to: "pending" }));
-});
-
-test("a moderator can always take their own listing down", async () => {
-  // Never covered by the suspended ban and never should be: a listing nobody can remove is worse
-  // than one its own author can also remove.
-  const selfDb = authenticatedDb(SELF_MODERATOR);
-  await seedPending(SELF_MODERATOR, FOURTH_ID);
-  await seedModerator(SELF_MODERATOR);
-
-  await assertSucceeds(moderate(selfDb, SELF_MODERATOR, FOURTH_ID, { from: "pending", to: "withdrawn" }));
-});
-
-test("deciding someone else's submission is unaffected by the suspension", async () => {
-  // The ordinary path has to keep working identically, so restoring the ban is a one-word change
-  // rather than a repair.
-  const moderatorDb = authenticatedDb(MODERATOR);
-  await seedPending(AUTHOR, FIFTH_ID);
-  await seedModerator(MODERATOR);
-
-  await assertSucceeds(moderate(moderatorDb, MODERATOR, FIFTH_ID, { from: "pending", to: "approved" }));
+  // The ban exists so nobody publishes themselves into the gallery.
+  await assertFails(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "pending", to: "approved" }));
+  // Taking a listing down is not that, and barring it would leave a bad entry with nobody able
+  // to act on it.
+  await assertSucceeds(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "pending", to: "withdrawn" }));
 });
 
 test("likes are one private immutable vote and can only target a published theme", async () => {

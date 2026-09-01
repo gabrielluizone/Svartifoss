@@ -8,15 +8,6 @@ const SHOT_SURFACES_SUBCOLLECTION = "surfaces";
 /* Mirrors SHOT_SURFACES in the publisher and the literal list in firestore.rules. */
 const SHOT_SURFACES = ["player"];
 const MAX_SHOT_BASE64_LENGTH = 128 * 1024;
-/*
- * TEMPORARY (2026-09-01): mirrors selfModerationAllowed() in firestore.rules.
- *
- * While there is one moderator who is also the only author, refusing self-review leaves the queue
- * permanently stuck. Both must move together: greying the buttons while the rules allow the write
- * is merely confusing, and enabling them while the rules refuse it turns every click into an
- * opaque PERMISSION_DENIED. Back to `false` as soon as a second moderator exists.
- */
-const SELF_MODERATION_ALLOWED = true;
 const STATUSES = ["pending", "approved", "published", "rejected", "withdrawn"];
 const STATUS_TITLES = {
   pending: "Pending review",
@@ -211,7 +202,7 @@ function buildCard({ id, data }) {
   const payloadStatus = textElement("p", "meta", "Checking submitted JSON and settings fingerprint…");
   const actions = document.createElement("div");
   actions.className = "actions";
-  const ownSubmission = !SELF_MODERATION_ALLOWED && data.ownerUid === signedInUser?.uid;
+  const ownSubmission = data.ownerUid === signedInUser?.uid;
   const status = stringOr(data.status, "pending");
   // Filled in once the screenshot read below resolves, and read at click time by the Approve
   // button. Absent means accepted, so a theme with no screenshot writes no verdict at all.

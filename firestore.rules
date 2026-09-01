@@ -126,23 +126,6 @@ service cloud.firestore {
     }
 
     /*
-     * Accounts the rolling submission limit does not apply to.
-     *
-     * Server-only, exactly like communityThemeModerators: no client rule grants a write, so it can
-     * only be filled from the Firebase console or the Admin SDK. That is what makes it an
-     * allowlist rather than something an APK could add itself to. A UID rather than an email,
-     * deliberately -- this file is public, and a personal address does not belong in it.
-     *
-     * Readable only by its own subject, because the app has to know whether to show "you have
-     * reached the limit" before attempting a write that the rules would then accept anyway.
-     */
-    match /communityThemeSubmissionQuotaExempt/{uid} {
-      allow get: if identifiedUser() && uid == request.auth.uid;
-
-      // Deliberately omitted: no client may create, edit, delete or enumerate an exemption.
-    }
-
-    /*
      * One immutable public identity per submitting account, paired with one globally unique,
      * case-insensitive name reservation. Neither half can be created alone: reciprocal getAfter
      * checks require the first submission transaction to create both atomically. Clients can
@@ -372,33 +355,10 @@ service cloud.firestore {
       let before = resource.data;
       let after = request.resource.data;
       return reviewRecordMatches(themeId, before.status, after.status)
-          && (((selfModerationAllowed() || before.ownerUid != request.auth.uid)
+          && ((before.ownerUid != request.auth.uid
                 && (validModeratorDecision(before, after) || validModeratorReopen(before, after)))
               || validModeratorWithdrawal(before, after)
               || validModeratorMetadataEdit(before, after));
-    }
-
-    /*
-     * TEMPORARY (2026-09-01): whether a moderator may decide or reopen their own submission.
-     *
-     * `true` while there is exactly one moderator, who is also the only person submitting. With the
-     * ban in force the queue cannot move at all in that configuration: the single account able to
-     * approve is the same account that sent the theme, so every submission is permanently stuck at
-     * pending and the only available action is deleting it.
-     *
-     * What it costs while it is true is the whole point of the rule it disables: nothing stops a
-     * moderator publishing themselves straight into the public gallery. That is only acceptable
-     * while the moderator set and the author set are the same one person. **The moment a second
-     * moderator is allowlisted in `communityThemeModerators`, or submissions start arriving from
-     * anyone else, this goes back to `false`** -- otherwise the check that keeps the queue honest
-     * is not weakened, it is simply absent.
-     *
-     * Restoring it is this one word, plus SELF_MODERATION_ALLOWED in docs/admin/admin.js, which
-     * greys the buttons for the same reason. The emulator suite pins both states, so flipping this
-     * back fails the test that names the change rather than silently passing.
-     */
-    function selfModerationAllowed() {
-      return true;
     }
 
     /*
@@ -780,7 +740,7 @@ service cloud.firestore {
           && ((validLegacySubmissionQuotaShape(before)
                 && validLegacyQuotaMigration(after))
               || (validSubmissionQuotaV2Shape(before)
-                && (validRollingQuotaProgression(before, after) || submissionQuotaExempt())));
+                && validRollingQuotaProgression(before, after)));
     }
 
     /*
@@ -865,19 +825,6 @@ service cloud.firestore {
                 && after.recentSubmissionCount == 3
                 && after.recentSubmissionFirstAt == before.recentSubmissionSecondAt
                 && after.recentSubmissionSecondAt == before.lastSubmissionAt));
-    }
-
-    /*
-     * Tested only after validRollingQuotaProgression has already failed, and the order is
-     * load-bearing rather than stylistic. Rules short-circuit `||`, so an ordinary submission never
-     * pays for this lookup -- which matters because it would otherwise spend an access call inside
-     * the four-document submission batch, where both the 1000-expression and the per-request
-     * access-call budgets are already shared.
-     */
-    function submissionQuotaExempt() {
-      return exists(
-        /databases/$(database)/documents/communityThemeSubmissionQuotaExempt/$(request.auth.uid)
-      );
     }
 
     function quotaTargetsCurrentIntake(quota) {
