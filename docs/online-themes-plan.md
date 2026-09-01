@@ -191,7 +191,7 @@ Two consequences follow, and both are accepted rather than engineered around:
   that anyone can already influence with a second Google account was never going to be one.
 - **The rules must now separate the two.** `identifiedUser()` gates every intake and quota rule
   while the like rules accept a bare `signedIn()`; without that, enabling anonymous auth would have
-  silently opened submission to free, unlimited, disposable accounts and made the three-per-24-hours
+  silently opened submission to free, unlimited, disposable accounts and made the per-24-hours
   quota meaningless. Its second clause tests the linked `google.com` identity as well as the
   provider, because `sign_in_provider` keeps reporting `"anonymous"` after an account is upgraded —
   so testing the provider alone would refuse submissions from everyone who liked a theme first.
@@ -267,8 +267,12 @@ first.
 3. **Rate limiting per account — enforced at the rules boundary.** A private
    `communityThemeSubmissionQuota/<Firebase Auth UID>` document is written in the same Firestore
    transaction as a new intake record. Version 2 retains the last three submission timestamps;
-   `getAfter` rules bind that history to the exact new submission and enforce **at most three
-   submissions in every rolling 24-hour window**. A modified client cannot skip, reset, or delete
+   `getAfter` rules bind that window to the exact new submission and enforce **at most ten
+   submissions in a 24-hour period**. Version 3 replaced version 2's rolling history with a fixed
+   window: proving a *rolling* limit needs the timestamp of every submission in it, so each extra
+   one costs a stored field and a rule branch inside the batch whose expression budget is already
+   the sharp edge of this path. A fixed window costs the same at any allowance, and gives up only
+   the boundary — a burst can straddle two windows, which the moderation queue still gates. A modified client cannot skip, reset, or delete
    the quota record; it can only read its own.
 
 The typed schema and digest are Android-free functions in `common/`; the shared semantic and
@@ -300,6 +304,15 @@ account secret before production use.
 
 ## 7. Previews
 
+> **Amended (2026-09-01).** The decision below — no preview images in Git, ever — was reversed for
+> one narrow case: an author may now attach **one** photograph of their own watch's Player screen to
+> a submission, which the publisher commits beside the theme. The reasoning here still holds for
+> everything else, and nothing in this section changes for a theme without one: cards stay
+> synthetic, every other surface stays locally rendered, and the moderation preview is still
+> discarded rather than published. See [`theme-screenshots-plan.md`](theme-screenshots-plan.md) for
+> why the reversal was worth its cost, what it does to the repository's growth, and what it does to
+> the moderation queue — which is the part that actually got more expensive.
+
 Approving a theme is a **visual** judgement, but shipping preview images has a cost: hundreds of PNGs
 committed to the repo grow forever and can never be removed from git history.
 
@@ -317,7 +330,8 @@ remain synthetic sample data. To make the detail preview feel more familiar, it 
 current album cover already held in memory on the phone. It does not use the current title, artist,
 playback position, queue, or other live media metadata, and that cover is neither uploaded nor
 transmitted to the watch. No screenshot or automatic watch-screen capture is requested, created,
-or sent. The repository carries only public JSON; no live song title, artist, cover, clock time, or
+or sent. The repository carries only public JSON and, since the amendment above, whatever an author
+deliberately attached; no live song title, artist, cover, clock time, or
 other currently-playing media data is captured in a submission preview. The normal app produces
 that preview from the same profile it uploads, but a modified client could still send a mismatched
 bitmap. The reviewer page therefore labels the bitmap as advisory, checks the profile JSON and
@@ -392,8 +406,8 @@ chooses a user-owned local profile, receives a fresh public UUID and complete ty
 passes the local 12-applicable-setting originality preflight, and then either reuses a Google
 connection made in Settings or explicitly invokes Google Sign-In.
 Firestore stores the UID-owned immutable pending record, public theme name/pseudonym, fixed-sample
-WebP review preview, client version, and server timestamp. The versioned rules enforce at most three
-submissions in any rolling 24-hour window. The restricted static reviewer page makes a one-time
+WebP review preview, client version, and server timestamp. The versioned rules enforce at most ten
+submissions in a 24-hour period. The restricted static reviewer page makes a one-time
 decision possible without exposing a write credential in the APK. The checked-in GitHub publisher
 writes/commits the approved static profiles
 and then finalizes their Firestore status; Firebase/Auth deployment and its service-account secret

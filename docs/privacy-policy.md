@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 28-08-2026**
+**Last updated: 01-09-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -158,11 +158,22 @@ display, Volume, Progress, Quick panel, and Queue previews locally from the
 profile with sample labels, timing, and queue data. The detail preview may show
 only the current album cover already held in memory on your phone. It does not
 use the current title, artist, playback position, queue, or other live media
-metadata; the cover is never uploaded or transmitted. It never requests, takes,
-or sends a screenshot or automatic capture from your watch. The downloaded
-catalogue/profile files are cached in the app's disposable cache for faster
-later browsing; they are public content and are not part of a configuration
-backup.
+metadata; the cover is never uploaded or transmitted.
+
+**Svartifoss never captures anything from your watch.** It does not request,
+take, or trigger a screenshot on the watch, and the watch never sends the app a
+picture of its own screen.
+
+Some themes carry **one photograph published by their author**: a screenshot
+that author took on their own watch and chose to attach when submitting. Where
+one exists, the detail page's Player shows it instead of the generated preview,
+labelled as the author's watch, with a control to switch back to the generated
+one. That control is remembered, and turning it off stops the app requesting
+these images at all rather than merely hiding them. The image is a public file
+served from the same GitHub Pages site as the rest of the catalogue, requested
+only when you open a detail page for a theme that has one, and cached in the
+app's disposable cache. The downloaded catalogue, profile and image files are
+public content and are not part of a configuration backup.
 
 ### Likes
 
@@ -225,10 +236,31 @@ configured moderator can later add only an approval or rejection decision,
 their reviewer UID, and a server timestamp; neither the author nor a moderator
 can edit the submitted theme content through the app.
 
+#### Attaching a photograph of your watch (optional)
+
+The submission screen lets you attach **one** image, of the Player screen, from
+your phone's photo picker. It is entirely optional: attaching nothing is the
+normal case, and a theme submitted without one shows only the generated preview.
+Svartifoss does not take the picture — you choose an existing image, and the
+app never reads your gallery beyond the single file you hand it through the
+system picker, which needs no storage permission.
+
+What you attach is published, and the submission screen says so before the
+picker opens. The image is cropped to a square, resized to at most 450×450 and
+re-encoded as WebP on your phone; re-encoding removes any camera or location
+metadata the original file carried. It is then stored in Firestore alongside the
+submission, shown to a moderator, and — if approved — committed to this
+project's public Git repository and served from GitHub Pages. **Everything
+visible in it becomes public permanently**, including the album cover, track
+name, artist and clock time that happen to be on the watch screen, and it
+remains in the repository's history even if the theme is later removed. A
+moderator may approve a theme and refuse its photograph, in which case only the
+theme is published.
+
 Firestore also keeps a separate private quota record tied to your Firebase Auth
 UID. It records the submission count, most recent submission ID, and the
-timestamps needed to enforce at most **three** Community-theme submissions in a
-rolling 24-hour window. It is not public.
+timestamp needed to enforce at most **ten** Community-theme submissions in a
+24-hour period. It is not public.
 
 Google processes Authentication and Firestore data under
 [Google's Privacy Policy](https://policies.google.com/privacy) and
@@ -239,7 +271,8 @@ Google processes Authentication and Firestore data under
 The pending record is private to its owner and configured moderators. Approval
 does not make a theme public immediately. When an approved submission is
 published, the trusted publisher validates it again and commits the public
-profile JSON, public theme name, and selected public author credit to this project's Git
+profile JSON, public theme name, selected public author credit, and any approved
+author photograph to this project's Git
 repository; GitHub Pages then serves those public files in the catalogue. The
 Firebase Auth UID and Google account name/email are not copied to the public
 repository or catalogue.
@@ -453,6 +486,9 @@ does not control these separate automatic Analytics events.
 - We don't read the content of unrelated notifications. For the current media
   app, only playback metadata and — when explicitly selected — its media action
   labels/icons are used.
+- We don't capture your watch's screen. The only images Svartifoss ever
+  publishes are ones you picked yourself and attached to a Community theme
+  submission.
 
 ## Children's privacy
 

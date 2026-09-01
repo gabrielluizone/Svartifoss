@@ -31,7 +31,7 @@ eventually aggregates private likes into the static public catalogue, without
 publishing voter identities. See `docs/privacy-policy.md#community-themes` for
 the retention and manual takedown-request limits. A separate private UID-owned
 Firestore quota record stores a submission count, most recent submission ID,
-and a short timestamp history solely to enforce at most three submissions in a
+and a window timestamp solely to enforce at most ten submissions in a
 rolling 24-hour window.
 
 The app does not log custom Analytics events, but the Analytics SDK still
@@ -78,16 +78,17 @@ Data Layer connection — never to a server you operate.
 | Personal info | User IDs | Only if the user explicitly submits a Community theme or taps Like | With Google (Firebase Authentication and Firestore) | App functionality / moderation | Firebase Auth UID. Google Sign-In is not opened while browsing or liking; after the user taps **Sign in and submit**, the Google-backed UID is stored as `ownerUid` for the pending record and its private rate-limit record. A Like uses an **anonymous** Firebase Auth UID, created silently and tied to no account, only for that device's private per-theme reaction. Neither is public or copied to GitHub Pages. |
 | Personal info | Email address | Only if the user explicitly submits a Community theme | With Google (Firebase Authentication) | Authentication / account management | A federated Google identity response can contain the account email for Firebase Authentication. Liking never reaches this path, because it uses an anonymous account. The app does not write that email to Firestore or publish it. |
 | Personal info | Name | Only if the user explicitly submits a Community theme | With Google (Firestore); public via GitHub Pages only if approved | App functionality / moderation | The author-selected pseudonym is stored with the pending submission. It may become public with the approved theme. The Google account name is not written into the submission or published. |
-| App activity | Other user-generated content | Only if the user explicitly submits a Community theme | With Google (Firestore); public via GitHub Pages only if approved | App functionality / moderation | Public theme name; complete typed theme-profile JSON; fixed-sample WebP review preview; base face/revision; client version; and timestamps. The preview contains no current playback, album art, or media metadata. |
+| App activity | Other user-generated content | Only if the user explicitly submits a Community theme | With Google (Firestore); public via GitHub Pages only if approved | App functionality / moderation | Public theme name; complete typed theme-profile JSON; fixed-sample WebP review preview; base face/revision; client version; and timestamps. The preview contains no current playback, album art, or media metadata. A submission may also carry one author-attached photograph, reported separately as Photos below. |
+| Photos and videos | Photos | Only if the user explicitly attaches one to a Community theme submission | With Google (Firestore); public via GitHub Pages only if approved | App functionality / moderation | **Optional and off unless the author acts.** One image the author picks from the system photo picker on the submission screen, intended as a screenshot of their own watch. It is cropped square, resized to at most 450x450 and re-encoded as WebP on the device — which strips any camera/location metadata — before being stored with the pending record for moderation and, if approved, committed to the public repository. The app never opens the camera, never enumerates the gallery, and never captures the watch's screen; it receives only the single file handed to it by the picker, which needs no storage permission. |
 | App activity | Other user-generated content | Only if the user enables it | With the streaming service (Spotify/YouTube/SoundCloud/Deezer) | Fetching a cover thumbnail for a saved shortcut | Off by default ("Fetch shortcut artwork online"). Only the already-public share link the user saved is sent, directly to that service's own oEmbed endpoint - no account, API key, or Svartifoss/Google identifier is attached. |
 | App activity | Other user-generated content | Yes, unless the user turns it off | With whatever host the playing music app published | Downloading a cover for a playback-queue entry | **On by default** ("Fetch queue covers online", see `QueueArtworkResolver.kt`) - a streaming app's queue exposes no other cover source, so off meant permanently blank rows. Only the cover URL the music app itself put on the queue entry is requested, and only for entries currently being shown on the watch - no account, API key, or Svartifoss/Google identifier is attached. A single switch (Settings → Apps, or Watch face → Panels) disables it. |
 | App activity | Other user-generated content | Yes, unless the user turns it off | With LRCLIB (lrclib.net) | Looking up the lyrics for the playing track | **On by default** ("Look up lyrics online", see `LyricsFetcher.kt`), but nothing is ever sent unless the user opens the watch's lyrics screen or selects the Verse watch face - no background lookups on any other face. Only the track name, artist name and track length are sent; LRCLIB matches on exactly those and needs no account or API key, so no account, API key, or Svartifoss/Google identifier is attached. Results are held in memory only and never written to disk. |
 | App activity | Other user-generated content | Yes, only if the user turns it on | With MusicBrainz (musicbrainz.org) | Filling in track details the playing app did not publish (ISRC, label, release date) | **Off by default** ("Look up track details online", see `MusicBrainzMetadata.kt`). Nothing is sent unless the user both enables it and selects the Metadata watch face. Only the track name and artist name are sent; MusicBrainz needs no account or API key, so no account, API key or Svartifoss/Google identifier is attached. Results are held in memory only and never written to disk. |
 
-**Except for the User IDs, Email address, and Name rows above, everything else
-in Play's standard list — Financial info, Health and fitness, Messages,
-Photos/videos, Audio files, Files and docs, Calendar, Contacts, Web browsing —
-is NOT collected.**
+**Except for the User IDs, Email address, Name, and Photos rows above,
+everything else in Play's standard list — Financial info, Health and fitness,
+Messages, Videos, Audio files, Files and docs, Calendar, Contacts, Web browsing
+— is NOT collected.**
 
 A few of these deserve a specific note since the app touches adjacent
 permissions:
@@ -97,11 +98,15 @@ permissions:
   the active media notification's action labels/icons. Those controls travel
   only to the paired watch and are not developer collection, so this should
   **not** be marked as "Messages" data collection.
-- **Photos**: the app can save the current album art to the device's photo
-  gallery, but only when the user explicitly taps that option, and the file
-  never leaves the device. This is a local write the user initiates, not
-  data the developer collects — do **not** mark "Photos and videos" as
-  collected.
+- **Photos**: two distinct things, and only one of them is collection.
+  Saving the current album art to the device's photo gallery is a local write
+  the user initiates and the file never leaves the device — that alone would
+  not be collection. But the Community-theme submission screen also lets an
+  author **attach one picture** from the system photo picker, which is uploaded
+  and, once approved, published. Because of that second path, "Photos and
+  videos" **is** marked as collected and shared, conditionally, per the table
+  row above. It is not marked as required: attaching nothing is the ordinary
+  case and no feature depends on it.
 - **Audio files / Music**: the app requests `READ_MEDIA_AUDIO` (Android 13+)
   purely to decode album covers that a local music player referenced from the
   device's own media library for the queue entries currently shown on the

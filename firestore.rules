@@ -720,27 +720,44 @@ service cloud.firestore {
           && getAfter(quotaPath).data.lastSubmissionAt == request.time;
     }
 
-    /* Everything true of a resulting quota whether or not the account had one before. */
+    /*
+     * Everything true of a resulting quota whether or not the account had one before.
+     *
+     * Both shapes are accepted, and that is a deployment property rather than indecision: an
+     * installed build older than V3 still writes V2, and rules that only took V3 would not merely
+     * hold such an account to the older allowance -- they would refuse its submissions outright.
+     * V3 is tested first, so a current build short-circuits and never evaluates the V2 branch.
+     */
     function validQuotaResult(after) {
-      return validSubmissionQuotaV2Shape(after)
+      return (validSubmissionQuotaV3Shape(after) || validSubmissionQuotaV2Shape(after))
           && after.lastSubmissionAt == request.time
           && quotaTargetsCurrentIntake(after);
     }
 
     function validNewSubmissionQuota(after) {
       return after.submissionCount == 1
-          && after.recentSubmissionCount == 1
-          && after.recentSubmissionFirstAt == request.time;
+          && ((after.quotaSchemaVersion == 3
+                && after.windowSubmissionCount == 1
+                && after.windowStartedAt == request.time)
+              || (after.quotaSchemaVersion == 2
+                && after.recentSubmissionCount == 1
+                && after.recentSubmissionFirstAt == request.time));
     }
 
     function validUpdatedSubmissionQuota(after) {
       let before = resource.data;
       return after.ownerUid == before.ownerUid
           && after.submissionCount == before.submissionCount + 1
-          && ((validLegacySubmissionQuotaShape(before)
-                && validLegacyQuotaMigration(after))
+          && ((validSubmissionQuotaV3Shape(before)
+                && validFixedWindowProgression(before, after))
+              // A V2 record moves to V3 under a current build and stays on V2 under an older one,
+              // which keeps that build submitting at its own smaller allowance rather than failing.
               || (validSubmissionQuotaV2Shape(before)
-                && validRollingQuotaProgression(before, after)));
+                && (validRollingQuotaMigration(before, after)
+                    || validRollingQuotaProgression(before, after)))
+              || (validLegacySubmissionQuotaShape(before)
+                && (validLegacyQuotaMigration(after)
+                    || validLegacyRollingMigration(after))));
     }
 
     /*
@@ -806,12 +823,70 @@ service cloud.firestore {
                 && data.recentSubmissionSecondAt <= data.lastSubmissionAt));
     }
 
+    /*
+     * V3: a fixed 24-hour window, two scalars instead of a hand-unrolled ring of timestamps.
+     *
+     * V2 proved "at most N in any *rolling* 24 hours" by storing the timestamp of every one of the
+     * last N submissions, which is why N was 3: each extra slot is another stored timestamp and
+     * another branch of the progression rule, inside the four-document submission batch whose
+     * 1000-expression budget is already the sharp edge of this path. Raising the allowance to ten
+     * that way would have meant nine timestamp fields and ten branches.
+     *
+     * A fixed window costs the same at any N: a window start and a count within it. What it gives
+     * up is the boundary -- ten submissions late in one window and ten early in the next is a burst
+     * of twenty in minutes. That is accepted deliberately: this is a spam brake, the moderation
+     * queue is the actual gate, and twenty themes is still twenty a human must look at.
+     */
+    function validSubmissionQuotaV3Shape(data) {
+      return data.keys().hasOnly([
+            "ownerUid",
+            "quotaSchemaVersion",
+            "submissionCount",
+            "lastSubmissionAt",
+            "lastSubmissionId",
+            "windowStartedAt",
+            "windowSubmissionCount"
+          ])
+          && data.keys().size() == 7
+          && data.ownerUid is string
+          && data.ownerUid == request.auth.uid
+          && data.quotaSchemaVersion is int
+          && data.quotaSchemaVersion == 3
+          && data.submissionCount is int
+          && data.submissionCount >= 1
+          && data.lastSubmissionAt is timestamp
+          && data.lastSubmissionId is string
+          && validThemeId(data.lastSubmissionId)
+          && data.windowStartedAt is timestamp
+          && data.windowSubmissionCount is int
+          // The allowance itself, stated once. A progression that would exceed it produces a
+          // document this shape refuses, so no branch below has to repeat the number.
+          && data.windowSubmissionCount >= 1
+          && data.windowSubmissionCount <= 10
+          && data.submissionCount >= data.windowSubmissionCount
+          && data.windowStartedAt <= data.lastSubmissionAt;
+    }
+
     /* Shape, owner, count, timestamp and intake pairing are asserted by the caller. */
     function validLegacyQuotaMigration(after) {
-      return after.recentSubmissionCount == 1
+      return after.quotaSchemaVersion == 3
+          && after.windowSubmissionCount == 1
+          && after.windowStartedAt == request.time;
+    }
+
+    /* The same one-off V1 migration performed by a build that still writes V2. */
+    function validLegacyRollingMigration(after) {
+      return after.quotaSchemaVersion == 2
+          && after.recentSubmissionCount == 1
           && after.recentSubmissionFirstAt == request.time;
     }
 
+    /*
+     * Retained for a build that has not yet moved to the fixed window. It is what bounded V2 to
+     * three per *rolling* 24 hours: the timestamp of every submission still inside the window had
+     * to be stored, so each extra one cost a field here and a branch below. That is the cost V3
+     * stops paying, and the reason the allowance could be raised at all.
+     */
     function validRollingQuotaProgression(before, after) {
       return ((before.recentSubmissionCount == 1
                 && after.recentSubmissionCount == 2
@@ -825,6 +900,28 @@ service cloud.firestore {
                 && after.recentSubmissionCount == 3
                 && after.recentSubmissionFirstAt == before.recentSubmissionSecondAt
                 && after.recentSubmissionSecondAt == before.lastSubmissionAt));
+    }
+
+    /*
+     * V2 records carry a real window, so migrating must not hand back a fresh allowance: the new
+     * window opens at the oldest submission V2 still remembers and inherits its count. Only once
+     * that timestamp is itself a day old does the migration start a window at `now`.
+     */
+    function validRollingQuotaMigration(before, after) {
+      return after.quotaSchemaVersion == 3
+          && ((request.time >= before.recentSubmissionFirstAt + duration.value(24, 'h')
+                && after.windowStartedAt == request.time
+                && after.windowSubmissionCount == 1)
+              || (after.windowStartedAt == before.recentSubmissionFirstAt
+                && after.windowSubmissionCount == before.recentSubmissionCount + 1));
+    }
+
+    function validFixedWindowProgression(before, after) {
+      return (after.windowStartedAt == before.windowStartedAt
+                && after.windowSubmissionCount == before.windowSubmissionCount + 1)
+          || (request.time >= before.windowStartedAt + duration.value(24, 'h')
+                && after.windowStartedAt == request.time
+                && after.windowSubmissionCount == 1);
     }
 
     function quotaTargetsCurrentIntake(quota) {

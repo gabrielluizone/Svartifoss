@@ -83,15 +83,23 @@ function authorNameClaim(ownerUid, authorName = "Theme maker", overrides = {}) {
   };
 }
 
+const SUBMISSIONS_PER_WINDOW = 10;
+const DAY_MILLIS = 24 * 60 * 60 * 1_000;
+
+/** A synthetic UUIDv4-shaped id, so a window test can reach past the five named ones. */
+function themeId(index) {
+  return `${String(index).padStart(8, "0")}-1111-4111-8111-111111111111`;
+}
+
 function quota(ownerUid, id, submissionCount = 1) {
   return {
     ownerUid,
-    quotaSchemaVersion: 2,
+    quotaSchemaVersion: 3,
     submissionCount,
     lastSubmissionAt: serverTimestamp(),
     lastSubmissionId: id,
-    recentSubmissionCount: 1,
-    recentSubmissionFirstAt: serverTimestamp(),
+    windowStartedAt: serverTimestamp(),
+    windowSubmissionCount: 1,
   };
 }
 
@@ -104,12 +112,21 @@ function legacyQuota(ownerUid, id, submissionCount = 1, lastSubmissionAt = serve
   };
 }
 
-function threeSubmissionQuota(ownerUid, id, {
-  submissionCount = 3,
-  firstAt,
-  secondAt,
-  lastAt,
-}) {
+/** A v3 window at an arbitrary point, for reaching a state a test cannot submit its way into. */
+function windowQuota(ownerUid, id, { submissionCount, windowCount, startedAt, lastAt }) {
+  return {
+    ownerUid,
+    quotaSchemaVersion: 3,
+    submissionCount: submissionCount ?? windowCount,
+    lastSubmissionAt: lastAt,
+    lastSubmissionId: id,
+    windowStartedAt: startedAt,
+    windowSubmissionCount: windowCount,
+  };
+}
+
+/** The retired rolling shape, kept so the migration into v3 can be exercised. */
+function rollingQuota(ownerUid, id, { submissionCount = 3, firstAt, secondAt, lastAt }) {
   return {
     ownerUid,
     quotaSchemaVersion: 2,
@@ -122,39 +139,44 @@ function threeSubmissionQuota(ownerUid, id, {
   };
 }
 
-function nextQuota(ownerUid, id, previous) {
-  if (previous === null || previous.quotaSchemaVersion !== 2) {
-    return quota(ownerUid, id, (previous?.submissionCount ?? 0) + 1);
-  }
+/**
+ * Whether the window a record carries has already run out, which decides whether the next write
+ * continues it or opens a new one. The app makes the same call from the same two fields.
+ */
+function windowIsExpired(previous) {
+  const startedAt = previous?.quotaSchemaVersion === 3
+    ? previous.windowStartedAt
+    : previous?.recentSubmissionFirstAt;
+  if (!startedAt || typeof startedAt.toMillis !== "function") return false;
+  return Date.now() >= startedAt.toMillis() + DAY_MILLIS;
+}
 
-  const next = {
+/** What the app writes: stay in the window while it is open, otherwise open a new one. */
+function nextQuota(ownerUid, id, previous, { windowExpired = windowIsExpired(previous) } = {}) {
+  const base = {
     ownerUid,
-    quotaSchemaVersion: 2,
-    submissionCount: previous.submissionCount + 1,
+    quotaSchemaVersion: 3,
+    submissionCount: (previous?.submissionCount ?? 0) + 1,
     lastSubmissionAt: serverTimestamp(),
     lastSubmissionId: id,
   };
-  if (previous.recentSubmissionCount === 1) {
+  // A v2 record still carries a window; migrating inherits it rather than handing back a fresh
+  // allowance, which is exactly what the rules assert.
+  if (previous?.quotaSchemaVersion === 2 && !windowExpired) {
     return {
-      ...next,
-      recentSubmissionCount: 2,
-      recentSubmissionFirstAt: previous.recentSubmissionFirstAt,
+      ...base,
+      windowStartedAt: previous.recentSubmissionFirstAt,
+      windowSubmissionCount: previous.recentSubmissionCount + 1,
     };
   }
-  if (previous.recentSubmissionCount === 2) {
+  if (previous?.quotaSchemaVersion === 3 && !windowExpired) {
     return {
-      ...next,
-      recentSubmissionCount: 3,
-      recentSubmissionFirstAt: previous.recentSubmissionFirstAt,
-      recentSubmissionSecondAt: previous.lastSubmissionAt,
+      ...base,
+      windowStartedAt: previous.windowStartedAt,
+      windowSubmissionCount: previous.windowSubmissionCount + 1,
     };
   }
-  return {
-    ...next,
-    recentSubmissionCount: 3,
-    recentSubmissionFirstAt: previous.recentSubmissionSecondAt,
-    recentSubmissionSecondAt: previous.lastSubmissionAt,
-  };
+  return { ...base, windowStartedAt: serverTimestamp(), windowSubmissionCount: 1 };
 }
 
 function voter(db, themeId, uid) {
@@ -483,46 +505,128 @@ test("a quota cannot be advanced without one matching new intake", async () => {
   await assertFails(batch.commit());
 });
 
-test("the quota accepts three submissions in a rolling 24-hour period and rejects a fourth", async () => {
+test("the quota accepts a full window of submissions and rejects the next", async () => {
   const authorDb = authenticatedDb(AUTHOR);
-  await assertSucceeds(submit(authorDb, AUTHOR, FIRST_ID));
-  await assertSucceeds(submit(authorDb, AUTHOR, SECOND_ID));
-  await assertSucceeds(submit(authorDb, AUTHOR, THIRD_ID));
-  await assertFails(submit(authorDb, AUTHOR, FOURTH_ID));
+  for (let index = 0; index < SUBMISSIONS_PER_WINDOW; index += 1) {
+    await assertSucceeds(submit(authorDb, AUTHOR, themeId(index)));
+  }
+  await assertFails(submit(authorDb, AUTHOR, themeId(SUBMISSIONS_PER_WINDOW)));
+
+  const stored = (await getDoc(authorDb,
+    doc(authorDb, "communityThemeSubmissionQuota", AUTHOR))).data();
+  assert.equal(stored.quotaSchemaVersion, 3);
+  assert.equal(stored.windowSubmissionCount, SUBMISSIONS_PER_WINDOW);
 });
 
-test("the rolling history shifts once its third-newest submission is older than 24 hours", async () => {
+test("a full window stays closed until it is a day old, then reopens whole", async () => {
   const authorDb = authenticatedDb(AUTHOR);
-  const day = 24 * 60 * 60 * 1_000;
   const now = Date.now();
-  const latest = Timestamp.fromMillis(now - 1_000);
-  const middle = Timestamp.fromMillis(now - 2_000);
-  await testEnvironment.withSecurityRulesDisabled(async (context) => {
-    const db = context.firestore();
-    await setDoc(db, doc(db, "communityThemeSubmissionQuota", AUTHOR), threeSubmissionQuota(AUTHOR,
-      THIRD_ID, {
-        firstAt: Timestamp.fromMillis(now - day + 60_000),
-        secondAt: middle,
-        lastAt: latest,
-      }));
-  });
+  const seedWindow = async (startedAtMillis) => {
+    await testEnvironment.withSecurityRulesDisabled(async (context) => {
+      const db = context.firestore();
+      await setDoc(db, doc(db, "communityThemeSubmissionQuota", AUTHOR), windowQuota(AUTHOR,
+        THIRD_ID, {
+          windowCount: SUBMISSIONS_PER_WINDOW,
+          startedAt: Timestamp.fromMillis(startedAtMillis),
+          lastAt: Timestamp.fromMillis(now - 1_000),
+        }));
+    });
+  };
+
+  await seedWindow(now - DAY_MILLIS + 60_000);
   await assertFails(submit(authorDb, AUTHOR, FOURTH_ID));
 
+  await seedWindow(Date.now() - DAY_MILLIS - 60_000);
+  await assertSucceeds(submit(authorDb, AUTHOR, FOURTH_ID));
+  // Reopened whole rather than shifted by one: that is the trade a fixed window makes, and the
+  // count starting again at 1 is what makes the allowance independent of its own size.
+  const reopened = (await getDoc(authorDb,
+    doc(authorDb, "communityThemeSubmissionQuota", AUTHOR))).data();
+  assert.equal(reopened.windowSubmissionCount, 1);
+  assert.equal(reopened.windowStartedAt.isEqual(reopened.lastSubmissionAt), true);
+});
+
+/** What a build that predates the fixed window writes: the V2 rolling progression. */
+function legacyNextQuota(ownerUid, id, previous) {
+  const base = {
+    ownerUid,
+    quotaSchemaVersion: 2,
+    submissionCount: (previous?.submissionCount ?? 0) + 1,
+    lastSubmissionAt: serverTimestamp(),
+    lastSubmissionId: id,
+  };
+  if (previous === null || previous.quotaSchemaVersion !== 2) {
+    return { ...base, recentSubmissionCount: 1, recentSubmissionFirstAt: serverTimestamp() };
+  }
+  if (previous.recentSubmissionCount === 1) {
+    return {
+      ...base,
+      recentSubmissionCount: 2,
+      recentSubmissionFirstAt: previous.recentSubmissionFirstAt,
+    };
+  }
+  return {
+    ...base,
+    recentSubmissionCount: 3,
+    recentSubmissionFirstAt: previous.recentSubmissionFirstAt,
+    recentSubmissionSecondAt: previous.lastSubmissionAt,
+  };
+}
+
+async function legacySubmit(db, ownerUid, id) {
+  const quotaDocument = doc(db, "communityThemeSubmissionQuota", ownerUid);
+  const previousSnapshot = await getDoc(db, quotaDocument);
+  const previous = previousSnapshot.exists ? previousSnapshot.data() : null;
+  const accountDocument = doc(db, "communityThemeAccounts", ownerUid);
+  const batch = writeBatch(db);
+  if (!(await getDoc(db, accountDocument)).exists) {
+    batch.set(accountDocument, authorAccount(ownerUid));
+    batch.set(doc(db, "communityThemeAuthorNames", authorKey("Theme maker")),
+      authorNameClaim(ownerUid));
+  }
+  batch.set(doc(db, "themeIntake", id), intake(ownerUid, id));
+  batch.set(quotaDocument, legacyNextQuota(ownerUid, id, previous));
+  return batch.commit();
+}
+
+test("an installed build still writing the rolling schema keeps submitting", async () => {
+  // The rules accepting both shapes is a deployment property, not indecision: rules that took only
+  // V3 would refuse an older build's submissions outright rather than merely holding it to the
+  // smaller allowance. Nothing else in this file would have noticed that.
+  const authorDb = authenticatedDb(AUTHOR);
+  await assertSucceeds(legacySubmit(authorDb, AUTHOR, FIRST_ID));
+  await assertSucceeds(legacySubmit(authorDb, AUTHOR, SECOND_ID));
+  await assertSucceeds(legacySubmit(authorDb, AUTHOR, THIRD_ID));
+  // And it keeps the allowance it was built with, rather than inheriting the larger one.
+  await assertFails(legacySubmit(authorDb, AUTHOR, FOURTH_ID));
+
+  const stored = (await getDoc(authorDb,
+    doc(authorDb, "communityThemeSubmissionQuota", AUTHOR))).data();
+  assert.equal(stored.quotaSchemaVersion, 2);
+});
+
+test("a rolling v2 record migrates without handing back a fresh allowance", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const now = Date.now();
+  const openedAt = Timestamp.fromMillis(now - 60_000);
   await testEnvironment.withSecurityRulesDisabled(async (context) => {
     const db = context.firestore();
-    await setDoc(db, doc(db, "communityThemeSubmissionQuota", AUTHOR), threeSubmissionQuota(AUTHOR,
+    await setDoc(db, doc(db, "communityThemeSubmissionQuota", AUTHOR), rollingQuota(AUTHOR,
       THIRD_ID, {
-        firstAt: Timestamp.fromMillis(Date.now() - day - 60_000),
-        secondAt: middle,
-        lastAt: latest,
+        firstAt: openedAt,
+        secondAt: Timestamp.fromMillis(now - 2_000),
+        lastAt: Timestamp.fromMillis(now - 1_000),
       }));
   });
+
   await assertSucceeds(submit(authorDb, AUTHOR, FOURTH_ID));
-  const shifted = (await getDoc(authorDb,
+  const migrated = (await getDoc(authorDb,
     doc(authorDb, "communityThemeSubmissionQuota", AUTHOR))).data();
-  assert.equal(shifted.recentSubmissionCount, 3);
-  assert.equal(shifted.recentSubmissionFirstAt.isEqual(middle), true);
-  assert.equal(shifted.recentSubmissionSecondAt.isEqual(latest), true);
+  assert.equal(migrated.quotaSchemaVersion, 3);
+  // The window opens at the oldest submission v2 still remembered, carrying its count -- not at
+  // `now` with a count of 1, which would have made migrating a way to reset the limit.
+  assert.equal(migrated.windowStartedAt.isEqual(openedAt), true);
+  assert.equal(migrated.windowSubmissionCount, 4);
 });
 
 test("a legacy quota migrates on its next submission without waiting and cannot reset afterward", async () => {
@@ -536,13 +640,17 @@ test("a legacy quota migrates on its next submission without waiting and cannot 
   await assertSucceeds(submit(authorDb, AUTHOR, SECOND_ID));
   const migrated = (await getDoc(authorDb,
     doc(authorDb, "communityThemeSubmissionQuota", AUTHOR))).data();
-  assert.equal(migrated.quotaSchemaVersion, 2);
+  assert.equal(migrated.quotaSchemaVersion, 3);
   assert.equal(migrated.submissionCount, 10);
-  assert.equal(migrated.recentSubmissionCount, 1);
-  assert.equal(migrated.recentSubmissionFirstAt.isEqual(migrated.lastSubmissionAt), true);
+  assert.equal(migrated.windowSubmissionCount, 1);
+  assert.equal(migrated.windowStartedAt.isEqual(migrated.lastSubmissionAt), true);
 
-  await assertSucceeds(submit(authorDb, AUTHOR, THIRD_ID));
-  await assertSucceeds(submit(authorDb, AUTHOR, FOURTH_ID));
+  // A v1 record proves no window at all, so migrating opens one -- and from there the ordinary
+  // allowance applies, with no second reset available.
+  for (let index = 0; index < SUBMISSIONS_PER_WINDOW - 1; index += 1) {
+    await assertSucceeds(submit(authorDb, AUTHOR, themeId(index)));
+  }
+  await assertFails(submit(authorDb, AUTHOR, themeId(SUBMISSIONS_PER_WINDOW)));
 
   const resetAttempt = quota(AUTHOR, FIFTH_ID, 13);
   const batch = writeBatch(authorDb);

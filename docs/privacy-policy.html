@@ -127,7 +127,7 @@
   }
   .eyebrow .dot { color: var(--sage); font-size: 8px; }
 
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     font-family: var(--face);
     font-weight: 700;
     letter-spacing: -0.01em;
@@ -253,6 +253,12 @@
     scroll-margin-top: 84px;
   }
   .doc-body h3:first-of-type { margin-top: 4px; }
+  /* One level below h3, for a sub-topic inside a section rather than a section of its own. */
+  .doc-body h4 {
+    font-size: 15px;
+    margin: 24px 0 10px;
+    color: var(--snow);
+  }
   .doc-body p {
     color: var(--ash);
     margin: 0 0 16px;
@@ -351,7 +357,7 @@
   <div class="doc-wrap">
     <div class="eyebrow"><span class="dot">●</span> Legal</div>
     <h1>Privacy Policy</h1>
-    <p class="doc-updated">Last updated: 28-08-2026</p>
+    <p class="doc-updated">Last updated: 01-09-2026</p>
     <p class="doc-lede">Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a paired watch control music playback on your phone. This policy explains what information the app accesses, what it stores, and what — if anything — leaves your device.</p>
     <div class="callout">
       <p><strong>The short version:</strong> Svartifoss does not require an account for playback, watch control, or Community-theme browsing; does not operate its own backend server; and does not sell or share your data with advertisers. The phone and watch talk to each other directly over your local Bluetooth/Wi-Fi connection. Optional update checks and the opt-in Community themes gallery contact GitHub Pages. Liking a published Community theme needs no account: the app creates an anonymous Firebase Authentication account for it silently, and Google Cloud Firestore keeps the private reaction under that anonymous ID. <strong>Submitting</strong> a theme is the one action that asks you to sign in with Google, and even then your Google account name and email are not published. The phone app also includes Google Firebase Crashlytics and Analytics for diagnostics, plus Firebase Cloud Messaging for occasional developer announcements. Crash reporting and announcement notifications are both enabled by default and can each be disabled at any time — see <a href="#crash-reports">Crash reports</a> and <a href="#announcement-notifications">Announcement notifications</a> below. A separate, off-by-default setting can also fetch cover art for your saved playlist shortcuts directly from the streaming service — see <a href="#streaming-shortcut-artwork-optional">Streaming shortcut artwork</a> below.</p>
@@ -438,7 +444,9 @@
       <h2>Community themes</h2>
       <h3>Browsing and installing</h3>
       <p>Opening <strong>Community themes</strong> from the Watch themes screen requests a public catalogue and, as needed for a preview or installation, public theme JSON files from this project's <a href="https://gabrielluizone.github.io/Svartifoss/">GitHub Pages</a> site. Nothing is requested until you open that screen. Searching, filtering by base layout, and ordering by newest or most liked happen locally over that downloaded public catalogue. Browsing does not start Google Sign-In or write to Firebase, and does not send your playback, library, saved themes, account details, or a device identifier. The request identifies the app only with a generic Svartifoss user-agent, while GitHub necessarily receives ordinary web-request information such as your IP address under its own privacy terms.</p>
-      <p>A card opens a detail page before a theme is added to <strong>My themes</strong>. Gallery cards remain synthetic, and the detail page renders its Player, always-on display, Volume, Progress, Quick panel, and Queue previews locally from the profile with sample labels, timing, and queue data. The detail preview may show only the current album cover already held in memory on your phone. It does not use the current title, artist, playback position, queue, or other live media metadata; the cover is never uploaded or transmitted. It never requests, takes, or sends a screenshot or automatic capture from your watch. The downloaded catalogue/profile files are cached in the app's disposable cache for faster later browsing; they are public content and are not part of a configuration backup.</p>
+      <p>A card opens a detail page before a theme is added to <strong>My themes</strong>. Gallery cards remain synthetic, and the detail page renders its Player, always-on display, Volume, Progress, Quick panel, and Queue previews locally from the profile with sample labels, timing, and queue data. The detail preview may show only the current album cover already held in memory on your phone. It does not use the current title, artist, playback position, queue, or other live media metadata; the cover is never uploaded or transmitted.</p>
+      <p><strong>Svartifoss never captures anything from your watch.</strong> It does not request, take, or trigger a screenshot on the watch, and the watch never sends the app a picture of its own screen.</p>
+      <p>Some themes carry <strong>one photograph published by their author</strong>: a screenshot that author took on their own watch and chose to attach when submitting. Where one exists, the detail page's Player shows it instead of the generated preview, labelled as the author's watch, with a control to switch back to the generated one. That control is remembered, and turning it off stops the app requesting these images at all rather than merely hiding them. The image is a public file served from the same GitHub Pages site as the rest of the catalogue, requested only when you open a detail page for a theme that has one, and cached in the app's disposable cache. The downloaded catalogue, profile and image files are public content and are not part of a configuration backup.</p>
 
       <h3>Likes</h3>
       <p><strong>Liking never asks you to sign in.</strong> Tapping <strong>Like</strong>, tapping it again to undo, and selecting the private <strong>Liked</strong> filter all work without a Google account and without any prompt. To store the reaction at all, the app creates an <strong>anonymous Firebase Authentication account</strong> the first time you use one of those actions. An anonymous account has no name, no email and no link to any Google account: it is only an opaque identifier held in this app's local storage on your phone.</p>
@@ -452,11 +460,14 @@
       <p>Submitting is separate from browsing. You can explicitly connect Google first under <strong>Settings → General → Community themes → Community account</strong>, or choose <strong>Submit to community</strong> for a private, user-owned saved theme and tap <strong>Sign in and submit</strong>. Firebase keeps that connection on this device, so later submissions reuse it without showing the account picker again. Before sending a theme, the app creates and checks a fresh public profile locally. The current preflight requires at least <strong>12</strong> setting values to differ from the selected base face; this is an eligibility filter, not a promise that the theme will be approved.</p>
       <p>At that explicit point, Firebase Authentication processes the Google credential and account information needed to authenticate you, then issues a Firebase Auth UID. Svartifoss stores that UID — rather than your Google account name or email — in the Firestore submission document as the ownership identifier (<code>ownerUid</code>). It does not show your Google account name or email to gallery visitors or publish them. Instead, you choose the public theme name and either an author pseudonym or the public credit <strong>Anonymous</strong> yourself.</p>
       <p>Firestore receives one immutable <strong>pending</strong> submission record. Its submitted content includes the fresh public theme ID; the complete typed profile JSON and its settings digest; the public theme name and selected public author credit; the base face, revision, client version, and Firestore server timestamp. It also includes a fixed-sample 200&times;200 WebP review preview rendered from Svartifoss's built-in sample track, not your current playback, album art, or media metadata. A configured moderator can later add only an approval or rejection decision, their reviewer UID, and a server timestamp; neither the author nor a moderator can edit the submitted theme content through the app.</p>
-      <p>Firestore also keeps a separate private quota record tied to your Firebase Auth UID. It records the submission count, most recent submission ID, and the timestamps needed to enforce at most <strong>three</strong> Community-theme submissions in a rolling 24-hour window. It is not public.</p>
+      <h4>Attaching a photograph of your watch (optional)</h4>
+      <p>The submission screen lets you attach <strong>one</strong> image, of the Player screen, from your phone's photo picker. It is entirely optional: attaching nothing is the normal case, and a theme submitted without one shows only the generated preview. Svartifoss does not take the picture — you choose an existing image, and the app never reads your gallery beyond the single file you hand it through the system picker, which needs no storage permission.</p>
+      <p>What you attach is published, and the submission screen says so before the picker opens. The image is cropped to a square, resized to at most 450&times;450 and re-encoded as WebP on your phone; re-encoding removes any camera or location metadata the original file carried. It is then stored in Firestore alongside the submission, shown to a moderator, and — if approved — committed to this project's public Git repository and served from GitHub Pages. <strong>Everything visible in it becomes public permanently</strong>, including the album cover, track name, artist and clock time that happen to be on the watch screen, and it remains in the repository's history even if the theme is later removed. A moderator may approve a theme and refuse its photograph, in which case only the theme is published.</p>
+      <p>Firestore also keeps a separate private quota record tied to your Firebase Auth UID. It records the submission count, most recent submission ID, and the window timestamp needed to enforce at most <strong>ten</strong> Community-theme submissions in a 24-hour period. It is not public.</p>
       <p>Google processes Authentication and Firestore data under <a href="https://policies.google.com/privacy">Google's Privacy Policy</a> and <a href="https://firebase.google.com/support/privacy">Firebase's data processing terms</a>.</p>
 
       <h3>Moderation and publication</h3>
-      <p>The pending record is private to its owner and configured moderators. Approval does not make a theme public immediately. When an approved submission is published, the trusted publisher validates it again and commits the public profile JSON, public theme name, and selected public author credit to this project's Git repository; GitHub Pages then serves those public files in the catalogue. The Firebase Auth UID and Google account name/email are not copied to the public repository or catalogue.</p>
+      <p>The pending record is private to its owner and configured moderators. Approval does not make a theme public immediately. When an approved submission is published, the trusted publisher validates it again and commits the public profile JSON, public theme name, selected public author credit, and any approved author photograph to this project's Git repository; GitHub Pages then serves those public files in the catalogue. The Firebase Auth UID and Google account name/email are not copied to the public repository or catalogue.</p>
       <p>Version 3.3 does not implement comments or theme-update submissions.</p>
       <p><strong>My submissions</strong> (Community account → See my submissions, or the history button in the community gallery) reads back the submissions this account has sent, with the status of each: waiting for review, approved, published, rejected, or being removed. For a published theme it also shows the public like count already in the downloaded catalogue; no per-theme figure is requested from Firebase.</p>
       <p>From that screen you can <strong>remove any of your own themes</strong> without deleting your account. It is a request rather than an instant delete, for the same reason account deletion is: the catalogue is a set of files in this project's Git repository, so the trusted publisher removes the file, the catalogue entry and the theme's likes on its next run, normally within about a day, and then deletes the submission record. Anyone who already installed the theme keeps their own local copy.</p>
@@ -519,6 +530,7 @@
         <li>We don't sell, rent, or share your data with advertisers or data brokers.</li>
         <li>We don't show ads.</li>
         <li>We don't read the content of unrelated notifications. For the current media app, only playback metadata and — when explicitly selected — its media action labels/icons are used.</li>
+        <li>We don't capture your watch's screen. The only images Svartifoss ever publishes are ones you picked yourself and attached to a Community theme submission.</li>
       </ul>
     </section>
 
