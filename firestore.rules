@@ -355,10 +355,33 @@ service cloud.firestore {
       let before = resource.data;
       let after = request.resource.data;
       return reviewRecordMatches(themeId, before.status, after.status)
-          && ((before.ownerUid != request.auth.uid
+          && (((selfModerationAllowed() || before.ownerUid != request.auth.uid)
                 && (validModeratorDecision(before, after) || validModeratorReopen(before, after)))
               || validModeratorWithdrawal(before, after)
               || validModeratorMetadataEdit(before, after));
+    }
+
+    /*
+     * TEMPORARY (2026-09-01): whether a moderator may decide or reopen their own submission.
+     *
+     * `true` while there is exactly one moderator, who is also the only person submitting. With the
+     * ban in force the queue cannot move at all in that configuration: the single account able to
+     * approve is the same account that sent the theme, so every submission is permanently stuck at
+     * pending and the only available action is deleting it.
+     *
+     * What it costs while it is true is the whole point of the rule it disables: nothing stops a
+     * moderator publishing themselves straight into the public gallery. That is only acceptable
+     * while the moderator set and the author set are the same one person. **The moment a second
+     * moderator is allowlisted in `communityThemeModerators`, or submissions start arriving from
+     * anyone else, this goes back to `false`** -- otherwise the check that keeps the queue honest
+     * is not weakened, it is simply absent.
+     *
+     * Restoring it is this one word, plus SELF_MODERATION_ALLOWED in docs/admin/admin.js, which
+     * greys the buttons for the same reason. The emulator suite pins both states, so flipping this
+     * back fails the test that names the change rather than silently passing.
+     */
+    function selfModerationAllowed() {
+      return true;
     }
 
     /*

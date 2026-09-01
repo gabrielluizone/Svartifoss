@@ -675,16 +675,45 @@ test("a moderator can correct only the theme name before publication, never the 
   }));
 });
 
-test("a moderator cannot decide or reopen their own intake, but can take it down", async () => {
+/*
+ * TEMPORARY (2026-09-01), pinning selfModerationAllowed() == true.
+ *
+ * The rule this replaces asserted the opposite: that a moderator can never decide or reopen their
+ * own submission, which is what stops one publishing themselves into the gallery. It is suspended
+ * while a single person is both the only moderator and the only author, because in that
+ * configuration the ban leaves every submission permanently stuck at pending.
+ *
+ * **When selfModerationAllowed() goes back to `false`, this test fails and this whole block is
+ * what to delete**, restoring the assertFails on the approve line and dropping the reopen case.
+ * That is deliberate: the tripwire should name the change rather than let it pass silently.
+ */
+test("a moderator can currently decide and reopen their own intake (self-review suspended)", async () => {
   const selfDb = authenticatedDb(SELF_MODERATOR);
   await seedPending(SELF_MODERATOR, THIRD_ID);
   await seedModerator(SELF_MODERATOR);
 
-  // The ban exists so nobody publishes themselves into the gallery.
-  await assertFails(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "pending", to: "approved" }));
-  // Taking a listing down is not that, and barring it would leave a bad entry with nobody able
-  // to act on it.
-  await assertSucceeds(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "pending", to: "withdrawn" }));
+  await assertSucceeds(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "pending", to: "approved" }));
+  await assertSucceeds(moderate(selfDb, SELF_MODERATOR, THIRD_ID, { from: "approved", to: "pending" }));
+});
+
+test("a moderator can always take their own listing down", async () => {
+  // Never covered by the suspended ban and never should be: a listing nobody can remove is worse
+  // than one its own author can also remove.
+  const selfDb = authenticatedDb(SELF_MODERATOR);
+  await seedPending(SELF_MODERATOR, FOURTH_ID);
+  await seedModerator(SELF_MODERATOR);
+
+  await assertSucceeds(moderate(selfDb, SELF_MODERATOR, FOURTH_ID, { from: "pending", to: "withdrawn" }));
+});
+
+test("deciding someone else's submission is unaffected by the suspension", async () => {
+  // The ordinary path has to keep working identically, so restoring the ban is a one-word change
+  // rather than a repair.
+  const moderatorDb = authenticatedDb(MODERATOR);
+  await seedPending(AUTHOR, FIFTH_ID);
+  await seedModerator(MODERATOR);
+
+  await assertSucceeds(moderate(moderatorDb, MODERATOR, FIFTH_ID, { from: "pending", to: "approved" }));
 });
 
 test("likes are one private immutable vote and can only target a published theme", async () => {
