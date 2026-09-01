@@ -210,8 +210,9 @@ Before any byte is committed, the publisher **re-validates the image itself**, w
 dependency: parse the RIFF container, require the `RIFF`/`WEBP` magic, accept only a simple `VP8 `
 lossy chunk, read width and height out of the VP8 frame header, and require square dimensions inside
 a fixed range. Rejecting `VP8X` is the load-bearing part of that list — the extended format is what
-can carry animation, ICC profiles and EXIF, so refusing it is what makes "no metadata reaches the
-public site" a property of the pipeline rather than a promise about the client. Roughly forty lines,
+can carry animation, EXIF and XMP, so refusing those is what makes "no personal metadata reaches
+the public site" a property of the pipeline rather than a promise about the client. A colour
+profile turned out to be the deliberate exception — see the correction under Phase 1. Roughly forty lines,
 fail-closed on everything else, in the same spirit as every other publisher gate: **nothing an APK
 sent is trusted as publication data.**
 
@@ -385,9 +386,24 @@ Two things were learned building it and are worth keeping. `publicProfilesMatch`
 approved intake, and a screenshot is not part of the intake — comparing it would turn a good
 published theme into one that can never finalize, because finalization is exactly what deletes the
 stored document. And the container validator accepts a `VP8X` extended file only when its flags
-claim nothing but alpha *and* no EXIF/XMP/ICC chunk is actually present, because a flag byte is a
-claim; refusing `VP8X` outright was the original plan and would have rejected legitimate encoder
-output.
+claim nothing but alpha or a colour profile *and* no EXIF/XMP/animation chunk is actually present,
+because a flag byte is a claim; refusing `VP8X` outright was the original plan and would have
+rejected legitimate encoder output.
+
+**Corrected after the first real submissions (2026-09-01).** Two photographs were dropped before
+anyone saw one in the gallery, and each exposed a category error at a different depth. The first was
+in the *reporting*: `invalid-screenshot-image` covered eight unrelated checks, so the log named a
+category rather than a cause and left nothing to act on. Splitting the codes and logging the chunk
+table produced the real answer on the very next run — `chunks=[VP8X:10, ICCP:536, VP8 :6916]`.
+
+The second was in the *rule*. "Metadata" had been treated as one thing, when EXIF can carry a
+location and XMP an author, while an ICC profile only describes a colour space. Android attaches one
+to every screenshot, so refusing ICCP refused every real submission there would ever be — and the
+profile is functional besides, since a Display P3 picture published without it renders in the wrong
+colours. EXIF, XMP and animation are now refused **by chunk name in every container form**, which is
+stricter than the flag test it replaced; alpha and ICC are accepted. Checks that only encoded
+assumptions about the encoder — exactly one chunk, an exactly-tiling RIFF length, no lossless — were
+dropped in the same pass. A boundary should refuse what is unsafe, not what is unfamiliar.
 
 **Phase 2 — the author side. Done (2026-09-01).**
 [`CommunityThemeScreenshots.kt`](../common/src/main/java/com/svartifoss/snfell/common/CommunityThemeScreenshots.kt)
