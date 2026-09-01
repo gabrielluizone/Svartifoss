@@ -18,6 +18,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import {
     ValidationError,
     canonicalSettingsDigest,
+    decodeThemeScreenshot,
     finalizePublishedThemes,
     isLikeRefreshDue,
     publishApprovedThemes,
@@ -112,6 +113,8 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
     );
     const quotas = new Set(options.quotas ?? []);
     const reviews = new Map(Object.entries(options.reviews ?? {}));
+    // Author screenshots, keyed "<themeId>/<surface>" so one flat map models the subcollection.
+    const shots = new Map(Object.entries(options.shots ?? {}));
     const defaultAccounts = {};
     const defaultAuthorNames = {};
     for (const document of documents) {
@@ -139,12 +142,14 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
     const events = options.events ?? [];
     const removed = {
         intake: [], markers: [], votes: [], quotas: [], requests: [], reviews: [], accounts: [], authorNames: [],
+        shots: [],
     };
 
     const snapshotFor = (target) => {
         const segments = target.path.split("/");
         let value;
         if (segments[0] === "themeIntake") value = byId.get(target.id)?.data;
+        else if (segments[0] === "themeIntakeReview") value = reviews.get(target.id);
         else if (segments[0] === "communityThemePublished") value = publishedThemeMarkers.get(target.id);
         else if (segments[0] === "communityThemeAccounts") value = accounts.get(target.id);
         else if (segments[0] === "communityThemeAuthorNames") value = authorNames.get(target.id);
@@ -205,6 +210,12 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
                 publishedThemeMarkers.delete(target.id);
                 removed.markers.push(target.id);
             }
+            return;
+        }
+        if (segments[0] === "themeIntakeShots") {
+            const key = `${segments[1]}/${target.id}`;
+            shots.delete(key);
+            removed.shots.push(key);
             return;
         }
         if (segments[0] === "communityThemeLikes") {
@@ -288,6 +299,33 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
                 return {
                     doc(id) {
                         return reference("themeIntakeReview", id);
+                    },
+                };
+            }
+            if (collectionName === "themeIntakeShots") {
+                return {
+                    doc(themeId) {
+                        return {
+                            collection(surfaces) {
+                                assert.equal(surfaces, "surfaces");
+                                return {
+                                    get: async () => {
+                                        const docs = [...shots.entries()]
+                                            .filter(([key]) => key.startsWith(`${themeId}/`))
+                                            .sort(([left], [right]) => left < right ? -1 : 1)
+                                            .map(([key, data]) => ({
+                                                id: key.slice(themeId.length + 1),
+                                                data: () => data,
+                                                ref: {
+                                                    id: key.slice(themeId.length + 1),
+                                                    path: `themeIntakeShots/${themeId}/surfaces/${key.slice(themeId.length + 1)}`,
+                                                },
+                                            }));
+                                        return { empty: docs.length === 0, docs };
+                                    },
+                                };
+                            },
+                        };
                     },
                 };
             }
@@ -483,7 +521,7 @@ test("individual title and artist fonts retain their Flex contracts", () => {
 test("a complete approved intake creates a preview-free public profile", () => {
     const candidate = validateApprovedDocument(approvedDocument());
 
-    assert.equal(SETTING_KEYS.length, 155);
+    assert.equal(SETTING_KEYS.length, 156);
     assert.equal(candidate.id, ID);
     assert.equal(candidate.publicProfile.author, "Theme maker");
     assert.equal(candidate.publicProfile.publishedAt, PUBLISHED_AT);
@@ -1531,4 +1569,259 @@ test("a legacy reviewer identity is moved off the submission it decided", async 
         logger: { log() {}, warn() {} },
     });
     assert.equal(again.migratedReviewers, 0);
+});
+
+/*
+ * Author screenshots.
+ *
+ * The container tests build their own RIFF bytes rather than embedding one blob per case: what is
+ * under test is the parser's reading of a container, and hand-built chunks state each case exactly
+ * -- an EXIF chunk present while the flag claiming it is clear cannot be expressed any other way.
+ * REAL_WEBP is the one genuine encoder output, there to prove the parser accepts what libwebp
+ * actually produces and not only what this file thinks it produces.
+ */
+function riffChunk(fourCC, payload) {
+    const header = Buffer.alloc(8);
+    header.write(fourCC, 0, "latin1");
+    header.writeUInt32LE(payload.length, 4);
+    const padding = Buffer.alloc(payload.length % 2);
+    return Buffer.concat([header, payload, padding]);
+}
+
+function riff(chunks) {
+    const body = Buffer.concat([Buffer.from("WEBP", "latin1"), ...chunks]);
+    const header = Buffer.alloc(8);
+    header.write("RIFF", 0, "latin1");
+    header.writeUInt32LE(body.length, 4);
+    return Buffer.concat([header, body]);
+}
+
+/** A minimal VP8 key-frame header: the ten bytes the dimension read actually looks at. */
+function vp8Frame(width, height) {
+    const payload = Buffer.alloc(16);
+    payload[0] = 0x50;
+    payload[3] = 0x9d;
+    payload[4] = 0x01;
+    payload[5] = 0x2a;
+    payload.writeUInt16LE(width, 6);
+    payload.writeUInt16LE(height, 8);
+    return payload;
+}
+
+function vp8xHeader(flags, width, height) {
+    const payload = Buffer.alloc(10);
+    payload[0] = flags;
+    payload.writeUIntLE(width - 1, 4, 3);
+    payload.writeUIntLE(height - 1, 7, 3);
+    return payload;
+}
+
+function screenshot(width = 256, height = width) {
+    return riff([riffChunk("VP8 ", vp8Frame(width, height))]).toString("base64");
+}
+
+/** 128x128, quality 70, straight out of libwebp. */
+const REAL_WEBP =
+    "UklGRkIDAABXRUJQVlA4IDYDAABQFQCdASqAAIAAPp1KnkqlpKKhqpzoALATiUAaPr0v4z+V66t1z8jv4BzL2ung" +
+    "bnkrP5wH5J9FXpAeYDoE+bl/Zusz9ADy4PY+8qPNIJqisBlgcUnetHN/7DxKagfRzI8f////6jU4OCLUKp7Oa/v6" +
+    "jRJ/BTb+MliToqhqt8x3d+y1oeDtfpcBPdNJqeqkkBLPSr4dZ2OnF/WBvj7zrpD9x9UaVirdXLGCiOJC+8738QyI" +
+    "AAD+8iI/ZEVryBggv5mXx5xkgOxXzp0T3RSIJq8N+5vegbaLv11uDlze1HCXYCHa0o4uRXTOR1suBTR0cUyqTKSf" +
+    "tzA2aLfiDc//+T+hyDWwB/mweewKbTUaMrIAL6qjv63+Hacug+71U5vIo7U4r0fB3KcEkcARMTfUHenyin+OyY++" +
+    "rfyAlEEP6GRiCzxZQJ7hYerqjjYF61l7rP88FO1WjneAgfPTA2hf1q03N4Xib7mJgxLU1IgOOedU69yXAeGmYiEq" +
+    "yPclh9QuH0AC6TrD1hhONM0EA/Y2R/JY9lsWHVe+HTjOTbSccACohkddfwoPwCDqShGnqrMJAGHur89j0T3gHm7m" +
+    "wCSFRGHABX3a0/J/Q5BxqLKAUFn+v3ql/Hij+yMNxdBLrAWJbMev76MeMcmZ06H7l0eCU4kHYq0pvWAD85sHY1cR" +
+    "Dhtnrc3HHSpMRBGEHVkVa7LNqdQgv1KGl9RXuHCvTfBQLHgoWg+WPFdx4DfJn/CyigsgGuaKWMFYkzWa8Q6G2ykE" +
+    "k3OVcGRMt7yZQ3qeK7Dz3KK78F0VD2xMLyK0s52Gr0mVNx8Se1OmP8gUE9AS75EgFKLNjLot2wfAMF7/QOMAhSl7" +
+    "BlHxK/jK+A4wt/3tPCrcrxU6OSly7hvyEoF6HFxH/2vM4jEFfZ4g732cop4dFBjrXemQsTAHey8Yd5Lo9FI4B657" +
+    "2lge1ng5NduYGMAST5T/R2TdENgEPldEik+aSEe6T/55dZIJFkbolb0k4J0XfC0DLuXUNjnOAP8oWdUQ2OlsLwre" +
+    "6l03vzl/KMiF6o14U0OT4E/8xWiU3kqYpv4zyxfoeszUGzM4/wXxpL+u4iAAAAAAAAA=";
+
+function shotDocument(ownerUid = "firebase-user-id", overrides = {}) {
+    return {
+        ownerUid,
+        surface: "player",
+        webpBase64: screenshot(),
+        createdAt: timestamp(),
+        ...overrides,
+    };
+}
+
+test("a screenshot decodes only as a plain still WebP", () => {
+    assert.deepEqual(
+        { ...decodeThemeScreenshot(screenshot(450)), bytes: undefined },
+        { bytes: undefined, width: 450, height: 450 });
+    // Genuine libwebp output, not only bytes this test file built.
+    assert.equal(decodeThemeScreenshot(REAL_WEBP).width, 128);
+    // Alpha is the one extension a screenshot may legitimately carry.
+    assert.equal(decodeThemeScreenshot(riff([
+        riffChunk("VP8X", vp8xHeader(0x10, 256, 256)),
+        riffChunk("ALPH", Buffer.alloc(4)),
+        riffChunk("VP8 ", vp8Frame(256, 256)),
+    ]).toString("base64")).width, 256);
+});
+
+test("a screenshot carrying anything but a picture is refused", () => {
+    // Each metadata flag on its own: ICC, EXIF, XMP, animation.
+    for (const flags of [0x20, 0x08, 0x04, 0x02]) {
+        assertValidationCode(() => decodeThemeScreenshot(riff([
+            riffChunk("VP8X", vp8xHeader(flags, 256, 256)),
+            riffChunk("VP8 ", vp8Frame(256, 256)),
+        ]).toString("base64")), "invalid-screenshot-image");
+    }
+    // The sharp case: a flag byte is a claim, and the chunk is what actually carries a location.
+    assertValidationCode(() => decodeThemeScreenshot(riff([
+        riffChunk("VP8X", vp8xHeader(0x00, 256, 256)),
+        riffChunk("VP8 ", vp8Frame(256, 256)),
+        riffChunk("EXIF", Buffer.from("II*abcd", "latin1")),
+    ]).toString("base64")), "invalid-screenshot-image");
+    // Lossless never comes out of the app, so it did not come from a released build.
+    assertValidationCode(
+        () => decodeThemeScreenshot(riff([riffChunk("VP8L", Buffer.alloc(16))]).toString("base64")),
+        "invalid-screenshot-image");
+});
+
+test("a screenshot has to be a square of a plausible size", () => {
+    assertValidationCode(() => decodeThemeScreenshot(screenshot(256, 160)), "invalid-screenshot-shape");
+    assertValidationCode(() => decodeThemeScreenshot(screenshot(64)), "invalid-screenshot-size");
+    assertValidationCode(() => decodeThemeScreenshot(screenshot(1024)), "invalid-screenshot-size");
+});
+
+test("a malformed screenshot envelope never reaches the container parser", () => {
+    assertValidationCode(() => decodeThemeScreenshot("not base64!"), "invalid-screenshot-encoding");
+    assertValidationCode(() => decodeThemeScreenshot(""), "invalid-screenshot-encoding");
+    assertValidationCode(() => decodeThemeScreenshot("A".repeat(131_073)), "invalid-screenshot-encoding");
+    assertValidationCode(() => decodeThemeScreenshot(42), "invalid-screenshot-encoding");
+    // A RIFF whose declared length disagrees with what arrived.
+    const truncated = riff([riffChunk("VP8 ", vp8Frame(256, 256))]).subarray(0, 24);
+    assertValidationCode(() => decodeThemeScreenshot(truncated.toString("base64")), "invalid-screenshot-image");
+    assertValidationCode(
+        () => decodeThemeScreenshot(Buffer.from("GIF89a").toString("base64")),
+        "invalid-screenshot-image");
+});
+
+test("an approved screenshot is committed beside the profile and named in it", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const firestore = fakeFirestore(document, {}, {
+        shots: { [`${ID}/player`]: shotDocument() },
+    });
+    await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger: { log() {}, warn() {} },
+        publish: true,
+        manifestPath: join(root, "manifest.json"),
+    });
+
+    const profile = JSON.parse(await readFile(join(root, "docs", "themes", `${ID}.json`), "utf8"));
+    assert.deepEqual(profile.screenshots, ["player"]);
+    const committed = await readFile(join(root, "docs", "themes", "shots", `${ID}-player.webp`));
+    assert.deepEqual(committed, Buffer.from(screenshot(), "base64"));
+    // The index deliberately stays untouched: it is one fetch for the whole gallery, and the cards
+    // that read it render locally.
+    const index = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.equal(Object.hasOwn(index.themes[0], "screenshots"), false);
+});
+
+test("a theme with no screenshot publishes exactly as it did before", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const firestore = fakeFirestore(approvedDocument());
+    await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger: { log() {}, warn() {} },
+        publish: true,
+        manifestPath: join(root, "manifest.json"),
+    });
+
+    const profile = JSON.parse(await readFile(join(root, "docs", "themes", `${ID}.json`), "utf8"));
+    // Absent, never an empty array: two spellings of "no image" would stop a republish comparing
+    // byte-for-byte against what is already committed.
+    assert.equal(Object.hasOwn(profile, "screenshots"), false);
+    const themeFiles = await readdir(join(root, "docs", "themes"));
+    assert.equal(themeFiles.includes("shots"), false);
+});
+
+test("a screenshot the theme publishes without is dropped, never fatal", async (t) => {
+    for (const [label, options] of [
+        // The moderator approved the theme and refused its image.
+        ["rejected by the moderator", {
+            shots: { [`${ID}/player`]: shotDocument() },
+            reviews: { [ID]: { reviewSchemaVersion: 1, decision: "approved", shotsAccepted: false } },
+        }],
+        // Bytes the container parser refuses.
+        ["undecodable bytes", {
+            shots: { [`${ID}/player`]: shotDocument("firebase-user-id", { webpBase64: "AAAA" }) },
+        }],
+        // A screenshot filed against an intake it does not belong to.
+        ["owner mismatch", { shots: { [`${ID}/player`]: shotDocument("someone-else") } }],
+        // A surface the registry does not publish.
+        ["unknown surface", { shots: { [`${ID}/volume`]: shotDocument() } }],
+    ]) {
+        const root = await temporaryCatalogue(t);
+        const firestore = fakeFirestore(approvedDocument(), {}, options);
+        const result = await publishApprovedThemes({
+            firestore,
+            root,
+            now: new Date("2026-08-24T12:00:00Z"),
+            logger: { log() {}, warn() {} },
+            publish: true,
+            manifestPath: join(root, "manifest.json"),
+        });
+
+        assert.equal(result.plans.length, 1, label);
+        const profile = JSON.parse(await readFile(join(root, "docs", "themes", `${ID}.json`), "utf8"));
+        assert.equal(Object.hasOwn(profile, "screenshots"), false, label);
+    }
+});
+
+test("finalization clears the stored screenshot once its bytes are committed", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const firestore = fakeFirestore(document, {}, {
+        quotas: ["firebase-user-id"],
+        shots: { [`${ID}/player`]: shotDocument() },
+    });
+    const manifestPath = join(root, "manifest.json");
+    const logger = { log() {}, warn() {} };
+    await publishApprovedThemes({
+        firestore, root, now: new Date("2026-08-24T12:00:00Z"), logger, publish: true, manifestPath,
+    });
+    await finalizePublishedThemes({ firestore, auth: fakeAuth(), root, manifestPath, logger });
+
+    // Published, and the private copy is gone now that a public one exists.
+    assert.equal(document.data.status, "published");
+    assert.deepEqual(firestore.removed.shots, [`${ID}/player`]);
+    await readFile(join(root, "docs", "themes", "shots", `${ID}-player.webp`));
+});
+
+test("withdrawing a theme takes its screenshot down with it", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const firestore = fakeFirestore(document, {}, {
+        quotas: ["firebase-user-id"],
+        shots: { [`${ID}/player`]: shotDocument() },
+    });
+    const logger = { log() {}, warn() {} };
+    const manifestPath = join(root, "manifest.json");
+    await publishApprovedThemes({
+        firestore, root, now: new Date("2026-08-24T12:00:00Z"), logger, publish: true, manifestPath,
+    });
+    await finalizePublishedThemes({ firestore, auth: fakeAuth(), root, manifestPath, logger });
+    await readFile(join(root, "docs", "themes", "shots", `${ID}-player.webp`));
+
+    document.data.status = "withdrawn";
+    await publishApprovedThemes({
+        firestore,
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "withdrawal-manifest.json"),
+    });
+
+    await assert.rejects(readFile(join(root, "docs", "themes", "shots", `${ID}-player.webp`)));
+    await assert.rejects(readFile(join(root, "docs", "themes", `${ID}.json`)));
 });

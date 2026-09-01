@@ -33,6 +33,20 @@ const ACCOUNT_COLLECTION = "communityThemeAccounts";
 const AUTHOR_NAMES_COLLECTION = "communityThemeAuthorNames";
 const DELETED_ACCOUNTS_COLLECTION = "communityThemeDeletedAccounts";
 const REVIEW_COLLECTION = "themeIntakeReview";
+const SHOTS_COLLECTION = "themeIntakeShots";
+const SHOT_SURFACES_SUBCOLLECTION = "surfaces";
+/*
+ * The published surface vocabulary, mirroring the literal list in firestore.rules. One value for
+ * now: the Player is where a person spends nearly all of their time, and every other surface costs
+ * a moderator another image to judge. The file layout keeps a surface segment anyway, so adding one
+ * later is a new entry here rather than a rewrite of every published theme.
+ */
+const SHOT_SURFACES = ["player"];
+const SHOTS_DIRECTORY = "shots";
+const MAX_SHOT_BASE64_LENGTH = 128 * 1024;
+const MAX_SHOT_BYTES = 96 * 1024;
+const MIN_SHOT_PIXELS = 128;
+const MAX_SHOT_PIXELS = 512;
 const MAX_WITHDRAWALS_PER_RUN = 200;
 const MAX_REVIEWER_MIGRATIONS_PER_RUN = 400;
 const CATALOG_FILE = "index.json";
@@ -97,8 +111,16 @@ const PUBLISHED_PROFILE_KEYS = [
     "revision",
     "minimumAppVersion",
     "publishedAt",
+    "screenshots",
     "settings",
 ];
+/*
+ * Absent means the author attached nothing, which is also every profile published before author
+ * screenshots existed. An empty array is deliberately *not* a second way to say the same thing:
+ * two spellings of "no image" would stop a republish comparing byte-for-byte against what is
+ * already committed.
+ */
+const OPTIONAL_PUBLISHED_PROFILE_KEYS = ["screenshots"];
 /*
  * Entries gained `likes` and then `settingsDigest` after the first catalogues were published, so
  * both are optional on read and always written. A catalogue missing either is upgraded on the next
@@ -432,7 +454,14 @@ function validateSubmissionProfile(rawProfile, expectedId, expectedName, expecte
 
 function validatePublishedProfileInternal(rawProfile, { requireCompleteSettings }) {
     const profile = assertJsonRecord(rawProfile, "invalid-published-profile");
-    assertExactKeys(profile, PUBLISHED_PROFILE_KEYS, "unexpected-published-profile-field");
+    const profileKeys = Object.keys(profile);
+    if (profileKeys.some((key) => !PUBLISHED_PROFILE_KEYS.includes(key))) {
+        fail("unexpected-published-profile-field");
+    }
+    for (const required of PUBLISHED_PROFILE_KEYS.filter(
+            (key) => !OPTIONAL_PUBLISHED_PROFILE_KEYS.includes(key))) {
+        if (!hasOwn(profile, required)) fail("missing-published-profile-field");
+    }
     assertExactInteger(profile.schemaVersion, PROFILE_SCHEMA_VERSION, "unsupported-published-profile-schema");
     const id = assertCanonicalUuid(profile.id, "invalid-published-profile-id");
     const name = assertPublicText(profile.name, "invalid-published-profile-name");
@@ -455,8 +484,35 @@ function validatePublishedProfileInternal(rawProfile, { requireCompleteSettings 
         revision: PROFILE_REVISION,
         minimumAppVersion: MINIMUM_APP_VERSION,
         publishedAt,
+        // Positioned here rather than appended, because publicProfilesMatch compares serialized
+        // JSON: the key order this builds has to be the one buildPublishedProfile writes.
+        ...(hasOwn(profile, "screenshots")
+            ? { screenshots: validateScreenshotSurfaces(profile.screenshots) }
+            : {}),
         settings: requireCompleteSettings ? validateSettings(profile.settings) : validatePartialSettings(profile.settings),
     };
+}
+
+/** The caller-supplied form: an empty list is legal here and simply omits the field. */
+function validateScreenshotSurfaceList(value) {
+    if (!Array.isArray(value)) fail("invalid-screenshot-surfaces");
+    return value.length === 0 ? [] : validateScreenshotSurfaces(value);
+}
+
+/** Surfaces are republished in registry order so a retry can compare against the committed file. */
+function validateScreenshotSurfaces(value) {
+    if (!Array.isArray(value) || value.length === 0 || value.length > SHOT_SURFACES.length) {
+        fail("invalid-published-profile-screenshots");
+    }
+    const surfaces = [];
+    for (const surface of value) {
+        if (typeof surface !== "string" || !SHOT_SURFACES.includes(surface) ||
+                surfaces.includes(surface)) {
+            fail("invalid-published-profile-screenshots");
+        }
+        surfaces.push(surface);
+    }
+    return SHOT_SURFACES.filter((surface) => surfaces.includes(surface));
 }
 
 function validatePublishedProfile(rawProfile) {
@@ -529,7 +585,97 @@ function validatePreview(value) {
     }
 }
 
-function buildPublishedProfile(profile, author, publishedAt) {
+/**
+ * Walks the top-level chunks of a RIFF body, refusing anything whose declared sizes do not tile the
+ * buffer exactly. Chunks are padded to an even length; a final odd chunk missing its pad byte is
+ * the one deviation real encoders produce, so it is tolerated and nothing else is.
+ */
+function readRiffChunks(buffer, start, end, code) {
+    const chunks = [];
+    let offset = start;
+    while (offset + 8 <= end) {
+        const size = buffer.readUInt32LE(offset + 4);
+        const payloadStart = offset + 8;
+        if (size > end - payloadStart) fail(code);
+        chunks.push({
+            fourCC: buffer.toString("latin1", offset, offset + 4),
+            start: payloadStart,
+            end: payloadStart + size,
+        });
+        offset = payloadStart + size + (size % 2);
+        if (offset === end + 1) offset = end;
+    }
+    if (offset !== end) fail(code);
+    return chunks;
+}
+
+/** Width and height out of a VP8 key frame header (RFC 6386 section 9.1). */
+function vp8KeyFrameDimensions(buffer, start, end, code) {
+    if (end - start < 10) fail(code);
+    const tag = buffer[start] | (buffer[start + 1] << 8) | (buffer[start + 2] << 16);
+    if ((tag & 1) !== 0) fail(code);
+    if (buffer[start + 3] !== 0x9d || buffer[start + 4] !== 0x01 || buffer[start + 5] !== 0x2a) {
+        fail(code);
+    }
+    return {
+        width: buffer.readUInt16LE(start + 6) & 0x3fff,
+        height: buffer.readUInt16LE(start + 8) & 0x3fff,
+    };
+}
+
+/**
+ * Turns one submitted base64 string into bytes that are provably a plain, still, metadata-free
+ * WebP -- the only thing this pipeline will ever commit to a public page.
+ *
+ * Parsing the container rather than sniffing a magic number is the entire point. `.webp` is a RIFF
+ * container, and its extended form can carry an animation, an ICC profile, EXIF or XMP beside the
+ * picture; EXIF in particular is how an image that passed through a phone gallery carries a
+ * location. The app re-encodes through a Bitmap, which strips all of it. This is the boundary that
+ * does not have to believe the app.
+ *
+ * Alpha is the one extension a screenshot may legitimately carry, so VP8X is accepted when its
+ * flags claim nothing else *and* no chunk beyond ALPH/VP8 is actually present -- a flag byte is a
+ * claim, and a claim is not what this function trusts. Lossless (VP8L) is refused because the app
+ * never produces it: a screenshot arriving as one did not come from a released build.
+ */
+export function decodeThemeScreenshot(value) {
+    if (typeof value !== "string" || value.length < 4 ||
+            value.length > MAX_SHOT_BASE64_LENGTH || !BASE64.test(value)) {
+        fail("invalid-screenshot-encoding");
+    }
+    const bytes = Buffer.from(value, "base64");
+    if (bytes.length < 20 || bytes.length > MAX_SHOT_BYTES) fail("invalid-screenshot-image");
+    if (bytes.toString("latin1", 0, 4) !== "RIFF" || bytes.toString("latin1", 8, 12) !== "WEBP") {
+        fail("invalid-screenshot-image");
+    }
+    if (bytes.readUInt32LE(4) + 8 !== bytes.length) fail("invalid-screenshot-image");
+    const chunks = readRiffChunks(bytes, 12, bytes.length, "invalid-screenshot-image");
+    let frame;
+    if (chunks.length === 1 && chunks[0].fourCC === "VP8 ") {
+        frame = chunks[0];
+    } else if (chunks.length > 1 && chunks[0].fourCC === "VP8X") {
+        const header = chunks[0];
+        if (header.end - header.start !== 10) fail("invalid-screenshot-image");
+        // ICC (0x20) | EXIF (0x08) | XMP (0x04) | animation (0x02). Alpha (0x10) is allowed.
+        if ((bytes[header.start] & 0x2e) !== 0) fail("invalid-screenshot-image");
+        for (const chunk of chunks.slice(1)) {
+            if (chunk.fourCC !== "ALPH" && chunk.fourCC !== "VP8 ") fail("invalid-screenshot-image");
+        }
+        frame = chunks.find((chunk) => chunk.fourCC === "VP8 ");
+        if (frame === undefined) fail("invalid-screenshot-image");
+    } else {
+        fail("invalid-screenshot-image");
+    }
+    const { width, height } = vp8KeyFrameDimensions(
+        bytes, frame.start, frame.end, "invalid-screenshot-image");
+    // Square because the app centre-crops before encoding, and because the gallery draws the result
+    // under a round mask: a non-square image did not come from that path.
+    if (width !== height) fail("invalid-screenshot-shape");
+    if (width < MIN_SHOT_PIXELS || width > MAX_SHOT_PIXELS) fail("invalid-screenshot-size");
+    return { bytes, width, height };
+}
+
+function buildPublishedProfile(profile, author, publishedAt, screenshots = []) {
     return {
         schemaVersion: PROFILE_SCHEMA_VERSION,
         id: profile.id,
@@ -541,6 +687,7 @@ function buildPublishedProfile(profile, author, publishedAt) {
         revision: PROFILE_REVISION,
         minimumAppVersion: MINIMUM_APP_VERSION,
         publishedAt,
+        ...(screenshots.length > 0 ? { screenshots: [...screenshots] } : {}),
         settings: profile.settings,
     };
 }
@@ -572,7 +719,7 @@ function buildIndexEntry(profile, author, publishedAt, likes = 0, settingsDigest
  * bytes are checked only as part of the queue envelope and deliberately never appear in the
  * returned profile or index entry.
  */
-export function validateApprovedDocument({ id, data, publishedAt }) {
+export function validateApprovedDocument({ id, data, publishedAt, screenshots = [] }) {
     const documentId = assertCanonicalUuid(id, "invalid-document-id");
     if (!isRecord(data)) fail("invalid-intake-document");
     if (data.status !== "approved") fail("document-is-not-approved");
@@ -613,7 +760,8 @@ export function validateApprovedDocument({ id, data, publishedAt }) {
     const changedSettings = countChangedSettings(profile.settings, profile.baseFace);
     if (changedSettings < MINIMUM_CHANGED_SETTINGS) fail("insufficient-originality");
     const canonicalPublishedAt = assertPublicationTimestamp(publishedAt, "invalid-publication-timestamp");
-    const publicProfile = buildPublishedProfile(profile, author, canonicalPublishedAt);
+    const publicProfile = buildPublishedProfile(
+        profile, author, canonicalPublishedAt, validateScreenshotSurfaceList(screenshots));
     if (Buffer.byteLength(jsonText(publicProfile), "utf8") > MAX_PUBLISHED_PROFILE_BYTES) {
         fail("published-profile-too-large");
     }
@@ -676,10 +824,26 @@ function summariesMatch(existing, expected) {
         existing.publishedAt === expected.publishedAt;
 }
 
+/** Rest-destructuring, so the surviving keys keep the insertion order the comparison relies on. */
+function withoutScreenshots(profile) {
+    if (!hasOwn(profile, "screenshots")) return profile;
+    const { screenshots: _screenshots, ...rest } = profile;
+    return rest;
+}
+
+/**
+ * Whether a committed file still corresponds to the approved intake it was published from.
+ *
+ * Screenshots are deliberately outside that question. They are not part of the intake: they come
+ * from a separate immutable collection plus the moderator's verdict on them, and finalization
+ * deletes those documents once the bytes are safely in Git. Comparing them here would turn a
+ * perfectly good published theme into one that can never finalize and republishes on every run.
+ */
 function publicProfilesMatch(existing, expected) {
     try {
         const normalized = validatePublishedProfile(existing);
-        return JSON.stringify(normalized) === JSON.stringify(expected);
+        return JSON.stringify(withoutScreenshots(normalized)) ===
+            JSON.stringify(withoutScreenshots(expected));
     } catch (_error) {
         return false;
     }
@@ -738,6 +902,19 @@ async function readCatalog(root) {
 function profilePath(themesDirectory, id) {
     const target = resolve(themesDirectory, `${id}.json`);
     if (dirname(target) !== themesDirectory) fail("unsafe-profile-path");
+    return target;
+}
+
+/*
+ * `<uuid>-<surface>.webp` under docs/themes/shots. Both components are already constrained -- a
+ * canonical UUID and a value from SHOT_SURFACES -- so the containment checks mirror profilePath's
+ * belt-and-braces rather than closing a reachable traversal.
+ */
+function shotPath(themesDirectory, id, surface) {
+    const directory = resolve(themesDirectory, SHOTS_DIRECTORY);
+    if (dirname(directory) !== themesDirectory) fail("unsafe-screenshot-path");
+    const target = resolve(directory, `${id}-${surface}.webp`);
+    if (dirname(target) !== directory) fail("unsafe-screenshot-path");
     return target;
 }
 
@@ -956,6 +1133,68 @@ async function buildAccountErasurePlan({ firestore, catalog, logger }) {
  * after it. Which ids are public is read from the catalogue, never from the intake status, for the
  * same reason an erasure does it that way -- the files are the thing being withdrawn.
  */
+/**
+ * Resolves the author screenshot for one approved theme.
+ *
+ * Every failure drops the image and keeps the theme. A moderator approved a theme; an unreadable,
+ * mismatched or unexpected picture is not a reason to withhold it, and the fallback -- a gallery
+ * card that renders the profile locally -- is exactly what a theme with no screenshot shows. The
+ * bytes cannot have changed since review, because the rules make a screenshot immutable, so what
+ * gets committed is what the moderator actually saw.
+ */
+async function collectApprovedScreenshots({ firestore, themeId, ownerUid, logger }) {
+    if (typeof ownerUid !== "string" || ownerUid.length === 0) return [];
+    const review = await firestore.collection(REVIEW_COLLECTION).doc(themeId).get();
+    // Absent means accepted, so every record written before screenshots existed keeps its meaning.
+    if (review.exists && review.data()?.shotsAccepted === false) {
+        log(logger, "log", `Dropped the screenshot of ${themeId}: the moderator did not accept it.`);
+        return [];
+    }
+    const snapshot = await firestore
+        .collection(SHOTS_COLLECTION)
+        .doc(themeId)
+        .collection(SHOT_SURFACES_SUBCOLLECTION)
+        .get();
+    const resolved = [];
+    for (const surface of SHOT_SURFACES) {
+        const stored = snapshot.docs.find((document) => document.id === surface);
+        if (stored === undefined) continue;
+        const data = stored.data();
+        // Defence in depth behind the rules: a screenshot is filed against an intake the caller
+        // owns, so an owner that disagrees means one of the two documents is not what it claims.
+        if (!isRecord(data) || data.ownerUid !== ownerUid || data.surface !== surface) {
+            log(logger, "warn", `Dropped the ${surface} screenshot of ${themeId}: owner-mismatch.`);
+            continue;
+        }
+        try {
+            resolved.push({ surface, image: decodeThemeScreenshot(data.webpBase64) });
+        } catch (error) {
+            const code = error instanceof ValidationError ? error.code : "invalid-screenshot";
+            log(logger, "warn", `Dropped the ${surface} screenshot of ${themeId}: ${code}.`);
+        }
+    }
+    return resolved;
+}
+
+/**
+ * Removes the stored screenshots of one theme. Called once the bytes are committed to Git, and
+ * again wherever a theme or an account is being erased -- a 96 KB document per submission is worth
+ * keeping only until it is either public or gone.
+ */
+async function deleteThemeScreenshots(firestore, themeId) {
+    const snapshot = await firestore
+        .collection(SHOTS_COLLECTION)
+        .doc(themeId)
+        .collection(SHOT_SURFACES_SUBCOLLECTION)
+        .get();
+    if (snapshot.empty) return;
+    await commitInBatches(
+        firestore,
+        snapshot.docs.map((document) => (batch) => batch.delete(document.ref)),
+        "Could not remove the screenshots of a community theme",
+    );
+}
+
 async function collectWithdrawnThemes({ firestore, catalog, logger }) {
     let snapshot;
     try {
@@ -1001,6 +1240,7 @@ async function applyWithdrawals({ firestore, withdrawals, logger }) {
             ],
             "Could not remove a withdrawn community theme",
         );
+        await deleteThemeScreenshots(firestore, id);
     }
     if (withdrawals.ids.length > 0) {
         log(logger, "log", `Removed ${withdrawals.ids.length} withdrawn community theme(s).`);
@@ -1148,6 +1388,12 @@ async function applyAccountErasure({ firestore, auth, request, catalogIds, logge
         "Could not erase the submissions of a deleted community account",
     );
 
+    // Including the themes being kept public: those bytes are already committed to Git, so the
+    // stored copy is only a private artefact still pointing at the person being erased.
+    for (const themeId of request.intakeIds) {
+        await deleteThemeScreenshots(firestore, themeId);
+    }
+
     // Other people's votes on a theme that no longer exists publicly.
     for (const themeId of request.removedThemeIds) {
         const voters = await collectVoterReferences(firestore, themeId);
@@ -1233,6 +1479,16 @@ async function writeTemporaryFile(target, body) {
 /** Creates a new profile without ever replacing a file another publisher has created. */
 async function atomicCreateJson(target, value) {
     const temporary = await writeTemporaryFile(target, jsonText(value));
+    try {
+        await link(temporary, target);
+    } finally {
+        await unlink(temporary).catch(() => undefined);
+    }
+}
+
+/** The binary sibling of atomicCreateJson; writeFile ignores the encoding for a Buffer. */
+async function atomicCreateBytes(target, bytes) {
+    const temporary = await writeTemporaryFile(target, bytes);
     try {
         await link(temporary, target);
     } finally {
@@ -1414,12 +1670,19 @@ async function buildPublicationPlan({ firestore, root, now, logger, refreshLikes
             log(logger, "warn", `Skipped ${idForLog}: owner-account-erasure-pending`);
             continue;
         }
+        const screenshots = await collectApprovedScreenshots({
+            firestore,
+            themeId: String(document.id),
+            ownerUid,
+            logger,
+        });
         let candidate;
         try {
             candidate = validateApprovedDocument({
                 id: document.id,
                 data: document.data(),
                 publishedAt,
+                screenshots: screenshots.map((shot) => shot.surface),
             });
         } catch (error) {
             skipped += 1;
@@ -1515,6 +1778,7 @@ async function buildPublicationPlan({ firestore, root, now, logger, refreshLikes
             publicProfile: expectedProfile,
             summary: expectedSummary,
             needsProfileWrite,
+            screenshots,
         });
     }
 
@@ -1812,6 +2076,13 @@ export async function publishApprovedThemes({
         await unlink(profilePath(plan.catalog.themesDirectory, id)).catch((error) => {
             if (error?.code !== "ENOENT") throw error;
         });
+        // Every registered surface, not only the ones this run resolved: a surface is only ever
+        // added to SHOT_SURFACES, so the current registry covers whatever an older run wrote.
+        for (const surface of SHOT_SURFACES) {
+            await unlink(shotPath(plan.catalog.themesDirectory, id, surface)).catch((error) => {
+                if (error?.code !== "ENOENT") throw error;
+            });
+        }
     }
     for (const candidate of plan.plans) {
         if (!candidate.needsProfileWrite) continue;
@@ -1819,6 +2090,17 @@ export async function publishApprovedThemes({
         // Hard-link creation fails if another process created this id after planning. It never
         // overwrites an existing publication, even in that narrow race.
         await atomicCreateJson(target, candidate.publicProfile);
+    }
+    // Deliberately not gated on needsProfileWrite: a run interrupted between the two writes leaves
+    // a profile whose screenshot is missing, and this is what repairs it. EEXIST is the ordinary
+    // outcome of a retry and never an overwrite -- the committed bytes stay the reviewed ones.
+    for (const candidate of plan.plans) {
+        for (const shot of candidate.screenshots) {
+            const target = shotPath(plan.catalog.themesDirectory, candidate.id, shot.surface);
+            await atomicCreateBytes(target, shot.image.bytes).catch((error) => {
+                if (error?.code !== "EEXIST") throw error;
+            });
+        }
     }
     if (plan.catalogChanged) {
         await assertCatalogUnchanged(plan.catalog);
@@ -1895,6 +2177,9 @@ export async function finalizePublishedThemes({
                         id: snapshot.id,
                         data: snapshot.data(),
                         publishedAt: item.publishedAt,
+                        // The committed file is the authority on its own screenshots; the intake
+                        // never carried them. publicProfilesMatch ignores the field either way.
+                        screenshots: staticProfile.screenshots ?? [],
                     });
                     if (current.submissionSchemaVersion >= 2) {
                         await validateAuthorIdentity({
@@ -1921,6 +2206,11 @@ export async function finalizePublishedThemes({
             });
             if (didMark) {
                 marked += 1;
+                // The bytes are in Git now, so the stored copy is waste rather than a safeguard.
+                // Failing to clear it must not fail a publication that has already succeeded.
+                await deleteThemeScreenshots(firestore, item.id).catch(() => {
+                    log(logger, "warn", `Left the stored screenshot of ${item.id} in place.`);
+                });
             } else {
                 skipped += 1;
                 log(logger, "warn", `Did not finalize ${item.id}: intake changed or is no longer approved.`);
