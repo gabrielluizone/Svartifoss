@@ -34,6 +34,7 @@ export const ALLOWED_BASE_FACES = Object.freeze([
 ]);
 
 const STRING_SETTINGS = [
+    "album_art_filter",
     "album_art_style",
     "screen_buttons_bg_style",
     "screen_buttons_curve_style",
@@ -627,6 +628,7 @@ export function isOriginalityApplicableSetting(key, settings, baseFace) {
 const DEFAULT_VALUES = Object.freeze({
     album_art_blur_radius: 35,
     album_art_dim_strength: 80,
+    album_art_filter: "none",
     album_art_style: "cover",
     always_show_time: false,
     ambient_album_art_opacity: 55,

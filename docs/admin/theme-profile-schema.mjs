@@ -8,6 +8,7 @@
  * parity with the publishing trust boundary on every publisher test run.
  */
 const STRING_SETTINGS = [
+  "album_art_filter",
   "album_art_style",
   "screen_buttons_bg_style",
   "screen_buttons_curve_style",
