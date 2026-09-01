@@ -617,9 +617,17 @@ function readRiffChunks(buffer, start, end) {
  *
  * Stronger than the flag test it replaces: a VP8X header *declares* what it carries, and a
  * declaration is not what this has to believe. EXIF is how an image that passed through a phone
- * gallery carries a location; ANIM/ANMF is how a still becomes a moving one.
+ * gallery carries a location, XMP can carry authorship and place, and ANIM/ANMF is how a still
+ * becomes a moving one.
+ *
+ * ICCP is deliberately **not** here, though an earlier version refused it as "metadata". A colour
+ * profile carries no personal data -- it describes a colour space -- and Android attaches one to
+ * every screenshot, so refusing it dropped every real submission there had been. It is functional
+ * rather than incidental too: a screenshot may be in Display P3, and publishing it without its
+ * profile publishes wrong colours on a wide-gamut screen, degrading the one thing the picture is
+ * there for.
  */
-const FORBIDDEN_CHUNKS = new Set(["EXIF", "XMP ", "ICCP", "ANIM", "ANMF"]);
+const FORBIDDEN_CHUNKS = new Set(["EXIF", "XMP ", "ANIM", "ANMF"]);
 
 /** Width and height out of a VP8 key frame header (RFC 6386 section 9.1). */
 function vp8KeyFrameDimensions(buffer, start, end) {
@@ -682,7 +690,9 @@ export function decodeThemeScreenshot(value) {
         if (FORBIDDEN_CHUNKS.has(chunk.fourCC)) fail("screenshot-carries-metadata");
     }
     const header = chunks[0].fourCC === "VP8X" ? chunks[0] : null;
-    if (header !== null && (bytes[header.start] & 0x2e) !== 0) fail("screenshot-carries-metadata");
+    // EXIF (0x08) | XMP (0x04) | animation (0x02). Alpha (0x10) and ICC (0x20) are both legitimate
+    // on a screenshot, and the chunk sweep above is the authority either way.
+    if (header !== null && (bytes[header.start] & 0x0e) !== 0) fail("screenshot-carries-metadata");
 
     const frames = chunks.filter((chunk) => chunk.fourCC === "VP8 " || chunk.fourCC === "VP8L");
     if (frames.length === 0) fail("screenshot-has-no-frame");

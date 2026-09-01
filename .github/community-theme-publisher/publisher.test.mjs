@@ -1672,6 +1672,14 @@ test("a screenshot decodes as any still WebP an encoder plausibly writes", () =>
     assert.equal(decodeThemeScreenshot(riff([
         riffChunk("VP8L", vp8lFrame(256, 256)),
     ]).toString("base64")).width, 256);
+    // A colour profile, which every Android screenshot carries. Refusing it as "metadata" is what
+    // dropped the first two real submissions: it holds no personal data and it is what makes a
+    // Display P3 picture render in the colours it was captured in.
+    assert.equal(decodeThemeScreenshot(riff([
+        riffChunk("VP8X", vp8xHeader(0x20, 329, 329)),
+        riffChunk("ICCP", Buffer.alloc(536)),
+        riffChunk("VP8 ", vp8Frame(329, 329)),
+    ]).toString("base64")).width, 329);
     // Trailing bytes no longer make an ordinary picture unreadable.
     const padded = Buffer.concat([
         riff([riffChunk("VP8 ", vp8Frame(256, 256))]),
@@ -1684,7 +1692,7 @@ test("a screenshot carrying anything but a picture is refused", () => {
     // By chunk, in every container form. A VP8X header only *declares* what it carries, and the
     // declaration is not what this trusts -- EXIF is how a file that passed through a phone gallery
     // carries a location.
-    for (const fourCC of ["EXIF", "XMP ", "ICCP", "ANIM", "ANMF"]) {
+    for (const fourCC of ["EXIF", "XMP ", "ANIM", "ANMF"]) {
         assertValidationCode(() => decodeThemeScreenshot(riff([
             riffChunk("VP8X", vp8xHeader(0x00, 256, 256)),
             riffChunk("VP8 ", vp8Frame(256, 256)),
@@ -1692,7 +1700,7 @@ test("a screenshot carrying anything but a picture is refused", () => {
         ]).toString("base64")), "screenshot-carries-metadata");
     }
     // And by flag, for a header that declares metadata it did not attach.
-    for (const flags of [0x20, 0x08, 0x04, 0x02]) {
+    for (const flags of [0x08, 0x04, 0x02]) {
         assertValidationCode(() => decodeThemeScreenshot(riff([
             riffChunk("VP8X", vp8xHeader(flags, 256, 256)),
             riffChunk("VP8 ", vp8Frame(256, 256)),
