@@ -19,6 +19,7 @@ import {
     ValidationError,
     canonicalSettingsDigest,
     decodeThemeScreenshot,
+    describeThemeScreenshot,
     finalizePublishedThemes,
     isLikeRefreshDue,
     publishApprovedThemes,
@@ -1666,24 +1667,24 @@ test("a screenshot carrying anything but a picture is refused", () => {
         assertValidationCode(() => decodeThemeScreenshot(riff([
             riffChunk("VP8X", vp8xHeader(flags, 256, 256)),
             riffChunk("VP8 ", vp8Frame(256, 256)),
-        ]).toString("base64")), "invalid-screenshot-image");
+        ]).toString("base64")), "screenshot-carries-metadata");
     }
     // The sharp case: a flag byte is a claim, and the chunk is what actually carries a location.
     assertValidationCode(() => decodeThemeScreenshot(riff([
         riffChunk("VP8X", vp8xHeader(0x00, 256, 256)),
         riffChunk("VP8 ", vp8Frame(256, 256)),
         riffChunk("EXIF", Buffer.from("II*abcd", "latin1")),
-    ]).toString("base64")), "invalid-screenshot-image");
+    ]).toString("base64")), "screenshot-unexpected-chunk");
     // Lossless never comes out of the app, so it did not come from a released build.
     assertValidationCode(
         () => decodeThemeScreenshot(riff([riffChunk("VP8L", Buffer.alloc(16))]).toString("base64")),
-        "invalid-screenshot-image");
+        "screenshot-unsupported-container");
 });
 
 test("a screenshot has to be a square of a plausible size", () => {
-    assertValidationCode(() => decodeThemeScreenshot(screenshot(256, 160)), "invalid-screenshot-shape");
-    assertValidationCode(() => decodeThemeScreenshot(screenshot(64)), "invalid-screenshot-size");
-    assertValidationCode(() => decodeThemeScreenshot(screenshot(1024)), "invalid-screenshot-size");
+    assertValidationCode(() => decodeThemeScreenshot(screenshot(256, 160)), "screenshot-not-square");
+    assertValidationCode(() => decodeThemeScreenshot(screenshot(64)), "screenshot-wrong-size");
+    assertValidationCode(() => decodeThemeScreenshot(screenshot(1024)), "screenshot-wrong-size");
 });
 
 test("a malformed screenshot envelope never reaches the container parser", () => {
@@ -1693,10 +1694,25 @@ test("a malformed screenshot envelope never reaches the container parser", () =>
     assertValidationCode(() => decodeThemeScreenshot(42), "invalid-screenshot-encoding");
     // A RIFF whose declared length disagrees with what arrived.
     const truncated = riff([riffChunk("VP8 ", vp8Frame(256, 256))]).subarray(0, 24);
-    assertValidationCode(() => decodeThemeScreenshot(truncated.toString("base64")), "invalid-screenshot-image");
+    assertValidationCode(() => decodeThemeScreenshot(truncated.toString("base64")), "screenshot-riff-length-mismatch");
     assertValidationCode(
         () => decodeThemeScreenshot(Buffer.from("GIF89a").toString("base64")),
-        "invalid-screenshot-image");
+        "screenshot-truncated");
+});
+
+test("a refused screenshot is described well enough to act on", () => {
+    // The reason this exists: a real submission was dropped in production and the log named a
+    // category, not a cause. The description has to survive input the validator already refused.
+    const described = describeThemeScreenshot(riff([
+        riffChunk("VP8X", vp8xHeader(0x08, 256, 256)),
+        riffChunk("VP8 ", vp8Frame(256, 256)),
+    ]).toString("base64"));
+    assert.match(described, /magic="RIFF"\/"WEBP"/);
+    assert.match(described, /chunks=\[VP8X:10, VP8 :16]/);
+    // And never throw on anything, which is the whole point of keeping it out of the validator.
+    for (const value of [undefined, 42, "", "!!!!", Buffer.from("GIF89a").toString("base64")]) {
+        assert.equal(typeof describeThemeScreenshot(value), "string");
+    }
 });
 
 test("an approved screenshot is committed beside the profile and named in it", async (t) => {

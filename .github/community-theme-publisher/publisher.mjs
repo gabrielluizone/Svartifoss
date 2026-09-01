@@ -644,35 +644,78 @@ export function decodeThemeScreenshot(value) {
         fail("invalid-screenshot-encoding");
     }
     const bytes = Buffer.from(value, "base64");
-    if (bytes.length < 20 || bytes.length > MAX_SHOT_BYTES) fail("invalid-screenshot-image");
+    /*
+     * Each refusal names its own condition. They shared one code at first, which was fine until a
+     * real submission was dropped in production: the log said "invalid-screenshot-image" and that
+     * covered eight unrelated checks, so it identified a category rather than a cause and there was
+     * nothing to act on. A boundary that refuses input has to say which rule the input broke.
+     */
+    if (bytes.length < 20) fail("screenshot-truncated");
+    if (bytes.length > MAX_SHOT_BYTES) fail("screenshot-too-large");
     if (bytes.toString("latin1", 0, 4) !== "RIFF" || bytes.toString("latin1", 8, 12) !== "WEBP") {
-        fail("invalid-screenshot-image");
+        fail("screenshot-not-a-webp");
     }
-    if (bytes.readUInt32LE(4) + 8 !== bytes.length) fail("invalid-screenshot-image");
-    const chunks = readRiffChunks(bytes, 12, bytes.length, "invalid-screenshot-image");
+    if (bytes.readUInt32LE(4) + 8 !== bytes.length) fail("screenshot-riff-length-mismatch");
+    const chunks = readRiffChunks(bytes, 12, bytes.length, "screenshot-riff-chunks-unreadable");
     let frame;
     if (chunks.length === 1 && chunks[0].fourCC === "VP8 ") {
         frame = chunks[0];
     } else if (chunks.length > 1 && chunks[0].fourCC === "VP8X") {
         const header = chunks[0];
-        if (header.end - header.start !== 10) fail("invalid-screenshot-image");
+        if (header.end - header.start !== 10) fail("screenshot-bad-vp8x-header");
         // ICC (0x20) | EXIF (0x08) | XMP (0x04) | animation (0x02). Alpha (0x10) is allowed.
-        if ((bytes[header.start] & 0x2e) !== 0) fail("invalid-screenshot-image");
+        if ((bytes[header.start] & 0x2e) !== 0) fail("screenshot-carries-metadata");
         for (const chunk of chunks.slice(1)) {
-            if (chunk.fourCC !== "ALPH" && chunk.fourCC !== "VP8 ") fail("invalid-screenshot-image");
+            if (chunk.fourCC !== "ALPH" && chunk.fourCC !== "VP8 ") {
+                fail("screenshot-unexpected-chunk");
+            }
         }
         frame = chunks.find((chunk) => chunk.fourCC === "VP8 ");
-        if (frame === undefined) fail("invalid-screenshot-image");
+        if (frame === undefined) fail("screenshot-has-no-lossy-frame");
     } else {
-        fail("invalid-screenshot-image");
+        fail("screenshot-unsupported-container");
     }
     const { width, height } = vp8KeyFrameDimensions(
-        bytes, frame.start, frame.end, "invalid-screenshot-image");
+        bytes, frame.start, frame.end, "screenshot-bad-vp8-frame");
     // Square because the app centre-crops before encoding, and because the gallery draws the result
     // under a round mask: a non-square image did not come from that path.
-    if (width !== height) fail("invalid-screenshot-shape");
-    if (width < MIN_SHOT_PIXELS || width > MAX_SHOT_PIXELS) fail("invalid-screenshot-size");
+    if (width !== height) fail("screenshot-not-square");
+    if (width < MIN_SHOT_PIXELS || width > MAX_SHOT_PIXELS) fail("screenshot-wrong-size");
     return { bytes, width, height };
+}
+
+/**
+ * A tolerant description of whatever arrived, for the log line beside a refusal.
+ *
+ * Deliberately separate from the validator and deliberately unable to fail: its whole job is to
+ * describe input the validator has already refused, so throwing would remove the one piece of
+ * evidence there is. Reports only shape -- byte length and chunk names -- never image content.
+ */
+export function describeThemeScreenshot(value) {
+    if (typeof value !== "string") return `type=${typeof value}`;
+    let bytes;
+    try {
+        bytes = Buffer.from(value, "base64");
+    } catch (_error) {
+        return `base64=${value.length} chars, undecodable`;
+    }
+    const parts = [`base64=${value.length}`, `bytes=${bytes.length}`];
+    if (bytes.length >= 12) {
+        parts.push(`magic=${JSON.stringify(bytes.toString("latin1", 0, 4))}` +
+            `/${JSON.stringify(bytes.toString("latin1", 8, 12))}`);
+        parts.push(`declared=${bytes.readUInt32LE(4) + 8}`);
+    }
+    const fourCCs = [];
+    let offset = 12;
+    while (offset + 8 <= bytes.length && fourCCs.length < 6) {
+        const size = bytes.readUInt32LE(offset + 4);
+        fourCCs.push(`${bytes.toString("latin1", offset, offset + 4)}:${size}`);
+        const next = offset + 8 + size + (size % 2);
+        if (next <= offset) break;
+        offset = next;
+    }
+    if (fourCCs.length > 0) parts.push(`chunks=[${fourCCs.join(", ")}]`);
+    return parts.join(" ");
 }
 
 function buildPublishedProfile(profile, author, publishedAt, screenshots = []) {
@@ -1170,7 +1213,11 @@ async function collectApprovedScreenshots({ firestore, themeId, ownerUid, logger
             resolved.push({ surface, image: decodeThemeScreenshot(data.webpBase64) });
         } catch (error) {
             const code = error instanceof ValidationError ? error.code : "invalid-screenshot";
-            log(logger, "warn", `Dropped the ${surface} screenshot of ${themeId}: ${code}.`);
+            log(
+                logger,
+                "warn",
+                `Dropped the ${surface} screenshot of ${themeId}: ${code}. ` +
+                    describeThemeScreenshot(data.webpBase64));
         }
     }
     return resolved;
