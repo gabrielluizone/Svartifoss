@@ -126,6 +126,23 @@ service cloud.firestore {
     }
 
     /*
+     * Accounts the rolling submission limit does not apply to.
+     *
+     * Server-only, exactly like communityThemeModerators: no client rule grants a write, so it can
+     * only be filled from the Firebase console or the Admin SDK. That is what makes it an
+     * allowlist rather than something an APK could add itself to. A UID rather than an email,
+     * deliberately -- this file is public, and a personal address does not belong in it.
+     *
+     * Readable only by its own subject, because the app has to know whether to show "you have
+     * reached the limit" before attempting a write that the rules would then accept anyway.
+     */
+    match /communityThemeSubmissionQuotaExempt/{uid} {
+      allow get: if identifiedUser() && uid == request.auth.uid;
+
+      // Deliberately omitted: no client may create, edit, delete or enumerate an exemption.
+    }
+
+    /*
      * One immutable public identity per submitting account, paired with one globally unique,
      * case-insensitive name reservation. Neither half can be created alone: reciprocal getAfter
      * checks require the first submission transaction to create both atomically. Clients can
@@ -763,7 +780,7 @@ service cloud.firestore {
           && ((validLegacySubmissionQuotaShape(before)
                 && validLegacyQuotaMigration(after))
               || (validSubmissionQuotaV2Shape(before)
-                && validRollingQuotaProgression(before, after)));
+                && (validRollingQuotaProgression(before, after) || submissionQuotaExempt())));
     }
 
     /*
@@ -848,6 +865,19 @@ service cloud.firestore {
                 && after.recentSubmissionCount == 3
                 && after.recentSubmissionFirstAt == before.recentSubmissionSecondAt
                 && after.recentSubmissionSecondAt == before.lastSubmissionAt));
+    }
+
+    /*
+     * Tested only after validRollingQuotaProgression has already failed, and the order is
+     * load-bearing rather than stylistic. Rules short-circuit `||`, so an ordinary submission never
+     * pays for this lookup -- which matters because it would otherwise spend an access call inside
+     * the four-document submission batch, where both the 1000-expression and the per-request
+     * access-call budgets are already shared.
+     */
+    function submissionQuotaExempt() {
+      return exists(
+        /databases/$(database)/documents/communityThemeSubmissionQuotaExempt/$(request.auth.uid)
+      );
     }
 
     function quotaTargetsCurrentIntake(quota) {

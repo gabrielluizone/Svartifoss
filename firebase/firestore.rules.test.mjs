@@ -525,6 +525,49 @@ test("the rolling history shifts once its third-newest submission is older than 
   assert.equal(shifted.recentSubmissionSecondAt.isEqual(latest), true);
 });
 
+async function seedQuotaExempt(uid) {
+  await testEnvironment.withSecurityRulesDisabled(async (context) => {
+    const db = context.firestore();
+    await setDoc(db, doc(db, "communityThemeSubmissionQuotaExempt", uid), {
+      createdAt: Timestamp.fromMillis(1_787_594_181_000),
+    });
+  });
+}
+
+test("an allowlisted account keeps submitting past the rolling limit", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  await seedQuotaExempt(AUTHOR);
+  await submit(authorDb, AUTHOR, FIRST_ID);
+  await submit(authorDb, AUTHOR, SECOND_ID);
+  await submit(authorDb, AUTHOR, THIRD_ID);
+
+  // The fourth is what the limit exists to refuse; the exemption is why it lands.
+  await assertSucceeds(submit(authorDb, AUTHOR, FOURTH_ID));
+  await assertSucceeds(submit(authorDb, AUTHOR, FIFTH_ID));
+});
+
+test("the exemption is per account and cannot be granted by a client", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const otherDb = authenticatedDb(OTHER_AUTHOR);
+  await seedQuotaExempt(OTHER_AUTHOR);
+
+  // Somebody else's exemption does nothing for this account.
+  await submit(authorDb, AUTHOR, FIRST_ID);
+  await submit(authorDb, AUTHOR, SECOND_ID);
+  await submit(authorDb, AUTHOR, THIRD_ID);
+  await assertFails(submit(authorDb, AUTHOR, FOURTH_ID));
+
+  // And no client can write itself one, which is what makes it an allowlist.
+  await assertFails(setDoc(authorDb,
+    doc(authorDb, "communityThemeSubmissionQuotaExempt", AUTHOR),
+    { createdAt: serverTimestamp() }));
+  // An account reads only its own, so the list can never be enumerated.
+  await assertSucceeds(getDoc(otherDb,
+    doc(otherDb, "communityThemeSubmissionQuotaExempt", OTHER_AUTHOR)));
+  await assertFails(getDoc(authorDb,
+    doc(authorDb, "communityThemeSubmissionQuotaExempt", OTHER_AUTHOR)));
+});
+
 test("a legacy quota migrates on its next submission without waiting and cannot reset afterward", async () => {
   const authorDb = authenticatedDb(AUTHOR);
   await testEnvironment.withSecurityRulesDisabled(async (context) => {
