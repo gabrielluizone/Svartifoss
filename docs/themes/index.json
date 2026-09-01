@@ -1,7 +1,19 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T09:28:45.909Z",
+  "generatedAt": "2026-09-01T17:02:52.575Z",
   "themes": [
+    {
+      "id": "ab1024cb-d892-4d7b-b756-e00d150f539d",
+      "name": "Serial Experiments",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "studio",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "3.3",
+      "publishedAt": "2026-09-01T17:02:52.575Z",
+      "likes": 0,
+      "settingsDigest": "sha256:86294eddf109433d1744c66ba16e25c37dc79724405cbc4ae6e555b2902efff1"
+    },
     {
       "id": "17e4176a-8429-40cb-bd15-e7ce181406f3",
       "name": "ReStudio",
@@ -12,7 +24,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-28T03:12:39.323Z",
       "likes": 2,
-      "settingsDigest": "sha256:1c638d443a3e0fa583bea4729aac7e8feae303822096be4f854bbea450d4ab92"
+      "settingsDigest": "sha256:0e3edcdae2fd8e52b453caf37512f5435e775e515efb913749c00494fa1a0921"
     },
     {
       "id": "09ea139e-8e25-443d-a065-09e8d10da102",
@@ -24,7 +36,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:52a3dd9414cedf2d0d00c519ad5c7bd48cbaa9bab44886b6254bdcf4d120d586"
+      "settingsDigest": "sha256:7e61465bab6baa77d7b24fb0ab1bb1a3ca461be98f7c972ad4b558c68808c388"
     },
     {
       "id": "2a9e18c9-1e57-426a-82be-dfbd5b964bf5",
@@ -36,7 +48,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 1,
-      "settingsDigest": "sha256:99335045121fba32d5ad66f102bc0934674a6b2ce27ce84970e6e851f83ca4c8"
+      "settingsDigest": "sha256:109d5040112763776d2cba1347780e97e214f7e81f5fe1edb3f48cb2c1be26b8"
     },
     {
       "id": "3f038d6e-c0e1-49e5-91e3-70a13ce3dbac",
@@ -48,7 +60,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:400f733dba7c0fa263a03b16bcc3d1892c3fc61769282e84ca7efc63392a0212"
+      "settingsDigest": "sha256:a87c4b3e741cf89a8865ca2e09f42f57ec41e6d646559063a68f92192e812546"
     },
     {
       "id": "5de63f5e-d61e-426a-9269-27d9e3ddd24a",
@@ -60,7 +72,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:a861e6305661d73fc9a9f5f15283c78a3a39ab6d757b306905645fef6f6f37a4"
+      "settingsDigest": "sha256:3f8e7da2fb234316ed75f1c4193655eb7b694585c1f791709a5a4a21cfc0025d"
     }
   ]
 }
