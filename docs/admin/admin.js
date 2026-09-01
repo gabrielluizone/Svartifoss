@@ -3,6 +3,18 @@ import { SETTING_KEYS, SETTING_TYPES } from "./theme-profile-schema.mjs";
 const FIREBASE_VERSION = "12.17.1";
 const INTAKE_COLLECTION = "themeIntake";
 const REVIEW_COLLECTION = "themeIntakeReview";
+/*
+ * Why a disabled action is disabled.
+ *
+ * Approve starts disabled on every pending card while the payload is checked, so a single blanket
+ * tooltip named the self-moderation ban as the reason for every one of them -- including a card
+ * whose profile simply failed the schema check, and including cards belonging to somebody else.
+ * A control that refuses to explain itself is worse than one that is merely unavailable.
+ */
+const DISABLED_REASON_SELF = "A different moderator must review this submission.";
+const DISABLED_REASON_CHECKING = "Checking the submitted profile\u2026";
+const DISABLED_REASON_PAYLOAD = "This profile did not pass the payload check. See the message above.";
+
 const SHOTS_COLLECTION = "themeIntakeShots";
 const SHOT_SURFACES_SUBCOLLECTION = "surfaces";
 /* Mirrors SHOT_SURFACES in the publisher and the literal list in firestore.rules. */
@@ -214,7 +226,10 @@ function buildCard({ id, data }) {
   if (status === "pending") {
     // Approve stays disabled until the payload check below has actually passed.
     approve = transitionButton(
-      "Approve", "approve", id, status, "approved", actions, true, screenshotVerdict);
+      "Approve", "approve", id, status, "approved", actions, true, screenshotVerdict,
+      // Not the self-moderation reason: at this point nothing is known but that the check is
+      // still running. The two outcomes below replace it with what actually happened.
+      DISABLED_REASON_CHECKING);
     actions.append(approve, transitionButton("Reject", "reject", id, status, "rejected", actions, ownSubmission));
   }
   if (status === "approved" || status === "rejected") {
@@ -256,12 +271,21 @@ function buildCard({ id, data }) {
     .then((inspection) => {
       payloadStatus.textContent = `Payload check passed · ${inspection.settingCount} typed settings · ${inspection.digest}`;
       // Only a pending card has an Approve button waiting on this check.
-      if (approve !== null && !ownSubmission) approve.disabled = false;
+      if (approve === null) return;
+      if (ownSubmission) {
+        approve.title = DISABLED_REASON_SELF;
+        return;
+      }
+      approve.disabled = false;
+      approve.removeAttribute("title");
     })
     .catch((error) => {
       console.warn(`Submission payload ${id} did not pass the browser check`, error);
       payloadStatus.textContent = `Payload check failed: ${error.message}. It cannot be approved from this page, but it may be rejected.`;
       payloadStatus.classList.add("error");
+      // The schema is why it cannot be approved, whoever is signed in. Leaving the tooltip naming
+      // the moderator sends the reader to change accounts over something no account can fix.
+      if (approve !== null) approve.title = DISABLED_REASON_PAYLOAD;
     });
   return card;
 }
@@ -381,13 +405,16 @@ async function applyModeratorAction(id, previousStatus, nextStatus, fields = {},
   await batch.commit();
 }
 
-function transitionButton(label, kind, id, previousStatus, nextStatus, actions, disabled, reviewFields) {
+function transitionButton(
+  label, kind, id, previousStatus, nextStatus, actions, disabled, reviewFields,
+  disabledReason = DISABLED_REASON_SELF
+) {
   const button = document.createElement("button");
   button.type = "button";
   button.className = `button ${kind}`;
   button.textContent = label;
   button.disabled = disabled;
-  if (disabled) button.title = "A different moderator must review this submission.";
+  if (disabled) button.title = disabledReason;
   button.addEventListener("click", async () => {
     if (!signedInUser) return;
     if (nextStatus === "withdrawn" && !confirm(withdrawalWarning(previousStatus))) return;
