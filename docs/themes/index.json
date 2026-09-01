@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T17:02:52.575Z",
+  "generatedAt": "2026-09-01T17:19:44.687Z",
   "themes": [
     {
-      "id": "ab1024cb-d892-4d7b-b756-e00d150f539d",
+      "id": "67962205-07a0-4261-9551-4c98d2879449",
       "name": "Serial Experiments",
       "author": "Gabriel L Svafoss",
       "baseFace": "studio",
       "revision": 1,
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
-      "publishedAt": "2026-09-01T17:02:52.575Z",
+      "publishedAt": "2026-09-01T17:19:44.687Z",
       "likes": 0,
-      "settingsDigest": "sha256:86294eddf109433d1744c66ba16e25c37dc79724405cbc4ae6e555b2902efff1"
+      "settingsDigest": "sha256:825e20d09e88d064e3358da36ad05c855a156b8f4abbe367195c9dd63096bc26"
     },
     {
       "id": "17e4176a-8429-40cb-bd15-e7ce181406f3",

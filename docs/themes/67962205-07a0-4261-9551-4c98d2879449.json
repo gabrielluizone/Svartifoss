@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "id": "ab1024cb-d892-4d7b-b756-e00d150f539d",
+  "id": "67962205-07a0-4261-9551-4c98d2879449",
   "name": "Serial Experiments",
   "author": "Gabriel L Svafoss",
   "baseFace": "studio",
-  "createdAt": 1788281371474,
-  "updatedAt": 1788281371474,
+  "createdAt": 1788283048162,
+  "updatedAt": 1788283048162,
   "revision": 1,
   "minimumAppVersion": "3.3",
-  "publishedAt": "2026-09-01T17:02:52.575Z",
+  "publishedAt": "2026-09-01T17:19:44.687Z",
   "settings": {
     "album_art_blur_radius": {
       "type": "int",
@@ -24,7 +24,7 @@
     },
     "album_art_style": {
       "type": "string",
-      "value": "expressive_no_blur"
+      "value": "studio"
     },
     "always_show_time": {
       "type": "boolean",
