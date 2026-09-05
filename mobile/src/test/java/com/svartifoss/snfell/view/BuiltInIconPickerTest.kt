@@ -33,4 +33,31 @@ class BuiltInIconPickerTest {
     fun `the app's own mark is offered, and offered first`() {
         assertEquals(R.drawable.ic_app_brand, BuiltInIconPicker.BUILT_IN_ICONS.first())
     }
+
+    /**
+     * The duplicate check above is worth as much across the two arrays as within either one: an
+     * archived icon that is also an ordinary one shows twice the moment the switch is turned on,
+     * which is exactly the silent outcome the first test exists to prevent.
+     */
+    @Test
+    fun `archived icons are additional, never repeats of the ordinary set`() {
+        val ordinary = BuiltInIconPicker.BUILT_IN_ICONS.toSet()
+        val repeated = BuiltInIconPicker.ARCHIVED_ICONS.filter { it in ordinary }
+        assertTrue("Archived ids already in BUILT_IN_ICONS: $repeated", repeated.isEmpty())
+
+        val archived = BuiltInIconPicker.ARCHIVED_ICONS.toList()
+        val duplicates = archived.groupBy { it }.filterValues { it.size > 1 }.keys
+        assertTrue("Duplicate resource ids in ARCHIVED_ICONS: $duplicates", duplicates.isEmpty())
+    }
+
+    /**
+     * Pins the reason this second array exists at all. Haibane Renmei is not a retired option, it
+     * is a mark belonging to something other than this app, so it must not appear beside the
+     * transport glyphs unless the developer switch has asked for exactly that.
+     */
+    @Test
+    fun `the Haibane Renmei mark is offered only behind the archived switch`() {
+        assertTrue(R.drawable.ic_haibane_renmei in BuiltInIconPicker.ARCHIVED_ICONS)
+        assertTrue(R.drawable.ic_haibane_renmei !in BuiltInIconPicker.BUILT_IN_ICONS)
+    }
 }

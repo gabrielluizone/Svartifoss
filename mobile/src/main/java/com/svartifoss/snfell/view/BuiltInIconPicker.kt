@@ -14,6 +14,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.svartifoss.snfell.R
@@ -289,6 +290,20 @@ object BuiltInIconPicker {
             R.drawable.ic_window,
     )
 
+    /**
+     * Icons the picker offers only while **Show archived options** is on.
+     *
+     * Kept as a second array rather than a flag on the first, because "archived" here does not
+     * mean the same thing it does for a watch layout: nothing is wrong with these and nothing was
+     * retired. They are simply marks that belong to something other than this app, so offering
+     * them in the ordinary grid would put them beside the transport glyphs as though they meant
+     * something to a media action. The developer switch is the existing way to say "show me the
+     * things that are deliberately out of the way", so it is the one used here too.
+     */
+    internal val ARCHIVED_ICONS = intArrayOf(
+            R.drawable.ic_haibane_renmei,
+    )
+
     fun show(
             activity: Activity,
             accent: Int,
@@ -296,7 +311,13 @@ object BuiltInIconPicker {
             onGalleryRequested: () -> Unit
     ) {
         val iconTint = ContextCompat.getColor(activity, R.color.lyra_on_surface)
-        val entries = BUILT_IN_ICONS.map { resId -> IconEntry(resId, iconLabel(activity, resId)) }
+        // Read per call rather than cached: the switch lives in Settings, and this dialog is
+        // opened long after the process started. Archived icons go last so turning the switch on
+        // never reorders the grid somebody already knows.
+        val showArchived = PreferenceManager.getDefaultSharedPreferences(activity)
+                .getBoolean("dev_show_archived", false)
+        val available = if (showArchived) BUILT_IN_ICONS + ARCHIVED_ICONS else BUILT_IN_ICONS
+        val entries = available.map { resId -> IconEntry(resId, iconLabel(activity, resId)) }
 
         lateinit var dialog: AlertDialog
 
